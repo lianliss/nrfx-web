@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Routes from './Routes';
 
-import * as testSelectors from './actions/test';
+import * as testActions from './actions/test';
 
 class App extends React.PureComponent {
   render() {
@@ -17,7 +17,7 @@ class App extends React.PureComponent {
 export function mapDispatchToProps(dispatch) {
   return {
     testActions: {
-      update: () => dispatch(testSelectors.update())
+      update: () => dispatch(testActions.update(...arguments))
     }
   };
 }

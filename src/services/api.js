@@ -1,4 +1,4 @@
-import { ApiClient } from '../swagger';
+//import ApiClient from '../swagger';
 import * as auth from './auth';
 
 export const Errors = {
@@ -32,6 +32,6 @@ export default function callApi(callable) {
       resolve(resp.body);
     });
 
-    callable.call({apiClient: ApiClient.instance}, ...args);
+    //callable.call({apiClient: ApiClient.instance}, ...args);
   });
 }

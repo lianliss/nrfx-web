@@ -1,7 +1,7 @@
+//import ApiClient from '../swagger';
 import * as storage from './storage';
-import { ApiClient } from '../swagger';
 
-function getToken() {
+export function getToken() {
   return storage.getItem('access_token');
 }
 
@@ -19,6 +19,6 @@ export function logout() {
 
 export function setup() {
   if (isLogged()) {
-    ApiClient.instance.defaultHeaders['X-Token'] = getToken();
+    //ApiClient.instance.defaultHeaders['X-Token'] = getToken();
   }
 }

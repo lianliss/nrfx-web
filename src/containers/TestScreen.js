@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseScreen from './BaseScreen';
+import UI from '../ui';
 
 export default class TestScreen extends BaseScreen {
   render() {
@@ -7,7 +8,7 @@ export default class TestScreen extends BaseScreen {
       <div>
         <h1>Message: {this.props.testMessage}</h1>
         <br />
-        <button onClick={() => this.props.update()}>Click</button>
+        <UI.Button onClick={() => this.props.update()}>Click</UI.Button>
       </div>
     )
   }
