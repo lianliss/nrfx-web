@@ -317,7 +317,7 @@ module.exports = function(webpackEnv) {
                 
               },
               loader: require.resolve('eslint-loader'),
-            },
+            }
           ],
           include: paths.appSrc,
         },
@@ -528,6 +528,10 @@ module.exports = function(webpackEnv) {
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
+      //new webpack.DefinePlugin({'define': define}),
+      new webpack.ProvidePlugin({
+        'define': 'global.define'
+      }),
       // This is necessary to emit hot updates (currently CSS only):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Watcher doesn't work well if you mistype casing in a path so we use

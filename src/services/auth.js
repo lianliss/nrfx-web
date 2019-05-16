@@ -1,4 +1,4 @@
-//import ApiClient from '../swagger';
+import { ApiClient } from '../swagger/src';
 import * as storage from './storage';
 
 export function getToken() {
@@ -19,6 +19,6 @@ export function logout() {
 
 export function setup() {
   if (isLogged()) {
-    //ApiClient.instance.defaultHeaders['X-Token'] = getToken();
+    ApiClient.instance.defaultHeaders['X-Token'] = getToken();
   }
 }

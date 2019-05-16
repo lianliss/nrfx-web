@@ -1,4 +1,4 @@
-//import ApiClient from '../swagger';
+import { ApiClient } from '../swagger';
 import * as auth from './auth';
 
 export const Errors = {
@@ -16,22 +16,23 @@ export const Errors = {
 
 export default function callApi(callable) {
   return new Promise((resolve, reject) => {
+    window.ApiClient = ApiClient;
     let args = [].slice.call(arguments).slice(1);
     args.push(async (error, data, resp) => {
       if (error) {
-        console.log('Error', error['rawResponse']);
-        console.log(resp.xhr['_response']);
+        //console.log('Error', error);
+        console.log(resp.body);
         if (resp.body.code === Errors.AUTH) {
           auth.logout();
         }
         return reject(resp.body);
       }
 
-      //console.log('resp', JSON.stringify(resp), resp.xhr['_response'], resp.body);
+      //console.log('resp', resp);
 
       resolve(resp.body);
     });
 
-    //callable.call({apiClient: ApiClient.instance}, ...args);
+    callable.call({apiClient: ApiClient.instance}, ...args);
   });
 }
