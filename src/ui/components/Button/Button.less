@@ -1,10 +1,152 @@
-.Button {
-  padding: 10px 12px;
-  background: black;
-  border-radius: 6px;
-  color: #fff;
+@import "../../vars";
 
-  &.red {
-    background: red;
+@height: 54px;
+@small-height: 40px;
+@border-radius: 12px;
+@border-radius-rounded: @height / 2;
+@border-radius-rounded-small: @small-height / 2;
+
+.Button {
+  font-family: @font-family;
+  padding: 0 32px;
+  background: var(--uikit-gradient-primary);
+  border-radius: @border-radius;
+  color: var(--uikit-contrast-primary);
+  display: inline-flex;
+  height: @height;
+  align-items: center;
+  cursor: pointer;
+  transition: box-shadow 150ms ease-in-out;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  box-sizing: border-box;
+
+  &.rounded {
+    border-radius: @border-radius-rounded;
   }
+
+  &:after {
+    content: '';
+    background: var(--uikit-primary);
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: opacity 150ms ease-in-out;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  }
+
+  &:active {
+    box-shadow: none;
+
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &.small {
+    height: @small-height;
+    padding: 0 24px;
+
+    &.rounded {
+      border-radius: @border-radius-rounded-small;
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.65;
+  }
+
+  &.secondary {
+    background: var(--uikit-button-secondary-background);
+    color: var(--uikit-foreground-secondary);
+
+    &:after {
+      background: var(--uikit-button-secondary-active-background);
+    }
+  }
+
+  &.outline {
+    color: var(--uikit-primary);
+
+    &:hover, &:active {
+      color: var(--uikit-contrast-primary);
+    }
+  }
+
+  &.negative {
+    background: var(--uikit-button-negative-background);
+
+    &:after {
+      background: var(--uikit-button-negative-background-active);
+    }
+  }
+
+  &.negative_outline {
+    color: var(--uikit-negative);
+    background: var(--uikit-button-negative-background);
+
+    &:after {
+      background: var(--uikit-negative);
+    }
+
+    &:hover, &:active {
+      color: var(--uikit-contrast-primary);
+    }
+  }
+}
+
+.Button__outline_helper {
+  background: var(--uikit-gradient-primary);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 150ms ease-in-out;
+
+  &:after {
+    content: '';
+    background: var(--uitkit-background);
+    position: absolute;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: @border-radius;
+  }
+
+  .Button.rounded &:after {
+    border-radius: @border-radius-rounded;
+  }
+
+  .Button.rounded.small &:after {
+    border-radius: @border-radius-rounded-small;
+  }
+
+  .Button.negative_outline & {
+    background: var(--uikit-button-negative-background);
+  }
+
+  .Button:hover & {
+    opacity: 0;
+  }
+}
+
+.Button__label {
+  transition: color 150ms ease-in-out;
+  font-size: 15px;
+  line-height: 17px;
+  font-weight: 600;
+  z-index: 2;
 }

@@ -12,6 +12,10 @@ export const routes = [
     name: pages.HELLO,
     path: '/hello',
   },
+  {
+    name: pages.UIKIT,
+    path: '/uikit',
+  },
 ];
 
 const params = {
