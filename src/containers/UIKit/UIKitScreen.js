@@ -29,6 +29,14 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="negative_outline">Button</UI.Button>
           </Line>
         </Section>
+        <Section title="Inputs">
+          <Line style={{width: 300}}>
+            <UI.Input placeholder="Placeholder" />
+          </Line>
+          <Line style={{width: 300}}>
+            <UI.Input placeholder="Placeholder" multiLine />
+          </Line>
+        </Section>
       </div>
     )
   }
@@ -45,7 +53,7 @@ function Section(props) {
 
 function Line(props) {
   return (
-    <div className="UIKit__section__line">
+    <div className="UIKit__section__line" style={props.style}>
       {props.children}
     </div>
   )

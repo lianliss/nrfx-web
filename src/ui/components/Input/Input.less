@@ -1,0 +1,27 @@
+@import "../../vars";
+
+.Input {
+  height: 55px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  background: var(--uitkit-background);
+  border-radius: @border-radius;
+  font-size: 15px;
+  line-height: 20px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  outline: none;
+  padding: 0 16px;
+  transition: all 150ms ease-in-out;
+  width: 100%;
+
+  &:focus, &:valid {
+    border-color: var(--uikit-primary-light);
+    box-shadow: none;
+  }
+
+  &.multiLine {
+    height: 100px;
+    resize: none;
+    padding: 12px 16px;
+  }
+}
