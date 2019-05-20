@@ -37,6 +37,14 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Input placeholder="Placeholder" multiLine />
           </Line>
         </Section>
+        <Section title="Search">
+          <Line style={{width: 500}}>
+            <UI.Search placeholder="Search..." />
+          </Line>
+          <Line style={{width: 500}}>
+            <UI.Search placeholder="Search..." lite />
+          </Line>
+        </Section>
       </div>
     )
   }
