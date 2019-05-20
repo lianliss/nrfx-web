@@ -19,7 +19,7 @@ export const routes = [
 ];
 
 const params = {
-  defaultRoute: pages.MAIN,
+  defaultRoute: pages.UIKIT,
   defaultParams: {}
 };
 
