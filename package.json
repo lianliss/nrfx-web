@@ -51,6 +51,7 @@
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "react-dom": "^16.8.6",
+    "react-inlinesvg": "^0.8.4",
     "react-redux": "^7.0.3",
     "react-router5": "^7.1.0",
     "redux": "^4.0.1",

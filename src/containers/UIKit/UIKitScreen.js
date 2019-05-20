@@ -4,6 +4,18 @@ import UI from '../../ui/index';
 import './UIKit.less';
 
 export default class UIKitScreen extends BaseScreen {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      checkbox1: false,
+      checkbox2: true,
+      radio: 'second',
+      switch1: false,
+      switch2: true,
+    };
+  }
+
   render() {
     return (
       <div>
@@ -43,6 +55,43 @@ export default class UIKitScreen extends BaseScreen {
           </Line>
           <Line style={{width: 500}}>
             <UI.Search placeholder="Search..." lite />
+          </Line>
+        </Section>
+        <Section title="Checkbox">
+          <Line>
+            <UI.CheckBox checked={this.state.checkbox1} onChange={() => this.setState({checkbox1: !this.state.checkbox1})}>Checkbox</UI.CheckBox>
+          </Line>
+          <Line>
+            <UI.CheckBox checked={this.state.checkbox2} onChange={() => this.setState({checkbox2: !this.state.checkbox2})}>Checkbox</UI.CheckBox>
+          </Line>
+          <Line>
+            <UI.CheckBox disabled>Checkbox</UI.CheckBox>
+          </Line>
+          <Line>
+            <UI.CheckBox checked disabled>Checkbox</UI.CheckBox>
+          </Line>
+        </Section>
+        <Section title="Radio">
+          <Line>
+            <UI.RadioGroup selected={this.state.radio} onChange={(radio) => this.setState({radio})}>
+              <UI.Radio value="first">Radio</UI.Radio>
+              <UI.Radio value="second">Radio</UI.Radio>
+              <UI.Radio value="last" disabled>Radio</UI.Radio>
+            </UI.RadioGroup>
+          </Line>
+        </Section>
+        <Section title="Switch">
+          <Line>
+            <UI.Switch on={this.state.switch1} onChange={() => this.setState({switch1: !this.state.switch1})}>Switch</UI.Switch>
+          </Line>
+          <Line>
+            <UI.Switch on={this.state.switch2} onChange={() => this.setState({switch2: !this.state.switch2})}>Switch</UI.Switch>
+          </Line>
+          <Line>
+            <UI.Switch disabled>Switch</UI.Switch>
+          </Line>
+          <Line>
+            <UI.Switch on disabled>Switch</UI.Switch>
           </Line>
         </Section>
       </div>

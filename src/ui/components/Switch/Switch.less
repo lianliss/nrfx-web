@@ -1,0 +1,76 @@
+@import "../../vars";
+
+.test() {
+  color: red;
+}
+
+.Switch {
+  display: flex;
+  align-items: center;
+  font-family: @font-family;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 16px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &.disabled {
+    pointer-events: none;
+  }
+}
+
+.Switch__control {
+  width: 48px;
+  height: 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  position: relative;
+
+  .Switch.disabled & {
+    background: var(--uikit-checkbox-disabled-background);
+  }
+}
+
+.Switch__indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  background: var(--uikit-switch-indicator-background);
+  overflow: hidden;
+  transition: transform 150ms ease-in-out;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--uikit-gradient-primary);
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+  }
+
+  .Switch.on & {
+    transform: translate(20px);
+  }
+
+  .Switch.on &:after {
+    opacity: 1;
+  }
+
+  .Switch.disabled &, .Switch.disabled &:after {
+    background: var(--uikit-switch-control-disabled-background);
+  }
+}
+
+.Switch__label {
+  margin-left: 12px;
+  font-size: 15px;
+  line-height: 20px;
+}
