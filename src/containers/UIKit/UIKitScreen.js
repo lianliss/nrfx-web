@@ -94,6 +94,34 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Switch on disabled>Switch</UI.Switch>
           </Line>
         </Section>
+        <Section title="Messages" style={{width: 500}}>
+          <Line>
+            <UI.Message>Default</UI.Message>
+          </Line>
+          <Line>
+            <UI.Message type="error">Error</UI.Message>
+          </Line>
+          <Line>
+            <UI.Message type="warning">Warning</UI.Message>
+          </Line>
+          <Line>
+            <UI.Message type="success">Success</UI.Message>
+          </Line>
+        </Section>
+        <Section title="Alerts" style={{width: 500}}>
+          <Line>
+            <UI.Message alert>Default</UI.Message>
+          </Line>
+          <Line>
+            <UI.Message type="error" alert>Error</UI.Message>
+          </Line>
+          <Line>
+            <UI.Message type="warning" alert>Warning</UI.Message>
+          </Line>
+          <Line>
+            <UI.Message type="success" alert>Success</UI.Message>
+          </Line>
+        </Section>
       </div>
     )
   }
@@ -101,7 +129,7 @@ export default class UIKitScreen extends BaseScreen {
 
 function Section(props) {
   return (
-    <div className="UIKit__section">
+    <div className="UIKit__section" style={props.style}>
       <div className="UIKit__section__title">{props.title}</div>
       <div className="UIKit__section__cont">{props.children}</div>
     </div>

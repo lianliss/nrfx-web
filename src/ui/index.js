@@ -6,6 +6,7 @@ import CheckBox from './components/CheckBox/CheckBox';
 import Radio from './components/Radio/Radio';
 import RadioGroup from './components/Radio/RadioGroup';
 import Switch from './components/Switch/Switch';
+import Message from './components/Message/Message';
 
 export default {
   Button,
@@ -14,5 +15,6 @@ export default {
   CheckBox,
   Radio,
   RadioGroup,
-  Switch
+  Switch,
+  Message
 };
