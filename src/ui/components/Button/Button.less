@@ -101,6 +101,25 @@
       color: var(--uikit-contrast-primary);
     }
   }
+
+  &.outline_white {
+    background: transparent;
+    border: 2px solid var(--uikit-contrast-primary);
+    transition: background 150ms ease-in-out;
+
+    &:after {
+      display: none;
+    }
+
+    &:active {
+      background: var(--uikit-contrast-primary);
+      color: var(--uikit-foreground-primary);
+    }
+
+    .Button__label {
+      transition: color 150ms ease-in-out;
+    }
+  }
 }
 
 .Button__outline_helper {

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class BaseScreen extends Component {
+export default class BaseScreen extends React.Component {
 
 }

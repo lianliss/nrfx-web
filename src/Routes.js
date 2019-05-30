@@ -1,13 +1,13 @@
 import React from 'react';
 import * as pages from './constants/pages';
 
-import TestScreen from './containers/TestScreen';
+import SiteMainScreen from './containers/site/SiteMainScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
 
 export default function Routes(props) {
   switch (props.state.default.page) {
     case pages.MAIN:
-      return <TestScreen {...props.state.test} {...props.testActions} />;
+      return <SiteMainScreen {...props.state.test} {...props.testActions} />;
     case pages.UIKIT:
       return <UIKitScreen {...props.state.test} {...props.testActions} />;
     case pages.HELLO:

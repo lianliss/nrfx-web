@@ -24,7 +24,7 @@ export default function Button(props) {
 
 Button.propTypes = {
   size: PropTypes.oneOf(['small']),
-  type: PropTypes.oneOf(['secondary', 'outline', 'negative', 'negative_outline']),
+  type: PropTypes.oneOf(['secondary', 'outline', 'negative', 'negative_outline', 'outline_white']),
   disabled: PropTypes.bool,
   rounded: PropTypes.bool,
   onClick: PropTypes.func
