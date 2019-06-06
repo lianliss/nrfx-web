@@ -15,8 +15,13 @@ export default function Button(props) {
     <div
       className={className}
       onClick={() => props.onClick && props.onClick()}
+      style={props.style}
     >
-      <div className="Button__label">{props.children}</div>
+      <div className="Button__cont">
+        {props.beforeContent}
+        <div className="Button__label">{props.children}</div>
+        {props.afterContent}
+      </div>
       {(props.type === 'outline' || props.type === 'negative_outline') && <div className="Button__outline_helper" />}
       </div>
   )
@@ -27,5 +32,8 @@ Button.propTypes = {
   type: PropTypes.oneOf(['secondary', 'outline', 'negative', 'negative_outline', 'outline_white']),
   disabled: PropTypes.bool,
   rounded: PropTypes.bool,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  style: PropTypes.object,
+  beforeContent: PropTypes.node,
+  afterContent: PropTypes.node
 };

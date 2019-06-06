@@ -4,10 +4,37 @@ body, input, textarea {
 
 body {
   user-select: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 :root {
   --foreground-primary: #000;
   --foreground-secondary: #9A9A9A;
   --contrast-primary: #fff;
+
+  --site-homepage-product-bg-title-color: #FAF7F5;
+
+  --primary: #FF9E65;
+  --primary-light: #FFCC5C;
+  --background-secondary: #F5F1EE;
+  --gradient-primary: linear-gradient(to right bottom, #FFC75D 0%, #FFA363 100%);
+  --negative: #FA6443;
+
+  --accent: #658BF5;
+  --accent-light: #8DB0FF;
+
+  --footer-backound: #FBF9F6;
+  --grey-logo-color: #C8C8C8;
+
+  --link-color: #FFA640;
 }

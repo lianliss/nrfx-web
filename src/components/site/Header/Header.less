@@ -1,7 +1,7 @@
 @import "../../../vars";
 
 .SiteHeader {
-  position: fixed;
+  position: absolute;
   width: 100%;
   z-index: 1000;
   left: 0;
@@ -15,11 +15,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: green;
 }
 
 .SiteHeader__logo {
   width: 31px;
+  color: var(--primary);
 
   &:active {
     transform: translateY(1px);
