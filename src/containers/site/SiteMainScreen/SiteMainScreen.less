@@ -1,0 +1,213 @@
+.SiteHomepageSafety__items {
+  display: flex;
+  margin-top: 114px;
+}
+
+.SiteHomepageSafety__item {
+  text-align: center;
+  flex: 1;
+  box-sizing: border-box;
+  padding: 0 52px;
+}
+
+.SiteHomepageSafety__item__icon {
+  width: 80px;
+  height: 80px;
+  background: no-repeat center/contain;
+  margin: 0 auto;
+}
+
+.SiteHomepageSafety__item__title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--foreground-primary);
+  margin-top: 52px;
+}
+
+.SiteHomepageSafety__item__caption {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--foreground-secondary);
+  margin-top: 24px;
+}
+
+.SiteHomepageSafety__item__more {
+  margin-top: 17px;
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  color: var(--link-color);
+  cursor: pointer;
+  text-decoration: none !important;
+
+  &:after {
+    content: '';
+    width: 5px;
+    height: 9px;
+    background: url('asset/homepage_safety_arrow.svg') no-repeat center/contain;
+    margin-left: 6px;
+    display: block;
+    flex: 0 0 auto;
+    transition: transform 150ms ease-in-out;
+  }
+
+  &:hover:after {
+    transform: translateX(2px);
+  }
+}
+
+.SiteHomepageApp {
+  height: 660px;
+  display: flex;
+  align-items: center;
+  margin: 110px auto 0;
+  width: 1228px;
+  position: relative;
+}
+
+.SiteHomepageApp__bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2043px;
+  height: 784px;
+  transform: translate(-50%, -174px);
+  background: url('asset/homepage_app.svg') no-repeat center/contain;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.SiteHomepageApp__cont {
+  position: relative;
+  z-index: 2;
+}
+
+.SiteHomepageApp__title {
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 42px;
+  color: var(--foreground-primary);
+  width: 335px;
+}
+
+.SiteHomepageApp__caption {
+  margin-top: 34px;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--foreground-secondary);
+  width: 346px;
+  line-height: 30px;
+}
+
+.SiteHomepageApp__buttons {
+  margin-top: 47px;
+  display: flex;
+}
+
+.SiteHomepageApp__button {
+  width: 178px;
+  height: 52px;
+  margin-left: 42px;
+  background: no-repeat center/contain;
+  transition: opacity 250ms ease-in-out;
+
+  &.ios {
+    background-image: url('../../../asset/site/download_apple.svg');
+  }
+
+  &.android {
+    background-image: url('../../../asset/site/download_google.svg');
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.SiteHomepageRegister {
+  height: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 1228px;
+  margin: 132px auto 0;
+  color: var(--contrast-primary);
+  text-align: center;
+  flex-direction: column;
+
+  &:after {
+    content: '';
+    background: url('asset/homepage_register_bg.svg');
+    width: 2874px;
+    height: 620px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    z-index: -1;
+  }
+}
+
+.SiteHomepageRegister__title {
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 56px;
+}
+
+.SiteHomepageRegister__caption {
+  margin-top: 16px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 34px;
+}
+
+.SiteHomepageRegister__form {
+  border: 2px solid var(--contrast-primary);
+  height: 68px;
+  border-radius: 34px;
+  width: 652px;
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-top: 80px;
+}
+
+.SiteHomepageRegister__form__input {
+  color: var(--contrast-primary);
+  padding: 0 40px;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 19px;
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  outline: none;
+  flex: 1;
+
+  &::placeholder {
+    color: var(--contrast-primary);
+  }
+}
+
+.SiteHomepageRegister__form__button {
+  background: var(--contrast-primary);
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 34px;
+  flex: 0 0 auto;
+  height: 100%;
+  padding: 0 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 34px 0 0 34px;
+}

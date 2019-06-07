@@ -1,8 +1,9 @@
 import React from 'react';
-import BaseScreen from '../BaseScreen';
-import SiteWrapper from '../../wrappers/Site/SiteWrapper';
-import SitePageInfoBlock from '../../components/site/SitePageInfoBlock/SitePageInfoBlock';
-import HomepageProduct from '../../components/site/HomepageProduct/HomepageProduct';
+import BaseScreen from '../../BaseScreen';
+import './SiteMainScreen.less';
+import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
+import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
+import HomepageProduct from '../../../components/site/HomepageProduct/HomepageProduct';
 
 export default class SiteMainScreen extends BaseScreen {
   render() {
@@ -50,6 +51,7 @@ export default class SiteMainScreen extends BaseScreen {
           <div className="SiteSectionHeaderCaption">Для нас безопасность цифровых валют и пользовательских данных в приоритете</div>
         </div>
         {this._renderSafety()}
+        {this._renderRegister()}
         {this._renderApp()}
       </SiteWrapper>
     )
@@ -57,15 +59,15 @@ export default class SiteMainScreen extends BaseScreen {
 
   _renderSafety() {
     const items = [{
-      icon: require('../../asset/site/homepage_safety_1.svg'),
+      icon: require('./asset/homepage_safety_1.svg'),
       title: 'Защищенное подключение',
       caption: 'Трафик нашего веб-сайта полностью проходит по зашифрованному SSL протоколу'
     }, {
-      icon: require('../../asset/site/homepage_safety_2.svg'),
+      icon: require('./asset/homepage_safety_2.svg'),
       title: 'Безопасное хранение',
       caption: 'Мы уделяем особое внимание вопросу безопасности и постоянно добавляем новые уровни защиты'
     }, {
-      icon: require('../../asset/site/homepage_safety_3.svg'),
+      icon: require('./asset/homepage_safety_3.svg'),
       title: 'Технологичная надежность',
       caption: 'Многоуровневая и многокластерная системная архитектура'
     }].map((item) => {
@@ -97,6 +99,19 @@ export default class SiteMainScreen extends BaseScreen {
             <a href="#" className="SiteHomepageApp__button ios" />
             <a href="https://play.google.com/store/apps/details?id=com.bitcoinbot" target="_blank" className="SiteHomepageApp__button android" />
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  _renderRegister() {
+    return (
+      <div className="SiteHomepageRegister">
+        <div className="SiteHomepageRegister__title">Создайте единый аккаунт сейчас</div>
+        <div className="SiteHomepageRegister__caption">Попробовать все преимущества BITCOINBOT очень просто </div>
+        <div className="SiteHomepageRegister__form">
+          <input type="email" className="SiteHomepageRegister__form__input" placeholder="E-mail" />
+          <div className="SiteHomepageRegister__form__button">Регистрация</div>
         </div>
       </div>
     )

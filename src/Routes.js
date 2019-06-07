@@ -1,7 +1,7 @@
 import React from 'react';
 import * as pages from './constants/pages';
 
-import SiteMainScreen from './containers/site/SiteMainScreen';
+import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
 
 export default function Routes(props) {
