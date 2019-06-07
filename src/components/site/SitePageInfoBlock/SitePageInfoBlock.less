@@ -38,6 +38,12 @@
 .SitePageInfoBlock__screen {
   width: 889px;
   height: 501px;
-  background: url('../../../containers/site/SiteMainScreen/asset/homepage_screen.png') no-repeat center/contain;
+  background: no-repeat center/contain;
   transform: translateX(152px);
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+
+  &.loaded {
+    opacity: 1;
+  }
 }

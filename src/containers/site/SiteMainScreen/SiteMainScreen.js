@@ -10,6 +10,7 @@ export default class SiteMainScreen extends BaseScreen {
     return (
       <SiteWrapper>
         <SitePageInfoBlock
+          image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
           title={<span>BITCOINBOT:<br/>Кошелек</span>}
           caption={<span>Почувствуйте все преимущества цифровых<br/>финансов в единой платформе</span>}
           buttonText="Начать"
