@@ -18,34 +18,35 @@ export default class SiteMainScreen extends BaseScreen {
           <div className="SiteSectionHeaderTitle">BITCOINBOT объединяет</div>
           <div className="SiteSectionHeaderCaption">Оцените пять ключевых продуктов на одной платформе</div>
         </div>
-        <HomepageProduct
-          title="Биржа"
-          bgTitle="Exchange"
-          icon="exchange"
-          style={{marginTop: 42}}
-        >{['Покупайте популярные криптовалюты', 'Выгодный курс', 'Низкие комиссии']}</HomepageProduct>
-        <HomepageProduct
-          title="Кошелек"
-          bgTitle="Wallets"
-          icon="wallet"
-          reverse
-        >{['Все ваши цифровые активы в одном месте', 'Мультивалютный счет', 'Данные зашифрованы и надежно защищены']}</HomepageProduct>
-        <HomepageProduct
-          title="Роботы"
-          bgTitle="Robots"
-          icon="robot"
-        >{['Автоматизированная торговля с BITCOINBOT 24/7', 'Высокая скорость выполнения операций', 'Анализ рынка по различным индикаторам']}</HomepageProduct>
-        <HomepageProduct
-          title="Инвестиции"
-          bgTitle="Investment"
-          icon="investment"
-          reverse
-        >{['Выгодные условия', 'Депозиты в нескольких криптовалютах', 'Высокая доходность по депозитам']}</HomepageProduct>
-        <HomepageProduct
-          title="Оплата"
-          bgTitle="Commerce"
-          icon="commerce"
-        >{['Принимайте платежи из любой точки мира', 'Платежи в течении нескольких минут, а не дней', 'Все платежи анонимны, а данные зашифрованы']}</HomepageProduct>
+        <div className="SiteHomepageProducts">
+          <HomepageProduct
+            title="Биржа"
+            bgTitle="Exchange"
+            icon="exchange"
+          >{['Покупайте популярные криптовалюты', 'Выгодный курс', 'Низкие комиссии']}</HomepageProduct>
+          <HomepageProduct
+            title="Кошелек"
+            bgTitle="Wallets"
+            icon="wallet"
+            reverse
+          >{['Все ваши цифровые активы в одном месте', 'Мультивалютный счет', 'Данные зашифрованы и надежно защищены']}</HomepageProduct>
+          <HomepageProduct
+            title="Роботы"
+            bgTitle="Robots"
+            icon="robot"
+          >{['Автоматизированная торговля с BITCOINBOT 24/7', 'Высокая скорость выполнения операций', 'Анализ рынка по различным индикаторам']}</HomepageProduct>
+          <HomepageProduct
+            title="Инвестиции"
+            bgTitle="Investment"
+            icon="investment"
+            reverse
+          >{['Выгодные условия', 'Депозиты в нескольких криптовалютах', 'Высокая доходность по депозитам']}</HomepageProduct>
+          <HomepageProduct
+            title="Оплата"
+            bgTitle="Commerce"
+            icon="commerce"
+          >{['Принимайте платежи из любой точки мира', 'Платежи в течении нескольких минут, а не дней', 'Все платежи анонимны, а данные зашифрованы']}</HomepageProduct>
+        </div>
         <div className="SiteSectionHeader">
           <div className="SiteSectionHeaderTitle">Безопасность превыше всего</div>
           <div className="SiteSectionHeaderCaption">Для нас безопасность цифровых валют и пользовательских данных в приоритете</div>
