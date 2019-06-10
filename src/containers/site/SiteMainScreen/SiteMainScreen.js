@@ -1,9 +1,13 @@
 import React from 'react';
+
 import BaseScreen from '../../BaseScreen';
-import './SiteMainScreen.less';
 import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import HomepageProduct from '../../../components/site/HomepageProduct/HomepageProduct';
+import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
+import InfoCard from '../../../components/site/InfoCard/InfoCard';
+
+import './SiteMainScreen.less';
 
 export default class SiteMainScreen extends BaseScreen {
   render() {
@@ -11,8 +15,8 @@ export default class SiteMainScreen extends BaseScreen {
       <SiteWrapper>
         <SitePageInfoBlock
           image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
-          title={<span>BITCOINBOT:<br/>Кошелек</span>}
-          caption={<span>Почувствуйте все преимущества цифровых<br/>финансов в единой платформе</span>}
+          title={<span>BITCOINBOT:<br />Кошелек</span>}
+          caption={<span>Почувствуйте все преимущества цифровых<br />финансов в единой платформе</span>}
           buttonText="Начать"
         />
         <div className="SiteSectionHeader">
@@ -29,6 +33,7 @@ export default class SiteMainScreen extends BaseScreen {
             title="Кошелек"
             bgTitle="Wallets"
             icon="wallet"
+            seeMoreLink="wallet"
             reverse
           >{['Все ваши цифровые активы в одном месте', 'Мультивалютный счет', 'Данные зашифрованы и надежно защищены']}</HomepageProduct>
           <HomepageProduct
@@ -54,7 +59,10 @@ export default class SiteMainScreen extends BaseScreen {
         </div>
         {this._renderSafety()}
         {this._renderRegister()}
-        {this._renderApp()}
+
+
+        <MobileAppBanner />
+
       </SiteWrapper>
     )
   }
@@ -74,34 +82,19 @@ export default class SiteMainScreen extends BaseScreen {
       caption: 'Многоуровневая и многокластерная системная архитектура'
     }].map((item) => {
       return (
-        <div className="SiteHomepageSafety__item">
-          <div className="SiteHomepageSafety__item__icon" style={{backgroundImage: `url(${item.icon})`}} />
-          <div className="SiteHomepageSafety__item__title">{item.title}</div>
-          <div className="SiteHomepageSafety__item__caption">{item.caption}</div>
-          <a href="#" className="SiteHomepageSafety__item__more">Узнать больше</a>
-        </div>
+        <InfoCard
+          key={item.title}
+          title={item.title}
+          caption={item.caption}
+          icon={item.icon}
+          btn={<a href="#" className="SiteHomepageSafety__item__more">Узнать больше</a>}
+        />
       )
     });
 
     return (
       <div className="SiteHomepageSafety__items">
         {items}
-      </div>
-    )
-  }
-
-  _renderApp() {
-    return (
-      <div className="SiteHomepageApp">
-        <div className="SiteHomepageApp__bg" />
-        <div className="SiteHomepageApp__cont">
-          <div className="SiteHomepageApp__title">BITCOINBOT всегда под рукой</div>
-          <div className="SiteHomepageApp__caption">Управляйте цифровыми активами, где бы вы ни находились</div>
-          <div className="SiteHomepageApp__buttons">
-            <a href="#" className="SiteHomepageApp__button ios" />
-            <a href="https://play.google.com/store/apps/details?id=com.bitcoinbot" target="_blank" className="SiteHomepageApp__button android" />
-          </div>
-        </div>
       </div>
     )
   }
