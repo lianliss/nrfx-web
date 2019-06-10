@@ -1,5 +1,6 @@
-import React from 'react';
 import './Footer.less';
+
+import React from 'react';
 import SVG from 'react-inlinesvg';
 
 export default function Footer() {

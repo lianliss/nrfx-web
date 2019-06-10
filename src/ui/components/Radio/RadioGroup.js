@@ -1,6 +1,6 @@
 import React  from 'react';
 
-export default function RadioGroup(props) {
+function RadioGroup(props) {
   return (
     <div>
       {React.Children.map(props.children, (child) => {
@@ -16,3 +16,5 @@ export default function RadioGroup(props) {
     </div>
   );
 }
+
+export default React.memo(RadioGroup);

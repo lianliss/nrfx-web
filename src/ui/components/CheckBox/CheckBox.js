@@ -1,10 +1,13 @@
-import React  from 'react';
-import { classNames } from '../../utils';
 import './CheckBox.less';
+
+import React  from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 
-export default function CheckBox(props) {
+import { classNames } from '../../utils';
+
+
+function CheckBox(props) {
   const className = classNames({
     CheckBox: true,
     checked: props.checked,
@@ -27,3 +30,5 @@ CheckBox.propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func
 };
+
+export default React.memo(CheckBox);

@@ -1,9 +1,12 @@
-import React  from 'react';
-import { classNames } from '../../utils';
 import './Switch.less';
+
+import React  from 'react';
 import PropTypes from 'prop-types';
 
-export default function Switch(props) {
+import { classNames } from '../../utils';
+
+
+function Switch(props) {
   const className = classNames({
     Switch: true,
     on: props.on,
@@ -25,3 +28,5 @@ Switch.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool
 };
+
+export default React.memo(Switch);
