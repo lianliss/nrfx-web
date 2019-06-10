@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './HomepageProduct.less';
+
 import * as utils from '../../../utils';
 import UI from '../../../ui';
+
+import './HomepageProduct.less';
+
 
 export default function HomepageProduct(props) {
   const className = utils.classNames({
@@ -28,10 +31,15 @@ export default function HomepageProduct(props) {
             return <li><span>{child}</span></li>;
           })}
         </ul>
-        <UI.Button
-          rounded
-          afterContent={<div className="HomepageProduct__button_arrow" />}
-        >Подробнее</UI.Button>
+
+        <a href={`/#/${props.seeMoreLink}`} className="HomepageProduct__anchor">
+          <UI.Button
+            rounded
+            afterContent={<div className="HomepageProduct__button_arrow" />}
+          >
+            Подробнее
+          </UI.Button>
+        </a>
       </div>
     </div>
   )

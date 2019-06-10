@@ -1,0 +1,72 @@
+
+.MobileAppBanner {
+  height: 660px;
+  display: flex;
+  align-items: center;
+  margin: 110px auto 0;
+  width: 1228px;
+  position: relative;
+}
+
+.MobileAppBanner__bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2043px;
+  height: 784px;
+  transform: translate(-50%, -174px);
+  background: url('asset/homepage_app.svg') no-repeat center/contain;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.MobileAppBanner__cont {
+  position: relative;
+  z-index: 2;
+}
+
+.MobileAppBanner__title {
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 42px;
+  color: var(--foreground-primary);
+  width: 335px;
+}
+
+.MobileAppBanner__caption {
+  margin-top: 34px;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--foreground-secondary);
+  width: 346px;
+  line-height: 30px;
+}
+
+.MobileAppBanner__buttons {
+  margin-top: 47px;
+  display: flex;
+}
+
+.MobileAppBanner__button {
+  width: 178px;
+  height: 52px;
+  margin-left: 42px;
+  background: no-repeat center/contain;
+  transition: opacity 250ms ease-in-out;
+
+  &.ios {
+    background-image: url('../../../asset/site/download_apple.svg');
+  }
+
+  &.android {
+    background-image: url('../../../asset/site/download_google.svg');
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default class BaseScreen extends React.Component {
+export default class BaseScreen extends React.PureComponent {
 
 }
