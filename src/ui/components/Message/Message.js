@@ -1,8 +1,10 @@
-import React  from 'react';
-import { classNames } from '../../utils';
 import './Message.less';
+
+import React  from 'react';
 import PropTypes from 'prop-types';
-import SVG from 'react-inlinesvg';
+
+import { classNames } from '../../utils';
+
 
 export default function Message(props) {
   const isAlert = props.alert;

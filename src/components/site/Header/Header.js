@@ -1,6 +1,8 @@
-import React from 'react';
 import './Header.less';
+
+import React from 'react';
 import SVG from 'react-inlinesvg';
+
 import UI from '../../../ui';
 
 export default class Header extends React.PureComponent {

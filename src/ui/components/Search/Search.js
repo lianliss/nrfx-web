@@ -1,9 +1,12 @@
-import React  from 'react';
-import { classNames } from '../../utils';
 import './Search.less';
+
+import React  from 'react';
 import PropTypes from 'prop-types';
 
-export default function Search(props) {
+import { classNames } from '../../utils';
+
+
+function Search(props) {
   const className = classNames({
     Search: true,
     lite: props.lite
@@ -33,3 +36,5 @@ Search.propTypes = {
   onSearch: PropTypes.func,
   lite: PropTypes.bool
 };
+
+export default React.memo(Search);

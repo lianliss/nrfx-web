@@ -1,3 +1,5 @@
+import './SiteMainScreen.less';
+
 import React from 'react';
 
 import BaseScreen from '../../BaseScreen';
@@ -7,7 +9,6 @@ import HomepageProduct from '../../../components/site/HomepageProduct/HomepagePr
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 
-import './SiteMainScreen.less';
 
 export default class SiteMainScreen extends BaseScreen {
   render() {

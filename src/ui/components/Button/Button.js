@@ -3,7 +3,7 @@ import { classNames } from '../../utils';
 import './Button.less';
 import PropTypes from 'prop-types';
 
-export default function Button(props) {
+function Button(props) {
   const className = classNames({
     Button: true,
     [props.size]: !!props.size,
@@ -23,7 +23,7 @@ export default function Button(props) {
         {props.afterContent}
       </div>
       {(props.type === 'outline' || props.type === 'negative_outline') && <div className="Button__outline_helper" />}
-      </div>
+    </div>
   )
 }
 
@@ -37,3 +37,5 @@ Button.propTypes = {
   beforeContent: PropTypes.node,
   afterContent: PropTypes.node
 };
+
+export default React.memo(Button);

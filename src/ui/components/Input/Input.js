@@ -1,9 +1,12 @@
-import React  from 'react';
-import { classNames } from '../../utils';
 import './Input.less';
+
+import React  from 'react';
 import PropTypes from 'prop-types';
 
-export default function Input(props) {
+import { classNames } from '../../utils';
+
+
+function Input(props) {
   const className = classNames({
     Input: true,
     multiLine: props.multiLine
@@ -27,3 +30,5 @@ Input.propTypes = {
   multiLine: PropTypes.bool,
   value: PropTypes.string
 };
+
+export default React.memo(Input);

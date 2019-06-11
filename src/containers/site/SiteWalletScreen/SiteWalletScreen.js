@@ -1,3 +1,5 @@
+import './SiteWalletScreen.less';
+
 import React from 'react';
 
 import BaseScreen from '../../BaseScreen';
@@ -5,8 +7,6 @@ import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
-
-import './SiteWalletScreen.less';
 
 
 export default class SiteWalletScreen extends BaseScreen {

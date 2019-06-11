@@ -1,9 +1,10 @@
 import React from 'react';
-import * as pages from './constants/pages';
 
+import * as pages from './constants/pages';
 import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
 import SiteWalletScreen from './containers/site/SiteWalletScreen/SiteWalletScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
+
 
 export default function Routes(props) {
   switch (props.state.default.page) {
