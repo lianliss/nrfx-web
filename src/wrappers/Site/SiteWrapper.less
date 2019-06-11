@@ -1,12 +1,9 @@
 .SiteWrapper {
   min-height: 1219px;
-  background-size: 2927px 1219px;
   position: relative;
-  width: 1404px;
-  margin: 0 auto;
 }
 
-.SiteWrapper__bg {
+.SiteWrapper__home__bg {
   display: block;
   position: absolute;
   width: 2929px;
@@ -16,6 +13,22 @@
   left: calc(50% + 132px);
   transform: translateX(-50%);
   z-index: -1;
+}
+
+.SiteWrapper__bg {
+  background: linear-gradient(170.9deg, #FFFFFF 30.13%, #FAF8F5 86.73%);
+  width: 100%;
+  height: 855px;
+  position: absolute;
+  z-index: -5;
+
+  .SiteWrapper__bg__img {
+    display: block;
+    position: absolute;
+    left: calc(50% + 595px);
+    transform: translateX(-50%);
+    z-index: -1;
+  }
 }
 
 .SiteSectionHeader {

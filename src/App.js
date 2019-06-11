@@ -23,5 +23,5 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export default connect((state) => {
-    return { state };
+  return { state };
 }, mapDispatchToProps)(App);
