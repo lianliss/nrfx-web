@@ -13,6 +13,10 @@ export const routes = [
     path: '/wallet',
   },
   {
+    name: pages.ROBOTS,
+    path: '/robots',
+  },
+  {
     name: pages.HELLO,
     path: '/hello',
   },

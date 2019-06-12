@@ -1,6 +1,9 @@
+.SiteHomepageSafety__item {
+  margin-top: 50px;
+}
+
 .SiteHomepageSafety__items {
-  display: flex;
-  margin-top: 114px;
+  margin-top: 64px;
 }
 
 .SiteHomepageSafety__item__more {
@@ -26,98 +29,6 @@
 
   &:hover:after {
     transform: translateX(2px);
-  }
-}
-
-.SiteHomepageRegister {
-  height: 620px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 1228px;
-  margin: 132px auto 0;
-  color: var(--contrast-primary);
-  text-align: center;
-  flex-direction: column;
-
-  &:after {
-    content: '';
-    background: url('asset/homepage_register_bg.svg');
-    width: 2874px;
-    height: 620px;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-    z-index: -1;
-  }
-}
-
-.SiteHomepageRegister__title {
-  font-weight: 500;
-  font-size: 34px;
-  line-height: 56px;
-}
-
-.SiteHomepageRegister__caption {
-  margin-top: 16px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 34px;
-}
-
-.SiteHomepageRegister__form {
-  border: 2px solid var(--contrast-primary);
-  height: 68px;
-  border-radius: 34px;
-  width: 652px;
-  display: flex;
-  overflow: hidden;
-  box-sizing: border-box;
-  margin-top: 80px;
-}
-
-.SiteHomepageRegister__form__input {
-  color: var(--contrast-primary);
-  padding: 0 40px;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 19px;
-  border: 0;
-  background: transparent;
-  box-sizing: border-box;
-  outline: none;
-  flex: 1;
-
-  &::placeholder {
-    color: var(--contrast-primary);
-  }
-}
-
-.SiteHomepageRegister__form__button {
-  background: var(--contrast-primary);
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 34px;
-  flex: 0 0 auto;
-  height: 100%;
-  padding: 0 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 34px 0 0 34px;
-  cursor: pointer;
-  transition: opacity 150ms ease-in-out;
-  box-sizing: border-box;
-
-  &:hover {
-    opacity: 0.9;
-  }
-
-  &:active {
-    padding-top: 1px;
   }
 }
 
