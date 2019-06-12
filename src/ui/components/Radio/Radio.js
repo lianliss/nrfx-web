@@ -1,9 +1,11 @@
-import React  from 'react';
-import { classNames } from '../../utils';
 import './Radio.less';
+
+import React  from 'react';
 import PropTypes from 'prop-types';
 
-export default function Radio(props) {
+import { classNames } from '../../utils';
+
+function Radio(props) {
   const className = classNames({
     Radio: true,
     selected: props.selected,
@@ -25,3 +27,5 @@ Radio.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool
 };
+
+export default React.memo(Radio);

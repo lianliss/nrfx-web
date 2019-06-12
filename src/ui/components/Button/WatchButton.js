@@ -1,8 +1,9 @@
-import React from 'react';
 import './Button.less';
+
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function WatchButton(props) {
+function WatchButton(props) {
   return (
     <div
       className="WatchButton"
@@ -19,3 +20,5 @@ WatchButton.propTypes = {
   onClick: PropTypes.func,
   style: PropTypes.object
 };
+
+export default React.memo(WatchButton);

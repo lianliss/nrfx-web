@@ -1,8 +1,11 @@
-import React from 'react';
 import './SiteWrapper.less';
+
+import React from 'react';
+import SVG from 'react-inlinesvg';
+
 import Header from '../../components/site/Header/Header';
 import Footer from '../../components/site/Footer/Footer';
-import SVG from 'react-inlinesvg';
+
 
 function SiteWrapper({ isHomepage, className, children }) {
   return (

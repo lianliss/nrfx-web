@@ -1,10 +1,10 @@
+import './HomepageProduct.less';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as utils from '../../../utils';
 import UI from '../../../ui';
-
-import './HomepageProduct.less';
 
 
 export default function HomepageProduct(props) {

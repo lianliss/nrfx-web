@@ -1,6 +1,6 @@
-import React from 'react';
-
 import './InfoCard.less';
+
+import React from 'react';
 
 
 function InfoCard({ title, caption, icon, btn }) {

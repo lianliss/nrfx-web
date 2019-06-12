@@ -1,7 +1,9 @@
+import './UIKit.less';
+
 import React from 'react';
+
 import BaseScreen from '../BaseScreen';
 import UI from '../../ui/index';
-import './UIKit.less';
 
 export default class UIKitScreen extends BaseScreen {
   constructor(props) {

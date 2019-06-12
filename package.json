@@ -76,10 +76,9 @@
   "scripts": {
     "start": "cross-env HOST=127.0.0.1 PORT=3000 HTTPS=true node scripts/start.js",
     "build": "node scripts/build.js",
+    "eslint": "eslint . --ext .js",
+    "eslint:fix": "eslint . --ext .js --fix",
     "test": "node scripts/test.js"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [

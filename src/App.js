@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Routes from './Routes';
 
+import Routes from './Routes';
 import * as testActions from './actions/test';
 
 class App extends React.PureComponent {

@@ -1,7 +1,9 @@
-import React from 'react';
 import './SitePageInfoBlock.less';
-import UI from '../../../ui';
+
+import React from 'react';
 import PropTypes from 'prop-types';
+
+import UI from '../../../ui';
 import * as utils from '../../../utils';
 
 export default class SitePageInfoBlock extends React.Component {
