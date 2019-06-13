@@ -1,6 +1,5 @@
 .Footer {
   background: var(--secondary-active-background);
-  height: 510px;
   display: flex;
   margin-top: 42px;
 }
@@ -19,6 +18,7 @@
 .Footer__links_wrap {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .Footer__links {
@@ -27,6 +27,9 @@
   line-height: 19px;
   display: flex;
   flex-direction: column;
+  width: 240px;
+  padding: 0 30px 20px;
+  width: 105%;
 }
 
 .Footer__links__title,
@@ -44,11 +47,20 @@
 }
 
 .Footer__bottom {
-  height: 120px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
+  flex-wrap: wrap;
+
+  @media (min-width: 992px) { padding: 30px 20px; }
+
+  div {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+  }
 
   &:after {
     content: '';

@@ -8,8 +8,10 @@ export default function MobileAppBanner() {
     <div className="MobileAppBanner">
       <div className="MobileAppBanner__bg" />
       <div className="MobileAppBanner__cont">
-        <div className="MobileAppBanner__title">BITCOINBOT всегда под рукой</div>
-        <div className="MobileAppBanner__caption">Управляйте цифровыми активами, где бы вы ни находились</div>
+        <div className="MobileAppBanner__text">
+          <div className="MobileAppBanner__title">BITCOINBOT <br/> всегда под рукой</div>
+          <div className="MobileAppBanner__caption">Управляйте цифровыми активами, где бы вы ни находились</div>
+        </div>
         <div className="MobileAppBanner__buttons">
           <a
             href="#"

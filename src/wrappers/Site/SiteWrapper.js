@@ -29,7 +29,7 @@ function SiteWrapper({ isHomepage, className, children }) {
 
         <Header />
 
-        <div style={{padding: '0 100px'}}>
+        <div className="SiteWrapper__content">
           {children}
         </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import BaseScreen from '../../../BaseScreen';
 import UI from '../../../../ui/index';
+import { PHONE } from '../../../../constants/breakpoints';
 
 
 const platformLogos = [
@@ -47,7 +48,7 @@ const platformLogos = [
 export default class SiteRobotsScreen extends BaseScreen {
   state = {
     visibleLogos: platformLogos,
-    screenWidth: 0,
+    screenWidth: window.innerWidth,
   }
 
   componentDidMount() {
@@ -61,11 +62,12 @@ export default class SiteRobotsScreen extends BaseScreen {
 
   updateVisibleLogos = () => {
     const { visibleLogos, screenWidth } = this.state;
+    console.log('screenWidth :', screenWidth);
 
     if (window.innerWidth !== screenWidth) {
-      if (window.innerWidth >= 767 && platformLogos.length !== visibleLogos.length) {
+      if (screenWidth > PHONE && platformLogos.length !== visibleLogos.length) {
         this.setState({ visibleLogos: platformLogos });
-      } else if (window.innerWidth < 767 && platformLogos.length === visibleLogos.length) {
+      } else if (screenWidth <= PHONE && platformLogos.length === visibleLogos.length) {
         this.setState({ visibleLogos: platformLogos.slice(0, 6) });
       }
 
