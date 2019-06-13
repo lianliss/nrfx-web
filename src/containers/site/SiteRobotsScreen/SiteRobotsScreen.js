@@ -7,11 +7,7 @@ import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
-import { Row, Col } from '../../../components/core/Grid';
-
-
-const BinanceCol = () => <Col className="SupportedPlatforms__logo" xs={6} sm={6} md={4} lg={4}><img src={require('./asset/binance.svg')} alt="Binance" /></Col>
-const BitfinexCol = () => <Col className="SupportedPlatforms__logo" xs={6} sm={6} md={4} lg={4}><img src={require('./asset/bitfinex.svg')} alt="Bitfinex" /></Col>
+import SupportedPlatforms from './components/SupportedPlatforms';
 
 
 export default class SiteRobotsScreen extends BaseScreen {
@@ -36,7 +32,7 @@ export default class SiteRobotsScreen extends BaseScreen {
 
         {this._renderFeatures()}
 
-        {this._renderSupportedPlatforms()}
+        <SupportedPlatforms />
 
         <RegisterBanner />
       </SiteWrapper>
@@ -77,40 +73,19 @@ export default class SiteRobotsScreen extends BaseScreen {
       },
     ].map((item) => {
       return (
-        <Col key={item.title} md={6} lg={4} className="RobotsFeature__item">
-          <InfoCard
-            title={item.title}
-            caption={item.caption}
-            icon={item.icon}
-          />
-        </Col>
+        <InfoCard
+          key={item.title} 
+          title={item.title}
+          caption={item.caption}
+          icon={item.icon}
+          className="RobotsFeature__item"
+        />
       )
     });
 
     return (
-      <Row className="RobotsFeature__items">
+      <div className="RobotsFeature__items">
         {items}
-      </Row>
-    )
-  }
-
-  _renderSupportedPlatforms() {
-    const largeScreenLogos = [1, 2, 1, 2, 1, 2, 1, 2, 1];
-    const smallScreenLogos = [1, 2, 2, 1, 1, 2];
-
-    return (
-      <div className="SupportedPlatforms">
-        <div className="SupportedPlatforms__text">
-          <img src={require('./asset/robots_platforms_bg.svg')} alt="supported-platforms" className="SupportedPlatforms_bg" />
-          <h2 className="SupportedPlatforms__title">Поддерживаемые биржи</h2>
-          <p className="SupportedPlatforms__caption">Мы поддерживаем следующие криптовалютные биржи и увеличиваем их количество</p>
-        </div>
-        <Row className="SupportedPlatforms__logos large__screen__logos">
-          {largeScreenLogos.map((key, i) => key === 1 ? <BinanceCol key={i} /> : <BitfinexCol key={i} />)}
-        </Row>
-        <Row className="SupportedPlatforms__logos small__screen__logos">
-          {smallScreenLogos.map((key, i) => key === 1 ? <BinanceCol key={i} /> : <BitfinexCol key={i} />)}
-        </Row>
       </div>
     )
   }

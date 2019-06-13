@@ -7,7 +7,6 @@ import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
-import { Row, Col } from '../../../components/core/Grid';
 
 
 export default class SiteWalletScreen extends BaseScreen {
@@ -59,20 +58,20 @@ export default class SiteWalletScreen extends BaseScreen {
       },
     ].map((item) => {
       return (
-        <Col key={item.title} md={6} lg={3} className="WalletFeature__item">
-          <InfoCard
-            title={item.title}
-            caption={item.caption}
-            icon={item.icon}
-          />
-        </Col>
+        <InfoCard
+          key={item.title}
+          title={item.title}
+          caption={item.caption}
+          icon={item.icon}
+          className="WalletFeature__item"
+        />
       )
     });
 
     return (
-      <Row className="WalletFeature__items">
+      <div className="WalletFeature__items">
         {items}
-      </Row>
+      </div>
     )
   }
 }

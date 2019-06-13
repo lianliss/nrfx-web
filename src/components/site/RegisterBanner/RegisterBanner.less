@@ -1,6 +1,9 @@
+@standard-height: 420px;
+@curly-height: 620px;
 
-.SiteRegister {
-  height: 620px;
+
+.RegisterBanner {
+  height: @standard-height;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,7 +18,7 @@
     content: '';
     background: url('asset/curly_register_bg.svg');
     width: 2874px;
-    height: 620px;
+    height: @curly-height;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -24,20 +27,24 @@
   }
 }
 
-.SiteRegister__title {
+.curly {
+  height: @curly-height;
+}
+
+.RegisterBanner__title {
   font-weight: 500;
   font-size: 34px;
   line-height: 56px;
 }
 
-.SiteRegister__caption {
+.RegisterBanner__caption {
   margin-top: 16px;
   font-weight: 500;
   font-size: 16px;
   line-height: 34px;
 }
 
-.SiteRegister__form {
+.RegisterBanner__form {
   border: 2px solid var(--contrast-primary);
   height: 68px;
   border-radius: 34px;
@@ -48,7 +55,7 @@
   margin-top: 80px;
 }
 
-.SiteRegister__form__input {
+.RegisterBanner__form__input {
   color: var(--contrast-primary);
   padding: 0 40px;
   font-weight: 600;
@@ -65,7 +72,7 @@
   }
 }
 
-.SiteRegister__form__button {
+.RegisterBanner__form__button {
   background: var(--contrast-primary);
   color: var(--primary);
   font-weight: 600;

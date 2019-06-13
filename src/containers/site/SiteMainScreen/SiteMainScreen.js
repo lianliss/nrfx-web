@@ -9,8 +9,6 @@ import HomepageProduct from '../../../components/site/HomepageProduct/HomepagePr
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
-import { Row, Col } from '../../../components/core/Grid';
-
 
 
 export default class SiteMainScreen extends BaseScreen {
@@ -89,21 +87,21 @@ export default class SiteMainScreen extends BaseScreen {
       caption: 'Многоуровневая и многокластерная системная архитектура'
     }].map((item) => {
       return (
-        <Col md={12} lg={4} key={item.title} className="SiteHomepageSafety__item">
-          <InfoCard
-            title={item.title}
-            caption={item.caption}
-            icon={item.icon}
-            btn={<a href="#" className="SiteHomepageSafety__item__more">Узнать больше</a>}
-          />
-        </Col>
+        <InfoCard
+          key={item.title}
+          title={item.title}
+          caption={item.caption}
+          icon={item.icon}
+          className="SiteHomepageSafety__item"
+          btn={<a href="#" className="SiteHomepageSafety__item__more">Узнать больше</a>}
+        />
       )
     });
 
     return (
-      <Row className="SiteHomepageSafety__items">
+      <div className="SiteHomepageSafety__items">
         {items}
-      </Row>
+      </div>
     )
   }
 }

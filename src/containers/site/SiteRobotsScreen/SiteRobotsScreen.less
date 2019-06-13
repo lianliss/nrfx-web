@@ -1,6 +1,11 @@
 .Robots__screen {
   .RobotsFeature__items {
-    padding-top: 45px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 45px 50px;
+
+    @media (min-width: 1400px) { grid-template-columns: repeat(3, minmax(300px, 1fr)) }
+
 
     .RobotsFeature__item {
       padding-top: 87px;
@@ -15,7 +20,7 @@
     padding-bottom: 150px;
 
 
-    .SupportedPlatforms_bg {
+    .SupportedPlatforms__bg {
       position: absolute;
       z-index: -2;
       transform: translate(-100px, -210px);
@@ -44,13 +49,15 @@
       }
     }
 
-    .small__screen__logos {
-      display: none;
-    }
-    
     .SupportedPlatforms__logos {
       flex: 6;
       padding-left: 25px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(100px, 1fr));
+      grid-gap: 0 50px;
+
+      @media (max-width: 766px) { grid-template-columns: repeat(2, minmax(100px, 1fr)) }
+
 
       .SupportedPlatforms__logo {
         height: 60px;
@@ -73,23 +80,12 @@
       align-items: center;
       text-align: center;
 
-      .SupportedPlatforms_bg {
+      .SupportedPlatforms__bg {
         display: none;
       }
 
       .SupportedPlatforms__logos {
         padding: 0;
-      }
-    }  
-
-    @media (max-width: 767px) {
-
-      .large__screen__logos {
-        display: none;
-      }
-
-      .small__screen__logos {
-        display: block;
       }
     }  
   }
