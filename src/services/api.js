@@ -1,4 +1,5 @@
 import { ApiClient } from '../swagger';
+
 import * as auth from './auth';
 
 export const Errors = {
@@ -20,6 +21,9 @@ export default function callApi(callable) {
     let args = [].slice.call(arguments).slice(1);
     args.push(async (error, data, resp) => {
       if (error) {
+        if (!resp) {
+          reject({http: true});
+        }
         //console.log('Error', error);
         console.log(resp.body);
         if (resp.body.code === Errors.AUTH) {

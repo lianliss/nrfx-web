@@ -8,18 +8,33 @@ import UIKitScreen from './containers/UIKit/UIKitScreen';
 
 
 export default function Routes(props) {
+
+  let actions = {};
+  let state = {};
+  let Component = false;
+
   switch (props.state.default.page) {
     case pages.MAIN:
-      return <SiteMainScreen {...props.state.test} {...props.testActions} />;
+      Component = SiteMainScreen;
+      break;
     case pages.WALLET:
-      return <SiteWalletScreen {...props.state.test} {...props.testActions} />;
+      Component = SiteWalletScreen;
+      break;
     case pages.ROBOTS:
-      return <SiteRobotsScreen {...props.state.test} {...props.testActions} />;
+      Component = SiteRobotsScreen;
+      break;
     case pages.UIKIT:
-      return <UIKitScreen {...props.state.test} {...props.testActions} />;
-    case pages.HELLO:
-      return <h2>Hello</h2>;
-    default:
-      return <h1>404 Not Found</h1>;
+      Component = UIKitScreen;
+      break;
   }
+
+  if (!Component) {
+    return <h1>404 Not Found</h1>;
+  }
+
+  const defaultProps = {
+    state: props.state.index
+  };
+
+  return <Component {...defaultProps} {...actions} {...state} />;
 }
