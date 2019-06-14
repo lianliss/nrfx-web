@@ -31,8 +31,8 @@ export default class SitePageInfoBlock extends React.Component {
     return (
       <div className="SitePageInfoBlock">
         <div className="SitePageInfoBlock__cont">
-          <div className="SitePageInfoBlock__title">{this.props.title}</div>
-          <div className="SitePageInfoBlock__caption">{this.props.caption}</div>
+          <h1 className="SitePageInfoBlock__title">{this.props.title}</h1>
+          <p className="SitePageInfoBlock__caption">{this.props.caption}</p>
           <div className="SitePageInfoBlock__buttons">
             <UI.Button rounded style={{width: 239}}>{this.props.buttonText}</UI.Button>
             <UI.WatchButton>Смотреть</UI.WatchButton>

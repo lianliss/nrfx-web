@@ -63,6 +63,7 @@ export default class SiteWalletScreen extends BaseScreen {
           title={item.title}
           caption={item.caption}
           icon={item.icon}
+          className="WalletFeature__item"
         />
       )
     });

@@ -4,9 +4,17 @@
     transform: translateX(220px);
   }
 
+  .WalletFeature__item {
+    margin-top: 50px;
+  }
+
   .WalletFeature__items {
-    display: flex;
-    margin-top: 114px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-gap: 64px 40px;
+
+    @media (min-width: 1120px) { grid-template-columns: repeat(2, minmax(280px, 1fr)) }
+    @media (min-width: 1400px) { grid-template-columns: repeat(4, minmax(280px, 1fr)) }
   }
 }
 

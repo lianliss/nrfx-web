@@ -7,6 +7,7 @@ import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import HomepageProduct from '../../../components/site/HomepageProduct/HomepageProduct';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
+import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 
 
@@ -41,6 +42,7 @@ export default class SiteMainScreen extends BaseScreen {
             title="Роботы"
             bgTitle="Robots"
             icon="robot"
+            seeMoreLink="robots"
           >{['Автоматизированная торговля с BITCOINBOT 24/7', 'Высокая скорость выполнения операций', 'Анализ рынка по различным индикаторам']}</HomepageProduct>
           <HomepageProduct
             title="Инвестиции"
@@ -54,13 +56,15 @@ export default class SiteMainScreen extends BaseScreen {
             icon="commerce"
           >{['Принимайте платежи из любой точки мира', 'Платежи в течении нескольких минут, а не дней', 'Все платежи анонимны, а данные зашифрованы']}</HomepageProduct>
         </div>
+
         <div className="SiteSectionHeader">
           <div className="SiteSectionHeaderTitle">Безопасность превыше всего</div>
           <div className="SiteSectionHeaderCaption">Для нас безопасность цифровых валют и пользовательских данных в приоритете</div>
         </div>
-        {this._renderSafety()}
-        {this._renderRegister()}
 
+        {this._renderSafety()}
+        
+        <RegisterBanner isCurly />
 
         <MobileAppBanner />
 
@@ -88,6 +92,7 @@ export default class SiteMainScreen extends BaseScreen {
           title={item.title}
           caption={item.caption}
           icon={item.icon}
+          className="SiteHomepageSafety__item"
           btn={<a href="#" className="SiteHomepageSafety__item__more">Узнать больше</a>}
         />
       )
@@ -96,19 +101,6 @@ export default class SiteMainScreen extends BaseScreen {
     return (
       <div className="SiteHomepageSafety__items">
         {items}
-      </div>
-    )
-  }
-
-  _renderRegister() {
-    return (
-      <div className="SiteHomepageRegister">
-        <div className="SiteHomepageRegister__title">Создайте единый аккаунт сейчас</div>
-        <div className="SiteHomepageRegister__caption">Попробовать все преимущества BITCOINBOT очень просто </div>
-        <div className="SiteHomepageRegister__form">
-          <input type="email" className="SiteHomepageRegister__form__input" placeholder="E-mail" />
-          <div className="SiteHomepageRegister__form__button">Регистрация</div>
-        </div>
       </div>
     )
   }
