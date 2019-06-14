@@ -16,7 +16,7 @@ export default class SiteWalletScreen extends BaseScreen {
 
   render() {
     return (
-      <SiteWrapper>
+      <SiteWrapper className="Wallet__screen">
         <SitePageInfoBlock
           image={require('./asset/wallet_main_image.svg')}
           title={<span>Один кошелек <br /> много возможностей</span>}

@@ -13,7 +13,7 @@ import InfoCard from '../../../components/site/InfoCard/InfoCard';
 export default class SiteMainScreen extends BaseScreen {
   render() {
     return (
-      <SiteWrapper>
+      <SiteWrapper isHomepage>
         <SitePageInfoBlock
           image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
           title={<span>BITCOINBOT:<br />Кошелек</span>}
