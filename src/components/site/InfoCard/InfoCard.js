@@ -5,10 +5,10 @@ import React from 'react';
 
 function InfoCard({ title, caption, icon, btn, className }) {
   return (
-    <div key={title} className={"InfoCard__item " + className}>
-      <div className="InfoCard__item__icon" style={{ backgroundImage: `url(${icon})` }} />
-      <div className="InfoCard__item__title">{title}</div>
-      <div className="InfoCard__item__caption">{caption}</div>
+    <div className={"InfoCard " + className}>
+      <div className="InfoCard__icon" style={{ backgroundImage: `url(${icon})` }} />
+      <h3 className="InfoCard__title">{title}</h3>
+      <p className="InfoCard__caption">{caption}</p>
 
       {btn || null}
     </div>

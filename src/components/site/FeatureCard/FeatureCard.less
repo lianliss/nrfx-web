@@ -1,0 +1,40 @@
+
+.FeatureCard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 90px;
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+}
+
+.FeatureCard__icon {
+  width: 36px;
+  margin: 10px;
+}
+
+.FeatureCard__cont {
+  width: 410px;
+  margin: 10px;
+}
+
+.FeatureCard__title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--foreground-primary);
+  margin: 0;
+}
+
+.FeatureCard__caption {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--foreground-secondary);
+}

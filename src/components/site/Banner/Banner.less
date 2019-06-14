@@ -1,0 +1,39 @@
+.Banner {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 132px auto 0;
+  color: var(--contrast-primary);
+  text-align: center;
+  flex-direction: column;
+
+  &:after {
+    content: '';
+    background: url('asset/banner_bg.svg');
+    width: 2874px;
+    height: 620px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    z-index: -1;
+  }
+}
+
+.Banner__title {
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 56px;
+  letter-spacing: 1.02px;
+  margin: 0;
+}
+
+.Banner__caption {
+  margin-top: 16px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 34px;
+  margin-bottom: 50px;
+}

@@ -22,7 +22,7 @@ export default class SitePageInfoBlock extends React.Component {
   }
 
   render() {
-
+    const { hideWatchButton } = this.props;
     const screenClassName = utils.classNames({
       SitePageInfoBlock__screen: true,
       loaded: this.state.isImageLoaded,
@@ -35,7 +35,7 @@ export default class SitePageInfoBlock extends React.Component {
           <p className="SitePageInfoBlock__caption">{this.props.caption}</p>
           <div className="SitePageInfoBlock__buttons">
             <UI.Button rounded style={{width: 239}}>{this.props.buttonText}</UI.Button>
-            <UI.WatchButton>Смотреть</UI.WatchButton>
+            {!hideWatchButton ? <UI.WatchButton>Смотреть</UI.WatchButton> : null}
           </div>
         </div>
         <div className={screenClassName} style={{backgroundImage: `url(${this.props.image})`}} />
@@ -48,4 +48,5 @@ SitePageInfoBlock.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   caption: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   buttonText: PropTypes.string.isRequired,
+  hideWatchButton: PropTypes.bool,
 };

@@ -17,6 +17,10 @@ export const routes = [
     path: '/robots',
   },
   {
+    name: pages.COMMERCE,
+    path: '/commerce',
+  },
+  {
     name: pages.HELLO,
     path: '/hello',
   },

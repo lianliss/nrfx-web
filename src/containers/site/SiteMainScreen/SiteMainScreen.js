@@ -54,6 +54,7 @@ export default class SiteMainScreen extends BaseScreen {
             title="Оплата"
             bgTitle="Commerce"
             icon="commerce"
+            seeMoreLink="commerce"
           >{['Принимайте платежи из любой точки мира', 'Платежи в течении нескольких минут, а не дней', 'Все платежи анонимны, а данные зашифрованы']}</HomepageProduct>
         </div>
 
