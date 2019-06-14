@@ -3,6 +3,7 @@ import './HomepageProduct.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import TitleWithBg from '../TitleWithBg/TitleWithBg';
 import * as utils from '../../../utils';
 import UI from '../../../ui';
 
@@ -22,10 +23,9 @@ export default function HomepageProduct(props) {
     <div className={className}>
       <div className={iconClassName} />
       <div className="HomepageProduct__cont">
-        <div className="HomepageProduct__title">
-          {props.title}
-          <div className="HomepageProduct__title__bg">{props.bgTitle}</div>
-        </div>
+
+        <TitleWithBg title={props.title} bgTitle={props.bgTitle} />
+
         <ul className="HomepageProduct__caption">
           {React.Children.map(props.children, (child) => {
             return <li><span>{child}</span></li>;
