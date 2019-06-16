@@ -8,7 +8,6 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 1228px;
   margin: 132px auto 0;
   color: var(--contrast-primary);
   text-align: center;
@@ -45,13 +44,7 @@
 }
 
 .RegisterBanner__form {
-  border: 2px solid var(--contrast-primary);
-  height: 68px;
-  border-radius: 34px;
-  width: 652px;
-  display: flex;
   overflow: hidden;
-  box-sizing: border-box;
   margin-top: 80px;
 }
 
@@ -79,7 +72,6 @@
   font-size: 15px;
   line-height: 34px;
   flex: 0 0 auto;
-  height: 100%;
   padding: 0 42px;
   display: flex;
   align-items: center;
@@ -95,5 +87,50 @@
 
   &:active {
     padding-top: 1px;
+  }
+}
+
+
+@media (min-width: 769px) {
+  .RegisterBanner__form {
+  display: flex;
+    border: 2px solid var(--contrast-primary);
+    height: 68px;
+    border-radius: 34px;
+    width: 652px;
+    box-sizing: border-box;
+    
+    .RegisterBanner__form__input {
+
+    }
+
+    .RegisterBanner__form__button {
+      height: 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .RegisterBanner__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+
+    .RegisterBanner__form__input {
+      border: 2px solid var(--contrast-primary);
+      border-radius: 34px;
+      padding: 15px 30px;
+      width: 352px;
+      box-sizing: border-box;
+    }
+
+    .RegisterBanner__form__button {
+      width: 186px;
+      border-radius: 34px;
+      height: 50px;
+      margin-top: 30px;
+    }
   }
 }

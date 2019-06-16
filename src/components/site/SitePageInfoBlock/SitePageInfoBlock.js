@@ -38,7 +38,8 @@ export default class SitePageInfoBlock extends React.Component {
             {!hideWatchButton ? <UI.WatchButton>Смотреть</UI.WatchButton> : null}
           </div>
         </div>
-        <div className={screenClassName} style={{backgroundImage: `url(${this.props.image})`}} />
+        {/* <div className={screenClassName} style={{backgroundImage: `url(${this.props.image})`}} /> */}
+        <img className={screenClassName} src={this.props.image} alt="bitcoinbot-main-banner" />
       </div>
     )
   }

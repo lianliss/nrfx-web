@@ -20,7 +20,7 @@ export default class SiteRobotsScreen extends BaseScreen {
       <SiteWrapper className="Robots__screen">
         <SitePageInfoBlock
           image={require('./asset/robots_main_image.svg')}
-          title={<span>Робот - лучший и самый быстрый помощник</span>}
+          title={<span>Робот - лучший и самый <br /> быстрый помощник</span>}
           caption={<span>Хотите торговать выгодно, - попробуйте с нашим роботом</span>}
           buttonText="Попробовать"
         />
