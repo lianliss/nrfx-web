@@ -48,6 +48,7 @@ export default class SiteMainScreen extends BaseScreen {
             title="Инвестиции"
             bgTitle="Investment"
             icon="investment"
+            seeMoreLink="investment"
             reverse
           >{['Выгодные условия', 'Депозиты в нескольких криптовалютах', 'Высокая доходность по депозитам']}</HomepageProduct>
           <HomepageProduct

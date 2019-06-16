@@ -21,6 +21,10 @@ export const routes = [
     path: '/commerce',
   },
   {
+    name: pages.INVESTMENT,
+    path: '/investment',
+  },
+  {
     name: pages.HELLO,
     path: '/hello',
   },
