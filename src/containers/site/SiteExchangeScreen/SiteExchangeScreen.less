@@ -1,0 +1,125 @@
+.SiteExchangeScreen__caption {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 34px;
+  text-align: center;
+  letter-spacing: 0.444444px;
+  margin-top: 35px;
+  margin-bottom: 60px;
+  color: var(--foreground-secondary);
+}
+
+.SiteExchangeScreen__title {
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 56px;
+  text-align: center;
+  letter-spacing: 1.2px;
+  color: var(--foreground-primary);
+  padding-top: 110px;
+  padding-bottom: 90px;
+}
+
+
+.SiteExchangeScreen__market {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+
+  .SiteExchangeScreen__market__image {
+    max-width: 90%;
+    margin-bottom: 50px;
+
+    @media (max-width: 768px) { display: none; }
+  }
+}
+
+
+.ExchangeFeature__item {
+  margin: 80px auto 20px;
+}
+
+@media (min-width: 992px) {
+  .ExchangeFeature__items {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 30px;
+  }
+  
+  .ExchangeFeature__item:nth-child(-1n + 3) {
+    grid-column: span 4;
+  }
+  
+  .ExchangeFeature__item:nth-last-child(2) {
+    grid-row-start: 2;
+    grid-column: 3 / span 4;
+  }
+  
+  .ExchangeFeature__item:nth-last-child(1) {
+    grid-row-start: 2;
+    grid-column: 7 / span 4;
+  }
+}
+
+
+.SiteExchangeScreen__interface {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 150px;
+
+  .SiteExchangeScreen__interface__cont {
+    flex-basis: 450px;
+    color: var(--uikit-primary);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.444444px;
+    margin-bottom: 40px;
+
+    .TitleWithBg {
+      @media (max-width: 768px) { text-align: center; }
+
+      .TitleWithBg__title__bg {
+        transform: translate(-51px, -119px);
+
+        @media (max-width: 768px) { transform: translate(6px, -119px); }
+
+      }
+    }
+
+    li {
+      line-height: 32px;
+    }
+
+    span, p {
+      color: var(--foreground-secondary);
+    }
+
+    p:first-of-type {
+      margin-top: 100px;
+    }
+  }
+
+  .SiteExchangeScreen__interface__img {
+    flex-basis: 400px;
+    position: relative;
+
+    &:after {
+      background: url('asset/exchange_interface_bg.svg') no-repeat center/contain;
+      pointer-events: none;
+      content: '';
+      width: 2874px;
+      height: 620px;
+      top: 0;
+      left: 50%;
+      transform: translate(-44%, -11%);
+      position: absolute;
+      z-index: -1;
+    }
+    
+  }
+}
