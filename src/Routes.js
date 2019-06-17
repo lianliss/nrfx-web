@@ -44,7 +44,7 @@ export default function Routes(props) {
   }
 
   const defaultProps = {
-    state: props.state.index
+    state: props.state.default
   };
 
   return <Component {...defaultProps} {...actions} {...state} />;
