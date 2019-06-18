@@ -30,6 +30,7 @@ export default class SiteMainScreen extends BaseScreen {
             title="Биржа"
             bgTitle="Exchange"
             icon="exchange"
+            seeMoreLink="exchange"
           >{['Покупайте популярные криптовалюты', 'Выгодный курс', 'Низкие комиссии']}</HomepageProduct>
           <HomepageProduct
             title="Кошелек"
