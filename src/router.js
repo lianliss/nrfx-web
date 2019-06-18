@@ -37,6 +37,10 @@ export const routes = [
     path: '/contact',
   },
   {
+    name: pages.FAQ,
+    path: '/faq',
+  },
+  {
     name: pages.HELLO,
     path: '/hello',
   },
