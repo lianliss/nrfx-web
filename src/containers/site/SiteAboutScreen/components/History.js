@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
-import InfoSection from './InfoSection';
+import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import { aboutInfo, misssionInfo } from '../fixtures';
 
 

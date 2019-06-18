@@ -2,7 +2,7 @@ import React from 'react';
 import SVG from 'react-inlinesvg';
 
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
-import InfoSection from './InfoSection';
+import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import { misssionInfo, historyInfo } from '../fixtures';
 
 
