@@ -2,6 +2,7 @@ import React from 'react';
 
 import * as pages from './constants/pages';
 import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
+import SiteAboutScreen from './containers/site/SiteAboutScreen/SiteAboutScreen';
 import SiteWalletScreen from './containers/site/SiteWalletScreen/SiteWalletScreen';
 import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
@@ -20,6 +21,9 @@ export default function Routes(props) {
   switch (props.state.default.page) {
     case pages.MAIN:
       Component = SiteMainScreen;
+      break;
+    case pages.ABOUT:
+      Component = SiteAboutScreen;
       break;
     case pages.EXCHANGE:
       Component = SiteExchangeScreen;
