@@ -9,6 +9,10 @@ export const routes = [
     path: '/',
   },
   {
+    name: pages.EXCHANGE,
+    path: '/exchange',
+  },
+  {
     name: pages.WALLET,
     path: '/wallet',
   },

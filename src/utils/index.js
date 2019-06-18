@@ -1,3 +1,5 @@
+import store from '../store';
+
 export function classNames() {
   let result = [];
 
@@ -22,4 +24,8 @@ export function classNames() {
   });
 
   return result.join(' ');
+}
+
+export function getLang(key) {
+  return store.getState().default.lang[key];
 }

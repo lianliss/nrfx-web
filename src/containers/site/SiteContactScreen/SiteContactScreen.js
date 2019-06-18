@@ -40,7 +40,7 @@ export default class SiteContactScreen extends BaseScreen {
               <img src={require('./asset/twitter.svg')} alt="Social icon" />
             </a>
             <a href="#" className="SiteContactScreen__social">
-              <img src={require('./asset/instagram.png')} alt="Social icon" />
+              <img src={require('./asset/instagram.svg')} alt="Social icon" />
             </a>
             <a href="#" className="SiteContactScreen__social">
               <img src={require('./asset/youtube.svg')} alt="Social icon" />
