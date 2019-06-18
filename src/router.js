@@ -9,6 +9,10 @@ export const routes = [
     path: '/',
   },
   {
+    name: pages.ABOUT,
+    path: '/about',
+  },
+  {
     name: pages.EXCHANGE,
     path: '/exchange',
   },

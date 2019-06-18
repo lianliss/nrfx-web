@@ -1,7 +1,10 @@
-import React from 'react';
-import { classNames } from '../../utils';
 import './Button.less';
+
+import React from 'react';
 import PropTypes from 'prop-types';
+
+import { classNames } from '../../utils';
+
 
 function Button(props) {
   const className = classNames({
@@ -9,8 +12,10 @@ function Button(props) {
     [props.size]: !!props.size,
     disabled: props.disabled,
     [props.type]: !!props.type,
+    [props.newClass]: !!props.newClass,
     rounded: props.rounded
   });
+
   return (
     <div
       className={className}
