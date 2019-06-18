@@ -10,10 +10,6 @@ import InfoCard from '../../../components/site/InfoCard/InfoCard';
 
 
 export default class SiteWalletScreen extends BaseScreen {
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
   render() {
     return (
       <SiteWrapper className="Wallet__screen">

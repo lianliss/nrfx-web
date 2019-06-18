@@ -29,6 +29,10 @@ export const routes = [
     path: '/investment',
   },
   {
+    name: pages.CONTACT,
+    path: '/contact',
+  },
+  {
     name: pages.HELLO,
     path: '/hello',
   },

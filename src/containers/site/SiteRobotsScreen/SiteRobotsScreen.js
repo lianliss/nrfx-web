@@ -11,10 +11,6 @@ import SupportedPlatforms from './components/SupportedPlatforms';
 
 
 export default class SiteRobotsScreen extends BaseScreen {
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
   render() {
     return (
       <SiteWrapper className="Robots__screen">

@@ -1,0 +1,135 @@
+@form-spacing-lg: 30px;
+@form-spacing-sm: 10px;
+
+.SiteContactScreen__heading {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 56px;
+  text-align: center;
+  letter-spacing: 1.2px;
+  color: var(--contrast-primary);
+  padding-top: 35px;
+  height: 330px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SiteContactScreen__title {
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 56px;
+  text-align: center;
+  letter-spacing: 1.2px;
+  margin-top: 70px;
+}
+
+.SiteContactScreen__caption {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 34px;
+  text-align: center;
+  letter-spacing: 0.444444px;
+}
+
+.SiteContactScreen__form {
+  width: 85%;
+  margin: 50px auto;
+}
+
+.SiteContactScreen__form__input {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+  letter-spacing: 0.05px;
+  border-radius: 33px;
+  border: 1px solid var(--primary);
+  color: var(--foreground-primary);
+  outline: none;
+  margin: @form-spacing-lg;
+  padding: 15px 30px;
+  flex: 4;
+
+  &::placeholder {
+    color: var(--foreground-primary);
+  }
+}
+
+
+.SiteContactScreen__form__firstRow {
+  display: flex;
+}
+
+.SiteContactScreen__form__secondRow {
+  display: flex;
+
+  .SiteContactScreen__form__input:first-child {
+    flex: 6;
+  }
+
+  .Button {
+    flex: 2 auto;
+    margin: @form-spacing-lg;
+  } 
+}
+
+
+.SiteContactScreen__socials {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  background: var(--secondary-active-background);
+  margin: 80px 320px;
+  padding: 50px 10px;
+  border-radius: 9px;
+
+  .SiteContactScreen__socials__title {
+    margin-bottom: 40px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 31px;
+    text-align: center;
+    letter-spacing: 0.444444px;
+  }
+
+  .SiteContactScreen__social {
+    margin: 10px;
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .SiteContactScreen__form {
+    width: 100%;
+  }
+
+  .SiteContactScreen__form__input {
+    margin: @form-spacing-sm;
+  }
+
+  .SiteContactScreen__form__secondRow {
+    .Button {
+      margin: @form-spacing-sm;    
+    }
+  }
+
+  .SiteContactScreen__socials {
+    margin: 40px 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .SiteContactScreen__form__firstRow, .SiteContactScreen__form__secondRow {
+    flex-direction: column;
+  }
+
+  .SiteContactScreen__socials {
+    margin: 30px 10px;
+  }
+}

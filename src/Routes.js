@@ -7,6 +7,7 @@ import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScree
 import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
 import SiteExchangeScreen from './containers/site/SiteExchangeScreen/SiteExchangeScreen';
 import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
+import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
 
 
@@ -34,6 +35,9 @@ export default function Routes(props) {
       break;
     case pages.INVESTMENT:
       Component = SiteInvestmentScreen;
+      break;
+    case pages.CONTACT:
+      Component = SiteContactScreen;
       break;
     case pages.UIKIT:
       Component = UIKitScreen;

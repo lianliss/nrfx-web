@@ -36,10 +36,6 @@ const stepsData = [
 
 
 export default class SiteCommerceScreen extends BaseScreen {
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
   render() {
     return (
       <SiteWrapper>
