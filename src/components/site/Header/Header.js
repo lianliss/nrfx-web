@@ -7,11 +7,16 @@ import UI from '../../../ui';
 
 export default class Header extends React.PureComponent {
   render() {
+    const { showLightLogo } = this.props;
+
     return (
       <div className="SiteHeader">
         <div className="SiteHeader__cont">
           <div className="SiteHeader__logo">
-            <SVG src={require('../../../asset/logo_big_orange.svg')} />
+            {showLightLogo
+              ? <SVG src={require('../../../asset/logo_big_white.svg')} />
+              : <SVG src={require('../../../asset/logo_big_orange.svg')} />
+            }
           </div>
           <div className="SiteHeader__menu">
             <MenuItem arrow>Продукты</MenuItem>

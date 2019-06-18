@@ -7,7 +7,7 @@ import Header from '../../components/site/Header/Header';
 import Footer from '../../components/site/Footer/Footer';
 
 
-function SiteWrapper({ isHomepage, className, children }) {
+function SiteWrapper({ isHomepage, withOrangeBg, className, children }) {
   return (
     <div className={className}>
       <div className="SiteWrapper">
@@ -18,16 +18,21 @@ function SiteWrapper({ isHomepage, className, children }) {
               <SVG src={require('../../asset/site/head_bg.svg')} />
             </div>
           )
-          : (
-            <div className="SiteWrapper__bg">
-              <div className="SiteWrapper__bg__img">
-                <SVG src={require('../../asset/site/banner_bg.svg')} />
+          : withOrangeBg
+            ? (
+              <div className="SiteWrapper__orange__bg">
+                <img src={require('../../asset/site/header_bg.svg')} alt="Bitcoinbot orange background" />
               </div>
-            </div>
-          )
+            ) : (
+              <div className="SiteWrapper__bg">
+                <div className="SiteWrapper__bg__img">
+                  <SVG src={require('../../asset/site/banner_bg.svg')} />
+                </div>
+              </div>
+            )
         }
 
-        <Header />
+        <Header showLightLogo={withOrangeBg} />
 
         <div className="SiteWrapper__content">
           {children}
