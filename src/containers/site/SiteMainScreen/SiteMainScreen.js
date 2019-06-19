@@ -19,50 +19,50 @@ export default class SiteMainScreen extends BaseScreen {
           image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
           title={<span>BITCOINBOT:<br />Кошелек</span>}
           caption={<span>Почувствуйте все преимущества цифровых<br />финансов в единой платформе</span>}
-          buttonText="Начать"
+          buttonText={this.lang.homeBegin}
         />
         <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">BITCOINBOT объединяет</div>
-          <div className="SiteSectionHeaderCaption">Оцените пять ключевых продуктов на одной платформе</div>
+          <div className="SiteSectionHeaderTitle">{this.lang.homeBitcoibotCombine}</div>
+          <div className="SiteSectionHeaderCaption">{this.lang.homeBitcoibotCombineSubTitle}</div>
         </div>
         <div className="SiteHomepageProducts">
           <HomepageProduct
-            title="Биржа"
+            title={this.lang.homeExchange}
             bgTitle="Exchange"
             icon="exchange"
             seeMoreLink="exchange"
-          >{['Покупайте популярные криптовалюты', 'Выгодный курс', 'Низкие комиссии']}</HomepageProduct>
+          >{[this.lang.homeExchangeSubTitile1, this.lang.homeExchangeSubTitile2, this.lang.homeExchangeSubTitile3]}</HomepageProduct>
           <HomepageProduct
-            title="Кошелек"
+            title={this.lang.homeWallet}
             bgTitle="Wallets"
             icon="wallet"
             seeMoreLink="wallet"
             reverse
-          >{['Все ваши цифровые активы в одном месте', 'Мультивалютный счет', 'Данные зашифрованы и надежно защищены']}</HomepageProduct>
+          >{[this.lang.homeWalletSubTitle1, this.lang.homeWalletSubTitle4, this.lang.homeWalletSubTitle3]}</HomepageProduct>
           <HomepageProduct
-            title="Роботы"
+            title={this.lang.homeRobots}
             bgTitle="Robots"
             icon="robot"
             seeMoreLink="robots"
-          >{['Автоматизированная торговля с BITCOINBOT 24/7', 'Высокая скорость выполнения операций', 'Анализ рынка по различным индикаторам']}</HomepageProduct>
+          >{[this.lang.homeRobotsSubTitle1, this.lang.homeRobotsSubTitle2, this.lang.homeRobotsSubTitle3]}</HomepageProduct>
           <HomepageProduct
-            title="Инвестиции"
+            title={this.lang.homeInvestments}
             bgTitle="Investment"
             icon="investment"
             seeMoreLink="investment"
             reverse
-          >{['Выгодные условия', 'Депозиты в нескольких криптовалютах', 'Высокая доходность по депозитам']}</HomepageProduct>
+          >{[this.lang.homeInvestmentsSubTitle1, this.lang.homeInvestmentsSubTitle2, this.lang.homeInvestmentsSubTitle3]}</HomepageProduct>
           <HomepageProduct
-            title="Оплата"
+            title={this.lang.homePayment}
             bgTitle="Commerce"
             icon="commerce"
             seeMoreLink="commerce"
-          >{['Принимайте платежи из любой точки мира', 'Платежи в течении нескольких минут, а не дней', 'Все платежи анонимны, а данные зашифрованы']}</HomepageProduct>
+          >{[this.lang.homePaymentSubTitle1, this.lang.homePaymentSubTitle2, this.lang.homePaymentSubTitle3]}</HomepageProduct>
         </div>
 
         <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">Безопасность превыше всего</div>
-          <div className="SiteSectionHeaderCaption">Для нас безопасность цифровых валют и пользовательских данных в приоритете</div>
+          <div className="SiteSectionHeaderTitle">{this.lang.homeSecurityTitle}</div>
+          <div className="SiteSectionHeaderCaption">{this.lang.homeSecuritySubaTitle}</div>
         </div>
 
         {this._renderSafety()}
@@ -78,16 +78,16 @@ export default class SiteMainScreen extends BaseScreen {
   _renderSafety() {
     const items = [{
       icon: require('./asset/homepage_safety_1.svg'),
-      title: 'Защищенное подключение',
-      caption: 'Трафик нашего веб-сайта полностью проходит по зашифрованному SSL протоколу'
+      title: this.lang.homeSafetyTitle1,
+      caption: this.lang.homeSafetySubTitle1
     }, {
       icon: require('./asset/homepage_safety_2.svg'),
-      title: 'Безопасное хранение',
-      caption: 'Мы уделяем особое внимание вопросу безопасности и постоянно добавляем новые уровни защиты'
+      title: this.lang.homeSafetyTitle2,
+      caption: this.lang.homeSafetySubTitle2
     }, {
       icon: require('./asset/homepage_safety_3.svg'),
-      title: 'Технологичная надежность',
-      caption: 'Многоуровневая и многокластерная системная архитектура'
+      title: this.lang.homeSafetyTitle3,
+      caption: this.lang.homeSafetySubTitle3
     }].map((item) => {
       return (
         <InfoCard
@@ -96,7 +96,7 @@ export default class SiteMainScreen extends BaseScreen {
           caption={item.caption}
           icon={item.icon}
           className="SiteHomepageSafety__item"
-          btn={<a href="#" className="SiteHomepageSafety__item__more">Узнать больше</a>}
+          btn={<a href="#" className="SiteHomepageSafety__item__more">{this.lang.homeLearnMore}</a>}
         />
       )
     });
