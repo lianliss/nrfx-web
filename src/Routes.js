@@ -28,6 +28,12 @@ export default function Routes(props) {
     case pages.ABOUT:
       Component = SiteAboutScreen;
       break;
+    case pages.MISSION:
+      Component = SiteAboutScreen;
+      break;
+    case pages.HISTORY:
+      Component = SiteAboutScreen;
+      break;
     case pages.EXCHANGE:
       Component = SiteExchangeScreen;
       break;

@@ -1,5 +1,7 @@
 export const MAIN = 'main';
 export const ABOUT = 'about';
+export const MISSION = 'mission';
+export const HISTORY = 'history';
 export const EXCHANGE = 'exchange';
 export const WALLET = 'wallet';
 export const ROBOTS = 'robots';

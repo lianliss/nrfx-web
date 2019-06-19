@@ -25,6 +25,10 @@
   .inactive {
     opacity: 0.45;
   }
+
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .SiteAboutScreen__intro {
@@ -120,29 +124,6 @@
   &:hover:after {
     transform: translateX(2px);
   }
-
-}
-
-.SiteAboutScreen__infocards {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 120px 10px;
-
-  @media (max-width: 992px) { flex-wrap: wrap; }
-
-  .SiteAboutScreen__infocard {
-    flex-basis: 390px;
-    margin: 30px 15px;
-  }
-}
-
-.SiteAboutScreen__divider {
-  width: 1px;
-  height: 140px;
-  background: #9A9A9A;
-
-  @media (max-width: 992px) { display: none; }
 }
 
 .SiteAboutScreen__mission__values {

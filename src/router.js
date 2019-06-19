@@ -13,6 +13,14 @@ export const routes = [
     path: '/about',
   },
   {
+    name: pages.MISSION,
+    path: '/mission',
+  },
+  {
+    name: pages.HISTORY,
+    path: '/history',
+  },
+  {
     name: pages.EXCHANGE,
     path: '/exchange',
   },
