@@ -42,7 +42,7 @@ const TabButton = ({ title, switchFn, tabName, currentTab }) => (
 
 export default class SiteAboutScreen extends BaseScreen {
   state = {
-    currentTab: ABOUT,
+    currentTab: HISTORY,
   }
 
   switchTab = (currentTab) => {
