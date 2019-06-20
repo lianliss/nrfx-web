@@ -15,7 +15,8 @@ function Input(props) {
   let params = {
     className,
     placeholder: props.placeholder,
-    required: true
+    type: props.type,
+    required: true,
   };
 
   if (props.multiLine) {

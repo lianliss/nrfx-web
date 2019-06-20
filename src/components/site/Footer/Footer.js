@@ -27,7 +27,7 @@ export default function Footer() {
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">Помощь</div>
-            <a href="#" className="Footer__links__item">ЧаВо</a>
+            <a href={`/#/${pages.FAQ}`} className="Footer__links__item">ЧаВо</a>
             <a href={`/#/${pages.CONTACT}`} className="Footer__links__item">Связаться с нами</a>
             <a href="#" className="Footer__links__item">Пользовательское соглашение</a>
             <a href="#" className="Footer__links__item">Политика конфиденциальности</a>

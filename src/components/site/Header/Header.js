@@ -5,8 +5,10 @@ import SVG from 'react-inlinesvg';
 
 import UI from '../../../ui';
 import * as pages from '../../../constants/pages';
+import * as steps from '../AuthModal/fixtures';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
+import AuthModal from '../AuthModal/AuthModal';
 
 
 const headerLinks = [
@@ -57,7 +59,7 @@ const headerLinks = [
     children: [
       {
         title: 'ЧаВо',
-        route: null,
+        route: pages.FAQ,
       },
       {
         title: 'Связаться с нами',
@@ -102,8 +104,12 @@ function Header({ showLightLogo }) {
               </div>
             </div>
             <div className="SiteHeader__menu__CTA">
-              <UI.Button type="outline">Войти</UI.Button>
-              <UI.Button type="outline_white">Регистрация</UI.Button>
+              <AuthModal>
+                <UI.Button type="outline">Войти</UI.Button>
+              </AuthModal>
+              <AuthModal type={steps.REGISTRATION}>
+                <UI.Button type="outline_white">Регистрация</UI.Button>
+              </AuthModal>
             </div>
             
             {headerLinks.map(item => (
@@ -130,8 +136,12 @@ function Header({ showLightLogo }) {
               ))}
 
               <div className="SiteHeader__menu_controls">
-                <MenuItem>Войти</MenuItem>
-                <UI.Button type="outline_white" rounded>Регистрация</UI.Button>
+                <AuthModal>
+                  <MenuItem>Войти</MenuItem>
+                </AuthModal>
+                <AuthModal type={steps.REGISTRATION}>
+                  <UI.Button type="outline_white" rounded>Регистрация</UI.Button>
+                </AuthModal>
                 <Dropdown title="Ru" subItems={langLinks} />
               </div>
             </div>
