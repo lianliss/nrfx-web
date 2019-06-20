@@ -12,10 +12,10 @@ export default class SiteSafetyScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper withOrangeBg>
-        <h1 className="SiteSafetyScreen__heading">Безопасность превыше всего</h1>
+        <h1 className="SiteSafetyScreen__heading">{this.lang.site.safetyTitle}</h1>
 
         <p className="SiteSafetyScreen__intro">
-          Для нас безопасность средств и пользовательских данных всегда в приоритете. Мы уделяем особое внимание вопросу безопасности и постоянно добавляем новые уровни защиты на платформе. Обращаем ваше внимание, что мы не можем раскрывать слишком много подробностей о мерах безопасности, реализованных на платформе        
+          {this.lang.site.safetySubTitle}
         </p>
 
 
@@ -27,8 +27,8 @@ export default class SiteSafetyScreen extends BaseScreen {
 
         <div className="SiteSafetyScreen__banner">
           <div className="SiteSafetyScreen__banner__cont">
-            <h3 className="SiteSafetyScreen__banner__title">Двойная защита</h3>
-            <p className="SiteSafetyScreen__banner__caption">Помимо логина и пароля, ваш аккаунт защищен дополнительным уровнем безопасности, при помощи двухфакторной аутентификации (2FA)</p>
+            <h3 className="SiteSafetyScreen__banner__title">{this.lang.site.safetyDoubleProtectionTitle}</h3>
+            <p className="SiteSafetyScreen__banner__caption">{this.lang.site.safetyDoubleProtectionSubTitle}</p>
           </div>
           <img src={require('./asset/safety_iphone.svg')} alt="phone"/>
         </div>
@@ -45,18 +45,18 @@ export default class SiteSafetyScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/safety_feature_1.svg'),
-        title: 'Трафик',
-        caption: 'Трафик нашего веб-сайта полностью проходит шифрование SSL (https)'
+        title: this.lang.site.safetyTrafficTitle,
+        caption: this.lang.site.safetyTrafficSubTitle
       },
       {
         icon: require('./asset/safety_feature_2.svg'),
-        title: 'Шифрование',
-        caption: 'Кошельки и данные хранятся с использованием шифрования AES-256'
+        title: this.lang.site.safetyEncryptionTitle,
+        caption: this.lang.site.safetyEncryptionSubTitle
       },
       {
         icon: require('./asset/safety_feature_3.svg'),
-        title: 'Данные',
-        caption: 'Персональные данные хранятся в соответствии с регламентом Европейского союза GDPR'
+        title: this.lang.site.safetyDataTitle,
+        caption: this.lang.site.safetyDataSubTitle
       },
     ].map((item) => {
       return (

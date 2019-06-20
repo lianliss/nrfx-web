@@ -49,17 +49,17 @@ export default class SiteTechnologyScreen extends BaseScreen {
 
     return (
       <SiteWrapper withOrangeBg>
-        <h1 className="SiteTechnologyScreen__heading">Технологии BITCOINBOT</h1>
+        <h1 className="SiteTechnologyScreen__heading">{this.lang.site.technologyTitle}</h1>
 
         <p className="SiteTechnologyScreen__intro">
-          Мы используем передовые технологии и решения для нашей платформы и создаем новые, уникальные в своем роде. Одна из наших сфер развития, которой мы уделяем особое внимание - это искусственный интелект.
+          {this.lang.site.technologySubTitle}
         </p>
 
         <div className="SiteTechnologyScreen__description">
-          <TitleWithBg title="Искусственный интеллект" bgTitle="Artificial Intelligence" centered darkBg />
+          <TitleWithBg title={this.lang.site.technologyArtificialIntelligence} bgTitle="Artificial Intelligence" centered darkBg />
 
           <p className="SiteTechnologyScreen__description__text">
-            Искусственный интеллект уже вошел в нашу жизнь, такие компании как Google, Apple, Facebook и многие другие применяют механизмы анализа данных для предоставления пользователям информации, интересующей именно их. Распознавание изображения и речи являются типичными областями применения. Но сфера применения машинного обучения намного шире. 
+            {this.lang.site.technologyArtificialIntelligenceText}
           </p>
 
           <br /><br />
@@ -80,13 +80,13 @@ export default class SiteTechnologyScreen extends BaseScreen {
 
 
           {!isAllTextVisible
-            ? <p className="SiteTechnologyScreen__see_more" onClick={this.showMoreText}>Читать далее</p>
+            ? <p className="SiteTechnologyScreen__see_more" onClick={this.showMoreText}>{this.lang.site.technologyReadMore}</p>
             : null}
 
         </div>
 
         <div className="SiteTechnologyScreen__features">
-          <h2 className="SiteTechnologyScreen__title">Почему мы создаем и развиваем собственные сети?</h2>
+          <h2 className="SiteTechnologyScreen__title">{this.lang.site.technologyQuestionTitle}</h2>
 
           {this._renderFeatures()}
         </div>
@@ -101,22 +101,22 @@ export default class SiteTechnologyScreen extends BaseScreen {
   _renderFeatures() {
     const features = [
       {
-        caption: 'Позволяет выстраивать стратегию на следующий торговый день, прогнозирует цены для всех видов активов',
+        caption: this.lang.site.technologyAnswers1,
       },
       {
-        caption: 'Помогает выявлять случаи манипулирования рынком',
+        caption: this.lang.site.technologyAnswers2,
       },
       {
-        caption: 'Показывает большую эффективность по сравнению с пассивной стратегией (buy/hold)',
+        caption: this.lang.site.technologyAnswers3,
       },
       {
-        caption: 'Увеличивает процент выигрышных сделок и значительно превосходит средний уровень прибыльности рынка',
+        caption: this.lang.site.technologyAnswers4,
       },
       {
-        caption: 'Помогает для формировании финансовых инструментов ценообразования',
+        caption: this.lang.site.technologyAnswers5,
       },
       {
-        caption: 'Обрабатывает огромные массивы данных и постоянно совершенствуют свои прогнозы',
+        caption: this.lang.site.technologyAnswers6,
       },
     ];
 
