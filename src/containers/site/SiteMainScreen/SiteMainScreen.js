@@ -19,50 +19,50 @@ export default class SiteMainScreen extends BaseScreen {
           image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
           title={<span>BITCOINBOT:<br />Кошелек</span>}
           caption={<span>Почувствуйте все преимущества цифровых<br />финансов в единой платформе</span>}
-          buttonText={this.lang.homeBegin}
+          buttonText={this.lang.site.homeBegin}
         />
         <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">{this.lang.homeBitcoibotCombine}</div>
-          <div className="SiteSectionHeaderCaption">{this.lang.homeBitcoibotCombineSubTitle}</div>
+          <div className="SiteSectionHeaderTitle">{this.lang.site.homeBitcoibotCombine}</div>
+          <div className="SiteSectionHeaderCaption">{this.lang.site.homeBitcoibotCombineSubTitle}</div>
         </div>
         <div className="SiteHomepageProducts">
           <HomepageProduct
-            title={this.lang.homeExchange}
+            title={this.lang.site.homeExchange}
             bgTitle="Exchange"
             icon="exchange"
             seeMoreLink="exchange"
-          >{[this.lang.homeExchangeSubTitile1, this.lang.homeExchangeSubTitile2, this.lang.homeExchangeSubTitile3]}</HomepageProduct>
+          >{[this.lang.site.homeExchangeSubTitile1, this.lang.site.homeExchangeSubTitile2, this.lang.site.homeExchangeSubTitile3]}</HomepageProduct>
           <HomepageProduct
-            title={this.lang.homeWallet}
+            title={this.lang.site.homeWallet}
             bgTitle="Wallets"
             icon="wallet"
             seeMoreLink="wallet"
             reverse
-          >{[this.lang.homeWalletSubTitle1, this.lang.homeWalletSubTitle4, this.lang.homeWalletSubTitle3]}</HomepageProduct>
+          >{[this.lang.site.homeWalletSubTitle1, this.lang.site.homeWalletSubTitle4, this.lang.site.homeWalletSubTitle3]}</HomepageProduct>
           <HomepageProduct
-            title={this.lang.homeRobots}
+            title={this.lang.site.homeRobots}
             bgTitle="Robots"
             icon="robot"
             seeMoreLink="robots"
-          >{[this.lang.homeRobotsSubTitle1, this.lang.homeRobotsSubTitle2, this.lang.homeRobotsSubTitle3]}</HomepageProduct>
+          >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]}</HomepageProduct>
           <HomepageProduct
-            title={this.lang.homeInvestments}
+            title={this.lang.site.homeInvestments}
             bgTitle="Investment"
             icon="investment"
             seeMoreLink="investment"
             reverse
-          >{[this.lang.homeInvestmentsSubTitle1, this.lang.homeInvestmentsSubTitle2, this.lang.homeInvestmentsSubTitle3]}</HomepageProduct>
+          >{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>
           <HomepageProduct
-            title={this.lang.homePayment}
+            title={this.lang.site.homePayment}
             bgTitle="Commerce"
             icon="commerce"
             seeMoreLink="commerce"
-          >{[this.lang.homePaymentSubTitle1, this.lang.homePaymentSubTitle2, this.lang.homePaymentSubTitle3]}</HomepageProduct>
+          >{[this.lang.site.homePaymentSubTitle1, this.lang.site.homePaymentSubTitle2, this.lang.site.homePaymentSubTitle3]}</HomepageProduct>
         </div>
 
         <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">{this.lang.homeSecurityTitle}</div>
-          <div className="SiteSectionHeaderCaption">{this.lang.homeSecuritySubaTitle}</div>
+          <div className="SiteSectionHeaderTitle">{this.lang.site.homeSecurityTitle}</div>
+          <div className="SiteSectionHeaderCaption">{this.lang.site.homeSecuritySubaTitle}</div>
         </div>
 
         {this._renderSafety()}
@@ -78,16 +78,16 @@ export default class SiteMainScreen extends BaseScreen {
   _renderSafety() {
     const items = [{
       icon: require('./asset/homepage_safety_1.svg'),
-      title: this.lang.homeSafetyTitle1,
+      title: this.lang.site.homeSafetyTitle1,
       caption: this.lang.homeSafetySubTitle1
     }, {
       icon: require('./asset/homepage_safety_2.svg'),
-      title: this.lang.homeSafetyTitle2,
-      caption: this.lang.homeSafetySubTitle2
+      title: this.lang.site.homeSafetyTitle2,
+      caption: this.lang.site.homeSafetySubTitle2
     }, {
       icon: require('./asset/homepage_safety_3.svg'),
-      title: this.lang.homeSafetyTitle3,
-      caption: this.lang.homeSafetySubTitle3
+      title: this.lang.site.homeSafetyTitle3,
+      caption: this.lang.site.homeSafetySubTitle3
     }].map((item) => {
       return (
         <InfoCard
@@ -96,7 +96,7 @@ export default class SiteMainScreen extends BaseScreen {
           caption={item.caption}
           icon={item.icon}
           className="SiteHomepageSafety__item"
-          btn={<a href="#" className="SiteHomepageSafety__item__more">{this.lang.homeLearnMore}</a>}
+          btn={<a href="#" className="SiteHomepageSafety__item__more">{this.lang.site.homeLearnMore}</a>}
         />
       )
     });

@@ -1,5 +1,6 @@
 import './Header.less';
 
+import * as utils from '../../../utils/index';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 
@@ -19,12 +20,12 @@ export default class Header extends React.PureComponent {
             }
           </div>
           <div className="SiteHeader__menu">
-            <MenuItem arrow>Продукты</MenuItem>
-            <MenuItem arrow>Компания</MenuItem>
-            <MenuItem arrow>Помощь</MenuItem>
+            <MenuItem arrow>{utils.getLang('site__headerProducts')}</MenuItem>
+            <MenuItem arrow>{utils.getLang('site__headerCompany')}</MenuItem>
+            <MenuItem arrow>{utils.getLang('site__headerHelp')}</MenuItem>
             <div className="SiteHeader__menu_controls">
-              <MenuItem>Войти</MenuItem>
-              <UI.Button type="outline_white" rounded>Регистрация</UI.Button>
+              <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
+              <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
               <MenuItem arrow>Ru</MenuItem>
             </div>
           </div>

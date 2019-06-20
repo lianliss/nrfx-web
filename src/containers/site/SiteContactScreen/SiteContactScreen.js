@@ -11,26 +11,26 @@ export default class SiteContactScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper withOrangeBg>
-        <h1 className="SiteContactScreen__heading">Связаться с нами</h1>
+        <h1 className="SiteContactScreen__heading">{this.lang.site.contactContactUs}</h1>
 
 
-        <h2 className="SiteContactScreen__title">Написать письмо</h2>
-        <h4 className="SiteContactScreen__caption">Мы свяжемся с вами по электронной почте очень скоро!</h4>
+        <h2 className="SiteContactScreen__title">{this.lang.site.contactWriteLetter}</h2>
+        <h4 className="SiteContactScreen__caption">{this.lang.site.contactWeContactYou}</h4>
 
         <div className="SiteContactScreen__form">
           <div className="SiteContactScreen__form__firstRow">
-            <input className="SiteContactScreen__form__input" placeholder="Логин" />
-            <input className="SiteContactScreen__form__input" placeholder="E-mail" />
+            <input className="SiteContactScreen__form__input" placeholder={this.lang.site.contactLogin} />
+            <input className="SiteContactScreen__form__input" placeholder={this.lang.site.contactEmail} />
           </div>
           <div className="SiteContactScreen__form__secondRow">
-            <input className="SiteContactScreen__form__input" placeholder="Сообщение" />
-            <UI.Button rounded>Отправить</UI.Button>
+            <input className="SiteContactScreen__form__input" placeholder={this.lang.site.contactMessage} />
+            <UI.Button rounded>{this.lang.site.contactSend}</UI.Button>
           </div>
         </div>
 
 
         <div className="SiteContactScreen__socials">
-          <p className="SiteContactScreen__socials__title">Наши социальные сети</p>
+          <p className="SiteContactScreen__socials__title">{this.lang.site.contactOurSocialNetworks}</p>
 
           <div className="SiteContactScreen__socials__icons">
             <a href="#" className="SiteContactScreen__social">

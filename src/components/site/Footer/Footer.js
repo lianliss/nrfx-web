@@ -1,5 +1,6 @@
 import './Footer.less';
 
+import * as utils from '../../../utils/index';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 
@@ -9,30 +10,29 @@ export default function Footer() {
       <div className="Footer__cont">
         <div className="Footer__links_wrap">
           <div className="Footer__links">
-            <div className="Footer__links__title">Продукты</div>
-            <a href="#" className="Footer__links__item">Кошелек</a>
-            <a href="#" className="Footer__links__item">Биржа</a>
-            <a href="#" className="Footer__links__item">Роботы</a>
-            <a href="#" className="Footer__links__item">Инвестиции</a>
-            <a href="#" className="Footer__links__item">Оплата</a>
+            <div className="Footer__links__title">{utils.getLang('site__footerProducts')}</div>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerWallet')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerExchange')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerRobots')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerInvestments')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerPayment')}</a>
           </div>
           <div className="Footer__links">
-            <div className="Footer__links__title">Компания</div>
-            <a href="#" className="Footer__links__item">О нас</a>
-            <a href="#" className="Footer__links__item">Технологии</a>
-            <a href="#" className="Footer__links__item">Безопасность</a>
+            <div className="Footer__links__title">{utils.getLang('site__footerCompany')}</div>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerAboutUs')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerTechnology')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerSecurity')}</a>
           </div>
           <div className="Footer__links">
-            <div className="Footer__links__title">Помощь</div>
-            <a href="#" className="Footer__links__item">ЧаВо</a>
-            <a href="#" className="Footer__links__item">Связаться с нами</a>
-            <a href="#" className="Footer__links__item">Пользовательское соглашение</a>
-            <a href="#" className="Footer__links__item">Политика конфиденциальности</a>
+            <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</a>
           </div>
           <div className="Footer__links">
-            <div className="Footer__links__title">Приложение</div>
-            <a href="#" className="Footer__links__item">App Store</a>
-            <a href="#" className="Footer__links__item">Google Play</a>
+            <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerAppStore')}</a>
           </div>
         </div>
         <div className="Footer__bottom">

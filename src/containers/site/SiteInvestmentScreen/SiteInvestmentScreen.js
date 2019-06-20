@@ -17,9 +17,9 @@ export default class SiteInvestmentScreen extends BaseScreen {
         <SitePageInfoBlock
           hideWatchButton
           image={require('./asset/investment_main_image.svg')}
-          title={<span>Инвестиции.pro</span>}
-          caption={<span>Приумножайте свой криптовалютный капитал вместе с нами</span>}
-          buttonText="Инвестировать"
+          title={<span>{this.lang.site.investmentTitleInvestment}</span>}
+          caption={<span>{this.lang.site.investmentSubTitle}</span>}
+          buttonText={this.lang.site.investmentInvestBtn}
         />
 
         <div className="SiteInvestmentScreen__numbers">
@@ -27,22 +27,21 @@ export default class SiteInvestmentScreen extends BaseScreen {
         </div>
 
         <div className="SiteInvestmentScreen__intro">
-          <TitleWithBg title="Что такое Инвестиции.pro?" bgTitle="Investment" bgTitleUppercase centered darkBg />
+          <TitleWithBg title={this.lang.site.investmentWhatIsInvestmentTitle} bgTitle="Investment" bgTitleUppercase centered darkBg />
           <p className="SiteInvestmentScreen__caption">
-            Любая покупка криптовалюты является инвестированием, как в саму технологию, так и в конкретный проект.
-            Мы даем возможность не только купить криптовалюту, но и инвестировать, приумножив свой собственный капитал.
+            {this.lang.site.investmentWhatIsInvestmentSubTitle}
           </p>
         </div>
 
 
-        <h2 className="SiteInvestmentScreen__title">Инвестиции.pro - это больше чем депозит</h2>
+        <h2 className="SiteInvestmentScreen__title">{this.lang.site.investmentMoreThanDeposit}</h2>
         {this._renderFeatures()}
 
 
         <Banner
-          title="Инвестирование никогда не было таким простым"
-          caption="Приумножить свой криптокапитал"
-          btnText="Инвестировать"
+          title={this.lang.site.investmentNeverBeenEasier}
+          caption={this.lang.site.investmentIncreaseCapital}
+          btnText={this.lang.site.investmentInvestBtn}
         />
 
       </SiteWrapper>
@@ -53,16 +52,16 @@ export default class SiteInvestmentScreen extends BaseScreen {
   _renderNumbers = () => {
     const dataWithNumbers = [
       {
-        title: '4000+',
-        caption: 'Открыто депозитов',
+        title: this.lang.site.investmentNumbersTitle1,
+        caption: this.lang.site.investmentNumbersSubTitle1,
       },
       {
-        title: '125%',
-        caption: 'Выплачено прибыли',
+        title: this.lang.site.investmentNumbersTitle2,
+        caption: this.lang.site.investmentNumbersSubTitle2,
       },
       {
-        title: 'x6',
-        caption: 'Рост капитала в год',
+        title: this.lang.site.investmentNumbersTitle3,
+        caption: this.lang.site.investmentNumbersSubTitle3,
       },
     ]
 
@@ -79,28 +78,28 @@ export default class SiteInvestmentScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/investment_feature_1.svg'),
-        title: 'Высокая доходность',
-        caption: 'Выплачиваем высокую прибыль своим инвесторам, значительно выше той, что представлена на классических фондовых рынках'
+        title: this.lang.site.investmentHighYieldTitle,
+        caption: this.lang.site.investmentHighYieldSubTitle
       },
       {
         icon: require('./asset/investment_feature_2.svg'),
-        title: 'Застрахованный депозит',
-        caption: 'Все криптовалютные депозиты наших инвесторов страхуются, формируя таким образом страховой фонд'
+        title: this.lang.site.investmentInsuredDepositTitle,
+        caption: this.lang.site.investmentInsuredDepositSubTitle
       },
       {
         icon: require('./asset/investment_feature_3.svg'),
-        title: 'Удобный вывод',
-        caption: 'Выводите средства в любое удобное для вас время, хоть каждый день. Вывод средств в кратчайшие сроки'
+        title: this.lang.site.investmentConvenientOutputTitle,
+        caption: this.lang.site.investmentConvenientOutputSubTitle
       },
       {
         icon: require('./asset/investment_feature_4.svg'),
-        title: 'Вариативные депозиты',
-        caption: 'Гибкая система инвестирования позволит подобрать наиболее удобный и выгодный тарифный план по депозиту, включая выбор из разных криптовалют'
+        title: this.lang.site.investmentVariableDepositsTitle,
+        caption: this.lang.site.investmentVariableDepositsSubTitle
       },
       {
         icon: require('./asset/investment_feature_5.svg'),
-        title: 'Надежный партнер',
-        caption: 'Проект существует на рынке с 2017 года, за это время команда показала не только отличные результаты, но и смогла зарекомендовать себя, как профессионалов отрасли'
+        title: this.lang.site.investmentReliablePartnerTitle,
+        caption: this.lang.site.investmentReliablePartnerSubTitle
       },
     ].map((item) => {
       return (

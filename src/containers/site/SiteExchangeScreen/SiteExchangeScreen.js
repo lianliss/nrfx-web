@@ -17,15 +17,15 @@ export default class SiteExchangeScreen extends BaseScreen {
       <SiteWrapper>
         <SitePageInfoBlock
           image={require('./asset/exchange_main_image.svg')}
-          title={<span>Технологичная биржа</span>}
-          caption={<span>Купить, продать и обменять криптовалюту в считанные минуты</span>}
-          buttonText="Начать"
+          title={<span>{this.lang.site.exchangeTitle}</span>}
+          caption={<span>{this.lang.site.exchangeSubTitle}</span>}
+          buttonText={this.lang.site.exchangeStart}
         />
 
 
         <div className="SiteExchangeScreen__market">
           <img src={require('./asset/exchange_data.svg')} alt="Exchange market" className="SiteExchangeScreen__market__image" />
-          <UI.Button rounded>Смотреть биржу</UI.Button>
+          <UI.Button rounded>{this.lang.site.exchangeViewExchange}</UI.Button>
         </div>
 
 
@@ -35,21 +35,21 @@ export default class SiteExchangeScreen extends BaseScreen {
 
         <div className="SiteExchangeScreen__interface">
           <div className="SiteExchangeScreen__interface__cont">
-            <TitleWithBg title="Настраиваемый интерфейс" bgTitle="Interface" />
+            <TitleWithBg title={this.lang.site.exchangeCustomizableInterface} bgTitle="Interface" />
 
             <p>
-              BITCOINBOT дает возможность настроить интерфейс и организовать рабочее пространство в соответствии с вашими предпочтениями.
+              {this.lang.site.exchangeCustomizableInterfaceTitle}
             </p>
 
             <ul>
-              <li><span>В вашем распоряжение множество инструментов для удобной торговли;</span></li>
-              <li><span>Компактный или полноэкранный режим работы;</span></li>
-              <li><span>Переключайтесь между светлой и темной темой;</span></li>
-              <li><span>Актуальное время всегда перед вам.</span></li>
+              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle1}</span></li>
+              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle2}</span></li>
+              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle3}</span></li>
+              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle4}</span></li>
             </ul>
 
             <p>
-              Минимализм – простой интерфейс не отвлекает от самого важного, всегда будьте в курсе цен и не упускайте возможность.
+              {this.lang.site.exchangeCustomizableInterfaceSubTitle5}
             </p>
           </div>
 
@@ -60,9 +60,9 @@ export default class SiteExchangeScreen extends BaseScreen {
 
 
         <Banner
-          title="Готовы начать торговать?"
-          caption="Создайте аккаунт бесплатно и начните торговать прямо сейчас"
-          btnText="Начать торговать"
+          title={this.lang.site.exchangeReadyStartTrading}
+          caption={this.lang.site.exchangeSubReadyStartTrading}
+          btnText={this.lang.site.exchangeStartTrading}
         />
 
       </SiteWrapper>
@@ -74,28 +74,28 @@ export default class SiteExchangeScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/exchange_feature_1.svg'),
-        title: 'Выгодный курс',
-        caption: 'Благодаря нашему уникальному алгоритму всегда покупайте криптовалюты по выгодной цене',
+        title: this.lang.site.exchangeFavorableRateTitle,
+        caption: this.lang.site.exchangeFavorableRateSubTitle,
       },
       {
         icon: require('./asset/exchange_feature_2.svg'),
-        title: 'Высокая скорость',
-        caption: 'Пропускная способность биржи более 2.500.000 транзакций в секунду, что делает нас одной из самых быстрых бирж на рынке',      
+        title: this.lang.site.exchangeHighSpeedTitle,
+        caption: this.lang.site.exchangeHighSpeedSubTitle,
       },
       {
         icon: require('./asset/exchange_feature_3.svg'),
-        title: 'Эффективная волатильность',
-        caption: 'Используя ликвидность различных криптовалютных бирж на одной платформе обеспечиваем высокую волатильность',      
+        title: this.lang.site.exchangeEffectiveVolatilityTitle,
+        caption: this.lang.site.exchangeEffectiveVolatilitySubTitle,
       },
       {
         icon: require('./asset/exchange_feature_4.svg'),
-        title: 'Высокая ликвидность',
-        caption: 'Большие объемы торгов на различных криптовалютных парах. Будьте уверены, что ваши ордера выполнятся быстро вне зависимости от загруженности платформы',      
+        title: this.lang.site.exchangeHighLiquidityTitle,
+        caption: this.lang.site.exchangeHighLiquiditySubTitle,
       },
       {
         icon: require('./asset/exchange_feature_5.svg'),
-        title: 'Удобный интерфейс',
-        caption: 'Интуитивно понятный и легкий в использовании. Настройте интерфейс для торговли под свои предпочтения',      
+        title: this.lang.site.exchangeConvenientInterfaceTitle,
+        caption: this.lang.site.exchangeConvenientInterfaceSubTitle,
       },
     ].map((item) => {
       return (
