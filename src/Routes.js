@@ -6,6 +6,8 @@ import SiteAboutScreen from './containers/site/SiteAboutScreen/SiteAboutScreen';
 import SiteWalletScreen from './containers/site/SiteWalletScreen/SiteWalletScreen';
 import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
+import SiteTechnologyScreen from './containers/site/SiteTechnologyScreen/SiteTechnologyScreen';
+import SiteSafetyScreen from './containers/site/SiteSafetyScreen/SiteSafetyScreen';
 import SiteExchangeScreen from './containers/site/SiteExchangeScreen/SiteExchangeScreen';
 import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
 import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactScreen';
@@ -34,6 +36,12 @@ export default function Routes(props) {
       break;
     case pages.ROBOTS:
       Component = SiteRobotsScreen;
+      break;
+    case pages.TECHNOLOGY:
+      Component = SiteTechnologyScreen;
+      break;
+    case pages.SAFETY:
+      Component = SiteSafetyScreen;
       break;
     case pages.COMMERCE:
       Component = SiteCommerceScreen;
