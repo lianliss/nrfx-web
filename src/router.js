@@ -25,6 +25,14 @@ export const routes = [
     path: '/robots',
   },
   {
+    name: pages.TECHNOLOGY,
+    path: '/technology',
+  },
+  {
+    name: pages.SAFETY,
+    path: '/safety',
+  },
+  {
     name: pages.COMMERCE,
     path: '/commerce',
   },

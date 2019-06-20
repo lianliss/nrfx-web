@@ -9,8 +9,8 @@ function FeatureCard({ title, caption }) {
       <img src={require('./asset/feature_tick_icon.svg')} alt="Feature" className="FeatureCard__icon" />
 
       <div className="FeatureCard__cont">
-        <h3 className="FeatureCard__title">{title}</h3>
-        <p className="FeatureCard__caption">{caption}</p>
+        {title && <h3 className="FeatureCard__title">{title}</h3>}
+        {caption && <p className="FeatureCard__caption">{caption}</p>}
       </div>
     </div>
   )

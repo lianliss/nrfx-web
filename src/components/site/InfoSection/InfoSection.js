@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InfoCard from '../../../../components/site/InfoCard/InfoCard';
+import InfoCard from '../InfoCard/InfoCard';
 
 
 function InfoSection({ firstInfo, secondInfo }) {

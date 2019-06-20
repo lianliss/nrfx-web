@@ -1,0 +1,77 @@
+.SafetyBanner {
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: var(--contrast-primary);
+  text-align: center;
+  flex-direction: column;
+
+  &:after {
+    content: '';
+    background: url('asset/banner_bg.svg');
+    width: 2874px;
+    height: 620px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    z-index: -1;
+  }
+}
+
+.SafetyBanner__title {
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 56px;
+  letter-spacing: 1.02px;
+  margin: 0;
+}
+
+.SafetyBanner__cont {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 50px;
+
+  @media (max-width: 897px) { margin-top: 20px; }
+}
+
+.SafetyBanner__data {
+  background: url('asset/graph_circle.svg') no-repeat center/contain;
+  width: 148px;
+  height: 148px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 56px;
+  text-align: center;
+  letter-spacing: 1.02px;
+}
+
+.SafetyBanner__text {
+  text-align: left;
+  max-width: 450px;
+  margin: 0 50px;
+
+  @media (max-width: 897px) { text-align: center; }
+}
+
+.SafetyBanner__subtitle {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 56px;
+  letter-spacing: 0.599999px;
+  color: var(--contrast-primary);
+}
+
+.SafetyBanner__caption {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.444444px;
+  color: var(--contrast-primary);
+}

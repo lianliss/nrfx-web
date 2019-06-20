@@ -62,7 +62,6 @@ export default class SiteRobotsScreen extends BaseScreen {
 
   updateVisibleLogos = () => {
     const { visibleLogos, screenWidth } = this.state;
-    console.log('screenWidth :', screenWidth);
 
     if (window.innerWidth !== screenWidth) {
       if (screenWidth > PHONE && platformLogos.length !== visibleLogos.length) {
