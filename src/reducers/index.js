@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   page: null,
-  lang: {}
+  lang: {},
+  auth: {},
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -12,6 +13,10 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.SET_LANG: {
       return Object.assign({}, state, {lang: action.lang});
+    }
+
+    case actionTypes.AUTH: {
+      return Object.assign({}, state, {auth: action.auth});
     }
 
     default:

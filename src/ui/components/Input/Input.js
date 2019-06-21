@@ -20,14 +20,15 @@ function Input(props) {
   };
 
   if (props.multiLine) {
-    return <textarea {...params}>{props.value}</textarea>;
+    return <textarea {...params} onChange={props.onChange}>{props.value}</textarea>;
   }
 
-  return <input {...params} value={props.value} />;
+  return <input {...params} value={props.value} onChange={props.onChange} />;
 }
 
 Input.propTypes = {
   placeholder: PropTypes.string,
+  onChange: PropTypes.func,
   multiLine: PropTypes.bool,
   value: PropTypes.string
 };
