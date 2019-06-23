@@ -7,6 +7,7 @@ import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
+import * as utils from '../../../utils/index';
 
 
 export default class SiteWalletScreen extends BaseScreen {
@@ -15,7 +16,7 @@ export default class SiteWalletScreen extends BaseScreen {
       <SiteWrapper className="Wallet__screen">
         <SitePageInfoBlock
           image={require('./asset/wallet_main_image.svg')}
-          title={<span>Один кошелек <br /> много возможностей</span>}
+          title={<span>{utils.nl2br(this.lang.site.walletTitle)}</span>}
           caption={<span>{this.lang.site.walletSubTitle}</span>}
           buttonText={this.lang.site.walletCreateBtn}
         />

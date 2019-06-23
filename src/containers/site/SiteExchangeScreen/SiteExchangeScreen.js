@@ -9,6 +9,7 @@ import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import Banner from '../../../components/site/Banner/Banner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import UI from '../../../ui';
+import * as utils from '../../../utils/index';
 
 
 export default class SiteExchangeScreen extends BaseScreen {
@@ -29,7 +30,7 @@ export default class SiteExchangeScreen extends BaseScreen {
         </div>
 
 
-        <h2 className="SiteExchangeScreen__title">Какие возможности открываются вам <br /> на BITCOINBOT бирже</h2>
+        <h2 className="SiteExchangeScreen__title">{utils.nl2br(this.lang.site.exchangeFeaturesTitle)}</h2>
         {this._renderFeatures()}
 
 

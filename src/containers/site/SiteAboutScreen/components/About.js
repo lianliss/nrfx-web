@@ -4,28 +4,24 @@ import SVG from 'react-inlinesvg';
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import { misssionInfo, historyInfo } from '../fixtures';
+import * as utils from '../../../../utils/index';
 
 
 function About() {
   return (
     <>
       <div className="SiteAboutScreen__intro">
-        <TitleWithBg title="Коротко" bgTitle="In Brief" centered />
-        <p className="SiteAboutScreen__caption">
-          BITCOINBOT.PRO основана в 2017 году. Мы – международная команда специалистов в сферах IT и финансов, а также в различных областях, таких как электронная коммерция и машинное обучение. Объединенные желанием изменить мир, используя свои знания и опыт мы создали единый надежный инструмент для удобного управления своими финансами с применением передовых технологий.
-          <br /><br />
-          Платформа – это продукт кропотливой работы команды профессионалов с многолетним опытом. Мы заработали свою репутацию благодаря качественной и безотказной работе, а также высокому уровню продуктов. Ядро платформы – является нашей гордостью и одним из лучших технологических решений в своем классе.
-        </p>
+        <TitleWithBg title={utils.getLang('site__aboutShortTitle')} bgTitle="In Brief" centered />
+        <p className="SiteAboutScreen__caption">{utils.nl2br(utils.getLang('site__aboutShortTitleText'))}</p>
       </div>
 
       <div className="SiteAboutScreen__career">
         <SVG src={require('../asset/about__career.svg')} />
-        <h2 className="SiteAboutScreen__career__title">Работа в BITCOINBOT:</h2>
-        <p className="SiteAboutScreen__career__caption">
-          Хотите работать с нами? <br />
-          Если вы верите в наше видение и разделяете нашу страсть, мы приглашаем вас подать заявку.
-        </p>
-        <a href="#" className="SiteAboutScreen__link">Связаться</a>
+        <h2 className="SiteAboutScreen__career__title">{utils.getLang('site__aboutWorkBitcoinbotTitle')}</h2>
+        <p className="SiteAboutScreen__career__caption">{utils.nl2br(utils.getLang('site__aboutWorkBitcoinbotTitleText'))}</p>
+        <a href="#" className="SiteAboutScreen__link">{utils.getLang('site__' +
+            '' +
+            'aboutContact')}</a>
       </div>
 
 

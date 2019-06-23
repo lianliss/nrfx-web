@@ -8,6 +8,7 @@ import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePa
 import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import SupportedPlatforms from './components/SupportedPlatforms';
+import * as utils from '../../../utils/index';
 
 
 export default class SiteRobotsScreen extends BaseScreen {
@@ -16,7 +17,7 @@ export default class SiteRobotsScreen extends BaseScreen {
       <SiteWrapper className="Robots__screen">
         <SitePageInfoBlock
           image={require('./asset/robots_main_image.svg')}
-          title={<span>Робот - лучший и самый <br /> быстрый помощник</span>}
+          title={<span>{utils.nl2br(this.lang.site.robotsTitle)}</span>}
           caption={<span>{this.lang.site.robotsSubTitle}</span>}
           buttonText="Попробовать"
         />

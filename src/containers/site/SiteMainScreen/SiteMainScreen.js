@@ -9,6 +9,7 @@ import HomepageProduct from '../../../components/site/HomepageProduct/HomepagePr
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
+import * as utils from '../../../utils/index';
 
 
 export default class SiteMainScreen extends BaseScreen {
@@ -17,8 +18,8 @@ export default class SiteMainScreen extends BaseScreen {
       <SiteWrapper isHomepage>
         <SitePageInfoBlock
           image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
-          title={<span>BITCOINBOT:<br />Кошелек</span>}
-          caption={<span>Почувствуйте все преимущества цифровых<br />финансов в единой платформе</span>}
+          title={<span>{utils.nl2br(this.lang.site.homeBitcoinbotWallet)}</span>}
+          caption={<span>{utils.nl2br(this.lang.site.homeWalletSubTitile)}</span>}
           buttonText={this.lang.site.homeBegin}
         />
         <div className="SiteSectionHeader">

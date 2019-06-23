@@ -1,6 +1,7 @@
 import React from 'react';
 
 import InfoCard from '../InfoCard/InfoCard';
+import * as utils from '../../../utils/index';
 
 
 function InfoSection({ firstInfo, secondInfo }) {
@@ -12,7 +13,7 @@ function InfoSection({ firstInfo, secondInfo }) {
         caption={firstInfo.caption}
         icon={firstInfo.icon}
         className="SiteAboutScreen__infocard"
-        btn={<a href="#" className="SiteAboutScreen__link">Подробнее</a>}
+        btn={<a href="#" className="SiteAboutScreen__link">{utils.getLang('site__aboutReadMore1')}</a>}
       />
 
       <div className="SiteAboutScreen__divider"></div>
@@ -23,7 +24,7 @@ function InfoSection({ firstInfo, secondInfo }) {
         caption={secondInfo.caption}
         icon={secondInfo.icon}
         className="SiteAboutScreen__infocard"
-        btn={<a href="#" className="SiteAboutScreen__link">Подробнее</a>}
+        btn={<a href="#" className="SiteAboutScreen__link">{utils.getLang('site__aboutReadMore2')}</a>}
       />
     </div>
   )

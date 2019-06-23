@@ -6,6 +6,7 @@ import BaseScreen from '../../BaseScreen';
 import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import SafetyBanner from './components/SafetyBanner/SafetyBanner';
+import * as utils from '../../../utils/index';
 
 
 export default class SiteSafetyScreen extends BaseScreen {
@@ -20,7 +21,7 @@ export default class SiteSafetyScreen extends BaseScreen {
 
 
         <div className="SiteSafetyScreen__features">
-          <h2 className="SiteSafetyScreen__title">Лучшие технологии <br /> для вашего спокойствия</h2>
+          <h2 className="SiteSafetyScreen__title">{utils.nl2br(this.lang.site.safetyFeaturesTitle)}</h2>
           {this._renderFeatures()}
         </div>
 
