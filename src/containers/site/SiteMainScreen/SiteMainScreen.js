@@ -9,6 +9,7 @@ import HomepageProduct from '../../../components/site/HomepageProduct/HomepagePr
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
+import * as pages from '../../../constants/pages';
 
 
 export default class SiteMainScreen extends BaseScreen {
@@ -30,33 +31,33 @@ export default class SiteMainScreen extends BaseScreen {
             title="Биржа"
             bgTitle="Exchange"
             icon="exchange"
-            seeMoreLink="exchange"
+            seeMoreLink={pages.EXCHANGE}
           >{['Покупайте популярные криптовалюты', 'Выгодный курс', 'Низкие комиссии']}</HomepageProduct>
           <HomepageProduct
             title="Кошелек"
             bgTitle="Wallets"
             icon="wallet"
-            seeMoreLink="wallet"
+            seeMoreLink={pages.WALLET}
             reverse
           >{['Все ваши цифровые активы в одном месте', 'Мультивалютный счет', 'Данные зашифрованы и надежно защищены']}</HomepageProduct>
           <HomepageProduct
             title="Роботы"
             bgTitle="Robots"
             icon="robot"
-            seeMoreLink="robots"
+            seeMoreLink={pages.ROBOTS}
           >{['Автоматизированная торговля с BITCOINBOT 24/7', 'Высокая скорость выполнения операций', 'Анализ рынка по различным индикаторам']}</HomepageProduct>
           <HomepageProduct
             title="Инвестиции"
             bgTitle="Investment"
             icon="investment"
-            seeMoreLink="investment"
+            seeMoreLink={pages.INVESTMENT}
             reverse
           >{['Выгодные условия', 'Депозиты в нескольких криптовалютах', 'Высокая доходность по депозитам']}</HomepageProduct>
           <HomepageProduct
             title="Оплата"
             bgTitle="Commerce"
             icon="commerce"
-            seeMoreLink="commerce"
+            seeMoreLink={pages.COMMERCE}
           >{['Принимайте платежи из любой точки мира', 'Платежи в течении нескольких минут, а не дней', 'Все платежи анонимны, а данные зашифрованы']}</HomepageProduct>
         </div>
 
@@ -79,15 +80,18 @@ export default class SiteMainScreen extends BaseScreen {
     const items = [{
       icon: require('./asset/homepage_safety_1.svg'),
       title: 'Защищенное подключение',
-      caption: 'Трафик нашего веб-сайта полностью проходит по зашифрованному SSL протоколу'
+      caption: 'Трафик нашего веб-сайта полностью проходит по зашифрованному SSL протоколу',
+      route: pages.SAFETY,
     }, {
       icon: require('./asset/homepage_safety_2.svg'),
       title: 'Безопасное хранение',
-      caption: 'Мы уделяем особое внимание вопросу безопасности и постоянно добавляем новые уровни защиты'
+      caption: 'Мы уделяем особое внимание вопросу безопасности и постоянно добавляем новые уровни защиты',
+      route: pages.SAFETY,
     }, {
       icon: require('./asset/homepage_safety_3.svg'),
       title: 'Технологичная надежность',
-      caption: 'Многоуровневая и многокластерная системная архитектура'
+      caption: 'Многоуровневая и многокластерная системная архитектура',
+      route: pages.TECHNOLOGY,
     }].map((item) => {
       return (
         <InfoCard
@@ -96,7 +100,7 @@ export default class SiteMainScreen extends BaseScreen {
           caption={item.caption}
           icon={item.icon}
           className="SiteHomepageSafety__item"
-          btn={<a href="#" className="SiteHomepageSafety__item__more">Узнать больше</a>}
+          btn={<a href={`/#/${item.route}`} className="SiteHomepageSafety__item__more">Узнать больше</a>}
         />
       )
     });

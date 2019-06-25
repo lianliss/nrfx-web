@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import UI from '../../../ui';
 import * as utils from '../../../utils';
+import AuthModal from '../AuthModal/AuthModal';
 
 export default class SitePageInfoBlock extends React.Component {
   constructor(props) {
@@ -34,7 +35,9 @@ export default class SitePageInfoBlock extends React.Component {
           <h1 className="SitePageInfoBlock__title">{this.props.title}</h1>
           <p className="SitePageInfoBlock__caption">{this.props.caption}</p>
           <div className="SitePageInfoBlock__buttons">
-            <UI.Button rounded style={{width: 239}}>{this.props.buttonText}</UI.Button>
+            <AuthModal>
+              <UI.Button rounded style={{width: 239}}>{this.props.buttonText}</UI.Button>
+            </AuthModal>
             {!hideWatchButton ? <UI.WatchButton>Смотреть</UI.WatchButton> : null}
           </div>
         </div>
