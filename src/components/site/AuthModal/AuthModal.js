@@ -13,7 +13,7 @@ import Registration from './components/Registration';
 import RegistrationSuccess from './components/RegistrationSuccess';
 
 
-function AuthModal({ children, type, initialEmail }) {
+function AuthModal({ children, type, initialEmail, className }) {
   const [isOpen, toggleOpen] = useState(false);
   const [currentStep, changeStep] = useState(type || steps.LOGIN);
   const [email, changeEmail] = useState('');
@@ -58,10 +58,11 @@ function AuthModal({ children, type, initialEmail }) {
   }
 
   return (
-    <div className="AuthModal">
+    <div className={"AuthModal " + className}>
       <span onClick={() => toggleOpen(true)}>
         {children}
       </span>
+
       <UI.Modal
         isOpen={isOpen}
         onClose={handleClose}
