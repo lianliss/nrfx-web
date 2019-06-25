@@ -46,7 +46,7 @@ export default class SiteMainScreen extends BaseScreen {
             bgTitle="Robots"
             icon="robot"
             seeMoreLink={pages.ROBOTS}
-          >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]</HomepageProduct>
+          >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]}</HomepageProduct>
           <HomepageProduct
             title={this.lang.site.homeInvestments}
             bgTitle="Investment"
