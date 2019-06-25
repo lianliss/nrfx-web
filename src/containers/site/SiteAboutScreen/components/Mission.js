@@ -3,24 +3,25 @@ import React from 'react';
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import { aboutInfo, historyInfo } from '../fixtures';
+import * as utils from '../../../../utils/index';
 
 
 function Mission() {
   const _renderValues = () => {
     const values = [
       {
-        title: 'Технологии и развитие',
-        caption: 'Мы стремимся максимально развивать криптовалютное сообщество и расширять доступность цифровых валют. Мы разработали уникальную платформу, которая могла бы сравняться, и даже превзойти традиционные финансовые инструменты. Это не простой путь. К счастью, мы не боимся трудностей и добьемся больших успехов. ',
+        title: utils.getLang('site__aboutMissionTechnologyDevelopmentTitle'),
+        caption: utils.getLang('site__aboutMissionTechnologyDevelopmentSubTitle'),
         icon: require('../asset/change.svg'),
       },
       {
-        title: 'Сообщество и пользователи',
-        caption: 'Мы и пользователи одно целое. Всегда говорим открыто с людьми, ценим их отзывы и рекомендации, помогая друг другу расти. Делимся самыми передовыми технологиями и новыми возможностями, развивая сообщество. Наши пользователи имеют решающее значение для нашего успеха.',
+        title: utils.getLang('site__aboutMissionCommunityUsersTitle'),
+        caption: utils.getLang('site__aboutMissionCommunityUsersSubTitle'),
         icon: require('../asset/community.svg'),
       },
       {
-        title: 'Доверие и надежность',
-        caption: 'Мы понимаем основные проблемы, с которыми сталкивается криптовалютное сообщество, поэтому стремимся предоставить наиболее надежный и безопасный сервис, выполняя работу качественно и заботясь о пользователях мы выстраиваем с ними доверие. Доверие как основной приоритет платформы, как фундамент свободной финансовой системы.',
+        title: utils.getLang('site__aboutMissionTrustReliabilityTitle'),
+        caption: utils.getLang('site__aboutMissionTrustReliabilitySubTitle'),
         icon: require('../asset/trust.svg'),
       },
     ]
@@ -39,17 +40,12 @@ function Mission() {
   return (
     <>
       <div className="SiteAboutScreen__intro">
-        <TitleWithBg title="Наша миссия" bgTitle="Mission" centered />
-        <p className="SiteAboutScreen__caption">
-          Мы стремимся к открытой финансовой системе, которая может дать экономическую свободу каждому, уровнять возможности людей, ускоряя тем самым темпы развития во всем мире. Система не контролируемая какой-либо страной или компанией, свободная как «Интернет». Технология блокчейн устраняет преграды на пути к доступности цифровых финансов, что в конечном итоге окажет существенное влияние на мировую экономику.
-          Криптовалюта является средством для достижения этой цели, и наша миссия заключается в предоставлении продуктов и услуг, необходимых для развития криптовалюты.
-          <br /><br />
-          Неважно, кто вы и чем занимаетесь, добро пожаловать в мир цифровых финансов, с надежной и удобной платформой - BITCOINBOT.
-        </p>
+        <TitleWithBg title={utils.getLang('site__aboutMissionOurMissionTitle')} bgTitle="Mission" centered />
+        <p className="SiteAboutScreen__caption">{utils.nl2br(utils.getLang('site__aboutMissionOurMissionSubTitle'))}</p>
       </div>
 
       <div className="SiteAboutScreen__mission__values">
-        <h2 className="SiteAboutScreen__mission__values__title">Ценности, которые нас объединяют</h2>
+        <h2 className="SiteAboutScreen__mission__values__title">{utils.getLang('site__aboutMissionValuesUnitUs')}</h2>
 
         {_renderValues()}
       </div>

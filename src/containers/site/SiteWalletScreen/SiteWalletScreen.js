@@ -7,6 +7,7 @@ import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
+import * as utils from '../../../utils/index';
 
 
 export default class SiteWalletScreen extends BaseScreen {
@@ -15,12 +16,12 @@ export default class SiteWalletScreen extends BaseScreen {
       <SiteWrapper className="Wallet__screen">
         <SitePageInfoBlock
           image={require('./asset/wallet_main_image.svg')}
-          title={<span>Один кошелек <br /> много возможностей</span>}
-          caption={<span>Простой и надежный криптовалютный кошелек</span>}
-          buttonText="Создать"
+          title={<span>{utils.nl2br(this.lang.site.walletTitle)}</span>}
+          caption={<span>{this.lang.site.walletSubTitle}</span>}
+          buttonText={this.lang.site.walletCreateBtn}
         />
         <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">Кошелек BITCOINBOT</div>
+          <div className="SiteSectionHeaderTitle">{this.lang.site.walletBitcoinbotWallet}</div>
         </div>
 
         {this._renderFeatures()}
@@ -34,23 +35,23 @@ export default class SiteWalletScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/wallet_feature_1.svg'),
-        title: 'Простой',
-        caption: 'Все ваши цифровые активы в одном месте. Храните, отправляйте и получайте криптовалюты в несколько кликов'
+        title: this.lang.site.walletSimpleTitle,
+        caption: this.lang.site.walletSimpleSubTitle
       },
       {
         icon: require('./asset/wallet_feature_2.svg'),
-        title: 'Надежный',
-        caption: 'Мы прилагаем огромные усилия для защиты ваших активов. Средств на кошельках хранятся с использованием шифрования AES-256'
+        title: this.lang.site.walletReliableTitle,
+        caption:this.lang.site.walletReliableSubTitle
       },
       {
         icon: require('./asset/wallet_feature_3.svg'),
-        title: 'Удобный',
-        caption: 'Используйте все преимущества своих цифровых активов на единой платформе'
+        title: this.lang.site.walletConvenientTitle,
+        caption:  this.lang.site.walletConvenientSubTitle
       },
       {
         icon: require('./asset/wallet_feature_4.svg'),
-        title: 'Бесплатный',
-        caption: 'Никаких комиссий за прием криптовалют и обслуживание. Собственный банк в ваших руках'
+        title: this.lang.site.walletFreeTitle,
+        caption: this.lang.site.walletFreeSubTitle
       },
     ].map((item) => {
       return (

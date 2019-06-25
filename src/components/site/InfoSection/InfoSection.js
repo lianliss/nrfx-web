@@ -3,6 +3,7 @@ import './InfoSection.less';
 import React from 'react';
 
 import InfoCard from '../InfoCard/InfoCard';
+import * as utils from '../../../utils/index';
 
 
 function InfoSection({ firstInfo, secondInfo }) {
@@ -14,7 +15,7 @@ function InfoSection({ firstInfo, secondInfo }) {
         caption={firstInfo.caption}
         icon={firstInfo.icon}
         className="InfoSection__infocard"
-        btn={<a href={`/#/${firstInfo.route}`} className="InfoSection__link">Подробнее</a>}
+        btn={<a href={`/#/${firstInfo.route}`} className="InfoSection__link">{utils.getLang('site__aboutReadMore1')}</a>}
       />
 
       <div className="InfoSection__divider"></div>
@@ -25,7 +26,7 @@ function InfoSection({ firstInfo, secondInfo }) {
         caption={secondInfo.caption}
         icon={secondInfo.icon}
         className="InfoSection__infocard"
-        btn={<a href={`/#/${secondInfo.route}`} className="InfoSection__link">Подробнее</a>}
+        btn={<a href={`/#/${secondInfo.route}`} className="InfoSection__link">{utils.getLang('site__aboutReadMore2')}</a>}
       />
     </div>
   )

@@ -1,4 +1,5 @@
 import store from '../store';
+import React from "react";
 
 export function classNames() {
   let result = [];
@@ -29,3 +30,6 @@ export function classNames() {
 export function getLang(key) {
   return store.getState().default.lang[key];
 }
+
+export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
+

@@ -51,21 +51,21 @@ export default class SiteFaqScreen extends BaseScreen {
     return (
       <SiteWrapper withOrangeBg>
         <div className="SiteFaqScreen__heading">
-          <h1 className="SiteFaqScreen__heading__title">FAQ</h1>
-          <p className="SiteFaqScreen__heading__subtitle">Мы составили список часто задаваемых вопросов</p>
+          <h1 className="SiteFaqScreen__heading__title">{this.lang.site.faqTitle}</h1>
+          <p className="SiteFaqScreen__heading__subtitle">{this.lang.site.faqSubTitle}</p>
         </div>
 
-        <UI.Search placeholder="Есть вопрос? Задайте поисковый запрос" />
+        <UI.Search placeholder={this.lang.site.faqPlaceHolder} />
 
 
         <div className="SiteFaqScreen__questions">
           <div className="SiteFaqScreen__questions__section">
-            <h2 className="SiteFaqScreen__questions__title">General Inquiries</h2>
+            <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle1}</h2>
 
             {this._renderQuestions(questions.general)}
           </div>
           <div className="SiteFaqScreen__questions__section">
-            <h2 className="SiteFaqScreen__questions__title">Another Inquiries</h2>
+            <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle2}</h2>
 
             {this._renderQuestions(questions.another)}
           </div>
@@ -76,7 +76,7 @@ export default class SiteFaqScreen extends BaseScreen {
           <img src={require('./asset/questions.svg')} alt="Questions" />
 
           <p className="SiteFaqScreen__more_questions__text">
-            Остались вопросы? Просто напишите нам 
+            {this.lang.site.faqMoreQuestions}
             <br />
             <a className="SiteFaqScreen__more_questions__email" href="mailto:someone@example.com?Subject=Hello%20again" target="_top">
               support@bitcoinbot.com

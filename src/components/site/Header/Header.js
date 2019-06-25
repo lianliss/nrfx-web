@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 
 import UI from '../../../ui';
+import * as utils from '../../../utils/index';
 import * as pages from '../../../constants/pages';
 import * as steps from '../AuthModal/fixtures';
 import Dropdown from './components/Dropdown';
@@ -105,13 +106,13 @@ function Header({ showLightLogo }) {
             </div>
             <div className="SiteHeader__menu__CTA">
               <AuthModal>
-                <UI.Button type="outline">Войти</UI.Button>
+                <UI.Button type="outline">{utils.getLang('site__headerLogIn')}</UI.Button>
               </AuthModal>
               <AuthModal type={steps.REGISTRATION}>
-                <UI.Button type="outline_white">Регистрация</UI.Button>
+                <UI.Button type="outline_white">{utils.getLang('site__headerRegistration')}</UI.Button>
               </AuthModal>
             </div>
-            
+
             {headerLinks.map(item => (
               <MobileDropdown key={item.title} title={item.title} subItems={item.children} />
             ))}
@@ -153,7 +154,7 @@ function Header({ showLightLogo }) {
               }
             </div>
           </div>
-        ) : null}      
+        ) : null}
     </div>
   )
 }

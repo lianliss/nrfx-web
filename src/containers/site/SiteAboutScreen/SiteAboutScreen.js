@@ -9,18 +9,19 @@ import About from './components/About';
 import Mission from './components/Mission';
 import History from './components/History';
 import { ABOUT, MISSION, HISTORY } from '../../../constants/pages';
+import * as utils from '../../../utils/index';
 
 
 const getHeading = (currentTab) => {
   switch (currentTab) {
     case ABOUT:
-      return 'О BITCOINBOT';
+      return utils.getLang('site__aboutBitcoinbotTitle');
     case MISSION:
-      return 'Миссия и ценности';
+      return utils.getLang('site__aboutMissionTitle');
     case HISTORY:
-      return 'Дорожная карта';
+      return utils.getLang('site__aboutRoadMapTitle');
     default:
-      return 'О BITCOINBOT';
+      return utils.getLang('site__aboutBitcoinbotTitle');
   }
 }
 
