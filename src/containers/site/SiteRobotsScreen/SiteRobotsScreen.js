@@ -15,23 +15,26 @@ export default class SiteRobotsScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper className="Robots__screen">
-        <SitePageInfoBlock
-          image={require('./asset/robots_main_image.svg')}
-          title={<span>{utils.nl2br(this.lang.site.robotsTitle)}</span>}
-          caption={<span>{this.lang.site.robotsSubTitle}</span>}
-          buttonText="Попробовать"
-        />
+        <div className="Layout_spacing">
+          <SitePageInfoBlock
+            image={require('./asset/robots_main_image.svg')}
+            title={<span>{utils.nl2br(this.lang.site.robotsTitle)}</span>}
+            caption={<span>{this.lang.site.robotsSubTitle}</span>}
+            buttonText="Попробовать"
+          />
 
-        <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">{this.lang.site.robotsHowEarnMoreTitle}</div>
-          <div className="SiteSectionHeaderCaption">{this.lang.site.robotsHowEarnMoreSubTitle}</div>
+          <div className="SiteSectionHeader">
+            <div className="SiteSectionHeaderTitle">{this.lang.site.robotsHowEarnMoreTitle}</div>
+            <div className="SiteSectionHeaderCaption">{this.lang.site.robotsHowEarnMoreSubTitle}</div>
+          </div>
+
+          {this._renderFeatures()}
+
+          <SupportedPlatforms />
         </div>
 
-        {this._renderFeatures()}
-
-        <SupportedPlatforms />
-
         <RegisterBanner />
+
       </SiteWrapper>
     )
   }
@@ -71,7 +74,7 @@ export default class SiteRobotsScreen extends BaseScreen {
     ].map((item) => {
       return (
         <InfoCard
-          key={item.title} 
+          key={item.title}
           title={item.title}
           caption={item.caption}
           icon={item.icon}

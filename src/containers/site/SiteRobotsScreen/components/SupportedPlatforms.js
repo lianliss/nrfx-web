@@ -52,7 +52,7 @@ export default class SiteRobotsScreen extends BaseScreen {
   }
 
   componentDidMount() {
-    this.updateVisibleLogos();
+    this.updateVisibleLogos(true);
     window.addEventListener('resize', this.updateVisibleLogos);
   }
 
@@ -60,10 +60,10 @@ export default class SiteRobotsScreen extends BaseScreen {
     window.removeEventListener('resize', this.updateVisibleLogos);
   }
 
-  updateVisibleLogos = () => {
+  updateVisibleLogos = (isInitial) => {
     const { visibleLogos, screenWidth } = this.state;
 
-    if (window.innerWidth !== screenWidth) {
+    if (window.innerWidth !== screenWidth || isInitial) {
       if (screenWidth > PHONE && platformLogos.length !== visibleLogos.length) {
         this.setState({ visibleLogos: platformLogos });
       } else if (screenWidth <= PHONE && platformLogos.length === visibleLogos.length) {

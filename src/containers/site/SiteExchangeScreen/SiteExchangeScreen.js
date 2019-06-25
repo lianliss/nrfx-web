@@ -16,49 +16,51 @@ export default class SiteExchangeScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper>
-        <SitePageInfoBlock
-          image={require('./asset/exchange_main_image.svg')}
-          title={<span>{this.lang.site.exchangeTitle}</span>}
-          caption={<span>{this.lang.site.exchangeSubTitle}</span>}
-          buttonText={this.lang.site.exchangeStart}
-        />
+        <div className="Layout_spacing">
+          <SitePageInfoBlock
+            image={require('./asset/exchange_main_image.svg')}
+            title={<span>{this.lang.site.exchangeTitle}</span>}
+            caption={<span>{this.lang.site.exchangeSubTitle}</span>}
+            buttonText={this.lang.site.exchangeStart}
+          />
 
 
-        <div className="SiteExchangeScreen__market">
-          <img src={require('./asset/exchange_data.svg')} alt="Exchange market" className="SiteExchangeScreen__market__image" />
-          <UI.Button rounded>{this.lang.site.exchangeViewExchange}</UI.Button>
-        </div>
-
-
-        <h2 className="SiteExchangeScreen__title">{utils.nl2br(this.lang.site.exchangeFeaturesTitle)}</h2>
-        {this._renderFeatures()}
-
-
-        <div className="SiteExchangeScreen__interface">
-          <div className="SiteExchangeScreen__interface__cont">
-            <TitleWithBg title={this.lang.site.exchangeCustomizableInterface} bgTitle="Interface" />
-
-            <p>
-              {this.lang.site.exchangeCustomizableInterfaceTitle}
-            </p>
-
-            <ul>
-              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle1}</span></li>
-              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle2}</span></li>
-              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle3}</span></li>
-              <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle4}</span></li>
-            </ul>
-
-            <p>
-              {this.lang.site.exchangeCustomizableInterfaceSubTitle5}
-            </p>
+          <div className="SiteExchangeScreen__market">
+            <img src={require('./asset/exchange_data.svg')} alt="Exchange market" className="SiteExchangeScreen__market__image" />
+            <UI.Button rounded>{this.lang.site.exchangeViewExchange}</UI.Button>
           </div>
 
-          <div className="SiteExchangeScreen__interface__img">
-            <img src={require('./asset/exchange_interface.svg')} alt="Exchange interface" className="" />
-          </div>
-        </div>
 
+          <h2 className="SiteExchangeScreen__title">{utils.nl2br(this.lang.site.exchangeFeaturesTitle)}</h2>
+          {this._renderFeatures()}
+
+
+          <div className="SiteExchangeScreen__interface">
+            <div className="SiteExchangeScreen__interface__cont">
+              <TitleWithBg title={this.lang.site.exchangeCustomizableInterface} bgTitle="Interface" />
+
+              <p>
+                {this.lang.site.exchangeCustomizableInterfaceTitle}
+              </p>
+
+              <ul>
+                <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle1}</span></li>
+                <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle2}</span></li>
+                <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle3}</span></li>
+                <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle4}</span></li>
+              </ul>
+
+              <p>
+                {this.lang.site.exchangeCustomizableInterfaceSubTitle5}
+              </p>
+            </div>
+
+            <div className="SiteExchangeScreen__interface__img">
+              <img src={require('./asset/exchange_interface.svg')} alt="Exchange interface" className="" />
+            </div>
+          </div>
+
+        </div>
 
         <Banner
           title={this.lang.site.exchangeReadyStartTrading}

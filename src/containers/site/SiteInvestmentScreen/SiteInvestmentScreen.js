@@ -14,30 +14,30 @@ export default class SiteInvestmentScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper>
-        <SitePageInfoBlock
-          hideWatchButton
-          image={require('./asset/investment_main_image.svg')}
-          title={<span>{this.lang.site.investmentTitleInvestment}</span>}
-          caption={<span>{this.lang.site.investmentSubTitle}</span>}
-          buttonText={this.lang.site.investmentInvestBtn}
-        />
+        <div className="Layout_spacing">
+          <SitePageInfoBlock
+            hideWatchButton
+            image={require('./asset/investment_main_image.svg')}
+            title={<span>{this.lang.site.investmentTitleInvestment}</span>}
+            caption={<span>{this.lang.site.investmentSubTitle}</span>}
+            buttonText={this.lang.site.investmentInvestBtn}
+          />
 
-        <div className="SiteInvestmentScreen__numbers">
-          {this._renderNumbers()}
+          <div className="SiteInvestmentScreen__numbers">
+            {this._renderNumbers()}
+          </div>
+
+          <div className="SiteInvestmentScreen__intro">
+            <TitleWithBg title={this.lang.site.investmentWhatIsInvestmentTitle} bgTitle="Investment" bgTitleUppercase centered darkBg />
+            <p className="SiteInvestmentScreen__caption">
+              {this.lang.site.investmentWhatIsInvestmentSubTitle}
+            </p>
+          </div>
+
+          <h2 className="SiteInvestmentScreen__title">{this.lang.site.investmentMoreThanDeposit}</h2>
+          {this._renderFeatures()}
         </div>
-
-        <div className="SiteInvestmentScreen__intro">
-          <TitleWithBg title={this.lang.site.investmentWhatIsInvestmentTitle} bgTitle="Investment" bgTitleUppercase centered darkBg />
-          <p className="SiteInvestmentScreen__caption">
-            {this.lang.site.investmentWhatIsInvestmentSubTitle}
-          </p>
-        </div>
-
-
-        <h2 className="SiteInvestmentScreen__title">{this.lang.site.investmentMoreThanDeposit}</h2>
-        {this._renderFeatures()}
-
-
+        
         <Banner
           title={this.lang.site.investmentNeverBeenEasier}
           caption={this.lang.site.investmentIncreaseCapital}

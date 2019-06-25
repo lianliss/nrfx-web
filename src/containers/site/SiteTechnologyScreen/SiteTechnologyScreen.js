@@ -51,45 +51,41 @@ export default class SiteTechnologyScreen extends BaseScreen {
 
     return (
       <SiteWrapper withOrangeBg>
-        <h1 className="SiteTechnologyScreen__heading">{this.lang.site.technologyTitle}</h1>
+        <div className="Layout_spacing">
+          <h1 className="SiteTechnologyScreen__heading">{this.lang.site.technologyTitle}</h1>
 
-        <p className="SiteTechnologyScreen__intro">
-          {this.lang.site.technologySubTitle}
-        </p>
-
-        <div className="SiteTechnologyScreen__description">
-          <TitleWithBg title={this.lang.site.technologyArtificialIntelligence} bgTitle="Artificial Intelligence" centered darkBg />
-
-          <p className="SiteTechnologyScreen__description__text">
-            {this.lang.site.technologyArtificialIntelligenceText}
+          <p className="SiteTechnologyScreen__intro">
+            {this.lang.site.technologySubTitle}
           </p>
 
-          <br /><br />
+          <div className="SiteTechnologyScreen__description">
+            <TitleWithBg title={this.lang.site.technologyArtificialIntelligence} bgTitle="Artificial Intelligence" centered darkBg />
+            <p className="SiteTechnologyScreen__description__text">
+              {this.lang.site.technologyArtificialIntelligenceText}
+            </p>
+            <br /><br />
 
-          {isAllTextVisible
-            ? (
-              <p className="SiteTechnologyScreen__description__text">
-                {utils.nl2br(this.lang.site.technologyDescriptionText)}
-              </p>
-            )
-            : null}
+            {isAllTextVisible
+              ? (
+                <p className="SiteTechnologyScreen__description__text">
+                  {utils.nl2br(this.lang.site.technologyDescriptionText)}
+                </p>
+              )
+              : null}
 
+            {!isAllTextVisible
+              ? <p className="SiteTechnologyScreen__see_more" onClick={this.showMoreText}>{this.lang.site.technologyReadMore}</p>
+              : null}
+          </div>
 
-          {!isAllTextVisible
-            ? <p className="SiteTechnologyScreen__see_more" onClick={this.showMoreText}>{this.lang.site.technologyReadMore}</p>
-            : null}
+          <div className="SiteTechnologyScreen__features">
+            <h2 className="SiteTechnologyScreen__title">{this.lang.site.technologyQuestionTitle}</h2>
+            {this._renderFeatures()}
+          </div>
+
+          <InfoSection firstInfo={misssionInfo} secondInfo={aboutInfo} />
 
         </div>
-
-        <div className="SiteTechnologyScreen__features">
-          <h2 className="SiteTechnologyScreen__title">{this.lang.site.technologyQuestionTitle}</h2>
-
-          {this._renderFeatures()}
-        </div>
-
-
-        <InfoSection firstInfo={misssionInfo} secondInfo={aboutInfo} />
-
       </SiteWrapper>
     )
   }

@@ -14,17 +14,20 @@ export default class SiteWalletScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper className="Wallet__screen">
-        <SitePageInfoBlock
-          image={require('./asset/wallet_main_image.svg')}
-          title={<span>{utils.nl2br(this.lang.site.walletTitle)}</span>}
-          caption={<span>{this.lang.site.walletSubTitle}</span>}
-          buttonText={this.lang.site.walletCreateBtn}
-        />
-        <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">{this.lang.site.walletBitcoinbotWallet}</div>
-        </div>
+        <div className="Layout_spacing">
+          <SitePageInfoBlock
+            image={require('./asset/wallet_main_image.svg')}
+            title={<span>{utils.nl2br(this.lang.site.walletTitle)}</span>}
+            caption={<span>{this.lang.site.walletSubTitle}</span>}
+            buttonText={this.lang.site.walletCreateBtn}
+          />
 
-        {this._renderFeatures()}
+          <div className="SiteSectionHeader">
+            <div className="SiteSectionHeaderTitle">{this.lang.site.walletBitcoinbotWallet}</div>
+          </div>
+
+          {this._renderFeatures()}
+        </div>
 
         <MobileAppBanner />
       </SiteWrapper>

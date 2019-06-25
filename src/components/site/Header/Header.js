@@ -99,7 +99,9 @@ function Header({ showLightLogo }) {
         ? (
           <div className="SiteHeader__menu__vertical">
             <div className="SiteHeader__logo__row">
-              <SVG src={require('../../../asset/logo_big_white.svg')} />
+              <a href="/#/">
+                <SVG src={require('../../../asset/logo_big_white.svg')} />
+              </a>
               <div onClick={() => toggleVerticalMenu(false)}>
                 <SVG src={require('./asset/close.svg')}  />
               </div>
@@ -125,12 +127,14 @@ function Header({ showLightLogo }) {
       {!isVerticalMenuOpen
         ? (
           <div className="SiteHeader__cont">
-            <div className="SiteHeader__logo">
-              {showLightLogo
-                ? <SVG src={require('../../../asset/logo_big_white.svg')} />
-                : <SVG src={require('../../../asset/logo_big_orange.svg')} />
-              }
-            </div>
+            <a href="/#/">
+              <div className="SiteHeader__logo">
+                {showLightLogo
+                  ? <SVG src={require('../../../asset/logo_big_white.svg')} />
+                  : <SVG src={require('../../../asset/logo_big_orange.svg')} />
+                }
+              </div>
+            </a>
             <div className="SiteHeader__menu__horizontal">
               {headerLinks.map(item => (
                 <Dropdown key={item.title} title={item.title} subItems={item.children} />
