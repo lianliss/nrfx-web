@@ -53,21 +53,24 @@ export default class SiteAboutScreen extends BaseScreen {
 
     return (
       <SiteWrapper withOrangeBg>
-        <div className="SiteAboutScreen">
+        <div className="Layout_spacing">
 
-          <h1 className="SiteAboutScreen__heading">{getHeading(currentTab)}</h1>
+          <div className="SiteAboutScreen">
 
-          <div className="SiteAboutScreen__tabs">
-            <TabButton title="О нас" tabName={ABOUT} currentTab={currentTab} />
-            <TabButton title="Миссия" tabName={MISSION} currentTab={currentTab} />
-            <TabButton title="Дорожная карта" tabName={HISTORY} currentTab={currentTab} />
+            <h1 className="SiteAboutScreen__heading">{getHeading(currentTab)}</h1>
+
+            <div className="SiteAboutScreen__tabs">
+              <TabButton title="О нас" tabName={ABOUT} currentTab={currentTab} />
+              <TabButton title="Миссия" tabName={MISSION} currentTab={currentTab} />
+              <TabButton title="Дорожная карта" tabName={HISTORY} currentTab={currentTab} />
+            </div>
+
+            {currentTab === ABOUT
+              ? <About />
+              : currentTab === MISSION
+                ? <Mission />
+                : <History />}
           </div>
-
-          {currentTab === ABOUT
-            ? <About />
-            : currentTab === MISSION
-              ? <Mission />
-              : <History />}
         </div>
 
       </SiteWrapper>

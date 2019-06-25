@@ -50,40 +50,42 @@ export default class SiteFaqScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper withOrangeBg>
-        <div className="SiteFaqScreen__heading">
-          <h1 className="SiteFaqScreen__heading__title">{this.lang.site.faqTitle}</h1>
-          <p className="SiteFaqScreen__heading__subtitle">{this.lang.site.faqSubTitle}</p>
-        </div>
+        <div className="Layout_spacing">
 
-        <UI.Search placeholder={this.lang.site.faqPlaceHolder} />
-
-
-        <div className="SiteFaqScreen__questions">
-          <div className="SiteFaqScreen__questions__section">
-            <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle1}</h2>
-
-            {this._renderQuestions(questions.general)}
+          <div className="SiteFaqScreen__heading">
+            <h1 className="SiteFaqScreen__heading__title">{this.lang.site.faqTitle}</h1>
+            <p className="SiteFaqScreen__heading__subtitle">{this.lang.site.faqSubTitle}</p>
           </div>
-          <div className="SiteFaqScreen__questions__section">
-            <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle2}</h2>
 
-            {this._renderQuestions(questions.another)}
+          <UI.Search placeholder={this.lang.site.faqPlaceHolder} />
+
+
+          <div className="SiteFaqScreen__questions">
+            <div className="SiteFaqScreen__questions__section">
+              <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle1}</h2>
+
+              {this._renderQuestions(questions.general)}
+            </div>
+            <div className="SiteFaqScreen__questions__section">
+              <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle2}</h2>
+
+              {this._renderQuestions(questions.another)}
+            </div>
+          </div>
+
+
+          <div className="SiteFaqScreen__more_questions">
+            <img src={require('./asset/questions.svg')} alt="Questions" />
+
+            <p className="SiteFaqScreen__more_questions__text">
+              {this.lang.site.faqMoreQuestions}
+              <br />
+              <a className="SiteFaqScreen__more_questions__email" href="mailto:someone@example.com?Subject=Hello%20again" target="_top">
+                support@bitcoinbot.com
+              </a>
+            </p>
           </div>
         </div>
-
-
-        <div className="SiteFaqScreen__more_questions">
-          <img src={require('./asset/questions.svg')} alt="Questions" />
-
-          <p className="SiteFaqScreen__more_questions__text">
-            {this.lang.site.faqMoreQuestions}
-            <br />
-            <a className="SiteFaqScreen__more_questions__email" href="mailto:someone@example.com?Subject=Hello%20again" target="_top">
-              support@bitcoinbot.com
-            </a>
-          </p>
-        </div>
-
       </SiteWrapper>
     )
   }

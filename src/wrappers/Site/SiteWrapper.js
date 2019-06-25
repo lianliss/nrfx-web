@@ -34,9 +34,7 @@ function SiteWrapper({ isHomepage, withOrangeBg, className, children }) {
 
         <Header showLightLogo={withOrangeBg} />
 
-        <div className="SiteWrapper__content">
-          {children}
-        </div>
+        {children}
 
       </div>
       <Footer />

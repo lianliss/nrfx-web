@@ -38,41 +38,42 @@ export default class SiteCommerceScreen extends BaseScreen {
   render() {
     return (
       <SiteWrapper>
-        <SitePageInfoBlock
-          hideWatchButton
-          image={require('../../../containers/site/SiteCommerceScreen/asset/Commerce_main_bg.svg')}
-          title={<span>{this.lang.site.commerceTitle}</span>}
-          caption={<span>{this.lang.site.commerceSubTitle}</span>}
-          buttonText={this.lang.site.commerceRegistration}
-        />
+        <div className="Layout_spacing">
+          <SitePageInfoBlock
+            hideWatchButton
+            image={require('../../../containers/site/SiteCommerceScreen/asset/Commerce_main_bg.svg')}
+            title={<span>{this.lang.site.commerceTitle}</span>}
+            caption={<span>{this.lang.site.commerceSubTitle}</span>}
+            buttonText={this.lang.site.commerceRegistration}
+          />
 
-        <div className="SiteCommerceScreen__intro">
-          <TitleWithBg title={this.lang.site.commerceBitcoinbotTitle} bgTitle="Commerce" bgTitleUppercase centered />
-          <p className="SiteCommerceScreen__caption">
-            {this.lang.site.commerceBitcoinbotSubTitle}
-          </p>
+          <div className="SiteCommerceScreen__intro">
+            <TitleWithBg title={this.lang.site.commerceBitcoinbotTitle} bgTitle="Commerce" bgTitleUppercase centered />
+            <p className="SiteCommerceScreen__caption">
+              {this.lang.site.commerceBitcoinbotSubTitle}
+            </p>
+          </div>
+
+          <div className="SiteCommerceScreen__features">
+            <h2 className="SiteCommerceScreen__title">{this.lang.site.commerceBenefitsTitle}</h2>
+            <p className="SiteCommerceScreen__caption">{this.lang.site.commerceBenefitsSubTitle}</p>
+
+            {this._renderFeatures()}
+          </div>
+
+
+          <h2 className="SiteCommerceScreen__title">{this.lang.site.commerceHowItWorksTitle}</h2>
+          <p className="SiteCommerceScreen__caption">{this.lang.site.commerceHowItWorksSubTitle}</p>
+
+          <Steps stepsData={this.stepsData} />
+
         </div>
-
-        <div className="SiteCommerceScreen__features">
-          <h2 className="SiteCommerceScreen__title">{this.lang.site.commerceBenefitsTitle}</h2>
-          <p className="SiteCommerceScreen__caption">{this.lang.site.commerceBenefitsSubTitle}</p>
-
-          {this._renderFeatures()}
-        </div>
-
-
-        <h2 className="SiteCommerceScreen__title">{this.lang.site.commerceHowItWorksTitle}</h2>
-        <p className="SiteCommerceScreen__caption">{this.lang.site.commerceHowItWorksSubTitle}</p>
-
-        <Steps stepsData={this.stepsData} />
-
 
         <Banner
           title={this.lang.site.commerceConnectTitle}
           caption={this.lang.site.commerceConnectSubTitle}
           btnText={this.lang.site.commerceConnectBtn}
         />
-
       </SiteWrapper>
     )
   }

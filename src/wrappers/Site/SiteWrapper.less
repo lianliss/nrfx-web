@@ -1,13 +1,8 @@
 .SiteWrapper {
   min-height: 1219px;
   position: relative;
-
-  .SiteWrapper__content {
-    padding: 0 100px;
-
-    @media (max-width: 992px) { padding: 0 70px; }
-    @media (max-width: 768px) { padding: 0 30px; }
-  }
+  width: 100vw;
+  overflow: hidden;
 }
 
 .SiteWrapper__home__bg {
@@ -20,18 +15,21 @@
   left: calc(50% + 132px);
   transform: translateX(-50%);
   z-index: -1;
+  max-width: 100vw;
+  overflow: hidden;
 
   @media (max-width: 1200px) { width: 1300px; }
 }
 
 .SiteWrapper__bg {
   background: linear-gradient(170.9deg, #FFFFFF 30.13%, #FAF8F5 86.73%);
-  width: 100%;
   height: 855px;
   position: absolute;
   z-index: -5;
+  max-width: 100vw;
+  overflow: hidden;
 
-  @media (max-width: 1200px) { width: 350%; }
+  // @media (max-width: 1200px) { width: 350%; }
 
 
   .SiteWrapper__bg__img {
@@ -47,7 +45,7 @@
 .SiteWrapper__orange__bg {
   position: absolute;
   z-index: -5;
-  width: 100%;
+  max-width: 100vw;
   height: 330px;
   overflow: hidden;
 
