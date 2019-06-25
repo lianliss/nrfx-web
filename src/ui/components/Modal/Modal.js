@@ -27,11 +27,9 @@ function Modal(props) {
   );
 }
 
-// pass a prop function for closing
-
 Modal.propTypes = {
   isOpen: PropTypes.bool,
-  onChange: PropTypes.func
+  onClose: PropTypes.func
 };
 
 export default React.memo(Modal);

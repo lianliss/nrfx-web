@@ -29,8 +29,11 @@ export default class SiteMainScreen extends BaseScreen {
             <div className="SiteSectionHeaderTitle">{this.lang.site.homeBitcoibotCombine}</div>
             <div className="SiteSectionHeaderCaption">{this.lang.site.homeBitcoibotCombineSubTitle}</div>
           </div>
+        </div>
 
-          <div className="SiteHomepageProducts">
+        <div className="SiteHomepageProducts">
+          <div className="Layout_spacing">
+
             <HomepageProduct
               title={this.lang.site.homeExchange}
               bgTitle="Exchange"
@@ -64,14 +67,14 @@ export default class SiteMainScreen extends BaseScreen {
               seeMoreLink={pages.COMMERCE}
             >{[this.lang.site.homePaymentSubTitle1, this.lang.site.homePaymentSubTitle2, this.lang.site.homePaymentSubTitle3]}</HomepageProduct>
           </div>
-
-          <div className="SiteSectionHeader">
-            <div className="SiteSectionHeaderTitle">{this.lang.site.homeSecurityTitle}</div>
-            <div className="SiteSectionHeaderCaption">{this.lang.site.homeSecuritySubaTitle}</div>
-          </div>
-
-          {this._renderSafety()}
         </div>
+
+        <div className="SiteSectionHeader">
+          <div className="SiteSectionHeaderTitle">{this.lang.site.homeSecurityTitle}</div>
+          <div className="SiteSectionHeaderCaption">{this.lang.site.homeSecuritySubaTitle}</div>
+        </div>
+
+        {this._renderSafety()}
 
         <RegisterBanner isCurly />
 
