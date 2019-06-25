@@ -1,21 +1,21 @@
-export const ABOUT = 'about';
-export const MISSION = 'mission';
-export const HISTORY = 'history';
-
+import { ABOUT, HISTORY, MISSION } from '../../../constants/pages';
 
 export const aboutInfo = {
+  route: ABOUT,
   title: 'О нас',
   caption: 'Платформа – это продукт кропотливой работы команды.',
   icon: require('./asset/about_icon.svg'),
 }
 
 export const misssionInfo = {
+  route: MISSION,
   title: 'Миссия',
   caption: 'Мы стремимся быть удобной и надежной платформой для доступности цифровых валют',
   icon: require('./asset/mission_icon.svg'),
 }
 
 export const historyInfo = {
+  route: HISTORY,
   title: 'Дорожная карта',
   caption: 'Все большое начинается с чего-то малого. Мы начали работать над платформой в 2017 году.',
   icon: require('./asset/history_icon.svg'),

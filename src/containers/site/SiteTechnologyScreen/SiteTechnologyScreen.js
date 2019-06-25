@@ -19,6 +19,7 @@ export default class SiteTechnologyScreen extends BaseScreen {
   }
 
   componentDidMount() {
+    window.scroll(0, 0);
     this.updateVisibleText(true);
     window.addEventListener('resize', this.updateVisibleText);
   }
@@ -70,7 +71,7 @@ export default class SiteTechnologyScreen extends BaseScreen {
               <p className="SiteTechnologyScreen__description__text">
                 {utils.nl2br(this.lang.site.technologyDescriptionText)}
               </p>
-            ) 
+            )
             : null}
 
 

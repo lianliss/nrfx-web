@@ -3,6 +3,7 @@ import './Banner.less';
 import React from 'react';
 
 import UI from '../../../ui';
+import AuthModal from '../AuthModal/AuthModal';
 
 function Banner({ title, caption, btnText }) {
   return (
@@ -11,7 +12,9 @@ function Banner({ title, caption, btnText }) {
       <p className="Banner__caption">{caption}</p>
 
       {/* TODO: control the wide (CTA) buttons via props */}
-      <UI.Button rounded type="outline" style={{ width: 240 }}>{btnText}</UI.Button>
+      <AuthModal>
+        <UI.Button rounded type="outline" style={{ width: 240 }}>{btnText}</UI.Button>
+      </AuthModal>
     </div>
   )
 }

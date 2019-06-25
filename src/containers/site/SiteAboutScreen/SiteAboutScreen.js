@@ -8,7 +8,7 @@ import UI from '../../../ui';
 import About from './components/About';
 import Mission from './components/Mission';
 import History from './components/History';
-import { ABOUT, MISSION, HISTORY } from './fixtures';
+import { ABOUT, MISSION, HISTORY } from '../../../constants/pages';
 import * as utils from '../../../utils/index';
 
 
@@ -29,29 +29,27 @@ const getClassName = (tab, currentTab) => {
   return currentTab !== tab ? 'inactive' : '';
 }
 
-const TabButton = ({ title, switchFn, tabName, currentTab }) => (
-  <UI.Button
-    rounded
-    style={{ width: 200 }}
-    onClick={() => switchFn(tabName)}
-    newClass={getClassName(tabName, currentTab)}
-  >
-    {title}
-  </UI.Button>
+const TabButton = ({ title, tabName, currentTab }) => (
+  <a href={`/#/${tabName}`}>
+    <UI.Button
+      rounded
+      style={{ width: 200 }}
+      newClass={getClassName(tabName, currentTab)}
+    >
+      {title}
+    </UI.Button>
+  </a>
 )
 
-
 export default class SiteAboutScreen extends BaseScreen {
-  state = {
-    currentTab: HISTORY,
-  }
-
-  switchTab = (currentTab) => {
-    this.setState({ currentTab });
+  componentDidUpdate(prevProps) {
+    if (prevProps.state.page !== this.props.state.page) {
+      window.scroll(0,0);
+    }
   }
 
   render() {
-    const { currentTab } = this.state;
+    const currentTab = this.props.state.page;
 
     return (
       <SiteWrapper withOrangeBg>
@@ -60,9 +58,9 @@ export default class SiteAboutScreen extends BaseScreen {
           <h1 className="SiteAboutScreen__heading">{getHeading(currentTab)}</h1>
 
           <div className="SiteAboutScreen__tabs">
-            <TabButton title="О нас" switchFn={this.switchTab} tabName={ABOUT} currentTab={currentTab} />
-            <TabButton title="Миссия" switchFn={this.switchTab} tabName={MISSION} currentTab={currentTab} />
-            <TabButton title="Дорожная карта" switchFn={this.switchTab} tabName={HISTORY} currentTab={currentTab} />
+            <TabButton title="О нас" tabName={ABOUT} currentTab={currentTab} />
+            <TabButton title="Миссия" tabName={MISSION} currentTab={currentTab} />
+            <TabButton title="Дорожная карта" tabName={HISTORY} currentTab={currentTab} />
           </div>
 
           {currentTab === ABOUT
@@ -71,7 +69,6 @@ export default class SiteAboutScreen extends BaseScreen {
               ? <Mission />
               : <History />}
         </div>
-
 
       </SiteWrapper>
     )
