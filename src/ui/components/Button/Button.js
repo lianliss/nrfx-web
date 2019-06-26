@@ -17,10 +17,11 @@ function Button(props) {
   });
 
   return (
-    <div
+    <button
       className={className}
       onClick={() => props.onClick && props.onClick()}
       style={props.style}
+      type={props.btnType}
     >
       <div className="Button__cont">
         {props.beforeContent}
@@ -28,13 +29,14 @@ function Button(props) {
         {props.afterContent}
       </div>
       {(props.type === 'outline' || props.type === 'negative_outline') && <div className="Button__outline_helper" />}
-    </div>
+    </button>
   )
 }
 
 Button.propTypes = {
   size: PropTypes.oneOf(['small']),
   type: PropTypes.oneOf(['secondary', 'outline', 'negative', 'negative_outline', 'outline_white']),
+  btnType: PropTypes.string,
   disabled: PropTypes.bool,
   rounded: PropTypes.bool,
   onClick: PropTypes.func,
