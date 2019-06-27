@@ -26,16 +26,16 @@ export default function Footer() {
             <a href={`/#/${pages.SAFETY}`} className="Footer__links__item">{utils.getLang('site__footerSecurity')}</a>
           </div>
           <div className="Footer__links">
-            <div className="Footer__links__title">Помощь</div>
-            <a href={`/#/${pages.FAQ}`} className="Footer__links__item">ЧаВо</a>
-            <a href={`/#/${pages.CONTACT}`} className="Footer__links__item">Связаться с нами</a>
-            <a href="#" className="Footer__links__item">Пользовательское соглашение</a>
-            <a href="#" className="Footer__links__item">Политика конфиденциальности</a>
+            <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
+            <a href={`/#/${pages.FAQ}`} className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
+            <a href={`/#/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</a>
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>
-            <a href="#" className="Footer__links__item">App Store</a>
-            <a href="#" className="Footer__links__item">Google Play</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerAppStore')}</a>
+            <a href="#" className="Footer__links__item">{utils.getLang('site__footerGooglePlay')}</a>
           </div>
         </div>
         <div className="Footer__bottom">

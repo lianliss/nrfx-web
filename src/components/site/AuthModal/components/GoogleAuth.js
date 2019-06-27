@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import UI from '../../../../ui';
 import * as steps from '../fixtures';
+import * as utils from '../../../../utils/index';
 import { getGoogleCode } from '../../../../actions/auth';
 
 
@@ -20,7 +21,7 @@ function GoogleAuth({ changeStep, email, password }) {
 
   return (
     <>
-      <h2 className="AuthModal__title">Log In</h2>
+      <h2 className="AuthModal__title">{utils.getLang('site__authModalLogIn')}</h2>
 
       <div className="AuthModal__content">
 
@@ -35,12 +36,12 @@ function GoogleAuth({ changeStep, email, password }) {
         </div>
         
         <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>
-          Reset Authenticator Key
+            {utils.getLang('site__authModalResetKey')}
         </h4>
       </div>
 
       <div className="AuthModal__footer">
-        <UI.Button onClick={handleSubmit}>Submit</UI.Button>
+        <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </>
   )

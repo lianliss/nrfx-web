@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import UI from '../../../../ui';
+import * as utils from "../../../../utils";
 import { resetGoogleCode } from '../../../../actions/auth';
 
 
@@ -20,7 +21,7 @@ function ResetAuth({ email, password }) {
 
   return (
     <>
-      <h2 className="AuthModal__title">Reset Authenticator</h2>
+      <h2 className="AuthModal__title">{utils.getLang('site__authModalResetAuth')}</h2>
 
       <div className="AuthModal__content">
         {errorMsg
@@ -31,7 +32,7 @@ function ResetAuth({ email, password }) {
       </div>
 
       <div className="AuthModal__footer">
-        <UI.Button onClick={handleSubmit}>Submit</UI.Button>
+        <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalResetAuthSubmit')}</UI.Button>
       </div>
     </>
   )
