@@ -4,11 +4,35 @@ import React from 'react';
 
 import BaseScreen from '../../BaseScreen';
 import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
+import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
+import { isEmail } from '../../../utils';
 import UI from '../../../ui';
 
 
 export default class SiteContactScreen extends BaseScreen {
+  state = {
+    login: '',
+    email: '',
+    message: '',
+    isEmailValid: true,
+  }
+
+  handleChange = (value, key) => {
+    if (key === 'email') {
+      if (!isEmail(value)) {
+        this.setState({
+          isEmailValid: false,
+        });
+      }
+    }
+
+    this.setState({
+      [key]: value,
+    });
+  }
+
   render() {
+    const { login, email, message, isEmailValid } = this.state;
     return (
       <SiteWrapper withOrangeBg>
         <div className="Layout_spacing">
@@ -19,12 +43,39 @@ export default class SiteContactScreen extends BaseScreen {
 
           <div className="SiteContactScreen__form">
             <div className="SiteContactScreen__form__firstRow">
-              <input className="SiteContactScreen__form__input" placeholder={this.lang.site.contactLogin} />
-              <input className="SiteContactScreen__form__input" placeholder={this.lang.site.contactEmail} />
+              <div className="SiteContactScreen__form__input__wrapper">
+                <input 
+                  className="SiteContactScreen__form__input"
+                  placeholder={this.lang.site.contactLogin}
+                  value={login}
+                  onChange={(e) => this.handleChange(e.target.value, 'login')}  
+                />
+              </div>
+
+              <div className="SiteContactScreen__form__input__wrapper">
+                <input 
+                  className="SiteContactScreen__form__input"
+                  placeholder={this.lang.site.contactEmail}
+                  value={email}
+                  onChange={(e) => this.handleChange(e.target.value, 'email')}  
+                />
+                {!isEmailValid ? <p className="SiteContactScreen__form__input__err">Please enter a valid e-mail</p> : null}
+              </div>
             </div>
+
             <div className="SiteContactScreen__form__secondRow">
-              <input className="SiteContactScreen__form__input" placeholder={this.lang.site.contactMessage} />
-              <UI.Button rounded>{this.lang.site.contactSend}</UI.Button>
+              <div className="SiteContactScreen__form__input__wrapper">
+                <textarea
+                  className="SiteContactScreen__form__input"
+                  placeholder={this.lang.site.contactMessage}
+                  value={message}
+                  onChange={(e) => this.handleChange(e.target.value, 'message')}  
+                />
+              </div>
+
+              <RecaptchaModal className="Send_Button">
+                <UI.Button rounded>{this.lang.site.contactSend}</UI.Button>
+              </RecaptchaModal>
             </div>
           </div>
 

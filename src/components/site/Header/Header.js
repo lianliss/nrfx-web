@@ -6,7 +6,10 @@ import SVG from 'react-inlinesvg';
 import UI from '../../../ui';
 import * as utils from '../../../utils/index';
 import * as pages from '../../../constants/pages';
+// TODO: use connect instead of direct calling
+import { loadLang } from '../../../actions';
 import * as steps from '../AuthModal/fixtures';
+import { getItem, setItem } from '../../../services/storage';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
@@ -78,20 +81,32 @@ const headerLinks = [
   }
 ]
 
-const langLinks = [
+const langList = [
   {
     title: 'Ru',
-    route: null,
+    value: 'ru',
   },
   {
     title: 'En',
-    route: null,
+    value: 'en',
   },
 ]
+
+const currentLang = getItem('lang');
 
 
 function Header({ showLightLogo }) {
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
+  const [ curLang, changeLang ] = useState(currentLang);
+
+  const currentLangObj = langList.find(l => l.value === curLang);
+  const currentLangTitle = currentLangObj ? currentLangObj.title : 'Ru';
+
+  const handleLangChange = (value) => {
+    loadLang(value);
+    changeLang(value);
+    setItem('lang', value);
+  }
 
   return (
     <div className="SiteHeader">
@@ -118,7 +133,7 @@ function Header({ showLightLogo }) {
             {headerLinks.map(item => (
               <MobileDropdown key={item.title} title={item.title} subItems={item.children} />
             ))}
-            <MobileDropdown title="Ru" subItems={langLinks} />
+            <MobileDropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
 
           </div>
         ) : null
@@ -147,7 +162,7 @@ function Header({ showLightLogo }) {
                 <AuthModal type={steps.REGISTRATION}>
                   <UI.Button type="outline_white" rounded>Регистрация</UI.Button>
                 </AuthModal>
-                <Dropdown title="Ru" subItems={langLinks} />
+                <Dropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
               </div>
             </div>
 

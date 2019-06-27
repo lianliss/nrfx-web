@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { loadReCaptcha } from 'react-recaptcha-google';
 
 import Routes from './Routes';
 import * as actions from './actions';
 import * as testActions from './actions/test';
+import * as storage from './services/storage';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +17,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    loadReCaptcha();
     this._loadAssets();
   }
 
@@ -33,8 +36,10 @@ class App extends React.Component {
   }
 
   _loadAssets = () => {
+    const lang = storage.getItem('lang');
+
     Promise.all([
-      actions.loadLang()
+      actions.loadLang(lang || 'ru')
     ])
       .then(() => this.setState({isLoading: false}))
       .catch(() => setTimeout(this._loadAssets, 3000));

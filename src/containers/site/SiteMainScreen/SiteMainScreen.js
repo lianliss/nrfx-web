@@ -1,6 +1,7 @@
 import './SiteMainScreen.less';
 
 import React from 'react';
+import Typist from 'react-typist';
 
 import BaseScreen from '../../BaseScreen';
 import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
@@ -20,7 +21,7 @@ export default class SiteMainScreen extends BaseScreen {
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
-            title={<span>{utils.nl2br(this.lang.site.homeBitcoinbotWallet)}</span>}
+            title={<span><Typist>{utils.nl2br(this.lang.site.homeBitcoinbotWallet)}</Typist></span>}
             caption={<span>{utils.nl2br(this.lang.site.homeWalletSubTitile)}</span>}
             buttonText={this.lang.site.homeBegin}
           />
@@ -30,6 +31,7 @@ export default class SiteMainScreen extends BaseScreen {
             <div className="SiteSectionHeaderCaption">{this.lang.site.homeBitcoibotCombineSubTitle}</div>
           </div>
         </div>
+
 
         <div className="SiteHomepageProducts">
           <div className="Layout_spacing">

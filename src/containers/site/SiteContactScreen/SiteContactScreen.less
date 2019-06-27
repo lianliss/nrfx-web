@@ -1,5 +1,5 @@
 @form-spacing-lg: 30px;
-@form-spacing-sm: 10px;
+@form-spacing-sm: 20px 10px;
 
 .SiteContactScreen__heading {
   font-weight: 500;
@@ -37,21 +37,34 @@
   margin: 50px auto;
 }
 
-.SiteContactScreen__form__input {
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 19px;
-  letter-spacing: 0.05px;
-  border-radius: 33px;
-  border: 1px solid var(--primary);
-  color: var(--foreground-primary);
-  outline: none;
+
+.SiteContactScreen__form__input__wrapper {
   margin: @form-spacing-lg;
-  padding: 15px 30px;
   flex: 4;
 
-  &::placeholder {
+  .SiteContactScreen__form__input {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 19px;
+    letter-spacing: 0.05px;
+    border-radius: 33px;
+    border: 1px solid var(--primary);
     color: var(--foreground-primary);
+    padding: 15px 30px;
+    outline: none;
+    width: -webkit-fill-available;
+    margin-bottom: 10px;
+
+    &::placeholder {
+      color: var(--foreground-primary);
+    }
+  }
+
+  .SiteContactScreen__form__input__err {
+    font-size: 12px;
+    color: var(--negative);
+    line-height: 0;
+    margin-left: 20px;
   }
 }
 
@@ -63,13 +76,21 @@
 .SiteContactScreen__form__secondRow {
   display: flex;
 
-  .SiteContactScreen__form__input:first-child {
+  .SiteContactScreen__form__input__wrapper:first-child {
     flex: 6;
   }
 
-  .Button {
+  textarea {
+    height: 20px;
+  }
+
+  .Send_Button {
     flex: 2 auto;
     margin: @form-spacing-lg;
+
+    button {
+      width: 100%; 
+    }
   } 
 }
 
@@ -109,12 +130,12 @@
     width: 100%;
   }
 
-  .SiteContactScreen__form__input {
+  .SiteContactScreen__form__input__wrapper {
     margin: @form-spacing-sm;
   }
 
   .SiteContactScreen__form__secondRow {
-    .Button {
+    .Send_Button {
       margin: @form-spacing-sm;    
     }
   }
