@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import UI from '../../../../ui';
 import { getAuth } from '../../../../actions/auth';
+import * as utils from '../../../../utils/index';
 import * as steps from '../fixtures';
 
 
@@ -28,7 +29,7 @@ function Login({ changeStep, email, password, handleChange }) {
 
   return (
     <>
-      <h2 className="AuthModal__title">Log In</h2>
+      <h2 className="AuthModal__title">{utils.getLang('site__authModalLogIn')}</h2>
 
       <div className="AuthModal__content">
         
@@ -36,12 +37,12 @@ function Login({ changeStep, email, password, handleChange }) {
           ? <p className="AuthModal__err_msg">{errorMsg}</p>
           : null}
 
-        <UI.Input value={email} onChange={(e) => handleChange(e.target.value, 'email')} placeholder="E-mail" />
+        <UI.Input value={email} onChange={(e) => handleChange(e.target.value, 'email')} placeholder={utils.getLang('site__authModalPlaceholderEmail')} />
         <div className="AuthModal__input_wrapper">
           <UI.Input
             value={password}
             onChange={(e) => handleChange(e.target.value, 'password')}
-            placeholder="Password"
+            placeholder={utils.getLang('site__authModalPlaceholderPwd')}
             type={isPasswordVisible ? 'text' : 'password'}
           />
 
@@ -51,12 +52,12 @@ function Login({ changeStep, email, password, handleChange }) {
           }
           
         </div>
-        <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>Forgot your password?</h4>
+        <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>{utils.getLang('site__authModalForgotPwd')}</h4>
       </div>
 
       <div className="AuthModal__footer">
-        <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>Sign Up</h4>
-        <UI.Button onClick={handleSubmit}>Log In</UI.Button>
+        <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__authModalSignUpBtn')}</h4>
+        <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </>
   )

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import UI from '../../../../ui';
 import * as steps from '../fixtures';
+import * as utils from '../../../../utils/index';
 import { registerUser } from '../../../../actions/auth';
 
 
@@ -26,21 +27,21 @@ function Registration({ changeStep, email, handleChange }) {
 
   return (
     <>
-      <h2 className="AuthModal__title">Registration</h2>
+      <h2 className="AuthModal__title">{utils.getLang('site__authModalRegistration')}</h2>
 
       <div className="AuthModal__content">
         {errorMsg
           ? <p className="AuthModal__err_msg">{errorMsg}</p>
           : null}
 
-        <UI.Input placeholder="E-mail" value={email} onChange={(e) => handleChange(e.target.value, 'email')} />
-        <UI.Input placeholder="Referrer" value={referrar} onChange={(e) => changeReferrar(e.target.value)} />
+        <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} value={email} onChange={(e) => handleChange(e.target.value, 'email')} />
+        <UI.Input placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrar} onChange={(e) => changeReferrar(e.target.value)} />
 
-        <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)}>Accept Terms and Conditions</UI.CheckBox>
+        <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)}>{utils.getLang('site__authModalTermsConditions')}</UI.CheckBox>
       </div>
 
       <div className="AuthModal__footer">
-        <UI.Button onClick={handleSubmit}>Next</UI.Button>
+        <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
       </div>
     </>
   )

@@ -21,7 +21,7 @@ export default class SiteMainScreen extends BaseScreen {
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
-            title={<span><Typist>{utils.nl2br(this.lang.site.homeBitcoinbotWallet)}</Typist></span>}
+            title={<span>BITCOINBOT:<br /><Typist>{this.lang.site.homeSlideExchange}</Typist></span>}
             caption={<span>{utils.nl2br(this.lang.site.homeWalletSubTitile)}</span>}
             buttonText={this.lang.site.homeBegin}
           />
