@@ -35,9 +35,7 @@ function GoogleAuth({ changeStep, email, password }) {
           <img src={require('../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         
-        <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>
-            {utils.getLang('site__authModalResetKey')}
-        </h4>
+        <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>{utils.getLang('site__authModalResetKey')}</h4>
       </div>
 
       <div className="AuthModal__footer">
