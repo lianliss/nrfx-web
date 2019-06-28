@@ -28,7 +28,7 @@ export function getGoogleCode(login, password, code) {
         // store.dispatch({type: actionTypes.SET_LANG, auth});
 
         const date = new Date(new Date().getTime() + 60 * 30 * 1000);
-        document.cookie = `hash=${resp.hash}, path=/, expires=${date.toUTCString()}; domain=bitcoinbot.pro;`;
+        document.cookie = `hash=${resp.hash}; path=/, expires=${date.toUTCString()}; domain=bitcoinbot.pro;`;
 
         resolve();
       })
