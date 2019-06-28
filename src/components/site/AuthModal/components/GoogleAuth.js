@@ -12,9 +12,12 @@ function GoogleAuth({ changeStep, email, password }) {
 
   const handleSubmit = () => {
     getGoogleCode(email, password, gCode)
-      .then(() => {
+      .then((resp) => {
         setErrorMsg('');
-        window.location = 'https://cabinet.bitcoinbot.pro/profile';
+
+        const date = new Date(new Date().getTime() + 60 * 30 * 1000);
+        document.cookie = `hash=${resp.hash}; path=/; domain=bitcoinbot.pro; expires=${date.toUTCString()}`;
+        setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
       })
       .catch((err) => setErrorMsg(err.message));
   }
