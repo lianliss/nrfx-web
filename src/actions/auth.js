@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 import { AuthApi, AccountApi } from '../swagger';
 import callApi from '../services/api';
 import store from '../store';
+import * as cookie from '../services/cookie';
 
 
 export function getAuth(login, password) {
@@ -27,8 +28,11 @@ export function getGoogleCode(login, password, code) {
       .then((resp) => {
         // store.dispatch({type: actionTypes.SET_LANG, auth});
 
-        const date = new Date(new Date().getTime() + 60 * 30 * 1000);
-        document.cookie = `hash=${resp.hash}; path=/, expires=${date.toUTCString()}; domain=bitcoinbot.pro;`;
+        cookie.deleteCookie('hash');
+        cookie.setCookie('hash', resp.hash, {
+          expires: new Date(new Date().getTime() + 60 * 30 * 1000),
+          domain: 'bitcoinbot.pro'
+        });
 
         resolve();
       })
