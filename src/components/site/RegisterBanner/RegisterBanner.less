@@ -26,6 +26,10 @@
     position: absolute;
     z-index: -1;
   }
+
+  .RegisterBanner__content {
+    @media (min-width: 1341px) { width: 1340px; margin: 0 auto; }
+  }
 }
 
 .curly {
@@ -50,7 +54,7 @@
 
 .RegisterBanner__form {
   overflow: hidden;
-  margin-top: 80px;
+  margin: 80px auto 0;
 }
 
 .RegisterBanner__form__input {
@@ -137,9 +141,9 @@
 }
 
 @media (max-width: 360px) {
-  .RegisterBanner {
+  /* .RegisterBanner {
     height: fit-content;
-  }
+  } */
 
   .RegisterBanner__form {
 
