@@ -31,7 +31,7 @@ export function getGoogleCode(login, password, code) {
         cookie.deleteCookie('hash');
         cookie.setCookie('hash', resp.hash, {
           expires: new Date(new Date().getTime() + 60 * 30 * 1000),
-          domain: 'bitcoinbot.pro'
+          domain: 'cabinet.bitcoinbot.pro'
         });
 
         resolve();
