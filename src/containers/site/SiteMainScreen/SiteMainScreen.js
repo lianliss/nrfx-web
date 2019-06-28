@@ -14,14 +14,55 @@ import * as pages from '../../../constants/pages';
 import * as utils from '../../../utils/index';
 
 
+
+
 export default class SiteMainScreen extends BaseScreen {
+
+  animationTimer = null;
+  state = {
+    currentProductIndex: 0,
+  }
+
+  componentDidMount() {
+    this.animationTimer = setInterval(this.changeProductText, 1500);
+  }
+
+  changeProductText = () => {
+    const { currentProductIndex } = this.state;
+
+    if (currentProductIndex < 4) {
+      this.setState((prevState) => ({
+        currentProductIndex: prevState.currentProductIndex + 1,
+      }));
+    } else {
+      this.setState({
+        currentProductIndex: 0,
+      })
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.animationTimer);
+  }
+  
+  getAnimatedTitle = () => {
+    const { site } = this.lang;
+    const { currentProductIndex } = this.state;
+    const products = [site.homeSlideExchange, site.homeSlideWallet, site.homeSlideInvestments, site.homeSlideRobots, site.homeSlidePayment];
+    const currentProduct = products[currentProductIndex];
+
+    return (
+      <Typist key={currentProduct}>{currentProduct}</Typist>
+    )
+  }
+
   render() {
     return (
       <SiteWrapper isHomepage>
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
-            title={<span>BITCOINBOT:<br /><Typist>{this.lang.site.homeSlideExchange}</Typist></span>}
+            title={<span>BITCOINBOT:<br />{this.getAnimatedTitle()}</span>}
             caption={<span>{utils.nl2br(this.lang.site.homeWalletSubTitile)}</span>}
             buttonText={this.lang.site.homeBegin}
           />
@@ -71,12 +112,16 @@ export default class SiteMainScreen extends BaseScreen {
           </div>
         </div>
 
-        <div className="SiteSectionHeader">
-          <div className="SiteSectionHeaderTitle">{this.lang.site.homeSecurityTitle}</div>
-          <div className="SiteSectionHeaderCaption">{this.lang.site.homeSecuritySubaTitle}</div>
+
+        <div className="SiteMainScreen__safety">
+          <div className="SiteSectionHeader">
+            <div className="SiteSectionHeaderTitle">{this.lang.site.homeSecurityTitle}</div>
+            <div className="SiteSectionHeaderCaption">{this.lang.site.homeSecuritySubTitle}</div>
+          </div>
+
+          {this._renderSafety()}
         </div>
 
-        {this._renderSafety()}
 
         <RegisterBanner isCurly />
 
@@ -90,7 +135,7 @@ export default class SiteMainScreen extends BaseScreen {
     const items = [{
       icon: require('./asset/homepage_safety_1.svg'),
       title: this.lang.site.homeSafetyTitle1,
-      caption: this.lang.homeSafetySubTitle1,
+      caption: this.lang.site.homeSafetySubTitle1,
       route: pages.SAFETY,
     }, {
       icon: require('./asset/homepage_safety_2.svg'),

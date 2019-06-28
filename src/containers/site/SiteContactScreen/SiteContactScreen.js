@@ -15,6 +15,17 @@ export default class SiteContactScreen extends BaseScreen {
     email: '',
     message: '',
     isEmailValid: true,
+    rows: 1,
+  }
+
+  handleTextareaChange = (e) => {
+    const textareaLineHeight = 24;
+    const currentRows = ~~(e.target.scrollHeight / textareaLineHeight);
+    console.log('currentRows :', currentRows);
+
+    this.setState({ rows: currentRows });
+
+    this.handleChange(e.target.value, 'message');
   }
 
   handleChange = (value, key) => {
@@ -32,7 +43,8 @@ export default class SiteContactScreen extends BaseScreen {
   }
 
   render() {
-    const { login, email, message, isEmailValid } = this.state;
+    const { login, email, message, isEmailValid, rows } = this.state;
+
     return (
       <SiteWrapper withOrangeBg>
         <div className="Layout_spacing">
@@ -69,7 +81,8 @@ export default class SiteContactScreen extends BaseScreen {
                   className="SiteContactScreen__form__input"
                   placeholder={this.lang.site.contactMessage}
                   value={message}
-                  onChange={(e) => this.handleChange(e.target.value, 'message')}  
+                  onChange={this.handleTextareaChange}  
+                  rows={rows}
                 />
               </div>
 

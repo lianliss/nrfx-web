@@ -36,12 +36,14 @@
 }
 
 .SitePageInfoBlock__screen {
-  width: 889px;
+  width: 800px;
   max-height: 501px;
   background: no-repeat center/contain;
   transform: translateX(60px);
   opacity: 0;
   transition: opacity 250ms ease-in-out;
+
+  @media (min-width: 1200px) { margin-top: 80px; }
 
   &.loaded {
     opacity: 1;

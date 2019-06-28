@@ -20,20 +20,21 @@
 }
 
 .SiteWrapper__bg {
-  background: linear-gradient(170.9deg, #FFFFFF 30.13%, #FAF8F5 86.73%);
+  background: linear-gradient(170.9deg, #FFFFFF 30.13%, #FAF8F5 86.73%) no-repeat;
   height: 855px;
   position: absolute;
   z-index: -5;
+  width: 100vw;
 
   
   .SiteWrapper__bg__img {
     display: block;
-    position: absolute;
+    position: sticky;
     left: calc(50% + 595px);
-    transform: translateX(-18%);
     z-index: -1;
+    transform: translateX(38%);
 
-    @media (max-width: 1200px) { transform: translateX(40%); }
+    @media (max-width: 1200px) { display: none; }
   }
 }
 
@@ -43,6 +44,7 @@
   z-index: -5;
   height: 330px;
   overflow: hidden;
+  width: 100vw;
 
   img {
     width: 115%;
@@ -55,6 +57,7 @@
 .SiteSectionHeader {
   text-align: center;
   margin-top: 120px;
+  padding: 0 10px;
 }
 
 .SiteSectionHeaderTitle {
