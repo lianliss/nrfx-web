@@ -1,5 +1,5 @@
-@form-spacing-lg: 30px;
-@form-spacing-sm: 20px 10px;
+@form-spacing-lg: 20px 20px 15px;
+@form-spacing-sm: 20px 10px 10px;
 
 .SiteContactScreen__heading {
   font-weight: 500;
@@ -34,9 +34,8 @@
 
 .SiteContactScreen__form {
   width: 85%;
-  margin: 50px auto;
+  margin: 50px auto 15px;
 }
-
 
 .SiteContactScreen__form__input__wrapper {
   margin: @form-spacing-lg;
@@ -48,15 +47,15 @@
     line-height: 19px;
     letter-spacing: 0.05px;
     border-radius: 33px;
-    border: 1px solid var(--primary);
-    color: var(--foreground-primary);
+    border: 1.2px solid var(--primary);
+    color: #808080;
     padding: 15px 30px;
     outline: none;
     width: -webkit-fill-available;
     margin-bottom: 10px;
 
     &::placeholder {
-      color: var(--foreground-primary);
+      color: #808080;
     }
   }
 
@@ -68,51 +67,32 @@
   }
 }
 
-
 .SiteContactScreen__form__firstRow {
   display: flex;
 }
 
-.SiteContactScreen__form__secondRow {
-  display: flex;
-
-  .SiteContactScreen__form__input__wrapper:first-child {
-    flex: 6;
-  }
-
-  textarea {
-    resize: none;
-  }
-
-  .Send_Button {
-    flex: 2 auto;
-    margin: @form-spacing-lg;
-
-    button {
-      width: 100%; 
-    }
-  } 
+.SiteContactScreen__form__input__wrapper:first-child {
+  flex: 6;
 }
 
+textarea {
+  resize: none;
+}
 
-.SiteContactScreen__socials {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  background: var(--secondary-active-background);
-  margin: 80px 320px;
-  padding: 50px 10px;
-  border-radius: 9px;
+.Send_Button {
+  margin: @form-spacing-lg;
+  width: fit-content;
 
-  .SiteContactScreen__socials__title {
-    margin-bottom: 40px;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 31px;
-    text-align: center;
-    letter-spacing: 0.444444px;
+  button {
+    width: 100%; 
+    padding: 25px 40px;
+    border-radius: 33px !important;
+    height: auto;
   }
+}
+
+.SiteContactScreen__socials__icons {
+  margin: 30px 0;
 
   .SiteContactScreen__social {
     margin: 10px;
@@ -124,7 +104,6 @@
   }
 }
 
-
 @media (max-width: 1200px) {
   .SiteContactScreen__form {
     width: 100%;
@@ -134,23 +113,23 @@
     margin: @form-spacing-sm;
   }
 
-  .SiteContactScreen__form__secondRow {
-    .Send_Button {
-      margin: @form-spacing-sm;    
-    }
-  }
-
-  .SiteContactScreen__socials {
-    margin: 40px 80px;
+  .Send_Button {
+    margin: @form-spacing-sm;    
   }
 }
 
 @media (max-width: 768px) {
-  .SiteContactScreen__form__firstRow, .SiteContactScreen__form__secondRow {
+  .SiteContactScreen__form__firstRow {
     flex-direction: column;
   }
+}
 
-  .SiteContactScreen__socials {
-    margin: 30px 10px;
+.SiteContactScreen__form__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 560px) {
+    flex-direction: column-reverse;
   }
 }
