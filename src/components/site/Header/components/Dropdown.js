@@ -11,7 +11,7 @@ function Dropdown({ title, subItems, onChange }) {
   }
 
   return (
-    <div className="SiteHeader__dropdown" onMouseEnter={() => toggle(true)} onMouseLeave={() => toggle(false)}>
+    <div className="SiteHeader__dropdown" onMouseEnter={() => toggle(true)} onClick={() => toggle(true)} onMouseLeave={() => toggle(false)}>
       <div className="SiteHeader__menu__item" >
         {title}
         <SVG src={require('../../../../asset/menu_arrow.svg')} />

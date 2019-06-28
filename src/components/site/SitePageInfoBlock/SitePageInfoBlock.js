@@ -23,7 +23,7 @@ export default class SitePageInfoBlock extends React.Component {
   }
 
   render() {
-    const { hideWatchButton } = this.props;
+    // const { hideWatchButton } = this.props;
     const screenClassName = utils.classNames({
       SitePageInfoBlock__screen: true,
       loaded: this.state.isImageLoaded,
@@ -38,7 +38,7 @@ export default class SitePageInfoBlock extends React.Component {
             <AuthModal className="SitePageInfoBlock__modal">
               <UI.Button rounded style={{width: 239}}>{this.props.buttonText}</UI.Button>
             </AuthModal>
-            {!hideWatchButton ? <UI.WatchButton>Смотреть</UI.WatchButton> : null}
+            {/* {!hideWatchButton ? <UI.WatchButton>Смотреть</UI.WatchButton> : null} */}
           </div>
         </div>
         {/* <div className={screenClassName} style={{backgroundImage: `url(${this.props.image})`}} /> */}

@@ -14,7 +14,7 @@ function GoogleAuth({ changeStep, email, password }) {
     getGoogleCode(email, password, gCode)
       .then(() => {
         setErrorMsg('');
-        // TODO: should redirect
+        window.location = 'https://cabinet.bitcoinbot.pro';
       })
       .catch((err) => setErrorMsg(err.message));
   }
