@@ -15,20 +15,19 @@ class RecaptchaModal extends React.PureComponent {
     if (this.captcha) {
       console.log("started, just a second...")
       this.captcha.reset();
-      // this.captcha.execute();
     }
   }
 
   onLoadRecaptcha = () => {
     if (this.captcha) {
       this.captcha.reset();
-      // this.captcha.execute();
     }
   }
 
   verifyCallback = (recaptchaToken) => {
     // Here you will get the final recaptchaToken!!!  
-    console.log(recaptchaToken, "<= your recaptcha token")
+    console.log(recaptchaToken, "<= your recaptcha token");
+    this.props.onVerify(recaptchaToken);
   }
 
   toggleModal = (isOpen) => {
@@ -36,11 +35,11 @@ class RecaptchaModal extends React.PureComponent {
   }
 
   render() {
-    const { className, children } = this.props;
+    const { className, children, disabled } = this.props;
   
     return (
       <div className={"RecaptchaModal " + className}>
-        <span onClick={() => this.toggleModal(true)}>
+        <span className={disabled ? "disabled-btn" : ""} onClick={() => !disabled ? this.toggleModal(true) : null}>
           {children}
         </span>
   
@@ -61,7 +60,7 @@ class RecaptchaModal extends React.PureComponent {
               />
             </div>
 
-            <UI.Button rounded>Submit</UI.Button>
+            {/* <UI.Button rounded>Submit</UI.Button> */}
           </div>
   
   

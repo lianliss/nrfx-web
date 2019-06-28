@@ -5,6 +5,7 @@ import React from 'react';
 import BaseScreen from '../../BaseScreen';
 import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
+import { sendContactForm } from '../../../actions/contact';
 import { isEmail } from '../../../utils';
 import UI from '../../../ui';
 
@@ -21,7 +22,6 @@ export default class SiteContactScreen extends BaseScreen {
   handleTextareaChange = (e) => {
     const textareaLineHeight = 24;
     const currentRows = ~~(e.target.scrollHeight / textareaLineHeight);
-    console.log('currentRows :', currentRows);
 
     this.setState({ rows: currentRows });
 
@@ -29,10 +29,16 @@ export default class SiteContactScreen extends BaseScreen {
   }
 
   handleChange = (value, key) => {
+    const { isEmailValid } = this.state;
+
     if (key === 'email') {
       if (!isEmail(value)) {
         this.setState({
           isEmailValid: false,
+        });
+      } else if (!isEmailValid) {
+        this.setState({
+          isEmailValid: true,
         });
       }
     }
@@ -42,8 +48,15 @@ export default class SiteContactScreen extends BaseScreen {
     });
   }
 
+  handleSubmit = (recaptchaToken) => {
+    const { login, email, message } = this.state;
+
+    sendContactForm(recaptchaToken, message, email, login);
+  }
+
   render() {
     const { login, email, message, isEmailValid, rows } = this.state;
+    const isSubmitDisabled = !isEmailValid || !email || !message;
 
     return (
       <SiteWrapper withOrangeBg>
@@ -86,7 +99,7 @@ export default class SiteContactScreen extends BaseScreen {
                 />
               </div>
 
-              <RecaptchaModal className="Send_Button">
+              <RecaptchaModal disabled={isSubmitDisabled} className="Send_Button" onVerify={this.handleSubmit}>
                 <UI.Button rounded>{this.lang.site.contactSend}</UI.Button>
               </RecaptchaModal>
             </div>
