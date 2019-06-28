@@ -71,7 +71,7 @@ export default class SiteContactScreen extends BaseScreen {
               <div className="SiteContactScreen__form__input__wrapper">
                 <input 
                   className="SiteContactScreen__form__input"
-                  placeholder={this.lang.site.contactYourName}\
+                  placeholder={this.lang.site.contactYourName}
                   value={name}
                   onChange={(e) => this.handleChange(e.target.value, 'name')}  
                 />
