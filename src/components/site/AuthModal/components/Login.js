@@ -12,9 +12,9 @@ function Login({ changeStep, email, password, handleChange }) {
   
   const handleSubmit = () => {
     if (!email) {
-      setErrorMsg('Email is required');
+      setErrorMsg(utils.getLang('site__authModalEmailRequired'));
     } else if (!password) {
-      setErrorMsg('Password is required');
+      setErrorMsg(utils.getLang('site__authModalPwdRequired'));
     } else {
       getAuth(email, password)
         .then(() => {

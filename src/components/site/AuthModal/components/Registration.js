@@ -13,11 +13,11 @@ function Registration({ changeStep, email, handleChange }) {
 
   const handleSubmit = () => {
     if (!email) {
-      setErrorMsg('Email is required');
+      setErrorMsg(utils.getLang('site__authModalEmailRequired'));
     } else if (!referrar) {
-      setErrorMsg('Referrar is required');
+      setErrorMsg(utils.getLang('site__authModalReferrerRequired'));
     } else if (!isChecked) {
-      setErrorMsg('Please accept Terms and Conditions');
+      setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
       registerUser(email, referrar)
         .then(() => changeStep(steps.REGISTRATION_SUCCESS))
