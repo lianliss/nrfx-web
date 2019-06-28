@@ -12,15 +12,15 @@ import UI from '../../../ui';
 
 export default class SiteContactScreen extends BaseScreen {
   state = {
-    login: '',
+    name: '',
     email: '',
     message: '',
     isEmailValid: true,
-    rows: 1,
+    rows: 3,
   }
 
   handleTextareaChange = (e) => {
-    const textareaLineHeight = 24;
+    const textareaLineHeight = 22;
     const currentRows = ~~(e.target.scrollHeight / textareaLineHeight);
 
     this.setState({ rows: currentRows });
@@ -49,18 +49,18 @@ export default class SiteContactScreen extends BaseScreen {
   }
 
   handleSubmit = (recaptchaToken) => {
-    const { login, email, message } = this.state;
+    const { name, email, message } = this.state;
 
-    sendContactForm(recaptchaToken, message, email, login);
+    sendContactForm(recaptchaToken, message, email, name);
   }
 
   render() {
-    const { login, email, message, isEmailValid, rows } = this.state;
+    const { name, email, message, isEmailValid, rows } = this.state;
     const isSubmitDisabled = !isEmailValid || !email || !message;
 
     return (
       <SiteWrapper withOrangeBg>
-        <div className="Layout_spacing">
+        <div className="SiteContactScreen Layout_spacing">
           <h1 className="SiteContactScreen__heading">{this.lang.site.contactContactUs}</h1>
 
           <h2 className="SiteContactScreen__title">{this.lang.site.contactWriteLetter}</h2>
@@ -71,9 +71,9 @@ export default class SiteContactScreen extends BaseScreen {
               <div className="SiteContactScreen__form__input__wrapper">
                 <input 
                   className="SiteContactScreen__form__input"
-                  placeholder={this.lang.site.contactYourName}
-                  value={login}
-                  onChange={(e) => this.handleChange(e.target.value, 'login')}  
+                  placeholder={this.lang.site.contactYourName}\
+                  value={name}
+                  onChange={(e) => this.handleChange(e.target.value, 'name')}  
                 />
               </div>
 
@@ -88,15 +88,33 @@ export default class SiteContactScreen extends BaseScreen {
               </div>
             </div>
 
-            <div className="SiteContactScreen__form__secondRow">
-              <div className="SiteContactScreen__form__input__wrapper">
-                <textarea
-                  className="SiteContactScreen__form__input"
-                  placeholder={this.lang.site.contactMessage}
-                  value={message}
-                  onChange={this.handleTextareaChange}  
-                  rows={rows}
-                />
+            <div className="SiteContactScreen__form__input__wrapper">
+              <textarea
+                className="SiteContactScreen__form__input"
+                placeholder={this.lang.site.contactMessage}
+                value={message}
+                onChange={this.handleTextareaChange}  
+                rows={rows}
+              />
+            </div>
+
+            <div className="SiteContactScreen__form__footer">
+              <div className="SiteContactScreen__socials__icons">
+                <a href="#" className="SiteContactScreen__social">
+                  <img src={require('./asset/facebook.svg')} alt="Social icon" />
+                </a>
+                <a href="#" className="SiteContactScreen__social">
+                  <img src={require('./asset/twitter.svg')} alt="Social icon" />
+                </a>
+                <a href="#" className="SiteContactScreen__social">
+                  <img src={require('./asset/instagram.svg')} alt="Social icon" />
+                </a>
+                <a href="#" className="SiteContactScreen__social">
+                  <img src={require('./asset/youtube.svg')} alt="Social icon" />
+                </a>
+                <a href="#" className="SiteContactScreen__social">
+                  <img src={require('./asset/telegram.svg')} alt="Social icon" />
+                </a>
               </div>
 
               <RecaptchaModal disabled={isSubmitDisabled} className="Send_Button" onVerify={this.handleSubmit}>
@@ -105,28 +123,6 @@ export default class SiteContactScreen extends BaseScreen {
             </div>
           </div>
 
-          <div className="SiteContactScreen__socials">
-            <p className="SiteContactScreen__socials__title">{this.lang.site.contactOurSocialNetworks}</p>
-
-            <div className="SiteContactScreen__socials__icons">
-              <a href="#" className="SiteContactScreen__social">
-                <img src={require('./asset/facebook.svg')} alt="Social icon" />
-              </a>
-              <a href="#" className="SiteContactScreen__social">
-                <img src={require('./asset/twitter.svg')} alt="Social icon" />
-              </a>
-              <a href="#" className="SiteContactScreen__social">
-                <img src={require('./asset/instagram.svg')} alt="Social icon" />
-              </a>
-              <a href="#" className="SiteContactScreen__social">
-                <img src={require('./asset/youtube.svg')} alt="Social icon" />
-              </a>
-              <a href="#" className="SiteContactScreen__social">
-                <img src={require('./asset/telegram.svg')} alt="Social icon" />
-              </a>
-            </div>
-
-          </div>
         </div>
       </SiteWrapper>
     )
