@@ -28,7 +28,7 @@ export default class SiteInvestmentScreen extends BaseScreen {
           </div>
 
           <div className="SiteInvestmentScreen__intro">
-            <TitleWithBg title={this.lang.site.investmentWhatIsInvestmentTitle} bgTitle="Investment" bgTitleUppercase centered darkBg />
+            <TitleWithBg title={this.lang.site.investmentWhatIsInvestmentTitle} bgTitle={this.lang.site.investmentWhatIsInvestmentTitle} bgTitleUppercase centered darkBg />
             <p className="SiteInvestmentScreen__caption">
               {this.lang.site.investmentWhatIsInvestmentSubTitle}
             </p>
