@@ -7,7 +7,7 @@ import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import FeatureCard from '../../../components/site/FeatureCard/FeatureCard';
 import InfoSection from '../../../components/site/InfoSection/InfoSection';
-import { misssionInfo, aboutInfo } from '../SiteAboutScreen/fixtures';
+import { data } from '../SiteAboutScreen/fixtures';
 import { PHONE } from '../../../constants/breakpoints';
 import * as utils from '../../../utils/index';
 
@@ -83,7 +83,7 @@ export default class SiteTechnologyScreen extends BaseScreen {
             {this._renderFeatures()}
           </div>
 
-          <InfoSection firstInfo={misssionInfo} secondInfo={aboutInfo} />
+          <InfoSection firstInfo={data.misssionInfo} secondInfo={data.aboutInfo} />
 
         </div>
       </SiteWrapper>

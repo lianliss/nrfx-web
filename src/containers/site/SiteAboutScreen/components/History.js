@@ -3,7 +3,7 @@ import React from 'react';
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import Timeline from '../../../../components/site/Timeline/Timeline';
-import { aboutInfo, misssionInfo, timelineData } from '../fixtures';
+import { data } from '../fixtures';
 import * as utils from '../../../../utils/index';
 
 
@@ -16,10 +16,10 @@ function History() {
       </div>
 
       <div className="SiteAboutScreen__history__timeline">
-        <Timeline timelineData={timelineData} />
+        <Timeline timelineData={data.timelineData} />
       </div>
 
-      <InfoSection firstInfo={aboutInfo} secondInfo={misssionInfo} />
+      <InfoSection firstInfo={data.aboutInfo} secondInfo={data.misssionInfo} />
     </>
   )
 }

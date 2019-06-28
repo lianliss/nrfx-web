@@ -1,65 +1,77 @@
 import { ABOUT, HISTORY, MISSION } from '../../../constants/pages';
+import * as utils from '../../../utils/index';
 
-export const aboutInfo = {
-  route: ABOUT,
-  title: 'О нас',
-  caption: 'Платформа – это продукт кропотливой работы команды.',
-  icon: require('./asset/about_icon.svg'),
-}
 
-export const misssionInfo = {
-  route: MISSION,
-  title: 'Миссия',
-  caption: 'Мы стремимся быть удобной и надежной платформой для доступности цифровых валют',
-  icon: require('./asset/mission_icon.svg'),
-}
+export const data = {
+  get misssionInfo() {
+    return {
+      route: MISSION,
+      title: utils.getLang('site__aboutFixturesMissionTitle'),
+      caption: utils.getLang('site__aboutFixturesMissionSubTitle'),
+      icon: require('./asset/mission_icon.svg'),
+    }
+  },
 
-export const historyInfo = {
-  route: HISTORY,
-  title: 'Дорожная карта',
-  caption: 'Все большое начинается с чего-то малого. Мы начали работать над платформой в 2017 году.',
-  icon: require('./asset/history_icon.svg'),
-}
+  get historyInfo() {
+    return {
+      route: HISTORY,
+      title: utils.getLang('site__aboutFixturesMapRoadTitle'),
+      caption: utils.getLang('site__aboutFixturesMapRoadSubTitle'),
+      icon: require('./asset/history_icon.svg'),
+    }
+  },
 
-export const timelineData = [
-  {
-    title: 'Q4 2017',
-    description: 'Начало нашего большого путешествия. Анализ основных проблем рынка криптовалют и путей их решения.  Определение концепции и плана развития проекта. Разработка роботов нового поколения.',
+  get aboutInfo() {
+    return {
+      route: ABOUT,
+      title: utils.getLang('site__aboutFixturesAboutUsTitle'),
+      caption: utils.getLang('site__aboutFixturesAboutUsSubTitle'),
+      icon: require('./asset/about_icon.svg'),
+    }
   },
-  {
-    title: 'Q1 2018',
-    description: 'Начало разработки онлайн платформы и ее тестирование. Запуск роботов нового поколения с различными конфигурациями.',
-  },
-  {
-    title: 'Q2 2018',
-    description: 'Запуск онлайн платформы (version 1.0). Добавлена криптовалюта Bitcoin. Привлечение первых частных инвестиций.',
-  },
-  {
-    title: 'Q3 2018',
-    description: 'Добавлены 3 криптовалюты (Ethereum, Litecoin, Bitcoin Сash). Начало разработки криптовалютной биржи (BITCOINBOT | Exchange).',
-  },
-  {
-    title: 'Q4 2018',
-    description: 'Обновление платформы (version 2.0). Создание для BITCOINBOT | Exchange протокола, поддерживающего +2 500 000 транзакций в секунду.',
-  },
-  {
-    title: 'Q1 2019',
-    description: 'Разработка приложения для Android и OS. Создание протокола «Эффективной волатильности» для BITCOINBOT | Exchange. Разработка нового продукта BITCOINBOT | Commerce.',
-  },
-  {
-    title: 'Q2 2019',
-    description: 'Выпуск мобильного приложения для Android и OS. Запуск BITCOINBOT | Commerce и BITCOINBOT | Exchange. Обновление онлайн платформы (version 3.0).',
-  },
-  {
-    title: 'Q3 2019',
-    description: 'Создание нового протокол машинного обучения для роботов. Начало разработки собственного блокчена и токенов.',
-  },
-  {
-    title: 'Q4 2019',
-    description: 'Обновление платформы (version 2.0). Создание для BITCOINBOT | Exchange протокола, поддерживающего +2 500 000 транзакций в секунду.',
-  },
-  {
-    title: 'Q1 2020',
-    description: 'Обновление платформы (version 2.0). Создание для BITCOINBOT | Exchange протокола, поддерживающего +2 500 000 транзакций в секунду.',
-  },
-]
+
+  get timelineData() {
+    return [
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle1'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle1'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle2'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle2'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle3'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle3'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle4'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle4'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle5'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle5'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle6'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle6'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle7'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle7'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle8'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle8'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle9'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle9'),
+      },
+      {
+        title: utils.getLang('site__aboutFixturesTimelineTitle10'),
+        description: utils.getLang('site__aboutFixturesTimelineSubTitle10'),
+      },
+    ];
+  }
+};
