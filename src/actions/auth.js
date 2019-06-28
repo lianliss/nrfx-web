@@ -24,8 +24,12 @@ export function getGoogleCode(login, password, code) {
 
   return new Promise((resolve, reject) => {
     callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
-      .then((code) => {
+      .then((resp) => {
         // store.dispatch({type: actionTypes.SET_LANG, auth});
+
+        const date = new Date(new Date().getTime() + 60 * 30 * 1000);
+        document.cookie = `hash=${resp.hash}, path=/, expires=${date.toUTCString()}; domain=bitcoinbot.pro;`;
+
         resolve();
       })
       .catch((err) => reject(err));
