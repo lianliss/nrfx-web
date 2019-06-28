@@ -3,7 +3,7 @@ import SVG from 'react-inlinesvg';
 
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
-import { misssionInfo, historyInfo } from '../fixtures';
+import { data } from '../fixtures';
 import * as utils from '../../../../utils/index';
 
 
@@ -24,7 +24,7 @@ function About() {
       </div>
 
 
-      <InfoSection firstInfo={misssionInfo} secondInfo={historyInfo} />
+      <InfoSection firstInfo={data.misssionInfo} secondInfo={data.historyInfo} />
     </>
   )
 }

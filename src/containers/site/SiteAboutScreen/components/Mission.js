@@ -2,7 +2,7 @@ import React from 'react';
 
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
-import { aboutInfo, historyInfo } from '../fixtures';
+import { data } from '../fixtures';
 import * as utils from '../../../../utils/index';
 
 
@@ -50,7 +50,7 @@ function Mission() {
         {_renderValues()}
       </div>
 
-      <InfoSection firstInfo={aboutInfo} secondInfo={historyInfo} />
+      <InfoSection firstInfo={data.aboutInfo} secondInfo={data.historyInfo} />
     </>
   )
 }
