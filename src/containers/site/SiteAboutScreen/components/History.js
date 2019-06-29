@@ -11,7 +11,7 @@ function History() {
   return (
     <>
       <div className="SiteAboutScreen__intro SiteAboutScreen__history">
-        <TitleWithBg title={utils.getLang('site__aboutHistoryTitle')} bgTitle="Roadmap" centered />
+        <TitleWithBg title={utils.getLang('site__aboutHistoryTitle')} bgTitle={utils.getLang('site__aboutHistoryTitle')} centered />
         <p className="SiteAboutScreen__caption">{utils.getLang('site__aboutHistorySubTitle')}</p>
       </div>
 

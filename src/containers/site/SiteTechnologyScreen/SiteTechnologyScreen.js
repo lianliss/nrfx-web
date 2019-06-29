@@ -59,7 +59,7 @@ export default class SiteTechnologyScreen extends BaseScreen {
           </p>
 
           <div className="SiteTechnologyScreen__description">
-            <TitleWithBg title={this.lang.site.technologyArtificialIntelligence} bgTitle="Artificial Intelligence" centered darkBg />
+            <TitleWithBg title={this.lang.site.technologyArtificialIntelligence} bgTitle={this.lang.site.technologyArtificialIntelligence} centered darkBg />
             <p className="SiteTechnologyScreen__description__text">
               {this.lang.site.technologyArtificialIntelligenceText}
             </p>

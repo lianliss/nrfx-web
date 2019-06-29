@@ -12,7 +12,7 @@ function About() {
   return (
     <>
       <div className="SiteAboutScreen__intro">
-        <TitleWithBg title={utils.getLang('site__aboutShortTitle')} bgTitle="In Brief" centered />
+        <TitleWithBg title={utils.getLang('site__aboutShortTitle')} bgTitle={utils.getLang('site__aboutShortTitle')} centered />
         <p className="SiteAboutScreen__caption">{utils.nl2br(utils.getLang('site__aboutShortTitleText'))}</p>
       </div>
 

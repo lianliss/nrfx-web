@@ -48,7 +48,7 @@ export default class SiteCommerceScreen extends BaseScreen {
           />
 
           <div className="SiteCommerceScreen__intro">
-            <TitleWithBg title={this.lang.site.commerceBitcoinbotTitle} bgTitle="Commerce" bgTitleUppercase centered />
+            <TitleWithBg title={this.lang.site.commerceBitcoinbotTitle} bgTitle={this.lang.site.commerceBitcoinbotTitle} bgTitleUppercase centered />
             <p className="SiteCommerceScreen__caption">
               {this.lang.site.commerceBitcoinbotSubTitle}
             </p>

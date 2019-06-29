@@ -157,10 +157,10 @@ function Header({ showLightLogo }) {
 
               <div className="SiteHeader__menu_controls">
                 <AuthModal>
-                  <MenuItem>Войти</MenuItem>
+                  <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
                 </AuthModal>
                 <AuthModal type={steps.REGISTRATION}>
-                  <UI.Button type="outline_white" rounded>Регистрация</UI.Button>
+                  <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
                 </AuthModal>
                 <Dropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
               </div>

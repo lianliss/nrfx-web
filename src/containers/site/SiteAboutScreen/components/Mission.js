@@ -40,7 +40,7 @@ function Mission() {
   return (
     <>
       <div className="SiteAboutScreen__intro">
-        <TitleWithBg title={utils.getLang('site__aboutMissionOurMissionTitle')} bgTitle="Mission" centered />
+        <TitleWithBg title={utils.getLang('site__aboutMissionOurMissionTitle')} bgTitle={utils.getLang('site__aboutMissionOurMissionTitle')} centered />
         <p className="SiteAboutScreen__caption">{utils.nl2br(utils.getLang('site__aboutMissionOurMissionSubTitle'))}</p>
       </div>
 
