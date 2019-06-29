@@ -10,10 +10,12 @@ import * as steps from '../AuthModal/fixtures';
 
 function RegisterBanner({ isCurly }) {
   const [email, changeEmail] = useState('');
+  const [isInputActive, toggleInputActive] = useState(false);
 
   const className = classNames({
     RegisterBanner: true,
     curly: isCurly,
+    active: isInputActive,
   });
 
   return (
@@ -28,6 +30,8 @@ function RegisterBanner({ isCurly }) {
             placeholder="E-mail"
             value={email}
             onChange={(e) => changeEmail(e.target.value)}
+            onFocus={() => toggleInputActive(true)}
+            onBlur={() => toggleInputActive(false)}
           />
 
           <AuthModal type={steps.REGISTRATION} initialEmail={email}>
