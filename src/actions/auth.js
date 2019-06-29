@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { AuthApi, AccountApi } from '../swagger';
+import { ApiClient, AuthApi, AccountApi } from '../swagger';
 import callApi from '../services/api';
 import store from '../store';
 import * as cookie from '../services/cookie';
@@ -24,19 +24,41 @@ export function getGoogleCode(login, password, code) {
   const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';
 
   return new Promise((resolve, reject) => {
-    callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
-      .then((resp) => {
-        // store.dispatch({type: actionTypes.SET_LANG, auth});
 
-        cookie.deleteCookie('hash');
-        cookie.setCookie('hash', resp.hash, {
-          expires: new Date(new Date().getTime() + 60 * 30 * 1000),
-          domain: 'bitcoinbot.pro'
-        });
+    let params = {
+      login,
+      password,
+      code,
+      app_id: appId,
+      public_key: publicKey
+    };
 
-        resolve();
-      })
+    let paramsArr = [];
+    for (let i in params) {
+      paramsArr.push(`${i}=${encodeURIComponent(params[i])}`);
+    }
+
+    fetch(ApiClient.instance.basePath + `/google_code?${paramsArr.join('&')}`, {
+      credentials: 'include'
+    })
+      .then(resp => resp.json())
+      .then(() => resolve())
       .catch((err) => reject(err));
+
+    // callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
+    //   .then((resp) => {
+    //     // store.dispatch({type: actionTypes.SET_LANG, auth});
+    //
+    //     cookie.deleteCookie('hash');
+    //     cookie.setCookie('hash', resp.hash, {
+    //       expires: new Date(new Date().getTime() + 60 * 30 * 1000),
+    //       domain: 'bitcoinbot.pro'
+    //     });
+    //
+    //     resolve();
+    //   })
+    //   .catch((err) => reject(err));
+
   });
 }
 
