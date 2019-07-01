@@ -37,7 +37,7 @@ export default function HomepageProduct(props) {
             rounded
             afterContent={<div className="HomepageProduct__button_arrow" />}
           >
-            Подробнее
+            {utils.getLang('site_readMore')}
           </UI.Button>
         </a>
       </div>
