@@ -27,7 +27,7 @@ function RegisterBanner({ isCurly }) {
           <input
             type="email"
             className="RegisterBanner__form__input"
-            placeholder="E-mail"
+            placeholder={utils.getLang('site__authModalPlaceholderEmail')}
             value={email}
             onChange={(e) => changeEmail(e.target.value)}
             onFocus={() => toggleInputActive(true)}
