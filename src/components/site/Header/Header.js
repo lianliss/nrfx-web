@@ -15,72 +15,6 @@ import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
 
 
-const headerLinks = [
-  {
-    title: 'Продукты',
-    children: [
-      {
-        title: 'Кошелек',
-        route: pages.WALLET,
-      },
-      {
-        title: 'Биржа',
-        route: pages.EXCHANGE,
-      },
-      {
-        title: 'Роботы',
-        route: pages.ROBOTS,
-      },
-      {
-        title: 'Инвестиции',
-        route: pages.INVESTMENT,
-      },
-      {
-        title: 'Оплата',
-        route: pages.COMMERCE,
-      },
-    ]
-  },
-  {
-    title: 'Компания',
-    children: [
-      {
-        title: 'О нас',
-        route: pages.ABOUT,
-      },
-      {
-        title: 'Технологии',
-        route: pages.TECHNOLOGY,
-      },
-      {
-        title: 'Безопасность',
-        route: pages.SAFETY,
-      },
-    ]
-  },
-  {
-    title: 'Помощь',
-    children: [
-      {
-        title: 'ЧаВо',
-        route: pages.FAQ,
-      },
-      {
-        title: 'Связаться с нами',
-        route: pages.CONTACT,
-      },
-      {
-        title: 'Пользовательское соглашение',
-        route: null,
-      },
-      {
-        title: 'Политика конфиденциальности',
-        route: null,
-      },
-    ]
-  }
-]
-
 const langList = [
   {
     title: 'Ru',
@@ -96,6 +30,72 @@ const currentLang = getItem('lang');
 
 
 function Header({ showLightLogo }) {
+  const headerLinks = [
+    {
+      title: utils.getLang('site__headerProducts'),
+      children: [
+        {
+          title: utils.getLang('site__headerWallet'),
+          route: pages.WALLET,
+        },
+        {
+          title: utils.getLang('site__headerExchange'),
+          route: pages.EXCHANGE,
+        },
+        {
+          title: utils.getLang('site__headerRobots'),
+          route: pages.ROBOTS,
+        },
+        {
+          title: utils.getLang('site__headerInvestment'),
+          route: pages.INVESTMENT,
+        },
+        {
+          title: utils.getLang('site__headerPayment'),
+          route: pages.COMMERCE,
+        },
+      ]
+    },
+    {
+      title: utils.getLang('site__headerCompany'),
+      children: [
+        {
+          title: utils.getLang('site__headerAboutUs'),
+          route: pages.ABOUT,
+        },
+        {
+          title: utils.getLang('site__headerTechnology'),
+          route: pages.TECHNOLOGY,
+        },
+        {
+          title: utils.getLang('site__headerSecurity'),
+          route: pages.SAFETY,
+        },
+      ]
+    },
+    {
+      title: utils.getLang('site__headerHelp'),
+      children: [
+        {
+          title: utils.getLang('site__headerFAQ'),
+          route: pages.FAQ,
+        },
+        {
+          title: utils.getLang('site__headerContactUs'),
+          route: pages.CONTACT,
+        },
+        {
+          title: utils.getLang('site__headerTerms'),
+          route: null,
+        },
+        {
+          title: utils.getLang('site__headerPrivacyPolicy'),
+          route: null,
+        },
+      ]
+    }
+  ]
+
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
   const [ curLang, changeLang ] = useState(currentLang);
 
