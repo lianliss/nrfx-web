@@ -30,7 +30,12 @@ function GoogleAuth({ changeStep, email, password }) {
           : null}
 
         <div className="AuthModal__input_wrapper">
-          <UI.Input placeholder={utils.getLang('site__authModalGAPlaceholder')} value={gCode} onChange={(e) => changeGCode(e.target.value)} />
+          <UI.Input
+            autocomplete="off"
+            value={gCode}
+            onChange={(e) => changeGCode(e.target.value)}
+            placeholder={utils.getLang('site__authModalGAPlaceholder')}
+          />
 
           <img src={require('../asset/google_auth.svg')} alt="Google Auth" />
         </div>

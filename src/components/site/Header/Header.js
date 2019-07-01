@@ -113,8 +113,8 @@ function Header({ showLightLogo }) {
       {isVerticalMenuOpen
         ? (
           <div className="SiteHeader__menu__vertical">
-            <div className="SiteHeader__logo__row">
-              <a href="/#/">
+            <div className="SiteHeader__header">
+              <a href="/#/" className="SiteHeader__header__logo">
                 <SVG src={require('../../../asset/logo_big_white.svg')} />
               </a>
               <div onClick={() => toggleVerticalMenu(false)}>
@@ -188,4 +188,4 @@ function MenuItem(props) {
 }
 
 
-export default React.memo(Header);
+export default Header;
