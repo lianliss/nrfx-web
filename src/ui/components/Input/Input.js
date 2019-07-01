@@ -16,6 +16,7 @@ function Input(props) {
     className,
     placeholder: props.placeholder,
     type: props.type,
+    autoComplete: props.autocomplete,
     required: true,
   };
 
