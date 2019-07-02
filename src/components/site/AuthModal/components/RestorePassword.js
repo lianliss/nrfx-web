@@ -7,6 +7,10 @@ import SuccessModal from '../../SuccessModal/SuccessModal';
 
 
 function RestorePassword({ changeStep, currentStep, onClose }) {
+  const handleSubmit = () => {
+    // Some actions here
+  }
+
   return (
     <>
       <h2 className="AuthModal__title">{utils.getLang('site__authModalRestorePwd')}</h2>
@@ -15,7 +19,7 @@ function RestorePassword({ changeStep, currentStep, onClose }) {
         ? (
           <>
             <div className="AuthModal__content">
-              <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} />
+              <UI.Input autoFocus placeholder={utils.getLang('site__authModalPlaceholderEmail')} onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null} />
             </div>
 
             <div className="AuthModal__footer">
@@ -25,7 +29,7 @@ function RestorePassword({ changeStep, currentStep, onClose }) {
         ) : (
           <SuccessModal
             onClose={onClose}
-            onResend={() => {}}
+            onResend={handleSubmit}
             subtitle={utils.getLang('site__authModalCheckEmailRestorePwd')}
           />
         )}

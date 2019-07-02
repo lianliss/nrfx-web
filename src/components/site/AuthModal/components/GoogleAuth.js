@@ -31,10 +31,13 @@ function GoogleAuth({ changeStep, email, password }) {
 
         <div className="AuthModal__input_wrapper">
           <UI.Input
-            autocomplete="off"
+            autoFocus
+            type="number"
+            autoComplete="off"
             value={gCode}
             onChange={(e) => changeGCode(e.target.value)}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
+            onKeyPress={(e) => (e.key === 'Enter' && gCode.length < 6) ? handleSubmit() : null}
           />
 
           <img src={require('../asset/google_auth.svg')} alt="Google Auth" />
@@ -44,7 +47,7 @@ function GoogleAuth({ changeStep, email, password }) {
       </div>
 
       <div className="AuthModal__footer">
-        <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalSubmit')}</UI.Button>
+        <UI.Button onClick={handleSubmit} disabled={gCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </>
   )
