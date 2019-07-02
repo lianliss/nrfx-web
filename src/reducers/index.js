@@ -12,7 +12,6 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {page: action.to.name});
 
     case actionTypes.SET_LANG: {
-      console.log('action.lang :', action.lang);
       return Object.assign({}, state, {lang: action.lang});
     }
 

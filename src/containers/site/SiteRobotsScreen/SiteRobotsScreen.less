@@ -57,7 +57,7 @@
       padding-left: 25px;
       display: grid;
       grid-template-columns: repeat(3, minmax(100px, 1fr));
-      grid-gap: 0 50px;
+      grid-gap: 20px 50px;
 
       @media (max-width: 766px) { grid-template-columns: repeat(2, minmax(100px, 1fr)) }
 
@@ -70,6 +70,8 @@
 
         img {
           width: 150px;
+          height: 30px;
+          object-fit: contain;
           padding: 0;
           margin: 0;
         }

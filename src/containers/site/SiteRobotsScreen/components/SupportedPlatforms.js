@@ -15,32 +15,32 @@ const platformLogos = [
     name: 'Bitfinex',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/poloniex.svg'),
+    name: 'Poloniex',
   },
   {
-    logo: require('../asset/bitfinex.svg'),
-    name: 'Bitfinex',
+    logo: require('../asset/kraken.svg'),
+    name: 'Kraken',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/huobi.svg'),
+    name: 'Huobi',
   },
   {
-    logo: require('../asset/bitfinex.svg'),
-    name: 'Bitfinex',
+    logo: require('../asset/coinbase.svg'),
+    name: 'Coinbase',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/bittrex.svg'),
+    name: 'Bittrex',
   },
   {
-    logo: require('../asset/bitfinex.svg'),
-    name: 'Bitfinex',
+    logo: require('../asset/okex.svg'),
+    name: 'Okex',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/bitstamp.svg'),
+    name: 'Bitstamp',
   },
 ];
 

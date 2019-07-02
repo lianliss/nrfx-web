@@ -8,7 +8,6 @@ import * as utils from '../../../../utils/index';
 
 
 function About() {
-  console.log('utils :', utils);
   return (
     <>
       <div className="SiteAboutScreen__intro">

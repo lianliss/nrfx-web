@@ -1,7 +1,6 @@
 import './SiteMainScreen.less';
 
 import React from 'react';
-import Typist from 'react-typist';
 
 import BaseScreen from '../../BaseScreen';
 import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
@@ -12,48 +11,22 @@ import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBann
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../utils/index';
-
-
+import TypedText from '../../../components/site/TypedText/TypedText';
 
 
 export default class SiteMainScreen extends BaseScreen {
 
-  animationTimer = null;
-  state = {
-    currentProductIndex: 0,
-  }
-
-  componentDidMount() {
-    this.animationTimer = setInterval(this.changeProductText, 1500);
-  }
-
-  changeProductText = () => {
-    const { currentProductIndex } = this.state;
-
-    if (currentProductIndex < 4) {
-      this.setState((prevState) => ({
-        currentProductIndex: prevState.currentProductIndex + 1,
-      }));
-    } else {
-      this.setState({
-        currentProductIndex: 0,
-      })
-    }
+  getAnimatedTitle = () => {
+    const { site } = this.lang;
+    const products = [site.homeSlideExchange, site.homeSlideWallet, site.homeSlideInvestments, site.homeSlideRobots, site.homeSlidePayment];
+    
+    return (
+      <TypedText products={products} />
+    )
   }
 
   componentWillUnmount() {
     clearInterval(this.animationTimer);
-  }
-  
-  getAnimatedTitle = () => {
-    const { site } = this.lang;
-    const { currentProductIndex } = this.state;
-    const products = [site.homeSlideExchange, site.homeSlideWallet, site.homeSlideInvestments, site.homeSlideRobots, site.homeSlidePayment];
-    const currentProduct = products[currentProductIndex];
-
-    return (
-      <Typist key={currentProduct}>{currentProduct}</Typist>
-    )
   }
 
   render() {
