@@ -155,7 +155,7 @@ export default class SiteMainScreen extends BaseScreen {
           caption={item.caption}
           icon={item.icon}
           className="SiteHomepageSafety__item"
-          btn={<a href={`/#/${item.route}`} className="SiteHomepageSafety__item__more">{this.lang.site.homeLearnMore}</a>}
+          btn={<a href={`/${item.route}`} className="SiteHomepageSafety__item__more">{this.lang.site.homeLearnMore}</a>}
         />
       )
     });

@@ -10,6 +10,7 @@ import Mission from './components/Mission';
 import History from './components/History';
 import { ABOUT, MISSION, HISTORY } from '../../../constants/pages';
 import * as utils from '../../../utils/index';
+import router from '../../../router';
 
 
 const getHeading = (currentTab) => {
@@ -30,7 +31,7 @@ const getClassName = (tab, currentTab) => {
 }
 
 const TabButton = ({ title, tabName, currentTab }) => (
-  <a href={`/#/${tabName}`}>
+  <span onClick={() => router.navigate(tabName)}>
     <UI.Button
       rounded
       style={{ width: 200 }}
@@ -38,7 +39,7 @@ const TabButton = ({ title, tabName, currentTab }) => (
     >
       {title}
     </UI.Button>
-  </a>
+  </span>
 )
 
 export default class SiteAboutScreen extends BaseScreen {
