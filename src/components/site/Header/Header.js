@@ -6,6 +6,7 @@ import SVG from 'react-inlinesvg';
 import UI from '../../../ui';
 import * as utils from '../../../utils/index';
 import * as pages from '../../../constants/pages';
+import router from '../../../router';
 // TODO: use connect instead of direct calling
 import { loadLang } from '../../../actions';
 import * as steps from '../AuthModal/fixtures';
@@ -108,13 +109,17 @@ function Header({ showLightLogo }) {
     setItem('lang', value);
   }
 
+  const handleNavigate = (route) => {
+    router.navigate(route);
+  }
+
   return (
     <div className="SiteHeader">
       {isVerticalMenuOpen
         ? (
           <div className="SiteHeader__menu__vertical">
             <div className="SiteHeader__header">
-              <a href="/#/" className="SiteHeader__header__logo">
+              <a href="/" className="SiteHeader__header__logo">
                 <SVG src={require('../../../asset/logo_big_white.svg')} />
               </a>
               <div onClick={() => toggleVerticalMenu(false)}>
@@ -131,7 +136,7 @@ function Header({ showLightLogo }) {
             </div>
 
             {headerLinks.map(item => (
-              <MobileDropdown key={item.title} title={item.title} subItems={item.children} />
+              <MobileDropdown key={item.title} onNavigate={handleNavigate} title={item.title} subItems={item.children} />
             ))}
             <MobileDropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
 
@@ -142,7 +147,7 @@ function Header({ showLightLogo }) {
       {!isVerticalMenuOpen
         ? (
           <div className="SiteHeader__cont">
-            <a href="/#/">
+            <a href="/">
               <div className="SiteHeader__logo">
                 {showLightLogo
                   ? <SVG src={require('../../../asset/logo_big_white.svg')} />
@@ -152,7 +157,7 @@ function Header({ showLightLogo }) {
             </a>
             <div className="SiteHeader__menu__horizontal">
               {headerLinks.map(item => (
-                <Dropdown key={item.title} title={item.title} subItems={item.children} />
+                <Dropdown key={item.title} title={item.title} onNavigate={handleNavigate} subItems={item.children} />
               ))}
 
               <div className="SiteHeader__menu_controls">

@@ -72,7 +72,7 @@ const params = {
 };
 
 let router = createRouter(routes, params);
-router.usePlugin(browserPlugin({ base: '', useHash: true }));
+router.usePlugin(browserPlugin({ base: '', useHash: false }));
 router.usePlugin(listenersPlugin());
 
 export default router;
