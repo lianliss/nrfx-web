@@ -40,7 +40,7 @@ export default function Footer() {
         </div>
         <div className="Footer__bottom">
           <div className="Footer__logo">
-            <SVG src={require('../../../asset/logo_big_orange.svg')} />
+            <SVG src={require('../../../asset/logo_full.svg')} />
           </div>
           <div className="Footer__copyright">© 2017-2019 BITCOINBOT</div>
           <div className="Footer__socials">

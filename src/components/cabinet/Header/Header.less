@@ -1,0 +1,68 @@
+.CabinetHeader {
+  background: #FFFFFF;
+  box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+
+  .CabinetHeader__content {
+    max-width: 1340px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .CabinetHeader__logo {
+      color: var(--primary);
+    }
+
+    .CabinetHeader__links {
+      display: flex;
+
+      .active {
+        color: #000;
+        border-bottom-width: 3px;
+        border-color: transparent;
+        position: relative;
+
+        .isvg {
+          color: #000;
+        }
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: calc(100% - 3px);
+          right: 0;
+          bottom: 0;
+          left: 0;
+          /* z-index: 0; */
+          /* margin: -3px; */
+          border-radius: inherit;
+          background: linear-gradient(4.37deg, #FFC75D 21.44%, #FFA363 76.19%);
+          height: 3px;
+          width: 90%;
+          margin: 0 auto;
+        }
+      }
+    }
+
+    .CabinetHeader__link {
+      color: #808080;
+      display: flex;
+      align-items: center;
+      padding: 20px 25px;
+      justify-content: center;
+
+      .isvg {
+        margin-right: 20px;
+        color: #808080;
+      }
+    }
+
+    .CabinetHeader__icons {
+      .isvg {
+        margin: 10px;
+        color: #808080;
+      }
+    }
+  }
+
+}

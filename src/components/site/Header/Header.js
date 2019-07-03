@@ -109,8 +109,8 @@ function Header({ showLightLogo, langList }) {
         ? (
           <div className="SiteHeader__menu__vertical">
             <div className="SiteHeader__header">
-              <a href="/" className="SiteHeader__header__logo">
-                <SVG src={require('../../../asset/logo_big_white.svg')} />
+              <a href="/" className="SiteHeader__header__logo SiteHeader__logo_white">
+                <SVG src={require('../../../asset/logo_full.svg')} />
               </a>
               <div onClick={() => toggleVerticalMenu(false)}>
                 <SVG src={require('./asset/close.svg')}  />
@@ -144,11 +144,8 @@ function Header({ showLightLogo, langList }) {
         ? (
           <div className="SiteHeader__cont">
             <a href="/">
-              <div className="SiteHeader__logo">
-                {showLightLogo
-                  ? <SVG src={require('../../../asset/logo_big_white.svg')} />
-                  : <SVG src={require('../../../asset/logo_big_orange.svg')} />
-                }
+              <div className={"SiteHeader__logo" + (showLightLogo ? " SiteHeader__logo_white" : "")}>
+                <SVG src={require('../../../asset/logo_full.svg')} />
               </div>
             </a>
             <div className="SiteHeader__menu__horizontal">

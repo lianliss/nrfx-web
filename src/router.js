@@ -68,6 +68,11 @@ export const routes = [
     name: pages.NOT_FOUND,
     path: '/not_found',
   },
+  // Cabinet routes (temorarily like this)
+  {
+    name: pages.CABINET_WALLET,
+    path: '/cabinet_wallet',
+  }
 ];
 
 const params = {

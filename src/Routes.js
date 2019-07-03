@@ -14,6 +14,7 @@ import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactSc
 import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
 import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
+import CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
 
 
 export default function Routes(props) {
@@ -64,6 +65,10 @@ export default function Routes(props) {
       break;
     case pages.UIKIT:
       Component = UIKitScreen;
+      break;
+    // Cabinet
+    case pages.CABINET_WALLET:
+      Component = CabinetWalletScreen;
       break;
     default:
       Component = SiteNotFoundScreen;

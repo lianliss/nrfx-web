@@ -1,0 +1,57 @@
+.ProfileSidebar {
+  width: 180px;
+
+  .ProfileSidebar__user {
+    text-align: center;
+    padding: 30px 0 15px;
+
+    .ProfileSidebar__user__avatar {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      display: block;
+      margin: 18px auto;
+      object-fit: cover;
+
+      &::before {
+        opacity: 0.5;
+        filter: blur(16px);
+        border-radius: 160px;
+      }
+    }
+
+    .ProfileSidebar__user__title {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.444444px;
+      margin-bottom: 8px;
+    }
+
+    .ProfileSidebar__user__txt {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 13px;
+      text-align: center;
+      letter-spacing: 0.444444px;
+      color: #BFBFBF;
+      margin-bottom: 4px;
+    }
+  }
+
+  .ProfileSidebar__menu {
+    .ProfileSidebar__menu__item {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+
+      .isvg {
+        margin-right: 10px;
+      }
+    }
+
+    .ProfileSidebar__menu__item_passive {
+      color: #808080;
+    }
+  }
+}
