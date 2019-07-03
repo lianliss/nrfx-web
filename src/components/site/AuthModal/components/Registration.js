@@ -31,6 +31,12 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose })
     onClose();
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  }
+
   return (
     <>
       <h2 className="AuthModal__title">{utils.getLang('site__authModalRegistration')}</h2>
@@ -43,8 +49,8 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose })
                 ? <p className="AuthModal__err_msg">{errorMsg}</p>
                 : null}
 
-              <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} value={email} onChange={(e) => handleChange(e.target.value, 'email')} />
-              <UI.Input placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrar} onChange={(e) => changeReferrar(e.target.value)} />
+              <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} value={email} onKeyPress={handleKeyPress} onChange={(e) => handleChange(e.target.value, 'email')} />
+              <UI.Input placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrar} onKeyPress={handleKeyPress} onChange={(e) => changeReferrar(e.target.value)} />
 
               <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)}>{utils.getLang('site__authModalTermsConditions')}</UI.CheckBox>
             </div>
