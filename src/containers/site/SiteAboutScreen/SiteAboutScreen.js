@@ -61,9 +61,9 @@ export default class SiteAboutScreen extends BaseScreen {
             <h1 className="SiteAboutScreen__heading">{getHeading(currentTab)}</h1>
 
             <div className="SiteAboutScreen__tabs">
-              <TabButton title="О нас" tabName={ABOUT} currentTab={currentTab} />
-              <TabButton title="Миссия" tabName={MISSION} currentTab={currentTab} />
-              <TabButton title="Дорожная карта" tabName={HISTORY} currentTab={currentTab} />
+              <TabButton title={this.lang.site.aboutTabTitle1} tabName={ABOUT} currentTab={currentTab} />
+              <TabButton title={this.lang.site.aboutTabTitle2} tabName={MISSION} currentTab={currentTab} />
+              <TabButton title={this.lang.site.aboutTabTitle3} tabName={HISTORY} currentTab={currentTab} />
             </div>
 
             {currentTab === ABOUT
