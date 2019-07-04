@@ -19,7 +19,7 @@ function Button(props) {
   return (
     <button
       className={className}
-      onClick={() => props.onClick && props.onClick()}
+      onClick={(e) => props.onClick && props.onClick(e)}
       style={props.style}
       type={props.btnType}
     >
