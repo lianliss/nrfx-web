@@ -27,7 +27,7 @@ function MobileDropdown({ title, subItems, onChange, onNavigate }) {
                   <span
                     key={item.title}
                     className="SiteHeader__mobileDropdown__link"
-                    onClick={() => onNavigate(`/${item.route}`)}
+                    onClick={() => onNavigate(item.route)}
                   >
                     {item.title}
                   </span>
@@ -40,7 +40,6 @@ function MobileDropdown({ title, subItems, onChange, onNavigate }) {
             })}
           </div>
         ) : null}
-
     </div>
   )
 }
