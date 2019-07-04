@@ -20,7 +20,7 @@ export default class SiteRobotsScreen extends BaseScreen {
             image={require('./asset/robots_main_image.svg')}
             title={<span>{utils.nl2br(this.lang.site.robotsTitle)}</span>}
             caption={<span>{this.lang.site.robotsSubTitle}</span>}
-            buttonText="Попробовать"
+            buttonText={this.lang.site.toTryBtn}
           />
 
           <div className="SiteSectionHeader">
