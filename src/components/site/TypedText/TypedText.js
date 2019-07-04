@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 let currentProductIndex = 0;
 
 export default class TypedText extends React.PureComponent {
+  animationTimer = null;
   state = {
     currentString: ''
   }
@@ -28,7 +29,7 @@ export default class TypedText extends React.PureComponent {
         } else {
           currentProductIndex = 0;
         }
-        setTimeout(() => {
+        this.animationTimer = setTimeout(() => {
           this.deleteMessage(curString);
         }, 500);
         clearInterval(int1);
@@ -42,7 +43,7 @@ export default class TypedText extends React.PureComponent {
   deleteMessage(str) {
     let int = setInterval(() => {
       if (str.length === 0) {
-        setTimeout(() => {
+        this.animationTimer = setTimeout(() => {
           this.typeMessage();
         }, 500);
         clearInterval(int);
@@ -53,6 +54,10 @@ export default class TypedText extends React.PureComponent {
         this.setState({ currentString: str });
       }
     }, 50);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.animationTimer);
   }
 
   render() {
