@@ -1,18 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import Timeline from '../../../../components/site/Timeline/Timeline';
 import { data } from '../fixtures';
-import * as utils from '../../../../utils/index';
 
 
-function History() {
+function History({ lang }) {
   return (
     <>
       <div className="SiteAboutScreen__intro SiteAboutScreen__history">
-        <TitleWithBg title={utils.getLang('site__aboutHistoryTitle')} bgTitle={utils.getLang('site__aboutHistoryTitle')} centered />
-        <p className="SiteAboutScreen__caption">{utils.getLang('site__aboutHistorySubTitle')}</p>
+        <TitleWithBg title={lang.site__aboutHistoryTitle} bgTitle={lang.site__aboutHistoryTitle} centered />
+        <p className="SiteAboutScreen__caption">{lang.site__aboutHistorySubTitle}</p>
       </div>
 
       <div className="SiteAboutScreen__history__timeline">
@@ -24,4 +24,8 @@ function History() {
   )
 }
 
-export default React.memo(History);
+const mapStateToProps = (state) => ({
+  lang: state.default.lang,
+});
+
+export default React.memo(connect(mapStateToProps)(History));

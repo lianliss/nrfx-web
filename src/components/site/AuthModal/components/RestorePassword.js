@@ -33,7 +33,6 @@ function RestorePassword({ changeStep, currentStep, onClose }) {
             subtitle={utils.getLang('site__authModalCheckEmailRestorePwd')}
           />
         )}
-
     </>
   )
 }
