@@ -37,27 +37,20 @@ export function getGoogleCode(login, password, code) {
     for (let i in params) {
       paramsArr.push(`${i}=${encodeURIComponent(params[i])}`);
     }
-
-    fetch(ApiClient.instance.basePath + `/google_code?${paramsArr.join('&')}`, {
-      credentials: 'include'
-    })
-      .then(resp => resp.json())
-      .then(() => resolve())
-      .catch((err) => reject(err));
-
-    // callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
-    //   .then((resp) => {
-    //     // store.dispatch({type: actionTypes.SET_LANG, auth});
     //
-    //     cookie.deleteCookie('hash');
-    //     cookie.setCookie('hash', resp.hash, {
-    //       expires: new Date(new Date().getTime() + 60 * 30 * 1000),
-    //       domain: 'bitcoinbot.pro'
-    //     });
-    //
-    //     resolve();
-    //   })
+    // fetch(ApiClient.instance.basePath + `/google_code?${paramsArr.join('&')}`, {
+    //   credentials: 'include'
+    // })
+    //   .then(resp => resp.json())
+    //   .then(() => resolve())
     //   .catch((err) => reject(err));
+
+    callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
+      .then((resp) => {
+        // store.dispatch({type: actionTypes.SET_LANG, auth});
+        resolve();
+      })
+      .catch((err) => reject(err));
 
   });
 }
