@@ -17,4 +17,10 @@ export const cryptocurrencies = [
     gradient: 'linear-gradient(225deg, #7AC4F2 0%, #619ABE 100%)',
     icon: require('../asset/cabinet/crypto/LTC.svg'),
   },
+  // {
+  //   name: 'Other',
+  //   code: 'Other',
+  //   gradient: 'linear-gradient(225deg, #B5B5B5 0%, #838383 100%)',
+  //   icon: require('../asset/cabinet/crypto/other.svg'),
+  // },
 ]
