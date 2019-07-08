@@ -37,7 +37,7 @@ export default class SiteExchangeScreen extends BaseScreen {
 
           <div className="SiteExchangeScreen__interface">
             <div className="SiteExchangeScreen__interface__cont">
-              <TitleWithBg title={this.lang.site.exchangeCustomizableInterface} bgTitle="Interface" />
+              <TitleWithBg title={this.lang.site.exchangeCustomizableInterface} bgTitle={this.lang.site.exchangeCustomizableInterface} />
 
               <p>
                 {this.lang.site.exchangeCustomizableInterfaceTitle}

@@ -1,7 +1,6 @@
 import './SiteMainScreen.less';
 
 import React from 'react';
-import Typist from 'react-typist';
 
 import BaseScreen from '../../BaseScreen';
 import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
@@ -12,48 +11,22 @@ import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBann
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../utils/index';
-
-
+import TypedText from '../../../components/site/TypedText/TypedText';
 
 
 export default class SiteMainScreen extends BaseScreen {
 
-  animationTimer = null;
-  state = {
-    currentProductIndex: 0,
-  }
-
-  componentDidMount() {
-    this.animationTimer = setInterval(this.changeProductText, 1500);
-  }
-
-  changeProductText = () => {
-    const { currentProductIndex } = this.state;
-
-    if (currentProductIndex < 4) {
-      this.setState((prevState) => ({
-        currentProductIndex: prevState.currentProductIndex + 1,
-      }));
-    } else {
-      this.setState({
-        currentProductIndex: 0,
-      })
-    }
+  getAnimatedTitle = () => {
+    const { site } = this.lang;
+    const products = [site.homeSlideExchange, site.homeSlideWallet, site.homeSlideInvestments, site.homeSlideRobots, site.homeSlidePayment];
+    
+    return (
+      <TypedText products={products} />
+    )
   }
 
   componentWillUnmount() {
     clearInterval(this.animationTimer);
-  }
-  
-  getAnimatedTitle = () => {
-    const { site } = this.lang;
-    const { currentProductIndex } = this.state;
-    const products = [site.homeSlideExchange, site.homeSlideWallet, site.homeSlideInvestments, site.homeSlideRobots, site.homeSlidePayment];
-    const currentProduct = products[currentProductIndex];
-
-    return (
-      <Typist key={currentProduct}>{currentProduct}</Typist>
-    )
   }
 
   render() {
@@ -79,33 +52,33 @@ export default class SiteMainScreen extends BaseScreen {
 
             <HomepageProduct
               title={this.lang.site.homeExchange}
-              bgTitle="Exchange"
+              bgTitle={this.lang.site.homeExchange}
               icon="exchange"
               seeMoreLink={pages.EXCHANGE}
             >{[this.lang.site.homeExchangeSubTitile1, this.lang.site.homeExchangeSubTitile2, this.lang.site.homeExchangeSubTitile3]}</HomepageProduct>
             <HomepageProduct
               title={this.lang.site.homeWallet}
-              bgTitle="Wallets"
+              bgTitle={this.lang.site.homeWallet}
               icon="wallet"
               seeMoreLink={pages.WALLET}
               reverse
             >{[this.lang.site.homeWalletSubTitle1, this.lang.site.homeWalletSubTitle4, this.lang.site.homeWalletSubTitle3]}</HomepageProduct>
             <HomepageProduct
               title={this.lang.site.homeRobots}
-              bgTitle="Robots"
+              bgTitle={this.lang.site.homeRobots}
               icon="robot"
               seeMoreLink={pages.ROBOTS}
             >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]}</HomepageProduct>
             <HomepageProduct
               title={this.lang.site.homeInvestments}
-              bgTitle="Investment"
+              bgTitle={this.lang.site.homeInvestments}
               icon="investment"
               seeMoreLink={pages.INVESTMENT}
               reverse
             >{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>
             <HomepageProduct
               title={this.lang.site.homePayment}
-              bgTitle="Commerce"
+              bgTitle={this.lang.site.homePayment}
               icon="commerce"
               seeMoreLink={pages.COMMERCE}
             >{[this.lang.site.homePaymentSubTitle1, this.lang.site.homePaymentSubTitle2, this.lang.site.homePaymentSubTitle3]}</HomepageProduct>
@@ -155,7 +128,7 @@ export default class SiteMainScreen extends BaseScreen {
           caption={item.caption}
           icon={item.icon}
           className="SiteHomepageSafety__item"
-          btn={<a href={`/#/${item.route}`} className="SiteHomepageSafety__item__more">{this.lang.site.homeLearnMore}</a>}
+          btn={<a href={`/${item.route}`} className="SiteHomepageSafety__item__more">{this.lang.site.homeLearnMore}</a>}
         />
       )
     });

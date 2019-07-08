@@ -28,7 +28,13 @@ function ResetAuth({ email, password }) {
           ? <p className="AuthModal__err_msg">{errorMsg}</p>
           : null}
 
-        <UI.Input placeholder="Secret Key" value={secretKey} onChange={(e) => changeSecretKey(e.target.value)} />
+        <UI.Input
+          autoFocus
+          placeholder="Secret Key"
+          value={secretKey}
+          onChange={(e) => changeSecretKey(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
+        />
       </div>
 
       <div className="AuthModal__footer">

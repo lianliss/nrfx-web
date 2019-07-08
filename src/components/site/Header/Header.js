@@ -6,6 +6,7 @@ import SVG from 'react-inlinesvg';
 import UI from '../../../ui';
 import * as utils from '../../../utils/index';
 import * as pages from '../../../constants/pages';
+import router from '../../../router';
 // TODO: use connect instead of direct calling
 import { loadLang } from '../../../actions';
 import * as steps from '../AuthModal/fixtures';
@@ -14,72 +15,6 @@ import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
 
-
-const headerLinks = [
-  {
-    title: 'Продукты',
-    children: [
-      {
-        title: 'Кошелек',
-        route: pages.WALLET,
-      },
-      {
-        title: 'Биржа',
-        route: pages.EXCHANGE,
-      },
-      {
-        title: 'Роботы',
-        route: pages.ROBOTS,
-      },
-      {
-        title: 'Инвестиции',
-        route: pages.INVESTMENT,
-      },
-      {
-        title: 'Оплата',
-        route: pages.COMMERCE,
-      },
-    ]
-  },
-  {
-    title: 'Компания',
-    children: [
-      {
-        title: 'О нас',
-        route: pages.ABOUT,
-      },
-      {
-        title: 'Технологии',
-        route: pages.TECHNOLOGY,
-      },
-      {
-        title: 'Безопасность',
-        route: pages.SAFETY,
-      },
-    ]
-  },
-  {
-    title: 'Помощь',
-    children: [
-      {
-        title: 'ЧаВо',
-        route: pages.FAQ,
-      },
-      {
-        title: 'Связаться с нами',
-        route: pages.CONTACT,
-      },
-      {
-        title: 'Пользовательское соглашение',
-        route: null,
-      },
-      {
-        title: 'Политика конфиденциальности',
-        route: null,
-      },
-    ]
-  }
-]
 
 const langList = [
   {
@@ -96,6 +31,72 @@ const currentLang = getItem('lang');
 
 
 function Header({ showLightLogo }) {
+  const headerLinks = [
+    {
+      title: utils.getLang('site__headerProducts'),
+      children: [
+        {
+          title: utils.getLang('site__headerWallet'),
+          route: pages.WALLET,
+        },
+        {
+          title: utils.getLang('site__headerExchange'),
+          route: pages.EXCHANGE,
+        },
+        {
+          title: utils.getLang('site__headerRobots'),
+          route: pages.ROBOTS,
+        },
+        {
+          title: utils.getLang('site__headerInvestment'),
+          route: pages.INVESTMENT,
+        },
+        {
+          title: utils.getLang('site__headerPayment'),
+          route: pages.COMMERCE,
+        },
+      ]
+    },
+    {
+      title: utils.getLang('site__headerCompany'),
+      children: [
+        {
+          title: utils.getLang('site__headerAboutUs'),
+          route: pages.ABOUT,
+        },
+        {
+          title: utils.getLang('site__headerTechnology'),
+          route: pages.TECHNOLOGY,
+        },
+        {
+          title: utils.getLang('site__headerSecurity'),
+          route: pages.SAFETY,
+        },
+      ]
+    },
+    {
+      title: utils.getLang('site__headerHelp'),
+      children: [
+        {
+          title: utils.getLang('site__headerFAQ'),
+          route: pages.FAQ,
+        },
+        {
+          title: utils.getLang('site__headerContactUs'),
+          route: pages.CONTACT,
+        },
+        {
+          title: utils.getLang('site__headerTerms'),
+          route: null,
+        },
+        {
+          title: utils.getLang('site__headerPrivacyPolicy'),
+          route: null,
+        },
+      ]
+    }
+  ]
+
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
   const [ curLang, changeLang ] = useState(currentLang);
 
@@ -108,13 +109,17 @@ function Header({ showLightLogo }) {
     setItem('lang', value);
   }
 
+  const handleNavigate = (route) => {
+    router.navigate(route);
+  }
+
   return (
     <div className="SiteHeader">
       {isVerticalMenuOpen
         ? (
           <div className="SiteHeader__menu__vertical">
-            <div className="SiteHeader__logo__row">
-              <a href="/#/">
+            <div className="SiteHeader__header">
+              <a href="/" className="SiteHeader__header__logo">
                 <SVG src={require('../../../asset/logo_big_white.svg')} />
               </a>
               <div onClick={() => toggleVerticalMenu(false)}>
@@ -131,7 +136,7 @@ function Header({ showLightLogo }) {
             </div>
 
             {headerLinks.map(item => (
-              <MobileDropdown key={item.title} title={item.title} subItems={item.children} />
+              <MobileDropdown key={item.title} onNavigate={handleNavigate} title={item.title} subItems={item.children} />
             ))}
             <MobileDropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
 
@@ -142,7 +147,7 @@ function Header({ showLightLogo }) {
       {!isVerticalMenuOpen
         ? (
           <div className="SiteHeader__cont">
-            <a href="/#/">
+            <a href="/">
               <div className="SiteHeader__logo">
                 {showLightLogo
                   ? <SVG src={require('../../../asset/logo_big_white.svg')} />
@@ -152,15 +157,15 @@ function Header({ showLightLogo }) {
             </a>
             <div className="SiteHeader__menu__horizontal">
               {headerLinks.map(item => (
-                <Dropdown key={item.title} title={item.title} subItems={item.children} />
+                <Dropdown key={item.title} title={item.title} onNavigate={handleNavigate} subItems={item.children} />
               ))}
 
               <div className="SiteHeader__menu_controls">
                 <AuthModal>
-                  <MenuItem>Войти</MenuItem>
+                  <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
                 </AuthModal>
                 <AuthModal type={steps.REGISTRATION}>
-                  <UI.Button type="outline_white" rounded>Регистрация</UI.Button>
+                  <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
                 </AuthModal>
                 <Dropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
               </div>
@@ -188,4 +193,4 @@ function MenuItem(props) {
 }
 
 
-export default React.memo(Header);
+export default Header;

@@ -2,6 +2,7 @@ import React from 'react';
 
 import BaseScreen from '../../../BaseScreen';
 import UI from '../../../../ui/index';
+import * as utils from '../../../../utils/index';
 import { PHONE } from '../../../../constants/breakpoints';
 
 
@@ -15,32 +16,32 @@ const platformLogos = [
     name: 'Bitfinex',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/poloniex.svg'),
+    name: 'Poloniex',
   },
   {
-    logo: require('../asset/bitfinex.svg'),
-    name: 'Bitfinex',
+    logo: require('../asset/kraken.svg'),
+    name: 'Kraken',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/huobi.svg'),
+    name: 'Huobi',
   },
   {
-    logo: require('../asset/bitfinex.svg'),
-    name: 'Bitfinex',
+    logo: require('../asset/coinbase.svg'),
+    name: 'Coinbase',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/bittrex.svg'),
+    name: 'Bittrex',
   },
   {
-    logo: require('../asset/bitfinex.svg'),
-    name: 'Bitfinex',
+    logo: require('../asset/okex.svg'),
+    name: 'Okex',
   },
   {
-    logo: require('../asset/binance.svg'),
-    name: 'Binance',
+    logo: require('../asset/bitstamp.svg'),
+    name: 'Bitstamp',
   },
 ];
 
@@ -85,8 +86,8 @@ export default class SiteRobotsScreen extends BaseScreen {
       <div className="SupportedPlatforms">
         <div className="SupportedPlatforms__text">
           <img src={require('../asset/robots_platforms_bg.svg')} alt="supported-platforms" className="SupportedPlatforms__bg" />
-          <h2 className="SupportedPlatforms__title">Поддерживаемые биржи</h2>
-          <p className="SupportedPlatforms__caption">Мы поддерживаем следующие криптовалютные биржи и увеличиваем их количество</p>
+          <h2 className="SupportedPlatforms__title">{utils.getLang('site__robotsSupportedTitle')}</h2>
+          <p className="SupportedPlatforms__caption">{utils.getLang('site__robotsSupportedSubTitle')}</p>
         </div>
         <div className="SupportedPlatforms__logos">
           {visibleLogos.map((item, i) => (

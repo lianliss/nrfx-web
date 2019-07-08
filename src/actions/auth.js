@@ -13,7 +13,7 @@ export function getAuth(login, password) {
     callApi(new AuthApi().authGet, login, password, appId, publicKey)
       .then((auth) => {
         store.dispatch({ type: actionTypes.AUTH, auth });
-        resolve();
+        resolve(auth);
       })
       .catch((err) => reject(err));
   });

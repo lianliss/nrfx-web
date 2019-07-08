@@ -12,6 +12,7 @@ import SiteExchangeScreen from './containers/site/SiteExchangeScreen/SiteExchang
 import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
 import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactScreen';
 import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
+import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
 
 
@@ -65,7 +66,7 @@ export default function Routes(props) {
       Component = UIKitScreen;
       break;
     default:
-      Component = UIKitScreen;
+      Component = SiteNotFoundScreen;
       break;
   }
 

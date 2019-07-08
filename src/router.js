@@ -64,15 +64,19 @@ export const routes = [
     name: pages.UIKIT,
     path: '/uikit',
   },
+  {
+    name: pages.NOT_FOUND,
+    path: '/not_found',
+  },
 ];
 
 const params = {
-  defaultRoute: pages.UIKIT,
+  defaultRoute: pages.NOT_FOUND,
   defaultParams: {}
 };
 
 let router = createRouter(routes, params);
-router.usePlugin(browserPlugin({ base: '', useHash: true }));
+router.usePlugin(browserPlugin({ base: '', useHash: false }));
 router.usePlugin(listenersPlugin());
 
 export default router;

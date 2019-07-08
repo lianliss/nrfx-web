@@ -1,9 +1,12 @@
 .Wallet__screen {
 
   .SitePageInfoBlock__screen {
-    transform: translate(70px, -46px);
-    width: 940px;
-    max-height: 472px;
+    width: 705px;
+    object-fit: contain;
+    transform: translate(0px, -30px);
+
+    @media (min-width: 1200px) { object-fit: cover; transform: translate(102px, -46px); }
+    
   }
 
   .WalletFeature__item {

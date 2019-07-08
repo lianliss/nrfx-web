@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 
 
-function Dropdown({ title, subItems, onChange }) {
+function Dropdown({ title, subItems, onChange, onNavigate }) {
   const [isOpen, toggle] = useState(false);
 
   const handleLinkClick = (value) => {
@@ -23,7 +23,13 @@ function Dropdown({ title, subItems, onChange }) {
             {subItems.map(item => {
               if (item.route) {
                 return (
-                  <a key={item.title} className="SiteHeader__dropdown__link" href={`/#/${item.route}`}>{item.title}</a>
+                  <span
+                    key={item.title}
+                    className="SiteHeader__dropdown__link"
+                    onClick={() => onNavigate(item.route)}
+                  >
+                    {item.title}
+                  </span>
                 )
               } else {
                 return (

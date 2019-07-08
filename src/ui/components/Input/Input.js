@@ -16,6 +16,9 @@ function Input(props) {
     className,
     placeholder: props.placeholder,
     type: props.type,
+    autoComplete: props.autoComplete,
+    autoFocus: props.autoFocus,
+    onKeyPress: props.onKeyPress,
     required: true,
   };
 
