@@ -1,0 +1,30 @@
+.LanguageModal__cont {
+  padding: 20px;
+  
+  .LanguageModal__cont__title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: 0.444444px;
+    color: var(--foreground-primary-opacity);
+    margin: 0 0 30px;
+  }
+  
+  .LanguageModal__cont__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(60px, 1fr));
+    grid-gap: 24px 100px;
+  
+    p {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+  
+      .isvg {
+        width: 18px;
+        margin-right: 5px;
+      }
+    }
+  }
+}

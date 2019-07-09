@@ -12,19 +12,24 @@ function Modal(props) {
     Modal_open: props.isOpen,
   });
 
-  return (
-    <div className={className}>
-      <div className="Modal__box">
-        <img 
-          alt="close"
-          className="Modal__box__close"
-          src={require('../../../asset/site/close.svg')}
-          onClick={props.onClose}
-        />
-        {props.children}
+  if (props.isOpen) {
+    return (
+      <div className={className}>
+        <div className="Modal__box">
+          <img 
+            alt="close"
+            className="Modal__box__close"
+            src={require('../../../asset/site/close.svg')}
+            onClick={props.onClose}
+          />
+          {props.children}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
+
 }
 
 Modal.propTypes = {

@@ -16,7 +16,6 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
   }
 
   utils.useInterval(() => {
-    console.log('timeRemaining :', timeRemaining);
     if (timeRemaining === 0) {
       setIsRunning(false);
       onClose();
