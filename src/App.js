@@ -6,6 +6,7 @@ import Routes from './Routes';
 import * as actions from './actions';
 import * as testActions from './actions/test';
 import * as storage from './services/storage';
+import CookieUsage from './components/site/CookieUsage/CookieUsage';
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +23,8 @@ class App extends React.Component {
   }
 
   render() {
+    const acceptedCookies = storage.getItem('acceptedCookies');
+
     if (this.state.isLoading) {
       return (
         <div className="AppLoading">Loading...</div>
@@ -31,6 +34,10 @@ class App extends React.Component {
     return (
       <div>
         <Routes {...this.props} />
+
+        {!acceptedCookies
+          ? <CookieUsage />
+          : null}
       </div>
     )
   }
