@@ -17,8 +17,8 @@ function WalletBox({ crypto, children, isGenerating }) {
       <img src={crypto.icon} alt="Crypto" className="WalletBox__icon" />
 
       <div className="WalletBox__content Content_box">
-        <h3>{crypto.name}</h3>
-        <p>{isGenerating ? 'Generating' : 'subtitle'}</p>
+        <h3>{crypto.currency}</h3>
+        <p>{isGenerating ? 'Generating' : crypto.amount}</p>
       </div>
 
       {isGenerating

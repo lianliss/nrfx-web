@@ -3,7 +3,9 @@ import React, { useState, useRef } from 'react';
 import UI from '../../../../ui';
 import * as steps from '../fixtures';
 import * as utils from '../../../../utils/index';
+import * as auth from '../../../../services/auth';
 import { getGoogleCode } from '../../../../actions/auth';
+import router from '../../../../router';
 
 
 function GoogleAuth({ changeStep, email, password, loginRes }) {
@@ -13,9 +15,11 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
 
   const handleSubmit = () => {
     getGoogleCode(email, password, gCode)
-      .then(() => {
+      .then((user) => {
         setErrorMsg('');
-        setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
+        auth.login(user.access_token);
+
+        setTimeout(() => router.navigate('cabinet_wallet'), 100);
       })
       .catch((err) => setErrorMsg(err.message));
   }

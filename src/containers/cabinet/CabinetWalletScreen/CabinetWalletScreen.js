@@ -2,11 +2,12 @@ import './CabinetWalletScreen.less';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import { connect } from 'react-redux';
 
+import { getWallets, getTransactionHistory } from '../../../actions/cabinet/wallets';
 import CabinetWrapper from '../../../wrappers/Cabinet/CabinetWrapper';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
-import { cryptocurrencies } from '../../../constants/currencies';
 import WalletBalance from './components/WalletBalance';
 import Table from '../../../components/cabinet/Table/Table';
 import BuyCurrency from './components/BuyCurrency';
@@ -98,7 +99,13 @@ const rows = [
   ],
 ]
 
-function CabinetWalletScreen() {
+
+function CabinetWalletScreen({ wallets }) {
+  React.useEffect(() => {
+    getWallets();
+    getTransactionHistory(4132);
+  }, []);
+
   return (
     <CabinetWrapper>
       <div className="CabinetWalletScreen">
@@ -107,11 +114,9 @@ function CabinetWalletScreen() {
         <div className="CabinetWalletScreen__content">
           <div>
             <div className="CabinetWalletScreen__wallets">
-              {cryptocurrencies.map(crypto => (
-                <WalletBox key={crypto.name} crypto={crypto} />
+              {wallets.length && wallets.map(crypto => (
+                <WalletBox key={crypto.id} crypto={crypto} />
               ))}
-
-              <WalletBox key={crypto.name} crypto={cryptocurrencies[2]} isGenerating />
 
               <div className="CabinetWalletScreen__new_wallet">
                 <h3>Create new wallet</h3>
@@ -128,12 +133,14 @@ function CabinetWalletScreen() {
 
             <BuyCurrency />
           </div>
-
         </div>
       </div>
     </CabinetWrapper>
   )
 }
 
+const mapStateToProps = (state) => ({
+  wallets: state.cabinet.wallets,
+});
 
-export default CabinetWalletScreen;
+export default connect(mapStateToProps)(CabinetWalletScreen);
