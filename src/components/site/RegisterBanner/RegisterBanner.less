@@ -100,6 +100,7 @@
 }
 
 
+/*
 .active {
 
   .RegisterBanner__form {
@@ -113,7 +114,6 @@
 
     .RegisterBanner__form__button {
       background: linear-gradient(52.85deg, #FFC75D 21.44%, #FFA363 76.19%);
-      /* White */
       border: 2px solid var(--contrast-primary);
       box-sizing: border-box;
       border-radius: 33px;
@@ -122,10 +122,32 @@
   }
 }
 
+*/
+
 
 @media (min-width: 769px) {
+  .active {
+    .RegisterBanner__form {
+      background: var(--contrast-primary);
+    
+      .RegisterBanner__form__input {
+        background: var(--contrast-primary);
+        color: var(--foreground-primary);
+      }
+
+
+      .RegisterBanner__form__button {
+        background: linear-gradient(52.85deg, #FFC75D 21.44%, #FFA363 76.19%);
+        border: 2px solid var(--contrast-primary);
+        box-sizing: border-box;
+        border-radius: 33px;
+        color: var(--contrast-primary);
+      }
+    }
+  }
+
   .RegisterBanner__form {
-  display: flex;
+    display: flex;
     border: 2px solid var(--contrast-primary);
     height: 68px;
     border-radius: 34px;
@@ -161,13 +183,19 @@
       margin-top: 30px;
     }
   }
+
+  .active {
+    .RegisterBanner__form {
+    
+      .RegisterBanner__form__input {
+        background: var(--contrast-primary);
+        color: var(--foreground-primary);
+      }
+    }
+  }
 }
 
 @media (max-width: 360px) {
-  /* .RegisterBanner {
-    height: fit-content;
-  } */
-
   .RegisterBanner__form {
 
     .RegisterBanner__form__input {
