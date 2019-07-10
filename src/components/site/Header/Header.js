@@ -132,7 +132,11 @@ function Header({ showLightLogo, langList }) {
               title={currentLangTitle}
               subItems={langList.slice(0, 3)}
               onChange={handleLangChange}
-              lastItem={<LanguageModal onLanguageClick={handleLangChange}><span className="SiteHeader__mobileDropdown__link">More...</span></LanguageModal>}
+              lastItem={(
+                <LanguageModal onLanguageClick={handleLangChange} langList={langList}>
+                  <span className="SiteHeader__mobileDropdown__link">More...</span>
+                </LanguageModal>
+              )}
             />
 
           </div>
@@ -199,6 +203,7 @@ function MenuItem(props) {
 
 const mapStateToProps = (state) => ({
   langList: state.default.langList,
+  lang: state.default.lang,
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(React.memo(Header));

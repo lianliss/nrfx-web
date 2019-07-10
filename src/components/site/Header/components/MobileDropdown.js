@@ -12,8 +12,8 @@ function MobileDropdown({ title, subItems, onChange, onNavigate, lastItem }) {
   }
 
   return (
-    <div className="SiteHeader__mobileDropdown" onClick={() => toggle(!isOpen)}>
-      <div className="SiteHeader__menu__item" >
+    <div className="SiteHeader__mobileDropdown">
+      <div className="SiteHeader__menu__item" onClick={() => toggle(!isOpen)}>
         <SVG src={icon} />
         {title}
       </div>
