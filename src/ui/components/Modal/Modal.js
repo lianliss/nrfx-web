@@ -12,7 +12,7 @@ function Modal(props) {
   const node = useRef();
   const className = classNames({
     Modal: true,
-    Modal_open: props.isOpen,
+    Modal__noSpacing: props.noSpacing,
   });
 
   const handleClick = e => {

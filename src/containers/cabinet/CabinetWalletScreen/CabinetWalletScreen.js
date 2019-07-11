@@ -10,6 +10,7 @@ import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSi
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBalance from './components/WalletBalance';
 import Table from '../../../components/cabinet/Table/Table';
+import NewWalletModal from '../../../components/cabinet/NewWalletModal/NewWalletModal';
 import BuyCurrency from './components/BuyCurrency';
 
 const headings = [
@@ -106,6 +107,22 @@ function CabinetWalletScreen({ wallets }) {
     getTransactionHistory(4132);
   }, []);
 
+  const _renderWallets = () => {
+    return (
+      <div className="CabinetWalletScreen__wallets">
+        {wallets.length && wallets.map(crypto => (
+          <WalletBox key={crypto.id} crypto={crypto} />
+        ))}
+
+        <NewWalletModal>
+          <div className="CabinetWalletScreen__new_wallet">
+            <h3>Create new wallet</h3>
+          </div>
+        </NewWalletModal>
+      </div>
+    )
+  }
+
   return (
     <CabinetWrapper>
       <div className="CabinetWalletScreen">
@@ -113,15 +130,7 @@ function CabinetWalletScreen({ wallets }) {
 
         <div className="CabinetWalletScreen__content">
           <div>
-            <div className="CabinetWalletScreen__wallets">
-              {wallets.length && wallets.map(crypto => (
-                <WalletBox key={crypto.id} crypto={crypto} />
-              ))}
-
-              <div className="CabinetWalletScreen__new_wallet">
-                <h3>Create new wallet</h3>
-              </div>
-            </div>
+            {_renderWallets()}
 
             <div className="CabinetWalletScreen__table">
               <Table headings={headings} rows={rows} />

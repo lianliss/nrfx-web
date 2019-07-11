@@ -99,12 +99,12 @@
       font-size: 16px;
       line-height: 24px;
       letter-spacing: 0.444444px;
-      color: rgba(0, 0, 0, 0.87);
+      color: var(--foreground-primary-opacity);
       padding-inline-start: 40px;
     }
   
     ul {
-      list-style: none; /* Remove default bullets */
+      list-style: none;
   
       li {
         font-weight: 500;
@@ -112,26 +112,26 @@
         line-height: 24px;
         letter-spacing: 0.444444px;
         margin: 8px 4px;
-        color: #808080;
+        color: var(--primary-grey);
         
         span {
-          color: rgba(0, 0, 0, 0.87);
+          color: var(--foreground-primary-opacity);
           width: 50px;
           display: inline-block;
         }
       }
   
       li::before {
-        content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-        background: linear-gradient(4.37deg, #FFC75D 21.44%, #FFA363 76.19%); /* Change the color */
+        content: "\2022";
+        background: linear-gradient(4.37deg, #FFC75D 21.44%, #FFA363 76.19%);
         color: transparent;
-        font-weight: bold; /* If you want it to be bold */
-        display: inline-flex; /* Needed to add space between the bullet and the text */
+        font-weight: bold;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 8px; /* Also needed for space (tweak if needed) */
+        width: 8px;
         height: 8px;
-        margin-right: 16px; /* Also needed for space (tweak if needed) */
+        margin-right: 16px;
         border-radius: 50%;
       }
     }
@@ -177,7 +177,7 @@
         line-height: 32px;
         text-align: center;
         letter-spacing: 1.02px;
-        color: rgba(0, 0, 0, 0.87);
+        color: var(--foreground-primary-opacity);
         margin-top: 20px;
       }
 
@@ -193,7 +193,7 @@
       }
 
       p.active {
-        color: #808080;
+        color: var(--primary-grey);
       }
     }
   }
@@ -209,7 +209,7 @@
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.444444px;
-    color: rgba(0, 0, 0, 0.87);
+    color: var(--foreground-primary-opacity);
     text-align: left;
   }
 

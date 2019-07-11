@@ -1,0 +1,65 @@
+.NewWalletModal {
+  
+  .NewWalletModal__content {
+    width: 480px;
+  
+    .NewWalletModal__title {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+      letter-spacing: 0.444444px;
+      color: var(--foreground-primary-opacity);
+      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+      padding: 22px;
+    }
+
+    .NewWalletModal__currencies {
+      margin-bottom: 144px;
+
+      .NewWalletModal__currency {
+        
+        &:hover {
+          box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.08);
+        }
+        
+        .NewWalletModal__currency__content {
+          padding: 24px 0;
+          margin: 0 24px;
+          border-bottom: 1px solid var(--background-secondary);
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+
+          div {
+            display: flex;
+            align-items: center;
+          }
+
+          .NewWalletModal__currency__name {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.444444px;
+            color: var(--foreground-primary-opacity);
+            padding: 20px;
+          }
+
+          .NewWalletModal__currency__code {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.444444px;
+            color: var(--primary-grey);
+            padding: 20px;
+          }
+        }
+
+        .isvg {
+          height: fit-content;
+        }
+      }
+    }
+  }
+}
