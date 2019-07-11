@@ -34,7 +34,7 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
       </div>
 
       <div className="SuccessModal__footer">
-        <UI.Button onClick={handleResend}>{utils.getLang('site__authModalClose') + ` 0:${timeRemaining}`}</UI.Button>
+        <UI.Button onClick={handleResend}>{utils.getLang('site__authModalResend') + ` 0:${timeRemaining}`}</UI.Button>
       </div>
     </div>
   )

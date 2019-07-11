@@ -1,8 +1,7 @@
 import * as actionTypes from './actionTypes';
-import { ApiClient, AuthApi, AccountApi } from '../swagger';
+import { AuthApi, AccountApi } from '../swagger';
 import callApi from '../services/api';
 import store from '../store';
-import * as cookie from '../services/cookie';
 
 
 export function getAuth(login, password) {
@@ -66,13 +65,21 @@ export function resetGoogleCode(secret, login, password, code) {
   });
 }
 
-// TODO: use redux-thunk
-export function registerUser(email, refer) {
+export function resetPassword(email) {
+  return new Promise((resolve, reject) => {
+    callApi(new AccountApi().accountResetPasswordPost, email)
+      .then(() => {
+        resolve();
+      })
+      .catch((err) => reject(err));
+  });
+}
 
+
+export function registerUser(email, refer) {
   return new Promise((resolve, reject) => {
     callApi(new AccountApi().accountRegisterPut, email, refer)
       .then((auth) => {
-        // store.dispatch({type: actionTypes.SET_LANG, auth});
         resolve();
       })
       .catch((err) => reject(err));

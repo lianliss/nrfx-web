@@ -1,11 +1,15 @@
 
 .FeatureCard {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 70px;
 
   @media (max-width: 1200px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 992px) {
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -16,11 +20,12 @@
 
 .FeatureCard__icon {
   width: 36px;
-  margin: 10px;
+  height: 36px;
+  margin: 20px;
 }
 
 .FeatureCard__cont {
-  width: 410px;
+  max-width: 410px;
   margin: 10px;
 }
 
@@ -29,7 +34,7 @@
   font-size: 20px;
   line-height: 24px;
   color: var(--foreground-primary);
-  margin: 0;
+  margin-bottom: 10px;
 }
 
 .FeatureCard__caption {

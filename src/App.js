@@ -38,6 +38,7 @@ class App extends React.Component {
         {!acceptedCookies
           ? <CookieUsage />
           : null}
+
       </div>
     )
   }
