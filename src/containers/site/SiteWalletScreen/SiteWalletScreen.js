@@ -16,7 +16,7 @@ export default class SiteWalletScreen extends BaseScreen {
       <SiteWrapper className="Wallet__screen">
         <div className="Layout_spacing">
           <SitePageInfoBlock
-            image={require('./asset/wallet_main_image.svg')}
+            image={require('./asset/wallet_main_image.png')}
             title={<span>{utils.nl2br(this.lang.site.walletTitle)}</span>}
             caption={<span>{this.lang.site.walletSubTitle}</span>}
             buttonText={this.lang.site.walletCreateBtn}

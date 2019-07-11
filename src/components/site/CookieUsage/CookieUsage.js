@@ -1,12 +1,13 @@
 import './CookieUsage.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import UI from '../../../ui';
 import * as storage from '../../../services/storage';
 
 
-function CookieUsage(props) {
+function CookieUsage({ lang }) {
   const [isOpen, toggleOpen] = React.useState(true);
 
   const handleAgree = () => {
@@ -17,13 +18,13 @@ function CookieUsage(props) {
   if (isOpen) {
     return (
       <div className="CookieUsage">
-        <h3 className="CookieUsage__title">Cookies on BitcoinBot</h3>
+        <h3 className="CookieUsage__title">{lang.site__cookieTitle}</h3>
         <p className="CookieUsage__text">
-          Мы используем куки-файлы, чтобы делать сайт еще удобней, анализировать его посещаемость, персонализировать контент, а также демонстрировать адресную рекламу. Узнайте о том, как мы используем куки-файлы и как вы можете их контролировать, из нашей 
-          <span> Политики конфиденциальности</span>.
-          Продолжая пользоваться этим сайтом, вы соглашаетесь на использование нами куки-файлов.
+          {lang.site__cookieText1}
+          <span> {lang.site__cookiePrivacyPolicy}</span>
+          {lang.site__cookieText2}
         </p>
-        <UI.Button onClick={handleAgree}>Хорошо, я согласен</UI.Button>
+        <UI.Button onClick={handleAgree}>{lang.site__cookieAgree}</UI.Button>
       </div>
     )
   }
@@ -31,4 +32,8 @@ function CookieUsage(props) {
   return null;
 }
 
-export default CookieUsage;
+const mapStateToProps = (state) => ({
+  lang: state.default.lang,
+})
+
+export default connect(mapStateToProps)(CookieUsage);
