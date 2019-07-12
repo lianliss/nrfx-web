@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 
 
-function MobileDropdown({ title, subItems, onChange, onNavigate }) {
+function MobileDropdown({ title, subItems, onChange, onNavigate, lastItem }) {
   const [isOpen, toggle] = useState(false);
   const icon = isOpen ? require('../asset/less.svg') : require('../asset/more.svg');
 
@@ -12,8 +12,8 @@ function MobileDropdown({ title, subItems, onChange, onNavigate }) {
   }
 
   return (
-    <div className="SiteHeader__mobileDropdown" onClick={() => toggle(!isOpen)}>
-      <div className="SiteHeader__menu__item" >
+    <div className="SiteHeader__mobileDropdown">
+      <div className="SiteHeader__menu__item" onClick={() => toggle(!isOpen)}>
         <SVG src={icon} />
         {title}
       </div>
@@ -38,6 +38,8 @@ function MobileDropdown({ title, subItems, onChange, onNavigate }) {
                 )
               }
             })}
+
+            {lastItem || null}
           </div>
         ) : null}
     </div>

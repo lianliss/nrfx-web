@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 
 
-function Dropdown({ title, subItems, onChange, onNavigate }) {
+function Dropdown({ title, subItems, onChange, onNavigate, lastItem }) {
   const [isOpen, toggle] = useState(false);
 
   const handleLinkClick = (value) => {
@@ -38,6 +38,8 @@ function Dropdown({ title, subItems, onChange, onNavigate }) {
               }
             }
             )}
+
+            {lastItem || null}
           </div>
         ) : null}
 

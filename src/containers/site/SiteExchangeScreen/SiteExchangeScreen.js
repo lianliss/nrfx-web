@@ -18,7 +18,7 @@ export default class SiteExchangeScreen extends BaseScreen {
       <SiteWrapper>
         <div className="Layout_spacing">
           <SitePageInfoBlock
-            image={require('./asset/exchange_main_image.svg')}
+            image={require('./asset/exchange_main_image.png')}
             title={<span>{this.lang.site.exchangeTitle}</span>}
             caption={<span>{this.lang.site.exchangeSubTitle}</span>}
             buttonText={this.lang.site.exchangeStart}

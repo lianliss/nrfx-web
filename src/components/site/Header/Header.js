@@ -2,6 +2,7 @@ import './Header.less';
 
 import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
+import { connect } from 'react-redux';
 
 import UI from '../../../ui';
 import * as utils from '../../../utils/index';
@@ -14,23 +15,12 @@ import { getItem, setItem } from '../../../services/storage';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
-
-
-const langList = [
-  {
-    title: 'Ru',
-    value: 'ru',
-  },
-  {
-    title: 'En',
-    value: 'en',
-  },
-]
+import LanguageModal from '../LanguageModal/LanguageModal';
 
 const currentLang = getItem('lang');
 
 
-function Header({ showLightLogo }) {
+function Header({ showLightLogo, langList }) {
   const headerLinks = [
     {
       title: utils.getLang('site__headerProducts'),
@@ -138,7 +128,16 @@ function Header({ showLightLogo }) {
             {headerLinks.map(item => (
               <MobileDropdown key={item.title} onNavigate={handleNavigate} title={item.title} subItems={item.children} />
             ))}
-            <MobileDropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
+            <MobileDropdown
+              title={currentLangTitle}
+              subItems={langList.slice(0, 3)}
+              onChange={handleLangChange}
+              lastItem={(
+                <LanguageModal onLanguageClick={handleLangChange} langList={langList}>
+                  <span className="SiteHeader__mobileDropdown__link">More...</span>
+                </LanguageModal>
+              )}
+            />
 
           </div>
         ) : null
@@ -167,7 +166,16 @@ function Header({ showLightLogo }) {
                 <AuthModal type={steps.REGISTRATION}>
                   <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
                 </AuthModal>
-                <Dropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
+                <Dropdown
+                  title={currentLangTitle}
+                  subItems={langList.slice(0, 3)}
+                  onChange={handleLangChange}
+                  lastItem={(
+                    <LanguageModal onLanguageClick={handleLangChange} langList={langList}>
+                      <span className="SiteHeader__dropdown__link">More...</span>
+                    </LanguageModal>
+                  )}
+                />
               </div>
             </div>
 
@@ -193,4 +201,9 @@ function MenuItem(props) {
 }
 
 
-export default Header;
+const mapStateToProps = (state) => ({
+  langList: state.default.langList,
+  lang: state.default.lang,
+});
+
+export default connect(mapStateToProps)(React.memo(Header));
