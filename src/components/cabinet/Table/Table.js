@@ -3,7 +3,7 @@ import './Table.less';
 import React from 'react';
 
 
-function Table({ headings, rows, onClick }) {
+function Table({ headings, rows, onRowClick }) {
   return (
     <table className="Table Content_box">
       <thead>
@@ -18,7 +18,7 @@ function Table({ headings, rows, onClick }) {
         {rows.map((rowItems, ind) => (
           <tr
             key={ind}
-            onClick={onClick}
+            onClick={onRowClick}
             className={ind % 2 === 0 ? 'Table__dark__row' : 'Table__row'}
           >
             {rowItems.map((item, index) => (

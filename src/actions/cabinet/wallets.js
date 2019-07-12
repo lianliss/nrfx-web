@@ -5,7 +5,7 @@ import store from '../../store';
 
 export function getWallets() {
   return new Promise((resolve, reject) => {
-    callApi(new WalletsApi().walletsGet)
+    callApi(new WalletsApi().walletsGetGet)
       .then((data) => {
         store.dispatch({ type: actionTypes.WALLETS, payload: data.wallets });
         resolve();

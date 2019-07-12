@@ -3,6 +3,7 @@ import './index.less';
 import Button from './components/Button/Button';
 import WatchButton from './components/Button/WatchButton';
 import Input from './components/Input/Input';
+import Dropdown from './components/Dropdown/Dropdown';
 import Search from './components/Search/Search';
 import CheckBox from './components/CheckBox/CheckBox';
 import Modal from './components/Modal/Modal';
@@ -15,6 +16,7 @@ export default {
   Button,
   WatchButton,
   Input,
+  Dropdown,
   Search,
   CheckBox,
   Modal,

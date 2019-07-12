@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import { AuthApi, AccountApi } from '../swagger';
 import callApi from '../services/api';
+import * as auth from '../services/auth';
 import store from '../store';
 
 
@@ -46,6 +47,7 @@ export function getGoogleCode(login, password, code) {
 
     callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
       .then((resp) => {
+        auth.login(resp.access_token);
         resolve(resp);
       })
       .catch((err) => reject(err));

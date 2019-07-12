@@ -1,6 +1,6 @@
 import './CabinetWalletScreen.less';
 
-import React from 'react';
+import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 
@@ -12,6 +12,7 @@ import WalletBalance from './components/WalletBalance';
 import Table from '../../../components/cabinet/Table/Table';
 import NewWalletModal from '../../../components/cabinet/NewWalletModal/NewWalletModal';
 import BuyCurrency from './components/BuyCurrency';
+import TransactionModal from '../../../components/cabinet/TransactionModal/TransactionModal';
 
 const headings = [
   <span className="Table__item Table__item_center Table__item_highlighted">
@@ -102,15 +103,23 @@ const rows = [
 
 
 function CabinetWalletScreen({ wallets }) {
+  const [isModalOpen, toggleModalOpen] = useState(false);
+  // const [currentModalData, changeModalData] = useState();
+
   React.useEffect(() => {
     getWallets();
     getTransactionHistory(4132);
   }, []);
 
+  const handleRowClick = () => {
+    toggleModalOpen(true);
+  }
+
+  console.log('wallets :', wallets);
   const _renderWallets = () => {
     return (
       <div className="CabinetWalletScreen__wallets">
-        {wallets.length && wallets.map(crypto => (
+        {!!wallets.length && wallets.map(crypto => (
           <WalletBox key={crypto.id} crypto={crypto} />
         ))}
 
@@ -133,7 +142,7 @@ function CabinetWalletScreen({ wallets }) {
             {_renderWallets()}
 
             <div className="CabinetWalletScreen__table">
-              <Table headings={headings} rows={rows} />
+              <Table headings={headings} rows={rows} onRowClick={handleRowClick} />
             </div>
           </div>
 
@@ -143,6 +152,8 @@ function CabinetWalletScreen({ wallets }) {
             <BuyCurrency />
           </div>
         </div>
+
+        <TransactionModal isOpen={isModalOpen} onChange={toggleModalOpen} />
       </div>
     </CabinetWrapper>
   )
