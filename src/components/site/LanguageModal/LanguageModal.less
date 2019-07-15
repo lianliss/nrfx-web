@@ -15,14 +15,20 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(60px, 1fr));
     grid-gap: 24px 100px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, minmax(80px, 1fr));
+      grid-gap: 24px;
+    }
   
-    p {
+    .LanguageModal__cont__lang {
       display: flex;
       align-items: center;
       cursor: pointer;
   
       .isvg {
         width: 18px;
+        height: 18px;
         margin-right: 5px;
       }
     }

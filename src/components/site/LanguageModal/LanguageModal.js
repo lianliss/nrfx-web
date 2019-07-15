@@ -6,7 +6,7 @@ import SVG from 'react-inlinesvg';
 import UI from '../../../ui';
 
 const getLanguageFlag = (langCode) => {
-  return <SVG src={`https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/flags/4x3/${langCode}.svg`} />
+  return <SVG src={require(`../../../asset/site/lang-flags/${langCode}.svg`)} />
 }
 
 
@@ -33,7 +33,7 @@ function LanguageModal({ langList, className, onLanguageClick, children }) {
 
           <div className="LanguageModal__cont__grid">
             {langList.map(lang => (
-              <p key={lang.value} onClick={() => handleLanguageChange(lang.value)}>
+              <p key={lang.value} className="LanguageModal__cont__lang" onClick={() => handleLanguageChange(lang.value)}>
                 {getLanguageFlag(lang.value)}
                 {lang.title}
               </p>

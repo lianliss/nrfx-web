@@ -8,7 +8,6 @@ import UI from '../../../ui';
 import * as utils from '../../../utils/index';
 import * as pages from '../../../constants/pages';
 import router from '../../../router';
-// TODO: use connect instead of direct calling
 import { loadLang } from '../../../actions';
 import * as steps from '../AuthModal/fixtures';
 import { getItem, setItem } from '../../../services/storage';
@@ -91,7 +90,7 @@ function Header({ showLightLogo, langList }) {
   const [ curLang, changeLang ] = useState(currentLang);
 
   const currentLangObj = langList.find(l => l.value === curLang);
-  const currentLangTitle = currentLangObj ? currentLangObj.title : 'Ru';
+  const currentLangTitle = currentLangObj ? currentLangObj.title : 'Русский';
 
   const handleLangChange = (value) => {
     loadLang(value);
@@ -167,6 +166,7 @@ function Header({ showLightLogo, langList }) {
                   <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
                 </AuthModal>
                 <Dropdown
+                  className="SiteHeader__lang__dropdown"
                   title={currentLangTitle}
                   subItems={langList.slice(0, 3)}
                   onChange={handleLangChange}
