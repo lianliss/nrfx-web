@@ -12,7 +12,6 @@ function RestorePassword({ changeStep, currentStep, onClose }) {
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = () => {
-    // Some actions here
     resetPassword(email)
       .then(() => changeStep(steps.RESTORE_PASSWORD_SUCCESS))
       .catch((err) => setErrorMsg(err.message));

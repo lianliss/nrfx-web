@@ -22,7 +22,8 @@ function AuthModal({ children, type, initialEmail, className }) {
       case steps.GOOGLE_AUTH:
         return <Login email={email} password={password} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} />;
       case steps.RESET_AUTH:
-        return <ResetAuth email={email} password={password} />;
+      case steps.RESET_AUTH_SUCCESS:
+        return <ResetAuth email={email} password={password} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
       case steps.RESTORE_PASSWORD:
       case steps.RESTORE_PASSWORD_SUCCESS:
         return <RestorePassword changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;

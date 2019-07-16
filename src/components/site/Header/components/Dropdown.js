@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 
 
-function Dropdown({ title, subItems, onChange, onNavigate, lastItem }) {
+function Dropdown({ title, subItems, onChange, onNavigate, lastItem, className }) {
   const [isOpen, toggle] = useState(false);
 
   const handleLinkClick = (value) => {
@@ -11,7 +11,12 @@ function Dropdown({ title, subItems, onChange, onNavigate, lastItem }) {
   }
 
   return (
-    <div className="SiteHeader__dropdown" onMouseEnter={() => toggle(true)} onClick={() => toggle(true)} onMouseLeave={() => toggle(false)}>
+    <div
+      className={"SiteHeader__dropdown " + className}
+      onClick={() => toggle(true)}
+      onMouseEnter={() => toggle(true)}
+      onMouseLeave={() => toggle(false)}
+    >
       <div className="SiteHeader__menu__item" >
         {title}
         <SVG src={require('../../../../asset/menu_arrow.svg')} />
@@ -36,8 +41,7 @@ function Dropdown({ title, subItems, onChange, onNavigate, lastItem }) {
                   <p key={item.title} className="SiteHeader__dropdown__link" onClick={() => handleLinkClick(item.value)}>{item.title}</p>
                 )
               }
-            }
-            )}
+            })}
 
             {lastItem || null}
           </div>
