@@ -7,6 +7,7 @@ export const AUTH = 'AUTH';
 //cabinet
 export const WALLETS = 'WALLETS';
 export const TRANSACTION_HISTORY = 'TRANSACTION_HISTORY';
+export const WALLET_HISTORY = 'WALLET_HISTORY';
 
 
 // test

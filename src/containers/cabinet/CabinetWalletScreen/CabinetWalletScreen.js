@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 
-import { getWallets, getTransactionHistory } from '../../../actions/cabinet/wallets';
+import { getWallets } from '../../../actions/cabinet/wallets';
 import CabinetWrapper from '../../../wrappers/Cabinet/CabinetWrapper';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
@@ -37,85 +37,50 @@ const headings = [
   </span>,
 ]
 
-const rows = [
-  [
-    <span className="Table__item Table__item_center">
-      <span className="Table__dot" style={{background: 'red'}}></span>
-    </span>,
-    <span className="Table__item">
-      code
-    </span>,
-    <span className="Table__item Table__item_right">
-      12
-    </span>,
-    <span className="Table__item">
-      BTC
-    </span>,
-    <span className="Table__item">
-      <span className="Table__item__type_sent">Sended</span>
-    </span>,
-    <span className="Table__item">
-      17:33
-    </span>,
-  ],
-  [
-    <span className="Table__item Table__item_center">
-      <span className="Table__dot" style={{ background: 'red' }}></span>
-    </span>,
-    <span className="Table__item">
-      <SVG src={require('../../../asset/logo.svg')} />      
-      code
-    </span>,
-    <span className="Table__item Table__item_right">
-      17.99
-    </span>,
-    <span className="Table__item">
-      ETH
-    </span>,
-    <span className="Table__item">
-      <span className="Table__item__type_received">Received</span>
-    </span>,
-    <span className="Table__item">
-      12:45
-    </span>,
-  ],
-  [
-    <span className="Table__item Table__item_center">
-      <span className="Table__dot" style={{ background: 'red' }}></span>
-    </span>,
-    <span className="Table__item">
-      code
-    </span>,
-    <span className="Table__item Table__item_right">
-      12
-    </span>,
-    <span className="Table__item">
-      BTC
-    </span>,
-    <span className="Table__item">
-      <span className="Table__item__type_sent">Sended</span>
-    </span>,
-    <span className="Table__item">
-      17:33
-    </span>,
-  ],
-]
+const getRows = (history) => {
+  if (!history) {
+    return [];
+  }
+
+  return history.map(item => (
+    [
+      <span className="Table__item Table__item_center">
+        <span className="Table__dot" style={{ background: 'red' }}></span>
+      </span>,
+      <span className="Table__item">
+        {item.from}
+      </span>,
+      <span className="Table__item Table__item_right">
+        {item.amount}
+      </span>,
+      <span className="Table__item">
+        {item.currency.toUpperCase()}
+      </span>,
+      <span className="Table__item">
+        {item.action_type === 'send' 
+          ? <span className="Table__item__type_sent">Sended</span> 
+          : <span className="Table__item__type_received">Received</span>}
+      </span>,
+      <span className="Table__item">
+        {item.date}
+      </span>,
+    ]
+  ))
+}
 
 
-function CabinetWalletScreen({ wallets }) {
+function CabinetWalletScreen({ wallets, history }) {
   const [isModalOpen, toggleModalOpen] = useState(false);
   // const [currentModalData, changeModalData] = useState();
 
   React.useEffect(() => {
     getWallets();
-    getTransactionHistory(4132);
   }, []);
 
   const handleRowClick = () => {
     toggleModalOpen(true);
   }
 
-  console.log('wallets :', wallets);
   const _renderWallets = () => {
     return (
       <div className="CabinetWalletScreen__wallets">
@@ -142,12 +107,23 @@ function CabinetWalletScreen({ wallets }) {
             {_renderWallets()}
 
             <div className="CabinetWalletScreen__table">
-              <Table headings={headings} rows={rows} onRowClick={handleRowClick} />
+              {history
+                ? <Table headings={headings} rows={getRows(history)} onRowClick={handleRowClick} />
+                : (
+                  <div className="CabinetWalletScreen__transactions_empty Content_box">
+                    <div className="Empty_box">
+                      <SVG src={require('../../../asset/cabinet/transactions_colorful.svg')} />
+                      <h3>
+                        Here will be your transactions
+                      </h3>
+                    </div>
+                  </div>
+                )}
             </div>
           </div>
 
           <div>
-            <WalletBalance />
+            <WalletBalance wallets={wallets} />
 
             <BuyCurrency />
           </div>
@@ -161,6 +137,7 @@ function CabinetWalletScreen({ wallets }) {
 
 const mapStateToProps = (state) => ({
   wallets: state.cabinet.wallets,
+  history: state.cabinet.history,
 });
 
 export default connect(mapStateToProps)(CabinetWalletScreen);

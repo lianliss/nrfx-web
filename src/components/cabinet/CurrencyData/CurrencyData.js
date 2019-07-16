@@ -31,11 +31,11 @@ class CurrencyData extends React.PureComponent {
     onWsOpen = () => console.log('WS opened');
 
     onWsMessage = (message) => {
-      const data = JSON.parse(message.data);
+      // const data = JSON.parse(message.data);
       // console.log('ETHBTC :', data.pair === 'ETHBTC');
-      if (data.pair === 'ETHBTC') {
-        console.log('ETHBTC :', data.price);
-      }
+      // if (data.pair === 'ETHBTC') {
+      //   console.log('ETHBTC :', data.price);
+      // }
     }
 
     onWsClose = () => console.log('WS closed');

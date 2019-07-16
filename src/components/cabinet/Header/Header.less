@@ -1,5 +1,5 @@
 .CabinetHeader {
-  background: #FFFFFF;
+  background: var(--contrast-primary);
   box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
 
   .CabinetHeader__content {
@@ -17,13 +17,13 @@
       display: flex;
 
       .active {
-        color: #000;
+        color: var(--foreground-primary);
         border-bottom-width: 3px;
         border-color: transparent;
         position: relative;
 
         .isvg {
-          color: #000;
+          color: var(--foreground-primary);
         }
 
         &:before {
