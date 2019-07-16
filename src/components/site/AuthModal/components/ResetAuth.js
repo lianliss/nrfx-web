@@ -25,7 +25,7 @@ function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
     <>
       <h2 className="AuthModal__title">{utils.getLang('site__authModalResetAuth')}</h2>
 
-      {currentStep === steps.RESTORE_PASSWORD
+      {currentStep === steps.RESET_AUTH
         ? (
           <>
             <div className="AuthModal__content">
