@@ -3,6 +3,7 @@ import './RecaptchaModal.less';
 import React from 'react';
 import { ReCaptcha } from 'react-recaptcha-google'
 
+import { GOOGLE_RECAPTCHA_SITEKEY } from '../../../config';
 import UI from '../../../ui';
 
 
@@ -12,7 +13,7 @@ class RecaptchaModal extends React.PureComponent {
     isOpen: false,
     verified: false,
   }
-
+  
   componentDidMount() {
     if (this.captcha) {
       this.captcha.reset();
@@ -62,7 +63,7 @@ class RecaptchaModal extends React.PureComponent {
                     ref={(el) => { this.captcha = el; }}
                     size="normal"
                     render="explicit"
-                    sitekey="6LeuvZIUAAAAAHyn4R0mUwHjpUJKA4luAT-PJWwn"
+                    sitekey={GOOGLE_RECAPTCHA_SITEKEY}
                     onloadCallback={this.onLoadRecaptcha}
                     verifyCallback={this.verifyCallback}
                   />

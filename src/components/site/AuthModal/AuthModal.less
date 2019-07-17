@@ -8,7 +8,21 @@
     -webkit-appearance: none;
 
     &::placeholder {
-      color: #808080;
+      color: var(--primary-grey);
+    }
+  }
+
+  .AuthModal__ga {
+    .AuthModal__footer {
+      margin: 30px 0 10px;
+
+      .Button {
+        margin: 4px 8px;
+
+        .Button__label {
+          font-size: 13px;
+        }
+      }
     }
   }
 
@@ -18,16 +32,51 @@
     line-height: 20px;
     text-align: center;
     letter-spacing: 0.444444px;
-    color: rgba(0, 0, 0, 0.87);
+    color: var(--foreground-primary-opacity);
     margin-bottom: 15px;
     margin-top: 20px;
   }
 
   .AuthModal__content {
-    height: 260px;
+    min-height: 260px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    .AuthModal__content__ga {
+      max-width: 320px;
+      text-align: center;
+
+      .AuthModal__title {
+        text-align: left;
+      }
+
+      .AuthModal__content__ga__msg {
+        font-weight: 300;
+        font-size: 13px;
+        line-height: 20px;
+        text-align: center;
+        letter-spacing: 0.444444px;
+        color: var(--foreground-primary-opacity);
+      }
+
+      .AuthModal__content__ga__hash {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16px;
+        text-align: center;
+        letter-spacing: 0.444444px;
+        border: none;
+        outline: none;
+        cursor: default;
+      }
+
+      img {
+        width: 190px;
+        height: 190px;
+        margin: 15px;
+      }
+    }
 
     .AuthModal__err_msg {
       text-align: center;
@@ -48,7 +97,7 @@
         display: flex;
         align-items: center;
         letter-spacing: 0.444444px;
-        color: #808080;
+        color: var(--primary-grey);
       }
     }
 
@@ -78,7 +127,7 @@
       line-height: 16px;
       text-align: center;
       letter-spacing: 0.444444px;
-      color: #808080;
+      color: var(--primary-grey);
       padding: 10px 20px;
       max-width: 200px;
       margin: 0 40px;
@@ -95,7 +144,7 @@
     line-height: 16px;
     text-align: center;
     letter-spacing: 0.444444px;
-    color: #BFBFBF;
+    color: var(--secondary-grey);
     margin-top: 16px;
     cursor: pointer;
 
@@ -125,5 +174,16 @@
       width: 50%;
       margin: 0;
     }
+  }
+}
+
+.RegisterModal {
+  .AuthModal__content {
+    .CheckBox {
+      margin-top: 50px;
+    }
+  }
+  .AuthModal__footer {
+    margin-top: 25px;
   }
 }

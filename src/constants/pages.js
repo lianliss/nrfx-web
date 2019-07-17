@@ -14,3 +14,4 @@ export const FAQ = 'faq';
 export const NOT_FOUND = 'not_found';
 export const HELLO = 'hello';
 export const UIKIT = 'uikit';
+export const CABINET_WALLET = 'cabinet_wallet';

@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 
 import UI from '../../../ui';
 import Login from './components/Login';
-import GoogleAuth from './components/GoogleAuth';
 import ResetAuth from './components/ResetAuth';
 import * as steps from './fixtures';
 import RestorePassword from './components/RestorePassword';
@@ -20,11 +19,11 @@ function AuthModal({ children, type, initialEmail, className }) {
   const getCurrentContent = () => {
     switch (currentStep) {
       case steps.LOGIN:
-        return <Login email={email} password={password} handleChange={handleChange} changeStep={changeStep} />;
       case steps.GOOGLE_AUTH:
-        return <GoogleAuth email={email} password={password} changeStep={changeStep} />;
+        return <Login email={email} password={password} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} />;
       case steps.RESET_AUTH:
-        return <ResetAuth email={email} password={password} />;
+      case steps.RESET_AUTH_SUCCESS:
+        return <ResetAuth email={email} password={password} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
       case steps.RESTORE_PASSWORD:
       case steps.RESTORE_PASSWORD_SUCCESS:
         return <RestorePassword changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;

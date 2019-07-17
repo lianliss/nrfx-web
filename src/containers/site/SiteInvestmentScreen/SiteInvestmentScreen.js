@@ -17,7 +17,7 @@ export default class SiteInvestmentScreen extends BaseScreen {
         <div className="Layout_spacing">
           <SitePageInfoBlock
             hideWatchButton
-            image={require('./asset/investment_main_image.svg')}
+            image={require('./asset/investment_main_image.png')}
             title={<span>{this.lang.site.investmentTitleInvestment}</span>}
             caption={<span>{this.lang.site.investmentSubTitle}</span>}
             buttonText={this.lang.site.investmentInvestBtn}

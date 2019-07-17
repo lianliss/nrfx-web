@@ -1,8 +1,4 @@
 .Modal {
-  display: none;
-}
-
-.Modal_open {
   position: fixed;
   left: 0;
   height: 100vh;
@@ -14,8 +10,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-
-
+  
   .Modal__box {
     background: #FFFFFF;
     box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.08);
@@ -23,12 +18,18 @@
     padding: 20px;
     min-width: 200px;
     position: relative;
-
+    
     .Modal__box__close {
       position: absolute;
-      left: 92%;
+      right: 12px;
       cursor: pointer;
-      top: 13px;
+      top: 12px;
+    }
+  }
+
+  &.Modal__noSpacing {
+    .Modal__box {
+      padding: 0;
     }
   }
 }

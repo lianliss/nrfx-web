@@ -1,5 +1,6 @@
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import { connect } from 'react-redux';
 
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
@@ -7,25 +8,28 @@ import { data } from '../fixtures';
 import * as utils from '../../../../utils/index';
 
 
-function About() {
+function About({ lang }) {
   return (
     <>
       <div className="SiteAboutScreen__intro">
-        <TitleWithBg title={utils.getLang('site__aboutShortTitle')} bgTitle={utils.getLang('site__aboutShortTitle')} centered />
-        <p className="SiteAboutScreen__caption">{utils.nl2br(utils.getLang('site__aboutShortTitleText'))}</p>
+        <TitleWithBg title={lang.site__aboutShortTitle} bgTitle={lang.site__aboutShortTitle} centered />
+        <p className="SiteAboutScreen__caption">{utils.nl2br(lang.site__aboutShortTitleText)}</p>
       </div>
 
       <div className="SiteAboutScreen__career">
         <SVG src={require('../asset/about__career.svg')} />
-        <h2 className="SiteAboutScreen__career__title">{utils.getLang('site__aboutWorkBitcoinbotTitle')}</h2>
-        <p className="SiteAboutScreen__career__caption">{utils.nl2br(utils.getLang('site__aboutWorkBitcoinbotTitleText'))}</p>
-        <a href="/contact" className="SiteAboutScreen__link">{utils.getLang('site_aboutContact')}</a>
+        <h2 className="SiteAboutScreen__career__title">{lang.site__aboutWorkBitcoinbotTitle}</h2>
+        <p className="SiteAboutScreen__career__caption">{utils.nl2br(lang.site__aboutWorkBitcoinbotTitleText)}</p>
+        <a href="/contact" className="SiteAboutScreen__link">{lang.site_aboutContact}</a>
       </div>
-
 
       <InfoSection firstInfo={data.misssionInfo} secondInfo={data.historyInfo} />
     </>
   )
 }
 
-export default React.memo(About);
+const mapStateToProps = (state) => ({
+  lang: state.default.lang,
+});
+
+export default React.memo(connect(mapStateToProps)(About));

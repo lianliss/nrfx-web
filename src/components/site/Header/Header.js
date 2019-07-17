@@ -2,35 +2,24 @@ import './Header.less';
 
 import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
+import { connect } from 'react-redux';
 
 import UI from '../../../ui';
 import * as utils from '../../../utils/index';
 import * as pages from '../../../constants/pages';
 import router from '../../../router';
-// TODO: use connect instead of direct calling
 import { loadLang } from '../../../actions';
 import * as steps from '../AuthModal/fixtures';
 import { getItem, setItem } from '../../../services/storage';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
-
-
-const langList = [
-  {
-    title: 'Ru',
-    value: 'ru',
-  },
-  {
-    title: 'En',
-    value: 'en',
-  },
-]
+import LanguageModal from '../LanguageModal/LanguageModal';
 
 const currentLang = getItem('lang');
 
 
-function Header({ showLightLogo }) {
+function Header({ showLightLogo, langList }) {
   const headerLinks = [
     {
       title: utils.getLang('site__headerProducts'),
@@ -99,9 +88,10 @@ function Header({ showLightLogo }) {
 
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
   const [ curLang, changeLang ] = useState(currentLang);
+  const [ isModalOpen, toggleModalOpen ] = useState(false);
 
   const currentLangObj = langList.find(l => l.value === curLang);
-  const currentLangTitle = currentLangObj ? currentLangObj.title : 'Ru';
+  const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
 
   const handleLangChange = (value) => {
     loadLang(value);
@@ -119,8 +109,8 @@ function Header({ showLightLogo }) {
         ? (
           <div className="SiteHeader__menu__vertical">
             <div className="SiteHeader__header">
-              <a href="/" className="SiteHeader__header__logo">
-                <SVG src={require('../../../asset/logo_big_white.svg')} />
+              <a href="/" className="SiteHeader__header__logo SiteHeader__logo_white">
+                <SVG src={require('../../../asset/logo_full.svg')} />
               </a>
               <div onClick={() => toggleVerticalMenu(false)}>
                 <SVG src={require('./asset/close.svg')}  />
@@ -138,7 +128,13 @@ function Header({ showLightLogo }) {
             {headerLinks.map(item => (
               <MobileDropdown key={item.title} onNavigate={handleNavigate} title={item.title} subItems={item.children} />
             ))}
-            <MobileDropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
+            <MobileDropdown
+              title={currentLangTitle}
+              subItems={langList.slice(0, 3)}
+              onChange={handleLangChange}
+              lastItemText='More...'
+              onLastItemClick={() => toggleModalOpen(true)}
+            />
 
           </div>
         ) : null
@@ -148,11 +144,8 @@ function Header({ showLightLogo }) {
         ? (
           <div className="SiteHeader__cont">
             <a href="/">
-              <div className="SiteHeader__logo">
-                {showLightLogo
-                  ? <SVG src={require('../../../asset/logo_big_white.svg')} />
-                  : <SVG src={require('../../../asset/logo_big_orange.svg')} />
-                }
+              <div className={"SiteHeader__logo" + (showLightLogo ? " SiteHeader__logo_white" : "")}>
+                <SVG src={require('../../../asset/logo_full.svg')} />
               </div>
             </a>
             <div className="SiteHeader__menu__horizontal">
@@ -167,7 +160,14 @@ function Header({ showLightLogo }) {
                 <AuthModal type={steps.REGISTRATION}>
                   <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
                 </AuthModal>
-                <Dropdown title={currentLangTitle} subItems={langList} onChange={handleLangChange} />
+                <Dropdown
+                  className="SiteHeader__lang__dropdown"
+                  title={currentLangTitle}
+                  subItems={langList.slice(0, 3)}
+                  onChange={handleLangChange}
+                  lastItemText='More...'
+                  onLastItemClick={() => toggleModalOpen(true)}
+                />
               </div>
             </div>
 
@@ -179,6 +179,9 @@ function Header({ showLightLogo }) {
             </div>
           </div>
         ) : null}
+
+
+      <LanguageModal isOpen={isModalOpen} onChange={toggleModalOpen} onLanguageClick={handleLangChange} langList={langList} />
     </div>
   )
 }
@@ -193,4 +196,9 @@ function MenuItem(props) {
 }
 
 
-export default Header;
+const mapStateToProps = (state) => ({
+  langList: state.default.langList,
+  lang: state.default.lang,
+});
+
+export default connect(mapStateToProps)(React.memo(Header));

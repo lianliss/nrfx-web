@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 
 
-function Dropdown({ title, subItems, onChange, onNavigate }) {
+function Dropdown({ title, subItems, onChange, onNavigate, lastItemText, onLastItemClick, className }) {
   const [isOpen, toggle] = useState(false);
 
   const handleLinkClick = (value) => {
@@ -10,9 +10,19 @@ function Dropdown({ title, subItems, onChange, onNavigate }) {
     toggle(false);
   }
 
+  const handleLastItemClick = () => {
+    toggle(false);
+    onLastItemClick();
+  }
+
   return (
-    <div className="SiteHeader__dropdown" onMouseEnter={() => toggle(true)} onClick={() => toggle(true)} onMouseLeave={() => toggle(false)}>
-      <div className="SiteHeader__menu__item" >
+    <div className={"SiteHeader__dropdown " + className}>
+      <div
+        className="SiteHeader__menu__item"
+        onClick={() => toggle(true)}
+        onMouseEnter={() => toggle(true)}
+        onMouseLeave={() => toggle(false)}
+      >
         {title}
         <SVG src={require('../../../../asset/menu_arrow.svg')} />
       </div>
@@ -36,7 +46,12 @@ function Dropdown({ title, subItems, onChange, onNavigate }) {
                   <p key={item.title} className="SiteHeader__dropdown__link" onClick={() => handleLinkClick(item.value)}>{item.title}</p>
                 )
               }
-            }
+            })}
+
+            {lastItemText && (
+              <span className="SiteHeader__dropdown__link" onClick={handleLastItemClick}>
+                {lastItemText}
+              </span>
             )}
           </div>
         ) : null}

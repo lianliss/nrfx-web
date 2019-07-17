@@ -38,7 +38,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose })
   }
 
   return (
-    <>
+    <div className="RegisterModal">
       <h2 className="AuthModal__title">{utils.getLang('site__authModalRegistration')}</h2>
 
       {currentStep === steps.REGISTRATION
@@ -68,7 +68,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose })
           />
         )}
 
-    </>
+    </div>
   )
 }
 

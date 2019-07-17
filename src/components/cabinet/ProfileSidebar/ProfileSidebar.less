@@ -1,0 +1,72 @@
+.ProfileSidebar {
+  width: 180px;
+
+  .ProfileSidebar__user {
+    text-align: center;
+    padding: 30px 0 15px;
+
+    .ProfileSidebar__user__avatar {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      display: block;
+      margin: 18px auto;
+      object-fit: cover;
+
+      &::before {
+        opacity: 0.5;
+        filter: blur(16px);
+        border-radius: 160px;
+      }
+    }
+
+    .ProfileSidebar__user__title {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.444444px;
+      margin-bottom: 8px;
+    }
+
+    .ProfileSidebar__user__txt {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 13px;
+      text-align: center;
+      letter-spacing: 0.444444px;
+      color: var(--secondary-grey);
+      margin-bottom: 4px;
+    }
+
+    .ProfileSidebar__user__verify {
+      margin-top: 8px;
+      background: var(--primary-red);
+      border-radius: 14px;
+      padding: 6px 16px;
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 16px;
+      text-align: center;
+      letter-spacing: 0.444444px;
+      color: var(--contrast-primary);
+      border: none;
+      outline: none;
+    }
+  }
+
+  .ProfileSidebar__menu {
+    .ProfileSidebar__menu__item {
+      display: flex;
+      align-items: center;
+      padding: 16px 24px;
+
+      .isvg {
+        margin-right: 10px;
+      }
+    }
+
+    .ProfileSidebar__menu__item_passive {
+      color: var(--primary-grey);
+    }
+  }
+}
