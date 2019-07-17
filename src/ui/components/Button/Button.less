@@ -28,6 +28,10 @@
     border-radius: @border-radius-rounded;
   }
 
+  &.forCabinet {
+    background: linear-gradient(47.71deg, #FFC75D 21.44%, #FFA363 76.19%);
+  }
+
   &:after {
     content: '';
     background: var(--uikit-primary);
@@ -59,6 +63,15 @@
 
     &.rounded {
       border-radius: @border-radius-rounded-small;
+    }
+  }
+
+  &.large {
+    width: 160px;
+    text-align: center;
+
+    .Button__cont {
+      justify-content: center;
     }
   }
 

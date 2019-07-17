@@ -13,6 +13,7 @@ function ProfileSidebar({ count, children }) {
         <h3 className="ProfileSidebar__user__title">Bitcoin bot</h3>
         <p className="ProfileSidebar__user__txt">BTCBOT</p>
         <p className="ProfileSidebar__user__txt">Agent</p>
+        <button className="ProfileSidebar__user__verify">Verify</button>
       </div>
 
       <div className="ProfileSidebar__menu">

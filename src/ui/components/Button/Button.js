@@ -13,7 +13,8 @@ function Button(props) {
     disabled: props.disabled,
     [props.type]: !!props.type,
     [props.newClass]: !!props.newClass,
-    rounded: props.rounded
+    rounded: props.rounded,
+    forCabinet: !!props.forCabinet,
   });
 
   return (
@@ -34,7 +35,7 @@ function Button(props) {
 }
 
 Button.propTypes = {
-  size: PropTypes.oneOf(['small']),
+  size: PropTypes.oneOf(['small', 'large']),
   type: PropTypes.oneOf(['secondary', 'outline', 'negative', 'negative_outline', 'outline_white']),
   btnType: PropTypes.string,
   disabled: PropTypes.bool,

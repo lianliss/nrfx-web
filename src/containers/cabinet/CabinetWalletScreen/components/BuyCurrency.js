@@ -27,6 +27,7 @@ function BuyCurrency({ cryptoList }) {
 
   return (
     <div className="BuyCurrency Content_box">
+      {/* TODO: get the list of currencies here */}
       <CurrencyData />
 
       <h3>Buy Currency</h3>
@@ -53,6 +54,8 @@ function BuyCurrency({ cryptoList }) {
           </div>
         </div>
       </div>
+
+      <UI.Button forCabinet size="large">Buy</UI.Button>
     </div>
   )
 }

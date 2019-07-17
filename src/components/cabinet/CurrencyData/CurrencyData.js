@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 let ws = null;
+let currencies = {};
 
 class CurrencyData extends React.PureComponent {
     state = {
@@ -31,11 +32,9 @@ class CurrencyData extends React.PureComponent {
     onWsOpen = () => console.log('WS opened');
 
     onWsMessage = (message) => {
-      // const data = JSON.parse(message.data);
-      // console.log('ETHBTC :', data.pair === 'ETHBTC');
-      // if (data.pair === 'ETHBTC') {
-      //   console.log('ETHBTC :', data.price);
-      // }
+      const data = JSON.parse(message.data);
+      currencies[data.pair] = data.price;
+      console.log('currencies :', currencies);
     }
 
     onWsClose = () => console.log('WS closed');
@@ -43,7 +42,7 @@ class CurrencyData extends React.PureComponent {
     closeWs = () => ws.close();
 
     render() {
-      return <span />;
+      return null;
     }
 }
 

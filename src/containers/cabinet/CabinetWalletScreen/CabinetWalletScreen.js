@@ -38,6 +38,17 @@ const headings = [
   </span>,
 ]
 
+const formatTransactionDate = (date) => {
+  const today = moment(new Date());
+  const tDate = moment(date);
+
+  if (today.isSame(tDate, 'd')) {
+    return moment(date).format('HH:mm')
+  }
+
+  return moment(date).format('ll')
+}
+
 const getRows = (history) => {
   if (!history) {
     return [];
@@ -63,7 +74,7 @@ const getRows = (history) => {
           : <span className="Table__item__type_received">Received</span>}
       </span>,
       <span className="Table__item">
-        {moment(item.date).format('HH:mm')}
+        {formatTransactionDate(item.date)}
       </span>,
     ]
   ))
