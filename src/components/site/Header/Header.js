@@ -132,7 +132,7 @@ function Header({ showLightLogo, langList }) {
               title={currentLangTitle}
               subItems={langList.slice(0, 3)}
               onChange={handleLangChange}
-              lastItemText='More...'
+              lastItemText={utils.getLang('site__headerMore')}
               onLastItemClick={() => toggleModalOpen(true)}
             />
 
@@ -168,7 +168,7 @@ function Header({ showLightLogo, langList }) {
                   title={currentLangTitle}
                   subItems={langList.slice(0, 3)}
                   onChange={handleLangChange}
-                  lastItemText='More...'
+                  lastItemText={utils.getLang('site__headerMore')}
                   onLastItemClick={() => toggleModalOpen(true)}
                 />
               </div>
