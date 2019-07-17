@@ -3,6 +3,7 @@ import './CabinetWalletScreen.less';
 import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { getWallets } from '../../../actions/cabinet/wallets';
 import CabinetWrapper from '../../../wrappers/Cabinet/CabinetWrapper';
@@ -62,7 +63,7 @@ const getRows = (history) => {
           : <span className="Table__item__type_received">Received</span>}
       </span>,
       <span className="Table__item">
-        {item.date}
+        {moment(item.date).format('HH:mm')}
       </span>,
     ]
   ))

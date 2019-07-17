@@ -54,3 +54,16 @@ export function useInterval(callback, delay) {
     }
   }, [delay]);
 }
+
+export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigits = 2) => {
+  if (num) {
+    return num.toLocaleString(undefined,
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }
+    )
+  }
+
+  return null;
+};

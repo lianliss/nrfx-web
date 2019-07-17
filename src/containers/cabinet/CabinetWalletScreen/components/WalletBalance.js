@@ -1,52 +1,84 @@
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import PieChart from 'react-minimal-pie-chart';
 
+import { formatNumber } from '../../../../utils';
+import { getGradientByCurrency, getColorByCurrency } from '../../../../utils/currencies';
+
+const getWalletsBalance = (wallets) => {
+  let walletsAmount = 0;
+  let walletsBalanceInUSD = 0;
+  let balancePieStyle = '';
+  let walletsCurrencies = [];
+  
+  wallets.forEach(item => {
+    walletsAmount += item.amount;
+  });
+
+  if (walletsAmount === 0) {
+    return null;
+  }
+
+  wallets.forEach((wallet, i) => {
+    if (wallet.amount !== 0) {
+      const color = getColorByCurrency(wallet.currency);
+      walletsBalanceInUSD += (wallet.amount * wallet.price_usd);
+
+      walletsCurrencies.push({
+        color,
+        currency: wallet.currency,
+        value: Math.floor(wallet.amount / walletsAmount * 100),
+      });
+    } 
+  });
+
+  return {
+    walletsBalanceInUSD,
+    walletsCurrencies,
+    balancePieStyle,
+  }
+}
 
 function WalletBalance({ wallets }) {
-
-  const getWalletsBalance = () => {
-    let walletAmounts = 0;
-    
-    wallets.forEach(item => {
-      walletAmounts += item.amount;
-    });
-
-    if (walletAmounts === 0) {
-      return null;
-    }
-  }
+  const walletsBalance = getWalletsBalance(wallets);
 
   return (
     <div className="WalletBalance Content_box">
-      {getWalletsBalance()
+      {walletsBalance
         ? (
           <>
             <div className="WalletBalance__list">
               <h3>Wallets Balance</h3>
 
               <ul>
-                <li>
-                  <span>50%</span>
-                  BTC
-                </li>
-                <li>
-                  <span>10%</span>
-                  LTC
-                </li>
-                <li>
-                  <span>32%</span>
-                  ETH
-                </li>
+                {walletsBalance.walletsCurrencies.map(wallet => {
+                  const gradient = getGradientByCurrency(wallet.currency);
+                  return (
+                    <div key={wallet.currency} className="WalletBalance__list__item">
+                      <span className="WalletBalance__list__item_dot" style={{ background: gradient }} />
+                      <li key={wallet.currency}>
+                        <span>{wallet.value}%</span>
+                        {wallet.currency.toUpperCase()}
+                      </li>
+                    </div>
+                  );
+                })}
               </ul>
             </div>
+
             <div className="WalletBalance__pie">
-              <div className="WalletBalance__pie__balance__wrapper">
-                <div className="WalletBalance__pie__balance">
-                  <h3>$2,999</h3>
-                  <div>
-                    <p className="active">BTN</p>
-                    <p>LTC</p>
-                  </div>
+              <PieChart
+                animate
+                lineWidth={20}
+                paddingAngle={1}
+                data={walletsBalance.walletsCurrencies}
+              />
+
+              <div className="WalletBalance__pie__balance">
+                <h3>${formatNumber(walletsBalance.walletsBalanceInUSD)}</h3>
+                <div>
+                  <p className="active">USD</p>
+                  <p>BTC</p>
                 </div>
               </div>
             </div>
@@ -64,4 +96,4 @@ function WalletBalance({ wallets }) {
   )
 }
 
-export default WalletBalance;
+export default React.memo(WalletBalance);
