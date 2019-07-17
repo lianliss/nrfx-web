@@ -172,7 +172,7 @@ function Header({ showLightLogo, langList }) {
                   onChange={handleLangChange}
                   lastItem={(
                     <LanguageModal onLanguageClick={handleLangChange} langList={langList}>
-                      <span className="SiteHeader__dropdown__link">More...</span>
+                      <span className="SiteHeader__dropdown__link">{utils.getLang('site__headerMore')}</span>
                     </LanguageModal>
                   )}
                 />

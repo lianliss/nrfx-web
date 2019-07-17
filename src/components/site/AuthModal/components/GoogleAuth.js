@@ -43,8 +43,8 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
         {loginRes.status === 'ga_init' 
           && (
             <div className="AuthModal__content__ga">
-              <h2 className="AuthModal__title">Enable Google Authenticator</h2>
-              <p className="AuthModal__content__ga__msg">Scan QR-code by Google Authentificator or add key manually:</p>
+              <h2 className="AuthModal__title">{utils.getLang('site__authModalTitle')}</h2>
+              <p className="AuthModal__content__ga__msg">{utils.getLang('site__authModalContentGA')}</p>
               <img src={loginRes.url} alt="GA QR Code" />
               <input className="AuthModal__content__ga__hash" ref={hashRef} value={loginRes.hash} readOnly />
             </div>
