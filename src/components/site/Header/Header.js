@@ -88,9 +88,10 @@ function Header({ showLightLogo, langList }) {
 
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
   const [ curLang, changeLang ] = useState(currentLang);
+  const [ isModalOpen, toggleModalOpen ] = useState(false);
 
   const currentLangObj = langList.find(l => l.value === curLang);
-  const currentLangTitle = currentLangObj ? currentLangObj.title : 'Русский';
+  const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
 
   const handleLangChange = (value) => {
     loadLang(value);
@@ -131,11 +132,8 @@ function Header({ showLightLogo, langList }) {
               title={currentLangTitle}
               subItems={langList.slice(0, 3)}
               onChange={handleLangChange}
-              lastItem={(
-                <LanguageModal onLanguageClick={handleLangChange} langList={langList}>
-                  <span className="SiteHeader__mobileDropdown__link">More...</span>
-                </LanguageModal>
-              )}
+              lastItemText='More...'
+              onLastItemClick={() => toggleModalOpen(true)}
             />
 
           </div>
@@ -170,11 +168,8 @@ function Header({ showLightLogo, langList }) {
                   title={currentLangTitle}
                   subItems={langList.slice(0, 3)}
                   onChange={handleLangChange}
-                  lastItem={(
-                    <LanguageModal onLanguageClick={handleLangChange} langList={langList}>
-                      <span className="SiteHeader__dropdown__link">{utils.getLang('site__headerMore')}</span>
-                    </LanguageModal>
-                  )}
+                  lastItemText='More...'
+                  onLastItemClick={() => toggleModalOpen(true)}
                 />
               </div>
             </div>
@@ -187,6 +182,9 @@ function Header({ showLightLogo, langList }) {
             </div>
           </div>
         ) : null}
+
+
+      <LanguageModal isOpen={isModalOpen} onChange={toggleModalOpen} onLanguageClick={handleLangChange} langList={langList} />
     </div>
   )
 }
