@@ -47,7 +47,7 @@ class App extends React.Component {
     const lang = storage.getItem('lang');
 
     Promise.all([
-      actions.loadLang(lang || 'ru')
+      actions.loadLang(lang || 'en')
     ])
       .then(() => this.setState({isLoading: false}))
       .catch(() => setTimeout(this._loadAssets, 3000));

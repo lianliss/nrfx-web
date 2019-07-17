@@ -1,6 +1,6 @@
 import './LanguageModal.less';
 
-import React, { useState } from 'react';
+import React from 'react';
 import SVG from 'react-inlinesvg';
 
 import UI from '../../../ui';
@@ -10,30 +10,30 @@ const getLanguageFlag = (langCode) => {
 }
 
 
-function LanguageModal({ langList, className, onLanguageClick, children }) {
-  const [isOpen, toggleOpen] = useState(false);
+function LanguageModal({ langList, className, onLanguageClick, isOpen, onChange }) {
 
   const handleLanguageChange = (langCode) => {
     onLanguageClick(langCode);
-    toggleOpen(false);
+    onChange(false);
   }
 
   return(
     <div className={"LanguageModal " + className}>
-      <span onClick={() => toggleOpen(true)}>
-        {children}
-      </span>
-
       <UI.Modal
         isOpen={isOpen}
-        onClose={() => toggleOpen(false)}
+        onClose={() => onChange(false)}
       >
+
         <div className="LanguageModal__cont">
           <h2 className="LanguageModal__cont__title">Language</h2>
 
           <div className="LanguageModal__cont__grid">
             {langList.map(lang => (
-              <p key={lang.value} className="LanguageModal__cont__lang" onClick={() => handleLanguageChange(lang.value)}>
+              <p
+                key={lang.value}
+                className="LanguageModal__cont__lang"
+                onClick={() => handleLanguageChange(lang.value)}
+              >
                 {getLanguageFlag(lang.value)}
                 {lang.title}
               </p>
