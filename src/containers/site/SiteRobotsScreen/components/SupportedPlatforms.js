@@ -4,6 +4,7 @@ import BaseScreen from '../../../BaseScreen';
 import UI from '../../../../ui/index';
 import * as utils from '../../../../utils/index';
 import { PHONE } from '../../../../constants/breakpoints';
+import {getLang} from "../../../../utils/index";
 
 
 const platformLogos = [
@@ -98,7 +99,7 @@ export default class SiteRobotsScreen extends BaseScreen {
         </div>
 
         {visibleLogos.length !== platformLogos.length 
-          ? <UI.Button size="small" rounded type="secondary" onClick={this.showMore}>Показать больше</UI.Button> 
+          ? <UI.Button size="small" rounded type="secondary" onClick={this.showMore}>{getLang('site__showMore')}</UI.Button>
           : null}
       </div>
     )
