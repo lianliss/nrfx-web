@@ -12,9 +12,7 @@ function Header() {
   return (
     <div className="CabinetHeader">
       <div className="CabinetHeader__content">
-        <div className="CabinetHeader__logo">
-          <SVG src={require('../../../asset/logo_full.svg')} />
-        </div>
+        <div className="CabinetHeader__logo" />
         <div className="CabinetHeader__links">
 
           <div className="CabinetHeader__link active">
@@ -44,11 +42,17 @@ function Header() {
 
         </div>
         <div className="CabinetHeader__icons">
-          <Badge count={4}>
-            <SVG src={require('../../../asset/cabinet/notification.svg')} />
-          </Badge>
-          <SVG src={require('../../../asset/cabinet/social.svg')} />
-          <SVG src={require('../../../asset/cabinet/settings.svg')} />
+          <div className="CabinetHeader__icon">
+            <Badge count={4}>
+              <SVG src={require('../../../asset/cabinet/notification.svg')} />
+            </Badge>
+          </div>
+          <div className="CabinetHeader__icon">
+            <SVG src={require('../../../asset/cabinet/social.svg')} />
+          </div>
+          <div className="CabinetHeader__icon">
+            <SVG src={require('../../../asset/cabinet/settings.svg')} />
+          </div>
         </div>
       </div>
     </div>

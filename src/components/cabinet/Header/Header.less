@@ -1,3 +1,5 @@
+@header-height: 56px;
+
 .CabinetHeader {
   background: var(--contrast-primary);
   box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
@@ -11,6 +13,10 @@
 
     .CabinetHeader__logo {
       color: var(--primary);
+      background: url('../../../asset/logotype_24.svg') no-repeat center;
+      background-size: 144px 24px;
+      width: 176px;
+      height: @header-height;
     }
 
     .CabinetHeader__links {
@@ -46,18 +52,33 @@
       color: var(--primary-grey);
       display: flex;
       align-items: center;
-      padding: 20px 25px;
+      padding: 16px 25px 16px 16px;
       justify-content: center;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
 
       .isvg {
-        margin-right: 20px;
+        margin-right: 16px;
+        height: 24px;
         color: var(--primary-grey);
       }
     }
 
     .CabinetHeader__icons {
+      display: flex;
+    }
+
+    .CabinetHeader__icon {
+      width: 16px * 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: @header-height;
+
       .isvg {
-        margin: 10px;
+        width: 24px;
+        height: 24px;
         color: var(--primary-grey);
       }
     }
