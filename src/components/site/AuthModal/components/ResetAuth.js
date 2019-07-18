@@ -38,7 +38,7 @@ function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
                   autoFocus
                   value={secretKey}
                   onChange={(e) => changeSecretKey(e.target.value)}
-                  placeholder="Secret Key"
+                  placeholder={utils.getLang('site__authModalSecretKey')}
                   type={isKeyVisible ? 'text' : 'password'}
                   onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
                 />
