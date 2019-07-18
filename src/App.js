@@ -6,7 +6,9 @@ import Routes from './Routes';
 import * as actions from './actions';
 import * as testActions from './actions/test';
 import * as storage from './services/storage';
+import * as pages from './constants/pages';
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
+import SiteWrapper from './wrappers/Site/SiteWrapper';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,6 +26,8 @@ class App extends React.Component {
 
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
+    const route = this.props.state.router.route.name;
+    const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
 
     if (this.state.isLoading) {
       return (
@@ -33,7 +37,11 @@ class App extends React.Component {
 
     return (
       <div>
-        <Routes {...this.props} />
+
+        {/* TODO: This is handled ONLY for site routes */}
+        <SiteWrapper isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
+          <Routes {...this.props} />
+        </SiteWrapper>
 
         {!acceptedCookies
           ? <CookieUsage />

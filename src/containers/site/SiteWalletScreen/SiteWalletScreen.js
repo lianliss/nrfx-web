@@ -1,9 +1,9 @@
 import './SiteWalletScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
@@ -13,7 +13,11 @@ import * as utils from '../../../utils/index';
 export default class SiteWalletScreen extends BaseScreen {
   render() {
     return (
-      <SiteWrapper className="Wallet__screen">
+      <div className="Wallet__screen">
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('./asset/wallet_main_image.png')}
@@ -30,7 +34,7 @@ export default class SiteWalletScreen extends BaseScreen {
         </div>
 
         <MobileAppBanner />
-      </SiteWrapper>
+      </div>
     )
   }
 

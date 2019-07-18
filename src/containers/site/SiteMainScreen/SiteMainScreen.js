@@ -1,9 +1,9 @@
 import './SiteMainScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import HomepageProduct from '../../../components/site/HomepageProduct/HomepageProduct';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
@@ -31,7 +31,11 @@ export default class SiteMainScreen extends BaseScreen {
 
   render() {
     return (
-      <SiteWrapper isHomepage>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('../../../containers/site/SiteMainScreen/asset/homepage_screen.png')}
@@ -100,7 +104,7 @@ export default class SiteMainScreen extends BaseScreen {
 
         <MobileAppBanner />
 
-      </SiteWrapper>
+      </div>
     )
   }
 

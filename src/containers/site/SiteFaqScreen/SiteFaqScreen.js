@@ -1,9 +1,9 @@
 import './SiteFaqScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import UI from '../../../ui';
 import Question from './components/Question';
 
@@ -49,7 +49,11 @@ export default class SiteFaqScreen extends BaseScreen {
 
   render() {
     return (
-      <SiteWrapper withOrangeBg>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
 
           <div className="SiteFaqScreen__heading">
@@ -86,7 +90,7 @@ export default class SiteFaqScreen extends BaseScreen {
             </p>
           </div>
         </div>
-      </SiteWrapper>
+      </div>
     )
   }
 }

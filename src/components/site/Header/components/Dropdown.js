@@ -6,7 +6,7 @@ function Dropdown({ title, subItems, onChange, onNavigate, lastItemText, onLastI
   const [isOpen, toggle] = useState(false);
 
   const handleLinkClick = (value) => {
-    onChange(value);
+    onChange && onChange(value);
     toggle(false);
   }
 
@@ -29,7 +29,7 @@ function Dropdown({ title, subItems, onChange, onNavigate, lastItemText, onLastI
 
       {isOpen
         ? (
-          <div className="SiteHeader__dropdown__items" onMouseEnter={() => toggle(true)}>
+          <div className="SiteHeader__dropdown__items" onMouseEnter={() => toggle(true)} onMouseLeave={() => toggle(false)}>
             {subItems.map(item => {
               if (item.route) {
                 return (

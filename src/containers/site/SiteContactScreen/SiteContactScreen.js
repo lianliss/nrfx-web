@@ -1,9 +1,9 @@
 import './SiteContactScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
 import { sendContactForm } from '../../../actions/contact';
 import { isEmail } from '../../../utils';
@@ -59,7 +59,11 @@ export default class SiteContactScreen extends BaseScreen {
     const isSubmitDisabled = !isEmailValid || !email || !message;
 
     return (
-      <SiteWrapper withOrangeBg>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="SiteContactScreen Layout_spacing">
           <h1 className="SiteContactScreen__heading">{this.lang.site.contactContactUs}</h1>
 
@@ -124,7 +128,7 @@ export default class SiteContactScreen extends BaseScreen {
           </div>
 
         </div>
-      </SiteWrapper>
+      </div>
     )
   }
 }

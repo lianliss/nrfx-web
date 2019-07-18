@@ -1,9 +1,9 @@
 import './SiteCommerceScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import FeatureCard from '../../../components/site/FeatureCard/FeatureCard';
@@ -37,7 +37,11 @@ export default class SiteCommerceScreen extends BaseScreen {
 
   render() {
     return (
-      <SiteWrapper>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <SitePageInfoBlock
             hideWatchButton
@@ -74,7 +78,7 @@ export default class SiteCommerceScreen extends BaseScreen {
           caption={this.lang.site.commerceConnectSubTitle}
           btnText={this.lang.site.commerceConnectBtn}
         />
-      </SiteWrapper>
+      </div>
     )
   }
 
