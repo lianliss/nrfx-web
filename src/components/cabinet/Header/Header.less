@@ -1,8 +1,15 @@
 @header-height: 56px;
 
+.CabinetHeaderContainer {
+  height: @header-height;
+}
+
 .CabinetHeader {
   background: var(--contrast-primary);
   box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 
   .CabinetHeader__content {
     max-width: 1340px;
