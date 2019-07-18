@@ -1,9 +1,9 @@
 import './SiteTechnologyScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import FeatureCard from '../../../components/site/FeatureCard/FeatureCard';
 import InfoSection from '../../../components/site/InfoSection/InfoSection';
@@ -50,7 +50,11 @@ export default class SiteTechnologyScreen extends BaseScreen {
     const { isAllTextVisible } = this.state;
 
     return (
-      <SiteWrapper withOrangeBg>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <h1 className="SiteTechnologyScreen__heading">{this.lang.site.technologyTitle}</h1>
 
@@ -86,7 +90,7 @@ export default class SiteTechnologyScreen extends BaseScreen {
           <InfoSection firstInfo={data.misssionInfo} secondInfo={data.aboutInfo} />
 
         </div>
-      </SiteWrapper>
+      </div>
     )
   }
 

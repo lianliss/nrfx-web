@@ -1,9 +1,9 @@
 import './SiteInvestmentScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import Banner from '../../../components/site/Banner/Banner';
@@ -13,7 +13,11 @@ import InfoCard from '../../../components/site/InfoCard/InfoCard';
 export default class SiteInvestmentScreen extends BaseScreen {
   render() {
     return (
-      <SiteWrapper>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <SitePageInfoBlock
             hideWatchButton
@@ -44,7 +48,7 @@ export default class SiteInvestmentScreen extends BaseScreen {
           btnText={this.lang.site.investmentInvestBtn}
         />
 
-      </SiteWrapper>
+      </div>
     )
   }
 

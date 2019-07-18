@@ -1,9 +1,9 @@
 import './SiteExchangeScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import Banner from '../../../components/site/Banner/Banner';
@@ -15,7 +15,11 @@ import * as utils from '../../../utils/index';
 export default class SiteExchangeScreen extends BaseScreen {
   render() {
     return (
-      <SiteWrapper>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('./asset/exchange_main_image.png')}
@@ -68,7 +72,7 @@ export default class SiteExchangeScreen extends BaseScreen {
           btnText={this.lang.site.exchangeStartTrading}
         />
 
-      </SiteWrapper>
+      </div>
     )
   }
 

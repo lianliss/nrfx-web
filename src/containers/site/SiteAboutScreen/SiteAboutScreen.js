@@ -1,9 +1,9 @@
 import './SiteAboutScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import UI from '../../../ui';
 import About from './components/About';
 import Mission from './components/Mission';
@@ -53,7 +53,11 @@ export default class SiteAboutScreen extends BaseScreen {
     const currentTab = this.props.state.page;
 
     return (
-      <SiteWrapper withOrangeBg>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
 
           <div className="SiteAboutScreen">
@@ -74,7 +78,7 @@ export default class SiteAboutScreen extends BaseScreen {
           </div>
         </div>
 
-      </SiteWrapper>
+      </div>
     )
   }
 }

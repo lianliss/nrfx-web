@@ -1,9 +1,9 @@
 import './SiteNotFoundScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
 import { sendContactForm } from '../../../actions/contact';
 import { isEmail, getLang } from '../../../utils';
@@ -59,7 +59,11 @@ export default class SiteNotFoundScreen extends BaseScreen {
     const isSubmitDisabled = !isEmailValid || !email || !message;
 
     return (
-      <SiteWrapper withOrangeBg>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="SiteNotFoundScreen Layout_spacing">
           <div className="SiteNotFoundScreen__heading">
             <h1>404</h1>
@@ -127,7 +131,7 @@ export default class SiteNotFoundScreen extends BaseScreen {
           </div>
 
         </div>
-      </SiteWrapper>
+      </div>
     )
   }
 }

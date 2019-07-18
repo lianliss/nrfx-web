@@ -1,9 +1,9 @@
 import './SiteRobotsScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
@@ -14,7 +14,11 @@ import * as utils from '../../../utils/index';
 export default class SiteRobotsScreen extends BaseScreen {
   render() {
     return (
-      <SiteWrapper className="Robots__screen">
+      <div className="Robots__screen">
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('./asset/robots_main_image.svg')}
@@ -35,7 +39,7 @@ export default class SiteRobotsScreen extends BaseScreen {
 
         <RegisterBanner />
 
-      </SiteWrapper>
+      </div>
     )
   }
 

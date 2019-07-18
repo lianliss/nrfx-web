@@ -1,9 +1,9 @@
 import './SiteSafetyScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import SafetyBanner from './components/SafetyBanner/SafetyBanner';
 import * as utils from '../../../utils/index';
@@ -12,7 +12,11 @@ import * as utils from '../../../utils/index';
 export default class SiteSafetyScreen extends BaseScreen {
   render() {
     return (
-      <SiteWrapper withOrangeBg>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="Layout_spacing">
           <h1 className="SiteSafetyScreen__heading">{this.lang.site.safetyTitle}</h1>
 
@@ -38,7 +42,7 @@ export default class SiteSafetyScreen extends BaseScreen {
 
         <SafetyBanner />
 
-      </SiteWrapper>
+      </div>
     )
   }
 
