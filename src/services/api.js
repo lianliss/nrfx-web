@@ -2,6 +2,9 @@ import { ApiClient } from '../swagger';
 
 import * as auth from './auth';
 
+const API_ENTRY = 'https://bitcoinbot.pro';
+const API_VERSION = 1;
+
 export const Errors = {
   FATAL: 1,
   AUTH: 2,
@@ -39,4 +42,57 @@ export default function callApi(callable) {
 
     callable.call({apiClient: ApiClient.instance}, ...args);
   });
+}
+
+export function invoke(method, name, params) {
+  return new Promise((resolve, reject) => {
+
+    const params_arr = [];
+    for (let key in params) {
+      params_arr.push(`${key}=${encodeURIComponent(params[key])}`);
+    }
+
+    let init = {
+      method,
+      headers: {
+        'X-Token': auth.getToken(),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    };
+
+    let url = `${API_ENTRY}/api/v${API_VERSION}/${name}`;
+    if (method === 'GET') {
+      url += `?${params_arr.join('&')}`;
+    } else {
+      init.body = params_arr.join('&');
+    }
+
+    fetch(url, init)
+      .then(resp => {
+        resp.json().then((json) => {
+          if (resp.status === 200) {
+            resolve(json);
+          } else {
+            reject(json);
+
+            if (json.code === 2) {
+              localStorage.removeItem('token');
+              window.location.href = '/';
+            }
+          }
+        }).catch(() => reject({code: -1, message: "Cant't parse JSON"}));
+      });
+  });
+}
+
+export function get(name, params = {}) {
+  return invoke('GET', name, params);
+}
+
+export function post(name, params = {}) {
+  return invoke('POST', name, params);
+}
+
+export function del(name, params = {}) {
+  return invoke('DELETE', name, params);
 }
