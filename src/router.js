@@ -72,6 +72,10 @@ export const routes = [
   {
     name: pages.CABINET_WALLET,
     path: '/cabinet_wallet',
+  },
+  {
+    name: pages.CABINET_INVESTMENTS,
+    path: '/investments',
   }
 ];
 
