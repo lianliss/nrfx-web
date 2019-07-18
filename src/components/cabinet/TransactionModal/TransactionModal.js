@@ -1,6 +1,7 @@
 import './TransactionModal.less';
 
 import React from 'react';
+import SVG from 'react-inlinesvg';
 
 import Modal from '../../../ui/components/Modal/Modal';
 import TransactionTable from './components/TransactionTable';
@@ -30,8 +31,12 @@ function TransactionModal({ children, isOpen, onChange }) {
 
           <TransactionTable data={data} />
 
-          <div>
-            Total
+          <div className="TransactionModal__summary">
+            <SVG src={require('../../../asset/cabinet/send_icon.svg')} width={48} height={48} />
+            <div className="TransactionModal__summary__content">
+              <h3>Total</h3>
+              <h2>770 LTC</h2>
+            </div>
           </div>
         </div>
       </Modal>
