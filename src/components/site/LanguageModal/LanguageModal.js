@@ -10,20 +10,19 @@ const getLanguageFlag = (langCode) => {
 }
 
 
-function LanguageModal({ langList, className, onLanguageClick, isOpen, onChange }) {
+function LanguageModal({ langList, className, onLanguageClick, isOpen, onClose }) {
 
   const handleLanguageChange = (langCode) => {
     onLanguageClick(langCode);
-    onChange(false);
+    onClose();
   }
 
   return(
     <div className={"LanguageModal " + className}>
       <UI.Modal
         isOpen={isOpen}
-        onClose={() => onChange(false)}
+        onClose={onClose}
       >
-
         <div className="LanguageModal__cont">
           <h2 className="LanguageModal__cont__title">Language</h2>
 
@@ -40,7 +39,6 @@ function LanguageModal({ langList, className, onLanguageClick, isOpen, onChange 
             ))}
           </div>
         </div>
-
       </UI.Modal>
     </div>
   )

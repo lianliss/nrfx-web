@@ -16,9 +16,7 @@ class RecaptchaModal extends React.PureComponent {
   }
   
   componentDidMount() {
-    if (this.captcha) {
-      this.captcha.reset();
-    }
+    this.onLoadRecaptcha();
   }
 
   onLoadRecaptcha = () => {
@@ -39,6 +37,12 @@ class RecaptchaModal extends React.PureComponent {
 
   toggleModal = (isOpen) => {
     this.setState({ isOpen });
+
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
   }
 
   render() {
