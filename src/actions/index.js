@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import * as actionTypes from './actionTypes';
-import { TranslationApi } from '../swagger';
+import { TranslationApi, StaticPagesApi } from '../swagger';
 import callApi from '../services/api';
 import store from '../store';
 
@@ -15,6 +15,15 @@ export function loadLang(lang) {
         langList,
       });
       resolve();
+    }).catch((err) => reject(err));
+  });
+}
+
+export function getStaticPageContent(url, lang) {
+  return new Promise((resolve, reject) => {
+    callApi(new StaticPagesApi().pagesGetGet, url, lang).then((data) => {
+      store.dispatch({ type: actionTypes.STATIC, payload: { url, lang, data } })
+      resolve(data);
     }).catch((err) => reject(err));
   });
 }

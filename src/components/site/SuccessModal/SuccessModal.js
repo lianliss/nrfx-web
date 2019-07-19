@@ -12,8 +12,10 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
   const [isActiveResend, activateResend] = useState(false);
 
   const handleResend = () => {
-    updateTiming(60);
     onResend();
+    updateTiming(60);
+    setIsRunning(true);
+    activateResend(false);
   }
 
   utils.useInterval(() => {
@@ -39,7 +41,7 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
           onClick={isActiveResend ? handleResend : null}
           className={"SuccessModal__resend " + (isActiveResend ? "SuccessModal__resend__active" : "")}
         >
-          {utils.getLang('site__authModalResend') + (!isActiveResend ? ` 0:${timeRemaining}` : '')}
+          {utils.getLang('site__authModalResend') + (!isActiveResend ? ` ${timeRemaining}s` : '')}
         </p>
         <UI.Button onClick={onClose}>{utils.getLang('site__authModalOk')}</UI.Button>
       </div>
