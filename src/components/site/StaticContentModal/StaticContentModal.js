@@ -9,7 +9,6 @@ import * as storage from '../../../services/storage';
 import { getStaticPageContent } from '../../../actions';
 
 
-
 function StaticContentModal(props) {
   const { children, type } = props;
   const [isOpen, toggleOpen] = useState(false);
@@ -25,13 +24,19 @@ function StaticContentModal(props) {
     }
   }, [currentInfo, type])
 
+  const handleOpen = () => {
+    document.body.classList.add('modal-open');
+    toggleOpen(true);
+  }
+
   const handleClose = () => {
+    document.body.classList.remove('modal-open');
     toggleOpen(false);
   }
 
   return (
     <div className="StaticContentModal">
-      <span onClick={() => toggleOpen(true)}>
+      <span className="StaticContentModal__opener" onClick={handleOpen}>
         {children}
       </span>
 
@@ -46,7 +51,7 @@ function StaticContentModal(props) {
 
               <div className="StaticContentModal__content" dangerouslySetInnerHTML={{ __html: currentData.content }} />
 
-              <UI.Button onClick={() => toggleOpen(false)}>{utils.getLang('site__goBack')}</UI.Button>
+              <UI.Button onClick={handleClose}>{utils.getLang('site__goBack')}</UI.Button>
             </div>
           </UI.Modal>
         ) : null}

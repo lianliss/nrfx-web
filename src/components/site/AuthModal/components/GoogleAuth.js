@@ -13,8 +13,9 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
 
   const handleSubmit = () => {
     getGoogleCode(email, password, gCode)
-      .then(() => {
+      .then((data) => {
         setErrorMsg('');
+        console.log('data :', data);
         setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
       })
       .catch((err) => setErrorMsg(err.message));

@@ -35,7 +35,13 @@ function AuthModal({ children, type, initialEmail, className }) {
     }
   }
 
+  const handleOpen = () => {
+    document.body.classList.add('modal-open');
+    toggleOpen(true);
+  }
+
   const handleClose = () => {
+    document.body.classList.remove('modal-open');
     toggleOpen(false);
 
     // Resetting the state
@@ -54,7 +60,7 @@ function AuthModal({ children, type, initialEmail, className }) {
 
   return (
     <div className={"AuthModal " + className}>
-      <span onClick={() => toggleOpen(true)}>
+      <span onClick={handleOpen}>
         {children}
       </span>
 

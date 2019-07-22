@@ -93,6 +93,16 @@ function Header({ showLightLogo, langList }) {
   const currentLangObj = langList.find(l => l.value === curLang);
   const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
 
+  const handleOpen = () => {
+    document.body.classList.add('modal-open');
+    toggleModalOpen(true);
+  }
+
+  const handleClose = () => {
+    document.body.classList.remove('modal-open');
+    toggleModalOpen(false);
+  }
+
   const handleLangChange = (value) => {
     loadLang(value);
     changeLang(value);
@@ -133,7 +143,7 @@ function Header({ showLightLogo, langList }) {
               subItems={langList.slice(0, 3)}
               onChange={handleLangChange}
               lastItemText={utils.getLang('site__headerMore')}
-              onLastItemClick={() => toggleModalOpen(true)}
+              onLastItemClick={handleOpen}
             />
 
           </div>
@@ -169,7 +179,7 @@ function Header({ showLightLogo, langList }) {
                   subItems={langList.slice(0, 3)}
                   onChange={handleLangChange}
                   lastItemText={utils.getLang('site__headerMore')}
-                  onLastItemClick={() => toggleModalOpen(true)}
+                  onLastItemClick={handleOpen}
                 />
               </div>
             </div>
@@ -184,7 +194,7 @@ function Header({ showLightLogo, langList }) {
         ) : null}
 
 
-      <LanguageModal isOpen={isModalOpen} onChange={toggleModalOpen} onLanguageClick={handleLangChange} langList={langList} />
+      <LanguageModal isOpen={isModalOpen} onClose={handleClose} onLanguageClick={handleLangChange} langList={langList} />
     </div>
   )
 }
