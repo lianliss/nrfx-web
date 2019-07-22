@@ -30,7 +30,7 @@ function Dropdown({ title, subItems, onChange, onNavigate, lastItemText, onLastI
       {isOpen
         ? (
           <div className="SiteHeader__dropdown__items" onMouseEnter={() => toggle(true)} onMouseLeave={() => toggle(false)}>
-            {subItems.map(item => {
+            {subItems.map((item, i) => {
               if (item.route) {
                 return (
                   <span
@@ -40,11 +40,15 @@ function Dropdown({ title, subItems, onChange, onNavigate, lastItemText, onLastI
                   >
                     {item.title}
                   </span>
-                )
-              } else {
+                );
+              } else if (typeof item.title === 'string') {
                 return (
                   <p key={item.title} className="SiteHeader__dropdown__link" onClick={() => handleLinkClick(item.value)}>{item.title}</p>
-                )
+                );
+              } else {
+                return (
+                  <div key={i} className="SiteHeader__dropdown__link">{item.title}</div>
+                );
               }
             })}
 

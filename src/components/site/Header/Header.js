@@ -15,6 +15,7 @@ import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
 import LanguageModal from '../LanguageModal/LanguageModal';
+import StaticContentModal from '../StaticContentModal/StaticContentModal';
 
 const currentLang = getItem('lang');
 
@@ -75,11 +76,19 @@ function Header({ showLightLogo, langList }) {
           route: pages.CONTACT,
         },
         {
-          title: utils.getLang('site__headerTerms'),
+          title: (
+            <StaticContentModal type="terms">
+              {utils.getLang('site__headerTerms')}
+            </StaticContentModal>
+          ),
           route: null,
         },
         {
-          title: utils.getLang('site__headerPrivacyPolicy'),
+          title: (
+            <StaticContentModal type="privacy">
+              {utils.getLang('site__headerPrivacyPolicy')}
+            </StaticContentModal>
+          ),
           route: null,
         },
       ]

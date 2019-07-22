@@ -29,6 +29,16 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
     // e.target.focus();
   }
 
+  const handleChange = (e) => {
+    if (e.target.value.length <= 6) {
+      changeGCode(e.target.value);
+    }
+
+    if (e.target.value.length === 6) {
+      handleSubmit();
+    }
+  }
+
   return (
     <div className="AuthModal__ga">
       {(loginRes.status !== 'ga_init')
@@ -57,7 +67,7 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
             type="number"
             autoComplete="off"
             value={gCode}
-            onChange={(e) => changeGCode(e.target.value)}
+            onChange={handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
             onKeyPress={(e) => (e.key === 'Enter' && gCode.length < 6) ? handleSubmit() : null}
           />

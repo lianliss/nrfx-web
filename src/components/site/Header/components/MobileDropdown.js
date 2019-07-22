@@ -26,7 +26,7 @@ function MobileDropdown({ title, subItems, onChange, onNavigate, lastItemText, o
       {isOpen
         ? (
           <div className="SiteHeader__mobileDropdown__items">
-            {subItems.map(item => {
+            {subItems.map((item, i) => {
               if (item.route) {
                 return (
                   <span
@@ -36,11 +36,15 @@ function MobileDropdown({ title, subItems, onChange, onNavigate, lastItemText, o
                   >
                     {item.title}
                   </span>
-                )
-              } else {
+                );
+              } else if (typeof item.title === 'string') {
                 return (
                   <p key={item.title} className="SiteHeader__mobileDropdown__link" onClick={() => handleLinkClick(item.value)}>{item.title}</p>
-                )
+                );
+              } else {
+                return (
+                  <div key={i} className="SiteHeader__mobileDropdown__link">{item.title}</div>
+                );
               }
             })}
 
