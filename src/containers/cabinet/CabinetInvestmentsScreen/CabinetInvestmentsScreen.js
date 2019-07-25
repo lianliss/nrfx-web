@@ -220,7 +220,17 @@ class CabinetInvestmentsScreen extends React.PureComponent {
         <UI.ModalHeader>
           Open New Deposit
         </UI.ModalHeader>
-        123
+        <div className="Investments__open_deposit_modal">
+          <div className="Investments__open_deposit_modal__row">
+            <UI.Input
+              placeholder="Amount"
+              indicator="min 0.04 BTC"
+            />
+          </div>
+          <div className="Investments__open_deposit_modal__invest_btn_wrapper">
+            <UI.Button>Invest</UI.Button>
+          </div>
+        </div>
       </UI.Modal>
     )
   }
