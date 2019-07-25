@@ -74,8 +74,8 @@ export const routes = [
     path: '/cabinet_wallet',
   },
   {
-    name: pages.CABINET_INVESTMENTS,
-    path: '/investments',
+    name: pages.INVESTMENTS,
+    path: '/investments?section',
   }
 ];
 
@@ -86,6 +86,6 @@ const params = {
 
 let router = createRouter(routes, params);
 router.usePlugin(browserPlugin({ base: '', useHash: false }));
-router.usePlugin(listenersPlugin());
+//router.usePlugin(listenersPlugin());
 
 export default router;

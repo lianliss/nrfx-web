@@ -21,9 +21,13 @@
     
     .Modal__box__close {
       position: absolute;
-      right: 12px;
+      right: 0;
       cursor: pointer;
-      top: 12px;
+      top: 0;
+      background: url('../../../asset/site/close.svg') no-repeat center;
+      background-size: 14px;
+      width: 14px + 12 * 2;
+      height: 14px + 12 * 2;
     }
   }
 
@@ -34,3 +38,16 @@
   }
 }
 
+.Modal__header {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  height: 40px;
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+}

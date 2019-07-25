@@ -35,12 +35,7 @@ function Modal(props) {
     return (
       <div className={className}>
         <div className="Modal__box" ref={node}>
-          <img 
-            alt="close"
-            className="Modal__box__close"
-            src={require('../../../asset/site/close.svg')}
-            onClick={props.onClose}
-          />
+          <div className="Modal__box__close" onClick={props.onClose} />
           {props.children}
         </div>
       </div>
@@ -55,5 +50,13 @@ Modal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func
 };
+
+export function ModalHeader({ children }) {
+  return (
+    <div className="Modal__header">
+      {children}
+    </div>
+  )
+}
 
 export default React.memo(Modal);

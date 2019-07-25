@@ -1,0 +1,13 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4 4V9H9V4H4ZM8 5H5V8H8V5Z" fill="currentColor" fill-opacity="0.87"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4 15V20H9V15H4ZM8 16H5V19H8V16Z" fill="currentColor" fill-opacity="0.87"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15 9V4H20V9H15ZM16 5H19V8H16V5Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M4 11H7V13H4V11Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M9 11H13V15H11V13H9V11Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M16 15H13V17H16V15Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M16 13V15H18V18H16V20H20V15H18V13H20V11H18V13H16Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M16 13H14V11H16V13Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M13 4H11V6H13V4Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M11 7H13V9H11V7Z" fill="currentColor" fill-opacity="0.87"/>
+<path d="M13 18H11V20H13V18Z" fill="currentColor" fill-opacity="0.87"/>
+</svg>

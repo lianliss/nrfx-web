@@ -1,0 +1,158 @@
+import './Chart.less';
+
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+
+export default function Chart({ series }) {
+  const options = {
+    chart: {
+      height: 160 + 40,
+    },
+    title: {
+      text: undefined,
+    },
+    subtitle: {
+      text: undefined
+    },
+    xAxis: {
+      type: 'datetime',
+      title: false,
+      subtitle: false,
+      gridLineWidth: 0,
+      lineWidth: 0,
+      minorGridLineWidth: 0,
+      lineColor: 'transparent',
+      minorTickLength: 0,
+      tickLength: 0,
+      labels: {
+        y: 19,
+        distance: 0,
+        padding: 0,
+        style: {
+          fontSize: '11px',
+          fontWeight: 500,
+          lineHeight: '16px',
+          color: '#808080',
+          fontFamily: 'Montserrat'
+        }
+      },
+      crosshair: {
+        color: '#C4C4C4'
+      },
+    },
+    yAxis: {
+      title: false,
+      opposite: true,
+      gridLineWidth: 0,
+      subtitle: false,
+      labels: {
+        enabled: false
+      },
+    },
+    legend: {
+      useHTML: true,
+      symbolPadding: 0,
+      symbolWidth: 0,
+      symbolRadius: 0,
+      labelFormatter: function () {
+        return `<div class="Chart__legend_item" style="background-color: ${this.color}">${this.name}</div>`;
+      },
+      itemMarginBottom: 0,
+      margin: 0,
+      x: 0,
+      padding: 0,
+      itemMarginTop: 16,
+      align: 'left',
+      alignColumns: false,
+      itemDistance: 16,
+      itemStyle: {
+        opacity: 1,
+      },
+      itemHoverStyle: {
+        opacity: 0.7
+      }
+    },
+    credits: {
+      enabled: false,
+    },
+    plotOptions: {
+      column: {
+        borderWidth: 0
+      },
+      series: {
+        lineWidth: 3,
+        marker: {
+          enabled: false,
+          radius: 2,
+          symbol: 'circle',
+          fillColor: '#fff',
+          lineColor: null,
+          lineWidth: 2,
+        },
+        shadow: {
+          enabled: true,
+          width: 4,
+          opacity: 0.2,
+          color: '#FF9E65'
+        },
+        states: {
+          hover: {
+            enabled: true,
+            halo: {
+              size: 7
+            }
+          }
+        },
+        events: {
+          mouseOver: function(e) {
+            this.xAxis.update({ className: 'Chart__xaxis_invisible' });
+          },
+          mouseOut: function () {
+            this.xAxis.update({ className: '' });
+          }
+        },
+      },
+    },
+    tooltip: {
+      split: true,
+      useHTML: true,
+      padding: 0,
+      borderWidth: 0,
+      shadow: false,
+      followPointer: true,
+      backgroundColor: 'transparent',
+      crosshairs: true,
+      hideDelay: 0,
+      formatter: function (tooltip) {
+
+        // return ['<b>' + this.x + '</b>'].concat(
+        //   this.points.map(function (point) {
+        //     return point.series.name + ': ' + point.y + 'm';
+        //   })
+        // );
+
+        return [`<div class="Chart__tooltip_date">${this.x} date</div>`].concat(this.points.map((point) => {
+          return `<div class="Chart__tooltip" style="background-color: ${point.color}">
+                ${point.y} ${point.series.name}
+              </div>`;
+        }));
+      },
+    },
+
+    series
+  };
+
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={options}
+    />
+  )
+}
+
+Chart.propTypes = {
+  series: PropTypes.array
+};

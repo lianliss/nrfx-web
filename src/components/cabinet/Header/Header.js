@@ -2,7 +2,11 @@ import './Header.less';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import { BaseLink } from 'react-router5';
+
 import Badge from '../Badge/Badge';
+import router from '../../../router';
+import * as pages from '../../../constants/pages';
 
 function Header() {
   // const handleNavigate = (route) => {
@@ -16,15 +20,15 @@ function Header() {
           <div className="CabinetHeader__logo" />
           <div className="CabinetHeader__links">
 
-            <div className="CabinetHeader__link active">
+            <BaseLink router={router} routeName={pages.CABINET_WALLET} className="CabinetHeader__link" activeClassName="active">
               <SVG src={require('../../../asset/cabinet/wallet_icon.svg')} />
               Wallets
-            </div>
+            </BaseLink>
 
-            <div className="CabinetHeader__link">
+            <BaseLink router={router} routeName={pages.INVESTMENTS} className="CabinetHeader__link" activeClassName="active">
               <SVG src={require('../../../asset/cabinet/investment_icon.svg')} />
               Investments
-            </div>
+            </BaseLink>
 
             <div className="CabinetHeader__link">
               <SVG src={require('../../../asset/cabinet/bots_icon.svg')} />

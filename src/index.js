@@ -4,20 +4,25 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router5';
 import store from './store';
 import router from './router';
 import * as actionTypes from './actions/actionTypes';
 import * as auth from './services/auth';
+
 require('define').noConflict();
 
 auth.setup();
-router.addListener((to, from) => store.dispatch({ type: actionTypes.NAVIGATE, to, from })).start();
+//router.addListener((to, from) => store.dispatch({ type: actionTypes.NAVIGATE, to, from }));
 
-ReactDOM.render(
-  <Provider store={store}>
+const wrappedApp = <Provider store={store}>
+  <RouterProvider router={router}>
     <App store={store} router={router} />
-  </Provider>,
-  document.getElementById('root')
-);
+  </RouterProvider>
+</Provider>;
+
+router.start((err, state) => {
+  ReactDOM.render(wrappedApp, document.getElementById('root'))
+});
 
 serviceWorker.unregister();

@@ -21,11 +21,14 @@ import CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScr
 
 export default function Routes(props) {
 
+  const routeState = props.router.getState();
+  const routerParams = routeState.params;
+
   let actions = {};
   let state = {};
   let Component = false;
 
-  switch (props.state.default.page) {
+  switch (routeState.name) {
     case pages.MAIN:
       Component = SiteMainScreen;
       break;
@@ -72,7 +75,7 @@ export default function Routes(props) {
     case pages.CABINET_WALLET:
       Component = CabinetWalletScreen;
       break;
-    case pages.CABINET_INVESTMENTS:
+    case pages.INVESTMENTS:
       Component = CabinetInvestmentsScreen;
       break;
     default:
@@ -88,5 +91,5 @@ export default function Routes(props) {
     state: props.state.default
   };
 
-  return <Component {...defaultProps} {...actions} {...state} />;
+  return <Component {...defaultProps} {...actions} {...state} routerParams={routerParams} />;
 }

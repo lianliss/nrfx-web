@@ -69,11 +69,19 @@
       font-weight: 500;
       font-size: 13px;
       line-height: 16px;
+      cursor: pointer;
+      transition: color 100ms ease-in-out;
+      text-decoration: none !important;
+      color: var(--foreground-primary);
 
       .isvg {
         margin-right: 8px;
         width: 24px;
         height: 24px;
+      }
+
+      &:hover, &.active {
+        color: var(--primary);
       }
     }
 

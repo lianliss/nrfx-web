@@ -10,7 +10,7 @@ import CabinetWrapper from '../../../wrappers/Cabinet/CabinetWrapper';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBalance from './components/WalletBalance';
-import Table from '../../../components/cabinet/Table/Table';
+import Table from '../../../ui/components/Table/Table';
 import NewWalletModal from '../../../components/cabinet/NewWalletModal/NewWalletModal';
 import BuyCurrency from './components/BuyCurrency';
 import TransactionModal from '../../../components/cabinet/TransactionModal/TransactionModal';
@@ -36,7 +36,7 @@ const headings = [
     </span>
     <SVG src={require('../../../asset/cabinet/arrow_small_down.svg')} />
   </span>,
-]
+];
 
 const formatTransactionDate = (date) => {
   const today = moment(new Date());
@@ -47,7 +47,7 @@ const formatTransactionDate = (date) => {
   }
 
   return moment(date).format('ll')
-}
+};
 
 const getRows = (history) => {
   if (!history) {
@@ -107,7 +107,7 @@ function CabinetWalletScreen({ wallets, history }) {
         </NewWalletModal>
       </div>
     )
-  }
+  };
 
   return (
     <CabinetWrapper>

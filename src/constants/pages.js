@@ -15,4 +15,4 @@ export const NOT_FOUND = 'not_found';
 export const HELLO = 'hello';
 export const UIKIT = 'uikit';
 export const CABINET_WALLET = 'cabinet_wallet';
-export const CABINET_INVESTMENTS = 'cabinet_investments';
+export const INVESTMENTS = 'investments';

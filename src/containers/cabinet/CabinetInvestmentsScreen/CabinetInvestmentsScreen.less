@@ -1,0 +1,129 @@
+.Investments__summary {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 33.3%;
+}
+
+.Investments__summary__item {
+  flex: 1;
+  margin-left: 28px;
+  padding: 16px 16px 16px 40px;
+  position: relative;
+  margin-top: 0 !important;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.Investments__summary__item__icon {
+  width: 72px;
+  height: 72px;
+  left: -32px;
+  top: 0;
+  position: absolute;
+  background: red;
+}
+
+.Investments__summary__item__info_row {
+  margin-top: 24px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.Investments__summary__item__info_row__label {
+  color: var(--primary-grey);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.Investments__summary__item__info_row__value {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 2px;
+
+  &.highlighted {
+    color: var(--primary);
+  }
+}
+
+.Investments__deposit_indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FFCC5C;
+  display: inline-block;
+}
+
+.Investment__profit {
+  padding: 40px;
+}
+
+.Investment__profit__header {
+  display: flex;
+  align-items: center;
+}
+
+.Investment__profit__header__cont {
+  flex: 1;
+}
+
+.Investment__profit__header__period {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--primary-grey);
+}
+
+.Investment__profit__header__fiat {
+  color: var(--color-green);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.Investment__profit__chart {
+  margin-top: 8px;
+  margin-bottom: -12px;
+}
+
+.Investments__deposit_info_modal__icon {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  background: red;
+}
+
+.Investments__deposit_info_modal__cont {
+  width: 664px;
+  padding: 40px;
+}
+
+.Investments__deposit_info_modal__columns {
+  display: flex;
+}
+
+.Investments__deposit_info_modal__column {
+  flex: 1;
+}
+
+.Investments__deposit_info_modal__withdrawal_form {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+
+  .Button {
+    margin-left: 16px;
+  }
+}
+
+.Investments__deposit_info_modal__withdrawal_form__currency {
+  color: var(--primary-grey);
+}
