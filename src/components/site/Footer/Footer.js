@@ -5,6 +5,7 @@ import SVG from 'react-inlinesvg';
 
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../utils/index';
+import StaticContentModal from '../StaticContentModal/StaticContentModal';
 
 export default function Footer() {
   return (
@@ -29,8 +30,12 @@ export default function Footer() {
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
             <a href={`/${pages.FAQ}`} className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
-            <a href="#" className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</a>
-            <a href="#" className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</a>
+            <StaticContentModal type="terms">
+              <span className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
+            </StaticContentModal>
+            <StaticContentModal type="privacy">
+              <span className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
+            </StaticContentModal>
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>

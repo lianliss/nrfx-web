@@ -1,0 +1,33 @@
+.StaticContentModal {
+
+  .Modal__box {
+    max-width: 800px;
+    padding: 40px;
+
+    @media (max-width: 992px) { max-width: 90%; }
+  }
+
+  .StaticContentModal__opener {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .StaticContentModal__content__wrapper {
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .StaticContentModal__title {
+      padding: 20px 10px;
+    }
+
+    .StaticContentModal__content {
+      padding: 10px;
+    }
+
+    .Button {
+      margin: 25px 10px 15px;
+    }
+  }
+}

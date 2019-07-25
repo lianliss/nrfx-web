@@ -9,16 +9,19 @@ import * as utils from '../../../utils';
 function SuccessModal({ title, subtitle, onClose, onResend }) {
   const [timeRemaining, updateTiming] = useState(60);
   const [isRunning, setIsRunning] = useState(true);
+  const [isActiveResend, activateResend] = useState(false);
 
   const handleResend = () => {
-    updateTiming(60);
     onResend();
+    updateTiming(60);
+    setIsRunning(true);
+    activateResend(false);
   }
 
   utils.useInterval(() => {
     if (timeRemaining === 0) {
       setIsRunning(false);
-      onClose();
+      activateResend(true);
     } else {
       updateTiming(timeRemaining - 1);
     }
@@ -34,7 +37,13 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
       </div>
 
       <div className="SuccessModal__footer">
-        <UI.Button onClick={handleResend}>{utils.getLang('site__authModalResend') + ` 0:${timeRemaining}`}</UI.Button>
+        <p
+          onClick={isActiveResend ? handleResend : null}
+          className={"SuccessModal__resend " + (isActiveResend ? "SuccessModal__resend__active" : "")}
+        >
+          {utils.getLang('site__authModalResend') + (!isActiveResend ? ` ${timeRemaining}s` : '')}
+        </p>
+        <UI.Button onClick={onClose}>{utils.getLang('site__authModalOk')}</UI.Button>
       </div>
     </div>
   )

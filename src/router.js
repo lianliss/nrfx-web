@@ -51,6 +51,7 @@ export const routes = [
   {
     name: pages.CONTACT,
     path: '/contact',
+    params: {site: true}
   },
   {
     name: pages.FAQ,

@@ -5,6 +5,7 @@ import * as steps from '../fixtures';
 import * as utils from '../../../../utils/index';
 import { registerUser } from '../../../../actions/auth';
 import SuccessModal from '../../SuccessModal/SuccessModal';
+import StaticContentModal from '../../StaticContentModal/StaticContentModal';
 
 
 function Registration({ changeStep, currentStep, email, handleChange, onClose }) {
@@ -52,7 +53,12 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose })
               <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} value={email} onKeyPress={handleKeyPress} onChange={(e) => handleChange(e.target.value, 'email')} />
               <UI.Input placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrar} onKeyPress={handleKeyPress} onChange={(e) => changeReferrar(e.target.value)} />
 
-              <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)}>{utils.getLang('site__authModalTermsConditions')}</UI.CheckBox>
+              <div className="AuthModal__content__terms">
+                <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
+                <StaticContentModal type="terms">
+                  <span className="AuthModal__content__terms__link">{utils.getLang('site__authModalTermsConditions')}</span>
+                </StaticContentModal>
+              </div>
             </div>
 
             <div className="AuthModal__footer">

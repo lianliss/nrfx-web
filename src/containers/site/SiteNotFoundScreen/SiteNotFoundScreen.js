@@ -1,12 +1,12 @@
 import './SiteNotFoundScreen.less';
 
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import SiteWrapper from '../../../wrappers/Site/SiteWrapper';
 import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
 import { sendContactForm } from '../../../actions/contact';
-import { isEmail } from '../../../utils';
+import { isEmail, getLang } from '../../../utils';
 import UI from '../../../ui';
 
 
@@ -59,11 +59,15 @@ export default class SiteNotFoundScreen extends BaseScreen {
     const isSubmitDisabled = !isEmailValid || !email || !message;
 
     return (
-      <SiteWrapper withOrangeBg>
+      <div>
+        <Helmet>
+          <meta title="" content="" />
+        </Helmet>
+
         <div className="SiteNotFoundScreen Layout_spacing">
           <div className="SiteNotFoundScreen__heading">
             <h1>404</h1>
-            <h2>Страница не найдена</h2>
+            <h2>{getLang('site__siteNotFound')}</h2>
           </div>
 
           <h2 className="SiteNotFoundScreen__title">{this.lang.site.contactWriteLetter}</h2>
@@ -87,7 +91,7 @@ export default class SiteNotFoundScreen extends BaseScreen {
                   value={email}
                   onChange={(e) => this.handleChange(e.target.value, 'email')}  
                 />
-                {!isEmailValid ? <p className="SiteNotFoundScreen__form__input__err">Please enter a valid e-mail</p> : null}
+                {!isEmailValid ? <p className="SiteNotFoundScreen__form__input__err">{getLang('site__siteEnterValidMail')}</p> : null}
               </div>
             </div>
 
@@ -127,7 +131,7 @@ export default class SiteNotFoundScreen extends BaseScreen {
           </div>
 
         </div>
-      </SiteWrapper>
+      </div>
     )
   }
 }

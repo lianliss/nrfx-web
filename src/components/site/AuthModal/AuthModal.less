@@ -179,10 +179,37 @@
 
 .RegisterModal {
   .AuthModal__content {
-    .CheckBox {
+    .AuthModal__content__terms {
       margin-top: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      .CheckBox {
+        margin: 0 16px 0;
+
+        .CheckBox__label {
+          display: none;
+        }
+      }
+
+      .AuthModal__content__terms__link {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.444444px;
+        color: var(--primary-grey);
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
+
   .AuthModal__footer {
     margin-top: 25px;
   }

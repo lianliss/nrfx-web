@@ -5,6 +5,7 @@ import { ReCaptcha } from 'react-recaptcha-google'
 
 import { GOOGLE_RECAPTCHA_SITEKEY } from '../../../config';
 import UI from '../../../ui';
+import * as utils from '../../../utils/index';
 
 
 class RecaptchaModal extends React.PureComponent {
@@ -15,9 +16,7 @@ class RecaptchaModal extends React.PureComponent {
   }
   
   componentDidMount() {
-    if (this.captcha) {
-      this.captcha.reset();
-    }
+    this.onLoadRecaptcha();
   }
 
   onLoadRecaptcha = () => {
@@ -38,6 +37,12 @@ class RecaptchaModal extends React.PureComponent {
 
   toggleModal = (isOpen) => {
     this.setState({ isOpen });
+
+    if (isOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
   }
 
   render() {
@@ -73,7 +78,7 @@ class RecaptchaModal extends React.PureComponent {
                 <div className="RecaptchaModal__success">
                   <img src={require('../../../asset/site/success_tick.svg')} alt="Success" />
 
-                  <p>Successfully sent!</p>                  
+                  <p>{utils.getLang('site__recaptchaModalSuccessfully')}</p>
                 </div>
               )}
           </div>

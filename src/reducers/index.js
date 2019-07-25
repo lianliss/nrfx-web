@@ -19,6 +19,10 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {auth: action.auth});
     }
 
+    case actionTypes.STATIC: {
+      return Object.assign({}, state, { [action.payload.url]: { data: action.payload.data, lang: action.payload.lang } });
+    }
+
     default:
       return state;
   }
