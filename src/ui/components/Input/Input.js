@@ -18,15 +18,16 @@ function Input(props) {
     type: props.type,
     autoComplete: props.autoComplete,
     autoFocus: props.autoFocus,
+    readOnly: props.readOnly,
     onKeyPress: props.onKeyPress,
     required: true,
   };
 
   if (props.multiLine) {
-    return <textarea {...params} onChange={props.onChange}>{props.value}</textarea>;
+    return <textarea {...params} onFocus={props.onFocus} onChange={props.onChange}>{props.value}</textarea>;
   }
 
-  return <input {...params} value={props.value} onChange={props.onChange} />;
+  return <input {...params} value={props.value} onFocus={props.onFocus} onChange={props.onChange} />;
 }
 
 Input.propTypes = {
