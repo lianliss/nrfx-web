@@ -121,6 +121,22 @@
       }
     }
 
+    .AuthModal__inputs__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .Input, .Dropdown {
+        margin: 16px;
+        width: 144px;
+        box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
+
+        .Dropdown__header {
+          width: 112px;
+        }
+      }
+    }
+
     .AuthModal__content__msg {
       font-weight: 500;
       font-size: 13px;
@@ -209,8 +225,32 @@
       }
     }
   }
-
+  
   .AuthModal__footer {
     margin-top: 25px;
+  }  
+}
+
+.AuthModal__Phone__dropdown {
+  display: flex;
+  align-items: center;
+
+  img {
+    max-width: 16px;
+    margin-right: 8px;
+  }
+}
+
+@media (min-width: 420px) {
+  .AuthModal__Phone {
+    width: 360px;
+
+    .AuthModal__content {
+      padding: 0 20px;
+
+      .Input {
+        margin: 0;
+      }
+    }
   }
 }

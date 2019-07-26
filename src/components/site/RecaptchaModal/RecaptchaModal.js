@@ -27,7 +27,6 @@ class RecaptchaModal extends React.PureComponent {
 
   verifyCallback = (recaptchaToken) => {
     // Here you will get the final recaptchaToken!!!  
-    console.log(recaptchaToken, "<= your recaptcha token");
     this.props.onVerify(recaptchaToken);
     this.setState({
       verified: true,
