@@ -20,7 +20,7 @@ import StaticContentModal from '../StaticContentModal/StaticContentModal';
 const currentLang = getItem('lang');
 
 
-function Header({ showLightLogo, langList }) {
+function Header({ showLightLogo, langList, routerState }) {
   const headerLinks = [
     {
       title: utils.getLang('site__headerProducts'),
@@ -101,6 +101,7 @@ function Header({ showLightLogo, langList }) {
 
   const currentLangObj = langList.find(l => l.value === curLang);
   const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
+  console.log('router :', router);
 
   const handleOpen = () => {
     document.body.classList.add('modal-open');
@@ -122,6 +123,8 @@ function Header({ showLightLogo, langList }) {
     router.navigate(route);
   }
 
+  console.log('router :', routerState);
+
   return (
     <div className="SiteHeader">
       {isVerticalMenuOpen
@@ -136,10 +139,10 @@ function Header({ showLightLogo, langList }) {
               </div>
             </div>
             <div className="SiteHeader__menu__CTA">
-              <AuthModal>
+              <AuthModal routerParams={routerState.route.params}>
                 <UI.Button type="outline">{utils.getLang('site__headerLogIn')}</UI.Button>
               </AuthModal>
-              <AuthModal type={steps.REGISTRATION}>
+              <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
                 <UI.Button type="outline_white">{utils.getLang('site__headerRegistration')}</UI.Button>
               </AuthModal>
             </div>
@@ -176,10 +179,10 @@ function Header({ showLightLogo, langList }) {
               ))}
 
               <div className="SiteHeader__menu_controls">
-                <AuthModal>
+                <AuthModal routerParams={routerState.route.params}>
                   <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
                 </AuthModal>
-                <AuthModal type={steps.REGISTRATION}>
+                <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
                   <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
                 </AuthModal>
                 <Dropdown
@@ -221,6 +224,7 @@ function MenuItem(props) {
 const mapStateToProps = (state) => ({
   langList: state.default.langList,
   lang: state.default.lang,
+  routerState: state.router,
 });
 
 export default connect(mapStateToProps)(React.memo(Header));
