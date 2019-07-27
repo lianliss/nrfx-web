@@ -8,9 +8,9 @@ import SuccessModal from '../../SuccessModal/SuccessModal';
 import StaticContentModal from '../../StaticContentModal/StaticContentModal';
 
 
-function Registration({ changeStep, currentStep, email, handleChange, onClose }) {
+function Registration({ changeStep, currentStep, email, handleChange, onClose, refParam }) {
   const [isChecked, toggleCheck] = useState(false);
-  const [referrar, changeReferrar] = useState('');
+  const [referrar, changeReferrar] = useState(refParam);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = () => {

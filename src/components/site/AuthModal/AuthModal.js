@@ -13,7 +13,7 @@ import SmsCode from './components/SmsCode';
 import GoogleAuth from './components/GoogleAuth';
 
 
-function AuthModal({ children, type, initialEmail, className }) {
+function AuthModal({ children, type, initialEmail, className, routerParams }) {
   const [isOpen, toggleOpen] = useState(false);
   const [currentStep, changeStep] = useState(type || steps.LOGIN);
   const [params, changeParams] = useState({});
@@ -39,7 +39,7 @@ function AuthModal({ children, type, initialEmail, className }) {
         return <RestorePassword changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
       case steps.REGISTRATION:
       case steps.REGISTRATION_SUCCESS:
-        return <Registration email={initialEmail ? initialEmail : email} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
+        return <Registration refParam={routerParams ? routerParams.ref : ''} email={initialEmail ? initialEmail : email} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
       case steps.CONFIRM_NUMBER:
         return <ConfirmPhone params={params} changeStep={changeStepWithParams} />
       case steps.CONFIRM_CODE:
@@ -71,7 +71,7 @@ function AuthModal({ children, type, initialEmail, className }) {
       changePassword(value);
     }
   }
-
+  console.log('routerParams :', routerParams);
   return (
     <div className={"AuthModal " + className}>
       <span onClick={handleOpen}>
