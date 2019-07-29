@@ -4,8 +4,31 @@
   box-sizing: border-box;
 }
 
+.WithdrawalModal__icon {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  transform: translateX(-50%);
+  background: no-repeat center/contain;
+  width: 72px;
+  height: 72px;
+}
+
 .WithdrawalModal__row {
   margin-top: 24px;
+}
+
+.WithdrawalModal__row_amount {
+  display: flex;
+
+  .Button {
+    margin-left: 16px;
+    flex: 0 0 auto;
+  }
+}
+
+.WithdrawalModal__row_amount__input {
+  flex: 1;
 }
 
 .WithdrawalModal__button_wrap {

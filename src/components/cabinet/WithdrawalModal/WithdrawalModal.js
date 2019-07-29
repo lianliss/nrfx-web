@@ -3,6 +3,8 @@ import './WithdrawalModal.less';
 import React from 'react';
 import UI from '../../../ui';
 
+import * as actions from '../../../actions';
+
 export default class WithdrawalModal extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,8 @@ export default class WithdrawalModal extends React.Component {
   }
 
   render() {
+    const currency = this.props.currency.toUpperCase();
+    const currencyInfo = actions.getCurrencyInfo(currency);
     return (
       <UI.Modal noSpacing isOpen={true} onClose={() => window.history.back()}>
         <UI.ModalHeader>
@@ -27,10 +31,15 @@ export default class WithdrawalModal extends React.Component {
             <div className="WithdrawalModal__info_row__title">Attention!</div>
             <div className="WithdrawalModal__info_row__caption">You can’t withdraw more than 10BTC (or any other cryptocurrency equivalent to 10BTC) in a day.</div>
           </div>
-          <div className="WithdrawalModal__row">
-            <UI.Input
-              placeholder="How much to withdraw?"
-            />
+          <div className="WithdrawalModal__row WithdrawalModal__row_amount">
+            <div className="WithdrawalModal__row_amount__input">
+              <UI.Input
+                placeholder="Amount"
+                indicator={currency}
+              />
+              <p className="Form__helper__text">Available: 120 {currency}</p>
+            </div>
+            <UI.Button type="outline">Max</UI.Button>
           </div>
           <div className="WithdrawalModal__row">
             <UI.Input
@@ -41,6 +50,7 @@ export default class WithdrawalModal extends React.Component {
           <div className="WithdrawalModal__button_wrap">
             <UI.Button style={{ width: '208px' }}>Withdraw</UI.Button>
           </div>
+          <div className="WithdrawalModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
         </div>
       </UI.Modal>
     )

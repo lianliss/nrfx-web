@@ -14,7 +14,7 @@ export default function SummaryItem({ currency, invested_amount, paid_amount, is
         <div key="info" className="Investments__summary__item__rows">
           <InfoRow label="Invested">None</InfoRow>
         </div>,
-        <UI.Button key="button" type="outline" size="small" onClick={() => actions.openModal('open_deposit')}>Invest</UI.Button>,
+        <UI.Button key="button" type="outline" size="small" onClick={() => actions.openModal('open_deposit', { currency })}>Invest</UI.Button>,
       ];
     } else {
       return [
@@ -22,7 +22,7 @@ export default function SummaryItem({ currency, invested_amount, paid_amount, is
           <InfoRow label="Invested">{utils.formatDouble(invested_amount)} {currency}</InfoRow>
           <InfoRow label="Available" highlighted>123 {currency}</InfoRow>
         </div>,
-        <UI.Button key="button" type="outline" size="small" onClick={() => actions.openModal('withdrawal')}>Withdraw</UI.Button>,
+        <UI.Button key="button" type="outline" size="small" onClick={() => actions.openModal('withdrawal', { currency })}>Withdraw</UI.Button>,
       ]
     }
   };

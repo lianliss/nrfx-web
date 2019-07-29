@@ -9,7 +9,7 @@
   outline: none;
   border: none;
   font-family: @font-family;
-  padding: 0 32px;
+  padding: 0 16px;
   background: var(--uikit-gradient-primary);
   border-radius: @border-radius;
   color: var(--uikit-contrast-primary);
@@ -152,7 +152,7 @@
     background: var(--uitkit-background);
     position: absolute;
     background-clip: padding-box;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     top: 0;
     left: 0;
     bottom: 0;
@@ -166,10 +166,6 @@
 
   .Button.rounded.small &:after {
     border-radius: @border-radius-rounded-small;
-  }
-
-  .Button.small &:after {
-    border-width: 1px;
   }
 
   .Button.negative_outline & {
