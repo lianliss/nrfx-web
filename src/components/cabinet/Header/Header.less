@@ -67,10 +67,18 @@
       line-height: 16px;
       text-decoration: none !important;
 
+      &, .isvg {
+        transition: color 150ms ease-in-out;
+      }
+
       .isvg {
         margin-right: 16px;
         height: 24px;
         color: var(--primary-grey);
+      }
+
+      &:hover, &:hover .isvg {
+        color: var(--foreground-primary);
       }
     }
 

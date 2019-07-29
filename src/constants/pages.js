@@ -1,3 +1,4 @@
+export const MODAL = 'modal';
 export const MAIN = 'main';
 export const ABOUT = 'about';
 export const MISSION = 'mission';

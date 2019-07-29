@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { getWallets } from '../../../actions/cabinet/wallets';
-import CabinetWrapper from '../../../wrappers/Cabinet/CabinetWrapper';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBalance from './components/WalletBalance';
@@ -110,7 +109,7 @@ function CabinetWalletScreen({ wallets, history }) {
   };
 
   return (
-    <CabinetWrapper>
+    <div>
       <div className="CabinetWalletScreen">
         <ProfileSidebar />
 
@@ -143,7 +142,7 @@ function CabinetWalletScreen({ wallets, history }) {
 
         <TransactionModal isOpen={isModalOpen} onChange={toggleModalOpen} />
       </div>
-    </CabinetWrapper>
+    </div>
   )
 }
 

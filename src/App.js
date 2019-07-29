@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { loadReCaptcha } from 'react-recaptcha-google';
 
 import Routes from './Routes';
+import Modals from './Modals';
 import * as actions from './actions';
 import * as testActions from './actions/test';
 import * as storage from './services/storage';
-import * as pages from './constants/pages';
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
-import SiteWrapper from './wrappers/Site/SiteWrapper';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,7 +26,6 @@ class App extends React.Component {
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
     const route = this.props.state.router.route.name;
-    const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
 
     if (this.state.isLoading) {
       return (
@@ -38,10 +36,9 @@ class App extends React.Component {
     return (
       <div>
 
-        {/* TODO: This is handled ONLY for site routes */}
-        <SiteWrapper isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
-          <Routes {...this.props} />
-        </SiteWrapper>
+        <Modals {...this.props} />
+
+        <Routes {...this.props} />
 
         {!acceptedCookies
           ? <CookieUsage />
@@ -55,7 +52,8 @@ class App extends React.Component {
     const lang = storage.getItem('lang');
 
     Promise.all([
-      actions.loadLang(lang || 'en')
+      actions.loadLang(lang || 'en'),
+      actions.loadCurrencies()
     ])
       .then(() => this.setState({isLoading: false}))
       .catch(() => setTimeout(this._loadAssets, 3000));

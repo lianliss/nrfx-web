@@ -76,17 +76,28 @@ export const routes = [
   },
   {
     name: pages.INVESTMENTS,
-    path: '/investments?section',
-  }
+    path: '/investments',
+  },
 ];
 
 const params = {
   defaultRoute: pages.NOT_FOUND,
-  defaultParams: {}
+  defaultParams: {},
+  strictQueryParams: true,
+  trailingSlash: true,
+  useTrailingSlash: false,
+  queryParamsMode: 'loose',
 };
 
 let router = createRouter(routes, params);
-router.usePlugin(browserPlugin({ base: '', useHash: false }));
+router.usePlugin(browserPlugin({
+  base: '',
+  useHash: false,
+  hashPrefix: '',
+  mergeState: true,
+  preserveHash: false,
+  forceDeactivate: true,
+}));
 //router.usePlugin(listenersPlugin());
 
 export default router;

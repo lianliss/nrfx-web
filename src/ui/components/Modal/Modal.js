@@ -43,7 +43,6 @@ function Modal(props) {
   } 
   
   return null;
-
 }
 
 Modal.propTypes = {

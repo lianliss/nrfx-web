@@ -11,7 +11,15 @@ function Table({ headings, children, onRowClick }) {
     <table className="Table Content_box">
       <thead>
         <tr>
-          {headings}
+          {React.Children.map(headings, (child, i) => {
+            if (!React.isValidElement(child)) {
+              return child;
+            }
+
+            return React.cloneElement(child, {
+              key: i
+            });
+          })}
         </tr>
       </thead>
 
@@ -57,7 +65,7 @@ export function TableColumn({ children, align, style, highlighted, sub }) {
       })}
       style={style}
     >
-      <div>{children}</div>
+      <div className="Table__td__cont">{children}</div>
       {sub && <div className="Table__sub">{sub}</div>}
     </td>
   )

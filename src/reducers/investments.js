@@ -2,15 +2,25 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   deposits: [],
+  payments: [],
+  loadingStatus: {}
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
-    case actionTypes.WALLETS:
-      return Object.assign({}, state, { wallets: action.payload });
 
-    case actionTypes.TRANSACTION_HISTORY:
-      return Object.assign({}, state, { history: action.payload });
+    case actionTypes.INVESTMENTS_SET_LOADING_STATUS: {
+      return Object.assign({}, state, {
+        loadingStatus: Object.assign({}, state.loadingStatus, { [action.section]: action.status })
+      });
+    }
+
+    case actionTypes.INVESTMENTS_SET: {
+      return Object.assign({}, state, {
+        deposits: action.deposits,
+        payments: action.payments
+      });
+    }
 
     default:
       return state;

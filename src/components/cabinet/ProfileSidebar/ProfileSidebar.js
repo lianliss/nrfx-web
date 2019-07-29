@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 
-import { classNames } from '../../../utils';
+import { classNames, makeModalParams } from '../../../utils';
 import router from '../../../router';
 
 
@@ -47,7 +47,7 @@ function ProfileSidebar({ count, children, items, section, appName }) {
           }
 
           return React.cloneElement(child, {
-            isActive: section === child.props.section && child.props.section
+            isActive: section === child.props.section && !!child.props.section
           });
         })}
       </div>
@@ -59,15 +59,21 @@ ProfileSidebar.propTypes = {
   items: PropTypes.node
 };
 
-export function ProfileSidebarItem({ icon, label, onClick, section, isActive }) {
-  const Component = section ? BaseLink : 'div';
+export function ProfileSidebarItem({ icon, label, onClick, section, isActive, modal }) {
+  const isLink = section || modal;
+  const Component = isLink ? BaseLink : 'div';
 
   let params = {};
-  if (section) {
+  if (isLink) {
+    params.routeName = router.getState().name;
     params.router = router;
-    params.routeName = window.location.pathname.substr(1);
-    params.routeParams = { section };
     params.activeClassName = '_a';
+  }
+
+  if (section) {
+    params.routeParams = { section };
+  } else if (modal) {
+    params.routeParams = makeModalParams(modal);
   }
 
   return (
@@ -90,7 +96,8 @@ ProfileSidebarItem.propTypes = {
   label: PropTypes.string,
   onClick: PropTypes.func,
   isActive: PropTypes.bool,
-  section: PropTypes.string
+  section: PropTypes.string,
+  modal: PropTypes.string
 };
 
 export default ProfileSidebar;

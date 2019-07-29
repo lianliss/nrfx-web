@@ -11,6 +11,11 @@
   right: 0;
   top: 0;
   bottom: 0;
+  overflow-y: auto;
+  padding: 60px 0;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  -webkit-overflow-scrolling: touch;
   
   .Modal__box {
     background: #FFFFFF;
@@ -19,6 +24,7 @@
     padding: 20px;
     min-width: 200px;
     position: relative;
+    flex: 0 0 auto;
     
     .Modal__box__close {
       position: absolute;

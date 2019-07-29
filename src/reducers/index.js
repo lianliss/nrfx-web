@@ -4,6 +4,7 @@ const initialState = {
   page: null,
   lang: {},
   auth: {},
+  modals: []
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -21,6 +22,18 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.STATIC: {
       return Object.assign({}, state, { [action.payload.url]: { data: action.payload.data, lang: action.payload.lang } });
+    }
+
+    case actionTypes.PUSH_MODAL: {
+      let modals = Object.assign([], state.modals);
+      modals.push(action.modal);
+      return Object.assign({}, state, { modals });
+    }
+
+    case actionTypes.POP_MODAL: {
+      let modals = Object.assign([], state.modals);
+      modals.pop();
+      return Object.assign({}, state, { modals });
     }
 
     default:

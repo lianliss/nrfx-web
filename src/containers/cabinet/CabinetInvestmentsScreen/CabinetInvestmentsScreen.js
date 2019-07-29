@@ -5,12 +5,16 @@ import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import UI from '../../../ui';
 
-import CabinetWrapper from '../../../wrappers/Cabinet/CabinetWrapper';
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import SummaryItem from './components/SummaryItem';
-import InfoRow, { InfoRowGroup } from '../../../components/cabinet/InfoRow/InfoRow';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import Chart from '../../../components/cabinet/Chart/Chart';
+import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
+import * as investmentsActions from '../../../actions/cabinet/investments';
+import * as utils from '../../../utils';
+import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import DepositInfoModal from '../../../components/cabinet/DepositInfoModal/DepositInfoModal';
+import * as actions from '../../../actions';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   constructor(props) {
@@ -22,16 +26,48 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     };
   }
 
+  get section() {
+    return this.props.routerParams.section || 'default';
+  }
+
+  get isLoading() {
+    return !!this.props.loadingStatus[this.section];
+  }
+
+  componentDidMount() {
+    this.__load();
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.routerParams.section !== this.props.routerParams.section) {
+      this.__load(nextProps.routerParams.section || 'default');
+    }
+  }
+
+  __load = (section = null) => {
+    switch (section || this.props.routerParams.section) {
+      case 'profits':
+        this.props.loadProfitHistory();
+        break;
+      case 'withdrawals':
+        this.props.loadWithdrawalHistory();
+        break;
+      default:
+        this.props.loadInvestments();
+        break;
+    }
+  };
+
   render() {
     return (
-      <CabinetWrapper>
+      <div>
         <PageContainer
-          leftContent={!this.props.routerParams.section && this.__renderLeftContent()}
+          leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
           sidebarOptions={{
             section: this.props.routerParams.section,
             appName: 'Investments',
             items: [
-              <ProfileSidebarItem icon={require('../../../asset/24px/plus-circle.svg')} label="New" onClick={this.__showOpenDepositModal} />,
+              <ProfileSidebarItem modal="open_deposit" icon={require('../../../asset/24px/plus-circle.svg')} label="New" />,
               <ProfileSidebarItem section="profits" icon={require('../../../asset/24px/invest.svg')} label="Profit" />,
               <ProfileSidebarItem section="withdrawals" icon={require('../../../asset/24px/send.svg')} label="Withdrawals" />
             ]
@@ -40,12 +76,16 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           {this.__renderContent()}
         </PageContainer>
         {this.__renderDepositInfoModal()}
-        {this.__renderOpenDepositModal()}
-      </CabinetWrapper>
+      </div>
     )
   }
 
   __renderContent() {
+
+    if (this.isLoading) {
+      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
+    }
+
     switch (this.props.routerParams.section) {
       case 'profits':
         return this.__renderProfitHistory();
@@ -121,13 +161,29 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   };
 
   __renderSummary() {
-    const items = [{
-      currency: 'BTC',
-    }, {
-      currency: 'ETH',
-    }, {
-      currency: 'LTC',
-    }].map((item, i) => <SummaryItem key={i} {...item} />);
+    if (!this.props.payments.length) {
+      return null;
+    }
+
+    let existCurrencies = {};
+    for (let item of this.props.payments) {
+      existCurrencies[item.currency] = true;
+    }
+
+    let payments = this.props.payments;
+    let allCurrencies = ['btc', 'eth', 'ltc'];
+    for (let currency of allCurrencies) {
+      if (existCurrencies[currency]) {
+        continue;
+      }
+
+      payments.push({
+        currency,
+        isEmpty: true
+      });
+    }
+
+    const items = payments.map((item, i) => <SummaryItem key={i} {...item} />);
 
     return (
       <div className="Investments__summary">
@@ -137,6 +193,20 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   _renderDeposits() {
+    if (!this.props.deposits.length) {
+      return (
+        <EmptyContentBlock
+          icon={require('../../../asset/120/no_deposits.svg')}
+          message="No Open Deposits"
+          button={{
+            text: 'Start Invest',
+            onClick: () => actions.openModal('open_deposit')
+          }}
+        />
+      )
+    }
+
+
     const headings = [
       <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
         <SVG src={require('../../../asset/cabinet/filter.svg')} />
@@ -145,28 +215,37 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <UI.TableColumn>Type</UI.TableColumn>,
       <UI.TableColumn>Rate</UI.TableColumn>,
       <UI.TableColumn align="right">Invested</UI.TableColumn>,
-      <UI.TableColumn>Profit</UI.TableColumn>,
+      <UI.TableColumn align="right">Profit</UI.TableColumn>,
     ];
 
-    const rows = [{
-      id: 1
-    }, {
-      id: 2
-    }, {
-      id: 3
-    }, {
-      id: 4
-    }].map((item) => {
+    const rows = this.props.deposits.map((item, i) => {
+      const progress = Math.max(0.01, item.passed_days / item.days);
+      const pathLength = 69.12472534179688;
+      const offset = pathLength * progress;
+      const color = progress >= 1 ? '#BFBFBF' : '#24B383';
+
+      item.localId = i + 1;
       return (
         <UI.TableCell key={item.id} onClick={() => this.__showDepositInfoModal(item)}>
           <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-            <div className="Investments__deposit_indicator" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path opacity="0.2" d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12Z" stroke="#24B383" strokeWidth="2"/>
+              <path
+                style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
+                d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12Z"
+                strokeDasharray={pathLength}
+                strokeDashoffset={pathLength - offset}
+                stroke={color}
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
           </UI.TableColumn>
-          <UI.TableColumn>001</UI.TableColumn>
-          <UI.TableColumn>Dynamic</UI.TableColumn>
-          <UI.TableColumn sub="Standart">14%</UI.TableColumn>
-          <UI.TableColumn align="right">100 BTC</UI.TableColumn>
-          <UI.TableColumn sub="12 / 90 Days">10 BTC</UI.TableColumn>
+          <UI.TableColumn>{i + 1}</UI.TableColumn>
+          <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
+          <UI.TableColumn sub={item.description}>{item.percent}%</UI.TableColumn>
+          <UI.TableColumn align="right">{item.amount} {item.currency.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn sub={`${item.passed_days} / ${item.days} Days`} align="right">10 {item.currency.toUpperCase()}</UI.TableColumn>
         </UI.TableCell>
       )
     });
@@ -180,72 +259,19 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
   __renderDepositInfoModal() {
     return (
-      <UI.Modal noSpacing isOpen={this.state.isDepositInfoModalShown} onClose={() => this.setState({ isDepositInfoModalShown: false })}>
-        <UI.ModalHeader>
-          Deposit 78% Optimal
-          <div className="Investments__deposit_info_modal__icon" />
-        </UI.ModalHeader>
-        <div className="Investments__deposit_info_modal__cont">
-          <div className="Investments__deposit_info_modal__columns">
-            <InfoRowGroup className="Investments__deposit_info_modal__column">
-              <InfoRow label="ID">001</InfoRow>
-              <InfoRow label="Type">Static</InfoRow>
-              <InfoRow label="Status">Closed</InfoRow>
-              <InfoRow label="Created">29 Mar 2019 9:51 PM</InfoRow>
-              <InfoRow label="Withdrawals">None</InfoRow>
-              <InfoRow label="W/ Amount">None</InfoRow>
-            </InfoRowGroup>
-            <InfoRowGroup className="Investments__deposit_info_modal__column">
-              <InfoRow label="Period">35 / 365 Days</InfoRow>
-              <InfoRow label="Amount">2000 LTC</InfoRow>
-              <InfoRow label="Profit">120 LTC (78%)</InfoRow>
-              <InfoRow label="Estimated">120 LTC (78%)</InfoRow>
-              <InfoRow label="In Fiat">1456 USD</InfoRow>
-              <InfoRow label="Avalible">120 LTC</InfoRow>
-            </InfoRowGroup>
-          </div>
-          <div className="Investments__deposit_info_modal__withdrawal_form">
-            <UI.Input placeholder="Type amount" indicator={<div className="Investments__deposit_info_modal__withdrawal_form__currency">LTC</div>} />
-            <UI.Button type="outline">Max</UI.Button>
-            <UI.Button style={{width: 208, flex: '0 0 auto'}}>Withdraw</UI.Button>
-          </div>
-        </div>
-      </UI.Modal>
+      <DepositInfoModal ref="deposit_info_modal" />
     )
   }
 
-  __renderOpenDepositModal() {
-    return (
-      <UI.Modal noSpacing isOpen={this.state.isOpenDepositModalShown} onClose={() => this.setState({ isOpenDepositModalShown: false })}>
-        <UI.ModalHeader>
-          Open New Deposit
-        </UI.ModalHeader>
-        <div className="Investments__open_deposit_modal">
-          <div className="Investments__open_deposit_modal__row">
-            <UI.Input
-              placeholder="Amount"
-              indicator="min 0.04 BTC"
-            />
-          </div>
-          <div className="Investments__open_deposit_modal__invest_btn_wrapper">
-            <UI.Button>Invest</UI.Button>
-          </div>
-        </div>
-      </UI.Modal>
-    )
-  }
-
-  __showDepositInfoModal = (deposit) => {
-    this.setState({ isDepositInfoModalShown: true });
-  };
-
-  __showOpenDepositModal = () => {
-    this.setState({ isOpenDepositModalShown: true });
-  };
+  __showDepositInfoModal = (deposit) => this.refs['deposit_info_modal'].show(deposit);
 }
 
 const mapStateToProps = (state) => ({
 
 });
 
-export default connect(mapStateToProps)(CabinetInvestmentsScreen);
+export default connect(mapStateToProps, {
+  loadInvestments: investmentsActions.loadInvestments,
+  loadProfitHistory: investmentsActions.loadProfitHistory,
+  loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory
+})(CabinetInvestmentsScreen);

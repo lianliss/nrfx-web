@@ -15,9 +15,9 @@ function PageContainer({ children, leftContent, sidebarOptions }) {
           {children}
         </div>
 
-        <div className="PageContainer__content__secondary">
+        {leftContent && <div className="PageContainer__content__secondary">
           {leftContent}
-        </div>
+        </div>}
       </div>
     </div>
   )

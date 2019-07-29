@@ -7,13 +7,23 @@
 .Investments__summary__item {
   flex: 1;
   margin-left: 28px;
-  padding: 16px 16px 16px 40px;
+  padding: 16px;
   position: relative;
   margin-top: 0 !important;
+  max-width: 33.3%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 
   &:first-child {
     margin-left: 0;
   }
+}
+
+.Investments__summary__item__rows {
+  padding-right: 24px;
+  flex: 1;
+  margin-bottom: 24px;
 }
 
 .Investments__summary__item__icon {
@@ -22,7 +32,6 @@
   left: -32px;
   top: 0;
   position: absolute;
-  background: red;
 }
 
 .Investments__summary__item__info_row {
@@ -89,59 +98,4 @@
 .Investment__profit__chart {
   margin-top: 8px;
   margin-bottom: -12px;
-}
-
-.Investments__deposit_info_modal__icon {
-  width: 72px;
-  height: 72px;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(-50%, -50%);
-  background: red;
-}
-
-.Investments__deposit_info_modal__cont {
-  width: 664px;
-  padding: 40px;
-}
-
-.Investments__deposit_info_modal__columns {
-  display: flex;
-}
-
-.Investments__deposit_info_modal__column {
-  flex: 1;
-}
-
-.Investments__deposit_info_modal__withdrawal_form {
-  display: flex;
-  align-items: center;
-  margin-top: 40px;
-
-  .Button {
-    margin-left: 16px;
-  }
-}
-
-.Investments__deposit_info_modal__withdrawal_form__currency {
-  color: var(--primary-grey);
-}
-
-.Investments__open_deposit_modal {
-  width: 440px;
-  padding: 40px;
-}
-
-.Investments__open_deposit_modal__row {
-  margin-top: 40px;
-
-  &:first-child {
-    margin-top: 0;
-  }
-}
-
-.Investments__open_deposit_modal__invest_btn_wrapper {
-  margin-top: 80px;
-  text-align: center;
 }

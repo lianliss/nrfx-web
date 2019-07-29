@@ -2,7 +2,7 @@ import { ApiClient } from '../swagger';
 
 import * as auth from './auth';
 
-const API_ENTRY = 'https://bitcoinbot.pro';
+const API_ENTRY = 'https://api.bitcoinbot.pro';
 const API_VERSION = 1;
 
 export const Errors = {
@@ -75,12 +75,11 @@ export function invoke(method, name, params) {
           } else {
             reject(json);
 
-            if (json.code === 2) {
-              localStorage.removeItem('token');
-              window.location.href = '/';
+            if (json.code === Errors.AUTH) {
+              auth.logout();
             }
           }
-        }).catch(() => reject({code: -1, message: "Cant't parse JSON"}));
+        }).catch(() => reject({code: -1, message: 'Cant\'t parse JSON'}));
       });
   });
 }

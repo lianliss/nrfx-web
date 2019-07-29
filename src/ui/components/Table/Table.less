@@ -27,6 +27,13 @@
     color: var(--primary-grey);
     font-weight: 500;
   }
+
+  .Table__td__cont {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    flex-direction: column;
+  }
   
   th, td {
     font-size: 13px;
@@ -34,6 +41,7 @@
     padding: 0 8px;
     height: 56px;
     border: none;
+    vertical-align: middle;
 
     &:first-child {
       padding-left: 16px;
@@ -46,10 +54,18 @@
 
   td.right {
     text-align: right;
+
+    .Table__td__cont {
+      align-items: right;
+    }
   }
 
   td.center {
     text-align: center;
+
+    .Table__td__cont {
+      align-items: center;
+    }
   }
 
   td.highlighted {

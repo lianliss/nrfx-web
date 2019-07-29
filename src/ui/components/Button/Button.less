@@ -168,6 +168,10 @@
     border-radius: @border-radius-rounded-small;
   }
 
+  .Button.small &:after {
+    border-width: 1px;
+  }
+
   .Button.negative_outline & {
     background: var(--uikit-button-negative-background);
   }
@@ -182,6 +186,11 @@
   font-size: 15px;
   line-height: 17px;
   font-weight: 600;
+
+  .Button.small & {
+    font-size: 13px;
+    line-height: 16px;
+  }
 }
 
 .Button__cont {

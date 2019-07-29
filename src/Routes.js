@@ -17,56 +17,73 @@ import UIKitScreen from './containers/UIKit/UIKitScreen';
 
 import CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
 import CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
+import SiteWrapper from './wrappers/Site/SiteWrapper';
+import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
 
 
 export default function Routes(props) {
 
   const routeState = props.router.getState();
   const routerParams = routeState.params;
+  const route = routeState.name;
 
   let actions = {};
   let state = {};
   let Component = false;
+  let WrapperComponent = CabinetWrapper;
 
-  switch (routeState.name) {
+  switch (route) {
     case pages.MAIN:
       Component = SiteMainScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.ABOUT:
       Component = SiteAboutScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.MISSION:
       Component = SiteAboutScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.HISTORY:
       Component = SiteAboutScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.EXCHANGE:
       Component = SiteExchangeScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.WALLET:
       Component = SiteWalletScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.ROBOTS:
       Component = SiteRobotsScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.TECHNOLOGY:
       Component = SiteTechnologyScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.SAFETY:
       Component = SiteSafetyScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.COMMERCE:
       Component = SiteCommerceScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.INVESTMENT:
       Component = SiteInvestmentScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.CONTACT:
       Component = SiteContactScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.FAQ:
       Component = SiteFaqScreen;
+      WrapperComponent = SiteWrapper;
       break;
     case pages.UIKIT:
       Component = UIKitScreen;
@@ -77,6 +94,7 @@ export default function Routes(props) {
       break;
     case pages.INVESTMENTS:
       Component = CabinetInvestmentsScreen;
+      state = props.state.investments;
       break;
     default:
       Component = SiteNotFoundScreen;
@@ -91,5 +109,11 @@ export default function Routes(props) {
     state: props.state.default
   };
 
-  return <Component {...defaultProps} {...actions} {...state} routerParams={routerParams} />;
+  const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
+
+  return (
+    <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
+      <Component {...defaultProps} {...actions} {...state} routerParams={routerParams} />;
+    </WrapperComponent>
+  );
 }

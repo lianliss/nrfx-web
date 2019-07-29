@@ -1,14 +1,36 @@
 import React from 'react';
+import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
+import * as actions from '../../../../actions';
 
-export default function SummaryItem({ currency }) {
+export default function SummaryItem({ currency, invested_amount, paid_amount, isEmpty }) {
+  const currencyInfo = actions.getCurrencyInfo(currency);
+  currency = currency.toUpperCase();
+
+  const getCont = () => {
+    if (isEmpty) {
+      return [
+        <div key="info" className="Investments__summary__item__rows">
+          <InfoRow label="Invested">None</InfoRow>
+        </div>,
+        <UI.Button key="button" type="outline" size="small" onClick={() => actions.openModal('open_deposit')}>Invest</UI.Button>,
+      ];
+    } else {
+      return [
+        <div key="info" className="Investments__summary__item__rows">
+          <InfoRow label="Invested">{utils.formatDouble(invested_amount)} {currency}</InfoRow>
+          <InfoRow label="Available" highlighted>123 {currency}</InfoRow>
+        </div>,
+        <UI.Button key="button" type="outline" size="small" onClick={() => actions.openModal('withdrawal')}>Withdraw</UI.Button>,
+      ]
+    }
+  };
+
   return (
     <div className="Investments__summary__item Content_box">
-      <div className="Investments__summary__item__icon" />
-      <InfoRow label="Invested">120.7050 {currency}</InfoRow>
-      <InfoRow label="Profit" highlighted>120.7050 {currency}</InfoRow>
-      <InfoRow label="Paid" highlighted>120.7050 {currency}</InfoRow>
+      {getCont()}
+      <div className="Investments__summary__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
     </div>
   )
 }

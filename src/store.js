@@ -6,6 +6,7 @@ import { reduxPlugin } from 'redux-router5';
 
 import defaultReducer from './reducers';
 import cabinetReducer from './reducers/cabinet';
+import investmentsReducer from './reducers/investments';
 import testReducer from './reducers/test';
 
 let store;
@@ -14,6 +15,7 @@ export function configureStore() {
     router: router5Reducer,
     default: defaultReducer,
     cabinet: cabinetReducer,
+    investments: investmentsReducer,
     test: testReducer
   }), applyMiddleware(thunk, router5Middleware(router)));
 

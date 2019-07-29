@@ -1,5 +1,7 @@
-import store from '../store';
 import React, { useEffect, useRef } from 'react';
+
+import store from '../store';
+import router from '../router';
 
 export function classNames() {
   let result = [];
@@ -67,3 +69,17 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
 
   return null;
 };
+
+export function ucfirst(input) {
+  return input.charAt(0).toUpperCase() + input.slice(1);
+}
+
+export function formatDouble(input) {
+  return Math.floor(input * 100000) / 100000;
+}
+
+export function makeModalParams(modal, params) {
+  let result = Object.assign({}, router.getState().params);
+  result = { ...result, modal, ...params  };
+  return result;
+}

@@ -13,6 +13,7 @@ import Switch from './components/Switch/Switch';
 import Message from './components/Message/Message';
 import Hover from './components/Hover/Hover';
 import Table, { TableCell, TableColumn } from './components/Table/Table';
+import SwitchTabs from './components/SwitchTabs/SwitchTabs';
 
 export default {
   Button,
@@ -31,4 +32,5 @@ export default {
   Table,
   TableCell,
   TableColumn,
+  SwitchTabs
 };

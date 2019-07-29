@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   wallets: [],
+  currencies: {}
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -11,6 +12,10 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.TRANSACTION_HISTORY:
       return Object.assign({}, state, { history: action.payload });
+
+    case actionTypes.SET_CURRENCIES: {
+      return Object.assign({}, state, { currencies: action.currencies });
+    }
 
     default:
       return state;
