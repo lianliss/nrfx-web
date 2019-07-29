@@ -27,6 +27,8 @@ class Input extends React.Component {
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,
       onKeyPress: this.props.onKeyPress,
+      readOnly: props.readOnly,
+      onFocus: props.onFocus,
       required: true,
       style: {
         paddingRight: 16 + this.state.indicatorWidth

@@ -6,17 +6,23 @@ import * as utils from '../../../../utils/index';
 import { getGoogleCode } from '../../../../actions/auth';
 
 
-function GoogleAuth({ changeStep, email, password, loginRes }) {
-  const [gCode, changeGCode] = useState('');
+function GoogleAuth({ changeStep, email, password, params }) {
+  const [gaCode, changeGaCode] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const hashRef = useRef(null);
+  const { loginRes } = params;
 
-  const handleSubmit = () => {
-    getGoogleCode(email, password, gCode)
+  const handleSubmit = (code) => {
+    const googleCode = code ? code : gaCode;
+
+    getGoogleCode(email, password, googleCode)
       .then((data) => {
         setErrorMsg('');
-        console.log('data :', data);
-        setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
+        if (data.status === 'phone_not_verified') {
+          changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
+        } else {
+          setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
+        }
       })
       .catch((err) => setErrorMsg(err.message));
   }
@@ -27,6 +33,18 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
 
     // In case don't want to select the hash
     // e.target.focus();
+  }
+
+  const handleChange = (e) => {
+    const val = e.target.value;
+
+    if (val.length <= 6) {
+      changeGaCode(val);
+    }
+
+    if (val.length === 6) {
+      handleSubmit(val);
+    }
   }
 
   return (
@@ -56,10 +74,10 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
             autoFocus
             type="number"
             autoComplete="off"
-            value={gCode}
-            onChange={(e) => changeGCode(e.target.value)}
+            value={gaCode}
+            onChange={handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={(e) => (e.key === 'Enter' && gCode.length < 6) ? handleSubmit() : null}
+            onKeyPress={(e) => (e.key === 'Enter' && gaCode.length < 6) ? handleSubmit() : null}
           />
 
           <img src={require('../asset/google_auth.svg')} alt="Google Auth" />
@@ -74,7 +92,7 @@ function GoogleAuth({ changeStep, email, password, loginRes }) {
         {(loginRes.status === 'ga_init' && document.queryCommandSupported('copy')) &&
           <UI.Button type="outline" outlined onClick={handleHashCopy}>Copy Key</UI.Button>
         }
-        <UI.Button onClick={handleSubmit} disabled={gCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
+        <UI.Button onClick={handleSubmit} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </div>
   )

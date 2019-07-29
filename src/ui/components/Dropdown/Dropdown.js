@@ -1,6 +1,6 @@
 import './Dropdown.less';
 
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 
@@ -45,15 +45,16 @@ function Dropdown(props) {
 const optionType = PropTypes.shape({
   value: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number
+    PropTypes.number,
   ]),
   title: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number
+    PropTypes.number,
+    PropTypes.element,
   ]),
   note: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number
+    PropTypes.number,
   ]),
 });
 

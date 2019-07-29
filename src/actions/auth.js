@@ -78,6 +78,26 @@ export function resetPassword(email) {
 }
 
 
+export function sendSmsCode(countryCode, number, gaCode) {
+  return new Promise((resolve, reject) => {
+    callApi(new AccountApi().accountSmsPut, countryCode, number, gaCode)
+      .then((auth) => {
+        resolve();
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+export function checkSmsCode(countryCode, number, code) {
+  return new Promise((resolve, reject) => {
+    callApi(new AccountApi().accountSmsGet, countryCode, number, code)
+      .then((auth) => {
+        resolve();
+      })
+      .catch((err) => reject(err));
+  });
+}
+
 export function registerUser(email, refer) {
   return new Promise((resolve, reject) => {
     callApi(new AccountApi().accountRegisterPut, email, refer)
