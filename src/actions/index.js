@@ -40,12 +40,28 @@ export function loadCurrencies() {
   });
 }
 
+const CryptoIcons = {
+  btc: require('../asset/cabinet/crypto/bitcoin.svg'),
+  eth: require('../asset/cabinet/crypto/ethereum.svg'),
+  ltc: require('../asset/cabinet/crypto/litecoin.svg'),
+  other: require('../asset/cabinet/crypto/other.svg')
+};
+
 export function getCurrencyInfo(name) {
   const state = store.getState().cabinet;
-  return state.currencies[name.toLowerCase()] || {
-    name: 'Unknown',
-    icon: null
-  };
+  name = name.toLowerCase();
+
+  let result = state.currencies[name];
+  if (!result) {
+    result = {
+      name: 'Unknown',
+      icon: null,
+      abbr: name
+    };
+  } else {
+    result.icon = CryptoIcons[name];
+  }
+  return result;
 }
 
 export function openModal(name, params = {}) {

@@ -22,7 +22,7 @@ const getWalletsBalance = (wallets) => {
   wallets.forEach((wallet, i) => {
     if (wallet.amount !== 0) {
       const color = getColorByCurrency(wallet.currency);
-      walletsBalanceInUSD += (wallet.amount * wallet.price_usd);
+      walletsBalanceInUSD += (wallet.amount * wallet.to_usd);
 
       walletsCurrencies.push({
         color,

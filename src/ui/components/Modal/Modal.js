@@ -34,7 +34,7 @@ function Modal(props) {
   if (props.isOpen) {
     return (
       <div className={className}>
-        <div className="Modal__box" ref={node}>
+        <div className="Modal__box" ref={node} style={{ width: props.width }}>
           <div className="Modal__box__close" onClick={props.onClose} />
           {props.children}
         </div>
@@ -47,7 +47,8 @@ function Modal(props) {
 
 Modal.propTypes = {
   isOpen: PropTypes.bool,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  width: PropTypes.number
 };
 
 export function ModalHeader({ children }) {

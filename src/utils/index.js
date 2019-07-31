@@ -78,8 +78,50 @@ export function formatDouble(input) {
   return Math.floor(input * 100000) / 100000;
 }
 
+export function formatTableId(index) {
+  const lenght = `${index}`.length;
+  const minLenght = 3;
+  const need = minLenght - lenght;
+
+  if (need <= 0) {
+    return index;
+  }
+
+  let arr = new Array(need).fill(0);
+  arr.push(index);
+  return arr.join('');
+}
+
 export function makeModalParams(modal, params) {
   let result = Object.assign({}, router.getState().params);
   result = { ...result, modal, ...params  };
   return result;
+}
+
+export function clipTextMiddle(text, length = 10) {
+  if (text.length <= length + length / 2) {
+    return text;
+  }
+
+  let parts = [text.substr(0, length), '...', text.substr(-length / 2)];
+  return parts.join('');
+}
+
+export function copyText(text) {
+  const input = document.createElement('input');
+  input.value = text;
+  input.style = {
+    position: 'fixed',
+    top: '-10px',
+    right: '-10px',
+    width: 1,
+    height: 1
+  };
+
+  document.body.appendChild(input);
+  input.select();
+
+  document.execCommand("copy");
+
+  document.body.removeChild(input);
 }

@@ -6,9 +6,13 @@ import PropTypes from 'prop-types';
 import * as utils from '../../utils';
 import Hover from '../Hover/Hover';
 
-function Table({ headings, children, onRowClick }) {
+function Table({ headings, children, className }) {
   return (
-    <table className="Table Content_box">
+    <table className={utils.classNames({
+      Table: true,
+      Content_box: true,
+      [className]: !!className
+    })}>
       <thead>
         <tr>
           {React.Children.map(headings, (child, i) => {
@@ -39,16 +43,23 @@ function Table({ headings, children, onRowClick }) {
 }
 
 export function TableCell({ children, onClick, dark }) {
+  let Component = 'tr';
+  let params = {};
+  if (onClick) {
+    Component = Hover;
+    params.tagName = 'tr';
+  }
+
   return (
-    <Hover
-      tagName={'tr'}
+    <Component
       onClick={onClick}
       className={utils.classNames({
         dark: !!dark
       })}
+      {...params}
     >
       {children}
-    </Hover>
+    </Component>
   )
 }
 

@@ -27,8 +27,8 @@ class Input extends React.Component {
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,
       onKeyPress: this.props.onKeyPress,
-      readOnly: props.readOnly,
-      onFocus: props.onFocus,
+      readOnly: this.props.readOnly,
+      onFocus: this.props.onFocus,
       required: true,
       style: {
         paddingRight: 16 + this.state.indicatorWidth
@@ -37,57 +37,33 @@ class Input extends React.Component {
 
     let cont;
     if (this.props.multiLine) {
-      cont = <textarea ref="input" {...params} onChange={this.props.onChange}>{this.props.value}</textarea>;
+      cont = <textarea ref="input" {...params} onChange={this.__onChange}>{this.props.value}</textarea>;
     } else {
-      cont = <input ref="input" {...params} value={this.props.value} onChange={this.props.onChange} />;
+      cont = <input ref="input" {...params} value={this.props.value} onChange={this.__onChange} />;
     }
 
     return (
-      <div className="Input__wrapper">
+      <div className="Input__wrapper" onClick={this.props.onClick}>
         {cont}
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth && this.setState({ indicatorWidth: ref.offsetWidth })}>{this.props.indicator}</div>}
       </div>
     )
   }
+
+  __onChange = (e) => {
+    this.props.onChange && this.props.onChange(e);
+    this.props.onTextChange && this.props.onTextChange(e.target.value);
+  };
 }
 
-// function Input(props) {
-//   const className = classNames({
-//     Input: true,
-//     multiLine: props.multiLine
-//   });
-//
-//   let params = {
-//     className,
-//     placeholder: props.placeholder,
-//     type: props.type,
-//     autoComplete: props.autoComplete,
-//     autoFocus: props.autoFocus,
-//     onKeyPress: props.onKeyPress,
-//     required: true,
-//   };
-//
-//   let cont;
-//   if (props.multiLine) {
-//     cont = <textarea {...params} onChange={props.onChange}>{props.value}</textarea>;
-//   } else {
-//     cont = <input {...params} value={props.value} onChange={props.onChange} />;
-//   }
-//
-//   return (
-//     <div className="Input__wrapper">
-//       {cont}
-//       {props.indicator && <div className="Input__indicator" ref="indicator">{props.indicator}</div>}
-//     </div>
-//   )
-// }
-
 Input.propTypes = {
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.any,
   onChange: PropTypes.func,
+  onTextChange: PropTypes.func,
   multiLine: PropTypes.bool,
-  value: PropTypes.string,
-  indicator: PropTypes.node
+  value: PropTypes.any,
+  indicator: PropTypes.node,
+  onClick: PropTypes.func
 };
 
 export default React.memo(Input);

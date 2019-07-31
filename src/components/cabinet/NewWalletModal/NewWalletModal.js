@@ -1,34 +1,42 @@
 import './NewWalletModal.less';
 
-import React, { useState } from 'react';
+import React from 'react';
+import UI from '../../../ui';
 
-import Modal from '../../../ui/components/Modal/Modal';
 import Currency from './components/Currency';
+import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import * as walletsActions from '../../../actions/cabinet/wallets';
 
+function NewWalletModal() {
+  let currencies = walletsActions.getNoGeneratedCurrencies();
 
-function NewWalletModal({ children }) {
-  const [isOpen, toggleOpen] = useState(false);
+  const getContent = () => {
+    if (currencies.length) {
+      return (
+        <div className="NewWalletModal__currencies">
+          {currencies.map((currency, i) =>  <Currency key={i} {...currency} />)}
+        </div>
+      )
+    } else {
+      return (
+        <EmptyContentBlock
+          icon={require('../../../asset/120/no_deposits.svg')}
+          message="No wallets available"
+          skipContentClass
+        />
+      )
+    }
+  };
 
   return (
-    <div className="NewWalletModal">
-      <span onClick={() => toggleOpen(!isOpen)}>
-        {children}
-      </span>
-
-      <Modal noSpacing isOpen={isOpen} onClose={() => toggleOpen(false)}>
-        <div className="NewWalletModal__content">
-          <h2 className="NewWalletModal__title">Create New Wallet</h2>
-
-          <div className="NewWalletModal__currencies">
-
-            <Currency />
-            <Currency />
-            <Currency />
-
-          </div>
-        </div>
-      </Modal>
-    </div>
+    <UI.Modal noSpacing isOpen={true} onClose={() => window.history.back()}>
+      <UI.ModalHeader>
+        Create New Wallet
+      </UI.ModalHeader>
+      <div className="NewWalletModal__content">
+        {getContent()}
+      </div>
+    </UI.Modal>
   )
 }
 

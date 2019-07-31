@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   deposits: [],
   payments: [],
+  profits: [],
   loadingStatus: {}
 };
 
@@ -19,6 +20,12 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {
         deposits: action.deposits,
         payments: action.payments
+      });
+    }
+
+    case actionTypes.INVESTMENTS_PROFITS_SET: {
+      return Object.assign({}, state, {
+        profits: action.profits,
       });
     }
 

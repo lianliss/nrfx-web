@@ -1,0 +1,53 @@
+.SendCoinsModal {
+  box-sizing: border-box;
+}
+
+.SendCoinsModal__wallet {
+  display: flex;
+  align-items: center;
+
+  .Dropdown {
+    flex: 1;
+  }
+}
+
+.SendCoinsModal__wallet__icon {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  margin-left: -16px;
+}
+
+.SendCoinsModal__row {
+  margin-top: 28px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.SendCoinsModal__amount {
+  display: flex;
+  align-items: center;
+
+  .Input__wrapper {
+    flex: 1;
+  }
+
+  .Button {
+    flex: 0 0 auto;
+  }
+
+  .Input__wrapper, .Button {
+    margin-left: 16px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.SendCoinsModal__submit_wrap {
+  margin-top: 40px;
+  text-align: center;
+}

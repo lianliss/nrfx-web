@@ -94,7 +94,6 @@ export default function Routes(props) {
       break;
     case pages.INVESTMENTS:
       Component = CabinetInvestmentsScreen;
-      state = props.state.investments;
       break;
     default:
       Component = SiteNotFoundScreen;
@@ -113,7 +112,7 @@ export default function Routes(props) {
 
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
-      <Component {...defaultProps} {...actions} {...state} routerParams={routerParams} />;
+      <Component {...defaultProps} {...actions} routerParams={routerParams} />;
     </WrapperComponent>
   );
 }

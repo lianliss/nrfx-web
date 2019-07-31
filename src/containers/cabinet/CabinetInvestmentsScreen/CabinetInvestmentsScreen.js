@@ -4,6 +4,7 @@ import React from 'react';
 import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 import UI from '../../../ui';
+import moment from 'moment/min/moment-with-locales';
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import SummaryItem from './components/SummaryItem';
@@ -106,8 +107,53 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderProfitHistory() {
+    const profits = this.props.profits;
+    if (!profits.length) {
+      return (
+        <EmptyContentBlock
+          icon={require('../../../asset/120/no_deposits.svg')}
+          message="No Profit History"
+        />
+      )
+    }
+
+    const headings = [
+      <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
+        <SVG src={require('../../../asset/cabinet/filter.svg')} />
+      </UI.TableColumn>,
+      <UI.TableColumn>ID</UI.TableColumn>,
+      <UI.TableColumn>Rate</UI.TableColumn>,
+      <UI.TableColumn>Type</UI.TableColumn>,
+      <UI.TableColumn>Invested</UI.TableColumn>,
+      <UI.TableColumn align="right">Amount</UI.TableColumn>,
+      <UI.TableColumn>Currency</UI.TableColumn>,
+      <UI.TableColumn>Profit Type</UI.TableColumn>,
+      <UI.TableColumn>Date</UI.TableColumn>,
+    ];
+
+    const rows = profits.map((item, i) => {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn />
+          <UI.TableColumn>{utils.formatTableId(i + 1)}</UI.TableColumn>
+          <UI.TableColumn sub="Standart">14%</UI.TableColumn>
+          <UI.TableColumn>Dinamic</UI.TableColumn>
+          <UI.TableColumn>100 BTC</UI.TableColumn>
+          <UI.TableColumn>{utils.formatDouble(item.amount)}</UI.TableColumn>
+          <UI.TableColumn>BTC</UI.TableColumn>
+          <UI.TableColumn>Investment</UI.TableColumn>
+          <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
+        </UI.TableCell>
+      )
+    });
+
     return (
-      <h1>PROFITS</h1>
+      <div>
+        <h2>Profit History</h2>
+        <UI.Table headings={headings} className="Investment__profits_table">
+          {rows}
+        </UI.Table>
+      </div>
     )
   }
 
@@ -241,7 +287,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
               />
             </svg>
           </UI.TableColumn>
-          <UI.TableColumn>{i + 1}</UI.TableColumn>
+          <UI.TableColumn>{utils.formatTableId(this.props.deposits.length - i)}</UI.TableColumn>
           <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
           <UI.TableColumn sub={item.description}>{item.percent}%</UI.TableColumn>
           <UI.TableColumn align="right">{item.amount} {item.currency.toUpperCase()}</UI.TableColumn>
@@ -266,12 +312,10 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   __showDepositInfoModal = (deposit) => this.refs['deposit_info_modal'].show(deposit);
 }
 
-const mapStateToProps = (state) => ({
-
-});
+const mapStateToProps = (state) => ({ ...state.investments });
 
 export default connect(mapStateToProps, {
   loadInvestments: investmentsActions.loadInvestments,
   loadProfitHistory: investmentsActions.loadProfitHistory,
   loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory
-})(CabinetInvestmentsScreen);
+})(React.memo(CabinetInvestmentsScreen));

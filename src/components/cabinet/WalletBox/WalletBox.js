@@ -3,26 +3,30 @@ import './WalletBox.less';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 
-import { classNames } from '../../../utils';
+import * as utils from '../../../utils';
+import * as actions from '../../../actions';
 
 
-function WalletBox({ crypto, children, isGenerating }) {
-  const className = classNames({
+function WalletBox({ currency, status, amount }) {
+  const isGenerating = status === 'generating';
+  const currencyInfo = actions.getCurrencyInfo(currency);
+
+  const className = utils.classNames({
     WalletBox: true,
-    WalletBox__inactive: !!isGenerating,
+    WalletBox__inactive: isGenerating,
   });
 
   return (
     <div className={className}>
-      <img src={crypto.icon} alt="Crypto" className="WalletBox__icon" />
+      <div style={{ backgroundImage: `url(${currencyInfo.icon})` }} className="WalletBox__icon" />
 
       <div className="WalletBox__content Content_box">
-        <h3>{crypto.currency}</h3>
-        <p>{isGenerating ? 'Generating' : crypto.amount}</p>
+        <h3>{utils.ucfirst(currencyInfo.name)}</h3>
+        <p>{isGenerating ? 'Generating' : utils.formatDouble(amount)}</p>
       </div>
 
       {isGenerating
-        ? <SVG className="WalletBox__loader" src={require('../../../asset/cabinet/loading.svg')} alt="Loading" />
+        ? <SVG className="WalletBox__loader" src={require('../../../asset/cabinet/loading.svg')} />
         : null}
     </div>
   )

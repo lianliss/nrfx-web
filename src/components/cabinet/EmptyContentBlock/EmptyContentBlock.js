@@ -4,9 +4,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UI from '../../../ui';
 
-export default function EmptyContentBlock({ icon, message, button }) {
+import * as utils from '../../../utils';
+
+export default function EmptyContentBlock({ icon, message, button, skipContentClass }) {
   return (
-    <div className="EmptyContentBlock Content_box">
+    <div className={utils.classNames({
+      EmptyContentBlock: true,
+      Content_box: !skipContentClass
+    })}>
       <div className="EmptyContentBlock__content">
         <div className="EmptyContentBlock__content__icon" style={{ backgroundImage: `url(${icon})` }} />
         <div className="EmptyContentBlock__content__message">{message}</div>
@@ -24,5 +29,6 @@ EmptyContentBlock.propTypes = {
   button: PropTypes.shape({
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func
-  })
+  }),
+  skipContentClass: PropTypes.bool
 };

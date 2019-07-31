@@ -2,7 +2,7 @@ import { ApiClient } from '../swagger/src';
 import * as storage from './storage';
 
 export function getToken() {
-  return 'ae5ef1fc21c5f8022ab5cf79891036793fb53b3669b5aa801674ec0f90b5d57a691db955480aef890ade58edadf1d5366362cf674bed2aee60e667d48a73238c';
+  return 'caa6f3fd3f3c5b6e1eff538c347b970df62ea6b9442e20c09b7715d16d5e5e9cdf92e21c0f68db2dbb90ddb6064834604ba725adc9c1de7f9310cfda6ea181a3';
   return storage.getItem('access_token');
 }
 

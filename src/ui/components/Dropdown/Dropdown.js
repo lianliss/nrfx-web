@@ -29,9 +29,12 @@ function Dropdown(props) {
 
       {isOpen
         ? (
-          <div className="Dropdown__options" onMouseLeave={() => toggle(false)}>
+          <div className="Dropdown__options">
             {props.options.map((opt) => (
-              <div key={opt.value} className="Dropdown__option" onClick={() => props.onChange(opt)}>
+              <div key={opt.value} className="Dropdown__option" onClick={() => {
+                props.onChange(opt);
+                toggle(false);
+              }}>
                 <p className="Dropdown__option__title">{opt.title}</p>
                 <p className="Dropdown__option__note">{opt.note}</p>
               </div>

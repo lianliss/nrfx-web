@@ -1,24 +1,47 @@
 .WalletBox {
   position: relative;
-  display: inline-block;
-  margin: 8px 20px;
+  margin-right: 28px;
+  flex: 1;
+
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  &:nth-child(n + 4) {
+    margin-top: 16px;
+  }
 
   .WalletBox__icon {
     position: absolute;
-    left: -10%;
-    top: 22%;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 72px;
+    height: 72px;
+    top: 0;
+    left: 0;
+    transform: translateX(-50%);
+    background: no-repeat center/contain;
   }
 
   .WalletBox__content {
     padding-left: 40px;
-    width: 152px;
     min-height: 72px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 0;
+
+    &.new {
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      padding-left: 0;
+      color: var(--primary);
+      text-align: center;
+      cursor: pointer;
+      transition: opacity 150ms ease-in-out;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
 
     h3 {
       font-weight: 500;

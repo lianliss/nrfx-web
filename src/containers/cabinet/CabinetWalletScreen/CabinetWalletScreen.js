@@ -1,154 +1,96 @@
 import './CabinetWalletScreen.less';
 
-import React, { useState } from 'react';
-import SVG from 'react-inlinesvg';
+import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
-import { getWallets } from '../../../actions/cabinet/wallets';
-import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
+import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
+import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
+import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
+import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
+import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
+import HistoryTable from './components/HistoryTable';
+import LoadingMore from '../../../components/cabinet/LoadingMore/LoadingMore';
 import WalletBalance from './components/WalletBalance';
-import Table from '../../../ui/components/Table/Table';
-import NewWalletModal from '../../../components/cabinet/NewWalletModal/NewWalletModal';
-import BuyCurrency from './components/BuyCurrency';
-import TransactionModal from '../../../components/cabinet/TransactionModal/TransactionModal';
 
-const headings = [
-  <span className="Table__item Table__item_center Table__item_highlighted">
-    <SVG src={require('../../../asset/cabinet/filter.svg')} />
-  </span>,
-  <span className="Table__item">Address/Login</span>,
-  <span className="Table__item Table__item_right">
-    <SVG src={require('../../../asset/cabinet/arrow_small_up.svg')} />
-    Amount
-  </span>,
-  <span className="Table__item">
-    Wallet
-  </span>,
-  <span className="Table__item">
-    Type
-  </span>,
-  <span className="Table__item">
-    <span className="Table__item_highlighted">
-      Date
-    </span>
-    <SVG src={require('../../../asset/cabinet/arrow_small_down.svg')} />
-  </span>,
-];
+import * as walletsActions from '../../../actions/cabinet/wallets';
+import Paging from "../../../components/cabinet/Paging/Paging";
 
-const formatTransactionDate = (date) => {
-  const today = moment(new Date());
-  const tDate = moment(date);
-
-  if (today.isSame(tDate, 'd')) {
-    return moment(date).format('HH:mm')
-  }
-
-  return moment(date).format('ll')
-};
-
-const getRows = (history) => {
-  if (!history) {
-    return [];
-  }
-
-  return history.map(item => (
-    [
-      <span className="Table__item Table__item_center">
-        <span className="Table__dot" style={{ background: 'red' }}></span>
-      </span>,
-      <span className="Table__item">
-        {item.from}
-      </span>,
-      <span className="Table__item Table__item_right">
-        {item.amount}
-      </span>,
-      <span className="Table__item">
-        {item.currency.toUpperCase()}
-      </span>,
-      <span className="Table__item">
-        {item.action_type === 'send' 
-          ? <span className="Table__item__type_sent">Sended</span> 
-          : <span className="Table__item__type_received">Received</span>}
-      </span>,
-      <span className="Table__item">
-        {formatTransactionDate(item.date)}
-      </span>,
-    ]
-  ))
-}
-
-
-function CabinetWalletScreen({ wallets, history }) {
-  const [isModalOpen, toggleModalOpen] = useState(false);
-  // const [currentModalData, changeModalData] = useState();
-
-  React.useEffect(() => {
-    getWallets();
-  }, []);
-
-  const handleRowClick = () => {
-    toggleModalOpen(true);
-  }
-
-  const _renderWallets = () => {
-    return (
-      <div className="CabinetWalletScreen__wallets">
-        {!!wallets.length && wallets.map(crypto => (
-          <WalletBox key={crypto.id} crypto={crypto} />
-        ))}
-
-        <NewWalletModal>
-          <div className="CabinetWalletScreen__new_wallet">
-            <h3>Create new wallet</h3>
-          </div>
-        </NewWalletModal>
-      </div>
-    )
+class CabinetWalletScreen extends CabinetBaseScreen {
+  load = (section = null) => {
+    switch (section || this.props.routerParams.section) {
+      default:
+        this.props.loadWallets();
+        break;
+    }
   };
 
-  return (
-    <div>
-      <div className="CabinetWalletScreen">
-        <ProfileSidebar />
-
-        <div className="CabinetWalletScreen__content">
-          <div>
-            {_renderWallets()}
-
-            <div className="CabinetWalletScreen__table">
-              {history
-                ? <Table headings={headings} rows={getRows(history)} onRowClick={handleRowClick} />
-                : (
-                  <div className="CabinetWalletScreen__transactions_empty Content_box">
-                    <div className="Empty_box">
-                      <SVG src={require('../../../asset/cabinet/transactions_colorful.svg')} />
-                      <h3>
-                        Here will be your transactions
-                      </h3>
-                    </div>
-                  </div>
-                )}
-            </div>
-          </div>
-
-          <div>
-            <WalletBalance wallets={wallets} />
-
-            <BuyCurrency />
-          </div>
-        </div>
-
-        <TransactionModal isOpen={isModalOpen} onChange={toggleModalOpen} />
+  render() {
+    return (
+      <div>
+        <PageContainer
+          leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
+          sidebarOptions={{
+            section: this.props.routerParams.section,
+            appName: 'Wallets',
+            items: [
+              <ProfileSidebarItem modal="send" icon={require('../../../asset/24px/send.svg')} label="Send" />,
+              <ProfileSidebarItem modal="receive" icon={require('../../../asset/24px/receive.svg')} label="Receive" />
+            ]
+          }}
+        >
+          {this.__renderContent()}
+        </PageContainer>
       </div>
-    </div>
-  )
+    )
+  }
+
+  __renderLeftContent() {
+    return <WalletBalance wallets={this.props.wallets} />;
+  }
+
+  __renderContent() {
+
+    if (this.isLoading) {
+      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.load()} />;
+    }
+
+    switch (this.props.routerParams.section) {
+      default:
+        return this.__renderMainContent();
+    }
+  }
+
+  __renderMainContent() {
+    return (
+      <div>
+        {this.__renderWallets()}
+        <Paging
+          isCanMore={!!this.props.transactionsNext && !this.props.transactionsLoadingMore}
+          onMore={this.props.loadMoreTransactions}
+        >
+          <HistoryTable history={this.props.transactions} />
+        </Paging>
+        {this.props.transactionsNext && <LoadingMore status={this.props.transactionsLoadingMore} />}
+      </div>
+    )
+  }
+
+  __renderWallets() {
+    const rows = this.props.wallets.map((wallet, i) => <WalletBox key={i} {...wallet} />);
+    const isCanCreate = walletsActions.getNoGeneratedCurrencies().length > 0;
+    return (
+      <div className="CabinetWalletScreen__wallets">
+        {rows}
+        {isCanCreate && <WalletBoxNew />}
+      </div>
+    )
+  }
 }
 
-const mapStateToProps = (state) => ({
-  wallets: state.cabinet.wallets,
-  history: state.cabinet.history,
-});
+const mapStateToProps = (state) => ({ ...state.wallets });
 
-export default connect(mapStateToProps)(CabinetWalletScreen);
+export default connect(mapStateToProps, {
+  loadWallets: walletsActions.loadWallets,
+  loadMoreTransactions: walletsActions.loadMoreTransactions
+})(React.memo(CabinetWalletScreen));

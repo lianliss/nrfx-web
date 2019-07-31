@@ -1,55 +1,59 @@
-.CabinetWalletScreen {
+.CabinetWalletScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.Wallets__history_table {
+  margin-top: 16px;
+}
+
+.Wallets__history_indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  &.done {
+    background: var(--color-green);
+  }
+
+  &.pending {
+    background: var(--primary-light);
+  }
+
+  &.failed {
+    background: var(--primary-red);
+  }
+}
+
+.Wallets__history__status {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+
+  &.pending {
+    color: var(--primary);
+  }
+
+  &.send {
+    color: var(--color-green);
+  }
+
+  &.receive {
+    color: var(--accent);
+  }
+}
+
+.Wallets__history__address {
   display: flex;
-  max-width: 1360px;
-  margin: 0 auto;
+  align-items: center;
+}
 
-  .CabinetWalletScreen__content {
-    padding: 20px 0;
-    display: flex;
-    width: 100%;
-  }
-
-  .CabinetWalletScreen__wallets {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .CabinetWalletScreen__table {
-    display: block;
-    margin: 16px 20px;
-    width: 652px;
-  }
-
-  .CabinetWalletScreen__transactions_empty {
-    height: 500px;
-  }
-
-  .CabinetWalletScreen__new_wallet {
-    background: linear-gradient(4.37deg, #FFC75D 21.44%, #FFA363 76.19%);
-    border-radius: 8px;
-    display: inline-block;
-    font-size: 20px;
-    padding: 1px;
-    text-decoration: none;
-    width: 192px;
-    height: 72px;
-    margin: 8px 20px;
-
-    h3 {
-      background: var(--secondary-active-background);
-      display: block;
-      height: 72px;
-      border-radius: 7px;
-      font-weight: 600;
-      font-size: 13px;
-      line-height: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      letter-spacing: 0.444444px;
-      color: var(--primary);
-    }
-  }
+.Wallets__history__bb {
+  width: 16px;
+  height: 16px;
+  background: url('../../../asset/logo_16.svg') no-repeat center/contain;
+  margin-right: 8px;
 }
 
 .WalletBalance {

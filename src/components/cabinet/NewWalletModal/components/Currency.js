@@ -1,18 +1,19 @@
 import React from 'react';
 import SVG from 'react-inlinesvg';
-
 import UI from '../../../../ui';
 
-function Currency() {
+import * as utils from '../../../../utils';
+
+function Currency({ name, abbr, icon }) {
   return(
     <UI.Hover className="NewWalletModal__currency">
       <div className="NewWalletModal__currency__content">
         <div className="NewWalletModal__currency__type">
-          <SVG src={require('../../../../asset/cabinet/crypto/BTC.svg')} />
-          <p className="NewWalletModal__currency__name">Bitcoin</p>
+          <div className="NewWalletModal__currency__icon" style={{ backgroundImage: `url(${icon})` }} />
+          <p className="NewWalletModal__currency__name">{utils.ucfirst(name)}</p>
         </div>
         <div>
-          <p className="NewWalletModal__currency__code">BTC</p>
+          <p className="NewWalletModal__currency__code">{abbr.toUpperCase()}</p>
           <SVG src={require('../../../../asset/cabinet/angle_right.svg')} />
         </div>
       </div>

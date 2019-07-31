@@ -39,7 +39,7 @@ export default class WithdrawalModal extends React.Component {
               />
               <p className="Form__helper__text">Available: 120 {currency}</p>
             </div>
-            <UI.Button type="outline">Max</UI.Button>
+            <UI.Button type="outline" smallPadding>Max</UI.Button>
           </div>
           <div className="WithdrawalModal__row">
             <UI.Input

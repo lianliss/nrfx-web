@@ -2,6 +2,7 @@ import './Button.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import SVG from 'react-inlinesvg';
 
 import { classNames } from '../../utils';
 
@@ -10,11 +11,13 @@ function Button(props) {
   const className = classNames({
     Button: true,
     [props.size]: !!props.size,
-    disabled: props.disabled,
+    disabled: props.disabled || props.state === 'disabled',
     [props.type]: !!props.type,
     [props.newClass]: !!props.newClass,
     rounded: props.rounded,
     forCabinet: !!props.forCabinet,
+    smallPadding: props.smallPadding,
+    [props.state]: !!props.state,
   });
 
   return (
@@ -24,6 +27,7 @@ function Button(props) {
       style={props.style}
       type={props.btnType}
     >
+      {props.state === 'loading' && <div className="Button__loader"><SVG src={require('../../asset/spinner.svg')} /></div>}
       <div className="Button__cont">
         {props.beforeContent}
         <div className="Button__label">{props.children}</div>
@@ -43,7 +47,9 @@ Button.propTypes = {
   onClick: PropTypes.func,
   style: PropTypes.object,
   beforeContent: PropTypes.node,
-  afterContent: PropTypes.node
+  afterContent: PropTypes.node,
+  smallPadding: PropTypes.bool,
+  state: PropTypes.oneOf(['loading', 'disabled'])
 };
 
 export default React.memo(Button);

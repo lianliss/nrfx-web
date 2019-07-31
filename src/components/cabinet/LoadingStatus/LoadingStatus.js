@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import UI from '../../../ui';
 
-export default function LoadingStatus({ status, onRetry }) {
+export default function LoadingStatus({ status, onRetry, inline }) {
 
   let cont;
   switch (status) {
@@ -22,14 +22,25 @@ export default function LoadingStatus({ status, onRetry }) {
       break;
   }
 
-  return (
+  let result = (
     <div className="LoadingStatus">
       {cont}
     </div>
-  )
+  );
+
+  if (inline) {
+    return (
+      <div className="LoadingStatus__wrap">
+        {result}
+      </div>
+    )
+  } else {
+    return result;
+  }
 }
 
 LoadingStatus.propTypes = {
   status: PropTypes.oneOf(['loading', 'failed']).isRequired,
-  onRetry: PropTypes.func
+  onRetry: PropTypes.func,
+  inline: PropTypes.bool
 };
