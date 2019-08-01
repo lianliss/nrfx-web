@@ -28,7 +28,6 @@ export default function Routes(props) {
   const route = routeState.name;
 
   let actions = {};
-  let state = {};
   let Component = false;
   let WrapperComponent = CabinetWrapper;
 

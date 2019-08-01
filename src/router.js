@@ -1,6 +1,6 @@
 import createRouter from 'router5';
 import browserPlugin from 'router5-plugin-browser';
-import listenersPlugin from 'router5-plugin-listeners';
+//import listenersPlugin from 'router5-plugin-listeners';
 import * as pages from './constants/pages';
 
 export const routes = [

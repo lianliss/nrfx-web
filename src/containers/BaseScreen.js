@@ -3,6 +3,7 @@ import React from 'react';
 export default class BaseScreen extends React.PureComponent {
   get lang() {
     let site ={};
+    console.log(this.props);
     let lang = this.props.state.lang;
 
     Object.keys(lang).forEach(function(key) {

@@ -25,7 +25,7 @@ class App extends React.Component {
 
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
-    const route = this.props.state.router.route.name;
+    //const route = this.props.state.router.route.name;
 
     if (this.state.isLoading) {
       return (
