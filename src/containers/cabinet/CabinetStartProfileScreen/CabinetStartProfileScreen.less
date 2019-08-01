@@ -1,0 +1,122 @@
+.CabinetStartProfileScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.CabinetStartProfileScreen__actionCards {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  margin-top: 24px;
+}
+
+// ActionCardBox
+
+.ActionCardBox {
+  position: relative;
+  margin-right: 28px;
+  flex: 1;
+  height: 320px;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  .ActionCardBox__icon {
+    width: 100%;
+    height: 120px;
+    margin: 40px 0 0;
+
+    .ActionCardBox__icon_content {
+      width: 120px;
+      height: 120px;
+      margin: auto;
+    }
+  }
+
+  .ActionCardBox__description {
+    display: flex;
+    width: calc(100% - 48px);
+    font-size: 12px;
+    margin: 40px 24px 0;
+    text-align: center;
+  }
+
+  .ActionCardBox__button {
+    width: 100%;
+    display: flex;
+    margin-top: 16px;
+    .Button {
+      margin: auto 24px;
+      width: calc(100% - 48px);
+    }
+  }
+}
+
+// EmptyWalletBox
+
+.EmptyWalletBox {
+  position: relative;
+  margin-right: 28px;
+  flex: 1;
+
+  &:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  &:nth-child(n + 4) {
+    margin-top: 16px;
+  }
+
+  .EmptyWalletBox__icon {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    top: 0;
+    left: 0;
+    transform: translateX(-50%);
+    background: no-repeat center/contain;
+  }
+
+  .EmptyWalletBox__content {
+    padding-left: 40px;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+
+    &.new {
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      padding-left: 0;
+      color: var(--primary);
+      text-align: center;
+      cursor: pointer;
+      transition: opacity 150ms ease-in-out;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      color: var(--primary-grey);
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: rgba(0, 0, 0, 0.87);
+      margin-top: 4px;
+    }
+  }
+}
