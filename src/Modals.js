@@ -5,6 +5,7 @@ import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModa
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
 import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
+import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 
 export default function Modals(props) {
 
@@ -29,6 +30,9 @@ export default function Modals(props) {
       break;
     case 'receive':
       Component = ReceiveCoinsModal;
+      break;
+    case 'transaction':
+      Component = WalletTransactionModal;
       break;
     default:
       return null;
