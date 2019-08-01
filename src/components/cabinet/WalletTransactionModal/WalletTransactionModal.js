@@ -3,6 +3,7 @@ import './WalletTransactionModal.less';
 import React from 'react';
 import UI from '../../../ui';
 import moment from 'moment/min/moment-with-locales';
+import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../actions';
 import * as walletsActions from '../../../actions/cabinet/wallets';
@@ -55,12 +56,18 @@ export default class WalletTransactionModal extends React.Component {
     } else {
       const data = this.state.info;
       const currencyInfo = actions.getCurrencyInfo(data.currency);
-
-      console.log(data);
+      const currency = data.currency.toUpperCase();
 
       let address = data.address;
       if (this.props.type === 'transfer') {
         address = address.toUpperCase();
+      }
+
+      let status;
+      if (data.status === 'done') {
+        status = 'Confirmed';
+      } else {
+        status = 'Confirmation';
       }
 
       return (
@@ -80,9 +87,29 @@ export default class WalletTransactionModal extends React.Component {
                   {address}
                 </div>}
             </InfoRow>
-            <InfoRow label="Amount">{utils.formatDouble(data.amount)}</InfoRow>
+            <InfoRow label="Amount">{utils.formatDouble(data.amount)} {currency}</InfoRow>
             <InfoRow label="Date">{moment(data.created_at).format('DD MMM YYYY h:mm a')}</InfoRow>
           </InfoRowGroup>
+          <div className="WalletTransactionModal__card">
+            <div className="WalletTransactionModal__card__icon">
+              <SVG src={require('../../../asset/24px/receive.svg')} />
+            </div>
+            <div className="WalletTransactionModal__card__label">Total</div>
+            <div className="WalletTransactionModal__card__value">{utils.formatDouble(data.amount)} {currency}</div>
+          </div>
+          <div className="WalletTransactionModal__status">
+            {data.status !== 'done' && <div className="WalletTransactionModal__status__row">
+              <div className="WalletTransactionModal__status__row__label">Blockchain Confirmations</div>
+              <div className="WalletTransactionModal__status__row__value">1/2</div>
+            </div>}
+            <div className="WalletTransactionModal__status__row right">
+              <div className="WalletTransactionModal__status__row__label">Status</div>
+              <div className={utils.classNames({
+                WalletTransactionModal__status__row__value: true,
+                [data.status]: data.status
+              })}>{status}</div>
+            </div>
+          </div>
         </div>
       )
     }
