@@ -4,16 +4,19 @@ import React from 'react';
 
 import { classNames } from '../../../utils';
 
-export default function InfoRow({ label, children }) {
+export default function InfoRow({ label, children, align }) {
   return (
-    <tr className="InfoRow">
+    <tr className={classNames({
+      InfoRow: true,
+      [align]: !!align
+    })}>
       <td className="InfoRow__label">{label}</td>
       <td className="InfoRow__value">{children}</td>
     </tr>
   )
 }
 
-export function InfoRowGroup({ children, className }) {
+export function InfoRowGroup({ children, className, align }) {
   return (
     <table className={classNames({
       InfoRow__group: true,
@@ -25,7 +28,9 @@ export function InfoRowGroup({ children, className }) {
             return child;
           }
 
-          return React.cloneElement(child);
+          return React.cloneElement(child, {
+            align
+          });
         })}
       </tbody>
     </table>

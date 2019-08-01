@@ -47,7 +47,6 @@ export function getGoogleCode(login, password, code) {
 
     callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
       .then((resp) => {
-        store.dispatch({type: actionTypes.SET_LANG, auth});
         auth.login(resp.access_token);
         resolve(resp);
       })

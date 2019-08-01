@@ -4,7 +4,8 @@ import UI from '../../../../ui';
 import * as steps from '../fixtures';
 import * as utils from '../../../../utils/index';
 import { getGoogleCode } from '../../../../actions/auth';
-
+import router from '../../../../router';
+import * as pages from '../../../../constants/pages';
 
 function GoogleAuth({ changeStep, email, password, params }) {
   const [gaCode, changeGaCode] = useState('');
@@ -21,7 +22,8 @@ function GoogleAuth({ changeStep, email, password, params }) {
         if (data.status === 'phone_not_verified') {
           changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
         } else {
-          setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
+          router.navigate(pages.INVESTMENTS, {}, { reload: true });
+          //setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
         }
       })
       .catch((err) => setErrorMsg(err.message));

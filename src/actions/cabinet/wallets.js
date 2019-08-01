@@ -65,3 +65,11 @@ export function getNoGeneratedCurrencies() {
 
   return currencies;
 }
+
+export function loadTransactionInfo(id, type) {
+  return new Promise((resolve, reject) => {
+    api.get(`wallet/${type}/${id}`).then((resp) => {
+      resolve(resp);
+    }).catch(() => reject());
+  });
+}
