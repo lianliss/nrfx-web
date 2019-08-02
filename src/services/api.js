@@ -69,17 +69,22 @@ export function invoke(method, name, params) {
 
     fetch(url, init)
       .then(resp => {
+        if (resp.status === 403) {
+          auth.logout();
+          window.location.href = '/';
+          return;
+        }
+
         resp.json().then((json) => {
           if (resp.status === 200) {
             resolve(json);
           } else {
             reject(json);
-
-            if (json.code === Errors.AUTH) {
-              auth.logout();
-            }
           }
-        }).catch(() => reject({code: -1, message: 'Cant\'t parse JSON'}));
+        }).catch((err) => {
+          console.log(err);
+          reject({code: -1, message: 'Cant\'t parse JSON'})
+        });
       });
   });
 }

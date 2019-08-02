@@ -74,8 +74,8 @@ export function ucfirst(input) {
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
-export function formatDouble(input) {
-  return Math.floor(input * 100000) / 100000;
+export function formatDouble(input, delim = 100000) {
+  return Math.floor(input * delim) / delim;
 }
 
 export function formatTableId(index) {

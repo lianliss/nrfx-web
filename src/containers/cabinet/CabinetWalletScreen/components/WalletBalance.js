@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import PieChart from 'react-minimal-pie-chart';
 
-import { formatNumber } from '../../../../utils';
+import { formatNumber, formatDouble, classNames } from '../../../../utils';
 import { getGradientByCurrency, getColorByCurrency } from '../../../../utils/currencies';
 
-const getWalletsBalance = (wallets) => {
+const getWalletsBalance = (wallets, isInFiat) => {
   let walletsAmount = 0;
-  let walletsBalanceInUSD = 0;
   let balancePieStyle = '';
+  let walletsBalanceInUSD = 0;
   let walletsCurrencies = [];
   
   wallets.forEach(item => {
     walletsAmount += item.amount;
+    walletsBalanceInUSD += item.amount * item.to_usd;
   });
 
   if (walletsAmount === 0) {
@@ -22,12 +23,18 @@ const getWalletsBalance = (wallets) => {
   wallets.forEach((wallet, i) => {
     if (wallet.amount !== 0) {
       const color = getColorByCurrency(wallet.currency);
-      walletsBalanceInUSD += (wallet.amount * wallet.to_usd);
+
+      let value;
+      if (isInFiat) {
+        value = (wallet.amount * wallet.to_usd) / walletsBalanceInUSD * 100;
+      } else {
+        value = wallet.amount / walletsAmount * 100
+      }
 
       walletsCurrencies.push({
         color,
         currency: wallet.currency,
-        value: Math.floor(wallet.amount / walletsAmount * 100),
+        value: formatDouble(value, 100),
       });
     } 
   });
@@ -37,10 +44,11 @@ const getWalletsBalance = (wallets) => {
     walletsCurrencies,
     balancePieStyle,
   }
-}
+};
 
 function WalletBalance({ wallets }) {
-  const walletsBalance = getWalletsBalance(wallets);
+  const [ isInFiat, setIsInFiat ] = useState(true);
+  const walletsBalance = getWalletsBalance(wallets, isInFiat);
 
   return (
     <div className="WalletBalance Content_box">
@@ -68,7 +76,6 @@ function WalletBalance({ wallets }) {
 
             <div className="WalletBalance__pie">
               <PieChart
-                animate
                 lineWidth={20}
                 paddingAngle={1}
                 data={walletsBalance.walletsCurrencies}
@@ -77,8 +84,8 @@ function WalletBalance({ wallets }) {
               <div className="WalletBalance__pie__balance">
                 <h3>${formatNumber(walletsBalance.walletsBalanceInUSD)}</h3>
                 <div>
-                  <p className="active">USD</p>
-                  <p>BTC</p>
+                  <p className={classNames({ active: isInFiat })} onClick={() => setIsInFiat(true)}>USD</p>
+                  <p className={classNames({ active: !isInFiat })} onClick={() => setIsInFiat(false)}>BTC</p>
                 </div>
               </div>
             </div>

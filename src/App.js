@@ -23,6 +23,14 @@ class App extends React.Component {
     this._loadAssets();
   }
 
+  componentDidUpdate() {
+    if (this.props.router.getState().params.modal) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+  }
+
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
     //const route = this.props.state.router.route.name;

@@ -65,6 +65,9 @@
   width: 472px;
 
   .WalletBalance__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     h3 {
       font-weight: 500;
@@ -78,6 +81,7 @@
   
     ul {
       list-style: none;
+      margin: 0;
 
       .WalletBalance__list__item {
         display: flex;
@@ -102,13 +106,12 @@
         font-weight: 500;
         font-size: 16px;
         line-height: 24px;
-        letter-spacing: 0.444444px;
         margin: 8px 4px;
         color: var(--primary-grey);
         
         span {
           color: var(--foreground-primary-opacity);
-          width: 52px;
+          width: 60px;
           display: inline-block;
         }
       }
@@ -154,8 +157,8 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 16px;
-        letter-spacing: 0.444444px;
         color: var(--secondary-grey);
+        cursor: pointer;
       }
 
       p.active {
