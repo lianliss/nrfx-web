@@ -26,6 +26,14 @@ export default class ReceiveCoinsModal extends React.Component {
     this.__load();
   }
 
+  get wallet() {
+    for (let i = 0; i < this.state.wallets.length; i++) {
+      if (this.state.wallets[i].currency === this.state.currency) {
+        return this.state.wallets[i];
+      }
+    }
+  }
+
   render() {
     const currencyInfo = this.state.currency ? actions.getCurrencyInfo(this.state.currency) : {};
     return (
@@ -58,13 +66,7 @@ export default class ReceiveCoinsModal extends React.Component {
         }
       });
 
-      let wallet;
-      for (let i = 0; i < this.state.wallets.length; i++) {
-        if (this.state.wallets[i].currency === this.state.currency) {
-          wallet = this.state.wallets[i];
-          break;
-        }
-      }
+      let wallet = this.wallet;
 
       return (
         <div className="ReceiveCoinsModal">
@@ -115,7 +117,7 @@ export default class ReceiveCoinsModal extends React.Component {
   };
 
   __copy = () => {
-    utils.copyText(this.state.address);
+    utils.copyText(this.wallet.address);
     this.setState({ isCopied: true });
   };
 }

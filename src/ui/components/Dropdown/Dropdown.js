@@ -16,7 +16,7 @@ function Dropdown(props) {
     Dropdown_open: isOpen,
   });
 
-  return (
+  return [
     <div className={className}>
       <div className="Dropdown__header" onClick={() => toggle(!isOpen)}>
         <div className="Dropdown__option">
@@ -41,8 +41,9 @@ function Dropdown(props) {
             ))}
           </div>
         ) : null}
-    </div>
-  );
+    </div>,
+    isOpen && <div className="Dropdown__overlay" onClick={() => toggle(false)} />
+  ];
 }
 
 const optionType = PropTypes.shape({
