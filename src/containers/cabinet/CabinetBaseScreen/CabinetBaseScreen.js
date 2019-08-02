@@ -1,5 +1,3 @@
-import React from 'react';
-
 import BaseScreen from '../../BaseScreen';
 
 export default class CabinetBaseScreen extends BaseScreen {

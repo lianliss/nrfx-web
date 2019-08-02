@@ -11,6 +11,15 @@ export default function LoadingStatus({ status, onRetry, inline }) {
     case 'loading':
       cont = <div className="LoadingStatus__spinner" />;
       break;
+    default:
+      cont = (
+        <div className="LoadingStatus__failed">
+          <div className="LoadingStatus__failed__icon" />
+          <div className="LoadingStatus__failed__message">Unknown Error.</div>
+          <UI.Button onClick={onRetry}>Try Again</UI.Button>
+        </div>
+      );
+      break;
     case 'failed':
       cont = (
         <div className="LoadingStatus__failed">

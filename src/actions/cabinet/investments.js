@@ -1,5 +1,4 @@
 import * as actionTypes from '../actionTypes';
-import store from '../../store';
 import * as api from '../../services/api';
 
 export function loadInvestments() {
