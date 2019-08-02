@@ -18,7 +18,8 @@ export default class ReceiveCoinsModal extends React.Component {
       currency: 'btc',
       loadingStatus: 'loading',
       wallets: [],
-      isCopied: false
+      isCopied: false,
+      dropDownCurrentItem: {}
     };
   }
 
@@ -72,11 +73,17 @@ export default class ReceiveCoinsModal extends React.Component {
         <div className="ReceiveCoinsModal">
           <div className="SendCoinsModal__wallet">
             <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
-            {options.length > 0 && <UI.Dropdown
-              placeholder={options[0]}
-              options={options}
-              onChange={(item) => this.setState({ currency: item.value, isCopied: false })}
-            />}
+            {options.length > 0 &&
+              <UI.Dropdown
+                placeholder={
+                  Object.keys(this.state.dropDownCurrentItem).length == 0 ? options[0] : this.state.dropDownCurrentItem
+                }
+                options={options}
+                onChange={(item) => {
+                  this.setState({ currency: item.value, isCopied: false, dropDownCurrentItem: item })
+                }}
+              />
+            }
           </div>
           <div className="SendCoinsModal__row ReceiveCoinsModal__qrcode">
             <QRCode value={wallet.address} size={192} />
@@ -84,10 +91,12 @@ export default class ReceiveCoinsModal extends React.Component {
           <div className="ReceiveCoinsModal__warning">Only send {utils.ucfirst(currencyInfo.name)} ({this.state.currency.toUpperCase()})  to this address</div>
           <div className="SendCoinsModal__row">
             <UI.Input
-              readOnly
               value={wallet.address}
               onClick={this.__copy}
-              indicator={<SVG src={require('../../../asset/24px/copy.svg')} className="ReceiveCoinsModal__copy_btn" />  }
+              indicator={
+                <SVG src={require('../../../asset/24px/copy.svg')} className="ReceiveCoinsModal__copy_btn" />
+              }
+              readOnly
             />
           </div>
           <div className="SendCoinsModal__row ReceiveCoinsModal__button_wrap">

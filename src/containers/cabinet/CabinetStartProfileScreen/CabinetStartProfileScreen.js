@@ -103,6 +103,7 @@ class CabinetStartProfileScreen extends CabinetBaseScreen {
   __renderWallets() {
     const rows = this.props.wallets.map((wallet, i) => <WalletBox key={i} {...wallet} />);
     const isCanCreate = walletsActions.getNoGeneratedCurrencies().length > 0;
+
     return (
       <div className="CabinetStartProfileScreen__wallets">
         {rows}
