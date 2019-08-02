@@ -2,8 +2,17 @@ import React from 'react';
 import UI from '../../../../ui';
 
 export default (props) => {
+  const defaultProps = {
+    height: 320,
+    buttonProps: {
+      size: "large"
+    }
+  };
+
   return (
-    <div className="ActionCardBox Content_box">
+    <div className="ActionCardBox Content_box" style={{
+      height: props.height || defaultProps.height
+    }}>
       <div className="ActionCardBox__icon">
         <div className="ActionCardBox__icon_content" style={{backgroundImage:`url(${props.icon})`}}>
         </div>
@@ -11,7 +20,7 @@ export default (props) => {
           {props.description}
         </div>
         <div className="ActionCardBox__button">
-          <UI.Button size="large" onClick={props.action}>
+          <UI.Button {...(props.buttonProps||defaultProps.buttonProps)} onClick={props.action}>
             {props.actionTitle}
           </UI.Button>
         </div>
