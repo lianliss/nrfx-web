@@ -161,6 +161,14 @@ export default class SendCoinsModal extends React.Component {
 
   __sendButtonHandler = () => {
     if (!this.__checkItsReady()) return;
+
+    this.props.openModalPage('confirm', {
+      currency: this.state.currency,
+      amount: this.state.amount,
+      address: this.state.address
+    });
+    return;
+
     this.props.openModalPage('receive');
     return;
     const params = {

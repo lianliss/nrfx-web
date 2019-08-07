@@ -1,0 +1,69 @@
+.SendCoinsConfirmModal__card {
+  background: var(--gradient-primary);
+  border-radius: 8px;
+  color: var(--contrast-primary);
+  text-align: center;
+  padding: 12px;
+  position: relative;
+}
+
+.SendCoinsConfirmModal__card__icon {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+
+  svg {
+    transform: scale(2);
+    transform-origin: top;
+  }
+}
+
+.SendCoinsConfirmModal__card__label {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.SendCoinsConfirmModal__card__value {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.SendCoinsConfirmModal__status {
+  display: flex;
+  margin-top: 24px;
+}
+
+.SendCoinsConfirmModal__status__row {
+  flex: 1;
+
+  &.right {
+    text-align: right;
+  }
+}
+
+.SendCoinsConfirmModal__status__row__label {
+  color: var(--primary-grey);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.SendCoinsConfirmModal__status__row__value {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 4px;
+
+  &.pending {
+    color: var(--primary);
+  }
+
+  &.done {
+    color: var(--color-green);
+  }
+}

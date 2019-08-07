@@ -8,6 +8,7 @@ import TestModalThird from '../../../components/cabinet/TestModalThird/TestModal
 import SendCoinsModal from '../../../components/cabinet/SendCoinsModal/SendCoinsModal';
 import ReceiveCoinsModal from '../../../components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from '../../../components/cabinet/WalletTransactionModal/WalletTransactionModal';
+import SendCoinsConfirmModal from '../../../components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 
 // investments
 import OpenDepositModal from '../../../components/cabinet/OpenDepositModal/OpenDepositModal';
@@ -18,7 +19,6 @@ import * as modalGroupActions from '../../../actions/modalGroup';
 import * as modalGroupConstant from '../../../constants/modalGroup';
 
 import {connect} from "react-redux";
-import router from "../../../router";
 
 const ModalGroupRoutes = {
   start_profile: {
@@ -28,6 +28,7 @@ const ModalGroupRoutes = {
   },
   cabinet_wallet: {
     send: {children: SendCoinsModal},
+    confirm: {children: SendCoinsConfirmModal},
     receive: {children: ReceiveCoinsModal},
     transaction: {
       children: WalletTransactionModal,
@@ -66,7 +67,7 @@ class ModalGroup extends React.Component {
   componentDidMount() {
     document.addEventListener("keyup", this.__keyListener);
     const lastModalPage = this.modalGroup.slice().pop();
-    if (lastModalPage !== undefined && Object.keys(ModalGroupRoutes[router.getState().name]).indexOf(lastModalPage) > -1) {
+    if (lastModalPage !== undefined && Object.keys(ModalGroupRoutes[this.__getRouteName()]).indexOf(lastModalPage) > -1) {
       this.props.modalGroupSetActiveModal(lastModalPage);
     } else {
       this.__routerNavigateToBaseModuleLink();
@@ -106,11 +107,11 @@ class ModalGroup extends React.Component {
   };
 
   __getRouteName = () => {
-    return router.getState().name;
+    return this.props.router.getState().name;
   };
 
   __routerNavigateToBaseModuleLink = () => {
-    this.props.router.navigate(router.getState().name);
+    this.props.router.navigate(this.__getRouteName());
   };
 
   __checkAllow = () => {
@@ -120,13 +121,13 @@ class ModalGroup extends React.Component {
   };
 
   __getPrevModal = () => {
-    const routerParams = {...router.getState().params};
+    const routerParams = {...this.props.router.getState().params};
     if (!(modalGroupConstant.MODALGROUP_GET_PARAM in routerParams)) {
       return {};
     }
-    let modal_group = routerParams[modalGroupConstant.MODALGROUP_GET_PARAM]
-      .split(modalGroupConstant.MODALGROUP_SEPARATOR);
-
+    let modal_group = routerParams[modalGroupConstant.MODALGROUP_GET_PARAM].split(
+      modalGroupConstant.MODALGROUP_SEPARATOR
+    );
     if (modal_group.length > 1) {
       modal_group.pop();
       let modal = modal_group[modal_group.length - 1];
@@ -147,7 +148,9 @@ class ModalGroup extends React.Component {
 
   __close = () => {
     const prevModal = this.__getPrevModal();
-    if (Object.keys(prevModal).length < 1) return;
+    if (Object.keys(prevModal).length < 1) {
+      return;
+    }
     const {name, params} = {...this.props.router.getState()};
     if ('rp' in params) {
       const rp = params.rp.split(modalGroupConstant.MODALGROUP_SEPARATOR);

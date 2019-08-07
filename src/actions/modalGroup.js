@@ -27,3 +27,20 @@ export function openModalPage(name, sendParams = {}) {
     modalGroupSetActiveModal(name);
   });
 }
+
+export function modalGroupClear() {
+  const params = {...router.getState().params};
+  delete params[modalGroupConstant.MODALGROUP_GET_PARAM];
+  if ('rp' in params) {
+    const rp = params.rp.split(modalGroupConstant.MODALGROUP_SEPARATOR);
+    rp.push('rp');
+    rp.forEach(param => {
+      if (param in params) {
+        delete params[param];
+      }
+    });
+  }
+  router.navigate(router.getState().name, params, () => {
+    modalGroupSetActiveModal(null);
+  });
+}
