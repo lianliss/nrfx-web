@@ -27,7 +27,7 @@ export default class WalletTransactionModal extends React.Component {
 
   render() {
     return (
-      <UI.Modal isOpen={true} onClose={() => window.history.back()} width={464}>
+      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={464}>
         <UI.ModalHeader>
           {this.__getTitle()}
         </UI.ModalHeader>

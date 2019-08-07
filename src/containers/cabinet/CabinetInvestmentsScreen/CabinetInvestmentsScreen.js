@@ -15,7 +15,9 @@ import * as investmentsActions from '../../../actions/cabinet/investments';
 import * as utils from '../../../utils';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import DepositInfoModal from '../../../components/cabinet/DepositInfoModal/DepositInfoModal';
+
 import * as actions from '../../../actions';
+import * as modalGroupActions from '../../../actions/modalGroup';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   constructor(props) {
@@ -68,7 +70,9 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             section: this.props.routerParams.section,
             appName: 'Investments',
             items: [
-              <ProfileSidebarItem modal="open_deposit" icon={require('../../../asset/24px/plus-circle.svg')} label="New" />,
+              <ProfileSidebarItem onClick={() => {modalGroupActions.openModalPage('open_deposit', {
+                x: 2, b: 3, gg: '2344'
+              })}} icon={require('../../../asset/24px/plus-circle.svg')} label="New" />,
               <ProfileSidebarItem section="profits" icon={require('../../../asset/24px/invest.svg')} label="Profit" />,
               <ProfileSidebarItem section="withdrawals" icon={require('../../../asset/24px/send.svg')} label="Withdrawals" />
             ]
@@ -246,7 +250,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           message="No Open Deposits"
           button={{
             text: 'Start Invest',
-            onClick: () => actions.openModal('open_deposit')
+            onClick: () => modalGroupActions.openModalPage('open_deposit')
           }}
         />
       )

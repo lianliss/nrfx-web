@@ -73,3 +73,11 @@ export function loadTransactionInfo(id, type) {
     }).catch(() => reject());
   });
 }
+
+export function sendCoins(params) {
+  return new Promise((resolve, reject) => {
+    api.post(`send`, params).tnen((resp) => {
+      resolve(resp);
+    }).catch(() => reject());
+  })
+}

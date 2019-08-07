@@ -15,6 +15,7 @@ import WalletBalance from './components/WalletBalance';
 
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import Paging from "../../../components/cabinet/Paging/Paging";
+import * as modalGroupActions from "../../../actions/modalGroup";
 
 class CabinetWalletScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -34,8 +35,16 @@ class CabinetWalletScreen extends CabinetBaseScreen {
             section: this.props.routerParams.section,
             appName: 'Wallets',
             items: [
-              <ProfileSidebarItem modal="send" icon={require('../../../asset/24px/send.svg')} label="Send" />,
-              <ProfileSidebarItem modal="receive" icon={require('../../../asset/24px/receive.svg')} label="Receive" />
+              <ProfileSidebarItem
+                onClick={() => {modalGroupActions.openModalPage('send')}}
+                icon={require('../../../asset/24px/send.svg')}
+                label="Send"
+              />,
+              <ProfileSidebarItem
+                onClick={() => {modalGroupActions.openModalPage('receive')}}
+                icon={require('../../../asset/24px/receive.svg')}
+                label="Receive"
+              />
             ]
           }}
         >
@@ -69,7 +78,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
           isCanMore={!!this.props.transactionsNext && !this.props.transactionsLoadingMore}
           onMore={this.props.loadMoreTransactions}
         >
-          <HistoryTable history={this.props.transactions} />
+          <HistoryTable history={'items' in this.props.transactions ? this.props.transactions.items : []} />
         </Paging>
         {this.props.transactionsNext && <LoadingMore status={this.props.transactionsLoadingMore} />}
       </div>
@@ -92,5 +101,6 @@ const mapStateToProps = (state) => ({ ...state.wallets });
 
 export default connect(mapStateToProps, {
   loadWallets: walletsActions.loadWallets,
-  loadMoreTransactions: walletsActions.loadMoreTransactions
+  loadMoreTransactions: walletsActions.loadMoreTransactions,
+  modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal
 })(React.memo(CabinetWalletScreen));

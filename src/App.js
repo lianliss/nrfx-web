@@ -4,9 +4,12 @@ import { loadReCaptcha } from 'react-recaptcha-google';
 
 import Routes from './Routes';
 import Modals from './Modals';
+import ModalGroup from './ui/components/ModalGroup/ModalGroup';
+
 import * as actions from './actions';
 import * as testActions from './actions/test';
 import * as storage from './services/storage';
+
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
 
 class App extends React.Component {
@@ -43,6 +46,7 @@ class App extends React.Component {
 
     return (
       <div>
+        <ModalGroup {...this.props} />
 
         <Modals {...this.props} />
 

@@ -18,7 +18,8 @@ export default class SendCoinsModal extends React.Component {
       loadingStatus: 'loading',
       wallets: [],
       amount: 0,
-      amountUSD: 0
+      amountUSD: 0,
+      address: ''
     };
   }
 
@@ -37,7 +38,7 @@ export default class SendCoinsModal extends React.Component {
   render() {
     const currencyInfo = this.state.currency ? actions.getCurrencyInfo(this.state.currency) : {};
     return (
-      <UI.Modal isOpen={true} onClose={() => window.history.back()} width={552}>
+      <UI.Modal isOpen={true} onClose={() => this.props.close()} width={552}>
         <UI.ModalHeader>
           Send {utils.ucfirst(currencyInfo.name)}
         </UI.ModalHeader>
@@ -66,6 +67,11 @@ export default class SendCoinsModal extends React.Component {
         }
       });
 
+      let sendButtonDisabled = true;
+      if (this.__checkItsReady()) {
+        sendButtonDisabled = false;
+      }
+
       return (
         <div className="SendCoinsModal">
           <div className="SendCoinsModal__wallet">
@@ -79,7 +85,9 @@ export default class SendCoinsModal extends React.Component {
           </div>
           <div className="SendCoinsModal__row">
             <UI.Input
+              value={this.state.address}
               placeholder="Enter BitcoinBot Login or Wallet Address"
+              onTextChange={this.__addressChange}
             />
           </div>
           <div className="SendCoinsModal__row SendCoinsModal__amount">
@@ -98,7 +106,12 @@ export default class SendCoinsModal extends React.Component {
             <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>Max</UI.Button>
           </div>
           <div className="SendCoinsModal__submit_wrap">
-            <UI.Button>Send</UI.Button>
+            <UI.Button
+              onClick={this.__sendButtonHandler}
+              disabled={sendButtonDisabled}
+            >
+              Send
+            </UI.Button>
           </div>
         </div>
       )
@@ -130,8 +143,31 @@ export default class SendCoinsModal extends React.Component {
     this.setState({ amountUSD, amount: utils.formatDouble(amountUSD / this.wallet.to_usd) });
   };
 
+  __addressChange = (address) => {
+    this.setState({ address });
+  };
+
   __maxDidPress = () => {
     const amount = this.wallet.amount;
     this.setState({ amount: amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd) });
   };
+
+  __checkItsReady() {
+    return this.state.address.length > 0 &&
+      this.state.selectedWallet &&
+      this.state.amount > 0 &&
+      this.state.amountUSD > 0;
+  }
+
+  __sendButtonHandler = () => {
+    if (!this.__checkItsReady()) return;
+    this.props.openModalPage('receive');
+    return;
+    const params = {
+      //wallet_id: this.state.selectedWallet.id,
+      address: this.state.address,
+      amount: this.state.amount,
+      //ga_code: ""
+    };
+  }
 }

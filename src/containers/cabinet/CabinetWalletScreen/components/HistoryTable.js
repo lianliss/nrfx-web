@@ -5,9 +5,10 @@ import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as actions from '../../../../actions';
+import * as modalGroupActions from '../../../../actions/modalGroup';
 
 export default function HistoryTable({ history }) {
+
   if (!history.length) {
     return (
       <EmptyContentBlock
@@ -42,7 +43,7 @@ export default function HistoryTable({ history }) {
     }
 
     return (
-      <UI.TableCell key={i} onClick={() => actions.openModal('transaction', { id: item.id, type: item.type })}>
+      <UI.TableCell key={i} onClick={() => modalGroupActions.openModalPage('transaction', {id:item.id, type:item.type})}>
         <UI.TableColumn align="center">
           <div className={utils.classNames({
             Wallets__history_indicator: true,

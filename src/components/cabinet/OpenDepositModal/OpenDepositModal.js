@@ -44,7 +44,7 @@ export default class OpenDepositModal extends React.Component {
     }
 
     return (
-      <UI.Modal noSpacing isOpen={true} onClose={() => window.history.back()}>
+      <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
           Open New Deposit
         </UI.ModalHeader>
@@ -97,6 +97,4 @@ export default class OpenDepositModal extends React.Component {
       </UI.Modal>
     )
   }
-
-  toggle = (isOpen) => this.setState({ isOpen });
 }

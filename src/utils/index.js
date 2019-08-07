@@ -98,6 +98,24 @@ export function makeModalParams(modal, params) {
   return result;
 }
 
+function removeUrlParamUtil(key, source) {
+  let rtn = source.split("?")[0],
+    param,
+    params_arr = [],
+    queryString = (source.indexOf("?") !== -1) ? source.split("?")[1] : "";
+  if (queryString !== "") {
+    params_arr = queryString.split("&");
+    for (let i = params_arr.length - 1; i >= 0; i -= 1) {
+      param = params_arr[i].split("=")[0];
+      if (param === key) {
+        params_arr.splice(i, 1);
+      }
+    }
+    rtn = rtn + "?" + params_arr.join("&");
+  }
+  return rtn;
+}
+
 export function clipTextMiddle(text, length = 10) {
   if (text.length <= length + length / 2) {
     return text;

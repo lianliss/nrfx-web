@@ -8,6 +8,7 @@ import defaultReducer from './reducers';
 import cabinetReducer from './reducers/cabinet';
 import investmentsReducer from './reducers/investments';
 import walletsReducer from './reducers/wallets';
+import modalGroupReducer from './reducers/modalGroup';
 import testReducer from './reducers/test';
 
 let store;
@@ -18,6 +19,7 @@ export function configureStore() {
     cabinet: cabinetReducer,
     investments: investmentsReducer,
     wallets: walletsReducer,
+    modalGroup: modalGroupReducer,
     test: testReducer
   }), applyMiddleware(thunk, router5Middleware(router)));
 
