@@ -1,42 +1,39 @@
 import './SendCoinsModal.less';
 
 import React from 'react';
+import {connect} from 'react-redux';
+
 import UI from '../../../ui';
 
 import * as actions from '../../../actions';
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../utils';
+import * as modalGroupActions from "../../../actions/modalGroup";
 
-export default class SendCoinsModal extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedWallet: false,
-      currency: 'btc',
-      loadingStatus: 'loading',
-      wallets: [],
-      amount: 0,
-      amountUSD: 0,
-      address: ''
-    };
-  }
-
+class SendCoinsModal extends React.Component {
   componentDidMount() {
     this.__load();
   }
 
+  get getSelectedWalletInfo() {
+    return this.props.states.send.wallets.filter(wallet => wallet.currency === this.props.states.send.selectedWallet.value);
+  }
+
   get wallet() {
-    for (let i = 0; i < this.state.wallets.length; i++) {
-      if (this.state.wallets[i].currency === this.state.currency) {
-        return this.state.wallets[i];
+    for (let i = 0; i < this.props.states.send.wallets.length; i++) {
+      if (this.props.states.send.wallets[i].currency === this.props.states.send.currency) {
+        return this.props.states.send.wallets[i];
       }
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+
   render() {
-    const currencyInfo = this.state.currency ? actions.getCurrencyInfo(this.state.currency) : {};
+    const currencyInfo = this.props.states.send.currency ? actions.getCurrencyInfo(this.props.states.send.currency) : {};
     return (
       <UI.Modal isOpen={true} onClose={() => this.props.close()} width={552}>
         <UI.ModalHeader>
@@ -48,17 +45,17 @@ export default class SendCoinsModal extends React.Component {
   }
 
   __renderContent() {
-    if (this.state.loadingStatus) {
+    if (this.props.states.send.loadingStatus) {
       return (
         <LoadingStatus
           inline
-          status={this.state.loadingStatus}
+          status={this.props.states.send.loadingStatus}
         />
       )
     } else {
-      const currencyInfo = actions.getCurrencyInfo(this.state.currency);
+      const currencyInfo = actions.getCurrencyInfo(this.props.states.send.currency);
 
-      const options = this.state.wallets.map((item) => {
+      const options = this.props.states.send.wallets.map((item) => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -77,15 +74,18 @@ export default class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__wallet">
             <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
             {options.length > 0 && <UI.Dropdown
-              placeholder={options[0]}
-              value={this.state.selectedWallet}
+              placeholder={this.props.states.send.selectedWallet}
+              value={this.props.states.send.selectedWallet}
               options={options}
-              onChange={(item) => this.setState({ currency: item.value, amount: 0, amountUSD: 0, selectedWallet: item })}
+              onChange={(item) => {
+                this.__setState({currency: item.value, selectedWallet: item });
+                this.__amountDidChange(this.props.states.send.amount);
+              }}
             />}
           </div>
           <div className="SendCoinsModal__row">
             <UI.Input
-              value={this.state.address}
+              value={this.props.states.send.address}
               placeholder="Enter BitcoinBot Login or Wallet Address"
               onTextChange={this.__addressChange}
             />
@@ -93,15 +93,15 @@ export default class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__row SendCoinsModal__amount">
             <UI.Input
               placeholder="0"
-              indicator={this.state.currency.toUpperCase()}
+              indicator={this.props.states.send.currency.toUpperCase()}
               onTextChange={this.__amountDidChange}
-              value={this.state.amount || ''}
+              value={this.props.states.send.amount || ''}
             />
             <UI.Input
               placeholder="0"
               indicator="USD"
               onTextChange={this.__usdAmountDidChange}
-              value={this.state.amountUSD}
+              value={this.props.states.send.amountUSD}
             />
             <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>Max</UI.Button>
           </div>
@@ -119,11 +119,11 @@ export default class SendCoinsModal extends React.Component {
   }
 
   __load = () => {
-    this.setState({ loadingStatus: 'loading' });
+    this.__setState({ loadingStatus: 'loading' });
     walletsActions.getWallets().then((wallets) => {
-      this.setState({ loadingStatus: '', wallets });
+      this.__setState({ loadingStatus: '', wallets });
     }).catch(() => {
-      this.setState({ loadingStatus: 'failed' });
+      this.__setState({ loadingStatus: 'failed' });
     });
   };
 
@@ -132,7 +132,7 @@ export default class SendCoinsModal extends React.Component {
       return false;
     }
 
-    this.setState({ amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd) });
+    this.__setState({ amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd) });
   };
 
   __usdAmountDidChange = (amountUSD) => {
@@ -140,40 +140,43 @@ export default class SendCoinsModal extends React.Component {
       return false;
     }
 
-    this.setState({ amountUSD, amount: utils.formatDouble(amountUSD / this.wallet.to_usd) });
+    this.__setState({ amountUSD, amount: utils.formatDouble(amountUSD / this.wallet.to_usd) });
   };
 
   __addressChange = (address) => {
-    this.setState({ address });
+    this.__setState({ address });
   };
 
   __maxDidPress = () => {
     const amount = this.wallet.amount;
-    this.setState({ amount: amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd) });
+    this.__setState({ amount: amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd) });
+  };
+
+  __setState = (value, key = null) => {
+    this.props.setStateByModalPage('send', value, key);
   };
 
   __checkItsReady() {
-    return this.state.address.length > 0 &&
-      this.state.selectedWallet &&
-      this.state.amount > 0 &&
-      this.state.amountUSD > 0;
+    return this.props.states.send.address.length > 0 &&
+      this.props.states.send.address.length < 256 &&
+      this.props.states.send.selectedWallet &&
+      this.props.states.send.amount > 0 &&
+      this.props.states.send.amountUSD > 0;
   }
 
   __sendButtonHandler = () => {
     if (!this.__checkItsReady()) return;
-
     this.props.openModalPage('confirm', {
-      currency: this.state.currency,
-      amount: this.state.amount,
-      address: this.state.address
+      wallet_id: this.getSelectedWalletInfo[0].id,
+      currency: this.props.states.send.currency,
+      amount: this.props.states.send.amount,
+      address: this.props.states.send.address
     });
-    return;
-
-    const params = {
-      //wallet_id: this.state.selectedWallet.id,
-      address: this.state.address,
-      amount: this.state.amount,
-      //ga_code: ""
-    };
   }
 }
+
+const mapStateToProps = (state) => ({ ...state.modalGroup });
+
+export default connect(mapStateToProps, {
+  setStateByModalPage: modalGroupActions.setStateByModalPage,
+})(React.memo(SendCoinsModal));

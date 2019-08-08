@@ -45,7 +45,9 @@ class Input extends React.Component {
     return (
       <div className="Input__wrapper" onClick={this.props.onClick}>
         {cont}
-        {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth && this.setState({ indicatorWidth: ref.offsetWidth })}>{this.props.indicator}</div>}
+
+        {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
+          this.setState({ indicatorWidth: (ref || 0) })}>{this.props.indicator}</div>}
       </div>
     )
   }

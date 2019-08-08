@@ -5,7 +5,7 @@ import UI from '../../../ui';
 import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../actions';
-import * as modalGroupActions from '../../../actions/modalGroup';
+import * as walletsActions from '../../../actions/cabinet/wallets';
 import * as utils from '../../../utils';
 
 import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow';
@@ -36,7 +36,7 @@ export default class SendCoinsConfirmModal extends React.Component {
   }
 
   __renderContent() {
-    const {currencyInfo, currency, address, amount, fee}  = Object.assign({...this.props}, {
+    const {currencyInfo, currency, address, amount}  = Object.assign({...this.props}, {
       currencyInfo: this.currencyInfo,
       currency: this.currency.toUpperCase(),
     });
@@ -56,7 +56,7 @@ export default class SendCoinsConfirmModal extends React.Component {
             </div>
           </InfoRow>
           <InfoRow label="Amount">{utils.formatDouble(amount)} {currency}</InfoRow>
-          <InfoRow label="Fee">{utils.formatDouble(fee)} {currency}</InfoRow>
+          {/*<InfoRow label="Fee">{utils.formatDouble(fee)} {currency}</InfoRow>*/}
         </InfoRowGroup>
         <div className="SendCoinsConfirmModal__card">
           <div className="SendCoinsConfirmModal__card__icon">
@@ -96,7 +96,18 @@ export default class SendCoinsConfirmModal extends React.Component {
     }
   };
 
-  __handleSubmit = () => {
+  __buildParams() {
+    const {address, wallet_id, amount} = this.props;
+    return {address, wallet_id, amount, ga_code: this.state.gaCode};
+  }
 
+  __handleSubmit = () => {
+    walletsActions.sendCoins(this.__buildParams()).then((info) => {
+      console.log(1, info);
+    }).catch((info) => {
+      console.log('failed', info);
+    });
+
+    //walletsActions.sendCoins()
   }
 }

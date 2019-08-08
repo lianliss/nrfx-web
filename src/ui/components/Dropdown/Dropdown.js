@@ -16,7 +16,9 @@ function Dropdown(props) {
   });
 
   useEffect(() => {
-    props.onChange(props.options[0]);
+    if (!props.value) {
+      props.onChange(props.options[0]);
+    }
   }, []);
 
   return [
@@ -36,7 +38,7 @@ function Dropdown(props) {
             {
               props.options.map((opt, i) => {
                 return <div
-                  key={i}
+                  key={Math.random()}
                   className="Dropdown__option key"
                   onClick={() => {
                     props.onChange(opt);

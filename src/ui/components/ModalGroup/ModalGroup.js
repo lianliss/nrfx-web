@@ -18,6 +18,8 @@ import ModalPage from '../ModalPage/ModalPage';
 import * as modalGroupActions from '../../../actions/modalGroup';
 import * as modalGroupConstant from '../../../constants/modalGroup';
 
+import router from '../../../router';
+
 import {connect} from "react-redux";
 
 const ModalGroupRoutes = {
@@ -27,15 +29,24 @@ const ModalGroupRoutes = {
     third: {children: TestModalThird}
   },
   cabinet_wallet: {
-    send: {children: SendCoinsModal},
+    send: {
+      children: SendCoinsModal,
+      onCloseHandler: () => {
+        if (!router.getState().params.hasOwnProperty(modalGroupConstant.MODALGROUP_GET_PARAM)) {
+          modalGroupActions.setStateByModalPage('send', {
+            selectedWallet: false,
+            currency: 'btc',
+            loadingStatus: '',
+            wallets: [],
+            amount: 0,
+            amountUSD: 0,
+            address: ''
+          });
+        }
+      }},
     confirm: {children: SendCoinsConfirmModal},
     receive: {children: ReceiveCoinsModal},
-    transaction: {
-      children: WalletTransactionModal,
-      onCloseHandler: () => {
-
-      }
-    }
+    transaction: {children: WalletTransactionModal,}
   },
   investments: {
     open_deposit: {children: OpenDepositModal}
@@ -180,5 +191,5 @@ class ModalGroup extends React.Component {
 const mapStateToProps = (state) => ({...state.modalGroup});
 
 export default connect(mapStateToProps, {
-  modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal,
+  modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal
 })(React.memo(ModalGroup));

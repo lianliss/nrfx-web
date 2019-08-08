@@ -10,6 +10,15 @@ export function modalGroupSetActiveModal(name) {
   });
 }
 
+export function setStateByModalPage(modalPageName, value, key) {
+  return store.dispatch({
+    type: actionTypes.MODALGROUP_SET_STATE_BY_MODALPAGE,
+    modalPageName,
+    value,
+    key
+  });
+}
+
 export function openModalPage(name, sendParams = {}) {
   let routerParams = {...router.getState().params} || {};
 
