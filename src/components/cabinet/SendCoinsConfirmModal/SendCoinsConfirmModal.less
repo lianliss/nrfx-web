@@ -67,3 +67,37 @@
     color: var(--color-green);
   }
 }
+
+.SendCoinsConfirmModal__input_wrapper {
+  position: relative;
+
+  .Input {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.08);
+    margin: 40px 0 0 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    border: 1px solid #f1f1f1;
+    -webkit-appearance: none;
+
+    &::placeholder {
+      color: var(--primary-grey);
+    }
+  }
+
+  img {
+    position: absolute;
+    transform: translate(338px, -36px);
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.SendCoinsConfirmModal__submit_wrapper {
+  width: 100%;
+  display: flex;
+  padding-top: 40px;
+  .Button {
+    margin: auto;
+  }
+}

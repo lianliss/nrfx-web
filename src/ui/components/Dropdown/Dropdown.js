@@ -1,11 +1,10 @@
 import './Dropdown.less';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 
 import { classNames } from '../../utils';
-
 
 function Dropdown(props) {
   const [isOpen, toggle] = useState(false);
@@ -15,6 +14,10 @@ function Dropdown(props) {
     Dropdown: true,
     Dropdown_open: isOpen,
   });
+
+  useEffect(() => {
+    props.onChange(props.options[0]);
+  }, []);
 
   return [
     <div className={className}>
@@ -55,7 +58,7 @@ function Dropdown(props) {
 const optionType = PropTypes.shape({
   value: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number,
+    PropTypes.number
   ]),
   title: PropTypes.oneOfType([
     PropTypes.string,
@@ -69,7 +72,10 @@ const optionType = PropTypes.shape({
 });
 
 Dropdown.propTypes = {
-  value: optionType,
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    optionType
+  ]),
   options: PropTypes.arrayOf(optionType).isRequired,
   onChange: PropTypes.func.isRequired,
 };

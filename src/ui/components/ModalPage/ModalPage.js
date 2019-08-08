@@ -29,7 +29,7 @@ class ModalPage extends Component {
   componentWillUnmount() {
     //this.__toggleDocumentScrolling(true);
     document.removeEventListener("mousedown", this.__handleClick);
-    this.__onCloseHandler();
+    this.props.onCloseHandler();
   }
 
   get child() {
@@ -73,11 +73,6 @@ class ModalPage extends Component {
   //   event.preventDefault();
   // };
 
-  __onCloseHandler = () => {
-    if (this.props.onCloseHandler) {
-      return this.props.onCloseHandler();
-    }
-  };
 
   __handleClick = e => {
     if (!(this.node.current && this.node.current.contains(e.target))) {
@@ -85,6 +80,10 @@ class ModalPage extends Component {
     }
   };
 }
+
+ModalPage.defaultProps = {
+  onCloseHandler: () => {}
+};
 
 export default React.memo(ModalPage);
 

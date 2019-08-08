@@ -169,8 +169,6 @@ export default class SendCoinsModal extends React.Component {
     });
     return;
 
-    this.props.openModalPage('receive');
-    return;
     const params = {
       //wallet_id: this.state.selectedWallet.id,
       address: this.state.address,

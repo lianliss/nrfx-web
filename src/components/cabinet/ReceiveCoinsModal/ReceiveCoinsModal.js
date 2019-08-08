@@ -104,7 +104,7 @@ export default class ReceiveCoinsModal extends React.Component {
               {this.state.isCopied && <SVG src={require('../../../asset/16px/check.svg')} className="ReceiveCoinsModal__copied_icon" />}
               <UI.Button onClick={() => {
                 if (this.state.isCopied) {
-                  window.history.back();
+                  this.props.close();
                 } else {
                   this.__copy();
                 }
