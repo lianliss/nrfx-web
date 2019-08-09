@@ -9,26 +9,17 @@ import * as utils from '../../../utils';
 import * as actions from '../../../actions';
 
 export default class DepositInfoModal extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-      deposit: null
-    };
-  }
-
   render() {
-    const deposit = this.state.deposit;
-    if (!deposit) {
+    if (!this.props.deposit) {
       return null;
     }
 
+    const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
 
     return (
-      <UI.Modal noSpacing isOpen={this.state.isOpen} onClose={() => this.setState({ isOpen: false })}>
+      <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
           Deposit {deposit.percent}% {deposit.description}
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
@@ -46,7 +37,7 @@ export default class DepositInfoModal extends React.Component {
             <InfoRowGroup className="DepositInfoModal__column">
               <InfoRow label="Period">{deposit.passed_days} / {deposit.days} Days</InfoRow>
               <InfoRow label="Amount">{deposit.amount} {currency}</InfoRow>
-              <InfoRow label="Profit">{deposit.profit} {currency} (78%)</InfoRow>
+              <InfoRow label="Profit">{deposit.profit.toFixed(4)} {currency} (78%)</InfoRow>
               <InfoRow label="Estimated">120 {currency} (78%)</InfoRow>
               <InfoRow label="In Fiat">1456 USD</InfoRow>
               <InfoRow label="Avalible">120 {currency}</InfoRow>
@@ -60,9 +51,5 @@ export default class DepositInfoModal extends React.Component {
         </div>
       </UI.Modal>
     )
-  }
-
-  show(deposit) {
-    this.setState({ isOpen: true, deposit })
   }
 }

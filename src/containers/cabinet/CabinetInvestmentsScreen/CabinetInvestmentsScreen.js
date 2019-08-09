@@ -14,21 +14,10 @@ import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStat
 import * as investmentsActions from '../../../actions/cabinet/investments';
 import * as utils from '../../../utils';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import DepositInfoModal from '../../../components/cabinet/DepositInfoModal/DepositInfoModal';
 
-import * as actions from '../../../actions';
 import * as modalGroupActions from '../../../actions/modalGroup';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isDepositInfoModalShown: false,
-      isOpenDepositModalShown: false
-    };
-  }
-
   get section() {
     return this.props.routerParams.section || 'default';
   }
@@ -70,9 +59,11 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             section: this.props.routerParams.section,
             appName: 'Investments',
             items: [
-              <ProfileSidebarItem onClick={() => {modalGroupActions.openModalPage('open_deposit', {
-                x: 2, b: 3, gg: '2344'
-              })}} icon={require('../../../asset/24px/plus-circle.svg')} label="New" />,
+              <ProfileSidebarItem
+                onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+                icon={require('../../../asset/24px/plus-circle.svg')}
+                label="New"
+              />,
               <ProfileSidebarItem section="profits" icon={require('../../../asset/24px/invest.svg')} label="Profit" />,
               <ProfileSidebarItem section="withdrawals" icon={require('../../../asset/24px/send.svg')} label="Withdrawals" />
             ]
@@ -80,7 +71,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
         >
           {this.__renderContent()}
         </PageContainer>
-        {this.__renderDepositInfoModal()}
       </div>
     )
   }
@@ -276,7 +266,9 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
       item.localId = i + 1;
       return (
-        <UI.TableCell key={item.id} onClick={() => this.__showDepositInfoModal(item)}>
+        <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
+          deposit: JSON.stringify(item)
+        })}}>
           <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path opacity="0.2" d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12Z" stroke="#24B383" strokeWidth="2"/>
@@ -306,14 +298,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       </UI.Table>
     )
   }
-
-  __renderDepositInfoModal() {
-    return (
-      <DepositInfoModal ref="deposit_info_modal" />
-    )
-  }
-
-  __showDepositInfoModal = (deposit) => this.refs['deposit_info_modal'].show(deposit);
 }
 
 const mapStateToProps = (state) => ({ ...state.investments });

@@ -17,13 +17,13 @@ class SendCoinsModal extends React.Component {
   }
 
   get getSelectedWalletInfo() {
-    return this.props.states.send.wallets.filter(wallet => wallet.currency === this.props.states.send.selectedWallet.value);
+    return this.props.thisState.wallets.filter(wallet => wallet.currency === this.props.thisState.selectedWallet.value);
   }
 
   get wallet() {
-    for (let i = 0; i < this.props.states.send.wallets.length; i++) {
-      if (this.props.states.send.wallets[i].currency === this.props.states.send.currency) {
-        return this.props.states.send.wallets[i];
+    for (let i = 0; i < this.props.thisState.wallets.length; i++) {
+      if (this.props.thisState.wallets[i].currency === this.props.thisState.currency) {
+        return this.props.thisState.wallets[i];
       }
     }
   }
@@ -33,7 +33,7 @@ class SendCoinsModal extends React.Component {
   }
 
   render() {
-    const currencyInfo = this.props.states.send.currency ? actions.getCurrencyInfo(this.props.states.send.currency) : {};
+    const currencyInfo = this.props.thisState.currency ? actions.getCurrencyInfo(this.props.thisState.currency) : {};
     return (
       <UI.Modal isOpen={true} onClose={() => this.props.close()} width={552}>
         <UI.ModalHeader>
@@ -45,17 +45,17 @@ class SendCoinsModal extends React.Component {
   }
 
   __renderContent() {
-    if (this.props.states.send.loadingStatus) {
+    if (this.props.thisState.loadingStatus) {
       return (
         <LoadingStatus
           inline
-          status={this.props.states.send.loadingStatus}
+          status={this.props.thisState.loadingStatus}
         />
       )
     } else {
-      const currencyInfo = actions.getCurrencyInfo(this.props.states.send.currency);
+      const currencyInfo = actions.getCurrencyInfo(this.props.thisState.currency);
 
-      const options = this.props.states.send.wallets.map((item) => {
+      const options = this.props.thisState.wallets.map((item) => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -74,18 +74,18 @@ class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__wallet">
             <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
             {options.length > 0 && <UI.Dropdown
-              placeholder={this.props.states.send.selectedWallet}
-              value={this.props.states.send.selectedWallet}
+              placeholder={this.props.thisState.selectedWallet}
+              value={this.props.thisState.selectedWallet}
               options={options}
               onChange={(item) => {
                 this.__setState({currency: item.value, selectedWallet: item });
-                this.__amountDidChange(this.props.states.send.amount);
+                this.__amountDidChange(this.props.thisState.amount);
               }}
             />}
           </div>
           <div className="SendCoinsModal__row">
             <UI.Input
-              value={this.props.states.send.address}
+              value={this.props.thisState.address}
               placeholder="Enter BitcoinBot Login or Wallet Address"
               onTextChange={this.__addressChange}
             />
@@ -93,15 +93,15 @@ class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__row SendCoinsModal__amount">
             <UI.Input
               placeholder="0"
-              indicator={this.props.states.send.currency.toUpperCase()}
+              indicator={this.props.thisState.currency.toUpperCase()}
               onTextChange={this.__amountDidChange}
-              value={this.props.states.send.amount || ''}
+              value={this.props.thisState.amount || ''}
             />
             <UI.Input
               placeholder="0"
               indicator="USD"
               onTextChange={this.__usdAmountDidChange}
-              value={this.props.states.send.amountUSD}
+              value={this.props.thisState.amountUSD}
             />
             <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>Max</UI.Button>
           </div>
@@ -157,25 +157,25 @@ class SendCoinsModal extends React.Component {
   };
 
   __checkItsReady() {
-    return this.props.states.send.address.length > 0 &&
-      this.props.states.send.address.length < 256 &&
-      this.props.states.send.selectedWallet &&
-      this.props.states.send.amount > 0 &&
-      this.props.states.send.amountUSD > 0;
+    return this.props.thisState.address.length > 0 &&
+      this.props.thisState.address.length < 256 &&
+      this.props.thisState.selectedWallet &&
+      this.props.thisState.amount > 0 &&
+      this.props.thisState.amountUSD > 0;
   }
 
   __sendButtonHandler = () => {
     if (!this.__checkItsReady()) return;
     this.props.openModalPage('confirm', {
       wallet_id: this.getSelectedWalletInfo[0].id,
-      currency: this.props.states.send.currency,
-      amount: this.props.states.send.amount,
-      address: this.props.states.send.address
+      currency: this.props.thisState.currency,
+      amount: this.props.thisState.amount,
+      address: this.props.thisState.address
     });
   }
 }
 
-const mapStateToProps = (state) => ({ ...state.modalGroup });
+const mapStateToProps = (state) => ({ thisState: {...state.modalGroup.states.send} });
 
 export default connect(mapStateToProps, {
   setStateByModalPage: modalGroupActions.setStateByModalPage,

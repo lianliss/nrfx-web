@@ -2,7 +2,8 @@ import './ModalPage.less';
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classNames} from '../../../utils/index';
+import {classNames, b64DecodeUnicode} from '../../../utils/index';
+import {MODALGROUP_SEPARATOR} from '../../../constants/modalGroup';
 
 class ModalPage extends Component {
   static propTypes = {
@@ -13,7 +14,6 @@ class ModalPage extends Component {
 
   constructor(props) {
     super(props);
-
     this.node = React.createRef();
     this.mainClassName = classNames({
       ModalPage: true,
@@ -34,10 +34,20 @@ class ModalPage extends Component {
 
   get child() {
     const Child = this.props.children;
+    const getStateParams = this.props.router.getState().params;
+    const getParams = {};
+    if (getStateParams.hasOwnProperty('rp')) {
+      let rp = getStateParams.rp.split(MODALGROUP_SEPARATOR);
+      if (rp.length > 0) {
+        rp.forEach(param => {
+          getParams[param] = b64DecodeUnicode(getStateParams[param]);
+        })
+      }
+    }
     return <Child
       close={this.props.close}
       openModalPage={this.props.openModalPage}
-      {...this.props.router.getState().params}
+      {...getParams}
     />
   }
 

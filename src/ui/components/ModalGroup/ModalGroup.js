@@ -12,6 +12,7 @@ import SendCoinsConfirmModal from '../../../components/cabinet/SendCoinsConfirmM
 
 // investments
 import OpenDepositModal from '../../../components/cabinet/OpenDepositModal/OpenDepositModal';
+import DepositInfoModal from '../../../components/cabinet/DepositInfoModal/DepositInfoModal';
 
 import ModalPage from '../ModalPage/ModalPage';
 
@@ -44,11 +45,14 @@ const ModalGroupRoutes = {
           });
         }
       }},
-    confirm: {children: SendCoinsConfirmModal},
+    confirm: {
+      children: SendCoinsConfirmModal
+    },
     receive: {children: ReceiveCoinsModal},
     transaction: {children: WalletTransactionModal,}
   },
   investments: {
+    deposit_info: {children: DepositInfoModal},
     open_deposit: {children: OpenDepositModal}
   }
 };

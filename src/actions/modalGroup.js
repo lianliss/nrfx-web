@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 import store from '../store';
 import router from "../router";
 import * as modalGroupConstant from '../constants/modalGroup';
+import * as utils from '../utils';
 
 export function modalGroupSetActiveModal(name) {
   return store.dispatch({
@@ -25,6 +26,10 @@ export function openModalPage(name, sendParams = {}) {
   routerParams.modal_group = (
     routerParams.modal_group ? routerParams.modal_group + modalGroupConstant.MODALGROUP_SEPARATOR : ''
   ) + name;
+
+  for (let key in sendParams) {
+    sendParams[key] = utils.b64EncodeUnicode(sendParams[key]);
+  }
 
   const routerSendParams = {...routerParams, ...sendParams};
 

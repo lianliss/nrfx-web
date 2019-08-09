@@ -97,6 +97,10 @@ export function post(name, params = {}) {
   return invoke('POST', name, params);
 }
 
+export function put(name, params = {}) {
+  return invoke('PUT', name, params);
+}
+
 export function del(name, params = {}) {
   return invoke('DELETE', name, params);
 }
