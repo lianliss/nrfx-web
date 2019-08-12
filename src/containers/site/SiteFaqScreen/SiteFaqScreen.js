@@ -84,8 +84,8 @@ export default class SiteFaqScreen extends BaseScreen {
             <p className="SiteFaqScreen__more_questions__text">
               {this.lang.site.faqMoreQuestions}
               <br />
-              <a className="SiteFaqScreen__more_questions__email" href="mailto:someone@example.com?Subject=Hello%20again" target="_top">
-                support@bitcoinbot.com
+              <a className="SiteFaqScreen__more_questions__email" href="mailto:support@bitcoinbot.pro" target="_top">
+                support@bitcoinbot.pro
               </a>
             </p>
           </div>
