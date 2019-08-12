@@ -10,6 +10,7 @@ import ActionCardBox from './components/ActionCardBox';
 import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
 
 import * as walletsActions from '../../../actions/cabinet/wallets';
+import * as pages from '../../../constants/pages';
 import {connect} from "react-redux";
 
 class CabinetStartProfileScreen extends CabinetBaseScreen {
@@ -66,7 +67,13 @@ class CabinetStartProfileScreen extends CabinetBaseScreen {
             appName: 'Welcome',
             items: [
               <ProfileSidebarItem icon={require('../../../asset/24px/send.svg')} label="Verification" />,
-              <ProfileSidebarItem icon={require('../../../asset/24px/settings.svg')} label="Settings" />,
+              <ProfileSidebarItem
+                onClick={
+                  () => {this.props.router.navigate(pages.SETTINGS)}
+                }
+                icon={require('../../../asset/24px/settings.svg')}
+                label="Settings"
+              />,
               <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
               <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
             ]

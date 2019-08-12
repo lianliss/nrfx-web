@@ -20,6 +20,7 @@ import CabinetStartProfileScreen from './containers/cabinet/CabinetStartProfileS
 import CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
+import CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
 
 export default function Routes(props) {
 
@@ -93,6 +94,9 @@ export default function Routes(props) {
       break;
     case pages.START_PROFILE:
       Component = CabinetStartProfileScreen;
+      break;
+    case pages.SETTINGS:
+      Component = CabinetSettingsScreen;
       break;
     case pages.INVESTMENTS:
       Component = CabinetInvestmentsScreen;

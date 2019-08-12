@@ -1,0 +1,47 @@
+.CabinetSettingsScreen__main {
+  width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  .CabinetSettingsScreen__w100wrapper {
+    width: 100%;
+    display: flex;
+  }
+  .CabinetSettingsScreen__header {
+    width: 100%;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 24px;
+  }
+  .CabinetSettingsScreen__relative {
+    position: relative;
+  }
+  .CabinetSettingsScreen__form.left {
+    width: 344px;
+    margin: auto;
+    .CabinetSettingsScreen__input_field {
+      width: 100%;
+      margin-bottom: 40px;
+    }
+  }
+  .CabinetSettingsScreen__form.right {
+    width: calc(100% - 344px);
+    margin: auto;
+    .Button {
+      position: absolute;
+      bottom: 40px;
+      right: 0;
+      width: calc(100% - 360px);
+    }
+  }
+  .CabinetSettingsScreen__space {
+    width: 100%;
+    height: 40px;
+  }
+
+  .CabinetSettingsScreen__inputWithoutEffects {
+    input {
+      box-shadow: none;
+      padding: 0;
+    }
+  }
+}

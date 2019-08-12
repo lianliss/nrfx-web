@@ -4,14 +4,40 @@ import React from 'react';
 import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 
+import DropDown from './components/Dropdown';
 import Badge from '../Badge/Badge';
 import router from '../../../router';
 import * as pages from '../../../constants/pages';
+import * as utils from "../../../utils";
 
 function Header() {
   // const handleNavigate = (route) => {
   //   router.navigate(route);
   // }
+
+  const DropDownLinks = [
+    {
+      title: <SVG src={require('../../../asset/cabinet/settings.svg')} />,
+      children: [
+        {
+          title: "Settings",
+          route: pages.SETTINGS
+        },
+        {
+          title: "FAQ",
+          route: pages.FAQ
+        },
+        {
+          title: "Exit",
+          route: pages.WALLET
+        },
+      ]
+    }
+  ];
+
+  const handleNavigate = (route) => {
+    router.navigate(route);
+  };
 
   return (
     <div className="CabinetHeaderContainer">
@@ -30,7 +56,7 @@ function Header() {
               Investments
             </BaseLink>
 
-            <div className="CabinetHeader__link">
+            <div className="CabinetHeader__link" style={{display:'none'}}>
               <SVG src={require('../../../asset/cabinet/bots_icon.svg')} />
               Bots
             </div>
@@ -56,7 +82,13 @@ function Header() {
               <SVG src={require('../../../asset/cabinet/social.svg')} />
             </div>
             <div className="CabinetHeader__icon">
-              <SVG src={require('../../../asset/cabinet/settings.svg')} />
+              <DropDown
+                key={DropDownLinks[0].title}
+                title={DropDownLinks[0].title}
+                onNavigate={handleNavigate}
+                subItems={DropDownLinks[0].children}
+                className={"CabinetHeader__DropDown_settings"}
+              />
             </div>
           </div>
         </div>

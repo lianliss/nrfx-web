@@ -75,6 +75,10 @@ export const routes = [
     path: '/cabinet_wallet',
   },
   {
+    name: pages.SETTINGS,
+    path: '/settings',
+  },
+  {
     name: pages.START_PROFILE,
     path: '/start_profile',
   },

@@ -17,8 +17,13 @@ class Input extends React.Component {
   render() {
     const className = classNames({
       Input: true,
-      multiLine: this.props.multiLine
+      multiLine: this.props.className
     });
+
+    let InputWrapper = 'Input__wrapper';
+    if (this.props.classNameWrapper) {
+      InputWrapper += ' ' + this.props.classNameWrapper;
+    }
 
     let params = {
       className,
@@ -39,11 +44,17 @@ class Input extends React.Component {
     if (this.props.multiLine) {
       cont = <textarea ref="input" {...params} onChange={this.__onChange}>{this.props.value}</textarea>;
     } else {
-      cont = <input ref="input" {...params} value={this.props.value} onChange={this.__onChange} />;
+      cont = <input
+        ref="input"
+        {...params}
+        value={this.props.value}
+        onChange={this.__onChange}
+        disabled={this.props.disabled}
+      />;
     }
 
     return (
-      <div className="Input__wrapper" onClick={this.props.onClick}>
+      <div className={InputWrapper} onClick={this.props.onClick}>
         {cont}
 
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
@@ -58,6 +69,11 @@ class Input extends React.Component {
   };
 }
 
+Input.defaultProps = {
+  classNameWrapper: '',
+  disabled: false,
+};
+
 Input.propTypes = {
   placeholder: PropTypes.any,
   onChange: PropTypes.func,
@@ -65,7 +81,9 @@ Input.propTypes = {
   multiLine: PropTypes.bool,
   value: PropTypes.any,
   indicator: PropTypes.node,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  classNameWrapper: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default React.memo(Input);
