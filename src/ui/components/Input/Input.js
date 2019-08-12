@@ -17,7 +17,7 @@ class Input extends React.Component {
   render() {
     const className = classNames({
       Input: true,
-      multiLine: this.props.className
+      multiLine: this.props.multiLine
     });
 
     let InputWrapper = 'Input__wrapper';
