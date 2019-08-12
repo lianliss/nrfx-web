@@ -21,7 +21,6 @@ import CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScr
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
 
-
 export default function Routes(props) {
 
   const routeState = props.router.getState();
