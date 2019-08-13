@@ -14,6 +14,11 @@ import SendCoinsConfirmModal from '../../../components/cabinet/SendCoinsConfirmM
 import OpenDepositModal from '../../../components/cabinet/OpenDepositModal/OpenDepositModal';
 import DepositInfoModal from '../../../components/cabinet/DepositInfoModal/DepositInfoModal';
 
+// settings
+import GAConfirmModal from '../../../components/cabinet/GAConfirmModal/GAConfirmModal';
+import ChangeEmailModal from '../../../components/cabinet/ChangeEmailModal/ChangeEmailModal';
+import ChangeNumberModal from '../../../components/cabinet/ChangeNumberModal/ChangeNumberModal';
+
 import ModalPage from '../ModalPage/ModalPage';
 
 import * as modalGroupActions from '../../../actions/modalGroup';
@@ -54,6 +59,11 @@ const ModalGroupRoutes = {
   investments: {
     deposit_info: {children: DepositInfoModal},
     open_deposit: {children: OpenDepositModal}
+  },
+  settings: {
+    ga_confirm: {children: GAConfirmModal},
+    change_email: {children: ChangeEmailModal},
+    change_number: {children: ChangeNumberModal},
   }
 };
 

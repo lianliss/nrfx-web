@@ -22,7 +22,7 @@ export function setStateByModalPage(modalPageName, value, key) {
 
 export function openModalPage(name, sendParams = {}) {
   let routerParams = {...router.getState().params} || {};
-
+  console.log(router.getState())
   routerParams.modal_group = (
     routerParams.modal_group ? routerParams.modal_group + modalGroupConstant.MODALGROUP_SEPARATOR : ''
   ) + name;
@@ -37,7 +37,7 @@ export function openModalPage(name, sendParams = {}) {
     routerSendParams.rp = Object.keys({...sendParams}).join(modalGroupConstant.MODALGROUP_SEPARATOR);
   }
 
-  router.navigate(router.getState().name, routerSendParams, () => {
+  router.navigate(router.getState().name, {...routerSendParams, skipLocationChange: true}, () => {
     modalGroupSetActiveModal(name);
   });
 }

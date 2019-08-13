@@ -58,6 +58,8 @@
     "react-helmet": "^5.2.1",
     "react-inlinesvg": "^0.8.4",
     "react-minimal-pie-chart": "^4.2.0",
+    "react-phone-input-2": "^2.9.5",
+    "react-phone-number-input": "^2.3.21",
     "react-recaptcha-google": "^1.1.1",
     "react-redux": "^7.0.3",
     "react-router5": "^7.1.0",

@@ -40,11 +40,11 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                   <UI.Input placeholder={'Your lastname'} />
                 </div>
                 <div className="CabinetSettingsScreen__input_field">
-                  <UI.Input placeholder={'Your nicname'} />
+                  <UI.Input placeholder={'Your nickname'} />
                 </div>
               </div>
               <div className="CabinetSettingsScreen__form right">
-                <UI.Button type={'outline'}>
+                <UI.Button type={'outline'} onClick={() => {modalGroupActions.openModalPage('ga_confirm')}}>
                   Save
                 </UI.Button>
               </div>
@@ -65,7 +65,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                 </div>
               </div>
               <div className="CabinetSettingsScreen__form right">
-                <UI.Button type={'outline'}>
+                <UI.Button type={'outline'} onClick={() => {modalGroupActions.openModalPage('change_number')}}>
                   Change
                 </UI.Button>
               </div>
@@ -84,7 +84,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                 </div>
               </div>
               <div className="CabinetSettingsScreen__form right">
-                <UI.Button type={'outline'}>
+                <UI.Button type={'outline'} onClick={() => {modalGroupActions.openModalPage('change_email')}}>
                   Change
                 </UI.Button>
               </div>
