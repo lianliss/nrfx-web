@@ -12,7 +12,7 @@ export const getGradientByCurrency = (currency) => {
     default:
       return 'linear-gradient(225deg, #B5B5B5 0%, #838383 100%)';
   }
-}
+};
 
 export const getColorByCurrency = (currency) => {
   switch (currency) {
@@ -28,4 +28,4 @@ export const getColorByCurrency = (currency) => {
     default:
       return '#BFBFBF';
   }
-}
+};

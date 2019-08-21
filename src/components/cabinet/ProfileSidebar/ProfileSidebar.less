@@ -73,6 +73,11 @@
       transition: color 100ms ease-in-out;
       text-decoration: none !important;
       color: var(--foreground-primary);
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
 
       .isvg {
         margin-right: 8px;
@@ -83,6 +88,10 @@
       &:hover, &.active {
         color: var(--primary);
       }
+    }
+
+    .ProfileSidebar__menu__item .active {
+      background-color: #000;
     }
 
     .ProfileSidebar__menu__item_passive {

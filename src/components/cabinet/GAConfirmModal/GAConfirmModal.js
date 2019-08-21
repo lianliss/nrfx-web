@@ -6,6 +6,9 @@ import UI from '../../../ui';
 import * as utils from '../../../utils';
 
 export default class GAConfirmModal extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     gaCode: ''
   };
@@ -55,6 +58,12 @@ export default class GAConfirmModal extends React.Component {
   };
 
   __handleSubmit = () => {
-
+    this.props.params.onChangeHandler();
   }
 }
+
+GAConfirmModal.defaultProps = {
+  params: {
+    onChangeHandler: () => {}
+  }
+};

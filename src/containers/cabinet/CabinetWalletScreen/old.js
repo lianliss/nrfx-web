@@ -8,7 +8,7 @@ import moment from 'moment';
 import { getWallets } from '../../../actions/cabinet/wallets';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
-import WalletBalance from './components/WalletBalance';
+import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 import Table from '../../../ui/components/Table/Table';
 import NewWalletModal from '../../../components/cabinet/NewWalletModal/NewWalletModal';
 import BuyCurrency from './components/BuyCurrency';

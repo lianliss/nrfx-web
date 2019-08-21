@@ -1,8 +1,10 @@
 import * as actionTypes from '../actions/actionTypes';
+import * as modalGroupRoutes from '../constants/modalGroupRoutes';
 
 const initialState = {
   activeModal: null,
   statesInc: 0,
+  modalGroupRoutes: {...modalGroupRoutes.MODALGROUP_ROUTES},
   states: {
     send: {
       selectedWallet: false,
@@ -20,8 +22,16 @@ export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
     case actionTypes.MODALGROUP_SET_ACTIVE_MODAL: {
       return Object.assign({}, state, {
-        activeModal: action.activeModal,
+        activeModal: action.activeModal
       });
+    }
+    case actionTypes.MODALGROUP_ADD_CUSTOM_MODAL: {
+      const modalGroupRoutes = {...state.modalGroupRoutes};
+      if (!modalGroupRoutes.hasOwnProperty(action.routerName)) {
+        modalGroupRoutes[action.routerName] = {};
+      }
+      modalGroupRoutes[action.routerName][action.name] = action.customModalPage;
+      return Object.assign({}, state, {modalGroupRoutes});
     }
     case actionTypes.MODALGROUP_SET_STATE_BY_MODALPAGE: {
       let copy = {...state};
@@ -38,7 +48,6 @@ export default function reduce(state = initialState, action = {}) {
       copy.statesInc = copy.statesInc + 1;
       return copy;
     }
-    default:
-      return state;
+    default: return state;
   }
 }

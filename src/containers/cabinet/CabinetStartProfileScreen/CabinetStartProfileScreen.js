@@ -3,7 +3,7 @@ import './CabinetStartProfileScreen.less';
 import React from 'react';
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
-import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
+import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import ActionCardBox from './components/ActionCardBox';
@@ -11,7 +11,9 @@ import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
 
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import * as pages from '../../../constants/pages';
-import {connect} from "react-redux";
+
+import * as CLASSES from '../../../constants/classes';
+import * as storeUtils from '../../../storeUtils';
 
 class CabinetStartProfileScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -120,8 +122,7 @@ class CabinetStartProfileScreen extends CabinetBaseScreen {
   }
 }
 
-const mapStateToProps = (state) => ({ ...state.wallets });
-
-export default connect(mapStateToProps, {
-  loadWallets: walletsActions.loadWallets
-})(React.memo(CabinetStartProfileScreen));
+export default storeUtils.getWithState(
+  CLASSES.CABINET_START_PFOFILE_SCREEN,
+  CabinetStartProfileScreen
+);

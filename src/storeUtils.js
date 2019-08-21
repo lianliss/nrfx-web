@@ -1,0 +1,62 @@
+import {memo} from 'react';
+import {connect} from 'react-redux';
+import * as CLASSES from './constants/classes';
+import * as walletsActions from './actions/cabinet/wallets';
+import * as modalGroupActions from "./actions/modalGroup";
+import * as investmentsActions from "./actions/cabinet/investments";
+
+export function getWithState(caseName, caseClass) {
+  let mapState2Props = state => ({...state}),
+    mapDispatch2Props = {};
+
+  switch (caseName) {
+    case CLASSES.COMPONENT_MODALGROUP:
+      mapState2Props = (state) => ({ ...state.modalGroup });
+      mapDispatch2Props = {
+        modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal
+      };
+      break;
+    case CLASSES.CABINET_PFOFILE_SCREEN:
+      mapState2Props = (state) => ({ ...state.wallets });
+      mapDispatch2Props = {
+        loadWallets: walletsActions.loadWallets
+      };
+      break;
+    case CLASSES.CABINET_START_PFOFILE_SCREEN:
+      mapState2Props = (state) => ({ ...state.wallets });
+      mapDispatch2Props = {
+        loadWallets: walletsActions.loadWallets
+      };
+      break;
+    case CLASSES.CABINET_WALLET_SCREEN:
+      mapState2Props = (state) => ({ ...state.wallets });
+      mapDispatch2Props = {
+        loadWallets: walletsActions.loadWallets,
+        loadMoreTransactions: walletsActions.loadMoreTransactions,
+      };
+      break;
+    case CLASSES.CABINET_INVESTMENTS_SCREEN:
+      mapState2Props = (state) => ({...state.investments});
+      mapDispatch2Props = {
+        loadInvestments: investmentsActions.loadInvestments,
+        loadProfitHistory: investmentsActions.loadProfitHistory,
+        loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory
+      };
+      break;
+    case CLASSES.CABINET_SETTINGS_SCREEN:
+      mapState2Props = (state) => ({ ...state });
+      mapDispatch2Props = {};
+      break;
+    case CLASSES.SEND_COINS_MODAL:
+      mapState2Props = (state) => ({ thisState: {...state.modalGroup.states.send} });
+      mapDispatch2Props = {
+        setStateByModalPage: modalGroupActions.setStateByModalPage
+      };
+      break;
+    default:
+      mapState2Props = (state) => ({ ...state });
+      mapDispatch2Props = {};
+      break;
+  }
+  return connect(mapState2Props, mapDispatch2Props)(memo(caseClass));
+}

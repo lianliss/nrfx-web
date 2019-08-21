@@ -11,18 +11,34 @@ export function modalGroupSetActiveModal(name) {
   });
 }
 
-export function setStateByModalPage(modalPageName, value, key) {
-  return store.dispatch({
-    type: actionTypes.MODALGROUP_SET_STATE_BY_MODALPAGE,
-    modalPageName,
-    value,
-    key
-  });
+export function modalGroupAddCustomModal(name, routerName, customModalPage, sendParams) {
+  store.dispatch({type: actionTypes.MODALGROUP_ADD_CUSTOM_MODAL, name, routerName, customModalPage});
+  openModalPage(name, sendParams, customModalPage);
 }
 
-export function openModalPage(name, sendParams = {}) {
+export function setStateByModalPage(modalPageName, value, key) {
+  return store.dispatch({type: actionTypes.MODALGROUP_SET_STATE_BY_MODALPAGE, modalPageName, value, key});
+}
+
+function existModalPage(name) {
+  const modalGroupRoutes = store.getState().modalGroup.modalGroupRoutes;
+  if (modalGroupRoutes.hasOwnProperty(router.getState().name)) {
+    return modalGroupRoutes[router.getState().name].hasOwnProperty(name);
+  } else {
+    return false;
+  }
+}
+
+export function openModalPage(name, sendParams = {}, customModal = {}) {
+  if (!existModalPage(name)) {
+    if (Object.keys(customModal).length > 0) {
+      return modalGroupAddCustomModal(name, router.getState().name, customModal, sendParams);
+    } else {
+      return false;
+    }
+  }
+
   let routerParams = {...router.getState().params} || {};
-  console.log(router.getState())
   routerParams.modal_group = (
     routerParams.modal_group ? routerParams.modal_group + modalGroupConstant.MODALGROUP_SEPARATOR : ''
   ) + name;
@@ -37,7 +53,7 @@ export function openModalPage(name, sendParams = {}) {
     routerSendParams.rp = Object.keys({...sendParams}).join(modalGroupConstant.MODALGROUP_SEPARATOR);
   }
 
-  router.navigate(router.getState().name, {...routerSendParams, skipLocationChange: true}, () => {
+  router.navigate(router.getState().name, {...routerSendParams}, {}, () => {
     modalGroupSetActiveModal(name);
   });
 }

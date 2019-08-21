@@ -6,10 +6,10 @@ import UI from '../../../ui';
 import Currency from './components/Currency';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as walletsActions from '../../../actions/cabinet/wallets';
+import * as modalGroupActions from '../../../actions/modalGroup';
 
 function NewWalletModal() {
   let currencies = walletsActions.getNoGeneratedCurrencies();
-
   const getContent = () => {
     if (currencies.length) {
       return (
@@ -29,7 +29,7 @@ function NewWalletModal() {
   };
 
   return (
-    <UI.Modal noSpacing isOpen={true} onClose={() => window.history.back()}>
+    <UI.Modal noSpacing isOpen={true} onClose={() => {arguments[0].close()}}>
       <UI.ModalHeader>
         Create New Wallet
       </UI.ModalHeader>

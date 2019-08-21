@@ -1,5 +1,66 @@
-.ChangeEmailModal__input_wrapper {
+.ChangeNumberModal__input_padding {
+  padding-top: 30px;
+}
+.ChangeNumberModal__PhoneInput_searchClass {
+  padding: 0 !important;
+  .ChangeNumberModal__PhoneInput_searchClass-box {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    border-width: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+    padding: 10px !important;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.33) !important;
+  }
+}
+
+.ChangeNumberModal__PhoneInput_dropdownClass {
+  margin: 10px 0 10px -5px !important;
+  width: 343px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.05) !important;
+  max-height: 250px !important;
+}
+
+.ChangeNumberModal__PhoneInput_buttonClass {
+  background-color: rgba(0, 0, 0, 0) !important;
+  border: none !important;
+  padding-left: 6px !important;
+}
+
+.ChangeNumberModal__PhoneInput_inputClass {
+  height: 48px !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.05);
+  background: var(--uitkit-background) !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  line-height: 20px !important;
+  box-sizing: border-box !important;
+  border: 2px solid rgba(0, 0, 0, 0) !important;
+  outline: none !important;
+  padding: 14px 16px;
+  transition: all 150ms ease-in-out;
+  width: 100% !important;
+}
+
+.ChangeNumberModal__input_wrapper {
   position: relative;
+
+  .react-tel-input .flag {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+  }
+
+  .react-tel-input .country-list .divider {
+    border-bottom: 1px solid rgba(204, 204, 204, 0.33) !important;
+  }
+
+  .react-tel-input .country-list .country.highlight {
+    background-color: rgba(255, 152, 0, 0.06) !important;
+  }
 
   .Input {
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.08);
@@ -23,7 +84,7 @@
   }
 }
 
-.ChangeEmailModal__submit_wrapper {
+.ChangeNumberModal__submit_wrapper {
   width: 100%;
   display: flex;
   padding-top: 40px;

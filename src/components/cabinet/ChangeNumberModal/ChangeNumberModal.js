@@ -27,8 +27,8 @@ export default class ChangeNumberModal extends React.Component {
 
   __renderContent() {
     return (
-      <div>
-        <div className="ChangeEmailModal__input_wrapper">
+      <div className={'ChangeNumberModal__input_padding'}>
+        <div className="ChangeNumberModal__input_wrapper">
           <ReactPhoneInput
             defaultCountry={'ru'}
             value={this.state.phone}
@@ -38,16 +38,16 @@ export default class ChangeNumberModal extends React.Component {
             countryCodeEditable={false}
             searchPlaceholder={'Сountry search or code'}
 
-            // searchClass={{}}
-            // dropdownClass={{}}
-            // buttonClass={{}}
-            // inputClass={{}}
-            // containerClass={{}}
+            searchClass={'ChangeNumberModal__PhoneInput_searchClass'}
+            dropdownClass={'ChangeNumberModal__PhoneInput_dropdownClass'}
+            buttonClass={'ChangeNumberModal__PhoneInput_buttonClass'}
+            inputClass={'ChangeNumberModal__PhoneInput_inputClass'}
+            //containerClass={'ChangeNumberModal__PhoneInput_containerClass'}
 
             preferredCountries={['ru', 'id']}
           />
         </div>
-        <div className="ChangeEmailModal__input_wrapper">
+        <div className="ChangeNumberModal__input_wrapper">
           <UI.Input
             autoFocus
             type="number"
@@ -60,7 +60,7 @@ export default class ChangeNumberModal extends React.Component {
 
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
-        <div className="ChangeEmailModal__submit_wrapper">
+        <div className="ChangeNumberModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6 || !isValidPhoneNumber(this.state.phone)}>
             {utils.getLang('site__authModalSubmit')}
           </UI.Button>

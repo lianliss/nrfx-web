@@ -1,9 +1,15 @@
+import './WalletBalance.less';
 import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import PieChart from 'react-minimal-pie-chart';
 
-import { formatNumber, formatDouble, classNames } from '../../../../utils';
-import { getGradientByCurrency, getColorByCurrency } from '../../../../utils/currencies';
+import { formatNumber, formatDouble, classNames } from '../../../utils/index';
+import { getGradientByCurrency, getColorByCurrency } from '../../../utils/currencies';
+import * as actions from "../../../actions/index";
+import * as utils from "../../../utils/index";
+import UI from '../../../ui/index';
+import * as currencies from "../../../utils/currencies";
+import * as modalGroupActions from "../../../actions/modalGroup";
 
 const getWalletsBalance = (wallets, isInFiat) => {
   let walletsAmount = 0;
@@ -49,6 +55,48 @@ const getWalletsBalance = (wallets, isInFiat) => {
 function WalletBalance({ wallets }) {
   const [ isInFiat, setIsInFiat ] = useState(true);
   const walletsBalance = getWalletsBalance(wallets, isInFiat);
+  if (arguments[0].hasOwnProperty('walletSelected')) {
+    if (arguments[0].walletSelected !== null) {
+      const {amount, currency, to_usd} = arguments[0].walletSelected;
+      const currencyInfo = actions.getCurrencyInfo(currency);
+      const currencyName = utils.ucfirst(currencyInfo.name);
+      const buttonBackgroundColor = currencies.getGradientByCurrency(currency);
+
+      let btc = wallets.filter((wallet) => wallet.currency === 'btc');
+      if (btc.length > 0) {
+        btc = btc[0].to_usd;
+      }
+
+      return <div className="WalletBalance Content_box">
+        <div className="WalletBalance__convert">
+          {amount > 0 ? ((amount * to_usd) / btc).toFixed(4) : 0} BTC
+        </div>
+        <div className="WalletBalance__selected_wallet">
+          <div className="WalletBalance__currency_name">My {currencyName} Wallet</div>
+          <div className="WalletBalance__selected_amount">{amount} {currency.toUpperCase()}</div>
+          <div className="WalletBalance__selected_buttons">
+            <UI.Button
+              disabled={amount === 0}
+              onClick={() => {modalGroupActions.openModalPage('send', {
+                preset: currencyName
+              })}}
+              style={{background: buttonBackgroundColor}}
+            >
+              Send
+            </UI.Button>
+            <UI.Button
+              onClick={() => {modalGroupActions.openModalPage('receive', {
+                preset: currencyName
+              })}}
+              style={{background: buttonBackgroundColor}}
+            >
+              Receive
+            </UI.Button>
+          </div>
+        </div>
+      </div>
+    }
+  }
 
   return (
     <div className="WalletBalance Content_box">
@@ -92,7 +140,7 @@ function WalletBalance({ wallets }) {
           </>
         ) : (
           <div className="Empty_box">
-            <SVG src={require('../../../../asset/cabinet/wallet_colorful.svg')} />
+            <SVG src={require('../../../asset/cabinet/wallet_colorful.svg')} />
             <h3>
               Here will be balance statistics
             </h3>

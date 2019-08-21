@@ -47,6 +47,7 @@ class ModalPage extends Component {
     return <Child
       close={this.props.close}
       openModalPage={this.props.openModalPage}
+      params={this.props.hasOwnProperty('params') ? {...this.props.params} : {}}
       {...getParams}
     />
   }

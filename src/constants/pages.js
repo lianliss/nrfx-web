@@ -17,5 +17,6 @@ export const HELLO = 'hello';
 export const UIKIT = 'uikit';
 export const CABINET_WALLET = 'cabinet_wallet';
 export const START_PROFILE = 'start_profile';
+export const PROFILE = 'profile';
 export const INVESTMENTS = 'investments';
 export const SETTINGS = 'settings';

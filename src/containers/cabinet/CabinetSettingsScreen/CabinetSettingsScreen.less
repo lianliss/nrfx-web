@@ -1,3 +1,19 @@
+.CabinetSettingsScreen__padding_box {
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.CabinetSettingsScreen__header.withPadding {
+  padding: 16px 16px 0;
+}
+.CabinetSettingsScreen__header {
+  width: 100%;
+  font-size: 16px;
+  color: black;
+  margin-bottom: 24px;
+}
+
 .CabinetSettingsScreen__main {
   width: 100%;
   padding: 40px;
@@ -13,12 +29,7 @@
       }
     }
   }
-  .CabinetSettingsScreen__header {
-    width: 100%;
-    font-size: 16px;
-    color: black;
-    margin-bottom: 24px;
-  }
+
   .CabinetSettingsScreen__relative {
     position: relative;
   }
@@ -28,6 +39,19 @@
     .CabinetSettingsScreen__input_field {
       width: 100%;
       margin-bottom: 40px;
+    }
+    .CabinetSettingsScreen__switch_field {
+      width: 100%;
+      display: flex;
+      margin-bottom: 40px;
+      span {
+        height: 50px;
+        line-height: 50px;
+        display: flex;
+        .Switch {
+          margin: auto auto auto 16px;
+        }
+      }
     }
   }
   .CabinetSettingsScreen__form.right {
@@ -56,4 +80,34 @@
       padding: 0;
     }
   }
+}
+
+.CabinetSettingsScreen__switch_item {
+  width: 100%;
+  padding: 8px 0px 8px 16px;
+  box-sizing:border-box;
+  border: 1px solid transparent;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  display: flex;
+  .text_span {
+    width: calc(100% - 60px);
+    height: 28px;
+    line-height: 28px;
+    font-size: 13px;
+  }
+
+  .switch_span {
+    width: 60px;
+  }
+
+  &:hover {
+    background-color: #FBF8F6;
+    border-color: #F5F1EE;
+  }
+}
+
+.CabinetWalletScreen__transactions_padding {
+  margin-top: 24px;
 }

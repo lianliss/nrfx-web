@@ -22,7 +22,7 @@ function Dropdown(props) {
   }, []);
 
   return [
-    <div className={className}>
+    <div className={className} key={Math.random()}>
       <div className="Dropdown__header" onClick={() => toggle(!isOpen)}>
         <div className="Dropdown__option">
           <p className="Dropdown__option__title">{headerText.title}</p>

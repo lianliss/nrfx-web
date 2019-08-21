@@ -17,6 +17,7 @@ import UIKitScreen from './containers/UIKit/UIKitScreen';
 
 import CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
 import CabinetStartProfileScreen from './containers/cabinet/CabinetStartProfileScreen/CabinetStartProfileScreen';
+import CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
 import CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
@@ -94,6 +95,9 @@ export default function Routes(props) {
       break;
     case pages.START_PROFILE:
       Component = CabinetStartProfileScreen;
+      break;
+    case pages.PROFILE:
+      Component = CabinetProfileScreen;
       break;
     case pages.SETTINGS:
       Component = CabinetSettingsScreen;

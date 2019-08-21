@@ -46,6 +46,11 @@ function Header() {
           <div className="CabinetHeader__logo" />
           <div className="CabinetHeader__links">
 
+            <BaseLink router={router} routeName={pages.PROFILE} className="CabinetHeader__link" activeClassName="active">
+              <SVG src={require('../../../asset/cabinet/user.svg')} />
+              Profile
+            </BaseLink>
+
             <BaseLink router={router} routeName={pages.CABINET_WALLET} className="CabinetHeader__link" activeClassName="active">
               <SVG src={require('../../../asset/cabinet/wallet_icon.svg')} />
               Wallets
@@ -61,12 +66,12 @@ function Header() {
               Bots
             </div>
 
-            <div className="CabinetHeader__link">
+            <div className="CabinetHeader__link" style={{display:'none'}}>
               <SVG src={require('../../../asset/cabinet/exchange_icon.svg')} />
               Exchange
             </div>
 
-            <div className="CabinetHeader__link">
+            <div className="CabinetHeader__link" style={{display:'none'}}>
               <SVG src={require('../../../asset/cabinet/commerce_icon.svg')} />
               Commerce
             </div>

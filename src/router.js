@@ -83,6 +83,10 @@ export const routes = [
     path: '/start_profile',
   },
   {
+    name: pages.PROFILE,
+    path: '/profile',
+  },
+  {
     name: pages.INVESTMENTS,
     path: '/investments',
   },

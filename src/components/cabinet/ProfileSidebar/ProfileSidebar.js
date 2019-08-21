@@ -9,9 +9,12 @@ import { classNames, makeModalParams } from '../../../utils';
 import router from '../../../router';
 
 
-function ProfileSidebar({ count, children, items, section, appName }) {
+function ProfileSidebar({ count, children, items, section = null, appName = null }) {
 
   const getBackButton = () => {
+    if (!section || !appName) {
+      return '';
+    }
     const routeName = section ? window.location.pathname.substr(1) : 'profile';
     return (
       <BaseLink
@@ -59,8 +62,8 @@ ProfileSidebar.propTypes = {
   items: PropTypes.node
 };
 
-export function ProfileSidebarItem({ icon, label, onClick, section, isActive, modal }) {
-  const isLink = section || modal;
+export function ProfileSidebarItem({ icon, label, onClick, section, modal, baselink, active }) {
+  const isLink = section || modal || baselink;
   const Component = isLink ? BaseLink : 'div';
 
   let params = {};
@@ -71,16 +74,17 @@ export function ProfileSidebarItem({ icon, label, onClick, section, isActive, mo
   }
 
   if (section) {
-    params.routeParams = { section };
+    params.routeParams = {section};
   } else if (modal) {
     params.routeParams = makeModalParams(modal);
   }
+
 
   return (
     <Component
       className={classNames({
         ProfileSidebar__menu__item: true,
-        active: isActive
+        active
       })}
       onClick={onClick}
       {...params}
@@ -95,9 +99,10 @@ ProfileSidebarItem.propTypes = {
   icon: PropTypes.string,
   label: PropTypes.string,
   onClick: PropTypes.func,
-  isActive: PropTypes.bool,
+  active: PropTypes.bool,
   section: PropTypes.string,
-  modal: PropTypes.string
+  modal: PropTypes.string,
+  baselink: PropTypes.bool
 };
 
 export default ProfileSidebar;

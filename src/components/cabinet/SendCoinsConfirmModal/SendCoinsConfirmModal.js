@@ -12,8 +12,8 @@ import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow
 
 export default class SendCoinsConfirmModal extends React.Component {
   componentWillMount() {
-    this.currencyInfo = actions.getCurrencyInfo(this.props.currency);
-    this.currency = this.props.currency;
+    this.currency = this.props.params.currency;
+    this.currencyInfo = actions.getCurrencyInfo(this.currency);
   }
 
   state = {
@@ -36,7 +36,7 @@ export default class SendCoinsConfirmModal extends React.Component {
   }
 
   __renderContent() {
-    const {currencyInfo, currency, address, amount}  = Object.assign({...this.props}, {
+    const {currencyInfo, currency, address, amount}  = Object.assign({...this.props.params}, {
       currencyInfo: this.currencyInfo,
       currency: this.currency.toUpperCase(),
     });
@@ -97,11 +97,13 @@ export default class SendCoinsConfirmModal extends React.Component {
   };
 
   __buildParams() {
-    const {address, wallet_id, amount} = this.props;
+    const {address, wallet_id, amount} = this.props.params;
     return {address, wallet_id, amount, ga_code: this.state.gaCode};
   }
 
   __handleSubmit = () => {
+    console.log(this.__buildParams());
+    return;
     walletsActions.sendCoins(this.__buildParams()).then((info) => {
       console.log(1, info);
     }).catch((info) => {

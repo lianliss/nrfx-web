@@ -2,7 +2,6 @@ import './CabinetInvestmentsScreen.less';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
-import { connect } from 'react-redux';
 import UI from '../../../ui';
 import moment from 'moment/min/moment-with-locales';
 
@@ -11,11 +10,13 @@ import SummaryItem from './components/SummaryItem';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import Chart from '../../../components/cabinet/Chart/Chart';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
-import * as investmentsActions from '../../../actions/cabinet/investments';
 import * as utils from '../../../utils';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
 import * as modalGroupActions from '../../../actions/modalGroup';
+
+import * as storeUtils from "../../../storeUtils";
+import * as CLASSES from "../../../constants/classes";
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -300,10 +301,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({ ...state.investments });
-
-export default connect(mapStateToProps, {
-  loadInvestments: investmentsActions.loadInvestments,
-  loadProfitHistory: investmentsActions.loadProfitHistory,
-  loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory
-})(React.memo(CabinetInvestmentsScreen));
+export default storeUtils.getWithState(
+  CLASSES.CABINET_INVESTMENTS_SCREEN,
+  CabinetInvestmentsScreen
+);

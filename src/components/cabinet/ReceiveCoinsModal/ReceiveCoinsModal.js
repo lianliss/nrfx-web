@@ -68,6 +68,18 @@ export default class ReceiveCoinsModal extends React.Component {
       });
 
       let wallet = this.wallet;
+      let placeholder = options[0];
+      if (Object.keys(this.state.dropDownCurrentItem).length > 0) {
+        placeholder = this.state.dropDownCurrentItem;
+      } else {
+        let preset = null;
+        if (this.props.hasOwnProperty('preset')) {
+          preset = options.filter((opt) => opt.title === this.props.preset)[0];
+          setTimeout(() => {
+            this.setState({ currency: preset.value, isCopied: false, dropDownCurrentItem: preset });
+          }, 0)
+        }
+      }
 
       return (
         <div className="ReceiveCoinsModal">
@@ -75,9 +87,7 @@ export default class ReceiveCoinsModal extends React.Component {
             <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
             {options.length > 0 &&
               <UI.Dropdown
-                placeholder={
-                  Object.keys(this.state.dropDownCurrentItem).length == 0 ? options[0] : this.state.dropDownCurrentItem
-                }
+                placeholder={placeholder}
                 options={options}
                 onChange={(item) => {
                   this.setState({ currency: item.value, isCopied: false, dropDownCurrentItem: item })

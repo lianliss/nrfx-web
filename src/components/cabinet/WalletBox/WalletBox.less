@@ -7,14 +7,21 @@
     margin-top: 16px;
   }
 
+  .WalletBox__close {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
+
   .WalletBox__icon {
     position: absolute;
-    width: 72px;
+    width: 52px;
     height: 72px;
     top: 0;
     left: 0;
     transform: translateX(-50%);
-    background: no-repeat center/contain;
+    background: no-repeat center/72px;
+    cursor: pointer;
   }
 
   .WalletBox__content {
@@ -24,6 +31,12 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 0;
+    cursor: pointer;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 
     &.new {
       border: 1px solid var(--primary);
@@ -68,6 +81,12 @@
 
 .WalletBox__inactive {
   opacity: 0.5;
+}
+
+.WalletBox__selected {
+  .WalletBox__content h3, .WalletBox__content p {
+    color: white !important;
+  }
 }
 
 @keyframes rotate {
