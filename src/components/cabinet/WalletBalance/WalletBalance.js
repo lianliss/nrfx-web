@@ -54,6 +54,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
 
 function WalletBalance({ wallets }) {
   const [ isInFiat, setIsInFiat ] = useState(true);
+  const [ convert_currency, setConvert_currency ] = useState('BTC');
   const walletsBalance = getWalletsBalance(wallets, isInFiat);
   if (arguments[0].hasOwnProperty('walletSelected')) {
     if (arguments[0].walletSelected !== null) {
@@ -68,8 +69,14 @@ function WalletBalance({ wallets }) {
       }
 
       return <div className="WalletBalance Content_box">
-        <div className="WalletBalance__convert">
-          {amount > 0 ? ((amount * to_usd) / btc).toFixed(4) : 0} BTC
+        <div className="WalletBalance__convert" onClick={() => {
+          convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
+        }}>
+          {'~ '}
+          <span>
+            {amount > 0 ? ( convert_currency === 'BTC' ? ((amount * to_usd) / btc) : (amount * to_usd) ).toFixed(4) : 0}
+            {' ' + convert_currency}
+          </span>
         </div>
         <div className="WalletBalance__selected_wallet">
           <div className="WalletBalance__currency_name">My {currencyName} Wallet</div>

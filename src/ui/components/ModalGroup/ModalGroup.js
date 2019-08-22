@@ -62,7 +62,7 @@ class ModalGroup extends React.Component {
           id={modalPage}
           key={modalPage + i}
           close={this.__close}
-          onCloseHandler={() => modalGroupHandlers.closeHandler(modalPage)}
+          onCloseHandler={() => (modalGroupHandlers.closeHandler(modalPage))}
           openModalPage={modalGroupActions.openModalPage}
           {...this.props.modalGroupRoutes[this.__getRouteName()][modalPage]}
           {...this.props}

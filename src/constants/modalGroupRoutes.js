@@ -7,6 +7,7 @@ import NewWalletModal from '../components/cabinet/NewWalletModal/NewWalletModal'
 // investments
 import OpenDepositModal from '../components/cabinet/OpenDepositModal/OpenDepositModal';
 import DepositInfoModal from '../components/cabinet/DepositInfoModal/DepositInfoModal';
+import WithdrawalModal from '../components/cabinet/WithdrawalModal/WithdrawalModal';
 
 // settings
 import GAConfirmModal from '../components/cabinet/GAConfirmModal/GAConfirmModal';
@@ -22,7 +23,8 @@ const Modals = {
   OpenDepositModal: {children: OpenDepositModal},
   GAConfirmModal: {children: GAConfirmModal},
   ChangeEmailModal: {children: ChangeEmailModal},
-  ChangeNumberModal: {children: ChangeNumberModal}
+  ChangeNumberModal: {children: ChangeNumberModal},
+  WithdrawalModal: {children: WithdrawalModal}
 };
 
 export const MODALGROUP_ROUTES = {
@@ -38,7 +40,8 @@ export const MODALGROUP_ROUTES = {
   },
   investments: {
     deposit_info: Modals.DepositInfoModal,
-    open_deposit: Modals.OpenDepositModal
+    open_deposit: Modals.OpenDepositModal,
+    withdrawal: Modals.WithdrawalModal
   },
   settings: {
     change_email: Modals.ChangeEmailModal,

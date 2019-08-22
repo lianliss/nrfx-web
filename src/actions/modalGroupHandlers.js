@@ -17,6 +17,7 @@ export function closeHandler(modalPageName) {
         });
       }
       break;
-    default:break;
+    default:
+      break;
   }
 }

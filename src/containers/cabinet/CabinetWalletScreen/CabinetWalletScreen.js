@@ -85,6 +85,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   }
 
   __renderRightContent = () => {
+    console.log(3, this.props.wallets);
     return <WalletBalance wallets={this.props.wallets} walletSelected={this.state.walletSelected} />;
   };
 

@@ -12,7 +12,6 @@ import Chart from '../../../components/cabinet/Chart/Chart';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../utils';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-
 import * as modalGroupActions from '../../../actions/modalGroup';
 
 import * as storeUtils from "../../../storeUtils";

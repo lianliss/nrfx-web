@@ -5,20 +5,22 @@ import UI from '../../../ui';
 
 import * as actions from '../../../actions';
 
-export default class WithdrawalModal extends React.Component {
+class WithdrawalModal extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       selectDepositType: 'static'
     };
   }
 
   render() {
+    if (!this.props.hasOwnProperty('currency')) {
+      return '';
+    }
     const currency = this.props.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
     return (
-      <UI.Modal noSpacing isOpen={true} onClose={() => window.history.back()}>
+      <UI.Modal noSpacing isOpen={true} onClose={() => (this.props.close())}>
         <UI.ModalHeader>
           Withdraw Income
         </UI.ModalHeader>
@@ -55,6 +57,7 @@ export default class WithdrawalModal extends React.Component {
       </UI.Modal>
     )
   }
-
-  toggle = (isOpen) => this.setState({ isOpen });
 }
+
+
+export default WithdrawalModal;

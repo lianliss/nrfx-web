@@ -27,7 +27,7 @@ export default class ChangeNumberModal extends React.Component {
 
   __renderContent() {
     return (
-      <div className={'ChangeNumberModal__input_padding'}>
+      <div className="ChangeNumberModal__input_padding">
         <div className="ChangeNumberModal__input_wrapper">
           <ReactPhoneInput
             defaultCountry={'ru'}

@@ -36,7 +36,10 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_INVESTMENTS_SCREEN:
-      mapState2Props = (state) => ({...state.investments});
+      mapState2Props = (state) => {
+        return {...state.investments}
+      };
+
       mapDispatch2Props = {
         loadInvestments: investmentsActions.loadInvestments,
         loadProfitHistory: investmentsActions.loadProfitHistory,

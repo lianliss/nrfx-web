@@ -40,7 +40,7 @@ class ModalPage extends Component {
       let rp = getStateParams.rp.split(MODALGROUP_SEPARATOR);
       if (rp.length > 0) {
         rp.forEach(param => {
-          getParams[param] = b64DecodeUnicode(getStateParams[param]);
+          getParams[param] = (getStateParams[param]);
         })
       }
     }
