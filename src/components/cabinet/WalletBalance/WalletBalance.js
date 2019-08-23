@@ -15,11 +15,13 @@ const getWalletsBalance = (wallets, isInFiat) => {
   let walletsAmount = 0;
   let balancePieStyle = '';
   let walletsBalanceInUSD = 0;
+  let walletsBalanceInAlign = 0;
   let walletsCurrencies = [];
   
   wallets.forEach(item => {
     walletsAmount += item.amount;
     walletsBalanceInUSD += item.amount * item.to_usd;
+    walletsBalanceInAlign += item.align;
   });
 
   if (walletsAmount === 0) {
@@ -29,24 +31,17 @@ const getWalletsBalance = (wallets, isInFiat) => {
   wallets.forEach((wallet, i) => {
     if (wallet.amount !== 0) {
       const color = getColorByCurrency(wallet.currency);
-
-      let value;
-      if (isInFiat) {
-        value = (wallet.amount * wallet.to_usd) / walletsBalanceInUSD * 100;
-      } else {
-        value = wallet.amount / walletsAmount * 100
-      }
-
       walletsCurrencies.push({
         color,
         currency: wallet.currency,
-        value: formatDouble(value, 100),
+        value: formatDouble((wallet.amount * wallet.to_usd) / walletsBalanceInUSD * 100, 100),
       });
     } 
   });
 
   return {
     walletsBalanceInUSD,
+    walletsBalanceInAlign,
     walletsCurrencies,
     balancePieStyle,
   }
@@ -58,15 +53,10 @@ function WalletBalance({ wallets }) {
   const walletsBalance = getWalletsBalance(wallets, isInFiat);
   if (arguments[0].hasOwnProperty('walletSelected')) {
     if (arguments[0].walletSelected !== null) {
-      const {amount, currency, to_usd} = arguments[0].walletSelected;
+      const {amount, currency, to_usd, align} = arguments[0].walletSelected;
       const currencyInfo = actions.getCurrencyInfo(currency);
       const currencyName = utils.ucfirst(currencyInfo.name);
       const buttonBackgroundColor = currencies.getGradientByCurrency(currency);
-
-      let btc = wallets.filter((wallet) => wallet.currency === 'btc');
-      if (btc.length > 0) {
-        btc = btc[0].to_usd;
-      }
 
       return <div className="WalletBalance Content_box">
         <div className="WalletBalance__convert" onClick={() => {
@@ -74,7 +64,7 @@ function WalletBalance({ wallets }) {
         }}>
           {'~ '}
           <span>
-            {amount > 0 ? ( convert_currency === 'BTC' ? ((amount * to_usd) / btc) : (amount * to_usd) ).toFixed(4) : 0}
+            {amount > 0 ? ( convert_currency === 'BTC' ? align : (amount * to_usd) ).toFixed(4) : 0}
             {' ' + convert_currency}
           </span>
         </div>
@@ -112,7 +102,6 @@ function WalletBalance({ wallets }) {
           <>
             <div className="WalletBalance__list">
               <h3>Wallets Balance</h3>
-
               <ul>
                 {walletsBalance.walletsCurrencies.map(wallet => {
                   const gradient = getGradientByCurrency(wallet.currency);
@@ -137,7 +126,12 @@ function WalletBalance({ wallets }) {
               />
 
               <div className="WalletBalance__pie__balance">
-                <h3>${formatNumber(walletsBalance.walletsBalanceInUSD)}</h3>
+                <h3 style={!isInFiat ? {fontSize:20} : {}}>
+                  {
+                    isInFiat ? formatNumber(walletsBalance.walletsBalanceInUSD) +
+                      '$' : '~' + (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
+                  }
+                </h3>
                 <div>
                   <p className={classNames({ active: isInFiat })} onClick={() => setIsInFiat(true)}>USD</p>
                   <p className={classNames({ active: !isInFiat })} onClick={() => setIsInFiat(false)}>BTC</p>

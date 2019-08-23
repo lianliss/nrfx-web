@@ -8,10 +8,12 @@ import { RouterProvider } from 'react-router5';
 import store from './store';
 import router from './router';
 import * as auth from './services/auth';
+import * as user from './actions/user';
 
 require('define').noConflict();
 
 auth.setup();
+user.install();
 
 const wrappedApp = <Provider store={store}>
   <RouterProvider router={router}>

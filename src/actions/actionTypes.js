@@ -3,10 +3,10 @@ export const NAVIGATE = 'NAVIGATE';
 export const SET_LANG = 'SET_LANG';
 export const AUTH = 'AUTH';
 export const STATIC = 'STATIC';
+export const PROFILE = 'PROFILE';
 
 export const PUSH_MODAL = 'PUSH_MODAL';
 export const POP_MODAL = 'POP_MODAL';
-
 
 //cabinet
 export const WALLETS = 'WALLETS';
@@ -22,6 +22,10 @@ export const TEST = 'TEST';
 export const INVESTMENTS_SET_LOADING_STATUS = 'INVESTMENTS_SET_LOADING_STATUS';
 export const INVESTMENTS_SET = 'INVESTMENTS_SET';
 export const INVESTMENTS_PROFITS_SET = 'INVESTMENTS_PROFITS_SET';
+
+// profile
+export const PROFILE_SET_LOADING_STATUS = 'PROFILE_SET_LOADING_STATUS';
+export const PROFILE_SET = 'PROFILE_SET_LOADING_STATUS';
 
 // wallets
 export const WALLETS_SET_LOADING_STATUS = 'WALLETS_SET_LOADING_STATUS';

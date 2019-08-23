@@ -10,6 +10,10 @@ export function getWithState(caseName, caseClass) {
     mapDispatch2Props = {};
 
   switch (caseName) {
+    case CLASSES.COMPONENT_PROFILE_SIDEBAR:
+      mapState2Props = (state) => ({ ...state.default.profile });
+      mapDispatch2Props = {};
+      break;
     case CLASSES.COMPONENT_MODALGROUP:
       mapState2Props = (state) => ({ ...state.modalGroup });
       mapDispatch2Props = {
@@ -17,7 +21,9 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_PFOFILE_SCREEN:
-      mapState2Props = (state) => ({ ...state.wallets });
+      mapState2Props = (state) => {
+        return { ...state.wallets }
+      };
       mapDispatch2Props = {
         loadWallets: walletsActions.loadWallets
       };

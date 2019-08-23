@@ -4,6 +4,7 @@ const initialState = {
   page: null,
   lang: {},
   auth: {},
+  profile: {},
   modals: []
 };
 
@@ -18,6 +19,10 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.AUTH: {
       return Object.assign({}, state, {auth: action.auth});
+    }
+
+    case actionTypes.PROFILE: {
+      return Object.assign({}, state, {profile: action.props});
     }
 
     case actionTypes.STATIC: {

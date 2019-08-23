@@ -18,11 +18,14 @@
     }
   }
 
+  .WalletBalance__convert:hover {
+    color: black;
+  }
+
   .WalletBalance__convert {
     position: absolute;
     right: 40px;
     top: 42px;
-    font-size: 13px;
     color: #808080;
     cursor: pointer;
     -webkit-touch-callout: none;
@@ -82,7 +85,7 @@
         color: var(--primary-grey);
 
         span {
-          color: var(--foreground-primary-opacity);
+          color: black;
           width: 60px;
           display: inline-block;
         }
@@ -111,10 +114,16 @@
       border-radius: 50%;
       position: absolute;
       top: 0;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
 
       h3 {
         font-weight: 600;
-        font-size: 24px;
+        font-size: 22px;
         line-height: 32px;
         text-align: center;
         letter-spacing: 1.02px;
@@ -122,19 +131,24 @@
         margin-top: 20px;
       }
 
+      p:hover {
+        color: var(--gradient-primary) !important;
+      }
+
       p {
         display: inline-block;
-        padding: 2px;
-        margin: 2px;
+        padding: 2px 0;
+        margin: 2px 4px;
         font-weight: 500;
         font-size: 13px;
         line-height: 16px;
         color: var(--secondary-grey);
         cursor: pointer;
+        border-bottom: 1px dotted rgba(0,0,0,0.1);
       }
 
       p.active {
-        color: var(--primary-grey);
+        color: black;
       }
     }
   }
