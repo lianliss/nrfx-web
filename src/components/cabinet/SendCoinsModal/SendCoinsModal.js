@@ -12,12 +12,17 @@ import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
 
 import SendCoinsConfirmModal from '../../../components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
+import * as api from "../../../services/api";
 
 
 class SendCoinsModal extends React.Component {
   componentDidMount() {
     this.__load();
   }
+
+  state = {
+    errorAddress: false
+  };
 
   get getSelectedWalletInfo() {
     return this.props.thisState.wallets.filter(wallet => wallet.currency === this.props.thisState.selectedWallet.value);
@@ -91,6 +96,7 @@ class SendCoinsModal extends React.Component {
               value={this.props.thisState.address}
               placeholder="Enter BitcoinBot Login or Wallet Address"
               onTextChange={this.__addressChange}
+              error={this.state.errorAddress}
             />
           </div>
           <div className="SendCoinsModal__row SendCoinsModal__amount">
@@ -172,8 +178,7 @@ class SendCoinsModal extends React.Component {
       this.props.thisState.amountUSD > 0;
   }
 
-  __sendButtonHandler = () => {
-    if (!this.__checkItsReady()) return;
+  __openConfirmModal = () => {
     this.props.openModalPage('confirm', {}, {
       children: SendCoinsConfirmModal,
       params: {
@@ -183,6 +188,28 @@ class SendCoinsModal extends React.Component {
         address: this.props.thisState.address
       }
     });
+  };
+
+  __sendButtonHandler = () => {
+    if (!this.__checkItsReady()) return;
+
+    if (this.props.thisState.address.length < 15) {
+      api.post('profile/check_login/', {login: this.props.thisState.address}).then((data) => {
+        this.__openConfirmModal();
+      }).catch((err) => {
+        this.setState({
+          errorAddress: true
+        }, () => {
+          setTimeout(() => {
+            this.setState({
+              errorAddress: false
+            });
+          }, 1000)
+        })
+      });
+    } else {
+      this.__openConfirmModal();
+    }
   }
 }
 

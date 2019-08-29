@@ -4,6 +4,7 @@ import * as CLASSES from './constants/classes';
 import * as walletsActions from './actions/cabinet/wallets';
 import * as modalGroupActions from "./actions/modalGroup";
 import * as investmentsActions from "./actions/cabinet/investments";
+import * as settingsActions from "./actions/cabinet/settings";
 
 export function getWithState(caseName, caseClass) {
   let mapState2Props = state => ({...state}),
@@ -53,8 +54,11 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_SETTINGS_SCREEN:
-      mapState2Props = (state) => ({ ...state });
-      mapDispatch2Props = {};
+      mapState2Props = (state) => ({ ...state.settings });
+      mapDispatch2Props = {
+        loadSettings: settingsActions.loadSettings,
+        setUserFieldValue: settingsActions.setUserFieldValue
+      };
       break;
     case CLASSES.SEND_COINS_MODAL:
       mapState2Props = (state) => ({ thisState: {...state.modalGroup.states.send} });

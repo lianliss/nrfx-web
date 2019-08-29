@@ -3,15 +3,20 @@ import './ChangeNumberModal.less';
 import React from 'react';
 import UI from '../../../ui';
 
+import ConfirmSmsModal from '../../../components/cabinet/ConfirmSmsModal/ConfirmSmsModal';
+
 import * as utils from '../../../utils';
 import ReactPhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/dist/style.css'
 import {isValidPhoneNumber} from 'react-phone-number-input';
+import * as settingsActions from '../../../actions/cabinet/settings';
 
 export default class ChangeNumberModal extends React.Component {
   state = {
     gaCode: '',
-    phone: ''
+    phone: '',
+    dialCode: '',
+    phoneWithoutCode: ''
   };
 
   render() {
@@ -69,8 +74,12 @@ export default class ChangeNumberModal extends React.Component {
     )
   }
 
-  __handleOnChangePhone = (value) => {
-    this.setState({ phone: value })
+  __handleOnChangePhone = (value, data) => {
+    this.setState({
+      phone: value,
+      dialCode: data.dialCode,
+      phoneWithoutCode: value.replace('+' + data.dialCode, '').replace(/[^\d;]/g, '')
+    });
   };
 
   __handleChange = (e) => {
@@ -82,6 +91,23 @@ export default class ChangeNumberModal extends React.Component {
   };
 
   __handleSubmit = () => {
-    console.log(isValidPhoneNumber(this.state.phone));
+    if (isValidPhoneNumber(this.state.phone)) {
+      settingsActions.sendSmsCode({
+        phone_code: this.state.dialCode,
+        phone_number: this.state.phoneWithoutCode
+      }).then((data) => {
+        console.log(123, data);
+        this.props.openModalPage('confirmSms', {}, {
+          children: ConfirmSmsModal,
+          params: {
+            phone: this.state.phone,
+            dialCode: this.state.dialCode,
+            phoneWithoutCode: this.state.phoneWithoutCode
+          }
+        });
+      }).catch((reason) => {
+        console.error(reason);
+      });
+    }
   }
 }

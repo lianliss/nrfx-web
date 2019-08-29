@@ -6,6 +6,7 @@ import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../actions';
 import * as walletsActions from '../../../actions/cabinet/wallets';
+import * as modalGroupActions from '../../../actions/modalGroup';
 import * as utils from '../../../utils';
 
 import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow';
@@ -17,7 +18,8 @@ export default class SendCoinsConfirmModal extends React.Component {
   }
 
   state = {
-    gaCode: ''
+    gaCode: '',
+    errorGaCode: false
   };
 
   render() {
@@ -75,6 +77,7 @@ export default class SendCoinsConfirmModal extends React.Component {
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
             onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            error={this.state.errorGaCode}
           />
 
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
@@ -92,7 +95,11 @@ export default class SendCoinsConfirmModal extends React.Component {
     const val = e.target.value;
 
     if (val.length <= 6) {
-      this.setState({gaCode: val});
+      this.setState({gaCode: val}, () => {
+        if (val.length === 6) {
+          this.__handleSubmit();
+        }
+      });
     }
   };
 
@@ -102,14 +109,25 @@ export default class SendCoinsConfirmModal extends React.Component {
   }
 
   __handleSubmit = () => {
-    console.log(this.__buildParams());
-    return;
     walletsActions.sendCoins(this.__buildParams()).then((info) => {
-      console.log(1, info);
+      modalGroupActions.modalGroupClear();
     }).catch((info) => {
-      console.log('failed', info);
+      switch (info.code) {
+        case "ga_error":
+          this.setState({
+            errorGaCode: true
+          }, () => {
+            setTimeout(() => {
+              this.setState({
+                errorGaCode: false
+              });
+            }, 1000)
+          });
+          break;
+        default:
+          alert(info.message);
+          break;
+      }
     });
-
-    //walletsActions.sendCoins()
   }
 }

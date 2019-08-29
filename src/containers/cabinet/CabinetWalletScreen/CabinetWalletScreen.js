@@ -20,21 +20,12 @@ import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
 
 class CabinetWalletScreen extends CabinetBaseScreen {
-  constructor(props) {
-    super(props);
-    this.content = this.__getWalletsPageContent;
-  }
-
   load = (section = null) => {
     switch (section || this.props.routerParams.section) {
-      case 'transactions':
-        this.content = this.__getTransactionsPageContent;
-        break;
       default:
-        this.content = this.__getWalletsPageContent;
+        this.props.loadWallets();
         break;
     }
-    this.props.loadWallets();
   };
 
   state = {
@@ -47,8 +38,11 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
           sidebarOptions={{
+            section: this.props.routerParams.section,
+            appName: 'Wallets',
             items: [
               <ProfileSidebarItem
+                hide={!this.props.routerParams.section}
                 active={!this.props.routerParams.section}
                 baselink={true}
                 icon={require('../../../asset/24px/wallet.svg')}
@@ -92,7 +86,15 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.load()} />;
     }
-    return this.content();
+
+    switch (this.props.routerParams.section) {
+      case 'transactions': {
+        return this.__getTransactionsPageContent();
+      }
+      default: {
+        return this.__getWalletsPageContent();
+      }
+    }
   };
 
   __getTransactionsPageContent = () => {

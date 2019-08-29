@@ -76,8 +76,8 @@ export function loadTransactionInfo(id, type) {
 
 export function sendCoins(params) {
   return new Promise((resolve, reject) => {
-    api.put(`wallet/send`, params).tnen((resp) => {
+    api.put(`wallet/send`, params).then((resp) => {
       resolve(resp);
-    }).catch(() => reject());
+    }).catch((resp) => reject(resp));
   })
 }

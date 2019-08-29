@@ -7,6 +7,7 @@ import { reduxPlugin } from 'redux-router5';
 import defaultReducer from './reducers';
 import cabinetReducer from './reducers/cabinet';
 import investmentsReducer from './reducers/investments';
+import settingsReducer from './reducers/settings';
 import walletsReducer from './reducers/wallets';
 import modalGroupReducer from './reducers/modalGroup';
 import testReducer from './reducers/test';
@@ -20,6 +21,7 @@ export function configureStore() {
     investments: investmentsReducer,
     wallets: walletsReducer,
     modalGroup: modalGroupReducer,
+    settings: settingsReducer,
     test: testReducer
   }), applyMiddleware(thunk, router5Middleware(router)));
 

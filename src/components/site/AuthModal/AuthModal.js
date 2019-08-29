@@ -52,7 +52,7 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
   const handleOpen = () => {
     document.body.classList.add('modal-open');
     toggleOpen(true);
-  }
+  };
 
   const handleClose = () => {
     document.body.classList.remove('modal-open');
@@ -62,7 +62,7 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
     changeStep(type || steps.LOGIN);
     changeEmail('');
     changePassword('');
-  }
+  };
 
   const handleChange = (value, type) => {
     if (type === 'email') {
@@ -70,8 +70,8 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
     } else if (type === 'password') {
       changePassword(value);
     }
-  }
-  console.log('routerParams :', routerParams);
+  };
+
   return (
     <div className={"AuthModal " + className}>
       <span onClick={handleOpen}>

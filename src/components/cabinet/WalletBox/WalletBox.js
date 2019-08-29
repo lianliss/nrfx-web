@@ -57,7 +57,7 @@ class WalletBox extends React.Component {
     if (this.isGenerating) {
       return 'Generating';
     } else if (this.props.amount > 0) {
-      return utils.formatDouble(this.props.amount);
+      return utils.formatDouble(this.props.amount, 1000000) + ' ' + this.props.currency.toUpperCase();
     } else {
       return 'None';
     }

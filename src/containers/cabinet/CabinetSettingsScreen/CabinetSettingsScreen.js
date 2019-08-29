@@ -7,11 +7,16 @@ import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/P
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import GAConfirmModal from '../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 
+import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
+
 import UI from '../../../ui';
 import * as modalGroupActions from "../../../actions/modalGroup";
 
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
+
+import * as settingsActions from '../../../actions/cabinet/settings';
+import ConfirmSmsModal from "../../../components/cabinet/ConfirmSmsModal/ConfirmSmsModal";
 
 class CabinetSettingsScreen extends CabinetBaseScreen {
   constructor(props) {
@@ -38,6 +43,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   }
 
   __load = (section = null) => {
+    this.props.loadSettings();
     switch (section || this.props.routerParams.section) {
       case 'security':
         this.content = this.__getSecurityPageContent;
@@ -52,6 +58,10 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   };
 
   render() {
+    if (this.isLoading) {
+      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
+    }
+
     return (<div>
       <PageContainer
         leftContent={this.__renderRightContent()}
@@ -63,7 +73,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
               baselink={true}
               active={!this.props.routerParams.section || this.props.routerParams.section === 'personal'}
             />,
-            <ProfileSidebarItem
+            /*<ProfileSidebarItem
               icon={require('../../../asset/24px/shield.svg')}
               label="Security"
               section="security"
@@ -74,7 +84,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
               label="Notifications"
               section="notifications"
               active={this.props.routerParams.section === 'notifications'}
-            />
+            />*/
           ]
         }}
       >
@@ -91,13 +101,25 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
-            <UI.Input placeholder={'Old Password'} />
+            <UI.Input
+              placeholder={'Old Password'}
+              value={this.props.old_password}
+              onTextChange={(value) => this.setState({old_password:value})}
+            />
           </div>
           <div className="CabinetSettingsScreen__input_field">
-            <UI.Input placeholder={'New Password'} />
+            <UI.Input
+              placeholder={'New Password'}
+              value={this.props.new_password}
+              onTextChange={(value) => this.setState({new_password:value})}
+            />
           </div>
           <div className="CabinetSettingsScreen__input_field">
-            <UI.Input placeholder={'Re-enter New Password'} />
+            <UI.Input
+              placeholder={'Re-enter New Password'}
+              value={this.props.re_password}
+              onTextChange={(value) => this.setState({re_password:value})}
+            />
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
@@ -249,13 +271,18 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
-            <UI.Input placeholder={'Your firstname'} />
+            <UI.Input
+              placeholder={'Your firstname'}
+              value={this.props.user.first_name}
+              onTextChange={(value) => this.props.setUserFieldValue({field: 'first_name', value})}
+            />
           </div>
           <div className="CabinetSettingsScreen__input_field">
-            <UI.Input placeholder={'Your lastname'} />
-          </div>
-          <div className="CabinetSettingsScreen__input_field">
-            <UI.Input placeholder={'Your nickname'} />
+            <UI.Input
+              placeholder={'Your lastname'}
+              value={this.props.user.last_name}
+              onTextChange={(value) => this.props.setUserFieldValue({field: 'last_name', value})}
+            />
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
@@ -276,6 +303,59 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
       <div className="CabinetSettingsScreen__space">
       </div>
       <div className="CabinetSettingsScreen__header">
+        Login
+      </div>
+      <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
+        <div className="CabinetSettingsScreen__form left">
+          <div className="CabinetSettingsScreen__input_field">
+            <UI.Input
+              placeholder={'Your login'} value={this.props.user.login}
+              onTextChange={(value) => this.props.setUserFieldValue({field: 'login', value})}
+            />
+          </div>
+        </div>
+        <div className="CabinetSettingsScreen__form right">
+          <UI.Button type={'outline'} onClick={() => {
+            modalGroupActions.openModalPage('ga_confirm', {}, {
+              children: GAConfirmModal,
+              params: {
+                onChangeHandler: (data, modal) => {
+                  settingsActions.changeLogin({
+                    login: this.props.user.login,
+                    ga_code: data.gaCode
+                  }).then((data) => {
+                    if (data.hasOwnProperty('response') && data.response === "ok") {
+                      modal.props.close();
+                    }
+                  }).catch((info) => {
+                    switch (info.code) {
+                      case "ga_auth_code_incorrect":
+                        modal.setState({
+                          errorGaCode: true
+                        }, () => {
+                          setTimeout(() => {
+                            modal.setState({
+                              errorGaCode: false
+                            });
+                          }, 1000)
+                        });
+                        break;
+                      default:
+                        alert(info.message);
+                        break;
+                    }
+                  });
+                }
+              }
+            })
+          }}>
+            Change
+          </UI.Button>
+        </div>
+      </div>
+      <div className="CabinetSettingsScreen__space">
+      </div>
+      <div className="CabinetSettingsScreen__header">
         Phone Number
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
@@ -284,7 +364,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Input
               classNameWrapper={'CabinetSettingsScreen__inputWithoutEffects'}
               disabled={true}
-              value={'+7 (***) *** ** 55'}
+              value={this.props.user.phone_number}
             />
           </div>
         </div>
@@ -384,6 +464,6 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
 }
 
 export default storeUtils.getWithState(
-  CLASSES.CABINET_START_PFOFILE_SCREEN,
+  CLASSES.CABINET_SETTINGS_SCREEN,
   CabinetSettingsScreen
 );

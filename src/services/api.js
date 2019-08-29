@@ -1,4 +1,5 @@
 import { ApiClient } from '../swagger';
+import schema from './schema.js';
 
 import * as auth from './auth';
 
@@ -55,6 +56,7 @@ export function invoke(method, name, params) {
     let init = {
       method,
       headers: {
+        'Accept': '*/*',
         'X-Token': auth.getToken(),
         'Content-Type': 'application/x-www-form-urlencoded'
       }

@@ -9,8 +9,10 @@ export default class GAConfirmModal extends React.Component {
   constructor(props) {
     super(props);
   }
+
   state = {
-    gaCode: ''
+    gaCode: '',
+    errorGaCode: false
   };
 
   render() {
@@ -36,6 +38,7 @@ export default class GAConfirmModal extends React.Component {
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
             onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            error={this.state.errorGaCode}
           />
 
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
@@ -58,7 +61,7 @@ export default class GAConfirmModal extends React.Component {
   };
 
   __handleSubmit = () => {
-    this.props.params.onChangeHandler();
+    this.props.params.onChangeHandler(this.state, this);
   }
 }
 

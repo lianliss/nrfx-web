@@ -62,9 +62,8 @@ function WalletBalance({ wallets }) {
         <div className="WalletBalance__convert" onClick={() => {
           convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
         }}>
-          {'~ '}
           <span>
-            {amount > 0 ? ( convert_currency === 'BTC' ? align : (amount * to_usd) ).toFixed(4) : 0}
+            {amount > 0 ? ( convert_currency === 'BTC' ? '~ ' + align.toFixed(6) : (amount * to_usd).toFixed(2) ) : 0}
             {' ' + convert_currency}
           </span>
         </div>

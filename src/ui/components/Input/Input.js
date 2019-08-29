@@ -17,7 +17,8 @@ class Input extends React.Component {
   render() {
     const className = classNames({
       Input: true,
-      multiLine: this.props.multiLine
+      multiLine: this.props.multiLine,
+      error: this.props.error
     });
 
     let InputWrapper = 'Input__wrapper';
@@ -72,6 +73,7 @@ class Input extends React.Component {
 Input.defaultProps = {
   classNameWrapper: '',
   disabled: false,
+  error: false
 };
 
 Input.propTypes = {
