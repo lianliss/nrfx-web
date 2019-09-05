@@ -12,44 +12,35 @@ import * as pages from '../../../constants/pages';
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
-import * as walletsActions from "../../../actions/cabinet/wallets";
+import DashboardItem from './components/dashboardItem';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
-  constructor(props) {
-    super(props);
-    this.content = this.__getProfilePageContent;
-  }
-
   state = {
     walletSelected: null
   };
 
   load = (section = null) => {
     switch (section || this.props.routerParams.section) {
-      case 'partners':
-        this.content = 'partners';
-        break;
-      case 'customers':
-        this.content = 'customers';
-        break;
       default:
-        this.content = this.__getProfilePageContent;
+        this.props.loadWallets();
+        this.props.loadDashboard();
         break;
     }
-    this.props.loadWallets();
   };
 
   render() {
+    if (this.isLoading) {
+      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
+    }
+
     return (
       <div>
         <PageContainer
-          leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
+          leftContent={!this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
           sidebarOptions={{
             items: [
               <ProfileSidebarItem
-                onClick={
-                  () => {this.props.router.navigate(pages.SETTINGS)}
-                }
+                onClick={() => {this.props.router.navigate(pages.SETTINGS)}}
                 icon={require('../../../asset/24px/settings.svg')}
                 label="Settings"
               />,
@@ -72,13 +63,26 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.load()} />;
     }
-    return this.content();
+
+    switch (this.props.routerParams.section) {
+      case 'partners': {
+        return 'partners';
+      }
+      case 'customers': {
+        return 'customers';
+      }
+      default: {
+        return this.__getProfilePageContent();
+      }
+    }
   };
 
   __getProfilePageContent = () => {
     return (
       <div>
         {this.__renderWallets()}
+        <div className="CabinetProfileScreen__height_padding"> </div>
+        {this.__renderDashboard()}
       </div>
     )
   };
@@ -93,7 +97,22 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       />
     });
     return (
-      <div className="CabinetWalletScreen__wallets">
+      <div className="CabinetProfileScreen__wallets">
+        {rows}
+      </div>
+    )
+  };
+
+  __renderDashboard = () => {
+    if (this.props.dashboard.length < 1) return;
+    const rows = this.props.dashboard.stats.map((dashboardItem, i) => {
+      return <DashboardItem
+        key={i}
+        {...dashboardItem}
+      />
+    });
+    return (
+      <div className="CabinetProfileScreen__dashboard">
         {rows}
       </div>
     )

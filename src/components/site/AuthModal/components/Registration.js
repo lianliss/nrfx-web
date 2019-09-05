@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import store from '../../../../store';
 import UI from '../../../../ui';
 import * as steps from '../fixtures';
 import * as utils from '../../../../utils/index';
@@ -8,16 +9,14 @@ import SuccessModal from '../../SuccessModal/SuccessModal';
 import StaticContentModal from '../../StaticContentModal/StaticContentModal';
 
 function Registration({ changeStep, currentStep, email, handleChange, onClose, refParam }) {
+
   const [isChecked, toggleCheck] = useState(false);
-  console.log(1, refParam);
   const [referrer, changeReferrer] = useState(refParam);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = () => {
     if (!email) {
       setErrorMsg(utils.getLang('site__authModalEmailRequired'));
-    } else if (!referrer) {
-      setErrorMsg(utils.getLang('site__authModalReferrerRequired'));
     } else if (!isChecked) {
       setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
@@ -51,7 +50,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
                 : null}
 
               <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} value={email} onKeyPress={handleKeyPress} onChange={(e) => handleChange(e.target.value, 'email')} />
-              <UI.Input placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrer} onKeyPress={handleKeyPress} onChange={(e) => changeReferrer(e.target.value)} />
+              {referrer ? <UI.Input disabled={true} placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrer} onKeyPress={handleKeyPress} onChange={(e) => changeReferrer(e.target.value)} /> : ""}
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />

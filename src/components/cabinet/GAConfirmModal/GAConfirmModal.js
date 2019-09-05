@@ -6,9 +6,6 @@ import UI from '../../../ui';
 import * as utils from '../../../utils';
 
 export default class GAConfirmModal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   state = {
     gaCode: '',
@@ -55,8 +52,12 @@ export default class GAConfirmModal extends React.Component {
   __handleChange = (e) => {
     const val = e.target.value;
 
-    if (val.length <= 6) {
+    if (val.length < 6) {
       this.setState({gaCode: val});
+    } else if (val.length === 6) {
+      this.setState({gaCode: val}, () => {
+        this.__handleSubmit();
+      });
     }
   };
 

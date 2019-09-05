@@ -10,6 +10,40 @@
       height: 112px;
       position: relative;
       margin: 18px auto;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .ProfileSidebar__user__avatar__wrap:hover {
+      background-color: white;
+    }
+
+    .ProfileSidebar__user__avatar__over {
+      opacity: 0;
+      transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      background-color: rgba(0, 0, 0, 0.47);
+      display: flex;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 1;
+      border-radius: 50%;
+      span {
+        margin: auto;
+        color: white;
+        svg {
+          width: 40px;
+          height: 40px;
+        }
+      }
+      &:hover {
+        opacity: 1;
+      }
     }
 
     .ProfileSidebar__user__avatar {

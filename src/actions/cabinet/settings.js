@@ -1,11 +1,12 @@
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
+import schemaAPI from '../../services/schema_out';
 import store from "../../store";
 
 export function loadSettings() {
   return dispatch => {
     dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-    api.get('profile/settings').then((data) => {
+    api.call(schemaAPI["profile/settings"]).then((data) => {
       dispatch({ type: actionTypes.SETTINGS_SET, user: {...data} });
       dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
@@ -14,9 +15,10 @@ export function loadSettings() {
   };
 }
 
-export function sendSmsCode({phone_code, phone_number}) {
+export function sendSmsCode({phone_code, phone_number, ga_code}) {
   return new Promise((resolve, reject) => {
-    api.get('profile/send_sms', {phone_code, phone_number}).then((data) => {
+    api.call(schemaAPI["profile/send_sms"], {phone_code, phone_number, ga_code}
+    ).then((data) => {
       resolve(data);
     }).catch((reason) => {
       reject(reason);
@@ -26,7 +28,7 @@ export function sendSmsCode({phone_code, phone_number}) {
 
 export function changeLogin({login, ga_code}) {
   return new Promise((resolve, reject) => {
-    api.put('profile/change_login', {login, ga_code}).then((data) => {
+    api.call(schemaAPI["profile/change_login"], {login, ga_code}).then((data) => {
       resolve(data);
     }).catch((reason) => {
       reject(reason);
@@ -34,9 +36,19 @@ export function changeLogin({login, ga_code}) {
   });
 }
 
-export function changeInfo({first_name, last_name}) {
+export function changeEmail({email, ga_code}) {
   return new Promise((resolve, reject) => {
-    api.put('profile/change_info', {first_name, last_name}).then((data) => {
+    api.call(schemaAPI["profile/change_email"], {email, ga_code}).then((data) => {
+      resolve(data);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
+}
+
+export function changeInfo({first_name, last_name, ga_code}) {
+  return new Promise((resolve, reject) => {
+    api.call(schemaAPI["profile/change_info"], {first_name, last_name, ga_code}).then((data) => {
       resolve(data);
     }).catch((reason) => {
       reject(reason);
@@ -45,10 +57,12 @@ export function changeInfo({first_name, last_name}) {
 }
 
 export function changeNumber({phone_code, phone_number, sms_code}) {
-  api.put('profile/change_phone_number', {phone_code, phone_number, sms_code}).then((data) => {
-    console.log(data);
-  }).catch((reason) => {
-    console.error(reason);
+  return new Promise((resolve, reject) => {
+    api.call(schemaAPI["profile/change_phone_number"], {phone_code, phone_number, sms_code}).then((data) => {
+      resolve(data);
+    }).catch((reason) => {
+      reject(reason);
+    });
   });
 }
 

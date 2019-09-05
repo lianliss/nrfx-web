@@ -45,14 +45,14 @@ class CabinetWalletScreen extends CabinetBaseScreen {
                 hide={!this.props.routerParams.section}
                 active={!this.props.routerParams.section}
                 baselink={true}
-                icon={require('../../../asset/24px/wallet.svg')}
+                icon={require('../../../asset/24px/arrow-left.svg')}
                 label="Wallets"
               />,
               <ProfileSidebarItem
-                section={'transactions'}
-                active={this.props.routerParams.section === 'transactions'}
+                section={'transfers'}
+                active={this.props.routerParams.section === 'transfers'}
                 icon={require('../../../asset/24px/history.svg')}
-                label="Transactions"
+                label="Transfers"
               />,
               <ProfileSidebarItem
                 onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
@@ -88,8 +88,8 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     }
 
     switch (this.props.routerParams.section) {
-      case 'transactions': {
-        return this.__getTransactionsPageContent();
+      case 'transfers': {
+        return this.__getTransfersPageContent();
       }
       default: {
         return this.__getWalletsPageContent();
@@ -97,10 +97,10 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     }
   };
 
-  __getTransactionsPageContent = () => {
+  __getTransfersPageContent = () => {
     return (
       <div>
-        {this.__getTransactions()}
+        {this.__getTransfers()}
       </div>
     )
   };
@@ -119,12 +119,30 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   __getTransactions = () => {
     return <div>
       <Paging
-        isCanMore={!!this.props.transactionsNext && !this.props.transactionsLoadingMore}
+        isCanMore={!!this.props.transactions.next && !this.props.transactionsLoadingMore}
         onMore={this.props.loadMoreTransactions}
       >
         <HistoryTable history={'items' in this.props.transactions ? this.props.transactions.items : []} />
       </Paging>
-      {this.props.transactionsNext && <LoadingMore status={this.props.transactionsLoadingMore} />}
+      {!!this.props.transactions.next && <LoadingMore
+        status={this.props.transactionsLoadingMore}
+        onClick={() => {this.props.loadMoreTransactions()}}
+      />}
+    </div>
+  };
+
+  __getTransfers = () => {
+    return <div>
+      <Paging
+        isCanMore={!!this.props.transfers.next && !this.props.transfersLoadingMore}
+        onMore={this.props.loadMoreTransfers}
+      >
+        <HistoryTable history={'items' in this.props.transfers ? this.props.transfers.items : []} />
+      </Paging>
+      {this.props.transfers.next && <LoadingMore
+        status={this.props.transfersLoadingMore}
+        onClick={() => {this.props.loadMoreTransfers()}}
+      />}
     </div>
   };
 

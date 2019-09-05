@@ -5,12 +5,17 @@ import * as walletsActions from './actions/cabinet/wallets';
 import * as modalGroupActions from "./actions/modalGroup";
 import * as investmentsActions from "./actions/cabinet/investments";
 import * as settingsActions from "./actions/cabinet/settings";
+import * as profileActions from "./actions/cabinet/profile";
 
 export function getWithState(caseName, caseClass) {
   let mapState2Props = state => ({...state}),
     mapDispatch2Props = {};
 
   switch (caseName) {
+    case CLASSES.COMPONENT_CABINET_HEADER:
+      mapState2Props = (state) => ({ ...state.default.profile });
+      mapDispatch2Props = {};
+      break;
     case CLASSES.COMPONENT_PROFILE_SIDEBAR:
       mapState2Props = (state) => ({ ...state.default.profile });
       mapDispatch2Props = {};
@@ -23,10 +28,11 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.CABINET_PFOFILE_SCREEN:
       mapState2Props = (state) => {
-        return { ...state.wallets }
+        return { ...state.wallets, ...state.profile }
       };
       mapDispatch2Props = {
-        loadWallets: walletsActions.loadWallets
+        loadWallets: walletsActions.loadWallets,
+        loadDashboard: profileActions.loadDashboard
       };
       break;
     case CLASSES.CABINET_START_PFOFILE_SCREEN:
@@ -40,6 +46,7 @@ export function getWithState(caseName, caseClass) {
       mapDispatch2Props = {
         loadWallets: walletsActions.loadWallets,
         loadMoreTransactions: walletsActions.loadMoreTransactions,
+        loadMoreTransfers: walletsActions.loadMoreTransfers,
       };
       break;
     case CLASSES.CABINET_INVESTMENTS_SCREEN:

@@ -33,6 +33,10 @@ export function getLang(key) {
   return store.getState().default.lang[key];
 }
 
+export function getLanguage() {
+  return store.getState();
+}
+
 export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
 
 export const isEmail = (email) => (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) ? true : false;

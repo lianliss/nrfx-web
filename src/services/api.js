@@ -1,10 +1,12 @@
 import { ApiClient } from '../swagger';
-import schema from './schema.js';
-
+import * as utils from '../utils';
 import * as auth from './auth';
 
 const API_ENTRY = 'https://api.bitcoinbot.pro';
 const API_VERSION = 1;
+
+export const EXPORT_API_VERSION = API_VERSION;
+export const EXPORT_API_ENTRY = API_ENTRY;
 
 export const Errors = {
   FATAL: 1,
@@ -19,7 +21,7 @@ export const Errors = {
   EMAIL_USED: 10,
 };
 
-export default function callApi(callable) {
+export function callApi(callable) {
   return new Promise((resolve, reject) => {
     window.ApiClient = ApiClient;
     let args = [].slice.call(arguments).slice(1);
@@ -56,9 +58,9 @@ export function invoke(method, name, params) {
     let init = {
       method,
       headers: {
-        'Accept': '*/*',
         'X-Token': auth.getToken(),
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept-Language': window.localStorage.lang || 'en'
       }
     };
 
@@ -105,4 +107,8 @@ export function put(name, params = {}) {
 
 export function del(name, params = {}) {
   return invoke('DELETE', name, params);
+}
+
+export function call(API, params = {}) {
+  return invoke(API.method, API.path, params);
 }

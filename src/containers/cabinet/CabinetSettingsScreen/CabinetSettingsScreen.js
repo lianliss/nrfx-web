@@ -6,24 +6,17 @@ import PageContainer from '../../../components/cabinet/PageContainer/PageContain
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import GAConfirmModal from '../../../components/cabinet/GAConfirmModal/GAConfirmModal';
-
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 
 import UI from '../../../ui';
-import * as modalGroupActions from "../../../actions/modalGroup";
 
+import * as modalGroupActions from "../../../actions/modalGroup";
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
-
 import * as settingsActions from '../../../actions/cabinet/settings';
-import ConfirmSmsModal from "../../../components/cabinet/ConfirmSmsModal/ConfirmSmsModal";
+import * as emitter from '../../../services/emitter';
 
 class CabinetSettingsScreen extends CabinetBaseScreen {
-  constructor(props) {
-    super(props);
-    this.content = this.__getPersonalPageContent;
-  }
-
   get section() {
     return this.props.routerParams.section || 'default';
   }
@@ -42,25 +35,31 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     }
   }
 
+  componentWillUnmount() {
+    emitter.removeListener(this.loadSettingsListener);
+  }
+
   __load = (section = null) => {
-    this.props.loadSettings();
+    this.loadSettingsListener = emitter.addListener('loadSettings', this.props.loadSettings);
     switch (section || this.props.routerParams.section) {
-      case 'security':
-        this.content = this.__getSecurityPageContent;
-        break;
-      case 'notifications':
-        this.content = this.__getNotificationsPageContent;
-        break;
-      default:
-        this.content = this.__getPersonalPageContent;
-        break;
+      default: {
+        emitter.emit('loadSettings');
+      }
     }
+  };
+
+  state = {
+    firstNameInputError: false,
+    lastNameInputError: false,
+    loginInputError: false
   };
 
   render() {
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
     }
+
+    console.log(this.props);
 
     return (<div>
       <PageContainer
@@ -88,10 +87,23 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           ]
         }}
       >
-        {this.content()}
+        {this.__renderContent()}
       </PageContainer>
     </div>);
   }
+
+  __renderContent = () => {
+    switch (this.props.routerParams.section) {
+      case 'security': {
+        return this.__getSecurityPageContent();
+      }
+      case 'notifications': {
+        return this.__getNotificationsPageContent();
+      }
+      default:
+        return this.__getPersonalPageContent();
+    }
+  };
 
   __getSecurityPageContent = () => {
     return <div className="CabinetSettingsScreen__main Content_box">
@@ -104,27 +116,28 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Input
               placeholder={'Old Password'}
               value={this.props.old_password}
-              onTextChange={(value) => this.setState({old_password:value})}
+              onTextChange={(value) => this.props.setUserFieldValue({field: 'old_password', value})}
             />
           </div>
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
               placeholder={'New Password'}
               value={this.props.new_password}
-              onTextChange={(value) => this.setState({new_password:value})}
+              onTextChange={(value) => this.props.setUserFieldValue({field: 'new_password', value})}
             />
           </div>
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
               placeholder={'Re-enter New Password'}
               value={this.props.re_password}
-              onTextChange={(value) => this.setState({re_password:value})}
+              onTextChange={(value) => this.props.setUserFieldValue({field: 're_password', value})}
             />
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
           <UI.Button type={'outline'} onClick={() => {
-            modalGroupActions.openModalPage('ga_confirm')}}>
+            modalGroupActions.openModalPage('ga_confirm')}}
+          >
             Save
           </UI.Button>
         </div>
@@ -275,6 +288,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
               placeholder={'Your firstname'}
               value={this.props.user.first_name}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'first_name', value})}
+              error={this.state.firstNameInputError}
             />
           </div>
           <div className="CabinetSettingsScreen__input_field">
@@ -282,20 +296,45 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
               placeholder={'Your lastname'}
               value={this.props.user.last_name}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'last_name', value})}
+              error={this.state.lastNameInputError}
             />
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
-          <UI.Button type={'outline'} onClick={() => {
-            modalGroupActions.openModalPage('ga_confirm', {}, {
-              children: GAConfirmModal,
-              params: {
-                onChangeHandler: () => {
-                  console.log(345);
-                }
+          <UI.Button
+            type={'outline'}
+            onClick={() => {
+              if (this.props.user.first_name.length < 1) {
+                return this.__inputError(this, 'firstNameInputError');
+              } else if (this.props.user.last_name.length < 1) {
+                return this.__inputError(this, 'lastNameInputError');
               }
-            })
-          }}>
+              modalGroupActions.openModalPage('ga_confirm', {}, {
+                children: GAConfirmModal,
+                params: {
+                  onChangeHandler: (data, modal) => {
+                    settingsActions.changeInfo({
+                      first_name: this.props.user.first_name,
+                      last_name: this.props.user.last_name,
+                      ga_code: data.gaCode
+                    }).then((data) => {
+                      if (data.hasOwnProperty('response') && data.response === "ok") {
+                        modal.props.close();
+                      }
+                    }).catch((info) => {
+                      switch (info.code) {
+                        case "ga_auth_code_incorrect":
+                          return this.__inputError(modal, 'errorGaCode');
+                        default:
+                          alert(info.message);
+                          break;
+                      }
+                    });
+                  }
+                }
+              })}
+            }
+          >
             Save
           </UI.Button>
         </div>
@@ -311,11 +350,15 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Input
               placeholder={'Your login'} value={this.props.user.login}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'login', value})}
+              error={this.state.loginInputError}
             />
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
           <UI.Button type={'outline'} onClick={() => {
+            if (this.props.user.login.length < 1) {
+              return this.__inputError(this, 'loginInputError');
+            }
             modalGroupActions.openModalPage('ga_confirm', {}, {
               children: GAConfirmModal,
               params: {
@@ -330,16 +373,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                   }).catch((info) => {
                     switch (info.code) {
                       case "ga_auth_code_incorrect":
-                        modal.setState({
-                          errorGaCode: true
-                        }, () => {
-                          setTimeout(() => {
-                            modal.setState({
-                              errorGaCode: false
-                            });
-                          }, 1000)
-                        });
-                        break;
+                        return this.__inputError(modal, 'errorGaCode');
                       default:
                         alert(info.message);
                         break;
@@ -383,7 +417,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Input
               classNameWrapper={'CabinetSettingsScreen__inputWithoutEffects'}
               disabled={true}
-              value={'sa******@gmail.com'}
+              value={this.props.user.email}
             />
           </div>
         </div>
@@ -434,6 +468,18 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         date: '29 Mar 2019 in 23:16',
       },
     ];
+  }
+
+  __inputError(node, stateField) {
+    node.setState({
+      [stateField]: true
+    }, () => {
+      setTimeout(() => {
+        node.setState({
+          [stateField]: false
+        });
+      }, 1000)
+    });
   }
 
   __renderRightContent = () => {

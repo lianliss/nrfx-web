@@ -116,11 +116,10 @@ export default function Routes(props) {
 
   const defaultProps = {
     state: props.state.default,
-    router: props.router
+    router: props.router,
   };
 
   const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
-
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
       <Component {...defaultProps} {...actions} routerParams={routerParams} />;

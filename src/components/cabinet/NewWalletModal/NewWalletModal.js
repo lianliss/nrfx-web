@@ -6,7 +6,6 @@ import UI from '../../../ui';
 import Currency from './components/Currency';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as walletsActions from '../../../actions/cabinet/wallets';
-import * as modalGroupActions from '../../../actions/modalGroup';
 
 function NewWalletModal() {
   let currencies = walletsActions.getNoGeneratedCurrencies();

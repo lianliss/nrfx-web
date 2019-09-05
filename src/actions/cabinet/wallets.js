@@ -1,15 +1,17 @@
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import store from '../../store';
+import schemaAPI from '../../services/schema_out';
 
 export function loadWallets() {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-      api.get('wallet').then(({ balances, transactions }) => {
+      api.call(schemaAPI["wallet/"], {count: 10}).then(({ balances, transactions, transfers }) => {
         dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: '' });
         dispatch({ type: actionTypes.WALLETS_SET, wallets: balances });
-        dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_SET, items: transactions, next: false });
+        dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_SET, items: transactions});
+        dispatch({ type: actionTypes.WALLETS_TRANFERS_SET, items: transfers });
         resolve(balances);
       }).catch(() => {
         dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
@@ -36,11 +38,31 @@ export function getWallets() {
 export function loadMoreTransactions() {
   return dispatch => {
     dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'loading' });
-    api.get('wallet/transaction', {
-      start_from: store.getState().wallets.transactionsNext
-    }).then(({ items, next }) => {
+    api.call(schemaAPI["wallet/transaction"], {
+      start_from: store.getState().wallets.transactions.next,
+      count: 20,
+    }).then((data) => {
+      let items = data.items;
+      let next = data.next;
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: '' });
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_APPEND, items, next });
+    }).catch(() => {
+      dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'failed' });
+    });
+  };
+}
+
+export function loadMoreTransfers() {
+  return dispatch => {
+    dispatch({ type: actionTypes.WALLETS_TRANFERS_LOADING_MORE, status: 'loading' });
+    api.call(schemaAPI["wallet/transfer"], {
+      start_from: store.getState().wallets.transfers.next,
+      count: 20,
+    }).then((data) => {
+      let items = data.items;
+      let next = data.next;
+      dispatch({ type: actionTypes.WALLETS_TRANFERS_LOADING_MORE, status: '' });
+      dispatch({ type: actionTypes.WALLETS_TRANFERS_APPEND, items, next });
     }).catch(() => {
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'failed' });
     });
@@ -76,7 +98,7 @@ export function loadTransactionInfo(id, type) {
 
 export function sendCoins(params) {
   return new Promise((resolve, reject) => {
-    api.put(`wallet/send`, params).then((resp) => {
+    api.put(schemaAPI["wallet/send"], params).then((resp) => {
       resolve(resp);
     }).catch((resp) => reject(resp));
   })

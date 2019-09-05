@@ -101,7 +101,6 @@ function Header({ showLightLogo, langList, routerState }) {
 
   const currentLangObj = langList.find(l => l.value === curLang);
   const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
-  console.log('router :', router);
 
   const handleOpen = () => {
     document.body.classList.add('modal-open');
@@ -122,8 +121,6 @@ function Header({ showLightLogo, langList, routerState }) {
   const handleNavigate = (route) => {
     router.navigate(route);
   }
-
-  console.log('router :', routerState);
 
   return (
     <div className="SiteHeader">

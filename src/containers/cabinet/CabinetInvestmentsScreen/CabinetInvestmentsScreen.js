@@ -102,7 +102,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
   __renderProfitHistory() {
     const profits = this.props.profits;
-    if (!profits.length) {
+    if (!profits.items) {
       return (
         <EmptyContentBlock
           icon={require('../../../asset/120/no_deposits.svg')}
@@ -125,18 +125,18 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <UI.TableColumn>Date</UI.TableColumn>,
     ];
 
-    const rows = profits.map((item, i) => {
+    const rows = profits.items.map((item, i) => {
       return (
         <UI.TableCell key={i}>
           <UI.TableColumn />
-          <UI.TableColumn>{utils.formatTableId(i + 1)}</UI.TableColumn>
-          <UI.TableColumn sub="Standart">14%</UI.TableColumn>
-          <UI.TableColumn>Dinamic</UI.TableColumn>
-          <UI.TableColumn>100 BTC</UI.TableColumn>
-          <UI.TableColumn>{utils.formatDouble(item.amount)}</UI.TableColumn>
-          <UI.TableColumn>BTC</UI.TableColumn>
-          <UI.TableColumn>Investment</UI.TableColumn>
-          <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
+          <UI.TableColumn>{utils.formatTableId(item.profit.id)}</UI.TableColumn>
+          <UI.TableColumn sub="Standart">{item.plan.percent}</UI.TableColumn>
+          <UI.TableColumn>{item.plan.description}</UI.TableColumn>
+          <UI.TableColumn>{item.deposit.amount} {item.deposit.currency.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn>{utils.formatDouble(item.profit.amount)}</UI.TableColumn>
+          <UI.TableColumn>{item.deposit.currency.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn>{item.profit.type}</UI.TableColumn>
+          <UI.TableColumn>{moment(item.profit.date).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
         </UI.TableCell>
       )
     });

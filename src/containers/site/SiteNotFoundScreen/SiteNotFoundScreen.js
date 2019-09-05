@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
-import { sendContactForm } from '../../../actions/contact';
 import { isEmail, getLang } from '../../../utils';
 import UI from '../../../ui';
 
@@ -50,8 +49,6 @@ export default class SiteNotFoundScreen extends BaseScreen {
 
   handleSubmit = (recaptchaToken) => {
     const { name, email, message } = this.state;
-
-    sendContactForm(recaptchaToken, message, email, name);
   }
 
   render() {

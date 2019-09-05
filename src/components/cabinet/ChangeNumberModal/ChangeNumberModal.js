@@ -14,6 +14,7 @@ import * as settingsActions from '../../../actions/cabinet/settings';
 export default class ChangeNumberModal extends React.Component {
   state = {
     gaCode: '',
+    errorGaCode: false,
     phone: '',
     dialCode: '',
     phoneWithoutCode: ''
@@ -61,6 +62,7 @@ export default class ChangeNumberModal extends React.Component {
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
             onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            error={this.state.errorGaCode}
           />
 
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
@@ -85,8 +87,12 @@ export default class ChangeNumberModal extends React.Component {
   __handleChange = (e) => {
     const val = e.target.value;
 
-    if (val.length <= 6) {
+    if (val.length < 6) {
       this.setState({gaCode: val});
+    } else if (val.length === 6) {
+      this.setState({gaCode: val}, () => {
+        this.__handleSubmit();
+      });
     }
   };
 
@@ -94,19 +100,33 @@ export default class ChangeNumberModal extends React.Component {
     if (isValidPhoneNumber(this.state.phone)) {
       settingsActions.sendSmsCode({
         phone_code: this.state.dialCode,
-        phone_number: this.state.phoneWithoutCode
+        phone_number: this.state.phoneWithoutCode,
+        ga_code: this.state.gaCode
       }).then((data) => {
-        console.log(123, data);
         this.props.openModalPage('confirmSms', {}, {
           children: ConfirmSmsModal,
           params: {
-            phone: this.state.phone,
             dialCode: this.state.dialCode,
             phoneWithoutCode: this.state.phoneWithoutCode
           }
         });
-      }).catch((reason) => {
-        console.error(reason);
+      }).catch((info) => {
+        switch (info.code) {
+          case "ga_auth_code_incorrect":
+            this.setState({
+              errorGaCode: true
+            }, () => {
+              setTimeout(() => {
+                this.setState({
+                  errorGaCode: false
+                });
+              }, 1000)
+            });
+            break;
+          default:
+            alert(info.message);
+            break;
+        }
       });
     }
   }

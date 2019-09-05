@@ -10,10 +10,10 @@ import router from '../../../router';
 import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
+import * as modalGroupActions from "../../../actions/modalGroup";
+import UploadAvatarModal from "../UploadAvatarModal/UploadAvatarModal";
 
 class ProfileSidebar extends React.Component {
-
-
   render() {
     let verified = false,
       verificationText = 'Not verified';
@@ -32,7 +32,15 @@ class ProfileSidebar extends React.Component {
     });
     return <div className="ProfileSidebar">
       <div className="ProfileSidebar__user">
-        <div className="ProfileSidebar__user__avatar__wrap">
+        <div className="ProfileSidebar__user__avatar__wrap" onClick={() => {
+          modalGroupActions.openModalPage('upload_avatar', {}, {
+            children: UploadAvatarModal,
+            params: {}
+          })
+        }}>
+          <div className="ProfileSidebar__user__avatar__over">
+            <SVG src={require("../../../asset/24px/camera.svg")} />
+          </div>
           <img className="ProfileSidebar__user__avatar blur" src={this.props.user.photo_url} alt="" />
           <img className="ProfileSidebar__user__avatar" src={this.props.user.photo_url} alt="" />
         </div>

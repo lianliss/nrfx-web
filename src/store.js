@@ -3,10 +3,10 @@ import thunk from 'redux-thunk';
 import router from './router';
 import { router5Middleware, router5Reducer } from 'redux-router5';
 import { reduxPlugin } from 'redux-router5';
-
 import defaultReducer from './reducers';
 import cabinetReducer from './reducers/cabinet';
 import investmentsReducer from './reducers/investments';
+import profileReducer from './reducers/profile';
 import settingsReducer from './reducers/settings';
 import walletsReducer from './reducers/wallets';
 import modalGroupReducer from './reducers/modalGroup';
@@ -22,6 +22,7 @@ export function configureStore() {
     wallets: walletsReducer,
     modalGroup: modalGroupReducer,
     settings: settingsReducer,
+    profile: profileReducer,
     test: testReducer
   }), applyMiddleware(thunk, router5Middleware(router)));
 

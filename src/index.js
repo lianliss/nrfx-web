@@ -9,11 +9,16 @@ import store from './store';
 import router from './router';
 import * as auth from './services/auth';
 import * as user from './actions/user';
+import * as emitter from './services/emitter';
+import initGetParams from './services/initialGetParams';
+const initGetParamsData = initGetParams;
 
 require('define').noConflict();
 
 auth.setup();
-user.install();
+
+emitter.addListener('userInstall', user.install);
+emitter.emit('userInstall');
 
 const wrappedApp = <Provider store={store}>
   <RouterProvider router={router}>

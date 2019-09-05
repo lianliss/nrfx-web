@@ -38,6 +38,7 @@ export function openModalPage(name, sendParams = {}, customModal = {}) {
   }
 
   let routerParams = {...router.getState().params} || {};
+
   routerParams.modal_group = (
     routerParams.modal_group ? routerParams.modal_group + modalGroupConstant.MODALGROUP_SEPARATOR : ''
   ) + name;

@@ -1,10 +1,11 @@
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
+import schemaAPI from '../../services/schema_out';
 
 export function loadInvestments() {
   return dispatch => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-    api.get('investment').then(({ deposits, payments, ...props }) => {
+    api.call(schemaAPI["investment/"]).then(({ deposits, payments, ...props }) => {
       payments = Object.values(payments);
       //TODO: убрать fake data
       payments.push({currency: 'btc', invested_amount:1000, paid_amount:1, isEmpty: false},
@@ -21,7 +22,7 @@ export function loadInvestments() {
 export function loadProfitHistory() {
   return dispatch => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'loading' });
-    api.get('profit', { offset: 0 }).then((profits) => {
+    api.call(schemaAPI["investment/profit"]).then((profits) => {
       dispatch({ type: actionTypes.INVESTMENTS_PROFITS_SET, profits });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: '' });
     }).catch((err) => {
