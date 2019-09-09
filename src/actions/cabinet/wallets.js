@@ -1,13 +1,13 @@
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import store from '../../store';
-import schemaAPI from '../../services/schema_out';
+import apiSchema from '../../services/apiSchema';
 
 export function loadWallets() {
   return dispatch => {
     return new Promise((resolve, reject) => {
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-      api.call(schemaAPI["wallet/"], {count: 10}).then(({ balances, transactions, transfers }) => {
+      api.call(apiSchema.Wallet.DefaultGet, {count: 10}).then(({ balances, transactions, transfers }) => {
         dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: '' });
         dispatch({ type: actionTypes.WALLETS_SET, wallets: balances });
         dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_SET, items: transactions});
@@ -38,7 +38,7 @@ export function getWallets() {
 export function loadMoreTransactions() {
   return dispatch => {
     dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'loading' });
-    api.call(schemaAPI["wallet/transaction"], {
+    api.call( apiSchema.Wallet.TransactionGet, {
       start_from: store.getState().wallets.transactions.next,
       count: 20,
     }).then((data) => {
@@ -55,7 +55,7 @@ export function loadMoreTransactions() {
 export function loadMoreTransfers() {
   return dispatch => {
     dispatch({ type: actionTypes.WALLETS_TRANFERS_LOADING_MORE, status: 'loading' });
-    api.call(schemaAPI["wallet/transfer"], {
+    api.call(apiSchema.Wallet.TransferGet, {
       start_from: store.getState().wallets.transfers.next,
       count: 20,
     }).then((data) => {
@@ -98,7 +98,7 @@ export function loadTransactionInfo(id, type) {
 
 export function sendCoins(params) {
   return new Promise((resolve, reject) => {
-    api.put(schemaAPI["wallet/send"], params).then((resp) => {
+    api.put(apiSchema.Wallet.SendPut, params).then((resp) => {
       resolve(resp);
     }).catch((resp) => reject(resp));
   })
