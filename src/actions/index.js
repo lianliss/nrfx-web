@@ -4,11 +4,11 @@ import * as api from '../services/api';
 import store from '../store';
 import router from '../router';
 import * as utils from '../utils';
-import schemaAPI from '../services/schema_out';
+import apiSchema from '../services/apiSchema';
 
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
-    api.call(schemaAPI.lang, {code}).then(({ translations, languages }) => {
+    api.call(apiSchema.LangGet, {code}).then(({ translations, languages }) => {
       const langList = languages.map(lang => ({ value: lang[0], title: lang[1] }));
       store.dispatch({
         type: actionTypes.SET_LANG,
@@ -22,7 +22,7 @@ export function loadLang(code) {
 
 export function getStaticPageContent(address) {
   return new Promise((resolve, reject) => {
-    api.call(schemaAPI['page/'], {address}).then((data) => {
+    api.call(apiSchema.Page.DefaultGet, {address}).then((data) => {
       console.log(data);
       store.dispatch({ type: actionTypes.STATIC, payload: { address, data } })
       resolve(data);
@@ -34,7 +34,7 @@ export function getStaticPageContent(address) {
 
 export function loadCurrencies() {
   return new Promise((resolve, reject) => {
-    api.call(schemaAPI["wallet/currencies"]).then((currencies) => {
+    api.call(apiSchema.Wallet.CurrenciesGet).then((currencies) => {
       store.dispatch({ type: actionTypes.SET_CURRENCIES, currencies });
       resolve();
     }).catch(() => reject());

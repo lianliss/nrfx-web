@@ -94,7 +94,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         {(loginRes.status === 'ga_init' && document.queryCommandSupported('copy')) &&
           <UI.Button type="outline" outlined onClick={handleHashCopy}>Copy Key</UI.Button>
         }
-        <UI.Button onClick={handleSubmit} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
+        <UI.Button onClick={() => handleSubmit()} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </div>
   )
