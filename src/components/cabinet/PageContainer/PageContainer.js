@@ -28,4 +28,4 @@ PageContainer.propTypes = {
   sidebarOptions: PropTypes.object
 };
 
-export default PageContainer;
+export default React.memo(PageContainer);

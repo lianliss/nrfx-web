@@ -43,7 +43,7 @@ export default class ChangeNumberModal extends React.Component {
             disableSearchIcon={true}
             countryCodeEditable={false}
             searchPlaceholder={'Сountry search or code'}
-
+            autoFocus={true}
             searchClass={'ChangeNumberModal__PhoneInput_searchClass'}
             dropdownClass={'ChangeNumberModal__PhoneInput_dropdownClass'}
             buttonClass={'ChangeNumberModal__PhoneInput_buttonClass'}
@@ -55,7 +55,6 @@ export default class ChangeNumberModal extends React.Component {
         </div>
         <div className="ChangeNumberModal__input_wrapper">
           <UI.Input
-            autoFocus
             type="number"
             autoComplete="off"
             value={this.state.gaCode}

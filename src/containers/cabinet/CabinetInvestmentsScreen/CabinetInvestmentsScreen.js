@@ -50,6 +50,10 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
   };
 
+  static sideOptions = {
+
+  };
+
   render() {
     return (
       <div>
@@ -158,8 +162,26 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderLeftContent() {
+    console.log(44, this.props.chart.usd_profit);
+    console.log(45, this.props.chart.data);
+
+    const chartCurrencies = {};
+    if (this.props.chart.data) {
+      this.props.chart.data.map(item => {
+        switch (item.currency) {
+          case 'btc':
+            if (!chartCurrencies.hasOwnProperty(item.currency)) {
+
+            }
+            break;
+        }
+        chartCurrencies[item.currency] = {
+
+        };
+      });
+    }
     const series = [{
-      data: [1, 30, 10, 2, 40],
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       type: 'spline',
       color: '#FF9E65',
       name: 'BTC',
@@ -171,11 +193,11 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       }
     }, {
       name: 'ETH',
-      data: [1, 30, 10, 2, 40].reverse(),
+      data: [6, 7, 8, 9, 10],
       type: 'spline',
       color: '#98B1F1',
       tooltip: {
-        valueDecimals: 2
+        valueDecimals: 11
       },
       shadow: {
         color: '#98B1F1',
@@ -189,7 +211,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <h3>Profit</h3>
             <div className="Investment__profit__header__period">30 Days</div>
           </div>
-          <div className="Investment__profit__header__fiat">+435.56$</div>
+          <div className="Investment__profit__header__fiat">{this.props.chart.usd_profit && this.props.chart.usd_profit.toFixed(6)}$</div>
         </div>
         <div className="Investment__profit__chart">
           <Chart
@@ -245,7 +267,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
         />
       )
     }
-
 
     const headings = [
       <UI.TableColumn align="center" highlighted style={{ width: 40 }}>

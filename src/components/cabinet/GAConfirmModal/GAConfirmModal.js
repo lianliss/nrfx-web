@@ -28,7 +28,7 @@ export default class GAConfirmModal extends React.Component {
       <div>
         <div className="GAConfirmModal__input_wrapper">
           <UI.Input
-            autoFocus
+            autoFocus={true}
             type="number"
             autoComplete="off"
             value={this.state.gaCode}

@@ -51,6 +51,7 @@ class Input extends React.Component {
         value={this.props.value}
         onChange={this.__onChange}
         disabled={this.props.disabled}
+        autoFocus={this.props.autoFocus}
       />;
     }
 
@@ -73,7 +74,8 @@ class Input extends React.Component {
 Input.defaultProps = {
   classNameWrapper: '',
   disabled: false,
-  error: false
+  error: false,
+  autoFocus: false
 };
 
 Input.propTypes = {

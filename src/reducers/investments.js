@@ -4,6 +4,7 @@ const initialState = {
   deposits: [],
   payments: [],
   profits: [],
+  chart: {},
   loadingStatus: {}
 };
 
@@ -19,7 +20,8 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.INVESTMENTS_SET: {
       return Object.assign({}, state, {
         deposits: action.deposits,
-        payments: action.payments
+        payments: action.payments,
+        chart: action.chart,
       });
     }
 

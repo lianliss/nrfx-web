@@ -34,7 +34,7 @@ class DashboardItem extends React.Component {
   }
 
   state = {
-    invert: false,
+    invert: true,
   };
 
   render() {

@@ -39,7 +39,6 @@ export default class ChangeEmailModal extends React.Component {
             error={this.state.errorNewEmail}
           />
           <UI.Input
-            autoFocus
             type="number"
             autoComplete="off"
             value={this.state.gaCode}
