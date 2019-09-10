@@ -8,7 +8,7 @@ import WithdrawaHistorylTable from './components/WithdrawaHistorylTable';
 import ProfitHistorylTable from './components/ProfitHistorylTable';
 import DepositTable from './components/DepositTable';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
-import Chart from '../../../components/cabinet/Chart/Chart';
+import ChartProfit from "./components/ChartProfit";
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as modalGroupActions from '../../../actions/modalGroup';
 
@@ -50,7 +50,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   };
 
   render() {
-    console.log(3, this.props);
     return (
       <div>
         <PageContainer
@@ -117,65 +116,11 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderLeftContent() {
-    //console.log(44, this.props.chart.usd_profit);
-    //console.log(45, this.props.chart.data);
+    if (!this.props.chart.hasOwnProperty('data')) {
+      return <LoadingStatus />;
+    }
 
-    //const chartCurrencies = {};
-    // if (this.props.chart.hasOwnProperty('data') && this.props.chart.data) {
-    //   this.props.chart.data.map(item => {
-    //     switch (item.currency) {
-    //       case 'btc':
-    //         if (!chartCurrencies.hasOwnProperty(item.currency)) {
-    //
-    //         }
-    //         break;
-    //     }
-    //     chartCurrencies[item.currency] = {
-    //
-    //     };
-    //   });
-    // }
-
-    const series = [{
-      data: [4000, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      type: 'spline',
-      color: '#FF9E65',
-      name: 'BTC',
-      tooltip: {
-        valueDecimals: 2
-      },
-      shadow: {
-        color: '#FF9E65',
-      }
-    }, {
-      name: 'ETH',
-      data: [6, 7, 8, 9, 10],
-      type: 'spline',
-      color: '#98B1F1',
-      tooltip: {
-        valueDecimals: 11
-      },
-      shadow: {
-        color: '#98B1F1',
-      }
-    }];
-
-    return (
-      <div className="Content_box Investment__profit">
-        <div className="Investment__profit__header">
-          <div className="Investment__profit__header__cont">
-            <h3>Profit</h3>
-            <div className="Investment__profit__header__period">30 Days</div>
-          </div>
-          <div className="Investment__profit__header__fiat">111$</div>
-        </div>
-        <div className="Investment__profit__chart">
-          <Chart
-            series={series}
-          />
-        </div>
-      </div>
-    )
+    return <ChartProfit chart={{...this.props.chart}} />
   };
 
   __renderSummary() {
