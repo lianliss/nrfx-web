@@ -5,12 +5,12 @@ import Chart from '../../../../components/cabinet/Chart/Chart';
 class ChartProfit extends React.Component {
   render() {
     const chartCurrencies = {};
-    this.props.chart.data.map(item => {
-      if (!chartCurrencies.hasOwnProperty(item.currency)) {
-        const currencyColor = currencies.getColorByCurrency(item.currency);
-        chartCurrencies[item.currency] = {
+    Object.keys(this.props.chart.data).map(currency => {
+      if (!chartCurrencies.hasOwnProperty(currency)) {
+        const currencyColor = currencies.getColorByCurrency(currency);
+        chartCurrencies[currency] = {
           data: [],
-          name: item.currency.toUpperCase(),
+          name: currency.toUpperCase(),
           type: 'spline',
           color: currencyColor,
           tooltip: {
@@ -21,10 +21,12 @@ class ChartProfit extends React.Component {
           }
         }
       }
-      chartCurrencies[item.currency]['data'].push({
-        x: new Date(item.created_at).getTime(),
-        y: item.usd_amount,
-        title: item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
+      this.props.chart.data[currency].map(item => {
+        chartCurrencies[currency]['data'].push({
+          x: new Date(item.created_at).getTime(),
+          y: item.usd_amount,
+          title: item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
+        });
       });
     });
 
