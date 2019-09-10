@@ -78,3 +78,13 @@ export function withdrawAdd({amount, wallet_id, ga_code}) {
     });
   });
 }
+
+export function getPlans(currency, amount, deposit_type) {
+  return new Promise((resolve, reject) => {
+    api.call(apiSchema.Investment.PlansGet, {currency, amount, deposit_type}).then((data) => {
+      resolve(data);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
+}

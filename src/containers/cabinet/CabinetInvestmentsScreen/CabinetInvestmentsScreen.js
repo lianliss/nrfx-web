@@ -63,7 +63,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderContent() {
-
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
     }
@@ -91,7 +90,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     const profits = this.props.profits;
     return (
       <div>
-        <h2>Profit History</h2>
         <ProfitHistorylTable profits={profits} />
       </div>
     )
