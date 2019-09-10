@@ -16,6 +16,8 @@ import * as modalGroupActions from '../../../actions/modalGroup';
 
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
+import HistoryTable from "../CabinetWalletScreen/components/HistoryTable";
+import Paging from "../../../components/cabinet/Paging/Paging";
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -91,7 +93,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
   __renderProfitHistory() {
     const profits = this.props.profits;
-    if (!profits.items) {
+    if (!profits.items || !profits.items.length) {
       return (
         <EmptyContentBlock
           icon={require('../../../asset/120/no_deposits.svg')}
@@ -141,8 +143,50 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderWithdrawalHistory() {
+    const { withdrawals } = this.props;
+    if (!withdrawals.items || !withdrawals.items.length) {
+      return (
+        <EmptyContentBlock
+          icon={require('../../../asset/120/no_deposits.svg')}
+          message="No Withdrawal History"
+        />
+      )
+    }
+
+    const headings = [
+      <UI.TableColumn>ID</UI.TableColumn>,
+      <UI.TableColumn>Status</UI.TableColumn>,
+      <UI.TableColumn align="right">Amount</UI.TableColumn>,
+      <UI.TableColumn>Wallet</UI.TableColumn>,
+      <UI.TableColumn>Date</UI.TableColumn>
+    ];
+
+    const rows = withdrawals.items.map((item, i) => {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn>{utils.formatTableId(i)}</UI.TableColumn>
+          <UI.TableColumn style={{width: "50%"}}>
+            <span className={"Investment__withdrawal_table__status " + item.status}>{item.status}</span>
+          </UI.TableColumn>
+          <UI.TableColumn align="right">{utils.formatDouble(item.amount)}</UI.TableColumn>
+          <UI.TableColumn>{item.currency.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn>{moment(item.created_at).fromNow()}</UI.TableColumn>
+        </UI.TableCell>
+      )
+    });
+
     return (
-      <h1>withdrawal</h1>
+      <div>
+        <h2>Withdrawal History</h2>
+        <Paging
+          isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
+          onMore={this.props.loadMoreWithdrawalHistory}
+        >
+          <UI.Table headings={headings} className="Investment__withdrawal_table">
+            {rows}
+          </UI.Table>
+        </Paging>
+      </div>
     )
   }
 
