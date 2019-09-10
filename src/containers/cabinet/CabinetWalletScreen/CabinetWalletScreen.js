@@ -88,7 +88,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
       <Paging
         isCanMore={!!this.props.transactions.next && !this.props.transactionsLoadingMore}
         onMore={this.props.loadMoreTransactions}
-        moreButton={!!this.props.transfers.next}
+        moreButton={!!this.props.transactions.next}
         isLoading={this.props.transactionsLoadingMore}
       >
         <HistoryTable history={'items' in this.props.transactions ? this.props.transactions.items : []} />
