@@ -181,6 +181,8 @@ class CabinetInvestmentsScreen extends React.PureComponent {
         <Paging
           isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
           onMore={this.props.loadMoreWithdrawalHistory}
+          moreButton={!!withdrawals.next}
+          isLoading={withdrawals.isLoadingMore}
         >
           <UI.Table headings={headings} className="Investment__withdrawal_table">
             {rows}
