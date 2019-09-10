@@ -57,7 +57,8 @@ export function getWithState(caseName, caseClass) {
       mapDispatch2Props = {
         loadInvestments: investmentsActions.loadInvestments,
         loadProfitHistory: investmentsActions.loadProfitHistory,
-        loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory
+        loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory,
+        loadMoreWithdrawalHistory: investmentsActions.loadMoreWithdrawalHistory,
       };
       break;
     case CLASSES.CABINET_SETTINGS_SCREEN:

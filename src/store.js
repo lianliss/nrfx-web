@@ -12,6 +12,13 @@ import walletsReducer from './reducers/wallets';
 import modalGroupReducer from './reducers/modalGroup';
 import testReducer from './reducers/test';
 
+const middlewares = [];
+
+if (process.env.NODE_ENV === `development`) {
+  const { logger } = require(`redux-logger`);
+  middlewares.push(logger);
+}
+
 let store;
 export function configureStore() {
   store = createStore(combineReducers({
@@ -24,7 +31,7 @@ export function configureStore() {
     settings: settingsReducer,
     profile: profileReducer,
     test: testReducer
-  }), applyMiddleware(thunk, router5Middleware(router)));
+  }), applyMiddleware( ...middlewares, thunk, router5Middleware(router)));
 
   router.usePlugin(reduxPlugin(store.dispatch));
 }

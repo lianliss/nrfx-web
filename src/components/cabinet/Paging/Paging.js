@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LoadingMore from "../LoadingMore/LoadingMore";
 
 export default class Paging extends React.PureComponent {
   componentDidMount() {
@@ -22,7 +23,14 @@ export default class Paging extends React.PureComponent {
   };
 
   render() {
-    return this.props.children;
+    const { props } = this;
+    return <>
+      {props.children}
+      {props.moreButton && <LoadingMore
+        status={props.isLoading && "loading"}
+        onClick={props.onMore}
+      />}
+    </>
   }
 }
 
