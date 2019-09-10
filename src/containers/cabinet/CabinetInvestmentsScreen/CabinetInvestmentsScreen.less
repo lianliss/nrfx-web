@@ -103,3 +103,10 @@
 .Investment__profits_table {
   margin-top: 16px;
 }
+
+.Investment__withdrawal_table {
+  &__status {
+    &.accepted { color: var(--color-green); }
+    &.deleted { color: var(--color-yellow); }
+  }
+}

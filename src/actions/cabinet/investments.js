@@ -1,6 +1,7 @@
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
+import store from "../../store";
 
 export function loadInvestments() {
   return dispatch => {
@@ -35,7 +36,30 @@ export function loadProfitHistory() {
 export function loadWithdrawalHistory() {
   return dispatch => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: 'loading' });
-    //api.post();
+    api.call(apiSchema.Investment.WithdrawalGet).then((withdrawals) => {
+      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET, withdrawals });
+      dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: '' });
+    }).catch((err) => {
+      console.log(err);
+      dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: 'failed' });
+    });
+  };
+}
+
+
+export function loadMoreWithdrawalHistory() {
+  return dispatch => {
+    dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: true });
+    api.call(apiSchema.Investment.WithdrawalGet, {
+      start_from: store.getState().investments.withdrawals.next,
+      count: 20,
+    }).then((data) => {
+      const { items, next } = data;
+      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
+      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next });
+    }).catch(() => {
+      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
+    });
   };
 }
 
