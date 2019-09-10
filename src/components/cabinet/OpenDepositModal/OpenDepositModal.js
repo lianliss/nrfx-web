@@ -5,13 +5,9 @@ import UI from '../../../ui';
 import SVG from 'react-inlinesvg';
 
 export default class OpenDepositModal extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectDepositType: 'static'
-    };
-  }
+  state = {
+    selectDepositType: 'static'
+  };
 
   render() {
     let typeInfoRows;

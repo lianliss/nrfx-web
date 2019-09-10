@@ -1,5 +1,5 @@
 export const getGradientByCurrency = (currency) => {
-  switch (currency) {
+  switch (currency.toLowerCase()) {
     case 'btc':
       return 'linear-gradient(225deg, #F7B73B 0%, #F8A15D 100%)';
 
@@ -17,15 +17,15 @@ export const getGradientByCurrency = (currency) => {
 export const getColorByCurrency = (currency) => {
   switch (currency) {
     case 'btc':
-      return '#F7B73B';
+      return '#F8AC4D';
 
     case 'ltc':
-      return '#57BFFF';
+      return '#75BBE7';
 
     case 'eth':
-      return '#896ADF';
+      return '#908EE8';
   
     default:
-      return '#BFBFBF';
+      return '#9B9B9B';
   }
 };

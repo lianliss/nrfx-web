@@ -1,0 +1,48 @@
+import React from 'react';
+import * as currencies from "../../../../utils/currencies";
+import Chart from '../../../../components/cabinet/Chart/Chart';
+
+class ChartProfit extends React.Component {
+  render() {
+    const chartCurrencies = {};
+    this.props.chart.data.map(item => {
+      if (!chartCurrencies.hasOwnProperty(item.currency)) {
+        const currencyColor = currencies.getColorByCurrency(item.currency);
+        chartCurrencies[item.currency] = {
+          data: [],
+          name: item.currency.toUpperCase(),
+          type: 'spline',
+          color: currencyColor,
+          tooltip: {
+            valueDecimals: 2
+          },
+          shadow: {
+            color: currencyColor,
+          }
+        }
+      }
+      chartCurrencies[item.currency]['data'].push({
+        x: new Date(item.created_at).getTime(),
+        y: item.usd_amount,
+        title: item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
+      });
+    });
+
+    return (
+      <div className="Content_box Investment__profit">
+        <div className="Investment__profit__header">
+          <div className="Investment__profit__header__cont">
+            <h3>Profit</h3>
+            <div className="Investment__profit__header__period">30 Days</div>
+          </div>
+          <div className="Investment__profit__header__fiat">{this.props.chart.usd_profit.toFixed(2) + ' $'}</div>
+        </div>
+        <div className="Investment__profit__chart">
+          <Chart series={Object.values(chartCurrencies)} />
+        </div>
+      </div>
+    )
+  }
+}
+
+export default ChartProfit;
