@@ -37,40 +37,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
-          sidebarOptions={{
-            section: this.props.routerParams.section,
-            appName: 'Wallets',
-            items: [
-              <ProfileSidebarItem
-                hide={!this.props.routerParams.section}
-                active={!this.props.routerParams.section}
-                baselink={true}
-                icon={require('../../../asset/24px/arrow-left.svg')}
-                label="Wallets"
-              />,
-              <ProfileSidebarItem
-                section={'transfers'}
-                active={this.props.routerParams.section === 'transfers'}
-                icon={require('../../../asset/24px/history.svg')}
-                label="Transfers"
-              />,
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
-                icon={require('../../../asset/24px/plus-circle.svg')}
-                label="New Wallet"
-              />,
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('send')}}
-                icon={require('../../../asset/24px/send.svg')}
-                label="Send"
-              />,
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('receive')}}
-                icon={require('../../../asset/24px/receive.svg')}
-                label="Receive"
-              />
-            ]
-          }}
+          sidebarOptions={this.props.sidebarOptions}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -173,6 +140,31 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     this.setState({walletSelected});
   }
 }
+
+export const sidebarOptions = {
+  items: [
+    <ProfileSidebarItem
+      onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+      icon={require('../../../asset/24px/plus-circle.svg')}
+      label="New Wallet"
+    />,
+    <ProfileSidebarItem
+      section={'transfers'}
+      icon={require('../../../asset/24px/history.svg')}
+      label="Transfers"
+    />,
+    <ProfileSidebarItem
+      onClick={() => {modalGroupActions.openModalPage('send')}}
+      icon={require('../../../asset/24px/send.svg')}
+      label="Send"
+    />,
+    <ProfileSidebarItem
+      onClick={() => {modalGroupActions.openModalPage('receive')}}
+      icon={require('../../../asset/24px/receive.svg')}
+      label="Receive"
+    />
+  ]
+};
 
 export default storeUtils.getWithState(
   CLASSES.CABINET_WALLET_SCREEN,

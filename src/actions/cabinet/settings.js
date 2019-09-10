@@ -3,8 +3,6 @@ import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
 import store from "../../store";
 
-console.log(33, schemaAPI);
-
 export function loadSettings() {
   return dispatch => {
     dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: 'loading' });

@@ -50,28 +50,13 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
   };
 
-  static sideOptions = {
-
-  };
-
   render() {
+    console.log(3, this.props);
     return (
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
-          sidebarOptions={{
-            section: this.props.routerParams.section,
-            appName: 'Investments',
-            items: [
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
-                icon={require('../../../asset/24px/plus-circle.svg')}
-                label="New"
-              />,
-              <ProfileSidebarItem section="profits" icon={require('../../../asset/24px/invest.svg')} label="Profit" />,
-              <ProfileSidebarItem section="withdrawals" icon={require('../../../asset/24px/send.svg')} label="Withdrawals" />
-            ]
-          }}
+          sidebarOptions={this.props.sidebarOptions}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -162,26 +147,27 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderLeftContent() {
-    console.log(44, this.props.chart.usd_profit);
-    console.log(45, this.props.chart.data);
+    //console.log(44, this.props.chart.usd_profit);
+    //console.log(45, this.props.chart.data);
 
-    const chartCurrencies = {};
-    if (this.props.chart.data) {
-      this.props.chart.data.map(item => {
-        switch (item.currency) {
-          case 'btc':
-            if (!chartCurrencies.hasOwnProperty(item.currency)) {
+    //const chartCurrencies = {};
+    // if (this.props.chart.hasOwnProperty('data') && this.props.chart.data) {
+    //   this.props.chart.data.map(item => {
+    //     switch (item.currency) {
+    //       case 'btc':
+    //         if (!chartCurrencies.hasOwnProperty(item.currency)) {
+    //
+    //         }
+    //         break;
+    //     }
+    //     chartCurrencies[item.currency] = {
+    //
+    //     };
+    //   });
+    // }
 
-            }
-            break;
-        }
-        chartCurrencies[item.currency] = {
-
-        };
-      });
-    }
     const series = [{
-      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      data: [4000, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       type: 'spline',
       color: '#FF9E65',
       name: 'BTC',
@@ -211,7 +197,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <h3>Profit</h3>
             <div className="Investment__profit__header__period">30 Days</div>
           </div>
-          <div className="Investment__profit__header__fiat">{this.props.chart.usd_profit && this.props.chart.usd_profit.toFixed(6)}$</div>
+          <div className="Investment__profit__header__fiat">111$</div>
         </div>
         <div className="Investment__profit__chart">
           <Chart
@@ -320,6 +306,18 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     )
   }
 }
+
+export const sidebarOptions = {
+  items: [
+    <ProfileSidebarItem
+      onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+      icon={require('../../../asset/24px/plus-circle.svg')}
+      label="New"
+    />,
+    <ProfileSidebarItem section="profits" icon={require('../../../asset/24px/invest.svg')} label="Profit" />,
+    <ProfileSidebarItem section="withdrawals" icon={require('../../../asset/24px/send.svg')} label="Withdrawals" />
+  ]
+};
 
 export default storeUtils.getWithState(
   CLASSES.CABINET_INVESTMENTS_SCREEN,

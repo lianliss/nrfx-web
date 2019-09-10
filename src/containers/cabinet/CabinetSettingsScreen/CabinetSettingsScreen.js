@@ -64,28 +64,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     return (<div>
       <PageContainer
         leftContent={this.__renderRightContent()}
-        sidebarOptions={{
-          items: [
-            <ProfileSidebarItem
-              icon={require('../../../asset/24px/id-badge.svg')}
-              label="Personal"
-              baselink={true}
-              active={!this.props.routerParams.section || this.props.routerParams.section === 'personal'}
-            />,
-            /*<ProfileSidebarItem
-              icon={require('../../../asset/24px/shield.svg')}
-              label="Security"
-              section="security"
-              active={this.props.routerParams.section === 'security'}
-            />,
-            <ProfileSidebarItem
-              icon={require('../../../asset/24px/user.svg')}
-              label="Notifications"
-              section="notifications"
-              active={this.props.routerParams.section === 'notifications'}
-            />*/
-          ]
-        }}
+        sidebarOptions={this.props.sidebarOptions}
       >
         {this.__renderContent()}
       </PageContainer>
@@ -508,6 +487,28 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     );
   }
 }
+
+export const sidebarOptions = {
+  items: [
+    <ProfileSidebarItem
+      icon={require('../../../asset/24px/id-badge.svg')}
+      label="Personal"
+      baselink={true}
+    />,
+    /*<ProfileSidebarItem
+      icon={require('../../../asset/24px/shield.svg')}
+      label="Security"
+      section="security"
+      active={this.props.routerParams.section === 'security'}
+    />,
+    <ProfileSidebarItem
+      icon={require('../../../asset/24px/user.svg')}
+      label="Notifications"
+      section="notifications"
+      active={this.props.routerParams.section === 'notifications'}
+    />*/
+  ]
+};
 
 export default storeUtils.getWithState(
   CLASSES.CABINET_SETTINGS_SCREEN,

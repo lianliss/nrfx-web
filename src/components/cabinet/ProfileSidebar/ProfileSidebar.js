@@ -53,7 +53,7 @@ class ProfileSidebar extends React.Component {
 
       <div className="ProfileSidebar__menu">
         {this.__getBackButton()}
-        {this.props.items.map((child) => {
+        {this.props.items && this.props.items.map((child) => {
           if (!React.isValidElement(child)) {
             return child;
           }

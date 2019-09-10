@@ -5,17 +5,13 @@ import apiSchema from '../../services/apiSchema';
 export function loadInvestments() {
   return dispatch => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-<<<<<<< HEAD
-    api.call(schemaAPI["investment/"]).then(({ deposits, payments, chart, ...props }) => {
-=======
     api.call(apiSchema.Investment.DefaultGet).then(({ deposits, payments, ...props }) => {
->>>>>>> f832c705cf2066de3eeff1f1e63904a47f6efa3a
       payments = Object.values(payments);
       //TODO: убрать fake data
       payments.push({currency: 'btc', invested_amount:1000, paid_amount:1, isEmpty: false},
         {currency: 'eth', invested_amount:0, paid_amount:0, isEmpty: true},
         {currency: 'ltc', invested_amount:1, paid_amount:1, isEmpty: false});
-      dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments, chart });
+      dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
@@ -41,4 +37,24 @@ export function loadWithdrawalHistory() {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: 'loading' });
     //api.post();
   };
+}
+
+export function depositAdd({amount, wallet_id, plan_id, deposit_type}) {
+  return new Promise((resolve, reject) => {
+    api.call(apiSchema.Investment.DepositPut, {amount, wallet_id, plan_id, deposit_type}).then((data) => {
+      resolve(data);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
+}
+
+export function withdrawAdd({amount, wallet_id, ga_code}) {
+  return new Promise((resolve, reject) => {
+    api.call(apiSchema.Investment.WithdrawPut, {amount, wallet_id, ga_code}).then((data) => {
+      resolve(data);
+    }).catch((reason) => {
+      reject(reason);
+    });
+  });
 }
