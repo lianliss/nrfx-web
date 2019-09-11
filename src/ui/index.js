@@ -8,12 +8,13 @@ import Search from './components/Search/Search';
 import CheckBox from './components/CheckBox/CheckBox';
 import Modal, { ModalHeader } from './components/Modal/Modal';
 import Radio from './components/Radio/Radio';
-import RadioGroup from './components/Radio/RadioGroup';
 import Switch from './components/Switch/Switch';
+import Notifications, { Notification, NotificationSeparator } from './components/Notifications/Notifications';
 import Message from './components/Message/Message';
 import Hover from './components/Hover/Hover';
 import Table, { TableCell, TableColumn } from './components/Table/Table';
 import SwitchTabs from './components/SwitchTabs/SwitchTabs';
+import RadioGroup from './components/Radio/RadioGroup';
 
 export default {
   Button,
@@ -32,5 +33,8 @@ export default {
   Table,
   TableCell,
   TableColumn,
-  SwitchTabs
+  SwitchTabs,
+  Notifications,
+  Notification,
+  NotificationSeparator
 };

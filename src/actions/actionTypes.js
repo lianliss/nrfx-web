@@ -14,6 +14,8 @@ export const TRANSACTION_HISTORY = 'TRANSACTION_HISTORY';
 export const WALLET_HISTORY = 'WALLET_HISTORY';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 
+// Notifications
+export const NOTIFICATIONS_SET = 'NOTIFICATIONS_SET';
 
 // test
 export const TEST = 'TEST';

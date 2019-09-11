@@ -10,6 +10,7 @@ import profileReducer from './reducers/profile';
 import settingsReducer from './reducers/settings';
 import walletsReducer from './reducers/wallets';
 import modalGroupReducer from './reducers/modalGroup';
+import notificationsReducer from './reducers/notifications';
 import testReducer from './reducers/test';
 
 const middlewares = [];
@@ -30,6 +31,7 @@ export function configureStore() {
     modalGroup: modalGroupReducer,
     settings: settingsReducer,
     profile: profileReducer,
+    notifications: notificationsReducer,
     test: testReducer
   }), applyMiddleware( ...middlewares, thunk, router5Middleware(router)));
 
