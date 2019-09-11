@@ -17,6 +17,11 @@ export const SET_CURRENCIES = 'SET_CURRENCIES';
 // Notifications
 export const NOTIFICATIONS_SET = 'NOTIFICATIONS_SET';
 
+// Toasts
+export const TOASTS_PUSH = 'TOASTS_PUSH';
+export const TOASTS_DROP = 'TOASTS_DROP';
+export const TOASTS_HIDE = 'TOASTS_HIDE';
+
 // test
 export const TEST = 'TEST';
 

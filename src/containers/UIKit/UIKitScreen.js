@@ -175,6 +175,15 @@ export default class UIKitScreen extends BaseScreen {
             </UI.Notifications>
           </Line>
         </Section>
+        <Section>
+          <Line>
+            <UI.Toast type="fail" message="Toast Message" />
+            <UI.Toast type="warning" message="Toast Message" />
+            <UI.Toast type="success" message="Toast Message" />
+            <UI.Toast type="info" message="Toast Message" />
+            <UI.Toast type="fail" message="Long text Long text Long text Long text " />
+          </Line>
+        </Section>
       </div>
     )
   }

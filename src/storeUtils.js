@@ -7,6 +7,7 @@ import * as investmentsActions from "./actions/cabinet/investments";
 import * as settingsActions from "./actions/cabinet/settings";
 import * as profileActions from "./actions/cabinet/profile";
 import * as notificationsActions from "./actions/cabinet/notifications";
+import * as toastsActions from "./actions/cabinet/toasts";
 
 export function getWithState(caseName, caseClass) {
   let mapState2Props = state => ({...state}),
@@ -71,13 +72,22 @@ export function getWithState(caseName, caseClass) {
       mapState2Props = (state) => ({ ...state.settings });
       mapDispatch2Props = {
         loadSettings: settingsActions.loadSettings,
-        setUserFieldValue: settingsActions.setUserFieldValue
+        setUserFieldValue: settingsActions.setUserFieldValue,
+        toastPush: toastsActions.toastPush
       };
       break;
     case CLASSES.SEND_COINS_MODAL:
       mapState2Props = (state) => ({ thisState: {...state.modalGroup.states.send} });
       mapDispatch2Props = {
         setStateByModalPage: modalGroupActions.setStateByModalPage
+      };
+      break;
+    case CLASSES.COMPONENT_TOASTS:
+      mapState2Props = (state) => ({
+        toasts: state.toasts,
+      });
+      mapDispatch2Props = {
+        toastDrop: toastsActions.toastDrop
       };
       break;
     default:

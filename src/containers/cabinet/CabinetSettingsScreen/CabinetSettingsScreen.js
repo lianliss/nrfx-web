@@ -305,7 +305,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                         case "ga_auth_code_incorrect":
                           return this.__inputError(modal, 'errorGaCode');
                         default:
-                          alert(info.message);
+                          this.props.toastPush(info.message, "error");
                           break;
                       }
                     });
@@ -354,7 +354,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                       case "ga_auth_code_incorrect":
                         return this.__inputError(modal, 'errorGaCode');
                       default:
-                        alert(info.message);
+                        this.props.toastPush(info.message, "error");
                         break;
                     }
                   });

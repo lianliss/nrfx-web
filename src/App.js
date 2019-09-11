@@ -5,6 +5,7 @@ import { loadReCaptcha } from 'react-recaptcha-google';
 import Routes from './Routes';
 import Modals from './Modals';
 import ModalGroup from './ui/components/ModalGroup/ModalGroup';
+import Toasts from './components/cabinet/Toasts/Toasts';
 
 import * as actions from './actions';
 import * as testActions from './actions/test';
@@ -50,6 +51,8 @@ class App extends React.Component {
         <Modals {...this.props} />
 
         <Routes {...this.props} />
+
+        <Toasts />
 
         {!acceptedCookies
           ? <CookieUsage />

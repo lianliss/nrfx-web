@@ -15,6 +15,7 @@ import Hover from './components/Hover/Hover';
 import Table, { TableCell, TableColumn } from './components/Table/Table';
 import SwitchTabs from './components/SwitchTabs/SwitchTabs';
 import RadioGroup from './components/Radio/RadioGroup';
+import Toast from './components/Toast/Toast';
 
 export default {
   Button,
@@ -36,5 +37,6 @@ export default {
   SwitchTabs,
   Notifications,
   Notification,
-  NotificationSeparator
+  NotificationSeparator,
+  Toast
 };

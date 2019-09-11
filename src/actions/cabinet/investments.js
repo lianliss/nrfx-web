@@ -2,6 +2,7 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
 import store from "../../store";
+import * as toastsActions from "./toasts";
 
 export function loadInvestments() {
   return dispatch => {
@@ -11,6 +12,7 @@ export function loadInvestments() {
       dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments, chart });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
+      toastsActions.toastPush("Error load investment", "error")(dispatch);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     });
   };
@@ -24,6 +26,7 @@ export function loadProfitHistory() {
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: '' });
     }).catch((err) => {
       console.log(err);
+      toastsActions.toastPush("Error load profit history", "error")(dispatch);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'failed' });
     });
   };
@@ -37,6 +40,7 @@ export function loadWithdrawalHistory() {
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: '' });
     }).catch((err) => {
       console.log(err);
+      toastsActions.toastPush("Error load withdrawal history", "error")(dispatch);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: 'failed' });
     });
   };
@@ -54,6 +58,7 @@ export function loadMoreWithdrawalHistory() {
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next });
     }).catch(() => {
+      toastsActions.toastPush("Error load more withdrawal history", "error")(dispatch);
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
     });
   };
