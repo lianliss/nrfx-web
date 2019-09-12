@@ -58,12 +58,12 @@ export default class Notifications extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener('click', this.handleClickOutside);
     document.addEventListener("keydown", this.handleClickEsc, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener('click', this.handleClickOutside);
     document.removeEventListener("keydown", this.handleClickEsc, false);
   }
 
@@ -80,9 +80,6 @@ export default class Notifications extends React.Component {
   }
 
   render() {
-    if (!this.props.visible) {
-      return false;
-    }
     return (
       <div className={classNames(this.props.classNames, "Notifications", {empty: !this.props.children})} ref="notifications">
         {this.props.children || <span className="Notifications__empty_text">You don’t have any notifications</span>}
@@ -92,7 +89,6 @@ export default class Notifications extends React.Component {
 }
 
 Notifications.propTypes = {
-  visible: PropTypes.bool,
   classNames: PropTypes.string,
   onClose: PropTypes.func
 };
