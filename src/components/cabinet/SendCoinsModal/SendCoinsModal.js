@@ -45,7 +45,7 @@ class SendCoinsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => this.props.close()} width={552}>
         <UI.ModalHeader>
-          Send {utils.ucfirst(currencyInfo.name)}
+          Send coins
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -63,7 +63,8 @@ class SendCoinsModal extends React.Component {
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.props.thisState.currency);
 
-      this.options = this.props.thisState.wallets.map((item) => {
+      this.options = this.props.thisState.wallets.filter(w => w.status !== 'pending');
+      this.options = this.options.map((item) => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -71,6 +72,12 @@ class SendCoinsModal extends React.Component {
           value: item.currency
         }
       });
+
+      if (!(this.options.length > 0)) {
+        return <div style={{textAlign:'center'}}>
+          Нет доступных кошельков
+        </div>;
+      }
 
       let sendButtonDisabled = true;
       if (this.__checkItsReady()) {

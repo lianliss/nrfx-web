@@ -40,7 +40,7 @@ export default class ReceiveCoinsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={480}>
         <UI.ModalHeader>
-          Receive {utils.ucfirst(currencyInfo.name)}
+          Receive coins
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -58,7 +58,8 @@ export default class ReceiveCoinsModal extends React.Component {
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.state.currency);
 
-      const options = this.state.wallets.map((item) => {
+      let options = this.state.wallets.filter(w => w.status !== 'pending');
+      options = options.map(item => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -66,6 +67,12 @@ export default class ReceiveCoinsModal extends React.Component {
           value: item.currency
         }
       });
+
+      if (!(options.length > 0)) {
+        return <div style={{textAlign:'center'}}>
+          Нет доступных кошельков
+        </div>;
+      }
 
       let wallet = this.wallet;
       let placeholder = options[0];
