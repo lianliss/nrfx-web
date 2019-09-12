@@ -91,8 +91,8 @@ class Header extends React.Component {
             </div>
             <div className="CabinetHeader__icons">
               <div className="CabinetHeader__icon">
-                <UI.Notifications
-                  visible={this.state.visibleNotifications}
+                { this.state.visibleNotifications && <UI.Notifications
+                  visible={true}
                   onClose={this.toggleNotifications.bind(this)}
                 >
                   {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
@@ -101,13 +101,14 @@ class Header extends React.Component {
                         <UI.NotificationSeparator title="Просмотренные" />
                       }
                       <UI.Notification
+                        icon={n.icon}
                         unread={n.unread}
                         message={n.message}
                         date={n.created_at}
                       />
                     </div>
                   ))}
-                </UI.Notifications>
+                </UI.Notifications>}
                 <div onClick={this.toggleNotifications.bind(this)}>
                   <Badge count={unreadCount || null}>
                     <SVG src={require('../../../asset/cabinet/notification.svg')} />
