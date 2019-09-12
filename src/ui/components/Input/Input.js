@@ -10,7 +10,7 @@ class Input extends React.Component {
     super(props);
 
     this.state = {
-      indicatorWidth: 0
+      indicatorWidth: this.props.indicatorWidth || 0
     };
   }
 
