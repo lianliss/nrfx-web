@@ -103,6 +103,7 @@ export default class ReceiveCoinsModal extends React.Component {
             <UI.Input
               value={wallet.address}
               onClick={this.__copy}
+              indicatorWidth={34}
               indicator={
                 <SVG src={require('../../../asset/24px/copy.svg')} className="ReceiveCoinsModal__copy_btn" />
               }
