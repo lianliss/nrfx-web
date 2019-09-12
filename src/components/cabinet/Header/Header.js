@@ -22,7 +22,8 @@ const DropDownLinks = [
       },
       {
         title: "FAQ",
-        route: pages.FAQ
+        route: 'https://bitcoinbot.wiki/',
+        useLocation: true
       },
       {
         title: "Exit",

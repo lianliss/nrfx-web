@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
-            <a href={`/${pages.FAQ}`} className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
+            <a href="https://bitcoinbot.wiki/" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
             <StaticContentModal type="terms">
               <span className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
