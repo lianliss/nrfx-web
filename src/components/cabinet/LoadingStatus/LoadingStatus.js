@@ -20,12 +20,21 @@ export default function LoadingStatus({ status, onRetry, inline }) {
         </div>
       );
       break;
+    case 'failed_connection':
+      cont = (
+        <div className="LoadingStatus__failed">
+          <div className="LoadingStatus__failed__icon_connection" />
+          <div className="LoadingStatus__failed__message">Connection Error.  Check Your Internet</div>
+          <UI.Button onClick={onRetry}>Try Again</UI.Button>
+        </div>
+      );
+      break;
     case 'failed':
       cont = (
         <div className="LoadingStatus__failed">
           <div className="LoadingStatus__failed__icon" />
-          <div className="LoadingStatus__failed__message">Connection Error.  Check Your Internet</div>
-          <UI.Button onClick={onRetry}>Try Again</UI.Button>
+          <div className="LoadingStatus__failed__message">It seems that something went wrong, try refreshing the page</div>
+          <UI.Button onClick={onRetry}>Refresh</UI.Button>
         </div>
       );
       break;

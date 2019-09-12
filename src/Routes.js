@@ -20,6 +20,7 @@ import * as CabinetStartProfileScreen from './containers/cabinet/CabinetStartPro
 import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
 import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
 import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
+import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
 
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
@@ -110,6 +111,9 @@ export default function Routes(props) {
     case pages.INVESTMENTS:
       Component = CabinetInvestmentsScreen.default;
       sidebarOptions = CabinetInvestmentsScreen.sidebarOptions;
+      break;
+    case pages.MENU:
+      Component = MenuScreen.default;
       break;
     default:
       Component = SiteNotFoundScreen;

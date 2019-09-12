@@ -2,6 +2,7 @@ import {memo} from 'react';
 import {connect} from 'react-redux';
 import * as CLASSES from './constants/classes';
 import * as walletsActions from './actions/cabinet/wallets';
+import * as actions from './actions/';
 import * as modalGroupActions from "./actions/modalGroup";
 import * as investmentsActions from "./actions/cabinet/investments";
 import * as settingsActions from "./actions/cabinet/settings";
@@ -12,6 +13,17 @@ export function getWithState(caseName, caseClass) {
     mapDispatch2Props = {};
 
   switch (caseName) {
+    case CLASSES.COMPONENT_CABINET_WRAPPER:
+      mapState2Props = (state) => ({ ...state.default });
+      mapDispatch2Props = {
+        setAdaptive: actions.setAdaptive
+      };
+      break;
+    case CLASSES.CABINET_MENU_SCREEN:
+      mapState2Props = (state) => ({
+        adaptive: state.default.adaptive
+      });
+      break;
     case CLASSES.COMPONENT_CABINET_HEADER:
       mapState2Props = (state) => ({ ...state.default.profile });
       mapDispatch2Props = {};

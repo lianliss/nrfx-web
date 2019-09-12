@@ -1,5 +1,6 @@
 export const MODAL = 'modal';
 export const MAIN = 'main';
+export const MENU = 'menu';
 export const ABOUT = 'about';
 export const MISSION = 'mission';
 export const HISTORY = 'history';

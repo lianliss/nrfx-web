@@ -70,3 +70,7 @@ export function openModal(name, params = {}) {
     router.getState().name,
     utils.makeModalParams(name, params));
 }
+
+export function setAdaptive(adaptive) {
+  return store.dispatch({ type: actionTypes.SET_ADAPTIVE, adaptive });
+}

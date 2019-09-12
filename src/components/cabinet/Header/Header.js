@@ -82,9 +82,9 @@ class Header extends React.Component {
                   <SVG src={require('../../../asset/cabinet/notification.svg')} />
                 </Badge>
               </div>
-              <div className="CabinetHeader__icon">
-                <SVG src={require('../../../asset/cabinet/social.svg')} />
-              </div>
+              {/*<div className="CabinetHeader__icon">*/}
+              {/*<SVG src={require('../../../asset/cabinet/social.svg')} />*/}
+              {/*</div>*/}
               <div className="CabinetHeader__icon">
                 <DropDown
                   key={DropDownLinks[0].title}

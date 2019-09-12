@@ -13,7 +13,7 @@ export const WALLETS = 'WALLETS';
 export const TRANSACTION_HISTORY = 'TRANSACTION_HISTORY';
 export const WALLET_HISTORY = 'WALLET_HISTORY';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
-
+export const SET_ADAPTIVE = 'SET_ADAPTIVE';
 
 // test
 export const TEST = 'TEST';
