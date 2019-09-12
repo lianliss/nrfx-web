@@ -40,7 +40,7 @@ export function getWallets() {
 export function loadMoreTransactions() {
   return dispatch => {
     dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'loading' });
-    api.call( apiSchema.Wallet.TransactionGet, {
+    api.call(apiSchema.Wallet.TransactionGet, {
       start_from: store.getState().wallets.transactions.next,
       count: 20,
     }).then((data) => {
@@ -102,7 +102,7 @@ export function loadTransactionInfo(id, type) {
 
 export function sendCoins(params) {
   return new Promise((resolve, reject) => {
-    api.put(apiSchema.Wallet.SendPut, params).then((resp) => {
+    api.call(apiSchema.Wallet.SendPut, params).then((resp) => {
       resolve(resp);
     }).catch((resp) => reject(resp));
   })

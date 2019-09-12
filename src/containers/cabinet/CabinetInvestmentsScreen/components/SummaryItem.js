@@ -8,7 +8,6 @@ import * as modalGroupActions from '../../../../actions/modalGroup';
 export default function SummaryItem({ available, currency, invested_amount, paid_amount }) {
   const currencyInfo = actions.getCurrencyInfo(currency);
   currency = currency.toUpperCase();
-  console.log(1, arguments);
 
   const getCont = () => {
     if (!(invested_amount > 0)) {
