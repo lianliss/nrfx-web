@@ -135,3 +135,98 @@
   height: 24px;
   width: 100%;
 }
+
+.CabinetStartProfileScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+}
+
+.CabinetStartProfileScreen__actionCards {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  margin-top: 24px;
+  width: calc(100% + 28px);
+}
+
+// ActionCardBox
+
+.ActionCardBox {
+  position: relative;
+  margin-right: 28px;
+  height: 320px;
+  margin-top: 0;
+
+  &:nth-child(2n) {
+    .ActionCardBox__icon_content {
+      opacity: 0.4;
+    }
+    .ActionCardBox__button {
+      .Button {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &:nth-child(3n) {
+    .ActionCardBox__button {
+      .Button {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .ActionCardBox__icon {
+    width: 100%;
+    height: 120px;
+    margin: 40px 0 0;
+
+    .ActionCardBox__icon_content {
+      width: 120px;
+      height: 120px;
+      margin: auto;
+    }
+  }
+
+  .ActionCardBox__description {
+    width: calc(100% - 48px);
+    font-size: 12px;
+    margin: 40px 24px 0;
+    text-align: center;
+  }
+
+  .ActionCardBox__button {
+    width: 100%;
+    display: flex;
+    margin-top: 16px;
+    .Button {
+      margin: auto 24px;
+      width: calc(100% - 48px);
+      white-space: nowrap;
+    }
+  }
+}
+
+.CabinetStartProfileScreen__right {
+  grid-template-columns: 100%;
+  margin-top: 0;
+  .ActionCardBox {
+    margin-bottom: 24px;
+    .ActionCardBox__description {
+      font-size: 14px;
+    }
+    .ActionCardBox__button {
+      width: 100%;
+      display: flex;
+      margin-top: 40px;
+      .Button {
+        width: 170px;
+        margin: auto;
+      }
+    }
+  }
+}

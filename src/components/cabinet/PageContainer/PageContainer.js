@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 
 function PageContainer({ children, leftContent, sidebarOptions }) {
-  {console.log(sidebarOptions)}
   return (
     <div className="PageContainer">
       <ProfileSidebar {...sidebarOptions} />

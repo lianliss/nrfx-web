@@ -8,12 +8,12 @@ import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
-import * as pages from '../../../constants/pages';
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
-import DashboardItem from './components/dashboardItem';
-import * as modalGroupActions from "../../../actions/modalGroup";
+import DashboardItem from './components/DashboardItem';
+import ProfileActionCards from './components/ProfileActionCards';
+
 
 class CabinetProfileScreen extends CabinetBaseScreen {
   state = {
@@ -74,6 +74,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         {this.__renderWallets()}
         <div className="CabinetProfileScreen__height_padding"> </div>
         {this.__renderDashboard()}
+        {this.__renderCards()}
       </div>
     )
   };
@@ -107,6 +108,10 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         {rows}
       </div>
     )
+  };
+
+  __renderCards = () => {
+    return <ProfileActionCards />
   };
 
   __walletSelect = (wallet) => {

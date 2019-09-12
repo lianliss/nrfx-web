@@ -58,9 +58,6 @@ export default function Footer() {
             <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/bitcoinbot_pro/" className="Footer__social">
               <SVG src={require('../../../asset/site/footer_instagram.svg')} />
             </a>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCkwFUCZP4B9sghoTFJFj2cA" className="Footer__social">
-              <SVG src={require('../../../asset/site/footer_youtube.svg')} />
-            </a>
           </div>
         </div>
       </div>

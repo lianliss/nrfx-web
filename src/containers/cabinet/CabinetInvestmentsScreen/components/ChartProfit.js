@@ -1,10 +1,21 @@
 import React from 'react';
 import * as currencies from "../../../../utils/currencies";
 import Chart from '../../../../components/cabinet/Chart/Chart';
+import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import * as modalGroupActions from "../../../../actions/modalGroup";
 
 class ChartProfit extends React.Component {
+
   render() {
+    if (!(this.props.chart.length > 0)) {
+      return <EmptyContentBlock
+        icon={require('../../../../asset/120/start_invest_second.svg')}
+        message="Here will be your investments profit charts"
+      />
+    }
+
     const chartCurrencies = {};
+
     Object.keys(this.props.chart.data).map(currency => {
       if (!chartCurrencies.hasOwnProperty(currency)) {
         const currencyColor = currencies.getColorByCurrency(currency);
