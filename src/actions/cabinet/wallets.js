@@ -2,6 +2,7 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import store from '../../store';
 import apiSchema from '../../services/apiSchema';
+import * as toastsActions from "./toasts";
 
 export function loadWallets() {
   return dispatch => {
@@ -14,6 +15,7 @@ export function loadWallets() {
         dispatch({ type: actionTypes.WALLETS_TRANFERS_SET, items: transfers });
         resolve(balances);
       }).catch(() => {
+        toastsActions.toastPush("Error load wallets", "error")(dispatch);
         dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
         reject();
       });
@@ -47,6 +49,7 @@ export function loadMoreTransactions() {
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: '' });
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_APPEND, items, next });
     }).catch(() => {
+      toastsActions.toastPush("Error load more transactions", "error")(dispatch);
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'failed' });
     });
   };
@@ -64,6 +67,7 @@ export function loadMoreTransfers() {
       dispatch({ type: actionTypes.WALLETS_TRANFERS_LOADING_MORE, status: '' });
       dispatch({ type: actionTypes.WALLETS_TRANFERS_APPEND, items, next });
     }).catch(() => {
+      toastsActions.toastPush("Error load more transfers", "error")(dispatch);
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'failed' });
     });
   };

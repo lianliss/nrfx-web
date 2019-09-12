@@ -1,7 +1,7 @@
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
-import store from "../../store";
+import * as toastsActions from "./toasts";
 
 export function loadSettings() {
   return dispatch => {
@@ -10,6 +10,7 @@ export function loadSettings() {
       dispatch({ type: actionTypes.SETTINGS_SET, user: {...data} });
       dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
+      toastsActions.toastPush("Error load settings", "error")(dispatch);
       dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     });
   };

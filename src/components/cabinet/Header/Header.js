@@ -10,6 +10,7 @@ import router from '../../../router';
 import * as pages from '../../../constants/pages';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from "../../../constants/classes";
+import UI from "../../../ui/index";
 
 const DropDownLinks = [
   {
@@ -32,13 +33,25 @@ const DropDownLinks = [
 ];
 
 class Header extends React.Component {
-  state = {activePage: null};
+  state = {
+    activePage: null,
+    visibleNotifications: false
+  };
+
+  componentDidMount() {
+    this.props.loadNotifications();
+  }
 
   handleNavigate = (route) => {
     router.navigate(route);
   };
 
+  toggleNotifications = () => {
+    this.setState({visibleNotifications: !this.state.visibleNotifications});
+  }
+
   render() {
+    const { notifications, unreadCount } = this.props.notifications;
     return (
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
@@ -78,9 +91,28 @@ class Header extends React.Component {
             </div>
             <div className="CabinetHeader__icons">
               <div className="CabinetHeader__icon">
-                <Badge count={this.props.has_notifications ? '!' : null}>
-                  <SVG src={require('../../../asset/cabinet/notification.svg')} />
-                </Badge>
+                <UI.Notifications
+                  visible={this.state.visibleNotifications}
+                  onClose={this.toggleNotifications.bind(this)}
+                >
+                  {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
+                    <div key={n.id}>
+                      { i > 0 &&  n.unread !== notifications[i - 1].unread &&
+                        <UI.NotificationSeparator title="Просмотренные" />
+                      }
+                      <UI.Notification
+                        unread={n.unread}
+                        message={n.message}
+                        date={n.created_at}
+                      />
+                    </div>
+                  ))}
+                </UI.Notifications>
+                <div onClick={this.toggleNotifications.bind(this)}>
+                  <Badge count={unreadCount || null}>
+                    <SVG src={require('../../../asset/cabinet/notification.svg')} />
+                  </Badge>
+                </div>
               </div>
               {/*<div className="CabinetHeader__icon">*/}
               {/*<SVG src={require('../../../asset/cabinet/social.svg')} />*/}

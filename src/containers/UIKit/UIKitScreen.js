@@ -124,6 +124,66 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Message type="success" alert>Success</UI.Message>
           </Line>
         </Section>
+        <Section>
+          <Line>
+            <UI.Notifications visible={true}></UI.Notifications>
+          </Line>
+          <Line>
+            <UI.Notifications visible={true}>
+              <UI.Notification
+                unread
+                icon="https://unsplash.it/40/40?random=1"
+                message="20 BTC вывод с баланса инвестиций на кошелек Static 150% Comfort (360 Days)"
+                date="8 Aug 2019"
+                onAction={console.log}
+                actions={[
+                  {
+                    "type": "primary",
+                    "text": "Accept",
+                    "action": "verification_accept",
+                    "params": {
+                      "test": ""
+                    }
+                  },
+                  {
+                    "type": "secondary",
+                    "text": "Accept",
+                    "action": "cancel",
+                    "params": []
+                  }
+                ]}
+              />
+              <UI.Notification
+                unread
+                icon="https://unsplash.it/40/40?random=2"
+                message="Вход через приложение для Android"
+                date="8 Aug 2019"
+              />
+              <UI.Notification
+                unread
+                icon="https://unsplash.it/40/40?random=3"
+                message="Пользователь ZEUS приглашает вас стать Агентом."
+                date="8 Aug 2019"
+                markText="Вы приняли приглашение."
+              />
+              <UI.NotificationSeparator title="Просмотренные" />
+              <UI.Notification
+                icon="https://unsplash.it/40/40?random=4"
+                message="Заявка на отправление 0.000450 BTC на адрес 7461L.. c2c171"
+                date="8 Aug 2019"
+              />
+            </UI.Notifications>
+          </Line>
+        </Section>
+        <Section>
+          <Line>
+            <UI.Toast type="fail" message="Toast Message" />
+            <UI.Toast type="warning" message="Toast Message" />
+            <UI.Toast type="success" message="Toast Message" />
+            <UI.Toast type="info" message="Toast Message" />
+            <UI.Toast type="fail" message="Long text Long text Long text Long text " />
+          </Line>
+        </Section>
       </div>
     )
   }

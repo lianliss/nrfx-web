@@ -15,6 +15,15 @@ export const WALLET_HISTORY = 'WALLET_HISTORY';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SET_ADAPTIVE = 'SET_ADAPTIVE';
 
+// Notifications
+export const NOTIFICATIONS_SET = 'NOTIFICATIONS_SET';
+
+// Toasts
+export const TOASTS_PUSH = 'TOASTS_PUSH';
+export const TOASTS_DROP = 'TOASTS_DROP';
+export const TOASTS_HIDE = 'TOASTS_HIDE';
+
+
 // test
 export const TEST = 'TEST';
 

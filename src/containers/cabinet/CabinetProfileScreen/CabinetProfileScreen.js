@@ -124,10 +124,10 @@ export const sidebarOptions = {
     <ProfileSidebarItem
       icon={require('../../../asset/24px/settings.svg')}
       label="Settings"
-    />,
-    <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
-    <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
+    />
   ]
+  // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
+  // <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
 };
 
 export default storeUtils.getWithState(

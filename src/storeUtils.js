@@ -7,6 +7,8 @@ import * as modalGroupActions from "./actions/modalGroup";
 import * as investmentsActions from "./actions/cabinet/investments";
 import * as settingsActions from "./actions/cabinet/settings";
 import * as profileActions from "./actions/cabinet/profile";
+import * as notificationsActions from "./actions/cabinet/notifications";
+import * as toastsActions from "./actions/cabinet/toasts";
 
 export function getWithState(caseName, caseClass) {
   let mapState2Props = state => ({...state}),
@@ -25,8 +27,13 @@ export function getWithState(caseName, caseClass) {
       });
       break;
     case CLASSES.COMPONENT_CABINET_HEADER:
-      mapState2Props = (state) => ({ ...state.default.profile });
-      mapDispatch2Props = {};
+      mapState2Props = (state) => ({
+        profile: state.default.profile,
+        notifications: state.notifications
+      });
+      mapDispatch2Props = {
+        loadNotifications: notificationsActions.loadNotifications
+      };
       break;
     case CLASSES.COMPONENT_PROFILE_SIDEBAR:
       mapState2Props = (state) => ({ ...state.default.profile });
@@ -77,13 +84,22 @@ export function getWithState(caseName, caseClass) {
       mapState2Props = (state) => ({ ...state.settings });
       mapDispatch2Props = {
         loadSettings: settingsActions.loadSettings,
-        setUserFieldValue: settingsActions.setUserFieldValue
+        setUserFieldValue: settingsActions.setUserFieldValue,
+        toastPush: toastsActions.toastPush
       };
       break;
     case CLASSES.SEND_COINS_MODAL:
       mapState2Props = (state) => ({ thisState: {...state.modalGroup.states.send} });
       mapDispatch2Props = {
         setStateByModalPage: modalGroupActions.setStateByModalPage
+      };
+      break;
+    case CLASSES.COMPONENT_TOASTS:
+      mapState2Props = (state) => ({
+        toasts: state.toasts,
+      });
+      mapDispatch2Props = {
+        toastDrop: toastsActions.toastDrop
       };
       break;
     default:
