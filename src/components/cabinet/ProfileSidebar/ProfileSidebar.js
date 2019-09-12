@@ -167,7 +167,9 @@ export function ProfileSidebarItem({ icon, label, onClick, section, modal, basel
     params.routeParams = makeModalParams(modal);
   }
 
-  if (hide) return <></>;
+  if (hide) {
+    return null;
+  }
 
   return (
     <Component
