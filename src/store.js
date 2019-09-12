@@ -16,10 +16,8 @@ import testReducer from './reducers/test';
 
 const middlewares = [];
 
-if (process.env.NODE_ENV === `development`) {
-  const { logger } = require(`redux-logger`);
-  middlewares.push(logger);
-}
+// const { logger } = require(`redux-logger`);
+// middlewares.push(logger);
 
 let store;
 export function configureStore() {
