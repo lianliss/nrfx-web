@@ -49,7 +49,7 @@ class Header extends React.Component {
 
   toggleNotifications = () => {
     this.setState({visibleNotifications: !this.state.visibleNotifications});
-  }
+  };
 
   render() {
     const { notifications, unreadCount } = this.props.notifications;

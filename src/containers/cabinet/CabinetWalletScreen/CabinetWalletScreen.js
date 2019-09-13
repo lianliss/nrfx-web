@@ -9,7 +9,6 @@ import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import HistoryTable from './components/HistoryTable';
-import LoadingMore from '../../../components/cabinet/LoadingMore/LoadingMore';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 
 import * as walletsActions from '../../../actions/cabinet/wallets';

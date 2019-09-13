@@ -13,6 +13,7 @@ import UI from '../../../ui';
 
 import * as modalGroupActions from "../../../actions/modalGroup";
 import * as storeUtils from "../../../storeUtils";
+import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
 import * as settingsActions from '../../../actions/cabinet/settings';
 import * as emitter from '../../../services/emitter';
@@ -59,8 +60,6 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
     }
-
-    console.log(this.props);
 
     return (<div>
       <PageContainer
@@ -259,13 +258,13 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   __getPersonalPageContent = () => {
     return <div className="CabinetSettingsScreen__main Content_box">
       <div className="CabinetSettingsScreen__header">
-        Personal Information
+        {utils.getLang('cabinet_settingsPersonalInformation')}
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              placeholder={'Your firstname'}
+              placeholder={utils.getLang('cabinet_settingsYourFirstName')}
               value={this.props.user.first_name}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'first_name', value})}
               error={this.state.firstNameInputError}
@@ -273,7 +272,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           </div>
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              placeholder={'Your lastname'}
+              placeholder={utils.getLang('cabinet_settingsYourLastName')}
               value={this.props.user.last_name}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'last_name', value})}
               error={this.state.lastNameInputError}
@@ -315,20 +314,20 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
               })}
             }
           >
-            Save
+            {utils.getLang('cabinet_settingsSave')}
           </UI.Button>
         </div>
       </div>
       <div className="CabinetSettingsScreen__space">
       </div>
       <div className="CabinetSettingsScreen__header">
-        Login
+        {utils.getLang('cabinet_settingsLogin')}
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              placeholder={'Your login'} value={this.props.user.login}
+              placeholder={utils.getLang('cabinet_settingsYourLogin')} value={this.props.user.login}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'login', value})}
               error={this.state.loginInputError}
             />
@@ -363,39 +362,39 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
               }
             })
           }}>
-            Change
+            {utils.getLang('cabinet_settingsChange')}
           </UI.Button>
         </div>
       </div>
       <div className="CabinetSettingsScreen__space">
       </div>
       <div className="CabinetSettingsScreen__header">
-        Phone Number
+        {utils.getLang('cabinet_settingsPhoneNumber')}
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              classNameWrapper={'CabinetSettingsScreen__inputWithoutEffects'}
+              classNameWrapper="CabinetSettingsScreen__inputWithoutEffects"
               disabled={true}
               value={this.props.user.phone_number}
             />
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
-          <UI.Button type={'outline'} onClick={() => {modalGroupActions.openModalPage('change_number')}}>
-            Change
+          <UI.Button type="outline" onClick={() => {modalGroupActions.openModalPage('change_number')}}>
+            {utils.getLang('cabinet_settingsChange')}
           </UI.Button>
         </div>
       </div>
       <div className="CabinetSettingsScreen__header">
-        E-mail
+        {utils.getLang('cabinet_settingsEmail')}
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              classNameWrapper={'CabinetSettingsScreen__inputWithoutEffects'}
+              classNameWrapper="CabinetSettingsScreen__inputWithoutEffects"
               disabled={true}
               value={this.props.user.email}
             />
@@ -403,52 +402,12 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         </div>
         <div className="CabinetSettingsScreen__form right">
           <UI.Button type={'outline'} onClick={() => {modalGroupActions.openModalPage('change_email')}}>
-            Change
+            {utils.getLang('cabinet_settingsChange')}
           </UI.Button>
         </div>
       </div>
     </div>
   };
-
-  get fakeActions() {
-    return [
-      {
-        id: 1,
-        actionType: 'Sign In',
-        device: 'Chrome Web',
-        ip: '109.241.12.22',
-        date: '25 Mar 2019 in 13:15',
-      },
-      {
-        id: 2,
-        actionType: 'E-mail update',
-        device: 'Chrome Ios',
-        ip: '109.241.12.22',
-        date: '26 Mar 2019 in 03:15',
-      },
-      {
-        id: 3,
-        actionType: 'Sign In',
-        device: 'Chrome Android',
-        ip: '109.241.12.22',
-        date: '27 Mar 2019 in 14:29',
-      },
-      {
-        id: 4,
-        actionType: 'Verification',
-        device: 'Chrome Web',
-        ip: '109.241.12.22',
-        date: '28 Mar 2019 in 15:15',
-      },
-      {
-        id: 5,
-        actionType: 'Withdraw',
-        device: 'Chrome Web',
-        ip: '109.241.12.22',
-        date: '29 Mar 2019 in 23:16',
-      },
-    ];
-  }
 
   __inputError(node, stateField) {
     node.setState({
@@ -464,16 +423,21 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
 
   __renderRightContent = () => {
     const headings = [
-      <UI.TableColumn>Action</UI.TableColumn>,
-      <UI.TableColumn>Device</UI.TableColumn>,
-      <UI.TableColumn>IP Address</UI.TableColumn>,
-      <UI.TableColumn>Date</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('cabinet_settingsAction')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('cabinet_settingsDevice')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('cabinet_settingsIP')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('cabinet_settingsDate')}</UI.TableColumn>,
     ];
 
     const rows = this.props.user && this.props.user.logs &&  this.props.user.logs.map((item, i) => {
       return (
         <UI.TableCell key={i}>
-          <UI.TableColumn>{item.action}</UI.TableColumn>
+          <UI.TableColumn>
+            {utils.switchMatch(item.action, {
+              'auth_signin': utils.getLang('cabinet_settingsAuthSignIn'),
+              'default': item.action
+            })}
+          </UI.TableColumn>
           <UI.TableColumn style={{width: 50}}>{item.browser}</UI.TableColumn>
           <UI.TableColumn>{item.ip}</UI.TableColumn>
           <UI.TableColumn style={{width: 140}}>{moment(item.created_at).fromNow()}</UI.TableColumn>

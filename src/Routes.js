@@ -102,7 +102,7 @@ export default function Routes(props) {
       break;
     case pages.PROFILE:
       Component = CabinetProfileScreen.default;
-      sidebarOptions = CabinetProfileScreen.sidebarOptions;
+      sidebarOptions = CabinetProfileScreen.sidebarOptions();
       break;
     case pages.SETTINGS:
       Component = CabinetSettingsScreen.default;

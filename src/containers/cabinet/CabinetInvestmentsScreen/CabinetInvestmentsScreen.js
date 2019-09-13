@@ -13,6 +13,7 @@ import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStat
 import * as modalGroupActions from '../../../actions/modalGroup';
 
 import * as storeUtils from "../../../storeUtils";
+import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
 import Paging from "../../../components/cabinet/Paging/Paging";
 
@@ -100,7 +101,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
     return (
       <div>
-        <h2>Withdrawal History</h2>
+        <h2>{utils.getLang('cabinet_investmentsWithdrawalHistory')}</h2>
         <Paging
           isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
           onMore={this.props.loadMoreWithdrawalHistory}
