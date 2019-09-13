@@ -1,8 +1,9 @@
 import * as actionTypes from "../actionTypes";
 
 export function toastPush(message, type) {
-  return dispatch => {
-    const id = Date.now();
+  return (dispatch, getStore) => {
+    const id = getStore().toasts.counter;
+
     dispatch({ type: actionTypes.TOASTS_PUSH, payload: { type, message, id }});
 
     setTimeout(() => {
