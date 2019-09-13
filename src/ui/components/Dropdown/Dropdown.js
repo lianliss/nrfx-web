@@ -1,60 +1,71 @@
 import './Dropdown.less';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 
 import { classNames } from '../../utils';
 
-function Dropdown(props) {
-  const [isOpen, toggle] = useState(false);
-  const dropdownIcon = isOpen ? require('../../asset/arrow_outline_up.svg') : require('../../asset/arrow_outline_down.svg');
-  const headerText = props.value || props.placeholder;
-  const className = classNames({
-    Dropdown: true,
-    Dropdown_open: isOpen,
-  });
+const arrowUp = require('../../asset/arrow_outline_up.svg');
+const arrowDown = require('../../asset/arrow_outline_down.svg');
 
-  useEffect(() => {
-    if (!props.value) {
-      props.onChange(props.options[0]);
-    }
-  }, []);
+class Dropdown extends React.Component {
+  state = {
+    isOpen: false
+  }
 
-  return [
-    <div className={className} key={Math.random()}>
-      <div className="Dropdown__header" onClick={() => toggle(!isOpen)}>
-        <div className="Dropdown__option">
-          <p className="Dropdown__option__title">{headerText.title}</p>
-          <p className="Dropdown__option__note">{headerText.note}</p>
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return JSON.stringify(this.props) !== JSON.stringify(nextProps) || this.state.isOpen !== nextState.isOpen;
+  }
+
+  toggle = (value) => {
+    this.setState({ isOpen: value });
+  }
+
+  render() {
+    const { props, state } = this;
+    const dropdownIcon = state.isOpen ? arrowUp : arrowDown;
+    const headerText = props.value || props.placeholder;
+    const className = classNames({
+      Dropdown: true,
+      Dropdown_open: state.isOpen,
+    });
+
+    return [
+      <div className={className} key={Math.random()}>
+        <div className="Dropdown__header" onClick={() => this.toggle(!state.isOpen)}>
+          <div className="Dropdown__option">
+            <p className="Dropdown__option__title">{headerText.title}</p>
+            <p className="Dropdown__option__note">{headerText.note}</p>
+          </div>
+
+          <SVG src={dropdownIcon} />
         </div>
 
-        <SVG src={dropdownIcon} />
-      </div>
-
-      {isOpen
-        ? (
-          <div className="Dropdown__options">
-            {
-              props.options.map((opt, i) => {
-                return <div
-                  key={Math.random()}
-                  className="Dropdown__option key"
-                  onClick={() => {
-                    props.onChange(opt);
-                    toggle(false);
-                  }}
-                >
-                  <p className="Dropdown__option__title">{opt.title}</p>
-                  <p className="Dropdown__option__note">{opt.note}</p>
-                </div>
-              })
-            }
-          </div>
-        ) : null}
-    </div>,
-    isOpen && <div className="Dropdown__overlay" onClick={() => toggle(false)} />
-  ];
+        {state.isOpen
+          ? (
+            <div className="Dropdown__options">
+              {
+                props.options.map((opt, i) => {
+                  return <div
+                    key={Math.random()}
+                    className="Dropdown__option key"
+                    onClick={() => {
+                      props.onChange(opt);
+                      this.toggle(false);
+                    }}
+                  >
+                    <p className="Dropdown__option__title">{opt.title}</p>
+                    <p className="Dropdown__option__note">{opt.note}</p>
+                  </div>
+                })
+              }
+            </div>
+          ) : null}
+      </div>,
+      this.isOpen && <div className="Dropdown__overlay" onClick={() => this.toggle(false)} />
+    ];
+  }
 }
 
 const optionType = PropTypes.shape({
@@ -82,4 +93,4 @@ Dropdown.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default React.memo(Dropdown);
+export default Dropdown;
