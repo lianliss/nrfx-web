@@ -8,7 +8,8 @@ import * as api from "../../../services/api";
 import * as walletsActions from "../../../actions/cabinet/wallets";
 import * as actions from "../../../actions";
 import * as utils from "../../../utils";
-import { connect } from "react-redux";
+import * as storeUtils from "../../../storeUtils";
+import * as CLASSES from "../../../constants/classes";
 
 class OpenDepositModal extends React.Component {
   state = {
@@ -19,7 +20,7 @@ class OpenDepositModal extends React.Component {
     planCurrentOption: {},
     amountMax: 0,
     amountMin: 0,
-    currency: this.props.router.route.params.currency.toLowerCase(),
+    currency: null,
     touched: false
   };
 
@@ -39,7 +40,8 @@ class OpenDepositModal extends React.Component {
           currency: item.currency
         }
       });
-      const walletCurrentOption =  walletOptions.find(w => w.currency === this.state.currency );
+      const currentCurrency = (this.props.router.route.params.currency || walletOptions[0].currency).toLowerCase();
+      const walletCurrentOption =  walletOptions.find(w => w.currency === currentCurrency );
       this.setState({
         walletOptions,
         walletCurrentOption,
@@ -159,7 +161,7 @@ class OpenDepositModal extends React.Component {
               }
               value={this.state.amount}
               placeholder="Amount"
-              indicator={`min ${this.state.amountMin} ${this.state.currency.toUpperCase()}`}
+              indicator={`min ${this.state.amountMin} ${this.state.currency && this.state.currency.toUpperCase()}`}
               onTextChange={amount => {
                 this.setState({amount: (amount || "").replace(/\D+/g,"")}, this.__getPlansThrottle);
               }}
@@ -210,6 +212,7 @@ class OpenDepositModal extends React.Component {
   }
 }
 
-export default connect(state => ({
-  router: state.router
-}))(OpenDepositModal);
+export default storeUtils.getWithState(
+  CLASSES.OPEN_DEPOSIT_MODAL,
+  OpenDepositModal
+);
