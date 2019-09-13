@@ -10,7 +10,7 @@ import HighchartsReact from 'highcharts-react-official';
 export default function Chart({ series }) {
   const options = {
     chart: {
-      height: 160 + 40,
+      height: 200,
     },
     title: {
       text: undefined,
@@ -69,6 +69,11 @@ export default function Chart({ series }) {
       align: 'left',
       alignColumns: false,
       itemDistance: 16,
+      states: {
+        hover: {
+          enabled: false
+        }
+      },
       itemStyle: {
         opacity: 1,
       },
@@ -87,25 +92,22 @@ export default function Chart({ series }) {
         lineWidth: 3,
         marker: {
           enabled: false,
-          radius: 2,
+          radius: 3,
           symbol: 'circle',
           fillColor: '#fff',
           lineColor: null,
           lineWidth: 2,
         },
         shadow: {
-          enabled: true,
-          width: 4,
-          opacity: 0.2,
-          color: '#FF9E65'
+          enabled: false,
         },
         states: {
           hover: {
             enabled: true,
             halo: {
-              size: 7
+              size: 10
             }
-          }
+          },
         },
         events: {
           mouseOver: function(e) {
@@ -118,6 +120,7 @@ export default function Chart({ series }) {
       },
     },
     tooltip: {
+      shared: true,
       split: true,
       useHTML: true,
       padding: 0,

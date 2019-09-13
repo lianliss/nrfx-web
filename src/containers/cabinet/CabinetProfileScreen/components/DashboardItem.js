@@ -29,6 +29,17 @@ class DashboardItem extends React.Component {
           secondMainContextInvert: props.count
         };
         break;
+      case 'commerce':
+        this.icon = <SVG src={require('../../../../asset/24px/shopping-cart.svg')} />;
+        this.content = {
+          firstHeaderLeftContext: 'Revenue',
+          firstMainContext: '0',
+          firstMainContextInvert: '0',
+          secondHeaderLeftContext: '',
+          secondMainContext: '',
+          secondMainContextInvert: '',
+        };
+        break;
       default: break;
     }
   }
@@ -41,6 +52,13 @@ class DashboardItem extends React.Component {
     return (
       <div className="DashboardItem">
         <div className="DashboardItem__content Content_box">
+          {
+            this.props.type === 'commerce' && <div className="disabled">
+              <span>
+                Coming soon...
+              </span>
+            </div>
+          }
           <div className="DashboardItem__content_header">
             <div className="DashboardItem__icon">
               {this.icon}

@@ -7,7 +7,7 @@ import * as modalGroupActions from "../../../../actions/modalGroup";
 class ChartProfit extends React.Component {
 
   render() {
-    if (!(this.props.chart.length > 0)) {
+    if (!(Object.keys(this.props.chart.data).length > 0)) {
       return <EmptyContentBlock
         icon={require('../../../../asset/120/start_invest_second.svg')}
         message="Here will be your investments profit charts"
@@ -21,6 +21,7 @@ class ChartProfit extends React.Component {
         const currencyColor = currencies.getColorByCurrency(currency);
         chartCurrencies[currency] = {
           data: [],
+          showInLegend: true,
           name: currency.toUpperCase(),
           type: 'spline',
           color: currencyColor,
@@ -34,7 +35,7 @@ class ChartProfit extends React.Component {
       }
       this.props.chart.data[currency].map(item => {
         chartCurrencies[currency]['data'].push({
-          x: new Date(item.created_at).getTime(),
+          x: new Date(item.created_at.split(' ')[0]).getTime(),
           y: item.usd_amount,
           title: item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
         });

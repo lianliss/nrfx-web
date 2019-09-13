@@ -106,6 +106,10 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     return (
       <div className="CabinetProfileScreen__dashboard">
         {rows}
+        <DashboardItem
+          key={3}
+          type="commerce"
+        />
       </div>
     )
   };
