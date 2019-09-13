@@ -7,7 +7,7 @@ import Toast from "../../../ui/components/Toast/Toast"
 export function Toasts(props) {
   return (
     <div className="Toasts">
-      {props.toasts.map(toast => (
+      {props.toasts.items.map(toast => (
         <Toast
           type={toast.type}
           key={toast.id}

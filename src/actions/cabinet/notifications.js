@@ -4,11 +4,11 @@ import apiSchema from '../../services/apiSchema';
 import * as toastsActions from './toasts';
 
 export function loadNotifications() {
-  return dispatch => {
+  return (dispatch, getState) => {
     api.call(apiSchema.Notification.DefaultGet).then(({ notifications }) => {
       dispatch({ type: actionTypes.NOTIFICATIONS_SET, notifications });
     }).catch((err) => {
-      toastsActions.toastPush("Error load notifications", "error")(dispatch);
+      toastsActions.toastPush("Error load notifications", "error")(dispatch, getState);
     });
   };
 }
