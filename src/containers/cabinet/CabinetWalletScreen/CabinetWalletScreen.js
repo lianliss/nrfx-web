@@ -150,7 +150,7 @@ export const sidebarOptions = {
       label="Transfers"
     />,
     <ProfileSidebarItem
-      onClick={() => {modalGroupActions.openModalPage('send')}}
+      onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
       icon={require('../../../asset/24px/send.svg')}
       label="Send"
     />,

@@ -54,6 +54,14 @@ export function getWithState(caseName, caseClass) {
         loadDashboard: profileActions.loadDashboard
       };
       break;
+    case CLASSES.WITHDRAWAL_COINS_MODAL:
+      mapState2Props = (state) => {
+        return { ...state.wallets}
+      };
+      mapDispatch2Props = {
+        loadWallets: walletsActions.loadWallets
+      };
+      break;
     case CLASSES.CABINET_START_PFOFILE_SCREEN:
       mapState2Props = (state) => ({ ...state.wallets });
       mapDispatch2Props = {
