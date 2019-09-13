@@ -1,6 +1,7 @@
 import './CabinetSettingsScreen.less';
 
 import React from 'react';
+import moment from 'moment'
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
@@ -469,13 +470,13 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
       <UI.TableColumn>Date</UI.TableColumn>,
     ];
 
-    const rows = this.fakeActions.map((item, i) => {
+    const rows = this.props.user && this.props.user.logs &&  this.props.user.logs.map((item, i) => {
       return (
         <UI.TableCell key={i}>
-          <UI.TableColumn>{item.actionType}</UI.TableColumn>
-          <UI.TableColumn style={{width: 50}}>{item.device}</UI.TableColumn>
+          <UI.TableColumn>{item.action}</UI.TableColumn>
+          <UI.TableColumn style={{width: 50}}>{item.browser}</UI.TableColumn>
           <UI.TableColumn>{item.ip}</UI.TableColumn>
-          <UI.TableColumn style={{width: 140}}>{item.date}</UI.TableColumn>
+          <UI.TableColumn style={{width: 140}}>{moment(item.created_at).fromNow()}</UI.TableColumn>
         </UI.TableCell>
       )
     });
