@@ -9,7 +9,7 @@ export default function Toast(props) {
   return (
     <div className={classNames("Toast", props.type, { hidden: props.hidden })}>
       <div className="Toast__icon">
-        <SVG src={require('../../asset/warning.svg')} />
+        <SVG src={props.type === "success" ? require('../../asset/check_24.svg') : require('../../asset/warning.svg')} />
       </div>
       <div>{props.message}</div>
       <div onClick={props.onClose} className="Toast__close">

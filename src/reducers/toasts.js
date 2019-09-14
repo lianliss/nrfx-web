@@ -10,13 +10,13 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.TOASTS_PUSH:
       return {
         ...state,
-        items: [...state.items, action.payload]
+        items: [...state.items, action.payload],
+        counter: state.counter + 1
       };
     case actionTypes.TOASTS_DROP:
       return {
         ...state,
         items: state.items.filter(t => t.id !== action.id),
-        counter: action.id + 1
       };
     case actionTypes.TOASTS_HIDE:
       return {

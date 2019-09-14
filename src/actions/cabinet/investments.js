@@ -5,42 +5,42 @@ import store from "../../store";
 import * as toastsActions from "./toasts";
 
 export function loadInvestments() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
     api.call(apiSchema.Investment.DefaultGet).then(({ deposits, payments, chart, ...props }) => {
       payments = Object.values(payments);
       dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments, chart });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
-      toastsActions.toastPush("Error load investment", "error")(dispatch);
+      toastsActions.toastPush("Error load investment", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     });
   };
 }
 
 export function loadProfitHistory() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'loading' });
     api.call(apiSchema.Investment.ProfitGet).then((profits) => {
       dispatch({ type: actionTypes.INVESTMENTS_PROFITS_SET, profits });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: '' });
     }).catch((err) => {
       console.log(err);
-      toastsActions.toastPush("Error load profit history", "error")(dispatch);
+      toastsActions.toastPush("Error load profit history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'failed' });
     });
   };
 }
 
 export function loadWithdrawalHistory() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: 'loading' });
     api.call(apiSchema.Investment.WithdrawalGet).then((withdrawals) => {
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET, withdrawals });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: '' });
     }).catch((err) => {
       console.log(err);
-      toastsActions.toastPush("Error load withdrawal history", "error")(dispatch);
+      toastsActions.toastPush("Error load withdrawal history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: 'failed' });
     });
   };
@@ -48,7 +48,7 @@ export function loadWithdrawalHistory() {
 
 
 export function loadMoreWithdrawalHistory() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: true });
     api.call(apiSchema.Investment.WithdrawalGet, {
       start_from: store.getState().investments.withdrawals.next,
@@ -58,7 +58,7 @@ export function loadMoreWithdrawalHistory() {
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next });
     }).catch(() => {
-      toastsActions.toastPush("Error load more withdrawal history", "error")(dispatch);
+      toastsActions.toastPush("Error load more withdrawal history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
     });
   };

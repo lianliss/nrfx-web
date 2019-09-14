@@ -4,13 +4,13 @@ import apiSchema from '../../services/apiSchema';
 import * as toastsActions from "./toasts";
 
 export function loadSettings() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
     api.call(apiSchema.Profile.SettingsGet).then((data) => {
       dispatch({ type: actionTypes.SETTINGS_SET, user: {...data} });
       dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
-      toastsActions.toastPush("Error load settings", "error")(dispatch);
+      toastsActions.toastPush("Error load settings", "error")(dispatch, getState);
       dispatch({ type: actionTypes.SETTINGS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     });
   };

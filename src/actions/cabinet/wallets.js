@@ -5,7 +5,7 @@ import apiSchema from '../../services/apiSchema';
 import * as toastsActions from "./toasts";
 
 export function loadWallets() {
-  return dispatch => {
+  return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
       api.call(apiSchema.Wallet.DefaultGet, {count: 10}).then(({ balances, transactions, transfers }) => {
@@ -15,7 +15,7 @@ export function loadWallets() {
         dispatch({ type: actionTypes.WALLETS_TRANFERS_SET, items: transfers });
         resolve(balances);
       }).catch(() => {
-        toastsActions.toastPush("Error load wallets", "error")(dispatch);
+        toastsActions.toastPush("Error load wallets", "error")(dispatch, getState);
         dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'failed' });
         reject();
       });
@@ -38,7 +38,7 @@ export function getWallets() {
 }
 
 export function loadMoreTransactions() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'loading' });
     api.call(apiSchema.Wallet.TransactionGet, {
       start_from: store.getState().wallets.transactions.next,
@@ -49,14 +49,14 @@ export function loadMoreTransactions() {
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: '' });
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_APPEND, items, next });
     }).catch(() => {
-      toastsActions.toastPush("Error load more transactions", "error")(dispatch);
+      toastsActions.toastPush("Error load more transactions", "error")(dispatch, getState);
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'failed' });
     });
   };
 }
 
 export function loadMoreTransfers() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.WALLETS_TRANFERS_LOADING_MORE, status: 'loading' });
     api.call(apiSchema.Wallet.TransferGet, {
       start_from: store.getState().wallets.transfers.next,
@@ -67,7 +67,7 @@ export function loadMoreTransfers() {
       dispatch({ type: actionTypes.WALLETS_TRANFERS_LOADING_MORE, status: '' });
       dispatch({ type: actionTypes.WALLETS_TRANFERS_APPEND, items, next });
     }).catch(() => {
-      toastsActions.toastPush("Error load more transfers", "error")(dispatch);
+      toastsActions.toastPush("Error load more transfers", "error")(dispatch, getState);
       dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE, status: 'failed' });
     });
   };
