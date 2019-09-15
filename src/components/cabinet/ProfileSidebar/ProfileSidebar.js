@@ -45,10 +45,9 @@ class ProfileSidebar extends React.Component {
           <img className="ProfileSidebar__user__avatar" src={this.props.user.photo_url} alt="" />
         </div>
         <h3 className="ProfileSidebar__user__title">{utils.ucfirst(this.props.user.first_name)} {utils.ucfirst(this.props.user.last_name)}</h3>
-        <p className="ProfileSidebar__user__txt">BTCBOT</p>
+        <p className="ProfileSidebar__user__txt">{this.props.user.login}</p>
         <p className="ProfileSidebar__user__txt">{this.props.role}</p>
-
-        <button className={verificationClasses}>{verificationText}</button>
+        {/*<button className={verificationClasses}>{verificationText}</button> // TODO: Вернуть как только будет готова верификация */}
       </div>
 
       <div className="ProfileSidebar__menu">
