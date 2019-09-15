@@ -93,6 +93,10 @@ export const routes = [
     name: pages.INVESTMENTS,
     path: '/investments',
   },
+  {
+    name: pages.CHANGE_EMAIL,
+    path: '/change_email',
+  },
 ];
 
 const params = {

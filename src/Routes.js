@@ -20,6 +20,7 @@ import * as CabinetStartProfileScreen from './containers/cabinet/CabinetStartPro
 import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
 import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
 import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
+import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmail/CabinetChangeEmail';
 import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
 
 import SiteWrapper from './wrappers/Site/SiteWrapper';
@@ -112,6 +113,9 @@ export default function Routes(props) {
       Component = CabinetInvestmentsScreen.default;
       sidebarOptions = CabinetInvestmentsScreen.sidebarOptions;
       break;
+    case pages.CHANGE_EMAIL:
+      Component = CabinetChangeEmail.default;
+      break;
     case pages.MENU:
       Component = MenuScreen.default;
       break;
@@ -132,7 +136,7 @@ export default function Routes(props) {
   const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
-      <Component {...defaultProps} sidebarOptions={sidebarOptions} {...actions} routerParams={routerParams} />;
+      <Component {...defaultProps} sidebarOptions={sidebarOptions} {...actions} routerParams={routerParams} />
     </WrapperComponent>
   );
 }

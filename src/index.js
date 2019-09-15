@@ -10,8 +10,8 @@ import router from './router';
 import * as auth from './services/auth';
 import * as user from './actions/user';
 import * as emitter from './services/emitter';
-import initGetParams from './services/initialGetParams';
-const initGetParamsData = initGetParams;
+import { GetParamsContext } from './contexts';
+import initGetParamsData from './services/initialGetParams';
 
 require('define').noConflict();
 
@@ -22,7 +22,9 @@ emitter.emit('userInstall');
 
 const wrappedApp = <Provider store={store}>
   <RouterProvider router={router}>
-    <App store={store} router={router} />
+    <GetParamsContext.Provider value={initGetParamsData}>
+      <App store={store} router={router} />
+    </GetParamsContext.Provider>
   </RouterProvider>
 </Provider>;
 
