@@ -104,7 +104,10 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
       mapState2Props = (state) => ({ router: state.router });
-      mapDispatch2Props = {};
+      mapDispatch2Props = {
+        modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal,
+        toastPush: toastsActions.toastPush
+      };
       break;
     case CLASSES.COMPONENT_TOASTS:
       mapState2Props = (state) => ({

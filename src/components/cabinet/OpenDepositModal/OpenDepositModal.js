@@ -76,6 +76,7 @@ class OpenDepositModal extends React.Component {
       this.setState({
         planOptions,
         planCurrentOption,
+        planId: planCurrentOption.value,
         amountMax: planCurrentOption.max,
         amountMin: planCurrentOption.min,
       });
@@ -93,9 +94,8 @@ class OpenDepositModal extends React.Component {
       plan_id: this.state.planId,
       deposit_type: this.state.selectDepositType
     }).then(({plans}) => {
-      this.setState({ plans }, () => {
-
-      });
+      this.props.toastPush("Deposit created successfully", "success");
+      this.props.modalGroupSetActiveModal();
     }).catch((err) => {
       this.setState({error: err.message});
     });
@@ -154,6 +154,7 @@ class OpenDepositModal extends React.Component {
           </div>
           <div className="OpenDepositModal__row">
             <UI.Input
+              type="number"
               error={
                 !this.state.amount && this.state.touched ||
                 this.state.amount > this.state.amountMax ||
@@ -163,7 +164,7 @@ class OpenDepositModal extends React.Component {
               placeholder="Amount"
               indicator={`min ${this.state.amountMin} ${this.state.currency && this.state.currency.toUpperCase()}`}
               onTextChange={amount => {
-                this.setState({amount: (amount || "").replace(/\D+/g,"")}, this.__getPlansThrottle);
+                this.setState({ amount }, this.__getPlansThrottle);
               }}
             />
           </div>
