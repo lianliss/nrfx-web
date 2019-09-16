@@ -17,6 +17,12 @@ import * as modalGroupActions from "../../../actions/modalGroup";
 
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
+import SVG from "react-inlinesvg";
+
+import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
+import { ReactComponent as HistorySvg } from '../../../asset/24px/history.svg';
+import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
+import { ReactComponent as ReceiveSvg } from '../../../asset/24px/receive.svg';
 
 class CabinetWalletScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -36,7 +42,28 @@ class CabinetWalletScreen extends CabinetBaseScreen {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
-          sidebarOptions={this.props.sidebarOptions}
+          sidebarOptions={[
+            !!walletsActions.getNoGeneratedCurrencies().length && <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+              icon={<PlusCircleSvg />}
+              label="New Wallet"
+            />,
+            <ProfileSidebarItem
+              section={'transfers'}
+              icon={<HistorySvg />}
+              label="Transfers"
+            />,
+            <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
+              icon={<SendSvg />}
+              label="Send"
+            />,
+            <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('receive')}}
+              icon={<ReceiveSvg />}
+              label="Receive"
+            />
+          ]}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -135,31 +162,6 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     this.setState({walletSelected});
   }
 }
-
-export const sidebarOptions = {
-  items: [
-    <ProfileSidebarItem
-      onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
-      icon={require('../../../asset/24px/plus-circle.svg')}
-      label="New Wallet"
-    />,
-    <ProfileSidebarItem
-      section={'transfers'}
-      icon={require('../../../asset/24px/history.svg')}
-      label="Transfers"
-    />,
-    <ProfileSidebarItem
-      onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
-      icon={require('../../../asset/24px/send.svg')}
-      label="Send"
-    />,
-    <ProfileSidebarItem
-      onClick={() => {modalGroupActions.openModalPage('receive')}}
-      icon={require('../../../asset/24px/receive.svg')}
-      label="Receive"
-    />
-  ]
-};
 
 export default storeUtils.getWithState(
   CLASSES.CABINET_WALLET_SCREEN,

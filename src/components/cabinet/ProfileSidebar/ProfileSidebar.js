@@ -52,7 +52,7 @@ class ProfileSidebar extends React.Component {
 
       <div className="ProfileSidebar__menu">
         {this.__getBackButton()}
-        {this.props.items && this.props.items.map((child) => {
+        {this.props.sidebarOptions && this.props.sidebarOptions.map((child) => {
           if (!React.isValidElement(child)) {
             return child;
           }
@@ -148,11 +148,13 @@ ProfileSidebar.propTypes = {
   items: PropTypes.node
 };
 
-export function ProfileSidebarItem({ icon, label, onClick, section, modal, baselink, active, hide = false}) {
+export function ProfileSidebarItem({ icon = null, label, onClick, section, modal, baselink, active, hide = false}) {
   const isLink = section || modal || baselink;
   const Component = isLink ? BaseLink : 'div';
+  const Icon = () => icon;
 
   let params = {};
+
 
   if (isLink) {
     params.routeName = router.getState().name;
@@ -179,7 +181,7 @@ export function ProfileSidebarItem({ icon, label, onClick, section, modal, basel
       onClick={onClick}
       {...params}
     >
-      <SVG src={icon} />
+      <Icon />
       {label}
     </Component>
   );

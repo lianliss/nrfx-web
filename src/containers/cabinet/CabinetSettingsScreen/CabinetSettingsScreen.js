@@ -18,6 +18,8 @@ import * as CLASSES from "../../../constants/classes";
 import * as settingsActions from '../../../actions/cabinet/settings';
 import * as emitter from '../../../services/emitter';
 
+import { ReactComponent as IdBadgeSvg } from '../../../asset/24px/id-badge.svg';
+
 class CabinetSettingsScreen extends CabinetBaseScreen {
   get section() {
     return this.props.routerParams.section || 'default';
@@ -64,7 +66,25 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     return (<div>
       <PageContainer
         leftContent={this.__renderRightContent()}
-        sidebarOptions={this.props.sidebarOptions}
+        sidebarOptions={[
+          <ProfileSidebarItem
+            icon={<IdBadgeSvg />}
+            label="Personal"
+            baselink={true}
+          />,
+          /*<ProfileSidebarItem
+            icon={require('../../../asset/24px/shield.svg')}
+            label="Security"
+            section="security"
+            active={this.props.routerParams.section === 'security'}
+          />,
+          <ProfileSidebarItem
+            icon={require('../../../asset/24px/user.svg')}
+            label="Notifications"
+            section="notifications"
+            active={this.props.routerParams.section === 'notifications'}
+          />*/
+        ]}
       >
         {this.__renderContent()}
       </PageContainer>
@@ -452,28 +472,6 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     );
   }
 }
-
-export const sidebarOptions = {
-  items: [
-    <ProfileSidebarItem
-      icon={require('../../../asset/24px/id-badge.svg')}
-      label="Personal"
-      baselink={true}
-    />,
-    /*<ProfileSidebarItem
-      icon={require('../../../asset/24px/shield.svg')}
-      label="Security"
-      section="security"
-      active={this.props.routerParams.section === 'security'}
-    />,
-    <ProfileSidebarItem
-      icon={require('../../../asset/24px/user.svg')}
-      label="Notifications"
-      section="notifications"
-      active={this.props.routerParams.section === 'notifications'}
-    />*/
-  ]
-};
 
 export default storeUtils.getWithState(
   CLASSES.CABINET_SETTINGS_SCREEN,

@@ -37,7 +37,7 @@ class CabinetRegister extends React.PureComponent {
       state.password &&
       state.phoneWithoutCode &&
       state.smsCode &&
-      state.passwordConfirm !== state.password
+      state.passwordConfirm === state.password
     ) {
       api.call(apiSchema.Profile.FillAccountPut, {
         first_name: state.firstName,
