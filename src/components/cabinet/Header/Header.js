@@ -9,15 +9,16 @@ import Badge from '../Badge/Badge';
 import router from '../../../router';
 import * as pages from '../../../constants/pages';
 import * as storeUtils from '../../../storeUtils';
+import * as utils from '../../../utils';
 import * as CLASSES from "../../../constants/classes";
 import UI from "../../../ui/index";
 
-const DropDownLinks = [
+function getDropDownLinks() { return[
   {
     title: <SVG src={require('../../../asset/cabinet/settings.svg')} />,
     children: [
       {
-        title: "Settings",
+        title: utils.getLang('cabinet_header_settings'),
         route: pages.SETTINGS
       },
       {
@@ -26,14 +27,19 @@ const DropDownLinks = [
         useLocation: true
       },
       {
-        title: "Exit",
+        title: utils.getLang('cabinet_header_exit'),
         route: pages.WALLET
       },
     ]
   }
-];
+]}
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.DropDownLinks = getDropDownLinks();
+  }
+
   state = {
     activePage: null,
     visibleNotifications: false
@@ -62,32 +68,32 @@ class Header extends React.Component {
 
               <BaseLink router={router} routeName={pages.PROFILE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.PROFILE})}}>
                 <SVG src={require('../../../asset/cabinet/user.svg')} />
-                Profile
+                {utils.getLang('cabinet_header_profile')}
               </BaseLink>
 
               <BaseLink router={router} routeName={pages.CABINET_WALLET} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>
                 <SVG src={require('../../../asset/cabinet/wallet_icon.svg')} />
-                Wallets
+                {utils.getLang('cabinet_header_wallets')}
               </BaseLink>
 
               <BaseLink router={router} routeName={pages.INVESTMENTS} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.INVESTMENTS})}}>
                 <SVG src={require('../../../asset/cabinet/investment_icon.svg')} />
-                Investments
+                {utils.getLang('cabinet_header_investments')}
               </BaseLink>
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../asset/cabinet/bots_icon.svg')} />
-                Bots
+                {utils.getLang('cabinet_header_bots')}
               </div>
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../asset/cabinet/exchange_icon.svg')} />
-                Exchange
+                {utils.getLang('cabinet_header_exchange')}
               </div>
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../asset/cabinet/commerce_icon.svg')} />
-                Commerce
+                {utils.getLang('cabinet_header_commerce')}
               </div>
             </div>
             <div className="CabinetHeader__icons">
@@ -99,7 +105,7 @@ class Header extends React.Component {
                   {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
                     <div key={n.id}>
                       { i > 0 &&  n.unread !== notifications[i - 1].unread &&
-                        <UI.NotificationSeparator title="Просмотренные" />
+                        <UI.NotificationSeparator title={utils.getLang('cabinet_header_viewed')} />
                       }
                       <UI.Notification
                         icon={n.icon}
@@ -121,11 +127,11 @@ class Header extends React.Component {
               {/*</div>*/}
               <div className="CabinetHeader__icon">
                 <DropDown
-                  key={DropDownLinks[0].title}
-                  title={DropDownLinks[0].title}
+                  key={this.DropDownLinks[0].title}
+                  title={this.DropDownLinks[0].title}
                   onNavigate={this.handleNavigate}
-                  subItems={DropDownLinks[0].children}
-                  className={"CabinetHeader__DropDown_settings"}
+                  subItems={this.DropDownLinks[0].children}
+                  className="CabinetHeader__DropDown_settings"
                 />
               </div>
             </div>

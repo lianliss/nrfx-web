@@ -8,12 +8,12 @@ function Dropdown({title, subItems, onChange, onNavigate, lastItemText, onLastIt
   const handleLinkClick = (value) => {
     onChange && onChange(value);
     toggle(false);
-  }
+  };
 
   const handleLastItemClick = () => {
     toggle(false);
     onLastItemClick();
-  }
+  };
 
   return (
     <div className={"CabinetHeader__dropdown " + className}>

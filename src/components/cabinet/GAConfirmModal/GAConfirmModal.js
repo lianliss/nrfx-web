@@ -16,7 +16,7 @@ export default class GAConfirmModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={384}>
         <UI.ModalHeader>
-          Enter Code
+          {utils.getLang('cabinet_ga_modal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -42,7 +42,7 @@ export default class GAConfirmModal extends React.Component {
         </div>
         <div className="GAConfirmModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
-            {utils.getLang('site__authModalSubmit')}
+            {utils.getLang('cabinet_ga_modal_save')}
           </UI.Button>
         </div>
       </div>

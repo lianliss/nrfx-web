@@ -21,7 +21,7 @@ export default class DepositInfoModal extends React.Component {
     return (
       <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
-          Deposit {deposit.percent}% {deposit.description}
+          {utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.percent}% {deposit.description}
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
@@ -35,7 +35,7 @@ export default class DepositInfoModal extends React.Component {
               <InfoRow label="W/ Amount">None</InfoRow>
             </InfoRowGroup>
             <InfoRowGroup className="DepositInfoModal__column">
-              <InfoRow label="Period">{deposit.passed_days} / {deposit.days} Days</InfoRow>
+              <InfoRow label="Period">{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_depositInfoModal_days')}</InfoRow>
               <InfoRow label="Amount">{deposit.amount} {currency}</InfoRow>
               <InfoRow label="Profit">{deposit.profit.toFixed(4)} {currency} (78%)</InfoRow>
               <InfoRow label="Estimated">120 {currency} (78%)</InfoRow>
