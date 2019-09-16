@@ -4,8 +4,9 @@ import * as auth from '../../../../services/auth';
 import * as api from '../../../../services/api';
 import * as modalActions from '../../../../actions/modalGroup';
 import * as emitter from "../../../../services/emitter";
+import * as utils from "../../../../utils";
 
-class ImageUpload extends React.Component {
+export default class ImageUpload extends React.Component {
   constructor(props) {
     super(props);
     this.uploadPhotoForm = React.createRef();
@@ -105,7 +106,7 @@ class ImageUpload extends React.Component {
               size="small"
               onClick={() => this.fileInput.current.click()}
             >
-              Select photo
+              {utils.getLang('cabinet_uploadAvatarModal_select')}
             </UI.Button> : this.state.percentsOfComplete > 0 || <UI.Button
               type="secondary"
               size="small"
@@ -117,7 +118,7 @@ class ImageUpload extends React.Component {
                 })
               }}
             >
-              Cancel
+              {utils.getLang('cabinet_uploadAvatarModal_cancel')}
             </UI.Button>
             }
           </div>
@@ -131,7 +132,7 @@ class ImageUpload extends React.Component {
               state={this.state.percentsOfComplete > 0 && this.state.percentsOfComplete < 100 ? 'loading' : null}
               onClick={(e)=>this._handleSubmit(e)}
             >
-              Upload Image
+              {utils.getLang('cabinet_uploadAvatarModal_uploadImage')}
             </UI.Button> : ''}
           </div>
         </form>
@@ -139,5 +140,3 @@ class ImageUpload extends React.Component {
     )
   }
 }
-
-export default ImageUpload;

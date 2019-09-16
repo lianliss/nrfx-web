@@ -34,7 +34,7 @@ export default class SendCoinsConfirmModal extends React.Component {
   }
 
   __getTitle() {
-    return `Confirm Sending ${utils.ucfirst(this.currencyInfo.name)}`;
+    return `${utils.getLang('cabinet_sendCoinsConfirmModal_name')} ${utils.ucfirst(this.currencyInfo.name)}`;
   }
 
   __renderContent() {
@@ -49,7 +49,7 @@ export default class SendCoinsConfirmModal extends React.Component {
         <InfoRowGroup align="left">
           <InfoRow label="From">
             <div className="Wallets__history__address">
-              My {utils.ucfirst(currencyInfo.name)}
+              {utils.getLang('cabinet_sendCoinsConfirmModal_my')} {utils.ucfirst(currencyInfo.name)}
             </div>
           </InfoRow>
           <InfoRow label="To">
@@ -64,7 +64,7 @@ export default class SendCoinsConfirmModal extends React.Component {
           <div className="SendCoinsConfirmModal__card__icon">
             <SVG src={require('../../../asset/24px/send.svg')} />
           </div>
-          <div className="SendCoinsConfirmModal__card__label">Total</div>
+          <div className="SendCoinsConfirmModal__card__label">{utils.getLang('cabinet_sendCoinsConfirmModal_total')}</div>
           <div className="SendCoinsConfirmModal__card__value">{utils.formatDouble(amount)} {currency}</div>
         </div>
 

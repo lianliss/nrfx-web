@@ -45,7 +45,7 @@ class SendCoinsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => this.props.close()} width={552}>
         <UI.ModalHeader>
-          Send coins
+          {utils.getLang('cabinet_sendCoinsModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -75,7 +75,7 @@ class SendCoinsModal extends React.Component {
 
       if (!(this.options.length > 0)) {
         return <div style={{textAlign:'center'}}>
-          Нет доступных кошельков
+          {utils.getLang('cabinet_sendCoinsModal_available')}
         </div>;
       }
 
@@ -119,7 +119,9 @@ class SendCoinsModal extends React.Component {
               onTextChange={this.__usdAmountDidChange}
               value={this.props.thisState.amountUSD}
             />
-            <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>Max</UI.Button>
+            <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>
+              {utils.getLang('cabinet_sendCoinsModal_max')}
+            </UI.Button>
           </div>
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button

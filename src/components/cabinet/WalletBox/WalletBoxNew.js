@@ -3,6 +3,7 @@ import './WalletBox.less';
 import React from 'react';
 
 import * as actions from '../../../actions';
+import * as utils from "../../../utils";
 
 export default function WalletBoxNew() {
   return (
@@ -11,7 +12,7 @@ export default function WalletBoxNew() {
       onClick={() => actions.openModal('new_wallet')}
     >
       <div className="WalletBox__content new">
-        Create New Wallet
+        {utils.getLang('cabinet_walletBox_create')}
       </div>
     </div>
   )

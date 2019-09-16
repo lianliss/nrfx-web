@@ -68,7 +68,7 @@ function WalletBalance({ wallets }) {
           </span>
         </div>
         <div className="WalletBalance__selected_wallet">
-          <div className="WalletBalance__currency_name">My {currencyName} Wallet</div>
+          <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletBalance_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
           <div className="WalletBalance__selected_amount">{amount} {currency.toUpperCase()}</div>
           <div className="WalletBalance__selected_buttons">
             <UI.Button
@@ -100,7 +100,7 @@ function WalletBalance({ wallets }) {
         ? (
           <>
             <div className="WalletBalance__list">
-              <h3>Wallets Balance</h3>
+              <h3>{utils.getLang('cabinet_walletBalance_name')}</h3>
               <ul>
                 {walletsBalance.walletsCurrencies.map(wallet => {
                   const gradient = getGradientByCurrency(wallet.currency);
@@ -142,7 +142,7 @@ function WalletBalance({ wallets }) {
           <div className="Empty_box">
             <SVG src={require('../../../asset/cabinet/wallet_colorful.svg')} />
             <h3>
-              Here will be balance statistics
+              {utils.getLang('cabinet_walletBalance_statistics_placeholder')}
             </h3>
           </div>
         )

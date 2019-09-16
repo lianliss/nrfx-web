@@ -9,7 +9,6 @@ import * as storeUtils from "../../../storeUtils";
 import router from "../../../router";
 import * as utils from "../../../utils";
 import * as investmentsActions from "../../../actions/cabinet/investments";
-import * as modalGroupActions from "../../../actions/modalGroup";
 
 class WithdrawalModal extends React.Component {
   constructor(props) {
@@ -37,11 +36,11 @@ class WithdrawalModal extends React.Component {
 
   render() {
     if (this.props.wallets.length < 1) {
-      return 'Loading...';
+      return utils.getLang('cabinet_modal_loadingText');
     }
 
     if (!this.props.hasOwnProperty('currency')) {
-      return 'Error';
+      return utils.getLang('cabinet_modal_loadingErrorText');
     }
 
     const currency = this.props.currency.toUpperCase();
@@ -59,12 +58,12 @@ class WithdrawalModal extends React.Component {
         </UI.ModalHeader>
         <div className="WithdrawalModal">
           <div className="WithdrawalModal__info_row">
-            <div className="WithdrawalModal__info_row__title">Be aware!</div>
-            <div className="WithdrawalModal__info_row__caption">Your each withdrawal request will reduce the percentage of your investments. Yet it will not affect your old investments.</div>
+            <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_beAware')}</div>
+            <div className="WithdrawalModal__info_row__caption">{utils.getLang('cabinet_withdrawalModal_eachRequestText')}</div>
           </div>
           <div className="WithdrawalModal__info_row">
-            <div className="WithdrawalModal__info_row__title">Attention!</div>
-            <div className="WithdrawalModal__info_row__caption">You can’t withdraw more than 10BTC (or any other cryptocurrency equivalent to 10BTC) in a day.</div>
+            <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_attention')}</div>
+            <div className="WithdrawalModal__info_row__caption">{utils.getLang('cabinet_withdrawalModal_moreThanText')}</div>
           </div>
           <div className="WithdrawalModal__row WithdrawalModal__row_amount">
             <div className="WithdrawalModal__row_amount__input">
@@ -77,7 +76,7 @@ class WithdrawalModal extends React.Component {
               />
               <p className="Form__helper__text">Available: {this.wallet.amount} {currency}</p>
             </div>
-            <UI.Button type="outline" smallPadding onClick={this.__maxDidPress}>Max</UI.Button>
+            <UI.Button type="outline" smallPadding onClick={this.__maxDidPress}>{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
           </div>
           <div className="WithdrawalModal__row">
             <UI.Input

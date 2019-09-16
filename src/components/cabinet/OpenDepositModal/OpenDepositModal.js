@@ -66,7 +66,7 @@ class OpenDepositModal extends React.Component {
       const planOptions = plans.map(p => ({
         value: p.id,
         title: p.description,
-        note: `${p.percent}% ${p.days} Days`,
+        note: `${p.percent}% ${p.days} ${utils.getLang('cabinet_openNewDeposit_days')}`,
         max: p.max,
         min: p.min
       }));
@@ -94,7 +94,7 @@ class OpenDepositModal extends React.Component {
       plan_id: this.state.planId,
       deposit_type: this.state.selectDepositType
     }).then(({plans}) => {
-      this.props.toastPush("Deposit created successfully", "success");
+      this.props.toastPush(utils.getLang('cabinet_openNewDeposit_depositCreated'), "success");
       this.props.modalGroupSetActiveModal();
     }).catch((err) => {
       this.setState({error: err.message});
@@ -108,26 +108,26 @@ class OpenDepositModal extends React.Component {
     if (this.state.selectDepositType === 'static') {
       typeInfoRows = [
         {
-          label: 'Доход — равный % ежедневно',
+          label: utils.getLang('cabinet_openNewDeposit_income'),
           icon: require('../../../asset/24px/bar-chart.svg')
         },
         {
-          label: 'Дополнительный бонусный %',
+          label: utils.getLang('cabinet_openNewDeposit_extra'),
           icon: require('../../../asset/24px/percent.svg')
         },
         {
-          label: 'Вывод — после завершения',
+          label: utils.getLang('cabinet_openNewDeposit_conclusion'),
           icon: require('../../../asset/24px/withdraw.svg')
         }
       ];
     } else {
       typeInfoRows = [
         {
-          label: 'Прогрессивный % дохода',
+          label: utils.getLang('cabinet_openNewDeposit_progressive'),
           icon: require('../../../asset/24px/bar-chart.svg')
         },
         {
-          label: 'Снижение % дохода от частоты вывода',
+          label: utils.getLang('cabinet_openNewDeposit_reduction'),
           icon: require('../../../asset/24px/withdraw.svg')
         }
       ];
@@ -136,7 +136,7 @@ class OpenDepositModal extends React.Component {
     return (
       <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
-          Open New Deposit
+          {utils.getLang('cabinet_openNewDeposit_name')}
         </UI.ModalHeader>
         <div className="OpenDepositModal">
           <div className="OpenDepositModal__row">
@@ -161,8 +161,8 @@ class OpenDepositModal extends React.Component {
                 this.state.amount < this.state.amountMin
               }
               value={this.state.amount}
-              placeholder="Amount"
-              indicator={`min ${this.state.amountMin} ${this.state.currency && this.state.currency.toUpperCase()}`}
+              placeholder={utils.getLang('cabinet_openNewDeposit_amount')}
+              indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.state.amountMin} ${this.state.currency && this.state.currency.toUpperCase()}`}
               onTextChange={amount => {
                 this.setState({ amount }, this.__getPlansThrottle);
               }}
@@ -186,7 +186,9 @@ class OpenDepositModal extends React.Component {
                   </div>
                 )
               })}
-              <a href="#" className="OpenDepositModal__type_info__more">More</a>
+              <a href="#" className="OpenDepositModal__type_info__more">
+                {utils.getLang('cabinet_openNewDeposit_more')}
+              </a>
             </div>
           </div>
           <div className="OpenDepositModal__row">
@@ -205,7 +207,9 @@ class OpenDepositModal extends React.Component {
           </div>
           { this.state.error && <div className="OpenDepositModal__error">{this.state.error}</div>}
           <div className="OpenDepositModal__btn_wrapper">
-            <UI.Button onClick={this.handleSubmit.bind(this)}>Invest</UI.Button>
+            <UI.Button onClick={this.handleSubmit.bind(this)}>
+              {utils.getLang('cabinet_openNewDeposit_invest')}
+            </UI.Button>
           </div>
         </div>
       </UI.Modal>

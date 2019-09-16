@@ -6,6 +6,7 @@ import UI from '../../../ui';
 import Currency from './components/Currency';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as walletsActions from '../../../actions/cabinet/wallets';
+import * as utils from "../../../utils";
 
 function NewWalletModal() {
   let currencies = walletsActions.getNoGeneratedCurrencies();
@@ -30,7 +31,7 @@ function NewWalletModal() {
   return (
     <UI.Modal noSpacing isOpen={true} onClose={() => {arguments[0].close()}}>
       <UI.ModalHeader>
-        Create New Wallet
+        {utils.getLang('cabinet_newWalletModal_name')}
       </UI.ModalHeader>
       <div className="NewWalletModal__content">
         {getContent()}

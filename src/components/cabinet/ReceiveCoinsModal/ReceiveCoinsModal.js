@@ -40,7 +40,7 @@ export default class ReceiveCoinsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={480}>
         <UI.ModalHeader>
-          Receive coins
+          {utils.getLang('cabinet_receiveCoinsModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -70,7 +70,7 @@ export default class ReceiveCoinsModal extends React.Component {
 
       if (!(options.length > 0)) {
         return <div style={{textAlign:'center'}}>
-          Нет доступных кошельков
+          {utils.getLang('cabinet_receiveCoinsModal_available')}
         </div>;
       }
 
@@ -105,7 +105,10 @@ export default class ReceiveCoinsModal extends React.Component {
           <div className="SendCoinsModal__row ReceiveCoinsModal__qrcode">
             <QRCode value={wallet.address} size={192} />
           </div>
-          <div className="ReceiveCoinsModal__warning">Only send {utils.ucfirst(currencyInfo.name)} ({this.state.currency.toUpperCase()})  to this address</div>
+          <div className="ReceiveCoinsModal__warning">
+            {utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()} 
+            {' ' + utils.getLang('cabinet_receiveCoinsModal_toThisAddress')}
+          </div>
           <div className="SendCoinsModal__row">
             <UI.Input
               value={wallet.address}
