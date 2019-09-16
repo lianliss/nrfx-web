@@ -119,10 +119,11 @@ class SendCoinsModal extends React.Component {
               onTextChange={this.__usdAmountDidChange}
               value={this.props.thisState.amountUSD}
             />
-            <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>Max</UI.Button>
+            <UI.Button smallPadding currency={this.props.thisState.currency} type="outline" onClick={this.__maxDidPress}>Max</UI.Button>
           </div>
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
+              currency={this.props.thisState.currency}
               onClick={this.__sendButtonHandler}
               disabled={sendButtonDisabled}
             >

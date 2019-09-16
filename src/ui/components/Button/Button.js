@@ -17,6 +17,7 @@ function Button(props) {
     rounded: props.rounded,
     forCabinet: !!props.forCabinet,
     smallPadding: props.smallPadding,
+    [props.currency]: !!props.currency,
     [props.state]: !!props.state,
   });
 
