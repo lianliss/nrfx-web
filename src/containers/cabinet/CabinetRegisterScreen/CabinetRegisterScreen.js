@@ -3,10 +3,10 @@ import React from 'react';
 import UI from '../../../ui';
 import { withRouter } from 'react-router5';
 import { GetParamsContext } from '../../../contexts';
-import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import apiSchema from '../../../services/apiSchema';
 import * as api from "../../../services/api";
 import * as storeUtils from "../../../storeUtils";
+import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
 import * as pages from '../../../constants/pages';
 import ReactPhoneInput from "react-phone-input-2";
@@ -17,7 +17,7 @@ class CabinetRegister extends React.PureComponent {
     sendSmsTime: false,
     timer: null,
     codeForm: false,
-  }
+  };
 
   componentDidMount() {
     if (!this.context.params.hash) {
@@ -49,7 +49,7 @@ class CabinetRegister extends React.PureComponent {
         sms_code: state.smsCode,
         hash: params.hash
       }).then(() => {
-        this.props.toastPush("Success", "success");
+        this.props.toastPush(utils.getLang('cabinet_registerScreen_success'), "success");
         this.props.router.navigate(pages.PROFILE);
       }).catch((err) => {
         this.props.toastPush(err.message, "error");
@@ -106,26 +106,26 @@ class CabinetRegister extends React.PureComponent {
     return (
       <div className="CabinetRegister">
         <div className="CabinetRegister__content Content_box">
-          <h3 className="CabinetRegister__content__title">Complete Registration</h3>
+          <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_complete')}</h3>
           <UI.Input
             error={state.touched && !state.firstName}
             value={state.firstName}
-            placeholder="First Name"
+            placeholder={utils.getLang('cabinet_registerScreen_firstName')}
             onTextChange={text => this.__handleChange("firstName", text)}
           />
           <UI.Input
             error={state.touched && !state.lastName}
             value={state.lastName}
-            placeholder="Last Name"
+            placeholder={utils.getLang('cabinet_registerScreen_lastName')}
             onTextChange={text => this.__handleChange("lastName", text)}
           />
           <UI.Input
             error={state.touched && !state.login}
             value={state.login}
-            placeholder="Login"
+            placeholder={utils.getLang('cabinet_registerScreen_login')}
             onTextChange={text => this.__handleChange("login", text)}
           />
-          <h3 className="CabinetRegister__content__title">Phone Number</h3>
+          <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_phoneNumber')}</h3>
           { !state.codeForm ? <div>
             <div className="CabinetRegister__PhoneInput">
               <ReactPhoneInput
@@ -135,7 +135,7 @@ class CabinetRegister extends React.PureComponent {
                 enableSearchField={true}
                 disableSearchIcon={true}
                 countryCodeEditable={false}
-                searchPlaceholder={'Сountry search or code'}
+                searchPlaceholder={utils.getLang('cabinet_registerScreen_countryOrCode')}
                 autoFocus={true}
                 searchClass={'CabinetRegister__PhoneInput_searchClass'}
                 dropdownClass={'CabinetRegister__PhoneInput_dropdownClass'}
@@ -147,32 +147,40 @@ class CabinetRegister extends React.PureComponent {
             <div className="CabinetRegister__content__send_code_button">
               <UI.Button
                 disabled={state.timer || !this.state.phoneWithoutCode}
-                onClick={this.__handleSendSms.bind(this)}>Send Code</UI.Button>
-              { state.timer && <div className="CabinetRegister__content__timer">{"Re-Send Code " + state.timer}</div> }
+                onClick={this.__handleSendSms.bind(this)}>
+                {utils.getLang('cabinet_registerScreen_sendCode')}
+              </UI.Button>
+              { state.timer && <div className="CabinetRegister__content__timer">{utils.getLang('cabinet_registerScreen_reSendCode') + ' ' + state.timer}</div> }
             </div>
           </div> : <div>
             <UI.Input
               error={state.touched && !state.password}
               value={state.smsCode}
               type="password"
-              placeholder="Enter Code"
+              placeholder={utils.getLang('cabinet_registerScreen_enterCode')}
               onTextChange={text => this.__handleChange("smsCode", text)}
             />
             <div className="CabinetRegister__content__send_code_button">
-              <UI.Button type="secondary" onClick={() => this.setState({codeForm: false})}>Back</UI.Button>
+              <UI.Button type="secondary" onClick={() => this.setState({codeForm: false})}>
+                {utils.getLang('cabinet_registerScreen_back')}
+              </UI.Button>
               { state.timer ?
-                <div className="CabinetRegister__content__timer">{"Re-Send Code " + state.timer}</div> :
-                <div onClick={this.__handleSendSms.bind(this)} className="CabinetRegister__content__resend_code_button">Re-Send Code</div> }
+                <div className="CabinetRegister__content__timer">{utils.getLang('cabinet_registerScreen_reSendCode') + ' ' + state.timer}</div> :
+                <div onClick={this.__handleSendSms.bind(this)} className="CabinetRegister__content__resend_code_button">
+                  {utils.getLang('cabinet_registerScreen_reSendCode')}
+                </div> }
             </div>
           </div> }
 
 
-          <h3 className="CabinetRegister__content__title">Create Password</h3>
+          <h3 className="CabinetRegister__content__title">
+            {utils.getLang('cabinet_registerScreen_createPassword')}
+          </h3>
           <UI.Input
             error={state.touched && !state.password}
             value={state.password}
             type="password"
-            placeholder="Password"
+            placeholder={utils.getLang('cabinet_registerScreen_password')}
             onTextChange={text => this.__handleChange("password", text)}
           />
 
@@ -180,12 +188,14 @@ class CabinetRegister extends React.PureComponent {
             error={state.touched && (!state.passwordConfirm || state.passwordConfirm !== state.password)}
             value={state.passwordConfirm}
             type="password"
-            placeholder="Re-enter Password"
+            placeholder={utils.getLang('cabinet_registerScreen_reEnterPassword')}
             onTextChange={text => this.__handleChange("passwordConfirm", text)}
           />
 
           <div className="CabinetRegister__content__submit_wrapper">
-            <UI.Button onClick={this.__handleSubmit.bind(this)}>Register</UI.Button>
+            <UI.Button onClick={this.__handleSubmit.bind(this)}>
+              {utils.getLang('cabinet_registerScreen_register')}
+            </UI.Button>
           </div>
         </div>
       </div>
