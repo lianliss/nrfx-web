@@ -129,7 +129,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
   __renderLeftContent() {
     if (!this.props.chart.hasOwnProperty('data')) {
-      return <LoadingStatus />;
+      return <LoadingStatus status="loading" />;
     }
 
     return <ChartProfit chart={{...this.props.chart}} />

@@ -25,7 +25,7 @@ function PageContainer({ children, leftContent, sidebarOptions }) {
 
 PageContainer.propTypes = {
   leftContent: PropTypes.node,
-  sidebarOptions: PropTypes.object
+  sidebarOptions: PropTypes.array
 };
 
 export default React.memo(PageContainer);
