@@ -18,7 +18,7 @@ export default class ConfirmSmsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={424}>
         <UI.ModalHeader>
-          Change Phone Number
+          {utils.getLang('cabinet_confirmSmsModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -35,7 +35,7 @@ export default class ConfirmSmsModal extends React.Component {
             autoComplete="off"
             value={this.state.smsCode}
             onChange={this.__handleChange}
-            placeholder={'Enter code from sms'}
+            placeholder={utils.getLang('cabinet_confirmSmsModal_enter')}
             onKeyPress={(e) => (e.key === 'Enter' && this.state.smsCode.length < 4) ? this.__handleSubmit() : null}
             error={this.state.errorSmsCode}
           />

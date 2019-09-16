@@ -24,7 +24,7 @@ export default class ChangeNumberModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={424}>
         <UI.ModalHeader>
-          Change Number
+          {utils.getLang('cabinet_changeNumberModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -42,12 +42,12 @@ export default class ChangeNumberModal extends React.Component {
             enableSearchField={true}
             disableSearchIcon={true}
             countryCodeEditable={false}
-            searchPlaceholder={'Сountry search or code'}
+            searchPlaceholder="Сountry search or code"
             autoFocus={true}
-            searchClass={'ChangeNumberModal__PhoneInput_searchClass'}
-            dropdownClass={'ChangeNumberModal__PhoneInput_dropdownClass'}
-            buttonClass={'ChangeNumberModal__PhoneInput_buttonClass'}
-            inputClass={'ChangeNumberModal__PhoneInput_inputClass'}
+            searchClass="ChangeNumberModal__PhoneInput_searchClass"
+            dropdownClass="ChangeNumberModal__PhoneInput_dropdownClass"
+            buttonClass="ChangeNumberModal__PhoneInput_buttonClass"
+            inputClass="ChangeNumberModal__PhoneInput_inputClass"
             //containerClass={'ChangeNumberModal__PhoneInput_containerClass'}
 
             preferredCountries={['ru', 'id']}
@@ -68,7 +68,7 @@ export default class ChangeNumberModal extends React.Component {
         </div>
         <div className="ChangeNumberModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6 || !isValidPhoneNumber(this.state.phone)}>
-            {utils.getLang('site__authModalSubmit')}
+            {utils.getLang('cabinet_changeNumberModal_save')}
           </UI.Button>
         </div>
       </div>

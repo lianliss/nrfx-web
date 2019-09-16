@@ -20,7 +20,7 @@ export default class ChangeEmailModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={424}>
         <UI.ModalHeader>
-          Change Email
+          {utils.getLang('cabinet_changeEmailModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -52,7 +52,7 @@ export default class ChangeEmailModal extends React.Component {
         </div>
         <div className="ChangeEmailModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
-            {utils.getLang('site__authModalSubmit')}
+            {utils.getLang('cabinet_changeEmailModal_save')}
           </UI.Button>
         </div>
       </div>

@@ -22,22 +22,22 @@ export default function HistoryTable({ history }) {
     <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
       <SVG src={require('../../../../asset/cabinet/filter.svg')} />
     </UI.TableColumn>,
-    <UI.TableColumn>Address/Login</UI.TableColumn>,
-    <UI.TableColumn align="right">Amount</UI.TableColumn>,
-    <UI.TableColumn>Wallet</UI.TableColumn>,
-    <UI.TableColumn>Type</UI.TableColumn>,
-    <UI.TableColumn>Date</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_addressLogin')}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang('cabinet_wallets_historyTable_amount')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_wallet')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_date')}</UI.TableColumn>,
   ];
 
   const rows = history.map((item, i) => {
     let status;
     if (item.category === 'send' && item.status === 'pending') {
-      status = 'Confirmation';
+      status = utils.getLang('cabinet_wallets_historyTable_confirmation');
     } else {
-      status = item.category === 'send' ? 'Sent' : 'Received';
+      status = item.category === 'send' ? utils.getLang('cabinet_wallets_historyTable_sent') : utils.getLang('cabinet_wallets_historyTable_received');
     }
 
-    let address = utils.clipTextMiddle(item.address) || 'Unknown';
+    let address = utils.clipTextMiddle(item.address) || utils.getLang('cabinet_wallets_historyTable_unknown');
     if (item.type === 'transfer') {
       address = address.toUpperCase();
     }

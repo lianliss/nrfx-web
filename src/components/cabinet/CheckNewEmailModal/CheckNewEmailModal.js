@@ -4,13 +4,14 @@ import React from 'react';
 import UI from '../../../ui';
 
 import * as modalGroupActions from "../../../actions/modalGroup";
+import * as utils from "../../../utils";
 
 export default class CheckNewEmailModal extends React.Component {
   render() {
     return (
       <UI.Modal isOpen={true} onClose={() => {modalGroupActions.modalGroupClear()}} width={384}>
         <UI.ModalHeader>
-          Check your email
+          {utils.getLang('cabinet_checkNewEmailModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -21,12 +22,12 @@ export default class CheckNewEmailModal extends React.Component {
     return (
       <div>
         <div style={{textAlign:'center'}}>
-          Check your email for confirmation
+          {utils.getLang('cabinet_checkNewEmailModal_checkYourEmail')}
         </div>
         <div>
           {this.props.newEmail}
           <UI.Button onClick={this.__handleSubmit}>
-            OK
+            {utils.getLang('cabinet_checkNewEmailModal_ok')}
           </UI.Button>
         </div>
       </div>
