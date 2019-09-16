@@ -45,7 +45,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
             <ProfileSidebarItem
               onClick={() => {router.navigate('settings')}}
               icon={<SettingsSvg />}
-              label="Settings"
+              label={utils.getLang('cabinet_profileScreen_settings')}
             />
             // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
             // <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />

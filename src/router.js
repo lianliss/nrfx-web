@@ -82,10 +82,6 @@ export const routes = [
     path: '/settings',
   },
   {
-    name: pages.START_PROFILE,
-    path: '/start_profile',
-  },
-  {
     name: pages.PROFILE,
     path: '/profile',
   },

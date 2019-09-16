@@ -28,7 +28,7 @@ export function sendSmsCode({phone_code, phone_number, ga_code}) {
 
 export function changeLogin({login, ga_code}) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.CheckLoginPost, {login, ga_code}).then((data) => {
+    api.call(apiSchema.Profile.ChangeLoginPut, {login, ga_code}).then((data) => {
       resolve(data);
     }).catch((reason) => {
       reject(reason);

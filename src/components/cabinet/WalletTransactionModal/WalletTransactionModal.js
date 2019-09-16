@@ -101,7 +101,7 @@ export default class WalletTransactionModal extends React.Component {
           <div className="WalletTransactionModal__status">
             {data.status !== 'done' && <div className="WalletTransactionModal__status__row">
               <div className="WalletTransactionModal__status__row__label">{utils.getLang('cabinet_walletTransactionModal_blockchainConfirmations')}</div>
-              <div className="WalletTransactionModal__status__row__value">1/2</div>
+              <div className="WalletTransactionModal__status__row__value">{data.confirmations}/{data.required_confirmations}</div>
             </div>}
             <div className="WalletTransactionModal__status__row right">
               <div className="WalletTransactionModal__status__row__label">{utils.getLang('cabinet_walletTransactionModal_status')}</div>

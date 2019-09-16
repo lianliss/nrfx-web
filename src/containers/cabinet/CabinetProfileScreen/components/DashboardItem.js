@@ -9,10 +9,10 @@ class DashboardItem extends React.Component {
       case 'investments':
         this.icon = <SVG src={require('../../../../asset/24px/users.svg')} />;
         this.content = {
-          firstHeaderLeftContext: 'Profit',
+          firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_profit'),
           firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(6) : 0,
           firstMainContextInvert: (props.profit.btc * props.profit.usd).toFixed(2),
-          secondHeaderLeftContext: 'Invested',
+          secondHeaderLeftContext: utils.getLang('cabinet_profileScreen_invested'),
           secondMainContext: '~ ' + props.invested.btc + ' BTC',
           secondMainContextInvert: (props.invested.btc * props.invested.usd).toFixed(2) + ' USD'
         };
@@ -21,10 +21,10 @@ class DashboardItem extends React.Component {
       case 'partners':
         this.icon = <SVG src={require('../../../../asset/24px/invest.svg')} />;
         this.content = {
-          firstHeaderLeftContext: 'Income',
+          firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_income'),
           firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(6) : 0,
           firstMainContextInvert: (props.profit.btc * props.profit.usd).toFixed(2),
-          secondHeaderLeftContext: 'Count',
+          secondHeaderLeftContext: utils.getLang('cabinet_profileScreen_count'),
           secondMainContext: props.count,
           secondMainContextInvert: props.count
         };
@@ -32,7 +32,7 @@ class DashboardItem extends React.Component {
       case 'commerce':
         this.icon = <SVG src={require('../../../../asset/24px/shopping-cart.svg')} />;
         this.content = {
-          firstHeaderLeftContext: 'Revenue',
+          firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_revenue'),
           firstMainContext: '0',
           firstMainContextInvert: '0',
           secondHeaderLeftContext: '',
@@ -55,7 +55,7 @@ class DashboardItem extends React.Component {
           {
             this.props.type === 'commerce' && <div className="disabled">
               <span>
-                Coming soon...
+                {utils.getLang('cabinet_profileScreen_comingSoon')}
               </span>
             </div>
           }

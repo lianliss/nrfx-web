@@ -1,29 +1,29 @@
 import React from 'react';
 import ActionCardBox from './ActionCardBox';
 import router from '../../../../router';
+import * as utils from "../../../../utils";
 
-const cards = [
-  {
+function cards() {
+  return [{
     icon: require('../../../../asset/120/invest.svg'),
-    description: "Invest your financials to get more profit",
-    actionTitle: "Invest",
+    description: utils.getLang('cabinet_profileScreen_actionCard_investText'),
+    actionTitle: utils.getLang('cabinet_profileScreen_actionCard_invest'),
     action: () => {
       router.navigate('investments');
     }
-  },
-  {
+  }, {
     icon: require('../../../../asset/120/trade.svg'),
-    description: "Trade on our awesome exchange",
-    actionTitle: "Coming Soon",
-    action: () => {}
-  },
-  {
+    description: utils.getLang('cabinet_profileScreen_actionCard_tradeText'),
+    actionTitle: utils.getLang('cabinet_profileScreen_actionCard_comingSoon'),
+    action: () => {
+    }
+  }, {
     icon: require('../../../../asset/120/bots.svg'),
-    description: "Use our bots to get more profit",
-    actionTitle: "Coming Soon",
+    description: utils.getLang('cabinet_profileScreen_actionCard_botText'),
+    actionTitle: utils.getLang('cabinet_profileScreen_actionCard_comingSoon'),
     action: () => {}
-  }
-];
+  }];
+}
 
 const defaultProps = {
   height: 320,
@@ -33,7 +33,7 @@ const defaultProps = {
 };
 
 export default () => <div className="CabinetStartProfileScreen__actionCards">
-  {cards.map((card, i) => {
+  {cards().map((card, i) => {
     return <ActionCardBox key={i} {...card} />
   })}
 </div>
