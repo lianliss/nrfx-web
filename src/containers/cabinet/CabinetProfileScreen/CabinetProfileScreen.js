@@ -16,6 +16,8 @@ import ProfileActionCards from './components/ProfileActionCards';
 import * as utils from "../../../utils";
 import router from "../../../router";
 
+import { ReactComponent as SettingsSvg } from '../../../asset/24px/settings.svg';
+
 class CabinetProfileScreen extends CabinetBaseScreen {
   state = {
     walletSelected: null
@@ -39,7 +41,15 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
-          sidebarOptions={this.props.sidebarOptions}
+          sidebarOptions={[
+            <ProfileSidebarItem
+              onClick={() => {router.navigate('settings')}}
+              icon={<SettingsSvg />}
+              label="Settings"
+            />
+            // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
+            // <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
+          ]}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -127,20 +137,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
     this.setState({walletSelected});
   };
-}
-
-export function sidebarOptions() {
-  return {
-    items: [
-      <ProfileSidebarItem
-        onClick={() => {router.navigate('settings')}}
-        icon={require('../../../asset/24px/settings.svg')}
-        label="Settings"
-      />
-    ]
-  }
-  // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
-  // <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
 }
 
 export default storeUtils.getWithState(
