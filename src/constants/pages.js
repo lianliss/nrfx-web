@@ -22,3 +22,4 @@ export const PROFILE = 'profile';
 export const INVESTMENTS = 'investments';
 export const SETTINGS = 'settings';
 export const CHANGE_EMAIL = 'change_email';
+export const REGISTER = 'register';

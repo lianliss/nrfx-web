@@ -97,6 +97,10 @@ export const routes = [
     name: pages.CHANGE_EMAIL,
     path: '/change_email',
   },
+  {
+    name: pages.REGISTER,
+    path: '/register',
+  },
 ];
 
 const params = {

@@ -117,6 +117,11 @@ export function getWithState(caseName, caseClass) {
         toastDrop: toastsActions.toastDrop
       };
       break;
+    case CLASSES.CABINET_REGISTER:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
     default:
       mapState2Props = (state) => ({ ...state });
       mapDispatch2Props = {};

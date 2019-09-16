@@ -21,6 +21,7 @@ import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen
 import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
 import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
 import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmail/CabinetChangeEmail';
+import * as CabinetRegister from './containers/cabinet/CabinetRegister/CabinetRegister';
 import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
 
 import SiteWrapper from './wrappers/Site/SiteWrapper';
@@ -115,6 +116,9 @@ export default function Routes(props) {
       break;
     case pages.CHANGE_EMAIL:
       Component = CabinetChangeEmail.default;
+      break;
+    case pages.REGISTER:
+      Component = CabinetRegister.default;
       break;
     case pages.MENU:
       Component = MenuScreen.default;
