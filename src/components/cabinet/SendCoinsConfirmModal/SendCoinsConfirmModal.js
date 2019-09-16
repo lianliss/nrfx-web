@@ -8,6 +8,7 @@ import * as actions from '../../../actions';
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import * as modalGroupActions from '../../../actions/modalGroup';
 import * as utils from '../../../utils';
+import * as currencies from "../../../utils/currencies";
 
 import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow';
 
@@ -43,6 +44,8 @@ export default class SendCoinsConfirmModal extends React.Component {
       currency: this.currency.toUpperCase(),
     });
 
+    const currencyGradient = currencies.getGradientByCurrency(currency);
+
 
     return (
       <div>
@@ -60,7 +63,7 @@ export default class SendCoinsConfirmModal extends React.Component {
           <InfoRow label="Amount">{utils.formatDouble(amount)} {currency}</InfoRow>
           {/*<InfoRow label="Fee">{utils.formatDouble(fee)} {currency}</InfoRow>*/}
         </InfoRowGroup>
-        <div className="SendCoinsConfirmModal__card">
+        <div className="SendCoinsConfirmModal__card" style={{background: currencyGradient}}>
           <div className="SendCoinsConfirmModal__card__icon">
             <SVG src={require('../../../asset/24px/send.svg')} />
           </div>
@@ -83,7 +86,7 @@ export default class SendCoinsConfirmModal extends React.Component {
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         <div className="SendCoinsConfirmModal__submit_wrapper">
-          <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
+          <UI.Button currency={currency.toLowerCase()} onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
             {utils.getLang('site__authModalSubmit')}
           </UI.Button>
         </div>

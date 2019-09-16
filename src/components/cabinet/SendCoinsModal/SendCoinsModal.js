@@ -125,6 +125,7 @@ class SendCoinsModal extends React.Component {
           </div>
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
+              currency={this.props.thisState.currency}
               onClick={this.__sendButtonHandler}
               disabled={sendButtonDisabled}
             >

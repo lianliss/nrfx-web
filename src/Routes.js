@@ -20,8 +20,8 @@ import * as CabinetStartProfileScreen from './containers/cabinet/CabinetStartPro
 import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
 import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
 import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
-import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmail/CabinetChangeEmail';
-import * as CabinetRegister from './containers/cabinet/CabinetRegister/CabinetRegister';
+import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
+import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
 import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
 
 import SiteWrapper from './wrappers/Site/SiteWrapper';

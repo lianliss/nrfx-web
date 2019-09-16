@@ -42,6 +42,36 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="negative">Button</UI.Button>
             <UI.Button size="small" type="negative_outline">Button</UI.Button>
           </Line>
+          <Line>
+            <UI.Button size="small" currency="btc">Button</UI.Button>
+            <UI.Button rounded size="small" currency="btc">Button</UI.Button>
+            <UI.Button size="small" disabled currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="secondary" currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="outline" currency="btc">Button</UI.Button>
+            <UI.Button size="small" rounded type="outline" currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="negative" currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="negative_outline" currency="btc">Button</UI.Button>
+          </Line>
+          <Line>
+            <UI.Button size="small" currency="eth">Button</UI.Button>
+            <UI.Button rounded size="small" currency="eth">Button</UI.Button>
+            <UI.Button size="small" disabled currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="secondary" currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="outline" currency="eth">Button</UI.Button>
+            <UI.Button size="small" rounded type="outline" currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="negative" currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="negative_outline" currency="eth">Button</UI.Button>
+          </Line>
+          <Line>
+            <UI.Button size="small" currency="ltc">Button</UI.Button>
+            <UI.Button rounded size="small" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" disabled currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="secondary" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="outline" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" rounded type="outline" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="negative" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="negative_outline" currency="ltc">Button</UI.Button>
+          </Line>
         </Section>
         <Section title="Inputs">
           <Line style={{width: 300}}>
