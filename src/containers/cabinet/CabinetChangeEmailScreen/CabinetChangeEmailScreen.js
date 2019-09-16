@@ -1,4 +1,4 @@
-import './CabinetChangeEmail.less';
+import './CabinetChangeEmailScreen.less';
 import React from 'react';
 import UI from '../../../ui';
 import { withRouter } from 'react-router5';

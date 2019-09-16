@@ -1,4 +1,4 @@
-import './CabinetRegister.less';
+import './CabinetRegisterScreen.less';
 import React from 'react';
 import UI from '../../../ui';
 import { withRouter } from 'react-router5';
