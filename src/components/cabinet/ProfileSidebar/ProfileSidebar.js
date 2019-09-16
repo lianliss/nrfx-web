@@ -188,7 +188,7 @@ export function ProfileSidebarItem({ icon = null, label, onClick, section, modal
 }
 
 ProfileSidebarItem.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.object,
   label: PropTypes.string,
   onClick: PropTypes.func,
   active: PropTypes.bool,
