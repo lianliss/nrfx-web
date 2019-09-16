@@ -8,7 +8,7 @@ import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSi
 function PageContainer({ children, leftContent, sidebarOptions }) {
   return (
     <div className="PageContainer">
-      <ProfileSidebar {...sidebarOptions} />
+      <ProfileSidebar sidebarOptions={sidebarOptions} />
 
       <div className="PageContainer__content">
         <div className="PageContainer__content__primary">

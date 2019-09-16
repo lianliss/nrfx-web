@@ -36,7 +36,6 @@ export default function Routes(props) {
   let actions = {};
   let Component = false;
   let WrapperComponent = CabinetWrapper;
-  let sidebarOptions = {};
 
   switch (route) {
     case pages.MAIN:
@@ -97,22 +96,18 @@ export default function Routes(props) {
     // Cabinet
     case pages.CABINET_WALLET:
       Component = CabinetWalletScreen.default;
-      sidebarOptions = CabinetWalletScreen.sidebarOptions;
       break;
     case pages.START_PROFILE:
       Component = CabinetStartProfileScreen.default;
       break;
     case pages.PROFILE:
       Component = CabinetProfileScreen.default;
-      sidebarOptions = CabinetProfileScreen.sidebarOptions();
       break;
     case pages.SETTINGS:
       Component = CabinetSettingsScreen.default;
-      sidebarOptions = CabinetSettingsScreen.sidebarOptions;
       break;
     case pages.INVESTMENTS:
       Component = CabinetInvestmentsScreen.default;
-      sidebarOptions = CabinetInvestmentsScreen.sidebarOptions;
       break;
     case pages.CHANGE_EMAIL:
       Component = CabinetChangeEmail.default;
@@ -140,7 +135,7 @@ export default function Routes(props) {
   const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
-      <Component {...defaultProps} sidebarOptions={sidebarOptions} {...actions} routerParams={routerParams} />
+      <Component {...defaultProps} {...actions} routerParams={routerParams} />
     </WrapperComponent>
   );
 }

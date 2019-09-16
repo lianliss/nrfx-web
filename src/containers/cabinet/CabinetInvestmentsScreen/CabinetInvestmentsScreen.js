@@ -17,6 +17,11 @@ import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
 import Paging from "../../../components/cabinet/Paging/Paging";
 
+import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
+import { ReactComponent as InvestSvg } from '../../../asset/24px/invest.svg';
+import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
+
+
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
     return this.props.routerParams.section || 'default';
@@ -55,7 +60,15 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
-          sidebarOptions={this.props.sidebarOptions}
+          sidebarOptions={[
+            <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+              icon={<PlusCircleSvg />}
+              label="New"
+            />,
+            <ProfileSidebarItem section="profits" icon={<InvestSvg />} label="Profit" />,
+            <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label="Withdrawals" />
+          ]}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -154,18 +167,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     )
   }
 }
-
-export const sidebarOptions = {
-  items: [
-    <ProfileSidebarItem
-      onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
-      icon={require('../../../asset/24px/plus-circle.svg')}
-      label="New"
-    />,
-    <ProfileSidebarItem section="profits" icon={require('../../../asset/24px/invest.svg')} label="Profit" />,
-    <ProfileSidebarItem section="withdrawals" icon={require('../../../asset/24px/send.svg')} label="Withdrawals" />
-  ]
-};
 
 export default storeUtils.getWithState(
   CLASSES.CABINET_INVESTMENTS_SCREEN,
