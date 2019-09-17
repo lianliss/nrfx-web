@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-if [ "$1" == "beta" ]; then
+prod_branch="beta"
+
+if [ "$1" == "$prod_branch" ]; then
     # Saves uncommitted changes and reset repo
     git stash
     git reset --hard
