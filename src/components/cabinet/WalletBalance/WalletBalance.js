@@ -68,7 +68,7 @@ function WalletBalance({ wallets }) {
           </span>
         </div>
         <div className="WalletBalance__selected_wallet">
-          <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletBalance_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
+          <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletTransactionModal_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
           <div className="WalletBalance__selected_amount">{amount} {currency.toUpperCase()}</div>
           <div className="WalletBalance__selected_buttons">
             <UI.Button
@@ -78,7 +78,7 @@ function WalletBalance({ wallets }) {
               })}}
               style={{background: buttonBackgroundColor}}
             >
-              Send
+              {utils.getLang('site__contactSend')}
             </UI.Button>
             <UI.Button
               onClick={() => {modalGroupActions.openModalPage('receive', {
@@ -86,7 +86,7 @@ function WalletBalance({ wallets }) {
               })}}
               style={{background: buttonBackgroundColor}}
             >
-              Receive
+              {utils.getLang('cabinet_walletTransactionModal_receive')}
             </UI.Button>
           </div>
         </div>

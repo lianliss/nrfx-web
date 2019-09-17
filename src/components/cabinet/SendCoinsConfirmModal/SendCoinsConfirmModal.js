@@ -57,7 +57,7 @@ export default class SendCoinsConfirmModal extends React.Component {
         <InfoRowGroup align="left">
           <InfoRow label="From">
             <div className="Wallets__history__address">
-              {utils.getLang('cabinet_sendCoinsConfirmModal_my')} {utils.ucfirst(currencyInfo.name)}
+              {utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)}
             </div>
           </InfoRow>
           <InfoRow label="To">

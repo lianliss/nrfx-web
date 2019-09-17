@@ -26,7 +26,7 @@ function Header({ showLightLogo, langList, routerState }) {
       title: utils.getLang('site__headerProducts'),
       children: [
         {
-          title: utils.getLang('site__headerWallet'),
+          title: utils.getLang('site__homeWallet'),
           route: pages.WALLET,
         },
         {
@@ -140,7 +140,7 @@ function Header({ showLightLogo, langList, routerState }) {
                 <UI.Button type="outline">{utils.getLang('site__headerLogIn')}</UI.Button>
               </AuthModal>
               <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                <UI.Button type="outline_white">{utils.getLang('site__headerRegistration')}</UI.Button>
+                <UI.Button type="outline_white">{utils.getLang('site__commerceRegistration')}</UI.Button>
               </AuthModal>
             </div>
 
@@ -177,7 +177,7 @@ function Header({ showLightLogo, langList, routerState }) {
                   <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
                 </AuthModal>
                 <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                  <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
+                  <UI.Button type="outline_white" rounded>{utils.getLang('site__commerceRegistration')}</UI.Button>
                 </AuthModal>
                 <Dropdown
                   className="SiteHeader__lang__dropdown"

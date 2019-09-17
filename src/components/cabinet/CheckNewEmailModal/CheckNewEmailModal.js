@@ -36,7 +36,7 @@ export default class CheckNewEmailModal extends React.Component {
         </div>
         <div className="CheckNewEmailModal__button_wrapper">
           <UI.Button onClick={this.__handleSubmit}>
-            {utils.getLang('cabinet_checkNewEmailModal_ok')}
+            {utils.getLang('site__authModalOk')}
           </UI.Button>
         </div>
       </div>

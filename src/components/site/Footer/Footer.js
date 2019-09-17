@@ -14,7 +14,7 @@ export default function Footer() {
         <div className="Footer__links_wrap">
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerProducts')}</div>
-            <a href={`/${pages.WALLET}`} className="Footer__links__item">{utils.getLang('site__footerWallet')}</a>
+            <a href={`/${pages.WALLET}`} className="Footer__links__item">{utils.getLang('site__homeWallet')}</a>
             <a href={`/${pages.EXCHANGE}`} className="Footer__links__item">{utils.getLang('site__footerExchange')}</a>
             <a href={`/${pages.ROBOTS}`} className="Footer__links__item">{utils.getLang('site__footerRobots')}</a>
             <a href={`/${pages.INVESTMENT}`} className="Footer__links__item">{utils.getLang('site__footerInvestments')}</a>

@@ -70,7 +70,7 @@ export default class ReceiveCoinsModal extends React.Component {
 
       if (!(options.length > 0)) {
         return <div style={{textAlign:'center'}}>
-          {utils.getLang('cabinet_receiveCoinsModal_available')}
+          {utils.getLang('cabinet_sendCoinsModal_available')}
         </div>;
       }
 

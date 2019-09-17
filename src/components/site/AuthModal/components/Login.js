@@ -64,7 +64,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
       </div>
 
       <div className="AuthModal__footer">
-        <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__authModalSignUpBtn')}</h4>
+        <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__commerceRegistration')}</h4>
         <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </>

@@ -57,7 +57,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
               icon={<SendSvg />}
-              label={utils.getLang('cabinet_walletScreen_send')}
+              label={utils.getLang('site__contactSend')}
             />,
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('receive')}}

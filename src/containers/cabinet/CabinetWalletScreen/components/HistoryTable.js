@@ -13,7 +13,7 @@ export default function HistoryTable({ history }) {
     return (
       <EmptyContentBlock
         icon={require('../../../../asset/120/no_deposits.svg')}
-        message="No Profit History"
+        message={utils.getLang('no_profit_history')}
       />
     )
   }
@@ -23,8 +23,8 @@ export default function HistoryTable({ history }) {
       <SVG src={require('../../../../asset/cabinet/filter.svg')} />
     </UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_addressLogin')}</UI.TableColumn>,
-    <UI.TableColumn align="right">{utils.getLang('cabinet_wallets_historyTable_amount')}</UI.TableColumn>,
-    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_wallet')}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang('cabinet_openNewDeposit_amount')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('site__homeWallet')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_date')}</UI.TableColumn>,
   ];
@@ -32,7 +32,7 @@ export default function HistoryTable({ history }) {
   const rows = history.map((item, i) => {
     let status;
     if (item.category === 'send' && item.status === 'pending') {
-      status = utils.getLang('cabinet_wallets_historyTable_confirmation');
+      status = utils.getLang('cabinet_walletTransactionModal_confirmation');
     } else {
       status = item.category === 'send' ? utils.getLang('cabinet_wallets_historyTable_sent') : utils.getLang('cabinet_wallets_historyTable_received');
     }

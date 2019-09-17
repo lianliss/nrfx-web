@@ -25,10 +25,10 @@ export default function WithdrawalTable({ deposits }) {
       <SVG src={require('../../../../asset/cabinet/filter.svg')} />
     </UI.TableColumn>,
     <UI.TableColumn>ID</UI.TableColumn>,
-    <UI.TableColumn>Type</UI.TableColumn>,
-    <UI.TableColumn>Rate</UI.TableColumn>,
-    <UI.TableColumn align="right">Invested</UI.TableColumn>,
-    <UI.TableColumn align="right">Profit</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('rate')}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang('cabinet_profileScreen_invested')}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang('Profit')}</UI.TableColumn>,
   ];
 
   const rows = deposits.map((item, i) => {

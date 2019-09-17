@@ -196,7 +196,7 @@ class CabinetRegister extends React.PureComponent {
 
           <div className="CabinetRegister__content__submit_wrapper">
             <UI.Button onClick={this.__handleSubmit.bind(this)}>
-              {utils.getLang('cabinet_registerScreen_register')}
+              {utils.getLang('site__commerceRegistration')}
             </UI.Button>
           </div>
         </div>

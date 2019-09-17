@@ -66,7 +66,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
               icon={<PlusCircleSvg />}
               label={utils.getLang('cabinet_investmentsScreen_new')}
             />,
-            <ProfileSidebarItem section="profits" icon={<InvestSvg />} label={utils.getLang('cabinet_investmentsScreen_profile')} />,
+            <ProfileSidebarItem section="profits" icon={<InvestSvg />} label={utils.getLang('cabinet_header_profile')} />,
             <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />
           ]}
         >

@@ -31,7 +31,7 @@ function NewWalletModal() {
   return (
     <UI.Modal noSpacing isOpen={true} onClose={() => {arguments[0].close()}}>
       <UI.ModalHeader>
-        {utils.getLang('cabinet_newWalletModal_name')}
+        {utils.getLang('cabinet_walletBox_create')}
       </UI.ModalHeader>
       <div className="NewWalletModal__content">
         {getContent()}
