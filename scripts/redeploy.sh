@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$1" == beta ]; then
+if [ "$1" == "beta" ]; then
     # Saves uncommitted changes and reset repo
     git stash
     git reset --hard
