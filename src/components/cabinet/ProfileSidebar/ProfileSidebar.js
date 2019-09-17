@@ -155,11 +155,12 @@ export function ProfileSidebarItem({ icon = null, label, onClick, section, modal
 
   let params = {};
 
-
   if (isLink) {
     params.routeName = router.getState().name;
     params.router = router;
-    params.activeClassName = '_a';
+    params.activeClassName = 'active';
+    params.ignoreQueryParams = false;
+    params.activeStrict = true;
   }
 
   if (section) {
@@ -176,7 +177,6 @@ export function ProfileSidebarItem({ icon = null, label, onClick, section, modal
     <Component
       className={classNames({
         ProfileSidebar__menu__item: true,
-        active
       })}
       onClick={onClick}
       {...params}
