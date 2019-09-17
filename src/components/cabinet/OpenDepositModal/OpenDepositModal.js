@@ -10,6 +10,8 @@ import * as actions from "../../../actions";
 import * as utils from "../../../utils";
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
+import * as modalGroupActions from "../../../actions/modalGroup";
+import RateDetailsModal from "../RateDetailsModal/RateDetailsModal";
 
 class OpenDepositModal extends React.Component {
   state = {
@@ -53,6 +55,16 @@ class OpenDepositModal extends React.Component {
     });
   }
 
+  __handleClickMore(e) {
+    e.preventDefault();
+    modalGroupActions.openModalPage(null, {}, {
+      children: RateDetailsModal,
+      params: {
+        plans: this.state.plans
+      }
+    })
+  }
+
   __getPlans() {
     const { currency, amount, selectDepositType } = this.state;
 
@@ -74,6 +86,7 @@ class OpenDepositModal extends React.Component {
       let planCurrentOption = planOptions.find(p => p.value === this.state.planId) || planOptions[0];
 
       this.setState({
+        plans: plans,
         planOptions,
         planCurrentOption,
         planId: planCurrentOption.value,
@@ -186,7 +199,7 @@ class OpenDepositModal extends React.Component {
                   </div>
                 )
               })}
-              <a href="#" className="OpenDepositModal__type_info__more">
+              <a href="#" onClick={this.__handleClickMore.bind(this)} className="OpenDepositModal__type_info__more">
                 {utils.getLang('cabinet_openNewDeposit_more')}
               </a>
             </div>
