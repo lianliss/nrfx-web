@@ -9,7 +9,6 @@ import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import HistoryTable from './components/HistoryTable';
-import LoadingMore from '../../../components/cabinet/LoadingMore/LoadingMore';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 
 import * as walletsActions from '../../../actions/cabinet/wallets';
@@ -18,23 +17,21 @@ import * as modalGroupActions from "../../../actions/modalGroup";
 
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
+import SVG from "react-inlinesvg";
+
+import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
+import { ReactComponent as HistorySvg } from '../../../asset/24px/history.svg';
+import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
+import { ReactComponent as ReceiveSvg } from '../../../asset/24px/receive.svg';
+import * as utils from "../../../utils";
 
 class CabinetWalletScreen extends CabinetBaseScreen {
-  constructor(props) {
-    super(props);
-    this.content = this.__getWalletsPageContent;
-  }
-
   load = (section = null) => {
     switch (section || this.props.routerParams.section) {
-      case 'transactions':
-        this.content = this.__getTransactionsPageContent;
-        break;
       default:
-        this.content = this.__getWalletsPageContent;
+        this.props.loadWallets();
         break;
     }
-    this.props.loadWallets();
   };
 
   state = {
@@ -46,37 +43,28 @@ class CabinetWalletScreen extends CabinetBaseScreen {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
-          sidebarOptions={{
-            items: [
-              <ProfileSidebarItem
-                active={!this.props.routerParams.section}
-                baselink={true}
-                icon={require('../../../asset/24px/wallet.svg')}
-                label="Wallets"
-              />,
-              <ProfileSidebarItem
-                section={'transactions'}
-                active={this.props.routerParams.section === 'transactions'}
-                icon={require('../../../asset/24px/history.svg')}
-                label="Transactions"
-              />,
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
-                icon={require('../../../asset/24px/plus-circle.svg')}
-                label="New Wallet"
-              />,
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('send')}}
-                icon={require('../../../asset/24px/send.svg')}
-                label="Send"
-              />,
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('receive')}}
-                icon={require('../../../asset/24px/receive.svg')}
-                label="Receive"
-              />
-            ]
-          }}
+          sidebarOptions={[
+            !!walletsActions.getNoGeneratedCurrencies().length && <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+              icon={<PlusCircleSvg />}
+              label="New Wallet"
+            />,
+            <ProfileSidebarItem
+              section={'transfers'}
+              icon={<HistorySvg />}
+              label={utils.getLang('cabinet_walletScreen_transfers')}
+            />,
+            <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
+              icon={<SendSvg />}
+              label={utils.getLang('cabinet_walletScreen_send')}
+            />,
+            <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('receive')}}
+              icon={<ReceiveSvg />}
+              label={utils.getLang('cabinet_walletScreen_receive')}
+            />
+          ]}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -92,13 +80,21 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.load()} />;
     }
-    return this.content();
+
+    switch (this.props.routerParams.section) {
+      case 'transfers': {
+        return this.__getTransfersPageContent();
+      }
+      default: {
+        return this.__getWalletsPageContent();
+      }
+    }
   };
 
-  __getTransactionsPageContent = () => {
+  __getTransfersPageContent = () => {
     return (
       <div>
-        {this.__getTransactions()}
+        {this.__getTransfers()}
       </div>
     )
   };
@@ -117,12 +113,26 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   __getTransactions = () => {
     return <div>
       <Paging
-        isCanMore={!!this.props.transactionsNext && !this.props.transactionsLoadingMore}
+        isCanMore={!!this.props.transactions.next && !this.props.transactionsLoadingMore}
         onMore={this.props.loadMoreTransactions}
+        moreButton={!!this.props.transactions.next}
+        isLoading={this.props.transactionsLoadingMore}
       >
         <HistoryTable history={'items' in this.props.transactions ? this.props.transactions.items : []} />
       </Paging>
-      {this.props.transactionsNext && <LoadingMore status={this.props.transactionsLoadingMore} />}
+    </div>
+  };
+
+  __getTransfers = () => {
+    return <div>
+      <Paging
+        isCanMore={!!this.props.transfers.next && !this.props.transfersLoadingMore}
+        onMore={this.props.loadMoreTransfers}
+        moreButton={!!this.props.transfers.next}
+        isLoading={this.props.transfersLoadingMore}
+      >
+        <HistoryTable history={'items' in this.props.transfers ? this.props.transfers.items : []} />
+      </Paging>
     </div>
   };
 

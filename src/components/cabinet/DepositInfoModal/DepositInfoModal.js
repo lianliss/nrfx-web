@@ -14,6 +14,8 @@ export default class DepositInfoModal extends React.Component {
       return null;
     }
 
+    console.log(1234, this.props);
+
     const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
@@ -21,7 +23,7 @@ export default class DepositInfoModal extends React.Component {
     return (
       <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
-          Deposit {deposit.percent}% {deposit.description}
+          {utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.percent}% {deposit.description}
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
@@ -31,16 +33,12 @@ export default class DepositInfoModal extends React.Component {
               <InfoRow label="Type">{utils.ucfirst(deposit.type)}</InfoRow>
               <InfoRow label="Status">{utils.ucfirst(deposit.status)}</InfoRow>
               <InfoRow label="Created">{moment(deposit.created_at).format('DD MMM YYYY h:mm a')}</InfoRow>
-              <InfoRow label="Withdrawals">None</InfoRow>
-              <InfoRow label="W/ Amount">None</InfoRow>
             </InfoRowGroup>
             <InfoRowGroup className="DepositInfoModal__column">
-              <InfoRow label="Period">{deposit.passed_days} / {deposit.days} Days</InfoRow>
+              <InfoRow label="Period">{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_depositInfoModal_days')}</InfoRow>
               <InfoRow label="Amount">{deposit.amount} {currency}</InfoRow>
               <InfoRow label="Profit">{deposit.profit.toFixed(4)} {currency} (78%)</InfoRow>
-              <InfoRow label="Estimated">120 {currency} (78%)</InfoRow>
               <InfoRow label="In Fiat">1456 USD</InfoRow>
-              <InfoRow label="Avalible">120 {currency}</InfoRow>
             </InfoRowGroup>
           </div>
           {/*<div className="DepositInfoModal__withdrawal_form">

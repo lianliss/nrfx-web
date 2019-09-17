@@ -33,6 +33,10 @@ export function getLang(key) {
   return store.getState().default.lang[key];
 }
 
+export function getLanguage() {
+  return store.getState();
+}
+
 export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
 
 export const isEmail = (email) => (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) ? true : false;
@@ -69,6 +73,29 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
 
   return null;
 };
+
+export function throttle(func, ms) {
+  let isThrottled = false,
+    savedArgs,
+    savedThis;
+  function wrapper() {
+    if (isThrottled) {
+      savedArgs = arguments;
+      savedThis = this;
+      return;
+    }
+    func.apply(this, arguments);
+    isThrottled = true;
+    setTimeout(function() {
+      isThrottled = false;
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = savedThis = null;
+      }
+    }, ms);
+  }
+  return wrapper;
+}
 
 export function ucfirst(input) {
   return input.charAt(0).toUpperCase() + input.slice(1);
@@ -118,6 +145,28 @@ export function b64DecodeUnicode(str) {
   return decodeURIComponent(atob(str).split('').map(function(c) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
+}
+
+export function switchMatch(key, node) {
+  const __DEFAULT__ = 'default';
+  switch (typeof node) {
+    case 'object': {
+      if (node.hasOwnProperty(key)) {
+        return node[key];
+      } else {
+        if (node.hasOwnProperty(__DEFAULT__)) {
+          switch (typeof node[__DEFAULT__]) {
+            case 'function': {
+              return node[__DEFAULT__]();
+            }
+            default: return node[__DEFAULT__];
+          }
+        } else {
+          return key;
+        }
+      }
+    }
+  }
 }
 
 export function copyText(text) {

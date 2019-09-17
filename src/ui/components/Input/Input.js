@@ -10,14 +10,15 @@ class Input extends React.Component {
     super(props);
 
     this.state = {
-      indicatorWidth: 0
+      indicatorWidth: this.props.indicatorWidth || 0
     };
   }
 
   render() {
     const className = classNames({
       Input: true,
-      multiLine: this.props.multiLine
+      multiLine: this.props.multiLine,
+      error: this.props.error
     });
 
     let InputWrapper = 'Input__wrapper';
@@ -50,6 +51,7 @@ class Input extends React.Component {
         value={this.props.value}
         onChange={this.__onChange}
         disabled={this.props.disabled}
+        autoFocus={this.props.autoFocus}
       />;
     }
 
@@ -72,6 +74,8 @@ class Input extends React.Component {
 Input.defaultProps = {
   classNameWrapper: '',
   disabled: false,
+  error: false,
+  autoFocus: false
 };
 
 Input.propTypes = {

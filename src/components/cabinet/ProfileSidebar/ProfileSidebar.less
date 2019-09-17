@@ -10,6 +10,40 @@
       height: 112px;
       position: relative;
       margin: 18px auto;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .ProfileSidebar__user__avatar__wrap:hover {
+      background-color: white;
+    }
+
+    .ProfileSidebar__user__avatar__over {
+      opacity: 0;
+      transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      background-color: rgba(0, 0, 0, 0.47);
+      display: flex;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 1;
+      border-radius: 50%;
+      span {
+        margin: auto;
+        color: white;
+        svg {
+          width: 40px;
+          height: 40px;
+        }
+      }
+      &:hover {
+        opacity: 1;
+      }
     }
 
     .ProfileSidebar__user__avatar {
@@ -45,6 +79,9 @@
       margin-bottom: 4px;
     }
 
+    .ProfileSidebar__user__verify.verified {
+      background-color: var(--color-green) !important;
+    }
     .ProfileSidebar__user__verify {
       margin-top: 8px;
       background: var(--primary-red);
@@ -72,21 +109,21 @@
       cursor: pointer;
       transition: color 100ms ease-in-out;
       text-decoration: none !important;
-      color: var(--foreground-primary);
+      color: var(--primary-grey);
       -moz-user-select: none;
       -khtml-user-select: none;
       -webkit-user-select: none;
       -ms-user-select: none;
       user-select: none;
 
-      .isvg {
+      svg {
         margin-right: 8px;
         width: 24px;
         height: 24px;
       }
 
       &:hover, &.active {
-        color: var(--primary);
+        color: var(--foreground-primary-opacity);
       }
     }
 

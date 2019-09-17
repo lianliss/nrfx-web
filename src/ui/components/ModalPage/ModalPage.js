@@ -2,7 +2,7 @@ import './ModalPage.less';
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {classNames, b64DecodeUnicode} from '../../../utils/index';
+import {classNames} from '../../../utils/index';
 import {MODALGROUP_SEPARATOR} from '../../../constants/modalGroup';
 
 class ModalPage extends Component {
@@ -60,30 +60,6 @@ class ModalPage extends Component {
       </div>
     </div>
   }
-
-  // get window() {
-  //   return this.context.window || window;
-  // }
-
-  // __toggleDocumentScrolling (enabled) {
-  //   if (this.documentScrolling === enabled) return;
-  //   this.documentScrolling = enabled;
-  //
-  //   if (enabled) {
-  //     this.window.removeEventListener('wheel', this.preventWheel);
-  //   } else {
-  //     this.window.addEventListener('wheel', this.__preventWheel, {passive: false});
-  //   }
-  // }
-
-  // __preventWheel = (event) => {
-  //   if (!event) return false;
-  //   while (event.originalEvent) {
-  //     event = event.originalEvent;
-  //   }
-  //   event.preventDefault();
-  // };
-
 
   __handleClick = e => {
     if (!(this.node.current && this.node.current.contains(e.target))) {

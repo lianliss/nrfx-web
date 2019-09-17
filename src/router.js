@@ -9,6 +9,10 @@ export const routes = [
     path: '/',
   },
   {
+    name: pages.MENU,
+    path: '/menu',
+  },
+  {
     name: pages.ABOUT,
     path: '/about',
   },
@@ -51,7 +55,6 @@ export const routes = [
   {
     name: pages.CONTACT,
     path: '/contact',
-    params: {site: true}
   },
   {
     name: pages.FAQ,
@@ -79,16 +82,20 @@ export const routes = [
     path: '/settings',
   },
   {
-    name: pages.START_PROFILE,
-    path: '/start_profile',
-  },
-  {
     name: pages.PROFILE,
     path: '/profile',
   },
   {
     name: pages.INVESTMENTS,
     path: '/investments',
+  },
+  {
+    name: pages.CHANGE_EMAIL,
+    path: '/change_email',
+  },
+  {
+    name: pages.REGISTER,
+    path: '/register',
   },
 ];
 

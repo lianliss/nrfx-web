@@ -38,11 +38,12 @@ export default class WalletTransactionModal extends React.Component {
 
   __getTitle() {
     if (!this.state.info) {
-      return 'Loading..';
+      return utils.getLang('cabinet_modal_loadingText');
     }
 
     const currencyInfo = actions.getCurrencyInfo(this.state.info.currency);
-    return `${this.state.info.category === 'send' ? 'Sent' : 'Receive'} ${utils.ucfirst(currencyInfo.name)}`;
+    return `${this.state.info.category === 'send' ? utils.getLang('cabinet_walletTransactionModal_sent') 
+      : utils.getLang('cabinet_walletTransactionModal_receive')} ${utils.ucfirst(currencyInfo.name)}`;
   }
 
   __renderContent() {
@@ -65,23 +66,23 @@ export default class WalletTransactionModal extends React.Component {
 
       let status;
       if (data.status === 'done') {
-        status = 'Confirmed';
+        status = utils.getLang('cabinet_walletTransactionModal_confirmed');
       } else {
-        status = 'Confirmation';
+        status = utils.getLang('cabinet_walletTransactionModal_confirmation');
       }
 
       return (
         <div>
           <InfoRowGroup align="left">
             <InfoRow label="From">
-              {data.category === 'send' ? `My ${utils.ucfirst(currencyInfo.name)}` :
+              {data.category === 'send' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
                 <div className="Wallets__history__address">
                   {data.type === 'transfer' && <div className="Wallets__history__bb" />}
                   {address}
                 </div>}
             </InfoRow>
             <InfoRow label="To">
-              {data.category === 'receive' ? `My ${utils.ucfirst(currencyInfo.name)}` :
+              {data.category === 'receive' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
                 <div className="Wallets__history__address">
                   {data.type === 'transfer' && <div className="Wallets__history__bb" />}
                   {address}
@@ -94,16 +95,16 @@ export default class WalletTransactionModal extends React.Component {
             <div className="WalletTransactionModal__card__icon">
               <SVG src={require('../../../asset/24px/receive.svg')} />
             </div>
-            <div className="WalletTransactionModal__card__label">Total</div>
+            <div className="WalletTransactionModal__card__label">{utils.getLang('cabinet_walletTransactionModal_total')}</div>
             <div className="WalletTransactionModal__card__value">{utils.formatDouble(data.amount)} {currency}</div>
           </div>
           <div className="WalletTransactionModal__status">
             {data.status !== 'done' && <div className="WalletTransactionModal__status__row">
-              <div className="WalletTransactionModal__status__row__label">Blockchain Confirmations</div>
-              <div className="WalletTransactionModal__status__row__value">1/2</div>
+              <div className="WalletTransactionModal__status__row__label">{utils.getLang('cabinet_walletTransactionModal_blockchainConfirmations')}</div>
+              <div className="WalletTransactionModal__status__row__value">{data.confirmations}/{data.required_confirmations}</div>
             </div>}
             <div className="WalletTransactionModal__status__row right">
-              <div className="WalletTransactionModal__status__row__label">Status</div>
+              <div className="WalletTransactionModal__status__row__label">{utils.getLang('cabinet_walletTransactionModal_status')}</div>
               <div className={utils.classNames({
                 WalletTransactionModal__status__row__value: true,
                 [data.status]: data.status

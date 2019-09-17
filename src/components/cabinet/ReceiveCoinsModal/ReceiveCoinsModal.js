@@ -40,7 +40,7 @@ export default class ReceiveCoinsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={480}>
         <UI.ModalHeader>
-          Receive {utils.ucfirst(currencyInfo.name)}
+          {utils.getLang('cabinet_receiveCoinsModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -58,7 +58,8 @@ export default class ReceiveCoinsModal extends React.Component {
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.state.currency);
 
-      const options = this.state.wallets.map((item) => {
+      let options = this.state.wallets.filter(w => w.status !== 'pending');
+      options = options.map(item => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -66,6 +67,12 @@ export default class ReceiveCoinsModal extends React.Component {
           value: item.currency
         }
       });
+
+      if (!(options.length > 0)) {
+        return <div style={{textAlign:'center'}}>
+          {utils.getLang('cabinet_receiveCoinsModal_available')}
+        </div>;
+      }
 
       let wallet = this.wallet;
       let placeholder = options[0];
@@ -98,11 +105,15 @@ export default class ReceiveCoinsModal extends React.Component {
           <div className="SendCoinsModal__row ReceiveCoinsModal__qrcode">
             <QRCode value={wallet.address} size={192} />
           </div>
-          <div className="ReceiveCoinsModal__warning">Only send {utils.ucfirst(currencyInfo.name)} ({this.state.currency.toUpperCase()})  to this address</div>
+          <div className="ReceiveCoinsModal__warning">
+            {utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()} 
+            {' ' + utils.getLang('cabinet_receiveCoinsModal_toThisAddress')}
+          </div>
           <div className="SendCoinsModal__row">
             <UI.Input
               value={wallet.address}
               onClick={this.__copy}
+              indicatorWidth={34}
               indicator={
                 <SVG src={require('../../../asset/24px/copy.svg')} className="ReceiveCoinsModal__copy_btn" />
               }

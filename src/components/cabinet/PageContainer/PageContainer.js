@@ -8,7 +8,7 @@ import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSi
 function PageContainer({ children, leftContent, sidebarOptions }) {
   return (
     <div className="PageContainer">
-      <ProfileSidebar {...sidebarOptions} />
+      <ProfileSidebar sidebarOptions={sidebarOptions} />
 
       <div className="PageContainer__content">
         <div className="PageContainer__content__primary">
@@ -25,7 +25,7 @@ function PageContainer({ children, leftContent, sidebarOptions }) {
 
 PageContainer.propTypes = {
   leftContent: PropTypes.node,
-  sidebarOptions: PropTypes.object
+  sidebarOptions: PropTypes.array
 };
 
-export default PageContainer;
+export default React.memo(PageContainer);

@@ -1,5 +1,6 @@
 export const MODAL = 'modal';
 export const MAIN = 'main';
+export const MENU = 'menu';
 export const ABOUT = 'about';
 export const MISSION = 'mission';
 export const HISTORY = 'history';
@@ -16,7 +17,8 @@ export const NOT_FOUND = 'not_found';
 export const HELLO = 'hello';
 export const UIKIT = 'uikit';
 export const CABINET_WALLET = 'cabinet_wallet';
-export const START_PROFILE = 'start_profile';
 export const PROFILE = 'profile';
 export const INVESTMENTS = 'investments';
 export const SETTINGS = 'settings';
+export const CHANGE_EMAIL = 'change_email';
+export const REGISTER = 'register';

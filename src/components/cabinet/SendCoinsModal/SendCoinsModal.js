@@ -12,12 +12,17 @@ import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
 
 import SendCoinsConfirmModal from '../../../components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
+import * as api from "../../../services/api";
 
 
 class SendCoinsModal extends React.Component {
   componentDidMount() {
     this.__load();
   }
+
+  state = {
+    errorAddress: false
+  };
 
   get getSelectedWalletInfo() {
     return this.props.thisState.wallets.filter(wallet => wallet.currency === this.props.thisState.selectedWallet.value);
@@ -40,7 +45,7 @@ class SendCoinsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => this.props.close()} width={552}>
         <UI.ModalHeader>
-          Send {utils.ucfirst(currencyInfo.name)}
+          {utils.getLang('cabinet_sendCoinsModal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -58,7 +63,8 @@ class SendCoinsModal extends React.Component {
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.props.thisState.currency);
 
-      this.options = this.props.thisState.wallets.map((item) => {
+      this.options = this.props.thisState.wallets.filter(w => w.status !== 'pending');
+      this.options = this.options.map((item) => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -66,6 +72,12 @@ class SendCoinsModal extends React.Component {
           value: item.currency
         }
       });
+
+      if (!(this.options.length > 0)) {
+        return <div style={{textAlign:'center'}}>
+          {utils.getLang('cabinet_sendCoinsModal_available')}
+        </div>;
+      }
 
       let sendButtonDisabled = true;
       if (this.__checkItsReady()) {
@@ -91,6 +103,7 @@ class SendCoinsModal extends React.Component {
               value={this.props.thisState.address}
               placeholder="Enter BitcoinBot Login or Wallet Address"
               onTextChange={this.__addressChange}
+              error={this.state.errorAddress}
             />
           </div>
           <div className="SendCoinsModal__row SendCoinsModal__amount">
@@ -106,10 +119,13 @@ class SendCoinsModal extends React.Component {
               onTextChange={this.__usdAmountDidChange}
               value={this.props.thisState.amountUSD}
             />
-            <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>Max</UI.Button>
+            <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>
+              {utils.getLang('cabinet_sendCoinsModal_max')}
+            </UI.Button>
           </div>
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
+              currency={this.props.thisState.currency}
               onClick={this.__sendButtonHandler}
               disabled={sendButtonDisabled}
             >
@@ -123,11 +139,15 @@ class SendCoinsModal extends React.Component {
 
   __load = () => {
     this.__setState({ loadingStatus: 'loading' });
+
     walletsActions.getWallets().then((wallets) => {
       this.__setState({ loadingStatus: '', wallets });
-      let preset = null;
+      let preset = 'Bitcoin';
       if (this.props.hasOwnProperty('preset')) {
         preset = this.options.filter((opt) => opt.title === this.props.preset)[0];
+        this.__setState({currency: preset.value, selectedWallet: preset });
+      } else {
+        preset = this.options.filter(opt => opt.title === "Bitcoin")[0];
         this.__setState({currency: preset.value, selectedWallet: preset });
       }
     }).catch(() => {
@@ -172,17 +192,39 @@ class SendCoinsModal extends React.Component {
       this.props.thisState.amountUSD > 0;
   }
 
+  __openConfirmModal = () => {
+    const params = {
+      wallet_id: this.getSelectedWalletInfo[0].id,
+      currency: this.props.thisState.currency,
+      amount: this.props.thisState.amount,
+      address: this.props.thisState.address
+    };
+    this.props.openModalPage(null, {}, {
+      children: SendCoinsConfirmModal,
+      params: {...params}
+    });
+  };
+
   __sendButtonHandler = () => {
     if (!this.__checkItsReady()) return;
-    this.props.openModalPage('confirm', {}, {
-      children: SendCoinsConfirmModal,
-      params: {
-        wallet_id: this.getSelectedWalletInfo[0].id,
-        currency: this.props.thisState.currency,
-        amount: this.props.thisState.amount,
-        address: this.props.thisState.address
-      }
-    });
+
+    if (this.props.thisState.address.length < 15) {
+      api.post('profile/check_login/', {login: this.props.thisState.address}).then((data) => {
+        this.__openConfirmModal();
+      }).catch((err) => {
+        this.setState({
+          errorAddress: true
+        }, () => {
+          setTimeout(() => {
+            this.setState({
+              errorAddress: false
+            });
+          }, 1000)
+        })
+      });
+    } else {
+      this.__openConfirmModal();
+    }
   }
 }
 

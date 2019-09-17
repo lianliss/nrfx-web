@@ -5,6 +5,7 @@ const initialState = {
   lang: {},
   auth: {},
   profile: {},
+  adaptive: false,
   modals: []
 };
 
@@ -41,7 +42,13 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, { modals });
     }
 
-    default:
-      return state;
+    case actionTypes.SET_ADAPTIVE: {
+      return {
+        ...state,
+        adaptive: action.adaptive
+      }
+    }
+
+    default: return state;
   }
 }

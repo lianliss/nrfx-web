@@ -6,21 +6,29 @@ import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../actions';
 import * as walletsActions from '../../../actions/cabinet/wallets';
+import * as modalGroupActions from '../../../actions/modalGroup';
 import * as utils from '../../../utils';
+import * as currencies from "../../../utils/currencies";
 
 import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow';
 
 export default class SendCoinsConfirmModal extends React.Component {
-  componentWillMount() {
-    this.currency = this.props.params.currency;
-    this.currencyInfo = actions.getCurrencyInfo(this.currency);
-  }
-
   state = {
-    gaCode: ''
+    gaCode: '',
+    errorGaCode: false
   };
 
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillUnmount() {
+  }
+
   render() {
+    this.currency = this.props.params.currency;
+    this.currencyInfo = actions.getCurrencyInfo(this.currency);
+
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={464}>
         <UI.ModalHeader>
@@ -32,7 +40,7 @@ export default class SendCoinsConfirmModal extends React.Component {
   }
 
   __getTitle() {
-    return `Confirm Sending ${utils.ucfirst(this.currencyInfo.name)}`;
+    return `${utils.getLang('cabinet_sendCoinsConfirmModal_name')} ${utils.ucfirst(this.currencyInfo.name)}`;
   }
 
   __renderContent() {
@@ -41,13 +49,15 @@ export default class SendCoinsConfirmModal extends React.Component {
       currency: this.currency.toUpperCase(),
     });
 
+    const currencyGradient = currencies.getGradientByCurrency(currency);
+
 
     return (
       <div>
         <InfoRowGroup align="left">
           <InfoRow label="From">
             <div className="Wallets__history__address">
-              My {utils.ucfirst(currencyInfo.name)}
+              {utils.getLang('cabinet_sendCoinsConfirmModal_my')} {utils.ucfirst(currencyInfo.name)}
             </div>
           </InfoRow>
           <InfoRow label="To">
@@ -58,11 +68,11 @@ export default class SendCoinsConfirmModal extends React.Component {
           <InfoRow label="Amount">{utils.formatDouble(amount)} {currency}</InfoRow>
           {/*<InfoRow label="Fee">{utils.formatDouble(fee)} {currency}</InfoRow>*/}
         </InfoRowGroup>
-        <div className="SendCoinsConfirmModal__card">
+        <div className="SendCoinsConfirmModal__card" style={{background: currencyGradient}}>
           <div className="SendCoinsConfirmModal__card__icon">
             <SVG src={require('../../../asset/24px/send.svg')} />
           </div>
-          <div className="SendCoinsConfirmModal__card__label">Total</div>
+          <div className="SendCoinsConfirmModal__card__label">{utils.getLang('cabinet_sendCoinsConfirmModal_total')}</div>
           <div className="SendCoinsConfirmModal__card__value">{utils.formatDouble(amount)} {currency}</div>
         </div>
 
@@ -75,12 +85,13 @@ export default class SendCoinsConfirmModal extends React.Component {
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
             onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            error={this.state.errorGaCode}
           />
 
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         <div className="SendCoinsConfirmModal__submit_wrapper">
-          <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
+          <UI.Button currency={currency.toLowerCase()} onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
             {utils.getLang('site__authModalSubmit')}
           </UI.Button>
         </div>
@@ -92,7 +103,11 @@ export default class SendCoinsConfirmModal extends React.Component {
     const val = e.target.value;
 
     if (val.length <= 6) {
-      this.setState({gaCode: val});
+      this.setState({gaCode: val}, () => {
+        if (val.length === 6) {
+          this.__handleSubmit();
+        }
+      });
     }
   };
 
@@ -102,14 +117,25 @@ export default class SendCoinsConfirmModal extends React.Component {
   }
 
   __handleSubmit = () => {
-    console.log(this.__buildParams());
-    return;
     walletsActions.sendCoins(this.__buildParams()).then((info) => {
-      console.log(1, info);
+      modalGroupActions.modalGroupClear();
     }).catch((info) => {
-      console.log('failed', info);
+      switch (info.code) {
+        case "ga_error":
+          this.setState({
+            errorGaCode: true
+          }, () => {
+            setTimeout(() => {
+              this.setState({
+                errorGaCode: false
+              });
+            }, 1000)
+          });
+          break;
+        default:
+          alert(info.message);
+          break;
+      }
     });
-
-    //walletsActions.sendCoins()
   }
 }

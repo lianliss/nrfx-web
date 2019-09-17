@@ -3,6 +3,7 @@ import './LoadingStatus.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 import UI from '../../../ui';
+import * as utils from "../../../utils";
 
 export default function LoadingStatus({ status, onRetry, inline }) {
 
@@ -15,8 +16,17 @@ export default function LoadingStatus({ status, onRetry, inline }) {
       cont = (
         <div className="LoadingStatus__failed">
           <div className="LoadingStatus__failed__icon" />
-          <div className="LoadingStatus__failed__message">Unknown Error.</div>
-          <UI.Button onClick={onRetry}>Try Again</UI.Button>
+          <div className="LoadingStatus__failed__message">{utils.getLang('cabinet_loadingStatus_unknownError')}</div>
+          <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_tryAgain')}</UI.Button>
+        </div>
+      );
+      break;
+    case 'failed_connection':
+      cont = (
+        <div className="LoadingStatus__failed">
+          <div className="LoadingStatus__failed__icon_connection" />
+          <div className="LoadingStatus__failed__message">{utils.getLang('cabinet_loadingStatus_connectionError')}</div>
+          <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_tryAgain')}</UI.Button>
         </div>
       );
       break;
@@ -24,8 +34,8 @@ export default function LoadingStatus({ status, onRetry, inline }) {
       cont = (
         <div className="LoadingStatus__failed">
           <div className="LoadingStatus__failed__icon" />
-          <div className="LoadingStatus__failed__message">Connection Error.  Check Your Internet</div>
-          <UI.Button onClick={onRetry}>Try Again</UI.Button>
+          <div className="LoadingStatus__failed__message">{utils.getLang('cabinet_loadingStatus_isSeemsText')}</div>
+          <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_refresh')}</UI.Button>
         </div>
       );
       break;

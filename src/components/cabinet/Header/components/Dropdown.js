@@ -8,12 +8,12 @@ function Dropdown({title, subItems, onChange, onNavigate, lastItemText, onLastIt
   const handleLinkClick = (value) => {
     onChange && onChange(value);
     toggle(false);
-  }
+  };
 
   const handleLastItemClick = () => {
     toggle(false);
     onLastItemClick();
-  }
+  };
 
   return (
     <div className={"CabinetHeader__dropdown " + className}>
@@ -35,7 +35,13 @@ function Dropdown({title, subItems, onChange, onNavigate, lastItemText, onLastIt
                   <span
                     key={item.title}
                     className="CabinetHeader__dropdown__link"
-                    onClick={() => onNavigate(item.route)}
+                    onClick={() => {
+                      if (item.hasOwnProperty('useLocation')) {
+                        window.location.href = item.route;
+                      } else {
+                        onNavigate(item.route)
+                      }
+                    }}
                   >
                     {item.title}
                   </span>

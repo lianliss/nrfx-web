@@ -1,16 +1,14 @@
-/* eslint-disable */
-
 import * as actionTypes from './actionTypes';
 import { TranslationApi, StaticPagesApi } from '../swagger';
-import callApi from '../services/api';
 import * as api from '../services/api';
 import store from '../store';
 import router from '../router';
 import * as utils from '../utils';
+import apiSchema from '../services/apiSchema';
 
-export function loadLang(lang) {
+export function loadLang(code) {
   return new Promise((resolve, reject) => {
-    callApi(new TranslationApi().translationExportGet, lang).then(({ translations, languages }) => {
+    api.call(apiSchema.LangGet, {code}).then(({ translations, languages }) => {
       const langList = languages.map(lang => ({ value: lang[0], title: lang[1] }));
       store.dispatch({
         type: actionTypes.SET_LANG,
@@ -22,18 +20,21 @@ export function loadLang(lang) {
   });
 }
 
-export function getStaticPageContent(url, lang) {
+export function getStaticPageContent(address) {
   return new Promise((resolve, reject) => {
-    callApi(new StaticPagesApi().pagesGetGet, url, lang).then((data) => {
-      store.dispatch({ type: actionTypes.STATIC, payload: { url, lang, data } })
+    api.call(apiSchema.Page.DefaultGet, {address}).then((data) => {
+      console.log(data);
+      store.dispatch({ type: actionTypes.STATIC, payload: { address, data } })
       resolve(data);
-    }).catch((err) => reject(err));
+    }).catch((err) => {
+      reject(err)
+    });
   });
 }
 
 export function loadCurrencies() {
   return new Promise((resolve, reject) => {
-    api.get('wallet/currencies').then((currencies) => {
+    api.call(apiSchema.Wallet.CurrenciesGet).then((currencies) => {
       store.dispatch({ type: actionTypes.SET_CURRENCIES, currencies });
       resolve();
     }).catch(() => reject());
@@ -65,5 +66,11 @@ export function getCurrencyInfo(name) {
 }
 
 export function openModal(name, params = {}) {
-  router.navigate(router.getState().name, utils.makeModalParams(name, params));
+  router.navigate(
+    router.getState().name,
+    utils.makeModalParams(name, params));
+}
+
+export function setAdaptive(adaptive) {
+  return store.dispatch({ type: actionTypes.SET_ADAPTIVE, adaptive });
 }

@@ -1,9 +1,10 @@
-import { ApiClient } from '../swagger';
-
 import * as auth from './auth';
 
 const API_ENTRY = 'https://api.bitcoinbot.pro';
 const API_VERSION = 1;
+
+export const EXPORT_API_VERSION = API_VERSION;
+export const EXPORT_API_ENTRY = API_ENTRY;
 
 export const Errors = {
   FATAL: 1,
@@ -18,32 +19,6 @@ export const Errors = {
   EMAIL_USED: 10,
 };
 
-export default function callApi(callable) {
-  return new Promise((resolve, reject) => {
-    window.ApiClient = ApiClient;
-    let args = [].slice.call(arguments).slice(1);
-    args.push(async (error, data, resp) => {
-      if (error) {
-        if (!resp) {
-          reject({http: true});
-        }
-        //console.log('Error', error);
-        console.log(resp.body);
-        if (resp.body.code === Errors.AUTH) {
-          auth.logout();
-        }
-        return reject(resp.body);
-      }
-
-      //console.log('resp', resp);
-
-      resolve(resp.body);
-    });
-
-    callable.call({apiClient: ApiClient.instance}, ...args);
-  });
-}
-
 export function invoke(method, name, params) {
   return new Promise((resolve, reject) => {
 
@@ -56,7 +31,8 @@ export function invoke(method, name, params) {
       method,
       headers: {
         'X-Token': auth.getToken(),
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept-Language': window.localStorage.lang || 'en'
       }
     };
 
@@ -103,4 +79,8 @@ export function put(name, params = {}) {
 
 export function del(name, params = {}) {
   return invoke('DELETE', name, params);
+}
+
+export function call(API, params = {}) {
+  return invoke(API.method, API.path, params);
 }

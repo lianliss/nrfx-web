@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
-            <a href={`/${pages.FAQ}`} className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
+            <a href="https://bitcoinbot.wiki/" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
             <StaticContentModal type="terms">
               <span className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
@@ -57,9 +57,6 @@ export default function Footer() {
             </a>
             <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/bitcoinbot_pro/" className="Footer__social">
               <SVG src={require('../../../asset/site/footer_instagram.svg')} />
-            </a>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCkwFUCZP4B9sghoTFJFj2cA" className="Footer__social">
-              <SVG src={require('../../../asset/site/footer_youtube.svg')} />
             </a>
           </div>
         </div>

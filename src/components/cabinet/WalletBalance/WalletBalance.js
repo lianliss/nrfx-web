@@ -62,14 +62,13 @@ function WalletBalance({ wallets }) {
         <div className="WalletBalance__convert" onClick={() => {
           convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
         }}>
-          {'~ '}
           <span>
-            {amount > 0 ? ( convert_currency === 'BTC' ? align : (amount * to_usd) ).toFixed(4) : 0}
+            {amount > 0 ? ( convert_currency === 'BTC' ? '~ ' + align.toFixed(6) : (amount * to_usd).toFixed(2) ) : 0}
             {' ' + convert_currency}
           </span>
         </div>
         <div className="WalletBalance__selected_wallet">
-          <div className="WalletBalance__currency_name">My {currencyName} Wallet</div>
+          <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletBalance_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
           <div className="WalletBalance__selected_amount">{amount} {currency.toUpperCase()}</div>
           <div className="WalletBalance__selected_buttons">
             <UI.Button
@@ -101,7 +100,7 @@ function WalletBalance({ wallets }) {
         ? (
           <>
             <div className="WalletBalance__list">
-              <h3>Wallets Balance</h3>
+              <h3>{utils.getLang('cabinet_walletBalance_name')}</h3>
               <ul>
                 {walletsBalance.walletsCurrencies.map(wallet => {
                   const gradient = getGradientByCurrency(wallet.currency);
@@ -143,7 +142,7 @@ function WalletBalance({ wallets }) {
           <div className="Empty_box">
             <SVG src={require('../../../asset/cabinet/wallet_colorful.svg')} />
             <h3>
-              Here will be balance statistics
+              {utils.getLang('cabinet_walletBalance_statistics_placeholder')}
             </h3>
           </div>
         )

@@ -28,7 +28,9 @@ function existModalPage(name) {
   }
 }
 
-export function openModalPage(name, sendParams = {}, customModal = {}) {
+export function openModalPage(name = null, sendParams = {}, customModal = {}) {
+  const chars = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"];
+  if (!name) name = 'modal_' + [...Array(5)].map(i=>chars[Math.random()*chars.length|0]).join``;
   if (!existModalPage(name)) {
     if (Object.keys(customModal).length > 0) {
       return modalGroupAddCustomModal(name, router.getState().name, customModal, sendParams);
@@ -38,6 +40,7 @@ export function openModalPage(name, sendParams = {}, customModal = {}) {
   }
 
   let routerParams = {...router.getState().params} || {};
+
   routerParams.modal_group = (
     routerParams.modal_group ? routerParams.modal_group + modalGroupConstant.MODALGROUP_SEPARATOR : ''
   ) + name;

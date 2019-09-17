@@ -2,14 +2,15 @@ import './Chart.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import moment from 'moment/min/moment-with-locales';
+import * as currencies from "../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
 export default function Chart({ series }) {
   const options = {
     chart: {
-      height: 160 + 40,
+      height: 200,
     },
     title: {
       text: undefined,
@@ -58,7 +59,7 @@ export default function Chart({ series }) {
       symbolWidth: 0,
       symbolRadius: 0,
       labelFormatter: function () {
-        return `<div class="Chart__legend_item" style="background-color: ${this.color}">${this.name}</div>`;
+        return `<div class="Chart__legend_item" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
       },
       itemMarginBottom: 0,
       margin: 0,
@@ -68,6 +69,11 @@ export default function Chart({ series }) {
       align: 'left',
       alignColumns: false,
       itemDistance: 16,
+      states: {
+        hover: {
+          enabled: false
+        }
+      },
       itemStyle: {
         opacity: 1,
       },
@@ -86,25 +92,22 @@ export default function Chart({ series }) {
         lineWidth: 3,
         marker: {
           enabled: false,
-          radius: 2,
+          radius: 3,
           symbol: 'circle',
           fillColor: '#fff',
           lineColor: null,
           lineWidth: 2,
         },
         shadow: {
-          enabled: true,
-          width: 4,
-          opacity: 0.2,
-          color: '#FF9E65'
+          enabled: false,
         },
         states: {
           hover: {
             enabled: true,
             halo: {
-              size: 7
+              size: 10
             }
-          }
+          },
         },
         events: {
           mouseOver: function(e) {
@@ -117,6 +120,7 @@ export default function Chart({ series }) {
       },
     },
     tooltip: {
+      shared: true,
       split: true,
       useHTML: true,
       padding: 0,
@@ -128,16 +132,10 @@ export default function Chart({ series }) {
       hideDelay: 0,
       formatter: function (tooltip) {
 
-        // return ['<b>' + this.x + '</b>'].concat(
-        //   this.points.map(function (point) {
-        //     return point.series.name + ': ' + point.y + 'm';
-        //   })
-        // );
-
-        return [`<div class="Chart__tooltip_date">${this.x} date</div>`].concat(this.points.map((point) => {
-          return `<div class="Chart__tooltip" style="background-color: ${point.color}">
-                ${point.y} ${point.series.name}
-              </div>`;
+        return [`<div class="Chart__tooltip_date">${moment(this.x).format('L')}</div>`].concat(this.points.map((point) => {
+          return `<div class="Chart__tooltip" style="background: ${currencies.getGradientByCurrency(point.series.name)}">
+            ${point.series.data.filter(p => p.y === point.y)[0].title}
+          </div>`;
         }));
       },
     },

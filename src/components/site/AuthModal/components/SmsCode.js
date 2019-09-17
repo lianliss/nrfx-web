@@ -15,7 +15,7 @@ function SmsCode({ changeStep, params }) {
     checkSmsCode(countryCode, number, code)
       .then(() => {
         setErrorMsg('');
-        setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
+        setTimeout(() => window.location = '/profile', 100);
       })
       .catch((err) => setErrorMsg(err.message));
   }

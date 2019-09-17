@@ -1,21 +1,26 @@
 import './CabinetInvestmentsScreen.less';
 
 import React from 'react';
-import SVG from 'react-inlinesvg';
-import UI from '../../../ui';
-import moment from 'moment/min/moment-with-locales';
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import SummaryItem from './components/SummaryItem';
+import WithdrawaHistorylTable from './components/WithdrawaHistorylTable';
+import ProfitHistorylTable from './components/ProfitHistorylTable';
+import DepositTable from './components/DepositTable';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
-import Chart from '../../../components/cabinet/Chart/Chart';
+import ChartProfit from "./components/ChartProfit";
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
-import * as utils from '../../../utils';
-import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as modalGroupActions from '../../../actions/modalGroup';
 
 import * as storeUtils from "../../../storeUtils";
+import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
+import Paging from "../../../components/cabinet/Paging/Paging";
+
+import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
+import { ReactComponent as InvestSvg } from '../../../asset/24px/invest.svg';
+import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
+
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -55,19 +60,15 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
-          sidebarOptions={{
-            section: this.props.routerParams.section,
-            appName: 'Investments',
-            items: [
-              <ProfileSidebarItem
-                onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
-                icon={require('../../../asset/24px/plus-circle.svg')}
-                label="New"
-              />,
-              <ProfileSidebarItem section="profits" icon={require('../../../asset/24px/invest.svg')} label="Profit" />,
-              <ProfileSidebarItem section="withdrawals" icon={require('../../../asset/24px/send.svg')} label="Withdrawals" />
-            ]
-          }}
+          sidebarOptions={[
+            <ProfileSidebarItem
+              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+              icon={<PlusCircleSvg />}
+              label={utils.getLang('cabinet_investmentsScreen_new')}
+            />,
+            <ProfileSidebarItem section="profits" icon={<InvestSvg />} label={utils.getLang('cabinet_investmentsScreen_profile')} />,
+            <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />
+          ]}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -76,7 +77,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderContent() {
-
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
     }
@@ -95,109 +95,44 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     return (
       <div>
         {this.__renderSummary()}
-        {this._renderDeposits()}
+        <DepositTable deposits={this.props.deposits} />
       </div>
     )
   }
 
   __renderProfitHistory() {
     const profits = this.props.profits;
-    if (!profits.length) {
-      return (
-        <EmptyContentBlock
-          icon={require('../../../asset/120/no_deposits.svg')}
-          message="No Profit History"
-        />
-      )
-    }
-
-    const headings = [
-      <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-        <SVG src={require('../../../asset/cabinet/filter.svg')} />
-      </UI.TableColumn>,
-      <UI.TableColumn>ID</UI.TableColumn>,
-      <UI.TableColumn>Rate</UI.TableColumn>,
-      <UI.TableColumn>Type</UI.TableColumn>,
-      <UI.TableColumn>Invested</UI.TableColumn>,
-      <UI.TableColumn align="right">Amount</UI.TableColumn>,
-      <UI.TableColumn>Currency</UI.TableColumn>,
-      <UI.TableColumn>Profit Type</UI.TableColumn>,
-      <UI.TableColumn>Date</UI.TableColumn>,
-    ];
-
-    const rows = profits.map((item, i) => {
-      return (
-        <UI.TableCell key={i}>
-          <UI.TableColumn />
-          <UI.TableColumn>{utils.formatTableId(i + 1)}</UI.TableColumn>
-          <UI.TableColumn sub="Standart">14%</UI.TableColumn>
-          <UI.TableColumn>Dinamic</UI.TableColumn>
-          <UI.TableColumn>100 BTC</UI.TableColumn>
-          <UI.TableColumn>{utils.formatDouble(item.amount)}</UI.TableColumn>
-          <UI.TableColumn>BTC</UI.TableColumn>
-          <UI.TableColumn>Investment</UI.TableColumn>
-          <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
-        </UI.TableCell>
-      )
-    });
-
     return (
       <div>
-        <h2>Profit History</h2>
-        <UI.Table headings={headings} className="Investment__profits_table">
-          {rows}
-        </UI.Table>
+        <ProfitHistorylTable profits={profits} />
       </div>
     )
   }
 
   __renderWithdrawalHistory() {
+    const { withdrawals } = this.props;
+
     return (
-      <h1>withdrawal</h1>
+      <div>
+        <h2>{utils.getLang('cabinet_investmentsWithdrawalHistory')}</h2>
+        <Paging
+          isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
+          onMore={this.props.loadMoreWithdrawalHistory}
+          moreButton={!!withdrawals.next}
+          isLoading={withdrawals.isLoadingMore}
+        >
+          <WithdrawaHistorylTable withdrawals={withdrawals} />
+        </Paging>
+      </div>
     )
   }
 
   __renderLeftContent() {
-    const series = [{
-      data: [1, 30, 10, 2, 40],
-      type: 'spline',
-      color: '#FF9E65',
-      name: 'BTC',
-      tooltip: {
-        valueDecimals: 2
-      },
-      shadow: {
-        color: '#FF9E65',
-      }
-    }, {
-      name: 'ETH',
-      data: [1, 30, 10, 2, 40].reverse(),
-      type: 'spline',
-      color: '#98B1F1',
-      tooltip: {
-        valueDecimals: 2
-      },
-      shadow: {
-        color: '#98B1F1',
-      }
-    }];
+    if (!this.props.chart.hasOwnProperty('data')) {
+      return <LoadingStatus status="loading" />;
+    }
 
-    return (
-      <div className="Content_box Investment__profit">
-        <div className="Investment__profit__header">
-          <div className="Investment__profit__header__cont">
-            <h3>Profit</h3>
-            <div className="Investment__profit__header__period">30 Days</div>
-          </div>
-          <div className="Investment__profit__header__fiat">+435.56$</div>
-        </div>
-        <div className="Investment__profit__chart">
-          <Chart
-            series={series}
-          />
-        </div>
-      </div>
-    )
+    return <ChartProfit chart={{...this.props.chart}} />
   };
 
   __renderSummary() {
@@ -229,73 +164,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <div className="Investments__summary">
         {items}
       </div>
-    )
-  }
-
-  _renderDeposits() {
-    if (!this.props.deposits.length) {
-      return (
-        <EmptyContentBlock
-          icon={require('../../../asset/120/no_deposits.svg')}
-          message="No Open Deposits"
-          button={{
-            text: 'Start Invest',
-            onClick: () => modalGroupActions.openModalPage('open_deposit')
-          }}
-        />
-      )
-    }
-
-
-    const headings = [
-      <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-        <SVG src={require('../../../asset/cabinet/filter.svg')} />
-      </UI.TableColumn>,
-      <UI.TableColumn>ID</UI.TableColumn>,
-      <UI.TableColumn>Type</UI.TableColumn>,
-      <UI.TableColumn>Rate</UI.TableColumn>,
-      <UI.TableColumn align="right">Invested</UI.TableColumn>,
-      <UI.TableColumn align="right">Profit</UI.TableColumn>,
-    ];
-
-    const rows = this.props.deposits.map((item, i) => {
-      const progress = Math.max(0.01, item.passed_days / item.days);
-      const pathLength = 69.12472534179688;
-      const offset = pathLength * progress;
-      const color = progress >= 1 ? '#BFBFBF' : '#24B383';
-
-      item.localId = i + 1;
-      return (
-        <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
-          deposit: JSON.stringify(item)
-        })}}>
-          <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path opacity="0.2" d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12Z" stroke="#24B383" strokeWidth="2"/>
-              <path
-                style={{ transform: 'rotate(-90deg)', transformOrigin: 'center' }}
-                d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12Z"
-                strokeDasharray={pathLength}
-                strokeDashoffset={pathLength - offset}
-                stroke={color}
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </UI.TableColumn>
-          <UI.TableColumn>{utils.formatTableId(this.props.deposits.length - i)}</UI.TableColumn>
-          <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
-          <UI.TableColumn sub={item.description}>{item.percent}%</UI.TableColumn>
-          <UI.TableColumn align="right">{item.amount} {item.currency.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn sub={`${item.passed_days} / ${item.days} Days`} align="right">10 {item.currency.toUpperCase()}</UI.TableColumn>
-        </UI.TableCell>
-      )
-    });
-
-    return (
-      <UI.Table headings={headings}>
-        {rows}
-      </UI.Table>
     )
   }
 }

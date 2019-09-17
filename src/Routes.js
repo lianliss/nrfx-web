@@ -15,13 +15,16 @@ import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
 import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
 
-import CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
-import CabinetStartProfileScreen from './containers/cabinet/CabinetStartProfileScreen/CabinetStartProfileScreen';
-import CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
-import CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
+import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
+import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
+import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
+import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
+import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
+import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
+import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
+
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
-import CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
 
 export default function Routes(props) {
 
@@ -91,19 +94,25 @@ export default function Routes(props) {
       break;
     // Cabinet
     case pages.CABINET_WALLET:
-      Component = CabinetWalletScreen;
-      break;
-    case pages.START_PROFILE:
-      Component = CabinetStartProfileScreen;
+      Component = CabinetWalletScreen.default;
       break;
     case pages.PROFILE:
-      Component = CabinetProfileScreen;
+      Component = CabinetProfileScreen.default;
       break;
     case pages.SETTINGS:
-      Component = CabinetSettingsScreen;
+      Component = CabinetSettingsScreen.default;
       break;
     case pages.INVESTMENTS:
-      Component = CabinetInvestmentsScreen;
+      Component = CabinetInvestmentsScreen.default;
+      break;
+    case pages.CHANGE_EMAIL:
+      Component = CabinetChangeEmail.default;
+      break;
+    case pages.REGISTER:
+      Component = CabinetRegister.default;
+      break;
+    case pages.MENU:
+      Component = MenuScreen.default;
       break;
     default:
       Component = SiteNotFoundScreen;
@@ -116,14 +125,13 @@ export default function Routes(props) {
 
   const defaultProps = {
     state: props.state.default,
-    router: props.router
+    router: props.router,
   };
 
   const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
-
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
-      <Component {...defaultProps} {...actions} routerParams={routerParams} />;
+      <Component {...defaultProps} {...actions} routerParams={routerParams} />
     </WrapperComponent>
   );
 }

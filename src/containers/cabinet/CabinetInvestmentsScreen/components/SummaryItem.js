@@ -5,12 +5,12 @@ import * as utils from '../../../../utils';
 import * as actions from '../../../../actions';
 import * as modalGroupActions from '../../../../actions/modalGroup';
 
-export default function SummaryItem({ currency, invested_amount, paid_amount, isEmpty }) {
+export default function SummaryItem({ available, currency, invested_amount, paid_amount }) {
   const currencyInfo = actions.getCurrencyInfo(currency);
   currency = currency.toUpperCase();
 
   const getCont = () => {
-    if (isEmpty) {
+    if (!(invested_amount > 0)) {
       return [
         <div key="info" className="Investments__summary__item__rows">
           <InfoRow label="Invested">None</InfoRow>
@@ -21,7 +21,7 @@ export default function SummaryItem({ currency, invested_amount, paid_amount, is
       return [
         <div key="info" className="Investments__summary__item__rows">
           <InfoRow label="Invested">{utils.formatDouble(invested_amount)} {currency}</InfoRow>
-          <InfoRow label="Available" highlighted>123 {currency}</InfoRow>
+          <InfoRow label="Available" highlighted>{available} {currency}</InfoRow>
         </div>,
         <UI.Button key="button" type="outline" size="small" onClick={() => modalGroupActions.openModalPage('withdrawal', { currency })}>Withdraw</UI.Button>,
       ]

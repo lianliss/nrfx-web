@@ -11,7 +11,7 @@ class WalletBox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.isGenerating = props.status === 'generating';
+    this.isGenerating = props.status === 'pending';
     this.currencyInfo = actions.getCurrencyInfo(props.currency);
   }
 
@@ -32,7 +32,7 @@ class WalletBox extends React.Component {
     });
 
     return (
-      <div className={this.className} onClick={() => {this.props.onClick()}}>
+      <div className={this.className} onClick={this.isGenerating ? () => {} : () => {this.props.onClick()}}>
         <div style={{ backgroundImage: `url(${this.currencyInfo.icon})` }} className="WalletBox__icon" />
 
         <div
@@ -55,11 +55,11 @@ class WalletBox extends React.Component {
 
   __getAmount = () => {
     if (this.isGenerating) {
-      return 'Generating';
+      return utils.getLang('cabinet_walletBox_generating');
     } else if (this.props.amount > 0) {
-      return utils.formatDouble(this.props.amount);
+      return utils.formatDouble(this.props.amount, 1000000) + ' ' + this.props.currency.toUpperCase();
     } else {
-      return 'None';
+      return utils.getLang('cabinet_walletBox_none');
     }
   };
 }

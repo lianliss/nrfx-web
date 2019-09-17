@@ -42,6 +42,36 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="negative">Button</UI.Button>
             <UI.Button size="small" type="negative_outline">Button</UI.Button>
           </Line>
+          <Line>
+            <UI.Button size="small" currency="btc">Button</UI.Button>
+            <UI.Button rounded size="small" currency="btc">Button</UI.Button>
+            <UI.Button size="small" disabled currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="secondary" currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="outline" currency="btc">Button</UI.Button>
+            <UI.Button size="small" rounded type="outline" currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="negative" currency="btc">Button</UI.Button>
+            <UI.Button size="small" type="negative_outline" currency="btc">Button</UI.Button>
+          </Line>
+          <Line>
+            <UI.Button size="small" currency="eth">Button</UI.Button>
+            <UI.Button rounded size="small" currency="eth">Button</UI.Button>
+            <UI.Button size="small" disabled currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="secondary" currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="outline" currency="eth">Button</UI.Button>
+            <UI.Button size="small" rounded type="outline" currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="negative" currency="eth">Button</UI.Button>
+            <UI.Button size="small" type="negative_outline" currency="eth">Button</UI.Button>
+          </Line>
+          <Line>
+            <UI.Button size="small" currency="ltc">Button</UI.Button>
+            <UI.Button rounded size="small" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" disabled currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="secondary" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="outline" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" rounded type="outline" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="negative" currency="ltc">Button</UI.Button>
+            <UI.Button size="small" type="negative_outline" currency="ltc">Button</UI.Button>
+          </Line>
         </Section>
         <Section title="Inputs">
           <Line style={{width: 300}}>
@@ -122,6 +152,66 @@ export default class UIKitScreen extends BaseScreen {
           </Line>
           <Line>
             <UI.Message type="success" alert>Success</UI.Message>
+          </Line>
+        </Section>
+        <Section>
+          <Line>
+            <UI.Notifications visible={true}></UI.Notifications>
+          </Line>
+          <Line>
+            <UI.Notifications visible={true}>
+              <UI.Notification
+                unread
+                icon="https://unsplash.it/40/40?random=1"
+                message="20 BTC вывод с баланса инвестиций на кошелек Static 150% Comfort (360 Days)"
+                date="8 Aug 2019"
+                onAction={console.log}
+                actions={[
+                  {
+                    "type": "primary",
+                    "text": "Accept",
+                    "action": "verification_accept",
+                    "params": {
+                      "test": ""
+                    }
+                  },
+                  {
+                    "type": "secondary",
+                    "text": "Accept",
+                    "action": "cancel",
+                    "params": []
+                  }
+                ]}
+              />
+              <UI.Notification
+                unread
+                icon="https://unsplash.it/40/40?random=2"
+                message="Вход через приложение для Android"
+                date="8 Aug 2019"
+              />
+              <UI.Notification
+                unread
+                icon="https://unsplash.it/40/40?random=3"
+                message="Пользователь ZEUS приглашает вас стать Агентом."
+                date="8 Aug 2019"
+                markText="Вы приняли приглашение."
+              />
+              <UI.NotificationSeparator title="Просмотренные" />
+              <UI.Notification
+                icon="https://unsplash.it/40/40?random=4"
+                message="Заявка на отправление 0.000450 BTC на адрес 7461L.. c2c171"
+                date="8 Aug 2019"
+              />
+            </UI.Notifications>
+          </Line>
+        </Section>
+        <Section>
+          <Line>
+            <UI.Toast type="fail" message="Toast Message" />
+            <UI.Toast type="warning" message="Toast Message" />
+            <UI.Toast type="success" message="Toast Message" />
+            <UI.Toast type="info" message="Toast Message" />
+            <UI.Toast type="fail" message="Long text Long text Long text Long text " />
           </Line>
         </Section>
       </div>

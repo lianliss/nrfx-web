@@ -6,18 +6,17 @@ import UI from '../../../ui';
 import * as utils from '../../../utils';
 
 export default class GAConfirmModal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
   state = {
-    gaCode: ''
+    gaCode: '',
+    errorGaCode: false
   };
 
   render() {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={384}>
         <UI.ModalHeader>
-          Enter Code
+          {utils.getLang('cabinet_ga_modal_name')}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -29,20 +28,21 @@ export default class GAConfirmModal extends React.Component {
       <div>
         <div className="GAConfirmModal__input_wrapper">
           <UI.Input
-            autoFocus
+            autoFocus={true}
             type="number"
             autoComplete="off"
             value={this.state.gaCode}
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
             onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            error={this.state.errorGaCode}
           />
 
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         <div className="GAConfirmModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
-            {utils.getLang('site__authModalSubmit')}
+            {utils.getLang('cabinet_ga_modal_save')}
           </UI.Button>
         </div>
       </div>
@@ -52,13 +52,17 @@ export default class GAConfirmModal extends React.Component {
   __handleChange = (e) => {
     const val = e.target.value;
 
-    if (val.length <= 6) {
+    if (val.length < 6) {
       this.setState({gaCode: val});
+    } else if (val.length === 6) {
+      this.setState({gaCode: val}, () => {
+        this.__handleSubmit();
+      });
     }
   };
 
   __handleSubmit = () => {
-    this.props.params.onChangeHandler();
+    this.props.params.onChangeHandler(this.state, this);
   }
 }
 

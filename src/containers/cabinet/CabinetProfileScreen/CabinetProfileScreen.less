@@ -1,0 +1,250 @@
+.CabinetProfileScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+}
+
+.CabinetProfileScreen__dashboard {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+  .DashboardItem {
+    position: relative;
+    margin-right: 28px;
+    flex: 1;
+
+    .disabled {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      border-radius: 10px;
+      span {
+        margin: auto;
+        font-size: 16px;
+        color: rgb(0, 0, 0);
+      }
+    }
+
+    &:nth-child(n + 4) {
+      margin-top: 16px;
+    }
+
+    .DashboardItem__close {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+    }
+
+    .DashboardItem__content {
+      height: 170px;
+      padding: 16px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      flex-direction: column;
+      justify-content: start;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
+      position: relative;
+      user-select: none;
+
+      .DashboardItem__content_header {
+         width: 100%;
+         height: 24px;
+         display: flex;
+         margin-bottom: 16px;
+         .DashboardItem__icon {
+           width: 24px !important;
+           height: 24px;
+           margin: auto 0;
+         }
+         .DashboardItem__headerText {
+           font-size: 16px;
+           line-height: 24px;
+           margin: auto 0 0 10px;
+           height: 24px;
+         }
+      }
+
+      .DashboardItem__content_item {
+        width: 100%;
+        height: 35px;
+        margin-bottom: 16px;
+        .DashboardItem__content_item_header {
+          height: 16px;
+          width: 100%;
+          position: relative;
+          font-size: 13px;
+          color: #808080;
+        }
+        .DashboardItem__content_item_header_left {
+          position: absolute;
+          left: 0;
+        }
+        .DashboardItem__content_item_header_right {
+          position: absolute;
+          right: 0;
+          cursor: pointer;
+          border-bottom: 1px solid rgba(128, 128, 128, 0.56);
+        }
+
+        .DashboardItem__content_item_context {
+          width: 100%;
+          font-size: 16px;
+          height: 30px;
+          line-height: 30px;
+          color: #212121;
+        }
+      }
+
+      h3 {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16px;
+        color: var(--primary-grey);
+      }
+
+      p {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: rgba(0, 0, 0, 0.87);
+        margin-top: 4px;
+      }
+    }
+
+    .DashboardItem__loader {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      right: 10px;
+      top: 10px;
+      color: #FF9E65;
+      animation: rotate 2s infinite linear;
+    }
+  }
+
+  .DashboardItem__inactive {
+    opacity: 0.5;
+  }
+
+  .DashboardItem__selected {
+    .DashboardItem__content h3, .DashboardItem__content p {
+      color: white !important;
+    }
+  }
+
+  @keyframes rotate {
+    0%    { transform: rotate(0deg); }
+    100%  { transform: rotate(360deg); }
+  }
+}
+
+.CabinetProfileScreen__height_padding {
+  height: 24px;
+  width: 100%;
+}
+
+.CabinetStartProfileScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+}
+
+.CabinetStartProfileScreen__actionCards {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  margin-top: 24px;
+  width: calc(100% + 28px);
+}
+
+// ActionCardBox
+
+.ActionCardBox {
+  position: relative;
+  margin-right: 28px;
+  height: 320px;
+  margin-top: 0;
+
+  &:nth-child(2n) {
+    .ActionCardBox__icon_content {
+      opacity: 0.4;
+    }
+    .ActionCardBox__button {
+      .Button {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &:nth-child(3n) {
+    .ActionCardBox__button {
+      .Button {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .ActionCardBox__icon {
+    width: 100%;
+    height: 120px;
+    margin: 40px 0 0;
+
+    .ActionCardBox__icon_content {
+      width: 120px;
+      height: 120px;
+      margin: auto;
+    }
+  }
+
+  .ActionCardBox__description {
+    width: calc(100% - 48px);
+    font-size: 12px;
+    margin: 40px 24px 0;
+    text-align: center;
+  }
+
+  .ActionCardBox__button {
+    width: 100%;
+    display: flex;
+    margin-top: 16px;
+    .Button {
+      margin: auto 24px;
+      width: calc(100% - 48px);
+      white-space: nowrap;
+    }
+  }
+}
+
+.CabinetStartProfileScreen__right {
+  grid-template-columns: 100%;
+  margin-top: 0;
+  .ActionCardBox {
+    margin-bottom: 24px;
+    .ActionCardBox__description {
+      font-size: 14px;
+    }
+    .ActionCardBox__button {
+      width: 100%;
+      display: flex;
+      margin-top: 40px;
+      .Button {
+        width: 170px;
+        margin: auto;
+      }
+    }
+  }
+}

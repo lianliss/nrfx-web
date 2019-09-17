@@ -23,11 +23,10 @@ function GoogleAuth({ changeStep, email, password, params }) {
           changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
         } else {
           router.navigate(pages.INVESTMENTS, {}, { reload: true });
-          //setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
         }
       })
       .catch((err) => setErrorMsg(err.message));
-  }
+  };
 
   const handleHashCopy = (e) => {
     hashRef.current.select();
@@ -35,7 +34,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
 
     // In case don't want to select the hash
     // e.target.focus();
-  }
+  };
 
   const handleChange = (e) => {
     const val = e.target.value;
@@ -47,11 +46,11 @@ function GoogleAuth({ changeStep, email, password, params }) {
     if (val.length === 6) {
       handleSubmit(val);
     }
-  }
+  };
 
   return (
     <div className="AuthModal__ga">
-      {(loginRes.status !== 'ga_init')
+      {(loginRes.need_ga_setup !== true)
         && <h2 className="AuthModal__title">{utils.getLang('site__authModalLogIn')}</h2>
       }
 
@@ -61,7 +60,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
           ? <p className="AuthModal__err_msg">{errorMsg}</p>
           : null}
 
-        {loginRes.status === 'ga_init' 
+        {loginRes.need_ga_setup === true
           && (
             <div className="AuthModal__content__ga">
               <h2 className="AuthModal__title">{utils.getLang('site__authModalTitle')}</h2>
@@ -85,16 +84,16 @@ function GoogleAuth({ changeStep, email, password, params }) {
           <img src={require('../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         
-        {loginRes.status !== 'ga_init' && (
+        {loginRes.need_ga_setup !== true && (
           <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>{utils.getLang('site__authModalResetKey')}</h4>
         )}
       </div>
 
       <div className="AuthModal__footer">
-        {(loginRes.status === 'ga_init' && document.queryCommandSupported('copy')) &&
+        {(loginRes.need_ga_setup === true && document.queryCommandSupported('copy')) &&
           <UI.Button type="outline" outlined onClick={handleHashCopy}>Copy Key</UI.Button>
         }
-        <UI.Button onClick={handleSubmit} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
+        <UI.Button onClick={() => handleSubmit()} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </div>
   )

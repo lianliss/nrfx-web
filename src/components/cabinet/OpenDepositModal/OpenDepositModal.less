@@ -2,6 +2,16 @@
   width: 440px;
   padding: 40px;
   box-sizing: border-box;
+
+  &__error {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: var(--primary-red);
+    text-align: center;
+    margin: 30px auto 0;
+    margin-bottom: -40px;
+  }
 }
 
 .OpenDepositModal__row {
@@ -19,6 +29,7 @@
 
 .OpenDepositModal__type_info {
   margin-top: 16px;
+  height: 122px;
   align-items: flex-end;
   display: flex;
   font-weight: 300;
@@ -32,7 +43,6 @@
   display: flex;
   align-items: center;
   margin-top: 8px;
-  flex: 1;
   width: 100%;
 
   &:first-child {

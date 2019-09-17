@@ -8,55 +8,48 @@ import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
-import * as pages from '../../../constants/pages';
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
-import * as walletsActions from "../../../actions/cabinet/wallets";
+import DashboardItem from './components/DashboardItem';
+import ProfileActionCards from './components/ProfileActionCards';
+import * as utils from "../../../utils";
+import router from "../../../router";
+
+import { ReactComponent as SettingsSvg } from '../../../asset/24px/settings.svg';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
-  constructor(props) {
-    super(props);
-    this.content = this.__getProfilePageContent;
-  }
-
   state = {
     walletSelected: null
   };
 
   load = (section = null) => {
     switch (section || this.props.routerParams.section) {
-      case 'partners':
-        this.content = 'partners';
-        break;
-      case 'customers':
-        this.content = 'customers';
-        break;
       default:
-        this.content = this.__getProfilePageContent;
+        this.props.loadWallets();
+        this.props.loadDashboard();
         break;
     }
-    this.props.loadWallets();
   };
 
   render() {
+    if (this.isLoading) {
+      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
+    }
+
     return (
       <div>
         <PageContainer
-          leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
-          sidebarOptions={{
-            items: [
-              <ProfileSidebarItem
-                onClick={
-                  () => {this.props.router.navigate(pages.SETTINGS)}
-                }
-                icon={require('../../../asset/24px/settings.svg')}
-                label="Settings"
-              />,
-              <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
-              <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
-            ]
-          }}
+          leftContent={!this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
+          sidebarOptions={[
+            <ProfileSidebarItem
+              onClick={() => {router.navigate('settings')}}
+              icon={<SettingsSvg />}
+              label={utils.getLang('cabinet_profileScreen_settings')}
+            />
+            // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
+            // <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
+          ]}
         >
           {this.__renderContent()}
         </PageContainer>
@@ -72,13 +65,27 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.load()} />;
     }
-    return this.content();
+
+    switch (this.props.routerParams.section) {
+      case 'partners': {
+        return 'partners';
+      }
+      case 'customers': {
+        return 'customers';
+      }
+      default: {
+        return this.__getProfilePageContent();
+      }
+    }
   };
 
   __getProfilePageContent = () => {
     return (
       <div>
         {this.__renderWallets()}
+        <div className="CabinetProfileScreen__height_padding"> </div>
+        {this.__renderDashboard()}
+        {this.__renderCards()}
       </div>
     )
   };
@@ -93,10 +100,33 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       />
     });
     return (
-      <div className="CabinetWalletScreen__wallets">
+      <div className="CabinetProfileScreen__wallets">
         {rows}
       </div>
     )
+  };
+
+  __renderDashboard = () => {
+    if (this.props.dashboard.length < 1) return;
+    const rows = this.props.dashboard.stats.map((dashboardItem, i) => {
+      return <DashboardItem
+        key={i}
+        {...dashboardItem}
+      />
+    });
+    return (
+      <div className="CabinetProfileScreen__dashboard">
+        {rows}
+        <DashboardItem
+          key={3}
+          type="commerce"
+        />
+      </div>
+    )
+  };
+
+  __renderCards = () => {
+    return <ProfileActionCards />
   };
 
   __walletSelect = (wallet) => {

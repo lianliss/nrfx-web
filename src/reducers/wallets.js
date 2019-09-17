@@ -6,6 +6,9 @@ const initialState = {
   transactions: [],
   transactionsNext: null,
   transactionsLoadingMore: '',
+  transfers: [],
+  transfersLoadingMore: '',
+  transfersNext: null,
   loadingStatus: {},
 };
 
@@ -38,10 +41,35 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.WALLETS_TRANSACTIONS_APPEND: {
-      const current = Object.assign([], state.transactions);
       return Object.assign({}, state, {
-        transactions: current.concat(action.items),
+        transactions: {
+          items:  Object.assign([], state.transactions.items).concat(action.items),
+          next: action.next
+        },
         transactionsNext: action.next
+      });
+    }
+
+    case actionTypes.WALLETS_TRANFERS_SET: {
+      return Object.assign({}, state, {
+        transfers: action.items,
+        transfersNext: action.next
+      });
+    }
+
+    case actionTypes.WALLETS_TRANFERS_LOADING_MORE: {
+      return Object.assign({}, state, {
+        transfersLoadingMore: action.status,
+      });
+    }
+
+    case actionTypes.WALLETS_TRANFERS_APPEND: {
+      return Object.assign({}, state, {
+        transfers: {
+          items: Object.assign([], state.transfers.items).concat(action.items),
+          next: action.next
+        },
+        transfersNext: action.next
       });
     }
 
