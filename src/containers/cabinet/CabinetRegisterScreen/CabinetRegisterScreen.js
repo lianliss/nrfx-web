@@ -49,8 +49,9 @@ class CabinetRegister extends React.PureComponent {
         phone_number: state.phoneWithoutCode,
         sms_code: state.smsCode,
         hash: params.hash
-      }).then(() => {
+      }).then(({ access_token }) => {
         this.props.toastPush(utils.getLang('cabinet_registerScreen_success'), "success");
+        auth.login(access_token);
         this.props.router.navigate(pages.PROFILE);
       }).catch((err) => {
         this.props.toastPush(err.message, "error");
