@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import { TranslationApi, StaticPagesApi } from '../swagger';
 import * as api from '../services/api';
 import store from '../store';
 import router from '../router';
