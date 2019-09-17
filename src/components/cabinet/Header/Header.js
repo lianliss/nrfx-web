@@ -46,7 +46,9 @@ class Header extends React.Component {
   };
 
   componentDidMount() {
-    this.props.loadNotifications();
+    if (this.props.profile.role) {
+      this.props.loadNotifications();
+    }
   }
 
   handleNavigate = (route) => {
@@ -58,14 +60,14 @@ class Header extends React.Component {
   };
 
   render() {
+    const isLogged = this.props.profile.role;
     const { notifications, unreadCount } = this.props.notifications;
     return (
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
           <div className="CabinetHeader__content">
-            <div className="CabinetHeader__logo" />
-            <div className="CabinetHeader__links">
-
+            <BaseLink router={router} routeName={isLogged ? pages.PROFILE : pages.MAIN} className="CabinetHeader__logo" />
+            { isLogged && <div className="CabinetHeader__links">
               <BaseLink router={router} routeName={pages.PROFILE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.PROFILE})}}>
                 <SVG src={require('../../../asset/cabinet/user.svg')} />
                 {utils.getLang('cabinet_header_profile')}
@@ -95,8 +97,8 @@ class Header extends React.Component {
                 <SVG src={require('../../../asset/cabinet/commerce_icon.svg')} />
                 {utils.getLang('cabinet_header_commerce')}
               </div>
-            </div>
-            <div className="CabinetHeader__icons">
+            </div> }
+            { isLogged && <div className="CabinetHeader__icons">
               <div className="CabinetHeader__icon">
                 { this.state.visibleNotifications && <UI.Notifications
                   visible={true}
@@ -134,7 +136,7 @@ class Header extends React.Component {
                   className="CabinetHeader__DropDown_settings"
                 />
               </div>
-            </div>
+            </div>}
           </div>
         </div>
       </div>
