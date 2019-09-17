@@ -341,14 +341,14 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
       <div className="CabinetSettingsScreen__space">
       </div>
       <div className="CabinetSettingsScreen__header">
-        {utils.getLang('cabinet_settingsLogin')}
+        {utils.getLang('site__contactLogin')}
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
               placeholder={utils.getLang('cabinet_settingsYourLogin')} value={this.props.user.login}
-              onTextChange={(value) => this.props.setUserFieldValue({field: 'login', value})}
+              onTextChange={value => this.props.setUserFieldValue({field: 'login', value})}
               error={this.state.loginInputError}
             />
           </div>

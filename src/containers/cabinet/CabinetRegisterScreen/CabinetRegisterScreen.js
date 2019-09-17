@@ -124,7 +124,7 @@ class CabinetRegister extends React.PureComponent {
           <UI.Input
             error={state.touched && !state.login}
             value={state.login}
-            placeholder={utils.getLang('cabinet_registerScreen_login')}
+            placeholder={utils.getLang('site__contactLogin')}
             onTextChange={text => this.__handleChange("login", text)}
           />
           <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_phoneNumber')}</h3>

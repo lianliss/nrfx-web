@@ -52,7 +52,7 @@ export default class ChangeEmailModal extends React.Component {
         </div>
         <div className="ChangeEmailModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
-            {utils.getLang('cabinet_changeEmailModal_save')}
+            {utils.getLang('cabinet_settingsSave')}
           </UI.Button>
         </div>
       </div>

@@ -5,6 +5,7 @@ import AdaptiveHeader from '../../components/cabinet/Header/AdaptiveHeader';
 import { classNames } from '../../utils';
 import * as CLASSES from "../../constants/classes";
 import * as storeUtils from "../../storeUtils";
+import SVG from "react-inlinesvg";
 
 class CabinetWrapper extends Component {
 
@@ -26,7 +27,13 @@ class CabinetWrapper extends Component {
     });
 
     return <div className={mainClassName}>
-      {adaptive ? <AdaptiveHeader /> : <Header />}
+      {adaptive ? <AdaptiveHeader
+        leftContent={<SVG src={require("../../asset/24px/bell.svg")} />}
+        mainContent={{
+          type: "text",
+          content: "Bitcoinbot"
+        }}
+      /> : <Header />}
       {children}
     </div>
   }
@@ -40,7 +47,6 @@ class CabinetWrapper extends Component {
       }
     } else {
       if (adaptive) {
-
         this.props.setAdaptive(false);
       }
     }

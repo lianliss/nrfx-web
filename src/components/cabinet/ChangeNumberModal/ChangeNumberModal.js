@@ -68,7 +68,7 @@ export default class ChangeNumberModal extends React.Component {
         </div>
         <div className="ChangeNumberModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6 || !isValidPhoneNumber(this.state.phone)}>
-            {utils.getLang('cabinet_changeNumberModal_save')}
+            {utils.getLang('cabinet_settingsSave')}
           </UI.Button>
         </div>
       </div>

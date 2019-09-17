@@ -42,7 +42,7 @@ export default class GAConfirmModal extends React.Component {
         </div>
         <div className="GAConfirmModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
-            {utils.getLang('cabinet_ga_modal_save')}
+            {utils.getLang('cabinet_settingsSave')}
           </UI.Button>
         </div>
       </div>
