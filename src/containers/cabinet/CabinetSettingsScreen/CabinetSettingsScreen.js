@@ -308,7 +308,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
               } else if (this.props.user.last_name.length < 1) {
                 return this.__inputError(this, 'lastNameInputError');
               }
-              modalGroupActions.openModalPage('ga_confirm', {}, {
+              modalGroupActions.openModalPage(null, {}, {
                 children: GAConfirmModal,
                 params: {
                   onChangeHandler: (data, modal) => {
@@ -358,7 +358,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             if (this.props.user.login.length < 1) {
               return this.__inputError(this, 'loginInputError');
             }
-            modalGroupActions.openModalPage('ga_confirm', {}, {
+            modalGroupActions.openModalPage(null, {}, {
               children: GAConfirmModal,
               params: {
                 onChangeHandler: (data, modal) => {

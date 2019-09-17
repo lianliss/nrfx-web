@@ -139,11 +139,15 @@ class SendCoinsModal extends React.Component {
 
   __load = () => {
     this.__setState({ loadingStatus: 'loading' });
+
     walletsActions.getWallets().then((wallets) => {
       this.__setState({ loadingStatus: '', wallets });
-      let preset = null;
+      let preset = 'Bitcoin';
       if (this.props.hasOwnProperty('preset')) {
         preset = this.options.filter((opt) => opt.title === this.props.preset)[0];
+        this.__setState({currency: preset.value, selectedWallet: preset });
+      } else {
+        preset = this.options.filter(opt => opt.title === "Bitcoin")[0];
         this.__setState({currency: preset.value, selectedWallet: preset });
       }
     }).catch(() => {
@@ -189,14 +193,15 @@ class SendCoinsModal extends React.Component {
   }
 
   __openConfirmModal = () => {
-    this.props.openModalPage('confirm', {}, {
+    const params = {
+      wallet_id: this.getSelectedWalletInfo[0].id,
+      currency: this.props.thisState.currency,
+      amount: this.props.thisState.amount,
+      address: this.props.thisState.address
+    };
+    this.props.openModalPage(null, {}, {
       children: SendCoinsConfirmModal,
-      params: {
-        wallet_id: this.getSelectedWalletInfo[0].id,
-        currency: this.props.thisState.currency,
-        amount: this.props.thisState.amount,
-        address: this.props.thisState.address
-      }
+      params: {...params}
     });
   };
 

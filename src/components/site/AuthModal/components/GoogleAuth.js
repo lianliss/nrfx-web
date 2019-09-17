@@ -23,7 +23,6 @@ function GoogleAuth({ changeStep, email, password, params }) {
           changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
         } else {
           router.navigate(pages.INVESTMENTS, {}, { reload: true });
-          //setTimeout(() => window.location = 'https://cabinet.bitcoinbot.pro/profile', 100);
         }
       })
       .catch((err) => setErrorMsg(err.message));

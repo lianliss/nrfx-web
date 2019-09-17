@@ -34,8 +34,7 @@ class ProfileSidebar extends React.Component {
       <div className="ProfileSidebar__user">
         <div className="ProfileSidebar__user__avatar__wrap" onClick={() => {
           modalGroupActions.openModalPage('upload_avatar', {}, {
-            children: UploadAvatarModal,
-            params: {}
+            children: UploadAvatarModal
           })
         }}>
           <div className="ProfileSidebar__user__avatar__over">

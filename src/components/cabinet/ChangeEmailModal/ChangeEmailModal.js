@@ -83,7 +83,7 @@ export default class ChangeEmailModal extends React.Component {
       ga_code: this.state.gaCode
     }).then((data) => {
       if (data.hasOwnProperty('response') && data.response === "ok") {
-        modalGroupActions.openModalPage('ga_confirm', {}, {
+        modalGroupActions.openModalPage(null, {}, {
           children: CheckNewEmailModal,
           params: {
             newEmail: this.state.newEmail

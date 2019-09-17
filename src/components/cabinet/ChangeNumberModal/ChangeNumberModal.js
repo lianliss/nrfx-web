@@ -102,7 +102,7 @@ export default class ChangeNumberModal extends React.Component {
         phone_number: this.state.phoneWithoutCode,
         ga_code: this.state.gaCode
       }).then((data) => {
-        this.props.openModalPage('confirmSms', {}, {
+        this.props.openModalPage(null, {}, {
           children: ConfirmSmsModal,
           params: {
             dialCode: this.state.dialCode,

@@ -13,17 +13,22 @@ import * as currencies from "../../../utils/currencies";
 import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow';
 
 export default class SendCoinsConfirmModal extends React.Component {
-  componentWillMount() {
-    this.currency = this.props.params.currency;
-    this.currencyInfo = actions.getCurrencyInfo(this.currency);
-  }
-
   state = {
     gaCode: '',
     errorGaCode: false
   };
 
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillUnmount() {
+  }
+
   render() {
+    this.currency = this.props.params.currency;
+    this.currencyInfo = actions.getCurrencyInfo(this.currency);
+
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={464}>
         <UI.ModalHeader>
