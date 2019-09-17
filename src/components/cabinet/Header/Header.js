@@ -105,17 +105,18 @@ class Header extends React.Component {
                   onClose={this.toggleNotifications.bind(this)}
                 >
                   {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
-                    <div key={n.id}>
-                      { i > 0 &&  n.unread !== notifications[i - 1].unread &&
+                    [
+                      ( i > 0 &&  n.unread !== notifications[i - 1].unread &&
                         <UI.NotificationSeparator title={utils.getLang('cabinet_header_viewed')} />
-                      }
+                      ),
                       <UI.Notification
+                        key={i}
                         icon={n.icon}
                         unread={n.unread}
                         message={n.message}
                         date={n.created_at}
                       />
-                    </div>
+                    ]
                   ))}
                 </UI.Notifications>}
                 <div onClick={this.toggleNotifications.bind(this)}>

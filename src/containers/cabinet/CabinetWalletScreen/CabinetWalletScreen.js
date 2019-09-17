@@ -23,6 +23,7 @@ import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle
 import { ReactComponent as HistorySvg } from '../../../asset/24px/history.svg';
 import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
 import { ReactComponent as ReceiveSvg } from '../../../asset/24px/receive.svg';
+import * as utils from "../../../utils";
 
 class CabinetWalletScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -51,17 +52,17 @@ class CabinetWalletScreen extends CabinetBaseScreen {
             <ProfileSidebarItem
               section={'transfers'}
               icon={<HistorySvg />}
-              label="Transfers"
+              label={utils.getLang('cabinet_walletScreen_transfers')}
             />,
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
               icon={<SendSvg />}
-              label="Send"
+              label={utils.getLang('cabinet_walletScreen_send')}
             />,
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('receive')}}
               icon={<ReceiveSvg />}
-              label="Receive"
+              label={utils.getLang('cabinet_walletScreen_receive')}
             />
           ]}
         >

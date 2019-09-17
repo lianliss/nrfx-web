@@ -64,10 +64,10 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
               icon={<PlusCircleSvg />}
-              label="New"
+              label={utils.getLang('cabinet_investmentsScreen_new')}
             />,
-            <ProfileSidebarItem section="profits" icon={<InvestSvg />} label="Profit" />,
-            <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label="Withdrawals" />
+            <ProfileSidebarItem section="profits" icon={<InvestSvg />} label={utils.getLang('cabinet_investmentsScreen_profile')} />,
+            <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />
           ]}
         >
           {this.__renderContent()}
