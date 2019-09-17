@@ -12,7 +12,7 @@ export default class ChangeEmailModal extends React.Component {
   state = {
     gaCode: '',
     errorGaCode: false,
-    newEmail: '',
+    newEmail: this.props.params.newEmail || '',
     errorNewEmail: false,
   };
 
@@ -82,14 +82,12 @@ export default class ChangeEmailModal extends React.Component {
       email: this.state.newEmail,
       ga_code: this.state.gaCode
     }).then((data) => {
-      if (data.hasOwnProperty('response') && data.response === "ok") {
-        modalGroupActions.openModalPage(null, {}, {
-          children: CheckNewEmailModal,
-          params: {
-            newEmail: this.state.newEmail
-          }
-        })
-      }
+      modalGroupActions.openModalPage(null, {}, {
+        children: CheckNewEmailModal,
+        params: {
+          newEmail: this.state.newEmail
+        }
+      })
     }).catch((info) => {
       switch (info.code) {
         case "ga_auth_code_incorrect":

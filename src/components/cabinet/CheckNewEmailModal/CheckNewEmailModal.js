@@ -20,12 +20,21 @@ export default class CheckNewEmailModal extends React.Component {
 
   __renderContent() {
     return (
-      <div>
-        <div style={{textAlign:'center'}}>
-          {utils.getLang('cabinet_checkNewEmailModal_checkYourEmail')}
+      <div className="CheckNewEmailModal">
+        <div className="CheckNewEmailModal__icon" style={{background: `url(${require('../../../asset/120/email_success.svg')})`}} />
+        <div className="CheckNewEmailModal__content">
+          <div>{utils.getLang('cabinet_checkNewEmailModal_pleaseCheck')}</div>
+          <div className="CheckNewEmailModal__new_email">{this.props.params.newEmail}</div>
+          <div>{utils.getLang('cabinet_checkNewEmailModal_toComplete')}</div>
         </div>
-        <div>
-          {this.props.newEmail}
+        <div className={"CheckNewEmailModal__resend_button"}>
+          <span onClick={() => {
+            modalGroupActions.openModalPage('change_email',  {
+              params: { newEmail: this.props.params.newEmail }
+            })
+          }}>{utils.getLang('cabinet_checkNewEmailModal_reSendEmail')}</span>
+        </div>
+        <div className="CheckNewEmailModal__button_wrapper">
           <UI.Button onClick={this.__handleSubmit}>
             {utils.getLang('cabinet_checkNewEmailModal_ok')}
           </UI.Button>
