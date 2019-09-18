@@ -13,7 +13,7 @@ class DashboardItem extends React.Component {
           firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(6) : 0,
           firstMainContextInvert: (props.profit.btc * props.profit.usd).toFixed(2),
           secondHeaderLeftContext: utils.getLang('cabinet_profileScreen_invested'),
-          secondMainContext: '~ ' + props.invested.btc + ' BTC',
+          secondMainContext: (props.invested.btc > 0 ? '~ ' +  props.invested.btc.toFixed(6) : 0)  + ' BTC',
           secondMainContextInvert: (props.invested.btc * props.invested.usd).toFixed(2) + ' USD'
         };
 
