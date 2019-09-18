@@ -57,10 +57,11 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.WITHDRAWAL_COINS_MODAL:
       mapState2Props = (state) => {
-        return { ...state.wallets}
+        return { ...state.wallets, ...state.investments}
       };
       mapDispatch2Props = {
-        loadWallets: walletsActions.loadWallets
+        loadWallets: walletsActions.loadWallets,
+        loadInvestments: investmentsActions.loadInvestments,
       };
       break;
     case CLASSES.CABINET_START_PFOFILE_SCREEN:

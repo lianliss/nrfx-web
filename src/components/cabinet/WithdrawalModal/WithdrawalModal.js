@@ -22,10 +22,15 @@ class WithdrawalModal extends React.Component {
     errorGaCode: false
   };
 
+  getPayment = () => {
+    return this.props.payments.filter(item => item.currency.toUpperCase() === this.props.currency)[0];
+  };
+
   load = () => {
     switch (router.getState().params.section) {
       default:
         this.props.loadWallets();
+        this.props.loadInvestments();
         break;
     }
   };
@@ -35,7 +40,7 @@ class WithdrawalModal extends React.Component {
   }
 
   render() {
-    if (this.props.wallets.length < 1) {
+    if (this.props.wallets.length < 1 || this.props.payments.length < 1) {
       return utils.getLang('cabinet_modal_loadingText');
     }
 
@@ -43,6 +48,7 @@ class WithdrawalModal extends React.Component {
       return utils.getLang('cabinet_modal_loadingErrorText');
     }
 
+    const payment = this.getPayment();
     const currency = this.props.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
     let wallet = this.props.wallets.filter(w => w.currency === currency.toLowerCase());
@@ -74,7 +80,7 @@ class WithdrawalModal extends React.Component {
                 onTextChange={this.__amountDidChange}
                 value={this.state.amount}
               />
-              <p className="Form__helper__text">Available: {this.wallet.amount} {currency}</p>
+              <p className="Form__helper__text">Available: {payment.available} {currency}</p>
             </div>
             <UI.Button type="outline" smallPadding onClick={this.__maxDidPress}>{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
           </div>
@@ -114,7 +120,8 @@ class WithdrawalModal extends React.Component {
   };
 
   __maxDidPress = () => {
-    this.setState({ amount: this.wallet.amount });
+    const payment = this.getPayment();
+    this.setState({ amount: payment.available });
   };
 
   __handleGAChange = (e) => {

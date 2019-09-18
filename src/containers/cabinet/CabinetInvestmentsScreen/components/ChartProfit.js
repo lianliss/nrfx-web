@@ -3,6 +3,7 @@ import * as currencies from "../../../../utils/currencies";
 import Chart from '../../../../components/cabinet/Chart/Chart';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as modalGroupActions from "../../../../actions/modalGroup";
+import * as utils from "../../../../utils";
 
 class ChartProfit extends React.Component {
 
@@ -15,7 +16,6 @@ class ChartProfit extends React.Component {
     }
 
     const chartCurrencies = {};
-    console.log('count', Object.keys(this.props.chart.data).length);
     Object.keys(this.props.chart.data).map(currency => {
       if (!chartCurrencies.hasOwnProperty(currency)) {
         const currencyColor = currencies.getColorByCurrency(currency);
@@ -46,7 +46,7 @@ class ChartProfit extends React.Component {
       <div className="Content_box Investment__profit">
         <div className="Investment__profit__header">
           <div className="Investment__profit__header__cont">
-            <h3>Profit</h3>
+            <h3>{utils.getLang('cabinet_investmentsProfit')}</h3>
             <div className="Investment__profit__header__period">30 Days</div>
           </div>
           <div className="Investment__profit__header__fiat">{this.props.chart.usd_profit.toFixed(2) + ' $'}</div>
