@@ -318,6 +318,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                       ga_code: data.gaCode
                     }).then((data) => {
                       if (data.hasOwnProperty('response') && data.response === "ok") {
+                        this.props.toastPush(utils.getLang("cabinet_nameChangedSuccessfully"), "success");
                         modal.props.close();
                       }
                     }).catch((info) => {
@@ -368,6 +369,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                   }).then((data) => {
                     if (data.hasOwnProperty('response') && data.response === "ok") {
                       modal.props.close();
+                      this.props.toastPush(utils.getLang("cabinet_loginChangedSuccessfully"), "success");
                     }
                   }).catch((info) => {
                     switch (info.code) {

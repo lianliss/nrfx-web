@@ -111,6 +111,12 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
+    case CLASSES.CONFIRM_SMS_MODAL:
+      mapDispatch2Props = {
+        setUserFieldValue: settingsActions.setUserFieldValue,
+        toastPush: toastsActions.toastPush
+      };
+      break;
     case CLASSES.COMPONENT_TOASTS:
       mapState2Props = (state) => ({
         toasts: state.toasts,

@@ -6,9 +6,10 @@ import UI from '../../../ui';
 import * as utils from '../../../utils';
 import * as settingsActions from "../../../actions/cabinet/settings";
 import * as modalGroupActions from "../../../actions/modalGroup";
-import * as emitter from "../../../services/emitter";
+import * as storeUtils from "../../../storeUtils";
+import * as CLASSES from "../../../constants/classes";
 
-export default class ConfirmSmsModal extends React.Component {
+class ConfirmSmsModal extends React.Component {
   state = {
     smsCode: '',
     errorSmsCode: false
@@ -70,7 +71,11 @@ export default class ConfirmSmsModal extends React.Component {
         sms_code: this.state.smsCode
       }).then((data) => {
         modalGroupActions.modalGroupClear();
-        emitter.emit('loadSettings');
+        this.props.setUserFieldValue({
+          field: "phone_number",
+          value: "+" + this.props.params.dialCode + this.props.params.phoneWithoutCode
+        });
+        this.props.toastPush(utils.getLang("cabinet_phoneNumberChangedSuccessfully"), "success");
       }).catch((info) => {
         switch (info.response) {
           case "invalid_code":
@@ -92,3 +97,8 @@ export default class ConfirmSmsModal extends React.Component {
     }
   }
 }
+
+export default storeUtils.getWithState(
+  CLASSES.CONFIRM_SMS_MODAL,
+  ConfirmSmsModal
+);
