@@ -22,17 +22,17 @@ class CabinetWrapper extends Component {
     const {children, className, adaptive} = this.props;
     const mainClassName = classNames({
       CabinetWrapper: true,
-      [className]: !!className,
-      adaptive
+      [className]: !!className
     });
 
     return <div className={mainClassName}>
       {adaptive ? <AdaptiveHeader
-        leftContent={<SVG src={require("../../asset/24px/bell.svg")} />}
+        leftContent={<SVG src={require("../../asset/24px/calendar.svg")} />}
         mainContent={{
           type: "text",
           content: "Bitcoinbot"
         }}
+        rightContent={<SVG src={require("../../asset/24px/calendar.svg")} />}
       /> : <Header />}
       {children}
     </div>
@@ -41,12 +41,14 @@ class CabinetWrapper extends Component {
   __handleResize = (w) => {
     const {adaptive} = this.props;
 
-    if (w <= 600) {
+    if (w <= 650) {
       if (!adaptive) {
+        document.body.classList.add('adaptive');
         this.props.setAdaptive(true);
       }
     } else {
       if (adaptive) {
+        document.body.classList.remove('adaptive');
         this.props.setAdaptive(false);
       }
     }

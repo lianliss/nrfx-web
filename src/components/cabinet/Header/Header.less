@@ -184,6 +184,10 @@
       width: 100%;
       height: @adaptive-header-height;
       display: flex;
+      span {
+        display: flex;
+        margin: auto;
+      }
       svg {
         margin: auto;
         color: var(--primary-grey)
@@ -209,5 +213,14 @@
   .CabinetHeader__rightContent {
     width: @adaptive-header-side-width;
     height: @adaptive-header-height;
+    display: flex;
+    span {
+      display: flex;
+      margin: auto;
+      svg {
+        margin: auto;
+        color: var(--primary-grey)
+      }
+    }
   }
 }

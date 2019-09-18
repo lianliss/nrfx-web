@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 
 function PageContainer({ children, leftContent, sidebarOptions }) {
+  const adaptive = document.body.classList.contains('adaptive');
   return (
     <div className="PageContainer">
-      <ProfileSidebar sidebarOptions={sidebarOptions} />
+      {!adaptive && <ProfileSidebar sidebarOptions={sidebarOptions} />}
 
       <div className="PageContainer__content">
         <div className="PageContainer__content__primary">
