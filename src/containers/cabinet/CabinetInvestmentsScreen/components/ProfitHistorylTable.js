@@ -6,7 +6,7 @@ import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ profits }) {
+export default function WithdrawalTable({ profits, total }) {
   if (!profits.items || !profits.items.length) {
     return (
       <EmptyContentBlock
@@ -34,11 +34,11 @@ export default function WithdrawalTable({ profits }) {
     return (
       <UI.TableCell key={i}>
         <UI.TableColumn />
-        <UI.TableColumn>{utils.formatTableId(item.profit.id)}</UI.TableColumn>
+        <UI.TableColumn>{utils.formatTableId(total - i)}</UI.TableColumn>
         <UI.TableColumn sub="Standart">{item.plan.percent}</UI.TableColumn>
         <UI.TableColumn>{item.plan.description}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.amount} {item.deposit.currency.toUpperCase()}</UI.TableColumn>
-        <UI.TableColumn>{utils.formatDouble(item.profit.amount)}</UI.TableColumn>
+        <UI.TableColumn align="right">{utils.formatDouble(item.profit.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn>{item.profit.type}</UI.TableColumn>
         <UI.TableColumn>{moment(item.profit.date).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
