@@ -59,7 +59,7 @@ class WalletBox extends React.Component {
     } else if (this.props.amount > 0) {
       return utils.formatDouble(this.props.amount, 1000000) + ' ' + this.props.currency.toUpperCase();
     } else {
-      return utils.getLang('cabinet_walletBox_none');
+      return utils.getLang('cabinet_walletTransactionModal_receive');
     }
   };
 }
