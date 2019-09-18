@@ -171,7 +171,6 @@ class CabinetRegister extends React.PureComponent {
             <UI.Input
               error={state.touched && !state.smsCode}
               value={state.smsCode}
-              type="password"
               placeholder={utils.getLang('cabinet_registerScreen_enterCode')}
               onTextChange={text => this.__handleChange("smsCode", text)}
             />
