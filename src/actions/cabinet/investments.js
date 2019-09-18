@@ -21,8 +21,8 @@ export function loadInvestments() {
 export function loadProfitHistory() {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'loading' });
-    api.call(apiSchema.Investment.ProfitGet).then((profits) => {
-      dispatch({ type: actionTypes.INVESTMENTS_PROFITS_SET, profits });
+    api.call(apiSchema.Investment.ProfitGet).then(({ profits, total_count }) => {
+      dispatch({ type: actionTypes.INVESTMENTS_PROFITS_SET, profits, total: total_count });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: '' });
     }).catch((err) => {
       console.log(err);
