@@ -15,8 +15,11 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = () => {
+
     if (!email) {
       setErrorMsg(utils.getLang('site__authModalEmailRequired'));
+    } else if (!utils.isEmail(email)) {
+      setErrorMsg(utils.getLang('global_InvalidEmail'));
     } else if (!isChecked) {
       setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
