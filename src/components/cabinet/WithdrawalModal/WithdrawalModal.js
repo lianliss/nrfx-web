@@ -54,7 +54,7 @@ class WithdrawalModal extends React.Component {
     return (
       <UI.Modal noSpacing isOpen={true} onClose={() => (this.props.close())}>
         <UI.ModalHeader>
-          Withdraw Income
+          {utils.getLang('withdraw_Income')}
         </UI.ModalHeader>
         <div className="WithdrawalModal">
           <div className="WithdrawalModal__info_row">
@@ -93,7 +93,7 @@ class WithdrawalModal extends React.Component {
           </div>
           <div className="WithdrawalModal__button_wrap">
             <UI.Button style={{ width: '208px' }} disabled={!this.__formIsValid()}>
-              Withdraw
+              {utils.getLang('general_withdraw')}
             </UI.Button>
           </div>
           <div className="WithdrawalModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
