@@ -108,7 +108,7 @@ function WalletBalance({ wallets }) {
                     <div key={wallet.currency} className="WalletBalance__list__item">
                       <span className="WalletBalance__list__item_dot" style={{ background: gradient }} />
                       <li key={wallet.currency}>
-                        <span>{wallet.value}%</span>
+                        <span>{utils.formatDouble(wallet.value, 2)}%</span>
                         {wallet.currency.toUpperCase()}
                       </li>
                     </div>
