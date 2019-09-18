@@ -174,10 +174,14 @@ class OpenDepositModal extends React.Component {
                 this.state.amount < this.state.amountMin
               }
               value={this.state.amount}
+              onBlur={() => {
+                const { amount, amountMax } = this.state;
+                this.setState({ amount: (amount > amountMax ? amountMax : amount) }, this.__getPlansThrottle);
+              }}
               placeholder={utils.getLang('cabinet_openNewDeposit_amount')}
               indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.state.amountMin} ${this.state.currency && this.state.currency.toUpperCase()}`}
               onTextChange={amount => {
-                this.setState({ amount }, this.__getPlansThrottle);
+                this.setState({ amount });
               }}
             />
           </div>
