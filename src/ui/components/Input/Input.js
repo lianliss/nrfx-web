@@ -56,6 +56,7 @@ class Input extends React.Component {
         {...params}
         value={this.props.value}
         onChange={this.__onChange}
+        onBlur={this.props.onBlur || (() => {})}
         disabled={this.props.disabled}
         autoFocus={this.props.autoFocus}
       />;
