@@ -99,9 +99,9 @@ export function resetGoogleCode(secret, login, password, code) {
   });
 }
 
-export function resetPassword(hash) {
+export function resetPassword(email) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.ResetPasswordPost, { hash })
+    api.call(apiSchema.Profile.ResetPasswordPost, { email })
       .then(() => {
         resolve();
       })

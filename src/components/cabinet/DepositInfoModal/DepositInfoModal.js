@@ -14,8 +14,6 @@ export default class DepositInfoModal extends React.Component {
       return null;
     }
 
-    console.log(1234, this.props);
-
     const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
