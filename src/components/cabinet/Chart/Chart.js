@@ -7,7 +7,7 @@ import * as currencies from "../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
-export default function Chart({ series }) {
+export default function Chart({ series, ...props }) {
   const options = {
     chart: {
       height: 200,
@@ -110,11 +110,20 @@ export default function Chart({ series }) {
           },
         },
         events: {
+          legendItemClick: () => {
+            if (props.count < 2) {
+              return false;
+            }
+          },
           mouseOver: function(e) {
-            this.xAxis.update({ className: 'Chart__xaxis_invisible' });
+            if (props.count > 1) {
+              this.xAxis.update({ className: 'Chart__xaxis_invisible' });
+            }
           },
           mouseOut: function () {
-            this.xAxis.update({ className: '' });
+            if (props.count > 1) {
+              this.xAxis.update({ className: '' });
+            }
           }
         },
       },

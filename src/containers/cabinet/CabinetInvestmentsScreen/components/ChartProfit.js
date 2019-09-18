@@ -15,7 +15,7 @@ class ChartProfit extends React.Component {
     }
 
     const chartCurrencies = {};
-
+    console.log('count', Object.keys(this.props.chart.data).length);
     Object.keys(this.props.chart.data).map(currency => {
       if (!chartCurrencies.hasOwnProperty(currency)) {
         const currencyColor = currencies.getColorByCurrency(currency);
@@ -52,7 +52,7 @@ class ChartProfit extends React.Component {
           <div className="Investment__profit__header__fiat">{this.props.chart.usd_profit.toFixed(2) + ' $'}</div>
         </div>
         <div className="Investment__profit__chart">
-          <Chart series={Object.values(chartCurrencies)} />
+          <Chart count={Object.keys(this.props.chart.data).length} series={Object.values(chartCurrencies)} />
         </div>
       </div>
     )
