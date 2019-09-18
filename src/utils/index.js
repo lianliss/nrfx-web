@@ -105,8 +105,8 @@ export function isFloat(n){
   return Number(n) === n && n % 1 !== 0;
 }
 
-export function formatDouble(input, delim = 100000) {
-  return Math.floor(input * delim) / delim;
+export function formatDouble(input, fractionDigits = 8) {
+  return parseFloat(input.toFixed(fractionDigits));
 }
 
 export function formatTableId(index) {

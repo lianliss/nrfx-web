@@ -94,7 +94,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   __getTransfersPageContent = () => {
     return (
       <div>
-        {this.__getTransfers()}
+        {this.__renderTransfers()}
       </div>
     )
   };
@@ -123,7 +123,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     </div>
   };
 
-  __getTransfers = () => {
+  __renderTransfers = () => {
     return <div>
       <Paging
         isCanMore={!!this.props.transfers.next && !this.props.transfersLoadingMore}
