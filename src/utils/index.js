@@ -101,6 +101,10 @@ export function ucfirst(input) {
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
+export function isFloat(n){
+  return Number(n) === n && n % 1 !== 0;
+}
+
 export function formatDouble(input, delim = 100000) {
   return Math.floor(input * delim) / delim;
 }

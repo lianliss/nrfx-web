@@ -164,7 +164,7 @@ class SendCoinsModal extends React.Component {
   };
 
   __usdAmountDidChange = (amountUSD) => {
-    if (amountUSD && !`${amountUSD}`.match(/^\d{0,15}(\.\d{0,15}){0,1}$/)) {
+    if (amountUSD && !`${amountUSD}`.match(/^\d{0,15}(\.\d{0,2}){0,1}$/)) {
       return false;
     }
 
