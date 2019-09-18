@@ -80,6 +80,9 @@ export default class UIKitScreen extends BaseScreen {
           <Line style={{width: 300}}>
             <UI.Input placeholder="Placeholder" multiLine />
           </Line>
+          <Line style={{width: 300}}>
+            <UI.Input type="password" placeholder="Password" />
+          </Line>
         </Section>
         <Section title="Search">
           <Line style={{width: 500}}>
