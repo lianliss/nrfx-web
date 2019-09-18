@@ -10,10 +10,10 @@ class DashboardItem extends React.Component {
         this.icon = <SVG src={require('../../../../asset/24px/users.svg')} />;
         this.content = {
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_profit'),
-          firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(6) : 0,
+          firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(8) : 0,
           firstMainContextInvert: (props.profit.btc * props.profit.usd).toFixed(2),
           secondHeaderLeftContext: utils.getLang('cabinet_profileScreen_invested'),
-          secondMainContext: (props.invested.btc > 0 ? '~ ' +  props.invested.btc.toFixed(6) : 0)  + ' BTC',
+          secondMainContext: (props.invested.btc > 0 ? '~ ' +  props.invested.btc.toFixed(8) : 0)  + ' BTC',
           secondMainContextInvert: (props.invested.btc * props.invested.usd).toFixed(2) + ' USD'
         };
 
@@ -22,7 +22,7 @@ class DashboardItem extends React.Component {
         this.icon = <SVG src={require('../../../../asset/24px/invest.svg')} />;
         this.content = {
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_income'),
-          firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(6) : 0,
+          firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(8) : 0,
           firstMainContextInvert: (props.profit.btc * props.profit.usd).toFixed(2),
           secondHeaderLeftContext: utils.getLang('cabinet_profileScreen_count'),
           secondMainContext: props.count,
