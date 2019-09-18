@@ -31,6 +31,7 @@ export function invoke(method, name, params) {
       method,
       headers: {
         'X-Token': auth.getToken(),
+        'X-Beta': 1,
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept-Language': window.localStorage.lang || 'en'
       }
