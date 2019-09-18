@@ -20,6 +20,10 @@
   transition: all 150ms ease-in-out;
   width: 100%;
 
+  &.password {
+    padding-right: 35px !important;
+  }
+
   &:focus {
     border-color: var(--uikit-primary);
     box-shadow: none;
@@ -54,4 +58,17 @@
   font-size: 14px;
   line-height: 20px;
   color: var(--secondary-grey);
+}
+
+.Input__display_password_button {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #D9D4CF;
+  user-select: none;
 }

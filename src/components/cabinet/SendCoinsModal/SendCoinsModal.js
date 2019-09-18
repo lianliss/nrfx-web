@@ -160,7 +160,7 @@ class SendCoinsModal extends React.Component {
       return false;
     }
 
-    this.__setState({ amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd) });
+    this.__setState({ amount, amountUSD: parseInt(utils.formatDouble(amount * this.wallet.to_usd)).toFixed(2) });
   };
 
   __usdAmountDidChange = (amountUSD) => {
@@ -177,7 +177,7 @@ class SendCoinsModal extends React.Component {
 
   __maxDidPress = () => {
     const amount = this.wallet.amount;
-    this.__setState({ amount: amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd) });
+    this.__setState({ amount: amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd).toFixed(2) });
   };
 
   __setState = (value, key = null) => {

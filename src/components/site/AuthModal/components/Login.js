@@ -7,7 +7,6 @@ import * as steps from '../fixtures';
 
 
 function Login({ changeStep, email, password, handleChange, currentStep }) {
-  const [isPasswordVisible, updateVisibility] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = () => {
@@ -49,14 +48,9 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
             value={password}
             onChange={(e) => handleChange(e.target.value, 'password')}
             placeholder={utils.getLang('site__authModalPlaceholderPwd')}
-            type={isPasswordVisible ? 'text' : 'password'}
             onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
+            type="password"
           />
-
-          {!isPasswordVisible
-            ? <img src={require('../asset/opened_eye.svg')} alt="Eye" onClick={() => updateVisibility(true)} />
-            : <img src={require('../asset/closed_eye.svg')} alt="Eye" onClick={() => updateVisibility(false)} />
-          }
 
         </div>
         <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>{utils.getLang('site__authModalForgotPwd')}</h4>

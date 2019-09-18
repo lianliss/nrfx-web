@@ -2,7 +2,7 @@ import './Input.less';
 
 import React  from 'react';
 import PropTypes from 'prop-types';
-
+import SVG from 'react-inlinesvg';
 import { classNames } from '../../utils';
 
 class Input extends React.Component {
@@ -10,15 +10,21 @@ class Input extends React.Component {
     super(props);
 
     this.state = {
-      indicatorWidth: this.props.indicatorWidth || 0
+      indicatorWidth: this.props.indicatorWidth || 0,
+      displayPassword: false,
     };
+  }
+
+  __toggleDisplayPassword() {
+    this.setState({ displayPassword: !this.state.displayPassword });
   }
 
   render() {
     const className = classNames({
       Input: true,
       multiLine: this.props.multiLine,
-      error: this.props.error
+      error: this.props.error,
+      password: this.props.type === "password"
     });
 
     let InputWrapper = 'Input__wrapper';
@@ -29,7 +35,7 @@ class Input extends React.Component {
     let params = {
       className,
       placeholder: this.props.placeholder,
-      type: this.props.type,
+      type: (this.props.type === "password" && this.state.displayPassword) ? "text" : this.props.type,
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,
       onKeyPress: this.props.onKeyPress,
@@ -55,12 +61,19 @@ class Input extends React.Component {
       />;
     }
 
+    const closeEyeSvg = require('../../asset/closed_eye_24.svg');
+    const openEyeSvg = require('../../asset/opened_eye_24.svg');
+
     return (
       <div className={InputWrapper} onClick={this.props.onClick}>
         {cont}
-
+        { this.props.type === "password" &&
+          <div className="Input__display_password_button" onClick={this.__toggleDisplayPassword.bind(this)}>
+            <SVG onClick={alert} src={this.state.displayPassword ? closeEyeSvg : openEyeSvg} />
+          </div>
+        }
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
-          this.setState({ indicatorWidth: (ref || 0) })}>{this.props.indicator}</div>}
+          this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
       </div>
     )
   }
