@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { classNames } from '../../../utils';
 
-export default function SwitchTabs({ tabs, selected, onChange }) {
+export default function SwitchTabs({ tabs, selected, onChange, currency }) {
 
   const getSelectedIndex = () => {
     for (let i = 0; i < tabs.length; i++) {
@@ -18,14 +18,15 @@ export default function SwitchTabs({ tabs, selected, onChange }) {
 
   const indicatorWidth = 100 / tabs.length;
   return (
-    <div className="SwitchTabs">
+    <div className={classNames("SwitchTabs", { [currency]: !!currency })}>
       {tabs.map((tab) => {
         return (
           <div
             key={tab.value}
             className={classNames({
               SwitchTabs__item: true,
-              active: tab.value === selected
+              active: tab.value === selected,
+              // [currency]: !!currency,
             })}
             onClick={() => onChange(tab.value)}
           >{tab.label}</div>
@@ -42,5 +43,6 @@ SwitchTabs.propTypes = {
     label: PropTypes.string
   })).isRequired,
   selected: PropTypes.any,
+  currency: PropTypes.string,
   onChange: PropTypes.func.isRequired
 };

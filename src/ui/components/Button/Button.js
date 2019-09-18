@@ -50,6 +50,7 @@ Button.propTypes = {
   beforeContent: PropTypes.node,
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
+  currency: PropTypes.string,
   state: PropTypes.oneOf(['loading', 'disabled'])
 };
 

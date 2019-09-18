@@ -22,7 +22,7 @@ class OpenDepositModal extends React.Component {
     planCurrentOption: {},
     amountMax: 0,
     amountMin: 0,
-    currency: null,
+    currency: 'btc',
     touched: false
   };
 
@@ -60,7 +60,8 @@ class OpenDepositModal extends React.Component {
     modalGroupActions.openModalPage(null, {}, {
       children: RateDetailsModal,
       params: {
-        plans: this.state.plans
+        currency: this.state.currency,
+        plans: this.state.plans.map(p => p[this.state.selectDepositType])
       }
     })
   }
@@ -75,13 +76,16 @@ class OpenDepositModal extends React.Component {
       deposit_type: selectDepositType
     }, ).then(({plans}) => {
 
-      const planOptions = plans.map(p => ({
-        value: p.id,
-        title: p.description,
-        note: `${p.percent}% ${p.days} ${utils.getLang('cabinet_openNewDeposit_days')}`,
-        max: p.max,
-        min: p.min
-      }));
+      const planOptions = plans.map(plan => {
+        const p = plan[this.state.selectDepositType];
+        return {
+          value: p.id,
+          title: p.description,
+          note: `${p.percent + p.bonus}% ${p.days} ${utils.getLang('global_days')}`,
+          max: p.max,
+          min: p.min
+        }
+      });
 
       let planCurrentOption = planOptions.find(p => p.value === this.state.planId) || planOptions[0];
 
@@ -187,6 +191,7 @@ class OpenDepositModal extends React.Component {
           </div>
           <div className="OpenDepositModal__row">
             <UI.SwitchTabs
+              currency={this.state.currency}
               selected={this.state.selectDepositType}
               onChange={(selectDepositType) => this.setState({ selectDepositType }, this.__getPlans)}
               tabs={[
@@ -224,7 +229,7 @@ class OpenDepositModal extends React.Component {
           </div>
           { this.state.error && <div className="OpenDepositModal__error">{this.state.error}</div>}
           <div className="OpenDepositModal__btn_wrapper">
-            <UI.Button onClick={this.handleSubmit.bind(this)}>
+            <UI.Button currency={this.state.currency} onClick={this.handleSubmit.bind(this)}>
               {utils.getLang('cabinet_openNewDeposit_invest')}
             </UI.Button>
           </div>
