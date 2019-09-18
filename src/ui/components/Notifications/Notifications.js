@@ -83,7 +83,7 @@ export default class Notifications extends React.Component {
     const empty = !this.props.children || !this.props.children.length;
     return (
       <div className={classNames(this.props.classNames, "Notifications", { empty: empty })} ref="notifications">
-        {!empty ? this.props.children : <span className="Notifications__empty_text">You don’t have any notifications</span>}
+        {!empty ? this.props.children : <span className="Notifications__empty_text">{this.props.emptyText}</span>}
       </div>
     )
   }

@@ -101,6 +101,7 @@ class Header extends React.Component {
             { isLogged && <div className="CabinetHeader__icons">
               <div className="CabinetHeader__icon">
                 { this.state.visibleNotifications && <UI.Notifications
+                  emptyText={utils.getLang('no_update')}
                   visible={true}
                   onClose={this.toggleNotifications.bind(this)}
                 >

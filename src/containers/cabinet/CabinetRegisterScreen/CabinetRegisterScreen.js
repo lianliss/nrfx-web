@@ -31,14 +31,27 @@ class CabinetRegister extends React.PureComponent {
     const { params } = this.context;
     const { state } = this;
 
+    if (state.password && state.password.length < 6) {
+      this.props.toastPush(utils.getLang('global_passwordMustBe'), "error");
+      return false;
+    }
+
+    if (
+      state.password &&
+      state.passwordConfirm &&
+      state.password !== state.passwordConfirm
+    ) {
+      this.props.toastPush(utils.getLang('global_passwordsMustBeSame'), "error");
+      return false;
+    }
+
     if (
       state.firstName &&
       state.lastName &&
       state.login &&
       state.password &&
       state.phoneWithoutCode &&
-      state.smsCode &&
-      state.passwordConfirm === state.password
+      state.smsCode
     ) {
       api.call(apiSchema.Profile.FillAccountPut, {
         first_name: state.firstName,
@@ -156,7 +169,7 @@ class CabinetRegister extends React.PureComponent {
             </div>
           </div> : <div>
             <UI.Input
-              error={state.touched && !state.password}
+              error={state.touched && !state.smsCode}
               value={state.smsCode}
               type="password"
               placeholder={utils.getLang('cabinet_registerScreen_enterCode')}

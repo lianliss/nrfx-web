@@ -156,7 +156,7 @@ export default class UIKitScreen extends BaseScreen {
         </Section>
         <Section>
           <Line>
-            <UI.Notifications visible={true}></UI.Notifications>
+            <UI.Notifications emptyText="No any updates" visible={true}></UI.Notifications>
           </Line>
           <Line>
             <UI.Notifications visible={true}>
