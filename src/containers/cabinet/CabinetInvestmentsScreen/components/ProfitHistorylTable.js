@@ -48,7 +48,7 @@ export default function WithdrawalTable({ profits, total }) {
 
   return (
     <div>
-      <h2>Profit History</h2>
+      <h2>{utils.getLang('cabinet_investmentsProfit')}</h2>
       <UI.Table headings={headings} className="Investment__profits_table">
         {rows}
       </UI.Table>

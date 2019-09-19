@@ -88,6 +88,7 @@ export function getWithState(caseName, caseClass) {
         loadProfitHistory: investmentsActions.loadProfitHistory,
         loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory,
         loadMoreWithdrawalHistory: investmentsActions.loadMoreWithdrawalHistory,
+        loadMoreProfitHistory: investmentsActions.loadMoreProfitHistory,
       };
       break;
     case CLASSES.CABINET_SETTINGS_SCREEN:

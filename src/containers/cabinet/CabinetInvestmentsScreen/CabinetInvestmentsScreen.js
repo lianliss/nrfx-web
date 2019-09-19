@@ -101,11 +101,19 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderProfitHistory() {
-    const profits = this.props.profits;
+    const { profits } = this.props;
     const total = this.props.profitsTotal;
+    console.log(1,this.props);
     return (
       <div>
-        <ProfitHistorylTable profits={profits} total={total} />
+        <Paging
+          isCanMore={!!profits.next && !(this.props.loadingStatus.profitsAppend === "loading")}
+          onMore={this.props.loadMoreProfitHistory}
+          moreButton={!!profits.next}
+          isLoading={this.props.loadingStatus.profitsAppend === "loading"}
+        >
+          <ProfitHistorylTable profits={profits} total={total} />
+        </Paging>
       </div>
     )
   }

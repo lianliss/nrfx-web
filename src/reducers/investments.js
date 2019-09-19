@@ -53,6 +53,17 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
+    case actionTypes.INVESTMENTS_PROFITS_APPEND: {
+      return {
+        ...state,
+        profits: {
+          ...state.profits,
+          items: [ ...state.profits.items, ...action.profits.items ],
+          next: action.profits.next
+        }
+      }
+    }
+
     case actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS: {
       return {
         ...state,

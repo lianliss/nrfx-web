@@ -21,13 +21,32 @@ export function loadInvestments() {
 export function loadProfitHistory() {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'loading' });
-    api.call(apiSchema.Investment.ProfitGet).then(({ profits, total_count }) => {
+    api.call(apiSchema.Investment.ProfitGet, {
+      count: 5
+    }).then(({ profits, total_count }) => {
       dispatch({ type: actionTypes.INVESTMENTS_PROFITS_SET, profits, total: total_count });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: '' });
     }).catch((err) => {
       console.log(err);
       toastsActions.toastPush("Error load profit history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'failed' });
+    });
+  };
+}
+
+export function loadMoreProfitHistory() {
+  return (dispatch, getState) => {
+    dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profitsAppend', status: 'loading' });
+    api.call(apiSchema.Investment.ProfitGet, {
+      start_from: store.getState().investments.profits.next,
+      count: 5,
+    }).then(({ profits, total_count, next }) => {
+      dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profitsAppend', status: '' });
+      dispatch({ type: actionTypes.INVESTMENTS_PROFITS_APPEND, profits, next, total: total_count });
+    }).catch((err) => {
+      console.log(err);
+      toastsActions.toastPush("Error load profit history", "error")(dispatch, getState);
+      dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profitsAppend', status: 'failed' });
     });
   };
 }
