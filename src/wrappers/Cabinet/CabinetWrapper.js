@@ -25,14 +25,16 @@ class CabinetWrapper extends Component {
       [className]: !!className
     });
 
+    const calendarSvg = require("../../asset/24px/calendar.svg");
+
     return <div className={mainClassName}>
       {adaptive ? <AdaptiveHeader
-        leftContent={<SVG src={require("../../asset/24px/calendar.svg")} />}
+        leftContent={<SVG src={calendarSvg} />}
         mainContent={{
           type: "text",
           content: "Bitcoinbot"
         }}
-        rightContent={<SVG src={require("../../asset/24px/calendar.svg")} />}
+        rightContent={<SVG src={calendarSvg} />}
       /> : <Header />}
       {children}
     </div>
