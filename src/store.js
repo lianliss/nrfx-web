@@ -16,8 +16,8 @@ import testReducer from './reducers/test';
 
 const middlewares = [];
 
-// const { logger } = require(`redux-logger`);
-// middlewares.push(logger);
+const { logger } = require(`redux-logger`);
+middlewares.push(logger);
 
 let store;
 export function configureStore() {

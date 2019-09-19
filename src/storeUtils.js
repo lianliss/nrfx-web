@@ -100,9 +100,13 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.SEND_COINS_MODAL:
-      mapState2Props = (state) => ({ thisState: {...state.modalGroup.states.send} });
+      mapState2Props = (state) => ({
+        thisState: state.modalGroup.states.send,
+        wallets: state.wallets.wallets
+      });
       mapDispatch2Props = {
-        setStateByModalPage: modalGroupActions.setStateByModalPage
+        setStateByModalPage: modalGroupActions.setStateByModalPage,
+        toastPush: toastsActions.toastPush
       };
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
