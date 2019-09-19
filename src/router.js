@@ -97,6 +97,10 @@ export const routes = [
     name: pages.REGISTER,
     path: '/register',
   },
+  {
+    name: pages.RESET_PASSWORD,
+    path: '/reset_password',
+  },
 ];
 
 const params = {

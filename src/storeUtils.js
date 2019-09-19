@@ -131,6 +131,11 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
+    case CLASSES.CABINET_RESET_PASSWORD:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
     default:
       mapState2Props = (state) => ({ ...state });
       mapDispatch2Props = {};
