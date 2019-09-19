@@ -12,19 +12,28 @@ import * as testActions from './actions/test';
 import * as storage from './services/storage';
 
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
+import UI from './ui';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoading: true
+      isLoading: true,
+      error: null
     };
   }
 
   componentDidMount() {
     loadReCaptcha();
     this._loadAssets();
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({ error: {
+      name: error.name,
+      message: error.message
+    }});
   }
 
   componentDidUpdate() {
@@ -37,10 +46,22 @@ class App extends React.Component {
 
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
+    const { error } = this.state;
 
     if (this.state.isLoading) {
       return (
         <div className="AppLoading">Loading...</div>
+      )
+    }
+
+    if (error) {
+      return (
+        <div className="Error_wrapper">
+          <UI.Message type="error">
+            <h2>{error.name}</h2>
+            <p>{error.message}</p>
+          </UI.Message>
+        </div>
       )
     }
 
