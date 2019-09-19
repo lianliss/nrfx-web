@@ -359,7 +359,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             if (this.props.user.login.length < 1) {
               return this.__inputError(this, 'loginInputError');
             }
-            modalGroupActions.openModalPage(null, {}, {
+            modalGroupActions.openModalPage(false, {}, {
               children: GAConfirmModal,
               params: {
                 onChangeHandler: (data, modal) => {

@@ -130,6 +130,11 @@ export function getWithState(caseName, caseClass) {
         toastDrop: toastsActions.toastDrop
       };
       break;
+    case CLASSES.COMPONENT_FOOTER:
+      mapState2Props = (state) => ({
+        langList: state.default.langList,
+      });
+      break;
     case CLASSES.CABINET_REGISTER:
       mapDispatch2Props = {
         toastPush: toastsActions.toastPush

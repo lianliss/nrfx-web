@@ -82,7 +82,7 @@ export default class ChangeEmailModal extends React.Component {
       email: this.state.newEmail,
       ga_code: this.state.gaCode
     }).then((data) => {
-      modalGroupActions.openModalPage(null, {}, {
+      modalGroupActions.openModalPage(null, null, {
         children: CheckNewEmailModal,
         params: {
           newEmail: this.state.newEmail
