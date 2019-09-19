@@ -34,7 +34,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
       walletsCurrencies.push({
         color,
         currency: wallet.currency,
-        value: formatDouble((wallet.amount * wallet.to_usd) / walletsBalanceInUSD * 100, 100),
+        value: (wallet.amount * wallet.to_usd) / walletsBalanceInUSD * 100
       });
     } 
   });
