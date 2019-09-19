@@ -106,7 +106,7 @@ export function isFloat(n){
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  return parseFloat(input.toFixed(fractionDigits));
+  return parseFloat(parseInt(input).toFixed(fractionDigits));
 }
 
 export function formatTableId(index) {
