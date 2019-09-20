@@ -30,7 +30,7 @@ class WithdrawalModal extends React.Component {
     switch (router.getState().params.section) {
       default:
         this.props.loadWallets();
-        this.props.loadInvestments();
+        !this.props.loaded && this.props.loadInvestments();
         break;
     }
   };

@@ -10,7 +10,8 @@ const initialState = {
   },
   withdrawalsTotalCount: null,
   chart: {},
-  loadingStatus: {}
+  loadingStatus: {},
+  loaded: null,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -27,6 +28,7 @@ export default function reduce(state = initialState, action = {}) {
         deposits: action.deposits,
         payments: action.payments,
         chart: action.chart,
+        loaded: true
       });
     }
 
