@@ -53,15 +53,15 @@ class DashboardItem extends React.Component {
           emptyIcon: <InviteSvg />,
           emptyDescription: utils.getLang('global_inviteDescription'),
         };
-        if (props.count < 1) {
+        if (props.count > 0) {
+          this.show = true;
           this.button = {
-            children: utils.getLang('cabinet_profileScreen_actionCard_comingSoon'),
+            children: utils.getLang('global_invite'),
             disabled: true
           };
         } else {
-          this.show = false;
           this.button = {
-            children: utils.getLang('global_invite'),
+            children: utils.getLang('cabinet_profileScreen_actionCard_comingSoon'),
             disabled: true
           };
         }
