@@ -60,6 +60,7 @@ export function getWithState(caseName, caseClass) {
         return { ...state.wallets, ...state.investments}
       };
       mapDispatch2Props = {
+        toastPush: toastsActions.toastPush,
         loadWallets: walletsActions.loadWallets,
         loadInvestments: investmentsActions.loadInvestments,
       };
