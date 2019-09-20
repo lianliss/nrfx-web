@@ -119,7 +119,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderWithdrawalHistory() {
-    const { withdrawals } = this.props;
+    const { withdrawals, withdrawalsTotalCount } = this.props;
 
     return (
       <div>
@@ -130,7 +130,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           moreButton={!!withdrawals.next}
           isLoading={withdrawals.isLoadingMore}
         >
-          <WithdrawaHistorylTable withdrawals={withdrawals} />
+          <WithdrawaHistorylTable withdrawals={withdrawals} withdrawalsTotalCount={withdrawalsTotalCount} />
         </Paging>
       </div>
     )

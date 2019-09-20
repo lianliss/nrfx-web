@@ -8,6 +8,7 @@ const initialState = {
   withdrawals: {
     isLoadingMore: false,
   },
+  withdrawalsTotalCount: null,
   chart: {},
   loadingStatus: {}
 };
@@ -39,6 +40,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.INVESTMENTS_WITHDRAWALS_SET: {
       return Object.assign({}, state, {
         withdrawals: action.withdrawals,
+        withdrawalsTotalCount: action.total_count
       });
     }
 

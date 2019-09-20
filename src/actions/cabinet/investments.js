@@ -54,8 +54,8 @@ export function loadMoreProfitHistory() {
 export function loadWithdrawalHistory() {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: 'loading' });
-    api.call(apiSchema.Investment.WithdrawalGet).then((withdrawals) => {
-      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET, withdrawals });
+    api.call(apiSchema.Investment.WithdrawalGet).then(({ withdrawals, total_count }) => {
+      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET, withdrawals, total_count });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'withdrawals', status: '' });
     }).catch((err) => {
       console.log(err);
@@ -73,7 +73,7 @@ export function loadMoreWithdrawalHistory() {
       start_from: store.getState().investments.withdrawals.next,
       count: 20,
     }).then((data) => {
-      const { items, next } = data;
+      const { withdrawals: { items, next }, total_count } = data;
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next });
     }).catch(() => {
