@@ -22,6 +22,7 @@ import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScre
 import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
 import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
 import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
+import * as CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
 
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
@@ -53,7 +54,7 @@ export default function Routes(props) {
       Component = SiteAboutScreen;
       WrapperComponent = SiteWrapper;
       break;
-    case pages.EXCHANGE:
+    case pages.SITE_EXCHANGE:
       Component = SiteExchangeScreen;
       WrapperComponent = SiteWrapper;
       break;
@@ -113,6 +114,9 @@ export default function Routes(props) {
       break;
     case pages.MENU:
       Component = MenuScreen.default;
+      break;
+    case pages.EXCHANGE:
+      Component = CabinetExchangeScreen.default;
       break;
     default:
       Component = SiteNotFoundScreen;

@@ -25,8 +25,8 @@ export const routes = [
     path: '/history',
   },
   {
-    name: pages.EXCHANGE,
-    path: '/exchange',
+    name: pages.SITE_EXCHANGE,
+    path: `/${pages.SITE_EXCHANGE}`,
   },
   {
     name: pages.WALLET,
@@ -97,6 +97,10 @@ export const routes = [
     name: pages.REGISTER,
     path: '/register',
   },
+  {
+    name: pages.EXCHANGE,
+    path: `/${pages.EXCHANGE}`,
+  }
 ];
 
 const params = {

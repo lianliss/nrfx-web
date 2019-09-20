@@ -24,13 +24,14 @@ class Input extends React.Component {
       Input: true,
       multiLine: this.props.multiLine,
       error: this.props.error,
-      password: this.props.type === "password"
+      password: this.props.type === "password",
     });
 
-    let InputWrapper = 'Input__wrapper';
-    if (this.props.classNameWrapper) {
-      InputWrapper += ' ' + this.props.classNameWrapper;
-    }
+    const wrapperClassName = classNames({
+      Input__wrapper: true,
+      [this.props.classNameWrapper]: !!this.props.classNameWrapper,
+      [this.props.size]: !!this.props.size,
+    });
 
     let params = {
       className,
@@ -66,7 +67,7 @@ class Input extends React.Component {
     const openEyeSvg = require('../../asset/opened_eye_24.svg');
 
     return (
-      <div className={InputWrapper} onClick={this.props.onClick}>
+      <div className={wrapperClassName} onClick={this.props.onClick}>
         {cont}
         { this.props.type === "password" &&
           <div className="Input__display_password_button" onClick={this.__toggleDisplayPassword.bind(this)}>
@@ -102,6 +103,7 @@ Input.propTypes = {
   onClick: PropTypes.func,
   classNameWrapper: PropTypes.string,
   disabled: PropTypes.bool,
+  size: PropTypes.oneOf(['small']),
 };
 
 export default React.memo(Input);

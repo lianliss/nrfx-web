@@ -31,7 +31,7 @@ function Header({ showLightLogo, langList, routerState }) {
         },
         {
           title: utils.getLang('site__headerExchange'),
-          route: pages.EXCHANGE,
+          route: pages.SITE_EXCHANGE,
         },
         {
           title: utils.getLang('site__headerRobots'),

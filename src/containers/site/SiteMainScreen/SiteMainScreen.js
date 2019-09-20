@@ -58,7 +58,7 @@ export default class SiteMainScreen extends BaseScreen {
               title={this.lang.site.homeExchange}
               bgTitle={this.lang.site.homeExchange}
               icon="exchange"
-              seeMoreLink={pages.EXCHANGE}
+              seeMoreLink={pages.SITE_EXCHANGE}
             >{[this.lang.site.homeExchangeSubTitile1, this.lang.site.homeExchangeSubTitile2, this.lang.site.homeExchangeSubTitile3]}</HomepageProduct>
             <HomepageProduct
               title={this.lang.site.homeWallet}

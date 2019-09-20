@@ -1,0 +1,89 @@
+.Exchange__wrapper {
+  min-width: 1328px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  display: flex;
+
+  .Content_box {
+    margin-top: 8px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.Exchange__left_content {
+  width: 272px;
+  flex: 0 0 auto;
+}
+
+.Exchange__right_content {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.Exchange__balances__currency {
+  display: flex;
+}
+
+.Exchange__balances__currency__full_name {
+  margin-left: 16px;
+}
+
+.Exchange__orders__side {
+  color: var(--primary-green);
+
+  &.sell {
+    color: var(--primary-red);
+  }
+}
+
+.Exchange__trade_content {
+  display: flex;
+}
+
+.Exchange__chart_wrapper {
+  flex: 1;
+  display: flex;
+  margin-right: 8px;
+  flex-direction: column;
+}
+
+.Exchange__chart {
+  flex: 1;
+}
+
+.Exchange__order_book {
+  flex: 0 0 auto;
+  width: 272px;
+
+  .Exchange__block {
+    height: 616px;
+  }
+}
+
+.Exchange__cancel_order_btn__wrap {
+  display: flex;
+  align-items: center;
+}
+
+.Exchange__cancel_order_btn {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  background: url('../../../asset/24px/close-xs.svg') no-repeat center/contain;
+  margin-left: -16px;
+  cursor: pointer;
+  transition: opacity 150ms ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.placeholder {
+    background: none;
+  }
+}

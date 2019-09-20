@@ -29,6 +29,14 @@ export function classNames() {
   return result.join(' ');
 }
 
+export function removeProperty(object, ...properties) {
+  let newObject = Object.assign({}, object);
+  for (let property of properties) {
+    delete newObject[property];
+  }
+  return newObject;
+}
+
 export function getLang(key) {
   return store.getState().default.lang[key];
 }
@@ -105,7 +113,7 @@ export function isFloat(n){
   return Number(n) === n && n % 1 !== 0;
 }
 
-export function formatDouble(input, fractionDigits = 8) {
+export function formatDouble(input, fractionDigits = 6) {
   return parseFloat(input.toFixed(fractionDigits));
 }
 
@@ -190,4 +198,8 @@ export function copyText(text) {
   document.execCommand("copy");
 
   document.body.removeChild(input);
+}
+
+export function isFiat(currency) {
+  return currency.toLowerCase() === 'usdt';
 }

@@ -14,13 +14,25 @@
   
   tr {
 
-    &.dark {
+    &.dark .Table__td__cont {
       background: var(--secondary-active-background);
     }
 
     &.Hover:hover {
       background: var(--contrast-primary);
     }
+  }
+
+  &.compact tr.dark .Table__td__cont {
+    background: var(--background-secondary);
+  }
+
+  &.compact tbody td:first-child .Table__td__cont {
+    border-radius: 12px 0 0 12px;
+  }
+
+  &.compact tbody td:last-child .Table__td__cont {
+    border-radius: 0 12px 12px 0;
   }
 
   thead td {
@@ -33,22 +45,59 @@
     justify-content: center;
     flex: 1;
     flex-direction: column;
+    padding: 0 8px;
+    line-height: 24px;
+    height: 56px;
   }
   
   th, td {
     font-size: 13px;
-    line-height: 24px;
-    padding: 0 8px;
-    height: 56px;
     border: none;
     vertical-align: middle;
+    padding: 0;
+    margin: 0;
 
-    &:first-child {
+    &:first-child .Table__td__cont {
       padding-left: 16px;
     }
 
-    &:last-child {
+    &:last-child .Table__td__cont {
       padding-right: 16px;
+    }
+  }
+
+  &.compact {
+    th, td {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 16px;
+    }
+
+    thead td {
+      height: 16px;
+    }
+
+    tbody td {
+      padding-top: 4px;
+    }
+
+    tbody tr:first-child td {
+      padding-top: 0;
+    }
+
+    .Table__td__cont {
+      height: 24px;
+    }
+  }
+
+  &.compact.inline {
+    tbody td {
+      padding-top: 0;
+    }
+
+    .Table__td__cont {
+      height: 16px;
+      line-height: 16px;
     }
   }
 

@@ -9,6 +9,7 @@ import * as settingsActions from "./actions/cabinet/settings";
 import * as profileActions from "./actions/cabinet/profile";
 import * as notificationsActions from "./actions/cabinet/notifications";
 import * as toastsActions from "./actions/cabinet/toasts";
+import * as exchangeActions from './actions/cabinet/exchange';
 
 export function getWithState(caseName, caseClass) {
   let mapState2Props = state => ({...state}),
@@ -128,6 +129,12 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.CABINET_REGISTER:
       mapDispatch2Props = {
         toastPush: toastsActions.toastPush
+      };
+      break;
+    case CLASSES.CABINET_EXCHANGE_SCREEN:
+      mapState2Props = (state) => ({ ...state.exchange });
+      mapDispatch2Props = {
+        load: exchangeActions.load
       };
       break;
     default:

@@ -1,0 +1,119 @@
+.OrderBook__cont__wrap {
+  display: flex;
+  height: 100%;
+}
+
+.OrderBook__cont {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  flex: 1;
+
+  &.indicator {
+    width: 24px;
+    flex: 0 0 auto;
+  }
+}
+
+.OrderBook__side {
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  display: flex;
+  position: relative;
+
+  &:last-child {
+    justify-content: flex-start;
+  }
+
+  .OrderBook__cont.indicator & {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+  }
+
+  .OrderBook__cont.indicator &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    opacity: 0.2;
+  }
+
+  &.red_bg:before {
+    background: var(--primary-red);
+  }
+
+  &.green_bg:before {
+    background: var(--primary-green);
+  }
+}
+
+.OrderBook__percent_indicator {
+  position: absolute;
+  width: 100%;
+  opacity: 0.3;
+
+  .OrderBook__side:first-child & {
+    bottom: 0;
+  }
+
+  .OrderBook__side:last-child & {
+    top: 0;
+  }
+
+  .OrderBook__side.red_bg & {
+    background: var(--primary-red);
+  }
+
+  .OrderBook__side.green_bg & {
+    background: var(--primary-green);
+  }
+}
+
+.OrderBook__order {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.OrderBook__order__row {
+  flex: 1;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+  position: relative;
+  z-index: 2;
+
+  &.right {
+    text-align: right;
+  }
+
+  &.center {
+    text-align: center;
+  }
+}
+
+.OrderBook__order__filled {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+
+  .OrderBook__order.sell & {
+    background: var(--primary-red);
+  }
+
+  .OrderBook__order.buy & {
+    background: var(--primary-green);
+  }
+}

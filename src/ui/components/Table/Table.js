@@ -6,12 +6,14 @@ import PropTypes from 'prop-types';
 import * as utils from '../../utils';
 import Hover from '../Hover/Hover';
 
-function Table({ headings, children, className }) {
+function Table({ headings, children, className, compact, skipContentBox, inline }) {
   return (
     <table className={utils.classNames({
       Table: true,
-      Content_box: true,
-      [className]: !!className
+      Content_box: !skipContentBox,
+      [className]: !!className,
+      compact: !!compact,
+      inline: !!inline,
     })}>
       <thead>
         <tr>
@@ -34,7 +36,7 @@ function Table({ headings, children, className }) {
           }
 
           return React.cloneElement(child, {
-            dark: i % 2 === 0
+            dark: !inline && i % 2 === 0
           });
         })}
       </tbody>
@@ -86,7 +88,10 @@ TableColumn.propTypes = {
   highlighted: PropTypes.bool,
   align: PropTypes.oneOf(['center', 'right']),
   style: PropTypes.object,
-  sub: PropTypes.string
+  sub: PropTypes.string,
+  compact: PropTypes.bool,
+  skipContentBox: PropTypes.bool,
+  inline: PropTypes.bool,
 };
 
 export default Table;

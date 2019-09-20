@@ -13,6 +13,7 @@ import modalGroupReducer from './reducers/modalGroup';
 import notificationsReducer from './reducers/notifications';
 import toastsReducer from './reducers/toasts';
 import testReducer from './reducers/test';
+import exchangeReducer from './reducers/exchange';
 
 const middlewares = [];
 
@@ -32,7 +33,8 @@ export function configureStore() {
     profile: profileReducer,
     notifications: notificationsReducer,
     toasts: toastsReducer,
-    test: testReducer
+    test: testReducer,
+    exchange: exchangeReducer
   }), applyMiddleware( ...middlewares, thunk, router5Middleware(router)));
 
   router.usePlugin(reduxPlugin(store.dispatch));
