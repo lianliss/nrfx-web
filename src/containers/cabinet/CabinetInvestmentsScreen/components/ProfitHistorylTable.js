@@ -35,8 +35,8 @@ export default function WithdrawalTable({ profits, total }) {
       <UI.TableCell key={i}>
         <UI.TableColumn />
         <UI.TableColumn>{utils.formatTableId(total - i)}</UI.TableColumn>
-        <UI.TableColumn sub="Standart">{item.plan.percent}</UI.TableColumn>
-        <UI.TableColumn>{item.plan.description}</UI.TableColumn>
+        <UI.TableColumn sub={item.plan.description}>{item.plan.percent}</UI.TableColumn>
+        <UI.TableColumn>{utils.ucfirst(item.deposit.type)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.amount} {item.deposit.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.profit.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.currency.toUpperCase()}</UI.TableColumn>
