@@ -122,7 +122,6 @@ function Header({ showLightLogo, langList, routerState }) {
     router.navigate(route);
   }
 
-  debugger;
   return (
     <div className="SiteHeader">
       {isVerticalMenuOpen
