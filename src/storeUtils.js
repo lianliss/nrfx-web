@@ -60,6 +60,7 @@ export function getWithState(caseName, caseClass) {
         return { ...state.wallets, ...state.investments}
       };
       mapDispatch2Props = {
+        toastPush: toastsActions.toastPush,
         loadWallets: walletsActions.loadWallets,
         loadInvestments: investmentsActions.loadInvestments,
       };
@@ -100,9 +101,13 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.SEND_COINS_MODAL:
-      mapState2Props = (state) => ({ thisState: {...state.modalGroup.states.send} });
+      mapState2Props = (state) => ({
+        thisState: state.modalGroup.states.send,
+        wallets: state.wallets.wallets
+      });
       mapDispatch2Props = {
-        setStateByModalPage: modalGroupActions.setStateByModalPage
+        setStateByModalPage: modalGroupActions.setStateByModalPage,
+        toastPush: toastsActions.toastPush
       };
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
@@ -126,7 +131,17 @@ export function getWithState(caseName, caseClass) {
         toastDrop: toastsActions.toastDrop
       };
       break;
+    case CLASSES.COMPONENT_FOOTER:
+      mapState2Props = (state) => ({
+        langList: state.default.langList,
+      });
+      break;
     case CLASSES.CABINET_REGISTER:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
+    case CLASSES.CABINET_RESET_PASSWORD:
       mapDispatch2Props = {
         toastPush: toastsActions.toastPush
       };

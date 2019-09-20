@@ -106,7 +106,7 @@ export function isFloat(n){
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  return parseFloat(input.toFixed(fractionDigits));
+  return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 
 export function formatTableId(index) {
@@ -177,23 +177,4 @@ export function switchMatch(key, node) {
       }
     }
   }
-}
-
-export function copyText(text) {
-  const input = document.createElement('input');
-  input.value = text;
-  input.style = {
-    position: 'fixed',
-    top: '-10px',
-    right: '-10px',
-    width: 1,
-    height: 1
-  };
-
-  document.body.appendChild(input);
-  input.select();
-
-  document.execCommand("copy");
-
-  document.body.removeChild(input);
 }

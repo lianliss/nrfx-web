@@ -56,7 +56,7 @@ export default function HistoryTable({ history }) {
             <div title={item.address}>{address}</div>
           </div>
         </UI.TableColumn>
-        <UI.TableColumn>{utils.formatDouble(item.amount)}</UI.TableColumn>
+        <UI.TableColumn align="right">{utils.formatDouble(item.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn>
           <div className={utils.classNames({
@@ -65,7 +65,9 @@ export default function HistoryTable({ history }) {
             [item.category]: true
           })}>{status}</div>
         </UI.TableColumn>
-        <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
+        <UI.TableColumn>
+          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY h:mm a')}</div>
+        </UI.TableColumn>
       </UI.TableCell>
     )
   });

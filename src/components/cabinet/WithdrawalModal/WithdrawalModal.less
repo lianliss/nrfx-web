@@ -2,6 +2,31 @@
   width: 384px;
   padding: 24px 48px 32px;
   box-sizing: border-box;
+
+  &__success_icon {
+    margin: 30px auto 0;
+    width: 120px;
+    height: 120px;
+  }
+
+  &.success {
+    text-align: center;
+
+    h4 {
+      color: var(--color-green);
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    p {
+      color: var(--primary-grey);
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      margin: 16px 0 80px;
+    }
+  }
 }
 
 .WithdrawalModal__icon {

@@ -9,6 +9,7 @@ import * as actions from '../../../actions';
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../utils';
+import copYText from 'clipboard-copy';
 
 export default class ReceiveCoinsModal extends React.Component {
   constructor(props) {
@@ -147,7 +148,8 @@ export default class ReceiveCoinsModal extends React.Component {
   };
 
   __copy = () => {
-    utils.copyText(this.wallet.address);
-    this.setState({ isCopied: true });
+    copYText(this.wallet.address).then(() => {
+      this.setState({ isCopied: true });
+    });
   };
 }
