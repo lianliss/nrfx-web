@@ -42,6 +42,10 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, { modals });
     }
 
+    case actionTypes.LOGOUT: {
+      return { ...state, profile: {} };
+    }
+
     case actionTypes.SET_ADAPTIVE: {
       return {
         ...state,

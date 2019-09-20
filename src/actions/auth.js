@@ -47,6 +47,11 @@ export function getAuth(login, password) {
 //   });
 // }
 
+export function logout() {
+  auth.logout();
+  store.dispatch({type: actionTypes.LOGOUT});
+}
+
 export function getGoogleCode(login, password, code) {
   const appId = 8;
   const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';

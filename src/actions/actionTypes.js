@@ -4,6 +4,7 @@ export const SET_LANG = 'SET_LANG';
 export const AUTH = 'AUTH';
 export const STATIC = 'STATIC';
 export const PROFILE = 'PROFILE';
+export const LOGOUT = 'LOGOUT';
 
 export const PUSH_MODAL = 'PUSH_MODAL';
 export const POP_MODAL = 'POP_MODAL';
