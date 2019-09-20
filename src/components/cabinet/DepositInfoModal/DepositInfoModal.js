@@ -7,6 +7,7 @@ import moment from 'moment/min/moment-with-locales';
 import InfoRow, { InfoRowGroup } from '../../../components/cabinet/InfoRow/InfoRow';
 import * as utils from '../../../utils';
 import * as actions from '../../../actions';
+import * as modalGroupActions from "../../../actions/modalGroup";
 
 export default class DepositInfoModal extends React.Component {
   render() {
@@ -14,10 +15,12 @@ export default class DepositInfoModal extends React.Component {
       return null;
     }
 
+
+
     const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
-
+    console.log(1, deposit);
     return (
       <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
@@ -35,15 +38,17 @@ export default class DepositInfoModal extends React.Component {
             <InfoRowGroup className="DepositInfoModal__column">
               <InfoRow label="Period">{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_openNewDeposit_days')}</InfoRow>
               <InfoRow label="Amount">{deposit.amount} {currency}</InfoRow>
-              <InfoRow label="Profit">{deposit.profit.toFixed(4)} {currency} (78%)</InfoRow>
-              <InfoRow label="In Fiat">1456 USD</InfoRow>
+              <InfoRow label="Profit">{utils.formatDouble(deposit.profit, 8)} {currency} ({deposit.percent}%)</InfoRow>
+              <InfoRow label="In Fiat">{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
             </InfoRowGroup>
           </div>
-          {/*<div className="DepositInfoModal__withdrawal_form">
-            <UI.Input placeholder="Type amount" indicator={<div className="DepositInfoModal__withdrawal_form__currency">LTC</div>} />
-            <UI.Button type="outline">Max</UI.Button>
-            <UI.Button style={{width: 208, flex: '0 0 auto'}}>Withdraw</UI.Button>
-          </div>*/}
+          {/*<div className="DepositInfoModal__withdrawal_form" style={{display:'flex'}}>*/}
+          {/*<UI.Input placeholder="Type amount" indicator={<div className="DepositInfoModal__withdrawal_form__currency">LTC</div>} />*/}
+          {/*<UI.Button type="outline">Max</UI.Button>*/}
+          {/*<UI.Button style={{width: 208, margin: 'auto'}} onClick={() => modalGroupActions.openModalPage('withdrawal', { currency })}>*/}
+          {/*Withdraw*/}
+          {/*</UI.Button>*/}
+          {/*</div>*/}
         </div>
       </UI.Modal>
     )
