@@ -1,28 +1,24 @@
+// styles
+// external
 import React from 'react';
-import { connect } from 'react-redux';
-import { loadReCaptcha } from 'react-recaptcha-google';
-
+import {connect} from 'react-redux';
+import {loadReCaptcha} from 'react-recaptcha-google';
+// internal
 import Routes from './Routes';
 import Modals from './Modals';
 import ModalGroup from './ui/components/ModalGroup/ModalGroup';
 import Toasts from './components/cabinet/Toasts/Toasts';
-
+import CookieUsage from './components/site/CookieUsage/CookieUsage';
+import UI from './ui';
 import * as actions from './actions';
 import * as testActions from './actions/test';
 import * as storage from './services/storage';
 
-import CookieUsage from './components/site/CookieUsage/CookieUsage';
-import UI from './ui';
-
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: true,
-      error: null
-    };
-  }
+  state = {
+    isLoading: true,
+    error: null
+  };
 
   componentDidMount() {
     loadReCaptcha();

@@ -1,9 +1,10 @@
+// styles
 import './Search.less';
-
+// external
 import React  from 'react';
 import PropTypes from 'prop-types';
-
-import { classNames } from '../../utils';
+// internal
+import {classNames} from '../../utils';
 
 
 function Search(props) {

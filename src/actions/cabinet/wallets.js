@@ -1,8 +1,11 @@
-import * as actionTypes from '../actionTypes';
-import * as api from '../../services/api';
+// styles
+// external
+// internal
 import store from '../../store';
 import apiSchema from '../../services/apiSchema';
-import * as toastsActions from "./toasts";
+import * as actionTypes from '../actionTypes';
+import * as api from '../../services/api';
+import * as toastsActions from './toasts';
 
 export function loadWallets() {
   return (dispatch, getState) => {

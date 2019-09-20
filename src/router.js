@@ -1,6 +1,9 @@
+// styles
+// external
 import createRouter from 'router5';
 import browserPlugin from 'router5-plugin-browser';
 //import listenersPlugin from 'router5-plugin-listeners';
+// internal
 import * as pages from './constants/pages';
 
 export const routes = [

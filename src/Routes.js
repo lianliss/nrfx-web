@@ -1,6 +1,7 @@
+// styles
+// external
 import React from 'react';
-
-import * as pages from './constants/pages';
+// internal
 import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
 import SiteAboutScreen from './containers/site/SiteAboutScreen/SiteAboutScreen';
 import SiteWalletScreen from './containers/site/SiteWalletScreen/SiteWalletScreen';
@@ -14,21 +15,20 @@ import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactSc
 import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
 import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
-
-import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
-import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
-import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
-import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
-import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
-import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
-import * as CabinetResetPassword from './containers/cabinet/CabinetResetPasswordScreen/CabinetResetPasswordScreen';
-import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
-
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
 
-export default function Routes(props) {
+import * as pages from './constants/pages';
+import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
+import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
+import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
+import * as CabinetSettingsScreen from './containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen';
+import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
+import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
+import * as CabinetResetPassword from './containers/cabinet/CabinetResetPasswordScreen/CabinetResetPasswordScreen';
+import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen';
 
+export default function Routes(props) {
   const routeState = props.router.getState();
   const routerParams = routeState.params;
   const route = routeState.name;

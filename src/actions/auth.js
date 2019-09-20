@@ -1,9 +1,12 @@
+// styles
+// external
+// internal
+import store from '../store';
+import apiSchema from '../services/apiSchema';
 import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as auth from '../services/auth';
-import store from '../store';
-import apiSchema from '../services/apiSchema';
-import * as emitter from "../services/emitter";
+import * as emitter from '../services/emitter';
 
 export function getAuth(login, password) {
   const app_id = 8;

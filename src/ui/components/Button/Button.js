@@ -1,11 +1,11 @@
+// styles
 import './Button.less';
-
+// external
 import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
-
-import { classNames } from '../../utils';
-
+// internal
+import {classNames} from '../../utils';
 
 function Button(props) {
   const className = classNames({

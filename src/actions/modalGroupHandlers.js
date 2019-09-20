@@ -1,6 +1,9 @@
-import * as modalGroupConstant from "../constants/modalGroup";
-import router from "../router";
-import * as modalGroupActions from "./modalGroup";
+// styles
+// external
+// internal
+import router from '../router';
+import * as modalGroupConstant from '../constants/modalGroup';
+import * as modalGroupActions from './modalGroup';
 
 export function closeHandler(modalPageName) {
   switch (modalPageName) {

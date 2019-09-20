@@ -1,5 +1,7 @@
+// styles
+// external
 import React from 'react';
-
+// internal
 import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';

@@ -1,14 +1,17 @@
+// styles
+// external
 import {memo} from 'react';
 import {connect} from 'react-redux';
+// internal
 import * as CLASSES from './constants/classes';
 import * as walletsActions from './actions/cabinet/wallets';
 import * as actions from './actions/';
-import * as modalGroupActions from "./actions/modalGroup";
-import * as investmentsActions from "./actions/cabinet/investments";
-import * as settingsActions from "./actions/cabinet/settings";
-import * as profileActions from "./actions/cabinet/profile";
-import * as notificationsActions from "./actions/cabinet/notifications";
-import * as toastsActions from "./actions/cabinet/toasts";
+import * as modalGroupActions from './actions/modalGroup';
+import * as investmentsActions from './actions/cabinet/investments';
+import * as settingsActions from './actions/cabinet/settings';
+import * as profileActions from './actions/cabinet/profile';
+import * as notificationsActions from './actions/cabinet/notifications';
+import * as toastsActions from './actions/cabinet/toasts';
 
 export function getWithState(caseName, caseClass) {
   let mapState2Props = state => ({...state}),

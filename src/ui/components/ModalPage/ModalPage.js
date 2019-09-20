@@ -1,7 +1,9 @@
+// styles
 import './ModalPage.less';
-
+// external
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+// internal
 import {classNames} from '../../../utils/index';
 import {MODALGROUP_SEPARATOR} from '../../../constants/modalGroup';
 

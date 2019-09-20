@@ -1,6 +1,9 @@
-import * as actionTypes from './actionTypes';
+// styles
+// external
+// internal
 import store from '../store';
-import router from "../router";
+import router from '../router';
+import * as actionTypes from './actionTypes';
 import * as modalGroupConstant from '../constants/modalGroup';
 
 export function modalGroupSetActiveModal(name) {

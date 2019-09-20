@@ -1,14 +1,16 @@
+// styles
 import './CabinetWrapper.less';
+// external
 import React, {Component} from 'react';
+import SVG from 'react-inlinesvg';
+// internal
 import Header from '../../components/cabinet/Header/Header';
 import AdaptiveHeader from '../../components/cabinet/Header/AdaptiveHeader';
-import { classNames } from '../../utils';
-import * as CLASSES from "../../constants/classes";
-import * as storeUtils from "../../storeUtils";
-import SVG from "react-inlinesvg";
+import {classNames} from '../../utils';
+import * as CLASSES from '../../constants/classes';
+import * as storeUtils from '../../storeUtils';
 
 class CabinetWrapper extends Component {
-
   componentDidMount() {
     window.addEventListener('resize', this.__handleOnResize);
     this.__handleResize(document.body.offsetWidth);

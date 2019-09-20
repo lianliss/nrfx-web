@@ -1,5 +1,7 @@
+//styles
+// external
 import React, { useEffect, useRef } from 'react';
-
+// internal
 import store from '../store';
 import router from '../router';
 
