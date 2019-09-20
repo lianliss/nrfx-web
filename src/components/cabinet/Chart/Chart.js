@@ -91,7 +91,7 @@ export default function Chart({ series, ...props }) {
       series: {
         lineWidth: 3,
         marker: {
-          enabled: false,
+          enabled: props.marker,
           radius: 3,
           symbol: 'circle',
           fillColor: '#fff',

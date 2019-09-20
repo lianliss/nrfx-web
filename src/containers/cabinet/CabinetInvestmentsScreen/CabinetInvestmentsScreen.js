@@ -8,7 +8,7 @@ import WithdrawaHistorylTable from './components/WithdrawaHistorylTable';
 import ProfitHistorylTable from './components/ProfitHistorylTable';
 import DepositTable from './components/DepositTable';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
-import ChartProfit from "./components/ChartProfit";
+import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as modalGroupActions from '../../../actions/modalGroup';
 

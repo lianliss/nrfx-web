@@ -12,8 +12,8 @@ import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 import DashboardItem from './components/DashboardItem';
-import ProfileActionCards from './components/ProfileActionCards';
 import * as utils from "../../../utils";
+import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import router from "../../../router";
 
 import { ReactComponent as SettingsSvg } from '../../../asset/24px/settings.svg';
@@ -58,7 +58,20 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   }
 
   __renderRightContent = () => {
-    return <WalletBalance wallets={this.props.wallets} walletSelected={this.state.walletSelected} />;
+    if (!this.props.dashboard.hasOwnProperty('chart')) {
+      return '';
+    }
+
+    return <div>
+      <div>
+        <WalletBalance wallets={this.props.wallets} walletSelected={this.state.walletSelected} />
+      </div>
+      <div className="CabinetProfileScreen__height24">
+      </div>
+      <div>
+        <ChartProfit chart={this.props.dashboard.chart} />
+      </div>
+    </div>
   };
 
   __renderContent = () => {
@@ -85,7 +98,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         {this.__renderWallets()}
         <div className="CabinetProfileScreen__height_padding"> </div>
         {this.__renderDashboard()}
-        {this.__renderCards()}
       </div>
     )
   };
@@ -107,7 +119,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   };
 
   __renderDashboard = () => {
-    if (this.props.dashboard.length < 1) return;
+    if (Object.keys(this.props.dashboard).length < 1) return;
     const rows = this.props.dashboard.stats.map((dashboardItem, i) => {
       return <DashboardItem
         key={i}
@@ -123,10 +135,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         />
       </div>
     )
-  };
-
-  __renderCards = () => {
-    return <ProfileActionCards />
   };
 
   __walletSelect = (wallet) => {
