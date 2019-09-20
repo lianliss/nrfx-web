@@ -61,7 +61,7 @@ class OpenDepositModal extends React.Component {
       children: RateDetailsModal,
       params: {
         currency: this.state.currency,
-        plans: this.state.plans.map(p => p[this.state.selectDepositType])
+        plans: this.state.plans.map(p => p["static"])
       }
     })
   }
@@ -81,7 +81,7 @@ class OpenDepositModal extends React.Component {
         return {
           value: p.id,
           title: p.description,
-          note: `${p.percent + p.bonus}% ${p.days} ${utils.getLang('global_days')}`,
+          note: `${p.percent}% ${p.days} ${utils.getLang('global_days')}`,
           max: p.max,
           min: p.min
         }
