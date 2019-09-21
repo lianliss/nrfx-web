@@ -24,18 +24,18 @@ export default function HistoryTable({ history }) {
     </UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_addressLogin')}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('cabinet_openNewDeposit_amount')}</UI.TableColumn>,
-    <UI.TableColumn>{utils.getLang('site__homeWallet')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_wallet')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_date')}</UI.TableColumn>,
   ];
 
   const rows = history.map((item, i) => {
     let status;
-    if (item.category === 'send' && item.status === 'pending') {
-      status = utils.getLang('cabinet_walletTransactionModal_confirmation');
-    } else {
-      status = item.category === 'send' ? utils.getLang('cabinet_wallets_historyTable_sent') : utils.getLang('cabinet_wallets_historyTable_received');
-    }
+    //if (item.category === 'send' && item.status === 'pending') {
+    //  status = utils.getLang('cabinet_walletTransactionModal_confirmation');
+    //} else {
+    status = item.category === 'send' ? utils.getLang('cabinet_wallets_historyTable_sent') : utils.getLang('cabinet_wallets_historyTable_received');
+    //}
 
     let address = utils.clipTextMiddle(item.address) || utils.getLang('cabinet_wallets_historyTable_unknown');
     if (item.type === 'transfer') {
@@ -66,7 +66,7 @@ export default function HistoryTable({ history }) {
           })}>{status}</div>
         </UI.TableColumn>
         <UI.TableColumn>
-          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY h:mm a')}</div>
+          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY HH:mm')}</div>
         </UI.TableColumn>
       </UI.TableCell>
     )
