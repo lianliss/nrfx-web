@@ -34,7 +34,7 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) 
         </UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.currency.toUpperCase()}</UI.TableColumn>
-        <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
+        <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY h:mm')}</UI.TableColumn>
       </UI.TableCell>
     )
   });

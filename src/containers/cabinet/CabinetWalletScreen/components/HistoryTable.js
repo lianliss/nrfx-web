@@ -31,11 +31,11 @@ export default function HistoryTable({ history }) {
 
   const rows = history.map((item, i) => {
     let status;
-    if (item.category === 'send' && item.status === 'pending') {
-      status = utils.getLang('cabinet_walletTransactionModal_confirmation');
-    } else {
-      status = item.category === 'send' ? utils.getLang('cabinet_wallets_historyTable_sent') : utils.getLang('cabinet_wallets_historyTable_received');
-    }
+    //if (item.category === 'send' && item.status === 'pending') {
+    //  status = utils.getLang('cabinet_walletTransactionModal_confirmation');
+    //} else {
+    status = item.category === 'send' ? utils.getLang('cabinet_wallets_historyTable_sent') : utils.getLang('cabinet_wallets_historyTable_received');
+    //}
 
     let address = utils.clipTextMiddle(item.address) || utils.getLang('cabinet_wallets_historyTable_unknown');
     if (item.type === 'transfer') {
