@@ -6,6 +6,7 @@ import SVG from 'react-inlinesvg';
 import * as utils from '../../../utils';
 import * as actions from '../../../actions';
 import * as currencies from '../../../utils/currencies';
+import * as modalGroupActions from '../../../actions/modalGroup';
 
 class WalletBox extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class WalletBox extends React.Component {
     });
 
     return (
-      <div className={this.className} onClick={this.isGenerating ? () => {} : () => {this.props.onClick()}}>
+      <div className={this.className} onClick={this.isGenerating ? () => {} : this.__onClick}>
         <div style={{ backgroundImage: `url(${this.currencyInfo.icon})` }} className="WalletBox__icon" />
 
         <div
@@ -60,6 +61,16 @@ class WalletBox extends React.Component {
       return utils.formatDouble(this.props.amount, 6) + ' ' + this.props.currency.toUpperCase();
     } else {
       return utils.getLang('cabinet_walletTransactionModal_receive');
+    }
+  };
+
+  __onClick = () => {
+    if (this.props.amount > 0) {
+      return this.props.onClick();
+    } else {
+      return modalGroupActions.openModalPage('receive', {
+        preset: utils.ucfirst(this.currencyInfo.name)
+      });
     }
   };
 }

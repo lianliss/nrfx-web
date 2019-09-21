@@ -57,6 +57,12 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     )
   }
 
+  get wallets() {
+    return this.props.wallets.sort((a, b) => {
+      return (a.currency < b.currency) ? -1 : 1;
+    });
+  }
+
   __renderRightContent = () => {
     if (!this.props.dashboard.hasOwnProperty('chart')) {
       return '';
@@ -64,7 +70,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
     return <div>
       <div>
-        <WalletBalance wallets={this.props.wallets} walletSelected={this.state.walletSelected} />
+        <WalletBalance wallets={this.wallets} walletSelected={this.state.walletSelected} />
       </div>
       <div className="CabinetProfileScreen__height24">
       </div>
@@ -103,7 +109,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   };
 
   __renderWallets = () => {
-    const rows = this.props.wallets.map((wallet, i) => {
+    const rows = this.wallets.map((wallet, i) => {
       return <WalletBox
         key={i}
         {...wallet}

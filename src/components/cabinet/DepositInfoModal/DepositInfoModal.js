@@ -15,8 +15,6 @@ export default class DepositInfoModal extends React.Component {
       return null;
     }
 
-
-
     const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
@@ -38,7 +36,7 @@ export default class DepositInfoModal extends React.Component {
             <InfoRowGroup className="DepositInfoModal__column">
               <InfoRow label="Period">{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_openNewDeposit_days')}</InfoRow>
               <InfoRow label="Amount">{deposit.amount} {currency}</InfoRow>
-              <InfoRow label="Profit">{utils.formatDouble(deposit.profit, 8)} {currency} ({deposit.percent}%)</InfoRow>
+              <InfoRow label="Profit">{utils.formatDouble(deposit.profit, 8)} {currency} ({utils.formatDouble(deposit.current_percent, 2)}%)</InfoRow>
               <InfoRow label="In Fiat">{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
             </InfoRowGroup>
           </div>
