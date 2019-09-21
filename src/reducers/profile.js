@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   loadingStatus: {},
-  dashboard: []
+  dashboard: {}
 };
 
 export default function reduce(state = initialState, action = {}) {

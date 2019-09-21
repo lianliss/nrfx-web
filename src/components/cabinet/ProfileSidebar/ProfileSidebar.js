@@ -12,6 +12,7 @@ import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
 import * as modalGroupActions from "../../../actions/modalGroup";
 import UploadAvatarModal from "../UploadAvatarModal/UploadAvatarModal";
+import Footer from "../Footer/Footer";
 
 class ProfileSidebar extends React.Component {
   render() {
@@ -31,36 +32,39 @@ class ProfileSidebar extends React.Component {
       verified
     });
     return <div className="ProfileSidebar">
-      <div className="ProfileSidebar__user">
-        <div className="ProfileSidebar__user__avatar__wrap" onClick={() => {
-          modalGroupActions.openModalPage('upload_avatar', {}, {
-            children: UploadAvatarModal
-          })
-        }}>
-          <div className="ProfileSidebar__user__avatar__over">
-            <SVG src={require("../../../asset/24px/camera.svg")} />
+      <div className="ProfileSidebar__top">
+        <div className="ProfileSidebar__user">
+          <div className="ProfileSidebar__user__avatar__wrap" onClick={() => {
+            modalGroupActions.openModalPage('upload_avatar', {}, {
+              children: UploadAvatarModal
+            })
+          }}>
+            <div className="ProfileSidebar__user__avatar__over">
+              <SVG src={require("../../../asset/24px/camera.svg")} />
+            </div>
+            <img className="ProfileSidebar__user__avatar blur" src={this.props.user.photo_url} alt="" />
+            <img className="ProfileSidebar__user__avatar" src={this.props.user.photo_url} alt="" />
           </div>
-          <img className="ProfileSidebar__user__avatar blur" src={this.props.user.photo_url} alt="" />
-          <img className="ProfileSidebar__user__avatar" src={this.props.user.photo_url} alt="" />
+          <h3 className="ProfileSidebar__user__title">{utils.ucfirst(this.props.user.first_name)} {utils.ucfirst(this.props.user.last_name)}</h3>
+          <p className="ProfileSidebar__user__txt">{this.props.user.login}</p>
+          <p className="ProfileSidebar__user__txt">{this.props.role}</p>
+          {/*<button className={verificationClasses}>{verificationText}</button> // TODO: Вернуть как только будет готова верификация */}
         </div>
-        <h3 className="ProfileSidebar__user__title">{utils.ucfirst(this.props.user.first_name)} {utils.ucfirst(this.props.user.last_name)}</h3>
-        <p className="ProfileSidebar__user__txt">{this.props.user.login}</p>
-        <p className="ProfileSidebar__user__txt">{this.props.role}</p>
-        {/*<button className={verificationClasses}>{verificationText}</button> // TODO: Вернуть как только будет готова верификация */}
-      </div>
 
-      <div className="ProfileSidebar__menu">
-        {this.__getBackButton()}
-        {this.props.sidebarOptions && this.props.sidebarOptions.map((child) => {
-          if (!React.isValidElement(child)) {
-            return child;
-          }
-          return React.cloneElement(child, {
-            isActive: this.section === child.props.section && !!child.props.section,
-            key: Math.random()
-          });
-        })}
+        <div className="ProfileSidebar__menu">
+          {this.__getBackButton()}
+          {this.props.sidebarOptions && this.props.sidebarOptions.map((child) => {
+            if (!React.isValidElement(child)) {
+              return child;
+            }
+            return React.cloneElement(child, {
+              isActive: this.section === child.props.section && !!child.props.section,
+              key: Math.random()
+            });
+          })}
+        </div>
       </div>
+      <Footer className="ProfileSidebar__footer" />
     </div>
   }
 

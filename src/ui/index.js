@@ -1,5 +1,7 @@
+//styles
 import './index.less';
-
+// external
+// internal
 import Button from './components/Button/Button';
 import WatchButton from './components/Button/WatchButton';
 import Input from './components/Input/Input';

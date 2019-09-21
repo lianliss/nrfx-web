@@ -94,7 +94,7 @@ class SendCoinsModal extends React.Component {
               options={this.options}
               onChange={(item) => {
                 this.__setState({currency: item.value, selectedWallet: item });
-                this.__amountDidChange(this.props.thisState.amount);
+                this.__amountDidChange(0);
               }}
             />}
           </div>
@@ -112,12 +112,13 @@ class SendCoinsModal extends React.Component {
               indicator={this.props.thisState.currency.toUpperCase()}
               onTextChange={this.__amountDidChange}
               value={this.props.thisState.amount || ''}
+              error={this.state.errorAmount}
             />
             <UI.Input
               placeholder="0"
               indicator="USD"
               onTextChange={this.__usdAmountDidChange}
-              value={this.props.thisState.amountUSD}
+              value={this.props.thisState.amountUSD > 0 ? this.props.thisState.amountUSD : ""}
             />
             <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>
               {utils.getLang('cabinet_sendCoinsModal_max')}
@@ -207,6 +208,22 @@ class SendCoinsModal extends React.Component {
 
   __sendButtonHandler = () => {
     if (!this.__checkItsReady()) return;
+    if (
+      this.props.thisState.amount >
+      this.props.wallets.find(w => w.currency === this.props.thisState.currency).amount
+    ) {
+      this.props.toastPush(utils.getLang("cabinet_notEnoughFunds"), "error");
+      this.setState({
+        errorAmount: true
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            errorAmount: false
+          });
+        }, 1000)
+      })
+      return;
+    }
 
     if (this.props.thisState.address.length < 15) {
       api.post('profile/check_login/', {login: this.props.thisState.address}).then((data) => {

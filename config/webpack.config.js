@@ -25,6 +25,8 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -185,6 +187,11 @@ module.exports = function(webpackEnv) {
       minimize: isEnvProduction,
       minimizer: [
         // This is only used in production mode
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            keep_fnames: true,
+          },
+        }),
         new TerserPlugin({
           terserOptions: {
             parse: {

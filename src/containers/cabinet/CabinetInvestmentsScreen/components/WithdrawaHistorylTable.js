@@ -7,7 +7,7 @@ import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/
 import * as modalGroupActions from "../../../../actions/modalGroup";
 import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ withdrawals }) {
+export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) {
   if (!withdrawals.items || !withdrawals.items.length) {
     return (
       <EmptyContentBlock
@@ -28,13 +28,13 @@ export default function WithdrawalTable({ withdrawals }) {
   const rows = withdrawals.items.map((item, i) => {
     return (
       <UI.TableCell key={i}>
-        <UI.TableColumn>{utils.formatTableId(i)}</UI.TableColumn>
+        <UI.TableColumn>{utils.formatTableId(withdrawalsTotalCount - i)}</UI.TableColumn>
         <UI.TableColumn style={{width: "50%"}}>
           <span className={"Investment__withdrawal_table__status " + item.status}>{item.status}</span>
         </UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.currency.toUpperCase()}</UI.TableColumn>
-        <UI.TableColumn>{moment(item.created_at).fromNow()}</UI.TableColumn>
+        <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
       </UI.TableCell>
     )
   });

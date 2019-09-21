@@ -1,9 +1,12 @@
-import * as actionTypes from './actionTypes';
-import * as api from '../services/api';
+// styles
+// external
+// internal
 import store from '../store';
 import router from '../router';
-import * as utils from '../utils';
 import apiSchema from '../services/apiSchema';
+import * as actionTypes from './actionTypes';
+import * as api from '../services/api';
+import * as utils from '../utils';
 
 export function loadLang(code) {
   return new Promise((resolve, reject) => {

@@ -1,11 +1,11 @@
+// styles
 import './SiteWrapper.less';
-
+// external
 import React from 'react';
 import SVG from 'react-inlinesvg';
-
+// internal
 import Header from '../../components/site/Header/Header';
 import Footer from '../../components/site/Footer/Footer';
-
 
 function SiteWrapper({ isHomepage, withOrangeBg, className, children }) {
   return (

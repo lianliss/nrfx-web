@@ -19,7 +19,8 @@ class WithdrawalModal extends React.Component {
     selectDepositType: 'static',
     amount: '',
     gaCode: '',
-    errorGaCode: false
+    errorGaCode: false,
+    success: false
   };
 
   getPayment = () => {
@@ -30,7 +31,7 @@ class WithdrawalModal extends React.Component {
     switch (router.getState().params.section) {
       default:
         this.props.loadWallets();
-        this.props.loadInvestments();
+        !this.props.loaded && this.props.loadInvestments();
         break;
     }
   };
@@ -62,54 +63,69 @@ class WithdrawalModal extends React.Component {
         <UI.ModalHeader>
           {utils.getLang('withdraw_Income')}
         </UI.ModalHeader>
-        <div className="WithdrawalModal">
-          <div className="WithdrawalModal__info_row">
-            <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_beAware')}</div>
-            <div className="WithdrawalModal__info_row__caption">{utils.getLang('cabinet_withdrawalModal_eachRequestText')}</div>
-          </div>
-          <div className="WithdrawalModal__info_row">
-            <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_attention')}</div>
-            <div className="WithdrawalModal__info_row__caption">{utils.getLang('cabinet_withdrawalModal_moreThanText')}</div>
-          </div>
-          <div className="WithdrawalModal__row WithdrawalModal__row_amount">
-            <div className="WithdrawalModal__row_amount__input">
-              <UI.Input
-                autoFocus
-                placeholder="0"
-                indicator={this.props.currency.toUpperCase()}
-                onTextChange={this.__amountDidChange}
-                value={this.state.amount}
-              />
-              <p className="Form__helper__text">Available: {payment.available} {currency}</p>
+        { !this.state.success ? (
+          <div className="WithdrawalModal">
+            <div className="WithdrawalModal__info_row">
+              <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_beAware')}</div>
+              <div className="WithdrawalModal__info_row__caption">{utils.getLang('cabinet_withdrawalModal_eachRequestText')}</div>
             </div>
-            <UI.Button type="outline" smallPadding onClick={this.__maxDidPress}>{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
+            <div className="WithdrawalModal__info_row">
+              <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_attention')}</div>
+              <div className="WithdrawalModal__info_row__caption">{utils.getLang('cabinet_withdrawalModal_moreThanText')}</div>
+            </div>
+            <div className="WithdrawalModal__row WithdrawalModal__row_amount">
+              <div className="WithdrawalModal__row_amount__input">
+                <UI.Input
+                  autoFocus
+                  placeholder="0"
+                  indicator={this.props.currency.toUpperCase()}
+                  onTextChange={this.__amountDidChange}
+                  value={this.state.amount}
+                  error={this.state.amount > payment.available}
+                />
+                <p className="Form__helper__text">Available: {payment.available} {currency}</p>
+              </div>
+              <UI.Button type="outline" smallPadding onClick={this.__maxDidPress}>{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
+            </div>
+            <div className="WithdrawalModal__row">
+              <UI.Input
+                type="number"
+                autoComplete="off"
+                indicator={<div className="OpenDepositModal__ga_icon" /> }
+                value={this.state.gaCode}
+                onChange={this.__handleGAChange}
+                placeholder={utils.getLang('site__authModalGAPlaceholder')}
+                onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+                error={this.state.errorGaCode}
+                disabled={this.state.amount.length < 1}
+              />
+            </div>
+            <div className="WithdrawalModal__button_wrap">
+              <UI.Button style={{ width: '208px' }} onClick={this.__handleSubmit} disabled={!this.__formIsValid()}>
+                {utils.getLang('general_withdraw')}
+              </UI.Button>
+            </div>
+            <div className="WithdrawalModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           </div>
-          <div className="WithdrawalModal__row">
-            <UI.Input
-              type="number"
-              autoComplete="off"
-              indicator={<div className="OpenDepositModal__ga_icon" /> }
-              value={this.state.gaCode}
-              onChange={this.__handleGAChange}
-              placeholder={utils.getLang('site__authModalGAPlaceholder')}
-              onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
-              error={this.state.errorGaCode}
-              disabled={this.state.amount.length < 1}
+        ) : (
+          <div className="WithdrawalModal success">
+            <div
+              className="WithdrawalModal__success_icon"
+              style={{backgroundImage: `url(${require('../../../asset/120/success.svg')})`}}
             />
-          </div>
-          <div className="WithdrawalModal__button_wrap">
-            <UI.Button style={{ width: '208px' }} disabled={!this.__formIsValid()}>
-              {utils.getLang('general_withdraw')}
+            <h4>{utils.getLang('cabinet_withdrawalModal_successTitle')}</h4>
+            <p>{utils.getLang('cabinet_withdrawalModal_successText')}</p>
+            <UI.Button style={{ width: '208px' }} onClick={this.props.close}>
+              {utils.getLang('global_ok')}
             </UI.Button>
           </div>
-          <div className="WithdrawalModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
-        </div>
+        )}
       </UI.Modal>
     )
   }
 
   __formIsValid = () => {
-    return this.state.gaCode.length > 5 && this.state.amount.length > 0;
+    return this.state.gaCode.length === 6 && this.state.amount > 0;
   };
 
   __amountDidChange = (amount) => {
@@ -159,14 +175,15 @@ class WithdrawalModal extends React.Component {
   __handleSubmit = () => {
     if (!this.__formIsValid()) return;
     investmentsActions.withdrawAdd(this.__buildParams()).then((info) => {
-      this.props.close();
+      this.setState({ success: true });
     }).catch((info) => {
       switch (info.code) {
         case "ga_auth_code_incorrect": {
+          this.props.toastPush(utils.getLang("incorrect_code"), "error");
           return this.__inputError(this, 'errorGaCode');
         }
         default:
-          alert(info.message);
+          this.props.toastPush(info.message, "error");
           break;
       }
     });

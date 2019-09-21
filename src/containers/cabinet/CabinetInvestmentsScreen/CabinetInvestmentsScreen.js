@@ -8,7 +8,7 @@ import WithdrawaHistorylTable from './components/WithdrawaHistorylTable';
 import ProfitHistorylTable from './components/ProfitHistorylTable';
 import DepositTable from './components/DepositTable';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
-import ChartProfit from "./components/ChartProfit";
+import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as modalGroupActions from '../../../actions/modalGroup';
 
@@ -101,17 +101,25 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderProfitHistory() {
-    const profits = this.props.profits;
+    const { profits } = this.props;
     const total = this.props.profitsTotal;
+    console.log(1,this.props);
     return (
       <div>
-        <ProfitHistorylTable profits={profits} total={total} />
+        <Paging
+          isCanMore={!!profits.next && !(this.props.loadingStatus.profitsAppend === "loading")}
+          onMore={this.props.loadMoreProfitHistory}
+          moreButton={!!profits.next}
+          isLoading={this.props.loadingStatus.profitsAppend === "loading"}
+        >
+          <ProfitHistorylTable profits={profits} total={total} />
+        </Paging>
       </div>
     )
   }
 
   __renderWithdrawalHistory() {
-    const { withdrawals } = this.props;
+    const { withdrawals, withdrawalsTotalCount } = this.props;
 
     return (
       <div>
@@ -122,7 +130,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           moreButton={!!withdrawals.next}
           isLoading={withdrawals.isLoadingMore}
         >
-          <WithdrawaHistorylTable withdrawals={withdrawals} />
+          <WithdrawaHistorylTable withdrawals={withdrawals} withdrawalsTotalCount={withdrawalsTotalCount} />
         </Paging>
       </div>
     )

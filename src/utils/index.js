@@ -1,5 +1,7 @@
+//styles
+// external
 import React, { useEffect, useRef } from 'react';
-
+// internal
 import store from '../store';
 import router from '../router';
 
@@ -106,7 +108,7 @@ export function isFloat(n){
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  return parseFloat(input.toFixed(fractionDigits));
+  return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 
 export function formatTableId(index) {
@@ -155,39 +157,26 @@ export function switchMatch(key, node) {
   const __DEFAULT__ = 'default';
   switch (typeof node) {
     case 'object': {
-      if (node.hasOwnProperty(key)) {
-        return node[key];
-      } else {
-        if (node.hasOwnProperty(__DEFAULT__)) {
-          switch (typeof node[__DEFAULT__]) {
-            case 'function': {
-              return node[__DEFAULT__]();
+      switch (typeof key) {
+        case 'boolean':
+          return node[key];
+        default:
+        case 'string':
+          if (node.hasOwnProperty(key)) {
+            return node[key];
+          } else {
+            if (node.hasOwnProperty(__DEFAULT__)) {
+              switch (typeof node[__DEFAULT__]) {
+                case 'function': {
+                  return node[__DEFAULT__]();
+                }
+                default: return node[__DEFAULT__];
+              }
+            } else {
+              return key;
             }
-            default: return node[__DEFAULT__];
           }
-        } else {
-          return key;
-        }
       }
     }
   }
-}
-
-export function copyText(text) {
-  const input = document.createElement('input');
-  input.value = text;
-  input.style = {
-    position: 'fixed',
-    top: '-10px',
-    right: '-10px',
-    width: 1,
-    height: 1
-  };
-
-  document.body.appendChild(input);
-  input.select();
-
-  document.execCommand("copy");
-
-  document.body.removeChild(input);
 }

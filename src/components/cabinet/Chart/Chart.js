@@ -1,13 +1,17 @@
 import './Chart.less';
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment/min/moment-with-locales';
 import * as currencies from "../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { classNames } from "../../../utils/index";
 
 export default function Chart({ series, ...props }) {
+
+  const [ hovered, setHovered ] = useState(false);
+
   const options = {
     chart: {
       height: 200,
@@ -91,7 +95,7 @@ export default function Chart({ series, ...props }) {
       series: {
         lineWidth: 3,
         marker: {
-          enabled: false,
+          enabled: props.marker,
           radius: 3,
           symbol: 'circle',
           fillColor: '#fff',
@@ -111,16 +115,19 @@ export default function Chart({ series, ...props }) {
         },
         events: {
           legendItemClick: () => {
+            console.log(0);
             if (props.count < 2) {
               return false;
             }
           },
           mouseOver: function(e) {
+            setHovered(true);
             if (props.count > 1) {
               this.xAxis.update({ className: 'Chart__xaxis_invisible' });
             }
           },
           mouseOut: function () {
+            setHovered(false);
             if (props.count > 1) {
               this.xAxis.update({ className: '' });
             }
@@ -154,6 +161,7 @@ export default function Chart({ series, ...props }) {
 
   return (
     <HighchartsReact
+      containerProps={{ className: classNames("Chart", { hovered }) }}
       highcharts={Highcharts}
       options={options}
     />

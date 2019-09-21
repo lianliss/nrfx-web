@@ -1,6 +1,9 @@
-import * as actionTypes from "../actionTypes";
-import * as api from "../../services/api";
+// styles
+// external
+// internal
 import apiSchema from '../../services/apiSchema';
+import * as actionTypes from '../actionTypes';
+import * as api from '../../services/api';
 import * as toastsActions from './toasts';
 
 export function loadDashboard() {
