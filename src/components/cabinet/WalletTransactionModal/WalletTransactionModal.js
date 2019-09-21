@@ -89,7 +89,7 @@ export default class WalletTransactionModal extends React.Component {
                 </div>}
             </InfoRow>
             <InfoRow label="Amount">{utils.formatDouble(data.amount)} {currency}</InfoRow>
-            <InfoRow label="Date">{moment(data.created_at).format('DD MMM YYYY h:mm a')}</InfoRow>
+            <InfoRow label="Date">{moment(data.created_at).format('DD MMM YYYY hh:mm')}</InfoRow>
           </InfoRowGroup>
           <div className="WalletTransactionModal__card">
             <div className="WalletTransactionModal__card__icon">
