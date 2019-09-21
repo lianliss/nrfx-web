@@ -41,7 +41,7 @@ export default function WithdrawalTable({ profits, total }) {
         <UI.TableColumn align="right">{utils.formatDouble(item.profit.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn>{item.profit.type}</UI.TableColumn>
-        <UI.TableColumn>{moment(item.profit.date).format('DD MMM YYYY hh:mm')}</UI.TableColumn>
+        <UI.TableColumn>{moment(item.profit.date).format('DD MMM YYYY HH:mm')}</UI.TableColumn>
       </UI.TableCell>
     )
   });

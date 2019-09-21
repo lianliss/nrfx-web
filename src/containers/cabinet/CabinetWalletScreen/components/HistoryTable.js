@@ -66,7 +66,7 @@ export default function HistoryTable({ history }) {
           })}>{status}</div>
         </UI.TableColumn>
         <UI.TableColumn>
-          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY hh:mm')}</div>
+          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY HH:mm')}</div>
         </UI.TableColumn>
       </UI.TableCell>
     )
