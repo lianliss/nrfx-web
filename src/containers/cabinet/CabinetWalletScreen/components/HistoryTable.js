@@ -24,7 +24,7 @@ export default function HistoryTable({ history }) {
     </UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_addressLogin')}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('cabinet_openNewDeposit_amount')}</UI.TableColumn>,
-    <UI.TableColumn>{utils.getLang('site__homeWallet')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_wallet')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_date')}</UI.TableColumn>,
   ];
@@ -66,7 +66,7 @@ export default function HistoryTable({ history }) {
           })}>{status}</div>
         </UI.TableColumn>
         <UI.TableColumn>
-          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY h:mm a')}</div>
+          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY h:mm')}</div>
         </UI.TableColumn>
       </UI.TableCell>
     )
