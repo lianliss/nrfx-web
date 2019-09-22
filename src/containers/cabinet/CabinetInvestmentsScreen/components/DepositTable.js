@@ -63,7 +63,7 @@ export default function WithdrawalTable({ deposits }) {
       )
     }
 
-    item.localId = i + 1;
+    item.localId = deposits.length - i;
     return (
       <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
         deposit: JSON.stringify(item)
