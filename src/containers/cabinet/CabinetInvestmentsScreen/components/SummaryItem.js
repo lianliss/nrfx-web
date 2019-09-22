@@ -14,7 +14,7 @@ export default function SummaryItem({ available, currency, invested_amount, paid
     if (!(invested_amount > 0)) {
       return [
         <div key="info" className="Investments__summary__item__rows">
-          <InfoRow label="Invested">None</InfoRow>
+          <InfoRow label="Invested">0 {currency}</InfoRow>
         </div>,
         <div className="Investments__summary__item__actions empty">
           <UI.Button key="button" type="default" size="small" onClick={() => modalGroupActions.openModalPage('open_deposit', { currency })}>

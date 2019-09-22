@@ -34,6 +34,12 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     }
   };
 
+  get wallets() {
+    return this.props.wallets.sort((a, b) => {
+      return (a.currency < b.currency) ? -1 : 1;
+    });
+  }
+
   state = {
     walletSelected: null
   };
@@ -73,7 +79,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   }
 
   __renderRightContent = () => {
-    return <WalletBalance wallets={this.props.wallets} walletSelected={this.state.walletSelected} />;
+    return <WalletBalance wallets={this.wallets} walletSelected={this.state.walletSelected} />;
   };
 
   __renderContent = () => {
@@ -137,7 +143,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   };
 
   __renderWallets = () => {
-    const rows = this.props.wallets.map((wallet, i) => {
+    const rows = this.wallets.map((wallet, i) => {
       return <WalletBox
         key={i}
         {...wallet}
