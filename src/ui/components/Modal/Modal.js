@@ -23,8 +23,10 @@ function Modal(props) {
   };
 
   useEffect(() => {
+    document.body.style.overflowY = "hidden";
     document.addEventListener("mousedown", handleClick);
     return () => {
+      document.body.style.overflowY = "scroll";
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);
