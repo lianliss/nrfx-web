@@ -126,6 +126,11 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
+    case CLASSES.CHANGE_EMAIL_MODAL:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
     case CLASSES.COMPONENT_TOASTS:
       mapState2Props = (state) => ({
         toasts: state.toasts,
