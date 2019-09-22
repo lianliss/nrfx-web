@@ -69,11 +69,11 @@ class ConfirmSmsModal extends React.Component {
         phone_code: this.props.params.dialCode,
         phone_number: this.props.params.phoneWithoutCode,
         sms_code: this.state.smsCode
-      }).then((data) => {
+      }).then(({ phone_number }) => {
         modalGroupActions.modalGroupClear();
         this.props.setUserFieldValue({
           field: "phone_number",
-          value: "+" + this.props.params.dialCode + this.props.params.phoneWithoutCode
+          value: phone_number
         });
         this.props.toastPush(utils.getLang("cabinet_phoneNumberChangedSuccessfully"), "success");
       }).catch((info) => {
