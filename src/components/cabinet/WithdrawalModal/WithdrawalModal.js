@@ -83,7 +83,7 @@ class WithdrawalModal extends React.Component {
                   value={this.state.amount}
                   error={this.state.amount > payment.available}
                 />
-                <p className="Form__helper__text">Available: {payment.available} {currency}</p>
+                <p className="Form__helper__text">{utils.getLang("global_available")}: {payment.available} {currency}</p>
               </div>
               <UI.Button type="outline" smallPadding onClick={this.__maxDidPress}>{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
             </div>

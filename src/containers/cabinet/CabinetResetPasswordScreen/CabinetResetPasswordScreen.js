@@ -8,10 +8,6 @@ import * as api from "../../../services/api";
 import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
-import * as pages from '../../../constants/pages';
-import ReactPhoneInput from "react-phone-input-2";
-import moment from 'moment';
-import * as auth from "../../../services/auth";
 
 class CabinetRegister extends React.PureComponent {
   state = {

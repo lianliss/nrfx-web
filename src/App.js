@@ -13,6 +13,7 @@ import UI from './ui';
 import * as actions from './actions';
 import * as testActions from './actions/test';
 import * as storage from './services/storage';
+import moment from 'moment/min/moment-with-locales';
 
 class App extends React.Component {
   state = {
@@ -42,11 +43,17 @@ class App extends React.Component {
 
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
+    const currentLang = storage.getItem("lang");
     const { error } = this.state;
 
     if (this.state.isLoading) {
+      const loadingText = {
+        ru: "Загрузка...",
+        id: "memuat...",
+        // TODO
+      }[currentLang] || "Loading...";
       return (
-        <div className="AppLoading">Loading...</div>
+        <div className="AppLoading">{loadingText}</div>
       )
     }
 
@@ -80,10 +87,11 @@ class App extends React.Component {
   }
 
   _loadAssets = () => {
-    const lang = storage.getItem('lang');
+    const lang = storage.getItem('lang') || "en";
+    moment.locale(lang);
 
     Promise.all([
-      actions.loadLang(lang || 'en'),
+      actions.loadLang(lang),
       actions.loadCurrencies()
     ])
       .then(() => this.setState({isLoading: false}))

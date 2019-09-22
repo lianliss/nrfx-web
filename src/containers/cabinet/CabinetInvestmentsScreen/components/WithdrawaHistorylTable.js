@@ -19,10 +19,10 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) 
 
   const headings = [
     <UI.TableColumn>ID</UI.TableColumn>,
-    <UI.TableColumn>Status</UI.TableColumn>,
-    <UI.TableColumn align="right">Amount</UI.TableColumn>,
-    <UI.TableColumn>Wallet</UI.TableColumn>,
-    <UI.TableColumn>Date</UI.TableColumn>
+    <UI.TableColumn>{utils.getLang("global_status")}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang("global_amount")}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("cabinet_wallet")}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("global_date")}</UI.TableColumn>
   ];
 
   const rows = withdrawals.items.map((item, i) => {
@@ -30,7 +30,7 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) 
       <UI.TableCell key={i}>
         <UI.TableColumn>{utils.formatTableId(withdrawalsTotalCount - i)}</UI.TableColumn>
         <UI.TableColumn style={{width: "50%"}}>
-          <span className={"Investment__withdrawal_table__status " + item.status}>{item.status}</span>
+          <span className={"Investment__withdrawal_table__status " + item.status}>{utils.getLang(`status_${item.status}`) || item.status}</span>
         </UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.currency.toUpperCase()}</UI.TableColumn>

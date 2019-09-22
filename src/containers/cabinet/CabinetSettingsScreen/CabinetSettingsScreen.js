@@ -1,7 +1,7 @@
 import './CabinetSettingsScreen.less';
 
 import React from 'react';
-import moment from 'moment'
+import moment from 'moment/min/moment-with-locales';
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
@@ -69,7 +69,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         sidebarOptions={[
           <ProfileSidebarItem
             icon={<IdBadgeSvg />}
-            label="Personal"
+            label={utils.getLang("cabinet_settingsMenuPersonal")}
             baselink={true}
           />,
           /*<ProfileSidebarItem
