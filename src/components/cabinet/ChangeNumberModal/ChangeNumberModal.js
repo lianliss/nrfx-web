@@ -10,8 +10,10 @@ import ReactPhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/dist/style.css'
 import {isValidPhoneNumber} from 'react-phone-number-input';
 import * as settingsActions from '../../../actions/cabinet/settings';
+import * as storeUtils from '../../../storeUtils';
+import * as CLASSES from '../../../constants/classes';
 
-export default class ChangeNumberModal extends React.Component {
+class ChangeNumberModal extends React.Component {
   state = {
     gaCode: '',
     errorGaCode: false,
@@ -123,10 +125,15 @@ export default class ChangeNumberModal extends React.Component {
             });
             break;
           default:
-            alert(info.message);
+            this.props.toastPush(info.message, "error");
             break;
         }
       });
     }
   }
 }
+
+export default storeUtils.getWithState(
+  CLASSES.CHANGE_PHONE_NUMBER_MODAL,
+  ChangeNumberModal
+);

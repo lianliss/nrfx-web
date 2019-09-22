@@ -90,7 +90,7 @@ class ConfirmSmsModal extends React.Component {
             });
             break;
           default:
-            alert(info.message);
+            this.props.toastPush(utils.getLang(info.message), "error");
             break;
         }
       });
