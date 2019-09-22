@@ -202,7 +202,7 @@ export default class UIKitScreen extends BaseScreen {
               <UI.NotificationSeparator title="Просмотренные" />
               <UI.Notification
                 icon="https://unsplash.it/40/40?random=4"
-                message="Заявка на отправление 0.000450 BTC на адрес 7461L.. c2c171"
+                message="Заявка на отправление 0.000450 BTC на адрес 7461L.. c2c171"
                 date="8 Aug 2019"
               />
             </UI.Notifications>

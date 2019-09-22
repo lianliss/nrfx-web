@@ -107,7 +107,7 @@ export default class ReceiveCoinsModal extends React.Component {
             <QRCode value={wallet.address} size={192} />
           </div>
           <div className="ReceiveCoinsModal__warning">
-            {utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()} 
+            {utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()}
             {' ' + utils.getLang('cabinet_receiveCoinsModal_toThisAddress')}
           </div>
           <div className="SendCoinsModal__row">
