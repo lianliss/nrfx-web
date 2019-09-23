@@ -9,6 +9,7 @@ import * as actions from '../../../actions';
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../utils';
+import copYText from 'clipboard-copy';
 
 export default class ReceiveCoinsModal extends React.Component {
   constructor(props) {
@@ -106,7 +107,7 @@ export default class ReceiveCoinsModal extends React.Component {
             <QRCode value={wallet.address} size={192} />
           </div>
           <div className="ReceiveCoinsModal__warning">
-            {utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()} 
+            {utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()}
             {' ' + utils.getLang('cabinet_receiveCoinsModal_toThisAddress')}
           </div>
           <div className="SendCoinsModal__row">
@@ -147,7 +148,8 @@ export default class ReceiveCoinsModal extends React.Component {
   };
 
   __copy = () => {
-    utils.copyText(this.wallet.address);
-    this.setState({ isCopied: true });
+    copYText(this.wallet.address).then(() => {
+      this.setState({ isCopied: true });
+    });
   };
 }

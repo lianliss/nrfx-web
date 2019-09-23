@@ -1,7 +1,8 @@
+// styles
+// external
 import React from 'react';
-
+// internal
 import ModalPage from '../ModalPage/ModalPage';
-
 import * as modalGroupActions from '../../../actions/modalGroup';
 import * as modalGroupHandlers from '../../../actions/modalGroupHandlers';
 import * as modalGroupConstants from '../../../constants/modalGroup';

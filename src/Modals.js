@@ -1,11 +1,14 @@
+// styles
+// external
 import React from 'react';
-
+// internal
 import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
 import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
+import LanguageModal from './components/site/LanguageModal/LanguageModal';
 
 export default function Modals(props) {
 
@@ -33,6 +36,9 @@ export default function Modals(props) {
       break;
     case 'transaction':
       Component = WalletTransactionModal;
+      break;
+    case 'language':
+      Component = LanguageModal;
       break;
     default:
       return null;

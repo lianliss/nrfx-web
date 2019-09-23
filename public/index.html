@@ -5,7 +5,6 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap" rel="stylesheet">
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -22,15 +21,6 @@
     -->
     <title>BitcoinBot</title>
     <meta name="description" content="BitcoinBot - a unique platform that combines the strategies of the world's best traders, trading robots and artificial intelligence for investing in the cryptocurrency market.">
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121397179-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-121397179-1');
-    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -45,5 +35,26 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script type="text/javascript">
+      WebFont.load({
+        custom: {
+          families: [
+            'Montserrat:400,500,600,700',
+          ],
+          urls: [
+            'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap',
+          ],
+        }
+      });
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121397179-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-121397179-1');
+    </script>
   </body>
 </html>

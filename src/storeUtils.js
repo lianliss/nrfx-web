@@ -1,14 +1,17 @@
+// styles
+// external
 import {memo} from 'react';
 import {connect} from 'react-redux';
+// internal
 import * as CLASSES from './constants/classes';
 import * as walletsActions from './actions/cabinet/wallets';
 import * as actions from './actions/';
-import * as modalGroupActions from "./actions/modalGroup";
-import * as investmentsActions from "./actions/cabinet/investments";
-import * as settingsActions from "./actions/cabinet/settings";
-import * as profileActions from "./actions/cabinet/profile";
-import * as notificationsActions from "./actions/cabinet/notifications";
-import * as toastsActions from "./actions/cabinet/toasts";
+import * as modalGroupActions from './actions/modalGroup';
+import * as investmentsActions from './actions/cabinet/investments';
+import * as settingsActions from './actions/cabinet/settings';
+import * as profileActions from './actions/cabinet/profile';
+import * as notificationsActions from './actions/cabinet/notifications';
+import * as toastsActions from './actions/cabinet/toasts';
 import * as exchangeActions from './actions/cabinet/exchange';
 
 export function getWithState(caseName, caseClass) {
@@ -61,6 +64,7 @@ export function getWithState(caseName, caseClass) {
         return { ...state.wallets, ...state.investments}
       };
       mapDispatch2Props = {
+        toastPush: toastsActions.toastPush,
         loadWallets: walletsActions.loadWallets,
         loadInvestments: investmentsActions.loadInvestments,
       };
@@ -89,6 +93,7 @@ export function getWithState(caseName, caseClass) {
         loadProfitHistory: investmentsActions.loadProfitHistory,
         loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory,
         loadMoreWithdrawalHistory: investmentsActions.loadMoreWithdrawalHistory,
+        loadMoreProfitHistory: investmentsActions.loadMoreProfitHistory,
       };
       break;
     case CLASSES.CABINET_SETTINGS_SCREEN:
@@ -100,9 +105,18 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.SEND_COINS_MODAL:
-      mapState2Props = (state) => ({ thisState: {...state.modalGroup.states.send} });
+      mapState2Props = (state) => ({
+        thisState: state.modalGroup.states.send,
+        wallets: state.wallets.wallets
+      });
       mapDispatch2Props = {
-        setStateByModalPage: modalGroupActions.setStateByModalPage
+        setStateByModalPage: modalGroupActions.setStateByModalPage,
+        toastPush: toastsActions.toastPush
+      };
+      break;
+    case CLASSES.SEND_COINS_CONFIRM_MODAL:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
       };
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
@@ -118,6 +132,16 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
+    case CLASSES.CHANGE_EMAIL_MODAL:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
+    case CLASSES.CHANGE_PHONE_NUMBER_MODAL:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
     case CLASSES.COMPONENT_TOASTS:
       mapState2Props = (state) => ({
         toasts: state.toasts,
@@ -126,7 +150,17 @@ export function getWithState(caseName, caseClass) {
         toastDrop: toastsActions.toastDrop
       };
       break;
+    case CLASSES.COMPONENT_FOOTER:
+      mapState2Props = (state) => ({
+        langList: state.default.langList,
+      });
+      break;
     case CLASSES.CABINET_REGISTER:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
+    case CLASSES.CABINET_RESET_PASSWORD:
       mapDispatch2Props = {
         toastPush: toastsActions.toastPush
       };

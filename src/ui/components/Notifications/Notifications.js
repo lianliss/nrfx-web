@@ -1,8 +1,11 @@
+// styles
 import './Notifications.less';
+// external
 import React from 'react';
-import UI from "../../index";
-import { classNames } from '../../utils';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+// internal
+import UI from '../../index';
+import {classNames} from '../../utils';
 
 export function Notification(props) {
   return (
@@ -10,7 +13,8 @@ export function Notification(props) {
       <div
         className="Notification__icon"
         style={{backgroundImage: (props.icon && `url(${props.icon})`)}}
-      ></div>
+      >
+      </div>
       <div className="Notification__body">
         <div className="Notification__message">{props.message}</div>
         {!!props.markText && <div className="Notification__text">{props.markText}</div>}

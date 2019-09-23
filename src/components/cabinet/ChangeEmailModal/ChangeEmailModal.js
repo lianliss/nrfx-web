@@ -7,8 +7,10 @@ import * as utils from '../../../utils';
 import * as settingsActions from "../../../actions/cabinet/settings";
 import * as modalGroupActions from "../../../actions/modalGroup";
 import CheckNewEmailModal from "../CheckNewEmailModal/CheckNewEmailModal";
+import * as storeUtils from '../../../storeUtils';
+import * as CLASSES from '../../../constants/classes';
 
-export default class ChangeEmailModal extends React.Component {
+class ChangeEmailModal extends React.Component {
   state = {
     gaCode: '',
     errorGaCode: false,
@@ -89,13 +91,13 @@ export default class ChangeEmailModal extends React.Component {
         }
       })
     }).catch((info) => {
+      this.props.toastPush(info.message, "error");
       switch (info.code) {
         case "ga_auth_code_incorrect":
           return this.__inputError(this, 'errorGaCode');
         case "email_incorrect":
           return this.__inputError(this, 'errorNewEmail');
         default:
-          alert(info.message);
           break;
       }
     });
@@ -113,3 +115,8 @@ export default class ChangeEmailModal extends React.Component {
     });
   }
 }
+
+export default storeUtils.getWithState(
+  CLASSES.CHANGE_EMAIL_MODAL,
+  ChangeEmailModal
+);

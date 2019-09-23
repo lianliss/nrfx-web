@@ -1,6 +1,7 @@
+// styles
+// external
 import React from 'react';
-
-import * as pages from './constants/pages';
+// internal
 import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
 import SiteAboutScreen from './containers/site/SiteAboutScreen/SiteAboutScreen';
 import SiteWalletScreen from './containers/site/SiteWalletScreen/SiteWalletScreen';
@@ -15,20 +16,19 @@ import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
 import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
 
+import * as pages from './constants/pages';
 import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
 import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
 import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
-import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
+import * as CabinetSettingsScreen from './containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen';
 import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
 import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
 import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
-import * as CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
 
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
 
 export default function Routes(props) {
-
   const routeState = props.router.getState();
   const routerParams = routeState.params;
   const route = routeState.name;
@@ -111,6 +111,9 @@ export default function Routes(props) {
       break;
     case pages.REGISTER:
       Component = CabinetRegister.default;
+      break;
+    case pages.RESET_PASSWORD:
+      Component = CabinetResetPassword.default;
       break;
     case pages.MENU:
       Component = MenuScreen.default;

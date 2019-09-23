@@ -1,10 +1,11 @@
+// styles
 import './Table.less';
-
+// external
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import * as utils from '../../utils';
+// internal
 import Hover from '../Hover/Hover';
+import * as utils from '../../utils';
 
 function Table({ headings, children, className, compact, skipContentBox, inline }) {
   return (

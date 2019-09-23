@@ -63,7 +63,7 @@ export default function WithdrawalTable({ deposits }) {
       )
     }
 
-    item.localId = i + 1;
+    item.localId = deposits.length - i;
     return (
       <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
         deposit: JSON.stringify(item)
@@ -74,10 +74,10 @@ export default function WithdrawalTable({ deposits }) {
         <UI.TableColumn>{utils.formatTableId(deposits.length - i)}</UI.TableColumn>
         <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
         <UI.TableColumn sub={item.description}>{item.percent}%</UI.TableColumn>
-        <UI.TableColumn align="right">{item.amount.toFixed(8)} {item.currency.toUpperCase()}</UI.TableColumn>
+        <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
           sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}
-          align="right">{item.profit.toFixed(8)} {item.currency.toUpperCase()}</UI.TableColumn>
+          align="right">{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
       </UI.TableCell>
     )
   });

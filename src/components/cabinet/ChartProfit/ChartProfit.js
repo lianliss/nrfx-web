@@ -1,17 +1,16 @@
 import React from 'react';
-import * as currencies from "../../../../utils/currencies";
-import Chart from '../../../../components/cabinet/Chart/Chart';
-import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as modalGroupActions from "../../../../actions/modalGroup";
-import * as utils from "../../../../utils";
+import * as currencies from "../../../utils/currencies";
+import Chart from '../../../components/cabinet/Chart/Chart';
+import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import * as utils from "../../../utils";
+import './ChartProfit.less';
 
 class ChartProfit extends React.Component {
-
   render() {
     if (!(Object.keys(this.props.chart.data).length > 0)) {
       return <EmptyContentBlock
-        icon={require('../../../../asset/120/start_invest_second.svg')}
-        message="Here will be your investments profit charts"
+        icon={require('../../../asset/120/start_invest_second.svg')}
+        message={utils.getLang("cabinet_placeholder_ investmentsProfitCharts")}
       />
     }
 
@@ -42,17 +41,24 @@ class ChartProfit extends React.Component {
       });
     });
 
+    let marker = false;
+    if (Object.keys(this.props.chart.data).length === 1) {
+      if (this.props.chart.data[Object.keys(this.props.chart.data)[0]].length < 3) {
+        marker = true;
+      }
+    }
+
     return (
-      <div className="Content_box Investment__profit">
-        <div className="Investment__profit__header">
-          <div className="Investment__profit__header__cont">
+      <div className="Content_box Chart__profit">
+        <div className="Chart__profit__header">
+          <div className="Chart__profit__header__cont">
             <h3>{utils.getLang('cabinet_investmentsProfit')}</h3>
-            <div className="Investment__profit__header__period">30 Days</div>
+            <div className="Chart__profit__header__period">30 {utils.getLang('global_days')}</div>
           </div>
-          <div className="Investment__profit__header__fiat">{this.props.chart.usd_profit.toFixed(2) + ' $'}</div>
+          <div className="Chart__profit__header__fiat">{this.props.chart.usd_profit.toFixed(2) + ' $'}</div>
         </div>
-        <div className="Investment__profit__chart">
-          <Chart count={Object.keys(this.props.chart.data).length} series={Object.values(chartCurrencies)} />
+        <div className="Chart__profit__chart">
+          <Chart marker={marker} count={Object.keys(this.props.chart.data).length} series={Object.values(chartCurrencies)} />
         </div>
       </div>
     )

@@ -21,13 +21,13 @@ export default function WithdrawalTable({ profits, total }) {
       <SVG src={require('../../../../asset/cabinet/filter.svg')} />
     </UI.TableColumn>,
     <UI.TableColumn>ID</UI.TableColumn>,
-    <UI.TableColumn>Rate</UI.TableColumn>,
-    <UI.TableColumn>Type</UI.TableColumn>,
-    <UI.TableColumn>Invested</UI.TableColumn>,
-    <UI.TableColumn align="right">Amount</UI.TableColumn>,
-    <UI.TableColumn>Currency</UI.TableColumn>,
-    <UI.TableColumn>Profit Type</UI.TableColumn>,
-    <UI.TableColumn>Date</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("rate")}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("global_type")}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("global_invested")}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang("global_amount")}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("global_currency")}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("global_profitType")}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang("global_date")}</UI.TableColumn>,
   ];
 
   const rows = profits.items.map((item, i) => {
@@ -35,20 +35,20 @@ export default function WithdrawalTable({ profits, total }) {
       <UI.TableCell key={i}>
         <UI.TableColumn />
         <UI.TableColumn>{utils.formatTableId(total - i)}</UI.TableColumn>
-        <UI.TableColumn sub="Standart">{item.plan.percent}</UI.TableColumn>
-        <UI.TableColumn>{item.plan.description}</UI.TableColumn>
+        <UI.TableColumn sub={item.plan.description}>{item.deposit.percent}</UI.TableColumn>
+        <UI.TableColumn>{utils.ucfirst(item.deposit.type)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.amount} {item.deposit.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.profit.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.currency.toUpperCase()}</UI.TableColumn>
-        <UI.TableColumn>{item.profit.type}</UI.TableColumn>
-        <UI.TableColumn>{moment(item.profit.date).format('DD MMM YYYY h:mm a')}</UI.TableColumn>
+        <UI.TableColumn>{utils.getLang(`type_${item.profit.type}`)}</UI.TableColumn>
+        <UI.TableColumn>{moment(item.profit.date).format('DD MMM YYYY HH:mm')}</UI.TableColumn>
       </UI.TableCell>
     )
   });
 
   return (
     <div>
-      <h2>Profit History</h2>
+      <h2>{utils.getLang('cabinet_investmentsProfit')}</h2>
       <UI.Table headings={headings} className="Investment__profits_table">
         {rows}
       </UI.Table>

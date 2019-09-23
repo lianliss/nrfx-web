@@ -16,11 +16,12 @@ import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
 import LanguageModal from '../LanguageModal/LanguageModal';
 import StaticContentModal from '../StaticContentModal/StaticContentModal';
+import * as auth from '../../../actions/auth';
 
 const currentLang = getItem('lang');
 
 
-function Header({ showLightLogo, langList, routerState }) {
+function Header({ showLightLogo, langList, routerState, profile }) {
   const headerLinks = [
     {
       title: utils.getLang('site__headerProducts'),
@@ -101,6 +102,7 @@ function Header({ showLightLogo, langList, routerState }) {
 
   const currentLangObj = langList.find(l => l.value === curLang);
   const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
+  const isLogin = !!profile.role;
 
   const handleOpen = () => {
     document.body.classList.add('modal-open');
@@ -173,12 +175,18 @@ function Header({ showLightLogo, langList, routerState }) {
               ))}
 
               <div className="SiteHeader__menu_controls">
-                <AuthModal routerParams={routerState.route.params}>
-                  <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
-                </AuthModal>
-                <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                  <UI.Button type="outline_white" rounded>{utils.getLang('site__commerceRegistration')}</UI.Button>
-                </AuthModal>
+                { !isLogin ? [
+                  <AuthModal routerParams={routerState.route.params}>
+                    <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
+                  </AuthModal>,
+                  <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
+                    <UI.Button type="outline_white" rounded>{utils.getLang('site__commerceRegistration')}</UI.Button>
+                  </AuthModal>
+                ] : [
+                  <MenuItem onClick={auth.logout}>{utils.getLang("cabinet_header_exit")}</MenuItem>,
+                  <UI.Button type="outline_white" rounded onClick={() => router.navigate(pages.PROFILE)}>{utils.getLang("cabinet_header_cabinet")}</UI.Button>
+                ]}
+
                 <Dropdown
                   className="SiteHeader__lang__dropdown"
                   title={currentLangTitle}
@@ -214,8 +222,8 @@ function MenuItem(props) {
   )
 }
 
-
 const mapStateToProps = (state) => ({
+  profile: state.default.profile,
   langList: state.default.langList,
   lang: state.default.lang,
   routerState: state.router,

@@ -11,8 +11,10 @@ import * as utils from '../../../utils';
 import * as currencies from "../../../utils/currencies";
 
 import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow';
+import * as storeUtils from '../../../storeUtils';
+import * as CLASSES from '../../../constants/classes';
 
-export default class SendCoinsConfirmModal extends React.Component {
+class SendCoinsConfirmModal extends React.Component {
   state = {
     gaCode: '',
     errorGaCode: false
@@ -55,17 +57,17 @@ export default class SendCoinsConfirmModal extends React.Component {
     return (
       <div>
         <InfoRowGroup align="left">
-          <InfoRow label="From">
+          <InfoRow label={utils.getLang('global_from')}>
             <div className="Wallets__history__address">
               {utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)}
             </div>
           </InfoRow>
-          <InfoRow label="To">
+          <InfoRow label={utils.getLang('global_to')}>
             <div className="Wallets__history__address">
               {address}
             </div>
           </InfoRow>
-          <InfoRow label="Amount">{utils.formatDouble(amount)} {currency}</InfoRow>
+          <InfoRow label={utils.getLang('global_amount')}>{utils.formatDouble(amount)} {currency}</InfoRow>
           {/*<InfoRow label="Fee">{utils.formatDouble(fee)} {currency}</InfoRow>*/}
         </InfoRowGroup>
         <div className="SendCoinsConfirmModal__card" style={{background: currencyGradient}}>
@@ -133,9 +135,14 @@ export default class SendCoinsConfirmModal extends React.Component {
           });
           break;
         default:
-          alert(info.message);
+          this.props.toastPush(info.message, "error");
           break;
       }
     });
   }
 }
+
+export default storeUtils.getWithState(
+  CLASSES.SEND_COINS_CONFIRM_MODAL,
+  SendCoinsConfirmModal
+);

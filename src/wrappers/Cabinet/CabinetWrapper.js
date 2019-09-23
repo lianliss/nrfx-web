@@ -1,14 +1,16 @@
+// styles
 import './CabinetWrapper.less';
+// external
 import React, {Component} from 'react';
+import SVG from 'react-inlinesvg';
+// internal
 import Header from '../../components/cabinet/Header/Header';
 import AdaptiveHeader from '../../components/cabinet/Header/AdaptiveHeader';
-import { classNames } from '../../utils';
-import * as CLASSES from "../../constants/classes";
-import * as storeUtils from "../../storeUtils";
-import SVG from "react-inlinesvg";
+import {classNames} from '../../utils';
+import * as CLASSES from '../../constants/classes';
+import * as storeUtils from '../../storeUtils';
 
 class CabinetWrapper extends Component {
-
   componentDidMount() {
     window.addEventListener('resize', this.__handleOnResize);
     this.__handleResize(document.body.offsetWidth);
@@ -25,14 +27,16 @@ class CabinetWrapper extends Component {
       [className]: !!className
     });
 
+    const calendarSvg = require("../../asset/24px/calendar.svg");
+
     return <div className={mainClassName}>
       {adaptive ? <AdaptiveHeader
-        leftContent={<SVG src={require("../../asset/24px/calendar.svg")} />}
+        leftContent={<SVG src={calendarSvg} />}
         mainContent={{
           type: "text",
           content: "Bitcoinbot"
         }}
-        rightContent={<SVG src={require("../../asset/24px/calendar.svg")} />}
+        rightContent={<SVG src={calendarSvg} />}
       /> : <Header />}
       {children}
     </div>

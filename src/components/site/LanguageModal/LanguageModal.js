@@ -2,6 +2,7 @@ import './LanguageModal.less';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import * as utils from '../../../utils';
 
 import UI from '../../../ui';
 
@@ -24,7 +25,7 @@ function LanguageModal({ langList, className, onLanguageClick, isOpen, onClose }
         onClose={onClose}
       >
         <div className="LanguageModal__cont">
-          <h2 className="LanguageModal__cont__title">Language</h2>
+          <h2 className="LanguageModal__cont__title">{utils.getLang("global_language")}</h2>
 
           <div className="LanguageModal__cont__grid">
             {langList.map(lang => (

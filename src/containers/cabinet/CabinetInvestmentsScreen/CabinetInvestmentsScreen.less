@@ -26,6 +26,27 @@
   padding-left: 24px;
 }
 
+.Investments__summary__item__actions {
+  position: relative;
+  height: 40px;
+  .Button {
+    position: absolute;
+  }
+  .Button.default {
+    width: calc(100% - 58px);
+  }
+  .secondary {
+    width: 50px;
+    right: 0;
+  }
+}
+
+.Investments__summary__item__actions.empty {
+  .Button.default {
+    width: 100%;
+  }
+}
+
 .Investments__summary__item__icon {
   width: 72px;
   height: 72px;

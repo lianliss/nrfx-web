@@ -1,12 +1,11 @@
 /* eslint-disable */
-
+// styles
 import './Modal.less';
-
+// external
 import React, { useEffect, useRef }  from 'react';
 import PropTypes from 'prop-types';
-
-import { classNames } from '../../utils';
-
+// internal
+import {classNames} from '../../utils';
 
 function Modal(props) {
   const node = useRef();
@@ -17,15 +16,17 @@ function Modal(props) {
 
   const handleClick = e => {
     if (node.current && node.current.contains(e.target)) {
-      return;
+      return () => {};
     } else {
       props.onClose();
     }
   };
 
   useEffect(() => {
+    document.body.style.overflowY = "hidden";
     document.addEventListener("mousedown", handleClick);
     return () => {
+      document.body.style.overflowY = "scroll";
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);

@@ -1,9 +1,11 @@
+// styles
 import './Toast.less';
-
+// external
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import PropTypes from 'prop-types';
+// internal
 import { classNames } from '../../utils';
-import PropTypes from "prop-types";
 
 export default function Toast(props) {
   return (
@@ -23,4 +25,4 @@ Toast.propTypes = {
   hidden: PropTypes.bool,
   message: PropTypes.string,
   onClose: PropTypes.func
-}
+};

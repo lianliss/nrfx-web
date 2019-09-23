@@ -31,10 +31,9 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
-
-  &.pending {
-    color: var(--primary);
-  }
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
 
   &.send {
     color: var(--color-green);
@@ -48,6 +47,10 @@
 .Wallets__history__address {
   display: flex;
   align-items: center;
+}
+
+.Wallets__history__date {
+  white-space: nowrap;
 }
 
 .Wallets__history__bb {

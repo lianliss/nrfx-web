@@ -1,4 +1,7 @@
-import * as actionTypes from "../actionTypes";
+// styles
+// external
+// internal
+import * as actionTypes from '../actionTypes';
 
 export function toastPush(message, type) {
   return (dispatch, getStore) => {

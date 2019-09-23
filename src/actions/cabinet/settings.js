@@ -1,7 +1,10 @@
+// styles
+// external
+// internal
+import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
-import apiSchema from '../../services/apiSchema';
-import * as toastsActions from "./toasts";
+import * as toastsActions from './toasts';
 
 export function loadSettings() {
   return (dispatch, getState) => {

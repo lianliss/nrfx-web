@@ -1,9 +1,10 @@
+// styles
 import './Dropdown.less';
-
+// external
 import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
-
+// internal
 import { classNames } from '../../utils';
 
 const arrowUp = require('../../asset/arrow_outline_up.svg');
@@ -12,7 +13,7 @@ const arrowDown = require('../../asset/arrow_outline_down.svg');
 class Dropdown extends React.Component {
   state = {
     isOpen: false
-  }
+  };
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     return JSON.stringify(this.props) !== JSON.stringify(nextProps) || this.state.isOpen !== nextState.isOpen;
@@ -20,7 +21,7 @@ class Dropdown extends React.Component {
 
   toggle = (value) => {
     this.setState({ isOpen: value });
-  }
+  };
 
   render() {
     const { props, state } = this;

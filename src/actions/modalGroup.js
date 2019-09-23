@@ -1,6 +1,9 @@
-import * as actionTypes from './actionTypes';
+// styles
+// external
+// internal
 import store from '../store';
-import router from "../router";
+import router from '../router';
+import * as actionTypes from './actionTypes';
 import * as modalGroupConstant from '../constants/modalGroup';
 
 export function modalGroupSetActiveModal(name) {
@@ -51,6 +54,7 @@ export function openModalPage(name = null, sendParams = {}, customModal = {}) {
     routerSendParams.rp = Object.keys({...sendParams}).join(modalGroupConstant.MODALGROUP_SEPARATOR);
   }
 
+  console.log(name);
   router.navigate(router.getState().name, {...routerSendParams}, {}, () => {
     modalGroupSetActiveModal(name);
   });

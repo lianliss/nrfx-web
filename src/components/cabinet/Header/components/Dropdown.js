@@ -36,6 +36,7 @@ function Dropdown({title, subItems, onChange, onNavigate, lastItemText, onLastIt
                     key={item.title}
                     className="CabinetHeader__dropdown__link"
                     onClick={() => {
+                      if (item.action) item.action();
                       if (item.hasOwnProperty('useLocation')) {
                         window.location.href = item.route;
                       } else {

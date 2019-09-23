@@ -12,6 +12,7 @@ import * as storeUtils from '../../../storeUtils';
 import * as utils from '../../../utils';
 import * as CLASSES from "../../../constants/classes";
 import UI from "../../../ui/index";
+import * as auth from '../../../actions/auth';
 
 function getDropDownLinks() { return[
   {
@@ -28,7 +29,10 @@ function getDropDownLinks() { return[
       },
       {
         title: utils.getLang('cabinet_header_exit'),
-        route: pages.WALLET
+        route: pages.WALLET,
+        action: () => {
+          auth.logout();
+        }
       },
     ]
   }

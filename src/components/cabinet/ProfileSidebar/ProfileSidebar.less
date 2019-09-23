@@ -1,5 +1,20 @@
 .ProfileSidebar {
   width: 180px;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+
+  @supports (position: sticky) {
+    position: sticky;
+    overflow-y: auto;
+    height: calc(100vh - 56px);
+    top: 56px;
+    align-self: flex-start;
+  }
+
+  .ProfileSidebar__top {
+    margin-bottom: 24px;
+  }
 
   .ProfileSidebar__user {
     text-align: center;
@@ -134,5 +149,9 @@
     .ProfileSidebar__menu__item_passive {
       color: var(--primary-grey);
     }
+  }
+
+  .ProfileSidebar__footer {
+    margin-top: auto;
   }
 }

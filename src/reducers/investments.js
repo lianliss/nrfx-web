@@ -8,8 +8,10 @@ const initialState = {
   withdrawals: {
     isLoadingMore: false,
   },
+  withdrawalsTotalCount: null,
   chart: {},
-  loadingStatus: {}
+  loadingStatus: {},
+  loaded: null,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -26,6 +28,7 @@ export default function reduce(state = initialState, action = {}) {
         deposits: action.deposits,
         payments: action.payments,
         chart: action.chart,
+        loaded: true
       });
     }
 
@@ -39,6 +42,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.INVESTMENTS_WITHDRAWALS_SET: {
       return Object.assign({}, state, {
         withdrawals: action.withdrawals,
+        withdrawalsTotalCount: action.total_count
       });
     }
 
@@ -49,6 +53,17 @@ export default function reduce(state = initialState, action = {}) {
           ...state.withdrawals,
           items: [ ...state.withdrawals.items, ...action.items ],
           next: action.next
+        }
+      }
+    }
+
+    case actionTypes.INVESTMENTS_PROFITS_APPEND: {
+      return {
+        ...state,
+        profits: {
+          ...state.profits,
+          items: [ ...state.profits.items, ...action.profits.items ],
+          next: action.profits.next
         }
       }
     }

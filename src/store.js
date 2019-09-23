@@ -1,8 +1,11 @@
+// styles
+// external
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import router from './router';
 import { router5Middleware, router5Reducer } from 'redux-router5';
 import { reduxPlugin } from 'redux-router5';
+// internal
+import router from './router';
 import defaultReducer from './reducers';
 import cabinetReducer from './reducers/cabinet';
 import investmentsReducer from './reducers/investments';
