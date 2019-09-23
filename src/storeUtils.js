@@ -26,7 +26,8 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.CABINET_MENU_SCREEN:
       mapState2Props = (state) => ({
-        adaptive: state.default.adaptive
+        adaptive: state.default.adaptive,
+        langList: state.default.langList
       });
       break;
     case CLASSES.COMPONENT_CABINET_HEADER:
@@ -44,7 +45,10 @@ export function getWithState(caseName, caseClass) {
       mapDispatch2Props = {};
       break;
     case CLASSES.COMPONENT_MODALGROUP:
-      mapState2Props = (state) => ({ ...state.modalGroup });
+      mapState2Props = (state) => ({
+        ...state.modalGroup,
+        adaptive: state.default.adaptive,
+      });
       mapDispatch2Props = {
         modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal
       };
