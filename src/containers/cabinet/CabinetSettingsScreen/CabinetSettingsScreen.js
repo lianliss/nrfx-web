@@ -276,7 +276,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   };
 
   __getPersonalPageContent = () => {
-    const buttonType = this.props.adaptive ? null : "outline";
+    const buttonType = this.props.adaptive ? "secondary" : "outline";
     return <div className="CabinetSettingsScreen__main Content_box">
       <div className="CabinetSettingsScreen__header">
         {utils.getLang('cabinet_settingsPersonalInformation')}
