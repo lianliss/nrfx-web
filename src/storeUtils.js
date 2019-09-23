@@ -100,7 +100,10 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_SETTINGS_SCREEN:
-      mapState2Props = (state) => ({ ...state.settings });
+      mapState2Props = (state) => ({
+        ...state.settings,
+        adaptive: state.default.adaptive,
+      });
       mapDispatch2Props = {
         loadSettings: settingsActions.loadSettings,
         setUserFieldValue: settingsActions.setUserFieldValue,
