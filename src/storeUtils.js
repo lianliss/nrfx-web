@@ -113,6 +113,11 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
+    case CLASSES.SEND_COINS_CONFIRM_MODAL:
+      mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
       mapState2Props = (state) => ({ router: state.router });
       mapDispatch2Props = {
