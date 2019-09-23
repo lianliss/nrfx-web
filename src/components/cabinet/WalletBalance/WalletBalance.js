@@ -47,7 +47,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
   }
 };
 
-function WalletBalance({ wallets }) {
+function WalletBalance({ wallets, adaptive }) {
   const [ isInFiat, setIsInFiat ] = useState(true);
   const [ convert_currency, setConvert_currency ] = useState('BTC');
   const walletsBalance = getWalletsBalance(wallets, isInFiat);
@@ -94,50 +94,71 @@ function WalletBalance({ wallets }) {
     }
   }
 
+  const balanceHeader = <h3 className="WalletBalance__header">
+    {utils.getLang('cabinet_walletBalance_name')}
+  </h3>;
   return (
     <div className="WalletBalance Content_box">
       {walletsBalance
         ? (
-          <>
-            <div className="WalletBalance__list">
-              <h3>{utils.getLang('cabinet_walletBalance_name')}</h3>
-              <ul>
-                {walletsBalance.walletsCurrencies.map(wallet => {
-                  const gradient = getGradientByCurrency(wallet.currency);
-                  return (
-                    <div key={wallet.currency} className="WalletBalance__list__item">
-                      <span className="WalletBalance__list__item_dot" style={{ background: gradient }} />
-                      <li key={wallet.currency}>
-                        <span>{utils.formatDouble(wallet.value, 2)}%</span>
-                        {wallet.currency.toUpperCase()}
-                      </li>
-                    </div>
-                  );
-                })}
-              </ul>
-            </div>
-
-            <div className="WalletBalance__pie">
-              <PieChart
-                lineWidth={20}
-                paddingAngle={1}
-                data={walletsBalance.walletsCurrencies}
-              />
-
-              <div className="WalletBalance__pie__balance">
+          <div>
+            {adaptive && balanceHeader}
+            {adaptive && <div>
+              <div className="WalletBalance__pie__balance" onClick={() => setIsInFiat(!isInFiat)}>
                 <h3 style={!isInFiat ? {fontSize:20} : {}}>
-                  {
-                    isInFiat ? formatNumber(walletsBalance.walletsBalanceInUSD) +
-                      '$' : '~' + (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
-                  }
+                  <span>
+                    {
+                      isInFiat ? formatNumber(walletsBalance.walletsBalanceInUSD) +
+                        '$' : '~' + (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
+                    }
+                  </span>
                 </h3>
-                <div>
-                  <p className={classNames({ active: isInFiat })} onClick={() => setIsInFiat(true)}>USD</p>
-                  <p className={classNames({ active: !isInFiat })} onClick={() => setIsInFiat(false)}>BTC</p>
-                </div>
+              </div>
+            </div>}
+            <div className="WalletBalance__adaptiveHelper">
+              <div className="WalletBalance__list">
+                {!adaptive && balanceHeader}
+                <ul>
+                  {walletsBalance.walletsCurrencies.map(wallet => {
+                    const gradient = getGradientByCurrency(wallet.currency);
+                    return (
+                      <div key={wallet.currency} className="WalletBalance__list__item">
+                        <span className="WalletBalance__list__item_dot" style={{ background: gradient }} />
+                        <li key={wallet.currency}>
+                          <span>{utils.formatDouble(wallet.value, 2)}%</span>
+                          {wallet.currency.toUpperCase()}
+                        </li>
+                      </div>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              <div className="WalletBalance__pie">
+                {adaptive ? <PieChart
+                  data={walletsBalance.walletsCurrencies}
+                  paddingAngle={1}
+                /> : <PieChart
+                  lineWidth={20}
+                  paddingAngle={1}
+                  data={walletsBalance.walletsCurrencies}
+                />}
+
+                {!adaptive && <div className="WalletBalance__pie__balance">
+                  <h3 style={!isInFiat ? {fontSize:20} : {}}>
+                    {
+                      isInFiat ? formatNumber(walletsBalance.walletsBalanceInUSD) +
+                        '$' : '~' + (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
+                    }
+                  </h3>
+                  <div>
+                    <p className={classNames({ active: isInFiat })} onClick={() => setIsInFiat(true)}>USD</p>
+                    <p className={classNames({ active: !isInFiat })} onClick={() => setIsInFiat(false)}>BTC</p>
+                  </div>
+                </div>}
               </div>
             </div>
-          </>
+          </div>
         ) : (
           <div className="Empty_box">
             <SVG src={require('../../../asset/cabinet/wallet_colorful.svg')} />

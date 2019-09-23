@@ -14,6 +14,7 @@ import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalan
 import DashboardItem from './components/DashboardItem';
 import * as utils from "../../../utils";
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
+import { classNames } from '../../../utils';
 import router from "../../../router";
 
 import { ReactComponent as SettingsSvg } from '../../../asset/24px/settings.svg';
@@ -40,7 +41,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     return (
       <div>
         <PageContainer
-          leftContent={!this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
+          leftContent={!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
           sidebarOptions={[
             <ProfileSidebarItem
               onClick={() => {router.navigate('settings')}}
@@ -70,13 +71,20 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
     return <div>
       <div>
-        <WalletBalance wallets={this.wallets} walletSelected={this.state.walletSelected} />
+        <WalletBalance adaptive={this.props.adaptive} wallets={this.wallets} walletSelected={this.state.walletSelected} />
       </div>
       <div className="CabinetProfileScreen__height24">
       </div>
-      <div>
-        <ChartProfit chart={this.props.dashboard.chart} />
-      </div>
+      {this.__renderChartProfit()}
+    </div>
+  };
+
+  __renderChartProfit = () => {
+    if (this.props.adaptive || !this.props.dashboard.hasOwnProperty('chart')) {
+      return '';
+    }
+    return <div>
+      <ChartProfit chart={this.props.dashboard.chart} />
     </div>
   };
 
@@ -99,6 +107,16 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   };
 
   __getProfilePageContent = () => {
+    if (this.props.adaptive && !this.props.routerParams.section && !this.isLoading) {
+      return (
+        <div>
+          {this.__renderRightContent()}
+          {this.__renderWallets()}
+          {this.__renderDashboard()}
+          <div className="CabinetProfileScreen__height_padding"> </div>
+        </div>
+      )
+    }
     return (
       <div>
         {this.__renderWallets()}
@@ -119,7 +137,9 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     });
     return (
       <div className="CabinetProfileScreen__wallets">
-        {rows}
+        {this.props.adaptive ? <div className="CabinetProfileScreen__walletsContentBox">
+          {rows}
+        </div> : rows}
       </div>
     )
   };
@@ -134,11 +154,15 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     });
     return (
       <div className="CabinetProfileScreen__dashboard">
-        {rows}
-        <DashboardItem
-          key={3}
-          type="commerce"
-        />
+        <div className="CabinetProfileScreen__dashboard__wrapper">
+          {rows}
+          <DashboardItem
+            key={3}
+            type="commerce"
+          />
+          <div className="fakeItem">
+          </div>
+        </div>
       </div>
     )
   };

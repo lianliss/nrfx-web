@@ -51,7 +51,7 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.CABINET_PFOFILE_SCREEN:
       mapState2Props = (state) => {
-        return { ...state.wallets, ...state.profile }
+        return { ...state.wallets, ...state.profile, adaptive: state.default.adaptive }
       };
       mapDispatch2Props = {
         loadWallets: walletsActions.loadWallets,

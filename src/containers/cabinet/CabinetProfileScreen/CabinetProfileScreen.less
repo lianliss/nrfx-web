@@ -6,10 +6,13 @@
 }
 
 .CabinetProfileScreen__dashboard {
-  display: grid;
-  flex-wrap: wrap;
-  grid-template-columns: 33.3% 33.3% 33.3%;
   width: calc(100% + 28px);
+  .CabinetProfileScreen__dashboard__wrapper {
+    width: 100%;
+    flex-wrap: wrap;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    display: grid;
+  }
   .DashboardItem {
     position: relative;
     margin-right: 28px;
@@ -225,16 +228,57 @@
 .adaptive {
   .CabinetProfileScreen__wallets {
     grid: none;
+    width: 100% !important;
     .WalletBox {
       margin-right: 0;
       .WalletBox__icon {
-        position: relative;
+        position: absolute;
+        transform: none;
+        left: 18px;
       }
       .WalletBox__content {
-
+        margin-left: 24px;
+        margin-right: 24px;
+        padding-left: 56px;
+        box-sizing: border-box;
       }
       .Content_box {
+        box-shadow: none;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
+      }
+    }
+    .CabinetProfileScreen__walletsContentBox {
+      background-color: white;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+    }
+  }
 
+  .CabinetProfileScreen__dashboard {
+    width: 100%;
+    height: 312px;
+    overflow: hidden;
+    overflow-x: scroll;
+    box-sizing: border-box;
+    .CabinetProfileScreen__dashboard__wrapper {
+      width: 100%;
+      flex-wrap: wrap;
+      flex-direction: column;
+      display: grid;
+      grid-template-columns: 208px 208px 208px 16px;
+      padding: 16px;
+      margin-right: 16px;
+      .DashboardItem {
+        width: calc(100% - 16px);
+      }
+      .fakeItem {
+        width: 1px;
+        height: 312px;
       }
     }
   }
