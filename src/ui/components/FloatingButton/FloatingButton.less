@@ -1,0 +1,77 @@
+.FloatingButton {
+  position: relative;
+  width: 56px;
+
+  &__button {
+    cursor: pointer;
+    display: flex;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--uikit-gradient-primary);
+    color: var(--uikit-contrast-primary);
+    box-shadow: 0px 16px 24px rgba(255, 181, 96, 0.3),
+      0px 0px 8px rgba(255, 181, 96, 0.3);
+
+    .isvg {
+      line-height: 0;
+      margin: auto;
+    }
+  }
+
+  &__menu {
+    width: 200px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    bottom: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    &__item {
+      pointer-events: all;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 20px;
+      padding: 12px 16px;
+      background: var(--uitkit-background);
+      color: var(--primary-grey);
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 2px rgba(0, 0, 0, 0.1);
+      transition: all .3s ease;
+      opacity: 0;
+
+      &:nth-child(1) { transition-delay: .05s }
+      &:nth-child(2) { transition-delay: .1s }
+      &:nth-child(3) { transition-delay: .15s }
+      &:nth-child(4) { transition-delay: .2s }
+      &:nth-child(5) { transition-delay: .25s }
+
+      .isvg {
+        line-height: 0;
+        margin: -2px;
+        margin-left: 8px;
+      }
+    }
+  }
+
+  &.opened {
+    .FloatingButton__menu {
+      &__item {
+        opacity: 1;
+
+        &:nth-last-child(1) { transition-delay: .05s }
+        &:nth-last-child(2) { transition-delay: .1s }
+        &:nth-last-child(3) { transition-delay: .15s }
+        &:nth-last-child(4) { transition-delay: .2s }
+        &:nth-last-child(5) { transition-delay: .25s }
+      }
+    }
+  }
+}
