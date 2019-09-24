@@ -118,7 +118,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
           {this.__renderRightContent()}
           {this.__renderWallets()}
           {this.__renderDashboard()}
-          <div className="CabinetProfileScreen__height_padding"> </div>
         </div>
       )
     }

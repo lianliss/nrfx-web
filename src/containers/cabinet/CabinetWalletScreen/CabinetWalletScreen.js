@@ -136,6 +136,8 @@ class CabinetWalletScreen extends CabinetBaseScreen {
       >
         <HistoryTable adaptive={this.props.adaptive} history={'items' in this.props.transactions ? this.props.transactions.items : []} />
       </Paging>
+      <div className="CabinetWalletScreen__height_padding">
+      </div>
     </div>
   };
 

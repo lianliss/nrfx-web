@@ -57,21 +57,24 @@ function WalletBalance({ wallets, adaptive }) {
       const currencyInfo = actions.getCurrencyInfo(currency);
       const currencyName = utils.ucfirst(currencyInfo.name);
       const buttonBackgroundColor = currencies.getGradientByCurrency(currency);
-
+      const convertBlock = <div className="WalletBalance__convert" onClick={() => {
+        convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
+      }}>
+        <span>
+          {amount > 0 ? ( convert_currency === 'BTC' ? '~ ' + align.toFixed(6) : (amount * to_usd).toFixed(2) ) : 0}
+          {' ' + convert_currency}
+        </span>
+      </div>;
       return <div className="WalletBalance Content_box">
-        <div className="WalletBalance__convert" onClick={() => {
-          convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
-        }}>
-          <span>
-            {amount > 0 ? ( convert_currency === 'BTC' ? '~ ' + align.toFixed(6) : (amount * to_usd).toFixed(2) ) : 0}
-            {' ' + convert_currency}
-          </span>
-        </div>
+        {!adaptive && convertBlock}
         <div className="WalletBalance__selected_wallet">
           <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletTransactionModal_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
-          <div className="WalletBalance__selected_amount">{amount} {currency.toUpperCase()}</div>
+          <div className="WalletBalance__selected_amount">
+            {adaptive ? convertBlock : amount + ' ' + currency.toUpperCase()}
+          </div>
           <div className="WalletBalance__selected_buttons">
             <UI.Button
+              size={adaptive ? 'small' : 'large'}
               disabled={amount === 0}
               onClick={() => {modalGroupActions.openModalPage('send', {
                 preset: currencyName
@@ -81,6 +84,7 @@ function WalletBalance({ wallets, adaptive }) {
               {utils.getLang('site__contactSend')}
             </UI.Button>
             <UI.Button
+              size={adaptive ? 'small' : 'large'}
               onClick={() => {modalGroupActions.openModalPage('receive', {
                 preset: currencyName
               })}}
