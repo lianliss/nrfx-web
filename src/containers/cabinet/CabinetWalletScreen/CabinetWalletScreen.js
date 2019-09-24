@@ -17,7 +17,6 @@ import * as modalGroupActions from "../../../actions/modalGroup";
 
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
-import SVG from "react-inlinesvg";
 
 import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
 import { ReactComponent as HistorySvg } from '../../../asset/24px/history.svg';
@@ -48,7 +47,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     return (
       <div>
         <PageContainer
-          leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
+          leftContent={!this.props.adaptive && !this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
           sidebarOptions={[
             !!walletsActions.getNoGeneratedCurrencies().length && <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
@@ -72,6 +71,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
             />
           ]}
         >
+          {this.props.adaptive && !this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
           {this.__renderContent()}
         </PageContainer>
       </div>
@@ -79,7 +79,12 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   }
 
   __renderRightContent = () => {
-    return <WalletBalance wallets={this.wallets} walletSelected={this.state.walletSelected} />;
+    return (
+      <div>
+        <WalletBalance adaptive={this.props.adaptive} wallets={this.wallets} walletSelected={this.state.walletSelected} />
+        {this.props.adaptive && <div className="CabinetWalletScreen__height_padding"> </div>}
+      </div>
+    );
   };
 
   __renderContent = () => {
@@ -124,7 +129,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         moreButton={!!this.props.transactions.next}
         isLoading={this.props.transactionsLoadingMore}
       >
-        <HistoryTable history={'items' in this.props.transactions ? this.props.transactions.items : []} />
+        <HistoryTable adaptive={this.props.adaptive} history={'items' in this.props.transactions ? this.props.transactions.items : []} />
       </Paging>
     </div>
   };
@@ -137,7 +142,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         moreButton={!!this.props.transfers.next}
         isLoading={this.props.transfersLoadingMore}
       >
-        <HistoryTable history={'items' in this.props.transfers ? this.props.transfers.items : []} />
+        <HistoryTable adaptive={this.props.adaptive} history={'items' in this.props.transfers ? this.props.transfers.items : []} />
       </Paging>
     </div>
   };
@@ -154,7 +159,9 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     const isCanCreate = walletsActions.getNoGeneratedCurrencies().length > 0;
     return (
       <div className="CabinetWalletScreen__wallets">
-        {rows}
+        {this.props.adaptive ? <div className="CabinetWalletsScreen__walletsContentBox">
+          {rows}
+        </div> : rows}
         {isCanCreate && <WalletBoxNew />}
       </div>
     )

@@ -142,6 +142,10 @@
   }
 }
 
+.CabinetWalletScreen__height_padding {
+  height: 24px;
+  width: 100%;
+}
 
 .Empty_box {
   display: flex;
@@ -160,5 +164,40 @@
     letter-spacing: 0.444444px;
     color: var(--primary-grey);
     max-width: 150px;
+  }
+}
+
+.adaptive {
+  .CabinetWalletScreen__wallets {
+    grid: none;
+    width: 100% !important;
+    .WalletBox {
+      margin-right: 0;
+      .WalletBox__icon {
+        position: absolute;
+        transform: none;
+        left: 18px;
+      }
+      .WalletBox__content {
+        margin-left: 24px;
+        margin-right: 24px;
+        padding-left: 56px;
+        box-sizing: border-box;
+      }
+      .Content_box {
+        box-shadow: none;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
+      }
+    }
+  }
+  .CabinetWalletsScreen__walletsContentBox {
+    background-color: white;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
   }
 }

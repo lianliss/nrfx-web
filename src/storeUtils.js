@@ -79,7 +79,7 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_WALLET_SCREEN:
-      mapState2Props = (state) => ({ ...state.wallets });
+      mapState2Props = (state) => ({ ...state.wallets, adaptive: state.default.adaptive });
       mapDispatch2Props = {
         loadWallets: walletsActions.loadWallets,
         loadMoreTransactions: walletsActions.loadMoreTransactions,
