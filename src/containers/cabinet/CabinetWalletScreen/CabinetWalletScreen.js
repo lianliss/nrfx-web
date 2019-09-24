@@ -10,6 +10,7 @@ import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import HistoryTable from './components/HistoryTable';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
+import * as PAGES from '../../../constants/pages';
 
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import Paging from "../../../components/cabinet/Paging/Paging";
@@ -23,6 +24,8 @@ import { ReactComponent as HistorySvg } from '../../../asset/24px/history.svg';
 import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
 import { ReactComponent as ReceiveSvg } from '../../../asset/24px/receive.svg';
 import * as utils from "../../../utils";
+import UI from '../../../ui';
+import router from "../../../router";
 
 class CabinetWalletScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -53,11 +56,30 @@ class CabinetWalletScreen extends CabinetBaseScreen {
       <div>
         <PageContainer
           leftContent={!this.props.adaptive && !this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
-          sidebarOptions={[
+          sidebarOptions={this.props.adaptive ? [
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/send.svg')}
+              onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
+            >{utils.getLang('site__contactSend')}</UI.FloatingButtonItem>,
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/receive.svg')}
+              onClick={() => {modalGroupActions.openModalPage('receive')}}
+            >{utils.getLang('cabinet_walletScreen_receive')}</UI.FloatingButtonItem>,
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/history.svg')}
+              onClick={() => {
+                router.navigate(PAGES.CABINET_WALLET, { section: 'transfers' })
+              }}
+            >{utils.getLang('cabinet_walletScreen_transfers')}</UI.FloatingButtonItem>,
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/plus-circle.svg')}
+              onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+            >{utils.getLang("cabinet_walletBox_create")}</UI.FloatingButtonItem>
+          ] : [
             !!walletsActions.getNoGeneratedCurrencies().length && <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
               icon={<PlusCircleSvg />}
-              label="New Wallet"
+              label={utils.getLang("cabinet_walletBox_create")}
             />,
             <ProfileSidebarItem
               section={'transfers'}

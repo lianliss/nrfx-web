@@ -22,7 +22,7 @@ export default function FloatingButton(props) {
 
 export function FloatingButtonItem(props) {
   return (
-    <div className="FloatingButton__menu__item">
+    <div onClick={e => {props.onClick && props.onClick(e)}} className="FloatingButton__menu__item">
       <span>{props.children}</span>
       <SVG src={props.icon} />
     </div>

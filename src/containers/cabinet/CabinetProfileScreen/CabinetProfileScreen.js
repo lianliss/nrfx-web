@@ -47,7 +47,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       <div>
         <PageContainer
           leftContent={!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
-          sidebarOptions={[
+          sidebarOptions={!this.props.adaptive && [
             <ProfileSidebarItem
               onClick={() => {router.navigate('settings')}}
               icon={<SettingsSvg />}

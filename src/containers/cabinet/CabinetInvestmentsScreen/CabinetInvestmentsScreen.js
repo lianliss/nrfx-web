@@ -20,6 +20,9 @@ import Paging from "../../../components/cabinet/Paging/Paging";
 import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
 import { ReactComponent as InvestSvg } from '../../../asset/24px/invest.svg';
 import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
+import UI from '../../../ui';
+import router from '../../../router';
+import * as PAGES from '../../../constants/pages';
 
 
 class CabinetInvestmentsScreen extends React.PureComponent {
@@ -61,7 +64,20 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
-          sidebarOptions={[
+          sidebarOptions={!this.props.adaptive ? [
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/plus-circle.svg')}
+              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+            >{utils.getLang('cabinet_investmentsScreen_new')}</UI.FloatingButtonItem>,
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/invest.svg')}
+              onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'profits' })}}
+            >{utils.getLang('cabinet_investmentsProfit')}</UI.FloatingButtonItem>,
+            <UI.FloatingButtonItem
+              onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'withdrawals' })}}
+              icon={require('../../../asset/24px/invest.svg')}
+            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,
+          ] : [
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
               icon={<PlusCircleSvg />}
