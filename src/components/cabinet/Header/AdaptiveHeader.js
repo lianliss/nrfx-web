@@ -13,12 +13,6 @@ import * as CLASSES from "../../../constants/classes";
 import * as utils from "../../../utils/";
 
 class AdaptiveHeader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.leftContent = props.leftContent;
-    this.mainContent = props.mainContent;
-    this.rightContent = props.rightContent;
-  }
   state = {activePage: null};
 
   handleNavigate = (route) => {
@@ -31,23 +25,23 @@ class AdaptiveHeader extends React.Component {
         <div className="CabinetHeader">
           <div className="CabinetHeader__leftContent">
             <div className="CabinetHeader__leftContent_icon">
-              {this.leftContent}
+              {this.props.leftContent}
             </div>
           </div>
           <div className="CabinetHeader__mainContent">
-            {utils.switchMatch(this.mainContent.type, {
+            {utils.switchMatch(this.props.mainContent.type, {
               'logotype': <div className="CabinetHeader__mainContent_logo">
                 <SVG src={require("../../../asset/logo_full_adaptive.svg")} />
               </div>,
               'default': <div className="CabinetHeader__mainContent_text">
                 <span>
-                  {this.mainContent.content}
+                  {this.props.mainContent.content}
                 </span>
               </div>
             })}
           </div>
           <div className="CabinetHeader__rightContent">
-            {this.rightContent}
+            {this.props.rightContent}
           </div>
         </div>
       </div>

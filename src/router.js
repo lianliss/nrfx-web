@@ -16,6 +16,10 @@ export const routes = [
     path: '/menu',
   },
   {
+    name: pages.NOTIFICATIONS,
+    path: '/notifications',
+  },
+  {
     name: pages.ABOUT,
     path: '/about',
   },

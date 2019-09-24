@@ -1,27 +1,30 @@
 import './MenuScreen.less';
-import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
+import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
 import React from 'react';
 import { BaseLink } from 'react-router5';
-import * as CLASSES from "../../../constants/classes";
-import * as storeUtils from "../../../storeUtils";
-import router from '../../../router';
+import * as CLASSES from "../../../../constants/classes";
+import * as storeUtils from "../../../../storeUtils";
+import router from '../../../../router';
 import SVG from 'react-inlinesvg';
-import * as PAGES from '../../../constants/pages';
-import * as utils from '../../../utils';
-import * as storage from '../../../services/storage';
-import * as auth from '../../../actions/auth';
-import {loadLang} from '../../../actions';
-import * as modalGroupActions from '../../../actions/modalGroup';
-import LanguageModal from '../../../components/site/LanguageModal/LanguageModal';
+import * as PAGES from '../../../../constants/pages';
+import * as utils from '../../../../utils';
+import * as storage from '../../../../services/storage';
+import * as auth from '../../../../actions/auth';
+import {loadLang} from '../../../../actions';
+import * as modalGroupActions from '../../../../actions/modalGroup';
+import LanguageModal from '../../../../components/site/LanguageModal/LanguageModal';
 import moment from 'moment/min/moment-with-locales';
 
 
 class MenuScreen extends CabinetBaseScreen {
-
   handleLangChange = (value) => {
     loadLang(value);
     storage.setItem('lang', value);
     moment.locale(value);
+  }
+
+  componentDidMount() {
+    this.props.setTitle(utils.getLang("global_menu"));
   }
 
   handleChangeLanguage = () => {
@@ -38,7 +41,7 @@ class MenuScreen extends CabinetBaseScreen {
 
   render() {
     if (!this.props.adaptive) {
-      return '0';
+      return null;
     }
 
     const currentLang = storage.getItem('lang') || "en";
@@ -54,7 +57,7 @@ class MenuScreen extends CabinetBaseScreen {
             className="Menu__section__item"
             activeClassName="active"
           >
-            <SVG src={require('../../../asset/24px/id-badge.svg')} />
+            <SVG src={require('../../../../asset/24px/id-badge.svg')} />
             <span>{utils.getLang("cabinet_settingsMenuPersonal")}</span>
           </BaseLink>
         </div>
@@ -63,7 +66,7 @@ class MenuScreen extends CabinetBaseScreen {
             onClick={this.handleChangeLanguage}
             className="Menu__section__item"
           >
-            <SVG className={"Menu__section__item__flag"} src={require(`../../../asset/site/lang-flags/${lang.value}.svg`)} />
+            <SVG className={"Menu__section__item__flag"} src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
             <span>{lang.title} {lang.value.toUpperCase()}</span>
           </div>
         </div>
@@ -75,7 +78,7 @@ class MenuScreen extends CabinetBaseScreen {
             className="Menu__section__item"
             activeClassName="active"
           >
-            <SVG src={require('../../../asset/24px/exit.svg')} />
+            <SVG src={require('../../../../asset/24px/exit.svg')} />
             <span>{utils.getLang("cabinet_header_exit")}</span>
           </BaseLink>
         </div>

@@ -21,6 +21,7 @@ class CabinetRegister extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.setTitle(utils.getLang("cabinet_registerScreen_complete"));
     if (!this.context.params.hash) {
       this.props.router.navigate(pages.MAIN);
     }

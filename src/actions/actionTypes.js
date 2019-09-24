@@ -15,8 +15,9 @@ export const TRANSACTION_HISTORY = 'TRANSACTION_HISTORY';
 export const WALLET_HISTORY = 'WALLET_HISTORY';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SET_ADAPTIVE = 'SET_ADAPTIVE';
+export const SET_TITLE = 'SET_TITLE';
 
-// Notifications
+// NotificationsScreen
 export const NOTIFICATIONS_SET = 'NOTIFICATIONS_SET';
 
 // Toasts

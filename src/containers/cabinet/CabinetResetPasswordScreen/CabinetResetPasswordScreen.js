@@ -14,6 +14,10 @@ class CabinetRegister extends React.PureComponent {
     success: false
   };
 
+  componentDidMount() {
+    this.props.setTitle(utils.getLang("cabinet_resetPassword_title"));
+  }
+
   static contextType = GetParamsContext;
 
   __handleChange(name, value) {

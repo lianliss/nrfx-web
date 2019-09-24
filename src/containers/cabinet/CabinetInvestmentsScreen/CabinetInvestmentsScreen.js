@@ -33,6 +33,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
   componentDidMount() {
     this.__load();
+    this.props.setTitle(utils.getLang("site__headerInvestment"));
   }
 
   componentWillUpdate(nextProps) {

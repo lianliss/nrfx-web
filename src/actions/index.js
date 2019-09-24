@@ -76,3 +76,7 @@ export function openModal(name, params = {}) {
 export function setAdaptive(adaptive) {
   return store.dispatch({ type: actionTypes.SET_ADAPTIVE, adaptive });
 }
+
+export function setTitle(title) {
+  return store.dispatch({ type: actionTypes.SET_TITLE, title });
+}
