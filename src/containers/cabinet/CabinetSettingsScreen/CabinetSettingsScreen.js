@@ -30,6 +30,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   }
 
   componentDidMount() {
+    this.props.setTitle(utils.getLang("cabinet_header_settings"));
     this.__load();
   }
 
@@ -276,7 +277,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   };
 
   __getPersonalPageContent = () => {
-    const buttonType = this.props.adaptive ? "secondary" : "outline";
+    const buttonType = this.props.adaptive ? undefined : "outline";
     return <div className="CabinetSettingsScreen__main Content_box">
       <div className="CabinetSettingsScreen__header">
         {utils.getLang('cabinet_settingsPersonalInformation')}

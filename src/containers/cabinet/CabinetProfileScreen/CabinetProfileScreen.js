@@ -32,6 +32,11 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     }
   };
 
+  componentDidMount() {
+    this.props.setTitle(utils.getLang("cabinet_header_profile"));
+    this.load();
+  }
+
   render() {
     if (this.isLoading) {
       return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;

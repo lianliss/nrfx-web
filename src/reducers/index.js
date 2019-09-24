@@ -6,6 +6,7 @@ const initialState = {
   auth: {},
   profile: {},
   adaptive: false,
+  title: "Bitcoinbot",
   modals: []
 };
 
@@ -50,6 +51,13 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         adaptive: action.adaptive
+      }
+    }
+
+    case actionTypes.SET_TITLE: {
+      return {
+        ...state,
+        title: action.title
       }
     }
 

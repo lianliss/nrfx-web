@@ -19,7 +19,10 @@ export function getWithState(caseName, caseClass) {
 
   switch (caseName) {
     case CLASSES.COMPONENT_CABINET_WRAPPER:
-      mapState2Props = (state) => ({ ...state.default });
+      mapState2Props = (state) => ({
+        ...state.default,
+        router: state.router
+      });
       mapDispatch2Props = {
         setAdaptive: actions.setAdaptive
       };
@@ -29,12 +32,25 @@ export function getWithState(caseName, caseClass) {
         adaptive: state.default.adaptive,
         langList: state.default.langList
       });
+      mapDispatch2Props = {
+        setTitle: actions.setTitle
+      };
+      break;
+    case CLASSES.CABINET_NOTIFICATIONS_SCREEN:
+      mapState2Props = (state) => ({
+        notifications: state.notifications,
+      });
+      mapDispatch2Props = {
+        setTitle: actions.setTitle,
+        loadNotifications: notificationsActions.loadNotifications
+      };
       break;
     case CLASSES.COMPONENT_CABINET_HEADER:
       mapState2Props = (state) => ({
         profile: state.default.profile,
         notifications: state.notifications,
-        router: state.router
+        router: state.router,
+        title: state.default.title
       });
       mapDispatch2Props = {
         loadNotifications: notificationsActions.loadNotifications
@@ -58,6 +74,7 @@ export function getWithState(caseName, caseClass) {
         return { ...state.wallets, ...state.profile }
       };
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadWallets: walletsActions.loadWallets,
         loadDashboard: profileActions.loadDashboard
       };
@@ -75,12 +92,14 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.CABINET_START_PFOFILE_SCREEN:
       mapState2Props = (state) => ({ ...state.wallets });
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadWallets: walletsActions.loadWallets
       };
       break;
     case CLASSES.CABINET_WALLET_SCREEN:
       mapState2Props = (state) => ({ ...state.wallets });
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadWallets: walletsActions.loadWallets,
         loadMoreTransactions: walletsActions.loadMoreTransactions,
         loadMoreTransfers: walletsActions.loadMoreTransfers,
@@ -92,6 +111,7 @@ export function getWithState(caseName, caseClass) {
       };
 
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadInvestments: investmentsActions.loadInvestments,
         loadProfitHistory: investmentsActions.loadProfitHistory,
         loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory,
@@ -105,6 +125,7 @@ export function getWithState(caseName, caseClass) {
         adaptive: state.default.adaptive,
       });
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadSettings: settingsActions.loadSettings,
         setUserFieldValue: settingsActions.setUserFieldValue,
         toastPush: toastsActions.toastPush

@@ -40,6 +40,11 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     });
   }
 
+  componentDidMount() {
+    this.props.setTitle(utils.getLang("cabinet_header_wallets"));
+    this.load();
+  }
+
   state = {
     walletSelected: null
   };

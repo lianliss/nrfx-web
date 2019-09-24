@@ -26,7 +26,8 @@ import * as CabinetSettingsScreen from './containers/cabinet/CabinetSettingsScre
 import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
 import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
 import * as CabinetResetPassword from './containers/cabinet/CabinetResetPasswordScreen/CabinetResetPasswordScreen';
-import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen';
+import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen/MenuScreen';
+import * as NotificationsScreen from './containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen';
 
 export default function Routes(props) {
   const routeState = props.router.getState();
@@ -117,6 +118,9 @@ export default function Routes(props) {
       break;
     case pages.MENU:
       Component = MenuScreen.default;
+      break;
+    case pages.NOTIFICATIONS:
+      Component = NotificationsScreen.default;
       break;
     default:
       Component = SiteNotFoundScreen;

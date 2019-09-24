@@ -6,9 +6,8 @@ import { GetParamsContext } from '../../../contexts';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import apiSchema from '../../../services/apiSchema';
 import * as api from "../../../services/api";
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
 import * as pages from '../../../constants/pages';
+import * as utils from '../../../utils';
 
 class CabinetChangeEmail extends React.PureComponent {
   state = {
@@ -19,6 +18,7 @@ class CabinetChangeEmail extends React.PureComponent {
 
   componentDidMount() {
     const { params } = this.context;
+    this.setTitle(utils.getLang("cabinet_changeEmailModal_name"));
     api.call(apiSchema.Profile.ConfirmEmailPost, params).then(() => {
       this.setState({success: true, pending: false});
     }).catch((err) => {
