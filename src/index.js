@@ -15,10 +15,12 @@ import * as serviceWorker from './serviceWorker';
 import * as auth from './services/auth';
 import * as user from './actions/user';
 import * as emitter from './services/emitter';
+import realTimeService from './services/realtime';
 
 require('define').noConflict();
 
 auth.setup();
+realTimeService();
 
 emitter.addListener('userInstall', user.install);
 emitter.emit('userInstall');

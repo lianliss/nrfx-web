@@ -60,7 +60,7 @@ class Orders extends React.Component {
       <UI.TableColumn align="right">Time</UI.TableColumn>,
     ];
 
-    let rows = this.props.open_orders.map((order) => {
+    let rows = Object.values(this.props.openOrders).map((order) => {
       const sideClassName = utils.classNames({
         Exchange__orders__side: true,
         sell: order.action === 'sell'

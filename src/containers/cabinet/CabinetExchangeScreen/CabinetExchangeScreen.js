@@ -15,6 +15,7 @@ import * as utils from '../../../utils';
 import OrderBook from './components/OrderBook/OrderBook';
 import TradeForm from './components/TradeForm/TradeForm';
 import Orders from './components/Orders/Orders';
+import * as exchangeService from '../../../services/exchange';
 
 class CabinetExchangeScreen extends CabinetBaseScreen {
   constructor(props) {
@@ -23,6 +24,16 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
     this.state = {
       ordersTab: 'open',
     };
+  }
+
+  componentDidMount() {
+    super.componentDidMount();
+    exchangeService.bind(this.props.market);
+  }
+
+  componentWillUnmount() {
+    super.componentWillUnmount();
+    exchangeService.unbind(this.props.market);
   }
 
   render() {
@@ -107,7 +118,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       <UI.TableColumn align="right">Time</UI.TableColumn>,
     ];
 
-    let rows = this.props.trades.map((order) => {
+    let rows = Object.keys(this.props.trades).map((order) => {
       const priceClassName = utils.classNames({
         Exchange__orders__side: true,
         sell: order.action === 'sell'
@@ -153,7 +164,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   load() {
-    this.props.load();
+    this.props.load(this.props.market);
   }
 }
 

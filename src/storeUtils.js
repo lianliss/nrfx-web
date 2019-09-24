@@ -175,7 +175,7 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.CABINET_EXCHANGE_SCREEN:
       mapState2Props = (state) => ({ ...state.exchange });
       mapDispatch2Props = {
-        load: exchangeActions.load
+        load: exchangeActions.load,
       };
       break;
     default:
