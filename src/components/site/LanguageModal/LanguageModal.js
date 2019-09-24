@@ -5,6 +5,7 @@ import SVG from 'react-inlinesvg';
 import * as utils from '../../../utils';
 
 import UI from '../../../ui';
+import {ModalHeader} from '../../../ui/components/Modal/Modal';
 
 const getLanguageFlag = (langCode) => {
   return <SVG src={require(`../../../asset/site/lang-flags/${langCode}.svg`)} />
@@ -24,9 +25,8 @@ function LanguageModal({ langList, className, onLanguageClick, isOpen, onClose }
         isOpen={isOpen}
         onClose={onClose}
       >
+        <UI.ModalHeader>{utils.getLang("global_language")}</UI.ModalHeader>
         <div className="LanguageModal__cont">
-          <h2 className="LanguageModal__cont__title">{utils.getLang("global_language")}</h2>
-
           <div className="LanguageModal__cont__grid">
             {langList.map(lang => (
               <p

@@ -4,7 +4,7 @@ import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from "../../../constants/classes";
 import Toast from "../../../ui/components/Toast/Toast"
 
-export function Toasts(props) {
+function Toasts(props) {
   return (
     <div className="Toasts">
       {props.toasts.items.map(toast => (

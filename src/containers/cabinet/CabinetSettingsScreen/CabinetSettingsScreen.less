@@ -111,3 +111,37 @@
 .CabinetWalletScreen__transactions_padding {
   margin-top: 24px;
 }
+
+.adaptive {
+  .CabinetSettingsScreen {
+    &__space {
+      height: 0;
+    }
+
+    &__header{
+      margin-bottom: 16px;
+    }
+
+    &__input_field {
+      margin-bottom: 25px !important;
+    }
+
+    &__relative {
+      margin-bottom: 48px;
+      display: block;
+    }
+
+    &__form {
+      &.left,
+      &.right {
+        width: 100%;
+
+        .Button {
+          position: relative;
+          bottom: initial;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -60,6 +60,7 @@ class ModalGroup extends React.Component {
     Object.keys(this.props.modalGroupRoutes[this.__getRouteName()]).forEach((modalPage, i) => {
       components.push(
         <ModalPage
+          adaptive={this.props.adaptive}
           id={modalPage}
           key={modalPage + i}
           close={this.__close}

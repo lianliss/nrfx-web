@@ -65,7 +65,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
 
     return (<div>
       <PageContainer
-        leftContent={this.__renderRightContent()}
+        leftContent={!this.props.adaptive && this.__renderRightContent()}
         sidebarOptions={[
           <ProfileSidebarItem
             icon={<IdBadgeSvg />}
@@ -276,6 +276,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   };
 
   __getPersonalPageContent = () => {
+    const buttonType = this.props.adaptive ? "secondary" : "outline";
     return <div className="CabinetSettingsScreen__main Content_box">
       <div className="CabinetSettingsScreen__header">
         {utils.getLang('cabinet_settingsPersonalInformation')}
@@ -301,7 +302,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         </div>
         <div className="CabinetSettingsScreen__form right">
           <UI.Button
-            type={'outline'}
+            type={buttonType}
             onClick={() => {
               if (this.props.user.first_name.length < 1) {
                 return this.__inputError(this, 'firstNameInputError');
@@ -355,7 +356,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
-          <UI.Button type={'outline'} onClick={() => {
+          <UI.Button type={buttonType} onClick={() => {
             if (this.props.user.login.length < 1) {
               return this.__inputError(this, 'loginInputError');
             }
@@ -404,7 +405,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
-          <UI.Button type="outline" onClick={() => {modalGroupActions.openModalPage('change_number')}}>
+          <UI.Button type={buttonType} onClick={() => {modalGroupActions.openModalPage('change_number')}}>
             {utils.getLang('cabinet_settingsChange')}
           </UI.Button>
         </div>
@@ -423,7 +424,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
-          <UI.Button type={'outline'} onClick={() => {modalGroupActions.openModalPage('change_email')}}>
+          <UI.Button type={buttonType} onClick={() => {modalGroupActions.openModalPage('change_email')}}>
             {utils.getLang('cabinet_settingsChange')}
           </UI.Button>
         </div>

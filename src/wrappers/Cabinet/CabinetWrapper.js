@@ -9,6 +9,7 @@ import AdaptiveHeader from '../../components/cabinet/Header/AdaptiveHeader';
 import {classNames} from '../../utils';
 import * as CLASSES from '../../constants/classes';
 import * as storeUtils from '../../storeUtils';
+import TabBar from '../../components/cabinet/TabBar/TabBar';
 
 class CabinetWrapper extends Component {
   componentDidMount() {
@@ -38,7 +39,8 @@ class CabinetWrapper extends Component {
         }}
         rightContent={<SVG src={calendarSvg} />}
       /> : <Header />}
-      {children}
+      <div className="CabinetWrapper__content">{children}</div>
+      {adaptive && <TabBar />}
     </div>
   }
 
