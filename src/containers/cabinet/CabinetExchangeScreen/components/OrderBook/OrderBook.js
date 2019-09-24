@@ -6,8 +6,8 @@ import * as utils from '../../../../../utils';
 
 export default function OrderBook({ asks, bids, onOrderPress }) {
 
-  asks.sort((a, b) => a.price - b.price);
-  bids.sort((a, b) => b.price - a.price);
+  asks.sort((a, b) => a.price > b.price ? -1 : 1);
+  bids.sort((a, b) => a.price > b.price ? -1 : 1);
 
 
   const sumAsks = asks.reduce((total, order) => total + order.amount, 0);
@@ -32,10 +32,10 @@ export default function OrderBook({ asks, bids, onOrderPress }) {
       </div>
       <div className="OrderBook__cont">
         <div className="OrderBook__side">
-          {makeRows(asks, onOrderPress)}
+          {makeRows(asks.slice(-11), onOrderPress)}
         </div>
         <div className="OrderBook__side">
-          {makeRows(bids, onOrderPress)}
+          {makeRows(bids.slice(0, 11), onOrderPress)}
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@ export default function OrderBook({ asks, bids, onOrderPress }) {
 }
 
 function makeRows(items, onOrderPress) {
-  return items.slice(0, 11).map((order) => {
+  return items.map((order) => {
     const className = utils.classNames({
       OrderBook__order: true,
       [order.action]: true,

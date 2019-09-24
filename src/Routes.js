@@ -27,6 +27,8 @@ import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
 
 import SiteWrapper from './wrappers/Site/SiteWrapper';
 import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
+import CabinetResetPasswordScreen from './containers/cabinet/CabinetResetPasswordScreen/CabinetResetPasswordScreen';
+import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
 
 export default function Routes(props) {
   const routeState = props.router.getState();
@@ -113,13 +115,13 @@ export default function Routes(props) {
       Component = CabinetRegister.default;
       break;
     case pages.RESET_PASSWORD:
-      Component = CabinetResetPassword.default;
+      Component = CabinetResetPasswordScreen.default;
       break;
     case pages.MENU:
       Component = MenuScreen.default;
       break;
     case pages.EXCHANGE:
-      Component = CabinetExchangeScreen.default;
+      Component = CabinetExchangeScreen;
       break;
     default:
       Component = SiteNotFoundScreen;
