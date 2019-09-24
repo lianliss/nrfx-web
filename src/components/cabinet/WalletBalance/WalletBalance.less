@@ -163,7 +163,19 @@
     width: 100px;
     height: 100px;
   }
+  .WalletBalance__selected_wallet {
+    padding-top: 8px;
+  }
   .WalletBalance {
+    .WalletBalance__selected_buttons {
+      padding-top: 50px;
+      .Button {
+        width: calc(50% - 24px);
+      }
+      .Button:first-child {
+        margin-right: 24px;
+      }
+    }
     width: 100%;
     display: inline-block;
     padding-block-start: 16px;
