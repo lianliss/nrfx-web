@@ -10,9 +10,9 @@ import * as toastsActions from './toasts';
 export function loadInvestments() {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-    api.call(apiSchema.Investment.DefaultGet).then(({ deposits, payments, chart, ...props }) => {
+    api.call(apiSchema.Investment.DefaultGet).then(({ deposits, payments, chart, balances, ...props }) => {
       payments = Object.values(payments);
-      dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments, chart });
+      dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments, chart, balances });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
       toastsActions.toastPush("Error load investment", "error")(dispatch, getState);

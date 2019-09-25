@@ -3,10 +3,12 @@ import './CabinetInvestmentsScreen.less';
 import React from 'react';
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
-import SummaryItem from './components/SummaryItem';
+import Balances from './components/Balances';
 import WithdrawaHistorylTable from './components/WithdrawaHistorylTable';
 import ProfitHistorylTable from './components/ProfitHistorylTable';
 import DepositTable from './components/DepositTable';
+import CurrentPayments from './components/CurrentPayments';
+import AllPayments from './components/AllPayments';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
@@ -64,7 +66,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <div>
         <PageContainer
           leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
-          sidebarOptions={!this.props.adaptive ? [
+          sidebarOptions={this.props.adaptive ? [
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/plus-circle.svg')}
               onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
@@ -111,7 +113,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   __renderMainContent() {
     return (
       <div>
-        {this.__renderSummary()}
+        {this.__renderBalances()}
         <DepositTable deposits={this.props.deposits} />
       </div>
     )
@@ -157,40 +159,62 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       return <LoadingStatus status="loading" />;
     }
 
-    return <ChartProfit chart={{...this.props.chart}} />
+    return [
+      <ChartProfit chart={{...this.props.chart}} />,
+      this.__renderCurrentPayments(),
+      <div className="Investment__heightPadding">
+      </div>,
+      this.__renderAllPayments()
+    ];
   };
 
-  __renderSummary() {
+  __renderBalances() {
+    if (!this.props.balances.length) {
+      return null;
+    }
+
+    return (
+      <div className="Investments__balances">
+        <Balances data={this.props.balances} />
+      </div>
+    )
+  }
+
+  __renderAllPayments = () => {
     if (!this.props.payments.length) {
       return null;
     }
 
-    let existCurrencies = {};
-    for (let item of this.props.payments) {
-      existCurrencies[item.currency] = true;
+    const notEmptyPayments = this.props.payments.filter(item => item.total_invested_amount > 0);
+    if (notEmptyPayments.length === 0) {
+      return null;
     }
-
-    let payments = this.props.payments;
-    let allCurrencies = ['btc', 'eth', 'ltc'];
-    for (let currency of allCurrencies) {
-      if (existCurrencies[currency]) {
-        continue;
-      }
-
-      payments.push({
-        currency,
-        isEmpty: true
-      });
-    }
-
-    const items = payments.map((item, i) => <SummaryItem key={i} {...item} />);
 
     return (
       <div className="Investments__summary">
-        {items}
+        <AllPayments payments={notEmptyPayments} />
       </div>
     )
-  }
+  };
+
+  __renderCurrentPayments = () => {
+    if (!this.props.payments.length) {
+      return null;
+    }
+
+    const notEmptyPayments = this.props.payments.filter(item => item.invested_amount > 0);
+    if (notEmptyPayments.length === 0) {
+      return null;
+    }
+
+    return [
+      <div className="Investment__heightPadding">
+      </div>,
+      <div className="Investments__payments">
+        <CurrentPayments payments={notEmptyPayments} />
+      </div>
+    ]
+  };
 }
 
 export default storeUtils.getWithState(

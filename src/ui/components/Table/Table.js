@@ -7,39 +7,43 @@ import PropTypes from 'prop-types';
 import Hover from '../Hover/Hover';
 import * as utils from '../../utils';
 
-function Table({ headings, children, className }) {
+function Table({ headings, children, className, header }) {
   return (
-    <table className={utils.classNames({
-      Table: true,
-      Content_box: true,
-      [className]: !!className
-    })}>
-      <thead>
-        <tr>
-          {React.Children.map(headings, (child, i) => {
+    <div className="TableMain Content_box">
+      {header && <div className="Table__header">
+        <span>{header}</span>
+      </div>}
+      <table className={utils.classNames({
+        Table: true,
+        [className]: !!className
+      })}>
+        <thead>
+          <tr>
+            {React.Children.map(headings, (child, i) => {
+              if (!React.isValidElement(child)) {
+                return child;
+              }
+
+              return React.cloneElement(child, {
+                key: i
+              });
+            })}
+          </tr>
+        </thead>
+
+        <tbody>
+          {React.Children.map(children, (child, i) => {
             if (!React.isValidElement(child)) {
               return child;
             }
 
             return React.cloneElement(child, {
-              key: i
+              dark: i % 2 === 0
             });
           })}
-        </tr>
-      </thead>
-
-      <tbody>
-        {React.Children.map(children, (child, i) => {
-          if (!React.isValidElement(child)) {
-            return child;
-          }
-
-          return React.cloneElement(child, {
-            dark: i % 2 === 0
-          });
-        })}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   )
 }
 
