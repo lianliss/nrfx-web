@@ -87,7 +87,10 @@
 
   img {
     position: absolute;
-    transform: translate(338px, -36px);
+    right: 16px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
     width: 26px;
     height: 26px;
   }
@@ -99,5 +102,33 @@
   padding-top: 40px;
   .Button {
     margin: auto;
+  }
+}
+
+.SendCoinsConfirmModal__icon {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  top: 16px;
+  left: -32px;
+  background: no-repeat center/contain;
+}
+
+.adaptive {
+  .SendCoinsConfirmModal {
+    &__wrapper {
+      padding-top: 80px;
+    }
+
+    &__icon {
+      left: 0;
+      right: 0;
+      top: -32px;
+      margin: 0 auto;
+    }
+
+    .Wallets__history__address {
+      word-break: break-all;
+    }
   }
 }

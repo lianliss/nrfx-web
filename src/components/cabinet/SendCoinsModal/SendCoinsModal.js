@@ -120,7 +120,12 @@ class SendCoinsModal extends React.Component {
               onTextChange={this.__usdAmountDidChange}
               value={this.props.thisState.amountUSD > 0 ? this.props.thisState.amountUSD : ""}
             />
-            <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>
+            <UI.Button
+              smallPadding
+              type="outline"
+              currency={this.props.thisState.currency}
+              onClick={this.__maxDidPress}
+            >
               {utils.getLang('cabinet_sendCoinsModal_max')}
             </UI.Button>
           </div>

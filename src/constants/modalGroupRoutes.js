@@ -46,5 +46,6 @@ export const MODALGROUP_ROUTES = {
   settings: {
     change_email: Modals.ChangeEmailModal,
     change_number: Modals.ChangeNumberModal,
-  }
+  },
+  menu: {},
 };
