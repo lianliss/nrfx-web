@@ -82,7 +82,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
               label={utils.getLang("cabinet_walletBox_create")}
             />,
             <ProfileSidebarItem
-              section={'transfers'}
+              section="transfers"
               icon={<HistorySvg />}
               label={utils.getLang('cabinet_walletScreen_transfers')}
             />,
@@ -156,7 +156,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         moreButton={!!this.props.transactions.next}
         isLoading={this.props.transactionsLoadingMore}
       >
-        <HistoryTable adaptive={this.props.adaptive} history={'items' in this.props.transactions ? this.props.transactions.items : []} />
+        <HistoryTable header={utils.getLang('global_transactions')} adaptive={this.props.adaptive} history={'items' in this.props.transactions ? this.props.transactions.items : []} />
       </Paging>
       <div className="CabinetWalletScreen__height_padding">
       </div>
@@ -171,7 +171,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         moreButton={!!this.props.transfers.next}
         isLoading={this.props.transfersLoadingMore}
       >
-        <HistoryTable adaptive={this.props.adaptive} history={'items' in this.props.transfers ? this.props.transfers.items : []} />
+        <HistoryTable header={utils.getLang('cabinet_walletScreen_transfers')} adaptive={this.props.adaptive} history={'items' in this.props.transfers ? this.props.transfers.items : []} />
       </Paging>
     </div>
   };

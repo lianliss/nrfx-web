@@ -7,7 +7,7 @@ import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as modalGroupActions from '../../../../actions/modalGroup';
 
-export default function HistoryTable({ history, adaptive}) {
+export default function HistoryTable({ history, adaptive, header}) {
 
   if (!history.length) {
     return (
@@ -104,7 +104,7 @@ export default function HistoryTable({ history, adaptive}) {
   });
 
   return (
-    <UI.Table headings={headings}>
+    <UI.Table headings={headings} header={header}>
       {rows}
     </UI.Table>
   )

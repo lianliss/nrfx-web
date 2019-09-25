@@ -29,10 +29,10 @@ export default function CurrentPayments({ payments }) {
           <div className="Investments__CurrentPayments__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
         </UI.TableColumn>
         <UI.TableColumn align="right">
-          {item.total_invested_amount + ' ' + currency}
+          {utils.formatDouble(item.total_invested_amount, 6) + ' ' + currency}
         </UI.TableColumn>
         <UI.TableColumn align="right">
-          {item.total_profit || 0}
+          {utils.formatDouble(item.total_profit, 6) || 0}
         </UI.TableColumn>
       </UI.TableCell>
     )

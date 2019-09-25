@@ -40,7 +40,7 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) 
   });
 
   return (
-    <UI.Table headings={headings} className="Investment__withdrawal_table">
+    <UI.Table headings={headings} className="Investment__withdrawal_table" header={utils.getLang('cabinet_investmentsWithdrawalHistory')}>
       {rows}
     </UI.Table>
   )

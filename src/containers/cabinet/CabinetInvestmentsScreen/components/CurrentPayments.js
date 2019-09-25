@@ -34,13 +34,13 @@ export default function CurrentPayments({ payments }) {
           <div className="Investments__CurrentPayments__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
         </UI.TableColumn>
         <UI.TableColumn align="right">
-          {item.invested_amount + ' ' + currency}
+          {utils.formatDouble(item.invested_amount, 6) + ' ' + currency}
         </UI.TableColumn>
         <UI.TableColumn align="right">
-          {item.profit}
+          {utils.formatDouble(item.profit, 6)}
         </UI.TableColumn>
         <UI.TableColumn align="right">
-          {item.available}
+          {utils.formatDouble(item.available, 6)}
         </UI.TableColumn>
         <UI.TableColumn align="right" style={{ width: 20, position: 'relative' }}>
           <UI.Button key="button" type="secondary" size="small" style={{width: 15}} onClick={() => modalGroupActions.openModalPage('withdrawal', { currency })}>

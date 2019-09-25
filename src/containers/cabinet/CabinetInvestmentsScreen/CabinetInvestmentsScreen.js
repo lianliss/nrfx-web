@@ -141,7 +141,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
     return (
       <div>
-        <h2>{utils.getLang('cabinet_investmentsWithdrawalHistory')}</h2>
         <Paging
           isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
           onMore={this.props.loadMoreWithdrawalHistory}

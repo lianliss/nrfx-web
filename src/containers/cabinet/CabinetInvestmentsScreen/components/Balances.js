@@ -12,7 +12,7 @@ function BalanceItem({ amount, currency }) {
   return (
     <div className="Investments__summary__item Content_box">
       <div key="info" className="Investments__summary__item__rows">
-        <InfoRow label={utils.getLang("global_invested")}>{amount} {currency}</InfoRow>
+        <InfoRow label={utils.ucfirst(currencyInfo.name)}>{amount} {currency}</InfoRow>
       </div>
       <div className="Investments__summary__item__actions empty">
         <UI.Button key="button" type="default" size="small" onClick={() => modalGroupActions.openModalPage('open_deposit', { currency })}>
@@ -37,13 +37,7 @@ function InfoRow({ label, children, highlighted }) {
 }
 
 export default function Balances({data}) {
-  /*
-align:  0.0146764
-amount: 0.0146764
-currency: "btc"
-   */
   return data.map(item => {
     return BalanceItem(item);
   });
-
 }
