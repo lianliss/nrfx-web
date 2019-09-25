@@ -9,9 +9,9 @@ import * as auth from '../services/auth';
 
 export function install() {
   if (!auth.isLogged()) {
-    return;
+    return Promise.reject();
   }
-  api.call(apiSchema.Profile.DefaultGet).then(({ ...props }) => {
+  return api.call(apiSchema.Profile.DefaultGet).then(({ ...props }) => {
     store.dispatch({ type: actionTypes.PROFILE, props });
   });
 }

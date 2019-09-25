@@ -8,6 +8,7 @@ import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/P
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import GAConfirmModal from '../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
+import ProfileUser from '../../../components/cabinet/ProfileUser/ProfileUser';
 
 import UI from '../../../ui';
 
@@ -67,7 +68,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     return (<div>
       <PageContainer
         leftContent={!this.props.adaptive && this.__renderRightContent()}
-        sidebarOptions={[
+        sidebarOptions={!this.props.adaptive && [
           <ProfileSidebarItem
             icon={<IdBadgeSvg />}
             label={utils.getLang("cabinet_settingsMenuPersonal")}
@@ -87,6 +88,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           />*/
         ]}
       >
+        {this.props.adaptive && <ProfileUser profile={this.props.profile} />}
         {this.__renderContent()}
       </PageContainer>
     </div>);

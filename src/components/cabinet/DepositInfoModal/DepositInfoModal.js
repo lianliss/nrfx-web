@@ -15,17 +15,22 @@ export default class DepositInfoModal extends React.Component {
       return null;
     }
 
+    const adaptive = document.body.classList.contains('adaptive');
     const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
     console.log(1, deposit);
     return (
-      <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
+      <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.percent}% {deposit.description}
-          <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
+          <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+          {adaptive && <div className="DepositInfoModal__amount">
+            <div className="DepositInfoModal__amount__label">{utils.getLang("site__headerInvestment")}</div>
+            <div className="DepositInfoModal__amount__number">{deposit.amount} {currency}</div>
+          </div> }
           <div className="DepositInfoModal__columns">
             <InfoRowGroup className="DepositInfoModal__column">
               <InfoRow label="ID">{deposit.localId}</InfoRow>

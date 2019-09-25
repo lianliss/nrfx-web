@@ -61,3 +61,38 @@
   display: inline-block;
   color: var(--primary-grey);
 }
+
+.OpenDepositModal__icon {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  top: 16px;
+  left: -32px;
+  background: no-repeat center/contain;
+}
+
+.adaptive {
+  .OpenDepositModal {
+    width: 100%;
+    padding: 24px 16px;
+
+    &__row {
+      margin-top: 24px;
+    }
+
+    &__btn_wrapper {
+      margin-top: 32px;
+    }
+
+    &__icon {
+      left: 0;
+      right: 0;
+      top: -32px;
+      margin: 0 auto;
+    }
+
+    &__wrapper {
+      padding-top: 80px;
+    }
+  }
+}

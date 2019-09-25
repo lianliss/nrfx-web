@@ -122,6 +122,7 @@ class OpenDepositModal extends React.Component {
 
   render() {
     let typeInfoRows;
+    const currencyInfo = actions.getCurrencyInfo(this.state.currency);
     if (this.state.selectDepositType === 'static') {
       typeInfoRows = [
         {
@@ -151,11 +152,12 @@ class OpenDepositModal extends React.Component {
     }
 
     return (
-      <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
+      <UI.Modal noSpacing className="OpenDepositModal__wrapper" isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_openNewDeposit_name')}
         </UI.ModalHeader>
         <div className="OpenDepositModal">
+          <div className="OpenDepositModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <div className="OpenDepositModal__row">
             <UI.Dropdown
               placeholder={this.state.walletCurrentOption}

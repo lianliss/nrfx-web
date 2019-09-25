@@ -32,7 +32,7 @@ class SendCoinsConfirmModal extends React.Component {
     this.currencyInfo = actions.getCurrencyInfo(this.currency);
 
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={464}>
+      <UI.Modal className="SendCoinsConfirmModal__wrapper" isOpen={true} onClose={() => {this.props.close()}} width={464}>
         <UI.ModalHeader>
           {this.__getTitle()}
         </UI.ModalHeader>
@@ -53,9 +53,9 @@ class SendCoinsConfirmModal extends React.Component {
 
     const currencyGradient = currencies.getGradientByCurrency(currency);
 
-
     return (
-      <div>
+      <div className="SendCoinsConfirmModal">
+        <div className="SendCoinsConfirmModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
         <InfoRowGroup align="left">
           <InfoRow label={utils.getLang('global_from')}>
             <div className="Wallets__history__address">

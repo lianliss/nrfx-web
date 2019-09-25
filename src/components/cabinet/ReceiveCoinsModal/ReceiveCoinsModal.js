@@ -41,7 +41,7 @@ export default class ReceiveCoinsModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={480}>
         <UI.ModalHeader>
-          {utils.getLang('cabinet_receiveCoinsModal_name')}
+          {utils.getLang('cabinet_receiveCoinsModal_name')} { utils.ucfirst(currencyInfo.name)}
         </UI.ModalHeader>
         {this.__renderContent()}
       </UI.Modal>
@@ -124,13 +124,15 @@ export default class ReceiveCoinsModal extends React.Component {
           <div className="SendCoinsModal__row ReceiveCoinsModal__button_wrap">
             <div className="ReceiveCoinsModal__button">
               {this.state.isCopied && <SVG src={require('../../../asset/16px/check.svg')} className="ReceiveCoinsModal__copied_icon" />}
-              <UI.Button onClick={() => {
-                if (this.state.isCopied) {
-                  this.props.close();
-                } else {
-                  this.__copy();
-                }
-              }}>{this.state.isCopied ? 'Close': 'Copy Wallet Address'}</UI.Button>
+              <UI.Button
+                currency={this.state.currency}
+                onClick={() => {
+                  if (this.state.isCopied) {
+                    this.props.close();
+                  } else {
+                    this.__copy();
+                  }
+                }}>{this.state.isCopied ? 'Close': 'Copy Wallet Address'}</UI.Button>
             </div>
           </div>
         </div>

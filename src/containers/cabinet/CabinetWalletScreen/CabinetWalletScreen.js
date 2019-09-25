@@ -71,7 +71,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
                 router.navigate(PAGES.CABINET_WALLET, { section: 'transfers' })
               }}
             >{utils.getLang('cabinet_walletScreen_transfers')}</UI.FloatingButtonItem>,
-            <UI.FloatingButtonItem
+            !!walletsActions.getNoGeneratedCurrencies().length && <UI.FloatingButtonItem
               icon={require('../../../asset/24px/plus-circle.svg')}
               onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
             >{utils.getLang("cabinet_walletBox_create")}</UI.FloatingButtonItem>

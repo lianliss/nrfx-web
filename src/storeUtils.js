@@ -57,7 +57,9 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.COMPONENT_PROFILE_SIDEBAR:
-      mapState2Props = (state) => ({ ...state.default.profile });
+      mapState2Props = (state) => ({
+        profile: state.default.profile
+      });
       mapDispatch2Props = {};
       break;
     case CLASSES.COMPONENT_MODALGROUP:
@@ -123,7 +125,8 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.CABINET_SETTINGS_SCREEN:
       mapState2Props = (state) => ({
         ...state.settings,
-        adaptive: state.default.adaptive,
+        profile: state.default.profile,
+        adaptive: state.default.adaptive
       });
       mapDispatch2Props = {
         setTitle: actions.setTitle,
@@ -185,11 +188,13 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.CABINET_REGISTER:
       mapDispatch2Props = {
-        toastPush: toastsActions.toastPush
+        toastPush: toastsActions.toastPush,
+        setTitle: actions.setTitle
       };
       break;
     case CLASSES.CABINET_RESET_PASSWORD:
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         toastPush: toastsActions.toastPush
       };
       break;

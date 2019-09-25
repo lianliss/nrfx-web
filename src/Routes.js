@@ -25,7 +25,7 @@ import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmen
 import * as CabinetSettingsScreen from './containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen';
 import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
 import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
-import * as CabinetResetPassword from './containers/cabinet/CabinetResetPasswordScreen/CabinetResetPasswordScreen';
+import * as CabinetResetPassword from './containers/site/SiteResetPasswordScreen/SiteResetPasswordScreen';
 import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen/MenuScreen';
 import * as NotificationsScreen from './containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen';
 
