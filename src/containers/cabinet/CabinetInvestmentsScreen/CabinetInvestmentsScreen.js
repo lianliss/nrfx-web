@@ -1,7 +1,9 @@
 import './CabinetInvestmentsScreen.less';
-
+//
 import React from 'react';
-
+//
+import UI from '../../../ui';
+import router from '../../../router';
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import Balances from './components/Balances';
 import WithdrawaHistorylTable from './components/WithdrawaHistorylTable';
@@ -12,20 +14,15 @@ import AllPayments from './components/AllPayments';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
-import * as modalGroupActions from '../../../actions/modalGroup';
-
-import * as storeUtils from "../../../storeUtils";
-import * as utils from "../../../utils";
-import * as CLASSES from "../../../constants/classes";
 import Paging from "../../../components/cabinet/Paging/Paging";
-
 import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
 import { ReactComponent as InvestSvg } from '../../../asset/24px/invest.svg';
 import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
-import UI from '../../../ui';
-import router from '../../../router';
 import * as PAGES from '../../../constants/pages';
-
+import * as modalGroupActions from '../../../actions/modalGroup';
+import * as storeUtils from "../../../storeUtils";
+import * as utils from "../../../utils";
+import * as CLASSES from "../../../constants/classes";
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -65,7 +62,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     return (
       <div>
         <PageContainer
-          leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
+          leftContent={!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
           sidebarOptions={this.props.adaptive ? [
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/plus-circle.svg')}
@@ -89,7 +86,9 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />
           ]}
         >
+          {this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
           {this.__renderContent()}
+          {this.props.adaptive && <div className="Investment__heightPadding"> </div>}
         </PageContainer>
       </div>
     )
@@ -114,31 +113,28 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     return (
       <div>
         {this.__renderBalances()}
-        <DepositTable deposits={this.props.deposits} />
+        <DepositTable deposits={this.props.deposits} adaptive={this.props.adaptive} />
       </div>
     )
   }
 
   __renderProfitHistory() {
-    const { profits } = this.props;
+    const {profits} = this.props;
     const total = this.props.profitsTotal;
-    return (
-      <div>
-        <Paging
-          isCanMore={!!profits.next && !(this.props.loadingStatus.profitsAppend === "loading")}
-          onMore={this.props.loadMoreProfitHistory}
-          moreButton={!!profits.next}
-          isLoading={this.props.loadingStatus.profitsAppend === "loading"}
-        >
-          <ProfitHistorylTable profits={profits} total={total} />
-        </Paging>
-      </div>
-    )
+    return <div>
+      <Paging
+        isCanMore={!!profits.next && !(this.props.loadingStatus.profitsAppend === "loading")}
+        onMore={this.props.loadMoreProfitHistory}
+        moreButton={!!profits.next}
+        isLoading={this.props.loadingStatus.profitsAppend === "loading"}
+      >
+        <ProfitHistorylTable profits={profits} total={total} />
+      </Paging>
+    </div>
   }
 
   __renderWithdrawalHistory() {
     const { withdrawals, withdrawalsTotalCount } = this.props;
-
     return (
       <div>
         <Paging
@@ -153,13 +149,13 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     )
   }
 
-  __renderLeftContent() {
+  __renderRightContent = () => {
     if (!this.props.chart.hasOwnProperty('data')) {
       return <LoadingStatus status="loading" />;
     }
 
     return [
-      <ChartProfit chart={{...this.props.chart}} />,
+      <ChartProfit chart={{...this.props.chart}} adaptive={this.props.adaptive} />,
       this.__renderCurrentPayments(),
       <div className="Investment__heightPadding">
       </div>,
@@ -190,8 +186,8 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
 
     return (
-      <div className="Investments__summary">
-        <AllPayments payments={notEmptyPayments} />
+      <div>
+        <AllPayments payments={notEmptyPayments} adaptive={this.props.adaptive} />
       </div>
     )
   };
@@ -210,7 +206,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       <div className="Investment__heightPadding">
       </div>,
       <div className="Investments__payments">
-        <CurrentPayments payments={notEmptyPayments} />
+        <CurrentPayments payments={notEmptyPayments} adaptive={this.props.adaptive} />
       </div>
     ]
   };

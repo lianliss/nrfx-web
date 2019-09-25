@@ -7,6 +7,7 @@ import * as currencies from "../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { classNames } from "../../../utils/index";
+import * as actions from '../../../actions';
 
 export default function Chart({ series, ...props }) {
 
@@ -63,6 +64,10 @@ export default function Chart({ series, ...props }) {
       symbolWidth: 0,
       symbolRadius: 0,
       labelFormatter: function () {
+        if (props.adaptive) {
+          const currencyInfo = actions.getCurrencyInfo(this.name);
+          return `<div class="Chart__legend_icon" style="background-image: url(${currencyInfo.icon})"></div>`
+        }
         return `<div class="Chart__legend_item" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
       },
       itemMarginBottom: 0,
@@ -147,7 +152,6 @@ export default function Chart({ series, ...props }) {
       crosshairs: true,
       hideDelay: 0,
       formatter: function (tooltip) {
-
         return [`<div class="Chart__tooltip_date">${moment(this.x).format('L')}</div>`].concat(this.points.map((point) => {
           return `<div class="Chart__tooltip" style="background: ${currencies.getGradientByCurrency(point.series.name)}">
             ${point.series.data.filter(p => p.y === point.y)[0].title}

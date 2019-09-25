@@ -1,4 +1,4 @@
-.Investments__summary {
+.Investments__balances {
   display: flex;
   flex-wrap: wrap;
   flex-basis: 33.3%;
@@ -9,7 +9,7 @@
   height: 24px;
 }
 
-.Investments__summary__item {
+.Investments__balances__item {
   flex: 1;
   margin-left: 28px;
   padding: 16px;
@@ -25,13 +25,13 @@
   }
 }
 
-.Investments__summary__item__rows {
+.Investments__balances__item__rows {
   flex: 1;
   margin-bottom: 24px;
   padding-left: 24px;
 }
 
-.Investments__summary__item__actions {
+.Investments__balances__item__actions {
   position: relative;
   height: 40px;
   .Button {
@@ -46,13 +46,13 @@
   }
 }
 
-.Investments__summary__item__actions.empty {
+.Investments__balances__item__actions.empty {
   .Button.default {
     width: 100%;
   }
 }
 
-.Investments__summary__item__icon {
+.Investments__balances__item__icon {
   width: 72px;
   height: 72px;
   left: -32px;
@@ -60,7 +60,7 @@
   position: absolute;
 }
 
-.Investments__summary__item__info_row {
+.Investments__balances__item__info_row {
   margin-top: 24px;
 
   &:first-child {
@@ -68,14 +68,14 @@
   }
 }
 
-.Investments__summary__item__info_row__label {
+.Investments__balances__item__info_row__label {
   color: var(--primary-grey);
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
 }
 
-.Investments__summary__item__info_row__value {
+.Investments__balances__item__info_row__value {
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
@@ -151,4 +151,55 @@
   display: flex;
   flex-wrap: wrap;
   flex-basis: 33.3%;
+}
+
+.adaptive {
+  .Chart__profit {
+    padding: 16px;
+  }
+  .Investments__balances {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    background-color: white;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    .Investments__balances__item__actions.empty {
+      margin-left: 58px;
+      width: calc(100% - 58px);
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .Investments__balances__item__actions.empty .Button.default {
+      width: 100%;
+    }
+    .Content_box {
+      background-color: rgba(0, 0, 0, 0);
+      box-shadow: none;
+      border-radius: 0;
+    }
+    .Investments__balances__item {
+      margin-left: 0;
+    }
+    .Investments__balances__item__rows {
+      padding-left: 58px;
+      padding-right: 24px;
+      box-sizing: border-box;
+      margin-bottom: 8px;
+    }
+    .Investments__balances__item__icon {
+      position: absolute;
+      transform: none;
+      left: 0;
+    }
+    .Investments__balances__item {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
 }

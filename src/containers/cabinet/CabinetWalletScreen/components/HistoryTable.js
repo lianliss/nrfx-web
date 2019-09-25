@@ -31,13 +31,11 @@ export default function HistoryTable({ history, adaptive, header}) {
 
   if (adaptive) {
     headings = [
-      <UI.TableColumn>
+      <UI.TableColumn sub={<div>{utils.getLang('cabinet_wallets_historyTable_type')}</div>}>
         <div>{utils.getLang('cabinet_wallets_historyTable_addressLogin')}</div>
-        <div>{utils.getLang('cabinet_wallets_historyTable_type')}</div>
       </UI.TableColumn>,
-      <UI.TableColumn align="right">
+      <UI.TableColumn align="right" sub={<div>{utils.getLang('cabinet_wallets_historyTable_date')}</div>}>
         <div>{utils.getLang('cabinet_openNewDeposit_amount')}</div>
-        <div>{utils.getLang('cabinet_wallets_historyTable_date')}</div>
       </UI.TableColumn>,
     ];
   }

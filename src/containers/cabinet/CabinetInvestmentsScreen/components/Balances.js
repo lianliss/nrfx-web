@@ -10,26 +10,26 @@ function BalanceItem({ amount, currency }) {
   currency = currency.toUpperCase();
 
   return (
-    <div className="Investments__summary__item Content_box">
-      <div key="info" className="Investments__summary__item__rows">
+    <div className="Investments__balances__item Content_box">
+      <div key="info" className="Investments__balances__item__rows">
         <InfoRow label={utils.ucfirst(currencyInfo.name)}>{amount} {currency}</InfoRow>
       </div>
-      <div className="Investments__summary__item__actions empty">
+      <div className="Investments__balances__item__actions empty">
         <UI.Button key="button" type="default" size="small" onClick={() => modalGroupActions.openModalPage('open_deposit', { currency })}>
           {utils.getLang('cabinet_profileScreen_actionCard_invest')}
         </UI.Button>
       </div>
-      <div className="Investments__summary__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
+      <div className="Investments__balances__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
     </div>
   )
 }
 
 function InfoRow({ label, children, highlighted }) {
   return (
-    <div className="Investments__summary__item__info_row">
-      <div className="Investments__summary__item__info_row__label">{label}</div>
+    <div className="Investments__balances__item__info_row">
+      <div className="Investments__balances__item__info_row__label">{label}</div>
       <div className={utils.classNames({
-        Investments__summary__item__info_row__value: true,
+        Investments__balances__item__info_row__value: true,
         highlighted: !!highlighted
       })}>{children}</div>
     </div>

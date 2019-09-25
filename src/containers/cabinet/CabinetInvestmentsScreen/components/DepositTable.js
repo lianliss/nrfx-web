@@ -6,7 +6,7 @@ import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/
 import * as modalGroupActions from "../../../../actions/modalGroup";
 import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ deposits }) {
+export default function WithdrawalTable({ deposits, adaptive }) {
   if (!deposits.length) {
     return (
       <EmptyContentBlock
@@ -20,7 +20,7 @@ export default function WithdrawalTable({ deposits }) {
     )
   }
 
-  const headings = [
+  let headings = [
     <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
       <SVG src={require('../../../../asset/cabinet/filter.svg')} />
     </UI.TableColumn>,
@@ -28,15 +28,30 @@ export default function WithdrawalTable({ deposits }) {
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('rate')}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('cabinet_profileScreen_invested')}</UI.TableColumn>,
-    <UI.TableColumn align="right">{utils.getLang('Profit')}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang('cabinet_investmentsScreen_profit')}</UI.TableColumn>,
   ];
+
+  if (adaptive) {
+    headings = [
+      <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
+        <SVG src={require('../../../../asset/cabinet/filter.svg')} />
+      </UI.TableColumn>,
+      <UI.TableColumn sub={
+        <div>{utils.getLang('rate')} / {utils.getLang('cabinet_wallets_historyTable_type')}</div>
+      }>
+        <div>{utils.getLang('cabinet_profileScreen_invested')}</div>
+      </UI.TableColumn>,
+      <UI.TableColumn align="right" sub={`${utils.getLang('global_days')}/ID`}>
+        {utils.getLang('cabinet_investmentsScreen_profit')}
+      </UI.TableColumn>,
+    ];
+  }
 
   const rows = deposits.map((item, i) => {
     const progress = Math.max(0.01, item.passed_days / item.days);
     const pathLength = 69.12472534179688;
     const offset = pathLength * progress;
     const color = progress >= 1 ? '#BFBFBF' : '#24B383';
-
 
     let icon;
     if (progress >= 1) {
@@ -64,6 +79,25 @@ export default function WithdrawalTable({ deposits }) {
     }
 
     item.localId = deposits.length - i;
+
+    if (adaptive) {
+      return (
+        <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
+          deposit: JSON.stringify(item)
+        })}}>
+          <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
+            {icon}
+          </UI.TableColumn>
+          <UI.TableColumn align="left" sub={`${item.percent}% ${item.description} ${utils.ucfirst(item.type)}`}>
+            {utils.formatDouble(item.amount)} {item.currency.toUpperCase()}
+          </UI.TableColumn>
+          <UI.TableColumn
+            sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')} / ${utils.formatTableId(deposits.length - i)}`}
+            align="right">{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
+        </UI.TableCell>
+      )
+    }
+
     return (
       <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
         deposit: JSON.stringify(item)

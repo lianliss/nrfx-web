@@ -4,7 +4,7 @@ import UI from '../../../../ui';
 import * as utils from '../../../../utils';
 import * as actions from '../../../../actions';
 
-export default function CurrentPayments({ payments }) {
+export default function CurrentPayments({ payments, adaptive }) {
   if (!payments.length) {
     return <></>;
   }
