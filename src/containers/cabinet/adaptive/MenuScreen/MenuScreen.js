@@ -1,42 +1,25 @@
 import './MenuScreen.less';
-import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
+//
 import React from 'react';
-import { BaseLink } from 'react-router5';
+import SVG from 'react-inlinesvg';
+import moment from 'moment/min/moment-with-locales';
+import {BaseLink} from 'react-router5';
+//
+import router from '../../../../router';
+import {loadLang} from '../../../../actions';
+import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
+import LanguageModal from '../../../../components/site/LanguageModal/LanguageModal';
 import * as CLASSES from "../../../../constants/classes";
 import * as storeUtils from "../../../../storeUtils";
-import router from '../../../../router';
-import SVG from 'react-inlinesvg';
 import * as PAGES from '../../../../constants/pages';
 import * as utils from '../../../../utils';
 import * as storage from '../../../../services/storage';
 import * as auth from '../../../../actions/auth';
-import {loadLang} from '../../../../actions';
 import * as modalGroupActions from '../../../../actions/modalGroup';
-import LanguageModal from '../../../../components/site/LanguageModal/LanguageModal';
-import moment from 'moment/min/moment-with-locales';
-
 
 class MenuScreen extends CabinetBaseScreen {
-  handleLangChange = (value) => {
-    loadLang(value);
-    storage.setItem('lang', value);
-    moment.locale(value);
-  }
-
   componentDidMount() {
     this.props.setTitle(utils.getLang("global_menu"));
-  }
-
-  handleChangeLanguage = () => {
-    modalGroupActions.openModalPage(null, {}, {
-      children: ({ params }) => <LanguageModal {...params} />,
-      params: {
-        onClose: modalGroupActions.modalGroupClear,
-        isOpen: true,
-        onLanguageClick: this.handleLangChange,
-        langList: this.props.langList,
-      }
-    })
   }
 
   render() {
@@ -63,7 +46,7 @@ class MenuScreen extends CabinetBaseScreen {
         </div>
         <div className="Menu__section Menu__section__noSpacing Content_box">
           <div
-            onClick={this.handleChangeLanguage}
+            onClick={this.__handleChangeLanguage}
             className="Menu__section__item"
           >
             <SVG className={"Menu__section__item__flag"} src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
@@ -86,6 +69,24 @@ class MenuScreen extends CabinetBaseScreen {
 
     );
   }
+
+  __handleChangeLanguage = () => {
+    modalGroupActions.openModalPage(null, {}, {
+      children: ({params}) => <LanguageModal {...params} />,
+      params: {
+        onClose: modalGroupActions.modalGroupClear,
+        isOpen: true,
+        onLanguageClick: this.__handleLangChange,
+        langList: this.props.langList,
+      }
+    })
+  };
+
+  __handleLangChange = value => {
+    loadLang(value);
+    storage.setItem('lang', value);
+    moment.locale(value);
+  };
 }
 
 export default storeUtils.getWithState(

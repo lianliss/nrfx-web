@@ -1,23 +1,21 @@
 import './CabinetProfileScreen.less';
-
+//
 import React from 'react';
-
+//
+import * as storeUtils from "../../../storeUtils";
+import * as utils from "../../../utils";
+import * as CLASSES from "../../../constants/classes";
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
-
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 import DashboardItem from './components/DashboardItem';
-import * as utils from "../../../utils";
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
-import { classNames } from '../../../utils';
 import router from "../../../router";
 
-import { ReactComponent as SettingsSvg } from '../../../asset/24px/settings.svg';
+import {ReactComponent as SettingsSvg} from '../../../asset/24px/settings.svg';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
   state = {
@@ -64,9 +62,9 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   }
 
   get wallets() {
-    return this.props.wallets.sort((a, b) => {
-      return (a.currency < b.currency) ? -1 : 1;
-    });
+    return this.props.wallets.sort(
+      (a, b) => a.currency < b.currency ? -1 : 1
+    );
   }
 
   __renderRightContent = () => {
@@ -76,7 +74,11 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
     return <div>
       <div>
-        <WalletBalance adaptive={this.props.adaptive} wallets={this.wallets} walletSelected={this.state.walletSelected} />
+        <WalletBalance
+          adaptive={this.props.adaptive}
+          wallets={this.wallets}
+          walletSelected={this.state.walletSelected}
+        />
       </div>
       <div className="CabinetProfileScreen__height24">
       </div>
@@ -89,7 +91,9 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       return '';
     }
     return <div>
-      <ChartProfit chart={this.props.dashboard.chart} />
+      <ChartProfit
+        chart={this.props.dashboard.chart}
+      />
     </div>
   };
 
@@ -121,13 +125,11 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         </div>
       )
     }
-    return (
-      <div>
-        {this.__renderWallets()}
-        <div className="CabinetProfileScreen__height_padding"> </div>
-        {this.__renderDashboard()}
-      </div>
-    )
+    return <div>
+      {this.__renderWallets()}
+      <div className="CabinetProfileScreen__height_padding"> </div>
+      {this.__renderDashboard()}
+    </div>
   };
 
   __renderWallets = () => {
@@ -139,13 +141,11 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         walletSelected={this.state.walletSelected}
       />
     });
-    return (
-      <div className="CabinetProfileScreen__wallets">
-        {this.props.adaptive ? <div className="CabinetProfileScreen__walletsContentBox">
-          {rows}
-        </div> : rows}
-      </div>
-    )
+    return <div className="CabinetProfileScreen__wallets">
+      {this.props.adaptive ? <div className="CabinetProfileScreen__walletsContentBox">
+        {rows}
+      </div> : rows}
+    </div>
   };
 
   __renderDashboard = () => {
@@ -164,21 +164,15 @@ class CabinetProfileScreen extends CabinetBaseScreen {
             key={3}
             type="commerce"
           />
-          <div className="fakeItem">
-          </div>
+          <div className="fakeItem"> </div>
         </div>
       </div>
     )
   };
 
-  __walletSelect = (wallet) => {
-    let walletSelected = wallet;
-    if (wallet === this.state.walletSelected) {
-      walletSelected = null;
-    }
-
-    this.setState({walletSelected});
-  };
+  __walletSelect = wallet => this.setState({
+    walletSelected: wallet === this.state.walletSelected ? null : wallet
+  });
 }
 
 export default storeUtils.getWithState(

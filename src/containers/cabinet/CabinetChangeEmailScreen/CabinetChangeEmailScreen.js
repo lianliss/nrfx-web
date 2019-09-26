@@ -1,8 +1,10 @@
 import './CabinetChangeEmailScreen.less';
+//
 import React from 'react';
-import UI from '../../../ui';
 import { withRouter } from 'react-router5';
-import { GetParamsContext } from '../../../contexts';
+//
+import {GetParamsContext} from '../../../contexts';
+import UI from '../../../ui';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import apiSchema from '../../../services/apiSchema';
 import * as api from "../../../services/api";
@@ -14,11 +16,12 @@ class CabinetChangeEmail extends React.PureComponent {
     success: null,
     pending: true,
     message: "You have successfully changed your email!"
-  }
+  };
 
   componentDidMount() {
-    const { params } = this.context;
+    const {params} = this.context;
     this.setTitle(utils.getLang("cabinet_changeEmailModal_name"));
+
     api.call(apiSchema.Profile.ConfirmEmailPost, params).then(() => {
       this.setState({success: true, pending: false});
     }).catch((err) => {
@@ -43,4 +46,5 @@ class CabinetChangeEmail extends React.PureComponent {
     )
   }
 }
+
 export default withRouter(CabinetChangeEmail);

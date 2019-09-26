@@ -1,7 +1,10 @@
 import './CabinetWalletScreen.less';
-
+//
 import React from 'react';
-
+//
+import UI from '../../../ui';
+import router from '../../../router';
+import Show from '../../../components/hoc/ShowContent';
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
@@ -10,22 +13,17 @@ import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import HistoryTable from './components/HistoryTable';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
+import Paging from '../../../components/cabinet/Paging/Paging';
+import {ReactComponent as PlusCircleSvg} from '../../../asset/24px/plus-circle.svg';
+import {ReactComponent as HistorySvg} from '../../../asset/24px/history.svg';
+import {ReactComponent as SendSvg} from '../../../asset/24px/send.svg';
+import {ReactComponent as ReceiveSvg} from '../../../asset/24px/receive.svg';
+import * as modalGroupActions from '../../../actions/modalGroup';
 import * as PAGES from '../../../constants/pages';
-
 import * as walletsActions from '../../../actions/cabinet/wallets';
-import Paging from "../../../components/cabinet/Paging/Paging";
-import * as modalGroupActions from "../../../actions/modalGroup";
-
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
-
-import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
-import { ReactComponent as HistorySvg } from '../../../asset/24px/history.svg';
-import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
-import { ReactComponent as ReceiveSvg } from '../../../asset/24px/receive.svg';
-import * as utils from "../../../utils";
-import UI from '../../../ui';
-import router from "../../../router";
+import * as storeUtils from '../../../storeUtils';
+import * as CLASSES from '../../../constants/classes';
+import * as utils from '../../../utils';
 
 class CabinetWalletScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -36,20 +34,20 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     }
   };
 
+  state = {
+    walletSelected: null
+  };
+
   get wallets() {
-    return this.props.wallets.sort((a, b) => {
-      return (a.currency < b.currency) ? -1 : 1;
-    });
+    return this.props.wallets.sort(
+      (a, b) => a.currency < b.currency ? -1 : 1
+    )
   }
 
   componentDidMount() {
     this.props.setTitle(utils.getLang("cabinet_header_wallets"));
     this.load();
   }
-
-  state = {
-    walletSelected: null
-  };
 
   render() {
     return (
@@ -98,7 +96,9 @@ class CabinetWalletScreen extends CabinetBaseScreen {
             />
           ]}
         >
-          {this.props.adaptive && !this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
+          <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>
+            {this.__renderRightContent()}
+          </Show>
           {this.__renderContent()}
         </PageContainer>
       </div>
@@ -106,12 +106,16 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   }
 
   __renderRightContent = () => {
-    return (
-      <div>
-        <WalletBalance adaptive={this.props.adaptive} wallets={this.wallets} walletSelected={this.state.walletSelected} />
-        {this.props.adaptive && <div className="CabinetWalletScreen__height_padding"> </div>}
-      </div>
-    );
+    return <div>
+      <WalletBalance
+        adaptive={this.props.adaptive}
+        wallets={this.wallets}
+        walletSelected={this.state.walletSelected}
+      />
+      <Show showIf={this.props.adaptive}>
+        <div className="CabinetWalletScreen__height_padding"> </div>
+      </Show>
+    </div>
   };
 
   __renderContent = () => {
@@ -130,24 +134,19 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   };
 
   __getTransfersPageContent = () => {
-    return (
-      <div>
-        {this.__renderTransfers()}
-        <div className="CabinetWalletScreen__height_padding">
-        </div>
-      </div>
-    )
+    return <div>
+      {this.__renderTransfers()}
+      <div className="CabinetWalletScreen__height_padding"> </div>
+    </div>
   };
 
   __getWalletsPageContent = () => {
-    return (
-      <div>
-        {this.__renderWallets()}
-        <div className="CabinetWalletScreen__transactions_padding">
-          {this.__getTransactions()}
-        </div>
+    return <div>
+      {this.__renderWallets()}
+      <div className="CabinetWalletScreen__transactions_padding">
+        {this.__getTransactions()}
       </div>
-    )
+    </div>
   };
 
   __getTransactions = () => {
@@ -158,10 +157,13 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         moreButton={!!this.props.transactions.next}
         isLoading={this.props.transactionsLoadingMore}
       >
-        <HistoryTable header={utils.getLang('global_transactions')} adaptive={this.props.adaptive} history={'items' in this.props.transactions ? this.props.transactions.items : []} />
+        <HistoryTable
+          header={utils.getLang('global_transactions')}
+          adaptive={this.props.adaptive}
+          history={'items' in this.props.transactions ? this.props.transactions.items : []}
+        />
       </Paging>
-      <div className="CabinetWalletScreen__height_padding">
-      </div>
+      <div className="CabinetWalletScreen__height_padding"> </div>
     </div>
   };
 
@@ -173,7 +175,11 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         moreButton={!!this.props.transfers.next}
         isLoading={this.props.transfersLoadingMore}
       >
-        <HistoryTable header={utils.getLang('cabinet_walletScreen_transfers')} adaptive={this.props.adaptive} history={'items' in this.props.transfers ? this.props.transfers.items : []} />
+        <HistoryTable
+          header={utils.getLang('cabinet_walletScreen_transfers')}
+          adaptive={this.props.adaptive}
+          history={'items' in this.props.transfers ? this.props.transfers.items : []}
+        />
       </Paging>
     </div>
   };
@@ -187,25 +193,22 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         walletSelected={this.state.walletSelected}
       />
     });
-    const isCanCreate = walletsActions.getNoGeneratedCurrencies().length > 0;
+
     return (
       <div className="CabinetWalletScreen__wallets">
         {this.props.adaptive ? <div className="CabinetWalletsScreen__walletsContentBox">
           {rows}
         </div> : rows}
-        {isCanCreate && <WalletBoxNew />}
+        <Show showIf={walletsActions.getNoGeneratedCurrencies().length > 0}>
+          <WalletBoxNew />
+        </Show>
       </div>
     )
   };
 
-  __walletSelect = (wallet) => {
-    let walletSelected = wallet;
-    if (wallet === this.state.walletSelected) {
-      walletSelected = null;
-    }
-
-    this.setState({walletSelected});
-  }
+  __walletSelect = wallet => this.setState({
+    walletSelected: wallet === this.state.walletSelected ? null : wallet
+  });
 }
 
 export default storeUtils.getWithState(

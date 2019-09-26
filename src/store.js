@@ -1,9 +1,9 @@
 // styles
 // external
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
-import { router5Middleware, router5Reducer } from 'redux-router5';
-import { reduxPlugin } from 'redux-router5';
+import {router5Middleware, router5Reducer} from 'redux-router5';
+import {reduxPlugin} from 'redux-router5';
 // internal
 import router from './router';
 import defaultReducer from './reducers';
@@ -37,7 +37,6 @@ export function configureStore() {
     toasts: toastsReducer,
     test: testReducer
   }), applyMiddleware( ...middlewares, thunk, router5Middleware(router)));
-
   router.usePlugin(reduxPlugin(store.dispatch));
 }
 configureStore();

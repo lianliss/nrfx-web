@@ -1,17 +1,15 @@
 import './CabinetSettingsScreen.less';
-
+//
 import React from 'react';
 import moment from 'moment/min/moment-with-locales';
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
-import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
+import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import GAConfirmModal from '../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import ProfileUser from '../../../components/cabinet/ProfileUser/ProfileUser';
-
 import UI from '../../../ui';
-
 import * as modalGroupActions from "../../../actions/modalGroup";
 import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../utils";
@@ -19,7 +17,7 @@ import * as CLASSES from "../../../constants/classes";
 import * as settingsActions from '../../../actions/cabinet/settings';
 import * as emitter from '../../../services/emitter';
 
-import { ReactComponent as IdBadgeSvg } from '../../../asset/24px/id-badge.svg';
+import {ReactComponent as IdBadgeSvg} from '../../../asset/24px/id-badge.svg';
 
 class CabinetSettingsScreen extends CabinetBaseScreen {
   get section() {

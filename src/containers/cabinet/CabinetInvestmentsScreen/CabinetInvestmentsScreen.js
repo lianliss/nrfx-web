@@ -11,18 +11,19 @@ import ProfitHistorylTable from './components/ProfitHistorylTable';
 import DepositTable from './components/DepositTable';
 import CurrentPayments from './components/CurrentPayments';
 import AllPayments from './components/AllPayments';
-import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
-import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
+import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
+import ChartProfit from '../../../components/cabinet/ChartProfit/ChartProfit';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
-import Paging from "../../../components/cabinet/Paging/Paging";
-import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
-import { ReactComponent as InvestSvg } from '../../../asset/24px/invest.svg';
-import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
+import Paging from '../../../components/cabinet/Paging/Paging';
+import {ReactComponent as PlusCircleSvg} from '../../../asset/24px/plus-circle.svg';
+import {ReactComponent as InvestSvg} from '../../../asset/24px/invest.svg';
+import {ReactComponent as SendSvg} from '../../../asset/24px/send.svg';
 import * as PAGES from '../../../constants/pages';
 import * as modalGroupActions from '../../../actions/modalGroup';
-import * as storeUtils from "../../../storeUtils";
-import * as utils from "../../../utils";
-import * as CLASSES from "../../../constants/classes";
+import * as storeUtils from '../../../storeUtils';
+import * as utils from '../../../utils';
+import * as CLASSES from '../../../constants/classes';
+import Show from '../../../components/hoc/ShowContent';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -86,9 +87,13 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />
           ]}
         >
-          {this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
+          <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>
+            {this.__renderRightContent()}
+          </Show>
           {this.__renderContent()}
-          {this.props.adaptive && <div className="Investment__heightPadding"> </div>}
+          <Show showIf={this.props.adaptive}>
+            <div className="Investment__heightPadding"> </div>
+          </Show>
         </PageContainer>
       </div>
     )
@@ -100,27 +105,32 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
 
     switch (this.props.routerParams.section) {
-      case 'profits':
+      case 'profits': {
         return this.__renderProfitHistory();
-      case 'withdrawals':
+      }
+      case 'withdrawals': {
         return this.__renderWithdrawalHistory();
-      default:
+      }
+      default: {
         return this.__renderMainContent();
+      }
     }
   }
 
   __renderMainContent() {
-    return (
-      <div>
-        {this.__renderBalances()}
-        <DepositTable deposits={this.props.deposits} adaptive={this.props.adaptive} />
-      </div>
-    )
+    return <div>
+      {this.__renderBalances()}
+      <DepositTable
+        deposits={this.props.deposits}
+        adaptive={this.props.adaptive}
+      />
+    </div>
   }
 
   __renderProfitHistory() {
     const {profits} = this.props;
-    const total = this.props.profitsTotal;
+    const total = profits.profitsTotal;
+
     return <div>
       <Paging
         isCanMore={!!profits.next && !(this.props.loadingStatus.profitsAppend === "loading")}
@@ -128,29 +138,31 @@ class CabinetInvestmentsScreen extends React.PureComponent {
         moreButton={!!profits.next}
         isLoading={this.props.loadingStatus.profitsAppend === "loading"}
       >
-        <ProfitHistorylTable adaptive={this.props.adaptive} profits={profits} total={total} />
+        <ProfitHistorylTable
+          adaptive={this.props.adaptive}
+          profits={profits}
+          total={total}
+        />
       </Paging>
     </div>
   }
 
   __renderWithdrawalHistory() {
-    const { withdrawals, withdrawalsTotalCount } = this.props;
-    return (
-      <div>
-        <Paging
-          isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
-          onMore={this.props.loadMoreWithdrawalHistory}
-          moreButton={!!withdrawals.next}
-          isLoading={withdrawals.isLoadingMore}
-        >
-          <WithdrawaHistorylTable
-            adaptive={this.props.adaptive}
-            withdrawals={withdrawals}
-            withdrawalsTotalCount={withdrawalsTotalCount}
-          />
-        </Paging>
-      </div>
-    )
+    const {withdrawals, withdrawalsTotalCount} = this.props;
+    return <div>
+      <Paging
+        isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
+        onMore={this.props.loadMoreWithdrawalHistory}
+        moreButton={!!withdrawals.next}
+        isLoading={withdrawals.isLoadingMore}
+      >
+        <WithdrawaHistorylTable
+          adaptive={this.props.adaptive}
+          withdrawals={withdrawals}
+          withdrawalsTotalCount={withdrawalsTotalCount}
+        />
+      </Paging>
+    </div>
   }
 
   __renderRightContent = () => {
@@ -159,24 +171,21 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
 
     return [
-      <ChartProfit chart={{...this.props.chart}} adaptive={this.props.adaptive} />,
+      <ChartProfit
+        chart={this.props.chart}
+        adaptive={this.props.adaptive}
+      />,
       this.__renderCurrentPayments(),
-      <div className="Investment__heightPadding">
-      </div>,
       this.__renderAllPayments()
     ];
   };
 
   __renderBalances() {
-    if (!this.props.balances.length) {
-      return null;
-    }
-
-    return (
+    return <Show showIf={this.props.balances.length > 0}>
       <div className="Investments__balances">
         <Balances data={this.props.balances} />
       </div>
-    )
+    </Show>
   }
 
   __renderAllPayments = () => {
@@ -184,16 +193,16 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       return null;
     }
 
-    const notEmptyPayments = this.props.payments.filter(item => item.total_invested_amount > 0);
-    if (notEmptyPayments.length === 0) {
-      return null;
-    }
+    const notEmptyPayments = this.props.payments.filter(
+      item => item.total_invested_amount > 0
+    );
 
-    return (
-      <div>
-        <AllPayments payments={notEmptyPayments} adaptive={this.props.adaptive} />
-      </div>
-    )
+    return <Show showIf={notEmptyPayments.length > 0}>
+      <AllPayments
+        payments={notEmptyPayments}
+        adaptive={this.props.adaptive}
+      />
+    </Show>
   };
 
   __renderCurrentPayments = () => {
@@ -201,18 +210,16 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       return null;
     }
 
-    const notEmptyPayments = this.props.payments.filter(item => item.invested_amount > 0);
-    if (notEmptyPayments.length === 0) {
-      return null;
-    }
+    const notEmptyPayments = this.props.payments.filter(
+      item => item.invested_amount > 0
+    );
 
-    return [
-      <div className="Investment__heightPadding">
-      </div>,
+    return <Show showIf={notEmptyPayments.length > 0}>
+      <div className="Investment__heightPadding"> </div>
       <div className="Investments__payments">
         <CurrentPayments payments={notEmptyPayments} adaptive={this.props.adaptive} />
       </div>
-    ]
+    </Show>
   };
 }
 

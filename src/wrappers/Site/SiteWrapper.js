@@ -7,11 +7,10 @@ import SVG from 'react-inlinesvg';
 import Header from '../../components/site/Header/Header';
 import Footer from '../../components/site/Footer/Footer';
 
-function SiteWrapper({ isHomepage, withOrangeBg, className, children }) {
+function SiteWrapper({isHomepage, withOrangeBg, className, children}) {
   return (
     <div className={className}>
       <div className="SiteWrapper">
-
         {isHomepage
           ? (
             <div className="SiteWrapper__home__bg">
@@ -31,11 +30,8 @@ function SiteWrapper({ isHomepage, withOrangeBg, className, children }) {
               </div>
             )
         }
-
         <Header showLightLogo={withOrangeBg} />
-
         {children}
-
       </div>
       <Footer />
     </div>

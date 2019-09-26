@@ -103,10 +103,6 @@ export function ucfirst(input) {
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
-export function isFloat(n){
-  return Number(n) === n && n % 1 !== 0;
-}
-
 export function formatDouble(input, fractionDigits = 8) {
   return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
@@ -127,8 +123,11 @@ export function formatTableId(index) {
 
 export function makeModalParams(modal, params) {
   let result = Object.assign({}, router.getState().params);
-  result = { ...result, modal, ...params  };
-  return result;
+  return {
+    ...result,
+    modal,
+    ...params
+  };
 }
 
 export function clipTextMiddle(text, length = 10) {
@@ -140,19 +139,6 @@ export function clipTextMiddle(text, length = 10) {
   return parts.join('');
 }
 
-export function b64EncodeUnicode(str) {
-  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-    function toSolidBytes(match, p1) {
-      return String.fromCharCode('0x' + p1);
-    }));
-}
-
-export function b64DecodeUnicode(str) {
-  return decodeURIComponent(atob(str).split('').map(function(c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-}
-
 export function switchMatch(key, node) {
   const __DEFAULT__ = 'default';
   switch (typeof node) {
@@ -161,7 +147,7 @@ export function switchMatch(key, node) {
         case 'boolean':
           return node[key];
         default:
-        case 'string':
+        case 'string': {
           if (node.hasOwnProperty(key)) {
             return node[key];
           } else {
@@ -176,6 +162,7 @@ export function switchMatch(key, node) {
               return key;
             }
           }
+        }
       }
     }
   }

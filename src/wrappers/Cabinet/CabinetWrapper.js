@@ -4,16 +4,16 @@ import './CabinetWrapper.less';
 import React, {Component} from 'react';
 import SVG from 'react-inlinesvg';
 // internal
+import {classNames} from '../../utils';
+import router from '../../router';
 import Header from '../../components/cabinet/Header/Header';
 import AdaptiveHeader from '../../components/cabinet/Header/AdaptiveHeader';
-import {classNames} from '../../utils';
 import * as CLASSES from '../../constants/classes';
 import * as storeUtils from '../../storeUtils';
-import router from '../../router';
+import * as PAGES from '../../constants/pages'
 import * as utils from '../../utils/index'
 import TabBar from '../../components/cabinet/TabBar/TabBar';
-import { BaseLink } from 'react-router5';
-import * as PAGES from '../../constants/pages'
+import {BaseLink} from 'react-router5';
 
 class CabinetWrapper extends Component {
   componentDidMount() {
@@ -59,7 +59,6 @@ class CabinetWrapper extends Component {
           type: "text",
           content: this.props.title
         }}
-        // rightContent={<SVG src={require("../../asset/24px/calendar.svg")} />}
       /> : <Header />}
       <div className="CabinetWrapper__content">{children}</div>
       {adaptive && <TabBar />}
@@ -68,7 +67,6 @@ class CabinetWrapper extends Component {
 
   __handleResize = (w) => {
     const {adaptive} = this.props;
-
     if (w <= 650) {
       if (!adaptive) {
         document.body.classList.add('adaptive');
@@ -83,7 +81,9 @@ class CabinetWrapper extends Component {
   };
 
   __handleOnResize = e => {
-    this.__handleResize(document.body.offsetWidth);
+    this.__handleResize(
+      document.body.offsetWidth
+    );
   }
 }
 
