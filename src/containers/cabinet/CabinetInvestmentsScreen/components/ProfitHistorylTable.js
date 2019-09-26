@@ -6,7 +6,7 @@ import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ profits, total }) {
+export default function WithdrawalTable({ profits, total, adaptive }) {
   if (!profits.items || !profits.items.length) {
     return (
       <EmptyContentBlock
@@ -16,7 +16,7 @@ export default function WithdrawalTable({ profits, total }) {
     )
   }
 
-  const headings = [
+  let headings = [
     <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
       <SVG src={require('../../../../asset/cabinet/filter.svg')} />
     </UI.TableColumn>,
@@ -30,7 +30,32 @@ export default function WithdrawalTable({ profits, total }) {
     <UI.TableColumn>{utils.getLang("global_date")}</UI.TableColumn>,
   ];
 
+  if (adaptive) {
+    headings = [
+      <UI.TableColumn sub={utils.getLang("rate") + ' / ' + utils.getLang("global_type")}>
+        {utils.getLang("global_invested")}
+      </UI.TableColumn>,
+      <UI.TableColumn sub={utils.getLang("global_date") + ' / ' + 'ID'}>
+        {utils.getLang("cabinet_investmentsScreen_profit")}
+      </UI.TableColumn>,
+    ];
+  }
+
   const rows = profits.items.map((item, i) => {
+    if (adaptive) {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn
+            sub={item.deposit.percent + '% ' + utils.ucfirst(item.deposit.type) + ' ' + item.plan.description}
+          >
+            {item.deposit.amount} {item.deposit.currency.toUpperCase()}
+          </UI.TableColumn>
+          <UI.TableColumn sub={moment(item.profit.date).format('DD MMM YYYY HH:mm') + ' / ' + utils.formatTableId(total - i)}>
+            {utils.formatDouble(item.profit.amount)} {item.deposit.currency.toUpperCase()}
+          </UI.TableColumn>
+        </UI.TableCell>
+      )
+    }
     return (
       <UI.TableCell key={i}>
         <UI.TableColumn />

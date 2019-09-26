@@ -133,6 +133,8 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     return (
       <div>
         {this.__renderTransfers()}
+        <div className="CabinetWalletScreen__height_padding">
+        </div>
       </div>
     )
   };

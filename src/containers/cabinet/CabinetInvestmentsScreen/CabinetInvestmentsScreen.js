@@ -128,7 +128,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
         moreButton={!!profits.next}
         isLoading={this.props.loadingStatus.profitsAppend === "loading"}
       >
-        <ProfitHistorylTable profits={profits} total={total} />
+        <ProfitHistorylTable adaptive={this.props.adaptive} profits={profits} total={total} />
       </Paging>
     </div>
   }
@@ -143,7 +143,11 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           moreButton={!!withdrawals.next}
           isLoading={withdrawals.isLoadingMore}
         >
-          <WithdrawaHistorylTable withdrawals={withdrawals} withdrawalsTotalCount={withdrawalsTotalCount} />
+          <WithdrawaHistorylTable
+            adaptive={this.props.adaptive}
+            withdrawals={withdrawals}
+            withdrawalsTotalCount={withdrawalsTotalCount}
+          />
         </Paging>
       </div>
     )
