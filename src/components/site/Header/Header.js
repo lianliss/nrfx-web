@@ -121,6 +121,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
   }
 
   const handleNavigate = (route) => {
+    toggleVerticalMenu(false);
     router.navigate(route);
   }
 

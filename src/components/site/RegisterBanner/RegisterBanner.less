@@ -40,8 +40,6 @@
   font-weight: 500;
   font-size: 34px;
   line-height: 56px;
-
-  @media (max-width: 350px) { font-size: 25px; }
 }
 
 .RegisterBanner__caption {
@@ -135,7 +133,6 @@
         color: var(--foreground-primary);
       }
 
-
       .RegisterBanner__form__button {
         background: linear-gradient(52.85deg, #FFC75D 21.44%, #FFA363 76.19%);
         border: 2px solid var(--contrast-primary);
@@ -161,6 +158,10 @@
 }
 
 @media (max-width: 768px) {
+  .RegisterBanner__content {
+    padding: 0 16px;
+  }
+
   .RegisterBanner__form {
     display: flex;
     flex-direction: column;
@@ -184,6 +185,10 @@
     }
   }
 
+  .RegisterBanner__caption {
+    margin: 32px 0;
+  }
+
   .active {
     .RegisterBanner__form {
     
@@ -195,8 +200,14 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
+  .RegisterBanner__title {
+    line-height: 36px;
+    font-size: 25px;
+  }
+
   .RegisterBanner__form {
+    padding: 0 12px;
 
     .RegisterBanner__form__input {
       width: 100%;

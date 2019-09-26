@@ -1,8 +1,14 @@
 .TypedText {
   height: 50px;
-  border-right: 3px solid var(--uikit-primary);
-  padding-right: 5px;
   width: fit-content;
+
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 1em;
+    border-right: 3px solid var(--uikit-primary);
+    margin-left: 5px;
+  }
 }
 
 @media (max-width: 1200px) {
