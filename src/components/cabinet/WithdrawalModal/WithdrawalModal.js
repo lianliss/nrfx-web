@@ -59,7 +59,7 @@ class WithdrawalModal extends React.Component {
     this.wallet = wallet[0];
 
     return (
-      <UI.Modal noSpacing isOpen={true} onClose={() => (this.props.close())}>
+      <UI.Modal className="WithdrawalModal__wrapper" noSpacing isOpen={true} onClose={() => (this.props.close())}>
         <UI.ModalHeader>
           {utils.getLang('withdraw_Income')}
         </UI.ModalHeader>
@@ -85,7 +85,12 @@ class WithdrawalModal extends React.Component {
                 />
                 <p className="Form__helper__text">{utils.getLang("global_available")}: {payment.available} {currency}</p>
               </div>
-              <UI.Button type="outline" smallPadding onClick={this.__maxDidPress}>{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
+              <UI.Button
+                currency={currencyInfo.abbr}
+                type="outline"
+                smallPadding
+                onClick={this.__maxDidPress}
+              >{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
             </div>
             <div className="WithdrawalModal__row">
               <UI.Input
@@ -101,7 +106,12 @@ class WithdrawalModal extends React.Component {
               />
             </div>
             <div className="WithdrawalModal__button_wrap">
-              <UI.Button style={{ width: '208px' }} onClick={this.__handleSubmit} disabled={!this.__formIsValid()}>
+              <UI.Button
+                currency={currencyInfo.abbr}
+                style={{ width: '208px' }}
+                onClick={this.__handleSubmit}
+                disabled={!this.__formIsValid()}
+              >
                 {utils.getLang('general_withdraw')}
               </UI.Button>
             </div>
