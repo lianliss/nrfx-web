@@ -101,7 +101,7 @@ class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__row">
             <UI.Input
               value={this.props.thisState.address}
-              placeholder="Enter BitcoinBot Login or Wallet Address"
+              placeholder={utils.getLang('cabinet__coinsAddressPlaceholder')}
               onTextChange={this.__addressChange}
               error={this.state.errorAddress}
             />
