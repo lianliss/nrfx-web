@@ -65,6 +65,7 @@
   }
 
   &__title {
+    word-break: break-word;
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
@@ -105,18 +106,23 @@
     margin-left: 24px;
     display: flex;
     align-items: center;
+
     &__avatar {
       &__wrap {
         margin: 0;
-
+        flex: 0 0 auto;
       }
     }
+
     &__description {
       margin-left: 16px;
+      margin-right: 16px;
       text-align: left;
     }
+
     &__txt {
       margin-bottom: 8px;
+      
       &:last-child {
         margin-bottom: 0;
       }

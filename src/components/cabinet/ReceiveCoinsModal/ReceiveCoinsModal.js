@@ -132,7 +132,7 @@ export default class ReceiveCoinsModal extends React.Component {
                   } else {
                     this.__copy();
                   }
-                }}>{this.state.isCopied ? 'Close': 'Copy Wallet Address'}</UI.Button>
+                }}>{this.state.isCopied ? utils.getLang('global_close') : utils.getLang('cabinet_copyWalletAddress')}</UI.Button>
             </div>
           </div>
         </div>

@@ -11,9 +11,9 @@ export default function WithdrawalTable({ deposits, adaptive }) {
     return (
       <EmptyContentBlock
         icon={require('../../../../asset/120/no_deposits.svg')}
-        message="No Open Deposits"
+        message={utils.getLang('cabinet_noOpenDeposits')}
         button={{
-          text: 'Start Invest',
+          text: utils.getLang('global_startInvest'),
           onClick: () => modalGroupActions.openModalPage('open_deposit')
         }}
       />

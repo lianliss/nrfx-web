@@ -6,6 +6,10 @@ import SVG from 'react-inlinesvg';
 import * as utils from '../../../utils';
 
 export default function ProfileSidebarUser({ profile }) {
+  if (!profile || !Object.keys(profile).length) {
+    return null;
+  }
+
   return (
     <div className="ProfileUser">
       <div className="ProfileUser__avatar__wrap" onClick={() => {

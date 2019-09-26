@@ -60,8 +60,19 @@
   .SitePageInfoBlock {
     flex-direction: column;
     position: relative;
-    top: 120px;
+    top: 116px;
     text-align: center;
+    height: auto;
+    padding-bottom: 32px;
+
+    .TypedText {
+      margin-bottom: 32px;
+      height: 2em;
+    }
+
+    &__cont {
+      margin-bottom: 64px;
+    }
 
     .SitePageInfoBlock__buttons {
       justify-content: center;
@@ -80,6 +91,10 @@
 
 @media (max-width: 768px) {
   .SitePageInfoBlock {
+
+    .SitePageInfoBlock__title {
+      margin-top: 32px;
+    }
 
     .SitePageInfoBlock__cont {
       justify-content: center;
