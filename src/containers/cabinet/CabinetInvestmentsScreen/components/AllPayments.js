@@ -39,7 +39,7 @@ export default function CurrentPayments({ payments, adaptive }) {
   });
 
   return (
-    <UI.Table headings={headings} header={utils.getLang('global_for_all_time')}>
+    <UI.Table hidden={true} adaptive={adaptive} headings={headings} header={utils.getLang('global_for_all_time')}>
       {rows}
     </UI.Table>
   )
