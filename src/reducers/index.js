@@ -61,6 +61,21 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
+    case actionTypes.SET_USER_NAME: {
+      const { first_name, last_name } = action;
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          user: {
+            ...state.profile.user,
+            first_name,
+            last_name
+          }
+        }
+      }
+    }
+
     default: return state;
   }
 }

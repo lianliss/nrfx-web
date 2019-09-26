@@ -5,6 +5,7 @@ import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import * as toastsActions from './toasts';
+import store from '../../store';
 
 export function loadSettings() {
   return (dispatch, getState) => {
@@ -52,6 +53,7 @@ export function changeEmail({email, ga_code}) {
 export function changeInfo({first_name, last_name, ga_code}) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Profile.ChangeInfoPut, {first_name, last_name, ga_code}).then((data) => {
+      store.dispatch({ type: actionTypes.SET_USER_NAME, first_name, last_name  })
       resolve(data);
     }).catch((reason) => {
       reject(reason);
