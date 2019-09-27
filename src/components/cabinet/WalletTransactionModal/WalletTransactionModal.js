@@ -79,22 +79,22 @@ export default class WalletTransactionModal extends React.Component {
         <div>
           <div className="WalletTransactionModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <InfoRowGroup align="left">
-            <InfoRow label="From">
+            <InfoRow label={utils.getLang("global_from")}>
               {data.category === 'send' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
                 <div className="Wallets__history__address">
                   {data.type === 'transfer' && <div className="Wallets__history__bb" />}
                   {address}
                 </div>}
             </InfoRow>
-            <InfoRow label="To">
+            <InfoRow label={utils.getLang("global_to")}>
               {data.category === 'receive' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
                 <div className="Wallets__history__address">
                   {data.type === 'transfer' && <div className="Wallets__history__bb" />}
                   {address}
                 </div>}
             </InfoRow>
-            <InfoRow label="Amount">{utils.formatDouble(data.amount)} {currency}</InfoRow>
-            <InfoRow label="Date">{moment(data.created_at).format('DD MMM YYYY HH:mm')}</InfoRow>
+            <InfoRow label={utils.getLang("global_amount")}>{utils.formatDouble(data.amount)} {currency}</InfoRow>
+            <InfoRow label={utils.getLang("global_date")}>{moment(data.created_at).format('DD MMM YYYY HH:mm')}</InfoRow>
           </InfoRowGroup>
           <div className="WalletTransactionModal__card" style={{ background: currencyGradient }}>
             <div className="WalletTransactionModal__card__icon">
