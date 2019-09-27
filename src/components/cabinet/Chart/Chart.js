@@ -7,7 +7,6 @@ import * as currencies from "../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { classNames } from "../../../utils/index";
-import * as actions from '../../../actions';
 
 export default function Chart({ series, ...props }) {
 
@@ -66,7 +65,7 @@ export default function Chart({ series, ...props }) {
       labelFormatter: function () {
         let out = `<div class="Chart__legend_item" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
         if (props.adaptive) {
-          out = `<div>
+          out = `<div style="margin: 20px 0">
             ${out}
           </div>`
         }

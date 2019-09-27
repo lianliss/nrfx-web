@@ -42,6 +42,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
   }
 
   const rows = profits.items.map((item, i) => {
+    console.log(14,i, total);
     if (adaptive) {
       return (
         <UI.TableCell key={i}>

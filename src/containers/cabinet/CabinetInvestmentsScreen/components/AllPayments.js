@@ -17,6 +17,9 @@ export default function CurrentPayments({ payments, adaptive }) {
     </UI.TableColumn>,
     <UI.TableColumn align="right">
       {utils.getLang('cabinet_investmentsProfit')}
+    </UI.TableColumn>,
+    <UI.TableColumn align="right">
+      {utils.getLang('global_withdrawn')}
     </UI.TableColumn>
   ];
 
@@ -33,6 +36,9 @@ export default function CurrentPayments({ payments, adaptive }) {
         </UI.TableColumn>
         <UI.TableColumn align="right">
           {utils.formatDouble(item.total_profit, 6) || 0}
+        </UI.TableColumn>
+        <UI.TableColumn align="right">
+          {item.hasOwnProperty('total_paid') ? (utils.formatDouble(item.total_paid, 6) || 0) : 0}
         </UI.TableColumn>
       </UI.TableCell>
     )

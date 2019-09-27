@@ -7,7 +7,6 @@ import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as auth from '../services/auth';
 import * as user from './user';
-import * as emitter from '../services/emitter';
 
 export function getAuth(login, password) {
   const app_id = 8;

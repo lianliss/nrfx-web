@@ -20,13 +20,6 @@ class SendCoinsConfirmModal extends React.Component {
     errorGaCode: false
   };
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillUnmount() {
-  }
-
   render() {
     this.currency = this.props.params.currency;
     this.currencyInfo = actions.getCurrencyInfo(this.currency);

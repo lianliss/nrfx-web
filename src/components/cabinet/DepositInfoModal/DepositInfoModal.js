@@ -7,7 +7,6 @@ import moment from 'moment/min/moment-with-locales';
 import InfoRow, { InfoRowGroup } from '../../../components/cabinet/InfoRow/InfoRow';
 import * as utils from '../../../utils';
 import * as actions from '../../../actions';
-import * as modalGroupActions from "../../../actions/modalGroup";
 
 export default class DepositInfoModal extends React.Component {
   render() {

@@ -165,5 +165,6 @@ export function switchMatch(key, node) {
         }
       }
     }
+    default: break;
   }
 }

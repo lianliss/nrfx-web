@@ -11,10 +11,6 @@ import * as utils from "../../../utils";
 import * as investmentsActions from "../../../actions/cabinet/investments";
 
 class WithdrawalModal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     selectDepositType: 'static',
     amount: '',

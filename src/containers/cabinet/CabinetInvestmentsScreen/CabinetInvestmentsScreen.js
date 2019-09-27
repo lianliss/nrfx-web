@@ -129,7 +129,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderProfitHistory() {
-    const {profits} = this.props;
+    const {profits} = this.props
     const total = profits.profitsTotal;
 
     return <div>

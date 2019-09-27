@@ -175,9 +175,8 @@ class OpenDepositModal extends React.Component {
             <UI.Input
               type="number"
               error={
-                !this.state.amount && this.state.touched ||
-                this.state.amount > this.state.amountMax ||
-                this.state.amount < this.state.amountMin
+                (!this.state.amount && this.state.touched) || (this.state.amount > this.state.amountMax) ||
+                (this.state.amount < this.state.amountMin)
               }
               value={this.state.amount}
               onBlur={() => {
