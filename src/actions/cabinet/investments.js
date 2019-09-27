@@ -78,7 +78,7 @@ export function loadMoreWithdrawalHistory() {
     }).then((data) => {
       const { withdrawals: { items, next }, total_count } = data;
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
-      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next });
+      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next, total_count });
     }).catch(() => {
       toastsActions.toastPush("Error load more withdrawal history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });

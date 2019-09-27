@@ -1,6 +1,6 @@
 import './NotificationsScreen.less';
 //
-import React, {useEffect} from 'react';
+import React from 'react';
 //
 import UI from '../../../../ui';
 import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
@@ -15,7 +15,7 @@ class Notifications extends CabinetBaseScreen {
   }
 
   render() {
-    const {notifications, pending, unreadCount} = this.props.notifications;
+    const {notifications, pending} = this.props.notifications;
 
     if (pending) {
       return null;

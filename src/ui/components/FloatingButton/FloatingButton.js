@@ -1,6 +1,5 @@
 import './FloatingButton.less';
 import React, { useState } from 'react';
-import { classNames } from '../../utils';
 import SVG from 'react-inlinesvg';
 import * as utils from '../../utils/index';
 

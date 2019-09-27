@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import PieChart from 'react-minimal-pie-chart';
 
-import { formatNumber, formatDouble, classNames } from '../../../utils/index';
+import { formatNumber, classNames } from '../../../utils/index';
 import { getGradientByCurrency, getColorByCurrency } from '../../../utils/currencies';
 import * as actions from "../../../actions/index";
 import * as utils from "../../../utils/index";

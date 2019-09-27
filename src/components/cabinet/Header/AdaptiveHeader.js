@@ -2,12 +2,7 @@ import './Header.less';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
-import { BaseLink } from 'react-router5';
-
-import DropDown from './components/Dropdown';
-import Badge from '../Badge/Badge';
 import router from '../../../router';
-import * as pages from '../../../constants/pages';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from "../../../constants/classes";
 import * as utils from "../../../utils/";

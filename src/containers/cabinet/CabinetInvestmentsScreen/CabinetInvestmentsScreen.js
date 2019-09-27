@@ -60,7 +60,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   };
 
   render() {
-    return (
+    return <>
       <div>
         <PageContainer
           leftContent={!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
@@ -96,7 +96,8 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           </Show>
         </PageContainer>
       </div>
-    )
+      {this.props.adaptive && <div className="floatingButtonPadding"> </div>}
+    </>
   }
 
   __renderContent() {

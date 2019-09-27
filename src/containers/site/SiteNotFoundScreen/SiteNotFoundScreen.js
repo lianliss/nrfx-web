@@ -16,19 +16,18 @@ export default class SiteNotFoundScreen extends BaseScreen {
     message: '',
     isEmailValid: true,
     rows: 3,
-  }
+  };
 
   handleTextareaChange = (e) => {
     const textareaLineHeight = 22;
     const currentRows = ~~(e.target.scrollHeight / textareaLineHeight);
 
-    this.setState({ rows: currentRows });
-
+    this.setState({rows: currentRows});
     this.handleChange(e.target.value, 'message');
-  }
+  };
 
   handleChange = (value, key) => {
-    const { isEmailValid } = this.state;
+    const {isEmailValid} = this.state;
 
     if (key === 'email') {
       if (!isEmail(value)) {
@@ -45,11 +44,11 @@ export default class SiteNotFoundScreen extends BaseScreen {
     this.setState({
       [key]: value,
     });
-  }
+  };
 
   handleSubmit = (recaptchaToken) => {
-    const { name, email, message } = this.state;
-  }
+    //const { name, email, message } = this.state;
+  };
 
   render() {
     const { name, email, message, isEmailValid, rows } = this.state;

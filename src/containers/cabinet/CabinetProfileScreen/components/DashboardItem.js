@@ -1,5 +1,4 @@
 import React from 'react';
-import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
 import UI from '../../../../ui';
 import router from "../../../../router";
@@ -11,7 +10,6 @@ import { ReactComponent as ShoppingCartSvg } from '../../../../asset/24px/shoppi
 import { ReactComponent as TradeSvg } from '../../../../asset/120/trade.svg';
 import { ReactComponent as Invest120Svg } from '../../../../asset/120/invest.svg';
 import { ReactComponent as InviteSvg } from '../../../../asset/120/invite.svg';
-
 
 class DashboardItem extends React.Component {
   constructor(props) {

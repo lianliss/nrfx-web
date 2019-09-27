@@ -101,6 +101,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
           </Show>
           {this.__renderContent()}
         </PageContainer>
+        {this.props.adaptive && <div className="floatingButtonPadding"> </div>}
       </div>
     )
   }

@@ -40,8 +40,7 @@ export default function Modals(props) {
     case 'language':
       Component = LanguageModal;
       break;
-    default:
-      return null;
+    default: return null;
   }
 
   return (

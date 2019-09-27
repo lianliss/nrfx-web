@@ -10,6 +10,7 @@ export default function WithdrawalTable({ deposits, adaptive }) {
   if (!deposits.length) {
     return (
       <EmptyContentBlock
+        adaptive={adaptive}
         icon={require('../../../../asset/120/no_deposits.svg')}
         message={utils.getLang('cabinet_noOpenDeposits')}
         button={{
