@@ -18,6 +18,7 @@ import * as settingsActions from '../../../actions/cabinet/settings';
 import * as emitter from '../../../services/emitter';
 
 import {ReactComponent as IdBadgeSvg} from '../../../asset/24px/id-badge.svg';
+import {ReactComponent as ShieldSvg} from '../../../asset/24px/shield.svg';
 
 class CabinetSettingsScreen extends CabinetBaseScreen {
   get section() {
@@ -52,6 +53,45 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     }
   };
 
+  __handleChangePassword () {
+    const { user } = this.props;
+    if (user.new_password && user.new_password.length < 6) {
+      this.props.toastPush(utils.getLang('global_passwordMustBe'), "error");
+      return false;
+    }
+
+    if (
+      user.new_password &&
+      user.re_password &&
+      user.new_password !== user.re_password
+    ) {
+      this.props.toastPush(utils.getLang('global_passwordsMustBeSame'), "error");
+      return false;
+    }
+
+    modalGroupActions.openModalPage(null, {}, {
+      children: GAConfirmModal,
+      params: {
+        onChangeHandler: (data, modal) => {
+          settingsActions.changeNewPassword({
+            old_password: this.props.user.old_password,
+            password: this.props.user.new_password,
+            ga_code: data.gaCode
+          }).then(() => {
+            modal.props.close();
+            this.props.toastPush(utils.getLang("cabinet_passwordUpdateSuccess"), "success");
+            this.props.setUserFieldValue({field: 'old_password', value: ""});
+            this.props.setUserFieldValue({field: 'new_password', value: ""});
+            this.props.setUserFieldValue({field: 're_password', value: ""});
+          }).catch(err => {
+            this.props.toastPush(err.message, "error");
+          });
+          return this.__inputError(modal, 'errorGaCode');
+        }
+      }
+    })
+  }
+
   state = {
     firstNameInputError: false,
     lastNameInputError: false,
@@ -72,13 +112,13 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             label={utils.getLang("cabinet_settingsMenuPersonal")}
             baselink={true}
           />,
-          /*<ProfileSidebarItem
-            icon={require('../../../asset/24px/shield.svg')}
-            label="Security"
+          <ProfileSidebarItem
+            icon={<ShieldSvg />}
+            label={utils.getLang("global_security")}
             section="security"
             active={this.props.routerParams.section === 'security'}
           />,
-          <ProfileSidebarItem
+          /*<ProfileSidebarItem
             icon={require('../../../asset/24px/user.svg')}
             label="Notifications"
             section="notifications"
@@ -106,59 +146,65 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   };
 
   __getSecurityPageContent = () => {
+    const { user } = this.props;
     return <div className="CabinetSettingsScreen__main Content_box">
       <div className="CabinetSettingsScreen__header">
-        Change Password
+        {utils.getLang("cabinet_changePassword")}
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              placeholder={'Old Password'}
-              value={this.props.old_password}
+              type="password"
+              placeholder={utils.getLang("cabinet_oldPassword")}
+              value={user.old_password}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'old_password', value})}
             />
           </div>
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              placeholder={'New Password'}
-              value={this.props.new_password}
+              type="password"
+              placeholder={utils.getLang("cabinet_newPassword")}
+              value={user.new_password}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'new_password', value})}
             />
           </div>
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
-              placeholder={'Re-enter New Password'}
-              value={this.props.re_password}
+              type="password"
+              placeholder={utils.getLang("cabinet_reEnterNewPassword")}
+              value={user.re_password}
               onTextChange={(value) => this.props.setUserFieldValue({field: 're_password', value})}
             />
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
-          <UI.Button type={'outline'} onClick={() => {
-            modalGroupActions.openModalPage('ga_confirm')}}
+          <UI.Button
+            disabled={!user.old_password || !user.new_password || !user.re_password}
+            type={'outline'}
+            onClick={this.__handleChangePassword.bind(this)}
           >
-            Save
+            {utils.getLang("cabinet_settingsSave")}
           </UI.Button>
         </div>
       </div>
       <div className="CabinetSettingsScreen__space">
       </div>
       <div className="CabinetSettingsScreen__header">
-        Secret Key
+        {utils.getLang("site__authModalSecretKey")}
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
-            <UI.Button onClick={() => {modalGroupActions.openModalPage('ga_confirm')}}>
-              Update
+            <UI.Button onClick={() => {modalGroupActions.openModalPage('secret_key_info')}}>
+              {utils.getLang("global_update")}
             </UI.Button>
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
         </div>
       </div>
-      <div className="CabinetSettingsScreen__header">
+      {/*<div className="CabinetSettingsScreen__header">
         2FA Authorization
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
@@ -172,7 +218,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         </div>
         <div className="CabinetSettingsScreen__form right">
         </div>
-      </div>
+      </div>*/}
     </div>
   };
 

@@ -61,6 +61,10 @@ export function changeInfo({first_name, last_name, ga_code}) {
   });
 }
 
+export function changeNewPassword(params) {
+  return api.call(apiSchema.Profile.ChangePasswordPost, params);
+}
+
 export function changeNumber({phone_code, phone_number, sms_code}) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Profile.ChangePhoneNumberPut, {phone_code, phone_number, sms_code}).then((data) => {
