@@ -1,10 +1,11 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  user: {},
-  old_password: '',
-  new_password: '',
-  re_password: '',
+  user: {
+    old_password: '',
+    new_password: '',
+    re_password: '',
+  },
   loadingStatus: {}
 };
 
@@ -28,7 +29,10 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.SETTINGS_SET: {
       return Object.assign({}, state, {
-        user: action.user
+        user: {
+          ...state.user,
+          ...action.user
+        }
       });
     }
 

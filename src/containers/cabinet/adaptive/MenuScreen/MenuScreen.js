@@ -43,6 +43,16 @@ class MenuScreen extends CabinetBaseScreen {
             <SVG src={require('../../../../asset/24px/id-badge.svg')} />
             <span>{utils.getLang("cabinet_settingsMenuPersonal")}</span>
           </BaseLink>
+          <BaseLink
+            router={router}
+            routeName={PAGES.SETTINGS}
+            routeParams={{ section: "security" }}
+            className="Menu__section__item"
+            activeClassName="active"
+          >
+            <SVG src={require('../../../../asset/24px/shield.svg')} />
+            <span>{utils.getLang("global_security")}</span>
+          </BaseLink>
         </div>
         <div className="Menu__section Menu__section__noSpacing Content_box">
           <div
