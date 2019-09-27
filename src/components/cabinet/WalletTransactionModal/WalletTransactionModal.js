@@ -10,6 +10,8 @@ import * as walletsActions from '../../../actions/cabinet/wallets';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../utils';
 import InfoRow, { InfoRowGroup } from '../../../components/cabinet/InfoRow/InfoRow';
+import * as currencies from '../../../utils/currencies';
+
 
 export default class WalletTransactionModal extends React.Component {
   constructor(props) {
@@ -27,7 +29,7 @@ export default class WalletTransactionModal extends React.Component {
 
   render() {
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={464}>
+      <UI.Modal className="WalletTransactionModal__wrapper" isOpen={true} onClose={() => {this.props.close()}} width={464}>
         <UI.ModalHeader>
           {this.__getTitle()}
         </UI.ModalHeader>
@@ -42,6 +44,7 @@ export default class WalletTransactionModal extends React.Component {
     }
 
     const currencyInfo = actions.getCurrencyInfo(this.state.info.currency);
+
     return `${this.state.info.category === 'send' ? utils.getLang('cabinet_walletTransactionModal_sent') 
       : utils.getLang('cabinet_walletTransactionModal_receive')} ${utils.ucfirst(currencyInfo.name)}`;
   }
@@ -58,6 +61,7 @@ export default class WalletTransactionModal extends React.Component {
       const data = this.state.info;
       const currencyInfo = actions.getCurrencyInfo(data.currency);
       const currency = data.currency.toUpperCase();
+      const currencyGradient = currencies.getGradientByCurrency(data.currency);
 
       let address = data.address;
       if (this.props.type === 'transfer') {
@@ -73,6 +77,7 @@ export default class WalletTransactionModal extends React.Component {
 
       return (
         <div>
+          <div className="WalletTransactionModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <InfoRowGroup align="left">
             <InfoRow label="From">
               {data.category === 'send' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
@@ -91,7 +96,7 @@ export default class WalletTransactionModal extends React.Component {
             <InfoRow label="Amount">{utils.formatDouble(data.amount)} {currency}</InfoRow>
             <InfoRow label="Date">{moment(data.created_at).format('DD MMM YYYY HH:mm')}</InfoRow>
           </InfoRowGroup>
-          <div className="WalletTransactionModal__card">
+          <div className="WalletTransactionModal__card" style={{ background: currencyGradient }}>
             <div className="WalletTransactionModal__card__icon">
               <SVG src={require('../../../asset/24px/receive.svg')} />
             </div>
