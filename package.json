@@ -87,7 +87,7 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "scripts": {
-    "start": "cross-env HOST=127.0.0.1 PORT=3000 HTTPS=false node scripts/start.js",
+    "start": "cross-env HOST=127.0.0.1 PORT=3001 HTTPS=false node scripts/start.js",
     "build": "node scripts/build.js",
     "eslint": "eslint . --ext .js",
     "eslint:fix": "eslint . --ext .js --fix",

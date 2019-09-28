@@ -53,6 +53,7 @@ class RealTime {
         continue;
       }
 
+      //console.log('[WS]', json);
       if (this.listeners[json.type]) {
         for (let listener of this.listeners[json.type]) {
           listener(json.body);

@@ -17,6 +17,8 @@ const initialState = {
     asks: {},
     bids: {},
   },
+  chart: [],
+  chartTimeFrame: 5,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -143,11 +145,15 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.EXCHANGE_ADD_TRADES: {
       let trades = Object.assign({}, state.trades);
-      for (let order of action.orders) {
-        trades[order.id] = order
+      trades = action.orders.concat(Object.values(trades));
+      trades = trades.slice(0, 20);
+
+      let tradesMap = {};
+      for (let order of trades) {
+        tradesMap[order.id] = order;
       }
 
-      return Object.assign({}, state, { trades });
+      return Object.assign({}, state, { trades: tradesMap });
     }
 
     case actionTypes.EXCHANGE_UPDATE_BALANCE: {
@@ -169,6 +175,10 @@ export default function reduce(state = initialState, action = {}) {
       }
 
       return Object.assign({}, state, { balanceInfo, balances });
+    }
+
+    case actionTypes.EXCHANGE_CHANGE_TIME_FRAME: {
+      return Object.assign({}, state, { chartTimeFrame: action.timeFrame });
     }
 
     default:

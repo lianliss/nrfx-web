@@ -4,10 +4,11 @@ import apiSchema from '../../services/apiSchema';
 import store from '../../store';
 
 export function load(market) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: 'loading' });
     api.call(apiSchema.Exchange.DefaultGet, {
       market,
+      chart_time_frame: getState().exchange.chartTimeFrame,
     }).then((resp) => {
       dispatch({
         type: actionTypes.EXCHANGE_SET,
@@ -42,4 +43,10 @@ export function addTrades(orders) {
 
 export function updateBalance(currency, amount) {
   store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, currency, amount });
+}
+
+export function changeTimeFrame(timeFrame) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.EXCHANGE_CHANGE_TIME_FRAME, timeFrame });
+  };
 }

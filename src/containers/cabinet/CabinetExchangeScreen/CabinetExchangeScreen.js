@@ -7,6 +7,8 @@ import moment from 'moment';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import Block from './components/Block/Block';
+import Trades from './components/Trades/Trades';
+import Balances from './components/Balances/Balances';
 import UI from '../../../ui';
 
 import * as storeUtils from '../../../storeUtils';
@@ -15,6 +17,8 @@ import * as utils from '../../../utils';
 import OrderBook from './components/OrderBook/OrderBook';
 import TradeForm from './components/TradeForm/TradeForm';
 import Orders from './components/Orders/Orders';
+import MarketInfo from './components/MarketInfo/MarketInfo';
+import Chart from './components/Chart/Chart';
 import * as exchangeService from '../../../services/exchange';
 
 class CabinetExchangeScreen extends CabinetBaseScreen {
@@ -56,14 +60,15 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
     return (
       <div className="Exchange__wrapper">
         <div className="Exchange__left_content">
-          {this.__renderBalances()}
-          {this.__renderTrades()}
+          <Balances />
+          <Trades />
         </div>
         <div className="Exchange__right_content">
           <div className="Exchange__trade_content">
             <div className="Exchange__chart_wrapper">
               <div className="Exchange__chart Content_box">
-
+                {this.props.tickerInfo && <MarketInfo />}
+                <Chart key={`chart_${this.props.chartTimeFrame}`} interval={this.props.chartTimeFrame} />
               </div>
               {this.props.tickerInfo && <TradeForm
                 ref="trade_form"
@@ -82,35 +87,6 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
     )
   }
 
-  __renderBalances() {
-    const headings = [
-      <UI.TableColumn>Currency</UI.TableColumn>,
-      <UI.TableColumn align="right">Amount</UI.TableColumn>,
-    ];
-
-    let rows = this.props.balances.map((balance) => {
-      return (
-        <UI.TableCell key={balance.id}>
-          <UI.TableColumn>{balance.currency.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(balance.amount, balance.currency === 'usdt' ? 2 : void 0)}</UI.TableColumn>
-        </UI.TableCell>
-      )
-    });
-
-    return (
-      <Block
-        title="Balance"
-        controls={[
-          <UI.Button key="withdraw" size="ultra_small" rounded type="secondary">Manage</UI.Button>
-        ]}
-      >
-        <UI.Table headings={headings} compact skipContentBox>
-          {rows}
-        </UI.Table>
-      </Block>
-    )
-  }
-
   __renderTrades() {
     const headings = [
       <UI.TableColumn>Price</UI.TableColumn>,
@@ -118,7 +94,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       <UI.TableColumn align="right">Time</UI.TableColumn>,
     ];
 
-    let rows = Object.keys(this.props.trades).map((order) => {
+    let rows = Object.values(this.props.trades).map((order) => {
       const priceClassName = utils.classNames({
         Exchange__orders__side: true,
         sell: order.action === 'sell'
