@@ -11,7 +11,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
     return (
       <EmptyContentBlock
         icon={require('../../../../asset/120/no_deposits.svg')}
-        message="No Profit History"
+        message={utils.getLang("cabinet_noProfitHistory")}
       />
     )
   }
@@ -42,12 +42,11 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
   }
 
   const rows = profits.items.map((item, i) => {
-    console.log(14,i, total);
     if (adaptive) {
       return (
         <UI.TableCell key={i}>
           <UI.TableColumn
-            sub={item.deposit.percent + '% ' + utils.ucfirst(item.deposit.type) + ' ' + item.plan.description}
+            sub={ item.deposit.percent + '% ' + item.plan.description + ' / ' + utils.ucfirst(item.deposit.type)}
           >
             {item.deposit.amount} {item.deposit.currency.toUpperCase()}
           </UI.TableColumn>

@@ -351,9 +351,9 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           <UI.Button
             type={buttonType}
             onClick={() => {
-              if (this.props.user.first_name.length < 1) {
+              if (!utils.isName(this.props.user.first_name)) {
                 return this.__inputError(this, 'firstNameInputError');
-              } else if (this.props.user.last_name.length < 1) {
+              } else if (!utils.isName(this.props.user.last_name)) {
                 return this.__inputError(this, 'lastNameInputError');
               }
               modalGroupActions.openModalPage(null, {}, {

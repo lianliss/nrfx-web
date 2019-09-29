@@ -129,8 +129,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   }
 
   __renderProfitHistory() {
-    const {profits} = this.props
-    const total = profits.profitsTotal;
+    const {profits, profitsTotal} = this.props;
 
     return <div>
       <Paging
@@ -142,7 +141,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
         <ProfitHistorylTable
           adaptive={this.props.adaptive}
           profits={profits}
-          total={total}
+          total={profitsTotal}
         />
       </Paging>
     </div>

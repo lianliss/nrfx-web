@@ -121,7 +121,10 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.CABINET_INVESTMENTS_SCREEN:
       mapState2Props = state => {
-        return {...state.investments, adaptive: state.default.adaptive}
+        return {
+          ...state.investments,
+          adaptive: state.default.adaptive
+        }
       };
       mapDispatch2Props = {
         setTitle: actions.setTitle,

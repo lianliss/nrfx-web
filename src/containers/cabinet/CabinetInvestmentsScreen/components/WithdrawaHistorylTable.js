@@ -10,7 +10,7 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount, ad
     return (
       <EmptyContentBlock
         icon={require('../../../../asset/120/no_deposits.svg')}
-        message="No Withdrawal History"
+        message={utils.getLang("cabinet_noWithdrawalHistory")}
       />
     )
   }
