@@ -53,20 +53,23 @@
 }
 
 .adaptive {
-  .SendCoinsModal__amount {
-    width: calc(100% - 80px);
-    position: relative;
-    flex-direction: column;
+  .Modal .SendCoinsModal {
+    &__amount {
+      width: calc(100% - 80px);
+      position: relative;
+      flex-direction: column;
 
-    .Input__wrapper {
-      margin: 0;
-      margin-bottom: 24px;
-    }
-    .Button {
-      position: absolute;
-      top: 0;
-      right:  -80px;
-      width: 64px;
+      .Input__wrapper {
+        margin: 0;
+        margin-bottom: 24px;
+      }
+
+      .Button {
+        position: absolute;
+        top: 0;
+        right: -80px;
+        width: 64px;
+      }
     }
   }
 }
