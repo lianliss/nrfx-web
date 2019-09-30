@@ -4,6 +4,7 @@ const initialState = {
   deposits: [],
   payments: [],
   profits: [],
+  balances: [],
   profitsTotal: 0,
   withdrawals: {
     isLoadingMore: false,
@@ -27,6 +28,7 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {
         deposits: action.deposits,
         payments: action.payments,
+        balances: action.balances,
         chart: action.chart,
         loaded: true
       });

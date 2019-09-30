@@ -6,6 +6,7 @@
   margin-top: 8px;
   width: 472px;
   height: 210px;
+  position: relative;
 
   .WalletBalance__selected_buttons {
     width: 100%;
@@ -148,6 +149,66 @@
 
       p.active {
         color: black;
+      }
+    }
+  }
+}
+
+.WalletBalance__adaptiveHelper {
+  width: 100%;
+  display: flex;
+}
+.adaptive {
+  .WalletBalance__pie {
+    width: 100px;
+    height: 100px;
+  }
+  .WalletBalance__selected_wallet {
+    padding-top: 8px;
+  }
+  .WalletBalance {
+    .WalletBalance__selected_buttons {
+      padding-top: 50px;
+      .Button {
+        width: calc(50% - 24px);
+      }
+      .Button:first-child {
+        margin-right: 24px;
+      }
+    }
+    width: 100%;
+    display: inline-block;
+    padding-block-start: 16px;
+    padding-block-end: 16px;
+    .WalletBalance__header {
+      text-align: center;
+    }
+  }
+  .WalletBalance__pie__balance {
+    text-align: center;
+    h3 {
+      font-size: 24px;
+      line-height: 32px;
+      span {
+        border-bottom: 2px solid;
+      }
+    }
+  }
+  .WalletBalance__adaptiveHelper {
+    width: 240px;
+    display: flex;
+    flex-flow: row-reverse;
+    padding-top: 24px;
+    margin: auto;
+    box-sizing: border-box;
+    .WalletBalance__pie {
+      margin-inline-end: 0;
+    }
+    .WalletBalance__list ul {
+      padding-inline-start: 24px;
+      li {
+        font-size: 13px;
+        margin: 2px 0px;
       }
     }
   }

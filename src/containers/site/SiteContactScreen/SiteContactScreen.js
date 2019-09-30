@@ -16,7 +16,7 @@ export default class SiteContactScreen extends BaseScreen {
     message: '',
     isEmailValid: true,
     rows: 3,
-  }
+  };
 
   handleTextareaChange = (e) => {
     const textareaLineHeight = 22;
@@ -45,11 +45,11 @@ export default class SiteContactScreen extends BaseScreen {
     this.setState({
       [key]: value,
     });
-  }
+  };
 
   handleSubmit = (recaptchaToken) => {
-    const { name, email, message } = this.state;
-  }
+    //const { name, email, message } = this.state;
+  };
 
   render() {
     const { name, email, message, isEmailValid, rows } = this.state;

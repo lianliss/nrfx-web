@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-import store from '../../../../store';
 import UI from '../../../../ui';
 import * as steps from '../fixtures';
 import * as utils from '../../../../utils/index';
-import { registerUser } from '../../../../actions/auth';
+import {registerUser} from '../../../../actions/auth';
 import SuccessModal from '../../SuccessModal/SuccessModal';
 import StaticContentModal from '../../StaticContentModal/StaticContentModal';
 

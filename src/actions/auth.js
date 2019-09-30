@@ -6,7 +6,7 @@ import apiSchema from '../services/apiSchema';
 import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as auth from '../services/auth';
-import * as emitter from '../services/emitter';
+import * as user from './user';
 
 export function getAuth(login, password) {
   const app_id = 8;
@@ -89,8 +89,9 @@ export function getGoogleCode(login, password, code) {
     })
       .then((resp) => {
         auth.login(resp.access_token);
-        emitter.emit('userInstall');
-        resolve(resp);
+        user.install().then(() => {
+          resolve(resp);
+        });
       })
       .catch((err) => reject(err));
   });

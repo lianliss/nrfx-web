@@ -1,3 +1,13 @@
+.WalletTransactionModal {
+  &__icon {
+    width: 72px;
+    height: 72px;
+    position: absolute;
+    left: -32px;
+    top: 16px;
+  }
+}
+
 .WalletTransactionModal__card {
   background: var(--gradient-primary);
   border-radius: 8px;
@@ -65,5 +75,21 @@
 
   &.done {
     color: var(--color-green);
+  }
+}
+
+.adaptive {
+  .WalletTransactionModal {
+
+    &__icon {
+      left: 0;
+      right: 0;
+      top: -32px;
+      margin: 0 auto;
+    }
+
+    &__wrapper {
+      padding-top: 80px;
+    }
   }
 }

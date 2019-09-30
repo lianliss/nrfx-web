@@ -9,7 +9,9 @@ import {classNames} from '../../utils';
 
 function Modal(props) {
   const node = useRef();
-  const className = classNames({
+  const adaptive = document.body.classList.contains('adaptive');
+
+  const className = classNames(props.className, {
     Modal: true,
     Modal__noSpacing: props.noSpacing,
   });
@@ -18,7 +20,7 @@ function Modal(props) {
     if (node.current && node.current.contains(e.target)) {
       return () => {};
     } else {
-      props.onClose();
+      !adaptive && props.onClose();
     }
   };
 

@@ -1,26 +1,29 @@
 import './CabinetInvestmentsScreen.less';
-
+//
 import React from 'react';
-
+//
+import UI from '../../../ui';
+import router from '../../../router';
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
-import SummaryItem from './components/SummaryItem';
+import Balances from './components/Balances';
 import WithdrawaHistorylTable from './components/WithdrawaHistorylTable';
 import ProfitHistorylTable from './components/ProfitHistorylTable';
 import DepositTable from './components/DepositTable';
-import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
-import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
+import CurrentPayments from './components/CurrentPayments';
+import AllPayments from './components/AllPayments';
+import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
+import ChartProfit from '../../../components/cabinet/ChartProfit/ChartProfit';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
+import Paging from '../../../components/cabinet/Paging/Paging';
+import {ReactComponent as PlusCircleSvg} from '../../../asset/24px/plus-circle.svg';
+import {ReactComponent as InvestSvg} from '../../../asset/24px/invest.svg';
+import {ReactComponent as SendSvg} from '../../../asset/24px/send.svg';
+import * as PAGES from '../../../constants/pages';
 import * as modalGroupActions from '../../../actions/modalGroup';
-
-import * as storeUtils from "../../../storeUtils";
-import * as utils from "../../../utils";
-import * as CLASSES from "../../../constants/classes";
-import Paging from "../../../components/cabinet/Paging/Paging";
-
-import { ReactComponent as PlusCircleSvg } from '../../../asset/24px/plus-circle.svg';
-import { ReactComponent as InvestSvg } from '../../../asset/24px/invest.svg';
-import { ReactComponent as SendSvg } from '../../../asset/24px/send.svg';
-
+import * as storeUtils from '../../../storeUtils';
+import * as utils from '../../../utils';
+import * as CLASSES from '../../../constants/classes';
+import Show from '../../../components/hoc/ShowContent';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -33,6 +36,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
   componentDidMount() {
     this.__load();
+    this.props.setTitle(utils.getLang("site__headerInvestment"));
   }
 
   componentWillUpdate(nextProps) {
@@ -56,11 +60,24 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   };
 
   render() {
-    return (
+    return <>
       <div>
         <PageContainer
-          leftContent={!this.props.routerParams.section  && !this.isLoading && this.__renderLeftContent()}
-          sidebarOptions={[
+          leftContent={!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
+          sidebarOptions={this.props.adaptive ? [
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/plus-circle.svg')}
+              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+            >{utils.getLang('cabinet_investmentsScreen_new')}</UI.FloatingButtonItem>,
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/invest.svg')}
+              onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'profits' })}}
+            >{utils.getLang('cabinet_investmentsProfit')}</UI.FloatingButtonItem>,
+            <UI.FloatingButtonItem
+              onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'withdrawals' })}}
+              icon={require('../../../asset/24px/invest.svg')}
+            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,
+          ] : [
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
               icon={<PlusCircleSvg />}
@@ -70,10 +87,17 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />
           ]}
         >
+          <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>
+            {this.__renderRightContent()}
+          </Show>
           {this.__renderContent()}
+          <Show showIf={this.props.adaptive}>
+            <div className="Investment__heightPadding"> </div>
+          </Show>
         </PageContainer>
       </div>
-    )
+      {this.props.adaptive && <div className="floatingButtonPadding"> </div>}
+    </>
   }
 
   __renderContent() {
@@ -82,98 +106,121 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
 
     switch (this.props.routerParams.section) {
-      case 'profits':
+      case 'profits': {
         return this.__renderProfitHistory();
-      case 'withdrawals':
+      }
+      case 'withdrawals': {
         return this.__renderWithdrawalHistory();
-      default:
+      }
+      default: {
         return this.__renderMainContent();
+      }
     }
   }
 
   __renderMainContent() {
-    return (
-      <div>
-        {this.__renderSummary()}
-        <DepositTable deposits={this.props.deposits} />
-      </div>
-    )
+    return <div>
+      {this.__renderBalances()}
+      <DepositTable
+        deposits={this.props.deposits}
+        adaptive={this.props.adaptive}
+      />
+    </div>
   }
 
   __renderProfitHistory() {
-    const { profits } = this.props;
-    const total = this.props.profitsTotal;
-    return (
-      <div>
-        <Paging
-          isCanMore={!!profits.next && !(this.props.loadingStatus.profitsAppend === "loading")}
-          onMore={this.props.loadMoreProfitHistory}
-          moreButton={!!profits.next}
-          isLoading={this.props.loadingStatus.profitsAppend === "loading"}
-        >
-          <ProfitHistorylTable profits={profits} total={total} />
-        </Paging>
-      </div>
-    )
+    const {profits, profitsTotal} = this.props;
+
+    return <div>
+      <Paging
+        isCanMore={!!profits.next && !(this.props.loadingStatus.profitsAppend === "loading")}
+        onMore={this.props.loadMoreProfitHistory}
+        moreButton={!!profits.next}
+        isLoading={this.props.loadingStatus.profitsAppend === "loading"}
+      >
+        <ProfitHistorylTable
+          adaptive={this.props.adaptive}
+          profits={profits}
+          total={profitsTotal}
+        />
+      </Paging>
+    </div>
   }
 
   __renderWithdrawalHistory() {
-    const { withdrawals, withdrawalsTotalCount } = this.props;
-
-    return (
-      <div>
-        <h2>{utils.getLang('cabinet_investmentsWithdrawalHistory')}</h2>
-        <Paging
-          isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
-          onMore={this.props.loadMoreWithdrawalHistory}
-          moreButton={!!withdrawals.next}
-          isLoading={withdrawals.isLoadingMore}
-        >
-          <WithdrawaHistorylTable withdrawals={withdrawals} withdrawalsTotalCount={withdrawalsTotalCount} />
-        </Paging>
-      </div>
-    )
+    const {withdrawals, withdrawalsTotalCount} = this.props;
+    return <div>
+      <Paging
+        isCanMore={!!withdrawals.next && !withdrawals.isLoadingMore}
+        onMore={this.props.loadMoreWithdrawalHistory}
+        moreButton={!!withdrawals.next}
+        isLoading={withdrawals.isLoadingMore}
+      >
+        <WithdrawaHistorylTable
+          adaptive={this.props.adaptive}
+          withdrawals={withdrawals}
+          withdrawalsTotalCount={withdrawalsTotalCount}
+        />
+      </Paging>
+    </div>
   }
 
-  __renderLeftContent() {
+  __renderRightContent = () => {
     if (!this.props.chart.hasOwnProperty('data')) {
       return <LoadingStatus status="loading" />;
     }
 
-    return <ChartProfit chart={{...this.props.chart}} />
+    return [
+      <ChartProfit
+        chart={this.props.chart}
+        adaptive={this.props.adaptive}
+      />,
+      this.__renderCurrentPayments(),
+      this.__renderAllPayments()
+    ];
   };
 
-  __renderSummary() {
+  __renderBalances() {
+    return <Show showIf={this.props.balances.length > 0}>
+      <div className="Investments__balances">
+        <Balances data={this.props.balances} />
+      </div>
+    </Show>
+  }
+
+  __renderAllPayments = () => {
     if (!this.props.payments.length) {
       return null;
     }
 
-    let existCurrencies = {};
-    for (let item of this.props.payments) {
-      existCurrencies[item.currency] = true;
+    const notEmptyPayments = this.props.payments.filter(
+      item => item.total_invested_amount > 0
+    );
+
+    return <Show showIf={notEmptyPayments.length > 0}>
+      <AllPayments
+        payments={notEmptyPayments}
+        adaptive={this.props.adaptive}
+      />
+    </Show>
+  };
+
+  __renderCurrentPayments = () => {
+    if (!this.props.payments.length) {
+      return null;
     }
 
-    let payments = this.props.payments;
-    let allCurrencies = ['btc', 'eth', 'ltc'];
-    for (let currency of allCurrencies) {
-      if (existCurrencies[currency]) {
-        continue;
-      }
+    const notEmptyPayments = this.props.payments.filter(
+      item => item.invested_amount > 0
+    );
 
-      payments.push({
-        currency,
-        isEmpty: true
-      });
-    }
-
-    const items = payments.map((item, i) => <SummaryItem key={i} {...item} />);
-
-    return (
-      <div className="Investments__summary">
-        {items}
+    return <Show showIf={notEmptyPayments.length > 0}>
+      <div className="Investment__heightPadding"> </div>
+      <div className="Investments__payments">
+        <CurrentPayments payments={notEmptyPayments} adaptive={this.props.adaptive} />
       </div>
-    )
-  }
+    </Show>
+  };
 }
 
 export default storeUtils.getWithState(

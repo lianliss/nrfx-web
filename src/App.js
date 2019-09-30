@@ -3,6 +3,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {loadReCaptcha} from 'react-recaptcha-google';
+import moment from 'moment/min/moment-with-locales';
 // internal
 import Routes from './Routes';
 import Modals from './Modals';
@@ -13,7 +14,6 @@ import UI from './ui';
 import * as actions from './actions';
 import * as testActions from './actions/test';
 import * as storage from './services/storage';
-import moment from 'moment/min/moment-with-locales';
 
 class App extends React.Component {
   state = {
@@ -68,22 +68,13 @@ class App extends React.Component {
       )
     }
 
-    return (
-      <div>
-        <ModalGroup {...this.props} />
-
-        <Modals {...this.props} />
-
-        <Routes {...this.props} />
-
-        <Toasts />
-
-        {!acceptedCookies
-          ? <CookieUsage />
-          : null}
-
-      </div>
-    )
+    return <div>
+      <ModalGroup {...this.props} />
+      <Modals {...this.props} />
+      <Routes {...this.props} />
+      <Toasts />
+      {!acceptedCookies ? <CookieUsage /> : null}
+    </div>
   }
 
   _loadAssets = () => {
@@ -102,11 +93,13 @@ class App extends React.Component {
 export function mapDispatchToProps(dispatch) {
   return {
     testActions: {
-      update: () => dispatch(testActions.update(...arguments))
+      update: () => dispatch(
+        testActions.update(...arguments)
+      )
     }
   };
 }
 
-export default connect((state) => {
-  return { state };
+export default connect(state => {
+  return {state};
 }, mapDispatchToProps)(App);

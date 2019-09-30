@@ -13,6 +13,7 @@ import WithdrawalModal from '../components/cabinet/WithdrawalModal/WithdrawalMod
 import GAConfirmModal from '../components/cabinet/GAConfirmModal/GAConfirmModal';
 import ChangeEmailModal from '../components/cabinet/ChangeEmailModal/ChangeEmailModal';
 import ChangeNumberModal from '../components/cabinet/ChangeNumberModal/ChangeNumberModal';
+import SecretKeyInfoModal from '../components/cabinet/SecretKeyInfoModal/SecretKeyInfoModal';
 
 const Modals = {
   SendCoinsModal: {children: SendCoinsModal},
@@ -24,7 +25,8 @@ const Modals = {
   GAConfirmModal: {children: GAConfirmModal},
   ChangeEmailModal: {children: ChangeEmailModal},
   ChangeNumberModal: {children: ChangeNumberModal},
-  WithdrawalModal: {children: WithdrawalModal}
+  WithdrawalModal: {children: WithdrawalModal},
+  SecretKeyInfoModal: {children: SecretKeyInfoModal}
 };
 
 export const MODALGROUP_ROUTES = {
@@ -46,5 +48,7 @@ export const MODALGROUP_ROUTES = {
   settings: {
     change_email: Modals.ChangeEmailModal,
     change_number: Modals.ChangeNumberModal,
-  }
+    secret_key_info: Modals.SecretKeyInfoModal,
+  },
+  menu: {},
 };

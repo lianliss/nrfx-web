@@ -6,7 +6,7 @@ import UI from '../../../ui';
 
 import * as utils from '../../../utils';
 
-export default function EmptyContentBlock({ icon, message, button, skipContentClass, height }) {
+export default function EmptyContentBlock({ icon, message, button, skipContentClass, height, adaptive }) {
   let style = {};
   if (height > 0) {
     style.height = height;
@@ -25,7 +25,7 @@ export default function EmptyContentBlock({ icon, message, button, skipContentCl
         <div className="EmptyContentBlock__content__message">{message}</div>
       </div>
       {button && <div className="EmptyContentBlock__call_to_action">
-        <UI.Button onClick={button.onClick} size={button.size || ''}>
+        <UI.Button onClick={button.onClick} size={!adaptive ? 'large' : 'small'} style={adaptive ? {marginTop: 16} : {}}>
           {button.text}
         </UI.Button>
       </div>}

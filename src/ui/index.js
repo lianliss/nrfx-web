@@ -18,6 +18,7 @@ import Table, { TableCell, TableColumn } from './components/Table/Table';
 import SwitchTabs from './components/SwitchTabs/SwitchTabs';
 import RadioGroup from './components/Radio/RadioGroup';
 import Toast from './components/Toast/Toast';
+import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
 
 export default {
   Button,
@@ -40,5 +41,7 @@ export default {
   Notifications,
   Notification,
   NotificationSeparator,
-  Toast
+  Toast,
+  FloatingButton,
+  FloatingButtonItem
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
 import UI from '../../../../ui';
 import router from "../../../../router";
@@ -12,7 +11,6 @@ import { ReactComponent as TradeSvg } from '../../../../asset/120/trade.svg';
 import { ReactComponent as Invest120Svg } from '../../../../asset/120/invest.svg';
 import { ReactComponent as InviteSvg } from '../../../../asset/120/invite.svg';
 
-
 class DashboardItem extends React.Component {
   constructor(props) {
     super(props);
@@ -22,8 +20,8 @@ class DashboardItem extends React.Component {
         this.icon = <UsersSvg />;
         this.content = {
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_profit'),
-          firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(8) : 0,
-          firstMainContextInvert: (props.profit.btc * props.profit.usd).toFixed(2),
+          firstMainContext: utils.formatDouble(props.profit.btc),
+          firstMainContextInvert: utils.formatDouble(props.profit.usd, 2),
           secondHeaderLeftContext: utils.getLang('cabinet_profileScreen_invested'),
           secondMainContext: (props.invested.btc > 0 ? '~ ' +  props.invested.btc.toFixed(8) : 0)  + ' BTC',
           secondMainContextInvert: (props.invested.btc * props.invested.usd).toFixed(2) + ' USD',
@@ -45,8 +43,8 @@ class DashboardItem extends React.Component {
         this.show = false;
         this.content = {
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_income'),
-          firstMainContext: props.profit.btc > 0 ? props.profit.btc.toFixed(8) : 0,
-          firstMainContextInvert: (props.profit.btc * props.profit.usd).toFixed(2),
+          firstMainContext: utils.formatDouble(props.profit.btc),
+          firstMainContextInvert: utils.formatDouble(props.profit.usd, 2),
           secondHeaderLeftContext: utils.getLang('cabinet_profileScreen_count'),
           secondMainContext: props.count,
           secondMainContextInvert: props.count,
@@ -109,49 +107,47 @@ class DashboardItem extends React.Component {
           </div>
         </div>
       </div>,
-      true: <div>
-        <div className="DashboardItem">
-          <div className="DashboardItem__content Content_box">
-            {this.props.type === 'commerce' && <div className="disabled">
-              <span>
-                {utils.getLang('cabinet_profileScreen_comingSoon')}
-              </span>
+      true: <div className="DashboardItem">
+        <div className="DashboardItem__content Content_box">
+          {this.props.type === 'commerce' && <div className="disabled">
+            <span>
+              {utils.getLang('cabinet_profileScreen_comingSoon')}
+            </span>
+          </div>
+          }
+          <div className="DashboardItem__content_header">
+            <div className="DashboardItem__icon">
+              {this.icon}
             </div>
-            }
-            <div className="DashboardItem__content_header">
-              <div className="DashboardItem__icon">
-                {this.icon}
-              </div>
-              <div className="DashboardItem__headerText">
-                {utils.ucfirst(this.props.type)}
-              </div>
+            <div className="DashboardItem__headerText">
+              {utils.ucfirst(this.props.type)}
             </div>
-            <div className="DashboardItem__content_item">
-              <div className="DashboardItem__content_item_header">
-                <div className="DashboardItem__content_item_header_left">
-                  {this.content.firstHeaderLeftContext}
-                </div>
-                <div className="DashboardItem__content_item_header_right" onClick={() => {this.setState({invert:!this.state.invert})}}>
-                  {this.state.invert ? 'BTC' : 'USD'}
-                </div>
+          </div>
+          <div className="DashboardItem__content_item">
+            <div className="DashboardItem__content_item_header">
+              <div className="DashboardItem__content_item_header_left">
+                {this.content.firstHeaderLeftContext}
               </div>
-              <div className="DashboardItem__content_item_context">
-                {this.state.invert ? this.content.firstMainContextInvert + ' USD' : '~ ' + this.content.firstMainContext + ' BTC'}
+              <div className="DashboardItem__content_item_header_right" onClick={() => {this.setState({invert:!this.state.invert})}}>
+                {this.state.invert ? 'BTC' : 'USD'}
               </div>
             </div>
-            <div className="DashboardItem__content_item">
-              <div className="DashboardItem__content_item_header">
-                <div className="DashboardItem__content_item_header_left">
-                  {this.content.secondHeaderLeftContext}
-                </div>
-              </div>
-              <div className="DashboardItem__content_item_context">
-                {this.state.invert ? this.content.secondMainContextInvert : this.content.secondMainContext}
+            <div className="DashboardItem__content_item_context">
+              {this.state.invert ? this.content.firstMainContextInvert + ' USD' : '~ ' + this.content.firstMainContext + ' BTC'}
+            </div>
+          </div>
+          <div className="DashboardItem__content_item">
+            <div className="DashboardItem__content_item_header">
+              <div className="DashboardItem__content_item_header_left">
+                {this.content.secondHeaderLeftContext}
               </div>
             </div>
-            <div className="DashboardItem__buttonAction">
-              <UI.Button size="small" {...this.button} />
+            <div className="DashboardItem__content_item_context">
+              {this.state.invert ? this.content.secondMainContextInvert : this.content.secondMainContext}
             </div>
+          </div>
+          <div className="DashboardItem__buttonAction">
+            <UI.Button size="small" {...this.button} />
           </div>
         </div>
       </div>

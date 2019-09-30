@@ -10,9 +10,9 @@ import * as toastsActions from './toasts';
 export function loadInvestments() {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-    api.call(apiSchema.Investment.DefaultGet).then(({ deposits, payments, chart, ...props }) => {
+    api.call(apiSchema.Investment.DefaultGet).then(({ deposits, payments, chart, balances, ...props }) => {
       payments = Object.values(payments);
-      dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments, chart });
+      dispatch({ type: actionTypes.INVESTMENTS_SET, deposits, payments, chart, balances });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
       toastsActions.toastPush("Error load investment", "error")(dispatch, getState);
@@ -78,7 +78,7 @@ export function loadMoreWithdrawalHistory() {
     }).then((data) => {
       const { withdrawals: { items, next }, total_count } = data;
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });
-      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next });
+      dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_APPEND, items, next, total_count });
     }).catch(() => {
       toastsActions.toastPush("Error load more withdrawal history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS, payload: false });

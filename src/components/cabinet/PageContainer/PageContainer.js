@@ -2,7 +2,7 @@ import './PageContainer.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import UI from '../../../ui';
 import ProfileSidebar from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 
 function PageContainer({ children, leftContent, sidebarOptions }) {
@@ -20,6 +20,11 @@ function PageContainer({ children, leftContent, sidebarOptions }) {
           {leftContent}
         </div>}
       </div>
+      { adaptive && sidebarOptions.length && (
+        <UI.FloatingButton wrapper icon={require('../../../asset/24px/options.svg')}>
+          {sidebarOptions}
+        </UI.FloatingButton>
+      )}
     </div>
   )
 }

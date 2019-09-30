@@ -1,17 +1,19 @@
 import './CabinetRegisterScreen.less';
+//
 import React from 'react';
-import UI from '../../../ui';
-import { withRouter } from 'react-router5';
-import { GetParamsContext } from '../../../contexts';
-import apiSchema from '../../../services/apiSchema';
-import * as api from "../../../services/api";
-import * as storeUtils from "../../../storeUtils";
-import * as utils from "../../../utils";
-import * as CLASSES from "../../../constants/classes";
-import * as pages from '../../../constants/pages';
-import ReactPhoneInput from "react-phone-input-2";
+import ReactPhoneInput from 'react-phone-input-2';
 import moment from 'moment';
-import * as auth from "../../../services/auth";
+//
+import UI from '../../../ui';
+import {withRouter} from 'react-router5';
+import {GetParamsContext} from '../../../contexts';
+import apiSchema from '../../../services/apiSchema';
+import * as api from '../../../services/api';
+import * as storeUtils from '../../../storeUtils';
+import * as utils from '../../../utils';
+import * as CLASSES from '../../../constants/classes';
+import * as pages from '../../../constants/pages';
+import * as auth from '../../../services/auth';
 
 class CabinetRegister extends React.PureComponent {
   state = {
@@ -21,6 +23,7 @@ class CabinetRegister extends React.PureComponent {
   };
 
   componentDidMount() {
+    this.props.setTitle(utils.getLang("cabinet_registerScreen_complete"));
     if (!this.context.params.hash) {
       this.props.router.navigate(pages.MAIN);
     }
@@ -84,7 +87,6 @@ class CabinetRegister extends React.PureComponent {
       var duration = moment.duration(60 * 1000, 'milliseconds');
       const timer = () => {
         duration = moment.duration(duration - 1000, 'milliseconds');
-        const timer =  moment(duration.asMilliseconds()).format('mm:ss')
         this.setState({ timer: moment(duration.asMilliseconds()).format('m:ss') });
         if (duration.seconds() <= 0) {
           this.setState({ timer: null });

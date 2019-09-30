@@ -58,7 +58,12 @@ class ChartProfit extends React.Component {
           <div className="Chart__profit__header__fiat">{this.props.chart.usd_profit.toFixed(2) + ' $'}</div>
         </div>
         <div className="Chart__profit__chart">
-          <Chart marker={marker} count={Object.keys(this.props.chart.data).length} series={Object.values(chartCurrencies)} />
+          <Chart
+            marker={marker}
+            count={Object.keys(this.props.chart.data).length}
+            series={Object.values(chartCurrencies)}
+            adaptive={this.props.adaptive}
+          />
         </div>
       </div>
     )

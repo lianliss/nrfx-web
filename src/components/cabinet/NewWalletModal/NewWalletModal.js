@@ -21,7 +21,7 @@ function NewWalletModal() {
       return (
         <EmptyContentBlock
           icon={require('../../../asset/120/no_deposits.svg')}
-          message="No wallets available"
+          message={utils.getLang("cabinet_noWalletsAvailable")}
           skipContentClass
         />
       )

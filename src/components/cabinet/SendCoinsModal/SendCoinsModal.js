@@ -101,7 +101,7 @@ class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__row">
             <UI.Input
               value={this.props.thisState.address}
-              placeholder="Enter BitcoinBot Login or Wallet Address"
+              placeholder={utils.getLang('cabinet__coinsAddressPlaceholder')}
               onTextChange={this.__addressChange}
               error={this.state.errorAddress}
             />
@@ -118,9 +118,14 @@ class SendCoinsModal extends React.Component {
               placeholder="0"
               indicator="USD"
               onTextChange={this.__usdAmountDidChange}
-              value={this.props.thisState.amountUSD > 0 ? this.props.thisState.amountUSD : ""}
+              value={(this.props.thisState.amountUSD > 0 || this.props.thisState.amount) ? this.props.thisState.amountUSD : ""}
             />
-            <UI.Button smallPadding type="outline" onClick={this.__maxDidPress}>
+            <UI.Button
+              smallPadding
+              type="outline"
+              currency={this.props.thisState.currency}
+              onClick={this.__maxDidPress}
+            >
               {utils.getLang('cabinet_sendCoinsModal_max')}
             </UI.Button>
           </div>
@@ -130,7 +135,7 @@ class SendCoinsModal extends React.Component {
               onClick={this.__sendButtonHandler}
               disabled={sendButtonDisabled}
             >
-              Send
+              {utils.getLang("global_send")}
             </UI.Button>
           </div>
         </div>
@@ -161,7 +166,7 @@ class SendCoinsModal extends React.Component {
       return false;
     }
 
-    this.__setState({ amount, amountUSD: parseInt(utils.formatDouble(amount * this.wallet.to_usd)).toFixed(2) });
+    this.__setState({ amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd, 2) });
   };
 
   __usdAmountDidChange = (amountUSD) => {
@@ -189,8 +194,7 @@ class SendCoinsModal extends React.Component {
     return this.props.thisState.address.length > 0 &&
       this.props.thisState.address.length < 256 &&
       this.props.thisState.selectedWallet &&
-      this.props.thisState.amount > 0 &&
-      this.props.thisState.amountUSD > 0;
+      (this.props.thisState.amount > 0 || this.props.thisState.amountUSD > 0)
   }
 
   __openConfirmModal = () => {

@@ -1,47 +1,66 @@
 // styles
 import './Table.less';
 // external
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 // internal
 import Hover from '../Hover/Hover';
 import * as utils from '../../utils';
 
-function Table({ headings, children, className, compact, skipContentBox, inline }) {
+import { ReactComponent as AngleDownSmall } from '../../asset/angle-down-small.svg';
+import { ReactComponent as AngleUpSmall } from '../../asset/angle-up-small.svg';
+
+function Table({ headings, children, className, header, hidden, adaptive, compact, skipContentBox, inline }) {
+  const [hiddenContent, setHiddenContent] = useState(hidden || false);
   return (
-    <table className={utils.classNames({
-      Table: true,
+    <div className={utils.classNames({
+      TableMain: true,
       Content_box: !skipContentBox,
-      [className]: !!className,
-      compact: !!compact,
-      inline: !!inline,
     })}>
-      <thead>
-        <tr>
-          {React.Children.map(headings, (child, i) => {
+      {header && <div
+        onClick={(adaptive && hidden) ? () => {setHiddenContent(!hiddenContent)} : () => {}}
+        className="Table__header"
+        style={adaptive ? {height: 56} : {}}
+      >
+        <span style={adaptive && hidden ? {color: 'var(--link-color)'} : {}}>{header}</span>
+        {adaptive && hidden && <span className="icon">
+          {hiddenContent ? <AngleDownSmall /> : <AngleUpSmall />}
+        </span>}
+      </div>}
+
+
+      {(!adaptive || (adaptive && !hiddenContent)) && <table className={utils.classNames({
+        Table: true,
+        [className]: !!className,
+        compact: !!compact,
+        inline: !!inline,
+      })}>
+        <thead>
+          <tr>
+            {React.Children.map(headings, (child, i) => {
+              if (!React.isValidElement(child)) {
+                return child;
+              }
+
+              return React.cloneElement(child, {
+                key: i
+              });
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {React.Children.map(children, (child, i) => {
             if (!React.isValidElement(child)) {
               return child;
             }
 
             return React.cloneElement(child, {
-              key: i
+              dark: !inline && i % 2 === 0
             });
           })}
-        </tr>
-      </thead>
-
-      <tbody>
-        {React.Children.map(children, (child, i) => {
-          if (!React.isValidElement(child)) {
-            return child;
-          }
-
-          return React.cloneElement(child, {
-            dark: !inline && i % 2 === 0
-          });
-        })}
-      </tbody>
-    </table>
+        </tbody>
+      </table>}
+    </div>
   )
 }
 

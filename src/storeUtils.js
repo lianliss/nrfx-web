@@ -20,33 +20,51 @@ export function getWithState(caseName, caseClass) {
 
   switch (caseName) {
     case CLASSES.COMPONENT_CABINET_WRAPPER:
-      mapState2Props = (state) => ({ ...state.default });
+      mapState2Props = state => ({
+        ...state.default,
+        router: state.router
+      });
       mapDispatch2Props = {
         setAdaptive: actions.setAdaptive
       };
       break;
     case CLASSES.CABINET_MENU_SCREEN:
-      mapState2Props = (state) => ({
+      mapState2Props = state => ({
         adaptive: state.default.adaptive,
         langList: state.default.langList
       });
+      mapDispatch2Props = {
+        setTitle: actions.setTitle
+      };
+      break;
+    case CLASSES.CABINET_NOTIFICATIONS_SCREEN:
+      mapState2Props = state => ({
+        notifications: state.notifications,
+      });
+      mapDispatch2Props = {
+        setTitle: actions.setTitle,
+        loadNotifications: notificationsActions.loadNotifications
+      };
       break;
     case CLASSES.COMPONENT_CABINET_HEADER:
-      mapState2Props = (state) => ({
+      mapState2Props = state => ({
         profile: state.default.profile,
         notifications: state.notifications,
-        router: state.router
+        router: state.router,
+        title: state.default.title
       });
       mapDispatch2Props = {
         loadNotifications: notificationsActions.loadNotifications
       };
       break;
     case CLASSES.COMPONENT_PROFILE_SIDEBAR:
-      mapState2Props = (state) => ({ ...state.default.profile });
+      mapState2Props = state => ({
+        profile: state.default.profile
+      });
       mapDispatch2Props = {};
       break;
     case CLASSES.COMPONENT_MODALGROUP:
-      mapState2Props = (state) => ({
+      mapState2Props = state => ({
         ...state.modalGroup,
         adaptive: state.default.adaptive,
       });
@@ -55,17 +73,25 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_PFOFILE_SCREEN:
-      mapState2Props = (state) => {
-        return { ...state.wallets, ...state.profile }
+      mapState2Props = state => {
+        return {
+          ...state.wallets,
+          ...state.profile,
+          adaptive: state.default.adaptive
+        }
       };
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadWallets: walletsActions.loadWallets,
         loadDashboard: profileActions.loadDashboard
       };
       break;
     case CLASSES.WITHDRAWAL_COINS_MODAL:
-      mapState2Props = (state) => {
-        return { ...state.wallets, ...state.investments}
+      mapState2Props = state => {
+        return {
+          ...state.wallets,
+          ...state.investments
+        }
       };
       mapDispatch2Props = {
         toastPush: toastsActions.toastPush,
@@ -74,25 +100,35 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_START_PFOFILE_SCREEN:
-      mapState2Props = (state) => ({ ...state.wallets });
+      mapState2Props = state => ({
+        ...state.wallets
+      });
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadWallets: walletsActions.loadWallets
       };
       break;
     case CLASSES.CABINET_WALLET_SCREEN:
-      mapState2Props = (state) => ({ ...state.wallets });
+      mapState2Props = state => ({
+        ...state.wallets,
+        adaptive: state.default.adaptive
+      });
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadWallets: walletsActions.loadWallets,
         loadMoreTransactions: walletsActions.loadMoreTransactions,
         loadMoreTransfers: walletsActions.loadMoreTransfers,
       };
       break;
     case CLASSES.CABINET_INVESTMENTS_SCREEN:
-      mapState2Props = (state) => {
-        return {...state.investments}
+      mapState2Props = state => {
+        return {
+          ...state.investments,
+          adaptive: state.default.adaptive
+        }
       };
-
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadInvestments: investmentsActions.loadInvestments,
         loadProfitHistory: investmentsActions.loadProfitHistory,
         loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory,
@@ -101,18 +137,20 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_SETTINGS_SCREEN:
-      mapState2Props = (state) => ({
+      mapState2Props = state => ({
         ...state.settings,
-        adaptive: state.default.adaptive,
+        profile: state.default.profile,
+        adaptive: state.default.adaptive
       });
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         loadSettings: settingsActions.loadSettings,
         setUserFieldValue: settingsActions.setUserFieldValue,
         toastPush: toastsActions.toastPush
       };
       break;
     case CLASSES.SEND_COINS_MODAL:
-      mapState2Props = (state) => ({
+      mapState2Props = state => ({
         thisState: state.modalGroup.states.send,
         wallets: state.wallets.wallets
       });
@@ -127,7 +165,9 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
-      mapState2Props = (state) => ({ router: state.router });
+      mapState2Props = state => ({
+        router: state.router
+      });
       mapDispatch2Props = {
         modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal,
         toastPush: toastsActions.toastPush
@@ -150,7 +190,7 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.COMPONENT_TOASTS:
-      mapState2Props = (state) => ({
+      mapState2Props = state => ({
         toasts: state.toasts,
       });
       mapDispatch2Props = {
@@ -158,17 +198,19 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.COMPONENT_FOOTER:
-      mapState2Props = (state) => ({
+      mapState2Props = state => ({
         langList: state.default.langList,
       });
       break;
     case CLASSES.CABINET_REGISTER:
       mapDispatch2Props = {
-        toastPush: toastsActions.toastPush
+        toastPush: toastsActions.toastPush,
+        setTitle: actions.setTitle
       };
       break;
     case CLASSES.CABINET_RESET_PASSWORD:
       mapDispatch2Props = {
+        setTitle: actions.setTitle,
         toastPush: toastsActions.toastPush
       };
       break;
@@ -179,7 +221,7 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     default:
-      mapState2Props = (state) => ({ ...state });
+      mapState2Props = state => ({...state});
       mapDispatch2Props = {};
       break;
   }

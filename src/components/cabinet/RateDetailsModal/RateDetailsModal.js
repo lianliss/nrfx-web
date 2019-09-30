@@ -10,7 +10,7 @@ export default class RateDetailsModal extends React.Component {
   render() {
     const { plans, currency } = this.props.params;
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}}>
+      <UI.Modal isOpen={true} className="RateDetailsModal__wrapper" onClose={() => {this.props.close()}}>
         <div className="RateDetailsModal__icon" style={{ backgroundImage: `url(${ actions.getCurrencyInfo(currency).icon})`}} />
         <UI.ModalHeader>{utils.getLang('cabinet_rateDetailsModal_title')}</UI.ModalHeader>
         <div className="RateDetailsModal">

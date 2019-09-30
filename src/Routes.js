@@ -15,6 +15,8 @@ import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactSc
 import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
 import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
 import UIKitScreen from './containers/UIKit/UIKitScreen';
+import SiteWrapper from './wrappers/Site/SiteWrapper';
+import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
 
 import * as pages from './constants/pages';
 import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
@@ -23,11 +25,9 @@ import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmen
 import * as CabinetSettingsScreen from './containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen';
 import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
 import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
-import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen";
-
-import SiteWrapper from './wrappers/Site/SiteWrapper';
-import CabinetWrapper from './wrappers/Cabinet/CabinetWrapper';
-import CabinetResetPasswordScreen from './containers/cabinet/CabinetResetPasswordScreen/CabinetResetPasswordScreen';
+import * as CabinetResetPassword from './containers/site/SiteResetPasswordScreen/SiteResetPasswordScreen';
+import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen/MenuScreen';
+import * as NotificationsScreen from './containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen';
 import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
 
 export default function Routes(props) {
@@ -115,10 +115,13 @@ export default function Routes(props) {
       Component = CabinetRegister.default;
       break;
     case pages.RESET_PASSWORD:
-      Component = CabinetResetPasswordScreen.default;
+      Component = CabinetResetPassword.default;
       break;
     case pages.MENU:
       Component = MenuScreen.default;
+      break;
+    case pages.NOTIFICATIONS:
+      Component = NotificationsScreen.default;
       break;
     case pages.EXCHANGE:
       Component = CabinetExchangeScreen;

@@ -9,10 +9,7 @@ export function isLogged() {
 }
 
 export function setup(token) {
-  console.log('getToken() :', getToken());
-  if (isLogged()) {
-    const accessToken = token ? token : getToken();
-  }
+  if (isLogged()) {}
 }
 
 export function login(accessToken) {

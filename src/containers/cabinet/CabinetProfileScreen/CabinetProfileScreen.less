@@ -6,10 +6,13 @@
 }
 
 .CabinetProfileScreen__dashboard {
-  display: grid;
-  flex-wrap: wrap;
-  grid-template-columns: 33.3% 33.3% 33.3%;
   width: calc(100% + 28px);
+  .CabinetProfileScreen__dashboard__wrapper {
+    width: 100%;
+    flex-wrap: wrap;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    display: grid;
+  }
   .DashboardItem {
     position: relative;
     margin-right: 28px;
@@ -49,6 +52,7 @@
            width: 24px !important;
            height: 24px;
            margin: auto 0;
+           color: var(--primary-grey);
          }
          .DashboardItem__headerText {
            font-size: 16px;
@@ -225,16 +229,74 @@
 .adaptive {
   .CabinetProfileScreen__wallets {
     grid: none;
+    width: 100% !important;
     .WalletBox {
       margin-right: 0;
       .WalletBox__icon {
-        position: relative;
+        position: absolute;
+        transform: none;
+        left: 10px;
       }
       .WalletBox__content {
-
+        padding-left: 72px;
+        padding-right: 24px;
+        box-sizing: border-box;
       }
       .Content_box {
+        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0);
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+      }
+    }
+    .CabinetProfileScreen__walletsContentBox {
+      background-color: white;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+    }
+  }
 
+  .WalletBalance {
+    padding-block-end: 0;
+  }
+
+  .WalletBalance__selected_wallet {
+    padding-inline-start: 24px !important;
+  }
+
+  .WalletBalance .WalletBalance__convert {
+    position: relative;
+    right: 0;
+    top: 0;
+    padding: 0;
+    span {
+      color: black;
+    }
+  }
+
+  .CabinetProfileScreen__dashboard {
+    width: 100%;
+    height: 312px;
+    overflow: hidden;
+    overflow-x: scroll;
+    box-sizing: border-box;
+    .CabinetProfileScreen__dashboard__wrapper {
+      width: 100%;
+      flex-wrap: wrap;
+      flex-direction: column;
+      display: grid;
+      grid-template-columns: 208px 208px 208px 16px;
+      padding: 16px;
+      margin-right: 16px;
+      .DashboardItem {
+        width: calc(100% - 16px);
+      }
+      .fakeItem {
+        width: 1px;
+        height: 312px;
       }
     }
   }

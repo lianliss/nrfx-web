@@ -73,6 +73,22 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="negative_outline" currency="ltc">Button</UI.Button>
           </Line>
         </Section>
+        <Section title="FloatingButton">
+          <Line style={{paddingLeft: 150, paddingTop: 200}}>
+            <UI.FloatingButton icon={require('../../asset/24px/loop.svg')}>
+              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Send" />
+              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Transfers" />
+              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Create New Wallet" />
+            </UI.FloatingButton>
+          </Line>
+          <Line style={{paddingLeft: 150, paddingTop: 200}}>
+            <UI.FloatingButton wrapper icon={require('../../asset/24px/loop.svg')}>
+              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Send" />
+              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Transfers" />
+              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Create New Wallet" />
+            </UI.FloatingButton>
+          </Line>
+        </Section>
         <Section title="Inputs">
           <Line style={{width: 300}}>
             <UI.Input placeholder="Placeholder" />

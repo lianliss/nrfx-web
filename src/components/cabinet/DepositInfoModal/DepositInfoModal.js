@@ -7,7 +7,6 @@ import moment from 'moment/min/moment-with-locales';
 import InfoRow, { InfoRowGroup } from '../../../components/cabinet/InfoRow/InfoRow';
 import * as utils from '../../../utils';
 import * as actions from '../../../actions';
-import * as modalGroupActions from "../../../actions/modalGroup";
 
 export default class DepositInfoModal extends React.Component {
   render() {
@@ -15,29 +14,33 @@ export default class DepositInfoModal extends React.Component {
       return null;
     }
 
+    const adaptive = document.body.classList.contains('adaptive');
     const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
-    console.log(1, deposit);
     return (
-      <UI.Modal noSpacing isOpen={true} onClose={() => {this.props.close()}}>
+      <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={() => {this.props.close()}}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.percent}% {deposit.description}
-          <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
+          <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+          {adaptive && <div className="DepositInfoModal__amount">
+            <div className="DepositInfoModal__amount__label">{utils.getLang("site__headerInvestment")}</div>
+            <div className="DepositInfoModal__amount__number">{deposit.amount} {currency}</div>
+          </div> }
           <div className="DepositInfoModal__columns">
             <InfoRowGroup className="DepositInfoModal__column">
               <InfoRow label="ID">{deposit.localId}</InfoRow>
-              <InfoRow label="Type">{utils.ucfirst(deposit.type)}</InfoRow>
-              <InfoRow label="Status">{utils.ucfirst(deposit.status)}</InfoRow>
-              <InfoRow label="Created">{moment(deposit.created_at).format('DD MMM YYYY hh:mm')}</InfoRow>
+              <InfoRow label={utils.getLang("global_type")}>{utils.ucfirst(deposit.type)}</InfoRow>
+              <InfoRow label={utils.getLang("global_status")}>{utils.ucfirst(deposit.status)}</InfoRow>
+              <InfoRow label={utils.getLang("created")}>{moment(deposit.created_at).format('DD MMM YYYY hh:mm')}</InfoRow>
             </InfoRowGroup>
             <InfoRowGroup className="DepositInfoModal__column">
-              <InfoRow label="Period">{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_openNewDeposit_days')}</InfoRow>
-              <InfoRow label="Amount">{deposit.amount} {currency}</InfoRow>
-              <InfoRow label="Profit">{utils.formatDouble(deposit.profit, 8)} {currency} ({utils.formatDouble(deposit.current_percent, 2)}%)</InfoRow>
-              <InfoRow label="In Fiat">{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
+              <InfoRow label={utils.getLang("period")}>{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_openNewDeposit_days')}</InfoRow>
+              <InfoRow label={utils.getLang("global_amount")}>{deposit.amount} {currency}</InfoRow>
+              <InfoRow label={utils.getLang("cabinet_investmentsScreen_profit")}>{utils.formatDouble(deposit.profit, 8)} {currency} ({utils.formatDouble(deposit.current_percent, 2)}%)</InfoRow>
+              <InfoRow label={utils.getLang("in_fiat")}>{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
             </InfoRowGroup>
           </div>
           {/*<div className="DepositInfoModal__withdrawal_form" style={{display:'flex'}}>*/}

@@ -5,11 +5,10 @@ import SVG from 'react-inlinesvg';
 import * as utils from '../../../utils';
 
 import UI from '../../../ui';
-import {ModalHeader} from '../../../ui/components/Modal/Modal';
 
 const getLanguageFlag = (langCode) => {
   return <SVG src={require(`../../../asset/site/lang-flags/${langCode}.svg`)} />
-}
+};
 
 
 function LanguageModal({ langList, className, onLanguageClick, isOpen, onClose }) {

@@ -4,20 +4,18 @@ import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as modalGroupActions from "../../../../actions/modalGroup";
-import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) {
+export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount, adaptive }) {
   if (!withdrawals.items || !withdrawals.items.length) {
     return (
       <EmptyContentBlock
         icon={require('../../../../asset/120/no_deposits.svg')}
-        message="No Withdrawal History"
+        message={utils.getLang("cabinet_noWithdrawalHistory")}
       />
     )
   }
 
-  const headings = [
+  let headings = [
     <UI.TableColumn>ID</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang("global_status")}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang("global_amount")}</UI.TableColumn>,
@@ -25,7 +23,34 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) 
     <UI.TableColumn>{utils.getLang("global_date")}</UI.TableColumn>
   ];
 
+  if (adaptive) {
+    headings = [
+      <UI.TableColumn sub={utils.getLang("cabinet_wallet")}>
+        {utils.getLang("global_status")}
+      </UI.TableColumn>,
+      <UI.TableColumn sub={utils.getLang("global_date") + ' / ID'}>
+        {utils.getLang("global_amount")}
+      </UI.TableColumn>,
+    ];
+  }
+
   const rows = withdrawals.items.map((item, i) => {
+    if (adaptive) {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn style={{width: "50%"}} sub={item.currency.toUpperCase()}>
+            <span className={"Investment__withdrawal_table__status " + item.status}>
+              {utils.getLang(`status_${item.status}`) || item.status}
+            </span>
+          </UI.TableColumn>
+          <UI.TableColumn
+            sub={moment(item.created_at).format('DD MMM YYYY HH:mm') + ' / ' + utils.formatTableId(withdrawalsTotalCount - i)}
+          >
+            {utils.formatDouble(item.amount)} {item.currency.toUpperCase()}
+          </UI.TableColumn>
+        </UI.TableCell>
+      )
+    }
     return (
       <UI.TableCell key={i}>
         <UI.TableColumn>{utils.formatTableId(withdrawalsTotalCount - i)}</UI.TableColumn>
@@ -40,7 +65,7 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount }) 
   });
 
   return (
-    <UI.Table headings={headings} className="Investment__withdrawal_table">
+    <UI.Table headings={headings} className="Investment__withdrawal_table" header={utils.getLang('cabinet_investmentsWithdrawalHistory')}>
       {rows}
     </UI.Table>
   )
