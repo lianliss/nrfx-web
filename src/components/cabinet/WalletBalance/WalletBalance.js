@@ -105,7 +105,7 @@ function WalletBalance({ wallets, adaptive }) {
     <div className="WalletBalance Content_box">
       {walletsBalance
         ? (
-          <div>
+          <>
             {adaptive && balanceHeader}
             {adaptive && <div>
               <div className="WalletBalance__pie__balance" onClick={() => setIsInFiat(!isInFiat)}>
@@ -162,7 +162,7 @@ function WalletBalance({ wallets, adaptive }) {
                 </div>}
               </div>
             </div>
-          </div>
+          </>
         ) : (
           <div className="Empty_box">
             <SVG src={require('../../../asset/cabinet/wallet_colorful.svg')} />

@@ -6,11 +6,8 @@ import * as utils from '../../utils/index';
 export default function FloatingButton(props) {
   const [opened, open] = useState(false);
   return (
-    <div onClick={e => {
-      if (e.currentTarget === e.target) {
-        open(false);
-      }
-    }} className={utils.classNames({"FloatingButton__wrapper": props.wrapper, opened })}>
+    <div>
+      <div className={utils.classNames({"FloatingButton__back": props.wrapper, opened })} onClick={() =>  open(false)} />
       <div className={utils.classNames("FloatingButton", { opened })}>
         <div className="FloatingButton__menu" onClick={() => open(false)}>{ opened && props.children}</div>
         <div className="FloatingButton__button" onClick={() => {

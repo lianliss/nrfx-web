@@ -35,7 +35,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
       <UI.TableColumn sub={utils.getLang("rate") + ' / ' + utils.getLang("global_type")}>
         {utils.getLang("global_invested")}
       </UI.TableColumn>,
-      <UI.TableColumn sub={utils.getLang("global_date") + ' / ' + 'ID'}>
+      <UI.TableColumn align="right" sub={utils.getLang("global_date") + ' / ' + 'ID'}>
         {utils.getLang("cabinet_investmentsScreen_profit")}
       </UI.TableColumn>,
     ];
@@ -50,7 +50,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
           >
             {item.deposit.amount} {item.deposit.currency.toUpperCase()}
           </UI.TableColumn>
-          <UI.TableColumn sub={moment(item.profit.date).format('DD MMM YYYY HH:mm') + ' / ' + utils.formatTableId(total - i)}>
+          <UI.TableColumn align="right" sub={moment(item.profit.date).format('DD MMM YYYY HH:mm') + ' / ' + utils.formatTableId(total - i)}>
             {utils.formatDouble(item.profit.amount)} {item.deposit.currency.toUpperCase()}
           </UI.TableColumn>
         </UI.TableCell>
