@@ -85,7 +85,8 @@ export function getWithState(caseName, caseClass) {
       mapDispatch2Props = {
         setTitle: actions.setTitle,
         loadWallets: walletsActions.loadWallets,
-        loadDashboard: profileActions.loadDashboard
+        loadDashboard: profileActions.loadDashboard,
+        getPartner: profileActions.getPartner
       };
       break;
     case CLASSES.WITHDRAWAL_COINS_MODAL:

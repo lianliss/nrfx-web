@@ -42,3 +42,16 @@ export function gaInit(code) {
     });
   };
 }
+
+export function getPartner() {
+  return (dispatch, getState) => {
+    dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partners', status: 'loading' });
+    api.call(apiSchema.Partner.DefaultGet).then(partner => {
+      dispatch({ type: actionTypes.PROFILE_PARTNER_SET, partner });
+      dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partners', status: '' });
+    }).catch(() => {
+      toastsActions.toastPush("Error load partner", "error")(dispatch, getState);
+      dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partners', status: 'failed' });
+    });
+  };
+}

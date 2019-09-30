@@ -12,7 +12,6 @@ import Toasts from './components/cabinet/Toasts/Toasts';
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
 import UI from './ui';
 import * as actions from './actions';
-import * as testActions from './actions/test';
 import * as internalNotifications from './actions/cabinet/internalNotifications';
 import * as storage from './services/storage';
 

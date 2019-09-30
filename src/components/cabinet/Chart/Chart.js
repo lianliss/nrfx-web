@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './Chart.less';
 
 import React, { useState } from 'react';

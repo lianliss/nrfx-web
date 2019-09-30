@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import SVG from 'react-inlinesvg';
-
 
 function Dropdown({title, subItems, onChange, onNavigate, lastItemText, onLastItemClick, className }) {
   const [isOpen, toggle] = useState(false);

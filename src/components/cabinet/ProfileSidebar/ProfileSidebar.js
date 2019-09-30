@@ -8,7 +8,6 @@ import { BaseLink } from 'react-router5';
 import { classNames, makeModalParams } from '../../../utils';
 import router from '../../../router';
 import * as storeUtils from "../../../storeUtils";
-import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
 import Footer from "../Footer/Footer";
 import ProfileUser from '../ProfileUser/ProfileUser';
