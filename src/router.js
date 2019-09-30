@@ -2,7 +2,8 @@
 // external
 import createRouter from 'router5';
 import browserPlugin from 'router5-plugin-browser';
-//import listenersPlugin from 'router5-plugin-listeners';
+import listenersPlugin from 'router5-plugin-listeners';
+import * as modalGroup from './actions/modalGroup';
 // internal
 import * as pages from './constants/pages';
 
@@ -128,6 +129,13 @@ router.usePlugin(browserPlugin({
   preserveHash: false,
   forceDeactivate: true,
 }));
-//router.usePlugin(listenersPlugin());
+router.usePlugin(listenersPlugin());
+
+router.addListener((state)  => {
+  console.log(66, state);
+  if(state.params && state.params.modal_group) {
+    modalGroup.modalGroupSetActiveModal(state.params.modal_group);
+  }
+});
 
 export default router;

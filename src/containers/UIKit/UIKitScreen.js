@@ -173,6 +173,16 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Message type="success" alert>Success</UI.Message>
           </Line>
         </Section>
+        <Section title="InternalNotifications" style={{width: 500}}>
+          <Line>
+            <UI.HeaderBanner
+              onClose={console.log}
+              onAccept={console.log}
+              acceptText={"Привязать"}
+              message="Для безопасного использования личного кабинета обязательно привяжите Google Authenticator"
+            />
+          </Line>
+        </Section>
         <Section>
           <Line>
             <UI.Notifications emptyText="No any updates" visible={true}></UI.Notifications>

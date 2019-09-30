@@ -11,6 +11,7 @@ import * as investmentsActions from './actions/cabinet/investments';
 import * as settingsActions from './actions/cabinet/settings';
 import * as profileActions from './actions/cabinet/profile';
 import * as notificationsActions from './actions/cabinet/notifications';
+import * as internalNotifications from './actions/cabinet/internalNotifications';
 import * as toastsActions from './actions/cabinet/toasts';
 
 export function getWithState(caseName, caseClass) {
@@ -47,12 +48,14 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.COMPONENT_CABINET_HEADER:
       mapState2Props = state => ({
+        internalNotifications: state.internalNotifications,
         profile: state.default.profile,
         notifications: state.notifications,
         router: state.router,
         title: state.default.title
       });
       mapDispatch2Props = {
+        dropInternalNotifications: internalNotifications.drop,
         loadNotifications: notificationsActions.loadNotifications
       };
       break;
@@ -160,6 +163,20 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.SEND_COINS_CONFIRM_MODAL:
       mapDispatch2Props = {
+        toastPush: toastsActions.toastPush
+      };
+      break;
+    case CLASSES.CHANGE_SECRET_KEY_MODAL:
+      mapDispatch2Props = {
+        changeSecretKay: profileActions.changeSecretKay,
+      };
+      break;
+    case CLASSES.GOOGLE_CODE_MODAL:
+      mapState2Props = state => ({
+        router: state.router
+      });
+      mapDispatch2Props = {
+        gaInit: profileActions.gaInit,
         toastPush: toastsActions.toastPush
       };
       break;

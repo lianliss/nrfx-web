@@ -11,7 +11,7 @@ import * as CLASSES from '../../../../constants/classes';
 class Notifications extends CabinetBaseScreen {
   componentDidMount() {
     this.props.setTitle(utils.getLang("global_notifications"));
-    this.props.loadNotifications();
+    this.props.loadNotifications(); // TODO
   }
 
   render() {

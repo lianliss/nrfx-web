@@ -15,6 +15,7 @@ import walletsReducer from './reducers/wallets';
 import modalGroupReducer from './reducers/modalGroup';
 import notificationsReducer from './reducers/notifications';
 import toastsReducer from './reducers/toasts';
+import internalNotificationsReducer from './reducers/InternalNotifications';
 import testReducer from './reducers/test';
 
 const middlewares = [];
@@ -23,6 +24,7 @@ const middlewares = [];
 // middlewares.push(logger);
 
 let store;
+
 export function configureStore() {
   store = createStore(combineReducers({
     router: router5Reducer,
@@ -35,6 +37,7 @@ export function configureStore() {
     profile: profileReducer,
     notifications: notificationsReducer,
     toasts: toastsReducer,
+    internalNotifications: internalNotificationsReducer,
     test: testReducer
   }), applyMiddleware( ...middlewares, thunk, router5Middleware(router)));
   router.usePlugin(reduxPlugin(store.dispatch));

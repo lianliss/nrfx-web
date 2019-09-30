@@ -55,6 +55,10 @@ export function logout() {
   store.dispatch({type: actionTypes.LOGOUT});
 }
 
+export function setSecretKey() {
+  return false;
+}
+
 export function getGoogleCode(login, password, code) {
   const appId = 8;
   const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';

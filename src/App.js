@@ -13,6 +13,7 @@ import CookieUsage from './components/site/CookieUsage/CookieUsage';
 import UI from './ui';
 import * as actions from './actions';
 import * as testActions from './actions/test';
+import * as internalNotifications from './actions/cabinet/internalNotifications';
 import * as storage from './services/storage';
 
 class App extends React.Component {
@@ -85,21 +86,16 @@ class App extends React.Component {
       actions.loadLang(lang),
       actions.loadCurrencies()
     ])
-      .then(() => this.setState({isLoading: false}))
+      .then(() => {
+        this.setState({isLoading: false});
+      })
       .catch(() => setTimeout(this._loadAssets, 3000));
   };
 }
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    testActions: {
-      update: () => dispatch(
-        testActions.update(...arguments)
-      )
-    }
-  };
-}
 
 export default connect(state => {
   return {state};
-}, mapDispatchToProps)(App);
+}, {
+  loadInternalNotifications: internalNotifications.load
+})(App);

@@ -21,11 +21,15 @@ export const SET_TITLE = 'SET_TITLE';
 // NotificationsScreen
 export const NOTIFICATIONS_SET = 'NOTIFICATIONS_SET';
 
+// InternalNotifications
+export const INTERNAL_NOTIFICATION_LOAD = 'INTERNAL_NOTIFICATION_LOAD';
+export const INTERNAL_NOTIFICATION_PUSH = 'INTERNAL_NOTIFICATION_PUSH';
+export const INTERNAL_NOTIFICATION_DROP = 'INTERNAL_NOTIFICATION_DROP';
+
 // Toasts
 export const TOASTS_PUSH = 'TOASTS_PUSH';
 export const TOASTS_DROP = 'TOASTS_DROP';
 export const TOASTS_HIDE = 'TOASTS_HIDE';
-
 
 // test
 export const TEST = 'TEST';
