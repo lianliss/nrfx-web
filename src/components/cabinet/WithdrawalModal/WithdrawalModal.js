@@ -135,9 +135,10 @@ class WithdrawalModal extends React.Component {
   };
 
   __amountDidChange = (amount) => {
-    if (amount && !`${amount}`.match(/^\d{0,8}(\.\d{0,8}){0,1}$/)) {
-      return false;
+    if (isNaN(amount)) {
+      return;
     }
+
     this.setState({amount})
   };
 
