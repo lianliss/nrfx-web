@@ -53,6 +53,7 @@ export function getAuth(login, password) {
 export function logout() {
   auth.logout();
   store.dispatch({type: actionTypes.LOGOUT});
+  window.location.href = '/';
 }
 
 export function setSecretKey() {

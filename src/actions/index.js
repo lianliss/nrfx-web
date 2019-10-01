@@ -22,10 +22,9 @@ export function loadLang(code) {
   });
 }
 
-export function getStaticPageContent(address) {
+export function getStaticPageContent(address,) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Page.DefaultGet, {address}).then((data) => {
-      console.log(data);
+    api.call(apiSchema.Page.DefaultGet, {address}).then(data => {
       store.dispatch({ type: actionTypes.STATIC, payload: { address, data } })
       resolve(data);
     }).catch((err) => {

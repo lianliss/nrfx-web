@@ -64,12 +64,11 @@ class CabinetProfileScreen extends CabinetBaseScreen {
               label="Profile"
               onClick={e => router.navigate(PAGES.PROFILE)}
             />,
-            //
-            //<ProfileSidebarItem
-            //  icon={<UsersSvg />}
-            //  label="Partners"
-            //  onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
-            ///>
+            <ProfileSidebarItem
+              icon={<UsersSvg />}
+              label="Partners"
+              onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
+            />
             // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
           ]}
         >
@@ -85,7 +84,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     );
   }
 
-  __renderRightContent = e => {
+  __renderRightContent = show => {
     switch (this.props.routerParams.section) {
       case 'partners': {
         return <div>
@@ -97,7 +96,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         </div>
       }
       default: {
-        if (!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.props.dashboard.hasOwnProperty('chart')) {
+        if (!(this.props.adaptive && !show) && !this.props.routerParams.section && !this.isLoading && this.props.dashboard.hasOwnProperty('chart')) {
           return <div>
             <div>
               <WalletBalance
@@ -155,7 +154,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     if (this.props.adaptive && !this.props.routerParams.section && !this.isLoading) {
       return (
         <div>
-          {this.__renderRightContent()}
+          {this.__renderRightContent(true)}
           {this.__renderWallets()}
           {this.__renderDashboard()}
         </div>

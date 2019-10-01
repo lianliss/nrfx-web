@@ -115,7 +115,7 @@ class Header extends React.Component {
                   {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
                     [
                       ( i > 0 &&  n.unread !== notifications[i - 1].unread &&
-                        <UI.NotificationSeparator title={utils.getLang('cabinet_header_viewed')} />
+                        <UI.NotificationSeparator key={Math.random()} title={utils.getLang('cabinet_header_viewed')} />
                       ),
                       <UI.Notification
                         key={i}
