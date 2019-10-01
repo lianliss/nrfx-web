@@ -1,26 +1,25 @@
+import './ConfirmModal.less'
+
 import React from 'react';
 import UI from '../../../ui';
+import * as utils from '../../../utils';
 
 class ConfirmModal extends React.Component {
-  state = {
-    testField: 'Информация из модалки'
-  };
-
   render() {
-    const {props} = this;
+    const { props } = this;
 
-    return <UI.Modal isOpen={true} onClose={() => {props.close()}} width={424}>
-      <UI.ModalHeader>TITLE</UI.ModalHeader>
+    return <UI.Modal isOpen={true} onClose={() => {props.close()}}>
+      <UI.ModalHeader>{props.params.text}</UI.ModalHeader>
       <div className="ConfirmModal">
-        <UI.Button onClick={
-          e => props.params.onAccept(this.state, this)
+        <UI.Button type={props.params.type === "delete" ? "negative" : undefined} onClick={
+          e => props.params.onAccept(this)
         }>
-          OK
+          { props.params.type === "delete" ? utils.getLang("global_delete") : utils.getLang("global_confirm")}
         </UI.Button>
-        <UI.Button onClick={
-          e => props.params.onCancel(this.state, this)
+        <UI.Button type="secondary" onClick={
+          e => props.params.onCancel(this)
         }>
-          Cancel
+          {utils.getLang("global_cancel")}
         </UI.Button>
       </div>
     </UI.Modal>

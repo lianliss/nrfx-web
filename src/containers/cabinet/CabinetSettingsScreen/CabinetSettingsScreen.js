@@ -55,56 +55,41 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   };
 
   __handleChangePassword () {
-    // const { user } = this.props;
-    // if (user.new_password && user.new_password.length < 6) {
-    //   this.props.toastPush(utils.getLang('global_passwordMustBe'), "error");
-    //   return false;
-    // }
-    //
-    // if (
-    //   user.new_password &&
-    //   user.re_password &&
-    //   user.new_password !== user.re_password
-    // ) {
-    //   this.props.toastPush(utils.getLang('global_passwordsMustBeSame'), "error");
-    //   return false;
-    // }
+    const { user } = this.props;
+    if (user.new_password && user.new_password.length < 6) {
+      this.props.toastPush(utils.getLang('global_passwordMustBe'), "error");
+      return false;
+    }
 
+    if (
+      user.new_password &&
+      user.re_password &&
+      user.new_password !== user.re_password
+    ) {
+      this.props.toastPush(utils.getLang('global_passwordsMustBeSame'), "error");
+      return false;
+    }
     modalGroupActions.openModalPage(null, {}, {
-      children: ConfirmModal,
+      children: GAConfirmModal,
       params: {
-        onAccept: (data, modal) => {
-          alert('все ок. ' + data.testField);
-          modal.props.close();
-        },
-        onCancel: (data, modal) => {
-          alert('все не ок. ' + data.testField);
-          modal.props.close();
+        onChangeHandler: (data, modal) => {
+          settingsActions.changeNewPassword({
+            old_password: this.props.user.old_password,
+            password: this.props.user.new_password,
+            ga_code: data.gaCode
+          }).then(() => {
+            modal.props.close();
+            this.props.toastPush(utils.getLang("cabinet_passwordUpdateSuccess"), "success");
+            this.props.setUserFieldValue({field: 'old_password', value: ""});
+            this.props.setUserFieldValue({field: 'new_password', value: ""});
+            this.props.setUserFieldValue({field: 're_password', value: ""});
+          }).catch(err => {
+            this.props.toastPush(err.message, "error");
+          });
+          return this.__inputError(modal, 'errorGaCode');
         }
       }
     })
-
-    // modalGroupActions.openModalPage(null, {}, {
-    //   children: GAConfirmModal,
-    //   params: {
-    //     onChangeHandler: (data, modal) => {
-    //       settingsActions.changeNewPassword({
-    //         old_password: this.props.user.old_password,
-    //         password: this.props.user.new_password,
-    //         ga_code: data.gaCode
-    //       }).then(() => {
-    //         modal.props.close();
-    //         this.props.toastPush(utils.getLang("cabinet_passwordUpdateSuccess"), "success");
-    //         this.props.setUserFieldValue({field: 'old_password', value: ""});
-    //         this.props.setUserFieldValue({field: 'new_password', value: ""});
-    //         this.props.setUserFieldValue({field: 're_password', value: ""});
-    //       }).catch(err => {
-    //         this.props.toastPush(err.message, "error");
-    //       });
-    //       return this.__inputError(modal, 'errorGaCode');
-    //     }
-    //   }
-    // })
   }
 
   state = {
