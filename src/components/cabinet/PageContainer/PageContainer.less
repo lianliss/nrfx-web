@@ -1,0 +1,40 @@
+.PageContainer {
+  max-width: 1328px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.PageContainer__content {
+  display: flex;
+  flex: 1;
+  padding: 24px 0;
+  margin-left: 24px;
+}
+
+.PageContainer__content__primary {
+  flex: 1;
+}
+
+.PageContainer__content__secondary {
+  width: 472px;
+  flex: 0 0 auto;
+  margin-left: 24px;
+}
+
+.adaptive {
+  .PageContainer {
+    width: 100%;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    .PageContainer__content__primary, .PageContainer__content__secondary {
+      width: 100%;
+    }
+    .PageContainer__content {
+      width: 100%;
+      margin-left: 0;
+      flex: none;
+      display: block;
+      padding-bottom: 0;
+    }
+  }
+}

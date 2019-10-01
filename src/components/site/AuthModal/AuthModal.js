@@ -11,7 +11,7 @@ import Registration from './components/Registration';
 import ConfirmPhone from './components/ConfirmPhone';
 import SmsCode from './components/SmsCode';
 import GoogleAuth from './components/GoogleAuth';
-
+import initGetParams from '../../../services/initialGetParams';
 
 function AuthModal({ children, type, initialEmail, className, routerParams }) {
   const [isOpen, toggleOpen] = useState(false);
@@ -39,7 +39,7 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
         return <RestorePassword changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
       case steps.REGISTRATION:
       case steps.REGISTRATION_SUCCESS:
-        return <Registration refParam={routerParams ? routerParams.ref : ''} email={initialEmail ? initialEmail : email} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
+        return <Registration refParam={initGetParams.params.hasOwnProperty('ref') ? initGetParams.params.ref : ''} email={initialEmail ? initialEmail : email} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
       case steps.CONFIRM_NUMBER:
         return <ConfirmPhone params={params} changeStep={changeStepWithParams} />
       case steps.CONFIRM_CODE:
@@ -52,7 +52,7 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
   const handleOpen = () => {
     document.body.classList.add('modal-open');
     toggleOpen(true);
-  }
+  };
 
   const handleClose = () => {
     document.body.classList.remove('modal-open');
@@ -62,7 +62,7 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
     changeStep(type || steps.LOGIN);
     changeEmail('');
     changePassword('');
-  }
+  };
 
   const handleChange = (value, type) => {
     if (type === 'email') {
@@ -70,8 +70,8 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
     } else if (type === 'password') {
       changePassword(value);
     }
-  }
-  console.log('routerParams :', routerParams);
+  };
+
   return (
     <div className={"AuthModal " + className}>
       <span onClick={handleOpen}>

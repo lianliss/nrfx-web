@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
-import { sendContactForm } from '../../../actions/contact';
 import { isEmail } from '../../../utils';
 import UI from '../../../ui';
 
@@ -17,7 +16,7 @@ export default class SiteContactScreen extends BaseScreen {
     message: '',
     isEmailValid: true,
     rows: 3,
-  }
+  };
 
   handleTextareaChange = (e) => {
     const textareaLineHeight = 22;
@@ -46,13 +45,11 @@ export default class SiteContactScreen extends BaseScreen {
     this.setState({
       [key]: value,
     });
-  }
+  };
 
   handleSubmit = (recaptchaToken) => {
-    const { name, email, message } = this.state;
-
-    sendContactForm(recaptchaToken, message, email, name);
-  }
+    //const { name, email, message } = this.state;
+  };
 
   render() {
     const { name, email, message, isEmailValid, rows } = this.state;

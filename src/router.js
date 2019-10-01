@@ -1,12 +1,24 @@
+// styles
+// external
 import createRouter from 'router5';
 import browserPlugin from 'router5-plugin-browser';
 import listenersPlugin from 'router5-plugin-listeners';
+import * as modalGroup from './actions/modalGroup';
+// internal
 import * as pages from './constants/pages';
 
 export const routes = [
   {
     name: pages.MAIN,
     path: '/',
+  },
+  {
+    name: pages.MENU,
+    path: '/menu',
+  },
+  {
+    name: pages.NOTIFICATIONS,
+    path: '/notifications',
   },
   {
     name: pages.ABOUT,
@@ -51,7 +63,6 @@ export const routes = [
   {
     name: pages.CONTACT,
     path: '/contact',
-    params: {site: true}
   },
   {
     name: pages.FAQ,
@@ -69,15 +80,61 @@ export const routes = [
     name: pages.NOT_FOUND,
     path: '/not_found',
   },
+  // Cabinet routes (temorarily like this)
+  {
+    name: pages.CABINET_WALLET,
+    path: '/cabinet_wallet',
+  },
+  {
+    name: pages.SETTINGS,
+    path: '/settings',
+  },
+  {
+    name: pages.PROFILE,
+    path: '/profile',
+  },
+  {
+    name: pages.INVESTMENTS,
+    path: '/investments',
+  },
+  {
+    name: pages.CHANGE_EMAIL,
+    path: '/change_email',
+  },
+  {
+    name: pages.REGISTER,
+    path: '/register',
+  },
+  {
+    name: pages.RESET_PASSWORD,
+    path: '/reset_password',
+  },
 ];
 
 const params = {
   defaultRoute: pages.NOT_FOUND,
-  defaultParams: {}
+  defaultParams: {},
+  strictQueryParams: true,
+  trailingSlash: true,
+  useTrailingSlash: false,
+  queryParamsMode: 'loose',
 };
 
 let router = createRouter(routes, params);
-router.usePlugin(browserPlugin({ base: '', useHash: false }));
+router.usePlugin(browserPlugin({
+  base: '',
+  useHash: false,
+  hashPrefix: '',
+  mergeState: true,
+  preserveHash: false,
+  forceDeactivate: true,
+}));
 router.usePlugin(listenersPlugin());
+
+router.addListener((state)  => {
+  if (state.params && state.params.modal_group) {
+    modalGroup.modalGroupSetActiveModal(state.params.modal_group);
+  }
+});
 
 export default router;

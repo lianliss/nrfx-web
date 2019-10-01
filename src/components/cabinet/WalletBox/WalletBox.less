@@ -1,0 +1,95 @@
+.WalletBox {
+  position: relative;
+  margin-right: 28px;
+  flex: 1;
+
+  &:nth-child(n + 4) {
+    margin-top: 16px;
+  }
+
+  .WalletBox__close {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
+
+  .WalletBox__icon {
+    position: absolute;
+    width: 52px;
+    height: 72px;
+    top: 0;
+    left: 0;
+    transform: translateX(-50%);
+    background: no-repeat center/72px;
+    cursor: pointer;
+  }
+
+  .WalletBox__content {
+    padding-left: 40px;
+    min-height: 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0;
+    cursor: pointer;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    &.new {
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      padding-left: 0;
+      color: var(--primary);
+      text-align: center;
+      cursor: pointer;
+      transition: opacity 150ms ease-in-out;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      color: var(--primary-grey);
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: rgba(0, 0, 0, 0.87);
+      margin-top: 4px;
+    }
+  }
+
+  .WalletBox__loader {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 10px;
+    top: 10px;
+    color: #FF9E65;
+    animation: rotate 2s infinite linear;
+  }
+}
+
+.WalletBox__inactive {
+  opacity: 0.5;
+}
+
+.WalletBox__selected {
+  .WalletBox__content h3, .WalletBox__content p {
+    color: white !important;
+  }
+}
+
+@keyframes rotate {
+  0%    { transform: rotate(0deg); }
+  100%  { transform: rotate(360deg); }
+}

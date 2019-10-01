@@ -1,0 +1,52 @@
+.InternalNotification {
+  display: flex;
+  background: var(--uikit-accent);
+  color: var(--uikit-contrast-primary);
+  padding: 8px 16px;
+  align-items: center;
+  font-Size: 13px;
+  line-Height: 16px;
+
+  &__message {
+    margin: 0 auto;
+  }
+
+  &__close {
+    cursor: pointer;
+    margin: -6px;
+    display: block;
+    opacity: .5;
+
+    .icon {
+      line-height: 0;
+    }
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+
+  &__button {
+    cursor: pointer;
+    text-transform: uppercase;
+    border: 0;
+    background: none;
+    padding: 8px;
+    margin: -8px 8px;
+    margin-right: 16px;
+    font: inherit;
+    line-height: inherit;
+    color: inherit;
+    outline: none;
+  }
+}
+
+.adaptive {
+  .InternalNotification {
+    &__close {
+      align-self: flex-start;
+      margin-right: -12px;
+      margin-top: -5px;
+    }
+  }
+}

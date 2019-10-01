@@ -1,10 +1,10 @@
+// styles
 import './Message.less';
-
+// external
 import React  from 'react';
 import PropTypes from 'prop-types';
-
-import { classNames } from '../../utils';
-
+// internal
+import {classNames} from '../../utils';
 
 export default function Message(props) {
   const isAlert = props.alert;

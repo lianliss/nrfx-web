@@ -4,6 +4,10 @@ const initialState = {
   page: null,
   lang: {},
   auth: {},
+  profile: {},
+  adaptive: false,
+  title: "Bitcoinbot",
+  modals: []
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -19,11 +23,59 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {auth: action.auth});
     }
 
-    case actionTypes.STATIC: {
-      return Object.assign({}, state, { [action.payload.url]: { data: action.payload.data, lang: action.payload.lang } });
+    case actionTypes.PROFILE: {
+      return Object.assign({}, state, {profile: action.props});
     }
 
-    default:
-      return state;
+    case actionTypes.STATIC: {
+      return Object.assign({}, state, { [action.payload.address]: { data: action.payload.data } });
+    }
+
+    case actionTypes.PUSH_MODAL: {
+      let modals = Object.assign([], state.modals);
+      modals.push(action.modal);
+      return Object.assign({}, state, { modals });
+    }
+
+    case actionTypes.POP_MODAL: {
+      let modals = Object.assign([], state.modals);
+      modals.pop();
+      return Object.assign({}, state, { modals });
+    }
+
+    case actionTypes.LOGOUT: {
+      return { ...state, profile: {} };
+    }
+
+    case actionTypes.SET_ADAPTIVE: {
+      return {
+        ...state,
+        adaptive: action.adaptive
+      }
+    }
+
+    case actionTypes.SET_TITLE: {
+      return {
+        ...state,
+        title: action.title
+      }
+    }
+
+    case actionTypes.SET_USER_NAME: {
+      const { first_name, last_name } = action;
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          user: {
+            ...state.profile.user,
+            first_name,
+            last_name
+          }
+        }
+      }
+    }
+
+    default: return state;
   }
 }

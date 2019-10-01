@@ -1,23 +1,37 @@
+// styles
 import './index.less';
+// external
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router5';
+// internal
 import store from './store';
 import router from './router';
-import * as actionTypes from './actions/actionTypes';
+import initGetParamsData from './services/initialGetParams';
+import {GetParamsContext} from './contexts';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 import * as auth from './services/auth';
+import * as user from './actions/user';
+import * as emitter from './services/emitter';
+
 require('define').noConflict();
-
 auth.setup();
-router.addListener((to, from) => store.dispatch({ type: actionTypes.NAVIGATE, to, from })).start();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App store={store} router={router} />
-  </Provider>,
-  document.getElementById('root')
-);
+emitter.addListener('userInstall', user.install);
+emitter.emit('userInstall');
 
-serviceWorker.unregister();
+const wrappedApp = <Provider store={store}>
+  <RouterProvider router={router}>
+    <GetParamsContext.Provider value={initGetParamsData}>
+      <App store={store} router={router} />
+    </GetParamsContext.Provider>
+  </RouterProvider>
+</Provider>;
+
+router.start((err, state) => {
+  ReactDOM.render(wrappedApp, document.getElementById('root'))
+});
+
+serviceWorker.register();

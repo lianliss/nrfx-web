@@ -7,7 +7,6 @@ import * as steps from '../fixtures';
 
 
 function Login({ changeStep, email, password, handleChange, currentStep }) {
-  const [isPasswordVisible, updateVisibility] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = () => {
@@ -20,13 +19,12 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
         .then((res) => {
           setErrorMsg('');
           changeStep(steps.GOOGLE_AUTH, { loginRes: res });
-          console.log('res :', res);
         })
         .catch((err) => {
           setErrorMsg(err.message);
         });
     }
-  }
+  };
 
   return (
     <>
@@ -49,14 +47,9 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
             value={password}
             onChange={(e) => handleChange(e.target.value, 'password')}
             placeholder={utils.getLang('site__authModalPlaceholderPwd')}
-            type={isPasswordVisible ? 'text' : 'password'}
             onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
+            type="password"
           />
-
-          {!isPasswordVisible
-            ? <img src={require('../asset/opened_eye.svg')} alt="Eye" onClick={() => updateVisibility(true)} />
-            : <img src={require('../asset/closed_eye.svg')} alt="Eye" onClick={() => updateVisibility(false)} />
-          }
 
         </div>
         <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>{utils.getLang('site__authModalForgotPwd')}</h4>
@@ -64,7 +57,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
       </div>
 
       <div className="AuthModal__footer">
-        <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__authModalSignUpBtn')}</h4>
+        <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__commerceRegistration')}</h4>
         <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </>

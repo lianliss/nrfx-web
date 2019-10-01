@@ -1,7 +1,7 @@
 .AuthModal {
   .Input {
     box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.08);
-    margin: 40px 5px 0 5px;
+    margin-top: 40px;
     width: 320px;
     display: block;
     border: 1px solid #f1f1f1;
@@ -125,10 +125,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 144px;
 
       .Input, .Dropdown {
-        margin: 16px;
-        width: 144px;
+        width: 100%;
+        //margin: 16px;
         box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
 
         .Dropdown__header {
@@ -160,7 +161,7 @@
     line-height: 16px;
     text-align: center;
     letter-spacing: 0.444444px;
-    color: #BFBFBF;
+    color: var(--secondary-grey);
     margin-top: 16px;
     cursor: pointer;
 

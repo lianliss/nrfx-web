@@ -1,5 +1,9 @@
-import store from '../store';
+//styles
+// external
 import React, { useEffect, useRef } from 'react';
+// internal
+import store from '../store';
+import router from '../router';
 
 export function classNames() {
   let result = [];
@@ -31,9 +35,14 @@ export function getLang(key) {
   return store.getState().default.lang[key];
 }
 
+export function getLanguage() {
+  return store.getState();
+}
+
 export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
 
 export const isEmail = (email) => (/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) ? true : false;
+export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase())
 
 export function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -53,4 +62,110 @@ export function useInterval(callback, delay) {
       return () => clearInterval(id);
     }
   }, [delay]);
+}
+
+export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigits = 2) => {
+  if (num) {
+    return num.toLocaleString(undefined,
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }
+    )
+  }
+
+  return null;
+};
+
+export function throttle(func, ms) {
+  let isThrottled = false,
+    savedArgs,
+    savedThis;
+  function wrapper() {
+    if (isThrottled) {
+      savedArgs = arguments;
+      savedThis = this;
+      return;
+    }
+    func.apply(this, arguments);
+    isThrottled = true;
+    setTimeout(function() {
+      isThrottled = false;
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = savedThis = null;
+      }
+    }, ms);
+  }
+  return wrapper;
+}
+
+export function ucfirst(input) {
+  return input.charAt(0).toUpperCase() + input.slice(1);
+}
+
+export function formatDouble(input, fractionDigits = 8) {
+  return parseFloat(parseFloat(input).toFixed(fractionDigits));
+}
+
+export function formatTableId(index) {
+  const lenght = `${index}`.length;
+  const minLenght = 3;
+  const need = minLenght - lenght;
+
+  if (need <= 0) {
+    return index;
+  }
+
+  let arr = new Array(need).fill(0);
+  arr.push(index);
+  return arr.join('');
+}
+
+export function makeModalParams(modal, params) {
+  let result = Object.assign({}, router.getState().params);
+  return {
+    ...result,
+    modal,
+    ...params
+  };
+}
+
+export function clipTextMiddle(text, length = 10) {
+  if (text.length <= length + length / 2) {
+    return text;
+  }
+
+  let parts = [text.substr(0, length), '...', text.substr(-length / 2)];
+  return parts.join('');
+}
+
+export function switchMatch(key, node) {
+  const __DEFAULT__ = 'default';
+  switch (typeof node) {
+    case 'object': {
+      switch (typeof key) {
+        case 'boolean':
+          return node[key];
+        default:
+        case 'string': {
+          if (node.hasOwnProperty(key)) {
+            return node[key];
+          } else {
+            if (node.hasOwnProperty(__DEFAULT__)) {
+              switch (typeof node[__DEFAULT__]) {
+                case 'function': {
+                  return node[__DEFAULT__]();
+                }
+                default: return node[__DEFAULT__];
+              }
+            } else {
+              return key;
+            }
+          }
+        }
+      }
+    }
+    default: break;
+  }
 }

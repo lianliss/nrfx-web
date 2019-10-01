@@ -1,0 +1,118 @@
+.CabinetRegister {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+
+
+
+  &__PhoneInput {
+    margin-bottom: 40px;
+
+    &_searchClass {
+      padding: 0 !important;
+      &-box {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        border-width: 0 !important;
+        -webkit-border-radius: 0 !important;
+        -moz-border-radius: 0 !important;
+        border-radius: 0 !important;
+        padding: 10px !important;
+        border-bottom: 1px solid rgba(204, 204, 204, 0.33) !important;
+      }
+    }
+
+    &_dropdownClass {
+      margin: 10px 0 10px -5px !important;
+      width: 343px !important;
+      border-radius: 8px !important;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.05) !important;
+      max-height: 250px !important;
+    }
+
+    &_buttonClass {
+      background-color: rgba(0, 0, 0, 0) !important;
+      border: none !important;
+      padding-left: 6px !important;
+    }
+
+    &_inputClass {
+      height: 48px !important;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.05);
+      background: var(--uitkit-background) !important;
+      border-radius: 8px !important;
+      font-size: 15px !important;
+      line-height: 20px !important;
+      box-sizing: border-box !important;
+      border: 2px solid rgba(0, 0, 0, 0) !important;
+      outline: none !important;
+      padding: 14px 16px;
+      transition: all 150ms ease-in-out;
+      width: 100% !important;
+    }
+  }
+
+  &__content {
+    padding: 50px;
+    width: 424px;
+    box-sizing: border-box;
+
+    &__send_code_button {
+      margin-top: -15px;
+      display: flex;
+      align-items: center;
+    }
+
+    &__timer,
+    &__resend_code_button {
+      color: var(--primary-grey);
+      margin: 0 24px;
+    }
+
+    &__resend_code_button {
+      cursor: pointer;
+    }
+
+    &__title {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      margin: 80px 0 24px;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    .Input__wrapper {
+      margin-bottom: 40px;
+    }
+    &__submit_wrapper {
+      text-align: center;
+      margin-top: 80px;
+    }
+  }
+}
+
+.adaptive {
+  .CabinetRegister {
+    padding: 16px 0;
+
+    &__content {
+      width: 100%;
+      padding: 24px 16px;
+
+      &__submit_wrapper {
+        .Button {
+          width: 100%;
+        }
+      }
+    }
+    &__PhoneInput_dropdownClass {
+      width: calc(100vw - 32px) !important;
+    }
+  }
+}
