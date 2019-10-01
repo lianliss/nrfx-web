@@ -38,34 +38,22 @@ class Exchange {
     }
   }
 
-  __orderBookDidUpdated = (orders) => {
-    exchange.orderBookUpdateOrders(orders);
-  };
+  __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
 
-  __orderDidCancel = (orderId) => {
-    exchange.removeOrders([orderId]);
-  };
+  __orderDidCancel = (orderId) => exchange.removeOrders([orderId]);
 
-  __orderDidCancelled = (orderId) => {
-    exchange.setOrderStatus(orderId, 'cancelled');
-  };
+  __orderDidCancelled = (orderId) => exchange.setOrderStatus(orderId, 'cancelled');
 
-  __orderDidCancelFailed = () => {
-    toasts.error('Can\'t cancel order');
-  };
+  __orderDidCancelFailed = () => toasts.error('Can\'t cancel order');;
 
-  __orderDidCreated = (order) => {
-    exchange.addOpenOrder(order);
-  };
+  __orderDidCreated = (order) => exchange.addOpenOrder(order);
 
   __orderDidTrade = (orders) => {
     exchange.removeOrders(orders.map(order => order.id));
     exchange.addTrades(orders);
   };
 
-  __balanceDidUpdate = ({ currency, amount }) => {
-    exchange.updateBalance(currency, amount);
-  };
+  __balanceDidUpdate = ({ currency, amount }) => exchange.updateBalance(currency, amount);
 }
 
 

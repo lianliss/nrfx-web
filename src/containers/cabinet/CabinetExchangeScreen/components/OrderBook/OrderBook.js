@@ -5,13 +5,11 @@ import React from 'react';
 import * as utils from '../../../../../utils';
 
 export default function OrderBook({ asks, bids, onOrderPress }) {
-
   asks = Object.values(asks);
   bids = Object.values(bids);
 
   asks.sort((a, b) => a.price > b.price ? -1 : 1);
   bids.sort((a, b) => a.price > b.price ? -1 : 1);
-
 
   const sumAsks = asks.reduce((total, order) => total + order.amount, 0);
   const sumBids = bids.reduce((total, order) => total + order.amount, 0);
