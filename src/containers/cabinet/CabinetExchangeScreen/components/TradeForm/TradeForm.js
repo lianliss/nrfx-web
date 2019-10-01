@@ -4,6 +4,9 @@ import React from 'react';
 
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
+import * as exchange from '../../../../../actions/cabinet/exchange';
+import * as modalGroupActions from '../../../../../actions/modalGroup';
+// import ConfirmModal from '../../../../../components/cabinet/ConfirmModal/ConfirmModal';
 
 
 export default class TradeForm extends React.Component {
@@ -68,13 +71,21 @@ export default class TradeForm extends React.Component {
           </div>
           <div className="TradeForm__form__controls">
             <div className="TradeForm__form__row">
-              <UI.Button size="middle" type="buy">Buy</UI.Button>
+              <UI.Button
+                size="middle"
+                type="buy"
+                onClick={() => this.__handleOrderCreate("buy")}
+              >Buy</UI.Button>
             </div>
             <div className="TradeForm__form__row percents">
               {this.__renderAmountsSelector()}
             </div>
             <div className="TradeForm__form__row">
-              <UI.Button size="middle" type="sell">Sell</UI.Button>
+              <UI.Button
+                size="middle"
+                type="sell"
+                onClick={() => this.__handleOrderCreate("sell")}
+              >Sell</UI.Button>
             </div>
           </div>
         </div>
@@ -143,6 +154,20 @@ export default class TradeForm extends React.Component {
         >{`${percent}%`}</UI.Button>
       )
     });
+  }
+
+  __handleOrderCreate(action) {
+    // modalGroupActions.openModalPage(null, {}, {
+    //   children: <ConfirmModal />,
+    // })
+
+    // exchange.orderCreate({
+    //   action,
+    //   type: this.state.orderType,
+    //   market: this.props.market,
+    //   amount: this.state.amount,
+    //   price: this.state.price
+    // });
   }
 
   set(amount, price) {

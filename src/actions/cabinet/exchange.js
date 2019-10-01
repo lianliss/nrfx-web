@@ -2,6 +2,7 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
 import store from '../../store';
+import * as toast from '../cabinet/toasts';
 
 export function load(market) {
   return (dispatch, getState) => {
@@ -19,6 +20,14 @@ export function load(market) {
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     })
   };
+}
+
+export function orderCreate(params) {
+  return api.call(apiSchema.Exchange.OrderPut, params).then(() => {
+    toast.success("ok");
+  }).catch((err) => {
+    toast.error(err.message);
+  })
 }
 
 export function removeOrders(orderIds) {
