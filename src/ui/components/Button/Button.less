@@ -144,22 +144,24 @@
   }
 
   &.negative {
-    background: var(--uikit-button-negative-background);
+    background: var(--uikit-negative);
+    opacity: .8;
 
     &:after {
-      background: var(--uikit-button-negative-background-active);
+      background: var(--uikit-negative);
     }
   }
 
   &.negative_outline {
     color: var(--uikit-negative);
-    background: var(--uikit-button-negative-background);
+    background: var(--uikit-negative);
 
     &:after {
       background: var(--uikit-negative);
     }
 
     &:hover, &:active {
+      opacity: .8;
       color: var(--uikit-contrast-primary);
     }
   }
