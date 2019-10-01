@@ -60,11 +60,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
               label={utils.getLang('cabinet_profileScreen_settings')}
             />,
             <ProfileSidebarItem
-              icon={<UserSvg />}
-              label="Profile"
-              onClick={e => router.navigate(PAGES.PROFILE)}
-            />,
-            <ProfileSidebarItem
               icon={<UsersSvg />}
               label="Partners"
               onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}

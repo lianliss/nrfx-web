@@ -50,17 +50,14 @@ class Header extends React.Component {
     visibleNotifications: false
   };
 
-  componentDidMount() {
-    if (this.props.profile.role) {
-      this.props.loadNotifications();
-    }
-  }
-
   handleNavigate = (route) => {
     router.navigate(route);
   };
 
   toggleNotifications = () => {
+    if (!this.props.notifications.notifications.length && !this.state.visibleNotifications) {
+      this.props.loadNotifications();
+    }
     this.setState({visibleNotifications: !this.state.visibleNotifications});
   };
 
@@ -110,6 +107,7 @@ class Header extends React.Component {
                 { this.state.visibleNotifications && <UI.Notifications
                   emptyText={utils.getLang('no_update')}
                   visible={true}
+                  pending={this.props.notifications.pending}
                   onClose={this.toggleNotifications.bind(this)}
                 >
                   {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
