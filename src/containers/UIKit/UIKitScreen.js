@@ -173,6 +173,16 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Message type="success" alert>Success</UI.Message>
           </Line>
         </Section>
+        <Section title="MarkDown" style={{width: 500}}>
+          <Line>
+            <UI.MarkDown content={`
+            ## Header
+            text
+            text
+            [link](#test) **Bold** *italic*
+            `} />
+          </Line>
+        </Section>
         <Section>
           <Line>
             <UI.Notifications emptyText="No any updates" visible={true}></UI.Notifications>

@@ -94,7 +94,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
       ]
     }
-  ]
+  ];
 
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
   const [ curLang, changeLang ] = useState(currentLang);
@@ -107,23 +107,23 @@ function Header({ showLightLogo, langList, routerState, profile }) {
   const handleOpen = () => {
     document.body.classList.add('modal-open');
     toggleModalOpen(true);
-  }
+  };
 
   const handleClose = () => {
     document.body.classList.remove('modal-open');
     toggleModalOpen(false);
-  }
+  };
 
   const handleLangChange = (value) => {
     loadLang(value);
     changeLang(value);
     setItem('lang', value);
-  }
+  };
 
   const handleNavigate = (route) => {
     toggleVerticalMenu(false);
     router.navigate(route);
-  }
+  };
 
   return (
     <div className="SiteHeader">
@@ -141,14 +141,36 @@ function Header({ showLightLogo, langList, routerState, profile }) {
             <div className="SiteHeader__menu__CTA">
               { !isLogin ? [
                 <AuthModal routerParams={routerState.route.params}>
-                  <UI.Button type="outline">{utils.getLang('site__headerLogIn')}</UI.Button>
+                  <UI.Button
+                    type="outline"
+                    fontSize={15}
+                  >
+                    {utils.getLang('site__headerLogIn')}
+                  </UI.Button>
                 </AuthModal>,
                 <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                  <UI.Button type="outline_white">{utils.getLang('site__commerceRegistration')}</UI.Button>
+                  <UI.Button
+                    type="outline_white"
+                    fontSize={15}
+                  >
+                    {utils.getLang('site__commerceRegistration')}
+                  </UI.Button>
                 </AuthModal>
               ] : [
-                <UI.Button onClick={() => router.navigate(pages.PROFILE)} type="outline">{utils.getLang('cabinet_header_cabinet')}</UI.Button>,
-                <UI.Button onClick={auth.logout} type="outline_white">{utils.getLang('cabinet_header_exit')}</UI.Button>
+                <UI.Button
+                  onClick={() => router.navigate(pages.PROFILE)}
+                  fontSize={15}
+                  type="outline"
+                >
+                  {utils.getLang('cabinet_header_cabinet')}
+                </UI.Button>,
+                <UI.Button
+                  onClick={auth.logout}
+                  type="outline_white"
+                  fontSize={15}
+                >
+                  {utils.getLang('cabinet_header_exit')}
+                </UI.Button>
               ]}
             </div>
 
@@ -186,11 +208,24 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                     <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
                   </AuthModal>,
                   <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                    <UI.Button type="outline_white" rounded>{utils.getLang('site__commerceRegistration')}</UI.Button>
+                    <UI.Button
+                      type="outline_white"
+                      rounded
+                      fontSize={15}
+                    >
+                      {utils.getLang('site__commerceRegistration')}
+                    </UI.Button>
                   </AuthModal>
                 ] : [
                   <MenuItem onClick={auth.logout}>{utils.getLang("cabinet_header_exit")}</MenuItem>,
-                  <UI.Button type="outline_white" rounded onClick={() => router.navigate(pages.PROFILE)}>{utils.getLang("cabinet_header_cabinet")}</UI.Button>
+                  <UI.Button
+                    type="outline_white"
+                    rounded
+                    fontSize={15}
+                    onClick={() => router.navigate(pages.PROFILE)}
+                  >
+                    {utils.getLang("cabinet_header_cabinet")}
+                  </UI.Button>
                 ]}
 
                 <Dropdown

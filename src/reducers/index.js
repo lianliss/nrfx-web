@@ -28,7 +28,7 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.STATIC: {
-      return Object.assign({}, state, { [action.payload.url]: { data: action.payload.data, lang: action.payload.lang } });
+      return Object.assign({}, state, { [action.payload.address]: { data: action.payload.data } });
     }
 
     case actionTypes.PUSH_MODAL: {

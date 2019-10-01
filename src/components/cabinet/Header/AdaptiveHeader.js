@@ -6,6 +6,8 @@ import router from '../../../router';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from "../../../constants/classes";
 import * as utils from "../../../utils/";
+import UI from '../../../ui';
+import url from "url";
 
 class AdaptiveHeader extends React.Component {
   state = {activePage: null};
@@ -15,6 +17,8 @@ class AdaptiveHeader extends React.Component {
   };
 
   render() {
+    const { internalNotifications } = this.props;
+    const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
     return (
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
@@ -38,7 +42,22 @@ class AdaptiveHeader extends React.Component {
           <div className="CabinetHeader__rightContent">
             {this.props.rightContent}
           </div>
+
         </div>
+        {internalNotification && <UI.InternalNotification
+          adaptive={true}
+          acceptText={internalNotification.button_text}
+          message={internalNotification.caption}
+          onAccept={() => {
+            const link = url.parse(internalNotification.link, true);
+            router.navigate(link.pathname.substr(1), link.query, internalNotification.params, () => {
+              this.props.dropInternalNotifications(internalNotification.type);
+            });
+          }}
+          onClose={() => {
+            this.props.dropInternalNotifications(internalNotification.type)
+          }}
+        />}
       </div>
     )
   }

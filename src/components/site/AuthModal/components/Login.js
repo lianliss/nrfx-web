@@ -19,13 +19,12 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
         .then((res) => {
           setErrorMsg('');
           changeStep(steps.GOOGLE_AUTH, { loginRes: res });
-          console.log('res :', res);
         })
         .catch((err) => {
           setErrorMsg(err.message);
         });
     }
-  }
+  };
 
   return (
     <>

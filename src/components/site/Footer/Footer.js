@@ -40,14 +40,14 @@ export default function Footer() {
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>
             <a href="#" className="Footer__links__item">{utils.getLang('site__footerAppStore')}</a>
-            <a href="#" className="Footer__links__item">{utils.getLang('site__footerGooglePlay')}</a>
+            <a href="https://play.google.com/store/apps/details?id=com.bitcoinbot&hl=en" className="Footer__links__item">{utils.getLang('site__footerGooglePlay')}</a>
           </div>
         </div>
         <div className="Footer__bottom">
           <div className="Footer__logo">
             <SVG src={require('../../../asset/logo_full.svg')} />
           </div>
-          <div className="Footer__copyright">© 2017-2019 BITCOINBOT</div>
+          <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} BITCOINBOT</div>
           <div className="Footer__socials">
             <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/Bitcoinbotpro-432506870546401/" className="Footer__social">
               <SVG src={require('../../../asset/site/footer_facebook.svg')} />

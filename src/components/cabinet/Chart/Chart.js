@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './Chart.less';
 
 import React, { useState } from 'react';
@@ -125,7 +126,6 @@ export default function Chart({ series, ...props }) {
         },
         events: {
           legendItemClick: () => {
-            console.log(0);
             if (props.count < 2) {
               return false;
             }

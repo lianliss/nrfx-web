@@ -61,7 +61,7 @@ function WalletBalance({ wallets, adaptive }) {
         convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
       }}>
         <span>
-          {amount > 0 ? ( convert_currency === 'BTC' ? '~ ' + align.toFixed(6) : (amount * to_usd).toFixed(2) ) : 0}
+          {amount > 0 ? ( convert_currency === 'BTC' ? align.toFixed(6) : (amount * to_usd).toFixed(2) ) : 0}
           {' ' + convert_currency}
         </span>
       </div>;
@@ -105,7 +105,7 @@ function WalletBalance({ wallets, adaptive }) {
     <div className="WalletBalance Content_box">
       {walletsBalance
         ? (
-          <div>
+          <>
             {adaptive && balanceHeader}
             {adaptive && <div>
               <div className="WalletBalance__pie__balance" onClick={() => setIsInFiat(!isInFiat)}>
@@ -113,7 +113,7 @@ function WalletBalance({ wallets, adaptive }) {
                   <span>
                     {
                       isInFiat ? formatNumber(walletsBalance.walletsBalanceInUSD) +
-                        '$' : '~' + (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
+                        '$' : (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
                     }
                   </span>
                 </h3>
@@ -152,7 +152,7 @@ function WalletBalance({ wallets, adaptive }) {
                   <h3 style={!isInFiat ? {fontSize:20} : {}}>
                     {
                       isInFiat ? formatNumber(walletsBalance.walletsBalanceInUSD) +
-                        '$' : '~' + (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
+                        '$' : (walletsBalance.walletsBalanceInAlign).toFixed(3) + ' BTC'
                     }
                   </h3>
                   <div>
@@ -162,7 +162,7 @@ function WalletBalance({ wallets, adaptive }) {
                 </div>}
               </div>
             </div>
-          </div>
+          </>
         ) : (
           <div className="Empty_box">
             <SVG src={require('../../../asset/cabinet/wallet_colorful.svg')} />

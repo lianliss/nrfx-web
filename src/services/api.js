@@ -60,7 +60,6 @@ export function invoke(method, name, params) {
             reject(json);
           }
         }).catch((err) => {
-          console.log(err);
           reject({code: -1, message: 'Cant\'t parse JSON'})
         });
       });

@@ -14,6 +14,11 @@ import GAConfirmModal from '../components/cabinet/GAConfirmModal/GAConfirmModal'
 import ChangeEmailModal from '../components/cabinet/ChangeEmailModal/ChangeEmailModal';
 import ChangeNumberModal from '../components/cabinet/ChangeNumberModal/ChangeNumberModal';
 import SecretKeyInfoModal from '../components/cabinet/SecretKeyInfoModal/SecretKeyInfoModal';
+import SecretKeyDescModal from '../components/cabinet/SecretKeyDescModal/SecretKeyDescModal';
+
+// profile
+import ChangeSecretKeyModal from '../components/cabinet/ChangeSecretKeyModal/ChangeSecretKeyModal';
+import GoogleCodeModal from '../components/cabinet/GoogleCodeModal/GoogleCodeModal';
 
 const Modals = {
   SendCoinsModal: {children: SendCoinsModal},
@@ -26,13 +31,19 @@ const Modals = {
   ChangeEmailModal: {children: ChangeEmailModal},
   ChangeNumberModal: {children: ChangeNumberModal},
   WithdrawalModal: {children: WithdrawalModal},
-  SecretKeyInfoModal: {children: SecretKeyInfoModal}
+  SecretKeyInfoModal: {children: SecretKeyInfoModal},
+  SecretKeyDescModal: {children: SecretKeyDescModal},
+  ChangeSecretKeyModal: {children: ChangeSecretKeyModal},
+  GoogleCodeModal: {children: GoogleCodeModal}
 };
 
 export const MODALGROUP_ROUTES = {
   profile: {
     send: Modals.SendCoinsModal,
-    receive: Modals.ReceiveCoinsModal
+    receive: Modals.ReceiveCoinsModal,
+    change_secret_key: Modals.ChangeSecretKeyModal,
+    secret_key: Modals.SecretKeyDescModal,
+    google_code: Modals.GoogleCodeModal
   },
   cabinet_wallet: {
     send: Modals.SendCoinsModal,

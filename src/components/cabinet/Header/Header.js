@@ -3,6 +3,7 @@ import './Header.less';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
+import url from 'url';
 
 import DropDown from './components/Dropdown';
 import Badge from '../Badge/Badge';
@@ -49,22 +50,21 @@ class Header extends React.Component {
     visibleNotifications: false
   };
 
-  componentDidMount() {
-    if (this.props.profile.role) {
-      this.props.loadNotifications();
-    }
-  }
-
   handleNavigate = (route) => {
     router.navigate(route);
   };
 
   toggleNotifications = () => {
+    if (!this.props.notifications.notifications.length && !this.state.visibleNotifications) {
+      this.props.loadNotifications();
+    }
     this.setState({visibleNotifications: !this.state.visibleNotifications});
   };
 
   render() {
     const isLogged = this.props.profile.role;
+    const { internalNotifications } = this.props;
+    const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
     const { notifications, unreadCount } = this.props.notifications;
     return (
       <div className="CabinetHeaderContainer">
@@ -107,12 +107,13 @@ class Header extends React.Component {
                 { this.state.visibleNotifications && <UI.Notifications
                   emptyText={utils.getLang('no_update')}
                   visible={true}
+                  pending={this.props.notifications.pending}
                   onClose={this.toggleNotifications.bind(this)}
                 >
                   {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
                     [
                       ( i > 0 &&  n.unread !== notifications[i - 1].unread &&
-                        <UI.NotificationSeparator title={utils.getLang('cabinet_header_viewed')} />
+                        <UI.NotificationSeparator key={Math.random()} title={utils.getLang('cabinet_header_viewed')} />
                       ),
                       <UI.Notification
                         key={i}
@@ -144,6 +145,19 @@ class Header extends React.Component {
               </div>
             </div>}
           </div>
+          {internalNotification && <UI.InternalNotification
+            acceptText={internalNotification.button_text}
+            message={internalNotification.caption}
+            onAccept={() => {
+              const link = url.parse(internalNotification.link, true);
+              router.navigate(link.pathname.substr(1), link.query, internalNotification.params, () => {
+                this.props.dropInternalNotifications(internalNotification.type);
+              });
+            }}
+            onClose={() => {
+              this.props.dropInternalNotifications(internalNotification.type)
+            }}
+          />}
         </div>
       </div>
     )

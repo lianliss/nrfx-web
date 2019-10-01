@@ -10,6 +10,7 @@ import { ReactComponent as ShoppingCartSvg } from '../../../../asset/24px/shoppi
 import { ReactComponent as TradeSvg } from '../../../../asset/120/trade.svg';
 import { ReactComponent as Invest120Svg } from '../../../../asset/120/invest.svg';
 import { ReactComponent as InviteSvg } from '../../../../asset/120/invite.svg';
+import * as modalGroupActions from '../../../../actions/modalGroup';
 
 class DashboardItem extends React.Component {
   constructor(props) {
@@ -31,7 +32,9 @@ class DashboardItem extends React.Component {
         this.button = {
           children: utils.getLang('cabinet_profileScreen_actionCard_invest'),
           onClick: () => {
-            router.navigate('investments');
+            router.navigate('investments', {}, {}, function() {
+              modalGroupActions.openModalPage('open_deposit', {});
+            });
           }
         };
         if (props.profit.btc > 0) {

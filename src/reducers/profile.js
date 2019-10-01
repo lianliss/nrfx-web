@@ -2,7 +2,14 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   loadingStatus: {},
-  dashboard: {}
+  dashboard: {},
+  partner: {
+    balances: [],
+    client_chart: {},
+    clients: [],
+    level: '',
+    profit_chart: {}
+  }
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -17,6 +24,12 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.PROFILE_DASHBOARD_SET: {
       return Object.assign({}, state, {
         dashboard: action.dashboard
+      });
+    }
+
+    case actionTypes.PROFILE_PARTNER_SET: {
+      return Object.assign({}, state, {
+        partner: action.partner
       });
     }
 

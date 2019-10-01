@@ -56,33 +56,46 @@ class CabinetWalletScreen extends CabinetBaseScreen {
           leftContent={!this.props.adaptive && !this.props.routerParams.section  && !this.isLoading && this.__renderRightContent()}
           sidebarOptions={this.props.adaptive ? [
             <UI.FloatingButtonItem
-              icon={require('../../../asset/24px/send.svg')}
-              onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
-            >{utils.getLang('site__contactSend')}</UI.FloatingButtonItem>,
-            <UI.FloatingButtonItem
               icon={require('../../../asset/24px/receive.svg')}
               onClick={() => {modalGroupActions.openModalPage('receive')}}
-            >{utils.getLang('cabinet_walletScreen_receive')}</UI.FloatingButtonItem>,
+            >
+              {utils.getLang('cabinet_walletScreen_receive')}
+            </UI.FloatingButtonItem>,
+
+            <UI.FloatingButtonItem
+              icon={require('../../../asset/24px/send.svg')}
+              onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
+            >
+              {utils.getLang('site__contactSend')}
+            </UI.FloatingButtonItem>,
+
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/history.svg')}
               onClick={() => {
                 router.navigate(PAGES.CABINET_WALLET, { section: 'transfers' })
               }}
-            >{utils.getLang('cabinet_walletScreen_transfers')}</UI.FloatingButtonItem>,
-            !!walletsActions.getNoGeneratedCurrencies().length && <UI.FloatingButtonItem
+            >
+              {utils.getLang('cabinet_walletScreen_transfers')}
+            </UI.FloatingButtonItem>,
+
+            !!walletsActions.getNoGeneratedCurrencies().length &&
+            <UI.FloatingButtonItem
               icon={require('../../../asset/24px/plus-circle.svg')}
               onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
-            >{utils.getLang("cabinet_walletBox_create")}</UI.FloatingButtonItem>
+            >
+              {utils.getLang("cabinet_walletBox_create")}
+            </UI.FloatingButtonItem>
           ] : [
-            !!walletsActions.getNoGeneratedCurrencies().length && <ProfileSidebarItem
+            !!walletsActions.getNoGeneratedCurrencies().length &&
+            <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
               icon={<PlusCircleSvg />}
               label={utils.getLang("cabinet_walletBox_create")}
             />,
             <ProfileSidebarItem
-              section="transfers"
-              icon={<HistorySvg />}
-              label={utils.getLang('cabinet_walletScreen_transfers')}
+              onClick={() => {modalGroupActions.openModalPage('receive')}}
+              icon={<ReceiveSvg />}
+              label={utils.getLang('cabinet_walletScreen_receive')}
             />,
             <ProfileSidebarItem
               onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
@@ -90,10 +103,10 @@ class CabinetWalletScreen extends CabinetBaseScreen {
               label={utils.getLang('site__contactSend')}
             />,
             <ProfileSidebarItem
-              onClick={() => {modalGroupActions.openModalPage('receive')}}
-              icon={<ReceiveSvg />}
-              label={utils.getLang('cabinet_walletScreen_receive')}
-            />
+              section="transfers"
+              icon={<HistorySvg />}
+              label={utils.getLang('cabinet_walletScreen_transfers')}
+            />,
           ]}
         >
           <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>

@@ -14,8 +14,12 @@ import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalan
 import DashboardItem from './components/DashboardItem';
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import router from "../../../router";
-
+import PartnersSection from './components/PartnersSection';
+import RightPartnersSection from './components/RightPartnersSection';
 import {ReactComponent as SettingsSvg} from '../../../asset/24px/settings.svg';
+import {ReactComponent as UsersSvg} from '../../../asset/24px/users.svg';
+import {ReactComponent as UserSvg} from '../../../asset/24px/user.svg';
+import * as PAGES from '../../../constants/pages';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
   state = {
@@ -24,6 +28,10 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
   load = (section = null) => {
     switch (section || this.props.routerParams.section) {
+      case 'partners':
+        this.props.loadWallets();
+        this.props.getPartner();
+        break;
       default:
         this.props.loadWallets();
         this.props.loadDashboard();
@@ -44,15 +52,19 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     return (
       <div>
         <PageContainer
-          leftContent={!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
+          leftContent={this.__renderRightContent()}
           sidebarOptions={!this.props.adaptive && [
             <ProfileSidebarItem
-              onClick={() => {router.navigate('settings')}}
+              onClick={e => router.navigate('settings')}
               icon={<SettingsSvg />}
               label={utils.getLang('cabinet_profileScreen_settings')}
+            />,
+            <ProfileSidebarItem
+              icon={<UsersSvg />}
+              label="Partners"
+              onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
             />
             // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
-            // <ProfileSidebarItem icon={require('../../../asset/24px/user.svg')} label="Partners" />
           ]}
         >
           {this.__renderContent()}
@@ -67,23 +79,36 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     );
   }
 
-  __renderRightContent = () => {
-    if (!this.props.dashboard.hasOwnProperty('chart')) {
-      return '';
+  __renderRightContent = show => {
+    switch (this.props.routerParams.section) {
+      case 'partners': {
+        return <div>
+          <RightPartnersSection
+            adaptive={this.props.adaptive}
+            wallets={this.wallets}
+            walletSelected={this.state.walletSelected}
+          />
+        </div>
+      }
+      default: {
+        if (!(this.props.adaptive && !show) && !this.props.routerParams.section && !this.isLoading && this.props.dashboard.hasOwnProperty('chart')) {
+          return <div>
+            <div>
+              <WalletBalance
+                adaptive={this.props.adaptive}
+                wallets={this.wallets}
+                walletSelected={this.state.walletSelected}
+              />
+            </div>
+            <div className="CabinetProfileScreen__height24">
+            </div>
+            {this.__renderChartProfit()}
+          </div>
+        } else {
+          return '';
+        }
+      }
     }
-
-    return <div>
-      <div>
-        <WalletBalance
-          adaptive={this.props.adaptive}
-          wallets={this.wallets}
-          walletSelected={this.state.walletSelected}
-        />
-      </div>
-      <div className="CabinetProfileScreen__height24">
-      </div>
-      {this.__renderChartProfit()}
-    </div>
   };
 
   __renderChartProfit = () => {
@@ -104,7 +129,12 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
     switch (this.props.routerParams.section) {
       case 'partners': {
-        return 'partners';
+        return <div>
+          <PartnersSection
+            adaptive={this.props.adaptive}
+            wallets={this.__renderWallets}
+          />
+        </div>
       }
       case 'customers': {
         return 'customers';
@@ -119,7 +149,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     if (this.props.adaptive && !this.props.routerParams.section && !this.isLoading) {
       return (
         <div>
-          {this.__renderRightContent()}
+          {this.__renderRightContent(true)}
           {this.__renderWallets()}
           {this.__renderDashboard()}
         </div>

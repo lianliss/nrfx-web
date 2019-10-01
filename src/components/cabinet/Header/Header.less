@@ -2,15 +2,15 @@
 @adaptive-header-height: 48px;
 
 .CabinetHeaderContainer {
-  height: @header-height;
+  position: sticky;
+  z-index: 100;
+  top: 0;
 }
 
 .CabinetHeader {
   background: var(--contrast-primary);
   box-shadow: 0 1px 16px rgba(0, 0, 0, 0.1);
-  position: fixed;
   width: 100vw;
-  z-index: 100;
 
   .CabinetHeader__content {
     max-width: 1340px;
@@ -166,9 +166,9 @@
 
 .adaptive {
   .CabinetHeaderContainer {
-    height: @adaptive-header-height;
+    //height: @adaptive-header-height;
     .CabinetHeader {
-      height: @adaptive-header-height;
+      //height: @adaptive-header-height;
       -webkit-border-radius: 0 0 8px 8px;
       -moz-border-radius: 0 0 8px 8px;
       border-radius: 0 0 8px 8px;

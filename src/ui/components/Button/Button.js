@@ -18,7 +18,7 @@ function Button(props) {
     forCabinet: !!props.forCabinet,
     smallPadding: props.smallPadding,
     [props.currency]: !!props.currency,
-    [props.state]: !!props.state,
+    [props.state]: !!props.state
   });
 
   return (
@@ -31,7 +31,7 @@ function Button(props) {
       {props.state === 'loading' && <div className="Button__loader"><SVG src={require('../../asset/spinner.svg')} /></div>}
       <div className="Button__cont">
         {props.beforeContent}
-        <div className="Button__label">{props.children}</div>
+        <div className="Button__label" style={props.fontSize ? {fontSize: props.fontSize} : {}}>{props.children}</div>
         {props.afterContent}
       </div>
       {(props.type === 'outline' || props.type === 'negative_outline') && <div className="Button__outline_helper" />}
