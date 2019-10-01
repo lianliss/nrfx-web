@@ -18,5 +18,5 @@ export function login(accessToken) {
 }
 
 export function logout() {
-  storage.removeItem('access_token');
+  storage.clear();
 }
