@@ -157,9 +157,7 @@ export default class TradeForm extends React.Component {
   }
 
   __handleOrderCreate(action) {
-    // modalGroupActions.openModalPage(null, {}, {
-    //   children: <ConfirmModal />,
-    // })
+    modalGroupActions.confirm("sdfd" ,"delete");
 
     // exchange.orderCreate({
     //   action,
