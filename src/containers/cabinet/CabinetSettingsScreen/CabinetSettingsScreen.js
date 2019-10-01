@@ -7,6 +7,7 @@ import PageContainer from '../../../components/cabinet/PageContainer/PageContain
 import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import GAConfirmModal from '../../../components/cabinet/GAConfirmModal/GAConfirmModal';
+import ConfirmModal from '../../../components/cabinet/ConfirmModal/ConfirmModal';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import ProfileUser from '../../../components/cabinet/ProfileUser/ProfileUser';
 import UI from '../../../ui';
@@ -68,7 +69,6 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
       this.props.toastPush(utils.getLang('global_passwordsMustBeSame'), "error");
       return false;
     }
-
     modalGroupActions.openModalPage(null, {}, {
       children: GAConfirmModal,
       params: {
