@@ -44,9 +44,9 @@ class ChangeEmailModal extends React.Component {
             type="number"
             autoComplete="off"
             value={this.state.gaCode}
-            onChange={(e) => this.__handleChange(e, 'GA')}
+            onChange={e => this.__handleChange(e, 'GA')}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={this.__onKeyPressHandler}
+            onKeyPress={utils.InputNumberOnKeyPressHandler}
             error={this.state.errorGaCode}
           />
 
@@ -61,13 +61,6 @@ class ChangeEmailModal extends React.Component {
     )
   }
 
-  __onKeyPressHandler = e => {
-    utils.InputNumberOnKeyPressHandler(e);
-    if (e.key === 'Enter' && this.state.gaCode.length < 6) {
-      this.__handleSubmit();
-    }
-  };
-
   __handleChange = (e, type) => {
     switch (type) {
       case 'EMAIL':
@@ -76,7 +69,11 @@ class ChangeEmailModal extends React.Component {
       case 'GA':
         const val = e.target.value;
         if (val.length <= 6) {
-          this.setState({gaCode: val});
+          this.setState({gaCode: val}, e => {
+            if (val.length === 6) {
+              this.__handleSubmit();
+            }
+          });
         }
         break;
       default: break;

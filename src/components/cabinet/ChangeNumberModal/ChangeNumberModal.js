@@ -62,7 +62,7 @@ class ChangeNumberModal extends React.Component {
             value={this.state.gaCode}
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={this.__onKeyPressHandler}
+            onKeyPress={utils.InputNumberOnKeyPressHandler}
             error={this.state.errorGaCode}
           />
 
@@ -76,13 +76,6 @@ class ChangeNumberModal extends React.Component {
       </div>
     )
   }
-
-  __onKeyPressHandler = e => {
-    utils.InputNumberOnKeyPressHandler(e);
-    if (e.key === 'Enter' && this.state.gaCode.length < 6) {
-      this.__handleSubmit();
-    }
-  };
 
   __handleOnChangePhone = (value, data) => {
     this.setState({
