@@ -18,6 +18,7 @@ export default class TradeForm extends React.Component {
       price: null,
       amount: null,
       amountSecondary: null,
+      touched: false,
     };
   }
 
@@ -40,6 +41,7 @@ export default class TradeForm extends React.Component {
           <div className="TradeForm__form">
             <div className="TradeForm__form__row">
               <UI.Input
+                error={this.state.touched && !this.state.amount}
                 placeholder="Amount"
                 indicator={primary.toUpperCase()}
                 size="small"
@@ -50,6 +52,7 @@ export default class TradeForm extends React.Component {
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
+                error={this.state.touched && !this.state.price}
                 placeholder="Price"
                 indicator={secondary.toUpperCase()}
                 size="small"
@@ -157,15 +160,16 @@ export default class TradeForm extends React.Component {
   }
 
   __handleOrderCreate(action) {
-    modalGroupActions.confirm("sdfd" ,"delete");
-
-    // exchange.orderCreate({
-    //   action,
-    //   type: this.state.orderType,
-    //   market: this.props.market,
-    //   amount: this.state.amount,
-    //   price: this.state.price
-    // });
+    this.setState({ touched: true });
+    if (this.state.amount && this.state.price) {
+      exchange.orderCreate({
+        action,
+        type: this.state.orderType,
+        market: this.props.market,
+        amount: this.state.amount,
+        price: this.state.price
+      });
+    }
   }
 
   set(amount, price) {

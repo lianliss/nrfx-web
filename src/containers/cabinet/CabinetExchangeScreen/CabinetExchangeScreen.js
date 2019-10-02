@@ -36,7 +36,6 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   componentWillUnmount() {
-    super.componentWillUnmount();
     exchangeService.unbind(this.props.market);
   }
 

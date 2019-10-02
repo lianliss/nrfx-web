@@ -6,6 +6,9 @@ import * as utils from '../../../../../utils';
 import moment from 'moment/moment';
 import { connect } from 'react-redux';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import * as exchange from '../../../../../actions/cabinet/exchange';
+import * as modals from '../../../../../actions/modalGroup';
+import * as actions from '../../../../../actions';
 
 class Orders extends React.Component {
   constructor(props) {
@@ -43,6 +46,16 @@ class Orders extends React.Component {
     }
   }
 
+  __handleOrderDelete(orderId) {
+    actions.confirm({
+      title: 'Delete order?',
+      okText: 'Delete',
+      type: 'delete'
+    }).then(() => {
+      exchange.orderDelete(orderId);
+    });
+  }
+
   __renderOpen() {
     const headings = [
       <UI.TableColumn>
@@ -72,7 +85,10 @@ class Orders extends React.Component {
         <UI.TableCell key={order.id}>
           <UI.TableColumn>
             <div className="Exchange__cancel_order_btn__wrap">
-              <div className="Exchange__cancel_order_btn" />
+              { order.status === 'pending' ?
+                <div className="Exchange__pending_order_loader" /> :
+                <div onClick={() => this.__handleOrderDelete(order.id)} className="Exchange__cancel_order_btn" />
+              }
               <div className={sideClassName}>{side}</div>
             </div>
           </UI.TableColumn>

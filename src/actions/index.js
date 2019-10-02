@@ -7,6 +7,7 @@ import apiSchema from '../services/apiSchema';
 import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as utils from '../utils';
+import * as emitter from '../services/emitter';
 
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
@@ -66,10 +67,27 @@ export function getCurrencyInfo(name) {
   return result;
 }
 
-export function openModal(name, params = {}) {
+export function openModal(name, params = {}, props = {}) {
   router.navigate(
     router.getState().name,
-    utils.makeModalParams(name, params));
+    utils.makeModalParams(name, params),
+    props
+  );
+}
+
+export function confirm(props) {
+  return new Promise((resolve, reject) => {
+    openModal('confirm', {}, props);
+    const acceptListener = emitter.addListener('confirm_accept', () => {
+      emitter.removeListener(acceptListener);
+      resolve();
+    });
+
+    const closeListener = emitter.addListener('confirm_cancel', () => {
+      emitter.removeListener(closeListener);
+      reject();
+    });
+  })
 }
 
 export function setAdaptive(adaptive) {

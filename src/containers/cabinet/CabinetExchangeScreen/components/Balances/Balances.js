@@ -4,10 +4,17 @@ import { connect } from 'react-redux';
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
 import Block from '../Block/Block';
+import { openModal } from '../../../../../actions/';
 
 class Balances extends React.Component {
   shouldComponentUpdate(nextProps) {
     return nextProps.balances !== this.props.balances;
+  }
+
+  __handleOpenBalance() {
+    openModal('manage_balance', {}, {
+      a: 1,
+    });
   }
 
   render() {
@@ -30,7 +37,12 @@ class Balances extends React.Component {
       <Block
         title="Balance"
         controls={[
-          <UI.Button key="withdraw" size="ultra_small" rounded type="secondary">Manage</UI.Button>
+          <UI.Button
+            key="withdraw"
+            size="ultra_small"
+            rounded type="secondary"
+            onClick={this.__handleOpenBalance}
+          >Manage</UI.Button>
         ]}
       >
         <UI.Table headings={headings} compact skipContentBox>

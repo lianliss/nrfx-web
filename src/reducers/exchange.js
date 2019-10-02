@@ -137,6 +137,19 @@ export default function reduce(state = initialState, action = {}) {
       });
     }
 
+    case actionTypes.EXCHANGE_SET_ORDER_PENDING: {
+      return {
+        ...state,
+        openOrders: {
+          ...state.openOrders,
+          [action.orderId]: {
+            ...state.openOrders[action.orderId],
+            status: "pending"
+          }
+        }
+      }
+    }
+
     case actionTypes.EXCHANGE_ADD_OPEN_ORDER: {
       let openOrders = Object.assign({}, state.openOrders);
       openOrders[action.order.id] = action.order;

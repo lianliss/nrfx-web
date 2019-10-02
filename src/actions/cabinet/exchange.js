@@ -30,6 +30,16 @@ export function orderCreate(params) {
   })
 }
 
+export function orderDelete(orderId) {
+  return api.call(apiSchema.Exchange.OrderDelete, {
+    order_id: orderId
+  }).then(() => {
+    store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_PENDING, orderId });
+  }).catch(err => {
+    toast.error(err.message);
+  });
+}
+
 export function removeOrders(orderIds) {
   store.dispatch({ type: actionTypes.EXCHANGE_REMOVE_ORDER, orderIds });
 }

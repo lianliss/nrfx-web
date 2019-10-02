@@ -42,7 +42,10 @@ class Exchange {
 
   __orderDidCancel = (orderId) => exchange.removeOrders([orderId]);
 
-  __orderDidCancelled = (orderId) => exchange.setOrderStatus(orderId, 'cancelled');
+  __orderDidCancelled = (orderId) => {
+    exchange.setOrderStatus(orderId, 'cancelled');
+    toasts.success('Your order has been canceled');
+  }
 
   __orderDidCancelFailed = () => toasts.error('Can\'t cancel order');;
 

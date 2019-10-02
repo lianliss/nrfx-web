@@ -62,4 +62,5 @@ export const MODALGROUP_ROUTES = {
     secret_key_info: Modals.SecretKeyInfoModal,
   },
   menu: {},
+  exchange: {}
 };

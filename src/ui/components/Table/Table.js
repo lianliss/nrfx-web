@@ -98,8 +98,10 @@ export function TableColumn({ children, align, style, highlighted, sub }) {
       })}
       style={style}
     >
-      <div className="Table__td__cont">{children}</div>
-      {sub && <div className="Table__sub">{sub}</div>}
+      <div className="Table__td__cont">
+        {children}
+        {sub && <div className="Table__sub">{sub}</div>}
+      </div>
     </td>
   )
 }
