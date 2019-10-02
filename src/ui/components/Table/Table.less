@@ -1,0 +1,142 @@
+.TableMain {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  .Table__header {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    span {
+      margin: auto;
+      font-weight: 500;
+    }
+    span.icon {
+      position: absolute;
+      right: 16px;
+      height: 56px;
+      display: flex;
+      color: var(--link-color);
+      svg {
+        margin: auto;
+      }
+    }
+  }
+}
+.Table {
+  border-collapse: collapse;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  .Table__row {
+    background: var(--contrast-primary);
+  }
+
+  .Table__dark__row {
+    background: var(--secondary-active-background);
+  }
+  
+  tr {
+
+    &.dark {
+      background: var(--secondary-active-background);
+    }
+
+    &.Hover:hover {
+      background: var(--contrast-primary);
+    }
+  }
+
+  thead td {
+    color: var(--primary-grey);
+    font-weight: 500;
+  }
+
+  .Table__td__cont {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    flex-direction: column;
+  }
+  
+  th, td {
+    font-size: 13px;
+    line-height: 24px;
+    padding: 0 8px;
+    height: 56px;
+    border: none;
+    vertical-align: middle;
+
+    &:first-child {
+      padding-left: 16px;
+    }
+
+    &:last-child {
+      padding-right: 16px;
+    }
+  }
+
+  td.right {
+    text-align: right;
+
+    .Table__td__cont {
+      align-items: right;
+    }
+  }
+
+  td.center {
+    text-align: center;
+
+    .Table__td__cont {
+      align-items: center;
+    }
+  }
+
+  td.highlighted {
+    color: var(--primary);
+  }
+
+  .Table__sub {
+    color: var(--secondary-grey);
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+.Table__item {
+  display: flex;
+  align-items: center;
+  margin: 0 8px;
+  height: 20px;
+
+  .isvg {
+    margin: 0 5px;
+  }
+
+  .Table__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+}
+
+.Table__item_right {
+  justify-content: flex-end;
+}
+
+.Table__item_center {
+  justify-content: center;
+}
+
+.Table__item_highlighted {
+  color: var(--primary);
+}
+
+.Table__item__type_sent {
+  color: #658BF5;
+}
+
+.Table__item__type_received {
+  color: #24B383;
+}

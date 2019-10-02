@@ -16,17 +16,18 @@ import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
 import LanguageModal from '../LanguageModal/LanguageModal';
 import StaticContentModal from '../StaticContentModal/StaticContentModal';
+import * as auth from '../../../actions/auth';
 
 const currentLang = getItem('lang');
 
 
-function Header({ showLightLogo, langList, routerState }) {
+function Header({ showLightLogo, langList, routerState, profile }) {
   const headerLinks = [
     {
       title: utils.getLang('site__headerProducts'),
       children: [
         {
-          title: utils.getLang('site__headerWallet'),
+          title: utils.getLang('site__homeWallet'),
           route: pages.WALLET,
         },
         {
@@ -93,7 +94,7 @@ function Header({ showLightLogo, langList, routerState }) {
         },
       ]
     }
-  ]
+  ];
 
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
   const [ curLang, changeLang ] = useState(currentLang);
@@ -101,29 +102,28 @@ function Header({ showLightLogo, langList, routerState }) {
 
   const currentLangObj = langList.find(l => l.value === curLang);
   const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
-  console.log('router :', router);
+  const isLogin = !!profile.role;
 
   const handleOpen = () => {
     document.body.classList.add('modal-open');
     toggleModalOpen(true);
-  }
+  };
 
   const handleClose = () => {
     document.body.classList.remove('modal-open');
     toggleModalOpen(false);
-  }
+  };
 
   const handleLangChange = (value) => {
     loadLang(value);
     changeLang(value);
     setItem('lang', value);
-  }
+  };
 
   const handleNavigate = (route) => {
+    toggleVerticalMenu(false);
     router.navigate(route);
-  }
-
-  console.log('router :', routerState);
+  };
 
   return (
     <div className="SiteHeader">
@@ -131,20 +131,47 @@ function Header({ showLightLogo, langList, routerState }) {
         ? (
           <div className="SiteHeader__menu__vertical">
             <div className="SiteHeader__header">
-              <a href="/" className="SiteHeader__header__logo">
-                <SVG src={require('../../../asset/logo_big_white.svg')} />
+              <a href="/" className="SiteHeader__header__logo SiteHeader__logo_white">
+                <SVG src={require('../../../asset/logo_full.svg')} />
               </a>
               <div onClick={() => toggleVerticalMenu(false)}>
                 <SVG src={require('./asset/close.svg')}  />
               </div>
             </div>
             <div className="SiteHeader__menu__CTA">
-              <AuthModal routerParams={routerState.route.params}>
-                <UI.Button type="outline">{utils.getLang('site__headerLogIn')}</UI.Button>
-              </AuthModal>
-              <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                <UI.Button type="outline_white">{utils.getLang('site__headerRegistration')}</UI.Button>
-              </AuthModal>
+              { !isLogin ? [
+                <AuthModal routerParams={routerState.route.params}>
+                  <UI.Button
+                    type="outline"
+                    fontSize={15}
+                  >
+                    {utils.getLang('site__headerLogIn')}
+                  </UI.Button>
+                </AuthModal>,
+                <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
+                  <UI.Button
+                    type="outline_white"
+                    fontSize={15}
+                  >
+                    {utils.getLang('site__commerceRegistration')}
+                  </UI.Button>
+                </AuthModal>
+              ] : [
+                <UI.Button
+                  onClick={() => router.navigate(pages.PROFILE)}
+                  fontSize={15}
+                  type="outline"
+                >
+                  {utils.getLang('cabinet_header_cabinet')}
+                </UI.Button>,
+                <UI.Button
+                  onClick={auth.logout}
+                  type="outline_white"
+                  fontSize={15}
+                >
+                  {utils.getLang('cabinet_header_exit')}
+                </UI.Button>
+              ]}
             </div>
 
             {headerLinks.map(item => (
@@ -166,11 +193,8 @@ function Header({ showLightLogo, langList, routerState }) {
         ? (
           <div className="SiteHeader__cont">
             <a href="/">
-              <div className="SiteHeader__logo">
-                {showLightLogo
-                  ? <SVG src={require('../../../asset/logo_big_white.svg')} />
-                  : <SVG src={require('../../../asset/logo_big_orange.svg')} />
-                }
+              <div className={"SiteHeader__logo" + (showLightLogo ? " SiteHeader__logo_white" : "")}>
+                <SVG src={require('../../../asset/logo_full.svg')} />
               </div>
             </a>
             <div className="SiteHeader__menu__horizontal">
@@ -179,12 +203,31 @@ function Header({ showLightLogo, langList, routerState }) {
               ))}
 
               <div className="SiteHeader__menu_controls">
-                <AuthModal routerParams={routerState.route.params}>
-                  <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
-                </AuthModal>
-                <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                  <UI.Button type="outline_white" rounded>{utils.getLang('site__headerRegistration')}</UI.Button>
-                </AuthModal>
+                { !isLogin ? [
+                  <AuthModal routerParams={routerState.route.params}>
+                    <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
+                  </AuthModal>,
+                  <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
+                    <UI.Button
+                      type="outline_white"
+                      rounded
+                      fontSize={15}
+                    >
+                      {utils.getLang('site__commerceRegistration')}
+                    </UI.Button>
+                  </AuthModal>
+                ] : [
+                  <MenuItem onClick={auth.logout}>{utils.getLang("cabinet_header_exit")}</MenuItem>,
+                  <UI.Button
+                    type="outline_white"
+                    rounded
+                    fontSize={15}
+                    onClick={() => router.navigate(pages.PROFILE)}
+                  >
+                    {utils.getLang("cabinet_header_cabinet")}
+                  </UI.Button>
+                ]}
+
                 <Dropdown
                   className="SiteHeader__lang__dropdown"
                   title={currentLangTitle}
@@ -213,15 +256,15 @@ function Header({ showLightLogo, langList, routerState }) {
 
 function MenuItem(props) {
   return (
-    <div className="SiteHeader__menu__item">
+    <div onClick={props.onClick} className="SiteHeader__menu__item">
       {props.children}
       {props.arrow && <SVG src={require('../../../asset/menu_arrow.svg')} />}
     </div>
   )
 }
 
-
 const mapStateToProps = (state) => ({
+  profile: state.default.profile,
   langList: state.default.langList,
   lang: state.default.lang,
   routerState: state.router,

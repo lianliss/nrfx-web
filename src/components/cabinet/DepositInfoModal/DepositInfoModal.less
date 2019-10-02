@@ -1,0 +1,109 @@
+
+.DepositInfoModal__icon {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  top: 16px;
+  left: -32px;
+  background: no-repeat center/contain;
+}
+
+.DepositInfoModal__cont {
+  width: 664px;
+  padding: 40px;
+}
+
+.DepositInfoModal__columns {
+  display: flex;
+  width: 100%;
+}
+
+.DepositInfoModal__column {
+  flex: 1;
+  max-width: 50%;
+}
+
+.DepositInfoModal__withdrawal_form {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+
+  .Button {
+    margin-left: 16px;
+  }
+}
+
+.DepositInfoModal__withdrawal_form__currency {
+  color: var(--primary-grey);
+}
+
+.adaptive {
+  .DepositInfoModal {
+
+    &__wrapper {
+      padding-top: 80px;
+    }
+
+    &__amount {
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 24px;
+
+      &__label {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16px;
+        color: var(--primary-grey);
+      }
+
+      &__number {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 32px;
+      }
+    }
+
+    &__column {
+      display: block;
+
+      tbody {
+        display: block;
+      }
+
+      &:first-child {
+        margin-right: 16px;
+      }
+    }
+
+    &__icon {
+      left: 0;
+      right: 0;
+      top: -32px;
+      margin: 0 auto;
+    }
+
+    &__cont {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 24px 16px;
+
+      .InfoRow {
+        display: block;
+
+        td {
+          padding: 0;
+        }
+
+        &__label {
+          line-height: 16px;
+          text-align: left;
+          display: block;
+        }
+
+        &__value {
+          display: block;
+        }
+      }
+    }
+  }
+}

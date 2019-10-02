@@ -1,7 +1,7 @@
 .LanguageModal {
   .Modal__box {
-    max-height: 400px;
-    overflow-y: scroll;
+    max-height: 440px;
+    overflow-y: auto;
   }
 }
 
@@ -38,6 +38,30 @@
         width: 18px;
         height: 18px;
         margin-right: 5px;
+      }
+    }
+  }
+}
+
+.adaptive {
+  .LanguageModal {
+    .Modal__box {
+      padding: 0;
+    }
+
+    &__cont {
+      padding: 8px 18px;
+
+      .LanguageModal__cont__grid {
+        display: block;
+      }
+
+      &__lang {
+        padding: 16px 0;
+
+        .isvg {
+          margin-right: 18px !important;
+        }
       }
     }
   }

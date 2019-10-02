@@ -10,7 +10,6 @@ import SuccessModal from '../../SuccessModal/SuccessModal';
 function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
   const [errorMsg, setErrorMsg] = useState('');
   const [secretKey, changeSecretKey] = useState('');
-  const [isKeyVisible, updateVisibility] = useState(false);
 
   const handleSubmit = () => {
     resetGoogleCode(secretKey, email, password)
@@ -39,15 +38,9 @@ function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
                   value={secretKey}
                   onChange={(e) => changeSecretKey(e.target.value)}
                   placeholder={utils.getLang('site__authModalSecretKey')}
-                  type={isKeyVisible ? 'text' : 'password'}
+                  type='password'
                   onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
                 />
-
-                {!isKeyVisible
-                  ? <img src={require('../asset/opened_eye.svg')} alt="Eye" onClick={() => updateVisibility(true)} />
-                  : <img src={require('../asset/closed_eye.svg')} alt="Eye" onClick={() => updateVisibility(false)} />
-                }
-
               </div>
             </div>
 

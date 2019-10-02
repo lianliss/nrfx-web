@@ -1,0 +1,208 @@
+.CabinetWalletScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+}
+
+.Wallets__history_table {
+  margin-top: 16px;
+}
+
+.Wallets__history_indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  &.done {
+    background: var(--color-green);
+  }
+
+  &.pending {
+    background: var(--primary-light);
+  }
+
+  &.failed {
+    background: var(--primary-red);
+  }
+}
+
+.Wallets__history__status {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+
+  &.receive {
+    color: var(--color-green);
+  }
+
+  &.send {
+    color: var(--accent);
+  }
+}
+
+.Wallets__history__address {
+  word-break: break-word;
+  display: flex;
+  align-items: center;
+}
+
+.Wallets__history__date {
+  white-space: nowrap;
+}
+
+.Wallets__history__bb {
+  width: 16px;
+  height: 16px;
+  background: url('../../../asset/logo_16.svg') no-repeat center/contain;
+  margin-right: 8px;
+  flex: 0 0 auto;
+}
+
+
+.WalletBalance__selected_wallet {
+  width: 100%;
+  padding-inline-start: 40px;
+  box-sizing: border-box;
+  .WalletBalance__currency_name {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.444444px;
+    color: var(--foreground-primary-opacity);
+  }
+
+  .WalletBalance__selected_amount {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 1.02px;
+    color: var(--foreground-primary-opacity);
+    margin-top: 20px;
+  }
+}
+
+.BuyCurrency {
+  padding: 40px;
+  margin: 24px 0;
+  width: 472px;
+  box-sizing: border-box;
+
+  h3 {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.444444px;
+    color: var(--foreground-primary-opacity);
+    text-align: left;
+  }
+
+  .Button {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .BuyCurrency__content {
+    padding: 40px 0;
+
+    .BuyCurrency__content__row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+
+      .BuyCurrency__input__wrapper {
+        flex: 4;
+
+        .Input {
+          box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
+        }
+      }
+
+      .BuyCurrency__dropdown__wrapper {
+        flex: 6;
+        margin-left: 16px;
+
+        .Input {
+          box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .Drpdown__helper__text {
+          color: var(--secondary-grey);
+          font-weight: 500;
+          font-size: 11px;
+          line-height: 16px;
+          display: flex;
+          align-items: center;
+          letter-spacing: 0.444444px;
+          margin: 8px 20px;
+        }
+      }
+    }
+  }
+}
+
+.CabinetWalletScreen__height_padding {
+  height: 24px;
+  width: 100%;
+}
+
+.Empty_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+
+  h3 {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: 0.444444px;
+    color: var(--primary-grey);
+    max-width: 150px;
+  }
+}
+
+.adaptive {
+  .CabinetWalletScreen__wallets {
+    grid: none;
+    width: 100% !important;
+    .WalletBox {
+      margin-right: 0;
+      .WalletBox__icon {
+        position: absolute;
+        transform: none;
+        left: 10px;
+      }
+      .WalletBox__content {
+        padding-left: 72px;
+        padding-right: 24px;
+        box-sizing: border-box;
+      }
+      .Content_box {
+        box-shadow: none;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0);
+      }
+    }
+  }
+  .WalletBalance {
+    padding-block-end: 0;
+  }
+
+  .CabinetWalletsScreen__walletsContentBox {
+    background-color: white;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+  }
+}

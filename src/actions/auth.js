@@ -1,15 +1,19 @@
-import * as actionTypes from './actionTypes';
-import { AuthApi, AccountApi } from '../swagger';
-import callApi from '../services/api';
+// styles
+// external
+// internal
 import store from '../store';
-
+import apiSchema from '../services/apiSchema';
+import * as actionTypes from './actionTypes';
+import * as api from '../services/api';
+import * as auth from '../services/auth';
+import * as user from './user';
 
 export function getAuth(login, password) {
-  const appId = 8;
-  const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';
+  const app_id = 8;
+  const public_key = '1a4b26bc31-a91649-b63396-253abb8d69';
 
   return new Promise((resolve, reject) => {
-    callApi(new AuthApi().authGet, login, password, appId, publicKey)
+    api.call(apiSchema.Profile.SignInPost, { login, password, app_id, public_key })
       .then((auth) => {
         store.dispatch({ type: actionTypes.AUTH, auth });
         resolve(auth);
@@ -18,16 +22,53 @@ export function getAuth(login, password) {
   });
 }
 
+// export function getAuth(login, password) {
+//   const app_id = 8;
+//   const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';
+//
+//   return new Promise((resolve, reject) => {
+//     api.post(schemaAPI.signin.path + '?login=' + login + '&password=' + password + '&app_id=' + app_id)
+//       .then((auth) => {
+//         store.dispatch({ type: actionTypes.AUTH, auth });
+//         resolve(auth);
+//       })
+//       .catch((err) => reject(err));
+//   });
+// }
+
+// export function getAuth(login, password) {
+//   const appId = 8;
+//   const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';
+//
+//   return new Promise((resolve, reject) => {
+//     api.callApi(new AuthApi().authGet, login, password, appId, publicKey)
+//       .then((auth) => {
+//         store.dispatch({ type: actionTypes.AUTH, auth });
+//         resolve(auth);
+//       })
+//       .catch((err) => reject(err));
+//   });
+// }
+
+export function logout() {
+  auth.logout();
+  store.dispatch({type: actionTypes.LOGOUT});
+  window.location.href = '/';
+}
+
+export function setSecretKey() {
+  return false;
+}
+
 export function getGoogleCode(login, password, code) {
   const appId = 8;
   const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';
 
   return new Promise((resolve, reject) => {
-
     let params = {
       login,
       password,
-      code,
+      ga_code: code,
       app_id: appId,
       public_key: publicKey
     };
@@ -44,19 +85,26 @@ export function getGoogleCode(login, password, code) {
     //   .then(() => resolve())
     //   .catch((err) => reject(err));
 
-    callApi(new AccountApi().googleCodeGet, login, password, code, appId, publicKey)
+    api.call(apiSchema.Profile.SignInTwoStepPost, {
+      login,
+      password,
+      ga_code: code,
+      app_id: appId,
+      public_key: publicKey
+    })
       .then((resp) => {
-        // store.dispatch({type: actionTypes.SET_LANG, auth});
-        resolve(resp);
+        auth.login(resp.access_token);
+        user.install().then(() => {
+          resolve(resp);
+        });
       })
       .catch((err) => reject(err));
-
   });
 }
 
 export function resetGoogleCode(secret, login, password, code) {
   return new Promise((resolve, reject) => {
-    callApi(new AccountApi().googleCodeDelete, secret, login, password)
+    api.call(apiSchema.Profile.ResetGaPost, { secret, login, password })
       .then(() => {
         // store.dispatch({type: actionTypes.SET_LANG, auth});
         resolve();
@@ -67,7 +115,7 @@ export function resetGoogleCode(secret, login, password, code) {
 
 export function resetPassword(email) {
   return new Promise((resolve, reject) => {
-    callApi(new AccountApi().accountResetPasswordPost, email)
+    api.call(apiSchema.Profile.ResetPasswordPost, { email })
       .then(() => {
         resolve();
       })
@@ -76,9 +124,9 @@ export function resetPassword(email) {
 }
 
 
-export function sendSmsCode(countryCode, number, gaCode) {
+export function sendSmsCode(phone_code, phone_number, hash) {
   return new Promise((resolve, reject) => {
-    callApi(new AccountApi().accountSmsPut, countryCode, number, gaCode)
+    api.call(apiSchema.Profile.FillAccountSendSmsPut, { phone_code, phone_number, hash })
       .then((auth) => {
         resolve();
       })
@@ -88,7 +136,7 @@ export function sendSmsCode(countryCode, number, gaCode) {
 
 export function checkSmsCode(countryCode, number, code) {
   return new Promise((resolve, reject) => {
-    callApi(new AccountApi().accountSmsGet, countryCode, number, code)
+    api.call(apiSchema.Profile.ChangePhoneNumberPut, { countryCode, number, code })
       .then((auth) => {
         resolve();
       })
@@ -96,9 +144,9 @@ export function checkSmsCode(countryCode, number, code) {
   });
 }
 
-export function registerUser(email, refer) {
+export function registerUser(email, refer = null) {
   return new Promise((resolve, reject) => {
-    callApi(new AccountApi().accountRegisterPut, email, refer)
+    api.call(apiSchema.Profile.SignUpPut, { email, refer })
       .then((auth) => {
         resolve();
       })

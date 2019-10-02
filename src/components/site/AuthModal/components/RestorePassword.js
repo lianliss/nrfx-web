@@ -39,7 +39,7 @@ function RestorePassword({ changeStep, currentStep, onClose }) {
             </div>
 
             <div className="AuthModal__footer">
-              <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalSend')}</UI.Button>
+              <UI.Button onClick={handleSubmit}>{utils.getLang('site__contactSend')}</UI.Button>
             </div>
           </>
         ) : (

@@ -3,14 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap" rel="stylesheet">
-
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#FFB560" />
+      <!--
+        manifest.json provides metadata used when your web app is installed on a
+        user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+      -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -24,14 +22,6 @@
     <title>BitcoinBot</title>
     <meta name="description" content="BitcoinBot - a unique platform that combines the strategies of the world's best traders, trading robots and artificial intelligence for investing in the cryptocurrency market.">
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121397179-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-121397179-1');
-    </script>
     <script type='text/javascript'>
       (function(){ var widget_id = 'LalozVWHru';var d=document;var w=window;function l(){
         var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
@@ -54,5 +44,26 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script type="text/javascript">
+      WebFont.load({
+        custom: {
+          families: [
+            'Montserrat:400,500,600,700',
+          ],
+          urls: [
+            'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap',
+          ],
+        }
+      });
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121397179-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-121397179-1');
+    </script>
   </body>
 </html>

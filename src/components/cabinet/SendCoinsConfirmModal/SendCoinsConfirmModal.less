@@ -1,0 +1,134 @@
+.SendCoinsConfirmModal__card {
+  background: var(--gradient-primary);
+  border-radius: 8px;
+  color: var(--contrast-primary);
+  text-align: center;
+  padding: 12px;
+  position: relative;
+}
+
+.SendCoinsConfirmModal__card__icon {
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+
+  svg {
+    transform: scale(2);
+    transform-origin: top;
+  }
+}
+
+.SendCoinsConfirmModal__card__label {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.SendCoinsConfirmModal__card__value {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.SendCoinsConfirmModal__status {
+  display: flex;
+  margin-top: 24px;
+}
+
+.SendCoinsConfirmModal__status__row {
+  flex: 1;
+
+  &.right {
+    text-align: right;
+  }
+}
+
+.SendCoinsConfirmModal__status__row__label {
+  color: var(--primary-grey);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.SendCoinsConfirmModal__status__row__value {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 4px;
+
+  &.pending {
+    color: var(--primary);
+  }
+
+  &.done {
+    color: var(--color-green);
+  }
+}
+
+.SendCoinsConfirmModal__input_wrapper {
+  position: relative;
+
+  .Input {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.08);
+    margin: 40px 0 0 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    border: 1px solid #f1f1f1;
+    -webkit-appearance: none;
+
+    &::placeholder {
+      color: var(--primary-grey);
+    }
+  }
+
+  img {
+    position: absolute;
+    right: 16px;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.SendCoinsConfirmModal__submit_wrapper {
+  width: 100%;
+  display: flex;
+  padding-top: 40px;
+  .Button {
+    margin: auto;
+  }
+}
+
+.SendCoinsConfirmModal__icon {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  top: 16px;
+  left: -32px;
+  background: no-repeat center/contain;
+}
+
+.adaptive {
+  .SendCoinsConfirmModal {
+    &__wrapper {
+      padding-top: 80px;
+    }
+
+    &__icon {
+      left: 0;
+      right: 0;
+      top: -32px;
+      margin: 0 auto;
+    }
+
+    .Wallets__history__address {
+      word-break: break-all;
+    }
+  }
+}
