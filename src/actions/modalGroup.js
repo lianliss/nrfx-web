@@ -55,7 +55,6 @@ export function openModalPage(name = null, sendParams = {}, customModal = {}) {
     routerSendParams.rp = Object.keys({...sendParams}).join(modalGroupConstant.MODALGROUP_SEPARATOR);
   }
 
-  console.log(name);
   router.navigate(router.getState().name, {...routerSendParams}, {}, () => {
     modalGroupSetActiveModal(name);
   });

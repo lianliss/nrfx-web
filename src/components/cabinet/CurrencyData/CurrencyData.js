@@ -34,7 +34,6 @@ class CurrencyData extends React.PureComponent {
     onWsMessage = (message) => {
       const data = JSON.parse(message.data);
       currencies[data.pair] = data.price;
-      console.log('currencies :', currencies);
     }
 
     onWsClose = () => console.log('WS closed');

@@ -9,10 +9,11 @@ import {loadLang} from '../../../actions';
 import * as storage from '../../../services/storage';
 import moment from 'moment/min/moment-with-locales';
 import * as utils from '../../../utils'
+import * as emitter from '../../../services/emitter';
 
-const Footer = (props) => {
+const Footer = props => {
   const handleLangChange = (value) => {
-    loadLang(value);
+    loadLang(value).then(e => emitter.emit('headerUpdate') && Footer(props));
     storage.setItem('lang', value);
     moment.locale(value);
   };
@@ -28,7 +29,7 @@ const Footer = (props) => {
         langList: props.langList,
       }
     })
-  }
+  };
 
   const currentLang = storage.getItem('lang') || "en";
   const lang = props.langList.find(l => l.value === currentLang);
@@ -41,7 +42,7 @@ const Footer = (props) => {
       <li className="CabinetFooter__item"><a href="http://cabinet.bitcoinbot.pro">{utils.getLang("global_oldDesign")}</a></li>
     </ul>
   )
-}
+};
 
 export default storeUtils.getWithState(
   CLASSES.COMPONENT_FOOTER,

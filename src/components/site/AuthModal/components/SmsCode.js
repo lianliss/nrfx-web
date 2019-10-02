@@ -39,7 +39,7 @@ function SmsCode({ changeStep, params }) {
 
       <div className="Resend__footer">
         <Resend onResend={handleSubmit} />
-        <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalConfirm')}</UI.Button>
+        <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalConfirm')}</UI.Button>
       </div>
     </div>
   )

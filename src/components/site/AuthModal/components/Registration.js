@@ -63,7 +63,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
             </div>
 
             <div className="AuthModal__footer">
-              <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
+              <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
             </div>
           </>
         ) : (

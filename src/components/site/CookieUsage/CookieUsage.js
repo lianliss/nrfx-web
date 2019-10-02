@@ -24,7 +24,7 @@ function CookieUsage({ lang }) {
           <span> {lang.site__cookiePrivacyPolicy}</span>
           {lang.site__cookieText2}
         </p>
-        <UI.Button onClick={handleAgree}>{lang.site__cookieAgree}</UI.Button>
+        <UI.Button fontSize={15} onClick={handleAgree}>{lang.site__cookieAgree}</UI.Button>
       </div>
     )
   }

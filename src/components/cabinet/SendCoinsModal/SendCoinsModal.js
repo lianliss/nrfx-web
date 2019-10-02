@@ -62,9 +62,8 @@ class SendCoinsModal extends React.Component {
       )
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.props.thisState.currency);
-
       this.options = this.props.thisState.wallets.filter(w => w.status !== 'pending');
-      this.options = this.options.map((item) => {
+      this.options = this.options.map(item => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -146,15 +145,20 @@ class SendCoinsModal extends React.Component {
   __load = () => {
     this.__setState({ loadingStatus: 'loading' });
 
-    walletsActions.getWallets().then((wallets) => {
+    walletsActions.getWallets().then(wallets => {
       this.__setState({ loadingStatus: '', wallets });
       let preset = 'Bitcoin';
+
       if (this.props.hasOwnProperty('preset')) {
-        preset = this.options.filter((opt) => opt.title === this.props.preset)[0];
+        preset = this.options.filter(opt => opt.title === this.props.preset)[0];
         this.__setState({currency: preset.value, selectedWallet: preset });
       } else {
-        preset = this.options.filter(opt => opt.title === "Bitcoin")[0];
-        this.__setState({currency: preset.value, selectedWallet: preset });
+        if (this.props.thisState.currency !== null) {
+          let currency = actions.getCurrencyInfo(this.props.thisState.currency);
+          preset = utils.ucfirst(currency.name)
+        }
+        preset = this.options.filter(opt => opt.title === preset)[0];
+        this.__setState({currency: preset.value, selectedWallet: preset});
       }
     }).catch(() => {
       this.__setState({ loadingStatus: 'failed' });
@@ -225,7 +229,7 @@ class SendCoinsModal extends React.Component {
             errorAmount: false
           });
         }, 1000)
-      })
+      });
       return;
     }
 

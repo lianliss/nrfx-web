@@ -27,13 +27,13 @@ class OpenDepositModal extends React.Component {
   };
 
   componentDidMount() {
-    this.__getWalets();
+    this.__getWallets();
   }
 
-  __getWalets() {
-    walletsActions.getWallets().then((wallets) => {
+  __getWallets = () => {
+    walletsActions.getWallets().then(wallets => {
       wallets = wallets.filter(w => w.status !== "pending");
-      const walletOptions = wallets.map((item) => {
+      const walletOptions = wallets.map(item => {
         const info = actions.getCurrencyInfo(item.currency);
         return {
           title: utils.ucfirst(info.name),
@@ -42,32 +42,32 @@ class OpenDepositModal extends React.Component {
           currency: item.currency
         }
       });
-      const currentCurrency = (this.props.router.route.params.currency || walletOptions[0].currency).toLowerCase();
+      const currentCurrency = (this.props.router.route.params.currency || this.props.thisState.currency || walletOptions[0].currency).toLowerCase();
       const walletCurrentOption =  walletOptions.find(w => w.currency === currentCurrency );
-      this.setState({
+      this.__setState({
         walletOptions,
         walletCurrentOption,
         currency: walletCurrentOption.currency,
         walletId: walletCurrentOption.value
-      }, this.__getPlans);
+      }, null, this.__getPlans);
     }).catch(() => {
-      alert("Error");
+      console.log("Error");
     });
-  }
+  };
 
   __handleClickMore(e) {
     e.preventDefault();
     modalGroupActions.openModalPage(null, {}, {
       children: RateDetailsModal,
       params: {
-        currency: this.state.currency,
-        plans: this.state.plans.map(p => p["static"])
+        currency: this.props.thisState.currency,
+        plans: this.props.thisState.plans.map(p => p["static"])
       }
     })
   }
 
-  __getPlans() {
-    const { currency, amount, selectDepositType } = this.state;
+  __getPlans = () => {
+    const {currency, amount, selectDepositType} = this.props.thisState;
 
     currency && selectDepositType &&
     api.call(apiSchema.Investment.PlansGet, {
@@ -77,7 +77,7 @@ class OpenDepositModal extends React.Component {
     }, ).then(({plans}) => {
 
       const planOptions = plans.map(plan => {
-        const p = plan[this.state.selectDepositType];
+        const p = plan[this.props.thisState.selectDepositType];
         return {
           value: p.id,
           title: p.description,
@@ -87,9 +87,9 @@ class OpenDepositModal extends React.Component {
         }
       });
 
-      let planCurrentOption = planOptions.find(p => p.value === this.state.planId) || planOptions[0];
+      let planCurrentOption = planOptions.find(p => p.value === this.props.thisState.planId) || planOptions[0];
 
-      this.setState({
+      this.__setState({
         plans: plans,
         planOptions,
         planCurrentOption,
@@ -98,32 +98,45 @@ class OpenDepositModal extends React.Component {
         amountMin: planCurrentOption.min,
       });
     }).catch((err) => {
-      this.setState({error: err.message});
+      this.__setState({error: err.message});
     });
-  }
+  };
 
   handleSubmit() {
-    !this.state.touched && this.setState({ touched: true });
+    !this.props.thisState.touched && this.__setState({ touched: true });
 
-    this.state.amount && api.call(apiSchema.Investment.DepositPut, {
-      amount: this.state.amount,
-      wallet_id: this.state.walletId,
-      plan_id: this.state.planId,
-      deposit_type: this.state.selectDepositType
+    this.props.thisState.amount && api.call(apiSchema.Investment.DepositPut, {
+      amount: this.props.thisState.amount,
+      wallet_id: this.props.thisState.walletId,
+      plan_id: this.props.thisState.planId,
+      deposit_type: this.props.thisState.selectDepositType
     }).then(({plans}) => {
       this.props.toastPush(utils.getLang('cabinet_openNewDeposit_depositCreated'), "success");
       this.props.modalGroupSetActiveModal();
     }).catch((err) => {
-      this.setState({error: err.message});
+      this.__setState({error: err.message});
     });
   }
 
   __getPlansThrottle = utils.throttle(this.__getPlans, 1000);
 
+  __setState = (value, key = null, callback) => {
+    this.props.setStateByModalPage('open_deposit', value, key);
+    if (callback) callback();
+  };
+
+  __onKeyPressHandler = e => {
+    if (isNaN(parseInt(e.key))) {
+      e.preventDefault();
+      return null;
+    }
+  };
+
   render() {
     let typeInfoRows;
-    const currencyInfo = actions.getCurrencyInfo(this.state.currency);
-    if (this.state.selectDepositType === 'static') {
+
+    const currencyInfo = actions.getCurrencyInfo(this.props.thisState.currency);
+    if (this.props.thisState.selectDepositType === 'static') {
       typeInfoRows = [
         {
           label: utils.getLang('cabinet_openNewDeposit_income'),
@@ -160,14 +173,14 @@ class OpenDepositModal extends React.Component {
           <div className="OpenDepositModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <div className="OpenDepositModal__row">
             <UI.Dropdown
-              placeholder={this.state.walletCurrentOption}
-              options={this.state.walletOptions}
+              placeholder={this.props.thisState.walletCurrentOption}
+              options={this.props.thisState.walletOptions}
               onChange={item => {
-                item && this.setState({
+                item && this.__setState({
                   walletCurrentOption: item,
                   currency: item.currency,
                   walletId: item.value
-                }, this.__getPlansThrottle)
+                }, null, this.__getPlansThrottle)
               }}
             />
           </div>
@@ -175,26 +188,27 @@ class OpenDepositModal extends React.Component {
             <UI.Input
               type="number"
               error={
-                (!this.state.amount && this.state.touched) || (this.state.amount > this.state.amountMax) ||
-                (this.state.amount < this.state.amountMin)
+                (!this.props.thisState.amount && this.props.thisState.touched) || (this.props.thisState.amount > this.props.thisState.amountMax) ||
+                (this.props.thisState.amount < this.props.thisState.amountMin)
               }
-              value={this.state.amount}
+              value={this.props.thisState.amount}
               onBlur={() => {
-                const { amount, amountMax } = this.state;
-                this.setState({ amount: (amount > amountMax ? amountMax : amount) }, this.__getPlansThrottle);
+                const { amount, amountMax } = this.props.thisState;
+                this.__setState({ amount: (amount > amountMax ? amountMax : amount) }, null, this.__getPlansThrottle);
               }}
               placeholder={utils.getLang('cabinet_openNewDeposit_amount')}
-              indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.state.amountMin} ${this.state.currency && this.state.currency.toUpperCase()}`}
+              indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.props.thisState.amountMin} ${this.props.thisState.currency && this.props.thisState.currency.toUpperCase()}`}
+              onKeyPress={e => this.__onKeyPressHandler(e)}
               onTextChange={amount => {
-                this.setState({ amount });
+                this.__setState({ amount });
               }}
             />
           </div>
           <div className="OpenDepositModal__row">
             <UI.SwitchTabs
-              currency={this.state.currency}
-              selected={this.state.selectDepositType}
-              onChange={(selectDepositType) => this.setState({ selectDepositType }, this.__getPlans)}
+              currency={this.props.thisState.currency}
+              selected={this.props.thisState.selectDepositType}
+              onChange={(selectDepositType) => this.__setState({ selectDepositType }, null, this.__getPlans)}
               tabs={[
                 { value: 'static', label: 'Static' },
                 { value: 'dynamic', label: 'Dynamic' }
@@ -216,21 +230,21 @@ class OpenDepositModal extends React.Component {
           </div>
           <div className="OpenDepositModal__row">
             <UI.Dropdown
-              placeholder={this.state.planCurrentOption}
-              options={this.state.planOptions}
+              placeholder={this.props.thisState.planCurrentOption}
+              options={this.props.thisState.planOptions}
               onChange={item => {
-                item && this.setState({
+                item && this.__setState({
                   planId: item.value,
                   planCurrentOption: item,
                   amountMax: item.max,
                   amountMin: item.min
-                }, this.__getPlansThrottle)
+                }, null, this.__getPlansThrottle)
               }}
             />
           </div>
-          { this.state.error && <div className="OpenDepositModal__error">{this.state.error}</div>}
+          { this.props.thisState.error && <div className="OpenDepositModal__error">{this.props.thisState.error}</div>}
           <div className="OpenDepositModal__btn_wrapper">
-            <UI.Button currency={this.state.currency} onClick={this.handleSubmit.bind(this)}>
+            <UI.Button currency={this.props.thisState.currency} onClick={this.handleSubmit.bind(this)}>
               {utils.getLang('cabinet_openNewDeposit_invest')}
             </UI.Button>
           </div>

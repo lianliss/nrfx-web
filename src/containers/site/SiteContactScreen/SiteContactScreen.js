@@ -119,7 +119,7 @@ export default class SiteContactScreen extends BaseScreen {
               </div>
 
               <RecaptchaModal disabled={isSubmitDisabled} className="Send_Button" onVerify={this.handleSubmit}>
-                <UI.Button rounded>{this.lang.site.contactSend}</UI.Button>
+                <UI.Button fontSize={15} rounded>{this.lang.site.contactSend}</UI.Button>
               </RecaptchaModal>
             </div>
           </div>
