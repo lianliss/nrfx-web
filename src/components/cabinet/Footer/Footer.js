@@ -1,21 +1,17 @@
 import "./Footer.less";
 import React from "react";
+import * as emitter from '../../../services/emitter';
 import { classNames } from '../../../utils/index';
 import * as modalGroupActions from '../../../actions/modalGroup';
 import LanguageModal from '../../site/LanguageModal/LanguageModal';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
-import {loadLang} from '../../../actions';
-import * as storage from '../../../services/storage';
-import moment from 'moment/min/moment-with-locales';
+import { getLang, setLang } from '../../../services/lang';
 import * as utils from '../../../utils'
-import * as emitter from '../../../services/emitter';
 
-const Footer = props => {
+const Footer = (props) => {
   const handleLangChange = (value) => {
-    loadLang(value).then(e => emitter.emit('headerUpdate') && Footer(props));
-    storage.setItem('lang', value);
-    moment.locale(value);
+    setLang(value, e => emitter.emit('headerUpdate') && Footer(props));
   };
 
   const handleChangeLanguage = () => {
@@ -31,7 +27,7 @@ const Footer = props => {
     })
   };
 
-  const currentLang = storage.getItem('lang') || "en";
+  const currentLang = getLang();
   const lang = props.langList.find(l => l.value === currentLang);
 
   return (
@@ -42,9 +38,10 @@ const Footer = props => {
       <li className="CabinetFooter__item"><a href="http://cabinet.bitcoinbot.pro">{utils.getLang("global_oldDesign")}</a></li>
     </ul>
   )
-};
+}
 
 export default storeUtils.getWithState(
   CLASSES.COMPONENT_FOOTER,
   Footer
 );
+
