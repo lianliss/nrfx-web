@@ -59,12 +59,12 @@ class CabinetProfileScreen extends CabinetBaseScreen {
               icon={<SettingsSvg />}
               label={utils.getLang('cabinet_profileScreen_settings')}
             />,
-            // <ProfileSidebarItem
-            //  icon={<UsersSvg />}
-            //  label="Partners"
-            //  onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
-            // />
-            // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
+            <ProfileSidebarItem
+              icon={<UsersSvg />}
+              label="Partners"
+              onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
+            />
+            //<ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
           ]}
         >
           {this.__renderContent()}
@@ -130,10 +130,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     switch (this.props.routerParams.section) {
       case 'partners': {
         return <div>
-          <PartnersSection
-            adaptive={this.props.adaptive}
-            wallets={this.__renderWallets}
-          />
+          <PartnersSection />
         </div>
       }
       case 'customers': {

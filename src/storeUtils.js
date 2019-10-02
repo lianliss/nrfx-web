@@ -79,6 +79,7 @@ export function getWithState(caseName, caseClass) {
         return {
           ...state.wallets,
           ...state.profile,
+          ...state.default,
           adaptive: state.default.adaptive
         }
       };

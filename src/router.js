@@ -92,6 +92,7 @@ export const routes = [
   {
     name: pages.PROFILE,
     path: '/profile',
+    params: { section: 'test' }
   },
   {
     name: pages.INVESTMENTS,
