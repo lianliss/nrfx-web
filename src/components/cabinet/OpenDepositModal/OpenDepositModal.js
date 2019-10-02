@@ -125,13 +125,6 @@ class OpenDepositModal extends React.Component {
     if (callback) callback();
   };
 
-  __onKeyPressHandler = e => {
-    if (isNaN(parseInt(e.key))) {
-      e.preventDefault();
-      return null;
-    }
-  };
-
   render() {
     let typeInfoRows;
 
@@ -198,7 +191,7 @@ class OpenDepositModal extends React.Component {
               }}
               placeholder={utils.getLang('cabinet_openNewDeposit_amount')}
               indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.props.thisState.amountMin} ${this.props.thisState.currency && this.props.thisState.currency.toUpperCase()}`}
-              onKeyPress={e => this.__onKeyPressHandler(e)}
+              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.props.thisState.amount)}
               onTextChange={amount => {
                 this.__setState({ amount });
               }}

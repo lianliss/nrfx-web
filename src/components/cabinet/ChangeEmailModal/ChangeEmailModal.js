@@ -46,7 +46,7 @@ class ChangeEmailModal extends React.Component {
             value={this.state.gaCode}
             onChange={(e) => this.__handleChange(e, 'GA')}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            onKeyPress={this.__onKeyPressHandler}
             error={this.state.errorGaCode}
           />
 
@@ -60,6 +60,13 @@ class ChangeEmailModal extends React.Component {
       </div>
     )
   }
+
+  __onKeyPressHandler = e => {
+    utils.InputNumberOnKeyPressHandler(e);
+    if (e.key === 'Enter' && this.state.gaCode.length < 6) {
+      this.__handleSubmit();
+    }
+  };
 
   __handleChange = (e, type) => {
     switch (type) {

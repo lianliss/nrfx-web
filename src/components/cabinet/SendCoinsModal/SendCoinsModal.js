@@ -91,8 +91,8 @@ class SendCoinsModal extends React.Component {
               placeholder={this.props.thisState.selectedWallet}
               value={this.props.thisState.selectedWallet}
               options={this.options}
-              onChange={(item) => {
-                this.__setState({currency: item.value, selectedWallet: item });
+              onChange={item => {
+                this.__setState({currency: item.value, selectedWallet: item, address: '' });
                 this.__amountDidChange(0);
               }}
             />}
@@ -110,14 +110,16 @@ class SendCoinsModal extends React.Component {
               placeholder="0"
               indicator={this.props.thisState.currency.toUpperCase()}
               onTextChange={this.__amountDidChange}
-              value={this.props.thisState.amount || ''}
+              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.props.thisState.amount)}
+              value={this.props.thisState.amount || undefined}
               error={this.state.errorAmount}
             />
             <UI.Input
               placeholder="0"
               indicator="USD"
               onTextChange={this.__usdAmountDidChange}
-              value={(this.props.thisState.amountUSD > 0 || this.props.thisState.amount) ? this.props.thisState.amountUSD : ""}
+              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.props.thisState.amountUSD)}
+              value={this.props.thisState.amountUSD || undefined}
             />
             <UI.Button
               smallPadding

@@ -38,7 +38,7 @@ const Footer = (props) => {
       <li className="CabinetFooter__item"><a href="http://cabinet.bitcoinbot.pro">{utils.getLang("global_oldDesign")}</a></li>
     </ul>
   )
-}
+};
 
 export default storeUtils.getWithState(
   CLASSES.COMPONENT_FOOTER,

@@ -75,7 +75,10 @@ class WithdrawalModal extends React.Component {
                   autoFocus
                   placeholder="0"
                   indicator={this.props.currency.toUpperCase()}
-                  onTextChange={this.__amountDidChange}
+                  onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.state.amount)}
+                  onTextChange={amount => {
+                    this.setState({amount});
+                  }}
                   value={this.state.amount}
                   error={this.state.amount > payment.available}
                 />
@@ -96,7 +99,7 @@ class WithdrawalModal extends React.Component {
                 value={this.state.gaCode}
                 onChange={this.__handleGAChange}
                 placeholder={utils.getLang('site__authModalGAPlaceholder')}
-                onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+                onKeyPress={this.__onKeyPressHandler}
                 error={this.state.errorGaCode}
                 disabled={this.state.amount.length < 1}
               />
@@ -130,16 +133,15 @@ class WithdrawalModal extends React.Component {
     )
   }
 
-  __formIsValid = () => {
-    return this.state.gaCode.length === 6 && this.state.amount > 0;
+  __onKeyPressHandler = e => {
+    utils.InputNumberOnKeyPressHandler(e);
+    if (e.key === 'Enter' && this.state.gaCode.length < 6) {
+      this.__handleSubmit();
+    }
   };
 
-  __amountDidChange = (amount) => {
-    if (isNaN(amount)) {
-      return;
-    }
-
-    this.setState({amount})
+  __formIsValid = () => {
+    return this.state.gaCode.length === 6 && this.state.amount > 0;
   };
 
   __maxDidPress = () => {

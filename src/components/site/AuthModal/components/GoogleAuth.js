@@ -76,9 +76,9 @@ function GoogleAuth({ changeStep, email, password, params }) {
             type="number"
             autoComplete="off"
             value={gaCode}
+            onKeyPress={utils.InputNumberOnKeyPressHandler}
             onChange={handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={(e) => (e.key === 'Enter' && gaCode.length < 6) ? handleSubmit() : null}
           />
 
           <img src={require('../asset/google_auth.svg')} alt="Google Auth" />

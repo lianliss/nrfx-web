@@ -34,7 +34,7 @@ export default class GAConfirmModal extends React.Component {
             value={this.state.gaCode}
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={e => this.__onKeyPressHandler(e)}
+            onKeyPress={utils.InputNumberOnKeyPressHandler}
             error={this.state.errorGaCode}
           />
 
@@ -48,15 +48,6 @@ export default class GAConfirmModal extends React.Component {
       </div>
     )
   }
-
-  __onKeyPressHandler = e => {
-    if (e.key === 'Enter' && this.state.gaCode.length < 6) {
-      this.__handleSubmit();
-    } else if (isNaN(parseInt(e.key))) {
-      e.preventDefault();
-      return null;
-    }
-  };
 
   __handleChange = e => {
     const val = e.target.value;

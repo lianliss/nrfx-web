@@ -79,7 +79,7 @@ class SendCoinsConfirmModal extends React.Component {
             value={this.state.gaCode}
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            onKeyPress={this.__onKeyPressHandler}
             error={this.state.errorGaCode}
           />
 
@@ -93,6 +93,13 @@ class SendCoinsConfirmModal extends React.Component {
       </div>
     )
   }
+
+  __onKeyPressHandler = e => {
+    utils.InputNumberOnKeyPressHandler(e);
+    if (e.key === 'Enter' && this.state.gaCode.length < 6) {
+      this.__handleSubmit();
+    }
+  };
 
   __handleChange = (e) => {
     const val = e.target.value;

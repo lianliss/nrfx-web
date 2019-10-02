@@ -50,7 +50,9 @@ class Header extends React.Component {
   }
 
   componentWillUnmount() {
-    emitter.removeListener(this.updater);
+    if (this.updater) {
+      emitter.removeListener(this.updater);
+    }
   }
 
   __update = e => {
