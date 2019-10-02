@@ -135,7 +135,10 @@ router.usePlugin(browserPlugin({
 }));
 router.usePlugin(listenersPlugin());
 
-router.addListener((state)  => {
+router.addListener((state, prevState)  => {
+  if (prevState && prevState.params && prevState.params.modal_group && !state.params.modal_group) {
+    modalGroup.modalGroupClear();
+  }
   if (state.params && state.params.modal_group) {
     modalGroup.modalGroupSetActiveModal(state.params.modal_group);
   }

@@ -3,6 +3,7 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import * as toastsActions from './toasts';
 import * as storage from '../../services/storage';
+import { INTERNAL_NOTIFICATION_KEY } from '../../constants/internalNotifications';
 
 export function load() {
   return (dispatch, getStore) => {
@@ -10,7 +11,7 @@ export function load() {
       dispatch({
         type: actionTypes.INTERNAL_NOTIFICATION_LOAD,
         payload: notifications.filter(n => {
-          return !storage.getItem(n.type);
+          return !storage.getItem(INTERNAL_NOTIFICATION_KEY + n.type);
         })
       });
     }).catch((err) => {
@@ -27,7 +28,7 @@ export function push(notification) {
 
 export function drop(id) {
   return dispatch => {
-    storage.setItem(id, true);
+    storage.setItem(INTERNAL_NOTIFICATION_KEY + id, true);
     dispatch({ type: actionTypes.INTERNAL_NOTIFICATION_DROP, id});
   };
 }
