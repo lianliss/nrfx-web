@@ -65,7 +65,7 @@ class MenuScreen extends CabinetBaseScreen {
           <BaseLink
             router={router}
             onClick={auth.logout}
-            routeName={PAGES.WALLET}
+            routeName={PAGES.MAIN}
             className="Menu__section__item"
             activeClassName="active"
           >

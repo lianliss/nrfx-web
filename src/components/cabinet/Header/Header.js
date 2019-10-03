@@ -32,7 +32,7 @@ function getDropDownLinks() {
         },
         {
           title: utils.getLang('cabinet_header_exit'),
-          route: pages.WALLET,
+          route: pages.MAIN,
           action: () => {
             auth.logout();
           }
@@ -47,12 +47,6 @@ class Header extends React.Component {
     super(props);
     this.DropDownLinks = getDropDownLinks();
     this.updater = emitter.addListener('headerUpdate', this.__update);
-  }
-
-  componentWillUnmount() {
-    if (this.updater) {
-      emitter.removeListener(this.updater);
-    }
   }
 
   __update = e => {
