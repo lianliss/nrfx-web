@@ -10,11 +10,13 @@ import * as pages from '../../../../constants/pages';
 function GoogleAuth({ changeStep, email, password, params }) {
   const [gaCode, changeGaCode] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [pending, setPending] = useState(false);
   const hashRef = useRef(null);
   const { loginRes } = params;
 
   const handleSubmit = (code) => {
     const googleCode = code ? code : gaCode;
+    setPending(true);
 
     getGoogleCode(email, password, googleCode)
       .then((data) => {
@@ -25,7 +27,10 @@ function GoogleAuth({ changeStep, email, password, params }) {
           router.navigate(pages.PROFILE, {}, { reload: true });
         }
       })
-      .catch((err) => setErrorMsg(err.message));
+      .catch((err) => setErrorMsg(err.message))
+      .finally(() => {
+        setPending(false);
+      });
   };
 
   const handleHashCopy = (e) => {
@@ -93,7 +98,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         {(loginRes.need_ga_setup === true && document.queryCommandSupported('copy')) &&
           <UI.Button fontSize={15} type="outline" outlined onClick={handleHashCopy}>Copy Key</UI.Button>
         }
-        <UI.Button fontSize={15} onClick={() => handleSubmit()} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
+        <UI.Button  fontSize={15} onClick={() => handleSubmit()} disabled={pending || gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </div>
   )
