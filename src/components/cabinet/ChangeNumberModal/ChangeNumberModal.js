@@ -62,7 +62,7 @@ class ChangeNumberModal extends React.Component {
             value={this.state.gaCode}
             onChange={this.__handleChange}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            onKeyPress={utils.InputNumberOnKeyPressHandler}
             error={this.state.errorGaCode}
           />
 

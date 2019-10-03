@@ -8,9 +8,8 @@ import UI from '../../../ui';
 import * as utils from '../../../utils/index';
 import * as pages from '../../../constants/pages';
 import router from '../../../router';
-import { loadLang } from '../../../actions';
 import * as steps from '../AuthModal/fixtures';
-import { getItem, setItem } from '../../../services/storage';
+import { getLang, setLang } from '../../../services/lang';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
@@ -18,7 +17,7 @@ import LanguageModal from '../LanguageModal/LanguageModal';
 import StaticContentModal from '../StaticContentModal/StaticContentModal';
 import * as auth from '../../../actions/auth';
 
-const currentLang = getItem('lang');
+const currentLang = getLang();
 
 
 function Header({ showLightLogo, langList, routerState, profile }) {
@@ -115,9 +114,8 @@ function Header({ showLightLogo, langList, routerState, profile }) {
   };
 
   const handleLangChange = (value) => {
-    loadLang(value);
+    setLang(value);
     changeLang(value);
-    setItem('lang', value);
   };
 
   const handleNavigate = (route) => {

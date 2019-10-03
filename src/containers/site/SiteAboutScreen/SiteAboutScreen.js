@@ -24,15 +24,16 @@ const getHeading = (currentTab) => {
     default:
       return utils.getLang('site__aboutBitcoinbotTitle');
   }
-}
+};
 
 const getClassName = (tab, currentTab) => {
   return currentTab !== tab ? 'inactive' : '';
-}
+};
 
 const TabButton = ({ title, tabName, currentTab }) => (
   <span onClick={() => router.navigate(tabName)}>
     <UI.Button
+      fontSize={15}
       rounded
       style={{ width: 200 }}
       newClass={getClassName(tabName, currentTab)}
@@ -40,17 +41,17 @@ const TabButton = ({ title, tabName, currentTab }) => (
       {title}
     </UI.Button>
   </span>
-)
+);
 
 export default class SiteAboutScreen extends BaseScreen {
   componentDidUpdate(prevProps) {
-    if (prevProps.state.page !== this.props.state.page) {
+    if (prevProps.state.page !== router.getState().name) {
       window.scroll(0,0);
     }
   }
 
   render() {
-    const currentTab = this.props.state.page;
+    const currentTab = router.getState().name;
 
     return (
       <div>

@@ -184,11 +184,14 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
       mapState2Props = state => ({
-        router: state.router
+        router: state.router,
+        thisState: state.modalGroup.states.open_deposit
       });
+
       mapDispatch2Props = {
         modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal,
-        toastPush: toastsActions.toastPush
+        toastPush: toastsActions.toastPush,
+        setStateByModalPage: modalGroupActions.setStateByModalPage
       };
       break;
     case CLASSES.CONFIRM_SMS_MODAL:

@@ -66,7 +66,7 @@ function ConfirmPhone({ changeStep, params }) {
       </div>
 
       <div className="AuthModal__footer">
-        <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalSendCode')}</UI.Button>
+        <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalSendCode')}</UI.Button>
       </div>
     </div>
   )
