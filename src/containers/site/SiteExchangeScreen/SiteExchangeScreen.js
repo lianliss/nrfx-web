@@ -31,7 +31,7 @@ export default class SiteExchangeScreen extends BaseScreen {
 
           <div className="SiteExchangeScreen__market">
             <img src={require('./asset/exchange_data.svg')} alt="Exchange market" className="SiteExchangeScreen__market__image" />
-            <UI.Button rounded>{this.lang.site.exchangeViewExchange}</UI.Button>
+            <UI.Button fontSize={15} rounded>{this.lang.site.exchangeViewExchange}</UI.Button>
           </div>
 
 

@@ -36,7 +36,7 @@ function Dropdown({title, subItems, onChange, onNavigate, lastItemText, onLastIt
                     onClick={() => {
                       if (item.action) item.action();
                       if (item.hasOwnProperty('useLocation')) {
-                        window.location.href = item.route;
+                        window.open(item.route, '_blank');
                       } else {
                         onNavigate(item.route)
                       }

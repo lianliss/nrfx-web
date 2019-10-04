@@ -31,6 +31,14 @@ export function classNames() {
   return result.join(' ');
 }
 
+export function removeProperty(object, ...properties) {
+  let newObject = Object.assign({}, object);
+  for (let property of properties) {
+    delete newObject[property];
+  }
+  return newObject;
+}
+
 export function getLang(key) {
   return store.getState().default.lang[key];
 }
@@ -131,6 +139,25 @@ export function makeModalParams(modal, params) {
   };
 }
 
+export function InputNumberOnKeyPressHandler(e) {
+  if (isNaN(parseInt(e.key))) {
+    return e.preventDefault();
+  }
+}
+
+export function __doubleInputOnKeyPressHandler(e, value = '') {
+  switch (e.key) {
+    default:
+      if (isNaN(parseInt(e.key)) || value.length === 1 && value[0] === '0') {
+        e.preventDefault();
+      }
+      break;
+    case '.': {
+      return value.length === 0 ? e.preventDefault() : value.indexOf(e.key) > -1 && e.preventDefault();
+    }
+  }
+}
+
 export function clipTextMiddle(text, length = 10) {
   if (text.length <= length + length / 2) {
     return text;
@@ -168,4 +195,8 @@ export function switchMatch(key, node) {
     }
     default: break;
   }
+}
+
+export function isFiat(currency) {
+  return currency.toLowerCase() === 'usdt';
 }

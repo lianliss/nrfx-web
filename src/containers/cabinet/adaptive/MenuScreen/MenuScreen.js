@@ -2,18 +2,16 @@ import './MenuScreen.less';
 //
 import React from 'react';
 import SVG from 'react-inlinesvg';
-import moment from 'moment/min/moment-with-locales';
 import {BaseLink} from 'react-router5';
 //
 import router from '../../../../router';
-import {loadLang} from '../../../../actions';
 import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
 import LanguageModal from '../../../../components/site/LanguageModal/LanguageModal';
 import * as CLASSES from "../../../../constants/classes";
 import * as storeUtils from "../../../../storeUtils";
 import * as PAGES from '../../../../constants/pages';
 import * as utils from '../../../../utils';
-import * as storage from '../../../../services/storage';
+import { getLang, setLang } from '../../../../services/lang';
 import * as auth from '../../../../actions/auth';
 import * as modalGroupActions from '../../../../actions/modalGroup';
 
@@ -27,7 +25,7 @@ class MenuScreen extends CabinetBaseScreen {
       return null;
     }
 
-    const currentLang = storage.getItem('lang') || "en";
+    const currentLang = getLang();
     const lang = this.props.langList.find(l => l.value === currentLang);
 
     return (
@@ -67,7 +65,7 @@ class MenuScreen extends CabinetBaseScreen {
           <BaseLink
             router={router}
             onClick={auth.logout}
-            routeName={PAGES.WALLET}
+            routeName={PAGES.MAIN}
             className="Menu__section__item"
             activeClassName="active"
           >
@@ -93,9 +91,7 @@ class MenuScreen extends CabinetBaseScreen {
   };
 
   __handleLangChange = value => {
-    loadLang(value);
-    storage.setItem('lang', value);
-    moment.locale(value);
+    setLang(value);
   };
 }
 

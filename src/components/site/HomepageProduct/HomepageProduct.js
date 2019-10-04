@@ -34,6 +34,7 @@ export default function HomepageProduct(props) {
 
         <a href={`/${props.seeMoreLink}`} className="HomepageProduct__anchor">
           <UI.Button
+            fontSize={15}
             rounded
             afterContent={<div className="HomepageProduct__button_arrow" />}
           >

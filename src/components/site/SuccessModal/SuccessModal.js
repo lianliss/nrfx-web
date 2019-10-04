@@ -19,7 +19,7 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
 
       <div className="Resend__footer">
         <Resend onResend={onResend} />
-        <UI.Button onClick={onClose}>{utils.getLang('site__authModalOk')}</UI.Button>
+        <UI.Button fontSize={15} onClick={onClose}>{utils.getLang('site__authModalOk')}</UI.Button>
       </div>
     </div>
   )

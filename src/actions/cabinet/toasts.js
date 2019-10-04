@@ -2,21 +2,31 @@
 // external
 // internal
 import * as actionTypes from '../actionTypes';
+import store from '../../store';
 
 export function toastPush(message, type) {
-  return (dispatch, getStore) => {
-    const id = getStore().toasts.counter;
+  return () => push();
+}
 
-    dispatch({ type: actionTypes.TOASTS_PUSH, payload: { type, message, id }});
+function push(message, type) {
+  const id = store.getState().toasts.counter;
 
-    setTimeout(() => {
-      dispatch({ type: actionTypes.TOASTS_HIDE, id });
-    }, 3000);
+  store.dispatch({ type: actionTypes.TOASTS_PUSH, payload: { type, message, id }});
 
-    setTimeout(() => {
-      dispatch({ type: actionTypes.TOASTS_DROP, id });
-    }, 5000);
-  };
+  setTimeout(() => store.dispatch({ type: actionTypes.TOASTS_HIDE, id }), 3000);
+  setTimeout(() => store.dispatch({ type: actionTypes.TOASTS_DROP, id }), 5000);
+}
+
+export function success(message) {
+  push(message, 'success');
+}
+
+export function warning(message) {
+  push(message, 'warning');
+}
+
+export function error(message) {
+  push(message, 'error');
 }
 
 export function toastDrop(id) {

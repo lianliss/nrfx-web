@@ -39,7 +39,10 @@ function StaticContentModal(props) {
         <div className="StaticContentModal__content__wrapper">
           <h3 className="StaticContentModal__title">{currentData.title}</h3>
           <div className="StaticContentModal__content" dangerouslySetInnerHTML={{ __html: currentData.content }} />
-          <UI.Button onClick={handleClose}>{utils.getLang('site__goBack')}</UI.Button>
+          <UI.Button
+            fontSize={15}
+            onClick={handleClose}>{utils.getLang('site__goBack')}
+          </UI.Button>
         </div>
       </UI.Modal>}
     </div>

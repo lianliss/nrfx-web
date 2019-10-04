@@ -33,8 +33,8 @@ export const routes = [
     path: '/history',
   },
   {
-    name: pages.EXCHANGE,
-    path: '/exchange',
+    name: pages.SITE_EXCHANGE,
+    path: `/${pages.SITE_EXCHANGE}`,
   },
   {
     name: pages.WALLET,
@@ -110,6 +110,10 @@ export const routes = [
     name: pages.RESET_PASSWORD,
     path: '/reset_password',
   },
+  {
+    name: pages.EXCHANGE,
+    path: `/${pages.EXCHANGE}`,
+  }
 ];
 
 const params = {
@@ -132,7 +136,10 @@ router.usePlugin(browserPlugin({
 }));
 router.usePlugin(listenersPlugin());
 
-router.addListener((state)  => {
+router.addListener((state, prevState)  => {
+  if (prevState && prevState.params && prevState.params.modal_group && !state.params.modal_group) {
+    modalGroup.modalGroupClear();
+  }
   if (state.params && state.params.modal_group) {
     modalGroup.modalGroupSetActiveModal(state.params.modal_group);
   }

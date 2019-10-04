@@ -13,7 +13,7 @@ function Banner({ title, caption, btnText }) {
 
       {/* TODO: control the wide (CTA) buttons via props */}
       <AuthModal className="Banner__modal">
-        <UI.Button rounded type="outline" style={{ width: 240 }}>{btnText}</UI.Button>
+        <UI.Button fontSize={15} rounded type="outline" style={{ width: 240 }}>{btnText}</UI.Button>
       </AuthModal>
     </div>
   )

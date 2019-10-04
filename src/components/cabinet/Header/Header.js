@@ -5,6 +5,7 @@ import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 import url from 'url';
 
+import * as emitter from '../../../services/emitter';
 import DropDown from './components/Dropdown';
 import Badge from '../Badge/Badge';
 import router from '../../../router';
@@ -15,39 +16,48 @@ import * as CLASSES from "../../../constants/classes";
 import UI from "../../../ui/index";
 import * as auth from '../../../actions/auth';
 
-function getDropDownLinks() { return[
-  {
-    title: <SVG src={require('../../../asset/cabinet/settings.svg')} />,
-    children: [
-      {
-        title: utils.getLang('cabinet_header_settings'),
-        route: pages.SETTINGS
-      },
-      {
-        title: "FAQ",
-        route: 'https://bitcoinbot.wiki/',
-        useLocation: true
-      },
-      {
-        title: utils.getLang('cabinet_header_exit'),
-        route: pages.WALLET,
-        action: () => {
-          auth.logout();
-        }
-      },
-    ]
-  }
-]}
+function getDropDownLinks() {
+  return [
+    {
+      title: <SVG src={require('../../../asset/cabinet/settings.svg')} />,
+      children: [
+        {
+          title: utils.getLang('cabinet_header_settings'),
+          route: pages.SETTINGS
+        },
+        {
+          title: "FAQ",
+          route: 'https://bitcoinbot.wiki/',
+          useLocation: true
+        },
+        {
+          title: utils.getLang('cabinet_header_exit'),
+          route: pages.MAIN,
+          action: () => {
+            auth.logout();
+          }
+        },
+      ]
+    }
+  ]
+}
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.DropDownLinks = getDropDownLinks();
+    this.updater = emitter.addListener('headerUpdate', this.__update);
   }
+
+  __update = e => {
+    this.DropDownLinks = getDropDownLinks();
+    this.setState({update: !this.state.update});
+  };
 
   state = {
     activePage: null,
-    visibleNotifications: false
+    visibleNotifications: false,
+    update: false
   };
 
   handleNavigate = (route) => {
@@ -92,10 +102,10 @@ class Header extends React.Component {
                 {utils.getLang('cabinet_header_bots')}
               </div>
 
-              <div className="CabinetHeader__link" style={{display:'none'}}>
-                <SVG src={require('../../../asset/cabinet/exchange_icon.svg')} />
-                {utils.getLang('cabinet_header_exchange')}
-              </div>
+              {/*<BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>*/}
+              {/*  <SVG src={require('../../../asset/cabinet/exchange_icon.svg')} />*/}
+              {/*  {utils.getLang('cabinet_header_exchange')}*/}
+              {/*</BaseLink>*/}
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../asset/cabinet/commerce_icon.svg')} />

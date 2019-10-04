@@ -24,14 +24,19 @@ function Modal(props) {
     }
   };
 
-  useEffect(() => {
-    if (props.isOpen) {
-      document.body.style.overflowY = "hidden";
+  const handlePressEsc = e => {
+    if(e.keyCode === 27) {
+      props.onClose && props.onClose();
     }
+  }
+
+  useEffect(() => {
     document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handlePressEsc, false);
+
     return () => {
-      document.body.style.overflowY = "scroll";
       document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handlePressEsc, false);
     };
   }, []);
 
