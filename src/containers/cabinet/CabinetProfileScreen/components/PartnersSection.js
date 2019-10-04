@@ -7,42 +7,91 @@ import * as toastsActions from '../../../../actions/cabinet/toasts';
 import * as profileActions from '../../../../actions/cabinet/profile';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
 import ReferralLink from './ReferralLink/ReferralLink';
-import TableOfPartners from './TableOfPartners';
+import PartnersTable from './PartnersTable';
+import WalletBox from '../../../../components/cabinet/WalletBox/WalletBox';
+import CustomersTable from './CustomersTable';
+import AgentsTable from './AgentsTable';
+import InviteLinks from './InviteLinks/InviteLinks';
 
 class PartnersSection extends React.Component {
   constructor(props) {
     super(props);
 
-    this.inviteLink = `https://bitcoinbot.pro/reg${props.profile.user.id}`;
+    this.inviteLink = props.profile.user ? `https://bitcoinbot.pro/reg${props.profile.user.id}` : '';
   }
 
   render() {
     return (
       <div>
-        <ReferralLink
-          profile={this.props.profile}
-          linkDidCopy={this.__linkDidCopy}
-          inviteLink={this.inviteLink}
-        />
-        {this.__renderTableOfPartners()}
+        {this.__renderWallets()}
+        {this.__renderPartners()}
       </div>
     )
   }
 
-  __renderTableOfPartners = e => {
-    return <TableOfPartners
-      partners={
-        [
-          1,2,3,4,5,6
-        ]
-      }
-    />
+  __renderPartners = () => {
+    switch (this.props.level) {
+      case 'agent':
+        return [
+          <InviteLinks
+            links={this.props.links}
+            linkDidCopy={this.__linkDidCopy}
+            linkDidChange={this.props.saveInviteLink}
+            linkDidDelete={this.props.deleteInviteLink}
+            linkDidRestore={this.props.restoreInviteLink}
+          />,
+          <CustomersTable
+            customers={this.props.clients}
+          />
+        ];
+      case 'representative':
+        return (
+          <div>
+            <AgentsTable
+              agents={this.props.clients}
+            />
+          </div>
+        );
+      default:
+        return (
+          <div>
+            <ReferralLink
+              profile={this.props.profile}
+              linkDidCopy={this.__linkDidCopy}
+              inviteLink={this.inviteLink}
+            />
+            <PartnersTable
+              partners={this.props.clients}
+            />
+          </div>
+        );
+    }
   };
 
-  __linkDidCopy = () => {
-    copyText(this.inviteLink).then(() => {
+  __linkDidCopy = (link = false) => {
+    copyText(link || this.inviteLink).then(() => {
       this.props.toastPush('Link copied', 'success');
     });
+  };
+
+  __renderWallets = () => {
+    if (!this.props.balances.length) {
+      return null;
+    }
+
+    const rows = this.props.balances.map((wallet, i) => {
+      return <WalletBox
+        key={i}
+        {...wallet}
+        skipEmptyLabel
+        onClick={() => console.log('sdfsdsfd')}
+      />
+    });
+    return <div className="CabinetProfileScreen__wallets">
+      {this.props.adaptive ? <div className="CabinetProfileScreen__walletsContentBox">
+        {rows}
+      </div> : rows}
+    </div>
   };
 }
 
@@ -51,8 +100,7 @@ PartnersSection.defaultProps = {
 };
 
 export default connect(state => ({
-  ...state.wallets,
-  ...state.profile,
+  ...state.profile.partner,
   ...state.default,
   adaptive: state.default.adaptive
 }), {
@@ -60,5 +108,8 @@ export default connect(state => ({
   loadWallets: walletsActions.loadWallets,
   loadDashboard: profileActions.loadDashboard,
   getPartner: profileActions.getPartner,
-  toastPush: toastsActions.toastPush
+  toastPush: toastsActions.toastPush,
+  saveInviteLink: profileActions.saveInviteLink,
+  deleteInviteLink: profileActions.deleteInviteLink,
+  restoreInviteLink: profileActions.restoreInviteLink
 })(memo(PartnersSection));

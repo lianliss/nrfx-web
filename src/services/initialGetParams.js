@@ -6,7 +6,11 @@ const initGetParams = ((location) => {
       params[param[0]] = param[1];
     });
   }
-  return {params, hash: location.hash.slice(1)};
+
+  return {
+    params,
+    hash: location.hash.slice(1)
+  };
 })(window.location);
 
 export default initGetParams;

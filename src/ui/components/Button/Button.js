@@ -51,7 +51,7 @@ Button.propTypes = {
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
   currency: PropTypes.string,
-  state: PropTypes.oneOf(['loading', 'disabled'])
+  state: PropTypes.oneOf(['', 'loading', 'disabled'])
 };
 
 export default React.memo(Button);

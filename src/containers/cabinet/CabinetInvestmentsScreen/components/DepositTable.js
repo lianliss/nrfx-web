@@ -6,7 +6,7 @@ import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/
 import * as modalGroupActions from "../../../../actions/modalGroup";
 import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ deposits, adaptive }) {
+export default function WithdrawalTable({ deposits, adaptive, fromPartners }) {
   if (!deposits.length) {
     return (
       <EmptyContentBlock
@@ -29,8 +29,16 @@ export default function WithdrawalTable({ deposits, adaptive }) {
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('rate')}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('cabinet_profileScreen_invested')}</UI.TableColumn>,
-    <UI.TableColumn align="right">{utils.getLang('cabinet_investmentsScreen_profit')}</UI.TableColumn>,
   ];
+
+  if (fromPartners) {
+    headings.push(
+      <UI.TableColumn>User Profit</UI.TableColumn>,
+      <UI.TableColumn>Agent Profit</UI.TableColumn>
+    );
+  } else {
+    headings.push(<UI.TableColumn align="right">{utils.getLang('cabinet_investmentsScreen_profit')}</UI.TableColumn>);
+  }
 
   if (adaptive) {
     headings = [

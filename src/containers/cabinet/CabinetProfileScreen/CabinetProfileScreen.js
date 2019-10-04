@@ -13,6 +13,7 @@ import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 import DashboardItem from './components/DashboardItem';
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
+import ClientChart from '../../../components/cabinet/ClientChart/ClientChart';
 import router from "../../../router";
 import PartnersSection from './components/PartnersSection';
 import RightPartnersSection from './components/RightPartnersSection';
@@ -85,9 +86,16 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         return <div>
           <RightPartnersSection
             adaptive={this.props.adaptive}
-            wallets={this.wallets}
+            wallets={this.props.partner.balances}
             walletSelected={this.state.walletSelected}
           />
+          {this.props.partner && this.props.partner.profit_chart && <ChartProfit
+            chart={this.props.partner.profit_chart}
+          />}
+          {this.props.partner && this.props.partner.client_chart && <ClientChart
+            title={this.__getClientsChartTitle()}
+            chart={this.props.partner.client_chart}
+          />}
         </div>
       }
       default: {
@@ -110,6 +118,17 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       }
     }
   };
+
+  __getClientsChartTitle() {
+    const level = this.props.partner.level;
+    if (level === 'agent') {
+      return 'Customers';
+    } else if (level === 'representation') {
+      return 'Agents';
+    } else {
+      return 'Partners';
+    }
+  }
 
   __renderChartProfit = () => {
     if (this.props.adaptive || !this.props.dashboard.hasOwnProperty('chart')) {

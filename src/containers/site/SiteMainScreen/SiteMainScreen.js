@@ -11,10 +11,17 @@ import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBann
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../utils/index';
+import * as actions from '../../../actions';
 import TypedText from '../../../components/site/TypedText/TypedText';
+import initGetParams from '../../../services/initialGetParams';
 
 
 export default class SiteMainScreen extends BaseScreen {
+  componentDidMount() {
+    if (initGetParams.params.i) {
+      actions.sendInviteLinkView(initGetParams.params.i);
+    }
+  }
 
   getAnimatedTitle = () => {
     const { site } = this.lang;

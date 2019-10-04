@@ -5,10 +5,10 @@ const initialState = {
   dashboard: {},
   partner: {
     balances: [],
-    client_chart: {},
+    client_chart: false,
     clients: [],
     level: '',
-    profit_chart: {}
+    profit_chart: false
   }
 };
 
@@ -30,6 +30,57 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.PROFILE_PARTNER_SET: {
       return Object.assign({}, state, {
         partner: action.partner
+      });
+    }
+
+    case actionTypes.PROFILE_INVITE_LINK_UPDATE: {
+      let partner = Object.assign({}, state.partner);
+
+      for (let i = 0; i < partner.links.length; i++) {
+        if (partner.links[i].id === action.linkId) {
+          partner.links[i].name = action.name;
+          break;
+        }
+      }
+
+      return Object.assign({}, state, { partner });
+    }
+
+    case actionTypes.PROFILE_INVITE_LINK_ADD: {
+      let links = Object.assign([], state.partner.links);
+      links.push(action.link);
+      return Object.assign({}, state, {
+        partner: Object.assign({}, state.partner, { links })
+      });
+    }
+
+    case actionTypes.PROFILE_INVITE_LINK_DELETE: {
+      let links = Object.assign([], state.partner.links);
+
+      for (let i = 0; i < links.length; i++) {
+        if (links[i].id === action.linkId) {
+          links[i].deleted = true;
+          break;
+        }
+      }
+
+      return Object.assign({}, state, {
+        partner: Object.assign({}, state.partner, { links })
+      });
+    }
+
+    case actionTypes.PROFILE_INVITE_LINK_RESTORE: {
+      let links = Object.assign([], state.partner.links);
+
+      for (let i = 0; i < links.length; i++) {
+        if (links[i].id === action.linkId) {
+          delete links[i].deleted;
+          break;
+        }
+      }
+
+      return Object.assign({}, state, {
+        partner: Object.assign({}, state.partner, { links })
       });
     }
 

@@ -20,7 +20,7 @@ function Modal(props) {
     if (node.current && node.current.contains(e.target)) {
       return () => {};
     } else {
-      !adaptive && props.onClose();
+      !adaptive && !props.skipClose && props.onClose();
     }
   };
 
@@ -40,7 +40,7 @@ function Modal(props) {
     return (
       <div className={className}>
         <div className="Modal__box" ref={node} style={{ width: props.width }}>
-          <div className="Modal__box__close" onClick={props.onClose} />
+          {!props.skipClose && <div className="Modal__box__close" onClick={props.onClose} />}
           {props.children}
         </div>
       </div>
@@ -53,7 +53,8 @@ function Modal(props) {
 Modal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  width: PropTypes.number
+  width: PropTypes.number,
+  skipClose: PropTypes.bool,
 };
 
 export function ModalHeader({ children }) {

@@ -21,6 +21,10 @@ class Input extends React.Component {
     this.setState({ displayPassword: !this.state.displayPassword });
   }
 
+  focus() {
+    this.refs['input'].focus();
+  }
+
   render() {
     const className = classNames({
       Input: true,
