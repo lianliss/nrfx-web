@@ -1,6 +1,6 @@
 import * as auth from './auth';
 
-const API_ENTRY = 'https://stage.bitcoinbot.pro';
+const API_ENTRY = 'https://api.bitcoinbot.pro';
 
 const API_VERSION = 1;
 

@@ -6,7 +6,7 @@ import { widget } from '../../../../../charting_library/charting_library.min';
 
 export default class Chart extends React.PureComponent {
   static defaultProps = {
-    symbol: 'BTC:USDT',
+    symbol: 'BTC:USDT2',
     interval: '1',
     resolution: '1',
     containerId: 'tv_chart_container',

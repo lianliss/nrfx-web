@@ -4,17 +4,24 @@ import React, { memo } from 'react';
 import { connect } from 'react-redux';
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
+import * as actions from '../../../../../actions';
 import * as exchangeActions from '../../../../../actions/cabinet/exchange';
 
 class MarketInfo extends React.Component{
+
+  __handleChooseMarket() {
+    actions.openModal('choose_market');
+  }
+
   render() {
 
     const [primary, secondary] = this.props.market.toUpperCase().split('/');
 
+
     return (
       <div className="MarketInfo">
         <div className="MarketInfo__row pair">
-          <div className="MarketInfo__pair">
+          <div className="MarketInfo__pair" onClick={this.__handleChooseMarket}>
             <div className="MarketInfo__pair__primary">{primary}</div>
             <div className="MarketInfo__pair__secondary">{secondary}</div>
           </div>

@@ -10,6 +10,7 @@ import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoi
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
 import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBalanceModal';
+import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
 import router from './router';
 
@@ -49,6 +50,9 @@ export default function Modals(props) {
       break;
     case 'confirm':
       Component = ConfirmModal;
+      break;
+    case 'choose_market':
+      Component = ChooseMarketModal;
       break;
     default: return null;
   }

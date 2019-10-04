@@ -11,6 +11,14 @@ body {
   &.adaptive {
     user-select: none;
   }
+
+  &.modal-open {
+    overflow-y: hidden;
+
+    #root {
+      overflow-y: scroll;
+    }
+  }
 }
 
 a {
@@ -33,10 +41,6 @@ h1, h2, h3, h4, h5, h6, p {
   height: 100vh;
   font-weight: 500;
   font-size: 16px;
-}
-
-.modal-open {
-  overflow: hidden;
 }
 
 /* TODO: Find a better method */

@@ -3,6 +3,7 @@ import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
 import store from '../../store';
 import * as toast from '../cabinet/toasts';
+import * as exchangeService from '../../services/exchange';
 
 export function load(market) {
   return (dispatch, getState) => {
@@ -13,12 +14,19 @@ export function load(market) {
     }).then((resp) => {
       dispatch({
         type: actionTypes.EXCHANGE_SET,
-        ...resp
+        ...resp,
+        market
       });
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: '' });
     }).catch(() => {
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     })
+  };
+}export function chooseMarket(market) {
+  return (dispatch, getState) => {
+    exchangeService.unbind(getState().exchange.market);
+    exchangeService.bind(market);
+    load(market)(dispatch, getState);
   };
 }
 
@@ -37,6 +45,12 @@ export function orderDelete(orderId) {
     store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_PENDING, orderId });
   }).catch(err => {
     toast.error(err.message);
+  });
+}
+
+export function getMarkets() {
+  return api.call(apiSchema.Exchange.MarketsGet).then(({markets}) => {
+    store.dispatch({ type: actionTypes.EXCHANGE_SET_MARKETS, markets });
   });
 }
 

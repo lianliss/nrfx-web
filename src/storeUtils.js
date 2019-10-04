@@ -246,6 +246,14 @@ export function getWithState(caseName, caseClass) {
         exchange: state.exchange
       });
       break;
+    case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:
+      mapState2Props = (state) => ({
+        markets: state.exchange.markets
+      });
+      mapDispatch2Props = {
+        chooseMarket: exchangeActions.chooseMarket,
+      };
+      break;
     default:
       mapState2Props = state => ({...state});
       mapDispatch2Props = {};

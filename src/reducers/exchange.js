@@ -13,6 +13,7 @@ const initialState = {
     secondary: {},
   },
   market: 'btc/usdt',
+  markets: [],
   depth: {
     asks: {},
     bids: {},
@@ -75,6 +76,7 @@ export default function reduce(state = initialState, action = {}) {
         depth,
         openOrders,
         trades,
+        market: action.market
       })
     }
 
@@ -192,6 +194,20 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.EXCHANGE_CHANGE_TIME_FRAME: {
       return Object.assign({}, state, { chartTimeFrame: action.timeFrame });
+    }
+
+    case actionTypes.EXCHANGE_SET_MARKETS: {
+      return {
+        ...state,
+        markets: action.markets
+      }
+    }
+
+    case actionTypes.EXCHANGE_CHOOSE_MARKET: {
+      return {
+        ...state,
+        market: action.market
+      }
     }
 
     default:
