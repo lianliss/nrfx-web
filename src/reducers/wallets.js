@@ -9,7 +9,9 @@ const initialState = {
   transfers: [],
   transfersLoadingMore: '',
   transfersNext: null,
-  loadingStatus: {},
+  loadingStatus: {
+    default: null
+  },
 };
 
 export default function reduce(state = initialState, action = {}) {
