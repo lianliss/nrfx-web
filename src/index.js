@@ -19,7 +19,7 @@ import realTimeService from './services/realtime';
 
 require('define').noConflict();
 auth.setup();
-realTimeService();
+// realTimeService();
 
 emitter.addListener('userInstall', user.install);
 emitter.emit('userInstall');
