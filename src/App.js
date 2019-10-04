@@ -35,7 +35,8 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.router.getState().params.modal) {
+    const { params } = this.props.router.getState();
+    if (params.modal || params.modal_group) {
       document.body.classList.add('modal-open');
     } else {
       document.body.classList.remove('modal-open');
