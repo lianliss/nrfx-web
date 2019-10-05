@@ -92,6 +92,7 @@ class RealTime {
   }
 
   triggerListeners(name, data = {}) {
+    console.log('triggerListeners');
     if (!this.listeners[name]) {
       return;
     }

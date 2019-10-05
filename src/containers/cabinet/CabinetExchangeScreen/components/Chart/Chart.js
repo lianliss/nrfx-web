@@ -2,11 +2,12 @@ import './Chart.less';
 
 import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
+import { getLang } from '../../../../../services/lang';
 
 
 export default class Chart extends React.PureComponent {
   static defaultProps = {
-    symbol: 'BTC:USDT2',
+    symbol: 'ETH:USDT',
     interval: '1',
     resolution: '1',
     containerId: 'tv_chart_container',
@@ -32,7 +33,7 @@ export default class Chart extends React.PureComponent {
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
 
-      locale: 'ru',
+      locale: getLang(),
       disabled_features: [
         'use_localstorage_for_settings',
         'header_widget',

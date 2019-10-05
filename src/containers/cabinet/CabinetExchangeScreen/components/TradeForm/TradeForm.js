@@ -30,7 +30,11 @@ export default class TradeForm extends React.Component {
   render() {
     const { balance, market } = this.props;
 
-    const [primary, secondary] = market.split('/');
+    if (!balance.primary) {
+      return null;
+    }
+
+    const [primary, secondary] = market.split('/')
 
     return (
       <div className="TradeForm Content_box">

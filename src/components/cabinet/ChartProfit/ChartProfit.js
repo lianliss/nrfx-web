@@ -1,6 +1,7 @@
 import React from 'react';
 import * as currencies from "../../../utils/currencies";
 import Chart from '../../../components/cabinet/Chart/Chart';
+import ChartSimple from '../../../components/cabinet/Chart/ChartSimple';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as utils from "../../../utils";
 import './ChartProfit.less';
@@ -47,6 +48,10 @@ class ChartProfit extends React.Component {
         marker = true;
       }
     }
+
+    console.log({
+      series: [Object.values(chartCurrencies)[0]]
+    })
 
     return (
       <div className="Content_box Chart__profit">

@@ -2,12 +2,17 @@
   overflow: hidden;
   width: 720px;
 
-  .Modal__box__close {
-    z-index: 3;
-  }
-
   .Modal__header {
     margin: 16px 0;
+  }
+
+  &__value {
+    &.positive {
+      color: var(--primary-green);
+    }
+    &.negative {
+      color: var(--primary-red);
+    }
   }
 
   &__filters {
@@ -21,6 +26,15 @@
 
       .Input, .Button {
         height: 40px;
+      }
+
+      .Input {
+        &__indicator {
+          .isvg {
+            line-height: 0;
+            margin-right: -4px;
+          }
+        }
       }
 
       .Button {
@@ -62,8 +76,44 @@
     //max-height: calc(100vh - 350px);
     //min-height: 400px;
 
-    tr {
-      min-height: 88px;
+    .Table td {
+      &:first-child {
+        width: 108px;
+      }
     }
+
+    tr.Hover{
+      height: 88px;
+      position: relative;
+
+      &::after {
+        position: absolute;
+        content: '';
+        display: block;
+        height: 1px;
+        left: 0;
+        right: 0;
+        box-sizing: border-box;
+        margin: -1px auto 0;
+        width: calc(100% - 48px);
+        background: rgba(0,0,0,.1);
+      }
+
+      &:hover + .Hover::after {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__chart {
+    .Chart {
+      width: 136px;
+    }
+  }
+}
+
+.ChooseMarketModal__wrapper {
+  .Modal__box__close {
+    z-index: 4;
   }
 }

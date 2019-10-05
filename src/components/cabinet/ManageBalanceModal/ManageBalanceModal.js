@@ -3,12 +3,10 @@ import './ManageBalanceModal.less';
 import React, { useState, useEffect } from 'react';
 import UI from '../../../ui';
 import * as utils from '../../../utils';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
 
-const ManageBalanceModal = props => {
+export default props => {
   const [ type, changeType ] = useState("deposit");
   const [ amount, changeAmount ] = useState(0);
   const [ id, changeId ] = useState();
@@ -27,12 +25,14 @@ const ManageBalanceModal = props => {
         title: utils.ucfirst(currencyInfo.name),
         amount: item.amount,
         currency: item.currency,
+        icon: currencyInfo.icon,
         note: utils.formatDouble(item.amount) + " " + item.currency.toUpperCase()
       }
     });
   };
 
   const options = getOptions(type === "deposit" ? balance.wallets : balance.balances);
+
   const currentOption = options.find( item => item.value === id) || options[0] || {};
   const { currency } = currentOption;
 
@@ -70,7 +70,8 @@ const ManageBalanceModal = props => {
             ]}
           />
         </div>
-        <div className="EManageBalanceModal__row">
+        <div className="ManageBalanceModal__row">
+          <div className="ManageBalanceModal__icon" style={{backgroundImage: `url(${currentOption.icon})`}} />
           <UI.Dropdown
             value={currentOption}
             placeholder=""
@@ -110,8 +111,3 @@ const ManageBalanceModal = props => {
     </UI.Modal>
   )
 }
-
-export default storeUtils.getWithState(
-  CLASSES.EXCHANGE_BALANCE_MODAL,
-  ManageBalanceModal
-);
