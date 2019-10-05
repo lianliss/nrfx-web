@@ -5,7 +5,7 @@ import moment from 'moment/min/moment-with-locales';
 import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
-export default function PartnersTable({partners, adaptive}) {
+export default function PartnersTable({partners, adaptive, skipContentBox}) {
   if (!partners.length) {
     return (
       <EmptyContentBlock
@@ -45,7 +45,7 @@ export default function PartnersTable({partners, adaptive}) {
   });
 
   return (
-    <UI.Table headings={headings}>
+    <UI.Table headings={headings} skipContentBox={skipContentBox}>
       {rows}
     </UI.Table>
   )

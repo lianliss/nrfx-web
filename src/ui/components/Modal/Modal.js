@@ -14,6 +14,7 @@ function Modal(props) {
   const className = classNames(props.className, {
     Modal: true,
     Modal__noSpacing: props.noSpacing,
+    Modal__grayBackground: props.grayBackground,
   });
 
   const handleClick = e => {
@@ -28,7 +29,7 @@ function Modal(props) {
     if(e.keyCode === 27) {
       props.onClose && props.onClose();
     }
-  }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -60,6 +61,7 @@ Modal.propTypes = {
   onClose: PropTypes.func,
   width: PropTypes.number,
   skipClose: PropTypes.bool,
+  grayBackground: PropTypes.bool,
 };
 
 export function ModalHeader({ children }) {

@@ -4,7 +4,6 @@ import React from 'react';
 import UI from '../../../../../ui/index';
 
 import { ReactComponent as VkIcon } from '../../../../../asset/social/vk.svg';
-import { ReactComponent as InstIcon } from '../../../../../asset/social/instagram.svg';
 import { ReactComponent as TwitterIcon } from '../../../../../asset/social/twitter.svg';
 import { ReactComponent as FbIcon } from '../../../../../asset/social/facebook.svg';
 
@@ -14,16 +13,13 @@ class ReferralLink extends React.Component {
       <div className="ReferralLink Content_box">
         <div className="ReferralLink__left">
           <div className="ReferralLink__title">Referral Link</div>
-          <div className="ReferralLink__caption">Share your referral link with your friends to get more profit!</div>
+          <div className="ReferralLink__caption">Вы можете воспользоваться своей реферальной ссылкой для приглашения партнеров и получения дополнительной прибыли с первого депозита реферала, вознаграждение составляет 3 % от суммы депозита.</div>
         </div>
         <div className="ReferralLink__right">
           <div className="ReferralLink__right__social_buttons">
             <a href={this.__buildVKUrl()} className="ReferralLink__right__social_button" target="_blank">
               <VkIcon />
             </a>
-            <div className="ReferralLink__right__social_button">
-              <InstIcon />
-            </div>
             <a href={this.__buildTwitterUrl()} className="ReferralLink__right__social_button" target="_blank">
               <TwitterIcon />
             </a>
@@ -31,7 +27,11 @@ class ReferralLink extends React.Component {
               <FbIcon />
             </a>
           </div>
-          <UI.Button onClick={this.props.linkDidCopy}>Скопировать ссылку</UI.Button>
+
+          <div>
+            <div className="ReferralLink__link">{this.props.inviteLink.replace('https://', '')}</div>
+            <UI.Button onClick={() => this.props.linkDidCopy(this.props.inviteLink)}>Скопировать ссылку</UI.Button>
+          </div>
         </div>
       </div>
     )

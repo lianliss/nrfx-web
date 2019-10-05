@@ -1,13 +1,12 @@
 import './PartnerInfoModal.less';
 
 import React from 'react';
-import SVG from 'react-inlinesvg';
 import UI from '../../../ui';
 
+import * as utils from '../../../utils';
 import ModalState from '../ModalState/ModalState';
 import * as profileActions from '../../../actions/cabinet/profile';
 import WalletBox from '../WalletBox/WalletBox';
-import * as utils from '../../../utils';
 import DepositTable from '../../../containers/cabinet/CabinetInvestmentsScreen/components/DepositTable';
 
 export default class PartnerInfoModal extends React.Component {
@@ -31,7 +30,16 @@ export default class PartnerInfoModal extends React.Component {
     }
 
     return (
-      <UI.Modal isOpen onClose={() => window.history.back()} width={800}>
+      <UI.Modal
+        noSpacing
+        isOpen
+        onClose={() => window.history.back()}
+        width={800}
+        grayBackground={this.props.adaptive}
+      >
+        {this.props.adaptive && <UI.ModalHeader>
+          Customer
+        </UI.ModalHeader>}
         {this.__renderUserInfo()}
         {this.__renderProfit()}
         {this.__renderDeposits()}
@@ -60,24 +68,30 @@ export default class PartnerInfoModal extends React.Component {
       return null;
     }
 
+    const rows = this.state.profits.map((profit, i) => {
+      return (
+        <WalletBox
+          key={i}
+          {...profit}
+          skipEmptyLabel
+          adaptive={this.props.adaptive}
+        />
+      )
+    });
+
     return (
-      <div className="PartnerInfoModal__block">
-        <div className="PartnerInfoModal__block__title">Profit</div>
-        <div className="PartnerInfoModal__block__content">
-          <div className="CabinetProfileScreen__wallets">
-            {this.state.profits.map((profit, i) => {
-              return (
-                <WalletBox
-                  key={i}
-                  {...profit}
-                  skipEmptyLabel
-                />
-              )
-            })}
-          </div>
+      <Block
+        adaptive={this.props.adaptive}
+        title="Profit"
+        modifier="wallets"
+      >
+        <div className="CabinetProfileScreen__wallets">
+          {this.props.adaptive ? <div className="CabinetProfileScreen__walletsContentBox">
+            {rows}
+          </div> : rows}
         </div>
-      </div>
-    )
+      </Block>
+    );
   }
 
   __renderDeposits() {
@@ -86,12 +100,19 @@ export default class PartnerInfoModal extends React.Component {
     }
 
     return (
-      <DepositTable
-        deposits={this.state.deposits}
+      <Block
         adaptive={this.props.adaptive}
-        fromPartners
-      />
-    )
+        title="Deposits"
+        skipMargin
+      >
+        <DepositTable
+          deposits={this.state.deposits}
+          adaptive={this.props.adaptive}
+          fromPartners
+          skipContentBox
+        />
+      </Block>
+    );
   }
 
   __load = () => {
@@ -100,4 +121,30 @@ export default class PartnerInfoModal extends React.Component {
       .then((resp) => this.setState({ ...resp, loadingStatus: '' }))
       .catch((err) => this.setState({ loadingStatus: err.error_name }));
   };
+}
+
+function Block(props) {
+  const {
+    title,
+    children,
+    skipMargin,
+    modifier,
+    adaptive
+  } = props;
+
+  const className = utils.classNames({
+    PartnerInfoModal__block: true,
+    skip_margin: !!skipMargin,
+    [modifier]: !!modifier,
+    Content_box: !!adaptive,
+  });
+
+  return (
+    <div className={className}>
+      <div className="PartnerInfoModal__block__title">{title}</div>
+      <div className="PartnerInfoModal__block__content">
+        {children}
+      </div>
+    </div>
+  )
 }

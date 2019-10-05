@@ -6,7 +6,7 @@ import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/
 import * as modalGroupActions from "../../../../actions/modalGroup";
 import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ deposits, adaptive, fromPartners }) {
+export default function WithdrawalTable({ deposits, adaptive, fromPartners, skipContentBox }) {
   if (!deposits.length) {
     return (
       <EmptyContentBlock
@@ -107,10 +107,15 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners }) {
       )
     }
 
-    return (
-      <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
+    let onClick = false;
+    if (!fromPartners) {
+      onClick = () => modalGroupActions.openModalPage('deposit_info', {
         deposit: JSON.stringify(item)
-      })}}>
+      });
+    }
+
+    return (
+      <UI.TableCell key={item.id} onClick={onClick}>
         <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
           {icon}
         </UI.TableColumn>
@@ -120,13 +125,14 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners }) {
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
           sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}
-          align="right">{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
+          align={fromPartners ? 'left' : 'right'}>{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
+        {fromPartners && <UI.TableColumn>{utils.formatDouble(item.agent_profit)} {item.currency.toUpperCase()}</UI.TableColumn>}
       </UI.TableCell>
     )
   });
 
   return (
-    <UI.Table headings={headings}>
+    <UI.Table headings={headings} skipContentBox={skipContentBox}>
       {rows}
     </UI.Table>
   )

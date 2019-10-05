@@ -108,7 +108,7 @@ export function TableColumn({ children, align, style, highlighted, sub }) {
 
 TableColumn.propTypes = {
   highlighted: PropTypes.bool,
-  align: PropTypes.oneOf(['center', 'right']),
+  align: PropTypes.oneOf(['center', 'right', 'left']),
   style: PropTypes.object,
   sub: PropTypes.string,
   compact: PropTypes.bool,

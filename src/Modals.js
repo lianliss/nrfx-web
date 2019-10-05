@@ -66,7 +66,7 @@ export default function Modals(props) {
   }
 
   return (
-    <Component {...routerParams} {...options} onClose={() => {
+    <Component {...props.state.default} {...routerParams} {...options} onClose={() => {
       router.navigate(router.getState().name);
     }} />
   );

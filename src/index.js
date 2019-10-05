@@ -9,7 +9,7 @@ import { RouterProvider } from 'react-router5';
 import store from './store';
 import router from './router';
 import initGetParamsData from './services/initialGetParams';
-import {GetParamsContext} from './contexts';
+import { GetParamsContext } from './contexts';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import * as auth from './services/auth';

@@ -17,7 +17,7 @@ class PartnersSection extends React.Component {
   constructor(props) {
     super(props);
 
-    this.inviteLink = props.profile.user ? `https://bitcoinbot.pro/reg${props.profile.user.id}` : '';
+    this.inviteLink = props.profile.user ? `https://bitcoinbot.pro/?ref=${props.profile.user.login}` : '';
   }
 
   render() {
@@ -34,6 +34,7 @@ class PartnersSection extends React.Component {
       case 'agent':
         return [
           <InviteLinks
+            key="links"
             links={this.props.links}
             linkDidCopy={this.__linkDidCopy}
             linkDidChange={this.props.saveInviteLink}
@@ -41,6 +42,7 @@ class PartnersSection extends React.Component {
             linkDidRestore={this.props.restoreInviteLink}
           />,
           <CustomersTable
+            key="table"
             customers={this.props.clients}
           />
         ];
@@ -53,24 +55,24 @@ class PartnersSection extends React.Component {
           </div>
         );
       default:
-        return (
-          <div>
-            <ReferralLink
-              profile={this.props.profile}
-              linkDidCopy={this.__linkDidCopy}
-              inviteLink={this.inviteLink}
-            />
-            <PartnersTable
-              partners={this.props.clients}
-            />
-          </div>
-        );
+        return [
+          <ReferralLink
+            key="link"
+            profile={this.props.profile}
+            linkDidCopy={this.__linkDidCopy}
+            inviteLink={this.inviteLink}
+          />,
+          <PartnersTable
+            key="table"
+            partners={this.props.clients}
+          />
+        ]
     }
   };
 
-  __linkDidCopy = (link = false) => {
-    copyText(link || this.inviteLink).then(() => {
-      this.props.toastPush('Link copied', 'success');
+  __linkDidCopy = (link) => {
+    copyText(link).then(() => {
+      toastsActions.success('Link copied');
     });
   };
 
@@ -79,12 +81,15 @@ class PartnersSection extends React.Component {
       return null;
     }
 
+    console.log('this.props.adaptive', this.props);
+
     const rows = this.props.balances.map((wallet, i) => {
       return <WalletBox
         key={i}
         {...wallet}
         skipEmptyLabel
         onClick={() => console.log('sdfsdsfd')}
+        adaptive={this.props.adaptive}
       />
     });
     return <div className="CabinetProfileScreen__wallets">
@@ -102,13 +107,11 @@ PartnersSection.defaultProps = {
 export default connect(state => ({
   ...state.profile.partner,
   ...state.default,
-  adaptive: state.default.adaptive
 }), {
   setTitle: actions.setTitle,
   loadWallets: walletsActions.loadWallets,
   loadDashboard: profileActions.loadDashboard,
   getPartner: profileActions.getPartner,
-  toastPush: toastsActions.toastPush,
   saveInviteLink: profileActions.saveInviteLink,
   deleteInviteLink: profileActions.deleteInviteLink,
   restoreInviteLink: profileActions.restoreInviteLink

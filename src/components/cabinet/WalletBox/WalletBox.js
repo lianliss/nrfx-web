@@ -65,8 +65,8 @@ class WalletBox extends React.Component {
   };
 
   __onClick = () => {
-    if (this.props.amount > 0) {
-      return this.props.onClick();
+    if (this.props.amount > 0 || this.props.skipEmptyLabel) {
+      return this.props.onClick && this.props.onClick();
     } else {
       return modalGroupActions.openModalPage('receive', {
         preset: utils.ucfirst(this.currencyInfo.name)
