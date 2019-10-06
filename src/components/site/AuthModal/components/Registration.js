@@ -58,7 +58,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
                 : null}
 
               <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} value={email} onKeyPress={handleKeyPress} onChange={(e) => handleChange(e.target.value, 'email')} />
-              {referrer ? <UI.Input disabled={true} placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrer} onKeyPress={handleKeyPress} onChange={(e) => changeReferrer(e.target.value)} /> : ""}
+              <UI.Input disabled={refParam} placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrer} onKeyPress={handleKeyPress} onChange={(e) => changeReferrer(e.target.value)} />
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
