@@ -89,10 +89,10 @@ class CabinetProfileScreen extends CabinetBaseScreen {
             wallets={this.props.partner.balances}
             walletSelected={this.state.walletSelected}
           />
-          {this.props.partner && this.props.partner.profit_chart && <ChartProfit
+          {!this.props.adaptive && this.props.partner && this.props.partner.profit_chart && <ChartProfit
             chart={this.props.partner.profit_chart}
           />}
-          {this.props.partner && this.props.partner.client_chart && <ClientChart
+          {!this.props.adaptive && this.props.partner && this.props.partner.client_chart && <ClientChart
             title={this.__getClientsChartTitle()}
             chart={this.props.partner.client_chart}
           />}
