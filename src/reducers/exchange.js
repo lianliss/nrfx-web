@@ -33,7 +33,7 @@ export default function reduce(state = initialState, action = {}) {
       }
 
       let balanceInfo = {};
-      let [primary, secondary] = state.market.split('/');
+      let [primary, secondary] = action.market.split('/');
       for (let balance of action.balances) {
         if (balance.currency === primary) {
           balanceInfo.primary = balance;

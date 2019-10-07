@@ -42,7 +42,7 @@ class ChooseMarketModal extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return (JSON.stringify(this.state) !== JSON.stringify(nextState));
+    return this.props.markets !== nextProps.markets || (JSON.stringify(this.state) !== JSON.stringify(nextState));
   }
 
   __handleChooseMarket (market) {

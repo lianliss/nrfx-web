@@ -56,6 +56,7 @@ class RealTime {
       //console.log('[WS]', json);
       if (this.listeners[json.type]) {
         for (let listener of this.listeners[json.type]) {
+          console.log("json:", json);
           listener(json.body);
         }
       }

@@ -44,7 +44,7 @@ export default props => {
 
   const __handleSubmit = () => {
     touch(true);
-    if (amount) {
+    if (amount && amount > 0) {
       balanceActions[type]({
         from: currentOption.value,
         amount,
@@ -86,7 +86,7 @@ export default props => {
             placeholder="0.00"
             onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, amount)}
             onTextChange={value => changeAmount(value)}
-            error={touched && !amount}
+            error={touched && (!amount || amount <= 0)}
           />
           <UI.Button
             smallPadding
@@ -110,5 +110,10 @@ export default props => {
         </div>
       </div>
     </UI.Modal>
+
+
   )
 }
+//
+// {"type":"order_completed","body":{"order_id":2199786}}
+// {"type":"orders_filled","body":[{"id":2199558,"action":"sell","type":"limit","primary_coin":"btc","secondary_coin":"usdt","amount":0.05,"filled":0.05,"price":8170.56405},{"id":2199563,"action":"sell","type":"limit","primary_coin":"btc","secondary_coin":"usdt","amount":0.051500000000000004,"filled":0.05,"price":8202.731625},{"id":2199786,"action":"buy","type":"limit","primary_coin":"btc","secondary_coin":"usdt","amount":0.1,"filled":0.1,"price":9000}]}
