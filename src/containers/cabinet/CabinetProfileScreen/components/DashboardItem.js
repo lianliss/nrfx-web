@@ -11,6 +11,7 @@ import { ReactComponent as TradeSvg } from '../../../../asset/120/trade.svg';
 import { ReactComponent as Invest120Svg } from '../../../../asset/120/invest.svg';
 import { ReactComponent as InviteSvg } from '../../../../asset/120/invite.svg';
 import * as modalGroupActions from '../../../../actions/modalGroup';
+import * as pages from '../../../../constants/pages';
 
 class DashboardItem extends React.Component {
   constructor(props) {
@@ -54,17 +55,12 @@ class DashboardItem extends React.Component {
           emptyIcon: <InviteSvg />,
           emptyDescription: utils.getLang('global_inviteDescription'),
         };
+        this.button = {
+          children: utils.getLang('global_invite'),
+          onClick: () => router.navigate(pages.PROFILE, { section: 'partners' }),
+        };
         if (props.count > 0) {
           this.show = true;
-          this.button = {
-            children: utils.getLang('global_invite'),
-            disabled: true
-          };
-        } else {
-          this.button = {
-            children: utils.getLang('cabinet_profileScreen_actionCard_comingSoon'),
-            disabled: true
-          };
         }
         break;
       case 'commerce':
