@@ -102,10 +102,10 @@ export function restoreInviteLink(linkId) {
   };
 }
 
-export function loadPartnerInfo(partnerId) {
+export function loadPartnerInfo(login) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Partner.PartnerInfoGet, {
-      id: partnerId,
+      login,
     })
       .then((info) => resolve(info))
       .catch((err) => reject(err));

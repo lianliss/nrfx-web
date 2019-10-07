@@ -117,7 +117,7 @@ export default class PartnerInfoModal extends React.Component {
 
   __load = () => {
     this.setState({ loadingStatus: 'loading' });
-    profileActions.loadPartnerInfo(this.props.id)
+    profileActions.loadPartnerInfo(this.props.login)
       .then((resp) => this.setState({ ...resp, loadingStatus: '' }))
       .catch((err) => this.setState({ loadingStatus: err.error_name }));
   };

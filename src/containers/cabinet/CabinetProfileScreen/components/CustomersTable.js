@@ -47,7 +47,7 @@ export default function CustomersTable({ customers, adaptive }) {
   if (adaptive) {
     rows = customers.map((item, i) => {
       return (
-        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { id: item.user.id })}>
+        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { login: item.user.login })}>
           <UI.TableColumn sub={item.deposits_count}>
             {item.user.login.toUpperCase()}
           </UI.TableColumn>
@@ -60,7 +60,7 @@ export default function CustomersTable({ customers, adaptive }) {
   } else {
     rows = customers.map((item, i) => {
       return (
-        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { id: item.user.id })}>
+        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { login: item.user.login })}>
           <UI.TableColumn>
             {item.user.login.toUpperCase()}
           </UI.TableColumn>

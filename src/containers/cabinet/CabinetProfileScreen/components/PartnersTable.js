@@ -44,7 +44,7 @@ export default function PartnersTable({partners, adaptive, skipContentBox}) {
   if (adaptive) {
     rows = partners.map((item, i) => {
       return (
-        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { id: item.user.id })}>
+        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { login: item.user.login })}>
           <UI.TableColumn>
             {item.user.login.toUpperCase()}
           </UI.TableColumn>
@@ -57,7 +57,7 @@ export default function PartnersTable({partners, adaptive, skipContentBox}) {
   } else {
     rows = partners.map((item, i) => {
       return (
-        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { id: item.user.id })}>
+        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { login: item.user.login })}>
           <UI.TableColumn>
             {item.user.login.toUpperCase()}
           </UI.TableColumn>
