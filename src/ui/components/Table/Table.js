@@ -10,10 +10,13 @@ import * as utils from '../../utils';
 import { ReactComponent as AngleDownSmall } from '../../asset/angle-down-small.svg';
 import { ReactComponent as AngleUpSmall } from '../../asset/angle-up-small.svg';
 
-function Table({ headings, children, className, header, hidden, adaptive }) {
+function Table({ headings, children, className, header, hidden, adaptive, compact, skipContentBox, inline }) {
   const [hiddenContent, setHiddenContent] = useState(hidden || false);
   return (
-    <div className="TableMain Content_box">
+    <div className={utils.classNames({
+      TableMain: true,
+      Content_box: !skipContentBox,
+    })}>
       {header && <div
         onClick={(adaptive && hidden) ? () => {setHiddenContent(!hiddenContent)} : () => {}}
         className="Table__header"
@@ -28,7 +31,9 @@ function Table({ headings, children, className, header, hidden, adaptive }) {
 
       {(!adaptive || (adaptive && !hiddenContent)) && <table className={utils.classNames({
         Table: true,
-        [className]: !!className
+        [className]: !!className,
+        compact: !!compact,
+        inline: !!inline,
       })}>
         <thead>
           <tr>
@@ -50,7 +55,7 @@ function Table({ headings, children, className, header, hidden, adaptive }) {
             }
 
             return React.cloneElement(child, {
-              dark: i % 2 === 0
+              dark: !inline && i % 2 === 0
             });
           })}
         </tbody>
@@ -93,8 +98,10 @@ export function TableColumn({ children, align, style, highlighted, sub }) {
       })}
       style={style}
     >
-      <div className="Table__td__cont">{children}</div>
-      {sub && <div className="Table__sub">{sub}</div>}
+      <div className="Table__td__cont">
+        {children}
+        {sub && <div className="Table__sub">{sub}</div>}
+      </div>
     </td>
   )
 }
@@ -103,7 +110,10 @@ TableColumn.propTypes = {
   highlighted: PropTypes.bool,
   align: PropTypes.oneOf(['center', 'right']),
   style: PropTypes.object,
-  sub: PropTypes.string
+  sub: PropTypes.string,
+  compact: PropTypes.bool,
+  skipContentBox: PropTypes.bool,
+  inline: PropTypes.bool,
 };
 
 export default Table;

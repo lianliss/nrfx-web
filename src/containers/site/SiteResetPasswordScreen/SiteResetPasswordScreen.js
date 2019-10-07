@@ -88,7 +88,7 @@ class CabinetRegister extends React.PureComponent {
                 onTextChange={text => this.__handleChange("passwordConfirm", text)}
               />
               <div className="CabinetResetPassword__content__submit_wrapper">
-                <UI.Button onClick={this.__handleSubmit.bind(this)}>
+                <UI.Button fontSize={15} onClick={this.__handleSubmit.bind(this)}>
                   {utils.getLang('cabinet_resetPassword_title')}
                 </UI.Button>
               </div>

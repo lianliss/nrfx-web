@@ -6,6 +6,18 @@ const initialState = {
   statesInc: 0,
   modalGroupRoutes: {...modalGroupRoutes.MODALGROUP_ROUTES},
   states: {
+    open_deposit: {
+      walletCurrentOption: {},
+      walletOptions: [],
+      selectDepositType: 'static',
+      planOptions: [],
+      planCurrentOption: {},
+      amountMax: 0,
+      amountMin: 0,
+      currency: 'btc',
+      touched: false,
+      amount: undefined,
+    },
     send: {
       selectedWallet: false,
       currency: 'btc',
@@ -25,6 +37,7 @@ export default function reduce(state = initialState, action = {}) {
         activeModal: action.activeModal
       });
     }
+
     case actionTypes.MODALGROUP_ADD_CUSTOM_MODAL: {
       const modalGroupRoutes = {...state.modalGroupRoutes};
       if (!modalGroupRoutes.hasOwnProperty(action.routerName)) {
@@ -33,9 +46,9 @@ export default function reduce(state = initialState, action = {}) {
       modalGroupRoutes[action.routerName][action.name] = action.customModalPage;
       return Object.assign({}, state, {modalGroupRoutes});
     }
+
     case actionTypes.MODALGROUP_SET_STATE_BY_MODALPAGE: {
       let copy = {...state};
-
       switch (typeof action.value) {
         default:
         case 'string':

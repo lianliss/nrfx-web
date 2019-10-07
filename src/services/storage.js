@@ -23,3 +23,13 @@ export function clear() {
     localStorage.clear();
   } catch (error) { }
 }
+
+export function removeItemsByKey(key) {
+  try {
+    Object.keys(localStorage).forEach(item => {
+      if (item.includes(key)) {
+        localStorage.removeItem(item);
+      }
+    })
+  } catch (error) { }
+}

@@ -17,6 +17,7 @@ import notificationsReducer from './reducers/notifications';
 import toastsReducer from './reducers/toasts';
 import internalNotificationsReducer from './reducers/InternalNotifications';
 import testReducer from './reducers/test';
+import exchangeReducer from './reducers/exchange';
 
 const middlewares = [];
 
@@ -37,6 +38,7 @@ export function configureStore() {
     profile: profileReducer,
     notifications: notificationsReducer,
     toasts: toastsReducer,
+    exchange: exchangeReducer,
     internalNotifications: internalNotificationsReducer,
     test: testReducer
   }), applyMiddleware( ...middlewares, thunk, router5Middleware(router)));

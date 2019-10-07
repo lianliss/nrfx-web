@@ -13,6 +13,7 @@ import * as profileActions from './actions/cabinet/profile';
 import * as notificationsActions from './actions/cabinet/notifications';
 import * as internalNotifications from './actions/cabinet/internalNotifications';
 import * as toastsActions from './actions/cabinet/toasts';
+import * as exchangeActions from './actions/cabinet/exchange';
 
 export function getWithState(caseName, caseClass) {
   let mapState2Props = state => ({...state}),
@@ -183,11 +184,14 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
       mapState2Props = state => ({
-        router: state.router
+        router: state.router,
+        thisState: state.modalGroup.states.open_deposit
       });
+
       mapDispatch2Props = {
         modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal,
-        toastPush: toastsActions.toastPush
+        toastPush: toastsActions.toastPush,
+        setStateByModalPage: modalGroupActions.setStateByModalPage
       };
       break;
     case CLASSES.CONFIRM_SMS_MODAL:
@@ -229,6 +233,25 @@ export function getWithState(caseName, caseClass) {
       mapDispatch2Props = {
         setTitle: actions.setTitle,
         toastPush: toastsActions.toastPush
+      };
+      break;
+    case CLASSES.CABINET_EXCHANGE_SCREEN:
+      mapState2Props = (state) => ({ ...state.exchange });
+      mapDispatch2Props = {
+        load: exchangeActions.load,
+      };
+      break;
+    case CLASSES.EXCHANGE_BALANCE_MODAL:
+      mapState2Props = (state) => ({
+        exchange: state.exchange
+      });
+      break;
+    case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:
+      mapState2Props = (state) => ({
+        markets: state.exchange.markets
+      });
+      mapDispatch2Props = {
+        chooseMarket: exchangeActions.chooseMarket,
       };
       break;
     default:

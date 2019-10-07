@@ -9,11 +9,16 @@ import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
+import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBalanceModal';
+import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
+import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
+import router from './router';
 
 export default function Modals(props) {
 
   const routeState = props.router.getState();
   const routerParams = routeState.params;
+  const { options } = routeState.meta;
   const modal = routerParams.modal;
 
   let Component = false;
@@ -40,10 +45,21 @@ export default function Modals(props) {
     case 'language':
       Component = LanguageModal;
       break;
+    case 'manage_balance':
+      Component = ManageBalanceModal;
+      break;
+    case 'confirm':
+      Component = ConfirmModal;
+      break;
+    case 'choose_market':
+      Component = ChooseMarketModal;
+      break;
     default: return null;
   }
 
   return (
-    <Component {...routerParams} />
+    <Component {...routerParams} {...options} onClose={() => {
+      router.navigate(router.getState().name);
+    }} />
   );
 }
