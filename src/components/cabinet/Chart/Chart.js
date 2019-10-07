@@ -64,7 +64,6 @@ export default function Chart({ series, ...props }) {
       symbolWidth: 0,
       symbolRadius: 0,
       labelFormatter: function (a) {
-        console.log(1, a, this, this.name);
         let out = `<div class="${classNames("Chart__legend_item", {visible: this.visible})}" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
         if (props.adaptive) {
           out = `<div style="margin: 20px 0">

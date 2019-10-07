@@ -17,26 +17,22 @@ function Modal(props) {
     Modal__grayBackground: props.grayBackground,
   });
 
-  const handleClick = e => {
-    if (node.current && node.current.contains(e.target)) {
-      return () => {};
-    } else {
-      !adaptive && !props.skipClose && props.onClose();
+  const handleClose = e => {
+    if (e.target === e.currentTarget) {
+      props.onClose(e);
     }
-  };
+  }
 
   const handlePressEsc = e => {
     if(e.keyCode === 27) {
-      props.onClose && props.onClose();
+      props.onClose && props.onClose(e);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
     document.addEventListener("keydown", handlePressEsc, false);
 
     return () => {
-      document.removeEventListener("mousedown", handleClick);
       document.removeEventListener("keydown", handlePressEsc, false);
     };
   }, []);
@@ -44,7 +40,7 @@ function Modal(props) {
 
   if (props.isOpen) {
     return (
-      <div className={className}>
+      <div className={className} onClick={handleClose}>
         <div className="Modal__box" ref={node} style={{ width: props.width }}>
           {!props.skipClose && <div className="Modal__box__close" onClick={props.onClose} />}
           {props.children}
