@@ -82,9 +82,10 @@ export default props => {
         <div className="ManageBalanceModal__row ManageBalanceModal__input_button">
           <UI.Input
             type="number"
-            value={amount > 0 ? amount : ""}
+            value={amount === 0 ? "" : amount}
             placeholder="0.00"
-            onTextChange={value => changeAmount(parseFloat(value))}
+            onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, amount)}
+            onTextChange={value => changeAmount(value)}
             error={touched && !amount}
           />
           <UI.Button
@@ -92,7 +93,7 @@ export default props => {
             type="outline"
             currency={currency}
             onClick={() => {
-              changeAmount(currentOption.amount || 0 );
+              changeAmount(currentOption.amount || "0" );
             }}
           >
             {utils.getLang('cabinet_sendCoinsModal_max')}
