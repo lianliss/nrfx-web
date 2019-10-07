@@ -3,6 +3,8 @@ import './ReferralLink.less';
 import React from 'react';
 import UI from '../../../../../ui/index';
 
+import * as utils from '../../../../../utils';
+
 import { ReactComponent as VkIcon } from '../../../../../asset/social/vk.svg';
 import { ReactComponent as TwitterIcon } from '../../../../../asset/social/twitter.svg';
 import { ReactComponent as FbIcon } from '../../../../../asset/social/facebook.svg';
@@ -12,8 +14,8 @@ class ReferralLink extends React.Component {
     return (
       <div className="ReferralLink Content_box">
         <div className="ReferralLink__left">
-          <div className="ReferralLink__title">Referral Link</div>
-          <div className="ReferralLink__caption">Вы можете воспользоваться своей реферальной ссылкой для приглашения партнеров и получения дополнительной прибыли с первого депозита реферала, вознаграждение составляет 3 % от суммы депозита.</div>
+          <div className="ReferralLink__title">{utils.getLang('cabinet_referralLink')}</div>
+          <div className="ReferralLink__caption">{utils.getLang('cabinet_referralLink_description')}</div>
         </div>
         <div className="ReferralLink__right">
           <div className="ReferralLink__right__social_buttons">
@@ -30,7 +32,7 @@ class ReferralLink extends React.Component {
 
           <div>
             <div className="ReferralLink__link">{this.props.inviteLink.replace('https://', '')}</div>
-            <UI.Button onClick={() => this.props.linkDidCopy(this.props.inviteLink)}>Скопировать ссылку</UI.Button>
+            <UI.Button onClick={() => this.props.linkDidCopy(this.props.inviteLink)}>{utils.getLang('cabinet_referralLinks_copyLink')}</UI.Button>
           </div>
         </div>
       </div>

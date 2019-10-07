@@ -11,38 +11,65 @@ export default function PartnersTable({partners, adaptive, skipContentBox}) {
       <EmptyContentBlock
         adaptive={adaptive}
         icon={require('../../../../asset/120/invite.svg')}
-        message="Here will be a list of your partners"
+        message={utils.getLang('cabinet_partners_tableEmpty')}
       />
     )
   }
 
   let headings = [
     <UI.TableColumn>
-      Partner
+      {utils.getLang('cabinet_partner')}
     </UI.TableColumn>,
     <UI.TableColumn align="right">
-      Profit
+      {utils.getLang('cabinet_investmentsScreen_profit')}
     </UI.TableColumn>,
     <UI.TableColumn align="right" style={{width: 100}}>
-      Date
+      {utils.getLang('cabinet_wallets_historyTable_date')}
     </UI.TableColumn>
   ];
 
-  const rows = partners.map((item, i) => {
-    return (
-      <UI.TableCell key={i}>
-        <UI.TableColumn>
-          {item.user.login.toUpperCase()}
-        </UI.TableColumn>
-        <UI.TableColumn align="right">
-          ~{utils.formatDouble(item.profit, 2)} USD
-        </UI.TableColumn>
-        <UI.TableColumn align="right" style={{width: 100}}>
-          {moment(item.user.created_at).format('DD MMM YYYY')}
-        </UI.TableColumn>
-      </UI.TableCell>
-    )
-  });
+  if (adaptive) {
+    headings = [
+      <UI.TableColumn>
+        Partner
+      </UI.TableColumn>,
+      <UI.TableColumn sub={utils.getLang('cabinet_wallets_historyTable_date')} align="right">
+        {utils.getLang('cabinet_investmentsScreen_profit')}
+      </UI.TableColumn>,
+    ];
+  }
+
+  let rows;
+  if (adaptive) {
+    rows = partners.map((item, i) => {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn>
+            {item.user.login.toUpperCase()}
+          </UI.TableColumn>
+          <UI.TableColumn align="right" sub={moment(item.user.created_at).format('DD MMM YYYY')}>
+            ~{utils.formatDouble(item.profit, 2)} USD
+          </UI.TableColumn>
+        </UI.TableCell>
+      )
+    });
+  } else {
+    rows = partners.map((item, i) => {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn>
+            {item.user.login.toUpperCase()}
+          </UI.TableColumn>
+          <UI.TableColumn align="right">
+            ~{utils.formatDouble(item.profit, 2)} USD
+          </UI.TableColumn>
+          <UI.TableColumn align="right" style={{width: 100}}>
+            {moment(item.user.created_at).format('DD MMM YYYY')}
+          </UI.TableColumn>
+        </UI.TableCell>
+      )
+    });
+  }
 
   return (
     <UI.Table headings={headings} skipContentBox={skipContentBox}>

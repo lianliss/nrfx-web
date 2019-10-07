@@ -33,8 +33,8 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
   if (fromPartners) {
     headings.push(
-      <UI.TableColumn>User Profit</UI.TableColumn>,
-      <UI.TableColumn>Agent Profit</UI.TableColumn>
+      <UI.TableColumn>{utils.getLang('cabinet_partners_userProfit')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('cabinet_partners_agentProfit')}</UI.TableColumn>
     );
   } else {
     headings.push(<UI.TableColumn align="right">{utils.getLang('cabinet_investmentsScreen_profit')}</UI.TableColumn>);

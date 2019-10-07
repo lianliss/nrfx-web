@@ -38,7 +38,7 @@ export default class PartnerInfoModal extends React.Component {
         grayBackground={this.props.adaptive}
       >
         {this.props.adaptive && <UI.ModalHeader>
-          Customer
+          {utils.getLang('cabinet_customerTitle')}
         </UI.ModalHeader>}
         {this.__renderUserInfo()}
         {this.__renderProfit()}
@@ -82,7 +82,7 @@ export default class PartnerInfoModal extends React.Component {
     return (
       <Block
         adaptive={this.props.adaptive}
-        title="Profit"
+        title={utils.getLang('cabinet_investmentsScreen_profit')}
         modifier="wallets"
       >
         <div className="CabinetProfileScreen__wallets">
@@ -102,7 +102,7 @@ export default class PartnerInfoModal extends React.Component {
     return (
       <Block
         adaptive={this.props.adaptive}
-        title="Deposits"
+        title={utils.getLang('cabinet_referralLinks_deposits')}
         skipMargin
       >
         <DepositTable

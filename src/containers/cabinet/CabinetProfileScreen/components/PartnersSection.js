@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import copyText from 'clipboard-copy';
 
 import * as actions from '../../../../actions';
+import * as utils from '../../../../utils';
 import * as toastsActions from '../../../../actions/cabinet/toasts';
 import * as profileActions from '../../../../actions/cabinet/profile';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
@@ -12,6 +13,7 @@ import WalletBox from '../../../../components/cabinet/WalletBox/WalletBox';
 import CustomersTable from './CustomersTable';
 import AgentsTable from './AgentsTable';
 import InviteLinks from './InviteLinks/InviteLinks';
+import {openModal} from '../../../../actions';
 
 class PartnersSection extends React.Component {
   constructor(props) {
@@ -40,20 +42,22 @@ class PartnersSection extends React.Component {
             linkDidChange={this.props.saveInviteLink}
             linkDidDelete={this.props.deleteInviteLink}
             linkDidRestore={this.props.restoreInviteLink}
+            adaptive={this.props.adaptive}
           />,
           <CustomersTable
             key="table"
             customers={this.props.clients}
+            adaptive={this.props.adaptive}
           />
         ];
       case 'representative':
-        return (
-          <div>
-            <AgentsTable
-              agents={this.props.clients}
-            />
-          </div>
-        );
+        return [
+          <AgentsTable
+            ket="table"
+            agents={this.props.clients}
+            adaptive={this.props.adaptive}
+          />
+        ];
       default:
         return [
           <ReferralLink
@@ -65,6 +69,7 @@ class PartnersSection extends React.Component {
           <PartnersTable
             key="table"
             partners={this.props.clients}
+            adaptive={this.props.adaptive}
           />
         ]
     }
@@ -72,7 +77,7 @@ class PartnersSection extends React.Component {
 
   __linkDidCopy = (link) => {
     copyText(link).then(() => {
-      toastsActions.success('Link copied');
+      toastsActions.success(utils.getLang('cabinet_referralLinks_copied'));
     });
   };
 
@@ -81,28 +86,31 @@ class PartnersSection extends React.Component {
       return null;
     }
 
-    console.log('this.props.adaptive', this.props);
-
     const rows = this.props.balances.map((wallet, i) => {
       return <WalletBox
         key={i}
         {...wallet}
         skipEmptyLabel
-        onClick={() => console.log('sdfsdsfd')}
+        onClick={() => this.__withdrawal(wallet)}
         adaptive={this.props.adaptive}
       />
     });
-    return <div className="CabinetProfileScreen__wallets">
-      {this.props.adaptive ? <div className="CabinetProfileScreen__walletsContentBox">
-        {rows}
-      </div> : rows}
+    return <div className={utils.classNames({
+      CabinetProfileScreen__wallets: true,
+      Content_box: this.props.adaptive
+    })}>
+      {rows}
     </div>
   };
-}
 
-PartnersSection.defaultProps = {
-  wallets: <></>
-};
+  __withdrawal(balance) {
+    openModal('manage_balance', {
+      withdrawal: 1,
+      currency: balance.currency,
+      category: 'partners',
+    });
+  }
+}
 
 export default connect(state => ({
   ...state.profile.partner,

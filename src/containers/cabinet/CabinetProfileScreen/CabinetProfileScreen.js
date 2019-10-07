@@ -13,7 +13,6 @@ import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 import DashboardItem from './components/DashboardItem';
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
-import ClientChart from '../../../components/cabinet/ClientChart/ClientChart';
 import router from "../../../router";
 import PartnersSection from './components/PartnersSection';
 import RightPartnersSection from './components/RightPartnersSection';
@@ -56,16 +55,15 @@ class CabinetProfileScreen extends CabinetBaseScreen {
           leftContent={this.__renderRightContent()}
           sidebarOptions={!this.props.adaptive && [
             <ProfileSidebarItem
-              onClick={e => router.navigate('settings')}
+              onClick={() => router.navigate('settings')}
               icon={<SettingsSvg />}
               label={utils.getLang('cabinet_profileScreen_settings')}
             />,
             <ProfileSidebarItem
               icon={<UsersSvg />}
-              label="Partners"
-              onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
+              label={utils.getLang('cabinet_profileScreen_partners')}
+              onClick={() => router.navigate(PAGES.PROFILE, {section: 'partners'})}
             />
-            //<ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
           ]}
         >
           {this.__renderContent()}
@@ -83,20 +81,14 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   __renderRightContent = show => {
     switch (this.props.routerParams.section) {
       case 'partners': {
-        return <div>
+        return (
           <RightPartnersSection
+            {...this.props.partner}
             adaptive={this.props.adaptive}
             wallets={this.props.partner.balances}
             walletSelected={this.state.walletSelected}
           />
-          {!this.props.adaptive && this.props.partner && this.props.partner.profit_chart && <ChartProfit
-            chart={this.props.partner.profit_chart}
-          />}
-          {!this.props.adaptive && this.props.partner && this.props.partner.client_chart && <ClientChart
-            title={this.__getClientsChartTitle()}
-            chart={this.props.partner.client_chart}
-          />}
-        </div>
+        )
       }
       default: {
         if (!(this.props.adaptive && !show) && !this.props.routerParams.section && !this.isLoading && this.props.dashboard.hasOwnProperty('chart')) {
@@ -118,17 +110,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       }
     }
   };
-
-  __getClientsChartTitle() {
-    const level = this.props.partner.level;
-    if (level === 'agent') {
-      return 'Customers';
-    } else if (level === 'representation') {
-      return 'Agents';
-    } else {
-      return 'Partners';
-    }
-  }
 
   __renderChartProfit = () => {
     if (this.props.adaptive || !this.props.dashboard.hasOwnProperty('chart')) {

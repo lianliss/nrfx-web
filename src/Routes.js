@@ -140,8 +140,6 @@ export default function Routes(props) {
     router: props.router,
   };
 
-  routerParams.section = 'partners';
-
   const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>

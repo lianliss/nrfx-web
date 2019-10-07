@@ -31,24 +31,51 @@ export default function AgentsTable({ agents, adaptive }) {
     </UI.TableColumn>
   ];
 
-  const rows = agents.map((item, i) => {
-    return (
-      <UI.TableCell key={i}>
-        <UI.TableColumn>
-          {item.user.login.toUpperCase()}
-        </UI.TableColumn>
-        <UI.TableColumn>
-          {item.partners_count}
-        </UI.TableColumn>
-        <UI.TableColumn align="right">
-          ~{utils.formatDouble(item.profit, 2)} USD
-        </UI.TableColumn>
-        <UI.TableColumn align="right" style={{width: 100}}>
-          {moment(item.created_at).format('DD MMM YYYY')}
-        </UI.TableColumn>
-      </UI.TableCell>
-    )
-  });
+  if (adaptive) {
+    headings = [
+      <UI.TableColumn sub="Partners">
+        Agent
+      </UI.TableColumn>,
+      <UI.TableColumn sub="Date">
+        Profit
+      </UI.TableColumn>,
+    ];
+  }
+
+  let rows;
+  if (adaptive) {
+    rows = agents.map((item, i) => {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn sub={item.partners_count}>
+            {item.user.login.toUpperCase()}
+          </UI.TableColumn>
+          <UI.TableColumn align="right" sub={moment(item.created_at).format('DD MMM YYYY')}>
+            ~{utils.formatDouble(item.profit, 2)} USD
+          </UI.TableColumn>
+        </UI.TableCell>
+      )
+    });
+  } else {
+    rows = agents.map((item, i) => {
+      return (
+        <UI.TableCell key={i}>
+          <UI.TableColumn>
+            {item.user.login.toUpperCase()}
+          </UI.TableColumn>
+          <UI.TableColumn>
+            {item.partners_count}
+          </UI.TableColumn>
+          <UI.TableColumn align="right">
+            ~{utils.formatDouble(item.profit, 2)} USD
+          </UI.TableColumn>
+          <UI.TableColumn align="right" style={{width: 100}}>
+            {moment(item.created_at).format('DD MMM YYYY')}
+          </UI.TableColumn>
+        </UI.TableCell>
+      )
+    });
+  }
 
   return (
     <UI.Table headings={headings}>

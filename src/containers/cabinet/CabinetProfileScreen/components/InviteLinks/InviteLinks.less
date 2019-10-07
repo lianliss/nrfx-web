@@ -1,5 +1,9 @@
 .InviteLinks {
   padding: 40px;
+
+  .adaptive & {
+    padding: 24px 16px;
+  }
 }
 
 .InviteLinks__title_wrap {
@@ -76,6 +80,10 @@
   &:first-child {
     margin-top: 40px;
   }
+
+  .adaptive & {
+    margin-top: 32px !important;
+  }
 }
 
 .InviteLinks__item__restore {
@@ -112,6 +120,11 @@
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
+
+  .adaptive & {
+    flex-direction: column;
+    padding-left: 16px;
+  }
 }
 
 .InviteLinks__item__stats__item {
@@ -120,9 +133,31 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
+
+  .adaptive & {
+    margin-top: 8px;
+    justify-content: flex-start;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 }
 
 .InviteLinks__item__stats__item__label {
   color: var(--primary-grey);
   margin-right: 8px;
+}
+
+.InviteLinks__item__mobile_links {
+  display: flex;
+  margin-top: 16px;
+
+  .Button {
+    flex: 1;
+  }
+
+  .Button:first-child {
+    margin-right: 16px;
+  }
 }

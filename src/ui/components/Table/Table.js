@@ -100,7 +100,7 @@ export function TableColumn({ children, align, style, highlighted, sub }) {
     >
       <div className="Table__td__cont">
         {children}
-        {sub && <div className="Table__sub">{sub}</div>}
+        {sub !== undefined && <div className="Table__sub">{sub}</div>}
       </div>
     </td>
   )

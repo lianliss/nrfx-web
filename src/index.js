@@ -16,6 +16,7 @@ import * as auth from './services/auth';
 import * as user from './actions/user';
 import * as emitter from './services/emitter';
 import realTimeService from './services/realtime';
+import './polyfill';
 
 require('define').noConflict();
 auth.setup();
