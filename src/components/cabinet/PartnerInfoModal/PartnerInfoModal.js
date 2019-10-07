@@ -95,7 +95,7 @@ export default class PartnerInfoModal extends React.Component {
   }
 
   __renderDeposits() {
-    if (!this.state.deposits.length) {
+    if (!this.state.deposits) {
       return null;
     }
 
