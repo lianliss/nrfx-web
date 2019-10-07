@@ -14,6 +14,7 @@ import * as actions from './actions';
 import * as internalNotifications from './actions/cabinet/internalNotifications';
 import * as storage from './services/storage';
 import { getLang } from './services/lang';
+import * as utils from './utils/';
 import moment from 'moment/min/moment-with-locales';
 
 class App extends React.Component {
@@ -38,8 +39,10 @@ class App extends React.Component {
     const { params } = this.props.router.getState();
     if (params.modal || params.modal_group) {
       document.body.classList.add('modal-open');
+      document.body.style.marginRight = utils.getScrollbarWidth() + "px";
     } else {
       document.body.classList.remove('modal-open');
+      document.body.style.marginRight = 0;
     }
   }
 
