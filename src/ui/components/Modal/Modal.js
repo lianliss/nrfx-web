@@ -14,13 +14,14 @@ function Modal(props) {
   const className = classNames(props.className, {
     Modal: true,
     Modal__noSpacing: props.noSpacing,
+    Modal__grayBackground: props.grayBackground,
   });
 
   const handleClick = e => {
     if (node.current && node.current.contains(e.target)) {
       return () => {};
     } else {
-      !adaptive && props.onClose();
+      !adaptive && !props.skipClose && props.onClose();
     }
   };
 
@@ -28,7 +29,7 @@ function Modal(props) {
     if(e.keyCode === 27) {
       props.onClose && props.onClose();
     }
-  }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -45,7 +46,7 @@ function Modal(props) {
     return (
       <div className={className}>
         <div className="Modal__box" ref={node} style={{ width: props.width }}>
-          <div className="Modal__box__close" onClick={props.onClose} />
+          {!props.skipClose && <div className="Modal__box__close" onClick={props.onClose} />}
           {props.children}
         </div>
       </div>
@@ -58,7 +59,9 @@ function Modal(props) {
 Modal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  width: PropTypes.number
+  width: PropTypes.number,
+  skipClose: PropTypes.bool,
+  grayBackground: PropTypes.bool,
 };
 
 export function ModalHeader({ children }) {

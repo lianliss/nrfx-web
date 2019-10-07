@@ -9,7 +9,10 @@ import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
 
 const ManageBalanceModal = props => {
-  const [ type, changeType ] = useState("deposit");
+  const isWithdrawalOnly = !!props.withdrawal;
+  const category = props.category || 'exchange';
+
+  const [ type, changeType ] = useState(isWithdrawalOnly ? 'withdraw' : 'deposit');
   const [ amount, changeAmount ] = useState(0);
   const [ id, changeId ] = useState();
   const [ touched, touch ] = useState(false);
@@ -32,12 +35,28 @@ const ManageBalanceModal = props => {
     });
   };
 
-  const options = getOptions(type === "deposit" ? balance.wallets : balance.balances);
+  const options = getOptions(type === 'deposit' ? balance.wallets : balance.balances);
   const currentOption = options.find( item => item.value === id) || options[0] || {};
   const { currency } = currentOption;
 
   useEffect(() => {
-    balanceActions.getBalance('exchange').then((res) => {
+    balanceActions.getBalance(category).then((res) => {
+      if (props.currency) {
+        let items;
+        if (type === 'deposit') {
+          items = res.wallets;
+        } else {
+          items = res.balances;
+        }
+
+        for (let item of items) {
+          if (item.currency === props.currency) {
+            changeId(item.id);
+            break;
+          }
+        }
+      }
+
       changeBalance(res);
     })
   }, []);
@@ -53,13 +72,13 @@ const ManageBalanceModal = props => {
         props.onClose();
       })
     }
-  }
+  };
 
   return (
     <UI.Modal isOpen={true} onClose={props.onClose}>
-      <UI.ModalHeader>Manage Exchange Balance</UI.ModalHeader>
+      <UI.ModalHeader>Manage Balance</UI.ModalHeader>
       <div className="ManageBalanceModal">
-        <div className="ManageBalanceModal__row">
+        {!isWithdrawalOnly && <div className="ManageBalanceModal__row">
           <UI.SwitchTabs
             currency={currency}
             selected={type}
@@ -69,7 +88,7 @@ const ManageBalanceModal = props => {
               { value: 'withdraw', label: 'Withdraw' }
             ]}
           />
-        </div>
+        </div>}
         <div className="EManageBalanceModal__row">
           <UI.Dropdown
             value={currentOption}

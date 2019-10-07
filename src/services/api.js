@@ -1,7 +1,6 @@
 import * as auth from './auth';
 
 const API_ENTRY = 'https://api.bitcoinbot.pro';
-
 const API_VERSION = 1;
 
 export const EXPORT_API_VERSION = API_VERSION;
@@ -57,12 +56,12 @@ export function invoke(method, name, params) {
           if (resp.status === 200) {
             resolve(json);
           } else {
+            json.error_name = 'failed';
             reject(json);
           }
-        }).catch((err) => {
-          reject({code: -1, message: 'Cant\'t parse JSON'})
-        });
-      });
+        }).catch(() => reject({code: -1, message: 'Cant\'t parse JSON', error_name: 'failed'}));
+      })
+      .catch((err) => reject({code: -2, ...err, error_name: 'failed_connection'}));
   });
 }
 

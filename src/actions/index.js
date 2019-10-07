@@ -88,3 +88,9 @@ export function setAdaptive(adaptive) {
 export function setTitle(title) {
   return store.dispatch({ type: actionTypes.SET_TITLE, title });
 }
+
+export function sendInviteLinkView(link) {
+  api.call(apiSchema.Partner.InviteLinkViewPost, {
+    link
+  });
+}

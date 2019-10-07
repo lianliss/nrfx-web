@@ -143,12 +143,10 @@ export function checkSmsCode(countryCode, number, code) {
   });
 }
 
-export function registerUser(email, refer = null) {
+export function registerUser(email, refer = null, invite_link = null) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignUpPut, { email, refer })
-      .then((auth) => {
-        resolve();
-      })
+    api.call(apiSchema.Profile.SignUpPut, { email, refer, invite_link })
+      .then(() => resolve())
       .catch((err) => reject(err));
   });
 }

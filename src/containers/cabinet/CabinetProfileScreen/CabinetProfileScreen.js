@@ -55,16 +55,15 @@ class CabinetProfileScreen extends CabinetBaseScreen {
           leftContent={this.__renderRightContent()}
           sidebarOptions={!this.props.adaptive && [
             <ProfileSidebarItem
-              onClick={e => router.navigate('settings')}
+              onClick={() => router.navigate('settings')}
               icon={<SettingsSvg />}
               label={utils.getLang('cabinet_profileScreen_settings')}
             />,
-            // <ProfileSidebarItem
-            //  icon={<UsersSvg />}
-            //  label="Partners"
-            //  onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
-            // />
-            // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
+            <ProfileSidebarItem
+              icon={<UsersSvg />}
+              label={utils.getLang('cabinet_profileScreen_partners')}
+              onClick={() => router.navigate(PAGES.PROFILE, {section: 'partners'})}
+            />
           ]}
         >
           {this.__renderContent()}
@@ -82,13 +81,14 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   __renderRightContent = show => {
     switch (this.props.routerParams.section) {
       case 'partners': {
-        return <div>
+        return (
           <RightPartnersSection
+            {...this.props.partner}
             adaptive={this.props.adaptive}
-            wallets={this.wallets}
+            wallets={this.props.partner.balances}
             walletSelected={this.state.walletSelected}
           />
-        </div>
+        )
       }
       default: {
         if (!(this.props.adaptive && !show) && !this.props.routerParams.section && !this.isLoading && this.props.dashboard.hasOwnProperty('chart')) {
@@ -130,10 +130,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     switch (this.props.routerParams.section) {
       case 'partners': {
         return <div>
-          <PartnersSection
-            adaptive={this.props.adaptive}
-            wallets={this.__renderWallets}
-          />
+          <PartnersSection />
         </div>
       }
       case 'customers': {
