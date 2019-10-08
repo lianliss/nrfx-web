@@ -10,7 +10,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.TOASTS_PUSH:
       return {
         ...state,
-        items: [...state.items, action.payload],
+        items: [action.payload, ...state.items],
         counter: state.counter + 1
       };
     case actionTypes.TOASTS_DROP:
