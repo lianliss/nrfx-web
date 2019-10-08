@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import * as utils from '../../../../../utils';
 
 export default function Block(props) {
-
   let {
     title,
     tabs,

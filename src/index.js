@@ -20,7 +20,7 @@ import './polyfill';
 
 require('define').noConflict();
 auth.setup();
-// realTimeService();
+realTimeService();
 
 emitter.addListener('userInstall', user.install);
 emitter.emit('userInstall');

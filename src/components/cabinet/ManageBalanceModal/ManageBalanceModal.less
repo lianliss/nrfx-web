@@ -1,6 +1,16 @@
 .ManageBalanceModal {
   width: 304px;
 
+  &__icon {
+    width: 72px;
+    height: 72px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin: -12px;
+    margin-right: 0;
+  }
+
   &__input_button {
     display: flex;
 
@@ -10,7 +20,13 @@
   }
 
   &__row {
+    display: flex;
     margin: 40px 0;
+
+    .SwitchTabs,
+    .Dropdown {
+      flex: 1;
+    }
   }
 
   &__submit_wrap {

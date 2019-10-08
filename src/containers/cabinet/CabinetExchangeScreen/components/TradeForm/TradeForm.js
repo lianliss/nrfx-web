@@ -19,6 +19,10 @@ export default class TradeForm extends React.Component {
       amount: null,
       amountSecondary: null,
       touched: false,
+      pending: {
+        buy: false,
+        sell: false,
+      }
     };
   }
 
@@ -29,8 +33,14 @@ export default class TradeForm extends React.Component {
 
   render() {
     const { balance, market } = this.props;
+    const { state: { pending } } = this;
+
+    if (!balance.primary) {
+      return null;
+    }
 
     const [primary, secondary] = market.split('/');
+    const isMarket = this.state.orderType === "market";
 
     return (
       <div className="TradeForm Content_box">
@@ -52,11 +62,12 @@ export default class TradeForm extends React.Component {
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
-                error={this.state.touched && !this.state.price}
+                error={this.state.touched && !this.state.price && !isMarket}
                 placeholder="Price"
+                disabled={isMarket}
                 indicator={secondary.toUpperCase()}
                 size="small"
-                value={this.state.price === null ? '' : this.state.price}
+                value={this.state.price === null || isMarket ? '' : this.state.price}
                 onTextChange={this.__priceDidChange}
               />
               <p className="Form__helper__text">{secondary.toUpperCase()} Balance - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p>
@@ -66,8 +77,9 @@ export default class TradeForm extends React.Component {
                 placeholder="Total"
                 indicator={secondary.toUpperCase()}
                 size="small"
+                disabled={isMarket}
                 onTextChange={this.__amountSecondaryDidChange}
-                value={this.state.amountSecondary === null ? '' : this.state.amountSecondary}
+                value={this.state.amountSecondary === null || isMarket ? '' : this.state.amountSecondary}
               />
               <p className="Form__helper__text">Fee: 0.02%</p>
             </div>
@@ -78,6 +90,7 @@ export default class TradeForm extends React.Component {
                 size="middle"
                 type="buy"
                 onClick={() => this.__handleOrderCreate("buy")}
+                disabled={pending.buy}
               >Buy</UI.Button>
             </div>
             <div className="TradeForm__form__row percents">
@@ -87,6 +100,7 @@ export default class TradeForm extends React.Component {
               <UI.Button
                 size="middle"
                 type="sell"
+                disabled={pending.sell}
                 onClick={() => this.__handleOrderCreate("sell")}
               >Sell</UI.Button>
             </div>
@@ -150,6 +164,7 @@ export default class TradeForm extends React.Component {
       return (
         <UI.Button
           key={percent}
+          disabled={balance.primary.amount === 0}
           size="ultra_small"
           rounded
           type={this.state.amount === percentAmount ? '' : 'secondary'}
@@ -161,13 +176,16 @@ export default class TradeForm extends React.Component {
 
   __handleOrderCreate(action) {
     this.setState({ touched: true });
-    if (this.state.amount && this.state.price) {
+    if (this.state.amount && (this.state.orderType === 'market' || this.state.price)) {
+      this.setState({ pending: { ...this.state.pending, [action]: true }});
       exchange.orderCreate({
         action,
         type: this.state.orderType,
         market: this.props.market,
         amount: this.state.amount,
-        price: this.state.price
+        ...(this.state.orderType === 'limit' && { price: this.state.amount })
+      }).finally(() => {
+        this.setState({ pending: { ...this.state.pending, [action]: false }});
       });
     }
   }

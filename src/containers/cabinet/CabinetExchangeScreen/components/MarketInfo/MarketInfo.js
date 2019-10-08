@@ -14,9 +14,7 @@ class MarketInfo extends React.Component{
   }
 
   render() {
-
     const [primary, secondary] = this.props.market.toUpperCase().split('/');
-
 
     return (
       <div className="MarketInfo">
@@ -123,6 +121,13 @@ class MarketInfo extends React.Component{
         </div>
         <div className="MarketInfo__summary_controls">
           {timeFrames}
+          <UI.Button
+            rounded
+            size="ultra_small"
+            onClick={() => {
+              exchangeActions.setFullscreen();
+            }}
+          >FullScreen</UI.Button>
         </div>
       </div>
     )

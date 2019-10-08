@@ -89,10 +89,10 @@ TableCell.propTypes = {
   dark: PropTypes.bool
 };
 
-export function TableColumn({ children, align, style, highlighted, sub }) {
+export function TableColumn({ children, align, style, highlighted, sub, className }) {
   return (
     <td
-      className={utils.classNames({
+      className={utils.classNames(className, {
         [align]: !!align,
         highlighted: !!highlighted
       })}

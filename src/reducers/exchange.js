@@ -20,6 +20,7 @@ const initialState = {
   },
   chart: [],
   chartTimeFrame: 5,
+  fullscreen: false
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -33,7 +34,7 @@ export default function reduce(state = initialState, action = {}) {
       }
 
       let balanceInfo = {};
-      let [primary, secondary] = state.market.split('/');
+      let [primary, secondary] = action.market.split('/');
       for (let balance of action.balances) {
         if (balance.currency === primary) {
           balanceInfo.primary = balance;
@@ -203,10 +204,10 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
-    case actionTypes.EXCHANGE_CHOOSE_MARKET: {
+    case actionTypes.EXCHANGE_SET_FULLSCREEN: {
       return {
         ...state,
-        market: action.market
+        fullscreen: action.status
       }
     }
 

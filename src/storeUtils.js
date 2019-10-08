@@ -242,14 +242,10 @@ export function getWithState(caseName, caseClass) {
         load: exchangeActions.load,
       };
       break;
-    case CLASSES.EXCHANGE_BALANCE_MODAL:
-      mapState2Props = (state) => ({
-        exchange: state.exchange
-      });
-      break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:
       mapState2Props = (state) => ({
-        markets: state.exchange.markets
+        markets: state.exchange.markets,
+        status: state.exchange.loadingStatus.getMarkets
       });
       mapDispatch2Props = {
         chooseMarket: exchangeActions.chooseMarket,
