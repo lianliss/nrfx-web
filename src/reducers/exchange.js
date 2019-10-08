@@ -203,13 +203,6 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
-    case actionTypes.EXCHANGE_CHOOSE_MARKET: {
-      return {
-        ...state,
-        market: action.market
-      }
-    }
-
     default:
       return state;
   }

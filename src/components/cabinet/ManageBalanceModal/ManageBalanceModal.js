@@ -5,6 +5,7 @@ import UI from '../../../ui';
 import * as utils from '../../../utils';
 import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
+import ModalState from '../ModalState/ModalState';
 
 export default props => {
   const isWithdrawalOnly = !!props.withdrawal;

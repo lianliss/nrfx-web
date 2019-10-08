@@ -243,9 +243,9 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:
-      console.log('DESPATCH');
       mapState2Props = (state) => ({
-        markets: state.exchange.markets
+        markets: state.exchange.markets,
+        status: state.exchange.loadingStatus.getMarkets
       });
       mapDispatch2Props = {
         chooseMarket: exchangeActions.chooseMarket,

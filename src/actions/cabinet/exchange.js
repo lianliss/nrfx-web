@@ -49,8 +49,13 @@ export function orderDelete(orderId) {
 }
 
 export function getMarkets() {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'getMarkets', status: 'loading' });
   return api.call(apiSchema.Exchange.MarketsGet).then(({markets}) => {
     store.dispatch({ type: actionTypes.EXCHANGE_SET_MARKETS, markets });
+  }).then(() => {
+    store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'getMarkets', status: '' });
+  }).catch(() => {
+    store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'getMarkets', status: 'failed' });
   });
 }
 

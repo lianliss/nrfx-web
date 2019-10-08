@@ -10,7 +10,7 @@ import * as CLASSES from '../../../constants/classes';
 import * as actions from '../../../actions';
 import * as utils from '../../../utils/';
 import ChartSimple from '../Chart/ChartSimple';
-
+import ModalState from '../ModalState/ModalState';
 
 class ChooseMarketModal extends React.Component {
   constructor(props) {
@@ -42,7 +42,9 @@ class ChooseMarketModal extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return this.props.markets !== nextProps.markets || (JSON.stringify(this.state) !== JSON.stringify(nextState));
+    return this.props.status !== nextProps.status ||
+      this.props.markets !== nextProps.markets ||
+      (JSON.stringify(this.state) !== JSON.stringify(nextState));
   }
 
   __handleChooseMarket (market) {
@@ -51,7 +53,12 @@ class ChooseMarketModal extends React.Component {
   }
 
   render () {
-    console.log(3, "RENDER ChooseMarketModal", this.props);
+    if (this.props.status) {
+      return (
+        <ModalState status={this.props.status} onRetry={() => {}} />
+      );
+    }
+
     const { markets } = this.props;
     const currentCurrencies = Object.keys(this.state.currencies).filter(key => this.state.currencies[key]);
     return (
@@ -93,11 +100,6 @@ class ChooseMarketModal extends React.Component {
                 ) {
                   return null;
                 }
-
-                //
-                // for (let i = 0; i < 50; i++) {
-                //   chart.push([1567641600000 + (100000000 * i), 0.221 + i / 100]); // TODO: TEMP
-                // }
 
                 const series = {
                   color: primary.color,
