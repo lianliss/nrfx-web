@@ -5,7 +5,8 @@ import * as actionTypes from '../actionTypes';
 import store from '../../store';
 
 export function toastPush(message, type) {
-  return () => push();
+  return () => push(message, type);
+  // TODO: Переделать везде toastPush на success, error, warning
 }
 
 function push(message, type) {

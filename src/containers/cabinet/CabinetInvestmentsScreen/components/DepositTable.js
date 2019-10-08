@@ -6,7 +6,7 @@ import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/
 import * as modalGroupActions from "../../../../actions/modalGroup";
 import SVG from "react-inlinesvg";
 
-export default function WithdrawalTable({ deposits, adaptive }) {
+export default function WithdrawalTable({ deposits, adaptive, fromPartners, skipContentBox }) {
   if (!deposits.length) {
     return (
       <EmptyContentBlock
@@ -29,8 +29,16 @@ export default function WithdrawalTable({ deposits, adaptive }) {
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('rate')}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('cabinet_profileScreen_invested')}</UI.TableColumn>,
-    <UI.TableColumn align="right">{utils.getLang('cabinet_investmentsScreen_profit')}</UI.TableColumn>,
   ];
+
+  if (fromPartners) {
+    headings.push(
+      <UI.TableColumn>{utils.getLang('cabinet_partners_userProfit')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('cabinet_partners_agentProfit')}</UI.TableColumn>
+    );
+  } else {
+    headings.push(<UI.TableColumn align="right">{utils.getLang('cabinet_investmentsScreen_profit')}</UI.TableColumn>);
+  }
 
   if (adaptive) {
     headings = [
@@ -99,10 +107,15 @@ export default function WithdrawalTable({ deposits, adaptive }) {
       )
     }
 
-    return (
-      <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
+    let onClick = false;
+    if (!fromPartners) {
+      onClick = () => modalGroupActions.openModalPage('deposit_info', {
         deposit: JSON.stringify(item)
-      })}}>
+      });
+    }
+
+    return (
+      <UI.TableCell key={item.id} onClick={onClick}>
         <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
           {icon}
         </UI.TableColumn>
@@ -112,13 +125,14 @@ export default function WithdrawalTable({ deposits, adaptive }) {
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
           sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}
-          align="right">{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
+          align={fromPartners ? 'left' : 'right'}>{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
+        {fromPartners && <UI.TableColumn>{utils.formatDouble(item.agent_profit)} {item.currency.toUpperCase()}</UI.TableColumn>}
       </UI.TableCell>
     )
   });
 
   return (
-    <UI.Table headings={headings}>
+    <UI.Table headings={headings} skipContentBox={skipContentBox}>
       {rows}
     </UI.Table>
   )

@@ -100,7 +100,7 @@ export function TableColumn({ children, align, style, highlighted, sub, classNam
     >
       <div className="Table__td__cont">
         {children}
-        {sub && <div className="Table__sub">{sub}</div>}
+        {sub !== undefined && <div className="Table__sub">{sub}</div>}
       </div>
     </td>
   )
@@ -108,7 +108,7 @@ export function TableColumn({ children, align, style, highlighted, sub, classNam
 
 TableColumn.propTypes = {
   highlighted: PropTypes.bool,
-  align: PropTypes.oneOf(['center', 'right']),
+  align: PropTypes.oneOf(['center', 'right', 'left']),
   style: PropTypes.object,
   sub: PropTypes.string,
   compact: PropTypes.bool,

@@ -3,10 +3,15 @@ import './ManageBalanceModal.less';
 import React, { useState, useEffect } from 'react';
 import UI from '../../../ui';
 import * as utils from '../../../utils';
+import * as storeUtils from '../../../storeUtils';
+import * as CLASSES from '../../../constants/classes';
 import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
 
-export default props => {
+const ManageBalanceModal = props => {
+  const isWithdrawalOnly = !!props.withdrawal;
+  const category = props.category || 'exchange';
+
   const [ type, changeType ] = useState("deposit");
   const [ amount, changeAmount ] = useState(0);
   const [ id, changeId ] = useState();
@@ -31,13 +36,28 @@ export default props => {
     });
   };
 
-  const options = getOptions(type === "deposit" ? balance.wallets : balance.balances);
-
+  const options = getOptions(type === 'deposit' ? balance.wallets : balance.balances);
   const currentOption = options.find( item => item.value === id) || options[0] || {};
   const { currency } = currentOption;
 
   useEffect(() => {
-    balanceActions.getBalance('exchange').then((res) => {
+    balanceActions.getBalance(category).then((res) => {
+      if (props.currency) {
+        let items;
+        if (type === 'deposit') {
+          items = res.wallets;
+        } else {
+          items = res.balances;
+        }
+
+        for (let item of items) {
+          if (item.currency === props.currency) {
+            changeId(item.id);
+            break;
+          }
+        }
+      }
+
       changeBalance(res);
     })
   }, []);
@@ -53,13 +73,13 @@ export default props => {
         props.onClose();
       })
     }
-  }
+  };
 
   return (
     <UI.Modal isOpen={true} onClose={props.onClose}>
-      <UI.ModalHeader>Manage Exchange Balance</UI.ModalHeader>
+      <UI.ModalHeader>Manage Balance</UI.ModalHeader>
       <div className="ManageBalanceModal">
-        <div className="ManageBalanceModal__row">
+        {!isWithdrawalOnly && <div className="ManageBalanceModal__row">
           <UI.SwitchTabs
             currency={currency}
             selected={type}
@@ -69,9 +89,9 @@ export default props => {
               { value: 'withdraw', label: 'Withdraw' }
             ]}
           />
-        </div>
-        <div className="ManageBalanceModal__row">
-          <div className="ManageBalanceModal__icon" style={{backgroundImage: `url(${currentOption.icon})`}} />
+        </div>}
+        <div className="EManageBalanceModal__row">
+
           <UI.Dropdown
             value={currentOption}
             placeholder=""
@@ -110,10 +130,10 @@ export default props => {
         </div>
       </div>
     </UI.Modal>
-
-
   )
 }
-//
-// {"type":"order_completed","body":{"order_id":2199786}}
-// {"type":"orders_filled","body":[{"id":2199558,"action":"sell","type":"limit","primary_coin":"btc","secondary_coin":"usdt","amount":0.05,"filled":0.05,"price":8170.56405},{"id":2199563,"action":"sell","type":"limit","primary_coin":"btc","secondary_coin":"usdt","amount":0.051500000000000004,"filled":0.05,"price":8202.731625},{"id":2199786,"action":"buy","type":"limit","primary_coin":"btc","secondary_coin":"usdt","amount":0.1,"filled":0.1,"price":9000}]}
+
+export default storeUtils.getWithState(
+  CLASSES.EXCHANGE_BALANCE_MODAL,
+  ManageBalanceModal
+);

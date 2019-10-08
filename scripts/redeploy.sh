@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-prod_branch="beta"
+branch_name="beta"
 
-if [ "$1" == "$prod_branch" ]; then
+if [ "$1" == "$branch_name" ]; then
     # Saves uncommitted changes and reset repo
     git stash
     git reset --hard
 
     # Move to master branch
-    git checkout beta
+    git checkout "$branch_name"
 
     # Pull latest commits from master
-    git pull origin beta
+    git pull origin "$branch_name"
 
     # Build
     npm run build

@@ -6,6 +6,7 @@ import * as utils from '../../../../utils/index';
 import {registerUser} from '../../../../actions/auth';
 import SuccessModal from '../../SuccessModal/SuccessModal';
 import StaticContentModal from '../../StaticContentModal/StaticContentModal';
+import initGetParams from '../../../../services/initialGetParams';
 
 function Registration({ changeStep, currentStep, email, handleChange, onClose, refParam }) {
 
@@ -22,7 +23,12 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
     } else if (!isChecked) {
       setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
-      registerUser(email, referrer)
+      let inviteLink = initGetParams.params.i;
+      let ref = referrer;
+      if (!ref && initGetParams.pathname.substr(0, 4) === '/reg') {
+        ref = initGetParams.pathname.substr(4);
+      }
+      registerUser(email, ref, inviteLink)
         .then(() => changeStep(steps.REGISTRATION_SUCCESS))
         .catch((err) => setErrorMsg(err.message));
     }

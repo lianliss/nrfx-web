@@ -57,7 +57,7 @@ class WalletBox extends React.Component {
   __getAmount = () => {
     if (this.isGenerating) {
       return utils.getLang('cabinet_walletBox_generating');
-    } else if (this.props.amount > 0) {
+    } else if (this.props.amount > 0 || this.props.skipEmptyLabel) {
       return utils.formatDouble(this.props.amount, 6) + ' ' + this.props.currency.toUpperCase();
     } else {
       return utils.getLang('cabinet_walletTransactionModal_receive');
@@ -65,8 +65,8 @@ class WalletBox extends React.Component {
   };
 
   __onClick = () => {
-    if (this.props.amount > 0) {
-      return this.props.onClick();
+    if (this.props.amount > 0 || this.props.skipEmptyLabel) {
+      return this.props.onClick && this.props.onClick();
     } else {
       return modalGroupActions.openModalPage('receive', {
         preset: utils.ucfirst(this.currencyInfo.name)
