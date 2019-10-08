@@ -10,7 +10,7 @@ import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
 import ModalState from '../ModalState/ModalState';
 
-class ManageBalanceModal extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +18,7 @@ class ManageBalanceModal extends React.Component {
     this.category = props.category || 'exchange';
 
     this.state = {
-      amount: null,
+      amount: '',
       type: this.isWithdrawalOnly ? 'withdraw' : 'deposit',
       wallets: [],
       balances: [],
@@ -137,7 +137,7 @@ class ManageBalanceModal extends React.Component {
               type="number"
               value={this.state.amount === null ? '' : this.state.amount}
               placeholder="0.00"
-              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, amount)}
+              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.state.amount)}
               onTextChange={this.__amountDidChange}
               error={this.state.touched && (!this.state.amount || this.state.amount <= 0 )}
             />
@@ -179,7 +179,7 @@ class ManageBalanceModal extends React.Component {
   };
 }
 
-export default storeUtils.getWithState(
-  CLASSES.EXCHANGE_BALANCE_MODAL,
-  ManageBalanceModal
-);
+// export default storeUtils.getWithState(
+//   CLASSES.EXCHANGE_BALANCE_MODAL,
+//   ManageBalanceModal
+// );
