@@ -3,12 +3,10 @@ import './ManageBalanceModal.less';
 import React, { useState, useEffect } from 'react';
 import UI from '../../../ui';
 import * as utils from '../../../utils';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
 
-const ManageBalanceModal = props => {
+export default props => {
   const isWithdrawalOnly = !!props.withdrawal;
   const category = props.category || 'exchange';
 
@@ -90,8 +88,8 @@ const ManageBalanceModal = props => {
             ]}
           />
         </div>}
-        <div className="EManageBalanceModal__row">
-
+        <div className="ManageBalanceModal__row">
+          <div className="ManageBalanceModal__icon" style={{backgroundImage: `url(${currentOption.icon})`}} />
           <UI.Dropdown
             value={currentOption}
             placeholder=""
@@ -132,8 +130,3 @@ const ManageBalanceModal = props => {
     </UI.Modal>
   )
 }
-
-export default storeUtils.getWithState(
-  CLASSES.EXCHANGE_BALANCE_MODAL,
-  ManageBalanceModal
-);
