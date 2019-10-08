@@ -12,6 +12,7 @@ export default class Chart extends React.PureComponent {
     resolution: '1',
     containerId: 'tv_chart_container',
     datafeedUrl: 'https://stage.bitcoinbot.pro/api/v1/exchange_chart',
+    // datafeedUrl: 'http://demo_feed.tradingview.com',
     libraryPath: 'charting_library/',
     chartsStorageUrl: 'https://saveload.tradingview.com',
     chartsStorageApiVersion: '1.1',
@@ -35,10 +36,10 @@ export default class Chart extends React.PureComponent {
 
       locale: getLang(),
       disabled_features: [
-        'use_localstorage_for_settings',
         'header_widget',
         'edit_buttons_in_legend',
         'context_menus',
+        'use_localstorage_for_settings',
         'go_to_date',
         'timeframes_toolbar',
         'shift_visible_range_on_new_bar',
@@ -56,6 +57,7 @@ export default class Chart extends React.PureComponent {
         'remove_library_container_border',
       ],
       enabled_features: [
+        'charting_library_debug_mode',
         'side_toolbar_in_fullscreen_mode',
         'move_logo_to_main_pane',
         'hide_left_toolbar_by_default'
@@ -66,7 +68,23 @@ export default class Chart extends React.PureComponent {
       user_id: this.props.userId,
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
-      studies_overrides: this.props.studiesOverrides,
+      studies_overrides: {
+        "volume.volume.color.0": "#eb6456",
+        "volume.volume.color.1": "#68c2ab",
+        ...this.props.studiesOverrides,
+      },
+      overrides: {
+        'paneProperties.crossHairProperties.color': "#808080",
+        'scalesProperties.lineColor': "#F5F1EE",
+        "scalesProperties.textColor" : '#808080',
+        'mainSeriesProperties.candleStyle.drawBorder': false,
+        "mainSeriesProperties.candleStyle.wickUpColor": '#68c2ab',
+        "mainSeriesProperties.candleStyle.wickDownColor": '#eb6456',
+        "paneProperties.horzGridProperties.color": "#F5F1EE",
+        "paneProperties.vertGridProperties.color": "#F5F1EE",
+        'mainSeriesProperties.candleStyle.upColor': '#68c2ab',
+        "mainSeriesProperties.candleStyle.downColor": '#eb6456'
+      },
       allow_symbol_change: false,
       time_frames: [],
     };
@@ -91,3 +109,6 @@ export default class Chart extends React.PureComponent {
     );
   }
 }
+
+
+
