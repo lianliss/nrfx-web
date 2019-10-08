@@ -1,6 +1,6 @@
 import * as auth from './auth';
 
-const API_ENTRY = 'https://stage.bitcoinbot.pro';
+const API_ENTRY = 'https://api.bitcoinbot.pro';
 const API_VERSION = 1;
 
 export const EXPORT_API_VERSION = API_VERSION;
@@ -19,7 +19,7 @@ export const Errors = {
   EMAIL_USED: 10,
 };
 
-export function invoke(method, name, params) {
+export function invoke(method, name, params, options = {}) {
   return new Promise((resolve, reject) => {
 
     const params_arr = [];
@@ -37,7 +37,8 @@ export function invoke(method, name, params) {
       }
     };
 
-    let url = `${API_ENTRY}/api/v${API_VERSION}/${name}`;
+    const apiEntry = options.apiEntry || API_ENTRY;
+    let url = `${apiEntry}/api/v${API_VERSION}/${name}`;
     if (method === 'GET') {
       url += `?${params_arr.join('&')}`;
     } else {
@@ -81,6 +82,6 @@ export function del(name, params = {}) {
   return invoke('DELETE', name, params);
 }
 
-export function call(API, params = {}) {
-  return invoke(API.method, API.path, params);
+export function call(API, params = {}, options = {}) {
+  return invoke(API.method, API.path, params, options);
 }

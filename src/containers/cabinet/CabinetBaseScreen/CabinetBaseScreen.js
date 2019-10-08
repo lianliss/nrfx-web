@@ -10,7 +10,7 @@ export default class CabinetBaseScreen extends BaseScreen {
   }
 
   get loadingStatus() {
-    return this.props.loadingStatus[this.section];
+    return this.props.loadingStatus[this.section] || '';
   }
 
   componentDidMount() {
