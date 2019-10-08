@@ -3,6 +3,8 @@ import './Chart.less';
 import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
 import { getLang } from '../../../../../services/lang';
+import { classNames } from '../../../../../utils/index'
+import * as actions from '../../../../../actions/cabinet/exchange';
 
 
 export default class Chart extends React.PureComponent {
@@ -11,7 +13,7 @@ export default class Chart extends React.PureComponent {
     interval: '1',
     resolution: '1',
     containerId: 'tv_chart_container',
-    datafeedUrl: 'https://stage.bitcoinbot.pro/api/v1/exchange_chart',
+    datafeedUrl: 'https://stageapi.bitcoinbot.pro/api/v1/exchange_chart',
     // datafeedUrl: 'http://demo_feed.tradingview.com',
     libraryPath: 'charting_library/',
     chartsStorageUrl: 'https://saveload.tradingview.com',
@@ -25,7 +27,15 @@ export default class Chart extends React.PureComponent {
 
   tvWidget = null;
 
+  __handleFullscreen() {
+    if (!document.fullscreen) {
+      actions.setFullscreen(false);
+    }
+  }
+
   componentDidMount() {
+    document.addEventListener('fullscreenchange', this.__handleFullscreen.bind(this), false);
+
     const widgetOptions = {
       symbol: this.props.symbol,
       // BEWARE: no trailing slash is expected in feed URL
@@ -36,31 +46,35 @@ export default class Chart extends React.PureComponent {
 
       locale: getLang(),
       disabled_features: [
-        'header_widget',
-        'edit_buttons_in_legend',
-        'context_menus',
-        'use_localstorage_for_settings',
-        'go_to_date',
-        'timeframes_toolbar',
-        'shift_visible_range_on_new_bar',
-        'compare_symbol',
-        'left_toolbar',
-        'header_symbol_search',
-        'symbol_search_hot_key',
-        'header_settings',
-        'header_compare',
-        'header_screenshot',
-        'header_saveload',
-        'symbol_info',
-        'header_resolutions',
-        'border_around_the_chart',
-        'remove_library_container_border',
+        ...(!this.props.fullscreen ? [
+          'header_widget',
+          'edit_buttons_in_legend',
+          'context_menus',
+          'use_localstorage_for_settings',
+          'go_to_date',
+          'timeframes_toolbar',
+          'shift_visible_range_on_new_bar',
+          'compare_symbol',
+          'left_toolbar',
+          'header_symbol_search',
+          'symbol_search_hot_key',
+          'header_settings',
+          'header_compare',
+          'header_screenshot',
+          'header_saveload',
+          'symbol_info',
+          'header_resolutions',
+          'border_around_the_chart',
+          'remove_library_container_border',
+        ] : [
+          // ...
+        ]),
       ],
       enabled_features: [
         'charting_library_debug_mode',
         'side_toolbar_in_fullscreen_mode',
         'move_logo_to_main_pane',
-        'hide_left_toolbar_by_default'
+        (!this.props.fullscreen ? 'hide_left_toolbar_by_default' : null)
       ],
       charts_storage_url: this.props.chartsStorageUrl,
       charts_storage_api_version: this.props.chartsStorageApiVersion,
@@ -69,21 +83,21 @@ export default class Chart extends React.PureComponent {
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
       studies_overrides: {
-        "volume.volume.color.0": "#eb6456",
-        "volume.volume.color.1": "#68c2ab",
+        'volume.volume.color.0': '#eb6456',
+        'volume.volume.color.1': '#68c2ab',
         ...this.props.studiesOverrides,
       },
       overrides: {
-        'paneProperties.crossHairProperties.color': "#808080",
-        'scalesProperties.lineColor': "#F5F1EE",
-        "scalesProperties.textColor" : '#808080',
+        'paneProperties.crossHairProperties.color': '#808080',
+        'scalesProperties.lineColor': '#F5F1EE',
+        'scalesProperties.textColor': '#808080',
         'mainSeriesProperties.candleStyle.drawBorder': false,
-        "mainSeriesProperties.candleStyle.wickUpColor": '#68c2ab',
-        "mainSeriesProperties.candleStyle.wickDownColor": '#eb6456',
-        "paneProperties.horzGridProperties.color": "#F5F1EE",
-        "paneProperties.vertGridProperties.color": "#F5F1EE",
+        'mainSeriesProperties.candleStyle.wickUpColor': '#68c2ab',
+        'mainSeriesProperties.candleStyle.wickDownColor': '#eb6456',
+        'paneProperties.horzGridProperties.color': '#F5F1EE',
+        'paneProperties.vertGridProperties.color': '#F5F1EE',
         'mainSeriesProperties.candleStyle.upColor': '#68c2ab',
-        "mainSeriesProperties.candleStyle.downColor": '#eb6456'
+        'mainSeriesProperties.candleStyle.downColor': '#eb6456'
       },
       allow_symbol_change: false,
       time_frames: [],
@@ -91,6 +105,10 @@ export default class Chart extends React.PureComponent {
 
     const tvWidget = new widget(widgetOptions);
     this.tvWidget = tvWidget;
+
+    if (this.props.fullscreen) {
+      this.refs.tradingView.requestFullscreen();
+    }
   }
 
   componentWillUnmount() {
@@ -104,11 +122,10 @@ export default class Chart extends React.PureComponent {
     return (
       <div
         id={ this.props.containerId }
-        className="Exchange__trading_view"
+        ref="tradingView"
+        className={ classNames("Exchange__trading_view", { fullscreen: this.props.fullscreen })}
       />
     );
   }
 }
-
-
 

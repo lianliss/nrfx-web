@@ -21,8 +21,8 @@ import exchangeReducer from './reducers/exchange';
 
 const middlewares = [];
 
-// const { logger } = require(`redux-logger`);
-// middlewares.push(logger);
+const { logger } = require(`redux-logger`);
+middlewares.push(logger);
 
 let store;
 

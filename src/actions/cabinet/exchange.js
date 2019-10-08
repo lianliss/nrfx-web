@@ -32,7 +32,7 @@ export function load(market) {
 
 export function orderCreate(params) {
   return api.call(apiSchema.Exchange.OrderPut, params).then(() => {
-    toast.success("ok");
+    toast.success("Order has been created");
   }).catch((err) => {
     toast.error(err.message);
   })
@@ -81,6 +81,10 @@ export function addTrades(orders) {
 
 export function updateBalance(currency, amount) {
   store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, currency, amount });
+}
+
+export function setFullscreen(status = true) {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_FULLSCREEN, status });
 }
 
 export function changeTimeFrame(timeFrame) {

@@ -68,7 +68,12 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
             <div className="Exchange__chart_wrapper">
               <div className="Exchange__chart Content_box">
                 {this.props.tickerInfo && <MarketInfo />}
-                <Chart symbol={this.props.market.split('/').join(':').toUpperCase()} key={`chart_${this.props.chartTimeFrame}`} interval={this.props.chartTimeFrame} />
+                <Chart
+                  fullscreen={this.props.fullscreen}
+                  symbol={this.props.market.split('/').join(':').toUpperCase()}
+                  key={`chart_${this.props.chartTimeFrame}_${this.props.fullscreen}`}
+                  interval={this.props.chartTimeFrame}
+                />
               </div>
               {this.props.tickerInfo && <TradeForm
                 ref="trade_form"

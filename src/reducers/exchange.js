@@ -20,6 +20,7 @@ const initialState = {
   },
   chart: [],
   chartTimeFrame: 5,
+  fullscreen: false
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -200,6 +201,13 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         markets: action.markets
+      }
+    }
+
+    case actionTypes.EXCHANGE_SET_FULLSCREEN: {
+      return {
+        ...state,
+        fullscreen: action.status
       }
     }
 
