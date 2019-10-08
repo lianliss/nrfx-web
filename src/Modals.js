@@ -67,7 +67,7 @@ export default function Modals(props) {
 
   return (
     <Component {...props.state.default} {...routerParams} {...options} onClose={() => {
-      router.navigate(router.getState().name);
+      window.history.back();
     }} />
   );
 }

@@ -18,7 +18,6 @@ import PartnersSection from './components/PartnersSection';
 import RightPartnersSection from './components/RightPartnersSection';
 import {ReactComponent as SettingsSvg} from '../../../asset/24px/settings.svg';
 import {ReactComponent as UsersSvg} from '../../../asset/24px/users.svg';
-import {ReactComponent as UserSvg} from '../../../asset/24px/user.svg';
 import * as PAGES from '../../../constants/pages';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
@@ -45,10 +44,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   }
 
   render() {
-    if (this.isLoading) {
-      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
-    }
-
     return (
       <div>
         <PageContainer
@@ -79,6 +74,10 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   }
 
   __renderRightContent = show => {
+    if (this.isLoading) {
+      return null;
+    }
+
     switch (this.props.routerParams.section) {
       case 'partners': {
         return (
@@ -124,7 +123,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
   __renderContent = () => {
     if (this.isLoading) {
-      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.load()} />;
+      return <LoadingStatus status={this.loadingStatus} onRetry={() => this.load()} />;
     }
 
     switch (this.props.routerParams.section) {
