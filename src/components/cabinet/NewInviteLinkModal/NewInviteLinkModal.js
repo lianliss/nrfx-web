@@ -24,11 +24,11 @@ class NewInviteLinkModal extends React.Component {
     return (
       <UI.Modal isOpen={true} onClose={() => window.history.back()} width={384}>
         <UI.ModalHeader>
-          New Link
+          {utils.getLang('cabinet_newInviteLink_title')}
         </UI.ModalHeader>
         <div className="ChangeEmailModal__input_wrapper">
           <UI.Input
-            placeholder="Enter Link Name"
+            placeholder={utils.getLang('cabinet_newInviteLink_name_placeholder')}
             value={this.state.name}
             onTextChange={(name) => this.setState({ name, isFailed: false })}
             autoComplete="off"
@@ -56,7 +56,7 @@ class NewInviteLinkModal extends React.Component {
     this.setState({ isLoading: true });
     this.props.createInviteLink(name).then(() => {
       window.history.back();
-      this.props.toastPush('Link created', 'success');
+      this.props.toastPush(utils.getLang('cabinet_newInviteLink_success'), 'success');
     }).catch((err) => {
       this.setState({ isLoading: false });
       this.props.toastPush(err.message, 'error')
