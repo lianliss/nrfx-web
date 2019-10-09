@@ -22,9 +22,9 @@ export default function OrderBook({ asks, bids, onOrderPress }) {
   return (
     <div className="OrderBook">
       <div className="OrderBook__header OrderBook__order">
-        <div className="OrderBook__order__row">Price</div>
-        <div className="OrderBook__order__row">Amount</div>
-        <div className="OrderBook__order__row">Total</div>
+        <div className="OrderBook__order__row">{utils.getLang('global_price')}</div>
+        <div className="OrderBook__order__row">{utils.getLang('global_amount')}</div>
+        <div className="OrderBook__order__row">{utils.getLang('global_total')}</div>
       </div>
       <div className="OrderBook__cont__wrap">
         <div className="OrderBook__cont indicator">

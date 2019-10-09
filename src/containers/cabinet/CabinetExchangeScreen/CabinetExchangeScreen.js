@@ -2,14 +2,11 @@ import './CabinetExchangeScreen.less';
 
 import React from 'react';
 
-import moment from 'moment';
-
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import Block from './components/Block/Block';
 import Trades from './components/Trades/Trades';
 import Balances from './components/Balances/Balances';
-import UI from '../../../ui';
 
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
@@ -92,47 +89,47 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
     )
   }
 
-  __renderTrades() {
-    const headings = [
-      <UI.TableColumn>Price</UI.TableColumn>,
-      <UI.TableColumn>Amount</UI.TableColumn>,
-      <UI.TableColumn align="right">Time</UI.TableColumn>,
-    ];
-
-    let rows = Object.values(this.props.trades).map((order) => {
-      const priceClassName = utils.classNames({
-        Exchange__orders__side: true,
-        sell: order.action === 'sell'
-      });
-      return (
-        <UI.TableCell key={order.id}>
-          <UI.TableColumn>
-            <div className={priceClassName}>{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : void 0)}</div>
-          </UI.TableColumn>
-          <UI.TableColumn>{utils.formatDouble(order.amount)}</UI.TableColumn>
-          <UI.TableColumn align="right">{moment(order.created_at).format('H:m:s')}</UI.TableColumn>
-        </UI.TableCell>
-      )
-    });
-
-    return (
-      <Block
-        title="Trades"
-        controls={[
-          <UI.Button key="all" size="ultra_small" rounded type="secondary">View All</UI.Button>,
-        ]}
-      >
-        <UI.Table headings={headings} compact skipContentBox inline>
-          {rows}
-        </UI.Table>
-      </Block>
-    )
-  }
+  // __renderTrades() {
+  //   const headings = [
+  //     <UI.TableColumn>Price</UI.TableColumn>,
+  //     <UI.TableColumn>Amount</UI.TableColumn>,
+  //     <UI.TableColumn align="right">Time</UI.TableColumn>,
+  //   ];
+  //
+  //   let rows = Object.values(this.props.trades).map((order) => {
+  //     const priceClassName = utils.classNames({
+  //       Exchange__orders__side: true,
+  //       sell: order.action === 'sell'
+  //     });
+  //     return (
+  //       <UI.TableCell key={order.id}>
+  //         <UI.TableColumn>
+  //           <div className={priceClassName}>{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : void 0)}</div>
+  //         </UI.TableColumn>
+  //         <UI.TableColumn>{utils.formatDouble(order.amount)}</UI.TableColumn>
+  //         <UI.TableColumn align="right">{moment(order.created_at).format('H:m:s')}</UI.TableColumn>
+  //       </UI.TableCell>
+  //     )
+  //   });
+  //
+  //   return (
+  //     <Block
+  //       title="Trades"
+  //       controls={[
+  //         <UI.Button key="all" size="ultra_small" rounded type="secondary">View All</UI.Button>,
+  //       ]}
+  //     >
+  //       <UI.Table headings={headings} compact skipContentBox inline>
+  //         {rows}
+  //       </UI.Table>
+  //     </Block>
+  //   )
+  // }
 
   __renderOrderBook() {
     return (
       <Block
-        title="Order Book"
+        title={utils.getLang('exchange_orderBook')}
         skipCollapse
         skipPadding
       >

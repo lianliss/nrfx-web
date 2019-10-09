@@ -3,11 +3,10 @@ import React, { memo } from 'react';
 import Block from '../Block/Block';
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
-import moment from 'moment/moment';
+import moment from 'moment/min/moment-with-locales';
 import { connect } from 'react-redux';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as exchange from '../../../../../actions/cabinet/exchange';
-import * as modals from '../../../../../actions/modalGroup';
 import * as actions from '../../../../../actions';
 
 class Orders extends React.Component {
@@ -23,13 +22,13 @@ class Orders extends React.Component {
     return (
       <Block
         tabs={[
-          {tag: 'open', label: 'Open Orders'},
-          {tag: 'history', label: 'My Trades'},
+          {tag: 'open', label: utils.getLang('exchange_openOrders')},
+          {tag: 'history', label: utils.getLang('exchange_myTrades')},
         ]}
         selectedTab={this.state.tab}
         onTabChange={(tab) => this.setState({ tab })}
         controls={[
-          <UI.Button key="all" size="ultra_small" rounded type="secondary">All Pairs</UI.Button>,
+          <UI.Button key="all" size="ultra_small" rounded type="secondary">{utils.getLang('exchange_allPairs')}</UI.Button>,
         ]}
       >
         {this.__renderContent()}
@@ -48,8 +47,8 @@ class Orders extends React.Component {
 
   __handleOrderDelete(orderId) {
     actions.confirm({
-      title: 'Delete order?',
-      okText: 'Delete',
+      title: utils.getLang('exchange_confirmDeleteOrder_title'),
+      okText: utils.getLang('global_delete'),
       type: 'delete'
     }).then(() => {
       exchange.orderDelete(orderId);
@@ -61,16 +60,16 @@ class Orders extends React.Component {
       <UI.TableColumn>
         <div className="Exchange__cancel_order_btn__wrap">
           <div className="Exchange__cancel_order_btn placeholder" />
-          <div>Side</div>
+          <div>{utils.getLang('global_side')}</div>
         </div>
       </UI.TableColumn>,
-      <UI.TableColumn>Pair</UI.TableColumn>,
-      <UI.TableColumn>Type</UI.TableColumn>,
-      <UI.TableColumn align="right">Price</UI.TableColumn>,
-      <UI.TableColumn align="right">Amount</UI.TableColumn>,
-      <UI.TableColumn align="right">Total</UI.TableColumn>,
-      <UI.TableColumn align="right">Filled %</UI.TableColumn>,
-      <UI.TableColumn align="right">Time</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_pair')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_type')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_price')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_amount')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_total')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_filled')} %</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_time')}</UI.TableColumn>,
     ];
 
     let rows = Object.values(this.props.openOrders).map((order) => {
@@ -79,7 +78,7 @@ class Orders extends React.Component {
         sell: order.action === 'sell'
       });
 
-      let side = order.action === 'sell' ? 'Sell' : 'Buy';
+      let side = order.action === 'sell' ? utils.getLang('exchange_sell') : utils.getLang('exchange_buy');
 
       return (
         <UI.TableCell key={order.id}>
@@ -115,11 +114,11 @@ class Orders extends React.Component {
       return (
         <EmptyContentBlock
           icon={require('../../../../../asset/120/no_orders.svg')}
-          message="No trade history"
+          message={utils.getLang('exchange_noTradeHistory')}
           skipContentClass
           height={280}
           button={{
-            text: 'See All Pairs',
+            text: utils.getLang('exchange_seeAllPairs'),
             size: 'middle',
           }}
         />
@@ -130,13 +129,13 @@ class Orders extends React.Component {
       <UI.TableColumn>Side</UI.TableColumn>,
       <UI.TableColumn>Pair</UI.TableColumn>,
       <UI.TableColumn>Type</UI.TableColumn>,
-      <UI.TableColumn align="right">Price</UI.TableColumn>,
-      <UI.TableColumn align="right">Amount</UI.TableColumn>,
-      <UI.TableColumn align="right">Average</UI.TableColumn>,
-      <UI.TableColumn align="right">Total</UI.TableColumn>,
-      <UI.TableColumn align="right">Filled %</UI.TableColumn>,
-      <UI.TableColumn align="right">Status</UI.TableColumn>,
-      <UI.TableColumn align="right">Time</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_price')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_amount')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_average')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_total')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_filled')} %</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_status')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_time')}</UI.TableColumn>,
     ];
 
     let rows = this.props.last_orders.map((order) => {
@@ -145,7 +144,7 @@ class Orders extends React.Component {
         sell: order.action === 'sell'
       });
 
-      let side = order.action === 'sell' ? 'Sell' : 'Buy';
+      let side = order.action === 'sell' ? utils.getLang('exchange_sell') : utils.getLang('exchange_buy');
 
       return (
         <UI.TableCell key={order.id}>
