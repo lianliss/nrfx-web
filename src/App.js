@@ -13,7 +13,7 @@ import UI from './ui';
 import * as actions from './actions';
 import * as internalNotifications from './actions/cabinet/internalNotifications';
 import * as storage from './services/storage';
-import { getLang } from './services/lang';
+import { getLang, setLang } from './services/lang';
 import * as utils from './utils/';
 import moment from 'moment/min/moment-with-locales';
 
@@ -84,6 +84,7 @@ class App extends React.Component {
 
   _loadAssets = () => {
     const lang = getLang();
+    setLang(lang);
     Promise.all([
       actions.loadLang(lang),
       actions.loadCurrencies()
