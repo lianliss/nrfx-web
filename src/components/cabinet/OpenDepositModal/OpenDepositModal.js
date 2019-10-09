@@ -23,7 +23,8 @@ class OpenDepositModal extends React.Component {
     amountMax: 0,
     amountMin: 0,
     currency: 'btc',
-    touched: false
+    touched: false,
+    pending: false,
   };
 
   componentDidMount() {
@@ -105,17 +106,23 @@ class OpenDepositModal extends React.Component {
   handleSubmit() {
     !this.props.thisState.touched && this.__setState({ touched: true });
 
-    this.props.thisState.amount && api.call(apiSchema.Investment.DepositPut, {
-      amount: this.props.thisState.amount,
-      wallet_id: this.props.thisState.walletId,
-      plan_id: this.props.thisState.planId,
-      deposit_type: this.props.thisState.selectDepositType
-    }).then(({plans}) => {
-      this.props.toastPush(utils.getLang('cabinet_openNewDeposit_depositCreated'), "success");
-      this.props.modalGroupSetActiveModal();
-    }).catch((err) => {
-      this.__setState({error: err.message});
-    });
+    if (this.props.thisState.amount) {
+      this.setState({ pending: true });
+
+      api.call(apiSchema.Investment.DepositPut, {
+        amount: this.props.thisState.amount,
+        wallet_id: this.props.thisState.walletId,
+        plan_id: this.props.thisState.planId,
+        deposit_type: this.props.thisState.selectDepositType
+      }).then(({plans}) => {
+        this.props.toastPush(utils.getLang('cabinet_openNewDeposit_depositCreated'), "success");
+        this.props.modalGroupSetActiveModal();
+      }).catch((err) => {
+        this.__setState({error: err.message});
+      }).finally(() => {
+        this.setState({ pending: false });
+      });
+    }
   }
 
   __getPlansThrottle = utils.throttle(this.__getPlans, 1000);
@@ -237,7 +244,11 @@ class OpenDepositModal extends React.Component {
           </div>
           { this.props.thisState.error && <div className="OpenDepositModal__error">{this.props.thisState.error}</div>}
           <div className="OpenDepositModal__btn_wrapper">
-            <UI.Button currency={this.props.thisState.currency} onClick={this.handleSubmit.bind(this)}>
+            <UI.Button
+              currency={this.props.thisState.currency}
+              onClick={this.handleSubmit.bind(this)}
+              disabled={this.state.pending}
+            >
               {utils.getLang('cabinet_openNewDeposit_invest')}
             </UI.Button>
           </div>

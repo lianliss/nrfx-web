@@ -9,6 +9,7 @@ import * as modalGroupActions from "../../../actions/modalGroup";
 import CheckNewEmailModal from "../CheckNewEmailModal/CheckNewEmailModal";
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
+import SVG from 'react-inlinesvg';
 
 class ChangeEmailModal extends React.Component {
   state = {
@@ -48,9 +49,10 @@ class ChangeEmailModal extends React.Component {
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
             onKeyPress={utils.InputNumberOnKeyPressHandler}
             error={this.state.errorGaCode}
+            indicator={
+              <SVG src={require('../../../asset/google_auth.svg')} />
+            }
           />
-
-          <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         <div className="ChangeEmailModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
