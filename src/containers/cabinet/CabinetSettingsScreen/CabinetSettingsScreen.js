@@ -373,6 +373,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
                       switch (info.code) {
                         case "ga_auth_code_incorrect":
                           return this.__inputError(modal, 'errorGaCode');
+                          // TODO: Переделать на нормальные модалки, не прокидывать функции в redux
                         default:
                           this.props.toastPush(info.message, "error");
                           break;
