@@ -9,8 +9,9 @@ class RightPartnersSection extends React.Component {
   render() {
     return <div>
       {this.__renderBalance()}
-      {!this.props.adaptive && this.props.profit_chart && Object.keys(this.props.profit_chart.data).length > 0 && <ChartProfit
+      {this.props.profit_chart && Object.keys(this.props.profit_chart.data).length > 0 && <ChartProfit
         chart={this.props.profit_chart}
+        adaptive={this.props.adaptive}
       />}
       {!this.props.adaptive && this.props.client_chart && this.props.client_chart.data.length > 0 && <ClientChart
         title={this.__getClientsChartTitle()}
@@ -22,6 +23,7 @@ class RightPartnersSection extends React.Component {
   __renderBalance = () => {
     return <WalletBalance
       title={utils.getLang('cabinet_referralBalance')}
+      emptyPlaceholder={utils.getLang('cabinet_balance_statistics_placeholder')}
       adaptive={this.props.adaptive}
       wallets={this.props.wallets}
       walletSelected={this.props.walletSelected}

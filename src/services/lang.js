@@ -5,10 +5,10 @@ import {loadLang} from '../actions'
 export function setLang(lang, callback) {
   if (lang) {
     storage.setItem("lang", lang);
+    moment.locale(lang);
     loadLang(lang).then(e => {
       if (callback) callback();
     });
-    moment.locale(lang);
   }
 }
 

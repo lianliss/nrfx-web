@@ -49,6 +49,8 @@ export default function HistoryTable({ history, adaptive, header}) {
       address = address.toUpperCase();
     }
 
+    const createdAt = moment(item.created_at);
+
     if (adaptive) {
       return (
         <UI.TableCell key={i} onClick={() => modalGroupActions.openModalPage('transaction', {id:item.id, type:item.type})}>
@@ -95,7 +97,10 @@ export default function HistoryTable({ history, adaptive, header}) {
           })}>{status}</div>
         </UI.TableColumn>
         <UI.TableColumn>
-          <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY HH:mm')}</div>
+          <div className="Wallets__history__date">
+            {createdAt.format('DD MMM YYYY')} <br />
+            {createdAt.format('HH:mm')}
+          </div>
         </UI.TableColumn>
       </UI.TableCell>
     )
