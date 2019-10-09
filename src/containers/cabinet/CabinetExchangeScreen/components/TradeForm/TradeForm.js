@@ -5,8 +5,6 @@ import React from 'react';
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
 import * as exchange from '../../../../../actions/cabinet/exchange';
-import * as modalGroupActions from '../../../../../actions/modalGroup';
-// import ConfirmModal from '../../../../../components/cabinet/ConfirmModal/ConfirmModal';
 
 
 export default class TradeForm extends React.Component {
@@ -52,36 +50,36 @@ export default class TradeForm extends React.Component {
             <div className="TradeForm__form__row">
               <UI.Input
                 error={this.state.touched && !this.state.amount}
-                placeholder="Amount"
+                placeholder={utils.getLang('global_amount')}
                 indicator={primary.toUpperCase()}
                 size="small"
                 value={this.state.amount === null ? '' : this.state.amount}
                 onTextChange={this.__amountDidChange}
               />
-              <p className="Form__helper__text">{primary.toUpperCase()} Balance - {utils.formatDouble(balance.primary.amount)}</p>
+              <p className="Form__helper__text">{primary.toUpperCase()}  {utils.getLang('global_balance')} - {utils.formatDouble(balance.primary.amount)}</p>
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
                 error={this.state.touched && !this.state.price && !isMarket}
-                placeholder="Price"
+                placeholder={utils.getLang('global_price')}
                 disabled={isMarket}
                 indicator={secondary.toUpperCase()}
                 size="small"
                 value={this.state.price === null || isMarket ? '' : this.state.price}
                 onTextChange={this.__priceDidChange}
               />
-              <p className="Form__helper__text">{secondary.toUpperCase()} Balance - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p>
+              <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')} - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p>
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
-                placeholder="Total"
+                placeholder={utils.getLang('global_total')}
                 indicator={secondary.toUpperCase()}
                 size="small"
                 disabled={isMarket}
                 onTextChange={this.__amountSecondaryDidChange}
                 value={this.state.amountSecondary === null || isMarket ? '' : this.state.amountSecondary}
               />
-              <p className="Form__helper__text">Fee: 0.02%</p>
+              <p className="Form__helper__text">{utils.getLang('exchange_fee')}: 0.02%</p>
             </div>
           </div>
           <div className="TradeForm__form__controls">
@@ -91,7 +89,7 @@ export default class TradeForm extends React.Component {
                 type="buy"
                 onClick={() => this.__handleOrderCreate("buy")}
                 disabled={pending.buy}
-              >Buy</UI.Button>
+              >{utils.getLang('exchange_action_buy')}</UI.Button>
             </div>
             <div className="TradeForm__form__row percents">
               {this.__renderAmountsSelector()}
@@ -102,7 +100,7 @@ export default class TradeForm extends React.Component {
                 type="sell"
                 disabled={pending.sell}
                 onClick={() => this.__handleOrderCreate("sell")}
-              >Sell</UI.Button>
+              >{utils.getLang('exchange_action_sell')}</UI.Button>
             </div>
           </div>
         </div>
@@ -151,7 +149,7 @@ export default class TradeForm extends React.Component {
           rounded
           type={this.state.orderType === type ? '' : 'secondary'}
           onClick={() => this.setState({ orderType: type })}
-        >{utils.ucfirst(type)}</UI.Button>
+        >{utils.getLang('exchange_type_' + type)}</UI.Button>
       )
     });
   }

@@ -18,9 +18,9 @@ class Trades extends React.Component {
   render() {
     console.log('RENDER Trades');
     const headings = [
-      <UI.TableColumn>Price</UI.TableColumn>,
-      <UI.TableColumn>Amount</UI.TableColumn>,
-      <UI.TableColumn align="right">Time</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_price')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_amount')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_time')}</UI.TableColumn>,
     ];
 
     let rows = Object.values(this.props.trades).map((order) => {
@@ -41,9 +41,9 @@ class Trades extends React.Component {
 
     return (
       <Block
-        title="Trades"
+        title={utils.getLang('exchange_trades')}
         controls={[
-          <UI.Button key="all" size="ultra_small" rounded type="secondary">View All</UI.Button>,
+          <UI.Button key="all" size="ultra_small" rounded type="secondary">{utils.getLang('global_viewAll')}</UI.Button>,
         ]}
       >
         <UI.Table headings={headings} compact skipContentBox inline>

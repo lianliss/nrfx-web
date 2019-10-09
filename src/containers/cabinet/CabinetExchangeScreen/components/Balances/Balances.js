@@ -20,8 +20,8 @@ class Balances extends React.Component {
   render() {
     console.log('RENDER balances');
     const headings = [
-      <UI.TableColumn>Currency</UI.TableColumn>,
-      <UI.TableColumn align="right">Amount</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_currency')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_amount')}</UI.TableColumn>,
     ];
 
     let rows = this.props.balances.map((balance) => {
@@ -35,14 +35,14 @@ class Balances extends React.Component {
 
     return (
       <Block
-        title="Balance"
+        title={utils.getLang('global_balance')}
         controls={[
           <UI.Button
             key="withdraw"
             size="ultra_small"
             rounded type="secondary"
             onClick={this.__handleOpenBalance}
-          >Manage</UI.Button>
+          >{utils.getLang('cabinet_manage')}</UI.Button>
         ]}
       >
         <UI.Table headings={headings} compact skipContentBox>
