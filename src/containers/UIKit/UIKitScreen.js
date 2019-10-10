@@ -4,6 +4,7 @@ import React from 'react';
 
 import BaseScreen from '../BaseScreen';
 import UI from '../../ui/index';
+import * as utils from '../../utils';
 
 export default class UIKitScreen extends BaseScreen {
   constructor(props) {
@@ -98,6 +99,45 @@ export default class UIKitScreen extends BaseScreen {
           </Line>
           <Line style={{width: 300}}>
             <UI.Input type="password" placeholder="Password" />
+          </Line>
+        </Section>
+        <Section title="Inputs">
+          <Line style={{width: 300}}>
+            <UI.Dropdown
+              placeholder="Placeholder"
+              value={{ title: 'BTC', note: '0.02112', value: 'btc' }}
+              onChange={console.log}
+              options={[
+                { title: 'BTC', note: '0.02112', value: 'btc' },
+                { title: 'ETH', note: '1.511', value: 'eth' },
+                { title: 'LTC', note: '9.1002', value: 'ltc' }
+              ]}
+            />
+          </Line>
+          <Line style={{width: 300}}>
+            <UI.Dropdown
+              placeholder="Placeholder"
+              value='btc'
+              onChange={console.log}
+              options={[
+                { title: 'BTC', note: '0.02112', value: 'btc' },
+                { title: 'ETH', note: '1.511', value: 'eth' },
+                { title: 'LTC', note: '9.1002', value: 'ltc' }
+              ]}
+            />
+          </Line>
+          <Line style={{width: 200}}>
+            <UI.Dropdown
+              size="small"
+              placeholder="Placeholder"
+              value='btc'
+              onChange={console.log}
+              options={[
+                { title: 'BTC', note: '0.02112', value: 'btc' },
+                { title: 'ETH', note: '1.511', value: 'eth' },
+                { title: 'LTC', note: '9.1002', value: 'ltc' }
+              ]}
+            />
           </Line>
         </Section>
         <Section title="Search">

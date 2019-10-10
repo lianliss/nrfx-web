@@ -237,7 +237,10 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_EXCHANGE_SCREEN:
-      mapState2Props = (state) => ({ ...state.exchange });
+      mapState2Props = (state) => ({
+        ...state.exchange,
+        adaptive: state.default.adaptive,
+      });
       mapDispatch2Props = {
         load: exchangeActions.load,
       };

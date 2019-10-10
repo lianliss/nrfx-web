@@ -1,3 +1,5 @@
+import './Balances.less';
+
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
 
@@ -8,7 +10,7 @@ import { openModal } from '../../../../../actions/';
 
 class Balances extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.balances !== this.props.balances;
+    return nextProps.adaptive !== this.props.adaptive || nextProps.balances !== this.props.balances;
   }
 
   __handleOpenBalance() {
@@ -33,7 +35,20 @@ class Balances extends React.Component {
       )
     });
 
-    return (
+    const table = (
+      <UI.Table headings={headings} compact skipContentBox>
+        {rows}
+      </UI.Table>
+    )
+
+    return  this.props.adaptive ? (
+      <div className="Exchange__balance">
+        {table}
+        <UI.Button
+          onClick={this.__handleOpenBalance}
+        >{utils.getLang('cabinet_manage')}</UI.Button>
+      </div>
+    ) : (
       <Block
         title={utils.getLang('global_balance')}
         controls={[
@@ -45,9 +60,7 @@ class Balances extends React.Component {
           >{utils.getLang('cabinet_manage')}</UI.Button>
         ]}
       >
-        <UI.Table headings={headings} compact skipContentBox>
-          {rows}
-        </UI.Table>
+        {table}
       </Block>
     )
   }

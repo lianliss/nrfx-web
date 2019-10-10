@@ -16,6 +16,7 @@ import Message from './components/Message/Message';
 import Hover from './components/Hover/Hover';
 import Table, { TableCell, TableColumn } from './components/Table/Table';
 import SwitchTabs from './components/SwitchTabs/SwitchTabs';
+import SwitchButtons from './components/SwitchButtons/SwitchButtons';
 import RadioGroup from './components/Radio/RadioGroup';
 import Toast from './components/Toast/Toast';
 import MarkDown from './components/MarkDown/MarkDown';
@@ -40,6 +41,7 @@ export default {
   TableCell,
   TableColumn,
   SwitchTabs,
+  SwitchButtons,
   Notifications,
   Notification,
   NotificationSeparator,

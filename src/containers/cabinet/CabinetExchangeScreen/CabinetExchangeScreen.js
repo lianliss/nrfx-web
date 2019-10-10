@@ -5,6 +5,7 @@ import React from 'react';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import Block from './components/Block/Block';
+import SwitchBlock from './components/SwitchBlock/SwitchBlock';
 import Trades from './components/Trades/Trades';
 import Balances from './components/Balances/Balances';
 
@@ -50,7 +51,24 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       return <LoadingStatus status={this.loadingStatus} onRetry={() => this.load()} />;
     }
 
-    return this.__renderExchange();
+    return this.props.adaptive ? this.__renderExchangeAdaptive() : this.__renderExchange();
+  }
+
+  __renderExchangeAdaptive() {
+    return (
+      <div className="Exchange__wrapper">
+        <SwitchBlock contents={[
+          {
+            title: utils.getLang('exchange_trades'),
+            content: <Balances adaptive={true} />
+          },
+          {
+            title: utils.getLang('global_balance'),
+            content: <Balances adaptive={true} />
+          }
+        ]} />
+      </div>
+    )
   }
 
   __renderExchange() {
