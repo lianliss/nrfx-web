@@ -1,7 +1,8 @@
 import './CabinetProfileScreen.less';
-//
+
 import React from 'react';
-//
+import UI from '../../../ui';
+
 import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../utils";
 import * as CLASSES from "../../../constants/classes";
@@ -18,7 +19,6 @@ import PartnersSection from './components/PartnersSection';
 import RightPartnersSection from './components/RightPartnersSection';
 import {ReactComponent as SettingsSvg} from '../../../asset/24px/settings.svg';
 import {ReactComponent as UsersSvg} from '../../../asset/24px/users.svg';
-import {ReactComponent as UserSvg} from '../../../asset/24px/user.svg';
 import * as PAGES from '../../../constants/pages';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
@@ -40,37 +40,71 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   };
 
   componentDidMount() {
-    this.props.setTitle(utils.getLang("cabinet_header_profile"));
+    this.__updateTitle();
     this.load();
   }
 
-  render() {
-    if (this.isLoading) {
-      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
+  componentDidUpdate(prevProps) {
+    if (this.props.routerParams.section !== prevProps.routerParams.section) {
+      this.__updateTitle();
     }
+  }
 
+  __updateTitle() {
+    switch (this.props.routerParams.section) {
+      case 'partners':
+        this.props.setTitle(utils.getLang('cabinet_header_partners'));
+        break;
+      default:
+        this.props.setTitle(utils.getLang('cabinet_header_profile'));
+        break;
+    }
+  }
+
+  render() {
     return (
       <div>
         <PageContainer
           leftContent={this.__renderRightContent()}
-          sidebarOptions={!this.props.adaptive && [
-            <ProfileSidebarItem
-              onClick={e => router.navigate('settings')}
-              icon={<SettingsSvg />}
-              label={utils.getLang('cabinet_profileScreen_settings')}
-            />,
-            // <ProfileSidebarItem
-            //  icon={<UsersSvg />}
-            //  label="Partners"
-            //  onClick={e => router.navigate(PAGES.PROFILE, {section: 'partners'})}
-            // />
-            // <ProfileSidebarItem icon={require('../../../asset/24px/id-badge.svg')} label="Customers" />,
-          ]}
+          sidebarOptions={this.__renderSideBarOptions()}
         >
           {this.__renderContent()}
+          {this.props.adaptive && <div className="floatingButtonPadding"> </div>}
         </PageContainer>
       </div>
     )
+  }
+
+  __renderSideBarOptions() {
+    if (this.props.adaptive) {
+      return [
+        <UI.FloatingButtonItem
+          icon={require('../../../asset/24px/settings.svg')}
+          onClick={() => router.navigate('settings')}
+        >
+          {utils.getLang('cabinet_profileScreen_settings')}
+        </UI.FloatingButtonItem>,
+        <UI.FloatingButtonItem
+          icon={require('../../../asset/24px/users.svg')}
+          onClick={() => router.navigate(PAGES.PROFILE, { section: 'partners' })}
+        >
+          {utils.getLang('cabinet_profileScreen_partners')}
+        </UI.FloatingButtonItem>,
+      ]
+    } else {
+      return [
+        <ProfileSidebarItem
+          onClick={() => router.navigate('settings')}
+          icon={<SettingsSvg />}
+          label={utils.getLang('cabinet_profileScreen_settings')}
+        />,
+        <ProfileSidebarItem
+          icon={<UsersSvg />}
+          section="partners"
+          label={utils.getLang('cabinet_profileScreen_partners')}
+        />
+      ];
+    }
   }
 
   get wallets() {
@@ -80,15 +114,20 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   }
 
   __renderRightContent = show => {
+    if (this.isLoading) {
+      return null;
+    }
+
     switch (this.props.routerParams.section) {
       case 'partners': {
-        return <div>
+        return (
           <RightPartnersSection
+            {...this.props.partner}
             adaptive={this.props.adaptive}
-            wallets={this.wallets}
+            wallets={this.props.partner.balances}
             walletSelected={this.state.walletSelected}
           />
-        </div>
+        )
       }
       default: {
         if (!(this.props.adaptive && !show) && !this.props.routerParams.section && !this.isLoading && this.props.dashboard.hasOwnProperty('chart')) {
@@ -124,16 +163,13 @@ class CabinetProfileScreen extends CabinetBaseScreen {
 
   __renderContent = () => {
     if (this.isLoading) {
-      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.load()} />;
+      return <LoadingStatus status={this.loadingStatus} onRetry={() => this.load()} />;
     }
 
     switch (this.props.routerParams.section) {
       case 'partners': {
         return <div>
-          <PartnersSection
-            adaptive={this.props.adaptive}
-            wallets={this.__renderWallets}
-          />
+          <PartnersSection />
         </div>
       }
       case 'customers': {
