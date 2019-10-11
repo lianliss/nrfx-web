@@ -5,20 +5,21 @@
   
   .Badge__count {
     color: var(--contrast-primary);
-    font-size: 10px;
     font-weight: 600;
+    font-size: 10px;
     position: absolute;
     background: var(--primary-red);
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
+    line-height: 12px;
+    min-width: 12px;
+    padding: 0 3px;
+    box-sizing: border-box;
+    border-radius: 6px;
     top: 1px;
-    right: -3px;
-    transform: translate(-80%, 0%);
+    left: 100%;
+    transform: translate(-12px, 0%);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 0 2px white;
     &:empty {
       display: none;
     }

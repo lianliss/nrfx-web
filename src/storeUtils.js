@@ -53,11 +53,12 @@ export function getWithState(caseName, caseClass) {
         profile: state.default.profile,
         notifications: state.notifications,
         router: state.router,
-        title: state.default.title
+        title: state.default.title,
       });
       mapDispatch2Props = {
         dropInternalNotifications: internalNotifications.drop,
-        loadNotifications: notificationsActions.loadNotifications
+        loadNotifications: notificationsActions.loadNotifications,
+        notificationAction: notificationsActions.submitAction,
       };
       break;
     case CLASSES.COMPONENT_PROFILE_SIDEBAR:

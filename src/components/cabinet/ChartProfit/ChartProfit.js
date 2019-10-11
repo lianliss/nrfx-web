@@ -43,15 +43,11 @@ class ChartProfit extends React.Component {
     });
 
     let marker = false;
-    if (Object.keys(this.props.chart.data).length === 1) {
-      if (this.props.chart.data[Object.keys(this.props.chart.data)[0]].length < 3) {
-        marker = true;
-      }
+    //if (Object.keys(this.props.chart.data).length === 1) {
+    if (this.props.chart.data[Object.keys(this.props.chart.data)[0]].length < 3) {
+      marker = true;
     }
-
-    console.log({
-      series: [Object.values(chartCurrencies)[0]]
-    })
+    //}
 
     return (
       <div className="Content_box Chart__profit">
