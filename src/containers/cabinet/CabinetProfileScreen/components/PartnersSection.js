@@ -13,7 +13,7 @@ import WalletBox from '../../../../components/cabinet/WalletBox/WalletBox';
 import CustomersTable from './CustomersTable';
 import AgentsTable from './AgentsTable';
 import InviteLinks from './InviteLinks/InviteLinks';
-import {openModal} from '../../../../actions';
+import InviteAgent from './InviteAgent/InviteAgent';
 
 class PartnersSection extends React.Component {
   constructor(props) {
@@ -52,6 +52,9 @@ class PartnersSection extends React.Component {
         ];
       case 'representative':
         return [
+          <InviteAgent
+
+          />,
           <AgentsTable
             ket="table"
             agents={this.props.clients}
@@ -104,7 +107,7 @@ class PartnersSection extends React.Component {
   };
 
   __withdrawal(balance) {
-    openModal('manage_balance', {
+    actions.openModal('manage_balance', {
       withdrawal: 1,
       currency: balance.currency,
       category: 'partners',
