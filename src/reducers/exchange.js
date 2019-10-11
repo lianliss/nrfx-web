@@ -7,7 +7,10 @@ const initialState = {
   trades: {},
   openOrders: {},
   last_orders: [],
-  tickerInfo: null,
+  tickerInfo: {
+    diff: 0,
+    percent: 0
+  },
   balanceInfo: {
     primary: {},
     secondary: {},
@@ -29,7 +32,10 @@ export default function reduce(state = initialState, action = {}) {
       let tickerInfo = {};
       for (let ticker of action.tickers) {
         if (ticker.market === state.market) {
-          tickerInfo = ticker;
+          tickerInfo = {
+            ...ticker,
+            prevPrice: ticker.price,
+          };
         }
       }
 
@@ -208,6 +214,17 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         fullscreen: action.status
+      }
+    }
+
+    case actionTypes.EXCHANGE_TICKER_UPDATE: {
+      return {
+        ...state,
+        tickerInfo: {
+          ...state.tickerInfo,
+          ...action.ticker,
+          prevPrice: state.tickerInfo.price,
+        }
       }
     }
 

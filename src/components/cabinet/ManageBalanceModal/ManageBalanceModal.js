@@ -75,6 +75,7 @@ export default class extends React.Component {
         title: utils.ucfirst(currencyInfo.name),
         amount: item.amount,
         currency: item.currency,
+        icon: currencyInfo.icon,
         note: utils.formatDouble(item.amount) + ' ' + item.currency.toUpperCase()
       };
     });
@@ -124,7 +125,8 @@ export default class extends React.Component {
               ]}
             />}
           </div>
-          <div className="EManageBalanceModal__row">
+          <div className="ManageBalanceModal__row">
+            <div style={{backgroundImage: `url(${this.currentOption.icon})`}} className="ManageBalanceModal__icon" />
             <UI.Dropdown
               value={this.currentOption}
               placeholder=""
@@ -178,8 +180,3 @@ export default class extends React.Component {
     }
   };
 }
-
-// export default storeUtils.getWithState(
-//   CLASSES.EXCHANGE_BALANCE_MODAL,
-//   ManageBalanceModal
-// );

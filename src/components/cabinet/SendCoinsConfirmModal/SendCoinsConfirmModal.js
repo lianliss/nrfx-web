@@ -13,11 +13,13 @@ import * as currencies from "../../../utils/currencies";
 import InfoRow, {InfoRowGroup} from '../../../components/cabinet/InfoRow/InfoRow';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
+import * as toast from '../../../actions/cabinet/toasts';
 
 class SendCoinsConfirmModal extends React.Component {
   state = {
     gaCode: '',
-    errorGaCode: false
+    errorGaCode: false,
+    pending: false,
   };
 
   render() {
@@ -86,7 +88,7 @@ class SendCoinsConfirmModal extends React.Component {
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         <div className="SendCoinsConfirmModal__submit_wrapper">
-          <UI.Button currency={currency.toLowerCase()} onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
+          <UI.Button currency={currency.toLowerCase()} onClick={this.__handleSubmit} disabled={this.state.pending || this.state.gaCode.length < 6}>
             {utils.getLang('site__authModalSubmit')}
           </UI.Button>
         </div>
@@ -111,7 +113,9 @@ class SendCoinsConfirmModal extends React.Component {
   }
 
   __handleSubmit = () => {
+    this.setState({pending: true});
     walletsActions.sendCoins(this.__buildParams()).then((info) => {
+      toast.success(utils.getLang('cabinet_sendCoinsModal_success'));
       modalGroupActions.modalGroupClear();
     }).catch((info) => {
       switch (info.code) {
@@ -127,9 +131,11 @@ class SendCoinsConfirmModal extends React.Component {
           });
           break;
         default:
-          this.props.toastPush(info.message, "error");
+          toast.error(info.message);
           break;
       }
+    }).finally(() => {
+      this.setState({pending: false});
     });
   }
 }

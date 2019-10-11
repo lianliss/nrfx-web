@@ -5,6 +5,8 @@ import React from 'react';
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
 import * as exchange from '../../../../../actions/cabinet/exchange';
+import OrderBook from '../OrderBook/OrderBook';
+import Block from '../Block/Block';
 
 
 export default class TradeForm extends React.Component {
@@ -39,6 +41,88 @@ export default class TradeForm extends React.Component {
 
     const [primary, secondary] = market.split('/');
     const isMarket = this.state.orderType === "market";
+
+
+
+
+    if (this.props.adaptive) {
+      return (
+        <div className="TradeForm">
+          <div className="TradeForm__adaptive_form">
+            <div className="TradeForm__adaptive_form__row">
+              <UI.Dropdown
+                size="small"
+                placeholder="Placeholder"
+                value={this.state.orderType}
+                onChange={type => this.setState({ orderType: type })}
+                options={[
+                  { title: utils.getLang('exchange_type_limit'), value: 'limit' },
+                  { title: utils.getLang('exchange_type_market'), value: 'market' }
+                ]}
+              />
+            </div>
+
+            <div className="TradeForm__adaptive_form__row">
+              <UI.Input
+                error={this.state.touched && !this.state.amount}
+                placeholder={utils.getLang('global_amount')}
+                indicator={primary.toUpperCase()}
+                size="small"
+                value={this.state.amount === null ? '' : this.state.amount}
+                onTextChange={this.__amountDidChange}
+              />
+              <p>{primary.toUpperCase()}  {utils.getLang('global_balance')} - {utils.formatDouble(balance.primary.amount)}</p>
+            </div>
+            <div className="TradeForm__adaptive_form__row">
+              <UI.Input
+                error={this.state.touched && !this.state.price && !isMarket}
+                placeholder={utils.getLang('global_price')}
+                disabled={isMarket}
+                indicator={secondary.toUpperCase()}
+                size="small"
+                value={this.state.price === null || isMarket ? '' : this.state.price}
+                onTextChange={this.__priceDidChange}
+              />
+              <p>{secondary.toUpperCase()} {utils.getLang('global_balance')} - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p>
+            </div>
+            <div className="TradeForm__adaptive_form__row">
+              <UI.Input
+                placeholder={utils.getLang('global_total')}
+                indicator={secondary.toUpperCase()}
+                size="small"
+                disabled={isMarket}
+                onTextChange={this.__amountSecondaryDidChange}
+                value={this.state.amountSecondary === null || isMarket ? '' : this.state.amountSecondary}
+              />
+              <p>{utils.getLang('exchange_fee')}: 0.02%</p>
+            </div>
+            <div className="TradeForm__adaptive_form__row TradeForm__amount_selector">
+              {this.__renderAmountsSelector()}
+            </div>
+
+            <div className="TradeForm__adaptive_form__buttons">
+              <UI.Button
+                type="buy"
+                disabled={pending.buy}
+                onClick={() => this.__handleOrderCreate("buy")}
+              >{utils.getLang('exchange_action_buy')}</UI.Button>
+
+              <UI.Button
+                type="sell"
+                disabled={pending.sell}
+                onClick={() => this.__handleOrderCreate("sell")}
+              >{utils.getLang('exchange_action_sell')}</UI.Button>
+            </div>
+          </div>
+          <OrderBook
+            adaptive={true}
+            ticker={this.props.ticker}
+            onOrderPress={(order) => {}}
+            {...this.props.depth}
+          />
+        </div>
+      )
+    }
 
     return (
       <div className="TradeForm Content_box">
@@ -181,7 +265,7 @@ export default class TradeForm extends React.Component {
         type: this.state.orderType,
         market: this.props.market,
         amount: this.state.amount,
-        ...(this.state.orderType === 'limit' && { price: this.state.amount })
+        ...(this.state.orderType === 'limit' && { price: this.state.price })
       }).finally(() => {
         this.setState({ pending: { ...this.state.pending, [action]: false }});
       });

@@ -19,7 +19,8 @@ class ChangeNumberModal extends React.Component {
     errorGaCode: false,
     phone: '',
     dialCode: '',
-    phoneWithoutCode: ''
+    phoneWithoutCode: '',
+    pending: false
   };
 
   render() {
@@ -69,7 +70,10 @@ class ChangeNumberModal extends React.Component {
           <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         <div className="ChangeNumberModal__submit_wrapper">
-          <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6 || !isValidPhoneNumber(this.state.phone)}>
+          <UI.Button
+            onClick={this.__handleSubmit}
+            disabled={this.state.pending || this.state.gaCode.length < 6 || !isValidPhoneNumber(this.state.phone)}
+          >
             {utils.getLang('cabinet_settingsSave')}
           </UI.Button>
         </div>
@@ -99,6 +103,7 @@ class ChangeNumberModal extends React.Component {
 
   __handleSubmit = () => {
     if (isValidPhoneNumber(this.state.phone)) {
+      this.setState({ pending: true });
       settingsActions.sendSmsCode({
         phone_code: this.state.dialCode,
         phone_number: this.state.phoneWithoutCode,
@@ -128,6 +133,8 @@ class ChangeNumberModal extends React.Component {
             this.props.toastPush(info.message, "error");
             break;
         }
+      }).finally(() => {
+        this.setState({ pending: false });
       });
     }
   }

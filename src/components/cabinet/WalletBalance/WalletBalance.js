@@ -47,7 +47,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
   }
 };
 
-function WalletBalance({ wallets, adaptive, title }) {
+function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
   const [ isInFiat, setIsInFiat ] = useState(true);
   const [ convert_currency, setConvert_currency ] = useState('BTC');
   const walletsBalance = getWalletsBalance(wallets, isInFiat);
@@ -167,7 +167,7 @@ function WalletBalance({ wallets, adaptive, title }) {
           <div className="Empty_box">
             <SVG src={require('../../../asset/cabinet/wallet_colorful.svg')} />
             <h3>
-              {utils.getLang('cabinet_walletBalance_statistics_placeholder')}
+              {emptyPlaceholder || utils.getLang('cabinet_walletBalance_statistics_placeholder')}
             </h3>
           </div>
         )

@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // internal
 import {classNames} from '../../../utils';
+import UI from '../../index';
 
 export default function SwitchTabs({ tabs, selected, onChange, currency }) {
 

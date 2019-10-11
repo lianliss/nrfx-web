@@ -8,7 +8,7 @@ import SVG from 'react-inlinesvg';
 import {classNames} from '../../utils';
 
 function Button(props) {
-  const className = classNames({
+  const className = classNames(props.className, {
     Button: true,
     [props.size]: !!props.size,
     disabled: props.disabled || props.state === 'disabled',
@@ -27,6 +27,7 @@ function Button(props) {
       onClick={(e) => props.onClick && props.onClick(e)}
       style={props.style}
       type={props.btnType}
+      title={props.title}
     >
       {props.state === 'loading' && <div className="Button__loader"><SVG src={require('../../asset/spinner.svg')} /></div>}
       <div className="Button__cont">
@@ -42,6 +43,7 @@ function Button(props) {
 Button.propTypes = {
   size: PropTypes.oneOf(['', 'small', 'large', 'ultra_small', 'middle']),
   type: PropTypes.oneOf(['', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'primary']),
+  className: PropTypes.string,
   btnType: PropTypes.string,
   disabled: PropTypes.bool,
   rounded: PropTypes.bool,
@@ -51,6 +53,7 @@ Button.propTypes = {
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
   currency: PropTypes.string,
+  title: PropTypes.string,
   state: PropTypes.oneOf(['', 'loading', 'disabled'])
 };
 

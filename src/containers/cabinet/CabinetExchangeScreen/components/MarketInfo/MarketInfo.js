@@ -2,6 +2,7 @@ import './MarketInfo.less';
 
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
+import SVG from 'react-inlinesvg';
 // import moment from 'moment/min/moment-with-locales';
 
 import UI from '../../../../../ui';
@@ -38,18 +39,18 @@ class MarketInfo extends React.Component{
 
     const lastPriceClassName = utils.classNames({
       MarketInfo__info_row__value__primary: true,
-      up: true,
+      [tickerInfo.percent >= 0 ? 'up' : 'down']: true
     });
 
     const dayChangeClassName = utils.classNames({
       MarketInfo__info_row__value__primary: true,
-      down: true,
+      [tickerInfo.percent >= 0 ? 'up' : 'down']: true
     });
 
     return (
       <div className="MarketInfo__row price">
         <div className="MarketInfo__info_row">
-          <div className="MarketInfo__info_row__label">Last Price</div>
+          <div className="MarketInfo__info_row__label">{utils.getLang('exchange_lastPrice')}</div>
           <div className="MarketInfo__info_row__value">
             <div className={lastPriceClassName}> {utils.formatDouble(tickerInfo.price, utils.isFiat(secondary) ? 2 : void 0)}</div>
             ${utils.formatDouble(tickerInfo.usd_price, 2)}
@@ -59,7 +60,7 @@ class MarketInfo extends React.Component{
           <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_change')}</div>
           <div className="MarketInfo__info_row__value">
             <div className={dayChangeClassName}>{`${utils.formatDouble(tickerInfo.percent, 2)}%`}</div>
-            {utils.formatDouble(tickerInfo.end_price - tickerInfo.start_price, utils.isFiat(secondary) ? 2 : void 0)}
+            {utils.formatDouble(tickerInfo.diff, utils.isFiat(secondary) ? 2 : void 0)}
           </div>
         </div>
       </div>
@@ -81,7 +82,7 @@ class MarketInfo extends React.Component{
     // ].map((item) => {
     //   return  <UI.Button
     //     key={item.minutes}
-    //     rounded
+    //     roundedMarketInfo__info_row__value
     //     size="ultra_small"
     //     type={item.value === this.props.chartTimeFrame ? '' : 'secondary'}
     //     onClick={() => this.props.changeTimeFrame(item.value)}
@@ -147,7 +148,10 @@ class MarketInfo extends React.Component{
             onClick={() => {
               exchangeActions.setFullscreen();
             }}
-          >FullScreen</UI.Button>
+            className="MarketInfo__fullscreen_button"
+            type="secondary"
+            title="FullScreen"
+          ><SVG src={require('../../../../../asset/16px/fullscreen.svg')} /></UI.Button>
         </div>
       </div>
     )

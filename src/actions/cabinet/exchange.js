@@ -67,6 +67,10 @@ export function orderBookUpdateOrders(orders) {
   store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_UPDATE, orders });
 }
 
+export function tickerUpdate(ticker) {
+  store.dispatch({ type: actionTypes.EXCHANGE_TICKER_UPDATE, ticker });
+}
+
 export function setOrderStatus(orderId, status) {
   store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_STATUS, orderId, status });
 }
