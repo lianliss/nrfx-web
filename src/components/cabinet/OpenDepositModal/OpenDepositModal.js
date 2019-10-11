@@ -67,14 +67,14 @@ class OpenDepositModal extends React.Component {
     })
   }
 
-  __getPlans = () => {
+  __getPlans = (value = {}) => {
     const {currency, amount, selectDepositType} = this.props.thisState;
 
     currency && selectDepositType &&
     api.call(apiSchema.Investment.PlansGet, {
-      currency,
-      amount: amount || 0,
-      deposit_type: selectDepositType
+      currency: value.currency || currency,
+      amount: value.amount || amount || 0,
+      deposit_type: value.selectDepositType || selectDepositType
     }, ).then(({plans}) => {
 
       const planOptions = plans.map(plan => {
@@ -124,8 +124,6 @@ class OpenDepositModal extends React.Component {
       });
     }
   }
-
-  __getPlansThrottle = utils.throttle(this.__getPlans, 1000);
 
   __setState = (value, key = null, callback) => {
     this.props.setStateByModalPage('open_deposit', value, key);
@@ -180,7 +178,7 @@ class OpenDepositModal extends React.Component {
                   walletCurrentOption: item,
                   currency: item.currency,
                   walletId: item.value
-                }, null, this.__getPlansThrottle)
+                }, null, this.__getPlans(item))
               }}
             />
           </div>
@@ -194,7 +192,7 @@ class OpenDepositModal extends React.Component {
               value={this.props.thisState.amount}
               onBlur={() => {
                 const { amount, amountMax } = this.props.thisState;
-                this.__setState({ amount: (amount > amountMax ? amountMax : amount) }, null, this.__getPlansThrottle);
+                this.__setState({ amount: (amount > amountMax ? amountMax : amount) }, null, this.__getPlans);
               }}
               placeholder={utils.getLang('cabinet_openNewDeposit_amount')}
               indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.props.thisState.amountMin} ${this.props.thisState.currency && this.props.thisState.currency.toUpperCase()}`}
@@ -208,7 +206,7 @@ class OpenDepositModal extends React.Component {
             <UI.SwitchTabs
               currency={this.props.thisState.currency}
               selected={this.props.thisState.selectDepositType}
-              onChange={(selectDepositType) => this.__setState({ selectDepositType }, null, this.__getPlans)}
+              onChange={(selectDepositType) => this.__setState({ selectDepositType }, null, this.__getPlans({ selectDepositType }))}
               tabs={[
                 { value: 'static', label: 'Static' },
                 { value: 'dynamic', label: 'Dynamic' }
@@ -238,7 +236,7 @@ class OpenDepositModal extends React.Component {
                   planCurrentOption: item,
                   amountMax: item.max,
                   amountMin: item.min
-                }, null, this.__getPlansThrottle)
+                })
               }}
             />
           </div>
