@@ -77,3 +77,65 @@
     }
   }
 }
+
+
+.adaptive {
+  .TradeForm {
+    padding: 0;
+    align-items: flex-start;
+    height: auto;
+
+    .Dropdown {
+      margin-bottom: 16px;
+    }
+
+    .OrderBook__cont__wrap {
+      height: 368px;
+    }
+
+    .OrderBook {
+      flex: 2;
+      margin-right: -16px;
+    }
+
+    .TradeForm__adaptive_form {
+      width: 150px;
+      margin-right: 16px;
+    }
+
+    .TradeForm__adaptive_form__row {
+      margin-top: 8px;
+
+      & > p {
+        text-align: center;
+        font-size: 9px;
+        line-height: 16px;
+        color: var(--uikit-foreground-secondary);
+      }
+    }
+
+    .TradeForm__amount_selector {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .Button {
+        width: 42px;
+        margin: 8px;
+      }
+    }
+    .TradeForm__adaptive_form__buttons {
+      .Button {
+        height: 40px;
+        display: block;
+        width: 100%;
+        margin-top: 16px;
+
+        &__label {
+          margin: 0 auto;
+        }
+
+      }
+    }
+  }
+}

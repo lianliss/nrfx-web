@@ -32,14 +32,6 @@
   margin-left: 16px;
 }
 
-.Exchange__orders__side {
-  color: var(--primary-green);
-
-  &.sell {
-    color: var(--primary-red);
-  }
-}
-
 .Exchange__trade_content {
   display: flex;
 }
@@ -112,4 +104,29 @@
 .adaptive .Exchange__wrapper {
   padding: 24px 0;
   display: block;
+}
+
+.Exchange__orders__side {
+  .Exchange__orders__mark {
+    color: var(--primary-green);
+  }
+
+  &.sell {
+    .Exchange__orders__mark {
+      color: var(--primary-red);
+    }
+  }
+}
+
+.adaptive {
+  .Exchange__orders__price {
+    color: inherit !important;
+  }
+  .Exchange__orders__side {
+    background-color: rgba(#24B396, 0.1);
+
+    &.sell {
+      background-color: rgba(#FA4E3E, 0.1);
+    }
+  }
 }

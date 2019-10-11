@@ -16,6 +16,7 @@ import OrderBook from './components/OrderBook/OrderBook';
 import TradeForm from './components/TradeForm/TradeForm';
 import Orders from './components/Orders/Orders';
 import MarketInfo from './components/MarketInfo/MarketInfo';
+import MarketInfoAdaptive from './components/MarketInfoAdaptive/MarketInfoAdaptive';
 import Chart from './components/Chart/Chart';
 import * as exchangeService from '../../../services/exchange';
 
@@ -57,14 +58,45 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   __renderExchangeAdaptive() {
     return (
       <div className="Exchange__wrapper">
+        <div className="Content_box">
+          <MarketInfoAdaptive {...this.props.tickerInfo} />
+          <Chart
+            adaptive={true}
+            fullscreen={this.props.fullscreen}
+            symbol={this.props.market.split('/').join(':').toUpperCase()}
+            key={`chart_${this.props.chartTimeFrame}_${this.props.fullscreen}`}
+            interval={this.props.chartTimeFrame}
+          />
+        </div>
         <SwitchBlock contents={[
           {
             title: utils.getLang('exchange_trades'),
-            content: <Balances adaptive={true} />
+            content: <TradeForm
+              ref="trade_form"
+              adaptive={true}
+              depth={this.props.depth}
+              balance={this.props.balanceInfo}
+              ticker={this.props.tickerInfo}
+              market={this.props.market}
+            />
           },
           {
             title: utils.getLang('global_balance'),
             content: <Balances adaptive={true} />
+          }
+        ]} />
+        <SwitchBlock type="buttons" contents={[
+          {
+            title: utils.getLang('exchange_trades'),
+            content: <Trades adaptive={true} />
+          },
+          {
+            title: utils.getLang('exchange_openOrders'),
+            content: <Orders type="open" adaptive={true} />
+          },
+          {
+            title: utils.getLang('exchange_myTrades'),
+            content: <Orders type="history" adaptive={true} />
           }
         ]} />
       </div>
@@ -106,43 +138,6 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       </div>
     )
   }
-
-  // __renderTrades() {
-  //   const headings = [
-  //     <UI.TableColumn>Price</UI.TableColumn>,
-  //     <UI.TableColumn>Amount</UI.TableColumn>,
-  //     <UI.TableColumn align="right">Time</UI.TableColumn>,
-  //   ];
-  //
-  //   let rows = Object.values(this.props.trades).map((order) => {
-  //     const priceClassName = utils.classNames({
-  //       Exchange__orders__side: true,
-  //       sell: order.action === 'sell'
-  //     });
-  //     return (
-  //       <UI.TableCell key={order.id}>
-  //         <UI.TableColumn>
-  //           <div className={priceClassName}>{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : void 0)}</div>
-  //         </UI.TableColumn>
-  //         <UI.TableColumn>{utils.formatDouble(order.amount)}</UI.TableColumn>
-  //         <UI.TableColumn align="right">{moment(order.created_at).format('H:m:s')}</UI.TableColumn>
-  //       </UI.TableCell>
-  //     )
-  //   });
-  //
-  //   return (
-  //     <Block
-  //       title="Trades"
-  //       controls={[
-  //         <UI.Button key="all" size="ultra_small" rounded type="secondary">View All</UI.Button>,
-  //       ]}
-  //     >
-  //       <UI.Table headings={headings} compact skipContentBox inline>
-  //         {rows}
-  //       </UI.Table>
-  //     </Block>
-  //   )
-  // }
 
   __renderOrderBook() {
     return (

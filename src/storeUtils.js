@@ -247,6 +247,7 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:
       mapState2Props = (state) => ({
+        adaptive: state.default.adaptive,
         markets: state.exchange.markets,
         status: state.exchange.loadingStatus.getMarkets
       });

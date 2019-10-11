@@ -16,7 +16,8 @@ class Exchange {
       ['cancel_order_failed', this.__orderDidCancelFailed],
       ['order_created', this.__orderDidCreated],
       ['trade_list', this.__orderDidTrade],
-      ['balance_update', this.__balanceDidUpdate]
+      ['balance_update', this.__balanceDidUpdate],
+      ['ticker', this.__tickerUpdate]
     ];
 
     this.__bind();
@@ -57,6 +58,8 @@ class Exchange {
   };
 
   __balanceDidUpdate = ({ currency, amount }) => exchange.updateBalance(currency, amount);
+
+  __tickerUpdate = (ticker) => exchange.tickerUpdate(ticker);
 }
 
 

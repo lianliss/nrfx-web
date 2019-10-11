@@ -5,6 +5,7 @@ import React from 'react';
 import BaseScreen from '../BaseScreen';
 import UI from '../../ui/index';
 import * as utils from '../../utils';
+import NumberFormat from '../../ui/components/NumberFormat/NumberFormat';
 
 export default class UIKitScreen extends BaseScreen {
   constructor(props) {
@@ -22,6 +23,15 @@ export default class UIKitScreen extends BaseScreen {
   render() {
     return (
       <div>
+        <Section title="NumberFormat">
+          <Line><UI.NumberFormat number={8951.72348234123} /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} type="up" indicator currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} type="down" indicator currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} skipTitle currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} fractionDigits={2} currency="usd" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} fractionDigits={2} percent /></Line>
+        </Section>
         <Section title="Buttons">
           <Line>
             <UI.Button>Button</UI.Button>

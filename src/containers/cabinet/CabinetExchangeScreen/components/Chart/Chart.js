@@ -38,6 +38,7 @@ export default class Chart extends React.PureComponent {
 
     const widgetOptions = {
       symbol: this.props.symbol,
+      // symbol: 'AA',
       // BEWARE: no trailing slash is expected in feed URL
       datafeed: new window.Datafeeds.UDFCompatibleDatafeed(this.props.datafeedUrl),
       interval: this.props.interval,
@@ -47,7 +48,8 @@ export default class Chart extends React.PureComponent {
       locale: getLang(),
       disabled_features: [
         ...(!this.props.fullscreen ? [
-          'header_widget',
+          (!this.props.adaptive && 'header_widget'),
+          (!this.props.adaptive && 'left_toolbar'),
           'edit_buttons_in_legend',
           'context_menus',
           'use_localstorage_for_settings',
@@ -55,7 +57,6 @@ export default class Chart extends React.PureComponent {
           'timeframes_toolbar',
           'shift_visible_range_on_new_bar',
           'compare_symbol',
-          'left_toolbar',
           'header_symbol_search',
           'symbol_search_hot_key',
           'header_settings',
@@ -67,14 +68,14 @@ export default class Chart extends React.PureComponent {
           'border_around_the_chart',
           'remove_library_container_border',
         ] : [
-          // ...
+          'use_localstorage_for_settings',
         ]),
       ],
       enabled_features: [
         'charting_library_debug_mode',
         'side_toolbar_in_fullscreen_mode',
         'move_logo_to_main_pane',
-        (!this.props.fullscreen ? 'hide_left_toolbar_by_default' : null)
+        (!this.props.fullscreen && 'hide_left_toolbar_by_default')
       ],
       charts_storage_url: this.props.chartsStorageUrl,
       charts_storage_api_version: this.props.chartsStorageApiVersion,

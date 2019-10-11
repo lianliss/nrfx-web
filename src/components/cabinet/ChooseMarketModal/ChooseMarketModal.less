@@ -2,6 +2,10 @@
   overflow: hidden;
   width: 720px;
 
+  .TableMain {
+    box-shadow: none;
+  }
+
   .Modal__header {
     margin: 16px 0;
   }
@@ -20,6 +24,11 @@
     padding: 24px 16px;
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
     z-index: 3;
+
+    &__buttons {
+      display: flex;
+      width: 400px;
+    }
 
     &__form {
       display: flex;
@@ -42,6 +51,7 @@
       }
     }
   }
+
   &__icons {
     display: flex;
   }
@@ -122,18 +132,29 @@
   .ChooseMarketModal {
     width: auto;
 
-    .Modal__header {
-      margin: 0;
-    }
+    &__filters {
+      box-shadow: none;
 
-    .ChooseMarketModal__filters__form {
-      .Button {
-        display: none;
+      &__form {
+        flex-direction: column;
+      }
+
+      &__buttons {
+        width: 100%;
+        margin-top: 16px;
+
+        .Button {
+          height: 24px;
+        }
+
+        .Button:first-child {
+          margin-left: 0;
+        }
       }
     }
 
-    .Chart {
-      display: none;
+    .Modal__header {
+      margin: 0;
     }
   }
 }

@@ -173,7 +173,7 @@ class OpenDepositModal extends React.Component {
           <div className="OpenDepositModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <div className="OpenDepositModal__row">
             <UI.Dropdown
-              placeholder={this.props.thisState.walletCurrentOption}
+              value={this.props.thisState.walletCurrentOption}
               options={this.props.thisState.walletOptions}
               onChange={item => {
                 item && this.__setState({
@@ -230,7 +230,7 @@ class OpenDepositModal extends React.Component {
           </div>
           <div className="OpenDepositModal__row">
             <UI.Dropdown
-              placeholder={this.props.thisState.planCurrentOption}
+              value={this.props.thisState.planCurrentOption}
               options={this.props.thisState.planOptions}
               onChange={item => {
                 item && this.__setState({

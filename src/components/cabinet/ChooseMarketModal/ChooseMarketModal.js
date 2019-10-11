@@ -74,11 +74,14 @@ class ChooseMarketModal extends React.Component {
                 indicatorWidth={28}
                 indicator={<SVG src={require('../../../asset/24px/search.svg')} />}
               />
-              {Object.keys(this.state.currencies).map(key => (
-                <UI.Button
-                  onClick={() => this.handleToggleCurrency(key)}
-                  type={!this.state.currencies[key] ? "secondary": null}>{key.toUpperCase()}</UI.Button>
-              ))}
+              <div className="ChooseMarketModal__filters__buttons">
+                {Object.keys(this.state.currencies).map(key => (
+                  <UI.Button
+                    onClick={() => this.handleToggleCurrency(key)}
+                    size={this.props.adaptive &&  'ultra_small'}
+                    type={!this.state.currencies[key] ? "secondary": null}>{key.toUpperCase()}</UI.Button>
+                ))}
+              </div>
             </div>
           </div>
           <div className="ChooseMarketModal__market_list">
@@ -129,17 +132,17 @@ class ChooseMarketModal extends React.Component {
                       </div>
                     </UI.TableColumn>
                     <UI.TableColumn className="ChooseMarketModal__chart">
-                      <ChartSimple
+                      { !this.props.adaptive && <ChartSimple
                         marker={false}
                         series={[series]}
-                      />
+                      /> }
                     </UI.TableColumn>
                     <UI.TableColumn>
                       { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.price, 2)}</span> }
                     </UI.TableColumn>
-                    <UI.TableColumn>
+                    { !this.props.adaptive && <UI.TableColumn>
                       { ticker && "$" + utils.formatDouble(ticker.usd_price, 2) }
-                    </UI.TableColumn>
+                    </UI.TableColumn> }
                     <UI.TableColumn>
                       { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.percent, 2)}%</span> }
                     </UI.TableColumn>
