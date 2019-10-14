@@ -22,7 +22,9 @@ export function load(market) {
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     })
   };
-}export function chooseMarket(market) {
+}
+
+export function chooseMarket(market) {
   return (dispatch, getState) => {
     exchangeService.unbind(getState().exchange.market);
     exchangeService.bind(market);
@@ -31,8 +33,8 @@ export function load(market) {
 }
 
 export function orderCreate(params) {
-  return api.call(apiSchema.Exchange.OrderPut, params).then(() => {
-    toast.success("Order has been created");
+  return api.call(apiSchema.Exchange.OrderPut, params).then(({balance}) => {
+    store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance });
   }).catch((err) => {
     toast.error(err.message);
   })
@@ -41,10 +43,6 @@ export function orderCreate(params) {
 export function orderDelete(orderId) {
   return api.call(apiSchema.Exchange.OrderDelete, {
     order_id: orderId
-  }).then(() => {
-    store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_PENDING, orderId });
-  }).catch(err => {
-    toast.error(err.message);
   });
 }
 

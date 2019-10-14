@@ -14,9 +14,7 @@ class Balances extends React.Component {
   }
 
   __handleOpenBalance() {
-    openModal('manage_balance', {}, {
-      a: 1,
-    });
+    openModal('manage_balance',);
   }
 
   render() {
