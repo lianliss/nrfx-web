@@ -217,10 +217,14 @@ export function isFiat(currency) {
   return currency.toLowerCase() === 'usdt';
 }
 
-export function dateFormat(time, format = 'DD MMM YYYY HH:mm') {
-  if (typeof time === 'number' && time.toString().length === 10) {
-    return moment.unix(time).format(format);
+export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
+  let dateObject;
+
+  if (typeof date === 'number' && date.toString().length === 10) {
+    dateObject = moment.unix(date);
   } else {
-    return moment(time).format(format);
+    dateObject = moment(date);
   }
+
+  return !!format ? dateObject.format(format) : dateObject;
 }

@@ -132,7 +132,7 @@ class Header extends React.Component {
                         actions={n.actions}
                         onAction={(action) => this.props.notificationAction(n.id, action)}
                         message={n.message}
-                        date={n.created_at}
+                        date={utils.dateFormat(n.created_at, false).fromNow()}
                       />
                     ]
                   ))}
