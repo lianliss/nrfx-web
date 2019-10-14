@@ -49,7 +49,7 @@ export function getLanguage() {
 
 export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
 
-export const isEmail = (email) => (/^[a-zA-Z0-9/.-]+@[a-zA-Z0-9/.-]+\.[A-Za-z]+$/.test(email)) ? true : false;
+export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase())) ? true : false;
 export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase())
 
 export function useInterval(callback, delay) {
