@@ -30,7 +30,7 @@ class ReferralLink extends React.Component {
             </a>
           </div>
 
-          <div>
+          <div className="ReferralLink__link__wrapper">
             <div className="ReferralLink__link">{this.props.inviteLink.replace('https://', '')}</div>
             <UI.Button onClick={() => this.props.linkDidCopy(this.props.inviteLink)}>{utils.getLang('cabinet_referralLinks_copyLink')}</UI.Button>
           </div>
