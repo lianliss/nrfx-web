@@ -99,7 +99,7 @@ function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
   }
 
   const balanceHeader = <h3 className="WalletBalance__header">
-    {title || utils.getLang('cabinet_walletBalance_name')}
+    {title}
   </h3>;
   return (
     <div className="WalletBalance Content_box">

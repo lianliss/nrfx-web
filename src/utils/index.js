@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 // internal
 import store from '../store';
 import router from '../router';
+import moment from 'moment/min/moment-with-locales';
 
 export function classNames() {
   let result = [];
@@ -49,7 +50,7 @@ export function getLanguage() {
 
 export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
 
-export const isEmail = (email) => (/^[a-zA-Z0-9/.-]+@[a-zA-Z0-9/.-]+\.[A-Za-z]+$/.test(email)) ? true : false;
+export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase())) ? true : false;
 export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase())
 
 export function useInterval(callback, delay) {
@@ -214,4 +215,16 @@ export function getScrollbarWidth() {
 
 export function isFiat(currency) {
   return currency.toLowerCase() === 'usdt';
+}
+
+export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
+  let dateObject;
+
+  if (typeof date === 'number' && date.toString().length === 10) {
+    dateObject = moment.unix(date);
+  } else {
+    dateObject = moment(date);
+  }
+
+  return !!format ? dateObject.format(format) : dateObject;
 }

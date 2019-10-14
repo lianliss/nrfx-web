@@ -87,7 +87,7 @@ class CabinetRegister extends React.PureComponent {
       var duration = moment.duration(60 * 1000, 'milliseconds');
       const timer = () => {
         duration = moment.duration(duration - 1000, 'milliseconds');
-        this.setState({ timer: moment(duration.asMilliseconds()).format('m:ss') });
+        this.setState({ timer: utils.dateFormat(duration.asMilliseconds(), 'm:ss')});
         if (duration.seconds() <= 0) {
           this.setState({ timer: null });
           clearInterval(interval);

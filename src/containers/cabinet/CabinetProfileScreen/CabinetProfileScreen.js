@@ -134,6 +134,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
           return <div>
             <div>
               <WalletBalance
+                title={utils.getLang('cabinet_walletBalance_name')}
                 adaptive={this.props.adaptive}
                 wallets={this.wallets}
                 walletSelected={this.state.walletSelected}

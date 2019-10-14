@@ -34,14 +34,14 @@ export default class DepositInfoModal extends React.Component {
               <InfoRow label="ID">{deposit.localId}</InfoRow>
               <InfoRow label={utils.getLang("global_type")}>{utils.ucfirst(deposit.type)}</InfoRow>
               <InfoRow label={utils.getLang("global_status")}>{utils.ucfirst(deposit.status)}</InfoRow>
-              <InfoRow label={utils.getLang("created")}>{moment(deposit.created_at).format('DD MMM YYYY hh:mm')}</InfoRow>
+              <InfoRow label={utils.getLang("created")}>{utils.dateFormat(deposit.created_at)}</InfoRow>
             </InfoRowGroup>
             <InfoRowGroup className="DepositInfoModal__column">
               <InfoRow label={utils.getLang("period")}>{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_openNewDeposit_days')}</InfoRow>
               <InfoRow label={utils.getLang("global_amount")}>{deposit.amount} {currency}</InfoRow>
               <InfoRow label={utils.getLang("cabinet_investmentsScreen_profit")}>{utils.formatDouble(deposit.profit, 8)} {currency} ({utils.formatDouble(deposit.current_percent, 2)}%)</InfoRow>
               <InfoRow label={utils.getLang("in_fiat")}>{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
-              <InfoRow label={utils.getLang("global_estimated")}>{utils.formatDouble(deposit.percent, 2)} %</InfoRow>
+              <InfoRow label={utils.getLang("global_estimated")}>{utils.formatDouble(deposit.percent, 2)}%</InfoRow>
             </InfoRowGroup>
           </div>
           {/*<div className="DepositInfoModal__withdrawal_form" style={{display:'flex'}}>*/}

@@ -42,9 +42,6 @@ export default class TradeForm extends React.Component {
     const [primary, secondary] = market.split('/');
     const isMarket = this.state.orderType === "market";
 
-
-
-
     if (this.props.adaptive) {
       return (
         <div className="TradeForm">
@@ -54,7 +51,7 @@ export default class TradeForm extends React.Component {
                 size="small"
                 placeholder="Placeholder"
                 value={this.state.orderType}
-                onChange={type => this.setState({ orderType: type })}
+                onChange={e => this.setState({ orderType: e.value })}
                 options={[
                   { title: utils.getLang('exchange_type_limit'), value: 'limit' },
                   { title: utils.getLang('exchange_type_market'), value: 'market' }
@@ -76,7 +73,7 @@ export default class TradeForm extends React.Component {
             <div className="TradeForm__adaptive_form__row">
               <UI.Input
                 error={this.state.touched && !this.state.price && !isMarket}
-                placeholder={utils.getLang('global_price')}
+                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_price')}
                 disabled={isMarket}
                 indicator={secondary.toUpperCase()}
                 size="small"
@@ -87,7 +84,7 @@ export default class TradeForm extends React.Component {
             </div>
             <div className="TradeForm__adaptive_form__row">
               <UI.Input
-                placeholder={utils.getLang('global_total')}
+                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_total')}
                 indicator={secondary.toUpperCase()}
                 size="small"
                 disabled={isMarket}
@@ -145,7 +142,7 @@ export default class TradeForm extends React.Component {
             <div className="TradeForm__form__row">
               <UI.Input
                 error={this.state.touched && !this.state.price && !isMarket}
-                placeholder={utils.getLang('global_price')}
+                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_price')}
                 disabled={isMarket}
                 indicator={secondary.toUpperCase()}
                 size="small"
@@ -156,7 +153,7 @@ export default class TradeForm extends React.Component {
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
-                placeholder={utils.getLang('global_total')}
+                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_total')}
                 indicator={secondary.toUpperCase()}
                 size="small"
                 disabled={isMarket}
@@ -250,7 +247,7 @@ export default class TradeForm extends React.Component {
           size="ultra_small"
           rounded
           type={this.state.amount === percentAmount ? '' : 'secondary'}
-          onClick={() => this.setState({ amount: percentAmount })}
+          onClick={() => this.__handlechangePercent(percentAmount)}
         >{`${percent}%`}</UI.Button>
       )
     });
@@ -270,6 +267,13 @@ export default class TradeForm extends React.Component {
         this.setState({ pending: { ...this.state.pending, [action]: false }});
       });
     }
+  }
+
+  __handlechangePercent = percent => {
+    this.setState({
+      amount: percent,
+      amountSecondary:  percent * this.state.price || null
+    });
   }
 
   set(amount, price) {

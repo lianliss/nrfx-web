@@ -50,7 +50,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
           >
             {item.deposit.amount} {item.deposit.currency.toUpperCase()}
           </UI.TableColumn>
-          <UI.TableColumn align="right" sub={moment(item.profit.date).format('DD MMM YYYY HH:mm') + ' / ' + utils.formatTableId(total - i)}>
+          <UI.TableColumn align="right" sub={utils.dateFormat(item.profit.date) + ' / ' + utils.formatTableId(total - i)}>
             {utils.formatDouble(item.profit.amount)} {item.deposit.currency.toUpperCase()}
           </UI.TableColumn>
         </UI.TableCell>
@@ -60,13 +60,13 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
       <UI.TableCell key={i}>
         <UI.TableColumn />
         <UI.TableColumn>{utils.formatTableId(total - i)}</UI.TableColumn>
-        <UI.TableColumn sub={item.plan.description}>{item.deposit.percent}</UI.TableColumn>
+        <UI.TableColumn sub={item.plan.description}>{item.deposit.plan_percent}</UI.TableColumn>
         <UI.TableColumn>{utils.ucfirst(item.deposit.type)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.amount} {item.deposit.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.profit.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.deposit.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn>{utils.getLang(`type_${item.profit.type}`)}</UI.TableColumn>
-        <UI.TableColumn>{moment(item.profit.date).format('DD MMM YYYY HH:mm')}</UI.TableColumn>
+        <UI.TableColumn>{utils.dateFormat(item.profit.date)}</UI.TableColumn>
       </UI.TableCell>
     )
   });

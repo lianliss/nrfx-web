@@ -11,6 +11,7 @@ class Exchange {
     this.listeners = [
       ['new_orders', this.__orderBookDidUpdated],
       ['orders_filled', this.__orderBookDidUpdated],
+      ['order_completed', this.__orderDidCompleted],
       ['cancel_order', this.__orderDidCancel],
       ['order_cancelled', this.__orderDidCancelled],
       ['cancel_order_failed', this.__orderDidCancelFailed],
@@ -41,12 +42,16 @@ class Exchange {
 
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
 
+  __orderDidCompleted = body => {
+    exchange.setOrderStatus(body.order_id, 'completed');
+  };
+
   __orderDidCancel = (orderId) => exchange.removeOrders([orderId]);
 
   __orderDidCancelled = (orderId) => {
     exchange.setOrderStatus(orderId, 'cancelled');
     toasts.success('Your order has been canceled');
-  }
+  };
 
   __orderDidCancelFailed = () => toasts.error('Can\'t cancel order');;
 
