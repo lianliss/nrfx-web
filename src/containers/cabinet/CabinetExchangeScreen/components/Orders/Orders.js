@@ -123,7 +123,7 @@ class Orders extends React.Component {
           <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">{utils.formatDouble(price * order.amount)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">{order.filled > 0 ? Math.floor(order.filled / order.filled * 100) : 0}%</UI.TableColumn>
-          <UI.TableColumn align="right">{moment(order.created_at).format('H:m:s')}</UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(order.created_at, 'H:m:s')}</UI.TableColumn>
         </UI.TableCell>
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>
@@ -197,7 +197,7 @@ class Orders extends React.Component {
           <UI.TableColumn align="right">{utils.formatDouble(price * order.amount)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">{filled}</UI.TableColumn>
           <UI.TableColumn align="right">{utils.ucfirst(order.status)}</UI.TableColumn>
-          <UI.TableColumn align="right">{moment(order.created_at).format('H:m:s')}</UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(order.created_at, 'H:m:s')}</UI.TableColumn>
         </UI.TableCell>
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>

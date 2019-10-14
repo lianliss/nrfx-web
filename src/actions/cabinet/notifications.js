@@ -15,3 +15,21 @@ export function loadNotifications() {
     });
   };
 }
+
+export function submitAction(id, action) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.NOTIFICATIONS_DELETE, id });
+    api.call(apiSchema.Notification.DefaultDelete, {
+      id,
+      action: action.action,
+      params: JSON.stringify(action.params),
+    }).then(({ message }) => {
+      if (message) {
+        toastsActions.success(message);
+      }
+    }).catch((err) => {
+      toastsActions.error(err.message);
+      dispatch({ type: actionTypes.NOTIFICATIONS_RESTORE, id});
+    });
+  };
+}

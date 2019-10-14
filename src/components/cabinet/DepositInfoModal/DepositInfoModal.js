@@ -34,7 +34,7 @@ export default class DepositInfoModal extends React.Component {
               <InfoRow label="ID">{deposit.localId}</InfoRow>
               <InfoRow label={utils.getLang("global_type")}>{utils.ucfirst(deposit.type)}</InfoRow>
               <InfoRow label={utils.getLang("global_status")}>{utils.ucfirst(deposit.status)}</InfoRow>
-              <InfoRow label={utils.getLang("created")}>{moment(deposit.created_at).format('DD MMM YYYY hh:mm')}</InfoRow>
+              <InfoRow label={utils.getLang("created")}>{utils.dateFormat(deposit.created_at)}</InfoRow>
             </InfoRowGroup>
             <InfoRowGroup className="DepositInfoModal__column">
               <InfoRow label={utils.getLang("period")}>{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_openNewDeposit_days')}</InfoRow>

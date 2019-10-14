@@ -67,7 +67,7 @@ export default function HistoryTable({ history, adaptive, header}) {
           </UI.TableColumn>
           <UI.TableColumn align="right">
             <div>{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</div>
-            <div className="Wallets__history__date">{moment(item.created_at).format('DD MMM YYYY HH:mm')}</div>
+            <div className="Wallets__history__date">{utils.dateFormat(item.created_at)}</div>
           </UI.TableColumn>
         </UI.TableCell>
       )

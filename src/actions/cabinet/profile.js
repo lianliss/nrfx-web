@@ -111,3 +111,13 @@ export function loadPartnerInfo(login) {
       .catch((err) => reject(err));
   });
 }
+
+export function inviteAgent(login) {
+  return new Promise((resolve, reject) => {
+    api.call(apiSchema.Partner.SendInvitePost, {
+      login,
+    })
+      .then((info) => resolve(info))
+      .catch((err) => reject(err));
+  });
+}

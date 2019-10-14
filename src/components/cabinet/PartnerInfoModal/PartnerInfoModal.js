@@ -8,6 +8,8 @@ import ModalState from '../ModalState/ModalState';
 import * as profileActions from '../../../actions/cabinet/profile';
 import WalletBox from '../WalletBox/WalletBox';
 import DepositTable from '../../../containers/cabinet/CabinetInvestmentsScreen/components/DepositTable';
+import ChartProfit from '../../../components/cabinet/ChartProfit/ChartProfit';
+import ClientChart from '../../../components/cabinet/ClientChart/ClientChart';
 
 export default class PartnerInfoModal extends React.Component {
   constructor(props) {
@@ -43,6 +45,8 @@ export default class PartnerInfoModal extends React.Component {
         {this.__renderUserInfo()}
         {this.__renderProfit()}
         {this.__renderDeposits()}
+        {this.__renderProfitChart()}
+        {this.__renderClientChart()}
       </UI.Modal>
     )
   }
@@ -115,6 +119,41 @@ export default class PartnerInfoModal extends React.Component {
     );
   }
 
+  __renderProfitChart() {
+    if (!this.state.profit_chart || !Object.keys(this.state.profit_chart.data).length) {
+      return null;
+    }
+
+    return (
+      <Block
+        adaptive={this.props.adaptive}
+        padding
+      >
+        <ChartProfit
+          chart={this.state.profit_chart}
+        />
+      </Block>
+    );
+  }
+
+  __renderClientChart() {
+    if (!this.state.profit_chart || !Object.keys(this.state.profit_chart.data).length) {
+      return null;
+    }
+
+    return (
+      <Block
+        adaptive={this.props.adaptive}
+        padding
+      >
+        <ClientChart
+          title={utils.getLang('cabinet_partners_customers')}
+          chart={this.state.client_chart}
+        />
+      </Block>
+    );
+  }
+
   __load = () => {
     this.setState({ loadingStatus: 'loading' });
     profileActions.loadPartnerInfo(this.props.login)
@@ -129,7 +168,8 @@ function Block(props) {
     children,
     skipMargin,
     modifier,
-    adaptive
+    adaptive,
+    padding,
   } = props;
 
   const className = utils.classNames({
@@ -137,11 +177,12 @@ function Block(props) {
     skip_margin: !!skipMargin,
     [modifier]: !!modifier,
     Content_box: !!adaptive,
+    padding: !!padding,
   });
 
   return (
     <div className={className}>
-      <div className="PartnerInfoModal__block__title">{title}</div>
+      {title && <div className="PartnerInfoModal__block__title">{title}</div>}
       <div className="PartnerInfoModal__block__content">
         {children}
       </div>

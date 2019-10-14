@@ -42,7 +42,7 @@ function Button(props) {
 
 Button.propTypes = {
   size: PropTypes.oneOf(['', 'small', 'large', 'ultra_small', 'middle']),
-  type: PropTypes.oneOf(['', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy']),
+  type: PropTypes.oneOf(['', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'primary']),
   className: PropTypes.string,
   btnType: PropTypes.string,
   disabled: PropTypes.bool,

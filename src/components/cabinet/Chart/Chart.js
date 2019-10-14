@@ -3,11 +3,10 @@ import './Chart.less';
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment/min/moment-with-locales';
 import * as currencies from "../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { classNames } from "../../../utils/index";
+import { classNames, dateFormat } from "../../../utils/index";
 
 export default function Chart({ series, ...props }) {
 
@@ -153,7 +152,7 @@ export default function Chart({ series, ...props }) {
       crosshairs: true,
       hideDelay: 0,
       formatter: function (tooltip) {
-        return [`<div class="Chart__tooltip_date">${moment(this.x).format('L')}</div>`].concat(this.points.map((point) => {
+        return [`<div class="Chart__tooltip_date">${dateFormat(this.x, 'L')}</div>`].concat(this.points.map((point) => {
           return `<div class="Chart__tooltip" style="background: ${currencies.getGradientByCurrency(point.series.name)}">
             ${point.series.data.filter(p => p.y === point.y)[0].title}
           </div>`;

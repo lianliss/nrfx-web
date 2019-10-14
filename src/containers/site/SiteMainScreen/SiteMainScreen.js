@@ -25,8 +25,14 @@ export default class SiteMainScreen extends BaseScreen {
 
   getAnimatedTitle = () => {
     const { site } = this.lang;
-    const products = [site.homeSlideExchange, site.homeSlideWallet, site.homeSlideInvestments, site.homeSlideRobots, site.homeSlidePayment];
-    
+    const products = [
+      site.homeSlideExchange,
+      site.homeSlideWallet,
+      site.homeSlideInvestments,
+      site.homeSlideRobots,
+      site.homeSlidePayment
+    ];
+
     return (
       <TypedText products={products} />
     )

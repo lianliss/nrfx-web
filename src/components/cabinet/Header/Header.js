@@ -75,7 +75,7 @@ class Header extends React.Component {
     const isLogged = this.props.profile.role;
     const { internalNotifications } = this.props;
     const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
-    const { notifications, unreadCount } = this.props.notifications;
+    const { notifications } = this.props.notifications;
     return (
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
@@ -120,7 +120,7 @@ class Header extends React.Component {
                   pending={this.props.notifications.pending}
                   onClose={this.toggleNotifications.bind(this)}
                 >
-                  {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
+                  {notifications.filter(item => !item.deleted).sort(n => n.unread ? -1 : 1).map((n, i) => (
                     [
                       ( i > 0 &&  n.unread !== notifications[i - 1].unread &&
                         <UI.NotificationSeparator key={Math.random()} title={utils.getLang('cabinet_header_viewed')} />
@@ -129,14 +129,16 @@ class Header extends React.Component {
                         key={i}
                         icon={n.icon}
                         unread={n.unread}
+                        actions={n.actions}
+                        onAction={(action) => this.props.notificationAction(n.id, action)}
                         message={n.message}
-                        date={n.created_at}
+                        date={utils.dateFormat(n.created_at, false).fromNow()}
                       />
                     ]
                   ))}
                 </UI.Notifications>}
                 <div onClick={this.toggleNotifications.bind(this)}>
-                  <Badge count={unreadCount || null}>
+                  <Badge count={!!this.props.profile.has_notifications ? 1 : null}>
                     <SVG src={require('../../../asset/cabinet/notification.svg')} />
                   </Badge>
                 </div>

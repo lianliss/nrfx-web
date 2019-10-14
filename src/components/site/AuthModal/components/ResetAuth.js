@@ -51,8 +51,7 @@ function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
         ) : (
           <SuccessModal
             onClose={onClose}
-            onResend={handleSubmit}
-            subtitle={utils.getLang('site__authModalCheckEmailRestoreAuth')}
+            subtitle={utils.getLang('site__resetAuthModalSubtitle')}
           />
         )}
     </>

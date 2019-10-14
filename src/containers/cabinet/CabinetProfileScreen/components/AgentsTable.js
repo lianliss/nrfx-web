@@ -4,6 +4,7 @@ import moment from 'moment/min/moment-with-locales';
 
 import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import * as actions from '../../../../actions';
 
 export default function AgentsTable({ agents, adaptive }) {
   if (!agents.length) {
@@ -46,11 +47,11 @@ export default function AgentsTable({ agents, adaptive }) {
   if (adaptive) {
     rows = agents.map((item, i) => {
       return (
-        <UI.TableCell key={i}>
+        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { login: item.user.login })}>
           <UI.TableColumn sub={item.partners_count}>
             {item.user.login.toUpperCase()}
           </UI.TableColumn>
-          <UI.TableColumn align="right" sub={moment(item.created_at).format('DD MMM YYYY')}>
+          <UI.TableColumn align="right" sub={utils.dateFormat(item.created_at, 'DD MMM YYYY')}>
             ~{utils.formatDouble(item.profit, 2)} USD
           </UI.TableColumn>
         </UI.TableCell>
@@ -59,7 +60,7 @@ export default function AgentsTable({ agents, adaptive }) {
   } else {
     rows = agents.map((item, i) => {
       return (
-        <UI.TableCell key={i}>
+        <UI.TableCell key={i} onClick={() => actions.openModal('partner_info', { login: item.user.login })}>
           <UI.TableColumn>
             {item.user.login.toUpperCase()}
           </UI.TableColumn>
@@ -70,7 +71,7 @@ export default function AgentsTable({ agents, adaptive }) {
             ~{utils.formatDouble(item.profit, 2)} USD
           </UI.TableColumn>
           <UI.TableColumn align="right" style={{width: 100}}>
-            {moment(item.created_at).format('DD MMM YYYY')}
+            {utils.dateFormat(item.created_at, 'DD MMM YYYY')}
           </UI.TableColumn>
         </UI.TableCell>
       )
