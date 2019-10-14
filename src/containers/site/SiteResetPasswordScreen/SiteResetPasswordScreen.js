@@ -70,6 +70,11 @@ class CabinetRegister extends React.PureComponent {
                 className="CabinetResetPassword__content__icon"
                 style={{backgroundImage: `url(${require('../../../asset/120/success.svg')})`}} />
               <p>{utils.getLang("cabinet_resetPasswordSuccess")}</p>
+              <UI.Button fontSize={15} onClick={() => {
+                window.location.href = '/'; // TODO: после правки модалок на лендинге, заменить этот код на openModal()
+              }}>
+                {utils.getLang('site__headerLogIn')}
+              </UI.Button>
             </div> :
             <div>
               <h3 className="CabinetResetPassword__content__title">{utils.getLang('cabinet_resetPassword_title')}</h3>
@@ -88,7 +93,7 @@ class CabinetRegister extends React.PureComponent {
                 onTextChange={text => this.__handleChange("passwordConfirm", text)}
               />
               <div className="CabinetResetPassword__content__submit_wrapper">
-                <UI.Button onClick={this.__handleSubmit.bind(this)}>
+                <UI.Button fontSize={15} onClick={this.__handleSubmit.bind(this)}>
                   {utils.getLang('cabinet_resetPassword_title')}
                 </UI.Button>
               </div>

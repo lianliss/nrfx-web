@@ -3,7 +3,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {loadReCaptcha} from 'react-recaptcha-google';
-import moment from 'moment/min/moment-with-locales';
 // internal
 import Routes from './Routes';
 import Modals from './Modals';
@@ -14,6 +13,9 @@ import UI from './ui';
 import * as actions from './actions';
 import * as internalNotifications from './actions/cabinet/internalNotifications';
 import * as storage from './services/storage';
+import { getLang, setLang } from './services/lang';
+import * as utils from './utils/';
+import moment from 'moment/min/moment-with-locales';
 
 class App extends React.Component {
   state = {
@@ -34,16 +36,19 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.router.getState().params.modal) {
+    const { params } = this.props.router.getState();
+    if (params.modal || params.modal_group) {
       document.body.classList.add('modal-open');
+      document.body.style.marginRight = utils.getScrollbarWidth() + "px";
     } else {
       document.body.classList.remove('modal-open');
+      document.body.style.marginRight = 0;
     }
   }
 
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
-    const currentLang = storage.getItem("lang");
+    const currentLang = getLang();
     const { error } = this.state;
 
     if (this.state.isLoading) {
@@ -78,9 +83,8 @@ class App extends React.Component {
   }
 
   _loadAssets = () => {
-    const lang = storage.getItem('lang') || "en";
-    moment.locale(lang);
-
+    const lang = getLang();
+    setLang(lang);
     Promise.all([
       actions.loadLang(lang),
       actions.loadCurrencies()

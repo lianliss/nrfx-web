@@ -11,15 +11,28 @@ import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBann
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../utils/index';
+import * as actions from '../../../actions';
 import TypedText from '../../../components/site/TypedText/TypedText';
+import initGetParams from '../../../services/initialGetParams';
 
 
 export default class SiteMainScreen extends BaseScreen {
+  componentDidMount() {
+    if (initGetParams.params.i) {
+      actions.sendInviteLinkView(initGetParams.params.i);
+    }
+  }
 
   getAnimatedTitle = () => {
     const { site } = this.lang;
-    const products = [site.homeSlideExchange, site.homeSlideWallet, site.homeSlideInvestments, site.homeSlideRobots, site.homeSlidePayment];
-    
+    const products = [
+      site.homeSlideExchange,
+      site.homeSlideWallet,
+      site.homeSlideInvestments,
+      site.homeSlideRobots,
+      site.homeSlidePayment
+    ];
+
     return (
       <TypedText products={products} />
     )
@@ -58,7 +71,7 @@ export default class SiteMainScreen extends BaseScreen {
               title={this.lang.site.homeExchange}
               bgTitle={this.lang.site.homeExchange}
               icon="exchange"
-              seeMoreLink={pages.EXCHANGE}
+              seeMoreLink={pages.SITE_EXCHANGE}
             >{[this.lang.site.homeExchangeSubTitile1, this.lang.site.homeExchangeSubTitile2, this.lang.site.homeExchangeSubTitile3]}</HomepageProduct>
             <HomepageProduct
               title={this.lang.site.homeWallet}

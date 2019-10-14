@@ -5,6 +5,7 @@ import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 import url from 'url';
 
+import * as emitter from '../../../services/emitter';
 import DropDown from './components/Dropdown';
 import Badge from '../Badge/Badge';
 import router from '../../../router';
@@ -15,39 +16,48 @@ import * as CLASSES from "../../../constants/classes";
 import UI from "../../../ui/index";
 import * as auth from '../../../actions/auth';
 
-function getDropDownLinks() { return[
-  {
-    title: <SVG src={require('../../../asset/cabinet/settings.svg')} />,
-    children: [
-      {
-        title: utils.getLang('cabinet_header_settings'),
-        route: pages.SETTINGS
-      },
-      {
-        title: "FAQ",
-        route: 'https://bitcoinbot.wiki/',
-        useLocation: true
-      },
-      {
-        title: utils.getLang('cabinet_header_exit'),
-        route: pages.WALLET,
-        action: () => {
-          auth.logout();
-        }
-      },
-    ]
-  }
-]}
+function getDropDownLinks() {
+  return [
+    {
+      title: <SVG src={require('../../../asset/cabinet/settings.svg')} />,
+      children: [
+        {
+          title: utils.getLang('cabinet_header_settings'),
+          route: pages.SETTINGS
+        },
+        {
+          title: "FAQ",
+          route: 'https://bitcoinbot.wiki/',
+          useLocation: true
+        },
+        {
+          title: utils.getLang('cabinet_header_exit'),
+          route: pages.MAIN,
+          action: () => {
+            auth.logout();
+          }
+        },
+      ]
+    }
+  ]
+}
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.DropDownLinks = getDropDownLinks();
+    this.updater = emitter.addListener('headerUpdate', this.__update);
   }
+
+  __update = e => {
+    this.DropDownLinks = getDropDownLinks();
+    this.setState({update: !this.state.update});
+  };
 
   state = {
     activePage: null,
-    visibleNotifications: false
+    visibleNotifications: false,
+    update: false
   };
 
   handleNavigate = (route) => {
@@ -65,7 +75,7 @@ class Header extends React.Component {
     const isLogged = this.props.profile.role;
     const { internalNotifications } = this.props;
     const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
-    const { notifications, unreadCount } = this.props.notifications;
+    const { notifications } = this.props.notifications;
     return (
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
@@ -92,10 +102,10 @@ class Header extends React.Component {
                 {utils.getLang('cabinet_header_bots')}
               </div>
 
-              <div className="CabinetHeader__link" style={{display:'none'}}>
-                <SVG src={require('../../../asset/cabinet/exchange_icon.svg')} />
-                {utils.getLang('cabinet_header_exchange')}
-              </div>
+              {/*<BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>*/}
+              {/*  <SVG src={require('../../../asset/cabinet/exchange_icon.svg')} />*/}
+              {/*  {utils.getLang('cabinet_header_exchange')}*/}
+              {/*</BaseLink>*/}
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../asset/cabinet/commerce_icon.svg')} />
@@ -110,7 +120,7 @@ class Header extends React.Component {
                   pending={this.props.notifications.pending}
                   onClose={this.toggleNotifications.bind(this)}
                 >
-                  {notifications.sort(n => n.unread ? -1 : 1).map((n, i) => (
+                  {notifications.filter(item => !item.deleted).sort(n => n.unread ? -1 : 1).map((n, i) => (
                     [
                       ( i > 0 &&  n.unread !== notifications[i - 1].unread &&
                         <UI.NotificationSeparator key={Math.random()} title={utils.getLang('cabinet_header_viewed')} />
@@ -119,6 +129,8 @@ class Header extends React.Component {
                         key={i}
                         icon={n.icon}
                         unread={n.unread}
+                        actions={n.actions}
+                        onAction={(action) => this.props.notificationAction(n.id, action)}
                         message={n.message}
                         date={n.created_at}
                       />
@@ -126,7 +138,7 @@ class Header extends React.Component {
                   ))}
                 </UI.Notifications>}
                 <div onClick={this.toggleNotifications.bind(this)}>
-                  <Badge count={unreadCount || null}>
+                  <Badge count={!!this.props.profile.has_notifications ? 1 : null}>
                     <SVG src={require('../../../asset/cabinet/notification.svg')} />
                   </Badge>
                 </div>

@@ -45,7 +45,7 @@ function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
             </div>
 
             <div className="AuthModal__footer">
-              <UI.Button onClick={handleSubmit}>{utils.getLang('site__authModalResetAuthSubmit')}</UI.Button>
+              <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalResetAuthSubmit')}</UI.Button>
             </div>
           </>
         ) : (

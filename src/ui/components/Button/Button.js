@@ -40,8 +40,8 @@ function Button(props) {
 }
 
 Button.propTypes = {
-  size: PropTypes.oneOf(['small', 'large']),
-  type: PropTypes.oneOf(['secondary', 'outline', 'negative', 'negative_outline', 'outline_white']),
+  size: PropTypes.oneOf(['', 'small', 'large', 'ultra_small', 'middle']),
+  type: PropTypes.oneOf(['', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'primary']),
   btnType: PropTypes.string,
   disabled: PropTypes.bool,
   rounded: PropTypes.bool,
@@ -51,7 +51,7 @@ Button.propTypes = {
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
   currency: PropTypes.string,
-  state: PropTypes.oneOf(['loading', 'disabled'])
+  state: PropTypes.oneOf(['', 'loading', 'disabled'])
 };
 
 export default React.memo(Button);

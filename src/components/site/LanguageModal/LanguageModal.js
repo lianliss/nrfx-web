@@ -10,13 +10,11 @@ const getLanguageFlag = (langCode) => {
   return <SVG src={require(`../../../asset/site/lang-flags/${langCode}.svg`)} />
 };
 
-
 function LanguageModal({ langList, className, onLanguageClick, isOpen, onClose }) {
-
   const handleLanguageChange = (langCode) => {
     onLanguageClick(langCode);
     onClose();
-  }
+  };
 
   return(
     <div className={"LanguageModal " + className}>

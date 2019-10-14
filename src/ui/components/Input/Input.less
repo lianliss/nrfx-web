@@ -4,6 +4,10 @@
   width: 100%;
   position: relative;
   border-radius: @border-radius;
+
+  &.small {
+    border-radius: 12px;
+  }
 }
 
 .Input {
@@ -40,15 +44,22 @@
     resize: none;
     padding: 12px 16px;
   }
+
+  .Input__wrapper.small & {
+    height: 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 14px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
+    padding: 5px 12px;
+    border-width: 1px;
+  }
 }
 
 .Input.error {
   border-color: rgb(255, 69, 69) !important;
   box-shadow: 0 0 8px 0px rgba(132, 1, 1, 0.45) !important;
-  transition: all 1s ease;
-  -webkit-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -moz-transition: all 1s ease;
   transition: all 1s ease;
 }
 
@@ -63,7 +74,7 @@
   padding-right: 16px;
   font-size: 14px;
   line-height: 20px;
-  color: var(--secondary-grey);
+  color: var(--primary-grey);
 }
 
 .Input__display_password_button {

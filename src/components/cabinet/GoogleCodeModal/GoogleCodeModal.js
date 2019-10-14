@@ -7,6 +7,7 @@ import UI from '../../../ui';
 import * as utils from '../../../utils';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
+import * as toasts from '../../../actions/cabinet/toasts';
 
 const GoogleCodeModal = props => {
   const [code, setCode] = useState("");
@@ -44,7 +45,7 @@ const GoogleCodeModal = props => {
         <div className="GoogleCodeModal__submit_wrapper">
           <UI.Button onClick={() => {
             copyText(options.hash).then(() => {
-              props.toastPush(utils.getLang("cabinet_ keyCopiedSuccessfully"), "success");
+              toasts.success(utils.getLang("cabinet_ keyCopiedSuccessfully"));
             })
           }} type="outline">{utils.getLang('cabinet_CopyKey')}</UI.Button>
           <UI.Button onClick={() => {

@@ -6,6 +6,9 @@ import router from '../router';
 import * as actionTypes from './actionTypes';
 import * as modalGroupConstant from '../constants/modalGroup';
 import ConfirmModal from '../components/cabinet/ConfirmModal/ConfirmModal';
+import * as utils from '../utils';
+import UI from '../ui';
+import React from 'react';
 
 export function modalGroupSetActiveModal(name) {
   return store.dispatch({
@@ -55,7 +58,6 @@ export function openModalPage(name = null, sendParams = {}, customModal = {}) {
     routerSendParams.rp = Object.keys({...sendParams}).join(modalGroupConstant.MODALGROUP_SEPARATOR);
   }
 
-  console.log(name);
   router.navigate(router.getState().name, {...routerSendParams}, {}, () => {
     modalGroupSetActiveModal(name);
   });
@@ -76,25 +78,4 @@ export function modalGroupClear() {
   router.navigate(router.getState().name, params, () => {
     modalGroupSetActiveModal(null);
   });
-}
-
-
-export function confirm(text, type) {
-  return new Promise((resolve, reject) => {
-    openModalPage(null, {}, {
-      children: ConfirmModal,
-      params: {
-        text,
-        type,
-        onAccept: (modal) => {
-          modal.props.close();
-          resolve();
-        },
-        onCancel: (modal) => {
-          modal.props.close();
-          reject();
-        }
-      }
-    })
-  })
 }

@@ -6,14 +6,22 @@ import UI from '../../../ui';
 
 import * as utils from '../../../utils';
 
-export default function EmptyContentBlock({ icon, message, button, skipContentClass, adaptive }) {
+export default function EmptyContentBlock({ icon, message, button, skipContentClass, height, adaptive }) {
+  let style = {};
+  if (height > 0) {
+    style.height = height;
+    style.minHeight = height;
+  }
   return (
-    <div className={utils.classNames({
-      EmptyContentBlock: true,
-      Content_box: !skipContentClass
-    })}>
-      <div className="EmptyContentBlock__content" style={adaptive ? {marginTop: 40} : {}}>
-        <div className="EmptyContentBlock__content__icon" style={{backgroundImage: `url(${icon})`}} />
+    <div
+      className={utils.classNames({
+        EmptyContentBlock: true,
+        Content_box: !skipContentClass
+      })}
+      style={style}
+    >
+      <div className="EmptyContentBlock__content">
+        <div className="EmptyContentBlock__content__icon" style={{ backgroundImage: `url(${icon})` }} />
         <div className="EmptyContentBlock__content__message">{message}</div>
       </div>
       {button && <div className="EmptyContentBlock__call_to_action">
@@ -32,5 +40,6 @@ EmptyContentBlock.propTypes = {
     text: PropTypes.string.isRequired,
     onClick: PropTypes.func
   }),
-  skipContentClass: PropTypes.bool
+  skipContentClass: PropTypes.bool,
+  height: PropTypes.number
 };

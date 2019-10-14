@@ -49,7 +49,7 @@ export default class ImageUpload extends React.Component {
     uploader.onerror = () => {
       let response = JSON.parse(this.response);
       if (response.status === 200) {
-        console.log(response.status, response);
+        //
       } else {
         console.error('status' + response.status, "error upload");
       }

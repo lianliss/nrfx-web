@@ -44,7 +44,7 @@ export default function CurrentPayments({ payments, adaptive }) {
     if (adaptive) {
       return (
         <UI.TableCell key={Math.random()}>
-          <UI.TableColumn align="left" style={{ width: 30, position: 'relative' }}>
+          <UI.TableColumn align="left" style={{ width: 50, position: 'relative' }}>
             <div className="Investments__CurrentPayments__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
           </UI.TableColumn>
           <UI.TableColumn align="left" sub={utils.formatDouble(item.profit, 6)}>

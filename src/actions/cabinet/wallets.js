@@ -12,7 +12,7 @@ export function loadWallets() {
     return new Promise((resolve, reject) => {
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
       api.call(apiSchema.Wallet.DefaultGet, {count: 10}).then(({ balances, transactions, transfers }) => {
-        dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: '' });
+        dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: null });
         dispatch({ type: actionTypes.WALLETS_SET, wallets: balances });
         dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_SET, items: transactions});
         dispatch({ type: actionTypes.WALLETS_TRANFERS_SET, items: transfers });
@@ -78,6 +78,9 @@ export function loadMoreTransfers() {
 
 export function getNoGeneratedCurrencies() {
   const state = store.getState();
+  if (state.wallets.loadingStatus.default) {
+    return [];
+  }
 
   let exist = {};
   for (let i = 0; i < state.wallets.wallets.length; i++) {
@@ -86,12 +89,11 @@ export function getNoGeneratedCurrencies() {
 
   let currencies = [];
   for (let name in state.cabinet.currencies) {
-    if (exist[name]) {
+    if (exist[name] || !state.cabinet.currencies[name].can_generate ) {
       continue;
     }
     currencies.push(state.cabinet.currencies[name]);
   }
-
   return currencies;
 }
 

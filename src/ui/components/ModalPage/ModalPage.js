@@ -17,7 +17,6 @@ class ModalPage extends Component {
   constructor(props) {
     super(props);
     this.node = React.createRef();
-    this.adaptive = document.body.classList.contains('adaptive');
     this.mainClassName = classNames({
       ModalPage: true,
       ModalPage__noSpacing: this.props.noSpacing,
@@ -65,7 +64,7 @@ class ModalPage extends Component {
   }
 
   __handleClick = e => {
-    if (!(this.node.current && this.node.current.contains(e.target)) && !this.adaptive) {
+    if (!(this.node.current && this.node.current.contains(e.target)) && !this.props.adaptive) {
       this.props.close();
     }
   };

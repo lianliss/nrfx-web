@@ -63,18 +63,14 @@ export default function Chart({ series, ...props }) {
       symbolPadding: 0,
       symbolWidth: 0,
       symbolRadius: 0,
-      labelFormatter: function () {
-        let out = `<div class="Chart__legend_item" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
+      labelFormatter: function (a) {
+        let out = `<div class="${classNames("Chart__legend_item", {visible: this.visible})}" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
         if (props.adaptive) {
           out = `<div style="margin: 20px 0">
             ${out}
           </div>`
         }
-        // if (props.adaptive) {
-        //   const currencyInfo = actions.getCurrencyInfo(this.name);
-        //   return `<div class="Chart__legend_icon" style="background-image: url(${currencyInfo.icon})"></div>`
-        // }
-        return `<div class="Chart__legend_item" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
+        return out;
       },
       itemMarginBottom: 0,
       margin: 0,

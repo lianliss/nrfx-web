@@ -194,7 +194,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
 
     const notEmptyPayments = this.props.payments.filter(
-      item => item.total_invested_amount > 0
+      item => (item.available || item.invested_amount || item.profit)
     );
 
     return <Show showIf={notEmptyPayments.length > 0}>
@@ -211,7 +211,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
     }
 
     const notEmptyPayments = this.props.payments.filter(
-      item => item.invested_amount > 0
+      item => (item.available || item.invested_amount || item.profit)
     );
 
     return <Show showIf={notEmptyPayments.length > 0}>

@@ -1,0 +1,38 @@
+.ManageBalanceModal {
+  width: 304px;
+
+  &__input_button {
+    display: flex;
+
+    .Button {
+      margin-left: 16px;
+    }
+  }
+
+  &__row {
+    margin: 40px 0;
+  }
+
+  &__submit_wrap {
+    margin-bottom: 8px;
+
+    .Button {
+      width: 100%;
+    }
+  }
+}
+
+.adaptive {
+  .ManageBalanceModal {
+    width: 100%;
+
+    &__row {
+      &:first-child {
+        margin-top: 0;
+      }
+      .Button {
+        width: auto;
+      }
+    }
+  }
+}

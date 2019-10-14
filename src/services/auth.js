@@ -1,4 +1,5 @@
 import * as storage from './storage';
+import { INTERNAL_NOTIFICATION_KEY } from '../constants/internalNotifications'
 
 export function getToken() {
   return storage.getItem('access_token');
@@ -18,5 +19,6 @@ export function login(accessToken) {
 }
 
 export function logout() {
-  storage.clear();
+  storage.removeItem('access_token');
+  storage.removeItemsByKey(INTERNAL_NOTIFICATION_KEY);
 }

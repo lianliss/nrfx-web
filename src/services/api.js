@@ -1,6 +1,7 @@
 import * as auth from './auth';
 
 const API_ENTRY = 'https://api.bitcoinbot.pro';
+//const API_ENTRY = 'http://bb.local';
 const API_VERSION = 1;
 
 export const EXPORT_API_VERSION = API_VERSION;
@@ -19,7 +20,7 @@ export const Errors = {
   EMAIL_USED: 10,
 };
 
-export function invoke(method, name, params) {
+export function invoke(method, name, params, options = {}) {
   return new Promise((resolve, reject) => {
 
     const params_arr = [];
@@ -37,7 +38,8 @@ export function invoke(method, name, params) {
       }
     };
 
-    let url = `${API_ENTRY}/api/v${API_VERSION}/${name}`;
+    const apiEntry = options.apiEntry || API_ENTRY;
+    let url = `${apiEntry}/api/v${API_VERSION}/${name}`;
     if (method === 'GET') {
       url += `?${params_arr.join('&')}`;
     } else {
@@ -56,12 +58,12 @@ export function invoke(method, name, params) {
           if (resp.status === 200) {
             resolve(json);
           } else {
+            json.error_name = 'failed';
             reject(json);
           }
-        }).catch((err) => {
-          reject({code: -1, message: 'Cant\'t parse JSON'})
-        });
-      });
+        }).catch(() => reject({code: -1, message: 'Cant\'t parse JSON', error_name: 'failed'}));
+      })
+      .catch((err) => reject({code: -2, ...err, error_name: 'failed_connection'}));
   });
 }
 
@@ -81,6 +83,6 @@ export function del(name, params = {}) {
   return invoke('DELETE', name, params);
 }
 
-export function call(API, params = {}) {
-  return invoke(API.method, API.path, params);
+export function call(API, params = {}, options = {}) {
+  return invoke(API.method, API.path, params, options);
 }

@@ -6,7 +6,7 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import * as toastsActions from './toasts';
 import * as modalGroup from '../modalGroup';
-import * as utils from '../../utils/index'
+import * as utils from '../../utils/index';
 
 export function loadDashboard() {
   return (dispatch, getState) => {
@@ -54,4 +54,70 @@ export function getPartner() {
       dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partners', status: 'failed' });
     });
   };
+}
+
+export function saveInviteLink(link, name) {
+  return (dispatch, getStore) => {
+    dispatch({ type: actionTypes.PROFILE_INVITE_LINK_UPDATE, linkId: link.id, name });
+    api.call(apiSchema.Partner.InviteLinkPost, {
+      id: link.id,
+      name
+    }).then(() => {
+      toastsActions.toastPush('Link name updated', 'success')(dispatch, getStore);
+    }).catch((err) => {
+      toastsActions.toastPush(err.message, 'error')(dispatch, getStore);
+      dispatch({ type: actionTypes.PROFILE_INVITE_LINK_UPDATE, linkId: link.id, name: link.name });
+    });
+  };
+}
+
+export function createInviteLink(name) {
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      api.call(apiSchema.Partner.InviteLinkPut, {
+        name
+      }).then((link) => {
+        resolve();
+        dispatch({ type: actionTypes.PROFILE_INVITE_LINK_ADD, link });
+      }).catch((err) => reject(err));
+    });
+  };
+}
+
+export function deleteInviteLink(linkId) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.PROFILE_INVITE_LINK_DELETE, linkId });
+    api.call(apiSchema.Partner.InviteLinkDelete, {
+      id: linkId
+    }).catch(() => dispatch({ type: actionTypes.PROFILE_INVITE_LINK_RESTORE, linkId }));
+  };
+}
+
+export function restoreInviteLink(linkId) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.PROFILE_INVITE_LINK_RESTORE, linkId });
+    api.call(apiSchema.Partner.InviteLinkRestorePost, {
+      id: linkId
+    }).catch(() => dispatch({ type: actionTypes.PROFILE_INVITE_LINK_DELETE, linkId }));
+  };
+}
+
+export function loadPartnerInfo(login) {
+  return new Promise((resolve, reject) => {
+    api.call(apiSchema.Partner.PartnerInfoGet, {
+      login,
+    })
+      .then((info) => resolve(info))
+      .catch((err) => reject(err));
+  });
+}
+
+export function inviteAgent(login) {
+  return new Promise((resolve, reject) => {
+    api.call(apiSchema.Partner.SendInvitePost, {
+      login,
+    })
+      .then((info) => resolve(info))
+      .catch((err) => reject(err));
+  });
 }

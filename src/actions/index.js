@@ -7,10 +7,13 @@ import apiSchema from '../services/apiSchema';
 import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as utils from '../utils';
+import * as emitter from '../services/emitter';
 
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.LangGet, {code}).then(({ translations, languages }) => {
+    api.call(apiSchema.LangGet, { code }, {
+      apiEntry: 'https://api.bitcoinbot.pro'
+    }).then(({ translations, languages }) => {
       const langList = languages.map(lang => ({ value: lang[0], title: lang[1] }));
       store.dispatch({
         type: actionTypes.SET_LANG,
@@ -42,13 +45,6 @@ export function loadCurrencies() {
   });
 }
 
-const CryptoIcons = {
-  btc: require('../asset/cabinet/crypto/bitcoin.svg'),
-  eth: require('../asset/cabinet/crypto/ethereum.svg'),
-  ltc: require('../asset/cabinet/crypto/litecoin.svg'),
-  other: require('../asset/cabinet/crypto/other.svg')
-};
-
 export function getCurrencyInfo(name) {
   const state = store.getState().cabinet;
   name = name.toLowerCase();
@@ -60,16 +56,31 @@ export function getCurrencyInfo(name) {
       icon: null,
       abbr: name
     };
-  } else {
-    result.icon = CryptoIcons[name];
   }
   return result;
 }
 
-export function openModal(name, params = {}) {
+export function openModal(name, params = {}, props = {}) {
   router.navigate(
     router.getState().name,
-    utils.makeModalParams(name, params));
+    utils.makeModalParams(name, params),
+    props
+  );
+}
+
+export function confirm(props) {
+  return new Promise((resolve, reject) => {
+    openModal('confirm', {}, props);
+    const acceptListener = emitter.addListener('confirm_accept', () => {
+      emitter.removeListener(acceptListener);
+      resolve();
+    });
+
+    const closeListener = emitter.addListener('confirm_cancel', () => {
+      emitter.removeListener(closeListener);
+      reject();
+    });
+  })
 }
 
 export function setAdaptive(adaptive) {
@@ -78,4 +89,10 @@ export function setAdaptive(adaptive) {
 
 export function setTitle(title) {
   return store.dispatch({ type: actionTypes.SET_TITLE, title });
+}
+
+export function sendInviteLinkView(link) {
+  api.call(apiSchema.Partner.InviteLinkViewPost, {
+    link
+  });
 }

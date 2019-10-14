@@ -1,0 +1,79 @@
+.TradeForm {
+  height: 120px;
+  flex: 0 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .Form__helper__text {
+    margin-left: 12px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
+
+.TradeForm__types {
+  width: 88px;
+  flex: 0 0 auto;
+
+  .Button {
+    width: 100%;
+    margin-top: 8px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.TradeForm__form__wrap {
+  margin-left: 64px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.TradeForm__form {
+  display: flex;
+  width: 584px;
+}
+
+.TradeForm__form__row {
+  flex: 1;
+  margin-left: 16px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &.percents {
+    flex: 0 0 auto;
+  }
+}
+
+.TradeForm__form__controls {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  width: 584px;
+
+  .Button.middle {
+    width: 100%;
+  }
+
+  .Button.ultra_small {
+    margin-left: 8px;
+    padding: 0;
+
+      width: 40px;
+      text-align: center;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}

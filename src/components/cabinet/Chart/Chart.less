@@ -6,6 +6,13 @@
   }
 }
 
+.Exchange__trading_view {
+  padding: 0 16px 16px;
+  box-sizing: border-box;
+  flex: 1;
+  overflow: hidden;
+}
+
 .Chart__tooltip {
   color: var(--contrast-primary);
   font-weight: 500;
@@ -37,6 +44,10 @@
   border-radius: 16px;
   padding: 1px 13px 0;
   font-family: 'Montserrat', sans-serif;
+
+  &:not(.visible) {
+    opacity: .5;
+  }
 }
 
 .Chart__legend_icon {

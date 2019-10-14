@@ -14,33 +14,35 @@ function Modal(props) {
   const className = classNames(props.className, {
     Modal: true,
     Modal__noSpacing: props.noSpacing,
+    Modal__grayBackground: props.grayBackground,
   });
 
-  const handleClick = e => {
-    if (node.current && node.current.contains(e.target)) {
-      return () => {};
-    } else {
-      !adaptive && props.onClose();
+  const handleClose = e => {
+    if (e.target === e.currentTarget) {
+      props.onClose(e);
+    }
+  }
+
+  const handlePressEsc = e => {
+    if(e.keyCode === 27) {
+      props.onClose && props.onClose(e);
     }
   };
 
   useEffect(() => {
-    if (props.isOpen) {
-      document.body.style.overflowY = "hidden";
-    }
-    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handlePressEsc, false);
+
     return () => {
-      document.body.style.overflowY = "scroll";
-      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handlePressEsc, false);
     };
   }, []);
 
 
   if (props.isOpen) {
     return (
-      <div className={className}>
+      <div className={className} onClick={handleClose}>
         <div className="Modal__box" ref={node} style={{ width: props.width }}>
-          <div className="Modal__box__close" onClick={props.onClose} />
+          {!props.skipClose && <div className="Modal__box__close" onClick={props.onClose} />}
           {props.children}
         </div>
       </div>
@@ -53,7 +55,9 @@ function Modal(props) {
 Modal.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  width: PropTypes.number
+  width: PropTypes.number,
+  skipClose: PropTypes.bool,
+  grayBackground: PropTypes.bool,
 };
 
 export function ModalHeader({ children }) {

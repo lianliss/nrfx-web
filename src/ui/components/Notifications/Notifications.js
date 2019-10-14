@@ -18,16 +18,17 @@ export function Notification(props) {
       <div className="Notification__body">
         <div className="Notification__message">{props.message}</div>
         {!!props.markText && <div className="Notification__text">{props.markText}</div>}
-        {props.actions && props.actions.length &&
-          <div className="Notification__body__buttons">{props.actions.map((action, key) => (
-            <UI.Button
-              key={key}
-              type={action.type}
-              size="small"
-              onClick={() => props.onAction(action)}>
-              {action.text}
-            </UI.Button>
-          ))}</div>
+        {props.actions &&
+        <div className="Notification__body__buttons">{props.actions.map((action, key) => (
+          <UI.Button
+            key={key}
+            rounded
+            type={action.type}
+            size="ultra_small"
+            onClick={(e) => props.onAction(action)}>
+            {action.text}
+          </UI.Button>
+        ))}</div>
         }
       </div>
       <div className="Notification__date">{props.date}</div>
@@ -57,17 +58,14 @@ NotificationSeparator.propTypes = {
 export default class Notifications extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleClickEsc = this.handleClickEsc.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.handleClickOutside);
     document.addEventListener("keydown", this.handleClickEsc, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleClickOutside);
     document.removeEventListener("keydown", this.handleClickEsc, false);
   }
 
@@ -77,19 +75,14 @@ export default class Notifications extends React.Component {
     }
   }
 
-  handleClickOutside(e) {
-    if (this.refs.notifications && !this.refs.notifications.contains(e.target)) {
-      this.props.onClose && this.props.onClose();
-    }
-  }
-
   render() {
     const empty = !this.props.pending && (!this.props.children || !this.props.children.length);
-    return (
-      <div className={classNames(this.props.classNames, "Notifications", { empty: empty })} ref="notifications">
+    return [
+      <div key="notify_close_helper" className="Notification__close_helper" onClick={() => this.props.onClose && this.props.onClose()} />,
+      <div key="notify_body" className={classNames(this.props.classNames, "Notifications", { empty: empty })} ref="notifications">
         {!empty ? this.props.children : <span className="Notifications__empty_text">{this.props.emptyText}</span>}
       </div>
-    )
+    ]
   }
 }
 

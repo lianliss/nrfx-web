@@ -27,24 +27,30 @@ class CabinetWrapper extends Component {
 
   render() {
     const route = router.getState();
-    const content = utils.switchMatch(route.name, {
+
+    let contentRules = {
       [PAGES.NOTIFICATIONS]: {
         left: <BaseLink router={router} routeName={PAGES.PROFILE}>
           <SVG src={require("../../asset/24px/angle-left.svg")} />
         </BaseLink>
       },
-      [PAGES.PROFILE]: {
-        left: <BaseLink router={router} routeName={PAGES.NOTIFICATIONS}>
-          <SVG src={require("../../asset/24px/bell.svg")} />
-        </BaseLink>
-      },
-      "default": {
+      'default': {
         left: !!Object.keys(route.params).length &&
           <span onClick={() => window.history.back()}>
             <SVG src={require("../../asset/24px/angle-left.svg")} />
           </span>
       }
-    });
+    };
+
+    if (!Object.keys(route.params)) {
+      contentRules[PAGES.PROFILE] = {
+        left: <BaseLink router={router} routeName={PAGES.NOTIFICATIONS}>
+          <SVG src={require("../../asset/24px/bell.svg")} />
+        </BaseLink>
+      };
+    }
+
+    const content = utils.switchMatch(route.name, contentRules);
 
     const {children, className, adaptive} = this.props;
     const mainClassName = classNames({

@@ -9,6 +9,7 @@ import * as modalGroupActions from "../../../actions/modalGroup";
 import CheckNewEmailModal from "../CheckNewEmailModal/CheckNewEmailModal";
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
+import SVG from 'react-inlinesvg';
 
 class ChangeEmailModal extends React.Component {
   state = {
@@ -44,13 +45,14 @@ class ChangeEmailModal extends React.Component {
             type="number"
             autoComplete="off"
             value={this.state.gaCode}
-            onChange={(e) => this.__handleChange(e, 'GA')}
+            onChange={e => this.__handleChange(e, 'GA')}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={(e) => (e.key === 'Enter' && this.state.gaCode.length < 6) ? this.__handleSubmit() : null}
+            onKeyPress={utils.InputNumberOnKeyPressHandler}
             error={this.state.errorGaCode}
+            indicator={
+              <SVG src={require('../../../asset/google_auth.svg')} />
+            }
           />
-
-          <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
         </div>
         <div className="ChangeEmailModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
@@ -69,7 +71,11 @@ class ChangeEmailModal extends React.Component {
       case 'GA':
         const val = e.target.value;
         if (val.length <= 6) {
-          this.setState({gaCode: val});
+          this.setState({gaCode: val}, e => {
+            if (val.length === 6) {
+              this.__handleSubmit();
+            }
+          });
         }
         break;
       default: break;
