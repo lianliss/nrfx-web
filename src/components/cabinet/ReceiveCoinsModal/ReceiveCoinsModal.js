@@ -95,7 +95,7 @@ export default class ReceiveCoinsModal extends React.Component {
             <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
             {options.length > 0 &&
               <UI.Dropdown
-                placeholder={placeholder}
+                value={placeholder}
                 options={options}
                 onChange={(item) => {
                   this.setState({ currency: item.value, isCopied: false, dropDownCurrentItem: item })
