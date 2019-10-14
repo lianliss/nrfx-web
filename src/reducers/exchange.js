@@ -29,15 +29,7 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
     case actionTypes.EXCHANGE_SET: {
-      let tickerInfo = {};
-      for (let ticker of action.tickers) {
-        if (ticker.market === state.market) {
-          tickerInfo = {
-            ...ticker,
-            prevPrice: ticker.price,
-          };
-        }
-      }
+      let tickerInfo = action.ticker;
 
       let balanceInfo = {};
       let [primary, secondary] = action.market.split('/');
