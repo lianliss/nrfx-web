@@ -41,7 +41,7 @@ export default class DepositInfoModal extends React.Component {
               <InfoRow label={utils.getLang("global_amount")}>{deposit.amount} {currency}</InfoRow>
               <InfoRow label={utils.getLang("cabinet_investmentsScreen_profit")}>{utils.formatDouble(deposit.profit, 8)} {currency} ({utils.formatDouble(deposit.current_percent, 2)}%)</InfoRow>
               <InfoRow label={utils.getLang("in_fiat")}>{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
-              <InfoRow label={utils.getLang("global_estimated")}>{utils.formatDouble(deposit.percent, 2)} %</InfoRow>
+              <InfoRow label={utils.getLang("global_estimated")}>{utils.formatDouble(deposit.percent, 2)}%</InfoRow>
             </InfoRowGroup>
           </div>
           {/*<div className="DepositInfoModal__withdrawal_form" style={{display:'flex'}}>*/}
