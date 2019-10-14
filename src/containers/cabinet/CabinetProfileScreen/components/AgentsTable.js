@@ -51,7 +51,7 @@ export default function AgentsTable({ agents, adaptive }) {
           <UI.TableColumn sub={item.partners_count}>
             {item.user.login.toUpperCase()}
           </UI.TableColumn>
-          <UI.TableColumn align="right" sub={moment(item.created_at).format('DD MMM YYYY')}>
+          <UI.TableColumn align="right" sub={utils.dateFormat(item.created_at, 'DD MMM YYYY')}>
             ~{utils.formatDouble(item.profit, 2)} USD
           </UI.TableColumn>
         </UI.TableCell>
@@ -71,7 +71,7 @@ export default function AgentsTable({ agents, adaptive }) {
             ~{utils.formatDouble(item.profit, 2)} USD
           </UI.TableColumn>
           <UI.TableColumn align="right" style={{width: 100}}>
-            {moment(item.created_at).format('DD MMM YYYY')}
+            {utils.dateFormat(item.created_at, 'DD MMM YYYY')}
           </UI.TableColumn>
         </UI.TableCell>
       )

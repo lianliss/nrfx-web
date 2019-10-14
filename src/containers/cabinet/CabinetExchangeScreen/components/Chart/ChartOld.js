@@ -188,7 +188,7 @@ class Chart extends React.Component {
       </tr>
       <tr class="ExchangeChart__tooltip__row">
         <td class="ExchangeChart__tooltip__row__label">Date:</td>
-        <td class="ExchangeChart__tooltip__row__value">${moment(data.x).format('DD MMM YYYY HH:mm')}</td>
+        <td class="ExchangeChart__tooltip__row__value">${utils.dateFormat(data.x)}</td>
       </tr>
     </table>
   </div>
