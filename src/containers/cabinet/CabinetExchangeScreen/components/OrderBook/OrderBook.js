@@ -5,7 +5,7 @@ import React from 'react';
 import * as utils from '../../../../../utils';
 import UI from '../../../../../ui/index';
 
-export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker }) {
+export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, type }) {
   asks = Object.values(asks);
   bids = Object.values(bids);
 
@@ -23,7 +23,7 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker }
   let diff = Math.round(Math.abs(asksPercent - bidsPercent));
 
   return (
-    <div className="OrderBook">
+    <div className={utils.classNames("OrderBook", type)}>
       <div className="OrderBook__header OrderBook__order">
         <div className="OrderBook__order__row">{utils.getLang('global_price')}</div>
         <div className="OrderBook__order__row">{utils.getLang('global_amount')}</div>
@@ -31,26 +31,34 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker }
       </div>
       <div className="OrderBook__cont__wrap">
         {!adaptive && <div className="OrderBook__cont indicator">
-          <div className="OrderBook__side red_bg">
+          {['all', 'asks'].includes(type) && <div className="OrderBook__side red_bg">
             {diff > 0 && asksPercent > bidsPercent && `${diff}%`}
             <div className="OrderBook__percent_indicator" style={{height: `${asksPercent}%`}} />
-          </div>
-          <div className="OrderBook__side green_bg">
+          </div>}
+          {['all', 'bids'].includes(type) && <div className="OrderBook__side green_bg">
             {diff > 0 && bidsPercent > asksPercent && `${diff}%`}
             <div className="OrderBook__percent_indicator" style={{height: `${bidsPercent}%`}} />
-          </div>
-        </div>}
-        <div className="OrderBook__cont">
-          <div className="OrderBook__side">
-            {makeRows(asks.slice(-sideLimit), onOrderPress, adaptive)}
-          </div>
-          {adaptive && <div className="OrderBook__price">
-            <UI.NumberFormat number={ticker.price} type={ticker.price  > ticker.prevPrice ? 'up' : 'down'} indicator />
           </div>}
-          <div className="OrderBook__side">
-            {makeRows(bids.slice(0, sideLimit), onOrderPress, adaptive)}
+        </div>}
+        {type !== 'all' ? (
+          <div className="OrderBook__cont">
+            <div className="OrderBook__side">
+              {makeRows((type === "bids" ? bids : asks), onOrderPress, adaptive)}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="OrderBook__cont">
+            <div className="OrderBook__side">
+              {makeRows(asks.slice(-sideLimit), onOrderPress, adaptive)}
+            </div>
+            {adaptive && <div className="OrderBook__price">
+              <UI.NumberFormat number={ticker.price} type={ticker.price  > ticker.prevPrice ? 'up' : 'down'} indicator />
+            </div>}
+            <div className="OrderBook__side">
+              {makeRows(bids.slice(0, sideLimit), onOrderPress, adaptive)}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

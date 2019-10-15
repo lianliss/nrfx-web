@@ -8,6 +8,7 @@ import Block from './components/Block/Block';
 import SwitchBlock from './components/SwitchBlock/SwitchBlock';
 import Trades from './components/Trades/Trades';
 import Balances from './components/Balances/Balances';
+import SVG from 'react-inlinesvg';
 
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
@@ -19,6 +20,7 @@ import MarketInfo from './components/MarketInfo/MarketInfo';
 import MarketInfoAdaptive from './components/MarketInfoAdaptive/MarketInfoAdaptive';
 import Chart from './components/Chart/Chart';
 import * as exchangeService from '../../../services/exchange';
+import UI from '../../../ui/';
 
 class CabinetExchangeScreen extends CabinetBaseScreen {
   constructor(props) {
@@ -26,6 +28,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
 
     this.state = {
       ordersTab: 'open',
+      orderBookType: 'all',
     };
   }
 
@@ -139,14 +142,34 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
     )
   }
 
+  __renderOrderBookControlOptions () {
+    return ['all', 'bids', 'asks'].map(type => ({
+      label: type.toUpperCase(),
+      value: type,
+      className: type,
+      icon: <SVG src={require('../../../asset/16px/list.svg')} />
+    }))
+  }
+
   __renderOrderBook() {
     return (
       <Block
         title={utils.getLang('exchange_orderBook')}
         skipCollapse
         skipPadding
+        controls={['all', 'bids', 'asks'].map(type => (
+          <div key={type} onClick={() => this.setState({ orderBookType: type })}> {type === this.state.orderBookType ? `[${type}]` : type}</div>
+        ))}
+        controls={(
+          <UI.SwitchButtons
+            className="Exchange__orderbook_controls"
+            selected={this.state.orderBookType}
+            onChange={type => this.setState({ orderBookType: type })}
+            tabs={this.__renderOrderBookControlOptions()} />
+        )}
       >
         <OrderBook
+          type={this.state.orderBookType}
           onOrderPress={(order) => this.refs.trade_form.set(order.amount, order.price)}
           {...this.props.depth}
         />
