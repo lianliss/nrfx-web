@@ -12,8 +12,6 @@ import { ReactComponent as AngleUpSmall } from '../../asset/angle-up-small.svg';
 
 function Table({ headings, children, className, header, hidden, adaptive, compact, skipContentBox, inline }) {
 
-  console.log(1, adaptive, className);
-
   const [hiddenContent, setHiddenContent] = useState(hidden || false);
   return (
     <div className={utils.classNames(className, {
