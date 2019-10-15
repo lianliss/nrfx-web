@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 // internal
 import store from '../store';
 import router from '../router';
+import moment from 'moment/min/moment-with-locales';
 
 export function classNames() {
   let result = [];
@@ -214,4 +215,16 @@ export function getScrollbarWidth() {
 
 export function isFiat(currency) {
   return currency.toLowerCase() === 'usdt';
+}
+
+export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
+  let dateObject;
+
+  if (typeof date === 'number' && date.toString().length === 10) {
+    dateObject = moment.unix(date);
+  } else {
+    dateObject = moment(date);
+  }
+
+  return !!format ? dateObject.format(format) : dateObject;
 }
