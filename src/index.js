@@ -11,7 +11,7 @@ import router from './router';
 import initGetParamsData from './services/initialGetParams';
 import { GetParamsContext } from './contexts';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+//import * as serviceWorker from './serviceWorker';
 import * as auth from './services/auth';
 import * as user from './actions/user';
 import * as emitter from './services/emitter';
@@ -37,4 +37,4 @@ router.start((err, state) => {
   ReactDOM.render(wrappedApp, document.getElementById('root'))
 });
 
-serviceWorker.register();
+// serviceWorker.register();
