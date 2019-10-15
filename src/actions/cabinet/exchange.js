@@ -41,6 +41,7 @@ export function orderCreate(params) {
 }
 
 export function orderDelete(orderId) {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_PENDING, orderId });
   return api.call(apiSchema.Exchange.OrderDelete, {
     order_id: orderId
   });
