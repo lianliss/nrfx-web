@@ -79,7 +79,7 @@ class ModalGroup extends React.Component {
   };
 
   __routerNavigateToBaseModuleLink = () => {
-    this.props.router.navigate(this.__getRouteName());
+    // this.props.router.navigate(this.__getRouteName());
   };
 
   __checkAllow = () => {

@@ -44,7 +44,7 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount, ad
             </span>
           </UI.TableColumn>
           <UI.TableColumn
-            sub={moment(item.created_at).format('DD MMM YYYY HH:mm') + ' / ' + utils.formatTableId(withdrawalsTotalCount - i)}
+            sub={utils.dateFormat(item.created_at) + ' / ' + utils.formatTableId(withdrawalsTotalCount - i)}
           >
             {utils.formatDouble(item.amount)} {item.currency.toUpperCase()}
           </UI.TableColumn>
@@ -59,7 +59,7 @@ export default function WithdrawalTable({ withdrawals, withdrawalsTotalCount, ad
         </UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)}</UI.TableColumn>
         <UI.TableColumn>{item.currency.toUpperCase()}</UI.TableColumn>
-        <UI.TableColumn>{moment(item.created_at).format('DD MMM YYYY HH:mm')}</UI.TableColumn>
+        <UI.TableColumn>{utils.dateFormat(item.created_at)}</UI.TableColumn>
       </UI.TableCell>
     )
   });

@@ -104,7 +104,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
             <div className={priceClassName}>{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : void 0)}</div>
           </UI.TableColumn>
           <UI.TableColumn>{utils.formatDouble(order.amount)}</UI.TableColumn>
-          <UI.TableColumn align="right">{moment(order.created_at).format('H:m:s')}</UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(order.created_at, 'H:m:s')}</UI.TableColumn>
         </UI.TableCell>
       )
     });
