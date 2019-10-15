@@ -4,8 +4,6 @@ import React from 'react';
 import UI from '../../../ui';
 
 import * as utils from '../../../utils';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
 import ModalState from '../ModalState/ModalState';
@@ -23,6 +21,7 @@ export default class extends React.Component {
       wallets: [],
       balances: [],
       selectedId: null,
+      currency: null,
       loadingStatus: 'loading',
       touched: false,
       isFormSending: false,
@@ -50,7 +49,7 @@ export default class extends React.Component {
 
         for (let item of items) {
           if (item.currency === this.props.currency) {
-            this.setState({ selectedId: item.id });
+            this.setState({ selectedId: item.id, currency: item.currency });
             break;
           }
         }
@@ -90,13 +89,7 @@ export default class extends React.Component {
   };
 
   get currentOption() {
-    for (let option of this.options) {
-      if (option.value === this.state.selectedId) {
-        return option;
-      }
-    }
-
-    return this.options[0];
+    return this.options.find(option => option.currency === this.state.currency) || this.options[0];
   }
 
   __maxDidPress = () => {
@@ -131,7 +124,7 @@ export default class extends React.Component {
               value={this.currentOption}
               placeholder=""
               options={this.options}
-              onChange={item => this.setState({ selectedId: item.value })}
+              onChange={item => this.setState({ selectedId: item.value, currency: item.currency })}
             />
           </div>
           <div className="ManageBalanceModal__row ManageBalanceModal__input_button">
