@@ -144,7 +144,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
 
   __renderOrderBookControlOptions () {
     return ['all', 'bids', 'asks'].map(type => ({
-      label: type.toUpperCase(),
+      label: utils.ucfirst(type),
       value: type,
       className: type,
       icon: <SVG src={require('../../../asset/16px/list.svg')} />

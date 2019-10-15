@@ -123,13 +123,13 @@ class Orders extends React.Component {
           <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">{utils.formatDouble(price * order.amount)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">{order.filled > 0 ? Math.floor(order.filled / order.filled * 100) : 0}%</UI.TableColumn>
-          <UI.TableColumn align="right">{moment(order.updated_at).format('HH:MM:SS')}</UI.TableColumn>
+          <UI.TableColumn align="right">{moment(order.updated_at).format('HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>
           <UI.TableColumn>{utils.formatDouble(order.price, utils.isFiat(order.secondary_coin) ? 2 : void 0)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn>{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{moment(order.updated_at).format('HH:MM:SS')}</UI.TableColumn>
+          <UI.TableColumn align="right">{moment(order.updated_at).format('HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       );
     });
@@ -203,7 +203,7 @@ class Orders extends React.Component {
         <UI.TableCell className={sideClassName} key={order.id}>
           <UI.TableColumn sub={average}>{price} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn sub={filled}>{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn sub={moment(order.updated_at).format('HH:MM:SS')} align="right">{utils.ucfirst(order.type)}</UI.TableColumn>
+          <UI.TableColumn sub={moment(order.updated_at).format('HH:mm:ss')} align="right">{utils.ucfirst(order.type)}</UI.TableColumn>
         </UI.TableCell>
       );
     });

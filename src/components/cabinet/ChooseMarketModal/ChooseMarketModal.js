@@ -88,7 +88,6 @@ class ChooseMarketModal extends React.Component {
             <UI.Table header={false} inline >
               {markets.map(({ market, ticker, chart }, key) => {
                 const [primary, secondary] = market.name.split('/').map(actions.getCurrencyInfo);
-                const fractionDigits = utils.isFiat(secondary.abbr) ? 2 : 6;
 
                 if (
                   (this.state.search && ![
@@ -139,13 +138,13 @@ class ChooseMarketModal extends React.Component {
                       /> }
                     </UI.TableColumn>
                     <UI.TableColumn>
-                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.price, fractionDigits)}</span> }
+                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.price, utils.isFiat(secondary.abbr) ? 2 : 6)}</span> }
                     </UI.TableColumn>
                     { !this.props.adaptive && <UI.TableColumn>
                       { ticker && "$" + utils.formatDouble(ticker.usd_price, 2) }
                     </UI.TableColumn> }
                     <UI.TableColumn>
-                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.percent, fractionDigits)}%</span> }
+                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.percent, 2)}%</span> }
                     </UI.TableColumn>
                   </UI.TableCell>
                 )
