@@ -5,18 +5,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // internal
 import UI from '../../index';
+import * as utils from '../../utils';
 
 const SwitchButtons = props => {
   return (
-    <div className="SwitchButtons">
+    <div className={utils.classNames("SwitchButtons", props.className)}>
       {props.tabs.map(tab => (
         <UI.Button
+          className={tab.className}
+          title={tab.icon && tab.label}
           key="all"
           size="ultra_small"
           rounded
           type={tab.value !== props.selected ? "secondary" : null}
           onClick={() => props.onChange(tab.value)}
-        >{tab.label}</UI.Button>
+        >{tab.icon || tab.label}</UI.Button>
       ))}
     </div>
   )
@@ -29,6 +32,7 @@ SwitchButtons.propTypes = {
   })).isRequired,
   selected: PropTypes.any,
   currency: PropTypes.string,
+  className: PropTypes.string,
   onChange: PropTypes.func.isRequired
 };
 

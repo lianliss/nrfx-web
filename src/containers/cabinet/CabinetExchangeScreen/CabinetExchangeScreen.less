@@ -92,6 +92,35 @@
   animation: order-loader 1s linear infinite;
 }
 
+.Exchange__orderbook_controls {
+  margin: 0 -4px;
+
+  .Button {
+    width: 24px;
+    margin: 0 4px;
+
+    .Button__label {
+      line-height: 0;
+    }
+
+    &.bids {
+      color: var(--primary-green);
+      &:not(.secondary) {
+        background: var(--primary-green);
+        color: white;
+      }
+    }
+
+    &.asks {
+      color: var(--primary-red);
+      &:not(.secondary) {
+        background: var(--primary-red);
+        color: white;
+      }
+    }
+  }
+}
+
 @keyframes order-loader {
   from {
     transform: rotate(0deg);
