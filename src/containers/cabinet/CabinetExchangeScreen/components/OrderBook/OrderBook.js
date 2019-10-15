@@ -31,14 +31,14 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, 
       </div>
       <div className="OrderBook__cont__wrap">
         {!adaptive && <div className="OrderBook__cont indicator">
-          {['all', 'asks'].includes(type) && <div className="OrderBook__side red_bg">
+          <div className="OrderBook__side red_bg">
             {diff > 0 && asksPercent > bidsPercent && `${diff}%`}
             <div className="OrderBook__percent_indicator" style={{height: `${asksPercent}%`}} />
-          </div>}
-          {['all', 'bids'].includes(type) && <div className="OrderBook__side green_bg">
+          </div>
+          <div className="OrderBook__side green_bg">
             {diff > 0 && bidsPercent > asksPercent && `${diff}%`}
             <div className="OrderBook__percent_indicator" style={{height: `${bidsPercent}%`}} />
-          </div>}
+          </div>
         </div>}
         {type !== 'all' ? (
           <div className="OrderBook__cont">
