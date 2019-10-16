@@ -34,6 +34,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
 
   componentDidMount() {
     super.componentDidMount();
+    this.props.setTitle(utils.getLang('cabinet_header_exchange'));
     exchangeService.bind(this.props.market);
   }
 
@@ -178,7 +179,8 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   load() {
-    this.props.load(this.props.market);
+    const { market } = this.props.router.route.params;
+    this.props.load((market && market.replace('_', '/')) || this.props.market);
   }
 }
 

@@ -11,6 +11,8 @@ import * as actions from '../../../actions';
 import * as utils from '../../../utils/';
 import ChartSimple from '../Chart/ChartSimple';
 import ModalState from '../ModalState/ModalState';
+import router from '../../../router';
+import * as PAGES from '../../../constants/pages';
 
 class ChooseMarketModal extends React.Component {
   constructor(props) {
@@ -49,7 +51,8 @@ class ChooseMarketModal extends React.Component {
 
   __handleChooseMarket (market) {
     this.props.chooseMarket(market);
-    this.props.onClose();
+    router.navigate(PAGES.EXCHANGE, { market: market.replace('/', '_')  });
+    // this.props.onClose();
   }
 
   render () {

@@ -3,6 +3,7 @@ import './Block.less';
 import React, { useState } from 'react';
 
 import * as utils from '../../../../../utils';
+import * as storage from '../../../../../services/storage';
 
 export default function Block(props) {
   let {
@@ -13,10 +14,18 @@ export default function Block(props) {
     children,
     controls,
     skipCollapse,
-    skipPadding
+    skipPadding,
+    name
   } = props;
 
-  const [collapsed, setCollapsed] = useState(false);
+  const storagekey = name + '_collapsed';
+
+  const [collapsed, setCollapsed] = useState(storage.getItem(storagekey));
+
+  const __setCollapsed = (stage) => {
+    setCollapsed(stage);
+    stage ? storage.setItem(storagekey, true) : storage.removeItem(storagekey);
+  };
 
   const classNames = utils.classNames({
     Exchange__block: true,
@@ -55,7 +64,7 @@ export default function Block(props) {
       <div className="Exchange__block__head">
         <div className="Exchange__block__title" onClick={(e) => {
           if (!e.target.classList.contains('Exchange__block__tab')) {
-            setCollapsed(!collapsed);
+            __setCollapsed(!collapsed);
           }
         }}>{title}</div>
         <div className="Exchange__block__head__controls">{controls}</div>

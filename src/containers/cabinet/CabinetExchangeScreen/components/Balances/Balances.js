@@ -48,6 +48,7 @@ class Balances extends React.Component {
       </div>
     ) : (
       <Block
+        name="balance"
         title={utils.getLang('global_balance')}
         controls={[
           <UI.Button

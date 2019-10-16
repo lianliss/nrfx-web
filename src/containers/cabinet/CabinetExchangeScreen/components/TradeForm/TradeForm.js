@@ -113,6 +113,7 @@ export default class TradeForm extends React.Component {
           </div>
           <OrderBook
             adaptive={true}
+            type="all"
             ticker={this.props.ticker}
             onOrderPress={(order) => {}}
             {...this.props.depth}

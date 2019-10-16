@@ -241,9 +241,11 @@ export function getWithState(caseName, caseClass) {
       mapState2Props = (state) => ({
         ...state.exchange,
         adaptive: state.default.adaptive,
+        router: state.router
       });
       mapDispatch2Props = {
         load: exchangeActions.load,
+        setTitle: actions.setTitle
       };
       break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:

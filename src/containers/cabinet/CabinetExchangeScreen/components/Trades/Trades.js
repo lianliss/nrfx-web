@@ -34,7 +34,7 @@ class Trades extends React.Component {
             <div className="Exchange__orders__mark">{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : void 0)}</div>
           </UI.TableColumn>
           <UI.TableColumn>{utils.formatDouble(order.filled)}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.dateFormat(order.created_at, 'H:m:s')}</UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       )
     });
@@ -47,6 +47,7 @@ class Trades extends React.Component {
 
     return (
       <Block
+        name="trades"
         title={utils.getLang('exchange_trades')}
         // controls={[
         //   <UI.Button key="all" size="ultra_small" rounded type="secondary">{utils.getLang('global_viewAll')}</UI.Button>,

@@ -25,6 +25,7 @@ class Orders extends React.Component {
 
     return (
       <Block
+        name="orders"
         tabs={[
           {tag: 'open', label: utils.getLang('exchange_openOrders')},
           {tag: 'history', label: utils.getLang('exchange_myTrades')},
@@ -69,10 +70,10 @@ class Orders extends React.Component {
           message={utils.getLang('exchange_openOrdersEmpty')}
           skipContentClass
           height={280}
-          button={{
-            text: utils.getLang('exchange_seeAllPairs'),
-            size: 'middle',
-          }}
+          // button={{
+          //   text: utils.getLang('exchange_seeAllPairs'),
+          //   size: 'small',
+          // }}
         />
       )
     }
@@ -149,10 +150,10 @@ class Orders extends React.Component {
           message={utils.getLang('exchange_noTradeHistory')}
           skipContentClass
           height={280}
-          button={{
-            text: utils.getLang('exchange_seeAllPairs'),
-            size: 'middle',
-          }}
+          // button={{
+          //   text: utils.getLang('exchange_seeAllPairs'),
+          //   size: 'small',
+          // }}
         />
       )
     }
