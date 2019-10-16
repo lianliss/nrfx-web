@@ -121,7 +121,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
         </UI.TableColumn>
         <UI.TableColumn>{utils.formatTableId(deposits.length - i)}</UI.TableColumn>
         <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
-        <UI.TableColumn sub={item.description}>{item.percent}%</UI.TableColumn>
+        <UI.TableColumn sub={item.description}>{item.plan_percent}%</UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
           sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}
