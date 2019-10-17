@@ -17,6 +17,11 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, 
   const sumAsks = asks.reduce((total, order) => total + order.amount, 0);
   const sumBids = bids.reduce((total, order) => total + order.amount, 0);
 
+  const asksMaxTotal = Math.max(...asks.map(order => order.amount * order.price));
+  const bidsMaxTotal = Math.max(...bids.map(order => order.amount * order.price));
+
+  const whole = Math.max(asksMaxTotal, bidsMaxTotal);
+
   let total = sumAsks + sumBids;
   let asksPercent = sumAsks / total * 100;
   let bidsPercent = sumBids / total * 100;
@@ -43,19 +48,19 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, 
         {type !== 'all' ? (
           <div className="OrderBook__cont">
             <div className="OrderBook__side">
-              {makeRows((type === "bids" ? bids : asks), onOrderPress, adaptive)}
+              {makeRows((type === "bids" ? bids : asks), onOrderPress, whole, adaptive)}
             </div>
           </div>
         ) : (
           <div className="OrderBook__cont">
             <div className="OrderBook__side">
-              {makeRows(asks.slice(-sideLimit), onOrderPress, adaptive)}
+              {makeRows(asks.slice(-sideLimit), onOrderPress, whole, adaptive)}
             </div>
             {adaptive && <div className="OrderBook__price">
               <UI.NumberFormat number={ticker.price} type={ticker.price  > ticker.prevPrice ? 'up' : 'down'} indicator />
             </div>}
             <div className="OrderBook__side">
-              {makeRows(bids.slice(0, sideLimit), onOrderPress, adaptive)}
+              {makeRows(bids.slice(0, sideLimit), onOrderPress, whole, adaptive)}
             </div>
           </div>
         )}
@@ -64,19 +69,23 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, 
   )
 }
 
-function makeRows(items, onOrderPress, adaptive) {
+function makeRows(items, onOrderPress, whole, adaptive,) {
   return items.map((order) => {
     const className = utils.classNames({
       OrderBook__order: true,
       [order.action]: true,
     });
+
+    const total = order.amount * order.price;
+    const filled = total / whole * 100;
+
     return (
-      <div key={order.id} className={className} onClick={() => onOrderPress(order)}>
+      <div title={`Filled: ${order.amount}%`} key={order.id} className={className} onClick={() => onOrderPress(order)}>
         <div className="OrderBook__order__row">{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : 6)}</div>
         <div className="OrderBook__order__row">{utils.formatDouble(order.amount)}</div>
         {!adaptive && <div className="OrderBook__order__row">{utils.formatDouble(order.price * order.amount, order.secondary_coin === 'usdt' ? 2 : 6)}</div>}
         <div className="OrderBook__order__filled" style={{
-          width: `${(order.filled / order.amount) * 100}%`
+          width: `${filled}%`
         }}/>
       </div>
     )

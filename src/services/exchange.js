@@ -1,6 +1,7 @@
 import * as realTime from './realtime';
 import * as exchange from '../actions/cabinet/exchange';
 import * as toasts from '../actions/cabinet/toasts';
+import * as utils from '../utils/';
 
 let markets = {};
 
@@ -45,22 +46,27 @@ class Exchange {
 
   __orderDidFailed = body => {
     exchange.setOrderStatus(body.order_id, 'completed');
+    toasts.error(utils.getLang('exchange_toastOrderFailed'));
   };
 
   __orderDidCompleted = body => {
     exchange.setOrderStatus(body.order_id, 'completed');
+    toasts.success(utils.getLang('exchange_toastOrderCompleted'));
   };
 
   __orderDidCancel = (orderId) => exchange.removeOrders([orderId]);
 
   __orderDidCancelled = (orderId) => {
     exchange.setOrderStatus(orderId, 'cancelled');
-    toasts.success('Your order has been canceled');
+    toasts.success(utils.getLang('exchange_toastOrderCanceled'));
   };
 
-  __orderDidCancelFailed = () => toasts.error('Can\'t cancel order');;
+  __orderDidCancelFailed = () => toasts.error('Can\'t cancel order');
 
-  __orderDidCreated = (order) => exchange.addOpenOrder(order);
+  __orderDidCreated = (order) => {
+    exchange.addOpenOrder(order);
+    toasts.success(utils.getLang('exchange_toastOrderCreated'));
+  }
 
   __orderDidTrade = (orders) => {
     exchange.removeOrders(orders.map(order => order.id));
