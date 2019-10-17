@@ -53,7 +53,7 @@ class Dropdown extends React.Component {
     const { props, state } = this;
     const dropdownIcon = state.isOpen ? arrowUp : arrowDown;
 
-    const headerText = typeof props.value === 'string' ?
+    const headerText = typeof props.value !== 'object' ?
       props.options.find( opt => opt.value === props.value) || {} : props.value || {};
 
     const className = classNames({
