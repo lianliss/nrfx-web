@@ -49,7 +49,7 @@ export default function HistoryTable({ history, adaptive, header}) {
       address = address.toUpperCase();
     }
 
-    const createdAt = moment(item.created_at);
+    const createdAt = utils.dateFormat(item.created_at, null);
 
     if (adaptive) {
       return (

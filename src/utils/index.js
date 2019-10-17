@@ -86,27 +86,15 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
   return null;
 };
 
-export function throttle(func, ms) {
-  let isThrottled = false,
-    savedArgs,
-    savedThis;
-  function wrapper() {
-    if (isThrottled) {
-      savedArgs = arguments;
-      savedThis = this;
-      return;
+export function throttle (func, ms)  {
+  let timeout = null;
+
+  return () => {
+    if (timeout) {
+      clearTimeout(timeout)
     }
-    func.apply(this, arguments);
-    isThrottled = true;
-    setTimeout(function() {
-      isThrottled = false;
-      if (savedArgs) {
-        wrapper.apply(savedThis, savedArgs);
-        savedArgs = savedThis = null;
-      }
-    }, ms);
+    timeout = setTimeout(func, ms);
   }
-  return wrapper;
 }
 
 export function ucfirst(input) {

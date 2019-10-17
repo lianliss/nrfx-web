@@ -33,7 +33,7 @@ export function invoke(method, name, params, options = {}) {
       headers: {
         'X-Token': auth.getToken(),
         'X-Beta': 1,
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
         'Accept-Language': window.localStorage.lang || 'en'
       }
     };
@@ -43,7 +43,7 @@ export function invoke(method, name, params, options = {}) {
     if (method === 'GET') {
       url += `?${params_arr.join('&')}`;
     } else {
-      init.body = params_arr.join('&');
+      init.body = JSON.stringify(params);
     }
 
     fetch(url, init)

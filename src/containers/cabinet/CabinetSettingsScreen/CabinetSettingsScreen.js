@@ -511,7 +511,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           </UI.TableColumn>
           <UI.TableColumn style={{width: 50}}>{item.browser}</UI.TableColumn>
           <UI.TableColumn>{item.ip}</UI.TableColumn>
-          <UI.TableColumn style={{width: 140}}>{moment(item.created_at).fromNow()}</UI.TableColumn>
+          <UI.TableColumn style={{width: 140}}>{utils.dateFormat(item.created_at, null).fromNow()}</UI.TableColumn>
         </UI.TableCell>
       )
     });
