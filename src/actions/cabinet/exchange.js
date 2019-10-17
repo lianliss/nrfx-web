@@ -22,7 +22,9 @@ export function load(market) {
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     })
   };
-}export function chooseMarket(market) {
+}
+
+export function chooseMarket(market) {
   return (dispatch, getState) => {
     exchangeService.unbind(getState().exchange.market);
     exchangeService.bind(market);

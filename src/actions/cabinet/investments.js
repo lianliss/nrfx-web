@@ -37,6 +37,19 @@ export function loadProfitHistory() {
   };
 }
 
+export function calculate({ currency, planId, amount, days }) {
+  return api.call(apiSchema.Investment.CalculateGet, {
+    currency: currency,
+    plan_id: planId,
+    amount,
+    steps: days.map(d => ([ d.dayNumber, d.amount ])).flat()
+  }).catch(err => {
+    toastsActions.error(err.message);
+    throw err;
+  });
+}
+
+
 export function loadMoreProfitHistory() {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profitsAppend', status: 'loading' });

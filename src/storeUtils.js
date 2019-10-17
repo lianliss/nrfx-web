@@ -196,6 +196,11 @@ export function getWithState(caseName, caseClass) {
         setStateByModalPage: modalGroupActions.setStateByModalPage
       };
       break;
+    case CLASSES.CALC_DEPOSIT_MODAL:
+      mapState2Props = state => ({
+        currencies: state.cabinet.currencies
+      });
+      break;
     case CLASSES.CONFIRM_SMS_MODAL:
       mapDispatch2Props = {
         setUserFieldValue: settingsActions.setUserFieldValue,

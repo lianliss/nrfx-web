@@ -119,7 +119,10 @@ class DashboardItem extends React.Component {
               {this.icon}
             </div>
             <div className="DashboardItem__headerText">
-              {utils.ucfirst(this.props.type)}
+              {{
+                partners: utils.getLang('cabinet_partners')
+                // TODO ?
+              }[this.props.type] || utils.ucfirst(this.props.type)}
             </div>
           </div>
           <div className="DashboardItem__content_item">
