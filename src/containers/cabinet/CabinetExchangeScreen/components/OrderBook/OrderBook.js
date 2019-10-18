@@ -6,11 +6,8 @@ import * as utils from '../../../../../utils';
 import UI from '../../../../../ui/index';
 
 export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, type }) {
-  asks = Object.values(asks);
-  bids = Object.values(bids);
 
-  asks.sort((a, b) => a.price > b.price ? -1 : 1);
-  bids.sort((a, b) => a.price > b.price ? -1 : 1);
+  [asks, bids] = [asks, bids].map(prepareOrders);
 
   const sideLimit = adaptive ? 7 : 11;
 
@@ -69,6 +66,22 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, 
   )
 }
 
+function prepareOrders(orders) {
+  // Group and Sort function
+  let result = [];
+  Object.values(orders).reduce((res, value) => {
+    if (!res[value.price]) {
+      res[value.price] = { ...value, amount: 0, filled: 0 };
+      result.push(res[value.price])
+    }
+    res[value.price].amount += value.amount;
+    res[value.price].filled += value.filled;
+    return res;
+  }, {});
+
+  return result.sort((a, b) => a.price > b.price ? -1 : 1);
+}
+
 function makeRows(items, onOrderPress, whole, adaptive,) {
   return items.map((order) => {
     const className = utils.classNames({
@@ -80,9 +93,9 @@ function makeRows(items, onOrderPress, whole, adaptive,) {
     const filled = total / whole * 100;
 
     return (
-      <div title={`Filled: ${order.amount}%`} key={order.id} className={className} onClick={() => onOrderPress(order)}>
+      <div title={`Filled: ${Math.floor(order.filled / order.amount * 100)}%`} key={order.id} className={className} onClick={() => onOrderPress(order)}>
         <div className="OrderBook__order__row">{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : 6)}</div>
-        <div className="OrderBook__order__row">{utils.formatDouble(order.amount)}</div>
+        <div className="OrderBook__order__row">{utils.formatDouble(order.amount - order.filled)} </div>
         {!adaptive && <div className="OrderBook__order__row">{utils.formatDouble(order.price * order.amount, order.secondary_coin === 'usdt' ? 2 : 6)}</div>}
         <div className="OrderBook__order__filled" style={{
           width: `${filled}%`

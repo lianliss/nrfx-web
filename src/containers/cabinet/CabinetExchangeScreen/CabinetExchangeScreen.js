@@ -171,7 +171,10 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       >
         <OrderBook
           type={this.state.orderBookType}
-          onOrderPress={(order) => this.refs.trade_form.set(order.amount, order.price)}
+          onOrderPress={(order) => this.refs.trade_form.set(
+            order.amount - order.filled,
+            order.price
+          )}
           {...this.props.depth}
         />
       </Block>
