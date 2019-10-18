@@ -57,7 +57,7 @@ class RealTime {
       if (this.listeners[json.type]) {
         for (let listener of this.listeners[json.type]) {
           console.log("json:", json);
-          listener && listener(json.body);
+          listener(json.body);
         }
       }
     }
@@ -87,7 +87,7 @@ class RealTime {
 
     for (let i = 0; i < this.listeners[name].length; i++) {
       if (this.listeners[name][i] === callback) {
-        delete this.listeners[name][i];
+        this.listeners[name].splice(i, 1);
       }
     }
   }

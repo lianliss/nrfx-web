@@ -70,7 +70,7 @@ const CalcDepositModal = class extends React.Component {
   };
 
   __daysIsFiled () {
-    return this.state.amount && this.state.days.every( d => !!d.dayNumber );
+    return !!this.state.days.length && this.state.amount && this.state.days.every( d => !!d.dayNumber );
   }
 
   __calculate () {
@@ -157,7 +157,9 @@ const CalcDepositModal = class extends React.Component {
               <UI.Input
                 placeholder={utils.getLang('cabinet_investmentAmount')}
                 value={this.state.amount}
-                onTextChange={value => this.setState({ amount: value })}
+                onTextChange={value => {
+                  this.setState({ amount: value }, this.__calculate);
+                }}
                 indicatorWidth={40}
                 indicator={this.state.currency.toUpperCase()} />
             </div>
@@ -215,7 +217,7 @@ const CalcDepositModal = class extends React.Component {
                         type="outline"
                         disabled={!this.state.daysResult[dayId] || disabled}
                         onClick={() => {
-                          this.__handleChangeDay(dayId, {amount: this.state.daysResult[dayId].profit})
+                          this.__handleChangeDay(dayId, {amount: utils.formatDouble(this.state.daysResult[dayId].profit, 5)})
                         }}
                       >{utils.getLang('cabinet_sendCoinsModal_max')}</UI.Button>
                     </div>
@@ -237,7 +239,7 @@ const CalcDepositModal = class extends React.Component {
           <div className="CalcDepositModal__row CalcDepositModal__result">
             <div className="CalcDepositModal__column">
               <UI.Button
-                disabled={!this.__daysIsFiled()}
+                disabled={!!this.state.days.length && !this.__daysIsFiled()}
                 onClick={this.__handleAddDay}
                 currency={this.state.currency}>{utils.getLang('cabinet_addNewDay')}</UI.Button>
             </div>
