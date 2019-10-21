@@ -5,7 +5,7 @@ git stash
 git reset --hard
 
 # Move to master branch
-git git checkout
+git checkout
 
 # Pull latest commits from master
 git pull
