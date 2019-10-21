@@ -73,20 +73,20 @@ class SendCoinsConfirmModal extends React.Component {
           <div className="SendCoinsConfirmModal__card__value">{utils.formatDouble(amount)} {currency}</div>
         </div>
 
-        <div className="SendCoinsConfirmModal__input_wrapper">
-          <UI.Input
-            autoFocus
-            type="number"
-            autoComplete="off"
-            value={this.state.gaCode}
-            onChange={this.__handleChange}
-            placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={utils.InputNumberOnKeyPressHandler}
-            error={this.state.errorGaCode}
-          />
-
-          <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
-        </div>
+        <UI.Input
+          autoFocus
+          type="number"
+          cell
+          autoComplete="off"
+          mouseWheel={false}
+          value={this.state.gaCode}
+          onChange={this.__handleChange}
+          placeholder={utils.getLang('site__authModalGAPlaceholder')}
+          indicator={
+            <SVG src={require('../../../asset/google_auth.svg')} />
+          }
+          error={this.state.errorGaCode}
+        />
         <div className="SendCoinsConfirmModal__submit_wrapper">
           <UI.Button currency={currency.toLowerCase()} onClick={this.__handleSubmit} disabled={this.state.pending || this.state.gaCode.length < 6}>
             {utils.getLang('site__authModalSubmit')}
