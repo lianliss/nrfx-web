@@ -11,6 +11,7 @@ git git checkout
 git pull
 
 # Build
+npm i
 npm run build
 
 # Expose redeploy.sh script to webhook daemon
