@@ -12,6 +12,18 @@ const initialState = {
   withdrawalsTotalCount: null,
   chart: {},
   loadingStatus: {},
+  openDepositModal: {
+    walletCurrentOption: {},
+    walletOptions: [],
+    selectDepositType: 'static',
+    planOptions: [],
+    planCurrentOption: {},
+    amountMax: 0,
+    amountMin: 0,
+    currency: 'btc',
+    touched: false,
+    amount: undefined,
+  },
   loaded: null,
 };
 
@@ -76,6 +88,16 @@ export default function reduce(state = initialState, action = {}) {
         withdrawals: {
           ...state.withdrawals,
           isLoadingMore: action.payload
+        }
+      }
+    }
+
+    case actionTypes.INVESTMENTS_OPEN_DEPOSIT_MODAL_PROPERTY_SET: {
+      return {
+        ...state,
+        openDepositModal: {
+          ...state.openDepositModal,
+          ...action.payload
         }
       }
     }

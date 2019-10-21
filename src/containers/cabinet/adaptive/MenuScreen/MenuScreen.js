@@ -6,14 +6,13 @@ import {BaseLink} from 'react-router5';
 //
 import router from '../../../../router';
 import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
-import LanguageModal from '../../../../components/site/LanguageModal/LanguageModal';
 import * as CLASSES from "../../../../constants/classes";
 import * as storeUtils from "../../../../storeUtils";
 import * as PAGES from '../../../../constants/pages';
 import * as utils from '../../../../utils';
 import { getLang, setLang } from '../../../../services/lang';
 import * as auth from '../../../../actions/auth';
-import * as modalGroupActions from '../../../../actions/modalGroup';
+import * as actions from '../../../../actions';
 
 class MenuScreen extends CabinetBaseScreen {
   componentDidMount() {
@@ -79,19 +78,7 @@ class MenuScreen extends CabinetBaseScreen {
   }
 
   __handleChangeLanguage = () => {
-    modalGroupActions.openModalPage(null, {}, {
-      children: ({params}) => <LanguageModal {...params} />,
-      params: {
-        onClose: modalGroupActions.modalGroupClear,
-        isOpen: true,
-        onLanguageClick: this.__handleLangChange,
-        langList: this.props.langList,
-      }
-    })
-  };
-
-  __handleLangChange = value => {
-    setLang(value);
+    actions.openModal('language');
   };
 }
 

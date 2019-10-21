@@ -3,9 +3,11 @@
 import React from 'react';
 // internal
 import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
+import RateDetailsModal from './components/cabinet/RateDetailsModal/RateDetailsModal';
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
 import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
+import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
@@ -29,6 +31,9 @@ export default function Modals(props) {
     case 'open_deposit':
       Component = OpenDepositModal;
       break;
+    case 'rate_details':
+      Component = RateDetailsModal;
+      break;
     case 'withdrawal':
       Component = WithdrawalModal;
       break;
@@ -37,6 +42,9 @@ export default function Modals(props) {
       break;
     case 'send':
       Component = SendCoinsModal;
+      break;
+    case 'send_confirm':
+      Component = SendCoinsConfirmModal;
       break;
     case 'receive':
       Component = ReceiveCoinsModal;
@@ -66,8 +74,16 @@ export default function Modals(props) {
   }
 
   return (
-    <Component {...props.state.default} {...routerParams} {...options} onClose={() => {
-      window.history.back();
-    }} />
+    <Component
+      {...routerParams}
+      {...options}
+      onBack={() => {
+        window.history.back();
+      }}
+      onClose={() => {
+        const route = router.getState();
+        router.navigate(route.name, null )
+      }}
+    />
   );
 }

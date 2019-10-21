@@ -6,6 +6,7 @@ import * as utils from '../../../../utils/index';
 import { getGoogleCode } from '../../../../actions/auth';
 import router from '../../../../router';
 import * as pages from '../../../../constants/pages';
+import SVG from 'react-inlinesvg';
 
 function GoogleAuth({ changeStep, email, password, params }) {
   const [gaCode, changeGaCode] = useState('');
@@ -75,19 +76,19 @@ function GoogleAuth({ changeStep, email, password, params }) {
             </div>
           )}
 
-        <div className="AuthModal__input_wrapper">
-          <UI.Input
-            autoFocus
-            type="number"
-            autoComplete="off"
-            value={gaCode}
-            onKeyPress={utils.InputNumberOnKeyPressHandler}
-            onChange={handleChange}
-            placeholder={utils.getLang('site__authModalGAPlaceholder')}
-          />
-
-          <img src={require('../asset/google_auth.svg')} alt="Google Auth" />
-        </div>
+        <UI.Input
+          autoFocus
+          type="number"
+          cell
+          mouseWheel={false}
+          autoComplete="off"
+          value={gaCode}
+          onChange={handleChange}
+          placeholder={utils.getLang('site__authModalGAPlaceholder')}
+          indicator={
+            <SVG src={require('../../../../asset/google_auth.svg')} />
+          }
+        />
         
         {loginRes.need_ga_setup !== true && (
           <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>{utils.getLang('site__authModalResetKey')}</h4>

@@ -76,7 +76,7 @@ function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
             <UI.Button
               size={adaptive ? 'small' : 'large'}
               disabled={amount === 0}
-              onClick={() => {modalGroupActions.openModalPage('send', {
+              onClick={() => {actions.openModal('send', {
                 preset: currencyName
               })}}
               style={{background: buttonBackgroundColor}}
@@ -85,7 +85,7 @@ function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
             </UI.Button>
             <UI.Button
               size={adaptive ? 'small' : 'large'}
-              onClick={() => {modalGroupActions.openModalPage('receive', {
+              onClick={() => {actions.openModal('receive', {
                 preset: currencyName
               })}}
               style={{background: buttonBackgroundColor}}

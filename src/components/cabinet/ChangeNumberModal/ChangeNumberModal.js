@@ -13,6 +13,8 @@ import * as settingsActions from '../../../actions/cabinet/settings';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
 
+import SVG from 'react-inlinesvg';
+
 class ChangeNumberModal extends React.Component {
   state = {
     gaCode: '',
@@ -56,19 +58,17 @@ class ChangeNumberModal extends React.Component {
             preferredCountries={['ru', 'id']}
           />
         </div>
-        <div className="ChangeNumberModal__input_wrapper">
-          <UI.Input
-            type="number"
-            autoComplete="off"
-            value={this.state.gaCode}
-            onChange={this.__handleChange}
-            placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={utils.InputNumberOnKeyPressHandler}
-            error={this.state.errorGaCode}
-          />
-
-          <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
-        </div>
+        <UI.Input
+          type="number"
+          cell
+          autoComplete="off"
+          value={this.state.gaCode}
+          onChange={this.__handleChange}
+          mouseWheel={false}
+          placeholder={utils.getLang('site__authModalGAPlaceholder')}
+          error={this.state.errorGaCode}
+          indicator={<SVG src={require('../../../asset/google_auth.svg')} />}
+        />
         <div className="ChangeNumberModal__submit_wrapper">
           <UI.Button
             onClick={this.__handleSubmit}

@@ -7,6 +7,7 @@ import apiSchema from '../services/apiSchema';
 import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as utils from '../utils';
+import { getColorByCurrency } from '../utils/currencies';
 import * as emitter from '../services/emitter';
 
 export function loadLang(code) {
@@ -50,6 +51,7 @@ export function getCurrencyInfo(name) {
   name = name.toLowerCase();
 
   let result = state.currencies[name];
+  result.color = getColorByCurrency(name);
   if (!result) {
     result = {
       name: 'Unknown',
