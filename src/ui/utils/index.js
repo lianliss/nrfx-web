@@ -52,3 +52,7 @@ export function parseMd(md){
   });
   return md;
 }
+
+export function isFiat(currency) {
+  return currency.toLowerCase() === 'usdt';
+}

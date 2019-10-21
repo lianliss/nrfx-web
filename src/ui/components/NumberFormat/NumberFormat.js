@@ -2,20 +2,27 @@ import './NumberFormat.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { classNames } from '../../utils';
 
+import * as utils from '../../utils/index';
+
 const FormatNumber = ({ number, fractionDigits, skipTitle, currency, type, percent, indicator, brackets }) => {
+  if (!fractionDigits && utils.isFiat(currency)) {
+    fractionDigits = 2
+  }
 
   let displayNumber = parseFloat(parseFloat(number).toFixed(fractionDigits));
 
   if (currency && !percent ) {
-    if (['$', 'usd', 'usdt'].includes(currency.toLowerCase())) {
-      displayNumber = '$ ' + displayNumber;
-    } else {
-      displayNumber += ' ' + currency.toUpperCase(); // nbsp
-    }
+    // if (['$', 'usd', 'usdt'].includes(currency.toLowerCase())) {
+    //   displayNumber = '$ ' + displayNumber;
+    // } else {
+    //   displayNumber += ' ' + currency.toUpperCase(); // nbsp
+    // }
+
+    displayNumber += ' ' + currency.toUpperCase(); // nbsp
   }
+
 
   if (type === 'auto') {
     type = number > 0 ? 'up' : 'down';

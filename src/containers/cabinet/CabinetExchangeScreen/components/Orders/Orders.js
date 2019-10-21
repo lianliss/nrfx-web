@@ -105,7 +105,6 @@ class Orders extends React.Component {
       });
 
       let side = order.action === 'sell' ? utils.getLang('exchange_sell') : utils.getLang('exchange_buy');
-      const price = utils.formatDouble(order.price, utils.isFiat(order.secondary_coin) ? 2 : void 0);
 
       return !adaptive ? (
         <UI.TableCell className={sideClassName} key={order.id}>
@@ -120,16 +119,16 @@ class Orders extends React.Component {
           </UI.TableColumn>
           <UI.TableColumn>{`${order.primary_coin}/${order.secondary_coin}`.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn>{utils.ucfirst(order.type)}</UI.TableColumn>
-          <UI.TableColumn align="right">{price} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(price * order.amount)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{ Math.floor(order.filled / order.amount  * 100) }%</UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.price} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.amount} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={Math.floor(order.filled / order.amount  * 100)} percent /></UI.TableColumn>
           <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>
-          <UI.TableColumn>{utils.formatDouble(order.price, utils.isFiat(order.secondary_coin) ? 2 : void 0)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn>{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn><UI.NumberFormat number={order.price} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn><UI.NumberFormat number={order.amount} currency={order.secondary_coin} /></UI.TableColumn>
           <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       );
@@ -181,13 +180,8 @@ class Orders extends React.Component {
         sell: order.action === 'sell'
       });
 
-      const fractionDigits = utils.isFiat(order.secondary_coin) ? 2 : void 0;
-      const currency = order.secondary_coin.toUpperCase();
       const side = order.action === 'sell' ? utils.getLang('exchange_sell') : utils.getLang('exchange_buy');
-      const price = utils.formatDouble(order.price, fractionDigits);
-      const total =  utils.formatDouble(price * order.amount,fractionDigits )+  " " + currency;
-      const average = utils.formatDouble(order.price * order.amount) + " " + currency;
-      const filled = Math.floor(order.filled / order.amount  * 100) + "%";
+      const filled = Math.floor(order.filled / order.amount  * 100);
 
       return !adaptive ? (
         <UI.TableCell className={sideClassName} key={order.id}>
@@ -196,18 +190,28 @@ class Orders extends React.Component {
           </UI.TableColumn>
           <UI.TableColumn>{`${order.primary_coin}/${order.secondary_coin}`.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn>{utils.ucfirst(order.type)}</UI.TableColumn>
-          <UI.TableColumn align="right">{price} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn align="right">
+            <UI.NumberFormat number={order.price} currency={order.secondary_coin} />
+          </UI.TableColumn>
           <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">-</UI.TableColumn>
-          <UI.TableColumn align="right">{total}</UI.TableColumn>
+          <UI.TableColumn align="right">
+            <UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} />
+          </UI.TableColumn>
           <UI.TableColumn align="right">{filled}</UI.TableColumn>
           <UI.TableColumn align="right">{utils.ucfirst(order.status)}</UI.TableColumn>
           <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>
-          <UI.TableColumn sub={average}>{price} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn sub={filled}>{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn sub="-">
+            <UI.NumberFormat number={order.price} currency={order.secondary_coin} />
+          </UI.TableColumn>
+          <UI.TableColumn sub={
+            <UI.NumberFormat number={filled} percent />
+          }>
+            <UI.NumberFormat number={order.amount} currency={order.secondary_coin} />
+          </UI.TableColumn>
           <UI.TableColumn sub={utils.dateFormat(order.updated_at, 'HH:mm:ss')} align="right">{utils.ucfirst(order.type)}</UI.TableColumn>
         </UI.TableCell>
       );

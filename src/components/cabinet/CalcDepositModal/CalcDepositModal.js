@@ -11,6 +11,7 @@ import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
 import * as api from '../../../services/api';
 import apiSchema from '../../../services/apiSchema';
+import * as toastsActions from '../../../actions/cabinet/toasts';
 
 const CalcDepositModal = class extends React.Component {
 
@@ -27,6 +28,7 @@ const CalcDepositModal = class extends React.Component {
     result: {},
     daysResult: [],
     maxDay: 0,
+    errorAmountDay: null,
 
     // TODO: Объединить days и daysResult
   };
@@ -75,15 +77,17 @@ const CalcDepositModal = class extends React.Component {
     })}, this.__calculateThrottled)
   };
 
-  __daysIsFiled () {
-    return !!this.state.days.length && this.state.amount && this.state.days.every( d => !!d.dayNumber );
+  __daysIsFilled (allField = false) {
+    return !!this.state.days.length && this.state.amount && this.state.days.every( d => !!d.dayNumber && (!allField || !!d.amount) );
   }
 
   __calculate () {
 
-    if (!this.__daysIsFiled()) {
+    if (!this.__daysIsFilled()) {
       return false;
     }
+
+    this.setState({errorAmountDay: null});
 
     investmentsActions.calculate({
       currency: this.state.currency,
@@ -98,6 +102,11 @@ const CalcDepositModal = class extends React.Component {
         },
         daysResult: result.profits_result
       })
+    }).catch((err) => {
+      toastsActions.error(err.message);
+      if (err.code === 'amount_incorrect') {
+        this.setState({errorAmountDay: err.day});
+      }
     })
   }
 
@@ -189,7 +198,7 @@ const CalcDepositModal = class extends React.Component {
                         indicatorWidth={50}
                         disabled={disabled}
                         value={day.dayNumber}
-                        error={day.dayNumber > this.state.maxDay || (day.amount && !day.dayNumber) || (day.dayNumber && dayId && day.dayNumber <= this.state.days[dayId - 1].dayNumber)}
+                        error={day.dayNumber > this.state.maxDay || (day.amount && !day.dayNumber) || (day.dayNumber && dayId && parseInt(day.dayNumber) <= parseInt(this.state.days[dayId - 1].dayNumber))}
                         indicator={day.dayNumber && utils.getLang('global_day')}/>
                     </div>
                     <div className="CalcDepositModal__column">
@@ -216,14 +225,15 @@ const CalcDepositModal = class extends React.Component {
                         indicatorWidth={40}
                         disabled={!day.dayNumber || disabled}
                         onTextChange={amount => this.__handleChangeDay(dayId, {amount})}
-                        value={day.amount}
+                        value={(day.amount || "").toString().split('.').pop().length <= 8 ?  day.amount : utils.formatDouble(day.amount, 8)}
+                        error={this.state.errorAmountDay === parseInt(day.dayNumber)}
                         indicator={this.state.currency.toUpperCase()}/>
                       <UI.Button
                         currency={this.state.currency}
                         type="outline"
                         disabled={!this.state.daysResult[dayId] || disabled}
                         onClick={() => {
-                          this.__handleChangeDay(dayId, {amount: utils.formatDouble(this.state.daysResult[dayId].profit, 5)})
+                          this.__handleChangeDay(dayId, {amount: this.state.daysResult[dayId].profit})
                         }}
                       >{utils.getLang('cabinet_sendCoinsModal_max')}</UI.Button>
                     </div>
@@ -245,7 +255,7 @@ const CalcDepositModal = class extends React.Component {
           <div className="CalcDepositModal__row CalcDepositModal__result">
             <div className="CalcDepositModal__column">
               <UI.Button
-                disabled={!!this.state.days.length && !this.__daysIsFiled()}
+                disabled={!this.state.amount || (!!this.state.days.length && !this.__daysIsFilled(true))}
                 onClick={this.__handleAddDay}
                 currency={this.state.currency}>{utils.getLang('cabinet_addNewDay')}</UI.Button>
             </div>

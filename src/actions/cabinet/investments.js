@@ -43,9 +43,6 @@ export function calculate({ currency, planId, amount, days }) {
     plan_id: planId,
     amount,
     steps: days.map(d => ([ d.dayNumber, d.amount ])).flat()
-  }).catch(err => {
-    toastsActions.error(err.message);
-    throw err;
   });
 }
 
