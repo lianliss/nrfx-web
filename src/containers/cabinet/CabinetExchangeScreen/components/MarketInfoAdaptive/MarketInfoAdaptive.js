@@ -6,6 +6,11 @@ import * as utils from '../../../../../utils';
 import * as actions from '../../../../../actions/';
 
 export default ({ market, price, percent, diff }) => {
+
+  if (!market) {
+    return null;
+  }
+
   const [primary, secondary] = market.split('/').map(actions.getCurrencyInfo);
 
   const __handleChangeMarket = () => {
