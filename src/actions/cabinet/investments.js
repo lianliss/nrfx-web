@@ -106,6 +106,14 @@ export function withdrawAdd({amount, wallet_id, ga_code}) {
   });
 }
 
+export function getWithdraw(currency) {
+  return api.call(apiSchema.Investment.WithdrawGet, { currency })
+}
+
+export function openDepositModalPropertySet(payload) {
+  store.dispatch({ type: actionTypes.INVESTMENTS_OPEN_DEPOSIT_MODAL_PROPERTY_SET, payload });
+}
+
 export function getPlans(currency, amount, deposit_type) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Investment.PlansGet, {currency, amount, deposit_type}).then((data) => {

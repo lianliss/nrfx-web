@@ -5,12 +5,18 @@ import UI from '../../../ui';
 import * as utils from "../../../utils";
 import SVG from 'react-inlinesvg';
 import * as actions from "../../../actions";
+import ModalState from '../../cabinet/ModalState/ModalState';
 
 export default class RateDetailsModal extends React.Component {
   render() {
-    const { plans, currency } = this.props.params;
+    const { plans, currency } = this.props;
+
+    if (!currency || !plans ) {
+      return <ModalState status="failed" />
+    }
+
     return (
-      <UI.Modal isOpen={true} className="RateDetailsModal__wrapper" onClose={() => {this.props.close()}}>
+      <UI.Modal isOpen={true} className="RateDetailsModal__wrapper" onClose={this.props.onBack}>
         <div className="RateDetailsModal__icon" style={{ backgroundImage: `url(${ actions.getCurrencyInfo(currency).icon})`}} />
         <UI.ModalHeader>{utils.getLang('cabinet_rateDetailsModal_title')}</UI.ModalHeader>
         <div className="RateDetailsModal">
@@ -51,7 +57,7 @@ export default class RateDetailsModal extends React.Component {
             </div>
           </div>
           <div className="RateDetailsModal__button_wrapper">
-            <UI.Button currency={currency} onClick={() => {this.props.close()}}>{utils.getLang('site__goBack')}</UI.Button>
+            <UI.Button currency={currency} onClick={this.props.onBack}>{utils.getLang('site__goBack')}</UI.Button>
           </div>
         </div>
       </UI.Modal>

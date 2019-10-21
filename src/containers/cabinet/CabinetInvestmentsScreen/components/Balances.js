@@ -3,7 +3,6 @@ import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import * as actions from '../../../../actions';
-import * as modalGroupActions from '../../../../actions/modalGroup';
 import * as currencies from '../../../../utils/currencies';
 
 function BalanceItem({ amount, currency }) {
@@ -21,7 +20,7 @@ function BalanceItem({ amount, currency }) {
           key="button"
           type="default"
           size="small"
-          onClick={() => modalGroupActions.openModalPage('open_deposit', { currency })}
+          onClick={() => actions.openModal('open_deposit', { currency })}
         >
           {utils.getLang('cabinet_profileScreen_actionCard_invest')}
         </UI.Button>

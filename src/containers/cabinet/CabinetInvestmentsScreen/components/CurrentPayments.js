@@ -2,7 +2,6 @@ import React from 'react';
 import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
-import * as modalGroupActions from "../../../../actions/modalGroup";
 import * as actions from '../../../../actions';
 import { ReactComponent as WithdrawSvg } from '../../../../asset/24px/withdraw.svg';
 
@@ -54,7 +53,7 @@ export default function CurrentPayments({ payments, adaptive }) {
             {utils.formatDouble(item.available, 6)}
           </UI.TableColumn>
           <UI.TableColumn align="right" style={{ width: 20, position: 'relative' }}>
-            <UI.Button key="button" type="secondary" size="small" style={{width: 15}} onClick={() => modalGroupActions.openModalPage('withdrawal', { currency })}>
+            <UI.Button key="button" type="secondary" size="small" style={{width: 15}} onClick={() => actions.openModal('withdrawal', { currency: item.currency })}>
               <WithdrawSvg />
             </UI.Button>
           </UI.TableColumn>
@@ -76,7 +75,7 @@ export default function CurrentPayments({ payments, adaptive }) {
           {utils.formatDouble(item.available, 6)}
         </UI.TableColumn>
         <UI.TableColumn align="right" style={{ width: 20, position: 'relative' }}>
-          <UI.Button key="button" type="secondary" size="small" style={{width: 15}} onClick={() => modalGroupActions.openModalPage('withdrawal', { currency })}>
+          <UI.Button key="button" type="secondary" size="small" style={{width: 15}} onClick={() => actions.openModal('withdrawal', { currency: item.currency })}>
             <WithdrawSvg />
           </UI.Button>
         </UI.TableColumn>

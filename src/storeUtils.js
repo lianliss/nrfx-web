@@ -92,19 +92,6 @@ export function getWithState(caseName, caseClass) {
         getPartner: profileActions.getPartner
       };
       break;
-    case CLASSES.WITHDRAWAL_COINS_MODAL:
-      mapState2Props = state => {
-        return {
-          ...state.wallets,
-          ...state.investments
-        }
-      };
-      mapDispatch2Props = {
-        toastPush: toastsActions.toastPush,
-        loadWallets: walletsActions.loadWallets,
-        loadInvestments: investmentsActions.loadInvestments,
-      };
-      break;
     case CLASSES.CABINET_START_PFOFILE_SCREEN:
       mapState2Props = state => ({
         ...state.wallets
@@ -187,14 +174,8 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.OPEN_DEPOSIT_MODAL:
       mapState2Props = state => ({
         router: state.router,
-        thisState: state.modalGroup.states.open_deposit
+        thisState: state.investments.openDepositModal
       });
-
-      mapDispatch2Props = {
-        modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal,
-        toastPush: toastsActions.toastPush,
-        setStateByModalPage: modalGroupActions.setStateByModalPage
-      };
       break;
     case CLASSES.CONFIRM_SMS_MODAL:
       mapDispatch2Props = {
