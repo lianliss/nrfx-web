@@ -59,7 +59,7 @@ class ChangeNumberModal extends React.Component {
           />
         </div>
         <UI.Input
-          type="number"
+          type="code"
           cell
           autoComplete="off"
           value={this.state.gaCode}

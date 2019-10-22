@@ -29,7 +29,7 @@ export default class GAConfirmModal extends React.Component {
       <div>
         <UI.Input
           autoFocus={true}
-          type="number"
+          type="code"
           cell
           mouseWheel={false}
           autoComplete="off"

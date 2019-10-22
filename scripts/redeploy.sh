@@ -16,3 +16,4 @@ npm run build
 
 # Expose redeploy.sh script to webhook daemon
 chmod +x ./scripts/redeploy.sh
+chown -R sohrab:sohrab *
