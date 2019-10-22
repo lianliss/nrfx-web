@@ -7,6 +7,7 @@ const initialState = {
   trades: {},
   openOrders: {},
   last_orders: [],
+  fee: 0,
   tickerInfo: {
     diff: 0,
     percent: 0
@@ -33,11 +34,14 @@ export default function reduce(state = initialState, action = {}) {
 
       let balanceInfo = {};
       let [primary, secondary] = action.market.split('/');
-      for (let balance of action.balances) {
-        if (balance.currency === primary) {
-          balanceInfo.primary = balance;
-        } else if (balance.currency === secondary) {
-          balanceInfo.secondary = balance;
+
+      if (action.balances) {
+        for (let balance of action.balances) {
+          if (balance.currency === primary) {
+            balanceInfo.primary = balance;
+          } else if (balance.currency === secondary) {
+            balanceInfo.secondary = balance;
+          }
         }
       }
 
@@ -57,9 +61,11 @@ export default function reduce(state = initialState, action = {}) {
       }
 
       let openOrders = {};
-      for (let i = 0; i < action.open_orders.length; i++) {
-        const order = action.open_orders[i];
-        openOrders[order.id] = order;
+      if (action.open_orders) {
+        for (let i = 0; i < action.open_orders.length; i++) {
+          const order = action.open_orders[i];
+          openOrders[order.id] = order;
+        }
       }
 
       let trades = {};

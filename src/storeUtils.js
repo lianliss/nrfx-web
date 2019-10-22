@@ -246,7 +246,8 @@ export function getWithState(caseName, caseClass) {
       mapState2Props = (state) => ({
         ...state.exchange,
         adaptive: state.default.adaptive,
-        router: state.router
+        router: state.router,
+        user: state.default.profile.user
       });
       mapDispatch2Props = {
         load: exchangeActions.load,

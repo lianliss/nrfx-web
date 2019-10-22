@@ -72,7 +72,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
             interval={this.props.chartTimeFrame}
           />
         </div>
-        <SwitchBlock contents={[
+        { this.props.user && <SwitchBlock contents={[
           {
             title: utils.getLang('exchange_trades'),
             content: <TradeForm
@@ -82,13 +82,14 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
               balance={this.props.balanceInfo}
               ticker={this.props.tickerInfo}
               market={this.props.market}
+              fee={this.props.fee}
             />
           },
           {
             title: utils.getLang('global_balance'),
             content: <Balances adaptive={true} />
           }
-        ]} />
+        ]} /> }
         <SwitchBlock type="buttons" contents={[
           {
             title: utils.getLang('exchange_trades'),
@@ -96,11 +97,13 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
           },
           {
             title: utils.getLang('exchange_openOrders'),
-            content: <Orders type="open" adaptive={true} />
+            content: <Orders type="open" adaptive={true} />,
+            disabled: !this.props.user
           },
           {
             title: utils.getLang('exchange_myTrades'),
-            content: <Orders type="history" adaptive={true} />
+            content: <Orders type="history" adaptive={true} />,
+            disabled: !this.props.user
           }
         ]} />
       </div>
@@ -111,7 +114,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
     return (
       <div className="Exchange__wrapper">
         <div className="Exchange__left_content">
-          <Balances />
+          { this.props.user && <Balances /> }
           <Trades />
         </div>
         <div className="Exchange__right_content">
@@ -128,6 +131,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
               </div>
               {this.props.tickerInfo && <TradeForm
                 ref="trade_form"
+                fee={this.props.fee}
                 balance={this.props.balanceInfo}
                 ticker={this.props.tickerInfo}
                 market={this.props.market}
@@ -137,7 +141,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
               {this.__renderOrderBook()}
             </div>
           </div>
-          <Orders />
+          { this.props.user && <Orders /> }
         </div>
       </div>
     )

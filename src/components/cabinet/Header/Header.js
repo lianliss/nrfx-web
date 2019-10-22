@@ -15,6 +15,8 @@ import * as utils from '../../../utils';
 import * as CLASSES from "../../../constants/classes";
 import UI from "../../../ui/index";
 import * as auth from '../../../actions/auth';
+import AuthModal from '../../site/AuthModal/AuthModal';
+import * as steps from '../../site/AuthModal/fixtures';
 
 function getDropDownLinks() {
   return [
@@ -156,6 +158,14 @@ class Header extends React.Component {
                 />
               </div>
             </div>}
+            { !isLogged && <div className="CabinetHeader__controls">
+              <AuthModal className="Banner__modal">
+                <UI.Button size="small" type="outline">Войти</UI.Button>
+              </AuthModal>
+              <AuthModal type={steps.REGISTRATION} className="Banner__modal">
+                <UI.Button size="small">Регистрация</UI.Button>
+              </AuthModal>
+            </div> }
           </div>
           {internalNotification && <UI.InternalNotification
             acceptText={internalNotification.button_text}

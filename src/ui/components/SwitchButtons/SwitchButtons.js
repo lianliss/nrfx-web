@@ -16,6 +16,7 @@ const SwitchButtons = props => {
           title={tab.icon && tab.label}
           key="all"
           size="ultra_small"
+          disabled={tab.disabled}
           rounded
           type={tab.value !== props.selected ? "secondary" : null}
           onClick={() => props.onChange(tab.value)}
@@ -23,7 +24,7 @@ const SwitchButtons = props => {
       ))}
     </div>
   )
-}
+};
 
 SwitchButtons.propTypes = {
   buttons: PropTypes.arrayOf(PropTypes.shape({

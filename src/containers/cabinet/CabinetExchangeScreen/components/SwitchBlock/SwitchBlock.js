@@ -18,7 +18,9 @@ export default props => {
         onChange={changeTab}
         tabs={
           props.contents.map((item, value) => ({
-            label: item.title, value
+            label: item.title,
+            disabled: item.disabled,
+            value,
           }))
         }
       />

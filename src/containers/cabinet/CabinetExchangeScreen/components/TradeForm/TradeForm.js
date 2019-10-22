@@ -32,7 +32,7 @@ export default class TradeForm extends React.Component {
   }
 
   render() {
-    const { balance, market } = this.props;
+    const { balance, market, fee } = this.props;
     const { state: { pending } } = this;
 
     if (!balance.primary) {
@@ -91,7 +91,7 @@ export default class TradeForm extends React.Component {
                 onTextChange={this.__amountSecondaryDidChange}
                 value={this.state.amountSecondary === null || isMarket ? '' : this.state.amountSecondary}
               />
-              <p>{utils.getLang('exchange_fee')}: 0.02%</p>
+              <p>{utils.getLang('exchange_fee')}: <UI.NumberFormat number={fee} percent /></p>
             </div>
             <div className="TradeForm__adaptive_form__row TradeForm__amount_selector">
               {this.__renderAmountsSelector()}
@@ -161,7 +161,7 @@ export default class TradeForm extends React.Component {
                 onTextChange={this.__amountSecondaryDidChange}
                 value={this.state.amountSecondary === null || isMarket ? '' : this.state.amountSecondary}
               />
-              <p className="Form__helper__text">{utils.getLang('exchange_fee')}: 0.02%</p>
+              <p className="Form__helper__text">{utils.getLang('exchange_fee')}: <UI.NumberFormat number={fee} percent /></p>
             </div>
           </div>
           <div className="TradeForm__form__controls">
@@ -275,7 +275,7 @@ export default class TradeForm extends React.Component {
       amount: percent,
       amountSecondary:  percent * this.state.price || null
     });
-  }
+  };
 
   set(amount, price) {
     amount = utils.formatDouble(amount);
