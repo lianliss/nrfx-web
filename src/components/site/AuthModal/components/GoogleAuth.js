@@ -78,7 +78,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
 
         <UI.Input
           autoFocus
-          type="number"
+          type="code"
           cell
           mouseWheel={false}
           autoComplete="off"
