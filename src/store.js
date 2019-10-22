@@ -20,7 +20,6 @@ import testReducer from './reducers/test';
 import exchangeReducer from './reducers/exchange';
 
 const middlewares = [];
-
 // const { logger } = require(`redux-logger`);
 // middlewares.push(logger);
 
