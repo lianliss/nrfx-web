@@ -93,7 +93,9 @@ export default function Routes(props) {
       WrapperComponent = SiteWrapper;
       break;
     case pages.UIKIT:
-      Component = UIKitScreen;
+      if (process.env.NODE_ENV === `development`) {
+        Component = UIKitScreen;
+      }
       break;
     // Cabinet
     case pages.CABINET_WALLET:
