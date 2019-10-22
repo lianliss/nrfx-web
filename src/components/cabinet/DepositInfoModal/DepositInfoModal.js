@@ -19,7 +19,7 @@ export default class DepositInfoModal extends React.Component {
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
     return (
-      <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={() => {this.props.close()}}>
+      <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_depositInfoModal_deposit')} {utils.formatDouble(deposit.plan_percent, 2)}% {deposit.description}
         </UI.ModalHeader>
