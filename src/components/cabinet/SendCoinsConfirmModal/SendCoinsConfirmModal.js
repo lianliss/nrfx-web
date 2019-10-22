@@ -75,7 +75,7 @@ class SendCoinsConfirmModal extends React.Component {
 
         <UI.Input
           autoFocus
-          type="number"
+          type="code"
           cell
           autoComplete="off"
           mouseWheel={false}

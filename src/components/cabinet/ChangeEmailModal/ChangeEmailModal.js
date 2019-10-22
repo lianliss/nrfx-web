@@ -42,7 +42,7 @@ class ChangeEmailModal extends React.Component {
             error={this.state.errorNewEmail}
           />
           <UI.Input
-            type="number"
+            type="code"
             cell
             autoComplete="off"
             mouseWheel={false}

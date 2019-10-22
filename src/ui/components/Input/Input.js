@@ -98,6 +98,12 @@ class Input extends React.Component {
       return this.props.onKeyPress(e);
     }
 
+    if (this.props.type === 'code') {
+      if(isNaN(e.key)) {
+        e.preventDefault();
+      }
+    }
+
     if (this.props.type === 'number') {
       if (this.props.cell) {
         if (isNaN(e.key)) {
@@ -147,6 +153,7 @@ Input.propTypes = {
   classNameWrapper: PropTypes.string,
   disabled: PropTypes.bool,
   size: PropTypes.oneOf(['small']),
+  type: PropTypes.oneOf(['text', 'number', 'password', 'code']),
   positive: PropTypes.bool,
   cell: PropTypes.bool,
 };
