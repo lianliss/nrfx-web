@@ -23,11 +23,12 @@ class SendCoinsConfirmModal extends React.Component {
   };
 
   render() {
-    this.currency = this.props.params.currency;
+
+    this.currency = this.props.currency;
     this.currencyInfo = actions.getCurrencyInfo(this.currency);
 
     return (
-      <UI.Modal className="SendCoinsConfirmModal__wrapper" isOpen={true} onClose={() => {this.props.close()}} width={464}>
+      <UI.Modal className="SendCoinsConfirmModal__wrapper" isOpen={true} onClose={this.props.onClose} width={464}>
         <UI.ModalHeader>
           {this.__getTitle()}
         </UI.ModalHeader>
@@ -41,10 +42,9 @@ class SendCoinsConfirmModal extends React.Component {
   }
 
   __renderContent() {
-    const {currencyInfo, currency, address, amount}  = Object.assign({...this.props.params}, {
-      currencyInfo: this.currencyInfo,
-      currency: this.currency.toUpperCase(),
-    });
+    const { address, amount } = this.props;
+    const currencyInfo = this.currencyInfo;
+    const currency = this.currency.toUpperCase();
 
     const currencyGradient = currencies.getGradientByCurrency(currency);
 
@@ -73,20 +73,20 @@ class SendCoinsConfirmModal extends React.Component {
           <div className="SendCoinsConfirmModal__card__value">{utils.formatDouble(amount)} {currency}</div>
         </div>
 
-        <div className="SendCoinsConfirmModal__input_wrapper">
-          <UI.Input
-            autoFocus
-            type="number"
-            autoComplete="off"
-            value={this.state.gaCode}
-            onChange={this.__handleChange}
-            placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={utils.InputNumberOnKeyPressHandler}
-            error={this.state.errorGaCode}
-          />
-
-          <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
-        </div>
+        <UI.Input
+          autoFocus
+          type="number"
+          cell
+          autoComplete="off"
+          mouseWheel={false}
+          value={this.state.gaCode}
+          onChange={this.__handleChange}
+          placeholder={utils.getLang('site__authModalGAPlaceholder')}
+          indicator={
+            <SVG src={require('../../../asset/google_auth.svg')} />
+          }
+          error={this.state.errorGaCode}
+        />
         <div className="SendCoinsConfirmModal__submit_wrapper">
           <UI.Button currency={currency.toLowerCase()} onClick={this.__handleSubmit} disabled={this.state.pending || this.state.gaCode.length < 6}>
             {utils.getLang('site__authModalSubmit')}
@@ -108,7 +108,7 @@ class SendCoinsConfirmModal extends React.Component {
   };
 
   __buildParams() {
-    const {address, wallet_id, amount} = this.props.params;
+    const {address, wallet_id, amount} = this.props;
     return {address, wallet_id, amount, ga_code: this.state.gaCode};
   }
 
@@ -116,7 +116,7 @@ class SendCoinsConfirmModal extends React.Component {
     this.setState({pending: true});
     walletsActions.sendCoins(this.__buildParams()).then((info) => {
       toast.success(utils.getLang('cabinet_sendCoinsModal_success'));
-      modalGroupActions.modalGroupClear();
+      this.props.onClose();
     }).catch((info) => {
       switch (info.code) {
         case "ga_error":

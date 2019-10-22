@@ -3,59 +3,52 @@ import './WithdrawalModal.less';
 import React from 'react';
 import UI from '../../../ui';
 
-import * as actions from '../../../actions';
-import * as CLASSES from "../../../constants/classes";
-import * as storeUtils from "../../../storeUtils";
-import router from "../../../router";
-import * as utils from "../../../utils";
 import * as investmentsActions from "../../../actions/cabinet/investments";
+import * as utils from "../../../utils";
+import ModalState from '../ModalState/ModalState';
+import * as actions from '../../../actions'
+import * as toasts from '../../../actions/cabinet/toasts'
 
-class WithdrawalModal extends React.Component {
+export default class WithdrawalModal extends React.Component {
   state = {
-    selectDepositType: 'static',
+    loadingStatus: 'loading',
     amount: '',
     gaCode: '',
     errorGaCode: false,
-    success: false
-  };
-
-  getPayment = () => {
-    return this.props.payments.filter(item => item.currency.toUpperCase() === this.props.currency)[0];
-  };
-
-  load = () => {
-    switch (router.getState().params.section) {
-      default:
-        this.props.loadWallets();
-        !this.props.loaded && this.props.loadInvestments();
-        break;
-    }
+    success: false,
+    available: 0,
+    availableWithoutDrop: 0,
+    currency: null,
+    walletId: null
   };
 
   componentDidMount() {
-    this.load();
+    this.__load();
   }
 
+  __load = () => {
+    investmentsActions.getWithdraw(this.props.currency).then(withdraw => {
+      this.setState({
+        available: withdraw.available,
+        availableWithoutDrop: withdraw.available_without_drop,
+        currency: this.props.currency,
+        walletId: withdraw.wallet.id,
+        loadingStatus: ''
+      });
+    }).catch(err => {
+      this.setState({loadingStatus: 'failed'});
+    })
+  };
+
   render() {
-    if (this.props.wallets.length < 1 || this.props.payments.length < 1) {
-      return utils.getLang('cabinet_modal_loadingText');
+    if (this.state.loadingStatus) {
+      return <ModalState status={this.state.loadingStatus} onRetry={this.__load} />
     }
 
-    if (!this.props.hasOwnProperty('currency')) {
-      return utils.getLang('cabinet_modal_loadingErrorText');
-    }
-
-    const payment = this.getPayment();
-    const currency = this.props.currency.toUpperCase();
-    const currencyInfo = actions.getCurrencyInfo(currency);
-    let wallet = this.props.wallets.filter(w => w.currency === currency.toLowerCase());
-    if (!(wallet.length > 0)) {
-      return 'Error';
-    }
-    this.wallet = wallet[0];
+    const currencyInfo = actions.getCurrencyInfo(this.state.currency);
 
     return (
-      <UI.Modal className="WithdrawalModal__wrapper" noSpacing isOpen={true} onClose={() => (this.props.close())}>
+      <UI.Modal className="WithdrawalModal__wrapper" noSpacing isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
           {utils.getLang('withdraw_Income')}
         </UI.ModalHeader>
@@ -63,7 +56,9 @@ class WithdrawalModal extends React.Component {
           <div className="WithdrawalModal">
             <div className="WithdrawalModal__info_row">
               <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_beAware')}</div>
-              <div className="WithdrawalModal__info_row__caption">{utils.getLang('cabinet_withdrawalModal_eachRequestText')}</div>
+              <div className="WithdrawalModal__info_row__caption">
+                {utils.getLang('cabinet_withoutCaption')} {utils.formatDouble(this.state.availableWithoutDrop)} {this.state.currency.toUpperCase()} {utils.getLang('cabinet_withoutCaption2')}
+              </div>
             </div>
             <div className="WithdrawalModal__info_row">
               <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_attention')}</div>
@@ -74,23 +69,31 @@ class WithdrawalModal extends React.Component {
                 <UI.Input
                   autoFocus
                   placeholder="0"
-                  indicator={this.props.currency.toUpperCase()}
+                  indicator={this.state.currency.toUpperCase()}
+                  indicatorWidth={32}
                   onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.state.amount)}
                   onTextChange={amount => {
                     this.setState({amount});
                   }}
                   value={this.state.amount}
-                  error={this.state.amount > payment.available}
+                  error={this.state.amount > this.state.available}
                 />
-                <p className="Form__helper__text">{utils.getLang("global_available")}: {utils.formatDouble(payment.available)} {currency}</p>
+                <p className="Form__helper__text">
+                  {utils.getLang("global_available")}: {utils.formatDouble(this.state.available)} {this.state.currency.toUpperCase()}
+                </p>
               </div>
               <UI.Button
-                currency={currencyInfo.abbr}
+                currency={this.state.currency}
                 type="outline"
                 smallPadding
-                onClick={this.__maxDidPress}
+                onClick={() => this.__maxDidPress(this.state.available) }
               >{utils.getLang('cabinet_withdrawalModal_max')}</UI.Button>
             </div>
+            {this.state.amount > this.state.availableWithoutDrop &&
+              <p className="WithdrawalModal__without_drop_info" style={{color: currencyInfo.color}}>
+                {utils.getLang('cabinet_withoutDropInfo')} {this.state.currency.toUpperCase()} {utils.getLang('cabinet_withoutDropInfo2')}
+              </p>
+            }
             <div className="WithdrawalModal__row">
               <UI.Input
                 type="number"
@@ -106,7 +109,7 @@ class WithdrawalModal extends React.Component {
             </div>
             <div className="WithdrawalModal__button_wrap">
               <UI.Button
-                currency={currencyInfo.abbr}
+                currency={this.state.currency}
                 style={{ width: '208px' }}
                 onClick={this.__handleSubmit}
                 disabled={!this.__formIsValid()}
@@ -124,7 +127,7 @@ class WithdrawalModal extends React.Component {
             />
             <h4>{utils.getLang('cabinet_withdrawalModal_successTitle')}</h4>
             <p>{utils.getLang('cabinet_withdrawalModal_successText')}</p>
-            <UI.Button style={{ width: '208px' }} onClick={this.props.close}>
+            <UI.Button currency={this.state.currency} style={{ width: '208px' }} onClick={this.props.close}>
               {utils.getLang('global_ok')}
             </UI.Button>
           </div>
@@ -144,9 +147,8 @@ class WithdrawalModal extends React.Component {
     return this.state.gaCode.length === 6 && this.state.amount > 0;
   };
 
-  __maxDidPress = () => {
-    const payment = this.getPayment();
-    this.setState({ amount: payment.available });
+  __maxDidPress = (max) => {
+    this.setState({ amount: max });
   };
 
   __handleGAChange = (e) => {
@@ -163,7 +165,7 @@ class WithdrawalModal extends React.Component {
 
   __buildParams() {
     return {
-      wallet_id: this.wallet.id,
+      wallet_id: this.state.walletId,
       amount: this.state.amount,
       ga_code: this.state.gaCode
     };
@@ -185,21 +187,8 @@ class WithdrawalModal extends React.Component {
     if (!this.__formIsValid()) return;
     investmentsActions.withdrawAdd(this.__buildParams()).then((info) => {
       this.setState({ success: true });
-    }).catch((info) => {
-      switch (info.code) {
-        case "ga_auth_code_incorrect": {
-          this.props.toastPush(utils.getLang("incorrect_code"), "error");
-          return this.__inputError(this, 'errorGaCode');
-        }
-        default:
-          this.props.toastPush(info.message, "error");
-          break;
-      }
+    }).catch((err) => {
+      toasts.error(err.message);
     });
   };
 }
-
-export default storeUtils.getWithState(
-  CLASSES.WITHDRAWAL_COINS_MODAL,
-  WithdrawalModal
-);

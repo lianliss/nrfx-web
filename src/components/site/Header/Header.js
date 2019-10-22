@@ -14,10 +14,9 @@ import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import AuthModal from '../AuthModal/AuthModal';
 import LanguageModal from '../LanguageModal/LanguageModal';
+import * as actions from '../../../actions/index';
 import StaticContentModal from '../StaticContentModal/StaticContentModal';
 import * as auth from '../../../actions/auth';
-
-const currentLang = getLang();
 
 
 function Header({ showLightLogo, langList, routerState, profile }) {
@@ -96,26 +95,13 @@ function Header({ showLightLogo, langList, routerState, profile }) {
   ];
 
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
-  const [ curLang, changeLang ] = useState(currentLang);
-  const [ isModalOpen, toggleModalOpen ] = useState(false);
+  const currentLang = getLang();;
+  const currentLangTitle = langList.find(l => l.value === currentLang).title;
 
-  const currentLangObj = langList.find(l => l.value === curLang);
-  const currentLangTitle = currentLangObj ? currentLangObj.title : 'English';
   const isLogin = !!profile.role;
-
-  const handleOpen = () => {
-    document.body.classList.add('modal-open');
-    toggleModalOpen(true);
-  };
-
-  const handleClose = () => {
-    document.body.classList.remove('modal-open');
-    toggleModalOpen(false);
-  };
 
   const handleLangChange = (value) => {
     setLang(value);
-    changeLang(value);
   };
 
   const handleNavigate = (route) => {
@@ -180,7 +166,9 @@ function Header({ showLightLogo, langList, routerState, profile }) {
               subItems={langList.slice(0, 3)}
               onChange={handleLangChange}
               lastItemText={utils.getLang('site__headerMore')}
-              onLastItemClick={handleOpen}
+              onLastItemClick={() => {
+                actions.openModal('language');
+              }}
             />
 
           </div>
@@ -232,7 +220,9 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                   subItems={langList.slice(0, 3)}
                   onChange={handleLangChange}
                   lastItemText={utils.getLang('site__headerMore')}
-                  onLastItemClick={handleOpen}
+                  onLastItemClick={() => {
+                    actions.openModal('language');
+                  }}
                 />
               </div>
             </div>
@@ -246,8 +236,6 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           </div>
         ) : null}
 
-
-      <LanguageModal isOpen={isModalOpen} onClose={handleClose} onLanguageClick={handleLangChange} langList={langList} />
     </div>
   )
 }

@@ -55,6 +55,7 @@ export function getCurrencyInfo(name) {
   name = name.toLowerCase();
 
   let result = state.currencies[name];
+  result.color = getColorByCurrency(name);
   if (!result) {
     result = {
       name: 'Unknown',

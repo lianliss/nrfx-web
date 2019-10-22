@@ -1,30 +1,16 @@
 import "./Footer.less";
 import React from "react";
-import * as emitter from '../../../services/emitter';
 import { classNames } from '../../../utils/index';
-import * as modalGroupActions from '../../../actions/modalGroup';
-import LanguageModal from '../../site/LanguageModal/LanguageModal';
+import * as actions from '../../../actions';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
 import { getLang, setLang } from '../../../services/lang';
 import * as utils from '../../../utils'
 
 const Footer = (props) => {
-  const handleLangChange = (value) => {
-    setLang(value, e => emitter.emit('headerUpdate') && Footer(props));
-  };
-
-  const handleChangeLanguage = () => {
-    modalGroupActions.openModalPage(null, {
-    }, {
-      children: ({ params }) => <LanguageModal {...params} />,
-      params: {
-        onClose: modalGroupActions.modalGroupClear,
-        isOpen: true,
-        onLanguageClick: handleLangChange,
-        langList: props.langList,
-      }
-    })
+  const handleChangeLanguage = e => {
+    e.preventDefault();
+    actions.openModal('language');
   };
 
   const currentLang = getLang();

@@ -6,18 +6,6 @@ const initialState = {
   statesInc: 0,
   modalGroupRoutes: {...modalGroupRoutes.MODALGROUP_ROUTES},
   states: {
-    open_deposit: {
-      walletCurrentOption: {},
-      walletOptions: [],
-      selectDepositType: 'static',
-      planOptions: [],
-      planCurrentOption: {},
-      amountMax: 0,
-      amountMin: 0,
-      currency: 'btc',
-      touched: false,
-      amount: undefined,
-    },
     send: {
       selectedWallet: false,
       currency: 'btc',

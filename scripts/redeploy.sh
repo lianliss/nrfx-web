@@ -5,12 +5,13 @@ git stash
 git reset --hard
 
 # Move to master branch
-git git checkout
+git checkout
 
 # Pull latest commits from master
 git pull
 
 # Build
+npm i
 npm run build
 
 # Expose redeploy.sh script to webhook daemon

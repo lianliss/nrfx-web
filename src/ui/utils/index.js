@@ -24,6 +24,19 @@ export function classNames() {
   return result.join(' ');
 }
 
+export function __doubleInputOnKeyPressHandler(e, value = '') {
+  switch (e.key) {
+    default:
+      if (isNaN(parseInt(e.key)) || value.length === 1 && value[0] === '0') {
+        e.preventDefault();
+      }
+      break;
+    case '.': {
+      return value.length === 0 ? e.preventDefault() : value.indexOf(e.key) > -1 && e.preventDefault();
+    }
+  }
+}
+
 
 export function parseMd(md){
 

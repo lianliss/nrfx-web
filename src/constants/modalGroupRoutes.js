@@ -5,7 +5,6 @@ import WalletTransactionModal from '../components/cabinet/WalletTransactionModal
 import NewWalletModal from '../components/cabinet/NewWalletModal/NewWalletModal';
 
 // investments
-import OpenDepositModal from '../components/cabinet/OpenDepositModal/OpenDepositModal';
 import DepositInfoModal from '../components/cabinet/DepositInfoModal/DepositInfoModal';
 import WithdrawalModal from '../components/cabinet/WithdrawalModal/WithdrawalModal';
 
@@ -26,7 +25,6 @@ const Modals = {
   WalletTransactionModal: {children: WalletTransactionModal},
   NewWalletModal: {children: NewWalletModal},
   DepositInfoModal: {children: DepositInfoModal},
-  OpenDepositModal: {children: OpenDepositModal},
   GAConfirmModal: {children: GAConfirmModal},
   ChangeEmailModal: {children: ChangeEmailModal},
   ChangeNumberModal: {children: ChangeNumberModal},
@@ -52,8 +50,6 @@ export const MODALGROUP_ROUTES = {
     new_wallet: Modals.NewWalletModal,
   },
   investments: {
-    deposit_info: Modals.DepositInfoModal,
-    open_deposit: Modals.OpenDepositModal,
     withdrawal: Modals.WithdrawalModal
   },
   settings: {

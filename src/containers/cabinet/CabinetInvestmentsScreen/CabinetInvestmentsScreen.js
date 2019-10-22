@@ -21,7 +21,7 @@ import {ReactComponent as SendSvg} from '../../../asset/24px/send.svg';
 import {ReactComponent as CalcSvg} from '../../../asset/24px/calc.svg';
 import * as PAGES from '../../../constants/pages';
 import * as modalGroupActions from '../../../actions/modalGroup';
-import * as actions from '../../../actions/';
+import * as actions from '../../../actions';
 import * as storeUtils from '../../../storeUtils';
 import * as utils from '../../../utils';
 import * as CLASSES from '../../../constants/classes';
@@ -69,7 +69,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           sidebarOptions={this.props.adaptive ? [
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/plus-circle.svg')}
-              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+              onClick={() => {actions.openModal('open_deposit')}}
             >{utils.getLang('cabinet_investmentsScreen_new')}</UI.FloatingButtonItem>,
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/invest.svg')}
@@ -85,7 +85,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             >{utils.getLang('cabinet_calculate')}</UI.FloatingButtonItem>,
           ] : [
             <ProfileSidebarItem
-              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+              onClick={() => {actions.openModal('open_deposit', {})}}
               icon={<PlusCircleSvg />}
               label={utils.getLang('cabinet_investmentsScreen_new')}
             />,

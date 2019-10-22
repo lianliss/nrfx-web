@@ -17,7 +17,7 @@ export default function LoadingStatus({ status, onRetry, inline }) {
         <div className="LoadingStatus__failed">
           <div className="LoadingStatus__failed__icon" />
           <div className="LoadingStatus__failed__message">{utils.getLang('cabinet_loadingStatus_unknownError')}</div>
-          <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_tryAgain')}</UI.Button>
+          {!!onRetry && <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_tryAgain')}</UI.Button> }
         </div>
       );
       break;
@@ -26,7 +26,7 @@ export default function LoadingStatus({ status, onRetry, inline }) {
         <div className="LoadingStatus__failed">
           <div className="LoadingStatus__failed__icon_connection" />
           <div className="LoadingStatus__failed__message">{utils.getLang('cabinet_loadingStatus_connectionError')}</div>
-          <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_tryAgain')}</UI.Button>
+          {!!onRetry && <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_tryAgain')}</UI.Button> }
         </div>
       );
       break;
@@ -35,7 +35,7 @@ export default function LoadingStatus({ status, onRetry, inline }) {
         <div className="LoadingStatus__failed">
           <div className="LoadingStatus__failed__icon" />
           <div className="LoadingStatus__failed__message">{utils.getLang('cabinet_loadingStatus_isSeemsText')}</div>
-          <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_refresh')}</UI.Button>
+          {onRetry && <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_refresh')}</UI.Button> }
         </div>
       );
       break;

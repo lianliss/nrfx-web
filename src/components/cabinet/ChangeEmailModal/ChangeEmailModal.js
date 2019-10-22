@@ -43,11 +43,12 @@ class ChangeEmailModal extends React.Component {
           />
           <UI.Input
             type="number"
+            cell
             autoComplete="off"
+            mouseWheel={false}
             value={this.state.gaCode}
             onChange={e => this.__handleChange(e, 'GA')}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={utils.InputNumberOnKeyPressHandler}
             error={this.state.errorGaCode}
             indicator={
               <SVG src={require('../../../asset/google_auth.svg')} />

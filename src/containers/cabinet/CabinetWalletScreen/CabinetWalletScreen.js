@@ -19,6 +19,7 @@ import {ReactComponent as HistorySvg} from '../../../asset/24px/history.svg';
 import {ReactComponent as SendSvg} from '../../../asset/24px/send.svg';
 import {ReactComponent as ReceiveSvg} from '../../../asset/24px/receive.svg';
 import * as modalGroupActions from '../../../actions/modalGroup';
+import * as actions from '../../../actions';
 import * as PAGES from '../../../constants/pages';
 import * as walletsActions from '../../../actions/cabinet/wallets';
 import * as storeUtils from '../../../storeUtils';
@@ -57,14 +58,14 @@ class CabinetWalletScreen extends CabinetBaseScreen {
           sidebarOptions={this.props.adaptive ? [
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/receive.svg')}
-              onClick={() => {modalGroupActions.openModalPage('receive')}}
+              onClick={() => {actions.openModal('receive')}}
             >
               {utils.getLang('cabinet_walletScreen_receive')}
             </UI.FloatingButtonItem>,
 
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/send.svg')}
-              onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
+              onClick={() => {actions.openModal('send', {preset:'Bitcoin'})}}
             >
               {utils.getLang('site__contactSend')}
             </UI.FloatingButtonItem>,
@@ -93,12 +94,12 @@ class CabinetWalletScreen extends CabinetBaseScreen {
               label={utils.getLang("cabinet_walletBox_create")}
             />,
             <ProfileSidebarItem
-              onClick={() => {modalGroupActions.openModalPage('receive')}}
+              onClick={() => {actions.openModal('receive')}}
               icon={<ReceiveSvg />}
               label={utils.getLang('cabinet_walletScreen_receive')}
             />,
             <ProfileSidebarItem
-              onClick={() => {modalGroupActions.openModalPage('send', {preset:'Bitcoin'})}}
+              onClick={() => {actions.openModal('send', {preset:'Bitcoin'})}}
               icon={<SendSvg />}
               label={utils.getLang('site__contactSend')}
             />,
