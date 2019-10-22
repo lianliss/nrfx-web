@@ -67,5 +67,5 @@ export function parseMd(md){
 }
 
 export function isFiat(currency) {
-  return currency.toLowerCase() === 'usdt';
+  return ['usdt', 'usd'].includes(currency.toLowerCase());
 }
