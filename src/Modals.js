@@ -17,6 +17,7 @@ import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBa
 import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
 import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
+import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
 import router from './router';
 
 export default function Modals(props) {
@@ -37,6 +38,9 @@ export default function Modals(props) {
       break;
     case 'deposit_info':
       Component = DepositInfoModal;
+      break;
+    case 'calc_deposit':
+      Component = CalcDepositModal;
       break;
     case 'withdrawal':
       Component = WithdrawalModal;
