@@ -23,7 +23,8 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.COMPONENT_CABINET_WRAPPER:
       mapState2Props = state => ({
         ...state.default,
-        router: state.router
+        router: state.router,
+        user: state.default.profile.user
       });
       mapDispatch2Props = {
         setAdaptive: actions.setAdaptive

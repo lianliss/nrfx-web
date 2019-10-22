@@ -3,9 +3,11 @@
 import React from 'react';
 // internal
 import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
+import RateDetailsModal from './components/cabinet/RateDetailsModal/RateDetailsModal';
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
 import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
+import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
@@ -28,9 +30,6 @@ export default function Modals(props) {
   switch (modal) {
     case 'open_deposit':
       Component = OpenDepositModal;
-      break;
-    case 'calc_deposit':
-      Component = CalcDepositModal;
       break;
     case 'rate_details':
       Component = RateDetailsModal;

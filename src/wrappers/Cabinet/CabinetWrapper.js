@@ -52,7 +52,7 @@ class CabinetWrapper extends Component {
 
     const content = utils.switchMatch(route.name, contentRules);
 
-    const {children, className, adaptive} = this.props;
+    const {children, className, adaptive, user} = this.props;
     const mainClassName = classNames({
       CabinetWrapper: true,
       [className]: !!className
@@ -67,7 +67,7 @@ class CabinetWrapper extends Component {
         }}
       /> : <Header />}
       <div className="CabinetWrapper__content">{children}</div>
-      {adaptive && <TabBar />}
+      {adaptive && user && <TabBar />}
     </div>
   }
 

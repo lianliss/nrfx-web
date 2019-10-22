@@ -160,10 +160,10 @@ class Header extends React.Component {
             </div>}
             { !isLogged && <div className="CabinetHeader__controls">
               <AuthModal className="Banner__modal">
-                <UI.Button size="small" type="outline">Войти</UI.Button>
+                <UI.Button className="login" size="small" type="outline">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
               </AuthModal>
               <AuthModal type={steps.REGISTRATION} className="Banner__modal">
-                <UI.Button size="small">Регистрация</UI.Button>
+                <UI.Button size="small" type="outline">{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
               </AuthModal>
             </div> }
           </div>
