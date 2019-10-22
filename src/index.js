@@ -38,3 +38,5 @@ router.start((err, state) => {
 });
 
 serviceWorker.register();
+
+console.log('test'); // test
