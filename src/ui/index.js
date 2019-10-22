@@ -19,6 +19,7 @@ import SwitchTabs from './components/SwitchTabs/SwitchTabs';
 import SwitchButtons from './components/SwitchButtons/SwitchButtons';
 import RadioGroup from './components/Radio/RadioGroup';
 import Toast from './components/Toast/Toast';
+import Range from './components/Range/Range';
 import MarkDown from './components/MarkDown/MarkDown';
 import InternalNotification from './components/InternalNotification/InternalNotification';
 import NumberFormat from './components/NumberFormat/NumberFormat';
@@ -47,6 +48,7 @@ export default {
   Notification,
   NotificationSeparator,
   Toast,
+  Range,
   MarkDown,
   FloatingButton,
   FloatingButtonItem,

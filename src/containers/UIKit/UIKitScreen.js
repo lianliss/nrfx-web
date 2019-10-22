@@ -161,8 +161,13 @@ export default class UIKitScreen extends BaseScreen {
             />
           </Line>
         </Section>
+        <Section title="Range">
+          <Line style={{width: 300}}>
+            <UI.Range formatLabel={value => value + ' Hours'} min={8} max={12} value={10} onChange={console.log} placeholder="Placeholder" />
+          </Line>
+        </Section>
         <Section title="Search">
-          <Line style={{width: 500}}>
+          <Line style={{width: 500}} >
             <UI.Search placeholder="Search..." />
           </Line>
           <Line style={{width: 500}}>
