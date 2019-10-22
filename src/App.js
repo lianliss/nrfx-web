@@ -31,7 +31,7 @@ class App extends React.Component {
   componentDidCatch(error, info) {
     this.setState({ error: {
       name: error.name,
-      message: error.message
+      message: error.message + " " + error.stack.toString(),
     }});
   }
 
