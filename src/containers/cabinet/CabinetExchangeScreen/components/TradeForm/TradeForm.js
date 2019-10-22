@@ -7,6 +7,8 @@ import * as utils from '../../../../../utils';
 import * as exchange from '../../../../../actions/cabinet/exchange';
 import OrderBook from '../OrderBook/OrderBook';
 import Block from '../Block/Block';
+import AuthModal from '../../../../../components/site/AuthModal/AuthModal';
+import * as steps from '../../../../../components/site/AuthModal/fixtures';
 
 
 export default class TradeForm extends React.Component {
@@ -31,13 +33,23 @@ export default class TradeForm extends React.Component {
     return secondary === 'usdt';
   }
 
-  render() {
-    const { balance, market, fee } = this.props;
-    const { state: { pending } } = this;
+  __renderPlaceholder() {
+    return <div className="TradeForm__placeholder">
+      <div className="TradeForm__placeholder__wrapper">
+        <AuthModal type={steps.REGISTRATION} className="Banner__modal">
+          <UI.Button size="small" >{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
+        </AuthModal>
+        <span className="TradeForm__placeholder__or">{utils.getLang('global_or')}</span>
+        <AuthModal>
+          <UI.Button size="small" type="secondary">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
+        </AuthModal>
+      </div>
+    </div>
+  }
 
-    if (!balance.primary) {
-      return null;
-    }
+  render() {
+    const { balance, market, fee, user } = this.props;
+    const { state: { pending } } = this;
 
     const [primary, secondary] = market.split('/');
     const isMarket = this.state.orderType === "market";
@@ -68,7 +80,7 @@ export default class TradeForm extends React.Component {
                 value={this.state.amount === null ? '' : this.state.amount}
                 onTextChange={this.__amountDidChange}
               />
-              <p>{primary.toUpperCase()}  {utils.getLang('global_balance')} - {utils.formatDouble(balance.primary.amount)}</p>
+              {user && <p>{primary.toUpperCase()}  {utils.getLang('global_balance')} - {utils.formatDouble(balance.primary.amount)}</p> }
             </div>
             <div className="TradeForm__adaptive_form__row">
               <UI.Input
@@ -80,7 +92,7 @@ export default class TradeForm extends React.Component {
                 value={this.state.price === null || isMarket ? '' : this.state.price}
                 onTextChange={this.__priceDidChange}
               />
-              <p>{secondary.toUpperCase()} {utils.getLang('global_balance')} - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p>
+              {user && <p>{secondary.toUpperCase()} {utils.getLang('global_balance')} - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p>}
             </div>
             <div className="TradeForm__adaptive_form__row">
               <UI.Input
@@ -124,6 +136,7 @@ export default class TradeForm extends React.Component {
 
     return (
       <div className="TradeForm Content_box">
+        {!user && this.__renderPlaceholder()}
         <div className="TradeForm__types">
           {this.__renderOrderType()}
         </div>
@@ -138,7 +151,7 @@ export default class TradeForm extends React.Component {
                 value={this.state.amount === null ? '' : this.state.amount}
                 onTextChange={this.__amountDidChange}
               />
-              <p className="Form__helper__text">{primary.toUpperCase()}  {utils.getLang('global_balance')} - {utils.formatDouble(balance.primary.amount)}</p>
+              { user && <p className="Form__helper__text">{primary.toUpperCase()}  {utils.getLang('global_balance')} - {utils.formatDouble(balance.primary.amount)}</p> }
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
@@ -150,7 +163,7 @@ export default class TradeForm extends React.Component {
                 value={this.state.price === null || isMarket ? '' : this.state.price}
                 onTextChange={this.__priceDidChange}
               />
-              <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')} - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p>
+              { user && <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')} - {utils.formatDouble(balance.secondary.amount, this.isFiat ? 2 : void 0)}</p> }
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
@@ -237,14 +250,14 @@ export default class TradeForm extends React.Component {
   }
 
   __renderAmountsSelector() {
-    const { balance } = this.props;
+    const { balance, user } = this.props;
 
     return [25, 50, 75, 100].map((percent) => {
-      const percentAmount = utils.formatDouble(percent / 100 * balance.primary.amount);
+      const percentAmount = user ? utils.formatDouble(percent / 100 * balance.primary.amount) : 0;
       return (
         <UI.Button
           key={percent}
-          disabled={balance.primary.amount === 0}
+          disabled={user && balance.primary.amount === 0}
           size="ultra_small"
           rounded
           type={this.state.amount === percentAmount ? '' : 'secondary'}

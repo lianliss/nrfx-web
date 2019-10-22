@@ -72,7 +72,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
             interval={this.props.chartTimeFrame}
           />
         </div>
-        { this.props.user && <SwitchBlock contents={[
+        <SwitchBlock hideTabs={!this.props.user} contents={[
           {
             title: utils.getLang('exchange_trades'),
             content: <TradeForm
@@ -82,6 +82,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
               balance={this.props.balanceInfo}
               ticker={this.props.tickerInfo}
               market={this.props.market}
+              user={this.props.user}
               fee={this.props.fee}
             />
           },
@@ -89,7 +90,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
             title: utils.getLang('global_balance'),
             content: <Balances adaptive={true} />
           }
-        ]} /> }
+        ]} />
         <SwitchBlock type="buttons" contents={[
           {
             title: utils.getLang('exchange_trades'),
@@ -134,6 +135,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
                 fee={this.props.fee}
                 balance={this.props.balanceInfo}
                 ticker={this.props.tickerInfo}
+                user={this.props.user}
                 market={this.props.market}
               />}
             </div>

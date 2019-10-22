@@ -10,6 +10,8 @@ import Banner from '../../../components/site/Banner/Banner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import UI from '../../../ui';
 import * as utils from '../../../utils/index';
+import router from '../../../router';
+import * as PAGES from '../../../constants/pages';
 
 
 export default class SiteExchangeScreen extends BaseScreen {
@@ -25,6 +27,7 @@ export default class SiteExchangeScreen extends BaseScreen {
             image={require('./asset/exchange_main_image.png')}
             title={<span>{this.lang.site.exchangeTitle}</span>}
             caption={<span>{this.lang.site.exchangeSubTitle}</span>}
+            onClick={() => router.navigate(PAGES.EXCHANGE)}
             buttonText={this.lang.site.exchangeStart}
           />
 
@@ -46,6 +49,7 @@ export default class SiteExchangeScreen extends BaseScreen {
               <p>
                 {this.lang.site.exchangeCustomizableInterfaceTitle}
               </p>
+
 
               <ul>
                 <li><span>{this.lang.site.exchangeCustomizableInterfaceSubTitle1}</span></li>

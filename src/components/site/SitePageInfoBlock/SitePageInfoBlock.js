@@ -35,9 +35,13 @@ export default class SitePageInfoBlock extends React.Component {
           <h1 className="SitePageInfoBlock__title">{this.props.title}</h1>
           <p className="SitePageInfoBlock__caption">{this.props.caption}</p>
           <div className="SitePageInfoBlock__buttons">
-            <AuthModal className="SitePageInfoBlock__modal">
-              <UI.Button fontSize={15} rounded style={{width: 239}}>{this.props.buttonText}</UI.Button>
-            </AuthModal>
+            { this.props.onClick ? (
+              <UI.Button fontSize={15} rounded style={{width: 239}} onClick={this.props.onClick}>{this.props.buttonText}</UI.Button>
+            ) : (
+              <AuthModal className="SitePageInfoBlock__modal">
+                <UI.Button fontSize={15} rounded style={{width: 239}}>{this.props.buttonText}</UI.Button>
+              </AuthModal>
+            )}
             {/* {!hideWatchButton ? <UI.WatchButton>Смотреть</UI.WatchButton> : null} */}
           </div>
         </div>

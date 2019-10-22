@@ -13,7 +13,7 @@ export default props => {
 
   return (
     <div className="SwitchBlock Content_box">
-      <Switch
+      { !props.hideTabs && <Switch
         selected={tab}
         onChange={changeTab}
         tabs={
@@ -23,7 +23,7 @@ export default props => {
             value,
           }))
         }
-      />
+      /> }
       {props.contents.find((item, value) => value === tab).content}
     </div>
   )

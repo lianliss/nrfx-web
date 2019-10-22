@@ -65,6 +65,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
             </div>
 
             <div className="AuthModal__footer">
+              <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.LOGIN)}>{utils.getLang('site__authModalLogInBtn')}</h4>
               <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
             </div>
           </>
@@ -76,7 +77,6 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
             subtitle={utils.getLang('site__authModalCheckMailDone')}
           />
         )}
-
     </div>
   )
 }

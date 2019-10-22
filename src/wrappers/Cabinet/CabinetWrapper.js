@@ -14,6 +14,7 @@ import * as PAGES from '../../constants/pages'
 import * as utils from '../../utils/index'
 import TabBar from '../../components/cabinet/TabBar/TabBar';
 import {BaseLink} from 'react-router5';
+import AuthModal from '../../components/site/AuthModal/AuthModal';
 
 class CabinetWrapper extends Component {
   componentDidMount() {
@@ -61,6 +62,11 @@ class CabinetWrapper extends Component {
     return <div className={mainClassName}>
       {adaptive ? <AdaptiveHeader
         leftContent={<span>{content.left}</span>}
+        rightContent={
+          <AuthModal className="Banner__modal">
+            <SVG src={require("../../asset/24px/login.svg")} />
+          </AuthModal>
+        }
         mainContent={{
           type: "text",
           content: this.props.title
