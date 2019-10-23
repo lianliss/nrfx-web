@@ -1,9 +1,10 @@
 import './LanguageModal.less';
 
-import React from 'react';
+import React, { memo } from 'react';
 import SVG from 'react-inlinesvg';
 import * as utils from '../../../utils';
 import UI from '../../../ui';
+import { connect } from 'react-redux';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
 import { getLang, setLang } from '../../../services/lang';
@@ -29,7 +30,7 @@ function LanguageModal({ langList, onClose }, props) {
         <UI.ModalHeader>{utils.getLang("global_language")}</UI.ModalHeader>
         <div className="LanguageModal__cont">
           <div className="LanguageModal__cont__grid">
-            {langList.map(lang => (
+            {!!langList && langList.map(lang => (
               <p
                 key={lang.value}
                 className="LanguageModal__cont__lang"
@@ -46,7 +47,6 @@ function LanguageModal({ langList, onClose }, props) {
   )
 }
 
-export default storeUtils.getWithState(
-  CLASSES.LANGUAGE_MODAL,
-  LanguageModal
-);
+export default connect( state => ({
+  langList: state.default.langList
+}))(memo(LanguageModal));
