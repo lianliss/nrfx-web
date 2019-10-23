@@ -25,7 +25,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         if (data.status === 'phone_not_verified') {
           changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
         } else {
-          router.navigate(pages.PROFILE, {}, { reload: true });
+          window.location.href = router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.PROFILE;
         }
       })
       .catch((err) => setErrorMsg(err.message))

@@ -54,6 +54,10 @@ export default class TradeForm extends React.Component {
     const [primary, secondary] = market.split('/');
     const isMarket = this.state.orderType === "market";
 
+    if (user && !balance.primary) {
+      return null;
+    }
+
     if (this.props.adaptive) {
       return (
         <div className="TradeForm">
