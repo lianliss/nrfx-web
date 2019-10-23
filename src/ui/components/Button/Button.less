@@ -60,7 +60,7 @@
     opacity: .8;
   }
 
-  &:not(.outline) {
+  &:not(.outline):not(.lite):not(.negative_outline):not(.secondary) {
     color: var(--uikit-contrast-primary);
   }
 
@@ -187,6 +187,16 @@
   &.outline {
     &:hover, &:active {
       color: var(--uikit-contrast-primary);
+    }
+  }
+
+
+  &.lite {
+    background: transparent;
+    box-shadow: none;
+
+    &:after {
+      display: none;
     }
   }
 

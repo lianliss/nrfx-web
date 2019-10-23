@@ -204,7 +204,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         <div className="CabinetSettingsScreen__form right">
         </div>
       </div>
-      {/*<div className="CabinetSettingsScreen__header">
+      <div className="CabinetSettingsScreen__header">
         2FA Authorization
       </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
@@ -218,7 +218,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         </div>
         <div className="CabinetSettingsScreen__form right">
         </div>
-      </div>*/}
+      </div>
     </div>
   };
 
