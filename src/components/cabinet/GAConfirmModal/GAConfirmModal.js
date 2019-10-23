@@ -15,7 +15,7 @@ export default class GAConfirmModal extends React.Component {
 
   render() {
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={384}>
+      <UI.Modal className="GAConfirmModal" isOpen={true} onClose={() => {this.props.close()}} width={384}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_ga_modal_name')}
         </UI.ModalHeader>

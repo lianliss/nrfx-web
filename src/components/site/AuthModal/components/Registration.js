@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import UI from '../../../../ui';
 import * as steps from '../fixtures';
 import * as utils from '../../../../utils/index';
+import * as actions from '../../../../actions/'
 import {registerUser} from '../../../../actions/auth';
 import SuccessModal from '../../SuccessModal/SuccessModal';
-import StaticContentModal from '../../StaticContentModal/StaticContentModal';
 import initGetParams from '../../../../services/initialGetParams';
 
 function Registration({ changeStep, currentStep, email, handleChange, onClose, refParam }) {
@@ -58,9 +58,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
-                <StaticContentModal type="terms">
-                  <span className="AuthModal__content__terms__link">{utils.getLang('site__authModalTermsConditions')}</span>
-                </StaticContentModal>
+                <span onClick={ () => actions.openModal('static_content', null, {type: "terms"})} className="AuthModal__content__terms__link">{utils.getLang('site__authModalTermsConditions')}</span>
               </div>
             </div>
 

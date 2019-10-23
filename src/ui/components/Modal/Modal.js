@@ -17,12 +17,6 @@ function Modal(props) {
     Modal__grayBackground: props.grayBackground,
   });
 
-  const handleClose = e => {
-    if (e.target === e.currentTarget) {
-      props.onClose(e);
-    }
-  }
-
   const handlePressEsc = e => {
     if(e.keyCode === 27) {
       props.onClose && props.onClose(e);
@@ -40,8 +34,9 @@ function Modal(props) {
 
   if (props.isOpen) {
     return (
-      <div className={className} onClick={handleClose}>
-        <div className="Modal__box" ref={node} style={{ width: props.width }}>
+      <div className={className}>
+        <div className="Modal__back" onClick={props.onClose} />
+        <div className="Modal__box" onClick={e => e.stopPropagation()} ref={node} style={{ width: props.width }}>
           {!props.skipClose && <div className="Modal__box__close" onClick={props.onClose} />}
           {props.children}
         </div>

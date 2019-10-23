@@ -18,6 +18,8 @@ import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMark
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
 import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
 import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
+import AuthModal from './components/site/AuthModal/AuthModal';
+import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
 import router from './router';
 
 export default function Modals(props) {
@@ -35,6 +37,12 @@ export default function Modals(props) {
       break;
     case 'rate_details':
       Component = RateDetailsModal;
+      break;
+    case 'auth':
+      Component = AuthModal;
+      break;
+    case 'static_content':
+      Component = StaticContentModal;
       break;
     case 'deposit_info':
       Component = DepositInfoModal;
