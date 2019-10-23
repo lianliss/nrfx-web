@@ -12,10 +12,7 @@ import * as steps from '../AuthModal/fixtures';
 import { getLang, setLang } from '../../../services/lang';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
-import AuthModal from '../AuthModal/AuthModal';
-import LanguageModal from '../LanguageModal/LanguageModal';
 import * as actions from '../../../actions/index';
-import StaticContentModal from '../StaticContentModal/StaticContentModal';
 import * as auth from '../../../actions/auth';
 
 
@@ -76,17 +73,17 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
         {
           title: (
-            <StaticContentModal type="terms">
+            <span onClick={ () => actions.openModal('static_content',{type: "terms"})}>
               {utils.getLang('site__headerTerms')}
-            </StaticContentModal>
+            </span>
           ),
           route: null,
         },
         {
           title: (
-            <StaticContentModal type="privacy">
+            <span onClick={ () => actions.openModal('static_content', {type: "privacy"})}>
               {utils.getLang('site__headerPrivacyPolicy')}
-            </StaticContentModal>
+            </span>
           ),
           route: null,
         },
@@ -124,22 +121,20 @@ function Header({ showLightLogo, langList, routerState, profile }) {
             </div>
             <div className="SiteHeader__menu__CTA">
               { !isLogin ? [
-                <AuthModal routerParams={routerState.route.params}>
-                  <UI.Button
-                    type="outline"
-                    fontSize={15}
-                  >
-                    {utils.getLang('site__headerLogIn')}
-                  </UI.Button>
-                </AuthModal>,
-                <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                  <UI.Button
-                    type="outline_white"
-                    fontSize={15}
-                  >
-                    {utils.getLang('site__commerceRegistration')}
-                  </UI.Button>
-                </AuthModal>
+                <UI.Button
+                  type="outline"
+                  fontSize={15}
+                  onClick={actions.openModal('auth', { type: steps.LOGIN })}
+                >
+                  {utils.getLang('site__headerLogIn')}
+                </UI.Button>,
+                <UI.Button
+                  type="outline_white"
+                  fontSize={15}
+                  onClick={actions.openModal('auth', { type: steps.REGISTRATION })}
+                >
+                  {utils.getLang('site__commerceRegistration')}
+                </UI.Button>
               ] : [
                 <UI.Button
                   onClick={() => router.navigate(pages.PROFILE)}
@@ -190,18 +185,15 @@ function Header({ showLightLogo, langList, routerState, profile }) {
 
               <div className="SiteHeader__menu_controls">
                 { !isLogin ? [
-                  <AuthModal routerParams={routerState.route.params}>
-                    <MenuItem>{utils.getLang('site__headerLogIn')}</MenuItem>
-                  </AuthModal>,
-                  <AuthModal routerParams={routerState.route.params} type={steps.REGISTRATION}>
-                    <UI.Button
-                      type="outline_white"
-                      rounded
-                      fontSize={15}
-                    >
-                      {utils.getLang('site__commerceRegistration')}
-                    </UI.Button>
-                  </AuthModal>
+                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN})}>{utils.getLang('site__headerLogIn')}</MenuItem>,
+                  <UI.Button
+                    onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})}
+                    type="outline_white"
+                    rounded
+                    fontSize={15}
+                  >
+                    {utils.getLang('site__commerceRegistration')}
+                  </UI.Button>
                 ] : [
                   <MenuItem onClick={auth.logout}>{utils.getLang("cabinet_header_exit")}</MenuItem>,
                   <UI.Button

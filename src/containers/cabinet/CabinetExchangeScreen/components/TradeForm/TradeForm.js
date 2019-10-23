@@ -4,6 +4,7 @@ import React from 'react';
 
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
+import * as actions from '../../../../../actions';
 import * as exchange from '../../../../../actions/cabinet/exchange';
 import OrderBook from '../OrderBook/OrderBook';
 import Block from '../Block/Block';
@@ -36,13 +37,9 @@ export default class TradeForm extends React.Component {
   __renderPlaceholder() {
     return <div className="TradeForm__placeholder">
       <div className="TradeForm__placeholder__wrapper">
-        <AuthModal type={steps.REGISTRATION} className="Banner__modal">
-          <UI.Button size="small" >{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
-        </AuthModal>
+        <UI.Button onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})} size="small" >{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
         <span className="TradeForm__placeholder__or">{utils.getLang('global_or')}</span>
-        <AuthModal>
-          <UI.Button size="small" type="secondary">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
-        </AuthModal>
+        <UI.Button onClick={() => actions.openModal('auth', {type: steps.LOGIN})} size="small" type="secondary">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </div>
   }

@@ -8,8 +8,7 @@ import * as utils from '../../../utils';
 import { getStaticPageContent } from '../../../actions';
 
 function StaticContentModal(props) {
-  const { children, type } = props;
-  const [isOpen, toggleOpen] = useState(false);
+  const { type } = props;
   const currentInfo = props[type];
   const currentData = currentInfo && currentInfo.data;
 
@@ -19,34 +18,21 @@ function StaticContentModal(props) {
     }
   }, [currentInfo, type]);
 
-  const handleOpen = e => {
-    document.body.classList.add('modal-open');
-    toggleOpen(true);
-  };
-
-  const handleClose = () => {
-    document.body.classList.remove('modal-open');
-    toggleOpen(false);
-  };
-
-  return (
-    <div className="StaticContentModal">
-      <span className="StaticContentModal__opener" onClick={handleOpen}>
-        {children}
-      </span>
-
-      {currentData && <UI.Modal isOpen={isOpen} onClose={handleClose}>
+  if (currentData) {
+    return (
+      <UI.Modal isOpen={true} className="StaticContentModal" onClose={props.onBack}>
         <div className="StaticContentModal__content__wrapper">
           <h3 className="StaticContentModal__title">{currentData.title}</h3>
           <div className="StaticContentModal__content" dangerouslySetInnerHTML={{ __html: currentData.content }} />
           <UI.Button
             fontSize={15}
-            onClick={handleClose}>{utils.getLang('site__goBack')}
+            onClick={props.onBack}>{utils.getLang('site__goBack')}
           </UI.Button>
         </div>
-      </UI.Modal>}
-    </div>
-  )
+      </UI.Modal>
+    )
+  }
+  return null;
 }
 
 const mapStateToProps = state => ({
