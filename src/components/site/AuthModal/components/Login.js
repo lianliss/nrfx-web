@@ -45,12 +45,12 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
         <div className="AuthModal__input_wrapper">
           <UI.Input
             value={password}
+            autoComplete="off"
             onChange={(e) => handleChange(e.target.value, 'password')}
             placeholder={utils.getLang('site__authModalPlaceholderPwd')}
             onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
             type="password"
           />
-
         </div>
         <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>{utils.getLang('site__authModalForgotPwd')}</h4>
 

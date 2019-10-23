@@ -24,6 +24,19 @@ export function classNames() {
   return result.join(' ');
 }
 
+export function __doubleInputOnKeyPressHandler(e, value = '') {
+  switch (e.key) {
+    default:
+      if (isNaN(parseInt(e.key)) || value.length === 1 && value[0] === '0') {
+        e.preventDefault();
+      }
+      break;
+    case '.': {
+      return value.length === 0 ? e.preventDefault() : value.indexOf(e.key) > -1 && e.preventDefault();
+    }
+  }
+}
+
 
 export function parseMd(md){
 
@@ -51,4 +64,8 @@ export function parseMd(md){
     return  /\<(\/)?(h\d|ul|ol|li|blockquote|pre|img)/.test(m) ? m : '<p>'+m+'</p>';
   });
   return md;
+}
+
+export function isFiat(currency) {
+  return ['usdt', 'usd'].includes(currency.toLowerCase());
 }

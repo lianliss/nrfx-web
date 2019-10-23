@@ -11,9 +11,10 @@ import { ReactComponent as AngleDownSmall } from '../../asset/angle-down-small.s
 import { ReactComponent as AngleUpSmall } from '../../asset/angle-up-small.svg';
 
 function Table({ headings, children, className, header, hidden, adaptive, compact, skipContentBox, inline }) {
+
   const [hiddenContent, setHiddenContent] = useState(hidden || false);
   return (
-    <div className={utils.classNames({
+    <div className={utils.classNames(className, {
       TableMain: true,
       Content_box: !skipContentBox,
     })}>
@@ -31,7 +32,6 @@ function Table({ headings, children, className, header, hidden, adaptive, compac
 
       {(!adaptive || (adaptive && !hiddenContent)) && <table className={utils.classNames({
         Table: true,
-        [className]: !!className,
         compact: !!compact,
         inline: !!inline,
       })}>
@@ -64,7 +64,7 @@ function Table({ headings, children, className, header, hidden, adaptive, compac
   )
 }
 
-export function TableCell({ children, onClick, dark }) {
+export function TableCell({ children, onClick, dark, className}) {
   let Component = 'tr';
   let params = {};
   if (onClick) {
@@ -75,7 +75,7 @@ export function TableCell({ children, onClick, dark }) {
   return (
     <Component
       onClick={onClick}
-      className={utils.classNames({
+      className={utils.classNames(className, {
         dark: !!dark
       })}
       {...params}
@@ -89,10 +89,10 @@ TableCell.propTypes = {
   dark: PropTypes.bool
 };
 
-export function TableColumn({ children, align, style, highlighted, sub }) {
+export function TableColumn({ children, align, style, highlighted, sub, className }) {
   return (
     <td
-      className={utils.classNames({
+      className={utils.classNames(className, {
         [align]: !!align,
         highlighted: !!highlighted
       })}

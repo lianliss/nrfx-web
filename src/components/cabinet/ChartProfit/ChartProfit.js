@@ -1,6 +1,7 @@
 import React from 'react';
 import * as currencies from "../../../utils/currencies";
 import Chart from '../../../components/cabinet/Chart/Chart';
+import ChartSimple from '../../../components/cabinet/Chart/ChartSimple';
 import EmptyContentBlock from '../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as utils from "../../../utils";
 import './ChartProfit.less';

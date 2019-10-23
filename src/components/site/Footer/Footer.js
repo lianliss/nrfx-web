@@ -5,7 +5,7 @@ import SVG from 'react-inlinesvg';
 
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../utils/index';
-import StaticContentModal from '../StaticContentModal/StaticContentModal';
+import * as actions from '../../../actions';
 
 export default function Footer() {
   return (
@@ -30,12 +30,8 @@ export default function Footer() {
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
             <a href="https://bitcoinbot.wiki/" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
-            <StaticContentModal type="terms">
-              <span className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
-            </StaticContentModal>
-            <StaticContentModal type="privacy">
-              <span className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
-            </StaticContentModal>
+            <span onClick={() => actions.openModal('static_content',{ type: "terms" })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
+            <span onClick={() => actions.openModal('static_content',{ type: "privacy" })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>

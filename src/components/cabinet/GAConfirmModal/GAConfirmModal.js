@@ -4,6 +4,7 @@ import React from 'react';
 import UI from '../../../ui';
 
 import * as utils from '../../../utils';
+import SVG from 'react-inlinesvg';
 
 export default class GAConfirmModal extends React.Component {
 
@@ -14,7 +15,7 @@ export default class GAConfirmModal extends React.Component {
 
   render() {
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={384}>
+      <UI.Modal className="GAConfirmModal" isOpen={true} onClose={() => {this.props.close()}} width={384}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_ga_modal_name')}
         </UI.ModalHeader>
@@ -26,20 +27,20 @@ export default class GAConfirmModal extends React.Component {
   __renderContent() {
     return (
       <div>
-        <div className="GAConfirmModal__input_wrapper">
-          <UI.Input
-            autoFocus={true}
-            type="number"
-            autoComplete="off"
-            value={this.state.gaCode}
-            onChange={this.__handleChange}
-            placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            onKeyPress={utils.InputNumberOnKeyPressHandler}
-            error={this.state.errorGaCode}
-          />
-
-          <img src={require('../../../asset/google_auth.svg')} alt="Google Auth" />
-        </div>
+        <UI.Input
+          autoFocus={true}
+          type="code"
+          cell
+          mouseWheel={false}
+          autoComplete="off"
+          value={this.state.gaCode}
+          onChange={this.__handleChange}
+          placeholder={utils.getLang('site__authModalGAPlaceholder')}
+          error={this.state.errorGaCode}
+          indicator={
+            <SVG src={require('../../../asset/google_auth.svg')} />
+          }
+        />
         <div className="GAConfirmModal__submit_wrapper">
           <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
             {utils.getLang('cabinet_settingsSave')}

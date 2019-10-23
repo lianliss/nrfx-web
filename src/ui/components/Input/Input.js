@@ -5,16 +5,22 @@ import React  from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 // internal
-import { classNames } from '../../utils';
+import { classNames, __doubleInputOnKeyPressHandler } from '../../utils';
 
 class Input extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      indicatorWidth: this.props.indicatorWidth || 0,
+      indicatorWidth: this.props.indicatorWidth || (this.props.indicator ? 34 : 0),
       displayPassword: false,
     };
+  }
+
+  componentDidMount() {
+    !this.props.mouseWheel && this.refs.input.addEventListener('mousewheel', (e) => {
+      e.preventDefault();
+    }, false);
   }
 
   __toggleDisplayPassword() {
@@ -62,6 +68,7 @@ class Input extends React.Component {
         ref="input"
         {...params}
         value={this.props.value}
+        onKeyPress={this.__onKeyPress}
         onChange={this.__onChange}
         onBlur={this.props.onBlur || (() => {})}
         disabled={this.props.disabled}
@@ -86,7 +93,39 @@ class Input extends React.Component {
     )
   }
 
+  __onKeyPress = (e) => {
+    if (this.props.onKeyPress) {
+      return this.props.onKeyPress(e);
+    }
+
+    if (this.props.type === 'code') {
+      if(isNaN(e.key)) {
+        e.preventDefault();
+      }
+    }
+
+    if (this.props.type === 'number') {
+      if (this.props.cell) {
+        if (isNaN(e.key)) {
+          e.preventDefault();
+        }
+      } else {
+        __doubleInputOnKeyPressHandler(e, e.target.value);
+      }
+    }
+  };
+
   __onChange = (e) => {
+    if (this.props.type === 'number') {
+      if (this.props.positive &&  e.target.value < 0) {
+        e.target.value = 0;
+      }
+
+      if (this.props.cell && e.target.value) {
+        e.target.value = parseInt(e.target.value);
+      }
+    }
+
     this.props.onChange && this.props.onChange(e);
     this.props.onTextChange && this.props.onTextChange(e.target.value);
   };
@@ -96,10 +135,14 @@ Input.defaultProps = {
   classNameWrapper: '',
   disabled: false,
   error: false,
-  autoFocus: false
+  autoFocus: false,
+  mouseWheel: true,
+  positive: true,
+  cell: false,
 };
 
 Input.propTypes = {
+  mouseWheel: PropTypes.bool,
   placeholder: PropTypes.any,
   onChange: PropTypes.func,
   onTextChange: PropTypes.func,
@@ -110,6 +153,9 @@ Input.propTypes = {
   classNameWrapper: PropTypes.string,
   disabled: PropTypes.bool,
   size: PropTypes.oneOf(['small']),
+  type: PropTypes.oneOf(['text', 'number', 'password', 'code']),
+  positive: PropTypes.bool,
+  cell: PropTypes.bool,
 };
 
 export default React.memo(Input);

@@ -19,9 +19,9 @@ export default class DepositInfoModal extends React.Component {
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
     return (
-      <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={() => {this.props.close()}}>
+      <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
-          {utils.getLang('cabinet_depositInfoModal_deposit')} {utils.formatDouble(deposit.plan_percent, 2)}% {deposit.description}
+          {utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.plan_percent}% {deposit.description}
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
@@ -41,7 +41,7 @@ export default class DepositInfoModal extends React.Component {
               <InfoRow label={utils.getLang("global_amount")}>{deposit.amount} {currency}</InfoRow>
               <InfoRow label={utils.getLang("cabinet_investmentsScreen_profit")}>{utils.formatDouble(deposit.profit, 8)} {currency} ({utils.formatDouble(deposit.current_percent, 2)}%)</InfoRow>
               <InfoRow label={utils.getLang("in_fiat")}>{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
-              <InfoRow label={utils.getLang("global_estimated")}>{utils.formatDouble(deposit.percent, 2)}%</InfoRow>
+              <InfoRow label={utils.getLang("global_estimated")}>{deposit.percent}%</InfoRow>
             </InfoRowGroup>
           </div>
           {/*<div className="DepositInfoModal__withdrawal_form" style={{display:'flex'}}>*/}

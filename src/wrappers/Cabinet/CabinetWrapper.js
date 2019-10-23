@@ -14,6 +14,8 @@ import * as PAGES from '../../constants/pages'
 import * as utils from '../../utils/index'
 import TabBar from '../../components/cabinet/TabBar/TabBar';
 import {BaseLink} from 'react-router5';
+import * as actions from '../../actions';
+import * as steps from '../../components/site/AuthModal/fixtures';
 
 class CabinetWrapper extends Component {
   componentDidMount() {
@@ -52,7 +54,7 @@ class CabinetWrapper extends Component {
 
     const content = utils.switchMatch(route.name, contentRules);
 
-    const {children, className, adaptive} = this.props;
+    const {children, className, adaptive, user} = this.props;
     const mainClassName = classNames({
       CabinetWrapper: true,
       [className]: !!className
@@ -61,13 +63,18 @@ class CabinetWrapper extends Component {
     return <div className={mainClassName}>
       {adaptive ? <AdaptiveHeader
         leftContent={<span>{content.left}</span>}
+        rightContent={
+          !user && (<div onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})} >
+            <SVG src={require("../../asset/24px/login.svg")} />
+          </div>)
+        }
         mainContent={{
           type: "text",
           content: this.props.title
         }}
       /> : <Header />}
       <div className="CabinetWrapper__content">{children}</div>
-      {adaptive && <TabBar />}
+      {adaptive && user && <TabBar />}
     </div>
   }
 

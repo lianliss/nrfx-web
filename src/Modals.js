@@ -3,9 +3,11 @@
 import React from 'react';
 // internal
 import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
+import RateDetailsModal from './components/cabinet/RateDetailsModal/RateDetailsModal';
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
 import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
+import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
@@ -14,6 +16,10 @@ import PartnerInfoModal from './components/cabinet/PartnerInfoModal/PartnerInfoM
 import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBalanceModal';
 import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
+import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
+import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
+import AuthModal from './components/site/AuthModal/AuthModal';
+import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
 import router from './router';
 
 export default function Modals(props) {
@@ -29,6 +35,21 @@ export default function Modals(props) {
     case 'open_deposit':
       Component = OpenDepositModal;
       break;
+    case 'rate_details':
+      Component = RateDetailsModal;
+      break;
+    case 'auth':
+      Component = AuthModal;
+      break;
+    case 'static_content':
+      Component = StaticContentModal;
+      break;
+    case 'deposit_info':
+      Component = DepositInfoModal;
+      break;
+    case 'calc_deposit':
+      Component = CalcDepositModal;
+      break;
     case 'withdrawal':
       Component = WithdrawalModal;
       break;
@@ -37,6 +58,9 @@ export default function Modals(props) {
       break;
     case 'send':
       Component = SendCoinsModal;
+      break;
+    case 'send_confirm':
+      Component = SendCoinsConfirmModal;
       break;
     case 'receive':
       Component = ReceiveCoinsModal;
@@ -66,8 +90,16 @@ export default function Modals(props) {
   }
 
   return (
-    <Component {...props.state.default} {...routerParams} {...options} onClose={() => {
-      window.history.back();
-    }} />
+    <Component
+      {...routerParams}
+      {...options}
+      onBack={() => {
+        window.history.back();
+      }}
+      onClose={() => {
+        const route = router.getState();
+        router.navigate(route.name, null )
+      }}
+    />
   );
 }

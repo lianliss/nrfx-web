@@ -37,6 +37,16 @@ export function loadProfitHistory() {
   };
 }
 
+export function calculate({ currency, planId, amount, days }) {
+  return api.call(apiSchema.Investment.CalculateGet, {
+    currency: currency,
+    plan_id: planId,
+    amount,
+    steps: days.map(d => ([ d.dayNumber, d.amount ])).flat()
+  });
+}
+
+
 export function loadMoreProfitHistory() {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profitsAppend', status: 'loading' });
@@ -104,6 +114,14 @@ export function withdrawAdd({amount, wallet_id, ga_code}) {
       reject(reason);
     });
   });
+}
+
+export function getWithdraw(currency) {
+  return api.call(apiSchema.Investment.WithdrawGet, { currency })
+}
+
+export function openDepositModalPropertySet(payload) {
+  store.dispatch({ type: actionTypes.INVESTMENTS_OPEN_DEPOSIT_MODAL_PROPERTY_SET, payload });
 }
 
 export function getPlans(currency, amount, deposit_type) {

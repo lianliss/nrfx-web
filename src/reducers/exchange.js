@@ -7,7 +7,11 @@ const initialState = {
   trades: {},
   openOrders: {},
   last_orders: [],
-  tickerInfo: null,
+  fee: 0,
+  tickerInfo: {
+    diff: 0,
+    percent: 0
+  },
   balanceInfo: {
     primary: {},
     secondary: {},
@@ -20,25 +24,24 @@ const initialState = {
   },
   chart: [],
   chartTimeFrame: 5,
+  fullscreen: false
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
     case actionTypes.EXCHANGE_SET: {
-      let tickerInfo = {};
-      for (let ticker of action.tickers) {
-        if (ticker.market === state.market) {
-          tickerInfo = ticker;
-        }
-      }
+      let tickerInfo = action.ticker;
 
       let balanceInfo = {};
-      let [primary, secondary] = state.market.split('/');
-      for (let balance of action.balances) {
-        if (balance.currency === primary) {
-          balanceInfo.primary = balance;
-        } else if (balance.currency === secondary) {
-          balanceInfo.secondary = balance;
+      let [primary, secondary] = action.market.split('/');
+
+      if (action.balances) {
+        for (let balance of action.balances) {
+          if (balance.currency === primary) {
+            balanceInfo.primary = balance;
+          } else if (balance.currency === secondary) {
+            balanceInfo.secondary = balance;
+          }
         }
       }
 
@@ -58,9 +61,11 @@ export default function reduce(state = initialState, action = {}) {
       }
 
       let openOrders = {};
-      for (let i = 0; i < action.open_orders.length; i++) {
-        const order = action.open_orders[i];
-        openOrders[order.id] = order;
+      if (action.open_orders) {
+        for (let i = 0; i < action.open_orders.length; i++) {
+          const order = action.open_orders[i];
+          openOrders[order.id] = order;
+        }
       }
 
       let trades = {};
@@ -203,10 +208,21 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
-    case actionTypes.EXCHANGE_CHOOSE_MARKET: {
+    case actionTypes.EXCHANGE_SET_FULLSCREEN: {
       return {
         ...state,
-        market: action.market
+        fullscreen: action.status
+      }
+    }
+
+    case actionTypes.EXCHANGE_TICKER_UPDATE: {
+      return {
+        ...state,
+        tickerInfo: {
+          ...state.tickerInfo,
+          ...action.ticker,
+          prevPrice: state.tickerInfo.price,
+        }
       }
     }
 

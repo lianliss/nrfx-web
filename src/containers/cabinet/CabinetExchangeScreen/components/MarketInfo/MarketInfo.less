@@ -25,6 +25,8 @@
 .MarketInfo__pair {
   display: flex;
   align-items: center;
+  cursor: pointer;
+  flex-wrap: wrap;
 }
 
 .MarketInfo__pair__primary {
@@ -85,7 +87,8 @@
 }
 
 .MarketInfo__info_row__value__primary {
-  width: 72px;
+  min-width: 78px;
+  margin-right: 1em;
 
   &.up {
     color: var(--primary-green);
@@ -109,9 +112,17 @@
 
   .Button {
     margin-left: 8px;
+    white-space: nowrap;
 
     &:first-child {
       margin-left: 0;
     }
+  }
+}
+
+.MarketInfo .MarketInfo__fullscreen_button {
+  padding: 0 4px;
+  .Button__label {
+    line-height: 0;
   }
 }

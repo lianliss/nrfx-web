@@ -3,11 +3,10 @@ import React, { memo } from 'react';
 import Block from '../Block/Block';
 import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
-import moment from 'moment/moment';
+import moment from 'moment/min/moment-with-locales';
 import { connect } from 'react-redux';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as exchange from '../../../../../actions/cabinet/exchange';
-import * as modals from '../../../../../actions/modalGroup';
 import * as actions from '../../../../../actions';
 
 class Orders extends React.Component {
@@ -20,57 +19,83 @@ class Orders extends React.Component {
   }
 
   render() {
+    if (this.props.adaptive) {
+      return this.__renderContent(this.props.type, true);
+    }
+
     return (
       <Block
+        name="orders"
         tabs={[
-          {tag: 'open', label: 'Open Orders'},
-          {tag: 'history', label: 'My Trades'},
+          {tag: 'open', label: utils.getLang('exchange_openOrders')},
+          {tag: 'history', label: utils.getLang('exchange_myTrades')},
         ]}
         selectedTab={this.state.tab}
         onTabChange={(tab) => this.setState({ tab })}
-        controls={[
-          <UI.Button key="all" size="ultra_small" rounded type="secondary">All Pairs</UI.Button>,
-        ]}
+        // controls={[
+        //   <UI.Button key="all" size="ultra_small" rounded type="secondary">{utils.getLang('exchange_allPairs')}</UI.Button>,
+        // ]}
       >
-        {this.__renderContent()}
+        {this.__renderContent(this.state.tab)}
       </Block>
     )
   }
 
-  __renderContent() {
-    switch (this.state.tab) {
+  __renderContent(type, adaptive) {
+    switch (type) {
       case 'open':
-        return this.__renderOpen();
+        return this.__renderOpen(adaptive);
       case 'history':
-        return this.__renderHistory();
+        return this.__renderHistory(adaptive);
     }
   }
 
   __handleOrderDelete(orderId) {
     actions.confirm({
-      title: 'Delete order?',
-      okText: 'Delete',
+      title: utils.getLang('exchange_confirmDeleteOrder_title'),
+      content: utils.getLang('exchange_confirm_orderDeleteText'),
+      okText: utils.getLang('global_delete'),
       type: 'delete'
     }).then(() => {
       exchange.orderDelete(orderId);
     });
   }
 
-  __renderOpen() {
-    const headings = [
+  __renderOpen(adaptive) {
+
+    if (!Object.keys(this.props.openOrders).length) {
+      return (
+        <EmptyContentBlock
+          icon={require('../../../../../asset/120/no_orders.svg')}
+          message={utils.getLang('exchange_openOrdersEmpty')}
+          skipContentClass
+          height={280}
+          // button={{
+          //   text: utils.getLang('exchange_seeAllPairs'),
+          //   size: 'small',
+          // }}
+        />
+      )
+    }
+
+    const headings = !adaptive ? [
       <UI.TableColumn>
         <div className="Exchange__cancel_order_btn__wrap">
           <div className="Exchange__cancel_order_btn placeholder" />
-          <div>Side</div>
+          <div>{utils.getLang('global_side')}</div>
         </div>
       </UI.TableColumn>,
-      <UI.TableColumn>Pair</UI.TableColumn>,
-      <UI.TableColumn>Type</UI.TableColumn>,
-      <UI.TableColumn align="right">Price</UI.TableColumn>,
-      <UI.TableColumn align="right">Amount</UI.TableColumn>,
-      <UI.TableColumn align="right">Total</UI.TableColumn>,
-      <UI.TableColumn align="right">Filled %</UI.TableColumn>,
-      <UI.TableColumn align="right">Time</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_pair')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_type')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_price')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_amount')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_total')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_filled')} %</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_time')}</UI.TableColumn>,
+    ] : [
+      <UI.TableColumn>{utils.getLang('global_price')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_amount')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_time')}</UI.TableColumn>,
     ];
 
     let rows = Object.values(this.props.openOrders).map((order) => {
@@ -79,64 +104,74 @@ class Orders extends React.Component {
         sell: order.action === 'sell'
       });
 
-      let side = order.action === 'sell' ? 'Sell' : 'Buy';
+      let side = order.action === 'sell' ? utils.getLang('exchange_sell') : utils.getLang('exchange_buy');
 
-      return (
-        <UI.TableCell key={order.id}>
+      return !adaptive ? (
+        <UI.TableCell className={sideClassName} key={order.id}>
           <UI.TableColumn>
             <div className="Exchange__cancel_order_btn__wrap">
               { order.status === 'pending' ?
                 <div className="Exchange__pending_order_loader" /> :
                 <div onClick={() => this.__handleOrderDelete(order.id)} className="Exchange__cancel_order_btn" />
               }
-              <div className={sideClassName}>{side}</div>
+              <div className="Exchange__orders__mark">{side}</div>
             </div>
           </UI.TableColumn>
           <UI.TableColumn>{`${order.primary_coin}/${order.secondary_coin}`.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn>{utils.ucfirst(order.type)}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.price, utils.isFiat(order.secondary_coin) ? 2 : void 0)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.price * order.amount, utils.isFiat(order.secondary_coin) ? 2 : void 0)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{order.filled > 0 ? Math.floor(order.filled / order.filled * 100) : 0}%</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.dateFormat(order.created_at, 'H:m:s')}</UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.price} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.amount} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={Math.floor(order.filled / order.amount  * 100)} percent /></UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
-      )
+      ) : (
+        <UI.TableCell className={sideClassName} key={order.id}>
+          <UI.TableColumn><UI.NumberFormat number={order.price} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn><UI.NumberFormat number={order.amount} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
+        </UI.TableCell>
+      );
     });
 
     return (
-      <UI.Table headings={headings} compact skipContentBox>
+      <UI.Table inline={adaptive} className="Exchange__orders_table" headings={headings} compact skipContentBox>
         {rows}
       </UI.Table>
     )
   }
 
-  __renderHistory() {
+  __renderHistory(adaptive) {
     if (!this.props.last_orders.length) {
       return (
         <EmptyContentBlock
           icon={require('../../../../../asset/120/no_orders.svg')}
-          message="No trade history"
+          message={utils.getLang('exchange_noTradeHistory')}
           skipContentClass
           height={280}
-          button={{
-            text: 'See All Pairs',
-            size: 'middle',
-          }}
+          // button={{
+          //   text: utils.getLang('exchange_seeAllPairs'),
+          //   size: 'small',
+          // }}
         />
       )
     }
 
-    const headings = [
-      <UI.TableColumn>Side</UI.TableColumn>,
-      <UI.TableColumn>Pair</UI.TableColumn>,
-      <UI.TableColumn>Type</UI.TableColumn>,
-      <UI.TableColumn align="right">Price</UI.TableColumn>,
-      <UI.TableColumn align="right">Amount</UI.TableColumn>,
-      <UI.TableColumn align="right">Average</UI.TableColumn>,
-      <UI.TableColumn align="right">Total</UI.TableColumn>,
-      <UI.TableColumn align="right">Filled %</UI.TableColumn>,
-      <UI.TableColumn align="right">Status</UI.TableColumn>,
-      <UI.TableColumn align="right">Time</UI.TableColumn>,
+    const headings = !adaptive ? [
+      <UI.TableColumn>{utils.getLang('global_side')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_pair')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_type')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_price')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_amount')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_average')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_total')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_filled')} %</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_status')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_time')}</UI.TableColumn>,
+    ] : [
+      <UI.TableColumn>{utils.getLang('global_price')}<br />{utils.getLang('global_average')}</UI.TableColumn>,
+      <UI.TableColumn>{utils.getLang('global_amount')}<br />{utils.getLang('global_filled')}</UI.TableColumn>,
+      <UI.TableColumn align="right">{utils.getLang('global_type')}<br />{utils.getLang('global_time')}</UI.TableColumn>,
     ];
 
     let rows = this.props.last_orders.map((order) => {
@@ -145,28 +180,45 @@ class Orders extends React.Component {
         sell: order.action === 'sell'
       });
 
-      let side = order.action === 'sell' ? 'Sell' : 'Buy';
+      const side = order.action === 'sell' ? utils.getLang('exchange_sell') : utils.getLang('exchange_buy');
+      const filled = Math.floor(order.filled / order.amount  * 100);
 
-      return (
-        <UI.TableCell key={order.id}>
+      return !adaptive ? (
+        <UI.TableCell className={sideClassName} key={order.id}>
           <UI.TableColumn>
-            <div className={sideClassName}>{side}</div>
+            <div className="Exchange__orders__mark">{side}</div>
           </UI.TableColumn>
           <UI.TableColumn>{`${order.primary_coin}/${order.secondary_coin}`.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn>{utils.ucfirst(order.type)}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : void 0)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn align="right">
+            <UI.NumberFormat number={order.price} currency={order.secondary_coin} />
+          </UI.TableColumn>
           <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.price * order.amount)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.price * order.amount)} {order.secondary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{order.filled > 0 ? Math.floor(order.filled / order.filled * 100) : 0}%</UI.TableColumn>
+          <UI.TableColumn align="right">-</UI.TableColumn>
+          <UI.TableColumn align="right">
+            <UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} />
+          </UI.TableColumn>
+          <UI.TableColumn align="right">{filled}</UI.TableColumn>
           <UI.TableColumn align="right">{utils.ucfirst(order.status)}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.dateFormat(order.created_at, 'H:m:s')}</UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
-      )
+      ) : (
+        <UI.TableCell className={sideClassName} key={order.id}>
+          <UI.TableColumn sub="-">
+            <UI.NumberFormat number={order.price} currency={order.secondary_coin} />
+          </UI.TableColumn>
+          <UI.TableColumn sub={
+            <UI.NumberFormat number={filled} percent />
+          }>
+            <UI.NumberFormat number={order.amount} currency={order.secondary_coin} />
+          </UI.TableColumn>
+          <UI.TableColumn sub={utils.dateFormat(order.updated_at, 'HH:mm:ss')} align="right">{utils.ucfirst(order.type)}</UI.TableColumn>
+        </UI.TableCell>
+      );
     });
 
     return (
-      <UI.Table headings={headings} compact skipContentBox>
+      <UI.Table inline={adaptive} className="Exchange__orders_table" headings={headings} compact skipContentBox>
         {rows}
       </UI.Table>
     )

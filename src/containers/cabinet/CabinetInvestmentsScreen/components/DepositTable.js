@@ -4,6 +4,7 @@ import UI from '../../../../ui';
 import * as utils from '../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as modalGroupActions from "../../../../actions/modalGroup";
+import * as actions from "../../../../actions";
 import SVG from "react-inlinesvg";
 
 export default function WithdrawalTable({ deposits, adaptive, fromPartners, skipContentBox }) {
@@ -15,7 +16,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
         message={utils.getLang('cabinet_noOpenDeposits')}
         button={{
           text: utils.getLang('global_startInvest'),
-          onClick: () => modalGroupActions.openModalPage('open_deposit')
+          onClick: () => actions.openModal('open_deposit')
         }}
       />
     )
@@ -91,7 +92,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
     if (adaptive) {
       return (
-        <UI.TableCell key={item.id} onClick={() => {modalGroupActions.openModalPage('deposit_info', {
+        <UI.TableCell key={item.id} onClick={() => {actions.openModal('deposit_info', null, {
           deposit: JSON.stringify(item)
         })}}>
           <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
@@ -109,7 +110,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
     let onClick = false;
     if (!fromPartners) {
-      onClick = () => modalGroupActions.openModalPage('deposit_info', {
+      onClick = () => actions.openModal('deposit_info', null, {
         deposit: JSON.stringify(item)
       });
     }
@@ -121,7 +122,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
         </UI.TableColumn>
         <UI.TableColumn>{utils.formatTableId(deposits.length - i)}</UI.TableColumn>
         <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
-        <UI.TableColumn sub={item.description}>{item.percent}%</UI.TableColumn>
+        <UI.TableColumn sub={item.description}>{item.plan_percent}%</UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
           sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}

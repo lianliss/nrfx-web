@@ -39,7 +39,7 @@ export default class ReceiveCoinsModal extends React.Component {
   render() {
     const currencyInfo = this.state.currency ? actions.getCurrencyInfo(this.state.currency) : {};
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={480}>
+      <UI.Modal isOpen={true} onClose={this.props.onClose} width={480}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_receiveCoinsModal_name')} { utils.ucfirst(currencyInfo.name)}
         </UI.ModalHeader>

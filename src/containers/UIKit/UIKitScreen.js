@@ -4,6 +4,8 @@ import React from 'react';
 
 import BaseScreen from '../BaseScreen';
 import UI from '../../ui/index';
+import * as utils from '../../utils';
+import NumberFormat from '../../ui/components/NumberFormat/NumberFormat';
 
 export default class UIKitScreen extends BaseScreen {
   constructor(props) {
@@ -21,6 +23,15 @@ export default class UIKitScreen extends BaseScreen {
   render() {
     return (
       <div>
+        <Section title="NumberFormat">
+          <Line><UI.NumberFormat number={8951.72348234123} /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} type="up" indicator currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} type="down" indicator currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} skipTitle currency="btc" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} fractionDigits={2} currency="usd" /></Line>
+          <Line><UI.NumberFormat number={8951.72348234123} fractionDigits={2} percent /></Line>
+        </Section>
         <Section title="Buttons">
           <Line>
             <UI.Button>Button</UI.Button>
@@ -98,6 +109,51 @@ export default class UIKitScreen extends BaseScreen {
           </Line>
           <Line style={{width: 300}}>
             <UI.Input type="password" placeholder="Password" />
+          </Line>
+          <Line style={{width: 300}}>
+            <UI.Input onTextChange={console.log} type="number" placeholder="Number" />
+          </Line>
+          <Line style={{width: 300}}>
+            <UI.Input onTextChange={console.log} cell type="number" placeholder="Number call" />
+          </Line>
+        </Section>
+        <Section title="Inputs">
+          <Line style={{width: 300}}>
+            <UI.Dropdown
+              placeholder="Placeholder"
+              value={{ title: 'BTC', note: '0.02112', value: 'btc' }}
+              onChange={console.log}
+              options={[
+                { title: 'BTC', note: '0.02112', value: 'btc' },
+                { title: 'ETH', note: '1.511', value: 'eth' },
+                { title: 'LTC', note: '9.1002', value: 'ltc' }
+              ]}
+            />
+          </Line>
+          <Line style={{width: 300}}>
+            <UI.Dropdown
+              placeholder="Placeholder"
+              value='btc'
+              onChange={console.log}
+              options={[
+                { title: 'BTC', note: '0.02112', value: 'btc' },
+                { title: 'ETH', note: '1.511', value: 'eth' },
+                { title: 'LTC', note: '9.1002', value: 'ltc' }
+              ]}
+            />
+          </Line>
+          <Line style={{width: 200}}>
+            <UI.Dropdown
+              size="small"
+              placeholder="Placeholder"
+              value='btc'
+              onChange={console.log}
+              options={[
+                { title: 'BTC', note: '0.02112', value: 'btc' },
+                { title: 'ETH', note: '1.511', value: 'eth' },
+                { title: 'LTC', note: '9.1002', value: 'ltc' }
+              ]}
+            />
           </Line>
         </Section>
         <Section title="Search">
@@ -181,57 +237,6 @@ export default class UIKitScreen extends BaseScreen {
             text
             [link](#test) **Bold** *italic*
             `} />
-          </Line>
-        </Section>
-        <Section>
-          <Line>
-            <UI.Notifications emptyText="No any updates" visible={true}></UI.Notifications>
-          </Line>
-          <Line>
-            <UI.Notifications visible={true}>
-              <UI.Notification
-                unread
-                icon="https://unsplash.it/40/40?random=1"
-                message="20 BTC вывод с баланса инвестиций на кошелек Static 150% Comfort (360 Days)"
-                date="8 Aug 2019"
-                onAction={console.log}
-                actions={[
-                  {
-                    "type": "primary",
-                    "text": "Accept",
-                    "action": "verification_accept",
-                    "params": {
-                      "test": ""
-                    }
-                  },
-                  {
-                    "type": "secondary",
-                    "text": "Accept",
-                    "action": "cancel",
-                    "params": []
-                  }
-                ]}
-              />
-              <UI.Notification
-                unread
-                icon="https://unsplash.it/40/40?random=2"
-                message="Вход через приложение для Android"
-                date="8 Aug 2019"
-              />
-              <UI.Notification
-                unread
-                icon="https://unsplash.it/40/40?random=3"
-                message="Пользователь ZEUS приглашает вас стать Агентом."
-                date="8 Aug 2019"
-                markText="Вы приняли приглашение."
-              />
-              <UI.NotificationSeparator title="Просмотренные" />
-              <UI.Notification
-                icon="https://unsplash.it/40/40?random=4"
-                message="Заявка на отправление 0.000450 BTC на адрес 7461L.. c2c171"
-                date="8 Aug 2019"
-              />
-            </UI.Notifications>
           </Line>
         </Section>
         <Section>

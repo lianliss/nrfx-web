@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import { classNames } from '../../../utils';
-import AuthModal from '../AuthModal/AuthModal';
 import * as steps from '../AuthModal/fixtures';
+import * as actions from '../../../actions';
 
 
 function RegisterBanner({ isCurly, lang }) {
@@ -33,10 +33,7 @@ function RegisterBanner({ isCurly, lang }) {
             onFocus={() => toggleInputActive(true)}
             onBlur={() => toggleInputActive(false)}
           />
-
-          <AuthModal type={steps.REGISTRATION} initialEmail={email}>
-            <div className="RegisterBanner__form__button">{lang.site__registerBannerBtn}</div>
-          </AuthModal>
+          <div onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})} className="RegisterBanner__form__button">{lang.site__registerBannerBtn}</div>
         </div>
       </div>
     </div>

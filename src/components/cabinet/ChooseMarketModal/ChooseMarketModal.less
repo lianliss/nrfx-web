@@ -2,12 +2,21 @@
   overflow: hidden;
   width: 720px;
 
-  .Modal__box__close {
-    z-index: 3;
+  .TableMain {
+    box-shadow: none;
   }
 
   .Modal__header {
     margin: 16px 0;
+  }
+
+  &__value {
+    &.positive {
+      color: var(--primary-green);
+    }
+    &.negative {
+      color: var(--primary-red);
+    }
   }
 
   &__filters {
@@ -16,6 +25,11 @@
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
     z-index: 3;
 
+    &__buttons {
+      display: flex;
+      width: 400px;
+    }
+
     &__form {
       display: flex;
 
@@ -23,11 +37,21 @@
         height: 40px;
       }
 
+      .Input {
+        &__indicator {
+          .isvg {
+            line-height: 0;
+            margin-right: -4px;
+          }
+        }
+      }
+
       .Button {
         margin-left: 16px;
       }
     }
   }
+
   &__icons {
     display: flex;
   }
@@ -62,8 +86,75 @@
     //max-height: calc(100vh - 350px);
     //min-height: 400px;
 
-    tr {
-      min-height: 88px;
+    .Table td {
+      &:first-child {
+        width: 108px;
+      }
+    }
+
+    tr.Hover{
+      height: 88px;
+      position: relative;
+
+      &::after {
+        position: absolute;
+        content: '';
+        display: block;
+        height: 1px;
+        left: 0;
+        right: 0;
+        box-sizing: border-box;
+        margin: -1px auto 0;
+        width: calc(100% - 48px);
+        background: rgba(0,0,0,.1);
+      }
+
+      &:hover + .Hover::after {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__chart {
+    .Chart {
+      width: 136px;
+    }
+  }
+}
+
+.ChooseMarketModal__wrapper {
+  .Modal__box__close {
+    z-index: 4;
+  }
+}
+
+.adaptive {
+  .ChooseMarketModal {
+    width: auto;
+
+    &__filters {
+      box-shadow: none;
+
+      &__form {
+        flex-direction: column;
+      }
+
+      &__buttons {
+        width: 100%;
+        margin-top: 16px;
+
+        .Button {
+          height: 24px;
+        }
+
+        .Button:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .Modal__header {
+      margin: 0;
     }
   }
 }

@@ -18,8 +18,10 @@ import Paging from '../../../components/cabinet/Paging/Paging';
 import {ReactComponent as PlusCircleSvg} from '../../../asset/24px/plus-circle.svg';
 import {ReactComponent as InvestSvg} from '../../../asset/24px/invest.svg';
 import {ReactComponent as SendSvg} from '../../../asset/24px/send.svg';
+import {ReactComponent as CalcSvg} from '../../../asset/24px/calc.svg';
 import * as PAGES from '../../../constants/pages';
 import * as modalGroupActions from '../../../actions/modalGroup';
+import * as actions from '../../../actions';
 import * as storeUtils from '../../../storeUtils';
 import * as utils from '../../../utils';
 import * as CLASSES from '../../../constants/classes';
@@ -67,7 +69,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           sidebarOptions={this.props.adaptive ? [
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/plus-circle.svg')}
-              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+              onClick={() => {actions.openModal('open_deposit')}}
             >{utils.getLang('cabinet_investmentsScreen_new')}</UI.FloatingButtonItem>,
             <UI.FloatingButtonItem
               icon={require('../../../asset/24px/invest.svg')}
@@ -76,15 +78,20 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <UI.FloatingButtonItem
               onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'withdrawals' })}}
               icon={require('../../../asset/24px/send.svg')}
-            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,
+            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,,
+            <UI.FloatingButtonItem
+              onClick={() => { actions.openModal('calc_deposit')}}
+              icon={require('../../../asset/24px/calc.svg')}
+            >{utils.getLang('cabinet_calculate')}</UI.FloatingButtonItem>,
           ] : [
             <ProfileSidebarItem
-              onClick={() => {modalGroupActions.openModalPage('open_deposit', {})}}
+              onClick={() => {actions.openModal('open_deposit', {})}}
               icon={<PlusCircleSvg />}
               label={utils.getLang('cabinet_investmentsScreen_new')}
             />,
             <ProfileSidebarItem section="profits" icon={<InvestSvg />} label={utils.getLang('cabinet_investmentsProfit')} />,
-            <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />
+            <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />,
+            <ProfileSidebarItem onClick={() => { actions.openModal('calc_deposit')}} icon={<CalcSvg />} label={utils.getLang('cabinet_calculate')} />
           ]}
         >
           <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>

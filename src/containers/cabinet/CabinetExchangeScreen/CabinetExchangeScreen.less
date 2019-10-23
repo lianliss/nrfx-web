@@ -1,6 +1,5 @@
 .Exchange__wrapper {
-  min-width: 1328px;
-  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   padding: 8px 16px;
   box-sizing: border-box;
@@ -31,14 +30,6 @@
 
 .Exchange__balances__currency__full_name {
   margin-left: 16px;
-}
-
-.Exchange__orders__side {
-  color: var(--primary-green);
-
-  &.sell {
-    color: var(--primary-red);
-  }
 }
 
 .Exchange__trade_content {
@@ -101,11 +92,72 @@
   animation: order-loader 1s linear infinite;
 }
 
+.Exchange__orderbook_controls {
+  margin: 0 -4px;
+  display: flex;
+  align-items: center;
+
+  .Button {
+    width: 24px;
+    margin: 0 4px;
+
+    .Button__label {
+      line-height: 0;
+    }
+
+    &.bids {
+      color: var(--primary-green);
+      &:not(.secondary) {
+        background: var(--primary-green);
+        color: white;
+      }
+    }
+
+    &.asks {
+      color: var(--primary-red);
+      &:not(.secondary) {
+        background: var(--primary-red);
+        color: white;
+      }
+    }
+  }
+}
+
 @keyframes order-loader {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.adaptive .Exchange__wrapper {
+  padding: 24px 0;
+  display: block;
+}
+
+.Exchange__orders__side {
+  .Exchange__orders__mark {
+    color: var(--primary-green);
+  }
+
+  &.sell {
+    .Exchange__orders__mark {
+      color: var(--primary-red);
+    }
+  }
+}
+
+.adaptive {
+  .Exchange__orders__price {
+    color: inherit !important;
+  }
+  .Exchange__orders__side {
+    background-color: rgba(#24B396, 0.1);
+
+    &.sell {
+      background-color: rgba(#FA4E3E, 0.1);
+    }
   }
 }

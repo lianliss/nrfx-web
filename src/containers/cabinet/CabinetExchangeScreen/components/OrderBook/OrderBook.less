@@ -2,6 +2,12 @@
   display: flex;
   height: 100%;
   flex-direction: column;
+
+  &:not(.all) {
+    .OrderBook__cont:last-child {
+      overflow-y: scroll;
+    }
+  }
 }
 
 .OrderBook__cont__wrap {
@@ -129,4 +135,34 @@
   height: 16px;
   padding-left: 24px + 16px;
   color: var(--primary-grey);
+}
+
+.OrderBook__price {
+  height: 32px;
+  line-height: 32px;
+  font-weight: 600;
+  padding: 0 16px;
+}
+
+.adaptive {
+  .OrderBook__header,
+  .OrderBook__order {
+    padding: 0 8px;
+  }
+
+  .OrderBook__order {
+    font-weight: 600;
+
+    .OrderBook__order__row {
+      font-weight: 600;
+    }
+
+    &.buy {
+      color: var(--uikit-primary-green);
+    }
+    &.sell {
+      color: var(--uikit-primary-red);
+    }
+  }
+
 }

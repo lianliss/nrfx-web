@@ -23,7 +23,8 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.COMPONENT_CABINET_WRAPPER:
       mapState2Props = state => ({
         ...state.default,
-        router: state.router
+        router: state.router,
+        user: state.default.profile.user
       });
       mapDispatch2Props = {
         setAdaptive: actions.setAdaptive
@@ -90,19 +91,6 @@ export function getWithState(caseName, caseClass) {
         loadWallets: walletsActions.loadWallets,
         loadDashboard: profileActions.loadDashboard,
         getPartner: profileActions.getPartner
-      };
-      break;
-    case CLASSES.WITHDRAWAL_COINS_MODAL:
-      mapState2Props = state => {
-        return {
-          ...state.wallets,
-          ...state.investments
-        }
-      };
-      mapDispatch2Props = {
-        toastPush: toastsActions.toastPush,
-        loadWallets: walletsActions.loadWallets,
-        loadInvestments: investmentsActions.loadInvestments,
       };
       break;
     case CLASSES.CABINET_START_PFOFILE_SCREEN:
@@ -187,14 +175,13 @@ export function getWithState(caseName, caseClass) {
     case CLASSES.OPEN_DEPOSIT_MODAL:
       mapState2Props = state => ({
         router: state.router,
-        thisState: state.modalGroup.states.open_deposit
+        thisState: state.investments.openDepositModal
       });
-
-      mapDispatch2Props = {
-        modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal,
-        toastPush: toastsActions.toastPush,
-        setStateByModalPage: modalGroupActions.setStateByModalPage
-      };
+      break;
+    case CLASSES.CALC_DEPOSIT_MODAL:
+      mapState2Props = state => ({
+        currencies: state.cabinet.currencies
+      });
       break;
     case CLASSES.CONFIRM_SMS_MODAL:
       mapDispatch2Props = {
@@ -238,19 +225,22 @@ export function getWithState(caseName, caseClass) {
       };
       break;
     case CLASSES.CABINET_EXCHANGE_SCREEN:
-      mapState2Props = (state) => ({ ...state.exchange });
+      mapState2Props = (state) => ({
+        ...state.exchange,
+        adaptive: state.default.adaptive,
+        router: state.router,
+        user: state.default.profile.user
+      });
       mapDispatch2Props = {
         load: exchangeActions.load,
+        setTitle: actions.setTitle
       };
-      break;
-    case CLASSES.EXCHANGE_BALANCE_MODAL:
-      mapState2Props = (state) => ({
-        exchange: state.exchange
-      });
       break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:
       mapState2Props = (state) => ({
-        markets: state.exchange.markets
+        adaptive: state.default.adaptive,
+        markets: state.exchange.markets,
+        status: state.exchange.loadingStatus.getMarkets
       });
       mapDispatch2Props = {
         chooseMarket: exchangeActions.chooseMarket,

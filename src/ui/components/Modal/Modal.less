@@ -11,7 +11,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 60px 0;
   box-sizing: border-box;
   flex-wrap: wrap;
@@ -68,6 +68,14 @@
   }
 }
 
+.Modal__back {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: calc(100% + 100px);
+}
+
 .adaptive {
   .Modal {
     align-items: start;
@@ -119,5 +127,9 @@
     &__box {
       padding: 24px 16px;
     }
+  }
+
+  .Modal__back {
+    height: 100%;
   }
 }

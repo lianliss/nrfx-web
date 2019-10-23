@@ -43,7 +43,7 @@ class SendCoinsModal extends React.Component {
   render() {
     const currencyInfo = this.props.thisState.currency ? actions.getCurrencyInfo(this.props.thisState.currency) : {};
     return (
-      <UI.Modal isOpen={true} onClose={() => this.props.close()} width={552}>
+      <UI.Modal isOpen={true} onClose={this.props.onClose} width={552}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_sendCoinsModal_name')}
         </UI.ModalHeader>
@@ -210,10 +210,7 @@ class SendCoinsModal extends React.Component {
       amount: this.props.thisState.amount,
       address: this.props.thisState.address
     };
-    this.props.openModalPage(null, {}, {
-      children: SendCoinsConfirmModal,
-      params: {...params}
-    });
+    actions.openModal('send_confirm', params, params);
   };
 
   __sendButtonHandler = () => {

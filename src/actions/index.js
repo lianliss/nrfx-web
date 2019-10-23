@@ -7,6 +7,7 @@ import apiSchema from '../services/apiSchema';
 import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as utils from '../utils';
+import { getColorByCurrency } from '../utils/currencies';
 import * as emitter from '../services/emitter';
 
 export function loadLang(code) {
@@ -39,6 +40,10 @@ export function getStaticPageContent(address,) {
 export function loadCurrencies() {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Wallet.CurrenciesGet).then((currencies) => {
+      Object.values(currencies).forEach(value => {
+        currencies[value.abbr].color = getColorByCurrency(value.abbr); // HACK
+      });
+      // TODO: Цвет тоже должен приходить с сервера
       store.dispatch({ type: actionTypes.SET_CURRENCIES, currencies });
       resolve();
     }).catch(() => reject());
@@ -50,6 +55,7 @@ export function getCurrencyInfo(name) {
   name = name.toLowerCase();
 
   let result = state.currencies[name];
+  result.color = getColorByCurrency(name);
   if (!result) {
     result = {
       name: 'Unknown',

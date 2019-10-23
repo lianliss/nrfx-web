@@ -10,14 +10,13 @@ import * as actions from "../../../actions";
 import * as utils from "../../../utils";
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
-import * as modalGroupActions from "../../../actions/modalGroup";
-import RateDetailsModal from "../RateDetailsModal/RateDetailsModal";
+import * as investmentsActions from "../../../actions/cabinet/investments";
+import * as toasts from '../../../actions/cabinet/toasts';
 
 class OpenDepositModal extends React.Component {
   state = {
     walletCurrentOption: {},
     walletOptions: [],
-    selectDepositType: 'static',
     planOptions: [],
     planCurrentOption: {},
     amountMax: 0,
@@ -58,12 +57,9 @@ class OpenDepositModal extends React.Component {
 
   __handleClickMore(e) {
     e.preventDefault();
-    modalGroupActions.openModalPage(null, {}, {
-      children: RateDetailsModal,
-      params: {
-        currency: this.props.thisState.currency,
-        plans: this.props.thisState.plans.map(p => p["static"])
-      }
+    actions.openModal('rate_details', {}, {
+      currency: this.props.thisState.currency,
+      plans: this.props.thisState.plans.map(p => p["static"])
     })
   }
 
@@ -115,7 +111,7 @@ class OpenDepositModal extends React.Component {
         plan_id: this.props.thisState.planId,
         deposit_type: this.props.thisState.selectDepositType
       }).then(({plans}) => {
-        this.props.toastPush(utils.getLang('cabinet_openNewDeposit_depositCreated'), "success");
+        toasts.success(utils.getLang('cabinet_openNewDeposit_depositCreated'));
         this.props.modalGroupSetActiveModal();
       }).catch((err) => {
         this.__setState({error: err.message});
@@ -126,7 +122,7 @@ class OpenDepositModal extends React.Component {
   }
 
   __setState = (value, key = null, callback) => {
-    this.props.setStateByModalPage('open_deposit', value, key);
+    investmentsActions.openDepositModalPropertySet(value);
     if (callback) callback();
   };
 
@@ -163,7 +159,7 @@ class OpenDepositModal extends React.Component {
     }
 
     return (
-      <UI.Modal noSpacing className="OpenDepositModal__wrapper" isOpen={true} onClose={() => {this.props.close()}}>
+      <UI.Modal noSpacing className="OpenDepositModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_openNewDeposit_name')}
         </UI.ModalHeader>
@@ -171,7 +167,7 @@ class OpenDepositModal extends React.Component {
           <div className="OpenDepositModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <div className="OpenDepositModal__row">
             <UI.Dropdown
-              placeholder={this.props.thisState.walletCurrentOption}
+              value={this.props.thisState.walletCurrentOption}
               options={this.props.thisState.walletOptions}
               onChange={item => {
                 item && this.__setState({
@@ -228,7 +224,7 @@ class OpenDepositModal extends React.Component {
           </div>
           <div className="OpenDepositModal__row">
             <UI.Dropdown
-              placeholder={this.props.thisState.planCurrentOption}
+              value={this.props.thisState.planCurrentOption}
               options={this.props.thisState.planOptions}
               onChange={item => {
                 item && this.__setState({

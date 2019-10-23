@@ -2,7 +2,7 @@ import * as auth from './auth';
 
 class RealTime {
   constructor() {
-    this.endpoint = 'wss://stage.bitcoinbot.pro/echo?access_token=' + auth.getToken();
+    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo?access_token=' + auth.getToken();
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;
@@ -56,6 +56,7 @@ class RealTime {
       //console.log('[WS]', json);
       if (this.listeners[json.type]) {
         for (let listener of this.listeners[json.type]) {
+          console.log("json:", json);
           listener(json.body);
         }
       }
@@ -86,12 +87,13 @@ class RealTime {
 
     for (let i = 0; i < this.listeners[name].length; i++) {
       if (this.listeners[name][i] === callback) {
-        this.listeners[name].slice(i, 1);
+        this.listeners[name].splice(i, 1);
       }
     }
   }
 
   triggerListeners(name, data = {}) {
+    console.log('triggerListeners');
     if (!this.listeners[name]) {
       return;
     }

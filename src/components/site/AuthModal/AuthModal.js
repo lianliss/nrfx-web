@@ -13,8 +13,7 @@ import SmsCode from './components/SmsCode';
 import GoogleAuth from './components/GoogleAuth';
 import initGetParams from '../../../services/initialGetParams';
 
-function AuthModal({ children, type, initialEmail, className, routerParams }) {
-  const [isOpen, toggleOpen] = useState(false);
+function AuthModal({ children, type, initialEmail, className, onClose, onBack, routerParams }) {
   const [currentStep, changeStep] = useState(type || steps.LOGIN);
   const [params, changeParams] = useState({});
   const [email, changeEmail] = useState('');
@@ -33,13 +32,13 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
         return <GoogleAuth params={params} email={email} password={password} handleChange={handleChange} changeStep={changeStepWithParams} currentStep={currentStep} />;
       case steps.RESET_AUTH:
       case steps.RESET_AUTH_SUCCESS:
-        return <ResetAuth email={email} password={password} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
+        return <ResetAuth email={email} password={password} changeStep={changeStep} currentStep={currentStep} onClose={onBack} />;
       case steps.RESTORE_PASSWORD:
       case steps.RESTORE_PASSWORD_SUCCESS:
-        return <RestorePassword changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
+        return <RestorePassword changeStep={changeStep} currentStep={currentStep} onClose={onBack} />;
       case steps.REGISTRATION:
       case steps.REGISTRATION_SUCCESS:
-        return <Registration refParam={initGetParams.params.hasOwnProperty('ref') ? initGetParams.params.ref : ''} email={initialEmail ? initialEmail : email} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} onClose={handleClose} />;
+        return <Registration refParam={initGetParams.params.hasOwnProperty('ref') ? initGetParams.params.ref : ''} email={initialEmail ? initialEmail : email} handleChange={handleChange} changeStep={changeStep} currentStep={currentStep} onClose={onBack} />;
       case steps.CONFIRM_NUMBER:
         return <ConfirmPhone params={params} changeStep={changeStepWithParams} />
       case steps.CONFIRM_CODE:
@@ -47,21 +46,6 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
       default:
         return <Login email={email} password={password} handleChange={handleChange} changeStep={changeStep} />;
     }
-  }
-
-  const handleOpen = () => {
-    document.body.classList.add('modal-open');
-    toggleOpen(true);
-  };
-
-  const handleClose = () => {
-    document.body.classList.remove('modal-open');
-    toggleOpen(false);
-
-    // Resetting the state
-    changeStep(type || steps.LOGIN);
-    changeEmail('');
-    changePassword('');
   };
 
   const handleChange = (value, type) => {
@@ -73,20 +57,15 @@ function AuthModal({ children, type, initialEmail, className, routerParams }) {
   };
 
   return (
-    <div className={"AuthModal " + className}>
-      <span onClick={handleOpen}>
-        {children}
-      </span>
+    <UI.Modal
+      isOpen={true}
+      onClose={onClose}
+      className={"AuthModal " + className}
+    >
 
-      <UI.Modal
-        isOpen={isOpen}
-        onClose={handleClose}
-      >
+      {getCurrentContent()}
 
-        {getCurrentContent()}
-
-      </UI.Modal>
-    </div>
+    </UI.Modal>
   )
 }
 

@@ -1,6 +1,7 @@
 import * as realTime from './realtime';
 import * as exchange from '../actions/cabinet/exchange';
 import * as toasts from '../actions/cabinet/toasts';
+import * as utils from '../utils/';
 
 let markets = {};
 
@@ -11,12 +12,15 @@ class Exchange {
     this.listeners = [
       ['new_orders', this.__orderBookDidUpdated],
       ['orders_filled', this.__orderBookDidUpdated],
+      ['order_failed', this.__orderDidFailed],
+      ['order_completed', this.__orderDidCompleted],
       ['cancel_order', this.__orderDidCancel],
       ['order_cancelled', this.__orderDidCancelled],
       ['cancel_order_failed', this.__orderDidCancelFailed],
       ['order_created', this.__orderDidCreated],
       ['trade_list', this.__orderDidTrade],
-      ['balance_update', this.__balanceDidUpdate]
+      ['balance_update', this.__balanceDidUpdate],
+      ['ticker', this.__tickerUpdate]
     ];
 
     this.__bind();
@@ -40,16 +44,29 @@ class Exchange {
 
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
 
+  __orderDidFailed = body => {
+    exchange.setOrderStatus(body.order_id, 'completed');
+    toasts.error(utils.getLang('exchange_toastOrderFailed'));
+  };
+
+  __orderDidCompleted = body => {
+    exchange.setOrderStatus(body.order_id, 'completed');
+    toasts.success(utils.getLang('exchange_toastOrderCompleted'));
+  };
+
   __orderDidCancel = (orderId) => exchange.removeOrders([orderId]);
 
   __orderDidCancelled = (orderId) => {
     exchange.setOrderStatus(orderId, 'cancelled');
-    toasts.success('Your order has been canceled');
+    toasts.success(utils.getLang('exchange_toastOrderCanceled'));
+  };
+
+  __orderDidCancelFailed = () => toasts.error('Can\'t cancel order');
+
+  __orderDidCreated = (order) => {
+    exchange.addOpenOrder(order);
+    toasts.success(utils.getLang('exchange_toastOrderCreated'));
   }
-
-  __orderDidCancelFailed = () => toasts.error('Can\'t cancel order');;
-
-  __orderDidCreated = (order) => exchange.addOpenOrder(order);
 
   __orderDidTrade = (orders) => {
     exchange.removeOrders(orders.map(order => order.id));
@@ -57,6 +74,8 @@ class Exchange {
   };
 
   __balanceDidUpdate = ({ currency, amount }) => exchange.updateBalance(currency, amount);
+
+  __tickerUpdate = (ticker) => exchange.tickerUpdate(ticker);
 }
 
 

@@ -1,52 +1,154 @@
 import './ChooseMarketModal.less';
 
 import React from 'react';
+import SVG from 'react-inlinesvg';
+
 import UI from '../../../ui';
 import * as exchange from  '../../../actions/cabinet/exchange'
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
 import * as actions from '../../../actions';
+import * as utils from '../../../utils/';
+import ChartSimple from '../Chart/ChartSimple';
+import ModalState from '../ModalState/ModalState';
+import router from '../../../router';
+import * as PAGES from '../../../constants/pages';
 
-class ChooseMarketModal extends React.Component{
+class ChooseMarketModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currencies: {
+        btc: false,
+        eth: false,
+        ltc: false,
+        bch: false,
+        usdt: false
+      },
+      search: ""
+    }
+  }
+
   componentDidMount() {
     exchange.getMarkets();
   }
 
+  handleToggleCurrency(currency) {
+    this.setState({
+      currencies: {
+        ...this.state.currencies,
+        [currency]:  !this.state.currencies[currency]
+      }
+    });
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return this.props.status !== nextProps.status ||
+      this.props.markets !== nextProps.markets ||
+      (JSON.stringify(this.state) !== JSON.stringify(nextState));
+  }
+
+  __handleChooseMarket (market) {
+    this.props.chooseMarket(market);
+    router.navigate(PAGES.EXCHANGE, { market: market.replace('/', '_')  });
+    // this.props.onClose();
+  }
+
   render () {
+    if (this.props.status) {
+      return (
+        <ModalState status={this.props.status} onRetry={() => {}} />
+      );
+    }
+
     const { markets } = this.props;
+    const currentCurrencies = Object.keys(this.state.currencies).filter(key => this.state.currencies[key]);
     return (
-      <UI.Modal noSpacing isOpen={true} onClose={this.props.onClose}>
+      <UI.Modal className="ChooseMarketModal__wrapper" noSpacing isOpen={true} onClose={this.props.onClose}>
         <div className="ChooseMarketModal">
           <div className="ChooseMarketModal__filters">
             <UI.ModalHeader>Choose Pair</UI.ModalHeader>
             <div className="ChooseMarketModal__filters__form">
               <UI.Input
+                value={this.state.search}
+                onTextChange={ value => this.setState({ search: value }) }
                 placeholder="Search Pairs"
+                indicatorWidth={28}
+                indicator={<SVG src={require('../../../asset/24px/search.svg')} />}
               />
-              <UI.Button>BTC</UI.Button>
-              <UI.Button type="secondary">LTC</UI.Button>
+              <div className="ChooseMarketModal__filters__buttons">
+                {Object.keys(this.state.currencies).map(key => (
+                  <UI.Button
+                    onClick={() => this.handleToggleCurrency(key)}
+                    size={this.props.adaptive &&  'ultra_small'}
+                    type={!this.state.currencies[key] ? "secondary": null}>{key.toUpperCase()}</UI.Button>
+                ))}
+              </div>
             </div>
           </div>
           <div className="ChooseMarketModal__market_list">
-            <UI.Table inline >
-              {markets.map(({ market }) => {
+            <UI.Table header={false} inline >
+              {markets.map(({ market, ticker, chart }, key) => {
                 const [primary, secondary] = market.name.split('/').map(actions.getCurrencyInfo);
+
+                if (
+                  (this.state.search && ![
+                    primary.abbr,
+                    secondary.abbr,
+                    secondary.name.toLowerCase()
+                  ].includes((this.state.search || "").toLowerCase())) ||
+                  (
+                    currentCurrencies.length &&
+                    !currentCurrencies.includes(primary.abbr) &&
+                    !currentCurrencies.includes(secondary.abbr)
+                  )
+                ) {
+                  return null;
+                }
+
+                const series = {
+                  color: primary.color,
+                  shadow: {
+                    color: primary.color,
+                  },
+                  data: chart.map(([x, y]) => ({ x, y })),
+                }
+
+                const numberClassName = ticker && utils.classNames(
+                  "ChooseMarketModal__value",
+                  ticker.percent >= 0 ? "positive" : "negative"
+                );
+
                 return (
-                  <UI.TableCell onClick={() => this.props.chooseMarket(market.name)}>
+                  <UI.TableCell key={key} onClick={() => this.__handleChooseMarket(market.name)}>
                     <UI.TableColumn>
                       <div className="ChooseMarketModal__icons">
                         <div style={{backgroundImage: `url(${primary.icon})`}} className="ChooseMarketModal__icon" />
                         <div style={{backgroundImage: `url(${secondary.icon})`}} className="ChooseMarketModal__icon" />
                       </div>
                     </UI.TableColumn>
-                    <UI.TableColumn lign="left">
+                    <UI.TableColumn align="left">
                       <div className="ChooseMarketModal__market">
                         <span className="ChooseMarketModal__market_primary">{primary.abbr.toUpperCase()}</span>
                         <span className="ChooseMarketModal__market_secondary"> / {secondary.abbr.toUpperCase()}</span>
                       </div>
                     </UI.TableColumn>
-                    <UI.TableColumn>{market.max_amount}</UI.TableColumn>
-                    <UI.TableColumn>{market.min_amount}</UI.TableColumn>
+                    <UI.TableColumn className="ChooseMarketModal__chart">
+                      { !this.props.adaptive && <ChartSimple
+                        marker={false}
+                        series={[series]}
+                      /> }
+                    </UI.TableColumn>
+                    <UI.TableColumn>
+                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.price, utils.isFiat(secondary.abbr) ? 2 : 6)}</span> }
+                    </UI.TableColumn>
+                    { !this.props.adaptive && <UI.TableColumn>
+                      { ticker && "$" + utils.formatDouble(ticker.usd_price, 2) }
+                    </UI.TableColumn> }
+                    <UI.TableColumn>
+                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.percent, 2)}%</span> }
+                    </UI.TableColumn>
                   </UI.TableCell>
                 )
               })}

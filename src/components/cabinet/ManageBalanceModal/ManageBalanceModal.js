@@ -4,13 +4,11 @@ import React from 'react';
 import UI from '../../../ui';
 
 import * as utils from '../../../utils';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as balanceActions from '../../../actions/cabinet/balance';
 import * as actions from '../../../actions';
 import ModalState from '../ModalState/ModalState';
 
-class ManageBalanceModal extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,11 +16,12 @@ class ManageBalanceModal extends React.Component {
     this.category = props.category || 'exchange';
 
     this.state = {
-      amount: null,
+      amount: '',
       type: this.isWithdrawalOnly ? 'withdraw' : 'deposit',
       wallets: [],
       balances: [],
       selectedId: null,
+      currency: null,
       loadingStatus: 'loading',
       touched: false,
       isFormSending: false,
@@ -50,7 +49,7 @@ class ManageBalanceModal extends React.Component {
 
         for (let item of items) {
           if (item.currency === this.props.currency) {
-            this.setState({ selectedId: item.id });
+            this.setState({ selectedId: item.id, currency: item.currency });
             break;
           }
         }
@@ -75,6 +74,7 @@ class ManageBalanceModal extends React.Component {
         title: utils.ucfirst(currencyInfo.name),
         amount: item.amount,
         currency: item.currency,
+        icon: currencyInfo.icon,
         note: utils.formatDouble(item.amount) + ' ' + item.currency.toUpperCase()
       };
     });
@@ -89,13 +89,7 @@ class ManageBalanceModal extends React.Component {
   };
 
   get currentOption() {
-    for (let option of this.options) {
-      if (option.value === this.state.selectedId) {
-        return option;
-      }
-    }
-
-    return this.options[0];
+    return this.options.find(option => option.currency === this.state.currency) || this.options[0];
   }
 
   __maxDidPress = () => {
@@ -124,12 +118,13 @@ class ManageBalanceModal extends React.Component {
               ]}
             />}
           </div>
-          <div className="EManageBalanceModal__row">
+          <div className="ManageBalanceModal__row">
+            <div style={{backgroundImage: `url(${this.currentOption.icon})`}} className="ManageBalanceModal__icon" />
             <UI.Dropdown
               value={this.currentOption}
               placeholder=""
               options={this.options}
-              onChange={item => this.setState({ selectedId: item.value })}
+              onChange={item => this.setState({ selectedId: item.value, currency: item.currency })}
             />
           </div>
           <div className="ManageBalanceModal__row ManageBalanceModal__input_button">
@@ -137,8 +132,9 @@ class ManageBalanceModal extends React.Component {
               type="number"
               value={this.state.amount === null ? '' : this.state.amount}
               placeholder="0.00"
+              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.state.amount)}
               onTextChange={this.__amountDidChange}
-              error={this.state.touched && !this.state.amount}
+              error={this.state.touched && (!this.state.amount || this.state.amount <= 0 )}
             />
             <UI.Button
               smallPadding
@@ -177,8 +173,3 @@ class ManageBalanceModal extends React.Component {
     }
   };
 }
-
-export default storeUtils.getWithState(
-  CLASSES.EXCHANGE_BALANCE_MODAL,
-  ManageBalanceModal
-);

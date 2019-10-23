@@ -22,7 +22,9 @@ export function load(market) {
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: 'failed' });
     })
   };
-}export function chooseMarket(market) {
+}
+
+export function chooseMarket(market) {
   return (dispatch, getState) => {
     exchangeService.unbind(getState().exchange.market);
     exchangeService.bind(market);
@@ -31,26 +33,28 @@ export function load(market) {
 }
 
 export function orderCreate(params) {
-  return api.call(apiSchema.Exchange.OrderPut, params).then(() => {
-    toast.success("ok");
+  return api.call(apiSchema.Exchange.OrderPut, params).then(({balance}) => {
+    store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance });
   }).catch((err) => {
     toast.error(err.message);
   })
 }
 
 export function orderDelete(orderId) {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_PENDING, orderId });
   return api.call(apiSchema.Exchange.OrderDelete, {
     order_id: orderId
-  }).then(() => {
-    store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_PENDING, orderId });
-  }).catch(err => {
-    toast.error(err.message);
   });
 }
 
 export function getMarkets() {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'getMarkets', status: 'loading' });
   return api.call(apiSchema.Exchange.MarketsGet).then(({markets}) => {
     store.dispatch({ type: actionTypes.EXCHANGE_SET_MARKETS, markets });
+  }).then(() => {
+    store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'getMarkets', status: '' });
+  }).catch(() => {
+    store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'getMarkets', status: 'failed' });
   });
 }
 
@@ -60,6 +64,10 @@ export function removeOrders(orderIds) {
 
 export function orderBookUpdateOrders(orders) {
   store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_UPDATE, orders });
+}
+
+export function tickerUpdate(ticker) {
+  store.dispatch({ type: actionTypes.EXCHANGE_TICKER_UPDATE, ticker });
 }
 
 export function setOrderStatus(orderId, status) {
@@ -76,6 +84,10 @@ export function addTrades(orders) {
 
 export function updateBalance(currency, amount) {
   store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, currency, amount });
+}
+
+export function setFullscreen(status = true) {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_FULLSCREEN, status });
 }
 
 export function changeTimeFrame(timeFrame) {

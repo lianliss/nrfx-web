@@ -10,7 +10,7 @@ import { ReactComponent as ShoppingCartSvg } from '../../../../asset/24px/shoppi
 import { ReactComponent as TradeSvg } from '../../../../asset/120/trade.svg';
 import { ReactComponent as Invest120Svg } from '../../../../asset/120/invest.svg';
 import { ReactComponent as InviteSvg } from '../../../../asset/120/invite.svg';
-import * as modalGroupActions from '../../../../actions/modalGroup';
+import * as actions from '../../../../actions';
 import * as pages from '../../../../constants/pages';
 
 class DashboardItem extends React.Component {
@@ -33,9 +33,7 @@ class DashboardItem extends React.Component {
         this.button = {
           children: utils.getLang('cabinet_profileScreen_actionCard_invest'),
           onClick: () => {
-            router.navigate('investments', {}, {}, function() {
-              modalGroupActions.openModalPage('open_deposit', {});
-            });
+            actions.openModal('open_deposit')
           }
         };
         if (props.profit.btc > 0) {
@@ -119,7 +117,10 @@ class DashboardItem extends React.Component {
               {this.icon}
             </div>
             <div className="DashboardItem__headerText">
-              {utils.ucfirst(this.props.type)}
+              {{
+                partners: utils.getLang('cabinet_partners')
+                // TODO ?
+              }[this.props.type] || utils.ucfirst(this.props.type)}
             </div>
           </div>
           <div className="DashboardItem__content_item">

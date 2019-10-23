@@ -11,6 +11,13 @@ const arrowUp = require('../../asset/arrow_outline_up.svg');
 const arrowDown = require('../../asset/arrow_outline_down.svg');
 
 class Dropdown extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.__handleClick = this.__handleClick.bind(this);
+    this.__handleClickEsc = this.__handleClickEsc.bind(this);
+  }
+
   state = {
     isOpen: false
   };
@@ -21,22 +28,45 @@ class Dropdown extends React.Component {
 
   toggle = (value) => {
     this.setState({ isOpen: value });
+    if (value) {
+      document.addEventListener('click', this.__handleClick, false);
+      document.addEventListener("keydown", this.__handleClickEsc, false);
+    } else {
+      document.removeEventListener('click', this.__handleClick, false);
+      document.removeEventListener("keydown", this.__handleClickEsc, false);
+    }
   };
+
+  __handleClick(e) {
+    console.log('e', this.refs.dropdown, !this.refs.dropdown.contains(e.target));
+    this.toggle(false);
+  }
+
+  __handleClickEsc(e){
+    console.log('e', e);
+    if(e.keyCode === 27) {
+      this.toggle(false);
+    }
+  }
 
   render() {
     const { props, state } = this;
     const dropdownIcon = state.isOpen ? arrowUp : arrowDown;
-    const headerText = props.value || props.placeholder;
+
+    const headerText = typeof props.value !== 'object' ?
+      props.options.find( opt => opt.value === props.value) || {} : props.value || {};
+
     const className = classNames({
       Dropdown: true,
       Dropdown_open: state.isOpen,
+      [props.size]: props.size
     });
 
     return [
-      <div className={className} key={Math.random()}>
+      <div ref="dropdown" key="dropdown" className={className}>
         <div className="Dropdown__header" onClick={() => this.toggle(!state.isOpen)}>
           <div className="Dropdown__option">
-            <p className="Dropdown__option__title">{headerText.title}</p>
+            <p className="Dropdown__option__title">{headerText.title || props.placeholder}</p>
             <p className="Dropdown__option__note">{headerText.note}</p>
           </div>
 
@@ -64,7 +94,7 @@ class Dropdown extends React.Component {
             </div>
           ) : null}
       </div>,
-      this.isOpen && <div className="Dropdown__overlay" onClick={() => this.toggle(false)} />
+      this.isOpen && <div key="overlay" className="Dropdown__overlay" onClick={() => this.toggle(false)} />
     ];
   }
 }

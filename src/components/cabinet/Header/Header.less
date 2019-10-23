@@ -56,6 +56,20 @@
       }
     }
 
+    .CabinetHeader__controls {
+      display: flex;
+
+      .Button {
+        margin-left: 8px;
+
+        &.login {
+          .Button__outline_helper {
+            background: white;
+          }
+        }
+      }
+    }
+
     .CabinetHeader__link {
       color: var(--primary-grey);
       display: flex;
@@ -174,6 +188,13 @@
       border-radius: 0 0 8px 8px;
       display: flex;
     }
+  }
+
+  .CabinetHeader__leftContent,
+  .CabinetHeader__rightContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @adaptive-header-side-width: 60px;

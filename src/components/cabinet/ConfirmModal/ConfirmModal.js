@@ -27,16 +27,18 @@ class ConfirmModal extends React.Component {
 
     return <UI.Modal isOpen={true} onClose={this.__handleClose}>
       <UI.ModalHeader>{props.title}</UI.ModalHeader>
-      {!!props.content && <p className="ConfirmModal__content">{props.content}</p>}
       <div className="ConfirmModal">
-        <UI.Button
-          type={props.type === "delete" ? "negative" : undefined}
-          onClick={this.__handleAccept}>
-          { props.okText || utils.getLang("global_confirm") }
-        </UI.Button>
-        <UI.Button type="secondary" onClick={this.__handleClose}>
-          { props.cancelText || utils.getLang("global_cancel")}
-        </UI.Button>
+        {!!props.content && <p className="ConfirmModal__content">{props.content}</p>}
+        <div className="ConfirmModal__buttons">
+          <UI.Button
+            type={props.type === "delete" ? "negative" : undefined}
+            onClick={this.__handleAccept}>
+            { props.okText || utils.getLang("global_confirm") }
+          </UI.Button>
+          <UI.Button type="secondary" onClick={this.__handleClose}>
+            { props.cancelText || utils.getLang("global_cancel")}
+          </UI.Button>
+        </div>
       </div>
     </UI.Modal>
   }
