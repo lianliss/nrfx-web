@@ -82,8 +82,11 @@ const CalcDepositModal = class extends React.Component {
   }
 
   __calculate () {
-
     if (!this.__daysIsFilled()) {
+      this.setState({
+        daysResult: [],
+        result: []
+      })
       return false;
     }
 
@@ -112,13 +115,11 @@ const CalcDepositModal = class extends React.Component {
 
   __calculateThrottled = utils.throttle(this.__calculate.bind(this), 500);
 
-
-
   __handleDeleteDay = (dayId) => {
     this.setState( {
       days: this.state.days.filter((day, id) => dayId !== id),
       daysResult: this.state.daysResult.filter((day, id) => dayId !== id),
-    })
+    }, this.__calculate);
   }
 
   __handleAddDay = () => {
