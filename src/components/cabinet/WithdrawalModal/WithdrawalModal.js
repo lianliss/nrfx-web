@@ -127,7 +127,7 @@ export default class WithdrawalModal extends React.Component {
             />
             <h4>{utils.getLang('cabinet_withdrawalModal_successTitle')}</h4>
             <p>{utils.getLang('cabinet_withdrawalModal_successText')}</p>
-            <UI.Button currency={this.state.currency} style={{ width: '208px' }} onClick={this.props.close}>
+            <UI.Button currency={this.state.currency} style={{ width: '208px' }} onClick={this.props.onClose}>
               {utils.getLang('global_ok')}
             </UI.Button>
           </div>
