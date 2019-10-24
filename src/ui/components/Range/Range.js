@@ -6,18 +6,19 @@ export default class Range extends React.Component {
   state = {
     isDraggable: false,
     clientX: 0,
-    value: Math.round((this.props.value - this.props.min) / (this.props.max - this.props.min) * 100),
-    startValue: 50,
+    percent: this.valueToPercent(this.props.value),
+    startPercent: 0,
   };
 
   componentDidMount() {
+    
   }
 
   __handleClick = (e) => {
     this.setState({
       isDraggable: true,
       clientX: e.clientX,
-      startValue: this.state.value
+      startPercent: this.state.percent
     });
 
     document.body.classList.add('draggable');
@@ -29,33 +30,34 @@ export default class Range extends React.Component {
     document.body.classList.remove('draggable');
     document.removeEventListener('mouseup', this.__handleMouseUp);
     document.removeEventListener('mousemove', this.__handleChange);
-    this.setState({ value: Math.round(this.state.value) });
 
-    this.props.onChange && this.props.onChange(this.result);
+    this.props.onChange && this.props.onChange(this.percentToValue(this.state.percent));
   };
 
-  get result() {
+  percentToValue(value) {
     const { min, max } = this.props;
-    return Math.round((max - min) / 100 * this.state.value + min);
+    return Math.round((max - min) / 100 * value + min);
   }
 
-  get value () {
+  valueToPercent(value) {
     const { min, max } = this.props;
-    return Math.round((this.state.value - min) / (max - min) * 100);
+    return Math.round((value - min) / (max - min) * 100);
   }
 
   __handleChange = (e) => {
-    let value = (((e.clientX - this.state.clientX)) / this.refs.range.clientWidth * 100) + this.state.startValue;
-    value = value > 100 ? 100 : value < 0 ? 0 : value;
-    this.setState({ value });
+    let percent = (((e.clientX - this.state.clientX)) / this.refs.range.clientWidth * 100) + this.state.startPercent;
+    percent = percent > 100 ? 100 : percent < 0 ? 0 : percent;
+    this.setState({ percent: percent });
   };
 
   render() {
+    const value = this.percentToValue(this.state.percent);
+    const width = this.valueToPercent(value) + '%';
     return (
       <div className="Range" ref="range">
-        <div style={{width: this.value + '%'}} className="Range__filler">
-          <div className="Range__thumb" style={{left: this.value + '%'}} onMouseDown={this.__handleClick}>
-            <div className="Range__label">{this.props.formatLabel(this.result)}</div>
+        <div style={{width: width}} className="Range__filler">
+          <div className="Range__thumb" style={{left: width}} onMouseDown={this.__handleClick}>
+            <div className="Range__label">{this.props.formatLabel(value)}</div>
           </div>
         </div>
       </div>
