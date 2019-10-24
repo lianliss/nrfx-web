@@ -26,6 +26,7 @@ export default function Modals(props) {
 
   const routeState = props.router.getState();
   const routerParams = routeState.params;
+  delete routerParams.ref;
   const { options } = routeState.meta;
   const modal = routerParams.modal;
 
