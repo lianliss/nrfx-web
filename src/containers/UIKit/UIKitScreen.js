@@ -90,14 +90,7 @@ export default class UIKitScreen extends BaseScreen {
           </Line>
         </Section>
         <Section title="FloatingButton">
-          <Line style={{paddingLeft: 150, paddingTop: 200}}>
-            <UI.FloatingButton icon={require('../../asset/24px/loop.svg')}>
-              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Send" />
-              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Transfers" />
-              <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Create New Wallet" />
-            </UI.FloatingButton>
-          </Line>
-          <Line style={{paddingLeft: 150, paddingTop: 200}}>
+          <Line style={{paddingLeft: 150, paddingTop: 200}} static>
             <UI.FloatingButton wrapper icon={require('../../asset/24px/loop.svg')}>
               <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Send" />
               <UI.FloatingButtonItem icon={require('../../asset/24px/loop.svg')} children="Transfers" />

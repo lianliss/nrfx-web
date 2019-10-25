@@ -5,6 +5,12 @@
   width: 56px;
   z-index: 200;
 
+  &.static {
+    position: relative;
+    bottom: 0;
+    right: 0;
+  }
+
   &__back {
     pointer-events: none;
     position: fixed;
@@ -14,6 +20,10 @@
     right: 0;
     z-index: 200;
     transition: background-color.3s ease;
+
+    &.static {
+      position: relative;
+    }
 
     &.opened {
       pointer-events: all;
