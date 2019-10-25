@@ -34,6 +34,7 @@ function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
 
               <div className="AuthModal__input_wrapper">
                 <UI.Input
+                  autoComplete="off"
                   autoFocus
                   value={secretKey}
                   onChange={(e) => changeSecretKey(e.target.value)}

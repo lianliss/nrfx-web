@@ -159,7 +159,7 @@ class Header extends React.Component {
               </div>
             </div>}
             { !isLogged && <div className="CabinetHeader__controls">
-              <UI.Button onClick={() => actions.openModal('auth', {type: steps.LOGIN})} className="login" size="small" type="outline">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
+              <UI.Button onClick={() => actions.openModal('auth', {type: steps.LOGIN})} className="login" size="small" type="lite">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
               <UI.Button onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})}  size="small" type="outline">{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
             </div> }
           </div>
