@@ -99,7 +99,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         {(loginRes.need_ga_setup === true && document.queryCommandSupported('copy')) &&
           <UI.Button fontSize={15} type="outline" outlined onClick={handleHashCopy}>Copy Key</UI.Button>
         }
-        <UI.Button  fontSize={15} onClick={() => handleSubmit()} disabled={pending || gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
+        <UI.Button  fontSize={15} onClick={() => handleSubmit()} state={pending && "loading"} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </div>
   )
