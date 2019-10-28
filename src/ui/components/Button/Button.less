@@ -60,7 +60,7 @@
     opacity: .8;
   }
 
-  &:not(.outline) {
+  &:not(.outline):not(.lite):not(.negative_outline):not(.secondary) {
     color: var(--uikit-contrast-primary);
   }
 
@@ -190,6 +190,16 @@
     }
   }
 
+
+  &.lite {
+    background: transparent;
+    box-shadow: none;
+
+    &:after {
+      display: none;
+    }
+  }
+
   &.negative {
     background: var(--uikit-negative);
     opacity: .8;
@@ -248,7 +258,6 @@
     top: 0;
     left: 0;
     animation: Button__loader_anim 1s infinite linear;
-    color: var(--uikit-contrast-primary);
   }
 }
 

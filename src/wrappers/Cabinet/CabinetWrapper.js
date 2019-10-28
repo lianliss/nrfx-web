@@ -64,9 +64,9 @@ class CabinetWrapper extends Component {
       {adaptive ? <AdaptiveHeader
         leftContent={<span>{content.left}</span>}
         rightContent={
-          <div onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})} >
+          !user && (<div onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})} >
             <SVG src={require("../../asset/24px/login.svg")} />
-          </div>
+          </div>)
         }
         mainContent={{
           type: "text",

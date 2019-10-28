@@ -194,7 +194,7 @@ class Orders extends React.Component {
             <UI.NumberFormat number={order.price} currency={order.secondary_coin} />
           </UI.TableColumn>
           <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">-</UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.avg_price} currency={order.secondary_coin} /></UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} />
           </UI.TableColumn>
@@ -204,7 +204,7 @@ class Orders extends React.Component {
         </UI.TableCell>
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>
-          <UI.TableColumn sub="-">
+          <UI.TableColumn sub={<UI.NumberFormat number={order.avg_price} currency={order.secondary_coin} />}>
             <UI.NumberFormat number={order.price} currency={order.secondary_coin} />
           </UI.TableColumn>
           <UI.TableColumn sub={

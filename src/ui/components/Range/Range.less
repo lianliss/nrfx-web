@@ -1,0 +1,42 @@
+.Range {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(161, 161, 161, .3);
+  margin: 40px 0;
+}
+
+.Range__filler {
+  height: 100%;
+  background: var(--uikit-primary);
+}
+
+.Range__thumb {
+  display: flex;
+  justify-content: center;
+  cursor: grab;
+  position: absolute;
+  margin-top: -6px;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  margin-left: -8px;
+  background: white;
+  border: 4px solid var(--uikit-primary);
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.Range__label {
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  margin-top: -25px;
+}
+
+body.draggable {
+  user-select: none;
+}

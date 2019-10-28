@@ -73,7 +73,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content', null, {type: "terms"})}>
+            <span onClick={ () => actions.openModal('static_content',{type: "terms"})}>
               {utils.getLang('site__headerTerms')}
             </span>
           ),
@@ -81,7 +81,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content', null, {type: "privacy"})}>
+            <span onClick={ () => actions.openModal('static_content', {type: "privacy"})}>
               {utils.getLang('site__headerPrivacyPolicy')}
             </span>
           ),
@@ -124,14 +124,14 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                 <UI.Button
                   type="outline"
                   fontSize={15}
-                  onClick={actions.openModal('auth', { type: steps.LOGIN })}
+                  onClick={() => actions.openModal('auth', { type: steps.LOGIN })}
                 >
                   {utils.getLang('site__headerLogIn')}
                 </UI.Button>,
                 <UI.Button
                   type="outline_white"
                   fontSize={15}
-                  onClick={actions.openModal('auth', { type: steps.REGISTRATION })}
+                  onClick={() => actions.openModal('auth', { type: steps.REGISTRATION })}
                 >
                   {utils.getLang('site__commerceRegistration')}
                 </UI.Button>

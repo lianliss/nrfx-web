@@ -22,15 +22,20 @@ function ConfirmPhone({ changeStep, params }) {
   });
   const [errorMsg, setErrorMsg] = useState('');
   const [countryCode, changeCode] = useState(currentCode);
+  const [pending, setPending] = useState(false);
   const [number, changeNumber] = useState(params.phoneNumber);
 
   const handleSubmit = () => {
+    setPending(true);
     sendSmsCode(countryCode, number, params.googleCode)
       .then(() => {
         setErrorMsg('');
         changeStep(steps.CONFIRM_CODE, { countryCode, number });
       })
-      .catch((err) => setErrorMsg(err.message));
+      .catch((err) => setErrorMsg(err.message))
+      .finally(() => {
+        setPending(false);
+      });
   }
 
   const handleNumberFocus = (e) => {
@@ -66,7 +71,7 @@ function ConfirmPhone({ changeStep, params }) {
       </div>
 
       <div className="AuthModal__footer">
-        <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalSendCode')}</UI.Button>
+        <UI.Button state={pending && "loading"} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalSendCode')}</UI.Button>
       </div>
     </div>
   )

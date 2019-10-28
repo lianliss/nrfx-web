@@ -58,7 +58,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
-                <span onClick={ () => actions.openModal('static_content', null, {type: "terms"})} className="AuthModal__content__terms__link">{utils.getLang('site__authModalTermsConditions')}</span>
+                <span onClick={ () => actions.openModal('static_content', {type: "terms"})} className="AuthModal__content__terms__link">{utils.getLang('site__authModalTermsConditions')}</span>
               </div>
             </div>
 

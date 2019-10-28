@@ -188,11 +188,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           </UI.Button>
         </div>
       </div>
-      <div className="CabinetSettingsScreen__space">
-      </div>
-      <div className="CabinetSettingsScreen__header">
-        {utils.getLang("site__authModalSecretKey")}
-      </div>
+      <div className="CabinetSettingsScreen__space"></div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
@@ -204,20 +200,29 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
         <div className="CabinetSettingsScreen__form right">
         </div>
       </div>
-      {/*<div className="CabinetSettingsScreen__header">
-        2FA Authorization
-      </div>
+      {/*<div className="CabinetSettingsScreen__space"></div>
+      <div className="CabinetSettingsScreen__header">{utils.getLang('cabinet_settings2FA')}</div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__switch_field">
-            <span>Google Authenticator</span>
+            <span>{utils.getLang('global_ga')}</span>
             <span>
-              <UI.Switch on={Math.random() >= 0.5} onChange={(e) => {console.log(e)}}/>
+              <UI.Switch on={true} disabled />
             </span>
           </div>
         </div>
         <div className="CabinetSettingsScreen__form right">
         </div>
+      </div>
+      <div className="CabinetSettingsScreen__space"></div>
+      <div className="CabinetSettingsScreen__header">
+        {utils.getLang("site__authModalSecretKey")}
+      </div>
+      <div className="CabinetSettingsScreen__space"></div>
+      <div className="CabinetSettingsScreen__header">{utils.getLang('cabinet_sessionTimeout')}</div>
+      <div className="CabinetSettingsScreen__relative">
+        <p>Session timeout represents the event occuring when a user do not perform any action on a web site during a interval (defined by web server). The event, on server side, change the status of the user session to 'invalid' (ie. "not used anymore") and instruct the web server to destroy it (deleting all data contained into it).</p>
+        <UI.Range min={0} max={12} formatLabel={value => value + " Hour"} value={3} />
       </div>*/}
     </div>
   };
