@@ -34,7 +34,12 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
           >{tab.label}</div>
         )
       })}
-      <div className="SwitchTabs__indicator" style={{ width: `calc(${indicatorWidth}% + 2px)`, transform: `translateX(${getSelectedIndex() * 100}%)` }} />
+      <div
+        className="SwitchTabs__indicator"
+        style={{
+          width: `calc(${indicatorWidth}% + 2px)`,
+          transform: `translateX(calc((100% - 2px) * ${getSelectedIndex()}))`,
+        }} />
     </div>
   )
 }

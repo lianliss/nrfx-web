@@ -24,6 +24,9 @@ class OpenDepositModal extends React.Component {
     currency: 'btc',
     touched: false,
     pending: false,
+    acceptTerms: false,
+    // isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
+    isPool: false
   };
 
   componentDidMount() {
@@ -62,6 +65,10 @@ class OpenDepositModal extends React.Component {
       plans: this.props.thisState.plans.map(p => p["static"])
     })
   }
+
+  __handleToggleTerms = (value) => {
+    this.setState({acceptTerms: !this.state.acceptTerms});
+  };
 
   __getPlans = (value = {}) => {
     const {currency, amount, selectDepositType} = this.props.thisState;
@@ -127,11 +134,10 @@ class OpenDepositModal extends React.Component {
   };
 
   render() {
-    let typeInfoRows;
-
+    const { selectDepositType } = this.props.thisState;
     const currencyInfo = actions.getCurrencyInfo(this.props.thisState.currency);
-    if (this.props.thisState.selectDepositType === 'static') {
-      typeInfoRows = [
+    const typeInfoRowsData = {
+      static: [
         {
           label: utils.getLang('cabinet_openNewDeposit_income'),
           icon: require('../../../asset/24px/bar-chart.svg')
@@ -144,9 +150,8 @@ class OpenDepositModal extends React.Component {
           label: utils.getLang('cabinet_openNewDeposit_conclusion'),
           icon: require('../../../asset/24px/withdraw.svg')
         }
-      ];
-    } else {
-      typeInfoRows = [
+      ],
+      dynamic: [
         {
           label: utils.getLang('cabinet_openNewDeposit_progressive'),
           icon: require('../../../asset/24px/bar-chart.svg')
@@ -155,8 +160,20 @@ class OpenDepositModal extends React.Component {
           label: utils.getLang('cabinet_openNewDeposit_reduction'),
           icon: require('../../../asset/24px/withdraw.svg')
         }
-      ];
-    }
+      ],
+      // pool: [
+      //   {
+      //     label: utils.getLang('cabinet_openNewDeposit_progressive'),
+      //     icon: require('../../../asset/24px/bar-chart.svg')
+      //   },
+      //   {
+      //     label: utils.getLang('cabinet_openNewDeposit_reduction'),
+      //     icon: require('../../../asset/24px/withdraw.svg')
+      //   }
+      // ],
+    };
+
+    const typeInfoRows = typeInfoRowsData[selectDepositType];
 
     return (
       <UI.Modal noSpacing className="OpenDepositModal__wrapper" isOpen={true} onClose={this.props.onClose}>
@@ -204,8 +221,9 @@ class OpenDepositModal extends React.Component {
               onChange={(selectDepositType) => this.__setState({ selectDepositType }, null, this.__getPlans({ selectDepositType }))}
               tabs={[
                 { value: 'static', label: 'Static' },
-                { value: 'dynamic', label: 'Dynamic' }
-              ]}
+                { value: 'dynamic', label: 'Dynamic' },
+                // (this.state.isPool && { value: 'pool', label: 'Pool' })
+              ].filter(Boolean)}
             />
             <div className="OpenDepositModal__type_info">
               {typeInfoRows.map((item, i) => {
@@ -216,31 +234,47 @@ class OpenDepositModal extends React.Component {
                   </div>
                 )
               })}
-              <a href="#" onClick={this.__handleClickMore.bind(this)} className="OpenDepositModal__type_info__more">
-                {utils.getLang('cabinet_openNewDeposit_more')}
-              </a>
+              {
+                selectDepositType !== 'pool' &&
+                <a href="#" onClick={this.__handleClickMore.bind(this)} className="OpenDepositModal__type_info__more">
+                  {utils.getLang('cabinet_openNewDeposit_more')}
+                </a>
+              }
             </div>
           </div>
-          <div className="OpenDepositModal__row">
-            <UI.Dropdown
-              value={this.props.thisState.planCurrentOption}
-              options={this.props.thisState.planOptions}
-              onChange={item => {
-                item && this.__setState({
-                  planId: item.value,
-                  planCurrentOption: item,
-                  amountMax: item.max,
-                  amountMin: item.min
-                })
-              }}
-            />
-          </div>
+          {selectDepositType !== 'pool' &&
+            <div className="OpenDepositModal__row">
+              <UI.Dropdown
+                value={this.props.thisState.planCurrentOption}
+                options={this.props.thisState.planOptions}
+                onChange={item => {
+                  item && this.__setState({
+                    planId: item.value,
+                    planCurrentOption: item,
+                    amountMax: item.max,
+                    amountMin: item.min
+                  })
+                }}
+              />
+            </div>
+          }
+
           { this.props.thisState.error && <div className="OpenDepositModal__error">{this.props.thisState.error}</div>}
+
+          { selectDepositType === 'pool' &&
+            <div className="OpenDepositModal__termsConditions">
+              <UI.CheckBox checked={this.state.acceptTerms} onChange={this.__handleToggleTerms} />
+              <span onClick={ () => actions.openModal('static_content', {type: "pool_terms"})} className="">
+                {utils.getLang('cabinet_investmentAcceptTerms')}
+              </span>
+            </div>
+          }
+
           <div className="OpenDepositModal__btn_wrapper">
             <UI.Button
               currency={this.props.thisState.currency}
               onClick={this.handleSubmit.bind(this)}
-              disabled={this.state.pending}
+              disabled={this.state.pending || (selectDepositType === 'pool' && !this.state.acceptTerms)}
             >
               {utils.getLang('cabinet_openNewDeposit_invest')}
             </UI.Button>
