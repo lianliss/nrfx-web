@@ -119,7 +119,7 @@ class OpenDepositModal extends React.Component {
         deposit_type: this.props.thisState.selectDepositType
       }).then(({plans}) => {
         toasts.success(utils.getLang('cabinet_openNewDeposit_depositCreated'));
-        this.props.modalGroupSetActiveModal();
+        this.props.onClose();
       }).catch((err) => {
         this.__setState({error: err.message});
       }).finally(() => {
