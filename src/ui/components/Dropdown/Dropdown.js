@@ -38,12 +38,10 @@ class Dropdown extends React.Component {
   };
 
   __handleClick(e) {
-    console.log('e', this.refs.dropdown, !this.refs.dropdown.contains(e.target));
     this.toggle(false);
   }
 
   __handleClickEsc(e){
-    console.log('e', e);
     if(e.keyCode === 27) {
       this.toggle(false);
     }

@@ -1,7 +1,7 @@
 import * as auth from './auth';
 
-const API_ENTRY = 'https://api.bitcoinbot.pro';
-// const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
+// const API_ENTRY = 'https://api.bitcoinbot.pro';
+const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
 const API_VERSION = 1;
 
 export const EXPORT_API_VERSION = API_VERSION;
@@ -48,7 +48,7 @@ export function invoke(method, name, params, options = {}) {
 
     fetch(url, init)
       .then(resp => {
-        if (resp.status === 403) {
+        if (resp.status === 403 && window.location.pathname  !== '/') {
           auth.logout();
           window.location.href = '/';
           return;

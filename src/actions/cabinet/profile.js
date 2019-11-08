@@ -4,9 +4,9 @@
 import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
-import * as toastsActions from './toasts';
+import * as toastsActions from '../toasts';
 import * as modalGroup from '../modalGroup';
-import * as utils from '../../utils/index';
+import * as utils from '../../utils';
 
 export function loadDashboard() {
   return (dispatch, getState) => {

@@ -1,5 +1,5 @@
 import * as storage from './storage';
-import { INTERNAL_NOTIFICATION_KEY } from '../constants/internalNotifications'
+import { INTERNAL_NOTIFICATION_KEY } from '../index/constants/internalNotifications'
 
 export function getToken() {
   return storage.getItem('access_token');

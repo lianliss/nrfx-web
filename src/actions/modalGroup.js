@@ -4,10 +4,7 @@
 import store from '../store';
 import router from '../router';
 import * as actionTypes from './actionTypes';
-import * as modalGroupConstant from '../constants/modalGroup';
-import ConfirmModal from '../components/cabinet/ConfirmModal/ConfirmModal';
-import * as utils from '../utils';
-import UI from '../ui';
+import * as modalGroupConstant from '../index/constants/modalGroup';
 import React from 'react';
 
 export function modalGroupSetActiveModal(name) {

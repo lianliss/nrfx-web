@@ -9,6 +9,7 @@ const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
+const isAdmin = process.env.DOMAIN === 'admin';
 
 module.exports = function(proxy, allowedHost) {
   return {
@@ -35,6 +36,7 @@ module.exports = function(proxy, allowedHost) {
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
     clientLogLevel: 'none',
+    index: 'no_index.html',
     // By default WebpackDevServer serves physical files from current directory
     // in addition to all the virtual build products that it serves from memory.
     // This is confusing because those files won’t automatically be available in
@@ -75,13 +77,26 @@ module.exports = function(proxy, allowedHost) {
     https: protocol === 'https',
     host,
     overlay: false,
-    historyApiFallback: {
-      // Paths with dots should still use the history fallback.
-      // See https://github.com/facebook/create-react-app/issues/387.
-      disableDotRule: true,
-    },
+    historyApiFallback: true,
     public: allowedHost,
-    proxy,
+    proxy: {
+      '*': {
+        secure: false,
+        changeOrigin: true,
+        bypass: () => {
+          return isAdmin ? '/admin.html' : '/index.html';
+        }
+      }
+    },
+    // proxy: {
+    //   '*': {
+    //     secure: false,
+    //     changeOrigin: true,
+    //     bypass: function(req, res, proxyOptions) {
+    //       return req.headers.host.split('.')[0] == 'admin' ? '/admin.html' : '/index.html';
+    //     }
+    //   }
+    // },
     before(app, server) {
       if (fs.existsSync(paths.proxySetup)) {
         // This registers user provided middleware for proxy reasons

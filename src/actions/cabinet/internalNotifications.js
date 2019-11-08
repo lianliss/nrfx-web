@@ -1,9 +1,9 @@
 import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
-import * as toastsActions from './toasts';
+import * as toastsActions from '../toasts';
 import * as storage from '../../services/storage';
-import { INTERNAL_NOTIFICATION_KEY } from '../../constants/internalNotifications';
+import { INTERNAL_NOTIFICATION_KEY } from '../../index/constants/internalNotifications';
 
 export function load() {
   return (dispatch, getStore) => {

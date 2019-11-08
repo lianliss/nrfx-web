@@ -4,18 +4,18 @@ import './CabinetWrapper.less';
 import React, {Component} from 'react';
 import SVG from 'react-inlinesvg';
 // internal
-import {classNames} from '../../utils';
-import router from '../../router';
-import Header from '../../components/cabinet/Header/Header';
-import AdaptiveHeader from '../../components/cabinet/Header/AdaptiveHeader';
-import * as CLASSES from '../../constants/classes';
-import * as storeUtils from '../../storeUtils';
-import * as PAGES from '../../constants/pages'
-import * as utils from '../../utils/index'
-import TabBar from '../../components/cabinet/TabBar/TabBar';
+import {classNames} from '../../../src/utils';
+import router from '../../../src/router';
+import Header from '../../index/components/cabinet/Header/Header'
+import AdaptiveHeader from '../../index/components/cabinet/Header/AdaptiveHeader';
+import * as CLASSES from '../../index/constants/classes';
+import * as storeUtils from '../../index/storeUtils';
+import * as PAGES from '../../index/constants/pages'
+import * as utils from '../../utils'
+import TabBar from '../../index/components/cabinet/TabBar/TabBar';
 import {BaseLink} from 'react-router5';
 import * as actions from '../../actions';
-import * as steps from '../../components/site/AuthModal/fixtures';
+import * as steps from '../../components/AuthModal/fixtures';
 
 class CabinetWrapper extends Component {
   componentDidMount() {

@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import * as modalGroupRoutes from '../constants/modalGroupRoutes';
+import * as modalGroupRoutes from '../index/constants/modalGroupRoutes';
 
 const initialState = {
   activeModal: null,

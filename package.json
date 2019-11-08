@@ -89,7 +89,10 @@
   },
   "scripts": {
     "start": "cross-env HOST=127.0.0.1 PORT=3001 HTTPS=false node scripts/start.js",
+    "start:admin": "DOMAIN=admin npm start",
     "build": "node scripts/build.js",
+    "build:admin": "DOMAIN=admin node scripts/build.js",
+    "build:all": "npm run build && DOMAIN=admin node scripts/build.js",
     "ui": "npx styleguidist server",
     "eslint": "eslint . --ext .js",
     "eslint:fix": "eslint . --ext .js --fix",

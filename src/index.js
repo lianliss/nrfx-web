@@ -1,5 +1,5 @@
 // styles
-import './index.less';
+import './index/index.less';
 // external
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,14 +9,14 @@ import { RouterProvider } from 'react-router5';
 import store from './store';
 import router from './router';
 import initGetParamsData from './services/initialGetParams';
-import { GetParamsContext } from './contexts';
-import App from './App';
+import { GetParamsContext } from './index/contexts';
+import App from './index/App';
 // import * as serviceWorker from './serviceWorker';
 import * as auth from './services/auth';
 import * as user from './actions/user';
 import * as emitter from './services/emitter';
 import realTimeService from './services/realtime';
-import './polyfill';
+import './index/polyfill';
 
 require('define').noConflict();
 auth.setup();
