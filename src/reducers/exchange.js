@@ -33,7 +33,7 @@ export default function reduce(state = initialState, action = {}) {
       let tickerInfo = action.ticker;
 
       let balanceInfo = {};
-      let [primary, secondary] = action.market.split('/');
+      let [primary, secondary] = action.market.toUpperCase().split('/');
 
       if (action.balances) {
         for (let balance of action.balances) {

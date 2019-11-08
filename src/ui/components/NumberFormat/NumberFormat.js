@@ -6,7 +6,7 @@ import { classNames } from '../../utils';
 
 import * as utils from '../../utils/index';
 
-const FormatNumber = ({ number, fractionDigits, skipTitle, currency, type, percent, indicator, brackets }) => {
+const NumberFormat = ({ number, fractionDigits, skipTitle, currency, type, percent, indicator, brackets }) => {
   if (!fractionDigits) {
     fractionDigits = utils.isFiat(currency) ? 2 : 8;
   }
@@ -41,7 +41,7 @@ const FormatNumber = ({ number, fractionDigits, skipTitle, currency, type, perce
   );
 }
 
-FormatNumber.defaultProps = {
+NumberFormat.defaultProps = {
   fractionDigits: null,
   percent: false,
   indicator: false,
@@ -50,7 +50,7 @@ FormatNumber.defaultProps = {
   type: '',
 }
 
-FormatNumber.propTypes = {
+NumberFormat.propTypes = {
   fractionDigits: PropTypes.number,
   skipTitle: PropTypes.bool,
   percent: PropTypes.bool,
@@ -60,4 +60,4 @@ FormatNumber.propTypes = {
   currency: PropTypes.string
 };
 
-export default React.memo(FormatNumber);
+export default React.memo(NumberFormat);

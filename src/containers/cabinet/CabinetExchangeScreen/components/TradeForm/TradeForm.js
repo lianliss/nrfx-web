@@ -113,13 +113,13 @@ export default class TradeForm extends React.Component {
             <div className="TradeForm__adaptive_form__buttons">
               <UI.Button
                 type="buy"
-                disabled={pending.buy}
+                state={pending.buy && "loading"}
                 onClick={() => this.__handleOrderCreate("buy")}
               >{utils.getLang('exchange_action_buy')}</UI.Button>
 
               <UI.Button
                 type="sell"
-                disabled={pending.sell}
+                state={pending.sell && "loading"}
                 onClick={() => this.__handleOrderCreate("sell")}
               >{utils.getLang('exchange_action_sell')}</UI.Button>
             </div>
@@ -184,7 +184,7 @@ export default class TradeForm extends React.Component {
                 size="middle"
                 type="buy"
                 onClick={() => this.__handleOrderCreate("buy")}
-                disabled={pending.buy}
+                state={pending.buy && 'loading'}
               >{utils.getLang('exchange_action_buy')}</UI.Button>
             </div>
             <div className="TradeForm__form__row percents">
@@ -194,7 +194,7 @@ export default class TradeForm extends React.Component {
               <UI.Button
                 size="middle"
                 type="sell"
-                disabled={pending.sell}
+                state={pending.sell && 'loading'}
                 onClick={() => this.__handleOrderCreate("sell")}
               >{utils.getLang('exchange_action_sell')}</UI.Button>
             </div>
