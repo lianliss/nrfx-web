@@ -3,7 +3,7 @@ import Table, { TableCell, TableColumn } from './Table.js';
 
 <Table headings={[
       <TableColumn>Title 1</TableColumn>,
-      <TableColumn>Title 2</TableColumn>,
+      <TableColumn sub="sub">Title 2</TableColumn>,
       <TableColumn>Title 3</TableColumn>,
       <TableColumn>Title 4</TableColumn>
 ]}>

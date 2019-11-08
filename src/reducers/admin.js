@@ -6,7 +6,7 @@ const initialState = {
   layout: [],
   modals: {},
   values: {},
-  pending: true,
+  pending: false,
   tabs: {}
 };
 
@@ -17,6 +17,18 @@ const activeTab = (id, state, items) => {
     } else {
       Object.keys(state).forEach(key => {
         activeTab(id, state[key], items);
+      })
+    }
+  }
+};
+
+const deleteById = (id, state) => {
+  if (state && ['object', 'array'].includes(typeof state)) {
+    if (state.id === id) {
+      state.type = 'deleted';
+    } else {
+      Object.keys(state).forEach(key => {
+        deleteById(id, state[key]);
       })
     }
   }
@@ -81,6 +93,13 @@ export default function reduce(state = initialState, action = {}) {
     case 'show_tab': {
       const newState = { ...state };
       activeTab(params.id, newState, params.layout);
+
+      return newState;
+    }
+
+    case 'delete_table_row': {
+      const newState = { ...state };
+      deleteById(params.id, newState);
 
       return newState;
     }

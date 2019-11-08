@@ -15,6 +15,10 @@ export const routes = process.env.DOMAIN === 'admin' ? [
   },
   {
     name: adminPages.PANEL,
+    path: `/panel`,
+  },
+  {
+    name: adminPages.PANEL_PAGE,
     path: `/panel/:page`,
   },
   {

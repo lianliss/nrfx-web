@@ -34,8 +34,7 @@ class App extends React.Component {
     const lang = getLang();
     setLang(lang);
     Promise.all([
-      actions.loadLang(lang),
-      adminActions.init()
+      actions.loadLang(lang)
     ])
       .then(() => {
         this.setState({isLoading: false});

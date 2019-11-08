@@ -12,7 +12,7 @@ import AdminWrapper from '../wrappers/Admin/AdminWrapper';
 import router from '../router';
 
 router.addListener((state, prevState)  => {
-  if (!state.params.modal) {
+  if (state.name == pages.PANEL_PAGE && !state.params.modal) {
     action({
       type: 'show_page',
       params: {
@@ -35,11 +35,16 @@ function Routes(props) {
     router.navigate(pages.MAIN);
   }
 
+  if (route === pages.MAIN && props.user) {
+    router.navigate(pages.PANEL);
+  }
+
   switch (route) {
     case pages.MAIN:
       Component = MainScreen;
       break;
     case pages.PANEL:
+    case pages.PANEL_PAGE:
       Component = PanelScreen;
       WrapperComponent = AdminWrapper;
       break;

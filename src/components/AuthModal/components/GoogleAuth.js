@@ -26,7 +26,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         if (data.status === 'phone_not_verified') {
           changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
         } else if (process.env.DOMAIN === 'admin') {
-          router.navigate(adminPages.PANEL, { page: 'test' });
+          router.navigate(adminPages.PANEL);
         } else {
           window.location.href = router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.PROFILE;
         }

@@ -10,6 +10,7 @@ import * as pages from '../../index/constants/pages';
 import * as adminPages from '../../admin/constants/pages';
 
 export function init() {
+
   return api.call(apiSchema.Admin.DefaultGet).then((resp) => {
     store.dispatch({type: actionTypes.ADMIN_INIT, data: resp});
   }).catch((err) => {
@@ -52,7 +53,7 @@ export default function action(action) {
           toast[action.params.type](action.params.message);
           break;
         case 'show_page':
-          router.navigate(adminPages.PANEL, { page: action.params.page});
+          router.navigate(adminPages.PANEL_PAGE, { page: action.params.page});
           break;
       }
       store.dispatch({type: action.type, params: action.params});
