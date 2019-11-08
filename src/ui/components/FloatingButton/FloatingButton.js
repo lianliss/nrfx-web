@@ -7,8 +7,8 @@ export default function FloatingButton(props) {
   const [opened, open] = useState(false);
   return (
     <div>
-      <div className={utils.classNames({"FloatingButton__back": props.wrapper, opened })} onClick={() =>  open(false)} />
-      <div className={utils.classNames("FloatingButton", { opened })}>
+      <div className={utils.classNames({"FloatingButton__back": props.wrapper, opened, static: props.static })} onClick={() =>  open(false)} />
+      <div className={utils.classNames("FloatingButton", { opened, static: props.static })}>
         <div className="FloatingButton__menu" onClick={() => open(false)}>{ opened && props.children}</div>
         <div className="FloatingButton__button" onClick={() => {
           open(!opened);
