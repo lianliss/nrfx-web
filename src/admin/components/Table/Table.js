@@ -9,7 +9,7 @@ class TableComponent extends React.Component {
     const { props } = this;
     return (
       <Table skipContentBox headings={props.header.items.map(column => (
-        <TableColumn><Item item={column.value}/></TableColumn>
+        <TableColumn sub={column.sub_value}><Item item={column.value}/></TableColumn>
       ))}>
         {props.items.filter(row => row.type !== 'deleted').map(row => (
           <TableCell>{row.items.map(column => (
@@ -20,7 +20,6 @@ class TableComponent extends React.Component {
     );
   }
 }
-
 
 export default connect(state => ({
   state: state.admin
