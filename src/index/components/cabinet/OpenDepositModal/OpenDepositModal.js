@@ -25,8 +25,7 @@ class OpenDepositModal extends React.Component {
     touched: false,
     pending: false,
     acceptTerms: false,
-    // isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
-    isPool: false
+    isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
   };
 
   componentDidMount() {
@@ -73,6 +72,10 @@ class OpenDepositModal extends React.Component {
   __getPlans = (value = {}) => {
     const {currency, amount, selectDepositType} = this.props.thisState;
 
+    if ((value.selectDepositType || selectDepositType) === 'pool') {
+      return false;
+    }
+
     currency && selectDepositType &&
     api.call(apiSchema.Investment.PlansGet, {
       currency: value.currency || currency,
@@ -112,7 +115,9 @@ class OpenDepositModal extends React.Component {
     if (this.props.thisState.amount) {
       this.setState({ pending: true });
 
-      api.call(apiSchema.Investment.DepositPut, {
+      const pool = this.props.thisState.selectDepositType === 'pool';
+
+      api.call(apiSchema.Investment[pool ? 'PoolDepositPut' : 'DepositPut'], {
         amount: this.props.thisState.amount,
         wallet_id: this.props.thisState.walletId,
         plan_id: this.props.thisState.planId,
@@ -161,16 +166,16 @@ class OpenDepositModal extends React.Component {
           icon: require('../../../../asset/24px/withdraw.svg')
         }
       ],
-      // pool: [
-      //   {
-      //     label: utils.getLang('cabinet_openNewDeposit_progressive'),
-      //     icon: require('../../../asset/24px/bar-chart.svg')
-      //   },
-      //   {
-      //     label: utils.getLang('cabinet_openNewDeposit_reduction'),
-      //     icon: require('../../../asset/24px/withdraw.svg')
-      //   }
-      // ],
+      pool: [
+        {
+          label: utils.getLang('cabinet_openNewDeposit_progressive'),
+          icon: require('../../../../asset/24px/bar-chart.svg')
+        },
+        {
+          label: utils.getLang('cabinet_openNewDeposit_reduction'),
+          icon: require('../../../../asset/24px/withdraw.svg')
+        }
+      ],
     };
 
     const typeInfoRows = typeInfoRowsData[selectDepositType];
@@ -222,7 +227,7 @@ class OpenDepositModal extends React.Component {
               tabs={[
                 { value: 'static', label: 'Static' },
                 { value: 'dynamic', label: 'Dynamic' },
-                // (this.state.isPool && { value: 'pool', label: 'Pool' })
+                (this.state.isPool && { value: 'pool', label: 'Pool' })
               ].filter(Boolean)}
             />
             <div className="OpenDepositModal__type_info">

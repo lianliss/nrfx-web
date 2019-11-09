@@ -9,19 +9,19 @@ import Table, { TableCell, TableColumn } from './Table.js';
 ]}>
   <TableCell>
       <TableColumn>Column 1</TableColumn>
-      <TableColumn>Column 2</TableColumn>
+      <TableColumn sub="sub">Column 2</TableColumn>
       <TableColumn>Column 3</TableColumn>
       <TableColumn>Column 4</TableColumn>
   </TableCell>
   <TableCell>
       <TableColumn>Column 1</TableColumn>
-      <TableColumn>Column 2</TableColumn>
+      <TableColumn sub="sub">Column 2</TableColumn>
       <TableColumn>Column 3</TableColumn>
       <TableColumn>Column 4</TableColumn>
   </TableCell>
   <TableCell>
       <TableColumn>Column 1</TableColumn>
-      <TableColumn>Column 2</TableColumn>
+      <TableColumn sub="sub">Column 2</TableColumn>
       <TableColumn>Column 3</TableColumn>
       <TableColumn>Column 4</TableColumn>
   </TableCell>

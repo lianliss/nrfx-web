@@ -36,7 +36,7 @@ module.exports = function(proxy, allowedHost) {
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
     clientLogLevel: 'none',
-    index: 'no_index.html',
+    index: 'index.html',
     // By default WebpackDevServer serves physical files from current directory
     // in addition to all the virtual build products that it serves from memory.
     // This is confusing because those files won’t automatically be available in
@@ -79,15 +79,15 @@ module.exports = function(proxy, allowedHost) {
     overlay: false,
     historyApiFallback: true,
     public: allowedHost,
-    proxy: {
-      '*': {
-        secure: false,
-        changeOrigin: true,
-        bypass: () => {
-          return isAdmin ? '/admin.html' : '/index.html';
-        }
-      }
-    },
+    // proxy: {
+    //   '*': {
+    //     secure: false,
+    //     changeOrigin: true,
+    //     bypass: () => {
+    //       return isAdmin ? '/admin.html' : '/index.html';
+    //     }
+    //   }
+    // },
     // proxy: {
     //   '*': {
     //     secure: false,

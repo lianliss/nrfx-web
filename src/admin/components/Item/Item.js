@@ -8,6 +8,10 @@ import Input from '../Input/Input';
 import action from '../../../actions/admin/index';
 import List from '../../../ui/components/List/List';
 import Tabs from '../Tabs/Tabs';
+import Paging from '../Paging/Paging';
+import PagingItem from '../Paging/PagingItem';
+import TableFilter from '../TableFilter/TableFilter';
+import Label from '../../../ui/components/Label/Label';
 import Message from '../../../ui/components/Message/Message';
 import ActionSheet from '../../../ui/components/ActionSheet/ActionSheet';
 
@@ -37,6 +41,17 @@ const Item = ({item}) => {
       break;
     case 'table':
       Component = Table;
+      break;
+    case 'paging':
+      Component = Paging;
+      break;
+    case 'paging_item':
+      Component = PagingItem;
+      break;
+    case 'table_filter':
+      Component = props => (
+        <Label {...props} onCancel={handleClick} />
+      );
       break;
     case 'action_sheet':
       Component = () => (

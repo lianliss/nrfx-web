@@ -34,10 +34,12 @@ export default function action(action) {
 
   const {type, params, values} = action;
 
+  let newValues = {...values};
+
   const state = store.getState();
 
-  values && Object.keys(values).map(key => {
-    values[key] = state.admin.values[values[key]];
+  values && Object.keys(newValues).map(key => {
+    newValues[key] = state.admin.values[newValues[key]];
   });
 
   store.dispatch({type: 'pending', params: true});
@@ -45,7 +47,7 @@ export default function action(action) {
   return api.call(apiSchema.Admin.ActionPost, {
     action: type,
     params: JSON.stringify(params),
-    values: JSON.stringify(values || {})
+    values: JSON.stringify(newValues || {})
   }).then((actions) => {
     actions.map(action => {
       switch(action.type) {

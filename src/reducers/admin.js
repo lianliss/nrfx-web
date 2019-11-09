@@ -34,6 +34,20 @@ const deleteById = (id, state) => {
   }
 };
 
+const updateTable = (id, state, layout) => {
+  if (state && ['object', 'array'].includes(typeof state)) {
+    if (state.id === id) {
+      Object.keys(layout).map(key => {
+        state[key] = layout[key];
+      })
+    } else {
+      Object.keys(state).forEach(key => {
+        updateTable(id, state[key], layout);
+      })
+    }
+  }
+};
+
 export default function reduce(state = initialState, action = {}) {
   const { params } = action;
   switch (action.type) {
@@ -100,6 +114,13 @@ export default function reduce(state = initialState, action = {}) {
     case 'delete_table_row': {
       const newState = { ...state };
       deleteById(params.id, newState);
+
+      return newState;
+    }
+
+    case 'reload_table': {
+      const newState = { ...state };
+      updateTable(params.id, newState, params.layout);
 
       return newState;
     }

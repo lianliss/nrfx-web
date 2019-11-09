@@ -4,13 +4,16 @@ import React from 'react';
 import Logo from '../../../ui/components/Logo/Logo';
 import * as auth from '../../../actions/auth';
 import * as actions from '../../../actions';
-import * as utils from '../../../utils';
-import * as exchange from '../../../actions/cabinet/exchange';
+import { BaseLink } from 'react-router5';
+import router from '../../../router';
+import * as PAGES from '../../constants/pages';
 
 export default props => {
   return (
     <div className="Header">
-      <Logo />
+      <BaseLink router={router} routeName={PAGES.PANEL}>
+        <Logo />
+      </BaseLink>
       <div className="Header__title">Admin Panel</div>
       <div className="Header__menu">
         <div className="Header__menu_item" onClick={() => {
@@ -20,6 +23,7 @@ export default props => {
             content: "Do you really want to logout?",
             okText: "Logout",
           }).then(() => {
+            router.navigate(PAGES.MAIN);
             auth.logout();
           });
         }}>Logout</div>

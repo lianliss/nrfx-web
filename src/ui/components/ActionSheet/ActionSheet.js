@@ -4,7 +4,7 @@ import { classNames as cn } from '../../utils/index';
 import React, { Component } from 'react';
 import SVG from 'react-inlinesvg';
 
-export default class ActionsSheet extends React.Component {
+export default class ActionSheet extends React.Component {
 
   state = {
     visible: false,

@@ -2,7 +2,6 @@ import './DepositInfoModal.less';
 
 import React from 'react';
 import UI from '../../../../ui';
-import moment from 'moment/min/moment-with-locales';
 
 import InfoRow, { InfoRowGroup } from '../../cabinet/InfoRow/InfoRow';
 import * as utils from '../../../../utils';
@@ -23,7 +22,7 @@ export default class DepositInfoModal extends React.Component {
     return (
       <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
-          {utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.plan_percent}% {deposit.description}
+          {deposit.type === 'pool' ? utils.getLang('cabinet_detailsInvestmentPoolTitle') : (`${utils.getLang('cabinet_depositInfoModal_deposit')} ${deposit.plan_percent}% ${deposit.description}`)}
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
