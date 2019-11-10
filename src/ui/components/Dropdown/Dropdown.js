@@ -56,6 +56,7 @@ class Dropdown extends React.Component {
 
     const className = classNames({
       Dropdown: true,
+      disabled: props.disabled,
       Dropdown_open: state.isOpen,
       [props.size]: props.size
     });
@@ -118,6 +119,7 @@ Dropdown.propTypes = {
     PropTypes.bool,
     optionType
   ]),
+  disabled: PropTypes.bool,
   options: PropTypes.arrayOf(optionType).isRequired,
   onChange: PropTypes.func.isRequired,
 };

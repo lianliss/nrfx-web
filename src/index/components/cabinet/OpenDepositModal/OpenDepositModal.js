@@ -25,7 +25,8 @@ class OpenDepositModal extends React.Component {
     touched: false,
     pending: false,
     acceptTerms: false,
-    isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
+    // isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
+    isPool: true
   };
 
   componentDidMount() {
@@ -52,7 +53,7 @@ class OpenDepositModal extends React.Component {
         currency: walletCurrentOption.currency,
         walletId: walletCurrentOption.value
       }, null, this.__getPlans);
-    }).catch(() => {
+    }).catch(err => {
       console.log("Error");
     });
   };
@@ -72,19 +73,14 @@ class OpenDepositModal extends React.Component {
   __getPlans = (value = {}) => {
     const {currency, amount, selectDepositType} = this.props.thisState;
 
-    if ((value.selectDepositType || selectDepositType) === 'pool') {
-      return false;
-    }
-
     currency && selectDepositType &&
     api.call(apiSchema.Investment.PlansGet, {
       currency: value.currency || currency,
       amount: value.amount || amount || 0,
       deposit_type: value.selectDepositType || selectDepositType
     }, ).then(({plans}) => {
-
       const planOptions = plans.map(plan => {
-        const p = plan[this.props.thisState.selectDepositType];
+        const p = plan[this.props.thisState.selectDepositType] || {};
         return {
           value: p.id,
           title: p.description,
@@ -105,7 +101,8 @@ class OpenDepositModal extends React.Component {
         amountMin: planCurrentOption.min,
       });
     }).catch((err) => {
-      this.__setState({error: err.message});
+      toasts.error(err.message);
+      // this.__setState({error: err.message});
     });
   };
 
@@ -126,7 +123,8 @@ class OpenDepositModal extends React.Component {
         toasts.success(utils.getLang('cabinet_openNewDeposit_depositCreated'));
         this.props.onClose();
       }).catch((err) => {
-        this.__setState({error: err.message});
+        toasts.error(err.message);
+        // this.__setState({error: err.message});
       }).finally(() => {
         this.setState({ pending: false });
       });
@@ -191,6 +189,7 @@ class OpenDepositModal extends React.Component {
             <UI.Dropdown
               value={this.props.thisState.walletCurrentOption}
               options={this.props.thisState.walletOptions}
+              disabled={selectDepositType === 'pool'}
               onChange={item => {
                 item && this.__setState({
                   walletCurrentOption: item,
@@ -223,7 +222,23 @@ class OpenDepositModal extends React.Component {
             <UI.SwitchTabs
               currency={this.props.thisState.currency}
               selected={this.props.thisState.selectDepositType}
-              onChange={(selectDepositType) => this.__setState({ selectDepositType }, null, this.__getPlans({ selectDepositType }))}
+              onChange={selectDepositType => {
+                let state = {}
+                if (selectDepositType === 'pool') {
+                  const item = this.props.thisState.walletOptions[0];
+                  state = {
+                    walletCurrentOption: item,
+                    currency: item.currency,
+                    walletId: item.value
+                  }
+                }
+
+                this.__setState(
+                  { selectDepositType, ...state },
+                  null,
+                  this.__getPlans({ selectDepositType })
+                )
+              }}
               tabs={[
                 { value: 'static', label: 'Static' },
                 { value: 'dynamic', label: 'Dynamic' },
@@ -279,7 +294,7 @@ class OpenDepositModal extends React.Component {
             <UI.Button
               currency={this.props.thisState.currency}
               onClick={this.handleSubmit.bind(this)}
-              disabled={this.state.pending || (selectDepositType === 'pool' && !this.state.acceptTerms)}
+              disabled={this.state.pending || this.props.thisState.amount < this.props.thisState.amountMin || (selectDepositType === 'pool' && !this.state.acceptTerms)}
             >
               {utils.getLang('cabinet_openNewDeposit_invest')}
             </UI.Button>
