@@ -25,8 +25,8 @@ class OpenDepositModal extends React.Component {
     touched: false,
     pending: false,
     acceptTerms: false,
-    // isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
-    isPool: true
+    isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
+    // isPool: true
   };
 
   componentDidMount() {
