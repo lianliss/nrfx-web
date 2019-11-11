@@ -15,7 +15,9 @@ import Label from '../../../ui/components/Label/Label';
 import Message from '../../../ui/components/Message/Message';
 import ActionSheet from '../../../ui/components/ActionSheet/ActionSheet';
 
-const Item = ({item}) => {
+const Item = (props) => {
+  const { item } = props;
+
   let Component = null;
 
   if (typeof item !== 'object') {
@@ -76,7 +78,7 @@ const Item = ({item}) => {
       break;
   }
 
-  return <Component {...item}>{item.items && item.items.map(item => {
+  return <Component {...props} {...item}>{item.items && item.items.map(item => {
     return <Item item={item} />
   })}</Component>
 }

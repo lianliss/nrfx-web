@@ -15,7 +15,7 @@ class TableComponent extends React.Component {
           {props.filters && <div className="Table__filters">{props.filters.map(item => (
             <Item item={item} />
           ))}</div>}
-          {props.paging && <Item item={props.paging} />}
+          {props.paging && <Item totalCount={props.total_count} item={props.paging} />}
         </div>
 
         <Table skipContentBox headings={props.header.items.map(column => (
