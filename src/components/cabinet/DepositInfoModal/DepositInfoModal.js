@@ -10,12 +10,14 @@ import * as actions from '../../../actions';
 
 export default class DepositInfoModal extends React.Component {
   render() {
-    if (!this.props.deposit) {
+    const deposit = this.props.deposit;
+
+    if (!deposit) {
+      this.props.onClose();
       return null;
     }
 
     const adaptive = document.body.classList.contains('adaptive');
-    const deposit = JSON.parse(this.props.deposit);
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
     return (

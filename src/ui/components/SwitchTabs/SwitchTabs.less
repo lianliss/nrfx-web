@@ -23,10 +23,20 @@
   position: relative;
   z-index: 2;
   cursor: pointer;
-  transition: color 150ms ease-in-out;
+  transition: color 150ms ease-in-out, border-color 150ms ease-in-out;
+  border-left: 1px solid;
+
+  &:first-child {
+    border-left: none;
+  }
 
   &.active {
     color: var(--uikit-contrast-primary);
+    border-color: transparent;
+
+    & + * {
+      border-color: transparent;
+    }
   }
 }
 

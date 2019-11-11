@@ -40,6 +40,7 @@ const mapStateToProps = state => ({
   lang: state.default.lang,
   terms: state.default.terms,
   privacy: state.default.privacy,
+  pool_terms: state.default.pool_terms
 });
 
 export default React.memo(connect(mapStateToProps)(StaticContentModal));

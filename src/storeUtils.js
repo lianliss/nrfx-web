@@ -174,6 +174,7 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.OPEN_DEPOSIT_MODAL:
       mapState2Props = state => ({
+        profile: state.default.profile,
         router: state.router,
         thisState: state.investments.openDepositModal
       });
