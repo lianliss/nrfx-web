@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 // internal
 import {classNames} from '../../../utils/index';
-import {MODALGROUP_SEPARATOR} from '../../../constants/modalGroup';
+import {MODALGROUP_SEPARATOR} from '../../../index/constants/modalGroup';
 
 class ModalPage extends Component {
   static propTypes = {

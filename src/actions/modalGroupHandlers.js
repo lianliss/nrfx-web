@@ -2,7 +2,7 @@
 // external
 // internal
 import router from '../router';
-import * as modalGroupConstant from '../constants/modalGroup';
+import * as modalGroupConstant from '../index/constants/modalGroup';
 import * as modalGroupActions from './modalGroup';
 
 export function closeHandler(modalPageName) {

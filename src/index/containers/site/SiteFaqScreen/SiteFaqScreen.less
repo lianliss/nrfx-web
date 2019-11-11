@@ -1,0 +1,137 @@
+.SiteFaqScreen__heading {
+  font-weight: 500;
+  text-align: center;
+  color: var(--contrast-primary);
+  padding-top: 35px;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+
+  .SiteFaqScreen__heading__title {
+    font-size: 40px;
+    line-height: 56px;
+    letter-spacing: 1.2px;
+  }
+
+  .SiteFaqScreen__heading__subtitle {
+    font-size: 16px;
+    letter-spacing: 0.444444px;
+    line-height: 34px;
+  }
+}
+
+.SiteFaqScreen__questions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-top: 90px;
+
+  .SiteFaqScreen__questions__title {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 56px;
+    letter-spacing: 0.599999px;
+    padding: 6px 0;
+  }
+}
+
+.SiteFaqScreen__questions__section {
+  padding: 20px;
+}
+
+.SiteFaqScreen__question {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.444444px;
+  color: var(--foreground-secondary);
+  padding: 10px 0;
+  border-bottom: 2px solid #EAEAEA;
+  width: 475px;
+  cursor: pointer;
+
+
+  .SiteFaqScreen__question__text {
+    position: relative;
+    padding: 10px 0;
+
+    h3 {
+      font-weight: 500;
+    }
+
+    &:hover {
+      color: #FFA845;
+    }
+
+    &:hover:after {
+      content: '';
+      position: absolute;
+      transform: translate(458px, -24px);
+      background: url('asset/down_arrow_orange.svg') no-repeat center/contain;
+      width: 16px;
+      height: 16px;
+    }
+
+  }
+
+  .SiteFaqScreen__question__answer {
+    font-weight: 500;
+    padding: 20px 0;
+    color: var(--foreground-secondary);
+  }
+}
+
+.active_question {
+
+  .SiteFaqScreen__question__text {
+    color: var(--foreground-primary);
+
+    &:after {
+      content: '';
+      position: absolute;
+      transform: translate(458px, -24px);
+      background: url('asset/down_arrow_black.svg') no-repeat center/contain;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+
+.SiteFaqScreen__more_questions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 50px 80px;
+  background: var(--secondary-active-background);
+  margin: 80px auto;
+  width: 600px;
+
+  @media (max-width: 992px) { width: auto; }
+
+  img {
+    margin: 0 20px;
+  }
+
+  .SiteFaqScreen__more_questions__text {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 31px;
+    letter-spacing: 0.444444px;
+    margin: 20px;
+    
+    .SiteFaqScreen__more_questions__email {
+      color: var(--link-color);
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}

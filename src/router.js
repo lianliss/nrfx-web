@@ -5,9 +5,27 @@ import browserPlugin from 'router5-plugin-browser';
 import listenersPlugin from 'router5-plugin-listeners';
 import * as modalGroup from './actions/modalGroup';
 // internal
-import * as pages from './constants/pages';
+import * as pages from './index/constants/pages';
+import * as adminPages from './admin/constants/pages';
 
-export const routes = [
+export const routes = process.env.DOMAIN === 'admin' ? [
+  {
+    name: adminPages.MAIN,
+    path: '/',
+  },
+  {
+    name: adminPages.PANEL,
+    path: `/panel`,
+  },
+  {
+    name: adminPages.PANEL_PAGE,
+    path: `/panel/:page`,
+  },
+  {
+    name: adminPages.NOT_FOUND,
+    path: '/not_found',
+  }
+] : [
   {
     name: pages.MAIN,
     path: '/',
@@ -132,7 +150,7 @@ router.usePlugin(browserPlugin({
   hashPrefix: '',
   mergeState: true,
   preserveHash: false,
-  forceDeactivate: true,
+  // forceDeactivate: true,
 }));
 router.usePlugin(listenersPlugin());
 

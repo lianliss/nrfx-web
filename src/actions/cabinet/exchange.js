@@ -2,7 +2,7 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
 import store from '../../store';
-import * as toast from '../cabinet/toasts';
+import * as toast from '../toasts';
 import * as exchangeService from '../../services/exchange';
 
 export function load(market) {

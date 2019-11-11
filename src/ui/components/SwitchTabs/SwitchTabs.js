@@ -30,7 +30,7 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
               active: tab.value === selected,
               // [currency]: !!currency,
             })}
-            onClick={() => onChange(tab.value)}
+            onClick={tab.onClick || (() => onChange(tab.value))}
           >{tab.label}</div>
         )
       })}

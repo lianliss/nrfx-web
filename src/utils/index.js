@@ -41,7 +41,7 @@ export function removeProperty(object, ...properties) {
 }
 
 export function getLang(key) {
-  return store.getState().default.lang[key];
+  return store.getState().default.lang[key] || key;
 }
 
 export function getLanguage() {

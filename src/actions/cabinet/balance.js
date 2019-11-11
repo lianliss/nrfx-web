@@ -1,6 +1,6 @@
 import * as api from '../../services/api';
 import apiSchema from '../../services/apiSchema';
-import * as toast from './toasts';
+import * as toast from '../toasts';
 import * as utils from '../../utils';
 import store from '../../store';
 import * as actionTypes from '../actionTypes';

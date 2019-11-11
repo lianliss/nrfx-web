@@ -5,6 +5,7 @@ import React  from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 // internal
+import MarkDown from '../MarkDown/MarkDown';
 import { classNames, __doubleInputOnKeyPressHandler } from '../../utils';
 
 class Input extends React.Component {
@@ -89,6 +90,7 @@ class Input extends React.Component {
         }
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
           this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
+        {this.props.description ? <div className="Input__description"><MarkDown content={this.props.description} /></div> : null}
       </div>
     )
   }

@@ -48,7 +48,7 @@ export function invoke(method, name, params, options = {}) {
 
     fetch(url, init)
       .then(resp => {
-        if (resp.status === 403) {
+        if (resp.status === 403 && window.location.pathname  !== '/') {
           auth.logout();
           window.location.href = '/';
           return;
