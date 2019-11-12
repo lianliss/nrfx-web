@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import * as utils from '../../../../../../utils';
 import * as storage from '../../../../../../services/storage';
+import UI from '../../../../../../ui/index';
 
 export default function Block(props) {
   let {
@@ -29,7 +30,6 @@ export default function Block(props) {
 
   const classNames = utils.classNames({
     Exchange__block: true,
-    Content_box: true,
     collapsed: !!collapsed && !skipCollapse,
     skip_collapse: !!skipCollapse,
     skip_padding: !!skipPadding
@@ -60,7 +60,7 @@ export default function Block(props) {
   }
 
   return (
-    <div className={classNames}>
+    <UI.ContentBox className={classNames}>
       <div className="Exchange__block__head">
         <div className="Exchange__block__title" onClick={(e) => {
           if (!e.target.classList.contains('Exchange__block__tab')) {
@@ -72,6 +72,6 @@ export default function Block(props) {
       <div className="Exchange__block__content">
         {children}
       </div>
-    </div>
+    </UI.ContentBox>
   )
 }

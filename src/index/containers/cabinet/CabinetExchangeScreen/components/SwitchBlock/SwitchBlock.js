@@ -12,7 +12,7 @@ export default props => {
   const Switch = props.type === 'buttons' ? UI.SwitchButtons : UI.SwitchTabs;
 
   return (
-    <div className="SwitchBlock Content_box">
+    <UI.ContentBox className="SwitchBlock">
       { !props.hideTabs && <Switch
         selected={tab}
         onChange={changeTab}
@@ -25,6 +25,6 @@ export default props => {
         }
       /> }
       {props.contents.find((item, value) => value === tab).content}
-    </div>
+    </UI.ContentBox>
   )
 }

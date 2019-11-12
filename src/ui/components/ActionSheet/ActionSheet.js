@@ -1,8 +1,10 @@
 import './ActionSheet.less';
-import { classNames as cn } from '../../utils/index';
 
 import React, { Component } from 'react';
 import SVG from 'react-inlinesvg';
+
+import { classNames as cn } from '../../utils/index';
+import ContentBox from '../ContentBox/ContentBox';
 
 export default class ActionSheet extends React.Component {
 
@@ -39,14 +41,14 @@ export default class ActionSheet extends React.Component {
         <div onClick={() => this.toggle(true)}>{props.children || (
           <SVG src={require('../../../asset/24px/menu-more.svg')} />
         )}</div>
-        <div className="ActionsSheet__list Content_box">
+        <ContentBox className="ActionsSheet__list">
           {props.items.map(item => (
             <div className={cn('ActionsSheet__item', item.type)} onClick={e => {
               item.onClick();
               this.toggle(false);
             }}>{item.title}</div>
           ))}
-        </div>
+        </ContentBox>
       </div>
     )
   }

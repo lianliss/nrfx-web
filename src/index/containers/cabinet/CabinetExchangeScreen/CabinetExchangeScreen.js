@@ -62,7 +62,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   __renderExchangeAdaptive() {
     return (
       <div className="Exchange__wrapper">
-        <div className="Content_box">
+        <UI.ContentBox>
           <MarketInfoAdaptive {...this.props.tickerInfo} />
           <Chart
             adaptive={true}
@@ -71,7 +71,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
             key={`chart_${this.props.chartTimeFrame}_${this.props.fullscreen}`}
             interval={this.props.chartTimeFrame}
           />
-        </div>
+        </UI.ContentBox>
         <SwitchBlock hideTabs={!this.props.user} contents={[
           {
             title: utils.getLang('exchange_trades'),
@@ -121,7 +121,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
         <div className="Exchange__right_content">
           <div className="Exchange__trade_content">
             <div className="Exchange__chart_wrapper">
-              <div className="Exchange__chart Content_box">
+              <UI.ContentBox className="Exchange__chart">
                 {this.props.tickerInfo && <MarketInfo />}
                 <Chart
                   fullscreen={this.props.fullscreen}
@@ -129,7 +129,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
                   key={`chart_${this.props.chartTimeFrame}_${this.props.fullscreen}`}
                   interval={this.props.chartTimeFrame}
                 />
-              </div>
+              </UI.ContentBox>
               {this.props.tickerInfo && <TradeForm
                 ref="trade_form"
                 fee={this.props.fee}
