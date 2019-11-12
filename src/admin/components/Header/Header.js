@@ -7,10 +7,11 @@ import * as actions from '../../../actions';
 import { BaseLink } from 'react-router5';
 import router from '../../../router';
 import * as PAGES from '../../constants/pages';
+import ContentBox from '../../../ui/components/ContentBox/ContentBox'
 
 export default props => {
   return (
-    <div className="Header">
+    <ContentBox className="Header">
       <BaseLink router={router} routeName={PAGES.PANEL}>
         <Logo />
       </BaseLink>
@@ -28,6 +29,6 @@ export default props => {
           });
         }}>Logout</div>
       </div>
-    </div>
+    </ContentBox>
   )
 }
