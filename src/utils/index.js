@@ -97,7 +97,7 @@ export function throttle (func, ms)  {
   }
 }
 
-export function ucfirst(input) {
+export function ucfirst(input = "") {
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
