@@ -3,8 +3,6 @@ import './Chart.less';
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment/min/moment-with-locales';
-import * as currencies from "../../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { classNames } from "../../../../utils/index";

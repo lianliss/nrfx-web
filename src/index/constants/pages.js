@@ -25,4 +25,5 @@ export const SETTINGS = 'settings';
 export const CHANGE_EMAIL = 'change_email';
 export const REGISTER = 'register';
 export const RESET_PASSWORD = 'reset_password';
+export const MERCHANT = 'merchant';
 export const EXCHANGE = 'exchange';

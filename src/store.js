@@ -12,6 +12,7 @@ import investmentsReducer from './reducers/investments';
 import profileReducer from './reducers/profile';
 import settingsReducer from './reducers/settings';
 import walletsReducer from './reducers/wallets';
+import fiatWalletsReducer from './reducers/fiatWallets';
 import modalGroupReducer from './reducers/modalGroup';
 import notificationsReducer from './reducers/notifications';
 import toastsReducer from './reducers/toasts';
@@ -40,6 +41,7 @@ export function configureStore() {
       cabinet: cabinetReducer,
       investments: investmentsReducer,
       wallets: walletsReducer,
+      fiatWallets: fiatWalletsReducer,
       modalGroup: modalGroupReducer,
       settings: settingsReducer,
       profile: profileReducer,

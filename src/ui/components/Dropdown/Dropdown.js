@@ -79,7 +79,7 @@ class Dropdown extends React.Component {
                 props.options.map((opt, i) => {
                   return <div
                     key={Math.random()}
-                    className="Dropdown__option key"
+                    className={classNames("Dropdown__option", { disabled: opt.disabled })}
                     onClick={() => {
                       props.onChange(opt);
                       this.toggle(false);
@@ -103,6 +103,7 @@ const optionType = PropTypes.shape({
     PropTypes.string,
     PropTypes.number
   ]),
+  disabled: PropTypes.bool,
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,

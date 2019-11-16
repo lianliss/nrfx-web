@@ -202,7 +202,8 @@ export function getScrollbarWidth() {
 }
 
 export function isFiat(currency) {
-  return currency.toLowerCase() === 'usdt';
+  return ['usd', 'eur', 'rub', 'idr', 'cny'].includes(currency.toLowerCase());
+  // TODO: Бруть из state.default.currency
 }
 
 export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {

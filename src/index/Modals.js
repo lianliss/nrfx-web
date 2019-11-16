@@ -19,6 +19,7 @@ import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
 import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
 import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
 import AuthModal from '../components/AuthModal/AuthModal';
+import MerchantModal from '../index/components/cabinet/MerchantModal/MerchantModal';
 import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
 import router from '../router';
 
@@ -35,6 +36,9 @@ export default function Modals(props) {
   switch (modal) {
     case 'open_deposit':
       Component = OpenDepositModal;
+      break;
+    case 'merchant':
+      Component = MerchantModal;
       break;
     case 'rate_details':
       Component = RateDetailsModal;

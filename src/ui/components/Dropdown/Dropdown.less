@@ -41,6 +41,11 @@
     .Dropdown__option {
       padding: 10px 16px;
       cursor: pointer;
+
+      &.disabled {
+        opacity: .5;
+        pointer-events: none;
+      }
   
       &:hover {
         color: var(--primary);

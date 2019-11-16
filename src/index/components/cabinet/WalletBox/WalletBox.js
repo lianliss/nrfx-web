@@ -5,8 +5,7 @@ import SVG from 'react-inlinesvg';
 
 import * as utils from '../../../../utils';
 import * as actions from '../../../../actions';
-import * as currencies from '../../../../utils/currencies';
-import * as modalGroupActions from '../../../../actions/modalGroup';
+import UI from '../../../../ui/';
 
 class WalletBox extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class WalletBox extends React.Component {
     let selected = false;
     if (this.props.hasOwnProperty('walletSelected')) {
       if (this.props.walletSelected !== null) {
-        if (this.props.walletSelected.currency === this.currencyInfo.abbr) {
+        if (this.props.walletSelected.currency.toLowerCase() === this.currencyInfo.abbr) {
           selected = true;
         }
       }
@@ -38,7 +37,7 @@ class WalletBox extends React.Component {
 
         <div
           className="WalletBox__content Content_box"
-          style={selected ? {background: currencies.getGradientByCurrency(this.currencyInfo.abbr)} : {}}
+          style={selected ? {background: this.currencyInfo.background} : {}}
         >
           {selected
             ? <SVG className="WalletBox__close" src={require('./asset/close.svg')} /> : ''
@@ -58,13 +57,17 @@ class WalletBox extends React.Component {
     if (this.isGenerating) {
       return utils.getLang('cabinet_walletBox_generating');
     } else if (this.props.amount > 0 || this.props.skipEmptyLabel) {
-      return utils.formatDouble(this.props.amount, 6) + ' ' + this.props.currency.toUpperCase();
+      return <UI.NumberFormat number={this.props.amount} currency={this.props.currency} />
     } else {
       return utils.getLang('cabinet_walletTransactionModal_receive');
     }
   };
 
   __onClick = () => {
+    if (this.props.isFiat) {
+      return this.props.onClick && this.props.onClick();
+    }
+
     if (this.props.amount > 0 || this.props.skipEmptyLabel) {
       return this.props.onClick && this.props.onClick();
     } else {
