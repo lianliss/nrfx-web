@@ -1,6 +1,8 @@
+import '../index/index.less';
+// import '../index/vars.less';
+
 import React from 'react';
 import {connect} from 'react-redux';
-import UI from '../ui/';
 
 import Toasts from '../index/components/cabinet/Toasts/Toasts';
 import Routes from './Routes';

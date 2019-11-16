@@ -5,6 +5,7 @@ import Group from '../Group/Group';
 import Table from '../Table/Table';
 import Button from '../../../ui/components/Button/Button';
 import Input from '../Input/Input';
+import DropDown from '../Dropdown/Dropdown';
 import action from '../../../actions/admin/index';
 import List from '../../../ui/components/List/List';
 import Tabs from '../Tabs/Tabs';
@@ -49,6 +50,9 @@ const Item = (props) => {
       break;
     case 'paging_item':
       Component = PagingItem;
+      break;
+    case 'drop_down':
+      Component = DropDown;
       break;
     case 'table_filter':
       Component = props => (
