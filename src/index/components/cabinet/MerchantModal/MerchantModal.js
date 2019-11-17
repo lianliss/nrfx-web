@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import UI from '../../../../ui/';
-import { getLang } from '../../../../utils';
+import { getLang, classNames as cn } from '../../../../utils';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
 import * as actions from '../../../../actions';
@@ -14,7 +14,7 @@ import * as merchantService from '../../../../services/merchant';
 import { Status } from '../../../containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 
 const MerchantModal = props => {
-
+  const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(params.currency.toLowerCase() || 'usd');
   const [merchant, setMerchant] = useState(null);
@@ -85,16 +85,19 @@ const MerchantModal = props => {
               <div className="MerchantModal__item__content__commission">{getLang('global_commissions')}: {m.fee}</div>
               <div className="MerchantModal__item__content__currencies">{getLang('global_currencies')}: <span>{m.currencies.join(', ')}</span></div>
             </div>
+            {!adaptive &&
             <div className="MerchantModal__item__methods">
               <div>
                 { m.payments.includes('visa') && <SVG src={require('../../../../asset/payment_systems/visa.svg')} /> }
                 { m.payments.includes('mastercard') && <SVG src={require('../../../../asset/payment_systems/mastercard.svg')} /> }
               </div>
               { m.payments.includes('bank') && <div>{getLang('global_bankTransfer')}</div> }
-            </div>
+            </div>}
+            {!adaptive &&
             <div className="MerchantModal__item__arrow">
-              <SVG src={require('../../../../asset/24px/angle-right.svg')} />
+              <SVG src={require('../../../../asset/24px/angle-right.svg')}/>
             </div>
+            }
           </div>
         ))}
       </div>
@@ -198,7 +201,9 @@ const MerchantModal = props => {
   };
 
   return (
-    <UI.Modal className="MerchantModal" onClose={props.onBack} isOpen={true}>
+    <UI.Modal className={cn("MerchantModal", {
+      'MerchantModal__list_wrapper': (!status && !merchant)
+    })} onClose={props.onBack} isOpen={true}>
       <UI.ModalHeader>{getLang('cabinet_merchantModalTitle')}</UI.ModalHeader>
       { renderContent() }
     </UI.Modal>
@@ -206,5 +211,6 @@ const MerchantModal = props => {
 }
 
 export default connect(state => ({
-  balances: state.fiatWallets.balances
+  balances: state.fiatWallets.balances,
+  adaptive: state.default.adaptive
 }))(MerchantModal);

@@ -227,3 +227,33 @@ body:not(.adaptive) .MerchantModal {
     width: calc(100% + 80px);
   }
 }
+
+.adaptive {
+  .MerchantModal {
+    &.MerchantModal__list_wrapper .Modal__box {
+      background: none;
+      box-shadow: none;
+      padding: 0;
+    }
+    .MerchantModal__list {
+      width: 100%;
+      margin: 0;
+      &::before {
+        display: none;
+      }
+
+      .MerchantModal__item {
+        background: white;
+        margin-bottom: 16px;
+        border-radius: 8px;
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+    .LoadingStatus__wrap {
+      width: 100%;
+    }
+  }
+}
