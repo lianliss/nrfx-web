@@ -8,6 +8,7 @@ import * as actions from "../../../../actions";
 import * as utils from "../../../../utils/index";
 import UI from '../../../../ui/index';
 import { getCurrencyInfo } from '../../../../actions';
+import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 const getWalletsBalance = (wallets, isInFiat) => {
   let walletsAmount = 0;
@@ -68,7 +69,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
         <div className="WalletBalance__selected_wallet">
           <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletTransactionModal_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
           <div className="WalletBalance__selected_amount">
-            {adaptive ? convertBlock : amount + ' ' + currency.toUpperCase()}
+            {adaptive ? convertBlock : <NumberFormat number={amount} currency={currency} />}
           </div>
           {
             isFiat ? (

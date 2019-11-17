@@ -56,9 +56,11 @@ export default function HistoryTable({ history, adaptive, header}) {
 
     return (
       <UI.TableCell key={i}>
-        <UI.TableColumn sub={item.primary_currency}>{item.secondary_currency}</UI.TableColumn>
+        <UI.TableColumn sub={item.secondary_currency}>{item.primary_currency}</UI.TableColumn>
         <UI.TableColumn><span className={utils.classNames('FiatHistoryTable__status', item.type)}>{item.type_label}</span></UI.TableColumn>
-        <UI.TableColumn align="right" sub={<UI.NumberFormat number={item.price} currency={item.primary_currency} />}><UI.NumberFormat number={item.primary_amount} currency={item.primary_currency} /></UI.TableColumn>
+        <UI.TableColumn align="right" sub={<UI.NumberFormat number={item.secondary_amount} currency={item.secondary_currency} />}>
+          <UI.NumberFormat number={item.primary_amount} currency={item.primary_currency} />
+        </UI.TableColumn>
         <UI.TableColumn align="right">
           <div className="FiatHistoryTable__time">
             <div>{utils.dateFormat(item.created_at, 'HH:mm')}</div>

@@ -38,7 +38,7 @@ class CabinetWalletFiatScreen extends React.Component {
         {...balance}
         isFiat
         onClick={() => this.__balanceSelect(balance)}
-        walletSelected={this.state.balanceSelected ? { ...this.state.balanceSelected, to_usd: 1, align: 2 } : null} // HAck
+        walletSelected={this.state.balanceSelected || null} // HAck
       />
     ));
 
@@ -68,12 +68,8 @@ class CabinetWalletFiatScreen extends React.Component {
             title={utils.getLang('cabinet_walletFiatBalance_name')}
             adaptive={this.props.adaptive}
             isFiat
-            wallets={this.props.balances.map(b => ({
-              ...b,
-              to_usd: b.amount, // HACK
-              align: b.amount, // HACK
-            }))}
-            walletSelected={this.state.balanceSelected ? {...this.state.balanceSelected, to_usd: 1, align: 2 } : null}
+            wallets={this.props.balances}
+            walletSelected={this.state.balanceSelected || null}
           />
           <div className="CabinetProfileScreen__height24" />
           <FiatMarketForm />
