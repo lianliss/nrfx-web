@@ -46,9 +46,10 @@ export function loadCurrencies() {
 }
 
 export function getCurrencyInfo(name) {
+  if (!name) return {};
+
   const state = store.getState().cabinet;
   name = name.toLowerCase();
-
   let currency = state.currencies[name];
   return {
     ...currency,

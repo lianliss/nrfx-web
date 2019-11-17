@@ -25,8 +25,8 @@ class App extends React.Component {
 
     return <div>
       <Routes {...this.props} />
-      <Modals {...this.props} />
       <DynamcModals modals={this.props.state.admin.modals} />
+      <Modals {...this.props} />
       <Toasts />
     </div>
   }

@@ -5,10 +5,20 @@ import React from 'react';
 import Table, { TableCell, TableColumn } from '../../../ui/components/Table/Table';
 import Item from '../Item/Item';
 import {connect} from 'react-redux';
+import * as utils from '../../../utils';
+import EmptyContentBlock from '../../../index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
 class TableComponent extends React.Component {
   render() {
     const { props } = this;
+
+    if (!props.items.length) {
+      return <EmptyContentBlock skipContentClass
+        icon={require('../../../asset/120/info.svg')}
+        message="Empty table"
+      />
+    }
+
     return (
       <div>
         <div className="Table__controls">
