@@ -92,8 +92,8 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
     if (adaptive) {
       return (
-        <UI.TableCell key={item.id} onClick={() => {actions.openModal('deposit_info', null, {
-          deposit: item
+        <UI.TableCell key={item.id} onClick={() => {actions.openModal('deposit_info', {
+          depositId: item.id
         })}}>
           <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
             {icon}
@@ -110,8 +110,8 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
     let onClick = false;
     if (!fromPartners) {
-      onClick = () => actions.openModal('deposit_info', null, {
-        deposit: item
+      onClick = () => actions.openModal('deposit_info', {
+        depositId: item.id
       });
     }
 
