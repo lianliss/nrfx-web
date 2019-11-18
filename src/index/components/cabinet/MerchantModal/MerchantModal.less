@@ -230,14 +230,20 @@ body:not(.adaptive) .MerchantModal {
 
 .adaptive {
   .MerchantModal {
+    .MerchantModal__form {
+      width: 100%;
+    }
+
     &.MerchantModal__list_wrapper .Modal__box {
       background: none;
       box-shadow: none;
       padding: 0;
     }
+
     .MerchantModal__list {
       width: 100%;
       margin: 0;
+
       &::before {
         display: none;
       }
@@ -246,6 +252,7 @@ body:not(.adaptive) .MerchantModal {
         background: white;
         margin-bottom: 16px;
         border-radius: 8px;
+        box-shadow: 0 1px 16px rgba(0, 0, 0, 0.1);
 
         &:after {
           display: none;

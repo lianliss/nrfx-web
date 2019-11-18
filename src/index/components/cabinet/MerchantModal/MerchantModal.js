@@ -46,14 +46,14 @@ const MerchantModal = props => {
   };
 
   const merchants = [
-    {
+    (props.profile.role.toLowerCase() === 'admin' ? { // TODO: TEMP
       icon: require('../../../../asset/merchants/adv_cash.svg'),
       name: "AdvCash",
       value: 'advcash',
       fee: '2-3%',
       currencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
       payments: ['mastercard', 'visa']
-    },
+    } : null),
     {
       icon: require('../../../../asset/merchants/swift.svg'),
       value: 'invoice',
@@ -70,7 +70,7 @@ const MerchantModal = props => {
     //   currencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
     //   payments: ['mastercard', 'visa', 'bank']
     // }
-  ]
+  ].filter(i => i);
 
   const renderMerchantsList = () => {
     return (
@@ -212,5 +212,6 @@ const MerchantModal = props => {
 
 export default connect(state => ({
   balances: state.fiatWallets.balances,
-  adaptive: state.default.adaptive
+  adaptive: state.default.adaptive,
+  profile: state.default.profile
 }))(MerchantModal);
