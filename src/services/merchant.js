@@ -6,9 +6,7 @@ export function open(url) {
   const top = screen.height / 2 - height / 2;
 
   return new Promise((resolve, reject) => {
-    const ref = window.open(
-      url,
-      '_blank',
+    const ref = window.open(url, '_blank',
       [
         ['toolbar', 'yes'],
         ['scrollbars', 'yes'],
@@ -19,7 +17,19 @@ export function open(url) {
         ['height', height],
       ].map(i => i.join('=')).join(',')
     );
+
+    if (!ref) {
+      window.location.href = url;
+    }
+
     const interval = setInterval(() => {
+      try {
+        if (ref.closed) {
+          clearInterval(interval);
+          reject();
+        }
+      } catch (e) {}
+
       try {
         if (ref.window.location.origin === window.location.origin) { // TODO check routes
           clearInterval(interval);
@@ -28,12 +38,10 @@ export function open(url) {
         } else if (ref.closed) {
           clearInterval(interval);
           reject();
-        } else {
-          // return reject();
         }
-      } catch (e) {
-
-      }
+      } catch (e) {}
     }, 500);
   });
 }
+
+window.openMerchant = open;

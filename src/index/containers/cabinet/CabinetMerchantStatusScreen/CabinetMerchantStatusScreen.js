@@ -19,7 +19,7 @@ export function Status(props) {
         })`}}
       />
       <h2 className="MerchantStatus__text">{success ? getLang('cabinet_merchantSuccessText') : getLang('cabinet_merchantErrorText')}</h2>
-      <UI.Button>{getLang('global_continue')}</UI.Button>
+      <UI.Button onClick={props.onClose || console.log}>{getLang('global_continue')}</UI.Button>
     </div>
   )
 }

@@ -57,7 +57,7 @@ class CabinetWalletFiatScreen extends React.Component {
             isLoading={false}
           >
             <FiatHistoryTable
-              header={utils.getLang('global_transactions')}
+              header={utils.getLang('global_operations')}
               adaptive={this.props.adaptive}
               history={this.props.history}
             />

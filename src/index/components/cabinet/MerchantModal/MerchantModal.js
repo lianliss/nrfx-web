@@ -1,6 +1,7 @@
 import './MerchantModal.less'
 
 import React, { useState } from 'react';
+import { renderToString } from 'react-dom/server'
 import { connect } from 'react-redux';
 
 import UI from '../../../../ui/';
@@ -22,28 +23,47 @@ const MerchantModal = props => {
   const [touched, setTouched] = useState(null);
   const [invoice, setInvoice] = useState(null);
   const [status, setStatus] = useState(null);
+  const [urlStatus, setUrlStatus] = useState(null);
+  const [url, setUrl] = useState(null);
 
   const handleSubmit = () => {
-    if (amount) {
+    if (url && amount && !urlStatus) {
+      setStatus('loading');
+      merchantService.open(url).then(() => {
+        setStatus('success');
+      }).catch(() => {
+        setStatus('error');
+      })
+    }
+  };
+
+  const handleSubmitInvoice = () => {
+    fiatActions.payForm({
+      amount,
+      merchant,
+      currency
+    }).then(({file}) => {
+      setInvoice(file);
+    });
+  }
+
+  const handleChangeAmount = (value) => {
+    setAmount(value);
+    if (!value) return false;
+    setUrlStatus('loading');
+    if (merchant === 'advcash') {
       fiatActions.payForm({
-        amount,
+        amount: value,
         merchant,
         currency
-      }).then((result) => {
-        if (result.file) {
-          setInvoice(result.file);
-        } else if (result.url) {
-          setStatus('loading');
-          merchantService.open(result.url).then(() => {
-            setStatus('success');
-          }).catch(() => {
-            setStatus('error');
-          })
-        }
+      }).then(({url}) => {
+        setUrlStatus(null);
+        setUrl(url);
       });
     }
-    setTouched(true);
   };
+
+  window.handleSubmit = handleSubmit;
 
   const merchants = [
     (['admin', 'translator'].includes(props.profile.role.toLowerCase()) ? { // TODO: TEMP
@@ -128,7 +148,7 @@ const MerchantModal = props => {
           <UI.Input
             error={touched && !amount}
             value={amount}
-            onTextChange={setAmount}
+            onTextChange={handleChangeAmount}
             type="number"
             placeholder="0.00"
             indicator={currencyInfo.abbr.toUpperCase()}
@@ -145,7 +165,13 @@ const MerchantModal = props => {
 
         <div className="MerchantModal__buttons">
           <UI.Button onClick={() => setMerchant(null)} type="outline">{getLang('global_back')}</UI.Button>
-          <UI.Button onClick={handleSubmit}>Далее</UI.Button>
+          { merchant === 'invoice' ? (
+            <UI.Button onClick={handleSubmitInvoice}>Далее</UI.Button>
+          ) : (
+            <div dangerouslySetInnerHTML={{__html: `<div onclick="handleSubmit()">${renderToString(
+              <UI.Button disabled={!amount || !url} state={urlStatus}>Далее</UI.Button>
+            )}</div>`}} />
+          )}
         </div>
       </div>
     )
@@ -189,7 +215,7 @@ const MerchantModal = props => {
       return <LoadingStatus inline status="loading" />
     }
     if (['success', 'error'].includes(status)) {
-      return <Status status={status} />
+      return <Status onClose={props.onClose} status={status} />
     }
     if (!merchant) {
       return renderMerchantsList();
