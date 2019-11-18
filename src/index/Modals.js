@@ -20,6 +20,7 @@ import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoM
 import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
 import AuthModal from '../components/AuthModal/AuthModal';
 import MerchantModal from '../index/components/cabinet/MerchantModal/MerchantModal';
+import DepositPoolSuccessModal from '../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal';
 import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
 import router from '../router';
 
@@ -90,6 +91,9 @@ export default function Modals(props) {
       break;
     case 'choose_market':
       Component = ChooseMarketModal;
+      break;
+    case 'deposit_pool_success':
+      Component = DepositPoolSuccessModal;
       break;
     default: return null;
   }
