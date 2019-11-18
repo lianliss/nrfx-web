@@ -46,7 +46,7 @@ const MerchantModal = props => {
   };
 
   const merchants = [
-    (props.profile.role.toLowerCase() === 'admin' ? { // TODO: TEMP
+    (['admin', 'translator'].includes(props.profile.role.toLowerCase()) ? { // TODO: TEMP
       icon: require('../../../../asset/merchants/adv_cash.svg'),
       name: "AdvCash",
       value: 'advcash',
