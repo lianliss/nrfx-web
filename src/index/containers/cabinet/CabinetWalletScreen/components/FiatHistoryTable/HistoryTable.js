@@ -19,16 +19,16 @@ export default function HistoryTable({ history, adaptive, header}) {
   }
 
   let headings = [
-    <UI.TableColumn>Валюты</UI.TableColumn>,
-    <UI.TableColumn>Тип</UI.TableColumn>,
-    <UI.TableColumn align="right">Сумма (Цена)</UI.TableColumn>,
-    <UI.TableColumn align="right">Дата</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('global_currency')}</UI.TableColumn>,
+    <UI.TableColumn>{utils.getLang('global_type')}</UI.TableColumn>,
+    <UI.TableColumn align="right">{`${utils.getLang('global_amount')} (${utils.getLang('global_price')})`}</UI.TableColumn>,
+    <UI.TableColumn align="right">{utils.getLang('global_date')}</UI.TableColumn>,
   ];
 
   if (adaptive) {
     headings = [
-      <UI.TableColumn sub="Валюты">Тип</UI.TableColumn>,
-      <UI.TableColumn align="right" sub="Дата">Сумма</UI.TableColumn>
+      <UI.TableColumn sub={utils.getLang('global_currency')}>{utils.getLang('global_type')}</UI.TableColumn>,
+      <UI.TableColumn align="right" sub={utils.getLang('global_date')}>{utils.getLang('global_amount')}</UI.TableColumn>
     ];
   }
 

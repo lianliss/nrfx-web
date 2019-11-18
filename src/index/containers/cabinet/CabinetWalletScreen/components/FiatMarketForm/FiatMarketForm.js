@@ -81,12 +81,12 @@ class FiatMarketForm extends React.Component {
     });
   };
 
-  getCurrenciesOptions() {
+  getCurrenciesOptions(prefix) {
     return Object.keys(this.props.currencies)
       .map(key => this.props.currencies[key])
       .map(c => ({
         ...c,
-        title: ucfirst(c.name),
+        title: prefix + ' ' + ucfirst(c.name),
         note: c.abbr.toUpperCase(),
         value: c.abbr,
       }))
@@ -128,7 +128,7 @@ class FiatMarketForm extends React.Component {
               placeholder="Placeholder"
               value={this.state.from}
               onChange={this.handleCurrencyChange('from')}
-              options={this.getCurrenciesOptions()}
+              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletBuy'))}
             />
             <div className="FiatMarketForm__rate">
               {this.renderRate('from')}
@@ -149,7 +149,7 @@ class FiatMarketForm extends React.Component {
               placeholder="Placeholder"
               value={this.state.to}
               onChange={this.handleCurrencyChange('to')}
-              options={this.getCurrenciesOptions()}
+              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletWith'))}
             />
             <div className="FiatMarketForm__rate">
               {this.renderRate('to')}

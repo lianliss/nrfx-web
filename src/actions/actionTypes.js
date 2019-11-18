@@ -2,7 +2,6 @@
 export const NAVIGATE = 'NAVIGATE';
 export const SET_LANG = 'SET_LANG';
 export const AUTH = 'AUTH';
-export const STATIC = 'STATIC';
 export const PROFILE = 'PROFILE';
 export const LOGOUT = 'LOGOUT';
 export const SET_USER_NAME = 'SET_USER_NAME';

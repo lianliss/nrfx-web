@@ -59,7 +59,7 @@ class WalletBox extends React.Component {
     } else if (this.props.amount > 0 || this.props.skipEmptyLabel) {
       return <UI.NumberFormat number={this.props.amount} currency={this.props.currency} />
     } else {
-      return utils.getLang('cabinet_walletTransactionModal_receive');
+      return utils.getLang('cabinet_walletScreen_receive');
     }
   };
 

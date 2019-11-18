@@ -1,46 +1,43 @@
 import './StaticContentModal.less';
 //
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 //
 import UI from '../../../../ui';
 import * as utils from '../../../../utils';
 import { getStaticPageContent } from '../../../../actions';
+import ModalState from '../../cabinet/ModalState/ModalState';
 
-function StaticContentModal(props) {
+export default props => {
   const { type } = props;
-  const currentInfo = props[type];
-  const currentData = currentInfo && currentInfo.data;
+  const [ status, setStatus ] = useState('loading');
+  const [ data, setData ] = useState({});
+
+  const __load = () => {
+    setStatus('loading');
+    getStaticPageContent(type).then(data => {
+      setStatus(null);
+      setData(data);
+    }).catch(() => {
+      setStatus('failed');
+    });
+  };
 
   useEffect(() => {
-    if (!currentInfo) {
-      getStaticPageContent(type)
-    }
-  }, [currentInfo, type]);
+    __load();
+  }, [type]);
 
-  if (currentData) {
-    return (
-      <UI.Modal isOpen={true} className="StaticContentModal" onClose={props.onBack}>
-        <div className="StaticContentModal__content__wrapper">
-          <h3 className="StaticContentModal__title">{currentData.title}</h3>
-          <div className="StaticContentModal__content" dangerouslySetInnerHTML={{ __html: currentData.content }} />
-          <UI.Button
-            fontSize={15}
-            onClick={props.onBack}>{utils.getLang('site__goBack')}
-          </UI.Button>
-        </div>
-      </UI.Modal>
-    )
-  }
-  return null;
+  return status ? (
+    <ModalState status={status} onRetry={__load} />
+  ) : (
+    <UI.Modal isOpen={true} className="StaticContentModal" onClose={props.onBack}>
+      <div className="StaticContentModal__content__wrapper">
+        <h3 className="StaticContentModal__title">{props.title}</h3>
+        <div className="StaticContentModal__content" dangerouslySetInnerHTML={{ __html: data.content }} />
+        <UI.Button
+          fontSize={15}
+          onClick={props.onBack}>{utils.getLang('site__goBack')}
+        </UI.Button>
+      </div>
+    </UI.Modal>
+  )
 }
-
-const mapStateToProps = state => ({
-  default: state.default,
-  lang: state.default.lang,
-  terms: state.default.terms,
-  privacy: state.default.privacy,
-  pool_terms: state.default.pool_terms
-});
-
-export default React.memo(connect(mapStateToProps)(StaticContentModal));

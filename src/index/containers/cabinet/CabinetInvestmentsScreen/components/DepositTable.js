@@ -98,7 +98,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
           <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
             {icon}
           </UI.TableColumn>
-          <UI.TableColumn align="left" sub={`${item.percent}% ${item.description} ${utils.ucfirst(item.type)}`}>
+          <UI.TableColumn align="left" sub={`${item.percent}% ${item.description} ${item.type !== 'pool' ? utils.ucfirst(item.type) : ''}`}>
             {utils.formatDouble(item.amount)} {item.currency.toUpperCase()}
           </UI.TableColumn>
           <UI.TableColumn
@@ -122,7 +122,11 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
         </UI.TableColumn>
         <UI.TableColumn>{utils.formatTableId(deposits.length - i)}</UI.TableColumn>
         <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
-        <UI.TableColumn sub={item.description}>{item.plan_percent}%</UI.TableColumn>
+        {item.type === 'pool' ? (
+          <UI.TableColumn>-</UI.TableColumn>
+        ) : (
+          <UI.TableColumn sub={item.description}>{item.plan_percent}%</UI.TableColumn>
+        )}
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
           sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}
