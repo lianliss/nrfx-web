@@ -6,6 +6,8 @@ import SVG from 'react-inlinesvg';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../../utils/index';
 import * as actions from '../../../../actions';
+import MarkDown from '../../../../ui/components/MarkDown/MarkDown';
+import { isIndonesia } from '../../../../services/locations';
 
 export default function Footer() {
   return (
@@ -56,6 +58,11 @@ export default function Footer() {
             </a>
           </div>
         </div>
+        {isIndonesia() &&
+          <div className="Footer__notice">
+            <MarkDown content={utils.getLang('site_footer_notice')}/>
+          </div>
+        }
       </div>
     </div>
   )

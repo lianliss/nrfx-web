@@ -29,7 +29,7 @@ function Button(props) {
       type={props.btnType}
       title={props.title}
     >
-      {props.state === 'loading' && <div className="Button__loader"><SVG src={require('../../asset/spinner.svg')} /></div>}
+      {props.state === 'loading' && <div className="Button__loader"></div>}
       <div className="Button__cont">
         {props.beforeContent}
         <div className="Button__label" style={props.fontSize ? {fontSize: props.fontSize} : {}}>{props.children}</div>
