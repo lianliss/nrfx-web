@@ -59,7 +59,7 @@ export default function Footer() {
           </div>
         </div>
         {isIndonesia() &&
-          <div className="Footer__notice">
+          <div className="Footer__notice" onClick={ () => actions.openModal('static_content', {type: "risk_statement"})}>
             <MarkDown content={utils.getLang('site_footer_notice')}/>
           </div>
         }
