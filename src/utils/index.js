@@ -89,11 +89,11 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
 export function throttle (func, ms)  {
   let timeout = null;
 
-  return () => {
+  return (...args) => {
     if (timeout) {
       clearTimeout(timeout)
     }
-    timeout = setTimeout(func, ms);
+    timeout = setTimeout(func.bind(this, ...args), ms);
   }
 }
 

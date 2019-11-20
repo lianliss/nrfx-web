@@ -1,11 +1,11 @@
 import './MerchantModal.less'
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { renderToString } from 'react-dom/server'
 import { connect } from 'react-redux';
 
 import UI from '../../../../ui/';
-import { getLang, classNames as cn } from '../../../../utils';
+import {getLang, throttle, classNames as cn} from '../../../../utils';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
 import * as actions from '../../../../actions';
@@ -45,20 +45,27 @@ const MerchantModal = props => {
     }).then(({file}) => {
       setInvoice(file);
     });
-  }
+  };
+
+  const getAdvCashUrl = (params) =>  {
+    setUrlStatus('loading');
+    console.log(params);
+    fiatActions.payForm(params).then(({url}) => {
+      setUrlStatus(null);
+      setUrl(url);
+    });
+  };
+
+  const getAdvCashUrlThrottled = useRef(throttle(getAdvCashUrl, 500)).current;
 
   const handleChangeAmount = (value) => {
-    setAmount(value);
     if (!value) return false;
-    setUrlStatus('loading');
+    setAmount(value);
     if (merchant === 'advcash') {
-      fiatActions.payForm({
+      getAdvCashUrlThrottled({
         amount: value,
         merchant,
         currency
-      }).then(({url}) => {
-        setUrlStatus(null);
-        setUrl(url);
       });
     }
   };
