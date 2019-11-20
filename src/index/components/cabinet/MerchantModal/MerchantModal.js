@@ -148,7 +148,14 @@ const MerchantModal = props => {
                 note: b.abbr.toUpperCase()
               }))
             }
-            onChange={e => setCurrency(e.value)}
+            onChange={e => {
+              setCurrency(e.value);
+              getAdvCashUrlThrottled({
+                amount,
+                merchant,
+                currency: e.value
+              });
+            }}
           />
         </div>
         <div className="MerchantModal__form__input__wrapper">
