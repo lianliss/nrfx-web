@@ -146,6 +146,12 @@ class OpenDepositModal extends React.Component {
     }
   }
 
+  __handleClickMax = () => {
+    const { amount } = this.props.wallets.find(w => w.currency ==  this.props.thisState.currency);
+    const { amountMax } =  this.props.thisState
+    this.__setState({ amount: amount > amountMax ? amountMax : amount });
+  }
+
   __setState = (value, key = null, callback) => {
     investmentsActions.openDepositModalPropertySet(value);
     if (callback) callback();
@@ -214,7 +220,7 @@ class OpenDepositModal extends React.Component {
               }}
             />
           </div>
-          <div className="OpenDepositModal__row">
+          <div className="OpenDepositModal__row OpenDepositModal__amount">
             <UI.Input
               type="number"
               error={
@@ -232,6 +238,7 @@ class OpenDepositModal extends React.Component {
                 this.__setState({ amount });
               }}
             />
+            <UI.Button onClick={this.__handleClickMax} currency={this.props.thisState.currency} type="outline">{utils.getLang('cabinet_sendCoinsModal_max')}</UI.Button>
           </div>
           <div className="OpenDepositModal__row">
             <UI.SwitchTabs
