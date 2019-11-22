@@ -41,17 +41,8 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
     }
   }
 
-  componentWillUnmount() {
-    emitter.removeListener(this.loadSettingsListener);
-  }
-
   __load = (section = null) => {
-    this.loadSettingsListener = emitter.addListener('loadSettings', this.props.loadSettings);
-    switch (section || this.props.routerParams.section) {
-      default: {
-        emitter.emit('loadSettings');
-      }
-    }
+    this.props.loadSettings();
   };
 
   __handleChangePassword () {
@@ -99,13 +90,9 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   };
 
   render() {
-    if (this.isLoading) {
-      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
-    }
-
     return (<div>
       <PageContainer
-        leftContent={!this.props.adaptive && this.__renderRightContent()}
+        leftContent={!this.props.adaptive && !this.isLoading && this.__renderRightContent()}
         sidebarOptions={!this.props.adaptive && [
           <ProfileSidebarItem
             icon={<IdBadgeSvg />}
@@ -133,6 +120,10 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   }
 
   __renderContent = () => {
+    if (this.isLoading) {
+      return <LoadingStatus status={this.props.loadingStatus[this.section]} onRetry={() => this.__load()} />;
+    }
+
     switch (this.props.routerParams.section) {
       case 'security': {
         return this.__getSecurityPageContent();
