@@ -50,6 +50,10 @@ class CabinetWalletFiatScreen extends React.Component {
               {wallets}
             </div> : wallets}
           </div>
+          { this.props.adaptive && <>
+            <FiatMarketForm />
+            <div className="CabinetProfileScreen__height24" />
+          </>}
           <Paging
             isCanMore={true}
             onMore={() => {}}
@@ -71,8 +75,11 @@ class CabinetWalletFiatScreen extends React.Component {
             wallets={this.props.balances}
             walletSelected={this.state.balanceSelected || null}
           />
-          <div className="CabinetProfileScreen__height24" />
-          <FiatMarketForm />
+
+          { !this.props.adaptive && <>
+            <div className="CabinetProfileScreen__height24" />
+            <FiatMarketForm />
+          </> }
         </div>
       </div>
     );

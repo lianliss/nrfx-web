@@ -9,28 +9,24 @@ import * as utils from '../../utils';
 
 import { ReactComponent as AngleDownSmall } from '../../asset/angle-down-small.svg';
 import { ReactComponent as AngleUpSmall } from '../../asset/angle-up-small.svg';
+import Collapse from '../Collapse/Collapse';
+import ContentBox from '../ContentBox/ContentBox';
 
 function Table({ headings, children, className, header, hidden, adaptive, compact, skipContentBox, inline }) {
 
-  const [hiddenContent, setHiddenContent] = useState(hidden || false);
+  const Wrapper = adaptive ? Collapse : (skipContentBox ? props => <div {...props} /> : ContentBox);
+
   return (
-    <div className={utils.classNames(className, {
+    <Wrapper title={header} className={utils.classNames(className, {
       TableMain: true,
-      Content_box: !skipContentBox,
     })}>
-      {header && <div
-        onClick={(adaptive && hidden) ? () => {setHiddenContent(!hiddenContent)} : () => {}}
+      {header && !adaptive && <div
         className="Table__header"
-        style={adaptive ? {height: 56} : {}}
       >
-        <span style={adaptive && hidden ? {color: 'var(--link-color)'} : {}}>{header}</span>
-        {adaptive && hidden && <span className="icon">
-          {hiddenContent ? <AngleDownSmall /> : <AngleUpSmall />}
-        </span>}
+        <span>{header}</span>
       </div>}
 
-
-      {(!adaptive || (adaptive && !hiddenContent)) && <table className={utils.classNames({
+      <table className={utils.classNames({
         Table: true,
         compact: !!compact,
         inline: !!inline,
@@ -59,8 +55,8 @@ function Table({ headings, children, className, header, hidden, adaptive, compac
             });
           })}
         </tbody>
-      </table>}
-    </div>
+      </table>
+    </Wrapper>
   )
 }
 

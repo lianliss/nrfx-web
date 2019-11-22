@@ -111,9 +111,11 @@ class FiatMarketForm extends React.Component {
 
   render() {
     const disabled = !this.props.rate;
+    const Wrapper = this.props.adaptive ? UI.Collapse : UI.ContentBox;
+
     return (
-      <UI.ContentBox className="FiatMarketForm">
-        <h2 className="FiatMarketForm__title">{getLang('cabinet_fiatMarketExchangeTitle')}</h2>
+      <Wrapper isOpenDefault={false} title={getLang('cabinet_fiatMarketExchangeTitle')} className="FiatMarketForm">
+        { !this.props.adaptive && <h2 className="FiatMarketForm__title">{getLang('cabinet_fiatMarketExchangeTitle')}</h2> }
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
             <UI.Input
@@ -163,12 +165,13 @@ class FiatMarketForm extends React.Component {
             state={this.props.loadingStatus}
           >{getLang('cabinet_fiatMarketExchangeActionButton')}</UI.Button>
         </div>
-      </UI.ContentBox>
+      </Wrapper>
     )
   }
 }
 
 export default connect(store => ({
+  adaptive: store.default.adaptive,
   currencies: store.cabinet.currencies,
   rate: store.fiatWallets.rate,
   loadingStatus: store.fiatWallets.loadingStatus.marketForm

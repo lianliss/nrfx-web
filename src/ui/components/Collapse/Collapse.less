@@ -1,0 +1,54 @@
+.Collapse {
+  .ContentBox__content {
+    padding: 0;
+  }
+
+  .Collapse__header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+
+    .Collapse__title {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .Collapse__arrow {
+      width: 24px;
+      height: 25px;
+      margin-right: 4px;
+      font-size: 0;
+      transition: transform 150ms ease-in-out;
+      color: #808080;
+    }
+    .Collapse__controls {
+      margin-left: auto;
+    }
+  }
+
+  .Collapse__content {
+    padding: 16px;
+    padding-top: 0;
+  }
+
+  &.isOpen .Collapse__arrow {
+    transform: rotate(-180deg);
+  }
+}
+
+.adaptive {
+  .Collapse__header {
+    position: relative;
+
+    .Collapse__title {
+      margin: 0 auto;
+    }
+
+    .Collapse__arrow {
+      right: 16px;
+      position: absolute;
+    }
+  }
+}
