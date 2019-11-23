@@ -15,7 +15,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
     } else if (!password) {
       setErrorMsg(utils.getLang('site__authModalPwdRequired'));
     } else {
-      getAuth(email, password)
+      getAuth(email.trim(), password)
         .then((res) => {
           setErrorMsg('');
           changeStep(steps.GOOGLE_AUTH, { loginRes: res });

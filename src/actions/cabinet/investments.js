@@ -37,6 +37,12 @@ export function loadProfitHistory() {
   };
 }
 
+export function getDeposit(id) {
+  return api.call(apiSchema.Investment.DepositGet, {
+    deposit_id: id
+  })
+}
+
 export function calculate({ currency, planId, amount, days }) {
   return api.call(apiSchema.Investment.CalculateGet, {
     currency: currency,

@@ -3,10 +3,10 @@ import './Chart.less';
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import * as currencies from "../../../../utils/currencies";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { classNames, dateFormat } from "../../../../utils/index";
+import {getCurrencyInfo} from '../../../../actions';
 
 export default function Chart({ series, ...props }) {
 
@@ -63,7 +63,7 @@ export default function Chart({ series, ...props }) {
       symbolWidth: 0,
       symbolRadius: 0,
       labelFormatter: function (a) {
-        let out = `<div class="${classNames("Chart__legend_item", {visible: this.visible})}" style="background: ${currencies.getGradientByCurrency(this.name.toLowerCase())}">${this.name}</div>`;
+        let out = `<div class="${classNames("Chart__legend_item", {visible: this.visible})}" style="background: ${getCurrencyInfo(this.name)}">${this.name}</div>`;
         if (props.adaptive) {
           out = `<div style="margin: 20px 0">
             ${out}
@@ -153,7 +153,7 @@ export default function Chart({ series, ...props }) {
       hideDelay: 0,
       formatter: function (tooltip) {
         return [`<div class="Chart__tooltip_date">${dateFormat(this.x, 'L')}</div>`].concat(this.points.map((point) => {
-          return `<div class="Chart__tooltip" style="background: ${currencies.getGradientByCurrency(point.series.name)}">
+          return `<div class="Chart__tooltip" style="background: ${getCurrencyInfo(point.series.name).background}">
             ${point.series.data.filter(p => p.y === point.y)[0].title}
           </div>`;
         }));

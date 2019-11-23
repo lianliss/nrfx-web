@@ -25,7 +25,9 @@ import InternalNotification from './components/InternalNotification/InternalNoti
 import NumberFormat from './components/NumberFormat/NumberFormat';
 import ActionSheet from './components/ActionSheet/ActionSheet';
 import Logo from './components/Logo/Logo';
+import List from './components/List/List';
 import ContentBox from './components/ContentBox/ContentBox';
+import Collapse from './components/Collapse/Collapse';
 import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
 
 export default {
@@ -59,5 +61,7 @@ export default {
   NumberFormat,
   ActionSheet,
   Logo,
+  List,
   ContentBox,
+  Collapse
 };

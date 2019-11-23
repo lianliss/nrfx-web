@@ -1,6 +1,13 @@
 .Exchange__block {
   display: flex;
   flex-direction: column;
+  //margin: 16px;
+  margin-bottom: 8px;
+
+  .ContentBox__content {
+    padding: 0;
+    position: relative;
+  }
 
   .EmptyContentBlock .Button.middle {
     min-width: 160px;
@@ -23,22 +30,6 @@
   display: flex;
   flex: 1;
   align-items: center;
-
-  &:before {
-    content: '';
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    background: url('../../../../../../asset/24px/angle-up-small.svg') no-repeat center/contain;
-    transition: transform 150ms ease-in-out;
-  }
-  .Exchange__block.collapsed &:before {
-    transform: rotate(180deg);
-  }
-
-  .Exchange__block.skip_collapse &:before {
-    display: none;
-  }
 }
 
 .Exchange__block__head__controls {
@@ -55,16 +46,11 @@
 }
 
 .Exchange__block__content {
-  padding: 0 16px 16px 16px;
   height: 100%;
   flex: 1;
 
   .Exchange__block.skip_padding & {
     padding: 0 0 16px 0;
-  }
-
-  .Exchange__block.collapsed & {
-    display: none;
   }
 }
 

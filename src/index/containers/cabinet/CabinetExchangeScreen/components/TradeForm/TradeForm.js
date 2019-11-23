@@ -7,8 +7,7 @@ import * as utils from '../../../../../../utils';
 import * as actions from '../../../../../../actions';
 import * as exchange from '../../../../../../actions/cabinet/exchange';
 import OrderBook from '../OrderBook/OrderBook';
-import Block from '../Block/Block';
-import AuthModal from '../../../../../../components/AuthModal/AuthModal';
+
 import * as steps from '../../../../../../components/AuthModal/fixtures';
 
 
@@ -136,7 +135,7 @@ export default class TradeForm extends React.Component {
     }
 
     return (
-      <div className="TradeForm Content_box">
+      <UI.ContentBox className="TradeForm">
         {!user && this.__renderPlaceholder()}
         <div className="TradeForm__types">
           {this.__renderOrderType()}
@@ -200,7 +199,7 @@ export default class TradeForm extends React.Component {
             </div>
           </div>
         </div>
-      </div>
+      </UI.ContentBox>
     )
   }
 

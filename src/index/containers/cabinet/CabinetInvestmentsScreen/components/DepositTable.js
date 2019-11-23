@@ -92,13 +92,13 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
     if (adaptive) {
       return (
-        <UI.TableCell key={item.id} onClick={() => {actions.openModal('deposit_info', null, {
-          deposit: item
+        <UI.TableCell key={item.id} onClick={() => {actions.openModal('deposit_info', {
+          depositId: item.id
         })}}>
           <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
             {icon}
           </UI.TableColumn>
-          <UI.TableColumn align="left" sub={`${item.percent}% ${item.description} ${utils.ucfirst(item.type)}`}>
+          <UI.TableColumn align="left" sub={`${item.percent}% ${item.description} ${item.type !== 'pool' ? utils.ucfirst(item.type) : ''}`}>
             {utils.formatDouble(item.amount)} {item.currency.toUpperCase()}
           </UI.TableColumn>
           <UI.TableColumn
@@ -110,8 +110,8 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
     let onClick = false;
     if (!fromPartners) {
-      onClick = () => actions.openModal('deposit_info', null, {
-        deposit: item
+      onClick = () => actions.openModal('deposit_info', {
+        depositId: item.id
       });
     }
 
@@ -122,7 +122,11 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
         </UI.TableColumn>
         <UI.TableColumn>{utils.formatTableId(deposits.length - i)}</UI.TableColumn>
         <UI.TableColumn>{utils.ucfirst(item.type)}</UI.TableColumn>
-        <UI.TableColumn sub={item.description}>{item.plan_percent}%</UI.TableColumn>
+        {item.type === 'pool' ? (
+          <UI.TableColumn>-</UI.TableColumn>
+        ) : (
+          <UI.TableColumn sub={item.description}>{item.plan_percent}%</UI.TableColumn>
+        )}
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
           sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}

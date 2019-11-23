@@ -1,18 +1,18 @@
 import React from 'react';
 import moment from 'moment/min/moment-with-locales';
 import SVG from 'react-inlinesvg';
-import UI from '../../../../../ui';
+import UI from '../../../../../../ui';
 
-import * as utils from '../../../../../utils';
-import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as modalGroupActions from '../../../../../actions/modalGroup';
+import * as utils from '../../../../../../utils';
+import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import * as modalGroupActions from '../../../../../../actions/modalGroup';
 
 export default function HistoryTable({ history, adaptive, header}) {
 
   if (!history.length) {
     return (
       <EmptyContentBlock
-        icon={require('../../../../../asset/120/no_deposits.svg')}
+        icon={require('../../../../../../asset/120/no_deposits.svg')}
         message={utils.getLang('no_transfers_history')}
       />
     )
@@ -20,7 +20,7 @@ export default function HistoryTable({ history, adaptive, header}) {
 
   let headings = [
     <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-      <SVG src={require('../../../../../asset/cabinet/filter.svg')} />
+      <SVG src={require('../../../../../../asset/cabinet/filter.svg')} />
     </UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_addressLogin')}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('cabinet_openNewDeposit_amount')}</UI.TableColumn>,

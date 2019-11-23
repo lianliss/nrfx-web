@@ -3,7 +3,6 @@ import UI from '../../../../../ui';
 
 import * as utils from '../../../../../utils';
 import * as actions from '../../../../../actions';
-import * as currencies from '../../../../../utils/currencies';
 
 function BalanceItem({ amount, currency }) {
   const currencyInfo = actions.getCurrencyInfo(currency);
@@ -16,7 +15,7 @@ function BalanceItem({ amount, currency }) {
       </div>
       <div className="Investments__balances__item__actions empty disable_active_button">
         <UI.Button
-          style={{background: currencies.getGradientByCurrency(currencyInfo.abbr)}}
+          style={{background: currencyInfo.background}}
           key="button"
           type="default"
           size="small"

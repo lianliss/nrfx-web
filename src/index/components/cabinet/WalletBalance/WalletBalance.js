@@ -4,12 +4,11 @@ import SVG from 'react-inlinesvg';
 import PieChart from 'react-minimal-pie-chart';
 
 import { formatNumber, classNames } from '../../../../utils/index';
-import { getGradientByCurrency, getColorByCurrency } from '../../../../utils/currencies';
 import * as actions from "../../../../actions";
 import * as utils from "../../../../utils/index";
 import UI from '../../../../ui/index';
-import * as currencies from "../../../../utils/currencies";
-import * as modalGroupActions from "../../../../actions/modalGroup";
+import { getCurrencyInfo } from '../../../../actions';
+import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 const getWalletsBalance = (wallets, isInFiat) => {
   let walletsAmount = 0;
@@ -30,7 +29,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
 
   wallets.forEach((wallet, i) => {
     if (wallet.amount !== 0) {
-      const color = getColorByCurrency(wallet.currency);
+      const { color } = getCurrencyInfo(wallet.currency);
       walletsCurrencies.push({
         color,
         currency: wallet.currency,
@@ -47,7 +46,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
   }
 };
 
-function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
+function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
   const [ isInFiat, setIsInFiat ] = useState(true);
   const [ convert_currency, setConvert_currency ] = useState('BTC');
   const walletsBalance = getWalletsBalance(wallets, isInFiat);
@@ -56,7 +55,7 @@ function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
       const {amount, currency, to_usd, align} = arguments[0].walletSelected;
       const currencyInfo = actions.getCurrencyInfo(currency);
       const currencyName = utils.ucfirst(currencyInfo.name);
-      const buttonBackgroundColor = currencies.getGradientByCurrency(currency);
+      const buttonBackgroundColor = currencyInfo.background;
       const convertBlock = <div className="WalletBalance__convert" onClick={() => {
         convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
       }}>
@@ -70,29 +69,45 @@ function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
         <div className="WalletBalance__selected_wallet">
           <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletTransactionModal_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
           <div className="WalletBalance__selected_amount">
-            {adaptive ? convertBlock : amount + ' ' + currency.toUpperCase()}
+            {adaptive ? convertBlock : <NumberFormat number={amount} currency={currency} />}
           </div>
-          <div className="WalletBalance__selected_buttons">
-            <UI.Button
-              size={adaptive ? 'small' : 'large'}
-              disabled={amount === 0}
-              onClick={() => {actions.openModal('send', {
-                preset: currencyName
-              })}}
-              style={{background: buttonBackgroundColor}}
-            >
-              {utils.getLang('site__contactSend')}
-            </UI.Button>
-            <UI.Button
-              size={adaptive ? 'small' : 'large'}
-              onClick={() => {actions.openModal('receive', {
-                preset: currencyName
-              })}}
-              style={{background: buttonBackgroundColor}}
-            >
-              {utils.getLang('cabinet_walletTransactionModal_receive')}
-            </UI.Button>
-          </div>
+          {
+            isFiat ? (
+              <div className="WalletBalance__selected_buttons">
+                <UI.Button
+                  size={adaptive ? 'small' : 'large'}
+                  onClick={() => {actions.openModal('merchant', {
+                    currency: currency
+                  })}}
+                  style={{background: buttonBackgroundColor}}
+                >
+                  {utils.getLang('cabinet_fiatBalance_add')}
+                </UI.Button>
+              </div>
+            ) : (
+              <div className="WalletBalance__selected_buttons">
+                <UI.Button
+                  size={adaptive ? 'small' : 'large'}
+                  disabled={amount === 0}
+                  onClick={() => {actions.openModal('send', {
+                    preset: currencyName
+                  })}}
+                  style={{background: buttonBackgroundColor}}
+                >
+                  {utils.getLang('site__contactSend')}
+                </UI.Button>
+                <UI.Button
+                  size={adaptive ? 'small' : 'large'}
+                  onClick={() => {actions.openModal('receive', {
+                    preset: currencyName
+                  })}}
+                  style={{background: buttonBackgroundColor}}
+                >
+                  {utils.getLang('cabinet_walletTransactionModal_receive')}
+                </UI.Button>
+              </div>
+            )
+          }
         </div>
       </div>
     }
@@ -101,6 +116,7 @@ function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
   const balanceHeader = <h3 className="WalletBalance__header">
     {title}
   </h3>;
+
   return (
     <div className="WalletBalance Content_box">
       {walletsBalance
@@ -124,10 +140,10 @@ function WalletBalance({ wallets, adaptive, title, emptyPlaceholder }) {
                 {!adaptive && balanceHeader}
                 <ul>
                   {walletsBalance.walletsCurrencies.map(wallet => {
-                    const gradient = getGradientByCurrency(wallet.currency);
+                    const { background } = getCurrencyInfo(wallet.currency);
                     return (
                       <div key={wallet.currency} className="WalletBalance__list__item">
-                        <span className="WalletBalance__list__item_dot" style={{ background: gradient }} />
+                        <span className="WalletBalance__list__item_dot" style={{ background: background }} />
                         <li key={wallet.currency}>
                           <span>{utils.formatDouble(wallet.value, 2)}%</span>
                           {wallet.currency.toUpperCase()}

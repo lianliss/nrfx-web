@@ -5,10 +5,6 @@
   position: relative;
   border-radius: @border-radius;
 
-  &.small {
-    border-radius: 12px;
-  }
-
   .Input__description {
     font-size: 11px;
     line-height: 16px;
@@ -51,8 +47,11 @@
     resize: none;
     padding: 12px 16px;
   }
+}
 
-  .Input__wrapper.small & {
+.Input__wrapper.small {
+
+  .Input {
     height: 24px;
     border-radius: 12px;
     font-weight: 500;
@@ -61,6 +60,10 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
     padding: 5px 12px;
     border-width: 1px;
+  }
+
+  .Input__indicator {
+    height: 24px;
   }
 }
 

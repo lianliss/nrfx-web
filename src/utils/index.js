@@ -89,11 +89,11 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
 export function throttle (func, ms)  {
   let timeout = null;
 
-  return () => {
+  return (...args) => {
     if (timeout) {
       clearTimeout(timeout)
     }
-    timeout = setTimeout(func, ms);
+    timeout = setTimeout(func.bind(this, ...args), ms);
   }
 }
 
@@ -202,7 +202,8 @@ export function getScrollbarWidth() {
 }
 
 export function isFiat(currency) {
-  return currency.toLowerCase() === 'usdt';
+  return ['usd', 'eur', 'rub', 'idr', 'cny'].includes(currency.toLowerCase());
+  // TODO: Бруть из state.default.currency
 }
 
 export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {

@@ -2,7 +2,6 @@ import './WalletTransactionModal.less';
 
 import React from 'react';
 import UI from '../../../../ui';
-import moment from 'moment/min/moment-with-locales';
 import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../../actions';
@@ -10,7 +9,6 @@ import * as walletsActions from '../../../../actions/cabinet/wallets';
 import LoadingStatus from '../../cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../../utils';
 import InfoRow, { InfoRowGroup } from '../../cabinet/InfoRow/InfoRow';
-import * as currencies from '../../../../utils/currencies';
 
 
 export default class WalletTransactionModal extends React.Component {
@@ -61,7 +59,6 @@ export default class WalletTransactionModal extends React.Component {
       const data = this.state.info;
       const currencyInfo = actions.getCurrencyInfo(data.currency);
       const currency = data.currency.toUpperCase();
-      const currencyGradient = currencies.getGradientByCurrency(data.currency);
 
       let address = data.address;
       if (this.props.type === 'transfer') {
@@ -96,7 +93,7 @@ export default class WalletTransactionModal extends React.Component {
             <InfoRow label={utils.getLang("global_amount")}>{utils.formatDouble(data.amount)} {currency}</InfoRow>
             <InfoRow label={utils.getLang("global_date")}>{ utils.dateFormat(data.created_at)}</InfoRow>
           </InfoRowGroup>
-          <div className="WalletTransactionModal__card" style={{ background: currencyGradient }}>
+          <div className="WalletTransactionModal__card" style={{ background: currencyInfo.background }}>
             <div className="WalletTransactionModal__card__icon">
               <SVG src={require('../../../../asset/24px/receive.svg')} />
             </div>

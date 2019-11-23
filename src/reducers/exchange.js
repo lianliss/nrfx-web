@@ -164,16 +164,17 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.EXCHANGE_ADD_TRADES: {
-      let trades = Object.assign({}, state.trades);
-      trades = action.orders.concat(Object.values(trades));
-      trades = trades.slice(0, 20);
+      const trades = { ...state.trades };
 
-      let tradesMap = {};
-      for (let order of trades) {
-        tradesMap[order.id] = order;
-      }
+      action.orders.forEach(order => {
+        trades[order.id] = order;
+      });
 
-      return Object.assign({}, state, { trades: tradesMap });
+      return {
+        ...state,
+        last_orders: [...action.orders, ...state.last_orders].slice(0, 20),
+        trades: trades
+      };
     }
 
     case actionTypes.EXCHANGE_UPDATE_BALANCE: {

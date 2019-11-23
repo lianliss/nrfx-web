@@ -1,10 +1,9 @@
 import React from 'react';
-import * as currencies from "../../../../utils/currencies";
 import Chart from '../Chart/Chart';
-import ChartSimple from '../Chart/ChartSimple';
 import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';
 import * as utils from "../../../../utils";
 import './ChartProfit.less';
+import {getCurrencyInfo} from '../../../../actions';
 
 class ChartProfit extends React.Component {
   render() {
@@ -17,8 +16,8 @@ class ChartProfit extends React.Component {
 
     const chartCurrencies = {};
     Object.keys(this.props.chart.data).map(currency => {
-      if (!chartCurrencies.hasOwnProperty(currency)) {
-        const currencyColor = currencies.getColorByCurrency(currency);
+      if (!chartCurrencies.hasOwnProperty(currency)){
+        const currencyColor = getCurrencyInfo(currency).color;
         chartCurrencies[currency] = {
           data: [],
           showInLegend: true,

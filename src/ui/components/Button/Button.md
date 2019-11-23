@@ -46,6 +46,16 @@ Button example:
 <Button size="small" type="negative" currency="ltc">Button</Button>
 <Button size="small" type="negative_outline" currency="ltc">Button</Button>
 <Button size="small" type="lite" currency="ltc">Button</Button>
+<br />
+
+<Button rounded size="ultra_small">Button</Button>
+<Button disabled size="ultra_small">Button</Button>
+<Button type="secondary" size="ultra_small">Button</Button>
+<Button type="outline" size="ultra_small">Button</Button>
+<Button rounded type="outline" size="ultra_small">Button</Button>
+<Button type="negative" size="ultra_small">Button</Button>
+<Button type="negative_outline" size="ultra_small">Button</Button>
+<Button type="lite" size="ultra_small">Button</Button>
 ```
 
 state loading

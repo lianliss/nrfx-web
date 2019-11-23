@@ -25,6 +25,7 @@ class Orders extends React.Component {
 
     return (
       <Block
+        skipCollapse
         name="orders"
         tabs={[
           {tag: 'open', label: utils.getLang('exchange_openOrders')},

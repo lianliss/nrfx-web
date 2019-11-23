@@ -28,7 +28,8 @@ import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/Cab
 import * as CabinetResetPassword from './containers/site/SiteResetPasswordScreen/SiteResetPasswordScreen';
 import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen/MenuScreen';
 import * as NotificationsScreen from './containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen';
-// import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
+import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
+import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 
 export default function Routes(props) {
   const routeState = props.router.getState();
@@ -125,9 +126,13 @@ export default function Routes(props) {
     case pages.NOTIFICATIONS:
       Component = NotificationsScreen.default;
       break;
-    // case pages.EXCHANGE:
-    //   Component = CabinetExchangeScreen;
-    //   break;
+    case pages.EXCHANGE:
+      Component = CabinetExchangeScreen;
+      break;
+    case pages.MERCHANT:
+      WrapperComponent = props => (<>{props.children}</>);
+      Component = CabinetMerchantStatusScreen;
+      break;
     default:
       Component = SiteNotFoundScreen;
       break;

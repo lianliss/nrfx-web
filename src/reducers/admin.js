@@ -125,6 +125,15 @@ export default function reduce(state = initialState, action = {}) {
       return newState;
     }
 
+    case 'reload_table_rows': {
+      const newState = { ...state };
+      params.map(row => {
+        updateTable(row.id, newState, { items: [] });
+      })
+
+      return newState;
+    }
+
     default:
       return state;
   }

@@ -93,3 +93,15 @@
   0%    { transform: rotate(0deg); }
   100%  { transform: rotate(360deg); }
 }
+
+.adaptive {
+  .WalletBox {
+    position: relative;
+    margin-right: 28px;
+    flex: 1;
+
+    &:nth-child(n + 4) {
+      margin-top: 0;
+    }
+  }
+}

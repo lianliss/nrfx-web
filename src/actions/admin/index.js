@@ -8,6 +8,9 @@ import store from '../../store';
 import * as toast from '../toasts';
 import * as pages from '../../index/constants/pages';
 import * as adminPages from '../../admin/constants/pages';
+import * as actions from '../index';
+import * as utils from '../../utils';
+import * as exchange from '../cabinet/exchange';
 
 export function init() {
 
@@ -26,7 +29,7 @@ export function valueChange(key, value) {
   store.dispatch({type: actionTypes.ADMIN_VALUE_CHANGE, key,  value });
 }
 
-export default function action(action) {
+function __action(action) {
   if (!action) {
     toast.error('Action not set');
     return false;
@@ -65,4 +68,17 @@ export default function action(action) {
   }).finally(() => {
     store.dispatch({type: 'pending', params: false});
   })
+}
+
+export default function action(action) {
+  if (action.confirm_type) {
+    actions.confirm({
+      title: 'Confirm action',
+      type: (action.confirm_type === 'destructive' ? 'delete' : 'default')
+    }).then(() => {
+      __action(action);
+    });
+  } else {
+    __action(action);
+  }
 }

@@ -2,8 +2,8 @@ import './MarketInfoAdaptive.less';
 
 import React from 'react';
 
-import * as utils from '../../../../../utils';
-import * as actions from '../../../../../actions/';
+import * as utils from '../../../../../../utils';
+import * as actions from '../../../../../../actions/';
 
 export default ({ market, price, percent, diff }) => {
 

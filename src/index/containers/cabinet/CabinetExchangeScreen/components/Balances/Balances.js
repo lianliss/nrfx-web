@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import Block from '../Block/Block';
-import { openModal } from '../../../../../actions/';
+import { openModal } from '../../../../../../actions/';
 
 class Balances extends React.Component {
   shouldComponentUpdate(nextProps) {

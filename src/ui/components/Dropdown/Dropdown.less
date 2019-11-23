@@ -20,6 +20,10 @@
     align-items: center;
     justify-content: stretch;
 
+    .Dropdown__option {
+      width: calc(100% - 30px);
+    }
+
     .isvg {
       display: block;
       margin: 0 3px 0 11px;
@@ -37,24 +41,21 @@
     z-index: 12;
     max-height: 200px;
     overflow-y: auto;
+    border-top: 1px solid var(--uikit-checkbox-disabled-background);
 
     .Dropdown__option {
+      box-sizing: border-box;
       padding: 10px 16px;
       cursor: pointer;
+
+      &.disabled {
+        opacity: .5;
+        pointer-events: none;
+      }
   
       &:hover {
         color: var(--primary);
       }
-    }
-
-    &::before {
-      display: block;
-      content: '';
-      height: 1px;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: var(--uikit-checkbox-disabled-background);
     }
   }
 
@@ -62,10 +63,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: -webkit-fill-available;
+    width: 100%;
     color: var(--foreground-primary-opacity);
 
     .Dropdown__option__title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       font-weight: normal;
       font-size: 14px;
       line-height: 20px;

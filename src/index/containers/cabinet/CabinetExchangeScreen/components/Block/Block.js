@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 
 import * as utils from '../../../../../../utils';
 import * as storage from '../../../../../../services/storage';
+import UI from '../../../../../../ui/index';
 
 export default function Block(props) {
   let {
@@ -20,7 +21,7 @@ export default function Block(props) {
 
   const storagekey = name + '_collapsed';
 
-  const [collapsed, setCollapsed] = useState(storage.getItem(storagekey));
+  const [collapsed, setCollapsed] = useState(!!storage.getItem(storagekey));
 
   const __setCollapsed = (stage) => {
     setCollapsed(stage);
@@ -29,9 +30,6 @@ export default function Block(props) {
 
   const classNames = utils.classNames({
     Exchange__block: true,
-    Content_box: true,
-    collapsed: !!collapsed && !skipCollapse,
-    skip_collapse: !!skipCollapse,
     skip_padding: !!skipPadding
   });
 
@@ -59,19 +57,21 @@ export default function Block(props) {
     )
   }
 
+  const Wrapper = skipCollapse ? UI.ContentBox : UI.Collapse;
+
   return (
-    <div className={classNames}>
-      <div className="Exchange__block__head">
+    <Wrapper title={title} isOpen={collapsed} onChange={() => __setCollapsed(!collapsed)} controls={controls} className={classNames}>
+      { skipCollapse && <div className="Exchange__block__head">
         <div className="Exchange__block__title" onClick={(e) => {
           if (!e.target.classList.contains('Exchange__block__tab')) {
             __setCollapsed(!collapsed);
           }
         }}>{title}</div>
         <div className="Exchange__block__head__controls">{controls}</div>
-      </div>
+      </div>}
       <div className="Exchange__block__content">
         {children}
       </div>
-    </div>
+    </Wrapper>
   )
 }

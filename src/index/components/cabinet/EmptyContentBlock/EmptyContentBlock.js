@@ -12,24 +12,24 @@ export default function EmptyContentBlock({ icon, message, button, skipContentCl
     style.height = height;
     style.minHeight = height;
   }
+
+  const Wrapper = skipContentClass ? props => <div {...props} /> : UI.ContentBox;
+
   return (
-    <div
+    <Wrapper
       className={utils.classNames({
         EmptyContentBlock: true,
-        Content_box: !skipContentClass
       })}
       style={style}
     >
-      <div className="EmptyContentBlock__content">
-        <div className="EmptyContentBlock__content__icon" style={{ backgroundImage: `url(${icon})` }} />
-        <div className="EmptyContentBlock__content__message">{message}</div>
-      </div>
+      <div className="EmptyContentBlock__content__icon" style={{ backgroundImage: `url(${icon})` }} />
+      <div className="EmptyContentBlock__content__message">{message}</div>
       {button && <div className="EmptyContentBlock__call_to_action">
         <UI.Button onClick={button.onClick} size={button.size || (!adaptive ? 'large' : 'small')} style={adaptive ? {marginTop: 16} : {}}>
           {button.text}
         </UI.Button>
       </div>}
-    </div>
+    </Wrapper>
   )
 }
 

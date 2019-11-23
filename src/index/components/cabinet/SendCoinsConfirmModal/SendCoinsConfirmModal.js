@@ -6,9 +6,7 @@ import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../../actions';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
-import * as modalGroupActions from '../../../../actions/modalGroup';
 import * as utils from '../../../../utils';
-import * as currencies from "../../../../utils/currencies";
 
 import InfoRow, {InfoRowGroup} from '../../cabinet/InfoRow/InfoRow';
 import * as storeUtils from '../../../storeUtils';
@@ -46,8 +44,6 @@ class SendCoinsConfirmModal extends React.Component {
     const currencyInfo = this.currencyInfo;
     const currency = this.currency.toUpperCase();
 
-    const currencyGradient = currencies.getGradientByCurrency(currency);
-
     return (
       <div className="SendCoinsConfirmModal">
         <div className="SendCoinsConfirmModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
@@ -65,7 +61,7 @@ class SendCoinsConfirmModal extends React.Component {
           <InfoRow label={utils.getLang('global_amount')}>{utils.formatDouble(amount)} {currency}</InfoRow>
           {/*<InfoRow label="Fee">{utils.formatDouble(fee)} {currency}</InfoRow>*/}
         </InfoRowGroup>
-        <div className="SendCoinsConfirmModal__card" style={{background: currencyGradient}}>
+        <div className="SendCoinsConfirmModal__card" style={{background: currencyInfo.background}}>
           <div className="SendCoinsConfirmModal__card__icon">
             <SVG src={require('../../../../asset/24px/send.svg')} />
           </div>

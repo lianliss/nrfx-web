@@ -25,12 +25,23 @@ class OpenDepositModal extends React.Component {
     touched: false,
     pending: false,
     acceptTerms: false,
-    isPool: (this.props.profile.role == 'pool' && this.props.profile.verification == "verified")
-    // isPool: true
+    isPool: (
+      ['pool', 'admin'].includes(this.props.profile.role.toLowerCase()) &&
+      this.props.profile.verification === 'verified'
+    )
   };
 
   componentDidMount() {
     this.__getWallets();
+
+    if (
+      this.props.router.route.params.currency.toLowerCase() !== 'btc' &&
+      this.props.thisState.selectDepositType === 'pool'
+    ) {
+      this.__setState({
+        selectDepositType: 'static'
+      })
+    }
   }
 
   __getWallets = () => {
@@ -120,8 +131,12 @@ class OpenDepositModal extends React.Component {
         plan_id: this.props.thisState.planId,
         deposit_type: this.props.thisState.selectDepositType
       }).then(({plans}) => {
-        toasts.success(utils.getLang('cabinet_openNewDeposit_depositCreated'));
-        this.props.onClose();
+        if (pool) {
+          actions.openModal('deposit_pool_success');
+        } else {
+          toasts.success(utils.getLang('cabinet_openNewDeposit_depositCreated'));
+          this.props.onClose();
+        }
       }).catch((err) => {
         toasts.error(err.message);
         // this.__setState({error: err.message});
@@ -129,6 +144,12 @@ class OpenDepositModal extends React.Component {
         this.setState({ pending: false });
       });
     }
+  }
+
+  __handleClickMax = () => {
+    const { amount } = this.props.wallets.find(w => w.currency ==  this.props.thisState.currency);
+    const { amountMax } =  this.props.thisState
+    this.__setState({ amount: amount > amountMax ? amountMax : amount });
   }
 
   __setState = (value, key = null, callback) => {
@@ -166,11 +187,15 @@ class OpenDepositModal extends React.Component {
       ],
       pool: [
         {
-          label: utils.getLang('cabinet_openNewDeposit_progressive'),
+          label: utils.getLang('cabinet_openNewDeposit_income'),
           icon: require('../../../../asset/24px/bar-chart.svg')
         },
         {
-          label: utils.getLang('cabinet_openNewDeposit_reduction'),
+          label: utils.getLang('cabinet_openNewDeposit_special'),
+          icon: require('../../../../asset/24px/star.svg')
+        },
+        {
+          label: utils.getLang('cabinet_openNewDeposit_conclusion'),
           icon: require('../../../../asset/24px/withdraw.svg')
         }
       ],
@@ -199,7 +224,7 @@ class OpenDepositModal extends React.Component {
               }}
             />
           </div>
-          <div className="OpenDepositModal__row">
+          <div className="OpenDepositModal__row OpenDepositModal__amount">
             <UI.Input
               type="number"
               error={

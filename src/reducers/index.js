@@ -7,6 +7,9 @@ const initialState = {
   profile: {},
   adaptive: false,
   title: "Bitcoinbot",
+  static: {
+    status: 'loading'
+  },
   modals: []
 };
 
@@ -25,10 +28,6 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.PROFILE: {
       return Object.assign({}, state, {profile: action.props});
-    }
-
-    case actionTypes.STATIC: {
-      return Object.assign({}, state, { [action.payload.address]: { data: action.payload.data } });
     }
 
     case actionTypes.PUSH_MODAL: {

@@ -28,13 +28,14 @@ export default class Chart extends React.PureComponent {
   tvWidget = null;
 
   __handleFullscreen() {
-    if (!document.fullscreen) {
+    if (!document.webkitIsFullScreen && !document.fullscreen ) {
       actions.setFullscreen(false);
     }
   }
 
   componentDidMount() {
     document.addEventListener('fullscreenchange', this.__handleFullscreen.bind(this), false);
+    document.addEventListener('webkitfullscreenchange', this.__handleFullscreen.bind(this), false);
 
     const widgetOptions = {
       symbol: this.props.symbol,
@@ -108,7 +109,12 @@ export default class Chart extends React.PureComponent {
     this.tvWidget = tvWidget;
 
     if (this.props.fullscreen) {
-      this.refs.tradingView.requestFullscreen();
+      const { tradingView } = this.refs;
+      if (tradingView.requestFullscreen) {
+        tradingView.requestFullscreen();
+      } else {
+        tradingView.webkitRequestFullScreen();
+      }
     }
   }
 
