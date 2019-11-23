@@ -83,13 +83,6 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
                 >
                   {utils.getLang('cabinet_fiatBalance_add')}
                 </UI.Button>
-                <UI.Button
-                  size={adaptive ? 'small' : 'large'}
-                  style={{background: buttonBackgroundColor}}
-                  disabled={true}
-                >
-                  {utils.getLang('global_withdrawAction')}
-                </UI.Button>
               </div>
             ) : (
               <div className="WalletBalance__selected_buttons">

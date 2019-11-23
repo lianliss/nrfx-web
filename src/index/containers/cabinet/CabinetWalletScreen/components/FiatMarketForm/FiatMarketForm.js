@@ -84,6 +84,7 @@ class FiatMarketForm extends React.Component {
   getCurrenciesOptions(prefix) {
     return Object.keys(this.props.currencies)
       .map(key => this.props.currencies[key])
+      .filter(c => !(c.type === 'crypto' && !c.can_generate))
       .map(c => ({
         ...c,
         title: prefix + ' ' + ucfirst(c.name),
