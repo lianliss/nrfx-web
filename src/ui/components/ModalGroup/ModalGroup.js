@@ -5,9 +5,9 @@ import React from 'react';
 import ModalPage from '../ModalPage/ModalPage';
 import * as modalGroupActions from '../../../actions/modalGroup';
 import * as modalGroupHandlers from '../../../actions/modalGroupHandlers';
-import * as modalGroupConstants from '../../../constants/modalGroup';
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
+import * as modalGroupConstants from '../../../index/constants/modalGroup';
+import * as storeUtils from "../../../index/storeUtils";
+import * as CLASSES from "../../../index/constants/classes";
 
 class ModalGroup extends React.Component {
   constructor(props) {

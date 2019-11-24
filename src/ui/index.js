@@ -23,6 +23,11 @@ import Range from './components/Range/Range';
 import MarkDown from './components/MarkDown/MarkDown';
 import InternalNotification from './components/InternalNotification/InternalNotification';
 import NumberFormat from './components/NumberFormat/NumberFormat';
+import ActionSheet from './components/ActionSheet/ActionSheet';
+import Logo from './components/Logo/Logo';
+import List from './components/List/List';
+import ContentBox from './components/ContentBox/ContentBox';
+import Collapse from './components/Collapse/Collapse';
 import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
 
 export default {
@@ -53,5 +58,10 @@ export default {
   FloatingButton,
   FloatingButtonItem,
   InternalNotification,
-  NumberFormat
+  NumberFormat,
+  ActionSheet,
+  Logo,
+  List,
+  ContentBox,
+  Collapse
 };

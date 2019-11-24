@@ -1,7 +1,7 @@
 import * as realTime from './realtime';
 import * as exchange from '../actions/cabinet/exchange';
-import * as toasts from '../actions/cabinet/toasts';
-import * as utils from '../utils/';
+import * as toasts from '../actions/toasts';
+import * as utils from '../utils';
 
 let markets = {};
 

@@ -7,7 +7,6 @@ import apiSchema from '../services/apiSchema';
 import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as utils from '../utils';
-import { getColorByCurrency } from '../utils/currencies';
 import * as emitter from '../services/emitter';
 
 export function loadLang(code) {
@@ -26,24 +25,13 @@ export function loadLang(code) {
   });
 }
 
-export function getStaticPageContent(address,) {
-  return new Promise((resolve, reject) => {
-    api.call(apiSchema.Page.DefaultGet, {address}).then(data => {
-      store.dispatch({ type: actionTypes.STATIC, payload: { address, data } })
-      resolve(data);
-    }).catch((err) => {
-      reject(err)
-    });
-  });
+export function getStaticPageContent(address) {
+  return api.call(apiSchema.Page.DefaultGet, {address});
 }
 
 export function loadCurrencies() {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Wallet.CurrenciesGet).then((currencies) => {
-      Object.values(currencies).forEach(value => {
-        currencies[value.abbr].color = getColorByCurrency(value.abbr); // HACK
-      });
-      // TODO: Цвет тоже должен приходить с сервера
       store.dispatch({ type: actionTypes.SET_CURRENCIES, currencies });
       resolve();
     }).catch(() => reject());
@@ -51,19 +39,15 @@ export function loadCurrencies() {
 }
 
 export function getCurrencyInfo(name) {
+  if (!name) return {};
+
   const state = store.getState().cabinet;
   name = name.toLowerCase();
-
-  let result = state.currencies[name];
-  result.color = getColorByCurrency(name);
-  if (!result) {
-    result = {
-      name: 'Unknown',
-      icon: null,
-      abbr: name
-    };
+  let currency = state.currencies[name];
+  return {
+    ...currency,
+    background: `linear-gradient(45deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`
   }
-  return result;
 }
 
 export function openModal(name, params = {}, props = {}) {

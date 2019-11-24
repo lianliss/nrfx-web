@@ -38,12 +38,10 @@ class Dropdown extends React.Component {
   };
 
   __handleClick(e) {
-    console.log('e', this.refs.dropdown, !this.refs.dropdown.contains(e.target));
     this.toggle(false);
   }
 
   __handleClickEsc(e){
-    console.log('e', e);
     if(e.keyCode === 27) {
       this.toggle(false);
     }
@@ -58,6 +56,7 @@ class Dropdown extends React.Component {
 
     const className = classNames({
       Dropdown: true,
+      disabled: props.disabled,
       Dropdown_open: state.isOpen,
       [props.size]: props.size
     });
@@ -66,8 +65,8 @@ class Dropdown extends React.Component {
       <div ref="dropdown" key="dropdown" className={className}>
         <div className="Dropdown__header" onClick={() => this.toggle(!state.isOpen)}>
           <div className="Dropdown__option">
-            <p className="Dropdown__option__title">{headerText.title || props.placeholder}</p>
-            <p className="Dropdown__option__note">{headerText.note}</p>
+            <div className="Dropdown__option__title">{headerText.title || props.placeholder}</div>
+            <div className="Dropdown__option__note">{headerText.note}</div>
           </div>
 
           <SVG src={dropdownIcon} />
@@ -80,14 +79,14 @@ class Dropdown extends React.Component {
                 props.options.map((opt, i) => {
                   return <div
                     key={Math.random()}
-                    className="Dropdown__option key"
+                    className={classNames("Dropdown__option", { disabled: opt.disabled })}
                     onClick={() => {
                       props.onChange(opt);
                       this.toggle(false);
                     }}
                   >
-                    <p className="Dropdown__option__title">{opt.title}</p>
-                    <p className="Dropdown__option__note">{opt.note}</p>
+                    <div className="Dropdown__option__title">{opt.title}</div>
+                    <div className="Dropdown__option__note">{opt.note}</div>
                   </div>
                 })
               }
@@ -104,6 +103,7 @@ const optionType = PropTypes.shape({
     PropTypes.string,
     PropTypes.number
   ]),
+  disabled: PropTypes.bool,
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -120,6 +120,7 @@ Dropdown.propTypes = {
     PropTypes.bool,
     optionType
   ]),
+  disabled: PropTypes.bool,
   options: PropTypes.arrayOf(optionType).isRequired,
   onChange: PropTypes.func.isRequired,
 };

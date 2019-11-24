@@ -1,0 +1,51 @@
+.ActionsSheet {
+  position: relative;
+  width: fit-content;
+
+  &.disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  .isvg {
+    color: var(--uikit-foreground-secondary);
+  }
+
+  &:not(.visible) .ActionsSheet__list{
+    display: none;
+  }
+
+  .ActionsSheet__list {
+    min-width: 160px;
+    position: absolute !important;
+    z-index: 10;
+    margin: 0;
+    top: 0;
+    left: 0;
+
+    .ContentBox__content {
+      padding: 8px 0;
+    }
+  }
+
+  &.left {
+    .ActionsSheet__list {
+      right: 0;
+      left: auto;
+    }
+  }
+
+  .ActionsSheet__item {
+    cursor: pointer;
+    padding: 12px 24px;
+    color: var(--uikit-foreground-secondary);
+
+    &.destructive {
+      color: var(--primary-red);
+    }
+
+    &:not(.destructive):hover {
+      color: black;
+    }
+  }
+}

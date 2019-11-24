@@ -1,0 +1,24 @@
+.List {
+  display: table;
+  border-spacing: 16px;
+
+  .List__item {
+    display: table-row;
+
+    &.margin {
+      & > * {
+        padding-bottom: 16px;
+      }
+    }
+
+    .List__item__label,
+    .List__item__value {
+      display: table-cell;
+    }
+
+    .List__item__label {
+      text-align: right;
+      color: var(--uikit-foreground-secondary);
+    }
+  }
+}

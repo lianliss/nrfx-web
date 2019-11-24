@@ -5,7 +5,7 @@ import store from '../../store';
 import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
-import * as toastsActions from './toasts';
+import * as toastsActions from '../toasts';
 
 export function loadInvestments() {
   return (dispatch, getState) => {
@@ -35,6 +35,12 @@ export function loadProfitHistory() {
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'failed' });
     });
   };
+}
+
+export function getDeposit(id) {
+  return api.call(apiSchema.Investment.DepositGet, {
+    deposit_id: id
+  })
 }
 
 export function calculate({ currency, planId, amount, days }) {
