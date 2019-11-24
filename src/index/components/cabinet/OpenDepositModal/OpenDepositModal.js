@@ -35,7 +35,7 @@ class OpenDepositModal extends React.Component {
     this.__getWallets();
 
     if (
-      this.props.router.route.params.currency.toLowerCase() !== 'btc' &&
+      (this.props.router.route.params.currency || '').toLowerCase() !== 'btc' &&
       this.props.thisState.selectDepositType === 'pool'
     ) {
       this.__setState({
