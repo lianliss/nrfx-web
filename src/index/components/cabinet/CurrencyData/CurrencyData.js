@@ -19,7 +19,7 @@ class CurrencyData extends React.PureComponent {
     }
 
     connectWs = () => {
-      ws = new WebSocket('wss://bitcoinbot.pro:7000/api/v1/ws/rate');
+      ws = new WebSocket('wss://narfex.com:7000/api/v1/ws/rate');
 
       ws.onopen = this.onWsOpen;
       ws.onmessage = this.onWsMessage;

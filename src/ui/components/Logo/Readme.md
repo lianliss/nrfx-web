@@ -4,15 +4,26 @@ Default
   <Logo />
 ```
 
-Current Color
+Flat
 ```js
-  <Logo currentColor />
+  <Logo type="flat" />
 ```
 
-
-Custom Color
+White
 ```js
-<div style={{background: '#FF9E65', padding: '1em', color: 'white'}}>
-  <Logo currentColor />
+<div style={{background: '#f3a93e', padding: '1em'}}>
+  <Logo type="white" />
 </div>
+```
+
+White
+```js
+<div style={{background: '#fbf9f6', padding: '1em'}}>
+  <Logo type="gray" />
+</div>
+```
+
+Monochrome / Сurrent color
+```js
+  <Logo type="monochrome" />
 ```

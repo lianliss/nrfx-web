@@ -2,7 +2,7 @@ import * as auth from './auth';
 
 class RealTime {
   constructor() {
-    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo?access_token=' + auth.getToken();
+    this.endpoint = 'wss://narfex.com/echo?access_token=' + auth.getToken();
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;

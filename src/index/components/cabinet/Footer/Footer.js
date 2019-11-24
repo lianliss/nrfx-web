@@ -21,7 +21,6 @@ const Footer = (props) => {
       <li className="CabinetFooter__item"><a href="//bitcoinbot.wiki" target="_blank" rel="noopener noreferrer">FAQ</a></li>
       {/*<li className="CabinetFooter__item"><BaseLink router={router} routeName={pages.FAQ}>{utils.getLang("site__footerFAQ")}</BaseLink></li>*/}
       <li className="CabinetFooter__item"><a href="#" onClick={handleChangeLanguage}>{lang.title}</a></li>
-      <li className="CabinetFooter__item"><a href="http://cabinet.bitcoinbot.pro">{utils.getLang("global_oldDesign")}</a></li>
     </ul>
   )
 };

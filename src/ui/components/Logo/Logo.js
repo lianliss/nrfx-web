@@ -4,8 +4,26 @@ import React from 'react';
 import SVG from 'react-inlinesvg';
 import { classNames as cn } from '../../utils/';
 
-export default props => (
-  <div className={cn("Logo", { currentColor: props.currentColor })}>
-    <SVG src={require('../../../asset/logo_monochrome.svg')} />
-  </div>
-);
+
+const Logo = props => {
+  const images = {
+    white: require('../../../asset/logo/white.svg'),
+    gray: require('../../../asset/logo/gray.svg'),
+    default: require('../../../asset/logo/default.svg'),
+    flat: require('../../../asset/logo/flat.svg'),
+    monochrome: require('../../../asset/logo/monochrome.svg'),
+  }
+
+  return (
+    <div className={cn("Logo", {currentColor: props.currentColor})}>
+      <SVG src={images[props.type]}/>
+    </div>
+  )
+};
+
+Logo.defaultProps = {
+  type: 'default'
+};
+
+
+export default Logo;

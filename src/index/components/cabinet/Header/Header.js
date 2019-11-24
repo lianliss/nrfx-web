@@ -82,7 +82,9 @@ class Header extends React.Component {
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
           <div className="CabinetHeader__content">
-            <BaseLink router={router} routeName={isLogged ? pages.PROFILE : pages.MAIN} className="CabinetHeader__logo" />
+            <BaseLink router={router} routeName={isLogged ? pages.PROFILE : pages.MAIN}>
+              <UI.Logo />
+            </BaseLink>
             { isLogged && <div className="CabinetHeader__links">
               <BaseLink router={router} routeName={pages.PROFILE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.PROFILE})}}>
                 <SVG src={require('../../../../asset/cabinet/user.svg')} />

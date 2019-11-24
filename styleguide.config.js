@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  title: "BitcoinBot UI",
+  title: "Narfex UI",
   components: 'src/ui/components/**/[A-Z]*.js',
   require: [
     path.join(__dirname, './src/index/index.less'),

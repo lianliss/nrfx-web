@@ -8,6 +8,7 @@ import * as utils from '../../../../utils/index';
 import * as actions from '../../../../actions';
 import MarkDown from '../../../../ui/components/MarkDown/MarkDown';
 import { isIndonesia } from '../../../../services/locations';
+import UI from '../../../../ui';
 
 export default function Footer() {
   return (
@@ -43,18 +44,18 @@ export default function Footer() {
         </div>
         <div className="Footer__bottom">
           <div className="Footer__logo">
-            <SVG src={require('../../../../asset/logo_full.svg')} />
+            <UI.Logo type="gray" />
           </div>
           <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} BITCOINBOT</div>
           <div className="Footer__socials">
             <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/Bitcoinbotpro-432506870546401/" className="Footer__social">
-              <SVG src={require('../../../../asset/site/footer_facebook.svg')} />
+              <SVG src={require('../../../../asset/social/facebook.svg')} />
             </a>
             <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/BitcoinBot_pro" className="Footer__social">
-              <SVG src={require('../../../../asset/site/footer_twitter.svg')} />
+              <SVG src={require('../../../../asset/social/twitter.svg')} />
             </a>
             <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/bitcoinbot_pro/" className="Footer__social">
-              <SVG src={require('../../../../asset/site/footer_instagram.svg')} />
+              <SVG src={require('../../../../asset/social/instagram.svg')} />
             </a>
           </div>
         </div>
