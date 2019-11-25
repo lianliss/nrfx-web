@@ -2,6 +2,8 @@ import './Logo.less';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import PropTypes from 'prop-types';
+
 import { classNames as cn } from '../../utils/';
 
 
@@ -15,15 +17,21 @@ const Logo = props => {
   }
 
   return (
-    <div className={cn("Logo", {currentColor: props.currentColor})}>
+    <div className={cn("Logo", props.size, {currentColor: props.currentColor})}>
       <SVG src={images[props.type]}/>
     </div>
   )
 };
 
 Logo.defaultProps = {
-  type: 'default'
+  type: 'default',
+  size: 'middle'
 };
 
 
-export default Logo;
+Logo.propTypes = {
+  size: PropTypes.oneOf(['middle', 'large']),
+};
+
+
+export default React.memo(Logo);
