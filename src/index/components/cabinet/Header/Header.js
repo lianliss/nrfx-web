@@ -5,8 +5,6 @@ import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 import url from 'url';
 
-import * as emitter from '../../../../services/emitter';
-import DropDown from './components/Dropdown';
 import Badge from '../Badge/Badge';
 import router from '../../../../router';
 import * as pages from '../../../constants/pages';
@@ -17,49 +15,13 @@ import UI from "../../../../ui/index";
 import * as auth from '../../../../actions/auth';
 import * as steps from '../../../../components/AuthModal/fixtures';
 import * as actions from '../../../../actions';
+import {getLang} from '../../../../services/lang';
 
-function getDropDownLinks() {
-  return [
-    {
-      title: <SVG src={require('../../../../asset/cabinet/settings.svg')} />,
-      children: [
-        {
-          title: utils.getLang('cabinet_header_settings'),
-          route: pages.SETTINGS
-        },
-        {
-          title: "FAQ",
-          route: 'https://bitcoinbot.wiki/',
-          useLocation: true
-        },
-        {
-          title: utils.getLang('cabinet_header_exit'),
-          route: pages.MAIN,
-          action: () => {
-            auth.logout();
-          }
-        },
-      ]
-    }
-  ]
-}
 
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.DropDownLinks = getDropDownLinks();
-    this.updater = emitter.addListener('headerUpdate', this.__update);
-  }
-
-  __update = e => {
-    this.DropDownLinks = getDropDownLinks();
-    this.setState({update: !this.state.update});
-  };
-
   state = {
     activePage: null,
     visibleNotifications: false,
-    update: false
   };
 
   handleNavigate = (route) => {
@@ -78,6 +40,10 @@ class Header extends React.Component {
     const { internalNotifications } = this.props;
     const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
     const { notifications } = this.props.notifications;
+
+    const currentLang = getLang();
+    const lang = this.props.langList.find(l => l.value === currentLang);
+
     return (
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
@@ -147,22 +113,22 @@ class Header extends React.Component {
                   </Badge>
                 </div>
               </div>
-              {/*<div className="CabinetHeader__icon">*/}
-              {/*<SVG src={require('../../../asset/cabinet/social.svg')} />*/}
-              {/*</div>*/}
               <div className="CabinetHeader__icon">
-                <DropDown
-                  key={this.DropDownLinks[0].title}
-                  title={this.DropDownLinks[0].title}
-                  onNavigate={this.handleNavigate}
-                  subItems={this.DropDownLinks[0].children}
-                  className="CabinetHeader__DropDown_settings"
-                />
+                <UI.ActionSheet position="left" items={[
+                  { title: utils.getLang('cabinet_header_settings'), onClick: () => router.navigate(pages.SETTINGS) },
+                  { title: "FAQ", onClick: () => window.location.href = 'https://bitcoinbot.wiki/' },
+                  { title: lang.title, onClick: () => actions.openModal('language'), subContent: (
+                    <SVG src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
+                  )},
+                  { title: utils.getLang('cabinet_header_exit'), onClick: auth.logout },
+                ]}>
+                  <SVG src={require('../../../../asset/cabinet/settings.svg')} />
+                </UI.ActionSheet>
               </div>
             </div>}
             { !isLogged && <div className="CabinetHeader__controls">
-              <UI.Button onClick={() => actions.openModal('auth', {type: steps.LOGIN})} className="login" size="small" type="lite">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
-              <UI.Button onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})}  size="small" type="outline">{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
+              <UI.Button onClick={() => actions.openModal('auth', {type: steps.LOGIN})} className="login" size="middle" type="lite">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
+              <UI.Button onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})}  size="middle" type="outline">{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
             </div> }
           </div>
           {internalNotification && <UI.InternalNotification

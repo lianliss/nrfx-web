@@ -7,6 +7,8 @@ import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as auth from '../services/auth';
 import * as user from './user';
+import router from '../router';
+import * as pages from '../index/constants/pages';
 
 export function getAuth(login, password) {
   const app_id = 8;
@@ -51,6 +53,7 @@ export function getAuth(login, password) {
 // }
 
 export function logout() {
+  router.navigate(pages.MAIN);
   auth.logout();
   store.dispatch({type: actionTypes.LOGOUT});
 }

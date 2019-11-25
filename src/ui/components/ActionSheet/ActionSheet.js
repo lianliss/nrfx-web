@@ -37,16 +37,24 @@ export default class ActionSheet extends React.Component {
     const { props, state } = this;
 
     return (
-      <div className={cn("ActionsSheet", props.position, { visible: state.visible, disabled: !props.items.length })}>
-        <div onClick={() => this.toggle(true)}>{props.children || (
-          <SVG src={require('../../../asset/24px/menu-more.svg')} />
-        )}</div>
+      <div
+        onMouseLeave={props.mouseOver ? () => this.toggle(false) : () => {}}
+        className={cn("ActionsSheet", props.position, { visible: state.visible, disabled: !props.items.length })}>
+        <div
+          onClick={() => this.toggle(true)}
+          onMouseOver={props.mouseOver ? () => this.toggle(true) : () => {}}>
+          {props.children || (
+            <SVG src={require('../../../asset/24px/menu-more.svg')} />
+          )}</div>
         <ContentBox className="ActionsSheet__list">
           {props.items.map(item => (
             <div className={cn('ActionsSheet__item', item.type)} onClick={e => {
               item.onClick();
               this.toggle(false);
-            }}>{item.title}</div>
+            }}>
+              <div className="ActionsSheet__item__title">{item.title}</div>
+              { item.subContent && <div className="ActionsSheet__item__sub">{item.subContent}</div>}
+            </div>
           ))}
         </ContentBox>
       </div>

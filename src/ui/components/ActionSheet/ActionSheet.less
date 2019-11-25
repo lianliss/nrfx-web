@@ -36,16 +36,23 @@
   }
 
   .ActionsSheet__item {
+    white-space: nowrap;
     cursor: pointer;
     padding: 12px 24px;
     color: var(--uikit-foreground-secondary);
+    display: flex;
 
-    &.destructive {
+    &.destructive .ActionsSheet__item__title {
       color: var(--primary-red);
     }
 
-    &:not(.destructive):hover {
+    &:not(.destructive):hover .ActionsSheet__item__title {
       color: black;
+    }
+
+    .ActionsSheet__item__sub {
+      margin-left: auto;
+      padding-left: 24px;
     }
   }
 }
