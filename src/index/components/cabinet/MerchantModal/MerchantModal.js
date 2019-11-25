@@ -178,12 +178,12 @@ const MerchantModal = props => {
         </div>
 
         <div className="MerchantModal__buttons">
-          <UI.Button onClick={() => setMerchant(null)} type="outline">{getLang('global_back')}</UI.Button>
+          <UI.Button currency={currencyInfo} onClick={() => setMerchant(null)} type="outline">{getLang('global_back')}</UI.Button>
           { merchant === 'invoice' ? (
-            <UI.Button onClick={handleSubmitInvoice}>{getLang('global_next')}</UI.Button>
+            <UI.Button currency={currencyInfo} onClick={handleSubmitInvoice}>{getLang('global_next')}</UI.Button>
           ) : (
             <div dangerouslySetInnerHTML={{__html: `<div onclick="handleSubmit()">${renderToString(
-              <UI.Button disabled={!amount || !url} state={urlStatus}>{getLang('global_next')}</UI.Button>
+              <UI.Button currency={currencyInfo} disabled={!amount || !url} state={urlStatus}>{getLang('global_next')}</UI.Button>
             )}</div>`}} />
           )}
         </div>

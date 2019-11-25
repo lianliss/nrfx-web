@@ -99,7 +99,7 @@ class DashboardItem extends React.Component {
               {this.content.emptyDescription}
             </div>
             <div className="DashboardItem__buttonAction">
-              <UI.Button size="small" {...this.button} />
+              <UI.Button size="middle" {...this.button} />
             </div>
           </div>
         </div>
@@ -147,7 +147,7 @@ class DashboardItem extends React.Component {
             </div>
           </div>
           <div className="DashboardItem__buttonAction">
-            <UI.Button size="small" {...this.button} />
+            <UI.Button size="middle" {...this.button} />
           </div>
         </div>
       </div>

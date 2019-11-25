@@ -124,7 +124,7 @@ class SendCoinsModal extends React.Component {
             <UI.Button
               smallPadding
               type="outline"
-              currency={this.props.thisState.currency}
+              currency={currencyInfo}
               onClick={this.__maxDidPress}
             >
               {utils.getLang('cabinet_sendCoinsModal_max')}
@@ -132,7 +132,7 @@ class SendCoinsModal extends React.Component {
           </div>
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
-              currency={this.props.thisState.currency}
+              currency={currencyInfo}
               onClick={this.__sendButtonHandler}
               disabled={sendButtonDisabled}
             >

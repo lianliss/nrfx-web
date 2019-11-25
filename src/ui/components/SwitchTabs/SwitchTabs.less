@@ -2,7 +2,7 @@
 
 .SwitchTabs {
   position: relative;
-  border: 1px solid var(--uikit-primary-light);
+  border: 1px solid;
   color: var(--uikit-primary);
   box-sizing: border-box;
   border-radius: @border-radius;
@@ -49,42 +49,4 @@
   z-index: 1;
   transition: transform 150ms ease-in-out;
   left: -1px;
-}
-
-.SwitchTabs {
-  &.ltc {
-    .SwitchTabs__indicator {
-      background: var(--uikit-button-gradient-ltc);
-      color: white;
-    }
-    color: var(--uikit-button-color-ltc);
-    border-color: var(--uikit-button-color-ltc);
-  }
-
-  &.eth {
-    .SwitchTabs__indicator {
-      background: var(--uikit-button-gradient-eth);
-      color: white;
-    }
-    color: var(--uikit-button-color-eth);
-    border-color: var(--uikit-button-color-eth);
-  }
-
-  &.btc {
-    .SwitchTabs__indicator {
-      background: var(--uikit-button-gradient-btc);
-      color: white;
-    }
-    color: var(--uikit-button-color-btc);
-    border-color: var(--uikit-button-color-btcZ);
-  }
-
-  &.fiat {
-    .SwitchTabs__indicator {
-      background: var(--uikit-button-gradient-fiat);
-      color: white;
-    }
-    color: var(--uikit-button-color-fiat);
-    border-color: var(--uikit-button-color-fiat);
-  }
 }

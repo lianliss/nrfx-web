@@ -21,11 +21,36 @@ function Button(props) {
     [props.state]: !!props.state,
   });
 
+  const getBackground = () => {
+    const { gradient } = props.currency;
+    if (gradient) {
+      return `linear-gradient(45deg, ${gradient[0]} 0%, ${gradient[1]} 100%)`
+    } else {
+      return props.currency.color;
+    }
+  };
+
+  const fillStyle = {}
+
+  if (props.type === 'normal') {
+    fillStyle.background = getBackground();
+    fillStyle.color = 'white';
+  }
+
+  if (props.type === 'outline') {
+    fillStyle.background = getBackground();
+    fillStyle.color = props.currency.color;
+  }
+
+  if (props.type === 'lite') {
+    fillStyle.color = props.currency.color;
+  }
+
   return (
     <button
       className={className}
       onClick={(e) => props.onClick && props.onClick(e)}
-      style={props.style}
+      style={{...fillStyle, ...props.style}}
       type={props.btnType}
       title={props.title}
     >
@@ -35,14 +60,20 @@ function Button(props) {
         <div className="Button__label" style={props.fontSize ? {fontSize: props.fontSize} : {}}>{props.children}</div>
         {props.afterContent}
       </div>
-      {(props.type === 'outline' || props.type === 'negative_outline') && <div className="Button__outline_helper" />}
     </button>
   )
 }
 
+Button.defaultProps = {
+  type: 'normal',
+  size: 'large',
+  currency: {},
+};
+
 Button.propTypes = {
-  size: PropTypes.oneOf(['', 'small', 'large', 'ultra_small', 'middle']),
-  type: PropTypes.oneOf(['', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'primary']),
+  size: PropTypes.oneOf(['middle', 'small', 'large', 'ultra_small']),
+  type: PropTypes.oneOf(['normal', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'primary']),
+  currency: PropTypes.object,
   className: PropTypes.string,
   btnType: PropTypes.string,
   disabled: PropTypes.bool,
@@ -52,9 +83,8 @@ Button.propTypes = {
   beforeContent: PropTypes.node,
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
-  currency: PropTypes.string,
   title: PropTypes.string,
-  state: PropTypes.oneOf(['', 'loading', 'disabled'])
+  state: PropTypes.oneOf(['default', 'loading', 'disabled'])
 };
 
 export default React.memo(Button);

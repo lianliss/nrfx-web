@@ -18,7 +18,7 @@ function BalanceItem({ amount, currency }) {
           style={{background: currencyInfo.background}}
           key="button"
           type="default"
-          size="small"
+          size="middle"
           onClick={() => actions.openModal('open_deposit', { currency })}
         >
           {utils.getLang('cabinet_profileScreen_actionCard_invest')}
