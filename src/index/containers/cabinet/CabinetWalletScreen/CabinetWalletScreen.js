@@ -225,9 +225,9 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   };
 
   __renderWallets = () => {
-    const rows = this.wallets.map((wallet, i) => {
+    const rows = this.wallets.map((wallet) => {
       return <WalletBox
-        key={i}
+        key={wallet.id}
         {...wallet}
         onClick={() => {this.__walletSelect(wallet)}}
         walletSelected={this.state.walletSelected}
