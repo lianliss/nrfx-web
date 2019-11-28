@@ -29,8 +29,8 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         history: [action.payload.history, ...state.history],
-        balances: state.balances.map(b => b.id === balance.id ? balance : b),
-        wallets: state.wallets.map(w => w.id === wallet.id ? wallet : w),
+        balances: state.balances.map(b => b.id === balance.id ? {...b, ...balance} : b),
+        wallets: state.wallets.map(w => w.id === wallet.id ? {...w, ...wallet} : w),
       };
     }
 

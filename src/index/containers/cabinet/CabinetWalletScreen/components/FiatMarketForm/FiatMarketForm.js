@@ -10,12 +10,12 @@ import * as actions from '../../../../../../actions/cabinet/fiatWallets';
 
 class FiatMarketForm extends React.Component {
   state = {
-    from: 'btc',
-    to: 'usd',
-    typeActive: 'from',
-    fromAmount: 1,
+    from: 'usd',
+    to: 'btc',
+    typeActive: 'to',
+    fromAmount: null,
     amount: 1,
-    toAmount: null
+    toAmount: 1
   };
 
   componentDidMount() {
@@ -121,27 +121,6 @@ class FiatMarketForm extends React.Component {
           <div className="FiatMarketForm__column">
             <UI.Input
               disabled={disabled}
-              value={this.state.fromAmount}
-              onTextChange={this.handleAmountChange('from')}
-              placeholder={getLang('global_amount')}
-              type="number" />
-          </div>
-          <div className="FiatMarketForm__column">
-            <UI.Dropdown
-              placeholder="Placeholder"
-              value={this.state.from}
-              onChange={this.handleCurrencyChange('from')}
-              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletBuy'))}
-            />
-            <div className="FiatMarketForm__rate">
-              {this.renderRate('from')}
-            </div>
-          </div>
-        </div>
-        <div className="FiatMarketForm__row">
-          <div className="FiatMarketForm__column">
-            <UI.Input
-              disabled={disabled}
               value={this.state.toAmount}
               onTextChange={this.handleAmountChange('to')}
               placeholder={getLang('global_amount')}
@@ -152,10 +131,31 @@ class FiatMarketForm extends React.Component {
               placeholder="Placeholder"
               value={this.state.to}
               onChange={this.handleCurrencyChange('to')}
-              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletWith'))}
+              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletBuy'))}
             />
             <div className="FiatMarketForm__rate">
               {this.renderRate('to')}
+            </div>
+          </div>
+        </div>
+        <div className="FiatMarketForm__row">
+          <div className="FiatMarketForm__column">
+            <UI.Input
+              disabled={disabled}
+              value={this.state.fromAmount}
+              onTextChange={this.handleAmountChange('from')}
+              placeholder={getLang('global_amount')}
+              type="number" />
+          </div>
+          <div className="FiatMarketForm__column">
+            <UI.Dropdown
+              placeholder="Placeholder"
+              value={this.state.from}
+              onChange={this.handleCurrencyChange('from')}
+              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletWith'))}
+            />
+            <div className="FiatMarketForm__rate">
+              {this.renderRate('from')}
             </div>
           </div>
         </div>
