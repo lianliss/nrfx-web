@@ -44,6 +44,7 @@ export function getCurrencyInfo(name) {
   const state = store.getState().cabinet;
   name = name.toLowerCase();
   let currency = state.currencies[name];
+  if (!currency) return { abbr: name };
   return {
     ...currency,
     background: `linear-gradient(45deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`
