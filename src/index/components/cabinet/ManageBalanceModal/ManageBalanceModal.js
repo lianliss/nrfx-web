@@ -101,7 +101,9 @@ export default class extends React.Component {
       return (
         <ModalState status={this.state.loadingStatus} onRetry={this.__load} />
       );
-    }
+    };
+
+    const currencyInfo = actions.getCurrencyInfo(this.currency);
 
     return (
       <UI.Modal isOpen={true} onClose={this.props.onClose}>
@@ -109,7 +111,7 @@ export default class extends React.Component {
         <div className="ManageBalanceModal">
           <div className="ManageBalanceModal__row">
             {!this.isWithdrawalOnly && <UI.SwitchTabs
-              currency={this.currency}
+              currency={currencyInfo}
               selected={this.state.type}
               onChange={(type) => this.setState({ type })}
               tabs={[
@@ -139,7 +141,7 @@ export default class extends React.Component {
             <UI.Button
               smallPadding
               type="outline"
-              currency={this.currency}
+              currency={currencyInfo}
               onClick={this.__maxDidPress}
             >
               {utils.getLang('cabinet_sendCoinsModal_max')}
@@ -147,7 +149,7 @@ export default class extends React.Component {
           </div>
           <div className="ManageBalanceModal__submit_wrap">
             <UI.Button
-              currency={this.currency}
+              currency={currencyInfo}
               onClick={this.__handleSubmit}
               state={this.state.isFormSending ? 'loading' : ''}
             >

@@ -55,7 +55,6 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
       const {amount, currency, to_usd, align} = arguments[0].walletSelected;
       const currencyInfo = actions.getCurrencyInfo(currency);
       const currencyName = utils.ucfirst(currencyInfo.name);
-      const buttonBackgroundColor = currencyInfo.background;
       const convertBlock = <div className="WalletBalance__convert" onClick={() => {
         convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
       }}>
@@ -75,11 +74,11 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
             isFiat ? (
               <div className="WalletBalance__selected_buttons">
                 <UI.Button
-                  size={adaptive ? 'small' : 'large'}
+                  size={adaptive ? 'middle' : 'large'}
                   onClick={() => {actions.openModal('merchant', {
                     currency: currency
                   })}}
-                  style={{background: buttonBackgroundColor}}
+                  currency={currencyInfo}
                 >
                   {utils.getLang('cabinet_fiatBalance_add')}
                 </UI.Button>
@@ -87,21 +86,21 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
             ) : (
               <div className="WalletBalance__selected_buttons">
                 <UI.Button
-                  size={adaptive ? 'small' : 'large'}
+                  size={adaptive ? 'middle' : 'large'}
                   disabled={amount === 0}
                   onClick={() => {actions.openModal('send', {
                     preset: currencyName
                   })}}
-                  style={{background: buttonBackgroundColor}}
+                  currency={currencyInfo}
                 >
                   {utils.getLang('site__contactSend')}
                 </UI.Button>
                 <UI.Button
-                  size={adaptive ? 'small' : 'large'}
+                  size={adaptive ? 'middle' : 'large'}
                   onClick={() => {actions.openModal('receive', {
                     preset: currencyName
                   })}}
-                  style={{background: buttonBackgroundColor}}
+                  currency={currencyInfo}
                 >
                   {utils.getLang('cabinet_walletTransactionModal_receive')}
                 </UI.Button>

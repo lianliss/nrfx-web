@@ -64,7 +64,7 @@ export default class SiteExchangeScreen extends BaseScreen {
             </div>
 
             <div className="SiteExchangeScreen__interface__img">
-              <img src={require('./asset/exchange_interface.svg')} alt="Exchange interface" className="" />
+              <img src={require('./asset/exchange_main_image.png')} alt="Exchange interface" className="" />
             </div>
           </div>
 

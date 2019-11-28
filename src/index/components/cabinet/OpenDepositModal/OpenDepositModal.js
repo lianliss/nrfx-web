@@ -35,7 +35,7 @@ class OpenDepositModal extends React.Component {
     this.__getWallets();
 
     if (
-      this.props.router.route.params.currency.toLowerCase() !== 'btc' &&
+      (this.props.router.route.params.currency || '').toLowerCase() !== 'btc' &&
       this.props.thisState.selectDepositType === 'pool'
     ) {
       this.__setState({
@@ -245,7 +245,7 @@ class OpenDepositModal extends React.Component {
           </div>
           <div className="OpenDepositModal__row">
             <UI.SwitchTabs
-              currency={this.props.thisState.currency}
+              currency={currencyInfo}
               selected={this.props.thisState.selectDepositType}
               onChange={selectDepositType => {
                 let state = {}
@@ -317,7 +317,7 @@ class OpenDepositModal extends React.Component {
 
           <div className="OpenDepositModal__btn_wrapper">
             <UI.Button
-              currency={this.props.thisState.currency}
+              currency={currencyInfo}
               onClick={this.handleSubmit.bind(this)}
               disabled={this.state.pending || this.props.thisState.amount < this.props.thisState.amountMin || (selectDepositType === 'pool' && !this.state.acceptTerms)}
             >

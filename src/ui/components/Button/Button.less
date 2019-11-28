@@ -1,8 +1,8 @@
 @import "../../vars";
 
 @height: 48px;
-@middle-height: 32px;
-@small-height: 40px;
+@middle-height: 40px;
+@small-height: 32px;
 @ultra-small-height: 24px;
 @border-radius-rounded: @height / 2;
 @border-radius-rounded-middle: @middle-height / 2;
@@ -28,25 +28,6 @@
   user-select: none;
   box-sizing: border-box;
 
-  &.btc {
-    background: var(--uikit-button-gradient-btc);
-    color: var(--uikit-button-color-btc);
-  }
-
-  &.eth {
-    background: var(--uikit-button-gradient-eth);
-    color: var(--uikit-button-color-eth);
-  }
-
-  &.ltc {
-    background: var(--uikit-button-gradient-ltc);
-    color: var(--uikit-button-color-ltc);
-  }
-
-  &.fiat {
-    background: var(--uikit-button-gradient-fiat);
-    color: var(--uikit-button-color-fiat);
-  }
 
   &.buy  {
     background: var(--uikit-primary-green);
@@ -83,7 +64,7 @@
 
   &:after {
     content: '';
-    background: var(--uikit--negative-gradient-primary);
+    background: inherit;
     opacity: 0;
     position: absolute;
     top: 0;
@@ -91,31 +72,35 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+    transform: rotate(180deg);
     transition: opacity 150ms ease-in-out;
   }
 
-  &.btc:after  {
-    background: var(--uikit-button-negative-gradient-btc);
-  }
+  &.outline,
+  &.negative_outline {
+    &::before {
+      content: '';
+      background: var(--uitkit-background);
+      position: absolute;
+      background-clip: padding-box;
+      border: 1px solid transparent;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: inherit;
+    }
 
-  &.eth:after  {
-    background: var(--uikit-button-negative-gradient-eth);
-  }
+    &:hover, &:active {
 
-  &.ltc:after  {
-    background: var(--uikit-button-negative-gradient-ltc);
-  }
+      &::before {
+        opacity: 0;
+      }
 
-  &.fiat:after  {
-    background: var(--uikit-button-negative-gradient-fiat);
-  }
-
-  &.buy:after  {
-    background: var(--uikit-primary-green);
-  }
-
-  &.sell:after  {
-    background: var(--uikit-primary-red);
+      .Button__label {
+        color: white;
+      }
+    }
   }
 
   &:hover {
@@ -136,7 +121,7 @@
 
   &.small {
     height: @small-height;
-    padding: 0 24px;
+    padding: 0 16px;
 
     &.rounded {
       border-radius: @border-radius-rounded-small;
@@ -154,7 +139,7 @@
 
   &.middle {
     height: @middle-height;
-    padding: 0 8px;
+    padding: 0 24px;
 
     &.rounded {
       border-radius: @border-radius-rounded-middle;
@@ -162,7 +147,7 @@
   }
 
   &.large {
-    width: 160px;
+    //min-width: 160px;
     text-align: center;
 
     .Button__cont {
@@ -183,13 +168,6 @@
       background: var(--uikit-button-secondary-active-background);
     }
   }
-
-  &.outline {
-    &:hover, &:active {
-      color: var(--uikit-contrast-primary);
-    }
-  }
-
 
   &.lite {
     background: transparent;
@@ -268,49 +246,6 @@
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-.Button__outline_helper {
-  background: inherit;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: opacity 150ms ease-in-out;
-
-  &:after {
-    content: '';
-    background: var(--uitkit-background);
-    position: absolute;
-    background-clip: padding-box;
-    border: 1px solid transparent;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-radius: @border-radius;
-  }
-
-  .Button.rounded &:after {
-    border-radius: @border-radius-rounded;
-  }
-
-  .Button.rounded.small &:after {
-    border-radius: @border-radius-rounded-small;
-  }
-
-  .Button.rounded.ultra_small &:after {
-    border-radius: @border-radius-rounded-ultra-small;
-  }
-
-  .Button.negative_outline & {
-    background: var(--uikit-button-negative-background);
-  }
-
-  .Button:hover & {
-    opacity: 0;
   }
 }
 

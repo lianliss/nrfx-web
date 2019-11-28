@@ -12,7 +12,7 @@ import * as emitter from '../services/emitter';
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.LangGet, { code }, {
-      apiEntry: 'https://api.narfex.com'
+      apiEntry: 'https://api.bitcoinbot.pro'
     }).then(({ translations, languages }) => {
       const langList = languages.map(lang => ({ value: lang[0], title: lang[1] }));
       store.dispatch({
@@ -44,6 +44,7 @@ export function getCurrencyInfo(name) {
   const state = store.getState().cabinet;
   name = name.toLowerCase();
   let currency = state.currencies[name];
+  if (!currency) return { abbr: name };
   return {
     ...currency,
     background: `linear-gradient(45deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`

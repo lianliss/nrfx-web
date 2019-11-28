@@ -54,6 +54,7 @@ export function getWithState(caseName, caseClass) {
         profile: state.default.profile,
         notifications: state.notifications,
         router: state.router,
+        langList: state.default.langList,
         title: state.default.title,
       });
       mapDispatch2Props = {

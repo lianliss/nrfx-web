@@ -18,9 +18,15 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
     return 0;
   };
 
+  const { gradient, color } = currency;
+
+  const fillIndicatorStyle = {
+    background: (gradient ? `linear-gradient(45deg, ${gradient[0]} 0%, ${gradient[1]} 100%)` : null)
+  };
+
   const indicatorWidth = 100 / tabs.length;
   return (
-    <div className={classNames("SwitchTabs", { [currency]: !!currency })}>
+    <div className="SwitchTabs" style={{ color }}>
       {tabs.map((tab) => {
         return (
           <div
@@ -28,7 +34,6 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
             className={classNames({
               SwitchTabs__item: true,
               active: tab.value === selected,
-              // [currency]: !!currency,
             })}
             onClick={tab.onClick || (() => onChange(tab.value))}
           >{tab.label}</div>
@@ -39,10 +44,15 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
         style={{
           width: `calc(${indicatorWidth}% + 2px)`,
           transform: `translateX(calc((100% - 2px) * ${getSelectedIndex()}))`,
+          ...fillIndicatorStyle
         }} />
     </div>
   )
 }
+
+SwitchTabs.defaultProps = {
+  currency: {},
+};
 
 SwitchTabs.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.shape({
@@ -50,6 +60,6 @@ SwitchTabs.propTypes = {
     label: PropTypes.string
   })).isRequired,
   selected: PropTypes.any,
-  currency: PropTypes.string,
+  currency: PropTypes.object,
   onChange: PropTypes.func.isRequired
 };

@@ -1,3 +1,5 @@
+
+Classic
 ```js
 <SwitchTabs
   selected="static"
@@ -9,9 +11,11 @@
 />
 ```
 
+
+More items
 ```js
 import { useState } from 'react';
-const [value, onChange] = useState('eth');
+const [value, onChange] = useState('2');
 <SwitchTabs
   selected={value}
   onChange={onChange}
@@ -27,16 +31,29 @@ const [value, onChange] = useState('eth');
 />
 ```
 
-
+Currencies color
 ```js
 import { useState } from 'react';
 const [value, onChange] = useState('eth');
-
+const currencies = {
+  btc: {
+    color: "#F8AC4D",
+    gradient: ["#F8A15D", "#F7B73B"]
+  },
+  eth: {
+    color: "#908EE8",
+    gradient: ["#896ADF", "#98B1F1"]
+  },
+  ltc: {
+    color: "#75BBE7",
+    gradient: ["#619ABE", "#7AC4F2"]
+  }
+};
 
 <SwitchTabs
-  currency={value}
   selected={value}
   onChange={onChange}
+  currency={currencies[value]}
   tabs={[
     { value: 'btc', label: 'BTH' },
     { value: 'eth', label: 'ETH' },
