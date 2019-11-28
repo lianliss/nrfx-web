@@ -51,6 +51,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           route: pages.ABOUT,
         },
         {
+          title: utils.getLang('site__headerContactUs'),
+          route: pages.CONTACT,
+        },
+        {
           title: utils.getLang('site__headerTechnology'),
           route: pages.TECHNOLOGY,
         },
@@ -66,10 +70,6 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         {
           title: utils.getLang('site__headerFAQ'),
           route: pages.FAQ,
-        },
-        {
-          title: utils.getLang('site__headerContactUs'),
-          route: pages.CONTACT,
         },
         {
           title: (
