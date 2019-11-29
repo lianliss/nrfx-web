@@ -24,7 +24,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
 
   let headings = [
     <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-      <SVG src={require('../../../../../asset/cabinet/filter.svg')} />
+      {/*<SVG src={require('../../../../../asset/cabinet/filter.svg')} />*/}
     </UI.TableColumn>,
     <UI.TableColumn>ID</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_type')}</UI.TableColumn>,
@@ -44,7 +44,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
   if (adaptive) {
     headings = [
       <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-        <SVG src={require('../../../../../asset/cabinet/filter.svg')} />
+        {/*<SVG src={require('../../../../../asset/cabinet/filter.svg')} />*/}
       </UI.TableColumn>,
       <UI.TableColumn sub={
         <div>{utils.getLang('rate')} / {utils.getLang('cabinet_wallets_historyTable_type')}</div>

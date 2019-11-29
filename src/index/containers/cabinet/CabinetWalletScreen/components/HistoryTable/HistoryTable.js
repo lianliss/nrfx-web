@@ -20,7 +20,7 @@ export default function HistoryTable({ history, adaptive, header}) {
 
   let headings = [
     <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-      <SVG src={require('../../../../../../asset/cabinet/filter.svg')} />
+      {/*<SVG src={require('../../../../../../asset/cabinet/filter.svg')} />*/}
     </UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('cabinet_wallets_historyTable_addressLogin')}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('cabinet_openNewDeposit_amount')}</UI.TableColumn>,

@@ -18,7 +18,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
 
   let headings = [
     <UI.TableColumn align="center" highlighted style={{ width: 40 }}>
-      <SVG src={require('../../../../../asset/cabinet/filter.svg')} />
+      {/*<SVG src={require('../../../../../asset/cabinet/filter.svg')} />*/}
     </UI.TableColumn>,
     <UI.TableColumn>ID</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang("rate")}</UI.TableColumn>,
