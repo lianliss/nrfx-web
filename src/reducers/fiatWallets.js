@@ -6,8 +6,10 @@ const initialState = {
   history: [],
   rates: {},
   rate: 0,
+  merchants: [],
   loadingStatus: {
     default: 'loading',
+    merchants: '',
     marketForm: ''
   },
 };
@@ -48,6 +50,13 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         rate: action.rate
+      };
+    }
+
+    case actionTypes.FIAT_WALLETS_SET_MERCHANTS: {
+      return {
+        ...state,
+        merchants: action.methods
       };
     }
 

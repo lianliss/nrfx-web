@@ -14,6 +14,17 @@ export function getFiatWallets() {
   }
 }
 
+export function getMerchant() {
+  return (dispatch, getState) => {
+    dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'merchants', status: 'loading'});
+    api.call(apiSchema.Fiat_wallet.PayMethodsGet).then(({methods}) => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_MERCHANTS, methods });
+    }).finally(() => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'merchants', status: ''});
+    })
+  }
+}
+
 export function exchange({from, to, amount, amountType}) {
   return (dispatch, getState) => {
     dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'marketForm', status: 'loading'});

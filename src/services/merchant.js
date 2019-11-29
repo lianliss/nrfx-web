@@ -31,13 +31,16 @@ export function open(url) {
       } catch (e) {}
 
       try {
-        if (ref.window.location.origin === window.location.origin) { // TODO check routes
-          clearInterval(interval);
-          ref.close();
-          resolve();
-        } else if (ref.closed) {
-          clearInterval(interval);
-          reject();
+        if (ref.window.location.origin === window.location.origin) {
+          if (ref.window.location.pathname.split('/').pop() === 'success') {
+            ref.close();
+            clearInterval(interval);
+            resolve();
+          } else {
+            ref.close();
+            clearInterval(interval);
+            reject();
+          }
         }
       } catch (e) {}
     }, 500);

@@ -1,18 +1,20 @@
 import './MerchantModal.less'
 
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { renderToString } from 'react-dom/server'
 import { connect } from 'react-redux';
 
 import UI from '../../../../ui/';
-import {getLang, throttle, classNames as cn} from '../../../../utils';
+import {getLang, throttle, classNames as cn, default as utils} from '../../../../utils';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
 import * as actions from '../../../../actions';
+import * as toasts from '../../../../actions/toasts';
 import * as fiatActions from '../../../../actions/cabinet/fiatWallets';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import * as merchantService from '../../../../services/merchant';
 import { Status } from '../../../containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
+import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';
 
 const MerchantModal = props => {
   const { adaptive } = props;
@@ -26,8 +28,56 @@ const MerchantModal = props => {
   const [urlStatus, setUrlStatus] = useState(null);
   const [url, setUrl] = useState(null);
 
+
+  const merchants = {
+    advcash: {
+      icon: require('../../../../asset/merchants/adv_cash.svg'),
+      title: "AdvCash",
+      displayCurrencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
+      payments: ['mastercard', 'visa']
+    },
+    invoice: {
+      icon: require('../../../../asset/merchants/swift.svg'),
+      title: "S.W.I.F.T",
+      displayCurrencies: ['USD', 'EUR', 'RUB', 'IDR'],
+      payments: ['bank']
+    },
+    payoneer: {
+      icon: require('../../../../asset/merchants/payoneer.svg'),
+      title: "Payoneer",
+      displayCurrencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
+      payments: ['mastercard', 'visa', 'bank']
+    },
+    xendit: {
+      icon: require('../../../../asset/merchants/xendit.svg'),
+      title: "Xendit",
+      displayCurrencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
+      payments: ['mastercard', 'visa', 'bank']
+    }
+  };
+
+  useEffect(() => {
+    props.getMerchant();
+  },[]);
+
+  const checkAmount = (value = amount) => {
+    console.log(11111, value);
+    const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];
+    const currencyLabel = currency.toUpperCase();
+    if (value < min_amount) {
+      return `${getLang('cabinet_amount_shouldBeMore')} ${min_amount} ${currencyLabel}`;
+    } else if (value > max_amount) {
+      return `${getLang('cabinet_amount_shouldBeLess')} ${max_amount} ${currencyLabel}`;
+    } return null;
+  }
+
   const handleSubmit = () => {
-    if (url && amount && !urlStatus) {
+    setTouched(true);
+    const message = checkAmount();
+    if (message) {
+      toasts.error(message);
+      return false;
+    } else if (url && amount && !urlStatus) {
       setStatus('loading');
       merchantService.open(url).then(() => {
         setStatus('success');
@@ -38,6 +88,12 @@ const MerchantModal = props => {
   };
 
   const handleSubmitInvoice = () => {
+    setTouched(true);
+    const message = checkAmount();
+    if (message) {
+      toasts.error(message);
+      return false;
+    }
     fiatActions.payForm({
       amount,
       merchant,
@@ -47,22 +103,21 @@ const MerchantModal = props => {
     });
   };
 
-  const getAdvCashUrl = (params) =>  {
+  const getMerchantUrl = (params) =>  {
     setUrlStatus('loading');
-    console.log(params);
     fiatActions.payForm(params).then(({url}) => {
       setUrlStatus(null);
       setUrl(url);
     });
   };
 
-  const getAdvCashUrlThrottled = useRef(throttle(getAdvCashUrl, 500)).current;
+  const getMerchantUrlThrottled = useRef(throttle(getMerchantUrl, 500)).current;
 
   const handleChangeAmount = (value) => {
-    if (!value) return false;
     setAmount(value);
-    if (merchant === 'advcash') {
-      getAdvCashUrlThrottled({
+    if (!value || checkAmount(value)) return false;
+    if (merchant !== 'invoice') {
+      getMerchantUrlThrottled({
         amount: value,
         merchant,
         currency
@@ -72,45 +127,24 @@ const MerchantModal = props => {
 
   window.handleSubmit = handleSubmit;
 
-  const merchants = [
-    (['admin', 'translator'].includes(props.profile.role.toLowerCase()) ? { // TODO: TEMP
-      icon: require('../../../../asset/merchants/adv_cash.svg'),
-      name: "AdvCash",
-      value: 'advcash',
-      fee: '2-3%',
-      currencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
-      payments: ['mastercard', 'visa']
-    } : null),
-    {
-      icon: require('../../../../asset/merchants/swift.svg'),
-      value: 'invoice',
-      name: "S.W.I.F.T",
-      fee: '~1%',
-      currencies: ['USD', 'EUR', 'RUB', 'IDR'],
-      payments: ['bank']
-    },
-    // {
-    //   icon: require('../../../../asset/merchants/payoneer.svg'),
-    //   name: "Payoneer",
-    //   value: "invoice",
-    //   fee: '1-3%',
-    //   currencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
-    //   payments: ['mastercard', 'visa', 'bank']
-    // }
-  ].filter(i => i);
-
   const renderMerchantsList = () => {
+    const merchants2 = Object.keys(props.merchants).map(name => ({
+      ...props.merchants[name],
+      ...merchants[name],
+      name
+    })).filter(m => Object.keys(m.currencies).includes(currency));
+
     return (
       <div className="MerchantModal__list">
-        {merchants.map(m => (
-          <div className="MerchantModal__item" onClick={() => setMerchant(m.value)}>
+        {merchants2.length ? merchants2.map(m => (
+          <div className="MerchantModal__item" onClick={() => setMerchant(m.name)}>
             <div className="MerchantModal__item__icon">
               <SVG src={m.icon} />
             </div>
             <div className="MerchantModal__item__content">
-              <div className="MerchantModal__item__content__name">{m.name}</div>
+              <div className="MerchantModal__item__content__name">{m.title}</div>
               <div className="MerchantModal__item__content__commission">{getLang('global_commissions')}: {m.fee}</div>
-              <div className="MerchantModal__item__content__currencies">{getLang('global_currencies')}: <span>{m.currencies.join(', ')}</span></div>
+              <div className="MerchantModal__item__content__currencies">{getLang('global_currencies')}: <span>{m.displayCurrencies.join(', ')}</span></div>
             </div>
             {!adaptive &&
             <div className="MerchantModal__item__methods">
@@ -126,7 +160,13 @@ const MerchantModal = props => {
             </div>
             }
           </div>
-        ))}
+        )) : (
+          <EmptyContentBlock
+            skipContentClass
+            icon={require('../../../../asset/120/buy_currency.svg')}
+            message={getLang("cabinet_merchantEmptyList")}
+          />
+        )}
       </div>
     )
   }
@@ -140,8 +180,8 @@ const MerchantModal = props => {
           <div className="MerchantModal__form__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <UI.Dropdown
             value={currency}
-            options={props.balances
-              .map(b => ({ ...b, ...actions.getCurrencyInfo(b.currency)}))
+            options={Object.keys(props.merchants[merchant].currencies)
+              .map(b => actions.getCurrencyInfo(b))
               .map(b => ({
                 value: b.abbr,
                 title: b.name,
@@ -150,7 +190,7 @@ const MerchantModal = props => {
             }
             onChange={e => {
               setCurrency(e.value);
-              getAdvCashUrlThrottled({
+              getMerchantUrlThrottled({
                 amount,
                 merchant,
                 currency: e.value
@@ -160,12 +200,12 @@ const MerchantModal = props => {
         </div>
         <div className="MerchantModal__form__input__wrapper">
           <UI.Input
-            error={touched && !amount}
+            error={touched && (!amount || checkAmount())}
             value={amount}
             onTextChange={handleChangeAmount}
             type="number"
             placeholder="0.00"
-            indicator={currencyInfo.abbr.toUpperCase()}
+            indicator={`${getLang('cabinet_merchantModal_min')} ${props.merchants[merchant].currencies[currency].min_amount} ${currencyInfo.abbr.toUpperCase()}`}
           />
           {/*<div className="MerchantModal__form__input__description">*/}
           {/*  <span>Комиссия 1%: $10</span>*/}
@@ -180,10 +220,10 @@ const MerchantModal = props => {
         <div className="MerchantModal__buttons">
           <UI.Button currency={currencyInfo} onClick={() => setMerchant(null)} type="outline">{getLang('global_back')}</UI.Button>
           { merchant === 'invoice' ? (
-            <UI.Button currency={currencyInfo} onClick={handleSubmitInvoice}>{getLang('global_next')}</UI.Button>
+            <UI.Button disabled={!amount} currency={currencyInfo} onClick={handleSubmitInvoice}>{getLang('global_next')}</UI.Button>
           ) : (
             <div dangerouslySetInnerHTML={{__html: `<div onclick="handleSubmit()">${renderToString(
-              <UI.Button currency={currencyInfo} disabled={!amount || !url} state={urlStatus}>{getLang('global_next')}</UI.Button>
+              <UI.Button currency={currencyInfo} state={urlStatus}>{getLang('global_next')}</UI.Button>
             )}</div>`}} />
           )}
         </div>
@@ -225,7 +265,7 @@ const MerchantModal = props => {
   }
 
   const renderContent = () => {
-    if (status === 'loading') {
+    if (status === 'loading' || props.loadingStatus.merchants) {
       return <LoadingStatus inline status="loading" />
     }
     if (['success', 'error'].includes(status)) {
@@ -252,6 +292,10 @@ const MerchantModal = props => {
 
 export default connect(state => ({
   balances: state.fiatWallets.balances,
+  loadingStatus: state.fiatWallets.loadingStatus,
   adaptive: state.default.adaptive,
-  profile: state.default.profile
-}))(MerchantModal);
+  profile: state.default.profile,
+  merchants: state.fiatWallets.merchants,
+}), {
+  getMerchant: fiatActions.getMerchant
+})(MerchantModal);
