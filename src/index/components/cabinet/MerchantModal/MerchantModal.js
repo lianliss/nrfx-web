@@ -33,25 +33,21 @@ const MerchantModal = props => {
     advcash: {
       icon: require('../../../../asset/merchants/adv_cash.svg'),
       title: "AdvCash",
-      displayCurrencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
       payments: ['mastercard', 'visa']
     },
     invoice: {
       icon: require('../../../../asset/merchants/swift.svg'),
       title: "S.W.I.F.T",
-      displayCurrencies: ['USD', 'EUR', 'RUB', 'IDR'],
       payments: ['bank']
     },
     payoneer: {
       icon: require('../../../../asset/merchants/payoneer.svg'),
       title: "Payoneer",
-      displayCurrencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
       payments: ['mastercard', 'visa', 'bank']
     },
     xendit: {
       icon: require('../../../../asset/merchants/xendit.svg'),
       title: "Xendit",
-      displayCurrencies: [getLang('cabinet_fiatWalletCurrenciesAll')],
       payments: ['mastercard', 'visa', 'bank']
     }
   };
@@ -144,7 +140,7 @@ const MerchantModal = props => {
             <div className="MerchantModal__item__content">
               <div className="MerchantModal__item__content__name">{m.title}</div>
               <div className="MerchantModal__item__content__commission">{getLang('global_commissions')}: {m.fee}</div>
-              <div className="MerchantModal__item__content__currencies">{getLang('global_currencies')}: <span>{m.displayCurrencies.join(', ')}</span></div>
+              <div className="MerchantModal__item__content__currencies">{getLang('global_currencies')}: <span>{Object.keys(m.currencies).join(', ').toUpperCase()}</span></div>
             </div>
             {!adaptive &&
             <div className="MerchantModal__item__methods">
