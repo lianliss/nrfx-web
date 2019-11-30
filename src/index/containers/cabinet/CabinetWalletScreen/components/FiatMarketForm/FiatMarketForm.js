@@ -110,6 +110,22 @@ class FiatMarketForm extends React.Component {
     </div>;
   }
 
+  renderFee() {
+    const { exchangeFee } = this.props;
+    const fiatType =  isFiat(this.state.from) ? 'from' : 'to';
+    const fiat = this.state[fiatType];
+    const fiatAmount = this.state[fiatType+'Amount'];
+    const fee = exchangeFee[fiat];
+
+    if (fee) {
+      const currency = fiat.toUpperCase();
+      const calcFee = formatDouble(Math.max(fee.min, (fiatAmount / 100 * fee.percent)), 2);
+      return `${getLang('exchange_fee')} (${fee.percent}%, ${getLang('cabinet_fiatWalletFeeMin')} ${fee.min} ${currency}) ≈ ${calcFee} ${currency}`;
+    } else {
+      return '-';
+    }
+  }
+
   render() {
     const disabled = !this.props.rate;
     const Wrapper = this.props.adaptive ? UI.Collapse : UI.ContentBox;
@@ -160,6 +176,7 @@ class FiatMarketForm extends React.Component {
           </div>
         </div>
         <div className="FiatMarketForm__button_wrapper">
+          <p className="FiatMarketForm__fee">{this.renderFee()}</p>
           <UI.Button
             disabled={disabled || !(this.state.amount > 0)}
             onClick={this.handleBuy}
@@ -175,6 +192,7 @@ export default connect(store => ({
   adaptive: store.default.adaptive,
   currencies: store.cabinet.currencies,
   rate: store.fiatWallets.rate,
+  exchangeFee: store.fiatWallets.exchange_fee,
   loadingStatus: store.fiatWallets.loadingStatus.marketForm
 }),{
   exchange: actions.exchange,
