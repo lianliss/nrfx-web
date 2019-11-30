@@ -64,7 +64,7 @@ export default class SiteContactScreen extends BaseScreen {
       [key]: value,
     });
   };
-  
+
   render() {
     return (
       <div>

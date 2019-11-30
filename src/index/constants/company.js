@@ -7,7 +7,8 @@ export default {
     info: 'info@narfex.com',
   },
   social: {
-    vk: 'https://vk.com/bitcoinbot_pro',
+    vk: 'https://vk.com/narfex',
+    telegram: 'https://t.me/narfex',
     facebook: 'https://facebook.com/Bitcoinbotpro-432506870546401',
     instagram: 'https://instagram.com/bitcoinbot_pro',
     twitter: "https://twitter.com/BitcoinBot_pro"
