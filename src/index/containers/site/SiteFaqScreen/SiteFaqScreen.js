@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import BaseScreen from '../../BaseScreen';
 import UI from '../../../../ui';
 import Question from './components/Question';
+import COMPANY from '../../../constants/company';
 
 
 const questions = {
@@ -84,8 +85,8 @@ export default class SiteFaqScreen extends BaseScreen {
             <p className="SiteFaqScreen__more_questions__text">
               {this.lang.site.faqMoreQuestions}
               <br />
-              <a className="SiteFaqScreen__more_questions__email" href="mailto:support@bitcoinbot.pro" target="_top">
-                support@bitcoinbot.pro
+              <a className="SiteFaqScreen__more_questions__email" href={`mailto:${COMPANY.email.support}`} target="_top">
+                {COMPANY.email.support}
               </a>
             </p>
           </div>

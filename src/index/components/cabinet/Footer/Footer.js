@@ -6,6 +6,7 @@ import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
 import { getLang, setLang } from '../../../../services/lang';
 import * as utils from '../../../../utils'
+import COMPANY from '../../../constants/company';
 
 const Footer = (props) => {
   const handleChangeLanguage = e => {
@@ -18,7 +19,7 @@ const Footer = (props) => {
 
   return (
     <ul className={classNames("CabinetFooter", props.className)}>
-      <li className="CabinetFooter__item"><a href="//bitcoinbot.wiki" target="_blank" rel="noopener noreferrer">FAQ</a></li>
+      <li className="CabinetFooter__item"><a href={COMPANY.wikiUrl} target="_blank" rel="noopener noreferrer">FAQ</a></li>
       {/*<li className="CabinetFooter__item"><BaseLink router={router} routeName={pages.FAQ}>{utils.getLang("site__footerFAQ")}</BaseLink></li>*/}
       <li className="CabinetFooter__item"><a href="#" onClick={handleChangeLanguage}>{lang.title}</a></li>
     </ul>

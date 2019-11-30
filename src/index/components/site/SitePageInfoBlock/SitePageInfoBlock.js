@@ -41,7 +41,7 @@ export default class SitePageInfoBlock extends React.Component {
           </div>
         </div>
         {/* <div className={screenClassName} style={{backgroundImage: `url(${this.props.image})`}} /> */}
-        <img className={screenClassName} src={this.props.image} alt="bitcoinbot-main-banner" />
+        <img className={screenClassName} src={this.props.image} alt="main-banner" />
       </div>
     )
   }

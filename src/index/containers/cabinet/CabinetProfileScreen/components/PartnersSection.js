@@ -14,12 +14,13 @@ import CustomersTable from './CustomersTable';
 import AgentsTable from './AgentsTable';
 import InviteLinks from './InviteLinks/InviteLinks';
 import InviteAgent from './InviteAgent/InviteAgent';
+import COMPANY from '../../../../constants/company';
 
 class PartnersSection extends React.Component {
   constructor(props) {
     super(props);
 
-    this.inviteLink = props.profile.user ? `https://bitcoinbot.pro/?ref=${props.profile.user.login}` : '';
+    this.inviteLink = props.profile.user ? `${COMPANY.url}?ref=${props.profile.user.login}` : '';
   }
 
   render() {

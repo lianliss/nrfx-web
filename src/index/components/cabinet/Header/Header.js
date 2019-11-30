@@ -16,6 +16,7 @@ import * as auth from '../../../../actions/auth';
 import * as steps from '../../../../components/AuthModal/fixtures';
 import * as actions from '../../../../actions';
 import {getLang} from '../../../../services/lang';
+import COMPANY from '../../../constants/company';
 
 
 class Header extends React.Component {
@@ -116,7 +117,7 @@ class Header extends React.Component {
               <div className="CabinetHeader__icon">
                 <UI.ActionSheet position="left" items={[
                   { title: utils.getLang('cabinet_header_settings'), onClick: () => router.navigate(pages.SETTINGS) },
-                  { title: "FAQ", onClick: () => window.location.href = 'https://bitcoinbot.wiki/' },
+                  { title: "FAQ", onClick: () => window.location.href = COMPANY.wikiUrl },
                   { title: lang.title, onClick: () => actions.openModal('language'), subContent: (
                     <SVG src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
                   )},

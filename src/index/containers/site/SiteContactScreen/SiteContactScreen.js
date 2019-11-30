@@ -4,7 +4,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
-import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
+import COMPANY from '../../../constants/company';
 import { isEmail } from '../../../../utils';
 import UI from '../../../../ui';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
@@ -21,7 +21,7 @@ const SnItem = props => (
     <SVG src={props.icon} />
     <div className="SiteContactScreen__sn__item__content">
       <h3>{props.title}</h3>
-      <a href={"https://" + props.link}>{props.link}</a>
+      <a href={"https://" + props.link}>{props.link.replace('https://', '')}</a>
     </div>
   </UI.ContentBox>
 );
@@ -98,10 +98,10 @@ export default class SiteContactScreen extends BaseScreen {
                 <p>{this.lang.site.contactFaqDescription}</p>
               </UI.ContentBox>
 
-              <UI.ContentBox onClick={() => {window.location.href = 'mailto:support@bitcoinbot.com'}} className="SiteContactScreen__link_item">
+              <UI.ContentBox onClick={() => {window.location.href = `mailto:${COMPANY.email.support}`}} className="SiteContactScreen__link_item">
                 <SVG src={require('../../../../asset/120/email_success.svg')}/>
                 <h3 className="SiteContactScreen__link_item__title">{this.lang.site.contactEmailTitle}</h3>
-                <h2><a href="mailto:support@bitcoinbot.com">support@bitcoinbot.com</a></h2>
+                <h2><a href={`mailto:${COMPANY.email.support}`}>{COMPANY.email.support}</a></h2>
                 <p>{this.lang.site.contactEmailDescription}</p>
               </UI.ContentBox>
 
@@ -138,22 +138,22 @@ export default class SiteContactScreen extends BaseScreen {
               <SnItem
                 icon={require('../../../../asset/social/vk.svg')}
                 title={this.lang.global_social_vkontakte}
-                link="vk.com/bitcoinbot_pro"
+                link={COMPANY.social.vk}
               />
               <SnItem
                 icon={require('../../../../asset/social/facebook.svg')}
                 title={this.lang.global_social_facebook}
-                link="facebook.com/Bitcoinbotpro-432506870546401"
+                link={COMPANY.social.facebook}
               />
               <SnItem
                 icon={require('../../../../asset/social/instagram.svg')}
                 title={this.lang.global_social_instagram}
-                link="instagram.com/bitcoinbot_pro"
+                link={COMPANY.social.instagram}
               />
               <SnItem
                 icon={require('../../../../asset/social/twitter.svg')}
                 title={this.lang.global_social_twitter}
-                link="twitter.com/BitcoinBot_pro"
+                link={COMPANY.social.twitter}
               />
             </div>
           </div>

@@ -2,6 +2,7 @@ import './MobileAppBanner.less';
 
 import React from 'react';
 import * as utils from '../../../../utils/index';
+import COMPANY from '../../../constants/company';
 
 
 export default function MobileAppBanner() {
@@ -15,14 +16,14 @@ export default function MobileAppBanner() {
         </div>
         <div className="MobileAppBanner__buttons">
           <a
-            href="#"
+            href={COMPANY.apps.ios}
             className="MobileAppBanner__button ios"
             target="_blank"
             rel="noopener noreferrer"
           />
 
           <a
-            href="https://play.google.com/store/apps/details?id=com.bitcoinbot"
+            href={COMPANY.apps.android}
             className="MobileAppBanner__button android"
             target="_blank"
             rel="noopener noreferrer"

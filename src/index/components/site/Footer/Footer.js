@@ -9,6 +9,7 @@ import * as actions from '../../../../actions';
 import MarkDown from '../../../../ui/components/MarkDown/MarkDown';
 import { isIndonesia } from '../../../../services/locations';
 import UI from '../../../../ui';
+import COMPANY from '../../../constants/company';
 
 export default function Footer() {
   return (
@@ -31,7 +32,7 @@ export default function Footer() {
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
-            <a href="https://bitcoinbot.wiki/" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
+            <a href={COMPANY.wikiUrl} className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
             <span onClick={() => actions.openModal('static_content',{ type: "terms" })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
             <span onClick={() => actions.openModal('static_content',{ type: "privacy" })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
@@ -39,22 +40,22 @@ export default function Footer() {
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>
             <a href="#" className="Footer__links__item">{utils.getLang('site__footerAppStore')}</a>
-            <a href="https://play.google.com/store/apps/details?id=com.bitcoinbot&hl=en" className="Footer__links__item">{utils.getLang('site__footerGooglePlay')}</a>
+            <a href={COMPANY.apps.android} className="Footer__links__item">{utils.getLang('site__footerGooglePlay')}</a>
           </div>
         </div>
         <div className="Footer__bottom">
           <div className="Footer__logo">
             <UI.Logo type="gray" />
           </div>
-          <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} BITCOINBOT</div>
+          <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} {COMPANY.name.toUpperCase()}</div>
           <div className="Footer__socials">
-            <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/Bitcoinbotpro-432506870546401/" className="Footer__social">
+            <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.facebook} className="Footer__social">
               <SVG src={require('../../../../asset/social/facebook.svg')} />
             </a>
-            <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/BitcoinBot_pro" className="Footer__social">
+            <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.twitter} className="Footer__social">
               <SVG src={require('../../../../asset/social/twitter.svg')} />
             </a>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/bitcoinbot_pro/" className="Footer__social">
+            <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.instagram} className="Footer__social">
               <SVG src={require('../../../../asset/social/instagram.svg')} />
             </a>
           </div>
