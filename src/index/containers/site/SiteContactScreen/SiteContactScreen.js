@@ -64,15 +64,8 @@ export default class SiteContactScreen extends BaseScreen {
       [key]: value,
     });
   };
-
-  handleSubmit = (recaptchaToken) => {
-    //const { name, email, message } = this.state;
-  };
-
+  
   render() {
-    const { name, email, message, isEmailValid, rows } = this.state;
-    const isSubmitDisabled = !isEmailValid || !email || !message;
-
     return (
       <div>
         <Helmet>
