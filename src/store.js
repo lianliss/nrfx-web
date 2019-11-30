@@ -23,8 +23,11 @@ import adminReducer from './reducers/admin';
 
 const middlewares = [];
 
-const { logger } = require(`redux-logger`);
-middlewares.push(logger);
+if (process.env.NODE_ENV === `development`) {
+  const { logger } = require(`redux-logger`);
+  middlewares.push(logger);
+}
+
 
 let store;
 
