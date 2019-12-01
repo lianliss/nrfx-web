@@ -49,15 +49,21 @@ export default function Footer() {
           </div>
           <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} {COMPANY.name.toUpperCase()}</div>
           <div className="Footer__socials">
-            <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.facebook} className="Footer__social">
+            {COMPANY.social.facebook && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.facebook} className="Footer__social">
               <SVG src={require('../../../../asset/social/facebook.svg')} />
-            </a>
-            <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.twitter} className="Footer__social">
+            </a>}
+            {COMPANY.social.twitter && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.twitter} className="Footer__social">
               <SVG src={require('../../../../asset/social/twitter.svg')} />
-            </a>
-            <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.instagram} className="Footer__social">
+            </a>}
+            {COMPANY.social.instagram && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.instagram} className="Footer__social">
               <SVG src={require('../../../../asset/social/instagram.svg')} />
-            </a>
+            </a>}
+            {COMPANY.social.telegram && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.telegram} className="Footer__social">
+              <SVG src={require('../../../../asset/social/telegram.svg')} />
+            </a>}
+            {COMPANY.social.vk && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.vk} className="Footer__social">
+              <SVG src={require('../../../../asset/social/vk.svg')} />
+            </a>}
           </div>
         </div>
         {isIndonesia() &&

@@ -144,7 +144,7 @@ class FiatMarketForm extends React.Component {
     const error = fiatAmount < fee.min;
 
     return (
-      <Wrapper isOpenDefault={false} title={getLang('cabinet_fiatMarketExchangeTitle')} className="FiatMarketForm">
+      <Wrapper isOpenDefault={false} className="FiatMarketForm">
         { !this.props.adaptive && <h2 className="FiatMarketForm__title">{getLang('cabinet_fiatMarketExchangeTitle')}</h2> }
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">

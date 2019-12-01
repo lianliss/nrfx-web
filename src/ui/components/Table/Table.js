@@ -17,7 +17,7 @@ function Table({ headings, children, className, header, hidden, adaptive, compac
   const Wrapper = adaptive ? Collapse : (skipContentBox ? props => <div {...props} /> : ContentBox);
 
   return (
-    <Wrapper title={header} className={utils.classNames(className, {
+    <Wrapper className={utils.classNames(className, {
       TableMain: true,
     })}>
       {header && !adaptive && <div

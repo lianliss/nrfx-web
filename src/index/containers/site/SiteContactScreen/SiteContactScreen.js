@@ -14,17 +14,19 @@ import router from '../../../../router';
 import * as PAGES from '../../../constants/pages';
 
 
-const SnItem = props => (
-  <UI.ContentBox onClick={() => {
-    window.open("https://" + props.link)
-  }} className="SiteContactScreen__sn__item">
-    <SVG src={props.icon} />
-    <div className="SiteContactScreen__sn__item__content">
-      <h3>{props.title}</h3>
-      <a href={"https://" + props.link}>{props.link.replace('https://', '')}</a>
-    </div>
-  </UI.ContentBox>
-);
+const SnItem = props => {
+  return props.link ? (
+    <UI.ContentBox onClick={() => {
+      window.open("https://" + props.link)
+    }} className="SiteContactScreen__sn__item">
+      <SVG src={props.icon}/>
+      <div className="SiteContactScreen__sn__item__content">
+        <h3>{props.title}</h3>
+        <a href={"https://" + props.link}>{props.link.replace('https://', '')}</a>
+      </div>
+    </UI.ContentBox>
+  ) : null;
+};
 
 
 export default class SiteContactScreen extends BaseScreen {
@@ -105,26 +107,6 @@ export default class SiteContactScreen extends BaseScreen {
               </UI.ContentBox>
             </div>
 
-            <TitleWithBg title={this.lang.site.contactTelegramTitle} bgTitle={this.lang.site.contactTelegramTitleBackground} centered />
-
-            <div className="SiteContactScreen__sn">
-              <SnItem
-                icon={require('../../../../asset/social/telegram.svg')}
-                title="Русский"
-                link="t.me/BitcoinBotPro_Russian"
-              />
-              <SnItem
-                icon={require('../../../../asset/social/telegram.svg')}
-                title="English"
-                link="t.me/BitcoinBotPro_English"
-              />
-              <SnItem
-                icon={require('../../../../asset/social/telegram.svg')}
-                title="Indonesian"
-                link="t.me/BitcoinBotPro_Indonesian"
-              />
-            </div>
-
             <TitleWithBg title={this.lang.site.contactSocialNetworksTitle} bgTitle={this.lang.site.contactSocialNetworksTitleBackground} centered />
 
             <div className="SiteContactScreen__sn">
@@ -148,7 +130,33 @@ export default class SiteContactScreen extends BaseScreen {
                 title={this.lang.global_social_twitter}
                 link={COMPANY.social.twitter}
               />
+              <SnItem
+                icon={require('../../../../asset/social/telegram.svg')}
+                title={this.lang.global_social_twitter}
+                link={COMPANY.social.telegram}
+              />
             </div>
+
+            <TitleWithBg title={this.lang.site.contactTelegramTitle} bgTitle={this.lang.site.contactTelegramTitleBackground} centered />
+
+            <div className="SiteContactScreen__sn">
+              <SnItem
+                icon={require('../../../../asset/social/telegram.svg')}
+                title="Русский"
+                link="t.me/BitcoinBotPro_Russian"
+              />
+              <SnItem
+                icon={require('../../../../asset/social/telegram.svg')}
+                title="English"
+                link="t.me/BitcoinBotPro_English"
+              />
+              <SnItem
+                icon={require('../../../../asset/social/telegram.svg')}
+                title="Indonesian"
+                link="t.me/BitcoinBotPro_Indonesian"
+              />
+            </div>
+
           </div>
         </div>
         <MobileAppBanner />
