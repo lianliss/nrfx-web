@@ -6,6 +6,7 @@ import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import {getCurrencyInfo} from '../../../../../../actions';
+import { openModal } from '../../../../../../actions';
 
 export default function HistoryTable({ history, adaptive, header}) {
 
@@ -36,7 +37,7 @@ export default function HistoryTable({ history, adaptive, header}) {
     if (adaptive) {
 
       return (
-        <UI.TableCell key={i}>
+        <UI.TableCell onClick={() => openModal('fiat_operation', { operation: item })} key={i}>
           <UI.TableColumn sub={
             getCurrencyInfo(item.primary_currency).name + ' / ' +
             getCurrencyInfo(item.secondary_currency).name

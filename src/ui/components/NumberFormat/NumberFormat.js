@@ -51,6 +51,7 @@ NumberFormat.defaultProps = {
 }
 
 NumberFormat.propTypes = {
+  number: PropTypes.number,
   fractionDigits: PropTypes.number,
   skipTitle: PropTypes.bool,
   percent: PropTypes.bool,

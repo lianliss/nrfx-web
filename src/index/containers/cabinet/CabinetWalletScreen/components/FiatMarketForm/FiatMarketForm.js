@@ -110,12 +110,23 @@ class FiatMarketForm extends React.Component {
     </div>;
   }
 
-  renderFee() {
+  getFee() {
     const { exchangeFee } = this.props;
     const fiatType =  isFiat(this.state.from) ? 'from' : 'to';
     const fiat = this.state[fiatType];
     const fiatAmount = this.state[fiatType+'Amount'];
     const fee = exchangeFee[fiat];
+
+    return fee ? {
+      fee,
+      fiatAmount,
+      fiatType,
+      fiat,
+    } : {};
+  }
+
+  renderFee() {
+    const { fee, fiatAmount, fiat } = this.getFee();
 
     if (fee) {
       const currency = fiat.toUpperCase();
@@ -129,6 +140,8 @@ class FiatMarketForm extends React.Component {
   render() {
     const disabled = !this.props.rate;
     const Wrapper = this.props.adaptive ? UI.Collapse : UI.ContentBox;
+    const { fiatType, fiatAmount, fee } = this.getFee();
+    const error = fiatAmount < fee.min;
 
     return (
       <Wrapper isOpenDefault={false} title={getLang('cabinet_fiatMarketExchangeTitle')} className="FiatMarketForm">
@@ -137,6 +150,7 @@ class FiatMarketForm extends React.Component {
           <div className="FiatMarketForm__column">
             <UI.Input
               disabled={disabled}
+              error={fiatType === 'to' && error}
               value={this.state.toAmount}
               onTextChange={this.handleAmountChange('to')}
               placeholder={getLang('global_amount')}
@@ -157,6 +171,7 @@ class FiatMarketForm extends React.Component {
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
             <UI.Input
+              error={fiatType === 'from' && error}
               disabled={disabled}
               value={this.state.fromAmount}
               onTextChange={this.handleAmountChange('from')}
@@ -178,7 +193,7 @@ class FiatMarketForm extends React.Component {
         <div className="FiatMarketForm__button_wrapper">
           <p className="FiatMarketForm__fee">{this.renderFee()}</p>
           <UI.Button
-            disabled={disabled || !(this.state.amount > 0)}
+            disabled={error || disabled || !(this.state.amount > 0)}
             onClick={this.handleBuy}
             state={this.props.loadingStatus}
           >{getLang('cabinet_fiatMarketExchangeActionButton')}</UI.Button>
