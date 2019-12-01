@@ -20,9 +20,9 @@ handlers:
   - url: /static/media/(.*)
     static_files: build/static/media/\1
     upload: build/static/media/(.*)
-  - url: /(.*\.(json|ico))$
+  - url: /(.*\.(json|png))$
     static_files: build/\1
-    upload: build/.*\.(json|ico)$
+    upload: build/.*\.(json|png)$
   - url: /
     static_files: build/index.html
     upload: build/index.html
