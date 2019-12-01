@@ -14,6 +14,7 @@ import * as utils from '../../../../utils/index';
 import * as actions from '../../../../actions';
 import TypedText from '../../../components/site/TypedText/TypedText';
 import initGetParams from '../../../../services/initialGetParams';
+import COMPANY from '../../../constants/company';
 
 
 export default class SiteMainScreen extends BaseScreen {
@@ -52,7 +53,7 @@ export default class SiteMainScreen extends BaseScreen {
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('../../site/SiteMainScreen/asset/homepage_screen.png')}
-            title={<span>BITCOINBOT:<br />{this.getAnimatedTitle()}</span>}
+            title={<span>{COMPANY.name.toUpperCase()}:<br />{this.getAnimatedTitle()}</span>}
             caption={<span>{utils.nl2br(this.lang.site.homeWalletSubTitile)}</span>}
             buttonText={this.lang.site.homeBegin}
           />
