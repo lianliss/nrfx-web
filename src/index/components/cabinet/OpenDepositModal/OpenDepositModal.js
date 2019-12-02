@@ -187,17 +187,13 @@ class OpenDepositModal extends React.Component {
       ],
       pool: [
         {
-          label: utils.getLang('cabinet_openNewDeposit_income'),
+          label: utils.getLang('cabinet_openNewDeposit_pool_income'),
           icon: require('../../../../asset/24px/bar-chart.svg')
         },
         {
           label: utils.getLang('cabinet_openNewDeposit_special'),
           icon: require('../../../../asset/24px/star.svg')
         },
-        {
-          label: utils.getLang('cabinet_openNewDeposit_conclusion'),
-          icon: require('../../../../asset/24px/withdraw.svg')
-        }
       ],
     };
 
