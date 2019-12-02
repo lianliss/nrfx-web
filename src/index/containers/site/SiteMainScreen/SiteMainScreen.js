@@ -53,7 +53,7 @@ export default class SiteMainScreen extends BaseScreen {
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('../../site/SiteMainScreen/asset/homepage_screen.png')}
-            title={<span>{COMPANY.name.toUpperCase()}:<br />{this.getAnimatedTitle()}</span>}
+            title={<span>{COMPANY.name}:<br />{this.getAnimatedTitle()}</span>}
             caption={<span>{utils.nl2br(this.lang.site.homeWalletSubTitile)}</span>}
             buttonText={this.lang.site.homeBegin}
           />
@@ -94,12 +94,12 @@ export default class SiteMainScreen extends BaseScreen {
               seeMoreLink={pages.INVESTMENT}
               reverse
             >{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>
-            <HomepageProduct
-              title={this.lang.site.homePayment}
-              bgTitle={this.lang.site.homePayment}
-              icon="commerce"
-              seeMoreLink={pages.COMMERCE}
-            >{[this.lang.site.homePaymentSubTitle1, this.lang.site.homePaymentSubTitle2, this.lang.site.homePaymentSubTitle3]}</HomepageProduct>
+            {/*<HomepageProduct*/}
+            {/*  title={this.lang.site.homePayment}*/}
+            {/*  bgTitle={this.lang.site.homePayment}*/}
+            {/*  icon="commerce"*/}
+            {/*  seeMoreLink={pages.COMMERCE}*/}
+            {/*>{[this.lang.site.homePaymentSubTitle1, this.lang.site.homePaymentSubTitle2, this.lang.site.homePaymentSubTitle3]}</HomepageProduct>*/}
           </div>
         </div>
 

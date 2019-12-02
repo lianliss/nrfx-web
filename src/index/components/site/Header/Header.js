@@ -37,10 +37,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           title: utils.getLang('site__headerInvestment'),
           route: pages.INVESTMENT,
         },
-        {
-          title: utils.getLang('site__headerPayment'),
-          route: pages.COMMERCE,
-        },
+        // {
+        //   title: utils.getLang('site__headerPayment'),
+        //   route: pages.COMMERCE,
+        // },
       ]
     },
     {

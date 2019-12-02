@@ -22,7 +22,7 @@ export default function Footer() {
             <a href={`/${pages.SITE_EXCHANGE}`} className="Footer__links__item">{utils.getLang('site__footerExchange')}</a>
             <a href={`/${pages.ROBOTS}`} className="Footer__links__item">{utils.getLang('site__footerRobots')}</a>
             <a href={`/${pages.INVESTMENT}`} className="Footer__links__item">{utils.getLang('site__footerInvestments')}</a>
-            <a href={`/${pages.COMMERCE}`} className="Footer__links__item">{utils.getLang('site__footerPayment')}</a>
+            {/*<a href={`/${pages.COMMERCE}`} className="Footer__links__item">{utils.getLang('site__footerPayment')}</a>*/}
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerCompany')}</div>
@@ -47,7 +47,7 @@ export default function Footer() {
           <div className="Footer__logo">
             <UI.Logo type="gray" />
           </div>
-          <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} {COMPANY.name.toUpperCase()}</div>
+          <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} {COMPANY.name}</div>
           <div className="Footer__socials">
             {COMPANY.social.facebook && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.facebook} className="Footer__social">
               <SVG src={require('../../../../asset/social/facebook.svg')} />

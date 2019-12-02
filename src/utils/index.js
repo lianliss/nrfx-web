@@ -202,7 +202,7 @@ export function getScrollbarWidth() {
 }
 
 export function isFiat(currency) {
-  return ['usd', 'eur', 'rub', 'idr', 'cny'].includes(currency.toLowerCase());
+  return ['gbp', 'usd', 'eur', 'rub', 'idr', 'cny'].includes(currency.toLowerCase());
   // TODO: Бруть из state.default.currency
 }
 

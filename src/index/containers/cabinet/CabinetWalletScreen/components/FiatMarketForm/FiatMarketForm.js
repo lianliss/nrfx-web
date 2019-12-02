@@ -145,7 +145,7 @@ class FiatMarketForm extends React.Component {
 
     return (
       <Wrapper isOpenDefault={false} className="FiatMarketForm">
-        { !this.props.adaptive && <h2 className="FiatMarketForm__title">{getLang('cabinet_fiatMarketExchangeTitle')}</h2> }
+        { !this.props.adaptive && <h2 className="FiatMarketForm__title">{this.state.from} {this.state.to} {getLang('cabinet_fiatMarketExchangeTitle')}</h2> }
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
             <UI.Input
