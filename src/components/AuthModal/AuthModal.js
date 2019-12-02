@@ -13,10 +13,10 @@ import SmsCode from './components/SmsCode';
 import GoogleAuth from './components/GoogleAuth';
 import initGetParams from '../../../src/services/initialGetParams';
 
-function AuthModal({ children, type, initialEmail, className, onClose, onBack, routerParams }) {
+function AuthModal({ type, initialEmail, className, onClose, defaultEmail, onBack }) {
   const [currentStep, changeStep] = useState(type || steps.LOGIN);
   const [params, changeParams] = useState({});
-  const [email, changeEmail] = useState('');
+  const [email, changeEmail] = useState(defaultEmail);
   const [password, changePassword] = useState('');
 
   const changeStepWithParams = (step, params) => {
