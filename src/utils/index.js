@@ -208,6 +208,8 @@ export function isFiat(currency) {
 
 export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
   let dateObject;
+  const offsetMoscow = 60 * 3;
+  const offset = new Date().getTimezoneOffset() + offsetMoscow;
 
   if (typeof date === 'number' && date.toString().length === 10) {
     dateObject = moment.unix(date);
@@ -215,5 +217,6 @@ export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
     dateObject = moment(date);
   }
 
+  dateObject.subtract('minutes', offset);
   return !!format ? dateObject.format(format) : dateObject;
 }
