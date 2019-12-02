@@ -137,6 +137,17 @@ class FiatMarketForm extends React.Component {
     }
   }
 
+  getBalance(type) {
+    return false;
+    const currency = this.state[type];
+
+    const balances = this.props[isFiat(currency) ? 'balances' : 'wallets'];
+    if (balances) {
+      const { amount } = balances.find(item => item.currency.toLowerCase() === currency);
+      return <UI.NumberFormat number={amount} currency={currency} />
+    } return null;
+  }
+
   render() {
     const disabled = !this.props.rate;
     const Wrapper = this.props.adaptive ? UI.Collapse : UI.ContentBox;
@@ -155,6 +166,9 @@ class FiatMarketForm extends React.Component {
               onTextChange={this.handleAmountChange('to')}
               placeholder={getLang('global_amount')}
               type="number" />
+            <div className="FiatMarketForm__balance">
+              {this.getBalance('to')}
+            </div>
           </div>
           <div className="FiatMarketForm__column">
             <UI.Dropdown
@@ -177,6 +191,9 @@ class FiatMarketForm extends React.Component {
               onTextChange={this.handleAmountChange('from')}
               placeholder={getLang('global_amount')}
               type="number" />
+            <div className="FiatMarketForm__balance">
+              {this.getBalance('from')}
+            </div>
           </div>
           <div className="FiatMarketForm__column">
             <UI.Dropdown
@@ -204,6 +221,8 @@ class FiatMarketForm extends React.Component {
 }
 
 export default connect(store => ({
+  balances: store.fiatWallets.balances,
+  wallets: store.fiatWallets.wallets,
   adaptive: store.default.adaptive,
   currencies: store.cabinet.currencies,
   rate: store.fiatWallets.rate,
