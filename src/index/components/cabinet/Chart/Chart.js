@@ -63,7 +63,7 @@ export default function Chart({ series, ...props }) {
       symbolWidth: 0,
       symbolRadius: 0,
       labelFormatter: function (a) {
-        let out = `<div class="${classNames("Chart__legend_item", {visible: this.visible})}" style="background: ${getCurrencyInfo(this.name)}">${this.name}</div>`;
+        let out = `<div class="${classNames("Chart__legend_item", {visible: this.visible})}" style="background: ${getCurrencyInfo(this.name).background}">${this.name}</div>`;
         if (props.adaptive) {
           out = `<div style="margin: 20px 0">
             ${out}
