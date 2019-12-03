@@ -21,10 +21,10 @@ import './index/polyfill';
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({dsn: "https://2f062902440147cfab7ea204358fdd26@sentry.io/1816477"});
-}
 
-if (window.location.protocol === 'http:') {
-  window.location.href = window.location.href.replace('http:', 'https:');
+  if (window.location.protocol === 'http:') {
+    window.location.href = window.location.href.replace('http:', 'https:');
+  }
 }
 
 require('define').noConflict();
