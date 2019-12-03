@@ -43,7 +43,7 @@ class Header extends React.Component {
     const { notifications } = this.props.notifications;
 
     const currentLang = getLang();
-    const lang = this.props.langList.find(l => l.value === currentLang);
+    const lang = this.props.langList.find(l => l.value === currentLang) || this.props.langList[0] || {}; // hack
 
     return (
       <div className="CabinetHeaderContainer">
