@@ -34,7 +34,7 @@ class ChartProfit extends React.Component {
       }
       this.props.chart.data[currency].map(item => {
         chartCurrencies[currency]['data'].push({
-          x: item.created_at,
+          x: item.created_at * 1000,
           y: item.usd_amount,
           title: item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
         });
@@ -47,6 +47,7 @@ class ChartProfit extends React.Component {
       marker = true;
     }
     //}
+
 
     return (
       <div className="Content_box Chart__profit">
