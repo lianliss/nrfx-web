@@ -60,13 +60,6 @@ export default class ReceiveCoinsModal extends React.Component {
       )
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.state.currency);
-
-      if (currencyInfo.abbr == 'ltc') {
-        return <div className="ReceiveCoinsModal">
-          <UI.Message type="error">{currencyInfo.name} {utils.getLang('cabinet_walletNotWorking')}</UI.Message>
-        </div>;
-      }
-
       let options = this.state.wallets.filter(w => w.status !== 'pending');
       options = options.map(item => {
         const info = actions.getCurrencyInfo(item.currency);
