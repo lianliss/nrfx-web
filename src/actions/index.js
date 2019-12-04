@@ -11,7 +11,9 @@ import * as emitter from '../services/emitter';
 
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.LangGet, { code }).then(({ translations, languages }) => {
+    api.call(apiSchema.LangGet, { code }, {
+      apiEntry: 'https://api.bitcoinbot.pro',
+    }).then(({ translations, languages }) => {
       const langList = languages.map(lang => ({ value: lang[0], title: lang[1] }));
       store.dispatch({
         type: actionTypes.SET_LANG,
