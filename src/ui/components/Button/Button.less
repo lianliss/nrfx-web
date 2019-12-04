@@ -28,7 +28,6 @@
   user-select: none;
   box-sizing: border-box;
 
-
   &.buy  {
     background: var(--uikit-primary-green);
     color: var(--uikit-contrast-primary);
@@ -212,6 +211,10 @@
 
     &:active {
       background: var(--uikit-contrast-primary);
+
+      .Button__label {
+        color: var(--uikit-primary);
+      }
     }
 
     .Button__label {

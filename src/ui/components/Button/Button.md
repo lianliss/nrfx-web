@@ -98,3 +98,13 @@ const currency = {
     <Button currency={currency} type="lite">Button</Button>
 </div>
 ```
+
+type="outline_white"
+```jsx FFFFF
+<div style={{background: '#f3a440', padding: '1em'}}>
+    <Button size="large" type="outline_white">Button</Button>
+    <Button size="middle" type="outline_white">Button</Button>
+    <Button size="small" type="outline_white">Button</Button>
+    <Button size="ultra_small" type="outline_white">Button</Button>
+</div>
+```
