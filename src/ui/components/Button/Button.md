@@ -100,7 +100,7 @@ const currency = {
 ```
 
 type="outline_white"
-```jsx FFFFF
+```jsx
 <div style={{background: '#f3a440', padding: '1em'}}>
     <Button size="large" type="outline_white">Button</Button>
     <Button size="middle" type="outline_white">Button</Button>
