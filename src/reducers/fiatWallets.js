@@ -7,6 +7,7 @@ const initialState = {
   rates: {},
   rate: 0,
   merchants: [],
+  exchange_fee: 0,
   loadingStatus: {
     default: 'loading',
     merchants: '',
