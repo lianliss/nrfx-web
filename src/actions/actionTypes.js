@@ -16,6 +16,8 @@ export const WALLET_HISTORY = 'WALLET_HISTORY';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SET_ADAPTIVE = 'SET_ADAPTIVE';
 export const SET_TITLE = 'SET_TITLE';
+export const APIKEY_SET = 'APIKEY_SET';
+export const APIKEY_SET_LOADING_STATUS = 'APIKEY_SET_LOADING_STATUS';
 
 // NotificationsScreen
 export const NOTIFICATIONS_SET = 'NOTIFICATIONS_SET';
