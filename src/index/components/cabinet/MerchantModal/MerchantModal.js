@@ -15,6 +15,7 @@ import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import * as merchantService from '../../../../services/merchant';
 import { Status } from '../../../containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';
+import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 const MerchantModal = props => {
   const { adaptive } = props;
@@ -57,7 +58,6 @@ const MerchantModal = props => {
   },[]);
 
   const checkAmount = (value = amount) => {
-    console.log(11111, value);
     const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];
     const currencyLabel = currency.toUpperCase();
     if (value < min_amount) {
@@ -167,8 +167,17 @@ const MerchantModal = props => {
     )
   }
 
+  const getFee = () => {
+    const fee = props.merchants[merchant].fee_conf[currency];
+    return {
+      ...fee,
+      fee: Math.max(fee.min, amount / 100 * fee.percent),
+    }
+  }
+
   const renderForm = () => {
     const currencyInfo = actions.getCurrencyInfo(currency);
+    const { fee, percent } = getFee();
 
     return (
       <div className="MerchantModal__form">
@@ -213,6 +222,10 @@ const MerchantModal = props => {
           {getLang('cabinet_merchantModalDescription_' + merchant)}
         </div>
 
+        <div className="MerchantModal__form__fee">
+          {getLang('global_fee')}: <NumberFormat number={percent} percent />, <NumberFormat number={fee} currency={currency} /> {getLang('global_min')}.
+        </div>
+
         <div className="MerchantModal__buttons">
           <UI.Button currency={currencyInfo} onClick={() => setMerchant(null)} type="outline">{getLang('global_back')}</UI.Button>
           { merchant === 'invoice' ? (
@@ -228,6 +241,8 @@ const MerchantModal = props => {
   }
 
   const renderInvoice = () => {
+    const { fee } = getFee();
+
     const currencyInfo = actions.getCurrencyInfo(currency);
     return (
       <div className="MerchantModal__invoice">
@@ -235,7 +250,7 @@ const MerchantModal = props => {
         <div className="MerchantModal__invoice__amount">
           <div className="MerchantModal__invoice__label">{getLang('global_amount')}:</div>
           <div className="MerchantModal__invoice__value">
-            {amount} {currencyInfo.abbr.toUpperCase()}
+            {parseFloat(amount) + fee} {currencyInfo.abbr.toUpperCase()}
           </div>
         </div>
         <UI.List items={[
@@ -243,7 +258,8 @@ const MerchantModal = props => {
           { label: 'Address', value: '91 Battersea Park Road,  London, England, SW8 4DU', margin: true },
           { label: 'SWIFT Code', value: 'STPVHKHH' },
           { label: 'Account', value: '099790001101' },
-          { label: 'Purpose of Payment', value: 'Balance Replenishment' }
+          { label: 'Purpose of Payment', value: 'Balance Replenishment', margin: true },
+          { label: getLang('global_fee'), value: <NumberFormat number={fee} currency={currency} /> }
         ]} />
 
         <div className="MerchantModal__invoice__link">
