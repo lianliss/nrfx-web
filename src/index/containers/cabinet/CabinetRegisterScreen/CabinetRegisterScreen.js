@@ -14,10 +14,12 @@ import * as utils from '../../../../utils';
 import * as CLASSES from '../../../constants/classes';
 import * as pages from '../../../constants/pages';
 import * as auth from '../../../../services/auth';
+import SVG from 'react-inlinesvg';
 
 class CabinetRegister extends React.PureComponent {
   state = {
     sendSmsTime: false,
+    sendSmsStatus: null,
     timer: null,
     codeForm: false,
   };
@@ -77,13 +79,13 @@ class CabinetRegister extends React.PureComponent {
 
   __handleSendSms() {
     const { params } = this.context;
-
+    this.setState({ sendSmsStatus: 'loading' });
     api.call(apiSchema.Profile.FillAccountSendSmsPut, {
       phone_code: this.state.dialCode,
       phone_number: this.state.phoneWithoutCode,
       hash: params.hash
     }).then(() => {
-      this.setState({ codeForm: true });
+      this.setState({ codeForm: true, smsCode: '' });
       var duration = moment.duration(60 * 1000, 'milliseconds');
       const timer = () => {
         duration = moment.duration(duration - 1000, 'milliseconds');
@@ -98,6 +100,8 @@ class CabinetRegister extends React.PureComponent {
 
     }).catch((err) => {
       this.props.toastPush(err.message, "error");
+    }).finally(() => {
+      this.setState({ sendSmsStatus: null });
     })
   }
 
@@ -144,7 +148,7 @@ class CabinetRegister extends React.PureComponent {
           />
           <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_phoneNumber')}</h3>
           { !state.codeForm ? <div>
-            <div className="CabinetRegister__PhoneInput">
+            <div className={utils.classNames('CabinetRegister__PhoneInput', {error: state.touched && !state.email})}>
               <ReactPhoneInput
                 defaultCountry={'ru'}
                 value={this.state.phone}
@@ -163,6 +167,7 @@ class CabinetRegister extends React.PureComponent {
             </div>
             <div className="CabinetRegister__content__send_code_button">
               <UI.Button
+                state={state.sendSmsStatus}
                 disabled={state.timer || !this.state.phoneWithoutCode}
                 onClick={this.__handleSendSms.bind(this)}>
                 {utils.getLang('cabinet_registerScreen_sendCode')}
@@ -171,8 +176,9 @@ class CabinetRegister extends React.PureComponent {
             </div>
           </div> : <div>
             <UI.Input
-              error={state.touched && !state.smsCode}
+              error={state.touched && !(state.smsCode && state.smsCode.length >= 4)}
               value={state.smsCode}
+              indicator={(state.smsCode && state.smsCode.length >= 4) ? <SVG src={require("../../../../asset/24px/check-middle.svg")} /> : null}
               placeholder={utils.getLang('cabinet_registerScreen_enterCode')}
               onTextChange={text => this.__handleChange("smsCode", text)}
             />

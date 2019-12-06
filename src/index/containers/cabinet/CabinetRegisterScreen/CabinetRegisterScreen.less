@@ -5,6 +5,9 @@
   justify-content: center;
   padding: 40px;
 
+  .Input__indicator {
+    color: var(--primary-green);
+  }
 
 
   &__PhoneInput {
@@ -47,11 +50,20 @@
       font-size: 15px !important;
       line-height: 20px !important;
       box-sizing: border-box !important;
-      border: 2px solid rgba(0, 0, 0, 0) !important;
+      border: 2px solid transparent !important;
       outline: none !important;
       padding: 14px 16px;
       transition: all 150ms ease-in-out;
       width: 100% !important;
+
+      &:focus {
+        border-color: var(--uikit-primary) !important;
+      }
+    }
+
+    .error &_inputClass {
+      border-color: #ff4545 !important;
+      box-shadow: 0 0 8px 0px rgba(132, 1, 1, 0.45) !important;
     }
   }
 
