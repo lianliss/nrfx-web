@@ -126,9 +126,9 @@ export default function Routes(props) {
     case pages.NOTIFICATIONS:
       Component = NotificationsScreen.default;
       break;
-    // case pages.EXCHANGE:
-    //   Component = CabinetExchangeScreen;
-    //   break;
+    case pages.EXCHANGE:
+      Component = CabinetExchangeScreen;
+      break;
     case pages.MERCHANT:
       WrapperComponent = props => (<>{props.children}</>);
       Component = CabinetMerchantStatusScreen;
