@@ -4,8 +4,6 @@ import { classNames } from '../../../../utils/index';
 import * as actions from '../../../../actions';
 import * as storeUtils from '../../../storeUtils';
 import * as CLASSES from '../../../constants/classes';
-import { getLang, setLang } from '../../../../services/lang';
-import * as utils from '../../../../utils'
 import COMPANY from '../../../constants/company';
 
 const Footer = (props) => {
@@ -14,8 +12,7 @@ const Footer = (props) => {
     actions.openModal('language');
   };
 
-  const currentLang = getLang();
-  const lang = props.langList.find(l => l.value === currentLang);
+  const lang = actions.getCurrentLang();
 
   return (
     <ul className={classNames("CabinetFooter", props.className)}>
