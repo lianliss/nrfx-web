@@ -94,9 +94,9 @@ function makeRows(items, onOrderPress, whole, adaptive,) {
 
     return (
       <div title={`Filled: ${Math.floor(order.filled / order.amount * 100)}%`} key={order.id} className={className} onClick={() => onOrderPress(order)}>
-        <div className="OrderBook__order__row">{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : 6)}</div>
-        <div className="OrderBook__order__row">{utils.formatDouble(order.amount - order.filled)} </div>
-        {!adaptive && <div className="OrderBook__order__row">{utils.formatDouble(order.price * order.amount, order.secondary_coin === 'usdt' ? 2 : 6)}</div>}
+        <div className="OrderBook__order__row"><UI.NumberFormat number={order.price} currency={order.secondary_coin} hiddenCurrency /></div>
+        <div className="OrderBook__order__row"><UI.NumberFormat number={order.amount - order.filled} currency={order.primary_coin} hiddenCurrency /></div>
+        {!adaptive && <div className="OrderBook__order__row"><UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} hiddenCurrency /></div>}
         <div className="OrderBook__order__filled" style={{
           width: `${filled}%`
         }}/>

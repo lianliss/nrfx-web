@@ -57,10 +57,10 @@ export default function Block(props) {
     )
   }
 
-  const Wrapper = skipCollapse ? UI.ContentBox : UI.Collapse;
+  const Wrapper = skipCollapse ? UI.ContentBox : (props => <UI.Collapse {...props} isOpen={!collapsed} />);
 
   return (
-    <Wrapper title={title} isOpen={collapsed} onChange={() => __setCollapsed(!collapsed)} controls={controls} className={classNames}>
+    <Wrapper title={title} onChange={() => __setCollapsed(!collapsed)} controls={controls} className={classNames}>
       { skipCollapse && <div className="Exchange__block__head">
         <div className="Exchange__block__title" onClick={(e) => {
           if (!e.target.classList.contains('Exchange__block__tab')) {

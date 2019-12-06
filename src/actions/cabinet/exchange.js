@@ -24,6 +24,10 @@ export function load(market) {
   };
 }
 
+export function setStatus(status) {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status });
+}
+
 export function chooseMarket(market) {
   return (dispatch, getState) => {
     exchangeService.unbind(getState().exchange.market);
@@ -59,7 +63,7 @@ export function getMarkets() {
 }
 
 export function removeOrders(orderIds) {
-  store.dispatch({ type: actionTypes.EXCHANGE_REMOVE_ORDER, orderIds });
+  store.dispatch({ type: actionTypes.EXCHANGE_REMOVE_ORDERS, orderIds });
 }
 
 export function orderBookUpdateOrders(orders) {

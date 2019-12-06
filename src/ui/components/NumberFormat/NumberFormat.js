@@ -6,15 +6,20 @@ import { classNames } from '../../utils';
 
 import * as utils from '../../utils/index';
 
-const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, type, percent, indicator, brackets }) => {
+const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hiddenCurrency, type, percent, indicator, brackets }) => {
   if (!fractionDigits) {
-    fractionDigits = utils.isFiat(currency) ? 2 : 8;
+    if (percent) {
+      fractionDigits = 2;
+    } else {
+      fractionDigits = (utils.isFiat(currency) || currency.toLowerCase() === 'usdt' ) ? 2 : 8;
+    }
+    // TODO: Вынести количество символов после точки в объект валют
   }
 
   let displayNumber = parseFloat(parseFloat(number).toFixed(fractionDigits));
 
   if (currency && !percent ) {
-    displayNumber += ' ' + currency.toUpperCase(); // nbsp
+    displayNumber += ' ' + ( !hiddenCurrency ? currency.toUpperCase() : ''); // nbsp
   }
 
 
@@ -22,12 +27,12 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, type
     type = number > 0 ? 'up' : 'down';
   }
 
-  if (indicator && type) {
-    displayNumber += (' ' + (type === 'up' ? '↑' : '↓'));
-  }
-
   if (percent) {
     displayNumber = displayNumber + '%';
+  }
+
+  if (indicator && type) {
+    displayNumber += (' ' + (type === 'up' ? '↑' : '↓'));
   }
 
   if (brackets) {
@@ -52,7 +57,8 @@ NumberFormat.defaultProps = {
   brackets: false,
   color: false,
   currency: '',
-  type: '',
+  type: null,
+  hiddenCurrency: false,
 }
 
 NumberFormat.propTypes = {
@@ -63,7 +69,8 @@ NumberFormat.propTypes = {
   percent: PropTypes.bool,
   indicator: PropTypes.bool,
   brackets: PropTypes.bool,
-  type: PropTypes.oneOf(['sell', 'buy', 'down', 'up']),
+  hiddenCurrency: PropTypes.bool,
+  type: PropTypes.oneOf([null, 'sell', 'buy', 'down', 'up']),
   currency: PropTypes.string
 };
 

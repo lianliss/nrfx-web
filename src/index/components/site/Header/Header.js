@@ -9,7 +9,7 @@ import * as utils from '../../../../utils/index';
 import * as pages from '../../../constants/pages';
 import router from '../../../../router';
 import * as steps from '../../../../components/AuthModal/fixtures';
-import { getLang, setLang } from '../../../../services/lang';
+import { setLang } from '../../../../services/lang';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import * as actions from '../../../../actions';

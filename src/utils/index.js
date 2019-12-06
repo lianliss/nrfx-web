@@ -102,6 +102,7 @@ export function ucfirst(input = "") {
 }
 
 export function formatDouble(input, fractionDigits = 8) {
+  if (!input) return null;
   return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 

@@ -13,7 +13,7 @@ import { getLang } from '../services/lang';
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.LangGet, { code }, {
-      apiEntry: 'https://api.narfex.com',
+      apiEntry: 'https://api.narfex.com' // TODO
     }).then(({ translations, languages }) => {
       const langList = languages.map(lang => ({ value: lang[0], title: lang[1] }));
       store.dispatch({

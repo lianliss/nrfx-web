@@ -31,9 +31,9 @@ class Trades extends React.Component {
       return (
         <UI.TableCell className={priceClassName} key={order.id}>
           <UI.TableColumn>
-            <div className="Exchange__orders__mark">{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : void 0)}</div>
+            <div className="Exchange__orders__mark"><UI.NumberFormat number={order.price} currency={order.secondary_coin} hiddenCurrency /></div>
           </UI.TableColumn>
-          <UI.TableColumn>{utils.formatDouble(order.filled)}</UI.TableColumn>
+          <UI.TableColumn><UI.NumberFormat number={order.filled} /></UI.TableColumn>
           <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       )

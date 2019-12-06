@@ -24,7 +24,7 @@ const initialState = {
   },
   chart: [],
   chartTimeFrame: 5,
-  fullscreen: false
+  fullscreen: false,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -91,15 +91,16 @@ export default function reduce(state = initialState, action = {}) {
       });
     }
 
-    case actionTypes.EXCHANGE_REMOVE_ORDER: {
-      let depth = Object.assign({}, state.depth);
+    case actionTypes.EXCHANGE_REMOVE_ORDERS: {
+      const depth = { ...state.depth };
+      const openOrders = { ...state.openOrders };
 
-      for (let orderId of action.orderIds) {
+      action.orderIds.forEach((orderId) => {
         delete depth.asks[orderId];
         delete depth.bids[orderId];
-      }
-
-      return Object.assign({}, state, { depth });
+        delete openOrders[orderId];
+      });
+      return ({ ...state, depth, openOrders });
     }
 
     case actionTypes.EXCHANGE_ORDER_BOOK_UPDATE: {

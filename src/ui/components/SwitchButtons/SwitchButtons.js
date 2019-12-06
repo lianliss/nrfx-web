@@ -14,11 +14,11 @@ const SwitchButtons = props => {
         <UI.Button
           className={tab.className}
           title={tab.icon && tab.label}
-          key="all"
+          key={tab.value}
           size="ultra_small"
           disabled={tab.disabled}
           rounded
-          type={tab.value !== props.selected ? "secondary" : null}
+          type={tab.value !== props.selected ? "secondary" : 'normal'}
           onClick={() => props.onChange(tab.value)}
         >{tab.icon || tab.label}</UI.Button>
       ))}
@@ -27,7 +27,7 @@ const SwitchButtons = props => {
 };
 
 SwitchButtons.propTypes = {
-  buttons: PropTypes.arrayOf(PropTypes.shape({
+  tabs: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any,
     label: PropTypes.string
   })).isRequired,

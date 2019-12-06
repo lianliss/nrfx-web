@@ -15,12 +15,14 @@ class Exchange {
       ['order_failed', this.__orderDidFailed],
       ['order_completed', this.__orderDidCompleted],
       ['cancel_order', this.__orderDidCancel],
+      ['cancel_orders', this.__ordersDidCancel],
       ['order_cancelled', this.__orderDidCancelled],
       ['cancel_order_failed', this.__orderDidCancelFailed],
       ['order_created', this.__orderDidCreated],
       ['trade_list', this.__orderDidTrade],
       ['balance_update', this.__balanceDidUpdate],
-      ['ticker', this.__tickerUpdate]
+      ['ticker', this.__tickerUpdate],
+      ['error_connection', this.__errorConnection]
     ];
 
     this.__bind();
@@ -42,6 +44,11 @@ class Exchange {
     }
   }
 
+  __errorConnection = () => {
+    unbind(this.market);
+    exchange.setStatus('failed');
+  };
+
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
 
   __orderDidFailed = body => {
@@ -55,6 +62,7 @@ class Exchange {
   };
 
   __orderDidCancel = (orderId) => exchange.removeOrders([orderId]);
+  __ordersDidCancel = (orderId) => exchange.removeOrders(orderId);
 
   __orderDidCancelled = (orderId) => {
     exchange.setOrderStatus(orderId, 'cancelled');

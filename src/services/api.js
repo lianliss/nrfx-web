@@ -1,6 +1,6 @@
 import * as auth from './auth';
 
-export const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
+const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
 const API_VERSION = 1;
 
 export const EXPORT_API_VERSION = API_VERSION;

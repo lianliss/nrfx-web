@@ -2,7 +2,11 @@ import * as auth from './auth';
 
 class RealTime {
   constructor() {
+<<<<<<< HEAD
     this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo?access_token=' + auth.getToken();
+=======
+    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo' + auth.getToken();
+>>>>>>> work on exchange...
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;
@@ -22,6 +26,7 @@ class RealTime {
 
       // resolve queue
       for (let event of this.sendQueue) {
+        console.log(1, 'send');
         this.connection.send(JSON.stringify(event));
       }
 
@@ -30,6 +35,7 @@ class RealTime {
 
     this.connection.onerror = (error) => {
       console.log('[WS] Error: ', error.message);
+      this.triggerListeners('error_connection');
     };
 
     this.connection.onclose = () => {
@@ -42,8 +48,36 @@ class RealTime {
     this.connection.onmessage = this.__messageDidReceive;
   };
 
-  __messageDidReceive = ({ data }) => {
+  __messageDidReceive = ({data}) => {
     let messages = data.split('\n');
+
+    // const events = {};
+    //
+    // messages.forEach(m => {
+    //
+    //   let json;
+    //   try {
+    //     json = JSON.parse(m);
+    //   } catch (e) {
+    //     console.log('[WS] Error:', e.message, m);
+    //   }
+    //
+    //
+    //   m = JSON.parse(m);
+    //   if (events[m.type]) {
+    //     events[m.type].push(m.body);
+    //   } else {
+    //     events[m.type] = [m.body];
+    //   }
+    // });
+    //
+    // Object.keys(events).forEach(event => {
+    //   if (messages[event]) {
+    //     console.log(messages[event]);
+    //     alert(1);
+    //   }
+    // });
+
     for (let message of messages) {
       let json;
       try {
@@ -105,12 +139,12 @@ class RealTime {
 
   subscribe(channel) {
     this.subscribtions[channel] = true;
-    this.__send('subscribe', { channel });
+    this.__send('subscribe', {channel});
   }
 
   unsubscribe(channel) {
     delete this.subscribtions[channel];
-    this.__send('unsubscribe', { channel });
+    this.__send('unsubscribe', {channel});
   }
 
   __restoreSubscriptions() {

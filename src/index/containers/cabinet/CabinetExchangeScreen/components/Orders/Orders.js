@@ -37,7 +37,9 @@ class Orders extends React.Component {
         //   <UI.Button key="all" size="ultra_small" rounded type="secondary">{utils.getLang('exchange_allPairs')}</UI.Button>,
         // ]}
       >
-        {this.__renderContent(this.state.tab)}
+        <div className="Exchange__orders__table">
+          {this.__renderContent(this.state.tab)}
+        </div>
       </Block>
     )
   }
@@ -194,7 +196,7 @@ class Orders extends React.Component {
           <UI.TableColumn align="right">
             <UI.NumberFormat number={order.price} currency={order.secondary_coin} />
           </UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(order.amount)} {order.primary_coin.toUpperCase()}</UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={order.amount} currency={order.primary_coin} /></UI.TableColumn>
           <UI.TableColumn align="right"><UI.NumberFormat number={order.avg_price} currency={order.secondary_coin} /></UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} />
