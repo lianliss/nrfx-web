@@ -75,6 +75,22 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
+    case actionTypes.APIKEY_SET: {
+      const { apikey } = action;
+      debugger
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          user: {
+            ...state.profile.user,
+            apikey
+            
+          }
+        }
+      }
+    }
+
     default: return state;
   }
 }
