@@ -5,6 +5,7 @@ import { widget } from '../../../../../charting_library/charting_library.min';
 import { getLang } from '../../../../../../services/lang';
 import { classNames } from '../../../../../../utils/index'
 import * as actions from '../../../../../../actions/cabinet/exchange';
+import { API_ENTRY } from '../../../../../../services/api';
 
 
 export default class Chart extends React.PureComponent {
@@ -13,7 +14,7 @@ export default class Chart extends React.PureComponent {
     interval: '1',
     resolution: '1',
     containerId: 'tv_chart_container',
-    datafeedUrl: 'https://api.narfex.com/api/v1/exchange_chart',
+    datafeedUrl: API_ENTRY + '/api/v1/exchange_chart',
     // datafeedUrl: 'http://demo_feed.tradingview.com',
     libraryPath: 'charting_library/',
     chartsStorageUrl: 'https://saveload.tradingview.com',
