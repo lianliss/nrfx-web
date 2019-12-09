@@ -1,11 +1,11 @@
 import './SettingSecurity.less';
 import React from 'react';
 
-import * as modalGroupActions from "../../../../actions/modalGroup";
-import * as settingsActions from '../../../../actions/cabinet/settings';
-import * as utils from "../../../../utils";
-import GAConfirmModal from '../GAConfirmModal/GAConfirmModal';
-import UI from '../../../../ui';
+import * as modalGroupActions from "../../../../../../actions/modalGroup";
+import * as settingsActions from '../../../../../../actions/cabinet/settings';
+import * as utils from "../../../../../../utils";
+import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
+import UI from '../../../../../../ui';
 
 export default function SettingSecurity({props}) {
   const { user } = props;

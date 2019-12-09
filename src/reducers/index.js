@@ -79,9 +79,7 @@ export default function reduce(state = initialState, action = {}) {
       const { apikey } = action;
       const apiKeys = apikey.keys ? [...apikey.keys] : []
       const apiKey = apikey.key ? [apikey.key] : []
-      const dataApiKey = state.profile.user.dataApiKey ? 
-        [...state.profile.user.dataApiKey, ...apiKey ] :
-        [...apiKeys, apiKey]
+      const dataApiKey = apiKey.length !== 0 && state.profile.user.dataApiKey ? [...state.profile.user.dataApiKey, ...apiKey ] : apiKeys
       return {
         ...state,
         profile: {
