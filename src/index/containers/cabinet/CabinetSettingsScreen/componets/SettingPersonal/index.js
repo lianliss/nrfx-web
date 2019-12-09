@@ -1,13 +1,13 @@
 import './SettingPersonal.less';
 import React from 'react';
 
-import * as modalGroupActions from "../../../../actions/modalGroup";
-import * as settingsActions from '../../../../actions/cabinet/settings';
-import * as CLASSES from "../../../constants/classes";
-import * as storeUtils from "../../../storeUtils";
-import * as utils from "../../../../utils";
-import GAConfirmModal from '../GAConfirmModal/GAConfirmModal';
-import UI from '../../../../ui';
+import * as modalGroupActions from "../../../../../../actions/modalGroup";
+import * as settingsActions from '../../../../../../actions/cabinet/settings';
+import * as CLASSES from "../../../../../constants/classes";
+import * as storeUtils from "../../../../../storeUtils";
+import * as utils from "../../../../../../utils";
+import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
+import UI from '../../../../../../ui';
 
 class SettingPersonal extends React.Component{
 
