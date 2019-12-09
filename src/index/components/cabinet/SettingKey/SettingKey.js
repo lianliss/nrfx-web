@@ -17,6 +17,18 @@ class SettingKey extends React.Component {
     displayPassword: false
   }
 
+  componentDidMount() {
+    const { user } = this.props.profile
+    if(!user.apikey){
+      this.__handleCheckData()
+    }
+    
+  }
+
+  __handleCheckData = () => {
+    settingsActions.DataKey()
+  }
+
   __handleCreateKey = () => {
     const {user, toastPush} = this.props
     if(!user.ApiKeyName){
@@ -30,10 +42,8 @@ class SettingKey extends React.Component {
           settingsActions.CreateKey({
             name: user.ApiKeyName,
             ga_code: data.gaCode
-          }).then((data) => {
-            modal.props.close();
-          }).catch(err => {
-          });
+          })
+          modal.props.close();
         }
       }
     })

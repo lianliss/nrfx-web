@@ -77,15 +77,18 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.APIKEY_SET: {
       const { apikey } = action;
-      debugger
+      const apiKeys = apikey.keys ? [...apikey.keys] : []
+      const apiKey = apikey.key ? [apikey.key] : []
+      const dataApiKey = state.profile.user.dataApiKey ? 
+        [...state.profile.user.dataApiKey, ...apiKey ] :
+        [...apiKeys, apiKey]
       return {
         ...state,
         profile: {
           ...state.profile,
           user: {
             ...state.profile.user,
-            apikey
-            
+            dataApiKey
           }
         }
       }
