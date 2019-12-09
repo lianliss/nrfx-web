@@ -62,10 +62,24 @@ export function changeInfo({first_name, last_name, ga_code}) {
 }
 
 export function CreateKey({name, ga_code}) {
-  debugger
   return new Promise((resolve, reject) => {
     store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
     api.call(apiSchema.Api_keys.DefaultPut, {name, ga_code}).then((data) => {
+      store.dispatch({ type: actionTypes.APIKEY_SET, apikey: {...data} });
+      store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: '' });
+      resolve(data);
+    }).catch((reason) => {
+      toastsActions.toastPush("Error load settings", "error")(store.dispatch, store.getState);
+      store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'failed' });
+      reject(reason);
+    });
+  });
+}
+
+export function DataKey() {
+  return new Promise((resolve, reject) => {
+    store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
+    api.call(apiSchema.Api_keys.DefaultGet).then((data) => {
       store.dispatch({ type: actionTypes.APIKEY_SET, apikey: {...data} });
       store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: '' });
       resolve(data);
