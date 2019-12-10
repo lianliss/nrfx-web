@@ -7,6 +7,7 @@ import PageContainer from '../../../components/cabinet/PageContainer/PageContain
 import { ProfileSidebarItem } from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 
 import { ReactComponent as PlusCircleSvg } from '../../../../asset/24px/plus-circle.svg';
+import * as actions from '../../../../actions';
 
 class TraderScreen extends CabinetBaseScreen {
   render() {
@@ -23,9 +24,7 @@ class TraderScreen extends CabinetBaseScreen {
               label={'Exchange'}
             />,
             <ProfileSidebarItem
-              onClick={() => {
-
-              }}
+              onClick={() => actions.openModal('trader_new_bot')}
               icon={<PlusCircleSvg />}
               label={'Bot'}
             />,
