@@ -78,9 +78,28 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.APIKEY_SET: {
       const { apikey } = action;
+      const items = state.profile.user.dataApiKey
       const apiKeys = apikey.keys ? [...apikey.keys] : []
       const apiKey = apikey.key ? [apikey.key] : []
-      const dataApiKey = apiKey.length !== 0 && state.profile.user.dataApiKey ? [...state.profile.user.dataApiKey, ...apiKey ] : apiKeys
+      const dataApiKey = apiKey.length !== 0 && items ? [...items, ...apiKey ] : apiKeys
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          user: {
+            ...state.profile.user,
+            dataApiKey
+          }
+        }
+      }
+    }
+
+    case actionTypes.SECRETKEY_SET: {
+      const { secret_key, key_id } = action;
+      const dataApiKey = state.profile.user.dataApiKey.map(item => item.id === key_id ? {...item, secret_key } : item)
+      //if(secret_key && key_id) {
+      //}
+      debugger
       return {
         ...state,
         profile: {

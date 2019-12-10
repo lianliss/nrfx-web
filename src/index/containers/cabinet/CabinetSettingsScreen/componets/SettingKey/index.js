@@ -1,6 +1,7 @@
 import './SettingKey.less';
 import React from 'react'
 import SVG from 'react-inlinesvg';
+import copyText from 'clipboard-copy';
 
 import * as CLASSES from "../../../../../constants/classes";
 import * as storeUtils from "../../../../../storeUtils";
@@ -14,12 +15,12 @@ import UI from '../../../../../../ui';
 
 class SettingKey extends React.Component {
   state = {
-    displayPassword: false,
+    displaySecretKey: false,
   }
 
   componentDidMount() {
     const { user } = this.props.profile
-    if( !user.dataApiKey){
+    if( user && !user.dataApiKey){
       this.__handleCheckData()
     }
   }
@@ -41,17 +42,20 @@ class SettingKey extends React.Component {
           settingsActions.createKey({
             name: user.ApiKeyName,
             ga_code: data.gaCode
-          })
-          modal.props.close();
+          }).then(() => {
+            modal.props.close();
+            this.props.toastPush(utils.getLang('cabinet__successCreateKey'), "success");
+          }).catch(err => {
+            this.props.toastPush(err.message, "error");
+          });
+          
         }
       }
     })
   }
 
-
   __handleDeleteApiKey = (key_id) => {
     if (!key_id) { return false}
-    debugger
     modalGroupActions.openModalPage(null, {}, {
       children: GAConfirmModal,
       params: {
@@ -61,6 +65,7 @@ class SettingKey extends React.Component {
             ga_code: data.gaCode
           }).then(() => {
             modal.props.close();
+            this.props.toastPush(utils.getLang('cabinet__succesDeleteKey'), "success");
             this.__handleCheckData()
           }).catch(err => {
             this.props.toastPush(err.message, "error");
@@ -70,9 +75,36 @@ class SettingKey extends React.Component {
     })
   }
 
-  __toggleDisplayPassword = () => {
+  __handleGetSecretKey = (key_id) => {
+    if (!key_id) { return false}
+    modalGroupActions.openModalPage(null, {}, {
+      children: GAConfirmModal,
+      params: {
+        onChangeHandler: (data, modal) => {
+          settingsActions.getSecretKey({
+            key_id,
+            ga_code: data.gaCode
+          }).then((item) => {
+            modal.props.close();
+            this.__toggleDisplaySecret()
+          }).catch(err => {
+            this.props.toastPush(err.message, "error");
+          });
+        }
+      }
+    })
+  }
+
+  __toggleDisplaySecret = () => {
     this.setState({ displayPassword: !this.state.displayPassword });
   }
+
+  __copy = (public_key) => {
+    copyText(public_key).then(() => {
+      this.props.toastPush(utils.getLang('cabinet_copyPublicKey'), "success");
+    });
+  };
+
 
   __renderListApiKeys = () => {
     const { user } = this.props.profile
@@ -89,15 +121,16 @@ class SettingKey extends React.Component {
               <UI.Button
                 size="small"
                 onClick={this.__handleCreateKey}
+                disabled={true}
               >
-              Save
+                {utils.getLang('cabinet_settingsSave')}
               </UI.Button>
               <UI.Button
                 size="small"
                 type="secondary"
                 onClick={() => { this.__handleDeleteApiKey(item.id)}}
               >
-              Delete Key
+                {utils.getLang('cabinet__deleteKey')}
               </UI.Button>
             </div>
         
@@ -105,7 +138,7 @@ class SettingKey extends React.Component {
           <div className="ApiKey__information">
             <div className="ApiKey__key">
               <div className="ApiKey__information-title">
-                <span className="ApiKey__svg" onClick={this.__copy}>
+                <span className="ApiKey__svg" onClick={() => {this.__copy(item.public_key)}}>
                   <SVG src={copySvg}  />
                 </span> 
               API Key: 
@@ -114,15 +147,15 @@ class SettingKey extends React.Component {
                 {item.public_key}
               </div>
             </div>
-            <div className="ApiKey__secret">
+            <div className="ApiKey__secret" onClick={() => {this.__handleGetSecretKey(item.id)}}>
               <div className="ApiKey__information-title">
                 <span className="ApiKey__svg">
-                  <SVG  src={this.state.displayPassword ? closeEyeSvg : openEyeSvg} />
+                  <SVG  src={this.state.displaySecretKey ? openEyeSvg : closeEyeSvg} />
                 </span> 
               Secret Key:
               </div>
               <div className="ApiKey__text">
-                *****
+                {item.secret_key || `*****`}
               </div>
             </div>
             <div className="ApiKey__restrictions">
@@ -156,7 +189,7 @@ class SettingKey extends React.Component {
     return(
       <React.Fragment>
         <ContentBox className="ApiKey">
-          <div className="ApiKey__title">Create New API Key</div>
+          <div className="ApiKey__title">{utils.getLang('cabinet__newCreateKey')}</div>
           <div className="ApiCreateKey__form">
             <UI.Input
               placeholder={'API Key Name'} 
@@ -166,7 +199,7 @@ class SettingKey extends React.Component {
               size="large"
               onClick={this.__handleCreateKey}
             >
-              Create
+              {utils.getLang('site__walletCreateBtn')}
             </UI.Button>
           </div>
         </ContentBox>

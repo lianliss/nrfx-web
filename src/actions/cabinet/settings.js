@@ -101,6 +101,19 @@ export function deleteKey({key_id, ga_code}) {
   });
 }
 
+export function getSecretKey({key_id, ga_code}) {
+  return new Promise((resolve, reject) => {
+    store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
+    api.call(apiSchema.Api_keys.SecretGet, {key_id, ga_code}).then((data) => {
+      store.dispatch({ type: actionTypes.SECRETKEY_SET, secret_key: data.response, key_id });
+      resolve(data);
+    }).catch((reason) => {
+      store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
+      reject(reason);
+    });
+  });
+}
+
 export function changeNewPassword(params) {
   return api.call(apiSchema.Profile.ChangePasswordPost, params);
 }
