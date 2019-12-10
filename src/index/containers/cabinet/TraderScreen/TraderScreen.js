@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import * as storeUtils from '../../../storeUtils';
@@ -43,7 +44,6 @@ class TraderScreen extends CabinetBaseScreen {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_TRADER_SCREEN,
-  TraderScreen
-);
+export default connect(state => ({
+  ...state.trader,
+}))(TraderScreen);
