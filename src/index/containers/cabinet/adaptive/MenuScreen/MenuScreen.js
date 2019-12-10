@@ -10,7 +10,6 @@ import * as CLASSES from "../../../../constants/classes";
 import * as storeUtils from "../../../../storeUtils";
 import * as PAGES from '../../../../constants/pages';
 import * as utils from '../../../../../utils';
-import { getLang, setLang } from '../../../../../services/lang';
 import * as auth from '../../../../../actions/auth';
 import * as actions from '../../../../../actions';
 
@@ -24,8 +23,7 @@ class MenuScreen extends CabinetBaseScreen {
       return null;
     }
 
-    const currentLang = getLang();
-    const lang = this.props.langList.find(l => l.value === currentLang);
+    const lang = actions.getCurrentLang();
 
     return (
       <div className="Menu">

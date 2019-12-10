@@ -7,6 +7,7 @@ import { getLang, formatDouble, isFiat, ucfirst } from '../../../../../../utils/
 import UI from '../../../../../../ui/index';
 
 import * as actions from '../../../../../../actions/cabinet/fiatWallets';
+import NumberFormat from '../../../../../../ui/components/NumberFormat/NumberFormat';
 
 class FiatMarketForm extends React.Component {
   state = {
@@ -14,7 +15,6 @@ class FiatMarketForm extends React.Component {
     to: 'btc',
     typeActive: 'to',
     fromAmount: null,
-    fee: 0,
     toAmount: 1,
     amount: 1,
   };
@@ -30,7 +30,6 @@ class FiatMarketForm extends React.Component {
       const secondaryType = this.invertType(state.typeActive);
       const secondaryAmount = this.getSecondaryAmount(this.state[state.typeActive + 'Amount'], secondaryType);
       this.setState({
-        fee: this.calculateFee(secondaryAmount, secondaryType),
         [secondaryType + 'Amount']: secondaryAmount
       })
     }
@@ -83,17 +82,7 @@ class FiatMarketForm extends React.Component {
       amount: value,
       [secondaryType + 'Amount']: secondaryAmount,
       typeActive: type,
-      fee: this.calculateFee(secondaryAmount, secondaryType)
     });
-  };
-
-  getValue = (type) => {
-    const amount = this.state[type + 'Amount'];
-
-    return formatDouble(
-      type === this.state.typeActive ? amount : amount + this.state.fee,
-      isFiat(this.state[type]) ? 2 : 8
-    );
   };
 
   getCurrenciesOptions(prefix) {
@@ -118,52 +107,12 @@ class FiatMarketForm extends React.Component {
     );
   };
 
-  calculateFee(amount, type) {
-    const typeIsFiat = isFiat(this.state[type]);
-    const { rate } = this.props;
-    const { exchangeFee } = this.props;
-    const fiatType = typeIsFiat ? type : this.invertType(type);
-    const fiat = this.state[fiatType];
-    const fee = exchangeFee[fiat];
-    const fiatAmount = typeIsFiat ? amount : amount * rate;
-    const calcFee = Math.max(fee.min, (fiatAmount / 100 * fee.percent));
-    return typeIsFiat ? calcFee : calcFee / rate;
-  }
-
   renderRate(type) {
     if (!this.props.rate) return null;
     const secondaryType = this.invertType(type);
     return <div>
       <UI.NumberFormat number={1} currency={this.state[type]} /> ≈ <UI.NumberFormat number={ this.getSecondaryAmount(1, secondaryType)} currency={this.state[secondaryType]} />
     </div>;
-  }
-
-  getFee() {
-    const { exchangeFee } = this.props;
-    const fiatType =  isFiat(this.state.from) ? 'from' : 'to';
-    const fiat = this.state[fiatType];
-    const fiatAmount = this.state[fiatType+'Amount'];
-    const fee = exchangeFee[fiat];
-    const calcFee = Math.max(fee.min, (fiatAmount / 100 * fee.percent));
-
-    return fee ? {
-      fee,
-      fiatAmount,
-      fiatType,
-      fiat,
-      calcFee
-    } : {};
-  }
-
-  renderFee() {
-    const { fee, fiat, calcFee } = this.getFee();
-
-    if (fee) {
-      const currency = fiat.toUpperCase();
-      return `${getLang('exchange_fee')} (${fee.percent}%, ${getLang('cabinet_fiatWalletFeeMin')} ${fee.min} ${currency}) ≈ ${formatDouble(calcFee, 2)} ${currency}`;
-    } else {
-      return '-';
-    }
   }
 
   getBalance(type) {
@@ -176,23 +125,15 @@ class FiatMarketForm extends React.Component {
     } return null;
   }
 
-  // renderTotal() {
-  //
-  //   const amounts = [amount, secondaryAmount];
-  //   if (type === 'from') {
-  //     amounts.reverse();
-  //   }
-  //
-  //   return (
-  //     <>{getLang('cabinet_fiatWalletPurchase')} <UI.NumberFormat number={amounts[0]} currency={this.state.to} /> {getLang('cabinet_fiatWalletWith')} <UI.NumberFormat number={amounts[1]} currency={this.state.from} /></>
-  //   );
-  // }
+  renderFee() {
+    const { exchangeFee } = this.props;
+    const fee = this.state.fromAmount / 100 * exchangeFee;
+    return (<>{getLang('cabinet_fiatWalletFee')} ({<NumberFormat number={exchangeFee} percent />} {<NumberFormat number={fee} currency={this.state.from} />}) ≈ <NumberFormat number={parseInt(this.state.fromAmount) + fee} currency={this.state.from} /></>);
+  }
 
   render() {
     const disabled = !this.props.rate;
     const Wrapper = this.props.adaptive ? UI.Collapse : UI.ContentBox;
-    const { fiatType, fiatAmount, fee } = this.getFee();
-    const error = fiatAmount < fee.min;
 
     return (
       <Wrapper title={getLang('cabinet_fiatMarketExchangeTitle')} isOpenDefault={false} className="FiatMarketForm">
@@ -201,8 +142,7 @@ class FiatMarketForm extends React.Component {
           <div className="FiatMarketForm__column">
             <UI.Input
               disabled={disabled}
-              error={fiatType === 'to' && error}
-              value={this.getValue('to')}
+              value={this.state.toAmount}
               onTextChange={this.handleAmountChange('to')}
               placeholder={getLang('global_amount')}
               type="number" />
@@ -225,9 +165,8 @@ class FiatMarketForm extends React.Component {
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
             <UI.Input
-              error={fiatType === 'from' && error}
               disabled={disabled}
-              value={this.getValue('from')}
+              value={this.state.fromAmount}
               onTextChange={this.handleAmountChange('from')}
               placeholder={getLang('global_amount')}
               type="number" />
@@ -248,10 +187,9 @@ class FiatMarketForm extends React.Component {
           </div>
         </div>
         <div className="FiatMarketForm__button_wrapper">
-          <p className="FiatMarketForm__fee">{getLang('cabinet_fiatWalletPriceAlgorithm')}<br />{this.renderFee()}</p>
-          {/*<p className="FiatMarketForm__total">{this.renderTotal()}</p>*/}
+          <p className="FiatMarketForm__fee">{this.renderFee()}</p>
           <UI.Button
-            disabled={error || disabled || !(this.state.amount > 0)}
+            disabled={disabled || !(this.state.amount > 0)}
             onClick={this.handleBuy}
             state={this.props.loadingStatus}
           >{getLang('cabinet_fiatMarketExchangeActionButton')}</UI.Button>

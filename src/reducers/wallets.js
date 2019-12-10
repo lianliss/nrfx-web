@@ -75,6 +75,10 @@ export default function reduce(state = initialState, action = {}) {
       });
     }
 
+    case actionTypes.WALLETS_GENERATE_SUCCESS: {
+      return { ...state, wallets: [...state.wallets, action.wallet] }
+    }
+
     default:
       return state;
   }

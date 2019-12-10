@@ -146,6 +146,7 @@ export function getWithState(caseName, caseClass) {
       break;
     case CLASSES.SEND_COINS_MODAL:
       mapState2Props = state => ({
+        withdrawalDisabled: state.default.profile.withdrawal_disabled,
         thisState: state.modalGroup.states.send,
         wallets: state.wallets.wallets
       });

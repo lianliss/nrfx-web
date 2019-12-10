@@ -10,9 +10,11 @@ import LoadingStatus from '../../cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../../utils';
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
+import company from '../../../../index/constants/company';
 
-import SendCoinsConfirmModal from '../../cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import * as api from "../../../../services/api";
+import SVG from 'react-inlinesvg';
+import Button from '../../../../ui/components/Button/Button';
 
 
 class SendCoinsModal extends React.Component {
@@ -40,14 +42,22 @@ class SendCoinsModal extends React.Component {
     return true;
   }
 
+  __renderUserBlock = () => (
+    <div className="SendCoinsModal__block">
+      <SVG src={require('../../../../asset/120/block.svg')} />
+      <p>{utils.getLang('cabinet_withdrawalDisabledText')} <a href={'mailto:' + company.email.support}>{company.email.support}</a></p>
+      <Button onClick={this.props.onClose}>{utils.getLang('global_ok')}</Button>
+    </div>
+  )
+
   render() {
     const currencyInfo = this.props.thisState.currency ? actions.getCurrencyInfo(this.props.thisState.currency) : {};
     return (
-      <UI.Modal isOpen={true} onClose={this.props.onClose} width={552}>
+      <UI.Modal isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_sendCoinsModal_name')}
         </UI.ModalHeader>
-        {this.__renderContent()}
+        {this.props.withdrawalDisabled ? this.__renderUserBlock() : this.__renderContent()}
       </UI.Modal>
     )
   }

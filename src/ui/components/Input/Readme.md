@@ -5,6 +5,10 @@ normal
 <div>
     <Input placeholder="Placeholder" />
     <br />
+    <Input indicator="USD" />
+    <br />
+    <Input value="Value" />
+    <br />
     <Input placeholder="Placeholder" multiLine />
     <br />
     <Input type="password" placeholder="Password" />

@@ -105,6 +105,17 @@ export function loadTransactionInfo(id, type) {
   });
 }
 
+export function generateWallet(currency) {
+  return api.call(apiSchema.Wallet.GeneratePut, {
+    currency
+  }).then((wallet) => {
+    store.dispatch({ type: actionTypes.WALLETS_GENERATE_SUCCESS, wallet });
+  }).catch((error) => {
+    toastsActions.error(error.message);
+    throw error;
+  });
+}
+
 export function sendCoins(params) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Wallet.SendPut, params).then((resp) => {

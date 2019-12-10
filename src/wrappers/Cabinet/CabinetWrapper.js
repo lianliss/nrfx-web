@@ -16,8 +16,19 @@ import TabBar from '../../index/components/cabinet/TabBar/TabBar';
 import {BaseLink} from 'react-router5';
 import * as actions from '../../actions';
 import * as steps from '../../components/AuthModal/fixtures';
+import LoadingStatus from '../../index/components/cabinet/LoadingStatus/LoadingStatus';
 
 class CabinetWrapper extends Component {
+  state = {
+    error: null
+  };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.children !== this.props.children) {
+      this.setState({ error: null });
+    }
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.__handleOnResize);
     this.__handleResize(document.body.offsetWidth);
@@ -25,6 +36,18 @@ class CabinetWrapper extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.__handleOnResize);
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({ error: {
+      name: error.name,
+      message: error.message
+    }});
+  }
+
+  __renderContent() {
+    const { error } = this.state;
+    return error ? <LoadingStatus status={error.name} description={error.message} /> : this.props.children;
   }
 
   render() {
@@ -54,7 +77,7 @@ class CabinetWrapper extends Component {
 
     const content = utils.switchMatch(route.name, contentRules);
 
-    const {children, className, adaptive, user} = this.props;
+    const {className, adaptive, user} = this.props;
     const mainClassName = classNames({
       CabinetWrapper: true,
       [className]: !!className
@@ -73,7 +96,7 @@ class CabinetWrapper extends Component {
           content: this.props.title
         }}
       /> : <Header />}
-      <div className="CabinetWrapper__content">{children}</div>
+      <div className="CabinetWrapper__content">{this.__renderContent()}</div>
       {adaptive && user && <TabBar />}
     </div>
   }

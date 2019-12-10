@@ -5,6 +5,7 @@ const initialState = {
   lang: {},
   auth: {},
   profile: {},
+  langList: [],
   adaptive: false,
   title: "Bitcoinbot",
   static: {

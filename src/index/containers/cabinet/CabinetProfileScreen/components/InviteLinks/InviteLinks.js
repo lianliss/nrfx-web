@@ -18,7 +18,7 @@ export default class InviteLinks extends React.Component {
 
   render() {
     return (
-      <div className="InviteLinks Content_box">
+      <UI.ContentBox className="InviteLinks">
         <div className="InviteLinks__title_wrap">
           <div className="InviteLinks__title">{utils.getLang('cabinet_referralLinks')}</div>
           <div className="InviteLinks__add_button" onClick={this.__addButtonDidPress}>
@@ -28,7 +28,7 @@ export default class InviteLinks extends React.Component {
         <div className="InviteLinks__items">
           {this.__renderLinks()}
         </div>
-      </div>
+      </UI.ContentBox>
     )
   }
 

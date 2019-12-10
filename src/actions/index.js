@@ -8,6 +8,7 @@ import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as utils from '../utils';
 import * as emitter from '../services/emitter';
+import { getLang } from '../services/lang';
 
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
@@ -23,6 +24,11 @@ export function loadLang(code) {
       resolve();
     }).catch((err) => reject(err));
   });
+}
+
+export function getCurrentLang() {
+  const { langList } = store.getState().default;
+  return langList.find(l => l.value === getLang()) || langList.find(l => l.value === 'en');
 }
 
 export function getStaticPageContent(address) {

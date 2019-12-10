@@ -26,7 +26,7 @@ class OpenDepositModal extends React.Component {
     pending: false,
     acceptTerms: false,
     isPool: (
-      ['pool', 'admin'].includes(this.props.profile.role.toLowerCase()) &&
+      ['user (pool)', 'admin'].includes(this.props.profile.role.toLowerCase()) &&
       this.props.profile.verification === 'verified'
     )
   };

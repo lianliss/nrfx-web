@@ -7,14 +7,23 @@ import Currency from './components/Currency';
 import EmptyContentBlock from '../../cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
 import * as utils from "../../../../utils";
+import * as toasts from '../../../../actions/toasts';
 
-function NewWalletModal() {
+const NewWalletModal = (props) => {
+
+  const handleGenerate = (currency) => () => {
+    walletsActions.generateWallet(currency.abbr).then(() => {
+      toasts.success(utils.getLang('cabinet_wallet_created_success'));
+      props.onClose();
+    });
+  };
+
   let currencies = walletsActions.getNoGeneratedCurrencies();
   const getContent = () => {
     if (currencies.length) {
       return (
         <div className="NewWalletModal__currencies">
-          {currencies.map((currency, i) =>  <Currency key={i} {...currency} />)}
+          {currencies.map((currency, i) =>  <Currency key={i} {...currency} onClick={handleGenerate(currency)} />)}
         </div>
       )
     } else {
@@ -29,7 +38,7 @@ function NewWalletModal() {
   };
 
   return (
-    <UI.Modal noSpacing isOpen={true} onClose={() => {arguments[0].close()}}>
+    <UI.Modal noSpacing isOpen={true} onClose={props.onClose}>
       <UI.ModalHeader>
         {utils.getLang('cabinet_walletBox_create')}
       </UI.ModalHeader>

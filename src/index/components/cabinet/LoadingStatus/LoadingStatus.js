@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import UI from '../../../../ui';
 import * as utils from "../../../../utils";
 
-export default function LoadingStatus({ status, onRetry, inline }) {
+export default function LoadingStatus({ status, description, onRetry, inline }) {
 
   let cont;
   switch (status) {
@@ -16,7 +16,8 @@ export default function LoadingStatus({ status, onRetry, inline }) {
       cont = (
         <div className="LoadingStatus__failed">
           <div className="LoadingStatus__failed__icon" />
-          <div className="LoadingStatus__failed__message">{utils.getLang('cabinet_loadingStatus_unknownError')}</div>
+          <div className="LoadingStatus__failed__message">{status || utils.getLang('cabinet_loadingStatus_unknownError')}</div>
+          {description && <div className="LoadingStatus__failed__description">{description}</div>}
           {!!onRetry && <UI.Button onClick={onRetry}>{utils.getLang('cabinet_loadingStatus_tryAgain')}</UI.Button> }
         </div>
       );
