@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 
 require('define').noConflict();
 auth.setup();
-realTimeService();
+//realTimeService();
 
 emitter.addListener('userInstall', user.install);
 emitter.emit('userInstall');

@@ -249,6 +249,14 @@ export function getWithState(caseName, caseClass) {
         chooseMarket: exchangeActions.chooseMarket,
       };
       break;
+    case CLASSES.CABINET_TRADER_SCREEN:
+      mapState2Props = (state) => ({
+        ...state.trader,
+      });
+      mapDispatch2Props = {
+
+      };
+      break;
     default:
       mapState2Props = state => ({...state});
       mapDispatch2Props = {};

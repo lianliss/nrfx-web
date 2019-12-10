@@ -136,6 +136,10 @@ export const routes = process.env.DOMAIN === 'admin' ? [
     name: pages.MERCHANT,
     path: '/merchant/:merchant/:status',
   },
+  {
+    name: pages.TRADER,
+    path: '/trader',
+  },
 ];
 
 const params = {
