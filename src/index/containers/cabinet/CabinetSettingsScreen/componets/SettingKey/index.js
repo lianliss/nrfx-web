@@ -1,10 +1,9 @@
 import './SettingKey.less';
 import React from 'react'
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 import copyText from 'clipboard-copy';
 
-import * as CLASSES from "../../../../../constants/classes";
-import * as storeUtils from "../../../../../storeUtils";
 import * as modalGroupActions from "../../../../../../actions/modalGroup";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
@@ -20,18 +19,18 @@ class SettingKey extends React.Component {
 
   componentDidMount() {
     const { user } = this.props.profile
-    if( user && !user.dataApiKey){
+    if( user && !user.dataApiKey ){
       this.__handleCheckData()
     }
   }
 
   __handleCheckData = () => {
-    settingsActions.dataKey()
+    settingsActions.getApiKeys()
   }
 
   __handleCreateKey = () => {
     const {user, toastPush} = this.props
-    if(!user.ApiKeyName){
+    if( !user.ApiKeyName ){
       toastPush(utils.getLang('cabinet__requiredApiName'), "error");
       return false;
     }
@@ -55,7 +54,7 @@ class SettingKey extends React.Component {
   }
 
   __handleDeleteApiKey = (key_id) => {
-    if (!key_id) { return false}
+    if ( !key_id ) { return false }
     modalGroupActions.openModalPage(null, {}, {
       children: GAConfirmModal,
       params: {
@@ -76,7 +75,7 @@ class SettingKey extends React.Component {
   }
 
   __handleGetSecretKey = (key_id) => {
-    if (!key_id) { return false}
+    if ( !key_id ) { return false }
     modalGroupActions.openModalPage(null, {}, {
       children: GAConfirmModal,
       params: {
@@ -107,14 +106,14 @@ class SettingKey extends React.Component {
 
 
   __renderListApiKeys = () => {
-    const { user } = this.props.profile
+    const { user } = this.props
     const closeEyeSvg = require('../../../../../../asset/16px/eye-closed.svg');
     const openEyeSvg = require('../../../../../../asset/16px/eye-open.svg');
     const copySvg = require('../../../../../../asset/16px/copy.svg');
 
-    const dataKey = user.dataApiKey.map((item,i) => {
+    const listApiKeys = user.dataApiKeys.map((item,i) => {
       return(
-        <ContentBox className="ApiKey" key={i}>
+        <ContentBox className="ApiKey__Item" key={i}>
           <div className="ApiKey__block">
             <div className="ApiKey__title">{item.name}</div>
             <div className="ApiKey__buttons">
@@ -133,15 +132,14 @@ class SettingKey extends React.Component {
                 {utils.getLang('cabinet__deleteKey')}
               </UI.Button>
             </div>
-        
           </div>
           <div className="ApiKey__information">
             <div className="ApiKey__key">
               <div className="ApiKey__information-title">
                 <span className="ApiKey__svg" onClick={() => {this.__copy(item.public_key)}}>
-                  <SVG src={copySvg}  />
-                </span> 
-              API Key: 
+                  <SVG src={copySvg}/>
+                </span>
+                {utils.getLang("cabinet_apiKey")}: 
               </div>
               <div className="ApiKey__text">
                 {item.public_key}
@@ -152,23 +150,23 @@ class SettingKey extends React.Component {
                 <span className="ApiKey__svg">
                   <SVG  src={this.state.displaySecretKey ? openEyeSvg : closeEyeSvg} />
                 </span> 
-              Secret Key:
+                {utils.getLang("cabinet_secretKey")}:
               </div>
               <div className="ApiKey__text">
                 {item.secret_key || `*****`}
               </div>
             </div>
             <div className="ApiKey__restrictions">
-              <div className="ApiKey__information-title">API Restrictions:</div>
-              <UI.CheckBox checked disabled>Read</UI.CheckBox>
-              <UI.CheckBox >Enable Trading</UI.CheckBox>
-              <UI.CheckBox >Enable Withdrawals</UI.CheckBox>
+              <div className="ApiKey__information-title">{utils.getLang("cabinet__restrictionsAPI")}:</div>
+              <UI.CheckBox checked disabled>{utils.getLang("read")}</UI.CheckBox>
+              <UI.CheckBox >{utils.getLang("enable_trading")}</UI.CheckBox>
+              <UI.CheckBox >{utils.getLang("enable_withdrawals")}</UI.CheckBox>
             </div>
             <div className="ApiKey__ipAdress">
-              <div className="ApiKey__information-title">IP Access Restrictions:</div>
+              <div className="ApiKey__information-title">{utils.getLang("ip_access_restrictions:")}:</div>
               {/* <UI.RadioGroup > */}
-              <UI.Radio selected>Unrestricted (Less Secure). <br /> <span>This API key allows access from any IP address. This is not recommended.</span></UI.Radio >
-              <UI.Radio>Restrict access to trusted IPs only (Recommended)</UI.Radio >
+              <UI.Radio selected>{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio >
+              <UI.Radio>{utils.getLang("unrestricted_ip_recommended")}</UI.Radio >
               {/* </UI.RadioGroup> */}
             
             </div>
@@ -178,21 +176,21 @@ class SettingKey extends React.Component {
     })
     
     return(
-      dataKey
+      listApiKeys
     )
   }
 
   
 
   render(){
-    const { profile } = this.props
+    const { user } = this.props
     return(
       <React.Fragment>
         <ContentBox className="ApiKey">
           <div className="ApiKey__title">{utils.getLang('cabinet__newCreateKey')}</div>
           <div className="ApiCreateKey__form">
             <UI.Input
-              placeholder={'API Key Name'} 
+              placeholder={utils.getLang('cabinet__apiKeyName')} 
               onTextChange={value => this.props.setUserFieldValue({field: 'ApiKeyName', value})}
             />
             <UI.Button
@@ -204,7 +202,7 @@ class SettingKey extends React.Component {
           </div>
         </ContentBox>
         {
-          profile.user && profile.user.dataApiKey && this.__renderListApiKeys()
+          user && user.dataApiKeys && this.__renderListApiKeys()
         }
         
       </React.Fragment>
@@ -213,7 +211,6 @@ class SettingKey extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_PROFILE_SIDEBAR,
-  SettingKey
-);
+export default connect(state => {
+  return { profile: state.default.profile};
+})(SettingKey);

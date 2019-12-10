@@ -76,7 +76,7 @@ export function createKey({name, ga_code}) {
   });
 }
 
-export function dataKey() {
+export function getApiKeys() {
   return new Promise((resolve, reject) => {
     store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
     api.call(apiSchema.Api_keys.DefaultGet).then((data) => {
