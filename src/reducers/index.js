@@ -96,9 +96,6 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.SECRETKEY_SET: {
       const { secret_key, key_id } = action;
       const dataApiKey = state.profile.user.dataApiKey.map(item => item.id === key_id ? {...item, secret_key } : item)
-      //if(secret_key && key_id) {
-      //}
-      debugger
       return {
         ...state,
         profile: {
