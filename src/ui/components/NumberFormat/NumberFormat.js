@@ -6,7 +6,7 @@ import { classNames } from '../../utils';
 
 import * as utils from '../../utils/index';
 
-const NumberFormat = ({ number, fractionDigits, skipTitle, currency, type, percent, indicator, brackets }) => {
+const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, type, percent, indicator, brackets }) => {
   if (!fractionDigits) {
     fractionDigits = utils.isFiat(currency) ? 2 : 8;
   }
@@ -34,6 +34,10 @@ const NumberFormat = ({ number, fractionDigits, skipTitle, currency, type, perce
     displayNumber = `(${displayNumber})`;
   }
 
+  if (color) {
+    type = number >= 0 ? 'up' : 'down';
+  }
+
   return (
     <span className={classNames("Number", {
       [type]: type
@@ -46,6 +50,7 @@ NumberFormat.defaultProps = {
   percent: false,
   indicator: false,
   brackets: false,
+  color: false,
   currency: '',
   type: '',
 }
@@ -54,6 +59,7 @@ NumberFormat.propTypes = {
   number: PropTypes.number,
   fractionDigits: PropTypes.number,
   skipTitle: PropTypes.bool,
+  color: PropTypes.bool,
   percent: PropTypes.bool,
   indicator: PropTypes.bool,
   brackets: PropTypes.bool,

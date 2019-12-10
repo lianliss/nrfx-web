@@ -28,6 +28,7 @@ import Logo from './components/Logo/Logo';
 import List from './components/List/List';
 import ContentBox from './components/ContentBox/ContentBox';
 import Collapse from './components/Collapse/Collapse';
+import StatusIndicator from './components/StatusIndicator/StatusIndicator';
 import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
 
 export default {
@@ -63,5 +64,6 @@ export default {
   Logo,
   List,
   ContentBox,
-  Collapse
+  Collapse,
+  StatusIndicator
 };

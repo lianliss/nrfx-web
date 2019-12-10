@@ -1,0 +1,17 @@
+.StatusIndicator {
+  font-size: 0;
+  background: var(--primary-grey);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  &.online,
+  &.activated {
+    background-color: var(--primary-green);
+  }
+
+  &.offline,
+  &.deactivated {
+    background-color: var(--primary-red);
+  }
+}

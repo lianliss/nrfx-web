@@ -1,22 +1,42 @@
-import React from 'react';
+import './TraderNewBotModal.less'
+
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+import * as actions from '../../../../actions/cabinet/trader';
 
 import Modal from '../../../../ui/components/Modal/Modal';
 import UI from '../../../../ui';
 
 function FiatOperationModal(props) {
+  const [name, setName] = useState();
+
+  const __handleSubmitForm = e => {
+    e.preventDefault();
+    props.createBot(name);
+  };
+
   return (
-    <Modal isOpen={true} onClose={props.onBack} width={400}>
+    <Modal className="TraderNewBotModal" isOpen={true} onClose={props.onClose}>
       <UI.ModalHeader>
-        New Bot
+        Create New Bot
       </UI.ModalHeader>
       <div>
-        <UI.Input
-          placeholder="Enter Bot Name"
-        />
-        <UI.Button>Create</UI.Button>
+        <form onSubmit={__handleSubmitForm}>
+          <UI.Input
+            value={name}
+            onTextChange={setName}
+            placeholder="Enter Bot Name"
+          />
+          <UI.Button onSubmit>Create</UI.Button>
+        </form>
       </div>
     </Modal>
   )
 }
 
-export default FiatOperationModal;
+export default connect(state => ({
+
+}), {
+  createBot: actions.createBot
+})(FiatOperationModal);
