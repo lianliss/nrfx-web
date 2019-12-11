@@ -14,7 +14,7 @@ import UI from '../../../../../../ui';
 
 class SettingKey extends React.Component {
   state = {
-    displaySecretKey: false,
+    displaySecretKey: false
   }
 
   componentDidMount() {
@@ -94,8 +94,40 @@ class SettingKey extends React.Component {
     })
   }
 
+  __handleSaveItem = (item) => {
+    if ( !item.id ) { return false }
+    modalGroupActions.openModalPage(null, {}, {
+      children: GAConfirmModal,
+      params: {
+        onChangeHandler: (data, modal) => {
+          settingsActions.saveItemKey({
+            key_id: item.id,
+            name: item.name,
+            permission_trading: item.permission_trading,
+            permission_withdraw: item.permission_withdraw,
+            ga_code: data.gaCode
+          }).then((item) => {
+            modal.props.close();
+            this.props.toastPush(utils.getLang('cabinet__succesDeleteKey'), "success");
+            this.__handleCheckData()
+          }).catch(err => {
+            this.props.toastPush(err.message, "error");
+          });
+        }
+      }
+    })
+  }
+
   __toggleDisplaySecret = () => {
     this.setState({ displayPassword: !this.state.displayPassword });
+  }
+
+  __handleSettingsCheckTrading = (id, permission_trading) => {
+    settingsActions.settingsCheckTrading(id, permission_trading)
+  }
+
+  __handleSettingsCheckWithdraw = (id, permission_withdraw) => {
+    settingsActions.settingsCheckWithdraw(id, permission_withdraw)
   }
 
   __copy = (public_key) => {
@@ -112,6 +144,7 @@ class SettingKey extends React.Component {
     const copySvg = require('../../../../../../asset/16px/copy.svg');
 
     const listApiKeys = user.dataApiKeys.map((item,i) => {
+      const ip_recomended = item.allow_ips === '' ? 'first' : 'second'
       return(
         <ContentBox className="ApiKey__Item" key={i}>
           <div className="ApiKey__block">
@@ -119,8 +152,8 @@ class SettingKey extends React.Component {
             <div className="ApiKey__buttons">
               <UI.Button
                 size="small"
-                onClick={this.__handleCreateKey}
-                disabled={true}
+                onClick={() => {this.__handleSaveItem(item)}}
+                disabled={!item.save_item}
               >
                 {utils.getLang('cabinet_settingsSave')}
               </UI.Button>
@@ -159,15 +192,15 @@ class SettingKey extends React.Component {
             <div className="ApiKey__restrictions">
               <div className="ApiKey__information-title">{utils.getLang("cabinet__restrictionsAPI")}:</div>
               <UI.CheckBox checked disabled>{utils.getLang("read")}</UI.CheckBox>
-              <UI.CheckBox >{utils.getLang("enable_trading")}</UI.CheckBox>
-              <UI.CheckBox >{utils.getLang("enable_withdrawals")}</UI.CheckBox>
+              <UI.CheckBox checked={item.permission_trading} onChange={() => {this.__handleSettingsCheckTrading(item.id, item.permission_trading)}}>{utils.getLang("enable_trading")}</UI.CheckBox>
+              <UI.CheckBox checked={item.permission_withdraw} onChange={() => {this.__handleSettingsCheckWithdraw(item.id, item.permission_withdraw)}}>{utils.getLang("enable_withdrawals")}</UI.CheckBox>
             </div>
             <div className="ApiKey__ipAdress">
               <div className="ApiKey__information-title">{utils.getLang("ip_access_restrictions:")}:</div>
-              {/* <UI.RadioGroup > */}
-              <UI.Radio selected>{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio >
-              <UI.Radio>{utils.getLang("unrestricted_ip_recommended")}</UI.Radio >
-              {/* </UI.RadioGroup> */}
+              <UI.RadioGroup selected={ip_recomended}> 
+                <UI.Radio value="first">{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio >
+                <UI.Radio value="second">{utils.getLang("unrestricted_ip_recommended")}</UI.Radio >
+              </UI.RadioGroup>
             
             </div>
           </div>

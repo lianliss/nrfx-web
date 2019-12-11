@@ -114,8 +114,28 @@ export function getSecretKey({key_id, ga_code}) {
   });
 }
 
+export function saveItemKey({key_id, name, permission_trading, permission_withdraw, ga_code}) {
+  return new Promise((resolve, reject) => {
+    store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
+    api.call(apiSchema.Api_keys.DefaultPost, {key_id, name, permission_trading, permission_withdraw , ga_code}).then((data) => {
+      resolve(data);
+    }).catch((reason) => {
+      store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
+      reject(reason);
+    });
+  });
+}
+
 export function changeNewPassword(params) {
   return api.call(apiSchema.Profile.ChangePasswordPost, params);
+}
+
+export function settingsCheckTrading(id, permission_trading) {
+  return store.dispatch({ type: actionTypes.SETTINGS_CHECK_TRADING, id, permission_trading  });
+}
+
+export function settingsCheckWithdraw(id, permission_withdraw) {
+  return store.dispatch({ type: actionTypes.SETTINGS_CHECK_WITHDRAW, id, permission_withdraw  });
 }
 
 export function changeNumber({phone_code, phone_number, sms_code}) {

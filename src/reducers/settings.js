@@ -38,7 +38,7 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.APIKEY_SET: {
       const { apikey } = action;
-      const items = state.user.dataApiKey
+      const items = state.user.dataApiKeys
       const apiKeys = apikey.keys ? [...apikey.keys] : []
       const apiKey = apikey.key ? [apikey.key] : []
       const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] : apiKeys
@@ -52,7 +52,31 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.SECRETKEY_SET: {
       const { secret_key, key_id } = action;
-      const dataApiKeys = state.user.dataApiKey.map(item => item.id === key_id ? {...item, secret_key } : item)
+      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? {...item, secret_key } : item)
+      return  Object.assign({}, state, {
+        user: {
+          ...state.user,
+          dataApiKeys
+        }
+      })
+    }
+    
+    case actionTypes.SETTINGS_CHECK_TRADING: {
+      const { id, permission_trading } = action;
+      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === id ? {...item, permission_trading: !permission_trading, save_item:true } : item)
+
+      return  Object.assign({}, state, {
+        user: {
+          ...state.user,
+          dataApiKeys
+        }
+      })
+    }
+
+    case actionTypes.SETTINGS_CHECK_WITHDRAW: {
+      const { id, permission_withdraw } = action;
+      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === id ? {...item, permission_withdraw: !permission_withdraw, save_item:true } : item)
+
       return  Object.assign({}, state, {
         user: {
           ...state.user,
