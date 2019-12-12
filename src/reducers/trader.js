@@ -39,6 +39,24 @@ export default function reduce(state = initialState, action = {}) {
       return { ...state, bot: { ...state.bot, bot: { ...state.bot.bot, ...action.bot }}}
     }
 
+    case actionTypes.TRADER_OPTIONS_UPDATE: {
+      return { ...state, bot: { ...state.bot, ...action.bot }}
+    }
+
+    case actionTypes.TRADER_BOT_SET_INDICATOR_PROPERTY: {
+      return { ...state, bot: { ...state.bot, bot: {
+        ...state.bot.bot,
+        indicators: state.bot.bot.indicators.map(i => {
+          if (i.name === action.indicator) {
+            return { ...i, params: {
+              ...i.params,
+              [action.property]: action.value
+            }}
+          } return i;
+        })
+      }}};
+    }
+
     case actionTypes.TRADER_INIT:
       return { ...state, bots: action.bots };
 

@@ -11,7 +11,8 @@ import * as traderActions from '../../../../../../actions/cabinet/trader';
 
 import BotInfo from '../../components/BotInfo/BotInfo';
 import BotForm from '../../components/BotForm/BotForm';
-import TradeList from '../../components/History/History';
+import History from '../../components/History/History';
+import Indicators from '../../components/Indicators/Indicators';
 import {ProfileSidebarItem} from '../../../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import * as pages from '../../../../../constants/pages';
 import {ReactComponent as PlusCircleSvg} from '../../../../../../asset/24px/angle-left.svg';
@@ -49,13 +50,13 @@ class Index extends CabinetBaseScreen {
         <BotInfo />
         <div className="Bot__forms">
           <BotForm />
-          <div />
+          <Indicators />
         </div>
       </div>
     )
   }
   __renderRightContent() {
-    return <TradeList />
+    return <History />
   }
 }
 
