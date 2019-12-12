@@ -222,9 +222,9 @@ const MerchantModal = props => {
           {getLang('cabinet_merchantModalDescription_' + merchant)}
         </div>
 
-        <div className="MerchantModal__form__fee">
+        {fee && <div className="MerchantModal__form__fee">
           {getLang('global_fee')}: <NumberFormat number={percent} percent />, <NumberFormat number={fee} currency={currency} /> {getLang('global_min')}.
-        </div>
+        </div>}
 
         <div className="MerchantModal__buttons">
           <UI.Button currency={currencyInfo} onClick={() => setMerchant(null)} type="outline">{getLang('global_back')}</UI.Button>
