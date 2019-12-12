@@ -132,7 +132,7 @@ export default class SiteContactScreen extends BaseScreen {
               />
               <SnItem
                 icon={require('../../../../asset/social/telegram.svg')}
-                title={this.lang.global_social_twitter}
+                title={this.lang.global_social_telegram}
                 link={COMPANY.social.telegram}
               />
             </div>
@@ -143,17 +143,17 @@ export default class SiteContactScreen extends BaseScreen {
               <SnItem
                 icon={require('../../../../asset/social/telegram.svg')}
                 title="Русский"
-                link="t.me/BitcoinBotPro_Russian"
+                link="t.me/Narfex_ru"
               />
               <SnItem
                 icon={require('../../../../asset/social/telegram.svg')}
                 title="English"
-                link="t.me/BitcoinBotPro_English"
+                link="t.me/Narfex_en"
               />
               <SnItem
                 icon={require('../../../../asset/social/telegram.svg')}
                 title="Indonesian"
-                link="t.me/BitcoinBotPro_Indonesian"
+                link="bit.ly/bbproidn"
               />
             </div>
 
