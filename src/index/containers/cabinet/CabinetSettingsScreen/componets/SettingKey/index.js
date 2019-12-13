@@ -102,6 +102,7 @@ class SettingKey extends React.Component {
         onChangeHandler: (data, modal) => {
           settingsActions.saveItemKey({
             key_id: item.id,
+            allow_ips: item.allow_ips,
             name: item.name,
             permission_trading: item.permission_trading,
             permission_withdraw: item.permission_withdraw,
@@ -116,6 +117,14 @@ class SettingKey extends React.Component {
         }
       }
     })
+  }
+
+  __handleSettingIpAccess = (id, radio) => {
+    settingsActions.settingIpAccess(id, radio)
+  }
+
+  __handleIpFieldValue = (id, field, value) => {
+    settingsActions.setIpAdressFieldValue(id, field, value)
   }
 
   __toggleDisplaySecret = () => {
@@ -142,21 +151,15 @@ class SettingKey extends React.Component {
     const closeEyeSvg = require('../../../../../../asset/16px/eye-closed.svg');
     const openEyeSvg = require('../../../../../../asset/16px/eye-open.svg');
     const copySvg = require('../../../../../../asset/16px/copy.svg');
+    const basketSvg = require('../../../../../../asset/24px/basket.svg');
 
     const listApiKeys = user.dataApiKeys.map((item,i) => {
-      const ip_recomended = item.allow_ips === '' ? 'first' : 'second'
+      const ip_recomended = !item.radioCheck ? 'first' : 'second'
       return(
         <ContentBox className="ApiKey__Item" key={i}>
           <div className="ApiKey__block">
             <div className="ApiKey__title">{item.name}</div>
             <div className="ApiKey__buttons">
-              <UI.Button
-                size="small"
-                onClick={() => {this.__handleSaveItem(item)}}
-                disabled={!item.save_item}
-              >
-                {utils.getLang('cabinet_settingsSave')}
-              </UI.Button>
               <UI.Button
                 size="small"
                 type="secondary"
@@ -197,12 +200,27 @@ class SettingKey extends React.Component {
             </div>
             <div className="ApiKey__ipAdress">
               <div className="ApiKey__information-title">{utils.getLang("ip_access_restrictions:")}:</div>
-              <UI.RadioGroup selected={ip_recomended}> 
+              <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio)}> 
                 <UI.Radio value="first">{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio >
                 <UI.Radio value="second">{utils.getLang("unrestricted_ip_recommended")}</UI.Radio >
               </UI.RadioGroup>
-            
+              {item.addIpAdress && 
+              <div className="ApiKey__ipAddAdress">
+                <UI.Input 
+                  indicator={<SVG src={basketSvg} />}
+                  onTextChange={(value) => this.__handleIpFieldValue({ id: item.id, field: 'first_ipAdress', value})}
+                  value={item.allow_ips}
+                />
+              </div>
+              }
             </div>
+            <UI.Button
+              size="large"
+              onClick={() => {this.__handleSaveItem(item)}}
+              disabled={!item.save_item}
+            >
+              {utils.getLang('cabinet_settingsSave')}
+            </UI.Button>
           </div>
         </ContentBox>
       )

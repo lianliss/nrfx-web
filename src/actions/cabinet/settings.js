@@ -114,10 +114,10 @@ export function getSecretKey({key_id, ga_code}) {
   });
 }
 
-export function saveItemKey({key_id, name, permission_trading, permission_withdraw, ga_code}) {
+export function saveItemKey({key_id, name, allow_ips, permission_trading, permission_withdraw, ga_code}) {
   return new Promise((resolve, reject) => {
     store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
-    api.call(apiSchema.Api_keys.DefaultPost, {key_id, name, permission_trading, permission_withdraw , ga_code}).then((data) => {
+    api.call(apiSchema.Api_keys.DefaultPost, {key_id, name, allow_ips, permission_trading, permission_withdraw , ga_code}).then((data) => {
       resolve(data);
     }).catch((reason) => {
       store.dispatch({ type: actionTypes.APIKEY_SET_LOADING_STATUS, section: 'default', status: 'loading' });
@@ -128,6 +128,10 @@ export function saveItemKey({key_id, name, permission_trading, permission_withdr
 
 export function changeNewPassword(params) {
   return api.call(apiSchema.Profile.ChangePasswordPost, params);
+}
+
+export function settingIpAccess(key_id, radio) {
+  return store.dispatch({ type: actionTypes.SETTINGS_IP_ACCESS, key_id, radio  });
 }
 
 export function settingsCheckTrading(id, permission_trading) {
@@ -146,6 +150,10 @@ export function changeNumber({phone_code, phone_number, sms_code}) {
       reject(reason);
     });
   });
+}
+
+export function setIpAdressFieldValue(action) {
+  return store.dispatch({type: actionTypes.SETTINGS_IP_ADRESS_FIELD_SET, key_id: action.id, field: action.field, value: action.value})
 }
 
 export function setUserFieldValue(action) {

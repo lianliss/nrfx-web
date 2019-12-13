@@ -85,6 +85,30 @@ export default function reduce(state = initialState, action = {}) {
       })
     }
 
+    case actionTypes.SETTINGS_IP_ACCESS: {
+      const { key_id, radio } = action;
+      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id && radio === 'second'  ? 
+        {...item, radioCheck: radio, addIpAdress: true , save_item:true } : {...item, radioCheck: null, addIpAdress: false, save_item:false})
+
+      return  Object.assign({}, state, {
+        user: {
+          ...state.user,
+          dataApiKeys
+        }
+      })
+    }
+
+    case actionTypes.SETTINGS_IP_ADRESS_FIELD_SET: {
+      const { key_id } = action;
+      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? {...item, allow_ips: action.value } : item)
+      return Object.assign({}, state, {
+        user: {
+          ...state.user,
+          dataApiKeys
+        }
+      });
+    }
+
     default:
       return state;
   }
