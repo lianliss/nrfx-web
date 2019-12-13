@@ -123,8 +123,8 @@ class SettingKey extends React.Component {
     settingsActions.settingIpAccess(id, radio)
   }
 
-  __handleIpFieldValue = (id, field, value) => {
-    settingsActions.setIpAdressFieldValue(id, field, value)
+  __handleIpFieldValue = (key_id, id_ip, value) => {
+    settingsActions.setIpAddressFieldValue(key_id, id_ip, value)
   }
 
   __toggleDisplaySecret = () => {
@@ -154,7 +154,7 @@ class SettingKey extends React.Component {
     const basketSvg = require('../../../../../../asset/24px/basket.svg');
 
     const listApiKeys = user.dataApiKeys.map((item,i) => {
-      const ip_recomended = !item.radioCheck ? 'first' : 'second'
+      const ip_recomended = !item.radioCheck ? 'first' : item.radioCheck
       return(
         <ContentBox className="ApiKey__Item" key={i}>
           <div className="ApiKey__block">
@@ -198,29 +198,38 @@ class SettingKey extends React.Component {
               <UI.CheckBox checked={item.permission_trading} onChange={() => {this.__handleSettingsCheckTrading(item.id, item.permission_trading)}}>{utils.getLang("enable_trading")}</UI.CheckBox>
               <UI.CheckBox checked={item.permission_withdraw} onChange={() => {this.__handleSettingsCheckWithdraw(item.id, item.permission_withdraw)}}>{utils.getLang("enable_withdrawals")}</UI.CheckBox>
             </div>
-            <div className="ApiKey__ipAdress">
+            <div className="ApiKey__ipAddress">
               <div className="ApiKey__information-title">{utils.getLang("ip_access_restrictions:")}:</div>
               <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio)}> 
-                <UI.Radio value="first">{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio >
+                <UI.Radio value="first">{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio>
                 <UI.Radio value="second">{utils.getLang("unrestricted_ip_recommended")}</UI.Radio >
               </UI.RadioGroup>
-              {item.addIpAdress && 
-              <div className="ApiKey__ipAddAdress">
-                <UI.Input 
-                  indicator={<SVG src={basketSvg} />}
-                  onTextChange={(value) => this.__handleIpFieldValue({ id: item.id, field: 'first_ipAdress', value})}
-                  value={item.allow_ips}
-                />
+              {item.addIpAddress && item.list_ips &&
+              <div className="ApiKey__ipAddAddress">
+                {
+                  item.list_ips.map((data, i) => {
+                    return (
+                      <UI.Input 
+                        indicator={<SVG src={basketSvg}/>}
+                        onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value})}
+                        value={data.value}
+                        key={i}
+                      />
+                    )
+                  })
+                }
               </div>
               }
             </div>
-            <UI.Button
-              size="large"
-              onClick={() => {this.__handleSaveItem(item)}}
-              disabled={!item.save_item}
-            >
-              {utils.getLang('cabinet_settingsSave')}
-            </UI.Button>
+            <div className="ApiKey__saveButton">
+              <UI.Button
+                size="large"
+                onClick={() => {this.__handleSaveItem(item)}}
+                disabled={!item.save_item}
+              >
+                {utils.getLang('cabinet_settingsSave')}
+              </UI.Button>
+            </div>
           </div>
         </ContentBox>
       )

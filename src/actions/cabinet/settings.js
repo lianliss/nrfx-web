@@ -152,8 +152,8 @@ export function changeNumber({phone_code, phone_number, sms_code}) {
   });
 }
 
-export function setIpAdressFieldValue(action) {
-  return store.dispatch({type: actionTypes.SETTINGS_IP_ADRESS_FIELD_SET, key_id: action.id, field: action.field, value: action.value})
+export function setIpAddressFieldValue(action) {
+  return store.dispatch({type: actionTypes.SETTINGS_IP_ADDRESS_FIELD_SET, ...action})
 }
 
 export function setUserFieldValue(action) {
