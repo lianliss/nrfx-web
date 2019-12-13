@@ -16,6 +16,8 @@ class MarketInfo extends React.Component{
     actions.openModal('choose_market');
   }
 
+  
+
   render() {
     const [primary, secondary] = this.props.market.toUpperCase().split('/');
 
@@ -86,7 +88,7 @@ class MarketInfo extends React.Component{
       {label: '15 min', value: 15},
       {label: '30 min', value: 30},
       {label: '1 hour', value: 60},
-      {label: '2 hours', value: 120},
+      {label: '4 hours', value: 240},
       {label: '1 day', value: '1D'},
       {label: '1 week', value: '1W'},
     ].map((item) => {

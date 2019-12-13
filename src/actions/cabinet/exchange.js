@@ -15,6 +15,10 @@ export function load(market) {
       dispatch({
         type: actionTypes.EXCHANGE_SET,
         ...resp,
+        depth: { // TODO: HACK убрать после доработки бэка
+          asks: [],
+          bids: []
+        },
         market
       });
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: '' });
@@ -38,7 +42,9 @@ export function chooseMarket(market) {
 
 export function orderCreate(params) {
   return api.call(apiSchema.Exchange.OrderPut, params).then(({balance}) => {
-    store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance });
+    if (params.type !== 'market') {
+      store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance });
+    }
   }).catch((err) => {
     toast.error(err.message);
   })

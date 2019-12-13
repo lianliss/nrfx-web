@@ -44,11 +44,16 @@ export default class TradeForm extends React.Component {
   }
 
   render() {
-    const { balance, market, fee, user } = this.props;
+
+    const { balance, market, fee, user, ticker } = this.props;
     const { state: { pending } } = this;
 
     const [primary, secondary] = market.split('/');
     const isMarket = this.state.orderType === "market";
+
+
+    const marketPrice = utils.formatDouble(ticker.price, utils.isFiat(secondary) ? 2 : undefined);
+    const marketTotalPrice = utils.formatDouble(this.state.amount * ticker.price, utils.isFiat(secondary) ? 2 : undefined);
 
     if (user && !balance.primary) {
       return null;
@@ -148,7 +153,7 @@ export default class TradeForm extends React.Component {
                 placeholder={utils.getLang('global_amount')}
                 indicator={primary.toUpperCase()}
                 size="small"
-                value={this.state.amount === null ? '' : this.state.amount}
+                value={this.state.amount}
                 onTextChange={this.__amountDidChange}
               />
               { user && <p className="Form__helper__text">{primary.toUpperCase()}  {utils.getLang('global_balance')} - <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
@@ -160,7 +165,7 @@ export default class TradeForm extends React.Component {
                 disabled={isMarket}
                 indicator={secondary.toUpperCase()}
                 size="small"
-                value={this.state.price === null || isMarket ? '' : this.state.price}
+                value={(isMarket ? marketPrice : this.state.price) || ""}
                 onTextChange={this.__priceDidChange}
               />
               { user && <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')} - <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p> }
@@ -172,7 +177,7 @@ export default class TradeForm extends React.Component {
                 size="small"
                 disabled={isMarket}
                 onTextChange={this.__amountSecondaryDidChange}
-                value={this.state.amountSecondary === null || isMarket ? '' : this.state.amountSecondary}
+                value={(isMarket ? marketTotalPrice : this.state.amountSecondary) || ""}
               />
               <p className="Form__helper__text">{utils.getLang('exchange_fee')}: <UI.NumberFormat number={fee} percent /></p>
             </div>

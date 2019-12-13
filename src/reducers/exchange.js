@@ -159,9 +159,10 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.EXCHANGE_ADD_OPEN_ORDER: {
-      let openOrders = Object.assign({}, state.openOrders);
-      openOrders[action.order.id] = action.order;
-      return Object.assign({}, state, { openOrders });
+      return { ...state, openOrders: {
+        ...state.openOrders,
+        [action.order.id]: action.order
+      }};
     }
 
     case actionTypes.EXCHANGE_ADD_TRADES: {
