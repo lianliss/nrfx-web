@@ -72,6 +72,11 @@ export function removeOrders(orderIds) {
   store.dispatch({ type: actionTypes.EXCHANGE_REMOVE_ORDERS, orderIds });
 }
 
+export function orderBookInit(payload) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_INIT, ...payload });
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'orderBook', status: '' });
+}
+
 export function orderBookUpdateOrders(orders) {
   store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_UPDATE, orders });
 }

@@ -11,6 +11,7 @@ class Exchange {
 
     this.listeners = [
       ['new_orders', this.__orderBookDidUpdated],
+      ['order_book', this.__orderBookInit],
       ['orders_filled', this.__orderBookDidUpdated],
       ['order_failed', this.__orderDidFailed],
       ['order_completed', this.__orderDidCompleted],
@@ -50,6 +51,7 @@ class Exchange {
   };
 
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
+  __orderBookInit = payload => exchange.orderBookInit(payload);
 
   __orderDidFailed = body => {
     exchange.setOrderStatus(body.order_id, 'completed');

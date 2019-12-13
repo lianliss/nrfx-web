@@ -181,6 +181,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
             utils.formatDouble(order.price, 2)
           )}
           {...this.props.depth}
+          loading={this.props.loadingStatus.orderBook}
         />
       </Block>
     )

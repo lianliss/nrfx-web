@@ -2,7 +2,9 @@ import * as actionTypes from '../actions/actionTypes';
 import * as utils from '../utils';
 
 const initialState = {
-  loadingStatus: {},
+  loadingStatus: {
+    orderBook: 'loading'
+  },
   balances: [],
   trades: {},
   openOrders: {},
@@ -101,6 +103,20 @@ export default function reduce(state = initialState, action = {}) {
         delete openOrders[orderId];
       });
       return ({ ...state, depth, openOrders });
+    }
+
+    case actionTypes.EXCHANGE_ORDER_BOOK_INIT: {
+      const asks = {};
+      const bids = {};
+      action.asks.forEach(i => { asks[i.id] = i });
+      action.bids.forEach(i => { bids[i.id] = i });
+      return {
+        ...state,
+        depth: {
+          asks: asks,
+          bids: bids,
+        },
+      };
     }
 
     case actionTypes.EXCHANGE_ORDER_BOOK_UPDATE: {

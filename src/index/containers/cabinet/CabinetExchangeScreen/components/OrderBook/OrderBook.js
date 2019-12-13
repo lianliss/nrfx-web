@@ -1,15 +1,14 @@
 import './OrderBook.less';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import * as utils from '../../../../../../utils';
 import UI from '../../../../../../ui/index';
 import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
 
-export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, type }) {
+export default function OrderBook({ asks, bids, loading, onOrderPress, adaptive, ticker, type }) {
 
   [asks, bids] = [asks, bids].map(prepareOrders);
-  const [status, setStatus] = useState('loading');
 
   const sideLimit = adaptive ? 7 : 11;
 
@@ -26,15 +25,12 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, 
   let bidsPercent = sumBids / total * 100;
   let diff = Math.round(Math.abs(asksPercent - bidsPercent));
 
-  if (![...asks, ...bids].length && status) {
-
+  if (loading) {
     return (
       <div className={utils.classNames("OrderBook", type)}>
         <LoadingStatus status="loading" />
       </div>
     )
-  } else if (status) {
-    setStatus(false);
   }
 
   return (

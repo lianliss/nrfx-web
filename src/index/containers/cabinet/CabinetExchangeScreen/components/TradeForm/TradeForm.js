@@ -82,7 +82,7 @@ export default class TradeForm extends React.Component {
                 placeholder={utils.getLang('global_amount')}
                 indicator={primary.toUpperCase()}
                 size="small"
-                value={this.state.amount === null ? '' : this.state.amount}
+                value={this.state.amount}
                 onTextChange={this.__amountDidChange}
               />
               {user && <p>{primary.toUpperCase()}  {utils.getLang('global_balance')} - <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
@@ -94,7 +94,7 @@ export default class TradeForm extends React.Component {
                 disabled={isMarket}
                 indicator={secondary.toUpperCase()}
                 size="small"
-                value={this.state.price === null || isMarket ? '' : this.state.price}
+                value={(isMarket ? "~" + marketPrice : this.state.price) || ""}
                 onTextChange={this.__priceDidChange}
               />
               {user && <p>{secondary.toUpperCase()} {utils.getLang('global_balance')} -  <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p>}
@@ -106,7 +106,7 @@ export default class TradeForm extends React.Component {
                 size="small"
                 disabled={isMarket}
                 onTextChange={this.__amountSecondaryDidChange}
-                value={this.state.amountSecondary === null || isMarket ? '' : this.state.amountSecondary}
+                value={(isMarket ? ( marketTotalPrice && "~" + marketTotalPrice) : this.state.amountSecondary) || ""}
               />
               <p>{utils.getLang('exchange_fee')}: <UI.NumberFormat number={fee} percent /></p>
             </div>
@@ -134,6 +134,7 @@ export default class TradeForm extends React.Component {
             ticker={this.props.ticker}
             onOrderPress={(order) => {}}
             {...this.props.depth}
+            loading={this.props.loadingStatus.orderBook}
           />
         </div>
       )
@@ -165,7 +166,7 @@ export default class TradeForm extends React.Component {
                 disabled={isMarket}
                 indicator={secondary.toUpperCase()}
                 size="small"
-                value={(isMarket ? marketPrice : this.state.price) || ""}
+                value={(isMarket ? "~" + marketPrice : this.state.price) || ""}
                 onTextChange={this.__priceDidChange}
               />
               { user && <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')} - <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p> }
@@ -177,7 +178,7 @@ export default class TradeForm extends React.Component {
                 size="small"
                 disabled={isMarket}
                 onTextChange={this.__amountSecondaryDidChange}
-                value={(isMarket ? marketTotalPrice : this.state.amountSecondary) || ""}
+                value={(isMarket ? ( marketTotalPrice && "~" + marketTotalPrice) : this.state.amountSecondary) || ""}
               />
               <p className="Form__helper__text">{utils.getLang('exchange_fee')}: <UI.NumberFormat number={fee} percent /></p>
             </div>
