@@ -127,6 +127,10 @@ class SettingKey extends React.Component {
     settingsActions.setIpAddressFieldValue(key_id, id_ip, value)
   }
 
+  __handleDeleteIpAddress = (key_id, id_ip) => {
+    settingsActions.deleteIpAddress(key_id, id_ip)
+  }
+
   __toggleDisplaySecret = () => {
     this.setState({ displayPassword: !this.state.displayPassword });
   }
@@ -210,7 +214,7 @@ class SettingKey extends React.Component {
                   item.list_ips.map((data, i) => {
                     return (
                       <UI.Input 
-                        indicator={<SVG src={basketSvg}/>}
+                        indicator={<SVG src={basketSvg} onClick={() => {this.__handleDeleteIpAddress({key_id: item.id, id_ip: i})}}/>}
                         onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value})}
                         value={data.value}
                         key={i}
