@@ -4,9 +4,11 @@ import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
 import { getLang } from '../../../../../../services/lang';
 import { classNames } from '../../../../../../utils/index'
-import * as actions from '../../../../../../actions/cabinet/exchange';
+import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
+import * as actions from '../../../../../../actions/';
 import { API_ENTRY } from '../../../../../../services/api';
 import getTimezone from './timezones';
+import langCodes from './langCodes';
 
 
 export default class Chart extends React.PureComponent {
@@ -32,13 +34,16 @@ export default class Chart extends React.PureComponent {
 
   __handleFullscreen() {
     if (!document.webkitIsFullScreen && !document.fullscreen ) {
-      actions.setFullscreen(false);
+      exchangeActions.setFullscreen(false);
     }
   }
 
   componentDidMount() {
     document.addEventListener('fullscreenchange', this.__handleFullscreen.bind(this), false);
     document.addEventListener('webkitfullscreenchange', this.__handleFullscreen.bind(this), false);
+
+    const lang = actions.getCurrentLang();
+    const locale = langCodes[lang.value] || lang.value;
 
     const widgetOptions = {
       symbol: this.props.symbol,
@@ -49,7 +54,7 @@ export default class Chart extends React.PureComponent {
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
 
-      locale: getLang(),
+      locale: locale,
       disabled_features: [
         ...(!this.props.fullscreen ? [
           (!this.props.adaptive && 'header_widget'),
