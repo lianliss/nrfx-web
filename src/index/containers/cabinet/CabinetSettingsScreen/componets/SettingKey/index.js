@@ -102,7 +102,7 @@ class SettingKey extends React.Component {
         onChangeHandler: (data, modal) => {
           settingsActions.saveItemKey({
             key_id: item.id,
-            allow_ips: item.allow_ips,
+            allow_ips: item.allow_ips.join(', '),
             name: item.name,
             permission_trading: item.permission_trading,
             permission_withdraw: item.permission_withdraw,
@@ -119,8 +119,12 @@ class SettingKey extends React.Component {
     })
   }
 
-  __handleSettingIpAccess = (id, radio) => {
-    settingsActions.settingIpAccess(id, radio)
+  __handleSettingIpAccess = (id, radio, allow_ips) => {
+    settingsActions.settingIpAccess(id, radio, allow_ips)
+  }
+
+  __handleAddIpAddress = (id) => {
+    settingsActions.addIpAddress(id)
   }
 
   __handleIpFieldValue = (key_id, id_ip, value) => {
@@ -155,6 +159,7 @@ class SettingKey extends React.Component {
     const closeEyeSvg = require('../../../../../../asset/16px/eye-closed.svg');
     const openEyeSvg = require('../../../../../../asset/16px/eye-open.svg');
     const copySvg = require('../../../../../../asset/16px/copy.svg');
+    const plusSvg = require('../../../../../../asset/16px/plus.svg');
     const basketSvg = require('../../../../../../asset/24px/basket.svg');
 
     const listApiKeys = user.dataApiKeys.map((item,i) => {
@@ -204,24 +209,30 @@ class SettingKey extends React.Component {
             </div>
             <div className="ApiKey__ipAddress">
               <div className="ApiKey__information-title">{utils.getLang("ip_access_restrictions:")}:</div>
-              <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio)}> 
+              <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio, item.allow_ips)}> 
                 <UI.Radio value="first">{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio>
                 <UI.Radio value="second">{utils.getLang("unrestricted_ip_recommended")}</UI.Radio >
               </UI.RadioGroup>
-              {item.addIpAddress && item.list_ips &&
+              {item.addIpAddress && item.allow_ips &&
               <div className="ApiKey__ipAddAddress">
                 {
-                  item.list_ips.map((data, i) => {
+                  item.allow_ips.map((data, i) => {
                     return (
                       <UI.Input 
                         indicator={<SVG src={basketSvg} onClick={() => {this.__handleDeleteIpAddress({key_id: item.id, id_ip: i})}}/>}
                         onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value})}
-                        value={data.value}
+                        value={data}
                         key={i}
                       />
                     )
                   })
                 }
+                <UI.Button
+                  size="middle"
+                  onClick={() => {this.__handleAddIpAddress(item.id)}}
+                >
+                  <SVG  src={plusSvg} />
+                </UI.Button>
               </div>
               }
             </div>

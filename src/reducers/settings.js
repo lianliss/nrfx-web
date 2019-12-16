@@ -40,8 +40,10 @@ export default function reduce(state = initialState, action = {}) {
       const { apikey } = action;
       const items = state.user.dataApiKeys
       const apiKeys = apikey.keys ? [...apikey.keys] : []
+      
       const apiKey = apikey.key ? [apikey.key] : []
-      const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] : apiKeys
+      const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] : 
+        apiKeys.map(item => item.allow_ips !== '' ? {...item, addIpAddress: true, radioCheck: 'second', allow_ips: item.allow_ips.split(',')} : item)
       return Object.assign({}, state, {
         user: {
           ...state.user,
@@ -86,14 +88,16 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.SETTINGS_IP_ACCESS: {
-      const { key_id, radio } = action;
-      const newIputIpAcess = [ {id_ip: 0, value: '' } ]
+      const { key_id, radio, allow_ips } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => {
         if( item.id === key_id ) {
           if(radio === 'first') {
             return {...item, radioCheck: radio, addIpAddress: false , save_item: false }
           }
-          return {...item, radioCheck: radio, list_ips: [...newIputIpAcess], addIpAddress: true , save_item: true }
+          if (Array.isArray(item.allow_ips)) {
+            return {...item, radioCheck: radio, addIpAddress: true , save_item: true }
+          }
+          return {...item, radioCheck: radio, allow_ips: allow_ips.split(','), addIpAddress: true , save_item: true }
         }
         return item
       })
@@ -109,7 +113,20 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.SETTINGS_IP_ADDRESS_FIELD_SET: {
       const { key_id, id_ip } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, list_ips: item.list_ips.map(data_ip => data_ip.id_ip === id_ip ? {...data_ip, value: action.value} : data_ip)} 
+        {...item, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? action.value : data_ip)} 
+        : item)
+      return Object.assign({}, state, {
+        user: {
+          ...state.user,
+          dataApiKeys
+        }
+      });
+    }
+
+    case actionTypes.ADD_IP_ADDRESS: {
+      const { key_id } = action;
+      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
+        {...item, allow_ips: item.allow_ips.concat(['']), save_item: true} 
         : item)
       return Object.assign({}, state, {
         user: {
@@ -122,7 +139,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.DELETE_IP_ADDRESS: {
       const { key_id, id_ip } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, list_ips: item.list_ips.map(data_ip => data_ip.id_ip === id_ip ? {...data_ip, value: ''} : data_ip)} 
+        {...item, list_ips: item.list_ips.map((data_ip, i) => i === id_ip ? {data_ip: ''} : data_ip)} 
         : item)
       return Object.assign({}, state, {
         user: {
