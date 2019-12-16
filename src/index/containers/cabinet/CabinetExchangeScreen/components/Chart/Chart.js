@@ -6,6 +6,7 @@ import { getLang } from '../../../../../../services/lang';
 import { classNames } from '../../../../../../utils/index'
 import * as actions from '../../../../../../actions/cabinet/exchange';
 import { API_ENTRY } from '../../../../../../services/api';
+import getTimezone from './timezones';
 
 
 export default class Chart extends React.PureComponent {
@@ -104,6 +105,7 @@ export default class Chart extends React.PureComponent {
         'mainSeriesProperties.candleStyle.downColor': '#eb6456'
       },
       allow_symbol_change: false,
+      timezone: getTimezone(),
       time_frames: [],
     };
 
