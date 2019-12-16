@@ -47,20 +47,20 @@ export default function reduce(state = initialState, action = {}) {
         }
       }
 
-      let depth = {
-        asks: {},
-        bids: {},
-      };
-
-      for (let i = 0; i < Math.max(action.depth.asks.length, action.depth.bids.length); i++) {
-        if (action.depth.asks[i]) {
-          depth.asks[action.depth.asks[i].id] = action.depth.asks[i];
-        }
-
-        if (action.depth.bids[i]) {
-          depth.bids[action.depth.bids[i].id] = action.depth.bids[i];
-        }
-      }
+      // let depth = {
+      //   asks: {},
+      //   bids: {},
+      // };
+      //
+      // for (let i = 0; i < Math.max(action.depth.asks.length, action.depth.bids.length); i++) {
+      //   if (action.depth.asks[i]) {
+      //     depth.asks[action.depth.asks[i].id] = action.depth.asks[i];
+      //   }
+      //
+      //   if (action.depth.bids[i]) {
+      //     depth.bids[action.depth.bids[i].id] = action.depth.bids[i];
+      //   }
+      // }
 
       let openOrders = {};
       if (action.open_orders) {
@@ -80,7 +80,7 @@ export default function reduce(state = initialState, action = {}) {
         ...utils.removeProperty(action, 'type', 'depth', 'open_orders', trades),
         tickerInfo,
         balanceInfo,
-        depth,
+        // depth,
         openOrders,
         trades,
         market: action.market
@@ -88,9 +88,14 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.EXCHANGE_SET_LOADING_STATUS: {
-      return Object.assign({}, state, {
-        loadingStatus: Object.assign({}, state.loadingStatus, { [action.section]: action.status })
-      });
+      return {
+        ...state,
+        depth: (action.section === 'default' && action.status === 'loading' ? initialState.depth : state.depth),
+        loadingStatus: {
+          ...state.loadingStatus,
+          [action.section]: action.status
+        }
+      };
     }
 
     case actionTypes.EXCHANGE_REMOVE_ORDERS: {

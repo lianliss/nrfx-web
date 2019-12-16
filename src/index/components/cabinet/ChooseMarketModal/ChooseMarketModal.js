@@ -50,6 +50,7 @@ class ChooseMarketModal extends React.Component {
   }
 
   __handleChooseMarket (market) {
+    market = market.toLowerCase();
     this.props.chooseMarket(market);
     router.navigate(PAGES.EXCHANGE, { market: market.replace('/', '_')  });
     // this.props.onClose();

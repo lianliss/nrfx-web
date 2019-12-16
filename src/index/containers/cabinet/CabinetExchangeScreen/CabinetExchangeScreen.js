@@ -1,6 +1,7 @@
 import './CabinetExchangeScreen.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
@@ -21,6 +22,8 @@ import MarketInfoAdaptive from './components/MarketInfoAdaptive/MarketInfoAdapti
 import Chart from './components/Chart/Chart';
 import * as exchangeService from '../../../../services/exchange';
 import UI from '../../../../ui/';
+import * as exchangeActions from '../../../../actions/cabinet/exchange';
+import * as actions from '../../../../actions';
 
 class CabinetExchangeScreen extends CabinetBaseScreen {
   constructor(props) {
@@ -188,13 +191,22 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   load() {
-    exchangeService.bind(this.props.market);
-    const { market } = this.props.router.route.params;
-    this.props.load((market && market.replace('_', '/')) || this.props.market);
+    let { market } = this.props.router.route.params;
+    market = (market && market.toLowerCase().replace('_', '/')) || this.props.market;
+    exchangeService.bind(market);
+    this.props.load(market);
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_EXCHANGE_SCREEN,
-  CabinetExchangeScreen
-);
+export default connect(
+  state => ({
+    ...state.exchange,
+    adaptive: state.default.adaptive,
+    router: state.router,
+    user: state.default.profile.user
+  }), {
+    load: exchangeActions.load,
+    chooseMarket: exchangeActions.chooseMarket,
+    setTitle: actions.setTitle
+  }
+)(CabinetExchangeScreen);

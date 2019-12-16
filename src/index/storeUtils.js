@@ -228,18 +228,6 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
-    case CLASSES.CABINET_EXCHANGE_SCREEN:
-      mapState2Props = (state) => ({
-        ...state.exchange,
-        adaptive: state.default.adaptive,
-        router: state.router,
-        user: state.default.profile.user
-      });
-      mapDispatch2Props = {
-        load: exchangeActions.load,
-        setTitle: actions.setTitle
-      };
-      break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:
       mapState2Props = (state) => ({
         adaptive: state.default.adaptive,

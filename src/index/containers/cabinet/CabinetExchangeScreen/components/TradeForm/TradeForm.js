@@ -85,7 +85,7 @@ export default class TradeForm extends React.Component {
                 value={this.state.amount}
                 onTextChange={this.__amountDidChange}
               />
-              {user && <p>{primary.toUpperCase()}  {utils.getLang('global_balance')} - <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
+              {user && <p>{primary.toUpperCase()}  {utils.getLang('global_balance')}: <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
             </div>
             <div className="TradeForm__adaptive_form__row">
               <UI.Input
@@ -97,7 +97,7 @@ export default class TradeForm extends React.Component {
                 value={(isMarket ? "~" + marketPrice : this.state.price) || ""}
                 onTextChange={this.__priceDidChange}
               />
-              {user && <p>{secondary.toUpperCase()} {utils.getLang('global_balance')} -  <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p>}
+              {user && <p>{secondary.toUpperCase()} {utils.getLang('global_balance')}:  <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p>}
             </div>
             <div className="TradeForm__adaptive_form__row">
               <UI.Input
@@ -157,7 +157,7 @@ export default class TradeForm extends React.Component {
                 value={this.state.amount}
                 onTextChange={this.__amountDidChange}
               />
-              { user && <p className="Form__helper__text">{primary.toUpperCase()}  {utils.getLang('global_balance')} - <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
+              { user && <p className="Form__helper__text">{primary.toUpperCase()}  {utils.getLang('global_balance')}: <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
             </div>
             <div className="TradeForm__form__row">
               <UI.Input
@@ -169,7 +169,7 @@ export default class TradeForm extends React.Component {
                 value={(isMarket ? "~" + marketPrice : this.state.price) || ""}
                 onTextChange={this.__priceDidChange}
               />
-              { user && <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')} - <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p> }
+              { user && <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')}: <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p> }
             </div>
             <div className="TradeForm__form__row">
               <UI.Input

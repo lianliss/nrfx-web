@@ -15,10 +15,6 @@ export function load(market) {
       dispatch({
         type: actionTypes.EXCHANGE_SET,
         ...resp,
-        depth: { // TODO: HACK убрать после доработки бэка
-          asks: [],
-          bids: []
-        },
         market
       });
       dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: '' });
