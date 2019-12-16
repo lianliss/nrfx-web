@@ -109,7 +109,7 @@ class SettingKey extends React.Component {
             ga_code: data.gaCode
           }).then((item) => {
             modal.props.close();
-            this.props.toastPush(utils.getLang('cabinet__succesDeleteKey'), "success");
+            this.props.toastPush(utils.getLang('cabinet_satting_save_key'), "success");
             this.__handleCheckData()
           }).catch(err => {
             this.props.toastPush(err.message, "error");
@@ -131,7 +131,7 @@ class SettingKey extends React.Component {
     settingsActions.setIpAddressFieldValue(key_id, id_ip, value)
   }
 
-  __handleDeleteIpAddress = (key_id, id_ip) => {
+  __handleDeleteIpAddress = ({key_id, id_ip}) => {
     settingsActions.deleteIpAddress(key_id, id_ip)
   }
 
@@ -219,8 +219,9 @@ class SettingKey extends React.Component {
                   item.allow_ips.map((data, i) => {
                     return (
                       <UI.Input 
-                        indicator={<SVG src={basketSvg} onClick={() => {this.__handleDeleteIpAddress({key_id: item.id, id_ip: i})}}/>}
-                        onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value})}
+                        indicator={<div onClick={() => this.__handleDeleteIpAddress({ key_id: item.id, id_ip: i })}><SVG src={basketSvg} /></div>}
+                        onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value })}
+                        placeholder={utils.getLang("trusted_ip_address") }
                         value={data}
                         key={i}
                       />

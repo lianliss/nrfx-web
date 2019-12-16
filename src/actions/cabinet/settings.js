@@ -146,8 +146,8 @@ export function settingsCheckWithdraw(id, permission_withdraw) {
   return store.dispatch({ type: actionTypes.SETTINGS_CHECK_WITHDRAW, id, permission_withdraw  });
 }
 
-export function deleteIpAddress(action) {
-  return store.dispatch({ type: actionTypes.DELETE_IP_ADDRESS, ...action  });
+export function deleteIpAddress(key_id, id_ip) {
+  return store.dispatch({ type: actionTypes.DELETE_IP_ADDRESS, key_id, id_ip });
 }
 
 export function changeNumber({phone_code, phone_number, sms_code}) {

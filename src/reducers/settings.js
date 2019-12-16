@@ -139,7 +139,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.DELETE_IP_ADDRESS: {
       const { key_id, id_ip } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, list_ips: item.list_ips.map((data_ip, i) => i === id_ip ? {data_ip: ''} : data_ip)} 
+        {...item,save_item: true, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? '' : data_ip)} 
         : item)
       return Object.assign({}, state, {
         user: {
