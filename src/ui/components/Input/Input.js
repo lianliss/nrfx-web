@@ -106,6 +106,12 @@ class Input extends React.Component {
       }
     }
 
+    if (this.props.pattern) {
+      if (!this.props.pattern.test(e.key)) {
+        e.preventDefault();
+      }
+    }
+
     if (this.props.type === 'number') {
       if (this.props.cell) {
         if (isNaN(e.key)) {
