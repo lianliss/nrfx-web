@@ -222,7 +222,7 @@ const MerchantModal = props => {
           {getLang('cabinet_merchantModalDescription_' + merchant)}
         </div>
 
-        {fee && <div className="MerchantModal__form__fee">
+        {fee > 0 && <div className="MerchantModal__form__fee">
           {getLang('global_fee')}: <NumberFormat number={percent} percent />, <NumberFormat number={fee} currency={currency} /> {getLang('global_min')}.
         </div>}
 
