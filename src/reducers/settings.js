@@ -44,47 +44,51 @@ export default function reduce(state = initialState, action = {}) {
       const apiKey = apikey.key ? [apikey.key] : []
       const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] : 
         apiKeys.map(item => item.allow_ips !== '' ? {...item, addIpAddress: true, radioCheck: 'second', allow_ips: item.allow_ips.split(',')} : item)
-      return Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      })
+      }
     }
 
     case actionTypes.SECRETKEY_SET: {
       const { secret_key, key_id } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? {...item, secret_key } : item)
-      return  Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      })
+      }
     }
     
     case actionTypes.SETTINGS_CHECK_TRADING: {
       const { id, permission_trading } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === id ? {...item, permission_trading: !permission_trading, save_item:true } : item)
 
-      return  Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      })
+      }
     }
 
     case actionTypes.SETTINGS_CHECK_WITHDRAW: {
       const { id, permission_withdraw } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === id ? {...item, permission_withdraw: !permission_withdraw, save_item:true } : item)
 
-      return  Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      })
+      }
     }
 
     case actionTypes.SETTINGS_IP_ACCESS: {
@@ -102,25 +106,27 @@ export default function reduce(state = initialState, action = {}) {
         return item
       })
 
-      return  Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      })
+      }
     }
     
     case actionTypes.SETTINGS_IP_ADDRESS_FIELD_SET: {
       const { key_id, id_ip } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? action.value : data_ip)} 
+        {...item, save_item: true, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? action.value : data_ip)} 
         : item)
-      return Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      });
+      }
     }
 
     case actionTypes.ADD_IP_ADDRESS: {
@@ -128,25 +134,27 @@ export default function reduce(state = initialState, action = {}) {
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
         {...item, allow_ips: item.allow_ips.concat(['']), save_item: true} 
         : item)
-      return Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      });
+      }
     }
 
     case actionTypes.DELETE_IP_ADDRESS: {
       const { key_id, id_ip } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
-        {...item,save_item: true, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? '' : data_ip)} 
+        {...item,save_item: true, allow_ips: item.allow_ips.filter((data_ip, i) => i !== id_ip)} 
         : item)
-      return Object.assign({}, state, {
+      return {
+        ...state,
         user: {
           ...state.user,
           dataApiKeys
         }
-      });
+      }
     }
 
     default:
