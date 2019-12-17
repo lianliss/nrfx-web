@@ -202,7 +202,7 @@ class OpenDepositModal extends React.Component {
     return (
       <UI.Modal noSpacing className="OpenDepositModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
-          {utils.getLang('cabinet_openNewDeposit_name')}
+          {utils.getLang('cabinet_openNewDeposit_name')} {this.state.amount}
         </UI.ModalHeader>
         <div className="OpenDepositModal">
           <div className="OpenDepositModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
@@ -238,6 +238,7 @@ class OpenDepositModal extends React.Component {
                 this.__setState({ amount });
               }}
             />
+            <UI.Button onClick={this.__handleClickMax} currency={currencyInfo}>{utils.getLang('cabinet_sendCoinsModal_max')}</UI.Button>
           </div>
           <div className="OpenDepositModal__row">
             <UI.SwitchTabs
