@@ -147,7 +147,7 @@ class OpenDepositModal extends React.Component {
   }
 
   __handleClickMax = () => {
-    const { amount } = this.props.wallets.find(w => w.currency ===  this.props.thisState.currency);
+    const { amount } = this.props.wallets.find(w => w.currency ==  this.props.thisState.currency);
     const { amountMax } =  this.props.thisState
     this.__setState({ amount: amount > amountMax ? amountMax : amount });
   }
@@ -238,6 +238,7 @@ class OpenDepositModal extends React.Component {
                 this.__setState({ amount });
               }}
             />
+            <UI.Button onClick={this.__handleClickMax} currency={currencyInfo}>{utils.getLang('cabinet_sendCoinsModal_max')}</UI.Button>
           </div>
           <div className="OpenDepositModal__row">
             <UI.SwitchTabs

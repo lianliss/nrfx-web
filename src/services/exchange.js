@@ -23,7 +23,8 @@ class Exchange {
       ['trade_list', this.__orderDidTrade],
       ['balance_update', this.__balanceDidUpdate],
       ['ticker', this.__tickerUpdate],
-      ['error_connection', this.__errorConnection]
+      ['error_connection', this.__errorConnection],
+      ['completed_orders', this.__orderBookRemoveOrder] // убирать ордера из ордербука
     ];
 
     this.__bind();
@@ -76,6 +77,9 @@ class Exchange {
   __orderDidCreated = (order) => {
     exchange.addOpenOrder(order);
     toasts.success(utils.getLang('exchange_toastOrderCreated'));
+  }
+  __orderBookRemoveOrder = (orders) => {
+    exchange.orderBookRemoveOrders(orders);
   }
 
   __orderDidTrade = (orders) => {

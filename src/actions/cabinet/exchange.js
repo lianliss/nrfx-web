@@ -89,8 +89,12 @@ export function addOpenOrder(order) {
   store.dispatch({ type: actionTypes.EXCHANGE_ADD_OPEN_ORDER, order });
 }
 
-export function addTrades(orders) {
-  store.dispatch({ type: actionTypes.EXCHANGE_ADD_TRADES, orders });
+export function orderBookRemoveOrders(orders) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_REMOVE_ORDER, orders });
+}
+
+export function addTrades(trades) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ADD_TRADES, trades });
 }
 
 export function updateBalance(currency, amount) {

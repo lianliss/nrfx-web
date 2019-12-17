@@ -78,6 +78,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
           {
             title: utils.getLang('exchange_trades'),
             content: <TradeForm
+              loadingStatus={this.props.loadingStatus}
               ref="trade_form"
               adaptive={true}
               depth={this.props.depth}
@@ -96,7 +97,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
         <SwitchBlock type="buttons" contents={[
           {
             title: utils.getLang('exchange_trades'),
-            content: <Trades adaptive={true} />
+            content: <Trades market={this.props.market} adaptive={true} />
           },
           {
             title: utils.getLang('exchange_openOrders'),
@@ -118,7 +119,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       <div className="Exchange__wrapper">
         <div className="Exchange__left_content">
           { this.props.user && <Balances /> }
-          <Trades />
+          <Trades market={this.props.market}  />
         </div>
         <div className="Exchange__right_content">
           <div className="Exchange__trade_content">
@@ -133,6 +134,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
                 />
               </UI.ContentBox>
               {this.props.tickerInfo && <TradeForm
+                loadingStatus={this.props.loadingStatus}
                 ref="trade_form"
                 fee={this.props.fee}
                 balance={this.props.balanceInfo}

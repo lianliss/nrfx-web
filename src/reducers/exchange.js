@@ -37,6 +37,9 @@ export default function reduce(state = initialState, action = {}) {
       let balanceInfo = {};
       let [primary, secondary] = action.market.toUpperCase().split('/');
 
+      balanceInfo.primary = { amount: 0, currency: primary };
+      balanceInfo.secondary = { amount: 0, currency: secondary };
+
       if (action.balances) {
         for (let balance of action.balances) {
           if (balance.currency === primary) {
@@ -69,20 +72,20 @@ export default function reduce(state = initialState, action = {}) {
           openOrders[order.id] = order;
         }
       }
-
-      let trades = {};
-      for (let i = 0; i < action.trades.length; i++) {
-        const order = action.trades[i];
-        trades[order.id] = order;
-      }
+      //
+      // let trades = {};
+      // for (let i = 0; i < action.trades.length; i++) {
+      //   const order = action.trades[i];
+      //   trades[order.id] = order;
+      // }
 
       return Object.assign({}, state, {
-        ...utils.removeProperty(action, 'type', 'depth', 'open_orders', trades),
+        ...utils.removeProperty(action, 'type', 'depth', 'open_orders'),
         tickerInfo,
         balanceInfo,
         // depth,
         openOrders,
-        trades,
+        trades: action.trades,
         market: action.market
       })
     }
@@ -186,17 +189,21 @@ export default function reduce(state = initialState, action = {}) {
       }};
     }
 
-    case actionTypes.EXCHANGE_ADD_TRADES: {
-      const trades = { ...state.trades };
+    case actionTypes.EXCHANGE_ORDER_BOOK_REMOVE_ORDER: {
+      const depth = { ...state.depth };
 
-      action.orders.forEach(order => {
-        trades[order.id] = order;
+      action.orders.forEach( order => {
+        delete depth.asks[order.id];
+        delete depth.bids[order.id];
       });
 
+      return { ...state, depth };
+    }
+
+    case actionTypes.EXCHANGE_ADD_TRADES: {
       return {
         ...state,
-        last_orders: [...action.orders, ...state.last_orders].slice(0, 20),
-        trades: trades
+        trades: [ ...action.trades, ...state.trades ]
       };
     }
 

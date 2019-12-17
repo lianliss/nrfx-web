@@ -7,34 +7,36 @@ import * as utils from '../../../../../../utils';
 import Block from '../Block/Block';
 
 class Trades extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    const currentOrders = Object.keys(this.props.trades);
-    if (!currentOrders.length) {
-      return true;
-    }
-    return Object.keys(nextProps.trades)[0].id !== currentOrders[0].id;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   const currentOrders = Object.keys(this.props.trades);
+  //   if (!currentOrders.length) {
+  //     return true;
+  //   }
+  //   return Object.keys(nextProps.trades)[0].id !== currentOrders[0].id;
+  // }
 
   render() {
     console.log('RENDER Trades');
+
+    const { trades, market } = this.props;
+    const [,currency] = market.split('/');
+
     const headings = [
       <UI.TableColumn>{utils.getLang('global_price')}</UI.TableColumn>,
       <UI.TableColumn>{utils.getLang('global_amount')}</UI.TableColumn>,
       <UI.TableColumn align="right">{utils.getLang('global_time')}</UI.TableColumn>,
     ];
 
-    let rows = Object.values(this.props.trades).map((order) => {
-      const priceClassName = utils.classNames("Exchange__orders__side", {
-        sell: order.action === 'sell'
-      });
-
+    let rows = Object.values(this.props.trades).slice(0, 30).map((trade, i) => { // .slice(0, 30) можно сделать скролл в ордерах
+      const prevTrade = trades[i+1];
+      const type = (prevTrade && trade.price > prevTrade.price) ? 'up' : "down";
       return (
-        <UI.TableCell className={priceClassName} key={order.id}>
+        <UI.TableCell className="Exchange__orders__side" key={trade.id}>
           <UI.TableColumn>
-            <div className="Exchange__orders__mark"><UI.NumberFormat number={order.price} currency={order.secondary_coin} hiddenCurrency /></div>
+            <UI.NumberFormat type={type} currency={currency} number={trade.price} hiddenCurrency />
           </UI.TableColumn>
-          <UI.TableColumn><UI.NumberFormat number={order.filled} /></UI.TableColumn>
-          <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
+          <UI.TableColumn><UI.NumberFormat number={trade.amount} /></UI.TableColumn>
+          <UI.TableColumn align="right">{utils.dateFormat(trade.date, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       )
     });
