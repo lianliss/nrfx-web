@@ -102,8 +102,9 @@ const MerchantModal = props => {
   const getMerchantUrl = (params) =>  {
     setUrlStatus('loading');
     fiatActions.payForm(params).then(({url}) => {
-      setUrlStatus(null);
       setUrl(url);
+    }).finally(() => {
+      setUrlStatus(null);
     });
   };
 
