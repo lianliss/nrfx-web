@@ -128,7 +128,7 @@ class FiatMarketForm extends React.Component {
   renderFee() {
     const { exchangeFee } = this.props;
     const fee = this.state.fromAmount / 100 * exchangeFee;
-    return (<>{getLang('cabinet_fiatWalletFee')} ({<NumberFormat number={exchangeFee} percent />} {<NumberFormat number={fee} currency={this.state.from} />}) ≈ <NumberFormat number={parseInt(this.state.fromAmount) + fee} currency={this.state.from} /></>);
+    return (<>{getLang('cabinet_fiatWalletFee')} ({<NumberFormat number={exchangeFee} percent />} {<NumberFormat number={fee} currency={this.state.from} />}) ≈ <NumberFormat number={parseFloat(this.state.fromAmount) + fee} currency={this.state.from} /></>);
   }
 
   render() {
