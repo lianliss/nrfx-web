@@ -193,7 +193,7 @@ class SettingKey extends React.Component {
                 {utils.getLang("cabinet_secretKey")}:
               </div>
               <div className="ApiKey__text">
-                {item.secret_key || `*****`}
+                {item.secret_key || `******************************`}
               </div>
             </div>
             <div className="ApiKey__restrictions">
