@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import UI from '../../../ui';
-import * as utils from '../../../utils';
+import UI from 'src/ui';
+import * as utils from 'utils';
 import * as steps from '../fixtures';
-import SuccessModal from '../../../index/components/site/SuccessModal/SuccessModal';
-import { resetPassword } from '../../../actions/auth';
+import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
+import { resetPassword } from 'actions/auth';
 
 
 function RestorePassword({ changeStep, currentStep, onClose }) {
@@ -19,7 +19,7 @@ function RestorePassword({ changeStep, currentStep, onClose }) {
 
   return (
     <>
-      <h2 className="AuthModal__title">{utils.getLang('site__authModalRestorePwd')}</h2>
+      <UI.ModalHeader>{utils.getLang("site__authModalRestorePwd")}</UI.ModalHeader>
 
       {currentStep === steps.RESTORE_PASSWORD
         ? (

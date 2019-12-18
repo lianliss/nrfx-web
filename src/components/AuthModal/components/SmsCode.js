@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import UI from '../../../ui';
-import * as utils from '../../../utils';
-import Resend from '../../../index/components/site/Resend/Resend';
-import { checkSmsCode } from '../../../actions/auth';
+import UI from 'src/ui';
+import * as utils from 'utils';
+import Resend from 'src/index/components/site/Resend/Resend';
+import { checkSmsCode } from 'actions/auth';
 
 
 function SmsCode({ changeStep, params }) {
@@ -22,7 +22,7 @@ function SmsCode({ changeStep, params }) {
 
   return (
     <div className="AuthModal__Phone">
-      <h2 className="AuthModal__title">{utils.getLang('site__authModalEnterCodeSMS')}</h2>
+      <UI.ModalHeader>{utils.getLang("site__authModalEnterCodeSMS")}</UI.ModalHeader>
 
       <div className="AuthModal__content">
         {errorMsg

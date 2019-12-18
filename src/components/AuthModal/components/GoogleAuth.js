@@ -60,7 +60,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
   return (
     <div className="AuthModal__ga">
       {(loginRes.need_ga_setup !== true)
-        && <h2 className="AuthModal__title">{utils.getLang('site__authModalLogIn')}</h2>
+        && <UI.ModalHeader>{utils.getLang("site__authModalLogIn")}</UI.ModalHeader>
       }
 
       <div className="AuthModal__content">
@@ -72,7 +72,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         {loginRes.need_ga_setup === true
           && (
             <div className="AuthModal__content__ga">
-              <h2 className="AuthModal__title">{utils.getLang('site__authModalTitle')}</h2>
+              <UI.ModalHeader>{utils.getLang("site__authModalTitle")}</UI.ModalHeader>
               <p className="AuthModal__content__ga__msg">{utils.getLang('site__authModalContentGA')}</p>
               <img src={loginRes.url} alt="GA QR Code" />
               <input className="AuthModal__content__ga__hash" ref={hashRef} value={loginRes.hash} readOnly />
