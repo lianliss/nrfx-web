@@ -14,13 +14,10 @@ import ContentBox from '../../../../../../ui/components/ContentBox/ContentBox';
 import UI from '../../../../../../ui';
 
 class SettingKey extends React.Component {
-  state = {
-    displaySecretKey: false
-  }
 
   componentDidMount() {
-    const { user } = this.props.profile
-    if( user && !user.dataApiKey ){
+    const { user } = this.props
+    if( user && !user.dataApiKeys ){
       this.__handleCheckData()
     }
   }
@@ -108,7 +105,6 @@ class SettingKey extends React.Component {
         }).then((item) => {
           modal.props.close();
           this.props.toastPush(utils.getLang('cabinet_satting_save_key'), "success");
-          //this.__handleCheckData()
         }).catch(err => {
           this.props.toastPush(err.message, "error");
         });
@@ -146,7 +142,7 @@ class SettingKey extends React.Component {
 
   __copy = (public_key) => {
     copyText(public_key).then(() => {
-      this.props.toastPush(utils.getLang('cabinet_copyPublicKey'), "success");
+      this.props.toastPush(utils.getLang('cabinet_ keyCopiedSuccessfully'), "success");
     });
   };
 
@@ -178,9 +174,9 @@ class SettingKey extends React.Component {
             </div>
           </div>
           <div className="ApiKey__information">
-            <div className="ApiKey__key">
+            <div className="ApiKey__key" onClick={() => {this.__copy(item.public_key)}}>
               <div className="ApiKey__information-title">
-                <span className="ApiKey__svg" onClick={() => {this.__copy(item.public_key)}}>
+                <span className="ApiKey__svg">
                   <SVG src={copySvg}/>
                 </span>
                 {utils.getLang("cabinet_apiKey")}: 
@@ -189,10 +185,10 @@ class SettingKey extends React.Component {
                 {item.public_key}
               </div>
             </div>
-            <div className="ApiKey__secret" onClick={() => {this.__handleGetSecretKey(item.id)}}>
+            <div className="ApiKey__secret" onClick={() => {item.displaySecretKey ? this.__copy(item.secret_key) : this.__handleGetSecretKey(item.id)}}>
               <div className="ApiKey__information-title">
                 <span className="ApiKey__svg">
-                  <SVG  src={this.state.displaySecretKey ? openEyeSvg : closeEyeSvg} />
+                  <SVG  src={item.displaySecretKey ? openEyeSvg : closeEyeSvg} />
                 </span> 
                 {utils.getLang("cabinet_secretKey")}:
               </div>

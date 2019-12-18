@@ -55,7 +55,7 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.SECRETKEY_SET: {
       const { secret_key, key_id } = action;
-      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? {...item, secret_key } : item)
+      const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? {...item, secret_key, displaySecretKey:true } : item)
       return {
         ...state,
         user: {
@@ -96,7 +96,7 @@ export default function reduce(state = initialState, action = {}) {
       const dataApiKeys = state.user.dataApiKeys.map(item => {
         if( item.id === key_id ) {
           if(radio === 'first') {
-            return {...item, radioCheck: radio, addIpAddress: false , save_item: false }
+            return {...item, radioCheck: radio, addIpAddress: false , save_item: true, allow_ips: [] }
           }
           if (Array.isArray(item.allow_ips)) {
             return {...item, radioCheck: radio, addIpAddress: true , save_item: true }
