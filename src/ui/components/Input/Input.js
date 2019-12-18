@@ -121,6 +121,10 @@ class Input extends React.Component {
         __doubleInputOnKeyPressHandler(e, e.target.value);
       }
     }
+
+    if (this.props.maxLength && e.target.value.length >= this.props.maxLength) {
+      e.preventDefault();
+    }
   };
 
   __onChange = (e) => {
@@ -147,6 +151,8 @@ Input.defaultProps = {
   mouseWheel: true,
   positive: true,
   cell: false,
+  maxLength: null,
+  pattern: null,
 };
 
 Input.propTypes = {
@@ -160,6 +166,8 @@ Input.propTypes = {
   onClick: PropTypes.func,
   classNameWrapper: PropTypes.string,
   disabled: PropTypes.bool,
+  maxLength: PropTypes.number,
+  pattern: PropTypes.string,
   size: PropTypes.oneOf(['small']),
   type: PropTypes.oneOf(['text', 'number', 'password', 'code']),
   positive: PropTypes.bool,

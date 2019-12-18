@@ -182,6 +182,8 @@ class CabinetRegister extends React.PureComponent {
             <UI.Input
               error={state.touched && !(state.smsCode && state.smsCode.length >= 4)}
               value={state.smsCode}
+              pattern={/^[0-9]+$/}
+              maxLength={4}
               indicator={(state.smsCode && state.smsCode.length >= 4) ? <SVG src={require("../../../../asset/24px/check-middle.svg")} /> : null}
               placeholder={utils.getLang('cabinet_registerScreen_enterCode')}
               onTextChange={text => this.__handleChange("smsCode", text)}
