@@ -51,7 +51,6 @@ class SendCoinsModal extends React.Component {
   )
 
   render() {
-    const currencyInfo = this.props.thisState.currency ? actions.getCurrencyInfo(this.props.thisState.currency) : {};
     return (
       <UI.Modal isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
