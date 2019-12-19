@@ -23,6 +23,7 @@ import MerchantModal from '../index/components/cabinet/MerchantModal/MerchantMod
 import FiatOperationModal from '../index/components/cabinet/FiatOperationModal/FiatOperationModal';
 import DepositPoolSuccessModal from '../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal';
 import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
+import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlockModal';
 import router from '../router';
 
 export default function Modals(props) {
@@ -98,6 +99,9 @@ export default function Modals(props) {
       break;
     case 'deposit_pool_success':
       Component = DepositPoolSuccessModal;
+      break;
+    case 'user_block':
+      Component = UserBlockModal;
       break;
     default: return null;
   }

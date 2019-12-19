@@ -1,7 +1,6 @@
 import './WithdrawalModal.less';
 
 import React from 'react';
-import { connect } from 'react-redux';
 
 import UI from '../../../../ui';
 
@@ -10,9 +9,6 @@ import * as utils from "../../../../utils";
 import ModalState from '../ModalState/ModalState';
 import * as actions from '../../../../actions'
 import * as toasts from '../../../../actions/toasts'
-import SVG from 'react-inlinesvg';
-import company from '../../../constants/company';
-import Button from '../../../../ui/components/Button/Button';
 
 class WithdrawalModal extends React.Component {
   state = {
@@ -46,19 +42,6 @@ class WithdrawalModal extends React.Component {
   };
 
   render() {
-    if (this.props.withdrawalDisabled) {
-      return (
-        <UI.Modal isOpen={true} onClose={this.props.onClose}>
-          <UI.ModalHeader> {utils.getLang('withdraw_Income')}</UI.ModalHeader>
-          <div className="WithdrawalModal__block">
-            <SVG src={require('../../../../asset/120/block.svg')} />
-            <p>{utils.getLang('cabinet_withdrawalDisabledText')} <a href={'mailto:' + company.email.support}>{company.email.support}</a></p>
-            <Button onClick={this.props.onClose}>{utils.getLang('global_ok')}</Button>
-          </div>
-        </UI.Modal>
-      )
-    }
-
     if (this.state.loadingStatus) {
       return <ModalState status={this.state.loadingStatus} onRetry={this.__load} />
     }
@@ -211,6 +194,4 @@ class WithdrawalModal extends React.Component {
   };
 }
 
-export default connect(state => ({
-  withdrawalDisabled: state.default.profile.withdrawal_disabled
-}))(WithdrawalModal);
+export default WithdrawalModal

@@ -1,4 +1,5 @@
 import * as auth from './auth';
+import * as action from '../actions/';
 
 const API_ENTRY = 'https://api.narfex.com';
 const API_VERSION = 1;
@@ -56,6 +57,8 @@ export function invoke(method, name, params, options = {}) {
         resp.json().then((json) => {
           if (resp.status === 200) {
             resolve(json);
+            // TODO
+            // action.openModal('user_block');
           } else {
             json.error_name = 'failed';
             reject(json);
