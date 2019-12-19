@@ -93,11 +93,18 @@ class SettingKey extends React.Component {
 
   __handleSaveItem = (item) => {
     if (!item.id) { return false }
+    if (Array.isArray(item.allow_ips) && item.allow_ips){
+      const filter = item.allow_ips.filter(item => item.address === '')
+      if(filter.length > 0){
+        this.props.toastPush(utils.getLang('cabinet_ip_address_empty'), "error");
+        return false
+      }
+    }
     this.__gaModalAction(
       (data, modal) => {
         settingsActions.saveItemKey({
           key_id: item.id,
-          allow_ips: item.allow_ips.join(', '),
+          allow_ips: item.allow_ips.map(item => item.address).join(', '),
           name: item.name,
           permission_trading: item.permission_trading,
           permission_withdraw: item.permission_withdraw,
@@ -217,7 +224,8 @@ class SettingKey extends React.Component {
                         indicator={<div className="svg_basket" onClick={() => this.__handleDeleteIpAddress({ key_id: item.id, id_ip: i })}><SVG src={basketSvg}/></div>}
                         onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value })}
                         placeholder={utils.getLang("trusted_ip_address") }
-                        value={data}
+                        error={data.address === "" && data.touched}
+                        value={data.address}
                         key={i}
                       />
                     )

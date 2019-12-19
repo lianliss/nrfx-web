@@ -43,7 +43,7 @@ export default function reduce(state = initialState, action = {}) {
       
       const apiKey = apikey.key ? [apikey.key] : []
       const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] : 
-        apiKeys.map(item => item.allow_ips !== '' ? {...item, addIpAddress: true, radioCheck: 'second', allow_ips: item.allow_ips.split(',')} : item)
+        apiKeys.map(item => item.allow_ips !== '' ? {...item, addIpAddress: true, radioCheck: 'second', allow_ips: item.allow_ips.split(',').map(ip => {return {address: ip, touched: false}})} : item)
       return {
         ...state,
         user: {
@@ -118,7 +118,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.SETTINGS_IP_ADDRESS_FIELD_SET: {
       const { key_id, id_ip } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, save_item: true, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? action.value : data_ip)} 
+        {...item, save_item: true, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? { address: action.value, touched: true } : data_ip)} 
         : item)
       return {
         ...state,
@@ -132,7 +132,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.ADD_IP_ADDRESS: {
       const { key_id } = action;
       const dataApiKeys = state.user.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, allow_ips: item.allow_ips.concat(['']), save_item: true} 
+        {...item, allow_ips: item.allow_ips.concat({address: '', touched: false}), save_item: true} 
         : item)
       return {
         ...state,
