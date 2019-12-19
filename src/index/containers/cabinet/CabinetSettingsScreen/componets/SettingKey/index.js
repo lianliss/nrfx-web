@@ -16,8 +16,8 @@ import UI from '../../../../../../ui';
 class SettingKey extends React.Component {
 
   componentDidMount() {
-    const { user } = this.props
-    if( user && !user.dataApiKeys ){
+    const { dataApiKeys } = this.props
+    if(!dataApiKeys){
       this.__handleCheckData()
     }
   }
@@ -119,8 +119,8 @@ class SettingKey extends React.Component {
     )
   }
 
-  __handleSettingIpAccess = (id, radio, allow_ips) => {
-    settingsActions.settingIpAccess(id, radio, allow_ips)
+  __handleSettingIpAccess = (id, radio) => {
+    settingsActions.settingIpAccess(id, radio)
   }
 
   __handleAddIpAddress = (id) => {
@@ -155,8 +155,8 @@ class SettingKey extends React.Component {
 
 
   __renderListApiKeys = () => {
-    const { user } = this.props
-    if (!user.dataApiKeys){return <LoadingStatus inline status="loading" />}
+    const { dataApiKeys } = this.props
+    if (!dataApiKeys){return <LoadingStatus inline status="loading" />}
 
     const closeEyeSvg = require('../../../../../../asset/16px/eye-closed.svg');
     const openEyeSvg = require('../../../../../../asset/16px/eye-open.svg');
@@ -164,7 +164,7 @@ class SettingKey extends React.Component {
     const plusSvg = require('../../../../../../asset/16px/plus.svg');
     const basketSvg = require('../../../../../../asset/24px/basket.svg');
 
-    const listApiKeys = user.dataApiKeys.map((item,i) => {
+    const listApiKeys = dataApiKeys.map((item,i) => {
       const ip_recomended = !item.radioCheck ? 'first' : item.radioCheck
       return(
         <ContentBox className="ApiKey__Item" key={i}>
@@ -200,7 +200,7 @@ class SettingKey extends React.Component {
                 {utils.getLang("cabinet_secretKey")}:
               </div>
               <div className="ApiKey__text">
-                {item.secret_key || `******************************`}
+                {item.secret_key || '*'.repeat(30)}
               </div>
             </div>
             <div className="ApiKey__restrictions">
@@ -211,7 +211,7 @@ class SettingKey extends React.Component {
             </div>
             <div className="ApiKey__ipAddress">
               <div className="ApiKey__information-title">{utils.getLang("ip_access_restrictions:")}:</div>
-              <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio, item.allow_ips)}> 
+              <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio)}> 
                 <UI.Radio value="first">{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio>
                 <UI.Radio value="second">{utils.getLang("unrestricted_ip_recommended")}</UI.Radio>
               </UI.RadioGroup>
@@ -244,7 +244,7 @@ class SettingKey extends React.Component {
               <UI.Button
                 size="large"
                 onClick={() => {this.__handleSaveItem(item)}}
-                disabled={!item.save_item}
+                disabled={!item.canSave}
               >
                 {utils.getLang('cabinet_settingsSave')}
               </UI.Button>
@@ -288,5 +288,7 @@ class SettingKey extends React.Component {
 }
 
 export default connect(state => {
-  return { profile: state.default.profile};
+  return { 
+    dataApiKeys: state.settings.dataApiKeys
+  };
 })(SettingKey);

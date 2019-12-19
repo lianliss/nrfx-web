@@ -130,8 +130,8 @@ export function changeNewPassword(params) {
   return api.call(apiSchema.Profile.ChangePasswordPost, params);
 }
 
-export function settingIpAccess(key_id, radio, allow_ips) {
-  return store.dispatch({ type: actionTypes.SETTINGS_IP_ACCESS, key_id, radio, allow_ips });
+export function settingIpAccess(key_id, radio) {
+  return store.dispatch({ type: actionTypes.SETTINGS_IP_ACCESS, key_id, radio });
 }
 
 export function addIpAddress(key_id) {
