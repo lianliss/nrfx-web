@@ -24,7 +24,7 @@ class Exchange {
       ['balance_update', this.__balanceDidUpdate],
       ['ticker', this.__tickerUpdate],
       ['error_connection', this.__errorConnection],
-      ['completed_orders', this.__orderBookRemoveOrder] // убирать ордера из ордербука
+      ['completed_orders', this.__orderBookRemoveOrder]
     ];
 
     this.__bind();
@@ -78,6 +78,7 @@ class Exchange {
     exchange.addOpenOrder(order);
     toasts.success(utils.getLang('exchange_toastOrderCreated'));
   }
+
   __orderBookRemoveOrder = (orders) => {
     exchange.orderBookRemoveOrders(orders);
   }
