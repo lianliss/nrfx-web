@@ -47,9 +47,12 @@ const MerchantModal = props => {
       payments: ['mastercard', 'visa', 'bank']
     },
     xendit: {
-      icon: require('../../../../asset/merchants/xendit.svg'),
-      title: "Xendit",
-      payments: ['mastercard', 'visa', 'bank']
+      // icon: require('../../../../asset/merchants/xendit.svg'),
+      icon: require('../../../../asset/merchants/rp.svg'),
+      // title: "Xendit",
+      title: "Indonesian Rupiah",
+      // payments: ['mastercard', 'visa', 'bank']
+      payments: ['bank']
     }
   };
 

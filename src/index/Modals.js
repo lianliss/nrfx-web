@@ -111,7 +111,9 @@ export default function Modals(props) {
       }}
       onClose={() => {
         const route = router.getState();
-        router.navigate(route.name, null )
+        router.navigate(route.name, {
+          section: route.params.section
+        })
       }}
     />
   );
