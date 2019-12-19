@@ -151,8 +151,7 @@ export default class Chart extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    clearInterval(this.chartSetInterval);
-    console.log(555555);
+    // clearInterval(this.chartSetInterval);
     if (this.tvWidget !== null) {
       this.tvWidget.remove();
       this.tvWidget = null;
