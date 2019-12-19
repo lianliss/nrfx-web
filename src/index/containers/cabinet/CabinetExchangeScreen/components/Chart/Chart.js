@@ -4,6 +4,7 @@ import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
 import { getLang } from '../../../../../../services/lang';
 import { classNames } from '../../../../../../utils/index'
+import { setItem, getItem } from '../../../../../../services/storage'
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
 import * as actions from '../../../../../../actions/';
 import { API_ENTRY } from '../../../../../../services/api';
@@ -117,6 +118,28 @@ export default class Chart extends React.PureComponent {
     const tvWidget = new widget(widgetOptions);
     this.tvWidget = tvWidget;
 
+    // tvWidget.onChartReady(() => {
+    //   const symbol = this.props.symbol.toLowerCase().replace(':', '_');
+    //   const key = 'tv_template_' + symbol + '_' + this.props.interval;
+    //   const templateString = getItem(key);
+    //   if (templateString) {
+    //     let template = JSON.parse(templateString);
+    //     template = {
+    //       charts: template.charts.map(chart => ({
+    //         panes: []
+    //       }))
+    //     }
+    //     tvWidget.load(template);
+    //   }
+    //
+    //   this.chartSetInterval = setInterval(() => {
+    //     tvWidget.save(template => {
+    //       console.log(111, template);
+    //       setItem(key, JSON.stringify(template));
+    //     })
+    //   }, 1000);
+    // });
+
     if (this.props.fullscreen) {
       const { tradingView } = this.refs;
       if (tradingView.requestFullscreen) {
@@ -128,6 +151,8 @@ export default class Chart extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    clearInterval(this.chartSetInterval);
+    console.log(555555);
     if (this.tvWidget !== null) {
       this.tvWidget.remove();
       this.tvWidget = null;

@@ -3,6 +3,7 @@ import * as utils from '../utils';
 
 const initialState = {
   loadingStatus: {
+    default: 'loading',
     orderBook: 'loading'
   },
   balances: [],
@@ -191,13 +192,19 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.EXCHANGE_ORDER_BOOK_REMOVE_ORDER: {
       const depth = { ...state.depth };
+      const openOrders = { ...state.depth };
 
       action.orders.forEach( order => {
         delete depth.asks[order.id];
         delete depth.bids[order.id];
+        delete openOrders[order.id];
       });
 
-      return { ...state, depth };
+      return {
+        ...state,
+        depth,
+        openOrders
+      };
     }
 
     case actionTypes.EXCHANGE_ADD_TRADES: {
