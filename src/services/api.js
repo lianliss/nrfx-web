@@ -57,9 +57,10 @@ export function invoke(method, name, params, options = {}) {
         resp.json().then((json) => {
           if (resp.status === 200) {
             resolve(json);
-            // TODO
-            // action.openModal('user_block');
           } else {
+            if (json.code === 'withdraw_disabled') {
+              action.openModal('user_block');
+            }
             json.error_name = 'failed';
             reject(json);
           }
