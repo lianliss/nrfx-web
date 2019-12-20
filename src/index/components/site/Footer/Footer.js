@@ -5,11 +5,11 @@ import SVG from 'react-inlinesvg';
 
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../../utils/index';
-import * as actions from '../../../../actions';
-import MarkDown from '../../../../ui/components/MarkDown/MarkDown';
-import { isIndonesia } from '../../../../services/locations';
-import UI from '../../../../ui';
-import COMPANY from '../../../constants/company';
+import * as actions from 'actions';
+import MarkDown from 'ui/MarkDown/MarkDown';
+import { isIndonesia } from 'src/services/locations';
+import UI from 'src/ui';
+import COMPANY from 'src/index/constants/company';
 
 export default function Footer() {
   return (
@@ -34,8 +34,8 @@ export default function Footer() {
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
             <a href={COMPANY.wikiUrl} className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
-            <span onClick={() => actions.openModal('static_content',{ type: "terms" })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
-            <span onClick={() => actions.openModal('static_content',{ type: "privacy" })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
+            <span onClick={() => actions.openModal('static_content',{ type: "terms", title: utils.getLang('site__footerTermsUse') })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
+            <span onClick={() => actions.openModal('static_content',{ type: "privacy", title: utils.getLang('site__footerPrivacyPolicy') })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
         </div>
         {isIndonesia() &&
-          <div className="Footer__notice" onClick={ () => actions.openModal('static_content', {type: "risk_statement"})}>
+          <div className="Footer__notice" onClick={ () => actions.openModal('static_content', {type: "risk_statement", title:utils.getLang('site_footer_notice')})}>
             <MarkDown content={utils.getLang('site_footer_notice')}/>
           </div>
         }

@@ -279,7 +279,7 @@ module.exports = function(webpackEnv) {
         'react-native': 'react-native-web',
         ui: path.resolve(__dirname, "../src/ui/components"),
         utils: path.resolve(__dirname, "../src/utils"),
-        action: path.resolve(__dirname, "../src/action"),
+        actions: path.resolve(__dirname, "../src/actions"),
         src: path.resolve(__dirname, "../src"),
         asset: path.resolve(__dirname, "../src/asset"),
       },

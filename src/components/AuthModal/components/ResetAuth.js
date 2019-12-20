@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import UI from '../../../ui';
-import * as utils from '../../../utils';
+import UI from 'src/ui';
+import * as utils from 'utils';
 import * as steps from '../fixtures';
-import { resetGoogleCode } from '../../../actions/auth';
-import SuccessModal from '../../../index/components/site/SuccessModal/SuccessModal';
+import { resetGoogleCode } from 'actions/auth';
+import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
 
 
 function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
@@ -22,7 +22,7 @@ function ResetAuth({ email, password, currentStep, onClose, changeStep }) {
 
   return (
     <>
-      <h2 className="AuthModal__title">{utils.getLang('site__authModalResetAuth')}</h2>
+      <UI.ModalHeader>{utils.getLang("site__authModalResetAuth")}</UI.ModalHeader>
 
       {currentStep === steps.RESET_AUTH
         ? (
