@@ -51,6 +51,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           route: pages.ABOUT,
         },
         {
+          title: utils.getLang('site__headerFee'),
+          route: pages.FEE,
+        },
+        {
           title: utils.getLang('site__headerContactUs'),
           route: pages.CONTACT,
         },

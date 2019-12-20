@@ -13,10 +13,11 @@ const NumberFormat = ({ number, fractionDigits, skipTitle, currency, type, perce
 
   let displayNumber = parseFloat(parseFloat(number).toFixed(fractionDigits));
 
+  displayNumber = displayNumber.toLocaleString();
+
   if (currency && !percent ) {
     displayNumber += ' ' + currency.toUpperCase(); // nbsp
   }
-
 
   if (type === 'auto') {
     type = number > 0 ? 'up' : 'down';
