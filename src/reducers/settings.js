@@ -6,7 +6,8 @@ const initialState = {
     new_password: '',
     re_password: '',
   },
-  loadingStatus: {}
+  loadingStatus: {},
+  translaterSetting: false
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -34,6 +35,14 @@ export default function reduce(state = initialState, action = {}) {
           ...action.user
         }
       });
+    }
+
+    
+    case actionTypes.IS_TRANSLATER: {
+      return {
+        ...state,
+        translaterSetting: action.translat
+      };
     }
 
     default:

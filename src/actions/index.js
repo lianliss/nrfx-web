@@ -91,3 +91,7 @@ export function sendInviteLinkView(link) {
     link
   });
 }
+
+export function isTranslater(translat) {
+  return store.dispatch({ type: actionTypes.IS_TRANSLATER, translat });
+}
