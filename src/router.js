@@ -143,7 +143,8 @@ export const routes = process.env.DOMAIN === 'admin' ? [
 ];
 
 const params = {
-  defaultRoute: pages.NOT_FOUND,
+  // defaultRoute: pages.NOT_FOUND,
+  allowNotFound: true,
   defaultParams: {},
   strictQueryParams: true,
   trailingSlash: true,

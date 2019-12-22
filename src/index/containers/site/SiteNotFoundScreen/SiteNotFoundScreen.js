@@ -1,133 +1,34 @@
 import './SiteNotFoundScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
 
 import BaseScreen from '../../BaseScreen';
-import RecaptchaModal from '../../../components/site/RecaptchaModal/RecaptchaModal';
-import { isEmail, getLang } from '../../../../utils';
 import UI from '../../../../ui';
+import router from '../../../../router';
+import { getLang } from 'src/utils/index';
+import * as pages from '../../../../index/constants/pages';
 
 
-export default class SiteNotFoundScreen extends BaseScreen {
-  state = {
-    name: '',
-    email: '',
-    message: '',
-    isEmailValid: true,
-    rows: 3,
-  };
-
-  handleTextareaChange = (e) => {
-    const textareaLineHeight = 22;
-    const currentRows = ~~(e.target.scrollHeight / textareaLineHeight);
-
-    this.setState({rows: currentRows});
-    this.handleChange(e.target.value, 'message');
-  };
-
-  handleChange = (value, key) => {
-    const {isEmailValid} = this.state;
-
-    if (key === 'email') {
-      if (!isEmail(value)) {
-        this.setState({
-          isEmailValid: false,
-        });
-      } else if (!isEmailValid) {
-        this.setState({
-          isEmailValid: true,
-        });
-      }
-    }
-
-    this.setState({
-      [key]: value,
-    });
-  };
-
-  handleSubmit = (recaptchaToken) => {
-    //const { name, email, message } = this.state;
-  };
-
+class SiteNotFoundScreen extends BaseScreen {
   render() {
-    const { name, email, message, isEmailValid, rows } = this.state;
-    const isSubmitDisabled = !isEmailValid || !email || !message;
 
     return (
-      <div>
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
-
-        <div className="SiteNotFoundScreen Layout_spacing">
-          <div className="SiteNotFoundScreen__heading">
-            <h1>404</h1>
-            <h2>{getLang('site__siteNotFound')}</h2>
-          </div>
-
-          <h2 className="SiteNotFoundScreen__title">{this.lang.site.contactWriteLetter}</h2>
-          <h4 className="SiteNotFoundScreen__caption">{this.lang.site.contactWeContactYou}</h4>
-
-          <div className="SiteNotFoundScreen__form">
-            <div className="SiteNotFoundScreen__form__firstRow">
-              <div className="SiteNotFoundScreen__form__input__wrapper">
-                <input 
-                  className="SiteNotFoundScreen__form__input"
-                  placeholder={this.lang.site.contactYourName}
-                  value={name}
-                  onChange={(e) => this.handleChange(e.target.value, 'name')}  
-                />
-              </div>
-
-              <div className="SiteNotFoundScreen__form__input__wrapper">
-                <input 
-                  className="SiteNotFoundScreen__form__input"
-                  placeholder={this.lang.site.contactEmail}
-                  value={email}
-                  onChange={(e) => this.handleChange(e.target.value, 'email')}  
-                />
-                {!isEmailValid ? <p className="SiteNotFoundScreen__form__input__err">{getLang('site__siteEnterValidMail')}</p> : null}
-              </div>
-            </div>
-
-            <div className="SiteNotFoundScreen__form__input__wrapper">
-              <textarea
-                className="SiteNotFoundScreen__form__input"
-                placeholder={this.lang.site.contactMessage}
-                value={message}
-                onChange={this.handleTextareaChange}  
-                rows={rows}
-              />
-            </div>
-
-            <div className="SiteNotFoundScreen__form__footer">
-              <div className="SiteNotFoundScreen__socials__icons">
-                <a href="#" className="SiteNotFoundScreen__social">
-                  <img src={require('./asset/facebook.svg')} alt="Social icon" />
-                </a>
-                <a href="#" className="SiteNotFoundScreen__social">
-                  <img src={require('./asset/twitter.svg')} alt="Social icon" />
-                </a>
-                <a href="#" className="SiteNotFoundScreen__social">
-                  <img src={require('./asset/instagram.svg')} alt="Social icon" />
-                </a>
-                <a href="#" className="SiteNotFoundScreen__social">
-                  <img src={require('./asset/youtube.svg')} alt="Social icon" />
-                </a>
-                <a href="#" className="SiteNotFoundScreen__social">
-                  <img src={require('./asset/telegram.svg')} alt="Social icon" />
-                </a>
-              </div>
-
-              <RecaptchaModal disabled={isSubmitDisabled} className="Send_Button" onVerify={this.handleSubmit}>
-                <UI.Button fontSize={15} rounded>{this.lang.site.contactSend}</UI.Button>
-              </RecaptchaModal>
-            </div>
-          </div>
-
+      <div className="SitePageNotFoundScreen">
+        <div className="SitePageNotFoundScreen__content">
+          <h2>404</h2>
+          <p>{getLang('global_pageNotFound')}<br />{getLang('global_pageNotFoundDescription')}</p>
+          {this.props.isLogin ? (
+            <UI.Button onClick={() => router.navigate(pages.PROFILE)}>{getLang('global_pageNotFoundGoToProfile')}</UI.Button>
+          ) : (
+            <UI.Button onClick={() => router.navigate(pages.MAIN)}>{getLang('global_pageNotFoundGoToMainPage')}</UI.Button>
+          )}
         </div>
       </div>
     )
   }
 }
+
+export default connect(state => ({
+  isLogin: !!state.default.profile.user
+}))(SiteNotFoundScreen);
