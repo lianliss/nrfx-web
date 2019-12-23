@@ -1,10 +1,12 @@
 import './CabinetChangeEmailScreen.less';
 //
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router5';
 //
 import {GetParamsContext} from '../../../contexts';
 import UI from '../../../../ui';
+import { setTitle } from '../../../../actions/index';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import apiSchema from '../../../../services/apiSchema';
 import * as api from "../../../../services/api";
@@ -15,21 +17,19 @@ class CabinetChangeEmail extends React.PureComponent {
   state = {
     success: null,
     pending: true,
-    message: "You have successfully changed your email!"
+    message: utils.getLang('cabinet_changeEmailScreenSuccess')
   };
 
   componentDidMount() {
-    const {params} = this.context;
-    this.setTitle(utils.getLang("cabinet_changeEmailModal_name"));
+    this.props.setTitle(utils.getLang("cabinet_changeEmailModal_name"));
+    const { params } = this.props.router.getState();
 
     api.call(apiSchema.Profile.ConfirmEmailPost, params).then(() => {
-      this.setState({success: true, pending: false});
+      this.setState({ success: true, pending: false });
     }).catch((err) => {
-      this.setState({pending: false, message: err.message});
+      this.setState({ pending: false, message: err.message });
     })
   }
-
-  static contextType = GetParamsContext;
 
   render() {
     if (this.state.pending) {
@@ -37,14 +37,16 @@ class CabinetChangeEmail extends React.PureComponent {
     }
     return (
       <div className="CabinetChangeEmail">
-        <div className="CabinetChangeEmail__content Content_box">
+        <UI.ContentBox className="CabinetChangeEmail__content">
           {this.state.success && <div className="CabinetChangeEmail__content__icon" style={{backgroundImage: `url(${require('../../../../asset/120/success.svg')})`}} />}
           <p>{this.state.message}</p>
-          <UI.Button onClick={() => this.props.router.navigate(pages.PROFILE)}>Great!</UI.Button>
-        </div>
+          <UI.Button onClick={() => this.props.router.navigate(pages.PROFILE)}>{utils.getLang('global_understand')}</UI.Button>
+        </UI.ContentBox>
       </div>
     )
   }
 }
 
-export default withRouter(CabinetChangeEmail);
+export default connect(null, {
+  setTitle
+})(withRouter(CabinetChangeEmail));
