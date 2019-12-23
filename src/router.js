@@ -139,7 +139,7 @@ export const routes = process.env.DOMAIN === 'admin' ? [
   {
     name: pages.FEE,
     path: '/fee',
-  }
+  },
   {
     name: pages.TRADER,
     path: '/trader',
