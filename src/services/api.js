@@ -51,7 +51,8 @@ export function invoke(method, name, params, options = {}) {
       .then(resp => {
         if (resp.status === 403) {
           auth.logout();
-          window.location.href = '/';
+          reject({ message: '403 Forbidden: Invalid credentials' });
+          // window.location.href = '/';
           return;
         }
 

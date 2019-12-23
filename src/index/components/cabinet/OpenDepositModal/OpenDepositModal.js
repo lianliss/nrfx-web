@@ -238,7 +238,7 @@ class OpenDepositModal extends React.Component {
                 this.__setState({ amount });
               }}
             />
-            <UI.Button onClick={this.__handleClickMax} currency={currencyInfo}>{utils.getLang('cabinet_sendCoinsModal_max')}</UI.Button>
+            <UI.Button onClick={this.__handleClickMax} type="outline" currency={currencyInfo}>{utils.getLang('cabinet_sendCoinsModal_max')}</UI.Button>
           </div>
           <div className="OpenDepositModal__row">
             <UI.SwitchTabs

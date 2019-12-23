@@ -18,7 +18,7 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hidd
 
   let displayNumber = parseFloat(parseFloat(number).toFixed(fractionDigits));
 
-  displayNumber = displayNumber.toLocaleString();
+  displayNumber = displayNumber.toLocaleString(undefined, { maximumFractionDigits: fractionDigits });
 
   if (currency && !percent ) {
     displayNumber += ' ' + ( !hiddenCurrency ? currency.toUpperCase() : ''); // nbsp
