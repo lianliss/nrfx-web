@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import UI from '../../../ui';
+import UI from 'src/ui';
 import * as steps from '../fixtures';
-import * as utils from '../../../utils';
-import * as actions from '../../../actions';
-import {registerUser} from '../../../actions/auth';
-import SuccessModal from '../../../index/components/site/SuccessModal/SuccessModal';
-import initGetParams from '../../../services/initialGetParams';
+import * as utils from 'utils';
+import * as actions from 'actions';
+import {registerUser} from 'actions/auth';
+import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
+import initGetParams from 'src/services/initialGetParams';
 
 function Registration({ changeStep, currentStep, email, handleChange, onClose, refParam }) {
 
@@ -43,7 +43,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
 
   return (
     <div className="RegisterModal">
-      <h2 className="AuthModal__title">{utils.getLang('site__authModalRegistration')}</h2>
+      <UI.ModalHeader>{utils.getLang("site__authModalRegistration")}</UI.ModalHeader>
 
       {currentStep === steps.REGISTRATION
         ? (

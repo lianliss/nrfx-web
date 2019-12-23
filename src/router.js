@@ -137,13 +137,18 @@ export const routes = process.env.DOMAIN === 'admin' ? [
     path: '/merchant/:merchant/:status',
   },
   {
+    name: pages.FEE,
+    path: '/fee',
+  }
+  {
     name: pages.TRADER,
     path: '/trader',
   }
 ];
 
 const params = {
-  defaultRoute: pages.NOT_FOUND,
+  // defaultRoute: pages.NOT_FOUND,
+  allowNotFound: true,
   defaultParams: {},
   strictQueryParams: true,
   trailingSlash: true,

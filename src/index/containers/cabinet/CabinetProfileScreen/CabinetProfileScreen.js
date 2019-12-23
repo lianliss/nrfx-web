@@ -12,7 +12,7 @@ import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
-import DashboardItem from './components/DashboardItem';
+import DashboardItem from './components/DashboardItem/DashboardItem';
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import router from "../../../../router";
 import PartnersSection from './components/PartnersSection';
@@ -188,13 +188,15 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         <div>
           {this.__renderRightContent(true)}
           {this.__renderWallets()}
+          <DashboardItem
+            type="currency"
+          />
           {this.__renderDashboard()}
         </div>
       )
     }
     return <div>
       {this.__renderWallets()}
-      <div className="CabinetProfileScreen__height_padding"> </div>
       {this.__renderDashboard()}
     </div>
   };
@@ -226,12 +228,13 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     return (
       <div className="CabinetProfileScreen__dashboard">
         <div className="CabinetProfileScreen__dashboard__wrapper">
+          { !this.props.adaptive && <DashboardItem
+            type="currency"
+          /> }
           {rows}
           <DashboardItem
-            key={3}
             type="commerce"
           />
-          <div className="fakeItem"> </div>
         </div>
       </div>
     )

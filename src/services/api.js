@@ -1,5 +1,7 @@
 import * as auth from './auth';
+import * as action from '../actions/';
 
+// const API_ENTRY = 'https://api.narfex.com';
 export const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
 const API_VERSION = 1;
 
@@ -57,6 +59,9 @@ export function invoke(method, name, params, options = {}) {
           if (resp.status === 200) {
             resolve(json);
           } else {
+            if (json.code === 'withdraw_disabled') {
+              action.openModal('user_block');
+            }
             json.error_name = 'failed';
             reject(json);
           }

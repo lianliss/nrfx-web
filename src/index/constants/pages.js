@@ -28,3 +28,4 @@ export const RESET_PASSWORD = 'reset_password';
 export const MERCHANT = 'merchant';
 export const EXCHANGE = 'exchange';
 export const TRADER = 'trader';
+export const FEE = 'fee';

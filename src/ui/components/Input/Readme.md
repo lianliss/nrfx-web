@@ -22,3 +22,7 @@ import Button from '../Button/Button';
     <Input onTextChange={console.log} cell type="number" placeholder="Number call" />
 </div>
 ```
+
+```js
+<Input description="Fee: 0.1%" indicator="USD" />
+```

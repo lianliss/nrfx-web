@@ -2,9 +2,6 @@
 
   .Modal__box {
     max-width: 800px;
-    padding: 40px;
-
-    @media (max-width: 992px) { max-width: 90%; }
   }
 
   .StaticContentModal__opener {
@@ -15,7 +12,7 @@
 
   .StaticContentModal__content__wrapper {
     color: var(--foreground-primary);
-    height: 80vh;
+    height: 70vh;
     overflow-y: scroll;
     overflow-x: hidden;
 
@@ -29,6 +26,14 @@
 
     .Button {
       margin: 25px 10px 15px;
+    }
+  }
+}
+
+.adaptive {
+  .StaticContentModal {
+    .StaticContentModal__content__wrapper {
+      height: initial;
     }
   }
 }

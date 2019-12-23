@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import UI from '../../../ui';
-import { getAuth } from '../../../actions/auth';
-import * as utils from '../../../utils';
+import UI from 'src/ui';
+import { getAuth } from 'actions/auth';
+import * as utils from 'utils';
 import * as steps from '../fixtures';
 
 
@@ -28,7 +28,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
 
   return (
     <>
-      <h2 className="AuthModal__title">{utils.getLang('site__authModalLogIn')}</h2>
+      <UI.ModalHeader>{utils.getLang("site__authModalLogIn")}</UI.ModalHeader>
 
       <div className="AuthModal__content">
 

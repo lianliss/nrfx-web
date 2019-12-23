@@ -100,7 +100,9 @@ class Input extends React.Component {
         }
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
           this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
-        {this.props.description ? <div className="Input__description"><MarkDown content={this.props.description} /></div> : null}
+        {this.props.description ? <div className="Input__description">
+          { typeof this.props.description !== 'string' ? this.props.description : <MarkDown content={this.props.description} /> }
+        </div> : null}
       </div>
     )
   }
@@ -116,6 +118,12 @@ class Input extends React.Component {
       }
     }
 
+    if (this.props.pattern) {
+      if (!this.props.pattern.test(e.key)) {
+        e.preventDefault();
+      }
+    }
+
     if (this.props.type === 'number') {
       if (this.props.cell) {
         if (isNaN(e.key)) {
@@ -124,6 +132,10 @@ class Input extends React.Component {
       } else {
         __doubleInputOnKeyPressHandler(e, e.target.value);
       }
+    }
+
+    if (this.props.maxLength && e.target.value.length >= this.props.maxLength) {
+      e.preventDefault();
     }
   };
 
@@ -151,6 +163,8 @@ Input.defaultProps = {
   mouseWheel: true,
   positive: true,
   cell: false,
+  maxLength: null,
+  pattern: null,
 };
 
 Input.propTypes = {
@@ -164,6 +178,9 @@ Input.propTypes = {
   onClick: PropTypes.func,
   classNameWrapper: PropTypes.string,
   disabled: PropTypes.bool,
+  maxLength: PropTypes.number,
+  pattern: PropTypes.string,
+  description: PropTypes.string,
   size: PropTypes.oneOf(['small']),
   type: PropTypes.oneOf(['text', 'number', 'password', 'code']),
   positive: PropTypes.bool,

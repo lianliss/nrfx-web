@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import UI from '../../../ui';
-import * as utils from '../../../utils';
+import UI from 'src/ui';
+import * as utils from 'utils';
 import * as steps from '../fixtures';
 import countries from '../../../index/constants/countries.json';
-import { sendSmsCode } from '../../../actions/auth';
+import { sendSmsCode } from 'actions/auth';
 
 
 const codes = countries.map(country => ({
@@ -46,7 +46,7 @@ function ConfirmPhone({ changeStep, params }) {
 
   return (
     <div className="AuthModal__Phone">
-      <h2 className="AuthModal__title">{utils.getLang('site__authModalConfirmNumber')}</h2>
+      <UI.ModalHeader>{utils.getLang("site__authModalConfirmNumber")}</UI.ModalHeader>
 
       <div className="AuthModal__content">
         {errorMsg

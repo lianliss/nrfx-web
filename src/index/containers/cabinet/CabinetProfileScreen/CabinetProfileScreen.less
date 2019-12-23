@@ -7,143 +7,14 @@
 }
 
 .CabinetProfileScreen__dashboard {
-  width: calc(100% + 28px);
+
   .CabinetProfileScreen__dashboard__wrapper {
     width: 100%;
-    flex-wrap: wrap;
-    grid-template-columns: 33.3% 33.3% 33.3%;
+
     display: grid;
-  }
-  .DashboardItem {
-    position: relative;
-    margin-right: 28px;
-    flex: 1;
-
-    &:nth-child(n + 4) {
-      margin-top: 16px;
-    }
-
-    .DashboardItem__close {
-      position: absolute;
-      top: 7px;
-      right: 7px;
-    }
-
-    .DashboardItem__content {
-      height: 280px;
-      padding: 16px;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      flex-direction: column;
-      justify-content: start;
-      -moz-user-select: none;
-      -khtml-user-select: none;
-      -webkit-user-select: none;
-      -o-user-select: none;
-      position: relative;
-      user-select: none;
-
-      .DashboardItem__content_header {
-         width: 100%;
-         height: 24px;
-         display: flex;
-         margin-bottom: 16px;
-         .DashboardItem__icon {
-           width: 24px !important;
-           height: 24px;
-           margin: auto 0;
-           color: var(--primary-grey);
-         }
-         .DashboardItem__headerText {
-           font-size: 16px;
-           line-height: 24px;
-           margin: auto 0 0 10px;
-           height: 24px;
-         }
-      }
-
-      .DashboardItem__content_item {
-        width: 100%;
-        height: 35px;
-        margin-bottom: 16px;
-        .DashboardItem__content_item_header {
-          height: 16px;
-          width: 100%;
-          position: relative;
-          font-size: 13px;
-          color: #808080;
-        }
-        .DashboardItem__content_item_header_left {
-          position: absolute;
-          left: 0;
-        }
-        .DashboardItem__content_item_header_right {
-          position: absolute;
-          right: 0;
-          cursor: pointer;
-          border-bottom: 1px solid rgba(128, 128, 128, 0.56);
-        }
-
-        .DashboardItem__content_item_context {
-          width: 100%;
-          font-size: 16px;
-          height: 30px;
-          line-height: 30px;
-          color: #212121;
-        }
-      }
-
-      h3 {
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 16px;
-        color: var(--primary-grey);
-      }
-
-      p {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        color: rgba(0, 0, 0, 0.87);
-        margin-top: 4px;
-      }
-
-      .DashboardItem__buttonAction {
-        position: absolute;
-        bottom: 24px;
-        left: 24px;
-        right: 24px;
-        .Button {
-          width: 100%;
-        }
-      }
-    }
-
-    .DashboardItem__loader {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      right: 10px;
-      top: 10px;
-      color: #FF9E65;
-      animation: rotate 2s infinite linear;
-    }
-  }
-
-  .DashboardItem__inactive {
-    opacity: 0.5;
-  }
-
-  .DashboardItem__selected {
-    .DashboardItem__content h3, .DashboardItem__content p {
-      color: white !important;
-    }
-  }
-
-  @keyframes rotate {
-    0%    { transform: rotate(0deg); }
-    100%  { transform: rotate(360deg); }
+    grid-template-columns: repeat(3, 1fr);
+    //grid-auto-rows: 100px;
+    grid-gap: 28px;
   }
 }
 
@@ -168,39 +39,6 @@
 }
 
 // DashboardItemAction
-
-.DashboardItem {
-
-  .DashboardItemAction__icon {
-    width: 100%;
-    height: 120px;
-    margin: 8px 0 0;
-
-    .DashboardItemAction__icon_content {
-      width: 120px;
-      height: 120px;
-      margin: auto;
-    }
-  }
-
-  .DashboardItemAction__description {
-    width: 100%;
-    font-size: 12px;
-    margin: 10px 0 0;
-    text-align: center;
-  }
-
-  .DashboardItemAction__button {
-    width: 100%;
-    display: flex;
-    margin-top: 16px;
-    .Button {
-      margin: auto 24px;
-      width: calc(100% - 48px);
-      white-space: nowrap;
-    }
-  }
-}
 
 .CabinetStartProfileScreen__right {
   grid-template-columns: 100%;
@@ -340,25 +178,22 @@
   }
 
   .CabinetProfileScreen__dashboard {
+    margin: 24px 0;
     width: 100%;
     height: 312px;
     overflow: hidden;
     overflow-x: scroll;
     box-sizing: border-box;
+
     .CabinetProfileScreen__dashboard__wrapper {
       width: 100%;
-      flex-wrap: wrap;
-      flex-direction: column;
-      display: grid;
-      grid-template-columns: 208px 208px 208px 16px;
-      padding: 16px;
-      margin-right: 16px;
-      .DashboardItem {
-        width: calc(100% - 16px);
-      }
-      .fakeItem {
-        width: 1px;
-        height: 312px;
+      display: flex;
+      margin: 0 8px;
+
+      & > div {
+        flex: 0 0 auto;
+        margin: 0 8px;
+        width: 192px;
       }
     }
   }

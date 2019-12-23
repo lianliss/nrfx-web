@@ -18,10 +18,11 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hidd
 
   let displayNumber = parseFloat(parseFloat(number).toFixed(fractionDigits));
 
+  displayNumber = displayNumber.toLocaleString();
+
   if (currency && !percent ) {
     displayNumber += ' ' + ( !hiddenCurrency ? currency.toUpperCase() : ''); // nbsp
   }
-
 
   if (type === 'auto') {
     type = number > 0 ? 'up' : 'down';

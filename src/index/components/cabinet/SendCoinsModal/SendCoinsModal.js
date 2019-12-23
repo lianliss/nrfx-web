@@ -10,11 +10,8 @@ import LoadingStatus from '../../cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../../utils';
 import * as storeUtils from "../../../storeUtils";
 import * as CLASSES from "../../../constants/classes";
-import company from '../../../../index/constants/company';
 
 import * as api from "../../../../services/api";
-import SVG from 'react-inlinesvg';
-import Button from '../../../../ui/components/Button/Button';
 
 
 class SendCoinsModal extends React.Component {
@@ -42,22 +39,13 @@ class SendCoinsModal extends React.Component {
     return true;
   }
 
-  __renderUserBlock = () => (
-    <div className="SendCoinsModal__block">
-      <SVG src={require('../../../../asset/120/block.svg')} />
-      <p>{utils.getLang('cabinet_withdrawalDisabledText')} <a href={'mailto:' + company.email.support}>{company.email.support}</a></p>
-      <Button onClick={this.props.onClose}>{utils.getLang('global_ok')}</Button>
-    </div>
-  )
-
   render() {
-    const currencyInfo = this.props.thisState.currency ? actions.getCurrencyInfo(this.props.thisState.currency) : {};
     return (
       <UI.Modal isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_sendCoinsModal_name')}
         </UI.ModalHeader>
-        {this.props.withdrawalDisabled ? this.__renderUserBlock() : this.__renderContent()}
+        {this.__renderContent()}
       </UI.Modal>
     )
   }
@@ -122,6 +110,10 @@ class SendCoinsModal extends React.Component {
               onTextChange={this.__amountDidChange}
               onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.props.thisState.amount)}
               value={this.props.thisState.amount || undefined}
+              // description={
+              //   <span style={{color: currencyInfo.color}}>
+              //     {utils.getLang('global_fee')}: <UI.NumberFormat number={0.01} currency={currencyInfo.abbr} /></span>
+              // }
               error={this.state.errorAmount}
             />
             <UI.Input

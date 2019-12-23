@@ -93,13 +93,13 @@ export default class WalletTransactionModal extends React.Component {
             <InfoRow label={utils.getLang("global_amount")}>{utils.formatDouble(data.amount)} {currency}</InfoRow>
             <InfoRow label={utils.getLang("global_date")}>{ utils.dateFormat(data.created_at)}</InfoRow>
           </InfoRowGroup>
-          <div className="WalletTransactionModal__card" style={{ background: currencyInfo.background }}>
-            <div className="WalletTransactionModal__card__icon">
-              <SVG src={require('../../../../asset/24px/receive.svg')} />
-            </div>
-            <div className="WalletTransactionModal__card__label">{utils.getLang('cabinet_walletTransactionModal_total')}</div>
-            <div className="WalletTransactionModal__card__value">{utils.formatDouble(data.amount)} {currency}</div>
-          </div>
+
+          <UI.WalletCard
+            title={utils.getLang('cabinet_walletTransactionModal_total')}
+            balance={data.amount}
+            currency={currencyInfo}
+          />
+
           <div className="WalletTransactionModal__status">
             {data.status !== 'done' && <div className="WalletTransactionModal__status__row">
               <div className="WalletTransactionModal__status__row__label">{utils.getLang('cabinet_walletTransactionModal_blockchainConfirmations')}</div>

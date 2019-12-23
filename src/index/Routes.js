@@ -30,6 +30,7 @@ import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen/MenuScreen
 import * as NotificationsScreen from './containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen';
 import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
 import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
+import SiteFeeScreen from './containers/site/SiteFeeScreen/SiteFeeScreen';
 import TraderScreen from './containers/cabinet/TraderScreen/TraderScreen';
 
 export default function Routes(props) {
@@ -94,6 +95,10 @@ export default function Routes(props) {
       Component = SiteFaqScreen;
       WrapperComponent = SiteWrapper;
       break;
+    case pages.FEE:
+      Component = SiteFeeScreen;
+      WrapperComponent = SiteWrapper;
+      break;
     case pages.UIKIT:
       if (process.env.NODE_ENV === `development`) {
         Component = UIKitScreen;
@@ -142,16 +147,23 @@ export default function Routes(props) {
       break;
   }
 
-  if (!Component) {
-    return <h1>404 Not Found</h1>;
-  }
-
   const defaultProps = {
     state: props.state.default,
     router: props.router,
   };
 
-  const isWithOrangeBg = route === pages.CONTACT || route === pages.FAQ || route === pages.ABOUT || route === pages.HISTORY || route === pages.MISSION || route === pages.NOT_FOUND || route === pages.SAFETY || route === pages.TECHNOLOGY;
+  const isWithOrangeBg = [
+    pages.CONTACT,
+    pages.FAQ,
+    pages.ABOUT,
+    pages.HISTORY,
+    pages.MISSION,
+    pages.NOT_FOUND,
+    pages.SAFETY,
+    pages.TECHNOLOGY,
+    pages.FEE
+  ].includes(route);
+
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
       <Component {...defaultProps} {...actions} routerParams={routerParams} />

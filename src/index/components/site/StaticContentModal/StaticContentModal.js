@@ -2,9 +2,9 @@ import './StaticContentModal.less';
 //
 import React, { useState, useEffect } from 'react';
 //
-import UI from '../../../../ui';
-import * as utils from '../../../../utils';
-import { getStaticPageContent } from '../../../../actions';
+import UI from 'src/ui';
+import * as utils from 'utils';
+import { getStaticPageContent } from 'actions';
 import ModalState from '../../cabinet/ModalState/ModalState';
 
 export default props => {
@@ -30,8 +30,8 @@ export default props => {
     <ModalState status={status} onRetry={__load} />
   ) : (
     <UI.Modal isOpen={true} className="StaticContentModal" onClose={props.onBack}>
+      <UI.ModalHeader>{props.title}</UI.ModalHeader>
       <div className="StaticContentModal__content__wrapper">
-        <h3 className="StaticContentModal__title">{props.title}</h3>
         <div className="StaticContentModal__content" dangerouslySetInnerHTML={{ __html: data.content }} />
         <UI.Button
           fontSize={15}

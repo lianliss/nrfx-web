@@ -4,17 +4,16 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 
-import UI from '../../../../ui';
-import * as utils from '../../../../utils/index';
-import * as pages from '../../../constants/pages';
-import router from '../../../../router';
-import * as steps from '../../../../components/AuthModal/fixtures';
-import { setLang } from '../../../../services/lang';
+import UI from 'src/ui';
+import * as utils from 'utils/index';
+import * as pages from 'src/index/constants/pages';
+import router from 'src/router';
+import * as steps from 'src/components/AuthModal/fixtures';
+import { getLang, setLang } from 'src/services/lang';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
-import * as actions from '../../../../actions';
-import * as auth from '../../../../actions/auth';
-
+import * as actions from 'actions';
+import * as auth from 'actions/auth';
 
 function Header({ showLightLogo, langList, routerState, profile }) {
   const headerLinks = [
@@ -51,6 +50,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           route: pages.ABOUT,
         },
         {
+          title: utils.getLang('site__headerFee'),
+          route: pages.FEE,
+        },
+        {
           title: utils.getLang('site__headerContactUs'),
           route: pages.CONTACT,
         },
@@ -73,7 +76,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content',{type: "terms"})}>
+            <span onClick={ () => actions.openModal('static_content',{type: "terms", title: utils.getLang('site__headerTerms')})}>
               {utils.getLang('site__headerTerms')}
             </span>
           ),
@@ -81,7 +84,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content', {type: "privacy"})}>
+            <span onClick={ () => actions.openModal('static_content', {type: "privacy", title: utils.getLang('site__headerPrivacyPolicy')})}>
               {utils.getLang('site__headerPrivacyPolicy')}
             </span>
           ),
@@ -123,14 +126,14 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                 <UI.Button
                   type="outline"
                   fontSize={15}
-                  onClick={() => actions.openModal('auth', { type: steps.LOGIN })}
+                  onClick={() => actions.openModal('auth', { type: steps.LOGIN, title: utils.getLang('site__headerLogIn') })}
                 >
                   {utils.getLang('site__headerLogIn')}
                 </UI.Button>,
                 <UI.Button
                   type="outline_white"
                   fontSize={15}
-                  onClick={() => actions.openModal('auth', { type: steps.REGISTRATION })}
+                  onClick={() => actions.openModal('auth', { type: steps.REGISTRATION, title: utils.getLang('site__commerceRegistration') })}
                 >
                   {utils.getLang('site__commerceRegistration')}
                 </UI.Button>
@@ -184,9 +187,9 @@ function Header({ showLightLogo, langList, routerState, profile }) {
 
               <div className="SiteHeader__menu_controls">
                 { !isLogin ? [
-                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN})}>{utils.getLang('site__headerLogIn')}</MenuItem>,
+                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN, title: utils.getLang('site__headerLogIn')})}>{utils.getLang('site__headerLogIn')}</MenuItem>,
                   <UI.Button
-                    onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})}
+                    onClick={() => actions.openModal('auth', {type: steps.REGISTRATION, title: utils.getLang('site__commerceRegistration')})}
                     type="outline_white"
                     rounded
                     fontSize={15}

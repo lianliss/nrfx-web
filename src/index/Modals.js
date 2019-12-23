@@ -23,6 +23,7 @@ import MerchantModal from '../index/components/cabinet/MerchantModal/MerchantMod
 import FiatOperationModal from '../index/components/cabinet/FiatOperationModal/FiatOperationModal';
 import DepositPoolSuccessModal from '../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal';
 import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
+import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlockModal';
 import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewBotModal';
 import router from '../router';
 
@@ -103,6 +104,9 @@ export default function Modals(props) {
     case 'trader_new_bot':
       Component = TraderNewBotModal;
       break;
+    case 'user_block':
+      Component = UserBlockModal;
+      break;
     default: return null;
   }
 
@@ -115,7 +119,9 @@ export default function Modals(props) {
       }}
       onClose={() => {
         const route = router.getState();
-        router.navigate(route.name, null )
+        router.navigate(route.name, {
+          section: route.params.section
+        })
       }}
     />
   );
