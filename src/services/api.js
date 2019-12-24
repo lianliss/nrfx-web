@@ -1,5 +1,7 @@
 import * as auth from './auth';
 import * as action from '../actions/';
+import router from '../router';
+import * as adminPages from '../admin/constants/pages';
 
 const API_ENTRY = 'https://api.narfex.com';
 // const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
@@ -52,7 +54,7 @@ export function invoke(method, name, params, options = {}) {
         if (resp.status === 403) {
           auth.logout();
           reject({ message: '403 Forbidden: Invalid credentials' });
-          // window.location.href = '/';
+          router.navigate(adminPages.MAIN);
           return;
         }
 
