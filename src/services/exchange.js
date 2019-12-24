@@ -24,6 +24,7 @@ class Exchange {
       ['balance_update', this.__balanceDidUpdate],
       ['ticker', this.__tickerUpdate],
       ['error_connection', this.__errorConnection],
+      ['close_connection', this.__errorConnection],
       ['completed_orders', this.__orderBookRemoveOrder]
     ];
 

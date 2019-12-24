@@ -22,7 +22,6 @@ class RealTime {
 
       // resolve queue
       for (let event of this.sendQueue) {
-        console.log(1, 'send');
         this.connection.send(JSON.stringify(event));
       }
 
@@ -38,7 +37,6 @@ class RealTime {
       this.connected = false;
       this.triggerListeners('close_connection');
       console.log('[WS] Disconnected, reconnection..');
-      setTimeout(this.__connect, 5000);
     };
 
     this.connection.onmessage = this.__messageDidReceive;
@@ -46,33 +44,6 @@ class RealTime {
 
   __messageDidReceive = ({data}) => {
     let messages = data.split('\n');
-
-    // const events = {};
-    //
-    // messages.forEach(m => {
-    //
-    //   let json;
-    //   try {
-    //     json = JSON.parse(m);
-    //   } catch (e) {
-    //     console.log('[WS] Error:', e.message, m);
-    //   }
-    //
-    //
-    //   m = JSON.parse(m);
-    //   if (events[m.type]) {
-    //     events[m.type].push(m.body);
-    //   } else {
-    //     events[m.type] = [m.body];
-    //   }
-    // });
-    //
-    // Object.keys(events).forEach(event => {
-    //   if (messages[event]) {
-    //     console.log(messages[event]);
-    //     alert(1);
-    //   }
-    // });
 
     for (let message of messages) {
       let json;
@@ -86,7 +57,6 @@ class RealTime {
       //console.log('[WS]', json);
       if (this.listeners[json.type]) {
         for (let listener of this.listeners[json.type]) {
-          console.log("json:", json);
           listener(json.body);
         }
       }
