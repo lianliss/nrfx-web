@@ -11,6 +11,7 @@ import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/Se
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
+import TranslatorModal from './components/cabinet/TranslatorModal';
 import NewInviteLinkModal from './components/cabinet/NewInviteLinkModal/NewInviteLinkModal';
 import PartnerInfoModal from './components/cabinet/PartnerInfoModal/PartnerInfoModal';
 import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBalanceModal';
@@ -102,6 +103,9 @@ export default function Modals(props) {
       break;
     case 'user_block':
       Component = UserBlockModal;
+      break;
+    case 'translator':
+      Component = TranslatorModal;
       break;
     default: return null;
   }
