@@ -58,7 +58,7 @@ class SiteFeeScreen extends BaseScreen {
             </tr>
             <tr>
               <td>{getLang('site__fee_minimumWithdrawal')}</td>
-              <td><NumberFormat number={0.01} currency="btc" /></td>
+              <td><NumberFormat number={0.001} currency="btc" /></td>
               <td><NumberFormat number={0.02} currency="eth" /></td>
               <td><NumberFormat number={0.002} currency="ltc" /></td>
             </tr>
@@ -98,7 +98,7 @@ class SiteFeeScreen extends BaseScreen {
               <td><NumberFormat number={60} currency="usd" /> или <NumberFormat number={1} percent /></td>
               <td><NumberFormat number={60} currency="eur" /> или <NumberFormat number={1} percent /></td>
               <td><NumberFormat number={4000} currency="rub" /> или <NumberFormat number={1} percent /></td>
-              <td><NumberFormat number={6000} currency="idr" /> или <NumberFormat number={1} percent /></td>
+              <td><NumberFormat number={10000} currency="idr" /> или <NumberFormat number={1} percent /></td>
             </tr>
             <tr>
               <td>{getLang('site__fee_minimumWithdrawal')}</td>
@@ -119,7 +119,7 @@ class SiteFeeScreen extends BaseScreen {
               <td><NumberFormat number={60} currency="usd" /> или <NumberFormat number={1} percent /></td>
               <td><NumberFormat number={60} currency="eur" /> или <NumberFormat number={1} percent /></td>
               <td><NumberFormat number={4000} currency="rub" /> или <NumberFormat number={1} percent /></td>
-              <td><NumberFormat number={6000} currency="idr" /> или <NumberFormat number={1} percent /></td>
+              <td><NumberFormat number={10000} currency="idr" /> или <NumberFormat number={1} percent /></td>
             </tr>
           </table>
         </UI.ContentBox>
