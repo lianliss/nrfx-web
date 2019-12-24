@@ -1,7 +1,6 @@
 import './SiteTechnologyScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
@@ -51,10 +50,6 @@ export default class SiteTechnologyScreen extends BaseScreen {
 
     return (
       <div>
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
-
         <div className="Layout_spacing">
           <h1 className="SiteTechnologyScreen__heading">{this.lang.site.technologyTitle}</h1>
 

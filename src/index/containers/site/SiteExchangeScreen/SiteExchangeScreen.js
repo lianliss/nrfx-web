@@ -1,7 +1,6 @@
 import './SiteExchangeScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
@@ -18,9 +17,6 @@ export default class SiteExchangeScreen extends BaseScreen {
   render() {
     return (
       <div>
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
 
         <div className="Layout_spacing">
           <SitePageInfoBlock

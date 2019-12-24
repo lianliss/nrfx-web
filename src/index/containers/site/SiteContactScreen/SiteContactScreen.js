@@ -1,7 +1,6 @@
 import './SiteContactScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import COMPANY from '../../../constants/company';
@@ -70,10 +69,6 @@ export default class SiteContactScreen extends BaseScreen {
   render() {
     return (
       <div>
-        <Helmet>
-          <meta title={this.lang.site.contactContactUs} content={this.lang.site.contactSubTitle} />
-        </Helmet>
-
         <div className="SiteContactScreen Layout_spacing">
           <h1 className="SiteContactScreen__heading">{this.lang.site.contactContactUs}</h1>
           <div className="SiteContactScreen__content">

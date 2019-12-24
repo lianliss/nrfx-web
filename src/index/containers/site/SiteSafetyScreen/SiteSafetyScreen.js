@@ -1,7 +1,6 @@
 import './SiteSafetyScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
@@ -13,10 +12,6 @@ export default class SiteSafetyScreen extends BaseScreen {
   render() {
     return (
       <div>
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
-
         <div className="Layout_spacing">
           <h1 className="SiteSafetyScreen__heading">{this.lang.site.safetyTitle}</h1>
 

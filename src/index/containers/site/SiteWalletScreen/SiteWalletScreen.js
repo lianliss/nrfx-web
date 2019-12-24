@@ -1,7 +1,6 @@
 import './SiteWalletScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
@@ -14,10 +13,6 @@ export default class SiteWalletScreen extends BaseScreen {
   render() {
     return (
       <div className="Wallet__screen">
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
-
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('./asset/wallet_main_image.png')}
