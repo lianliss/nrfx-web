@@ -11,7 +11,7 @@ export default function SettingSecurity({props}) {
   const { user } = props;
 
   const __handleChangePassword = () => {
-    
+
     if (user.new_password && user.new_password.length < 6) {
       props.toastPush(utils.getLang('global_passwordMustBe'), "error");
       return false;
@@ -92,6 +92,9 @@ export default function SettingSecurity({props}) {
         </div>
       </div>
       <div className="CabinetSettingsScreen__space"></div>
+      <div className="CabinetSettingsScreen__header">
+        {utils.getLang("cabinet_secretKey")}
+      </div>
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
