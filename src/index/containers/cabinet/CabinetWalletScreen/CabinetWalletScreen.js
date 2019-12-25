@@ -68,7 +68,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
 
             <UI.FloatingButtonItem
               icon={require('../../../../asset/24px/send.svg')}
-              onClick={() => {actions.openModal('send', {preset:'Bitcoin'})}}
+              onClick={() => {actions.openModal('send', {currency:'btc'})}}
             >
               {utils.getLang('site__contactSend')}
             </UI.FloatingButtonItem>,
@@ -111,7 +111,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
               label={utils.getLang('cabinet_walletScreen_receive')}
             />,
             <ProfileSidebarItem
-              onClick={() => {actions.openModal('send', {preset:'Bitcoin'})}}
+              onClick={() => {actions.openModal('send', {currency: 'btc'})}}
               icon={<SendSvg />}
               label={utils.getLang('site__contactSend')}
             />,

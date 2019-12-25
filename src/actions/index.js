@@ -12,9 +12,7 @@ import { getLang } from '../services/lang';
 
 export function loadLang(code) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.LangGet, { code }, {
-      apiEntry: 'https://api.narfex.com' // TODO
-    }).then(({ translations, languages }) => {
+    api.call(apiSchema.LangGet, { code }).then(({ translations, languages }) => {
       const langList = languages.map(lang => ({ value: lang[0], title: lang[1] }));
       store.dispatch({
         type: actionTypes.SET_LANG,
@@ -53,6 +51,7 @@ export function getCurrencyInfo(name) {
   if (!currency) return { abbr: name };
   return {
     ...currency,
+    name: utils.ucfirst(currency.name), // HACK, TODO: Форматировать имена валют на бэке
     background: `linear-gradient(45deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`
   }
 }

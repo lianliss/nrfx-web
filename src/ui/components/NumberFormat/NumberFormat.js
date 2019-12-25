@@ -6,7 +6,7 @@ import { classNames } from '../../utils';
 
 import * as utils from '../../utils/index';
 
-const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hiddenCurrency, type, percent, indicator, brackets }) => {
+const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
   if (!fractionDigits) {
     if (percent) {
       fractionDigits = 2;
@@ -16,7 +16,9 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hidd
     // TODO: Вынести количество символов после точки в объект валют
   }
 
-  let displayNumber = parseFloat(parseFloat(number).toFixed(fractionDigits));
+
+  const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
+  let displayNumber = Math.floor(number * coefficient) / coefficient;
 
   displayNumber = displayNumber.toLocaleString(undefined, { maximumFractionDigits: fractionDigits });
 
@@ -45,7 +47,7 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hidd
   }
 
   return (
-    <span className={classNames("Number", {
+    <span onClick={onClick} className={classNames("Number", {
       [type]: type
     })} title={!skipTitle && number}>{displayNumber}</span>
   );

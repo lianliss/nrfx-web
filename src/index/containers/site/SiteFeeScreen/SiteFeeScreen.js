@@ -135,7 +135,7 @@ class SiteFeeScreen extends BaseScreen {
             <tr>
               <td>{getLang('site__fee_exchangeFee')}</td>
               <td><NumberFormat number={0.2} percent /></td>
-              <td><p>{getLang('site__fee_maximumBiddingFee')}</p></td>
+              <td><p>{getLang('site__fee_minimumBiddingFee')}</p></td>
               <td><p>{getLang('site__fee_maximumBiddingFee')}</p></td>
             </tr>
           </table>

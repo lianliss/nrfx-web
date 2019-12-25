@@ -144,21 +144,6 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
-    case CLASSES.SEND_COINS_MODAL:
-      mapState2Props = state => ({
-        thisState: state.modalGroup.states.send,
-        wallets: state.wallets.wallets
-      });
-      mapDispatch2Props = {
-        setStateByModalPage: modalGroupActions.setStateByModalPage,
-        toastPush: toastsActions.toastPush
-      };
-      break;
-    case CLASSES.SEND_COINS_CONFIRM_MODAL:
-      mapDispatch2Props = {
-        toastPush: toastsActions.toastPush
-      };
-      break;
     case CLASSES.CHANGE_SECRET_KEY_MODAL:
       mapDispatch2Props = {
         changeSecretKay: profileActions.changeSecretKay,

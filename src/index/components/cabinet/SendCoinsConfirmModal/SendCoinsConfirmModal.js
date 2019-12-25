@@ -1,29 +1,22 @@
 import './SendCoinsConfirmModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../../actions';
-import * as walletsActions from '../../../../actions/cabinet/wallets';
 import * as utils from '../../../../utils';
-
-import InfoRow, {InfoRowGroup} from '../../cabinet/InfoRow/InfoRow';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
-import * as toast from '../../../../actions/toasts';
+import * as walletsActions from '../../../../actions/cabinet/wallets';
 
 class SendCoinsConfirmModal extends React.Component {
-  state = {
-    gaCode: '',
-    errorGaCode: false,
-    pending: false,
-  };
+
 
   render() {
-
-    this.currency = this.props.currency;
-    this.currencyInfo = actions.getCurrencyInfo(this.currency);
+    if (!this.props.amount || this.props.loadingStatus === 'success') {
+      this.props.onClose();
+      return false;
+    }
 
     return (
       <UI.Modal className="SendCoinsConfirmModal__wrapper" isOpen={true} onClose={this.props.onClose} width={464}>
@@ -35,39 +28,58 @@ class SendCoinsConfirmModal extends React.Component {
     )
   }
 
-  __getTitle() {
-    return `${utils.getLang('cabinet_sendCoinsConfirmModal_name')} ${utils.ucfirst(this.currencyInfo.name)}`;
+  get currentWallet() {
+    return this.props.wallets.find(w => w.id == this.props.walletId);
   }
 
+  __handleChange = value => {
+    this.props.sendCoinModalSetValue('gaCode', value);
+    if (value.length === 6) {
+      this.__handleSubmit(value);
+    }
+  };
+
+  __getTitle() {
+    const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
+    return `${utils.getLang('cabinet_sendCoinsConfirmModal_name')} ${utils.ucfirst(currencyInfo.name)}`;
+  }
+
+  get currentFee() {
+    const fee = this.props.limits[this.currentWallet.currency];
+    return Math.max(fee.min, this.props.amount * fee.fee);
+  }
+
+  __handleSubmit = (gaCode) => {
+    this.props.sendCoins({
+      address: this.props.address,
+      wallet_id: this.props.walletId,
+      amount: this.props.amount + this.currentFee,
+      ga_code: (gaCode || this.props.gaCode)
+    });
+  };
+
   __renderContent() {
-    const { address, amount } = this.props;
-    const currencyInfo = this.currencyInfo;
-    const currency = this.currency.toUpperCase();
+    const { address, amount, gaCode = '' } = this.props;
+    const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
 
     return (
       <div className="SendCoinsConfirmModal">
         <div className="SendCoinsConfirmModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
-        <InfoRowGroup align="left">
-          <InfoRow label={utils.getLang('global_from')}>
-            <div className="Wallets__history__address">
-              {utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)}
-            </div>
-          </InfoRow>
-          <InfoRow label={utils.getLang('global_to')}>
-            <div className="Wallets__history__address">
-              {address}
-            </div>
-          </InfoRow>
-          <InfoRow label={utils.getLang('global_amount')}>{utils.formatDouble(amount)} {currency}</InfoRow>
-          {/*<InfoRow label="Fee">{utils.formatDouble(fee)} {currency}</InfoRow>*/}
-        </InfoRowGroup>
-        <div className="SendCoinsConfirmModal__card" style={{background: currencyInfo.background}}>
-          <div className="SendCoinsConfirmModal__card__icon">
-            <SVG src={require('../../../../asset/24px/send.svg')} />
-          </div>
-          <div className="SendCoinsConfirmModal__card__label">{utils.getLang('cabinet_sendCoinsConfirmModal_total')}</div>
-          <div className="SendCoinsConfirmModal__card__value">{utils.formatDouble(amount)} {currency}</div>
-        </div>
+        <UI.List items={[
+          {
+            label: utils.getLang('global_from'),
+            value: `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)} ${utils.getLang('global_wallet')}`
+          },
+          { label: utils.getLang('global_to'), value: address },
+          { label: utils.getLang('global_amount'), value: amount },
+          { label: utils.getLang('global_fee'), value: this.currentFee }
+        ]} />
+
+        <UI.WalletCard
+          title={utils.getLang('cabinet_sendCoinsConfirmModal_total')}
+          balance={amount + this.currentFee}
+          currency={currencyInfo}
+        />
 
         <UI.Input
           autoFocus
@@ -75,68 +87,37 @@ class SendCoinsConfirmModal extends React.Component {
           cell
           autoComplete="off"
           mouseWheel={false}
-          value={this.state.gaCode}
-          onChange={this.__handleChange}
+          maxLength={6}
+          value={gaCode}
+          onTextChange={this.__handleChange}
           placeholder={utils.getLang('site__authModalGAPlaceholder')}
+          error={gaCode.length === 6 && this.props.loadingStatus === 'failed'}
           indicator={
             <SVG src={require('../../../../asset/google_auth.svg')} />
           }
-          error={this.state.errorGaCode}
         />
         <div className="SendCoinsConfirmModal__submit_wrapper">
-          <UI.Button currency={currency.toLowerCase()} onClick={this.__handleSubmit} disabled={this.state.pending || this.state.gaCode.length < 6}>
+          <UI.Button
+            state={this.props.loadingStatus}
+            currency={currencyInfo}
+            onClick={() => this.__handleSubmit()}
+            disabled={gaCode.length !== 6}
+          >
             {utils.getLang('site__authModalSubmit')}
           </UI.Button>
         </div>
       </div>
     )
   }
-
-  __handleChange = e => {
-    const val = e.target.value;
-    if (val.length <= 6) {
-      this.setState({gaCode: val}, () => {
-        if (val.length === 6) {
-          this.__handleSubmit();
-        }
-      });
-    }
-  };
-
-  __buildParams() {
-    const {address, wallet_id, amount} = this.props;
-    return {address, wallet_id, amount, ga_code: this.state.gaCode};
-  }
-
-  __handleSubmit = () => {
-    this.setState({pending: true});
-    walletsActions.sendCoins(this.__buildParams()).then((info) => {
-      toast.success(utils.getLang('cabinet_sendCoinsModal_success'));
-      this.props.onClose();
-    }).catch((info) => {
-      switch (info.code) {
-        case "ga_error":
-          this.setState({
-            errorGaCode: true
-          }, () => {
-            setTimeout(() => {
-              this.setState({
-                errorGaCode: false
-              });
-            }, 1000)
-          });
-          break;
-        default:
-          toast.error(info.message);
-          break;
-      }
-    }).finally(() => {
-      this.setState({pending: false});
-    });
-  }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.SEND_COINS_CONFIRM_MODAL,
-  SendCoinsConfirmModal
-);
+export default connect(state => ({
+  loadingStatus: state.wallets.loadingStatus.send,
+  wallets: state.wallets.wallets,
+  limits: state.wallets.limits,
+  ...state.wallets.sendCoinModal,
+  gaCode: state.wallets.sendCoinModal.gaCode,
+}), {
+  sendCoins: walletsActions.sendCoins,
+  sendCoinModalSetValue: walletsActions.sendCoinModalSetValue,
+})(SendCoinsConfirmModal);

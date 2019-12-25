@@ -6,16 +6,20 @@ import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import * as toastsActions from '../toasts';
+import * as utils from '../../utils';
+import router from '../../router';
 
 export function loadWallets() {
   return (dispatch, getState) => {
+    const { currency } = router.getState().params;
+
     return new Promise((resolve, reject) => {
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: 'loading' });
       api.call(apiSchema.Wallet.DefaultGet, {count: 10}).then(({ balances, transactions, transfers }) => {
-        dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: null });
-        dispatch({ type: actionTypes.WALLETS_SET, wallets: balances });
+        dispatch({ type: actionTypes.WALLETS_SET, wallets: balances, currency });
         dispatch({ type: actionTypes.WALLETS_TRANSACTIONS_SET, items: transactions});
         dispatch({ type: actionTypes.WALLETS_TRANFERS_SET, items: transfers });
+        dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'default', status: null });
         resolve(balances);
       }).catch(() => {
         toastsActions.toastPush("Error load wallets", "error")(dispatch, getState);
@@ -29,11 +33,12 @@ export function loadWallets() {
 export function getWallets() {
   return new Promise((resolve, reject) => {
     const state = store.getState().wallets;
-
     if (state.wallets.length > 0) {
+      const { currency } = router.getState().params;
+      if (currency) store.dispatch({ type: actionTypes.WALLETS_SET, wallets: state.wallets, currency });
       resolve(state.wallets);
     } else {
-      loadWallets()(store.dispatch)
+      return loadWallets()(store.dispatch)
         .then((wallets) => resolve(wallets))
         .catch(() => reject());
     }
@@ -117,9 +122,45 @@ export function generateWallet(currency) {
 }
 
 export function sendCoins(params) {
-  return new Promise((resolve, reject) => {
-    api.call(apiSchema.Wallet.SendPut, params).then((resp) => {
-      resolve(resp);
-    }).catch((resp) => reject(resp));
-  })
+  return (dispatch) => {
+    dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'loading' });
+    api.call(apiSchema.Wallet.SendPut, params).then(({wallet}) => {
+      toastsActions.success(utils.getLang('cabinet_sendCoinsModal_success'));
+      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'success' });
+      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: null });
+      dispatch({ type: actionTypes.WALLETS_SEND_COIN_MODAL_CLEAR });
+      dispatch({ type: actionTypes.WALLETS_WALLET_UPDATE });
+    }).catch((err) => {
+      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'failed' });
+    })
+  }
+}
+
+export function getLimits() {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'limits', status: 'loading' });
+    api.call(apiSchema.Wallet.SendGet).then(({limits}) => {
+      dispatch({ type: actionTypes.WALLETS_SET_LIMITS, limits });
+    }).catch((err) => {
+      toastsActions.error(err.message);
+    }).finally(() => {
+      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'limits', status: null });
+    });
+  };
+}
+
+export function sendCoinModalSetValue(property, value) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.WALLETS_SEND_COIN_MODAL_SET_VALUE, property, value });
+  };
+}
+
+export function checkLogin(login) {
+  return api.call(apiSchema.Profile.CheckLoginPost, { login }).then(({ response }) => {
+    if (response === "not_found") {
+      return Promise.reject();
+    } else {
+      return Promise.resolve();
+    }
+  });
 }
