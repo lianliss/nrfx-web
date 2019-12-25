@@ -62,7 +62,7 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
-    case actionTypes.NO_SECRETKEY: {
+    case actionTypes.IS_SECRETKEY: {
       const dataApiKeys = state.dataApiKeys.map(item => item.secret_key ? {...item, secret_key:null, displaySecretKey:false } : item)
       return {
         ...state,

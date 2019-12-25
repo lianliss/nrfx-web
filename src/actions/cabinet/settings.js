@@ -127,7 +127,7 @@ export function saveItemKey({key_id, name, allow_ips, permission_trading, permis
 }
 
 export function isSecretKey() {
-  return store.dispatch({ type: actionTypes.NO_SECRETKEY });
+  return store.dispatch({ type: actionTypes.IS_SECRETKEY });
 }
 
 export function changeNewPassword(params) {
