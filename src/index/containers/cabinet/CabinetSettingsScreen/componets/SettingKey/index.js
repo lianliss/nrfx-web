@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 import copyText from 'clipboard-copy';
 
-import * as modalGroupActions from "../../../../../../actions/modalGroup";
-import * as settingsActions from '../../../../../../actions/cabinet/settings';
-import * as utils from "../../../../../../utils";
-import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
-import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
+import * as modalGroupActions from "actions/modalGroup";
+import * as settingsActions from 'actions/cabinet/settings';
+import * as utils from "utils";
+import GAConfirmModal from 'src/index/components/cabinet/GAConfirmModal/GAConfirmModal';
+import EmptyContentBlock from 'src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
-import ContentBox from '../../../../../../ui/components/ContentBox/ContentBox';
-import UI from '../../../../../../ui';
+import ContentBox from 'ui/ContentBox/ContentBox';
+import UI from 'src/ui';
 
 class SettingKey extends React.Component {
 
@@ -19,11 +19,18 @@ class SettingKey extends React.Component {
     const { dataApiKeys } = this.props
     if(!dataApiKeys){
       this.__handleCheckData()
+    } else {
+      this._handleIsSecretKey()
     }
+
   }
 
   __handleCheckData = () => {
     settingsActions.getApiKeys()
+  }
+  
+  _handleIsSecretKey = () => {
+    settingsActions.isSecretKey()
   }
 
   __gaModalAction = (action) => {
@@ -83,7 +90,6 @@ class SettingKey extends React.Component {
           ga_code: data.gaCode
         }).then((item) => {
           modal.props.close();
-          this.__toggleDisplaySecret()
         }).catch(err => {
           this.props.toastPush(err.message, "error");
         });
@@ -135,10 +141,6 @@ class SettingKey extends React.Component {
     settingsActions.deleteIpAddress(key_id, id_ip)
   }
 
-  __toggleDisplaySecret = () => {
-    this.setState({ displayPassword: !this.state.displayPassword });
-  }
-
   __handleSettingsCheckTrading = (id, permission_trading) => {
     settingsActions.settingsCheckTrading(id, permission_trading)
   }
@@ -156,13 +158,20 @@ class SettingKey extends React.Component {
 
   __renderListApiKeys = () => {
     const { dataApiKeys } = this.props
-    if (!dataApiKeys){return <LoadingStatus inline status="loading" />}
+    if (!dataApiKeys || dataApiKeys.length === 0){
+      return (
+        <EmptyContentBlock
+          icon={require('asset/120/noApiKey.svg')}
+          message={utils.getLang("cabinet__noApiKey")}
+        />
+      )
+    }
 
-    const closeEyeSvg = require('../../../../../../asset/16px/eye-closed.svg');
-    const openEyeSvg = require('../../../../../../asset/16px/eye-open.svg');
-    const copySvg = require('../../../../../../asset/16px/copy.svg');
-    const plusSvg = require('../../../../../../asset/16px/plus.svg');
-    const basketSvg = require('../../../../../../asset/24px/basket.svg');
+    const closeEyeSvg = require('asset/16px/eye-closed.svg');
+    const openEyeSvg = require('asset/16px/eye-open.svg');
+    const copySvg = require('asset/16px/copy.svg');
+    const plusSvg = require('asset/16px/plus.svg');
+    const basketSvg = require('asset/24px/basket.svg');
 
     const listApiKeys = dataApiKeys.map((item,i) => {
       const ip_recomended = !item.radioCheck ? 'first' : item.radioCheck
@@ -262,6 +271,7 @@ class SettingKey extends React.Component {
   
 
   render(){
+    const { user } =  this.props
     return(
       <React.Fragment>
         <ContentBox className="ApiKey">
@@ -270,6 +280,8 @@ class SettingKey extends React.Component {
             <UI.Input
               placeholder={utils.getLang('cabinet__apiKeyName')} 
               onTextChange={value => this.props.setUserFieldValue({field: 'ApiKeyName', value})}
+              autoFocus={true}
+              value={user.ApiKeyName}
             />
             <UI.Button
               size="large"

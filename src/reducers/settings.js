@@ -40,13 +40,16 @@ export default function reduce(state = initialState, action = {}) {
       const { apikey } = action;
       const items = state.dataApiKeys
       const apiKeys = apikey.keys ? [...apikey.keys] : []
-      
       const apiKey = apikey.key ? [apikey.key] : []
       const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] : 
         apiKeys.map(item => item.allow_ips !== '' ? {...item, addIpAddress: true, radioCheck: 'second', allow_ips: item.allow_ips.split(',').map(ip => {return {address: ip, touched: false}})} : item)
       return {
         ...state,
-        dataApiKeys
+        dataApiKeys,
+        user: {
+          ...state.user,
+          ApiKeyName: null
+        }
       }
     }
 
@@ -58,10 +61,26 @@ export default function reduce(state = initialState, action = {}) {
         dataApiKeys
       }
     }
-    
+
+    case actionTypes.NO_SECRETKEY: {
+      const dataApiKeys = state.dataApiKeys.map(item => item.secret_key ? {...item, secret_key:null, displaySecretKey:false } : item)
+      return {
+        ...state,
+        dataApiKeys
+      }
+    }
+
     case actionTypes.SETTINGS_CHECK_TRADING: {
       const { id, permission_trading } = action;
-      const dataApiKeys = state.dataApiKeys.map(item => item.id === id ? {...item, permission_trading: !permission_trading, canSave:true } : item)
+      const dataApiKeys = state.dataApiKeys.map(item => {
+        if(item.id === id) {
+          if(!permission_trading || item.permission_withdraw) {
+            return {...item, permission_trading: !permission_trading, canSave:true }
+          }
+          return {...item, permission_trading: !permission_trading, canSave:false }
+        }
+        return item
+      })
 
       return {
         ...state,
@@ -71,7 +90,15 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.SETTINGS_CHECK_WITHDRAW: {
       const { id, permission_withdraw } = action;
-      const dataApiKeys = state.dataApiKeys.map(item => item.id === id ? {...item, permission_withdraw: !permission_withdraw, canSave:true } : item)
+      const dataApiKeys = state.dataApiKeys.map(item => {
+        if(item.id === id) {
+          if(!permission_withdraw || item.permission_trading) {
+            return {...item, permission_withdraw: !permission_withdraw, canSave:true }
+          }
+          return {...item, permission_withdraw: !permission_withdraw, canSave:false }
+        }
+        return item
+      })
 
       return {
         ...state,
