@@ -13,6 +13,7 @@ import Paging from '../Paging/Paging';
 import PagingItem from '../Paging/PagingItem';
 import TableFilter from '../TableFilter/TableFilter';
 import Label from '../../../ui/components/Label/Label';
+import Json from '../Json/Json';
 import Message from '../../../ui/components/Message/Message';
 import ActionSheet from '../../../ui/components/ActionSheet/ActionSheet';
 
@@ -76,6 +77,9 @@ const Item = (props) => {
       break;
     case 'tabs':
       Component = Tabs;
+      break;
+    case 'json':
+      Component = Json;
       break;
     default:
       Component = props => <Message type="error">Error item type [{props.type}]</Message>;
