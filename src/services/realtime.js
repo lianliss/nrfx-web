@@ -12,6 +12,12 @@ class RealTime {
     this.__connect();
   }
 
+  reconnect = () => {
+    if (this.connection.readyState === 3) {
+      this.__connect();
+    }
+  };
+
   __connect = () => {
     this.connected = false;
     this.connection = new WebSocket(this.endpoint);

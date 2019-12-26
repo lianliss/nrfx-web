@@ -96,6 +96,7 @@ class Exchange {
 
 
 export function bind(market) {
+  realTime.shared.reconnect();
   markets[market] = new Exchange(market);
 }
 
