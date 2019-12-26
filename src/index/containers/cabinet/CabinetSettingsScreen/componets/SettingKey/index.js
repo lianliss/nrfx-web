@@ -8,6 +8,7 @@ import * as modalGroupActions from "actions/modalGroup";
 import * as settingsActions from 'actions/cabinet/settings';
 import * as utils from "utils";
 import GAConfirmModal from 'src/index/components/cabinet/GAConfirmModal/GAConfirmModal';
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
 import EmptyContentBlock from 'src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
 import ContentBox from 'ui/ContentBox/ContentBox';
@@ -28,6 +29,12 @@ class SettingKey extends React.Component {
     }
 
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if ( this.props.dataApiKeys != prevProps.dataApiKeys){
+  //     alert(2)
+  //   }
+  // }
 
   __handleCheckData = () => {
     settingsActions.getApiKeys()
@@ -163,7 +170,10 @@ class SettingKey extends React.Component {
 
   __renderListApiKeys = () => {
     const { dataApiKeys } = this.props
-    if (!dataApiKeys || dataApiKeys.length === 0){
+    if (!dataApiKeys) {
+      return <LoadingStatus inline status="loading" />
+    }
+    if (dataApiKeys.length === 0){
       return (
         <EmptyContentBlock
           icon={require('asset/120/noApiKey.svg')}
@@ -238,6 +248,7 @@ class SettingKey extends React.Component {
                         indicator={<div className="svg_basket" onClick={() => this.__handleDeleteIpAddress({ key_id: item.id, id_ip: i })}><SVG src={basketSvg}/></div>}
                         onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value })}
                         placeholder={utils.getLang("trusted_ip_address") }
+                        autoFocus={true}
                         error={data.address === "" && data.touched}
                         value={data.address}
                         key={i}
@@ -273,11 +284,8 @@ class SettingKey extends React.Component {
     )
   }
 
-  //onTextChange={value => this.props.setUserFieldValue({field: 'ApiKeyName', value})}
-
   render(){
     const { ApiKeyName } =  this.state
-    debugger
     return(
       <React.Fragment>
         <ContentBox className="ApiKey">

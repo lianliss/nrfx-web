@@ -45,11 +45,7 @@ export default function reduce(state = initialState, action = {}) {
         apiKeys.map(item => item.allow_ips !== '' ? {...item, addIpAddress: true, radioCheck: 'second', allow_ips: item.allow_ips.split(',').map(ip => {return {address: ip, touched: false}})} : item)
       return {
         ...state,
-        dataApiKeys,
-        user: {
-          ...state.user,
-          ApiKeyName: null
-        }
+        dataApiKeys
       }
     }
 
@@ -112,7 +108,7 @@ export default function reduce(state = initialState, action = {}) {
         if( item.id === key_id ) {
           const allow_ips = item.allow_ips
           if(radio === 'first') {
-            return {...item, radioCheck: radio, addIpAddress: false , canSave: true, allow_ips: [] }
+            return {...item, radioCheck: radio, addIpAddress: false, canSave: false }
           }
           if (Array.isArray(item.allow_ips)) {
             return {...item, radioCheck: radio, addIpAddress: true , canSave: true }
