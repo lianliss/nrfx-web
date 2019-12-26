@@ -30,12 +30,6 @@ class SettingKey extends React.Component {
 
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if ( this.props.dataApiKeys != prevProps.dataApiKeys){
-  //     alert(2)
-  //   }
-  // }
-
   __handleCheckData = () => {
     settingsActions.getApiKeys()
   }
