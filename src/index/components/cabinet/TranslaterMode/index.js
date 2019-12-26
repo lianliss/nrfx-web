@@ -17,9 +17,9 @@ class TranslaterMode extends React.Component {
     const {lang, keys} = this.props
     const langString = lang[keys] || keys
     return (
-      <div className="Translation" onClick={(e) => this.__handleOpenModalTranslate(e, langString)}>
+      <span className="Translation" onClick={(e) => this.__handleOpenModalTranslate(e, langString)}>
         {langString}
-      </div>
+      </span>
       
     )
   }
