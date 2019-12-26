@@ -65,10 +65,11 @@ class DashboardItem extends React.Component {
           this.show = true;
         }
         break;
-      case 'commerce':
+      case 'exchange':
         this.show = false;
         this.icon = <ShoppingCartSvg />;
         this.content = {
+          label: 'soon',
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_revenue'),
           firstMainContext: '0',
           firstMainContextInvert: '0',
@@ -76,10 +77,13 @@ class DashboardItem extends React.Component {
           secondMainContext: '',
           secondMainContextInvert: '',
           emptyIcon: <TradeSvg />,
-          emptyDescription: utils.getLang('cabinet_profileScreen_actionCard_tradeText'),
+          emptyDescription: <span>
+            {utils.getLang('cabinet_profileScreen_actionCard_tradeTextSoon')}<br />
+            {utils.getLang('cabinet_profileScreen_actionCard_tradeTextSoonDate')}
+          </span>,
         };
         this.button = {
-          children: utils.getLang('cabinet_profileScreen_actionCard_comingSoon'),
+          children: utils.getLang('global_soon'),
           disabled: true
         };
         break;
@@ -117,6 +121,7 @@ class DashboardItem extends React.Component {
 
     return utils.switchMatch(this.show, {
       false: <UI.ContentBox className={cn("DashboardItem", this.props.type)}>
+        {this.content.label && <div className={utils.classNames('DashboardItem__label', this.content.label)}>{this.content.label.toUpperCase()}</div>}
         <div className="DashboardItemAction__icon">
           <div className="DashboardItemAction__icon_content">
             {this.content.emptyIcon}
