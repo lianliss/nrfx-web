@@ -25,7 +25,10 @@ class FiatMarketForm extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.rate !== this.props.rate) {
+    if (
+      prevProps.rate !== this.props.rate ||
+      prevProps.rateUpdateTime !== this.props.rateUpdateTime
+    ) {
       const { state } = this;
       const secondaryType = this.invertType(state.typeActive);
       const secondaryAmount = this.getSecondaryAmount(this.state[state.typeActive + 'Amount'], secondaryType);
@@ -243,8 +246,9 @@ export default connect(store => ({
   adaptive: store.default.adaptive,
   currencies: store.cabinet.currencies,
   rate: store.fiatWallets.rate,
+  rateUpdateTime: store.fiatWallets.rateUpdateTime,
   exchangeFee: store.fiatWallets.exchange_fee,
-  loadingStatus: store.fiatWallets.loadingStatus.marketForm
+  rateStatus: store.fiatWallets.loadingStatus.rate
 }),{
   exchange: actions.exchange,
   getRate: actions.getRate
