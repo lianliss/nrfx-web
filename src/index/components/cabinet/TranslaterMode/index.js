@@ -6,18 +6,15 @@ import './TranslaterMode.less';
 class TranslaterMode extends React.Component {
 
   __handleOpenModalTranslate = (e, langString) => {
+    e.preventDefault();
     openModal('translator', {langString})
-    if (e.which ===  3) {
-      return alert(2)
-    }
-    
   }
 
   render() {
     const {lang, keys} = this.props
     const langString = lang[keys] || keys
     return (
-      <span className="Translation" onClick={(e) => this.__handleOpenModalTranslate(e, langString)}>
+      <span className="Translation" onContextMenu={(e) => this.__handleOpenModalTranslate(e, langString)}>
         {langString}
       </span>
       

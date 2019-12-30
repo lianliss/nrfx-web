@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import UI from 'src/ui';
 import SVG from 'react-inlinesvg';
 import { openModal, getCurrentLang } from 'actions'
-import { setLang } from 'src/services/lang';
 import { getLang } from 'utils';
 
 import './TranslatorModal.less';
@@ -38,7 +37,6 @@ class TranslatorModal extends React.Component {
   render() {
     const { langString } = this.props
     const localKey = getCurrentLang();
-    const localLang = setLang()
     
     return (
       <UI.Modal noSpacing  isOpen={true} onClose={this.props.onClose}>
