@@ -18,7 +18,7 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hidd
 
 
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
-  let displayNumber = Math.floor(number * coefficient) / coefficient;
+  let displayNumber = Math.floor((number * coefficient).toFixed(0)) / coefficient;
 
   displayNumber = displayNumber.toLocaleString(undefined, { maximumFractionDigits: fractionDigits });
 

@@ -46,8 +46,7 @@ class SendCoinsConfirmModal extends React.Component {
   }
 
   get currentFee() {
-    const fee = this.props.limits[this.currentWallet.currency];
-    return Math.max(fee.min, this.props.amount * fee.fee);
+    return this.props.limits[this.currentWallet.currency].fee;
   }
 
   __handleSubmit = (gaCode) => {

@@ -64,7 +64,7 @@ class SendCoinsModal extends React.Component {
 
   get maxAmount() {
     const currentWallet = this.currentWallet;
-    return  currentWallet.amount - this.currentFee;
+    return currentWallet.amount - this.currentFee;
   }
 
   __maxDidPress = () => {

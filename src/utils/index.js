@@ -104,7 +104,7 @@ export function ucfirst(input = "") {
 export function formatDouble(input, fractionDigits = 8) {
   if (parseFloat(input) === NaN) return null;
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
-  return Math.floor(input * coefficient) / coefficient;
+  return Math.floor((input * coefficient).toFixed(0)) / coefficient;
   // return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 
