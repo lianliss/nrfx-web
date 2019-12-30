@@ -77,7 +77,7 @@ class SendCoinsConfirmModal extends React.Component {
 
         <UI.WalletCard
           title={utils.getLang('cabinet_sendCoinsConfirmModal_total')}
-          balance={amount + this.currentFee}
+          balance={parseFloat(amount) + this.currentFee}
           currency={currencyInfo}
         />
 
