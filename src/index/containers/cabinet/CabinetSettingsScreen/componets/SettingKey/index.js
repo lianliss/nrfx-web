@@ -17,7 +17,7 @@ import UI from 'src/ui';
 class SettingKey extends React.Component {
 
   state = {
-    ApiKeyName: null
+    apiKeyName: null
   };
 
   componentDidMount() {
@@ -48,20 +48,20 @@ class SettingKey extends React.Component {
   }
 
   __handleCreateKey = () => {
-    const { ApiKeyName } = this.state
-    if(!ApiKeyName){
+    const { apiKeyName } = this.state
+    if(!apiKeyName){
       this.props.toastPush(utils.getLang('cabinet__requiredApiName'), "error");
       return false;
     }
     this.__gaModalAction(
       (data, modal) => {
         settingsActions.createKey({
-          name: ApiKeyName,
+          name: apiKeyName,
           ga_code: data.gaCode
         }).then(() => {
           modal.props.close();
           this.props.toastPush(utils.getLang('cabinet__successCreateKey'), "success");
-          this.setState({ApiKeyName:''})
+          this.setState({apiKeyName:''})
         }).catch(err => {
           this.props.toastPush(err.message, "error");
         })
@@ -279,7 +279,7 @@ class SettingKey extends React.Component {
   }
 
   render(){
-    const { ApiKeyName } =  this.state
+    const { apiKeyName } =  this.state
     return(
       <React.Fragment>
         <ContentBox className="ApiKey">
@@ -287,9 +287,9 @@ class SettingKey extends React.Component {
           <div className="ApiCreateKey__form">
             <UI.Input
               placeholder={utils.getLang('cabinet__apiKeyName')} 
-              onTextChange={value => this.setState({ApiKeyName: value})}
+              onTextChange={value => this.setState({apiKeyName: value})}
               autoFocus={true}
-              value={ApiKeyName}
+              value={apiKeyName}
             />
             <UI.Button
               size="large"
