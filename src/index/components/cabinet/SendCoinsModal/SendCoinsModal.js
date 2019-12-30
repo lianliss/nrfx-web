@@ -6,17 +6,17 @@ import { connect } from 'react-redux';
 import UI from '../../../../ui';
 
 import * as actions from '../../../../actions';
+import * as toast from '../../../../actions/toasts';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
 import LoadingStatus from '../../cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../../utils';
-import router from '../../../../router';
 
 
 
 class SendCoinsModal extends React.Component {
 
   state = {
-    addressError: false
+    addressError: false,
   };
 
   componentDidMount() {
@@ -39,12 +39,12 @@ class SendCoinsModal extends React.Component {
     return this.props.wallets.find(w => w.id == this.props.walletId);
   }
 
-  __currentFee(amount) {
-    const fee = this.props.limits[this.currentWallet.currency];
-    return {
-      ...fee,
-      total: Math.max(fee.min, (amount || 0) * fee.fee)
-    }
+  get currentFee() {
+    return this.props.limits[this.currentWallet.currency].fee;
+  }
+
+  get currentMin() {
+    return this.props.limits[this.currentWallet.currency].min;
   }
 
   __handleChange(property) {
@@ -64,7 +64,7 @@ class SendCoinsModal extends React.Component {
 
   get maxAmount() {
     const currentWallet = this.currentWallet;
-    return  currentWallet.amount - this.__currentFee(currentWallet.amount).total;
+    return  currentWallet.amount - this.currentFee;
   }
 
   __maxDidPress = () => {
@@ -76,15 +76,32 @@ class SendCoinsModal extends React.Component {
   };
 
   __handleSubmit = () => {
-    if (this.props.address.length < 15 ) {
-      walletsActions.checkLogin(this.props.address).then(response => {
-        this.setState({ addressError: false });
-        actions.openModal('send_confirm');
-      }).catch(response => {
-        this.setState({ addressError: true });
-      })
+    if (this.props.amount > this.maxAmount) {
+      toast.error(
+        utils.getLang('cabinet_sendCoinsModal_maximumAmountText') + ': ' +
+        utils.formatDouble(this.maxAmount) + ' ' +
+        this.currentWallet.currency.toUpperCase()
+      );
+      return false;
     }
-    // actions.openModal('send_confirm')
+    if (this.props.amount >= this.currentMin) {
+      if (this.props.address.length < 15 ) {
+        walletsActions.checkLogin(this.props.address).then(response => {
+          this.setState({ addressError: false });
+          actions.openModal('send_confirm');
+        }).catch(response => {
+          this.setState({ addressError: true });
+        })
+      } else {
+        actions.openModal('send_confirm');
+      }
+    } else {
+      toast.error(
+        utils.getLang('cabinet_sendCoinsModal_minimumAmountText') + ': ' +
+        utils.formatDouble(this.currentMin) + ' ' +
+        this.currentWallet.currency.toUpperCase()
+      );
+    }
   }
 
   __renderContent() {
@@ -132,16 +149,16 @@ class SendCoinsModal extends React.Component {
               indicator={currencyInfo.abbr.toUpperCase()}
               onTextChange={this.__handleChange('amount')}
               type="number"
+              error={this.props.amount && this.props.amount < this.currentMin || this.props.amount > this.maxAmount}
               value={this.props.amount}
               description={
                 <span style={{color: currencyInfo.color}}>
                   {utils.getLang('global_fee')}: <UI.NumberFormat
-                    number={utils.formatDouble(this.__currentFee(this.props.amount).total)}
+                    number={utils.formatDouble(this.currentFee)}
                     currency={currencyInfo.abbr}
                   />
                 </span>
               }
-              error={false}
             />
             <UI.Input
               placeholder="0"
@@ -163,7 +180,7 @@ class SendCoinsModal extends React.Component {
             <UI.Button
               currency={currencyInfo}
               onClick={this.__handleSubmit}
-              disabled={!this.props.amount || this.props.amount > this.maxAmount || !this.props.address}
+              disabled={!this.props.amount || !this.props.address}
             >
               {utils.getLang("global_send")}
             </UI.Button>

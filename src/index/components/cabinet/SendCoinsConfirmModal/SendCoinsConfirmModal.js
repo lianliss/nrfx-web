@@ -8,6 +8,7 @@ import SVG from 'react-inlinesvg';
 import * as actions from '../../../../actions';
 import * as utils from '../../../../utils';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
+import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 class SendCoinsConfirmModal extends React.Component {
 
@@ -53,7 +54,7 @@ class SendCoinsConfirmModal extends React.Component {
     this.props.sendCoins({
       address: this.props.address,
       wallet_id: this.props.walletId,
-      amount: this.props.amount + this.currentFee,
+      amount: this.props.amount,
       ga_code: (gaCode || this.props.gaCode)
     });
   };
@@ -71,8 +72,8 @@ class SendCoinsConfirmModal extends React.Component {
             value: `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)} ${utils.getLang('global_wallet')}`
           },
           { label: utils.getLang('global_to'), value: address },
-          { label: utils.getLang('global_amount'), value: amount },
-          { label: utils.getLang('global_fee'), value: this.currentFee }
+          { label: utils.getLang('global_amount'), value: <NumberFormat number={amount} currency={currencyInfo.abbr} /> },
+          { label: utils.getLang('global_fee'), value: <NumberFormat number={this.currentFee} currency={currencyInfo.abbr} /> }
         ]} />
 
         <UI.WalletCard
