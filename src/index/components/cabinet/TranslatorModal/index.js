@@ -45,7 +45,7 @@ class TranslatorModal extends React.Component {
           <div className="Translation__title">{localKey.value} {getLang('cabinet_key')}</div>
           <div className="Translation__key">{langString}</div>
           { this.__handleTranslate() }
-          <UI.Input placeholder={getLang('cabinet__typeAnyText', true)} multiLine autoFocus={true} />
+          <UI.Input placeholder={getLang('cabinet__typeAnyText')} multiLine autoFocus={true} />
           <div className="Translation__button"><UI.Button size="large">{getLang('cabinet_settingsSave')}</UI.Button></div>
         </div>
       </UI.Modal>

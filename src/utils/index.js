@@ -41,11 +41,13 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
-export function getLang(key, placeholder) {
-  if(store.getState().settings.translaterSetting && !placeholder) {
-    return <TranslaterMode keys={key} />
+export function getLang(key) {
+  let langString = store.getState().default.lang[key] || key
+  
+  if(store.getState().settings.translaterSetting) {
+    return <TranslaterMode langString={langString} />
   }
-  return store.getState().default.lang[key] || key;
+  return langString;
 }
 
 export function getLanguage() {
