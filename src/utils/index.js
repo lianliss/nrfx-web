@@ -41,8 +41,8 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
-export function getLang(key) {
-  if(store.getState().settings.translaterSetting) {
+export function getLang(key, placeholder) {
+  if(store.getState().settings.translaterSetting && !placeholder) {
     return <TranslaterMode keys={key} />
   }
   return store.getState().default.lang[key] || key;

@@ -147,7 +147,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
               type="password"
-              placeholder={utils.getLang("cabinet_oldPassword")}
+              placeholder={utils.getLang("cabinet_oldPassword", true)}
               value={user.old_password}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'old_password', value})}
             />
@@ -155,7 +155,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
               type="password"
-              placeholder={utils.getLang("cabinet_newPassword")}
+              placeholder={utils.getLang("cabinet_newPassword", true)}
               value={user.new_password}
               onTextChange={(value) => this.props.setUserFieldValue({field: 'new_password', value})}
             />
@@ -163,7 +163,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           <div className="CabinetSettingsScreen__input_field">
             <UI.Input
               type="password"
-              placeholder={utils.getLang("cabinet_reEnterNewPassword")}
+              placeholder={utils.getLang("cabinet_reEnterNewPassword", true)}
               value={user.re_password}
               onTextChange={(value) => this.props.setUserFieldValue({field: 're_password', value})}
             />
