@@ -61,8 +61,6 @@ class Input extends React.Component {
       }
     };
 
-    debugger
-    console.log(params)
     let cont;
     if (this.props.multiLine) {
       cont = <textarea ref="input" {...params} onChange={this.__onChange}>{this.props.value}</textarea>;
