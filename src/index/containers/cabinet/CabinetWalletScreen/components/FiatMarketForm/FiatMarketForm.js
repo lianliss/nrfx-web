@@ -140,6 +140,7 @@ class FiatMarketForm extends React.Component {
         { !this.props.adaptive && <h2 className="FiatMarketForm__title">{getLang('cabinet_fiatMarketExchangeTitle')}</h2> }
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
+            <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGet')}</span>
             <UI.Input
               disabled={disabled}
               value={this.state.toAmount}
@@ -164,6 +165,7 @@ class FiatMarketForm extends React.Component {
         </div>
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
+            <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGive')}</span>
             <UI.Input
               disabled={disabled}
               value={this.state.fromAmount}
@@ -187,7 +189,7 @@ class FiatMarketForm extends React.Component {
           </div>
         </div>
         <div className="FiatMarketForm__button_wrapper">
-          <p className="FiatMarketForm__fee">{this.renderFee()}</p>
+          {/*<p className="FiatMarketForm__fee">{this.renderFee()}</p>*/}
           <UI.Button
             disabled={disabled || !(this.state.amount > 0)}
             onClick={this.handleBuy}

@@ -8,8 +8,9 @@
   }
 
   .FiatMarketForm__row {
+    position: relative;
     display: flex;
-    margin: 16px -8px;
+    margin: 40px -8px;
   }
 
   .FiatMarketForm__column {
@@ -24,6 +25,14 @@
     }
   }
 
+  .FiatMarketForm__inputLabel {
+    font-size: 13px;
+    line-height: 16px;
+    top: -24px;
+    left: 16px;
+    position: absolute;
+  }
+
   .FiatMarketForm__rate,
   .FiatMarketForm__balance {
     min-height: 16px;
@@ -35,7 +44,7 @@
   }
 
   .FiatMarketForm__button_wrapper {
-    margin-top: 32px;
+    margin-top: 28px;
     text-align: center;
 
     .Button {

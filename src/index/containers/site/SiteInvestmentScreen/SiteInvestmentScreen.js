@@ -1,7 +1,6 @@
 import './SiteInvestmentScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
@@ -14,10 +13,6 @@ export default class SiteInvestmentScreen extends BaseScreen {
   render() {
     return (
       <div>
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
-
         <div className="Layout_spacing">
           <SitePageInfoBlock
             hideWatchButton
@@ -41,7 +36,7 @@ export default class SiteInvestmentScreen extends BaseScreen {
           <h2 className="SiteInvestmentScreen__title">{this.lang.site.investmentMoreThanDeposit}</h2>
           {this._renderFeatures()}
         </div>
-        
+
         <Banner
           title={this.lang.site.investmentNeverBeenEasier}
           caption={this.lang.site.investmentIncreaseCapital}

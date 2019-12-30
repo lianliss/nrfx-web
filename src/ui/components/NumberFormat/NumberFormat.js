@@ -13,7 +13,7 @@ const NumberFormat = ({ number, fractionDigits, skipTitle, currency, type, perce
 
   let displayNumber = parseFloat(parseFloat(number).toFixed(fractionDigits));
 
-  displayNumber = displayNumber.toLocaleString();
+  displayNumber = displayNumber.toLocaleString(undefined, { maximumFractionDigits: fractionDigits });
 
   if (currency && !percent ) {
     displayNumber += ' ' + currency.toUpperCase(); // nbsp

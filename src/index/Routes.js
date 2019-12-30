@@ -143,10 +143,6 @@ export default function Routes(props) {
       break;
   }
 
-  if (!Component) {
-    return <h1>404 Not Found</h1>;
-  }
-
   const defaultProps = {
     state: props.state.default,
     router: props.router,
@@ -163,7 +159,6 @@ export default function Routes(props) {
     pages.TECHNOLOGY,
     pages.FEE
   ].includes(route);
-
 
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
