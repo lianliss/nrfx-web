@@ -121,7 +121,6 @@ export default function reduce(state = initialState, action = {}) {
     case 'reload_table': {
       const newState = { ...state };
       updateTable(params.id, newState, params.layout);
-
       return newState;
     }
 
