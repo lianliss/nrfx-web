@@ -11,7 +11,8 @@ const initialState = {
   transfersNext: null,
   loadingStatus: {
     default: 'loading',
-    limits: 'loading'
+    limits: 'loading',
+    sendCode: null,
   },
   limits: [],
   sendCoinModal: {

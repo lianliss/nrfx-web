@@ -131,7 +131,8 @@ export function sendCoins(params) {
       dispatch({ type: actionTypes.WALLETS_SEND_COIN_MODAL_CLEAR });
       dispatch({ type: actionTypes.WALLETS_WALLET_UPDATE });
     }).catch((err) => {
-      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'failed' });
+      toastsActions.error(err.message);
+      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'sendCode', status: err.code });
     })
   }
 }

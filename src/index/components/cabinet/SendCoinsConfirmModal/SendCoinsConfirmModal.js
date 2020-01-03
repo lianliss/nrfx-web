@@ -91,7 +91,7 @@ class SendCoinsConfirmModal extends React.Component {
           value={gaCode}
           onTextChange={this.__handleChange}
           placeholder={utils.getLang('site__authModalGAPlaceholder')}
-          error={gaCode.length === 6 && this.props.loadingStatus === 'failed'}
+          error={gaCode.length === 6 && this.props.loadingStatus === 'ga_auth_code_incorrect'}
           indicator={
             <SVG src={require('../../../../asset/google_auth.svg')} />
           }
@@ -112,7 +112,7 @@ class SendCoinsConfirmModal extends React.Component {
 }
 
 export default connect(state => ({
-  loadingStatus: state.wallets.loadingStatus.send,
+  loadingStatus: state.wallets.loadingStatus.sendCode,
   wallets: state.wallets.wallets,
   limits: state.wallets.limits,
   ...state.wallets.sendCoinModal,
