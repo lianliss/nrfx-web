@@ -37,5 +37,6 @@ size="large"
   <Logo size="large" type="white" />
   <Logo size="large" type="gray" />
   <Logo size="large" type="monochrome" />
+  <Logo size="large" type="christmas" />
 </div>
 ```

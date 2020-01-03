@@ -231,10 +231,10 @@ class CabinetProfileScreen extends CabinetBaseScreen {
           { !this.props.adaptive && <DashboardItem
             type="currency"
           /> }
-          {rows}
           <DashboardItem
-            type="commerce"
+            type="exchange"
           />
+          {rows}
         </div>
       </div>
     )

@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import initGetParams from '../services/initialGetParams';
 
 const initialState = {
   page: null,
@@ -11,7 +12,12 @@ const initialState = {
   static: {
     status: 'loading'
   },
-  modals: []
+  modals: [],
+  registration: {
+    email: '',
+    referrer: '',
+    refParam: initGetParams.params.hasOwnProperty('ref') ? initGetParams.params.ref : null
+  }
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -72,6 +78,16 @@ export default function reduce(state = initialState, action = {}) {
             first_name,
             last_name
           }
+        }
+      }
+    }
+
+    case actionTypes.REGISTRATION_SET_VALUE: {
+      return {
+        ...state,
+        registration: {
+          ...state.registration,
+          [action.property]: action.value
         }
       }
     }
