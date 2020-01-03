@@ -42,10 +42,12 @@ export function removeProperty(object, ...properties) {
 }
 
 export function getLang(key) {
+  let langString = store.getState().default.lang[key] || key
+  
   if(store.getState().settings.translaterSetting) {
-    return <TranslaterMode keys={key} />
+    return <TranslaterMode langString={langString} />
   }
-  return store.getState().default.lang[key] || key;
+  return langString;
 }
 
 export function getLanguage() {

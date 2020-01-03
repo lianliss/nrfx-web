@@ -48,7 +48,7 @@ class Input extends React.Component {
 
     let params = {
       className,
-      placeholder: this.props.placeholder,
+      placeholder: typeof this.props.placeholder === 'object' ?  this.props.placeholder.props.langString : this.props.placeholder,
       type: (this.props.type === "password" && this.state.displayPassword) ? "text" : this.props.type,
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,
