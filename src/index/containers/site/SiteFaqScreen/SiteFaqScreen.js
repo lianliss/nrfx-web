@@ -1,7 +1,6 @@
 import './SiteFaqScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import UI from '../../../../ui';
@@ -40,7 +39,6 @@ const questions = {
   ]
 }
 
-
 export default class SiteFaqScreen extends BaseScreen {
   _renderQuestions = (questions) => {
     return questions.map(q => (
@@ -51,12 +49,7 @@ export default class SiteFaqScreen extends BaseScreen {
   render() {
     return (
       <div>
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
-
         <div className="Layout_spacing">
-
           <div className="SiteFaqScreen__heading">
             <h1 className="SiteFaqScreen__heading__title">{this.lang.site.faqTitle}</h1>
             <p className="SiteFaqScreen__heading__subtitle">{this.lang.site.faqSubTitle}</p>

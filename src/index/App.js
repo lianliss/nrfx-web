@@ -15,6 +15,7 @@ import * as internalNotifications from '../actions/cabinet/internalNotifications
 import * as storage from '../services/storage';
 import { getLang, setLang } from '../services/lang';
 import * as utils from '../utils';
+import {Helmet} from 'react-helmet';
 
 class App extends React.Component {
   state = {
@@ -74,6 +75,9 @@ class App extends React.Component {
     }
 
     return <div>
+      <Helmet>
+        <title>{utils.getLang('global_meta_title')}</title>
+      </Helmet>
       <ModalGroup {...this.props} />
       <Modals {...this.props} />
       <Routes {...this.props} />

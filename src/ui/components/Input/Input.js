@@ -90,7 +90,9 @@ class Input extends React.Component {
         }
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
           this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
-        {this.props.description ? <div className="Input__description"><MarkDown content={this.props.description} /></div> : null}
+        {this.props.description ? <div className="Input__description">
+          { typeof this.props.description !== 'string' ? this.props.description : <MarkDown content={this.props.description} /> }
+        </div> : null}
       </div>
     )
   }
@@ -168,6 +170,7 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   maxLength: PropTypes.number,
   pattern: PropTypes.string,
+  description: PropTypes.string,
   size: PropTypes.oneOf(['small']),
   type: PropTypes.oneOf(['text', 'number', 'password', 'code']),
   positive: PropTypes.bool,

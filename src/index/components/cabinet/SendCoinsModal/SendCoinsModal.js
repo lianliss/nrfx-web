@@ -110,6 +110,10 @@ class SendCoinsModal extends React.Component {
               onTextChange={this.__amountDidChange}
               onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.props.thisState.amount)}
               value={this.props.thisState.amount || undefined}
+              // description={
+              //   <span style={{color: currencyInfo.color}}>
+              //     {utils.getLang('global_fee')}: <UI.NumberFormat number={0.01} currency={currencyInfo.abbr} /></span>
+              // }
               error={this.state.errorAmount}
             />
             <UI.Input

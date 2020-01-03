@@ -1,7 +1,6 @@
 import './SiteAboutScreen.less';
 
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import BaseScreen from '../../BaseScreen';
 import UI from '../../../../ui';
@@ -55,10 +54,6 @@ export default class SiteAboutScreen extends BaseScreen {
 
     return (
       <div>
-        <Helmet>
-          <meta title="" content="" />
-        </Helmet>
-
         <div className="Layout_spacing">
 
           <div className="SiteAboutScreen">
