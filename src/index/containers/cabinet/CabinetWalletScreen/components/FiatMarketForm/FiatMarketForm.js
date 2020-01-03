@@ -137,7 +137,7 @@ class FiatMarketForm extends React.Component {
     if (balances) {
       const { amount } = balances.find(item => item.currency.toLowerCase() === currency);
       const secondaryAmount = this.getSecondaryAmount(amount, secondaryType);
-      return <UI.NumberFormat onClick={() => {
+      return <UI.NumberFormat skipTitle onClick={() => {
         // TODO: Думаю что код ниже (if, else) можно написать лучше :-)
         if (type == 'from') {
           this.setState({
@@ -185,7 +185,7 @@ class FiatMarketForm extends React.Component {
               placeholder={getLang('global_amount')}
               type={typeActive === 'to' ? 'number' : undefined} />
             <div className="FiatMarketForm__balance">
-              {this.getBalance('to')}
+              <UI.Tooltip title={getLang('cabinet_fiatWalletMyWalletBalance')}>{this.getBalance('to')}</UI.Tooltip>
             </div>
           </div>
           <div className="FiatMarketForm__column">
@@ -211,7 +211,7 @@ class FiatMarketForm extends React.Component {
               placeholder={getLang('global_amount')}
               type={typeActive === 'from' ? 'number' : undefined} />
             <div className="FiatMarketForm__balance">
-              {this.getBalance('from')}
+              <UI.Tooltip title={getLang('cabinet_fiatWalletMyWalletBalance')}>{this.getBalance('from')}</UI.Tooltip>
             </div>
           </div>
           <div className="FiatMarketForm__column">

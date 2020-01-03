@@ -31,6 +31,7 @@ import Collapse from './components/Collapse/Collapse';
 import WalletCard from './components/WalletCard/WalletCard';
 import StatusIndicator from './components/StatusIndicator/StatusIndicator';
 import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
+import Tooltip from './components/Tooltip/Tooltip';
 
 export default {
   Button,
@@ -67,5 +68,6 @@ export default {
   ContentBox,
   Collapse,
   WalletCard,
-  StatusIndicator
+  StatusIndicator,
+  Tooltip
 };
