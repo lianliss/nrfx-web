@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import UI from 'src/ui';
 import * as steps from '../fixtures';
@@ -7,11 +8,11 @@ import * as actions from 'actions';
 import {registerUser} from 'actions/auth';
 import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
 import initGetParams from 'src/services/initialGetParams';
+import { registrationSetValue } from 'src/actions/index';
 
-function Registration({ changeStep, currentStep, email, handleChange, onClose, refParam }) {
+function Registration({ changeStep, currentStep, email, onClose, refParam, referrer, registrationSetValue }) {
 
   const [isChecked, toggleCheck] = useState(false);
-  const [referrer, changeReferrer] = useState(refParam);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = () => {
@@ -31,7 +32,8 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
   };
 
   const handleClose = () => {
-    changeReferrer('');
+    registrationSetValue('email', '');
+    registrationSetValue('referrer', '');
     onClose();
   };
 
@@ -39,6 +41,10 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
     if (e.key === 'Enter') {
       handleSubmit();
     }
+  };
+
+  const handleChange = property => value => {
+    registrationSetValue(property, value);
   };
 
   return (
@@ -53,8 +59,20 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
                 ? <p className="AuthModal__err_msg">{errorMsg}</p>
                 : null}
 
-              <UI.Input placeholder={utils.getLang('site__authModalPlaceholderEmail')} value={email} onKeyPress={handleKeyPress} onChange={(e) => handleChange(e.target.value, 'email')} />
-              <UI.Input disabled={refParam} placeholder={utils.getLang('site__authModalPlaceholderReferrer')} value={referrer} onKeyPress={handleKeyPress} onChange={(e) => changeReferrer(e.target.value)} />
+              <UI.Input
+                placeholder={utils.getLang('site__authModalPlaceholderEmail')}
+                value={email}
+                onTextChange={handleChange('email')}
+                onKeyPress={handleKeyPress}
+              />
+
+              <UI.Input
+                disabled={refParam}
+                value={refParam || referrer}
+                placeholder={utils.getLang('site__authModalPlaceholderReferrer')}
+                onTextChange={handleChange('referrer')}
+                onKeyPress={handleKeyPress}
+              />
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
@@ -69,7 +87,7 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
           </>
         ) : (
           <SuccessModal
-            onClose={handleClose} 
+            onClose={handleClose}
             onResend={handleSubmit}
             title={utils.getLang('site__authModalRegDone')}
             subtitle={utils.getLang('site__authModalCheckMailDone')}
@@ -79,4 +97,10 @@ function Registration({ changeStep, currentStep, email, handleChange, onClose, r
   )
 }
 
-export default React.memo(Registration);
+export default React.memo(connect(state => ({
+  email: state.default.registration.email,
+  referrer: state.default.registration.referrer,
+  refParam: state.default.registration.refParam,
+}), {
+  registrationSetValue
+})(Registration));

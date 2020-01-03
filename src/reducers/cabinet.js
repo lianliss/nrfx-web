@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   wallets: [],
-  currencies: {}
+  currencies: {},
 };
 
 export default function reduce(state = initialState, action = {}) {

@@ -91,3 +91,9 @@ export function sendInviteLinkView(link) {
     link
   });
 }
+
+export function registrationSetValue(property, value) {
+  return (dispatch) => {
+    dispatch({type: actionTypes.REGISTRATION_SET_VALUE, property, value});
+  }
+}

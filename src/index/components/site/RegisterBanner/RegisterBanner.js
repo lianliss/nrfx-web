@@ -6,9 +6,10 @@ import { connect } from 'react-redux';
 import { classNames } from '../../../../utils';
 import * as steps from '../../../../components/AuthModal/fixtures';
 import * as actions from '../../../../actions';
+import { registrationSetValue } from 'src/actions/index';
 
 
-function RegisterBanner({ isCurly, lang }) {
+function RegisterBanner({ isCurly, lang, registrationSetValue }) {
   const [email, changeEmail] = useState('');
   const [isInputActive, toggleInputActive] = useState(false);
 
@@ -33,7 +34,10 @@ function RegisterBanner({ isCurly, lang }) {
             onFocus={() => toggleInputActive(true)}
             onBlur={() => toggleInputActive(false)}
           />
-          <div onClick={() => actions.openModal('auth', {type: steps.REGISTRATION, defaultEmail: email})} className="RegisterBanner__form__button">{lang.site__registerBannerBtn}</div>
+          <div onClick={() => {
+            registrationSetValue('email', email);
+            actions.openModal('auth', { type: steps.REGISTRATION })
+          }} className="RegisterBanner__form__button">{lang.site__registerBannerBtn}</div>
         </div>
       </div>
     </div>
@@ -44,4 +48,7 @@ const mapStateToProps = (state) => ({
   lang: state.default.lang,
 });
 
-export default React.memo(connect(mapStateToProps)(RegisterBanner));
+export default React.memo(connect(
+  mapStateToProps,
+  { registrationSetValue }
+)(RegisterBanner));
