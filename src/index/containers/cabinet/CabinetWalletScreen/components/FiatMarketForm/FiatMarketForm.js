@@ -25,7 +25,10 @@ class FiatMarketForm extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.rate !== this.props.rate) {
+    if (
+      prevProps.rate !== this.props.rate ||
+      prevProps.rateUpdateTime !== this.props.rateUpdateTime
+    ) {
       const { state } = this;
       const secondaryType = this.invertType(state.typeActive);
       const secondaryAmount = this.getSecondaryAmount(this.state[state.typeActive + 'Amount'], secondaryType);
@@ -73,6 +76,13 @@ class FiatMarketForm extends React.Component {
     }, this.getRate);
   };
 
+  handleAmountFocus = (type) => () => {
+    // const secondaryType = this.invertType(type);
+    this.setState({
+      typeActive: type,
+    });
+  }
+
   handleAmountChange = (type) => (value) => {
     const secondaryType = this.invertType(type);
     const secondaryAmount = this.getSecondaryAmount(value, secondaryType);
@@ -99,13 +109,17 @@ class FiatMarketForm extends React.Component {
 
   getSecondaryAmount = (amount, type) => {
     const { rate } = this.props;
-    const secondaryAmount = isFiat(this.state[type]) ? ( amount * rate) : (amount / rate);
+    const secondaryAmount = isFiat(this.state[type]) ? (amount * rate) : (amount / rate);
 
     return formatDouble(
       secondaryAmount,
       isFiat(this.state[type]) ? 2 : 6
     );
   };
+
+  formatAmount = (amount, currency) => {
+    return formatDouble(amount, isFiat(currency) ? 2 : undefined);
+  }
 
   renderRate(type) {
     if (!this.props.rate) return null;
@@ -117,11 +131,32 @@ class FiatMarketForm extends React.Component {
 
   getBalance(type) {
     const currency = this.state[type];
+    const secondaryType = this.invertType(type);
 
     const balances = this.props[isFiat(currency) ? 'balances' : 'wallets'];
     if (balances) {
       const { amount } = balances.find(item => item.currency.toLowerCase() === currency);
-      return <UI.NumberFormat number={amount} currency={currency} />
+      const secondaryAmount = this.getSecondaryAmount(amount, secondaryType);
+      return <UI.NumberFormat skipTitle onClick={() => {
+        // TODO: Думаю что код ниже (if, else) можно написать лучше :-)
+        if (type == 'from') {
+          this.setState({
+            typeActive: type,
+            amount: amount,
+            [secondaryType + 'Amount']: secondaryAmount,
+            [type + 'Amount']: this.formatAmount(amount, this.state[type]),
+          })
+        } else {
+          this.setState({
+            typeActive: secondaryType,
+            [secondaryType + 'Amount']: this.formatAmount(amount, this.state.to),
+            from: this.state.to,
+            to: this.state.from,
+            amount: amount,
+            [type + 'Amount']: secondaryAmount,
+          })
+        }
+      }} number={amount} currency={currency} />
     } return null;
   }
 
@@ -134,6 +169,7 @@ class FiatMarketForm extends React.Component {
   render() {
     const disabled = !this.props.rate;
     const Wrapper = this.props.adaptive ? UI.Collapse : UI.ContentBox;
+    const { typeActive } = this.state;
 
     return (
       <Wrapper title={getLang('cabinet_fiatMarketExchangeTitle')} isOpenDefault={false} className="FiatMarketForm">
@@ -143,12 +179,13 @@ class FiatMarketForm extends React.Component {
             <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGet')}</span>
             <UI.Input
               disabled={disabled}
-              value={this.state.toAmount}
+              value={(typeActive !== 'to' ? "~ " : '') + this.state.toAmount}
               onTextChange={this.handleAmountChange('to')}
+              onFocus={this.handleAmountFocus('to')}
               placeholder={getLang('global_amount')}
-              type="number" />
+              type={typeActive === 'to' ? 'number' : undefined} />
             <div className="FiatMarketForm__balance">
-              {this.getBalance('to')}
+              <UI.Tooltip title={getLang('cabinet_fiatWalletMyWalletBalance')}>{this.getBalance('to')}</UI.Tooltip>
             </div>
           </div>
           <div className="FiatMarketForm__column">
@@ -168,12 +205,13 @@ class FiatMarketForm extends React.Component {
             <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGive')}</span>
             <UI.Input
               disabled={disabled}
-              value={this.state.fromAmount}
+              value={(typeActive !== 'from' ? "~ " : '') + this.state.fromAmount}
               onTextChange={this.handleAmountChange('from')}
+              onFocus={this.handleAmountFocus('from')}
               placeholder={getLang('global_amount')}
-              type="number" />
+              type={typeActive === 'from' ? 'number' : undefined} />
             <div className="FiatMarketForm__balance">
-              {this.getBalance('from')}
+              <UI.Tooltip title={getLang('cabinet_fiatWalletMyWalletBalance')}>{this.getBalance('from')}</UI.Tooltip>
             </div>
           </div>
           <div className="FiatMarketForm__column">
@@ -208,8 +246,9 @@ export default connect(store => ({
   adaptive: store.default.adaptive,
   currencies: store.cabinet.currencies,
   rate: store.fiatWallets.rate,
+  rateUpdateTime: store.fiatWallets.rateUpdateTime,
   exchangeFee: store.fiatWallets.exchange_fee,
-  loadingStatus: store.fiatWallets.loadingStatus.marketForm
+  rateStatus: store.fiatWallets.loadingStatus.rate
 }),{
   exchange: actions.exchange,
   getRate: actions.getRate

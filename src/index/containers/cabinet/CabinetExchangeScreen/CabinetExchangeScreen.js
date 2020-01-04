@@ -1,6 +1,7 @@
 import './CabinetExchangeScreen.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
@@ -21,6 +22,8 @@ import MarketInfoAdaptive from './components/MarketInfoAdaptive/MarketInfoAdapti
 import Chart from './components/Chart/Chart';
 import * as exchangeService from '../../../../services/exchange';
 import UI from '../../../../ui/';
+import * as exchangeActions from '../../../../actions/cabinet/exchange';
+import * as actions from '../../../../actions';
 
 class CabinetExchangeScreen extends CabinetBaseScreen {
   constructor(props) {
@@ -35,7 +38,6 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   componentDidMount() {
     super.componentDidMount();
     this.props.setTitle(utils.getLang('cabinet_header_exchange'));
-    exchangeService.bind(this.props.market);
   }
 
   componentWillUnmount() {
@@ -76,6 +78,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
           {
             title: utils.getLang('exchange_trades'),
             content: <TradeForm
+              loadingStatus={this.props.loadingStatus}
               ref="trade_form"
               adaptive={true}
               depth={this.props.depth}
@@ -94,7 +97,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
         <SwitchBlock type="buttons" contents={[
           {
             title: utils.getLang('exchange_trades'),
-            content: <Trades adaptive={true} />
+            content: <Trades market={this.props.market} adaptive={true} />
           },
           {
             title: utils.getLang('exchange_openOrders'),
@@ -116,7 +119,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       <div className="Exchange__wrapper">
         <div className="Exchange__left_content">
           { this.props.user && <Balances /> }
-          <Trades />
+          <Trades market={this.props.market}  />
         </div>
         <div className="Exchange__right_content">
           <div className="Exchange__trade_content">
@@ -131,6 +134,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
                 />
               </UI.ContentBox>
               {this.props.tickerInfo && <TradeForm
+                loadingStatus={this.props.loadingStatus}
                 ref="trade_form"
                 fee={this.props.fee}
                 balance={this.props.balanceInfo}
@@ -179,21 +183,32 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
           type={this.state.orderBookType}
           onOrderPress={(order) => this.refs.trade_form.set(
             order.amount - order.filled,
-            order.price
+            utils.formatDouble(order.price, 2)
           )}
           {...this.props.depth}
+          loading={this.props.loadingStatus.orderBook}
         />
       </Block>
     )
   }
 
   load() {
-    const { market } = this.props.router.route.params;
-    this.props.load((market && market.replace('_', '/')) || this.props.market);
+    let { market } = this.props.router.route.params;
+    market = (market && market.toLowerCase().replace('_', '/')) || this.props.market;
+    exchangeService.bind(market);
+    this.props.load(market);
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_EXCHANGE_SCREEN,
-  CabinetExchangeScreen
-);
+export default connect(
+  state => ({
+    ...state.exchange,
+    adaptive: state.default.adaptive,
+    router: state.router,
+    user: state.default.profile.user
+  }), {
+    load: exchangeActions.load,
+    chooseMarket: exchangeActions.chooseMarket,
+    setTitle: actions.setTitle
+  }
+)(CabinetExchangeScreen);

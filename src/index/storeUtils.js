@@ -144,21 +144,6 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
-    case CLASSES.SEND_COINS_MODAL:
-      mapState2Props = state => ({
-        thisState: state.modalGroup.states.send,
-        wallets: state.wallets.wallets
-      });
-      mapDispatch2Props = {
-        setStateByModalPage: modalGroupActions.setStateByModalPage,
-        toastPush: toastsActions.toastPush
-      };
-      break;
-    case CLASSES.SEND_COINS_CONFIRM_MODAL:
-      mapDispatch2Props = {
-        toastPush: toastsActions.toastPush
-      };
-      break;
     case CLASSES.CHANGE_SECRET_KEY_MODAL:
       mapDispatch2Props = {
         changeSecretKay: profileActions.changeSecretKay,
@@ -225,18 +210,6 @@ export function getWithState(caseName, caseClass) {
       mapDispatch2Props = {
         setTitle: actions.setTitle,
         toastPush: toastsActions.toastPush
-      };
-      break;
-    case CLASSES.CABINET_EXCHANGE_SCREEN:
-      mapState2Props = (state) => ({
-        ...state.exchange,
-        adaptive: state.default.adaptive,
-        router: state.router,
-        user: state.default.profile.user
-      });
-      mapDispatch2Props = {
-        load: exchangeActions.load,
-        setTitle: actions.setTitle
       };
       break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:

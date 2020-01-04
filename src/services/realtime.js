@@ -2,7 +2,7 @@ import * as auth from './auth';
 
 class RealTime {
   constructor() {
-    this.endpoint = 'wss://echo.narfex.com?access_token=' + auth.getToken();
+    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo?access_token=' + auth.getToken();
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;
@@ -11,6 +11,12 @@ class RealTime {
 
     this.__connect();
   }
+
+  reconnect = () => {
+    if (this.connection.readyState === 3) {
+      this.__connect();
+    }
+  };
 
   __connect = () => {
     this.connected = false;
@@ -30,20 +36,21 @@ class RealTime {
 
     this.connection.onerror = (error) => {
       console.log('[WS] Error: ', error.message);
+      this.triggerListeners('error_connection');
     };
 
     this.connection.onclose = () => {
       this.connected = false;
       this.triggerListeners('close_connection');
       console.log('[WS] Disconnected, reconnection..');
-      setTimeout(this.__connect, 5000);
     };
 
     this.connection.onmessage = this.__messageDidReceive;
   };
 
-  __messageDidReceive = ({ data }) => {
+  __messageDidReceive = ({data}) => {
     let messages = data.split('\n');
+
     for (let message of messages) {
       let json;
       try {
@@ -56,7 +63,6 @@ class RealTime {
       //console.log('[WS]', json);
       if (this.listeners[json.type]) {
         for (let listener of this.listeners[json.type]) {
-          console.log("json:", json);
           listener(json.body);
         }
       }
@@ -105,12 +111,12 @@ class RealTime {
 
   subscribe(channel) {
     this.subscribtions[channel] = true;
-    this.__send('subscribe', { channel });
+    this.__send('subscribe', {channel});
   }
 
   unsubscribe(channel) {
     delete this.subscribtions[channel];
-    this.__send('unsubscribe', { channel });
+    this.__send('unsubscribe', {channel});
   }
 
   __restoreSubscriptions() {

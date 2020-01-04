@@ -81,7 +81,8 @@ class Dropdown extends React.Component {
                     key={Math.random()}
                     className={classNames("Dropdown__option", { disabled: opt.disabled })}
                     onClick={() => {
-                      props.onChange(opt);
+                      props.onChange && props.onChange(opt);
+                      props.onChangeValue && props.onChangeValue(opt.value);
                       this.toggle(false);
                     }}
                   >
@@ -122,7 +123,8 @@ Dropdown.propTypes = {
   ]),
   disabled: PropTypes.bool,
   options: PropTypes.arrayOf(optionType).isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onChangeValue: PropTypes.func,
 };
 
 export default Dropdown;

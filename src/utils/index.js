@@ -102,7 +102,10 @@ export function ucfirst(input = "") {
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  return parseFloat(parseFloat(input).toFixed(fractionDigits));
+  if (parseFloat(input) === NaN) return null;
+  const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
+  return Math.floor((input * coefficient).toFixed(0)) / coefficient;
+  // return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 
 export function formatTableId(index) {
@@ -202,7 +205,7 @@ export function getScrollbarWidth() {
 }
 
 export function isFiat(currency) {
-  return ['gbp', 'usd', 'eur', 'rub', 'idr', 'cny'].includes(currency.toLowerCase());
+  return ['gbp', 'usd', 'usdt', 'eur', 'rub', 'idr', 'cny'].includes(currency.toLowerCase());
   // TODO: Бруть из state.default.currency
 }
 

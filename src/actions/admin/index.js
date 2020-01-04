@@ -42,7 +42,12 @@ function __action(action) {
   const state = store.getState();
 
   values && Object.keys(newValues).map(key => {
-    newValues[key] = state.admin.values[newValues[key]];
+    const value = state.admin.values[newValues[key]];
+    if (value) {
+      newValues[key] = value;
+    } else {
+      delete newValues[key];
+    }
   });
 
   store.dispatch({type: 'pending', params: true});

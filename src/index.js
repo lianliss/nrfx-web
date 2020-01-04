@@ -16,7 +16,7 @@ import App from './index/App';
 import * as auth from './services/auth';
 import * as user from './actions/user';
 import * as emitter from './services/emitter';
-// import realTimeService from './services/realtime';
+import realTimeService from './services/realtime';
 import './index/polyfill';
 
 if (process.env.NODE_ENV === 'production') {
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 
 require('define').noConflict();
 auth.setup();
-// realTimeService();
+realTimeService();
 
 emitter.addListener('userInstall', user.install);
 emitter.emit('userInstall');

@@ -39,7 +39,7 @@ Collapse.propTypes = {
   isOpen: PropTypes.bool,
   isOpenDefault: PropTypes.bool,
   title: PropTypes.string,
-  controls: PropTypes.element
+  controls: PropTypes.arrayOf(PropTypes.element)
 };
 
 export default Collapse;

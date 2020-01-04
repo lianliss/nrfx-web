@@ -4,8 +4,9 @@ import React from 'react';
 
 import * as utils from '../../../../../../utils';
 import UI from '../../../../../../ui/index';
+import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
 
-export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, type }) {
+export default function OrderBook({ asks, bids, loading, onOrderPress, adaptive, ticker, type }) {
 
   [asks, bids] = [asks, bids].map(prepareOrders);
 
@@ -23,6 +24,14 @@ export default function OrderBook({ asks, bids, onOrderPress, adaptive, ticker, 
   let asksPercent = sumAsks / total * 100;
   let bidsPercent = sumBids / total * 100;
   let diff = Math.round(Math.abs(asksPercent - bidsPercent));
+
+  if (loading) {
+    return (
+      <div className={utils.classNames("OrderBook", type)}>
+        <LoadingStatus status="loading" />
+      </div>
+    )
+  }
 
   return (
     <div className={utils.classNames("OrderBook", type)}>
@@ -94,9 +103,9 @@ function makeRows(items, onOrderPress, whole, adaptive,) {
 
     return (
       <div title={`Filled: ${Math.floor(order.filled / order.amount * 100)}%`} key={order.id} className={className} onClick={() => onOrderPress(order)}>
-        <div className="OrderBook__order__row">{utils.formatDouble(order.price, order.secondary_coin === 'usdt' ? 2 : 6)}</div>
-        <div className="OrderBook__order__row">{utils.formatDouble(order.amount - order.filled)} </div>
-        {!adaptive && <div className="OrderBook__order__row">{utils.formatDouble(order.price * order.amount, order.secondary_coin === 'usdt' ? 2 : 6)}</div>}
+        <div className="OrderBook__order__row"><UI.NumberFormat number={order.price} currency={order.secondary_coin} hiddenCurrency /></div>
+        <div className="OrderBook__order__row"><UI.NumberFormat number={order.amount - order.filled} currency={order.primary_coin} hiddenCurrency /></div>
+        {!adaptive && <div className="OrderBook__order__row"><UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} hiddenCurrency /></div>}
         <div className="OrderBook__order__filled" style={{
           width: `${filled}%`
         }}/>

@@ -4,20 +4,20 @@ import UI from '../../../../../ui';
 import * as utils from '../../../../../utils';
 import * as actions from '../../../../../actions';
 
-function BalanceItem({ amount, currency }) {
+function BalanceItem({ amount, currency }, key ) {
   const currencyInfo = actions.getCurrencyInfo(currency);
   currency = currency.toUpperCase();
 
   return (
-    <div className="Investments__balances__item Content_box">
-      <div key="info" className="Investments__balances__item__rows">
+    <div key={key} className="Investments__balances__item Content_box">
+      <div className="Investments__balances__item__rows">
         <InfoRow label={utils.ucfirst(currencyInfo.name)}>{amount} {currency}</InfoRow>
       </div>
       <div className="Investments__balances__item__actions empty disable_active_button">
         <UI.Button
           style={{background: currencyInfo.background}}
           key="button"
-          type="default"
+          type="normal"
           size="middle"
           onClick={() => actions.openModal('open_deposit', { currency })}
         >
@@ -42,7 +42,7 @@ function InfoRow({ label, children, highlighted }) {
 }
 
 export default function Balances({data}) {
-  return data.map(item => {
-    return BalanceItem(item);
+  return data.map((item, key) => {
+    return BalanceItem(item, key);
   });
 }

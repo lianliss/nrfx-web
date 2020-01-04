@@ -56,10 +56,6 @@
   margin-top: 8px;
   flex: 1;
 
-  &:first-child {
-    margin-top: 0;
-  }
-
   .MarketInfo__summary_line & {
     display: table-cell;
   }
@@ -89,19 +85,11 @@
 .MarketInfo__info_row__value__primary {
   min-width: 78px;
   margin-right: 1em;
-
-  &.up {
-    color: var(--primary-green);
-  }
-
-  &.down {
-    color: var(--primary-red);
-  }
 }
 
 
 .MarketInfo__summary_line {
-  display: table;
+  display: flex;
   width: 100%;
 }
 

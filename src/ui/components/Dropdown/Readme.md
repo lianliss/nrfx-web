@@ -5,6 +5,7 @@ normal
   placeholder="Placeholder"
   value="btc"
   onChange={console.log}
+  onChangeValue={console.log}
   options={[
     { title: 'BTC', note: '0.02112', value: 'btc' },
     { title: 'ETH', note: '1.511', value: 'eth' },
@@ -18,7 +19,7 @@ small
 <Dropdown
   placeholder="Placeholder"
   value="btc"
-  onChange={console.log}
+  onChangeValue={console.log}
   size="small"
   options={[
     { title: 'BTC', note: '0.02112', value: 'btc' },

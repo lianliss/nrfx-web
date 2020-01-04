@@ -50,6 +50,7 @@ class ChooseMarketModal extends React.Component {
   }
 
   __handleChooseMarket (market) {
+    market = market.toLowerCase();
     this.props.chooseMarket(market);
     router.navigate(PAGES.EXCHANGE, { market: market.replace('/', '_')  });
     // this.props.onClose();
@@ -113,12 +114,9 @@ class ChooseMarketModal extends React.Component {
                     color: primary.color,
                   },
                   data: chart.map(([x, y]) => ({ x, y })),
-                }
+                };
 
-                const numberClassName = ticker && utils.classNames(
-                  "ChooseMarketModal__value",
-                  ticker.percent >= 0 ? "positive" : "negative"
-                );
+                const currencyType = ticker.percent >= 0 ? "up" : "down";
 
                 return (
                   <UI.TableCell key={key} onClick={() => this.__handleChooseMarket(market.name)}>
@@ -141,13 +139,13 @@ class ChooseMarketModal extends React.Component {
                       /> }
                     </UI.TableColumn>
                     <UI.TableColumn>
-                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.price, utils.isFiat(secondary.abbr) ? 2 : 6)}</span> }
+                      { ticker && <UI.NumberFormat number={ticker.price} type={currencyType} currency={secondary.abbr} hiddenCurrency /> }
                     </UI.TableColumn>
                     { !this.props.adaptive && <UI.TableColumn>
-                      { ticker && "$" + utils.formatDouble(ticker.usd_price, 2) }
+                      { ticker && <UI.NumberFormat number={ticker.usd_price} currency={'usd'} /> }
                     </UI.TableColumn> }
                     <UI.TableColumn>
-                      { ticker && <span className={numberClassName}>{utils.formatDouble(ticker.percent, 2)}%</span> }
+                      { ticker && <UI.NumberFormat number={ticker.percent} type={currencyType} percent /> }
                     </UI.TableColumn>
                   </UI.TableCell>
                 )

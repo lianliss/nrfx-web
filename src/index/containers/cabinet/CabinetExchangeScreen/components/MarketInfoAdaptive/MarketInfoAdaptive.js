@@ -4,6 +4,7 @@ import React from 'react';
 
 import * as utils from '../../../../../../utils';
 import * as actions from '../../../../../../actions/';
+import UI from '../../../../../../ui';
 
 export default ({ market, price, percent, diff }) => {
 
@@ -34,14 +35,14 @@ export default ({ market, price, percent, diff }) => {
             <div className="MarketInfoAdaptive__pair__secondary">{secondary.abbr.toUpperCase()}</div>
           </div>
           <div className="MarketInfoAdaptive__day_percent">
-            <span className={valueClassName}>{utils.formatDouble(percent, 2)}%</span>
+            <UI.NumberFormat number={percent} percent type={percent >= 0 ? 'up' : 'down'} />
           </div>
         </div>
         <div className="MarketInfoAdaptive__row">
           <div className="MarketInfoAdaptive__price">
-            <span className={valueClassName}>{utils.formatDouble(price)}</span>
+          	<UI.NumberFormat number={price} percent type={percent >= 0 ? 'up' : 'down'} />
           </div>
-          <div className="MarketInfoAdaptive__day_price">${utils.formatDouble(diff, 2)}</div>
+          <div className="MarketInfoAdaptive__day_price">$<UI.NumberFormat number={diff} currency={'usd'} hiddenCurrency /></div>
         </div>
       </div>
     </div>
