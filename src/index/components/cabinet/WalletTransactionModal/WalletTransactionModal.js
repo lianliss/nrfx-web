@@ -90,13 +90,14 @@ export default class WalletTransactionModal extends React.Component {
                   {address}
                 </div>}
             </InfoRow>
-            <InfoRow label={utils.getLang("global_amount")}>{utils.formatDouble(data.amount)} {currency}</InfoRow>
+            <InfoRow label={utils.getLang("global_amount")}><UI.NumberFormat number={data.amount} currency={currency} /></InfoRow>
+            <InfoRow label={utils.getLang("global_fee")}><UI.NumberFormat number={data.fee} currency={currency} /></InfoRow>
             <InfoRow label={utils.getLang("global_date")}>{ utils.dateFormat(data.created_at)}</InfoRow>
           </InfoRowGroup>
 
           <UI.WalletCard
             title={utils.getLang('cabinet_walletTransactionModal_total')}
-            balance={data.amount}
+            balance={data.amount + data.fee}
             currency={currencyInfo}
           />
 
