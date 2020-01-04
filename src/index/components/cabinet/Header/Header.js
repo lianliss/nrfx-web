@@ -73,10 +73,10 @@ class Header extends React.Component {
                 {utils.getLang('cabinet_header_bots')}
               </div>
 
-              <BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>
-                <SVG src={require('../../../../asset/cabinet/exchange_icon.svg')} />
-                {utils.getLang('cabinet_header_exchange')}
-              </BaseLink>
+              {/*<BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>*/}
+              {/*  <SVG src={require('../../../../asset/cabinet/exchange_icon.svg')} />*/}
+              {/*  {utils.getLang('cabinet_header_exchange')}*/}
+              {/*</BaseLink>*/}
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../../asset/cabinet/commerce_icon.svg')} />
