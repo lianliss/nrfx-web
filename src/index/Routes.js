@@ -10,7 +10,7 @@ import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScree
 import SiteTechnologyScreen from './containers/site/SiteTechnologyScreen/SiteTechnologyScreen';
 import SiteSafetyScreen from './containers/site/SiteSafetyScreen/SiteSafetyScreen';
 import SiteExchangeScreen from './containers/site/SiteExchangeScreen/SiteExchangeScreen';
-import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
+// import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
 import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactScreen';
 import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
 import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
@@ -83,10 +83,10 @@ export default function Routes(props) {
     //   Component = SiteCommerceScreen;
     //   WrapperComponent = SiteWrapper;
     //   break;
-    case pages.INVESTMENT:
-      Component = SiteInvestmentScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.INVESTMENT:
+    //   Component = SiteInvestmentScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     case pages.CONTACT:
       Component = SiteContactScreen;
       WrapperComponent = SiteWrapper;

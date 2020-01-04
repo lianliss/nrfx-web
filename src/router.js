@@ -74,10 +74,10 @@ export const routes = process.env.DOMAIN === 'admin' ? [
     name: pages.COMMERCE,
     path: '/commerce',
   },
-  {
-    name: pages.INVESTMENT,
-    path: '/investment',
-  },
+  // {
+  //   name: pages.INVESTMENT,
+  //   path: '/investment',
+  // },
   {
     name: pages.CONTACT,
     path: '/contact',

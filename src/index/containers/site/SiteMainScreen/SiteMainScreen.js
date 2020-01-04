@@ -82,13 +82,15 @@ export default class SiteMainScreen extends BaseScreen {
               icon="robot"
               seeMoreLink={pages.ROBOTS}
             >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]}</HomepageProduct>
-            <HomepageProduct
-              title={this.lang.site.homeInvestments}
-              bgTitle={this.lang.site.homeInvestments}
-              icon="investment"
-              seeMoreLink={pages.INVESTMENT}
-              reverse
-            >{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>
+
+            {/*<HomepageProduct*/}
+            {/*  title={this.lang.site.homeInvestments}*/}
+            {/*  bgTitle={this.lang.site.homeInvestments}*/}
+            {/*  icon="investment"*/}
+            {/*  seeMoreLink={pages.INVESTMENT}*/}
+            {/*  reverse*/}
+            {/*>{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>*/}
+
             {/*<HomepageProduct*/}
             {/*  title={this.lang.site.homePayment}*/}
             {/*  bgTitle={this.lang.site.homePayment}*/}
