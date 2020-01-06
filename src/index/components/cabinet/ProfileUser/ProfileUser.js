@@ -4,6 +4,8 @@ import * as modalGroupActions from '../../../../actions/modalGroup';
 import UploadAvatarModal from '../UploadAvatarModal/UploadAvatarModal';
 import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
+import UI from 'src/ui/index';
+import * as actions from '../../../../actions';
 
 export default function ProfileSidebarUser({ profile }) {
   if (!profile || !Object.keys(profile).length) {
@@ -27,7 +29,14 @@ export default function ProfileSidebarUser({ profile }) {
         <h3 className="ProfileUser__title">{utils.ucfirst(profile.user.first_name)} {utils.ucfirst(profile.user.last_name)}</h3>
         <p className="ProfileUser__txt">{profile.user.login}</p>
         <p className="ProfileUser__txt">{profile.role}</p>
-        {/*<button className={verificationClasses}>{verificationText}</button> // TODO: Вернуть как только будет готова верификация */}
+        {/*<UI.Button*/}
+        {/*  onClick={() => {*/}
+        {/*    actions.openModal('verification');*/}
+        {/*  }}*/}
+        {/*  className="ProfileUser__verifyButton"*/}
+        {/*  size="small"*/}
+        {/*  type="negative"*/}
+        {/*>{utils.getLang('global_verify')}</UI.Button>*/}
       </div>
     </div>
   )
