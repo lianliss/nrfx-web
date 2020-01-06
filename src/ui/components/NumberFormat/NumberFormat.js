@@ -7,6 +7,9 @@ import { classNames } from '../../utils';
 import * as utils from '../../utils/index';
 
 const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
+
+  if (!number) return null;
+
   if (!fractionDigits) {
     if (percent) {
       fractionDigits = 2;

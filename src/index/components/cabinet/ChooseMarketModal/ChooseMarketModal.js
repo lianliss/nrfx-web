@@ -91,6 +91,7 @@ class ChooseMarketModal extends React.Component {
           <div className="ChooseMarketModal__market_list">
             <UI.Table header={false} inline >
               {markets.map(({ market, ticker, chart }, key) => {
+                if (!ticker) ticker = {};
                 const [primary, secondary] = market.name.split('/').map(actions.getCurrencyInfo);
 
                 if (
