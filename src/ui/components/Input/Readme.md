@@ -2,10 +2,14 @@
 normal
 
 ```js
+import Button from '../Button/Button';
+
 <div>
     <Input placeholder="Placeholder" />
     <br />
     <Input indicator="USD" />
+    <br />
+    <Input placeholder="indicator component" indicator={<Button type="ultra_small" onClick={console.log}>component</Button>} />
     <br />
     <Input value="Value" />
     <br />

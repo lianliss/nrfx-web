@@ -46,6 +46,16 @@ class Input extends React.Component {
       [this.props.size]: !!this.props.size,
     });
 
+    let type = this.props.type;
+
+    if (this.props.type === "password" && this.state.displayPassword) {
+      type = "text";
+    }
+
+    if (this.props.type === "datetime") {
+      type = "datetime-local";
+    }
+
     let params = {
       className,
       placeholder: typeof this.props.placeholder === 'object' ?  this.props.placeholder.props.langString : this.props.placeholder,

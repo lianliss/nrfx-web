@@ -16,6 +16,8 @@ class MarketInfo extends React.Component{
     actions.openModal('choose_market');
   }
 
+  
+
   render() {
     const [primary, secondary] = this.props.market.toUpperCase().split('/');
 
@@ -37,30 +39,22 @@ class MarketInfo extends React.Component{
     const { tickerInfo, market } = this.props;
     const [, secondary] = market.split('/');
 
-    const lastPriceClassName = utils.classNames({
-      MarketInfo__info_row__value__primary: true,
-      [tickerInfo.percent >= 0 ? 'up' : 'down']: true
-    });
-
-    const dayChangeClassName = utils.classNames({
-      MarketInfo__info_row__value__primary: true,
-      [tickerInfo.percent >= 0 ? 'up' : 'down']: true
-    });
+    const type = tickerInfo.percent >= 0 ? 'up' : 'down';
 
     return (
       <div className="MarketInfo__row price">
         <div className="MarketInfo__info_row">
           <div className="MarketInfo__info_row__label">{utils.getLang('exchange_lastPrice')}</div>
           <div className="MarketInfo__info_row__value">
-            <div className={lastPriceClassName}> {utils.formatDouble(tickerInfo.price, utils.isFiat(secondary) ? 2 : void 0)}</div>
-            ${utils.formatDouble(tickerInfo.usd_price, 2)}
+            <div className="MarketInfo__info_row__value__primary"><UI.NumberFormat type={type} indicator number={tickerInfo.price} currency={secondary} hiddenCurrency /></div>
+            $<UI.NumberFormat number={tickerInfo.usd_price} currency={'usd'} hiddenCurrency />
           </div>
         </div>
         <div className="MarketInfo__info_row">
           <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_change')}</div>
           <div className="MarketInfo__info_row__value">
-            <div className={dayChangeClassName}>{`${utils.formatDouble(tickerInfo.percent, 2)}%`}</div>
-            {utils.formatDouble(tickerInfo.diff, utils.isFiat(secondary) ? 2 : void 0)}
+            <div className="MarketInfo__info_row__value__primary"><UI.NumberFormat number={tickerInfo.percent} type={type} indicator percent fractionDigits={2} /></div>
+            <UI.NumberFormat number={tickerInfo.diff} currency={secondary} hiddenCurrency />
           </div>
         </div>
       </div>
@@ -94,7 +88,7 @@ class MarketInfo extends React.Component{
       {label: '15 min', value: 15},
       {label: '30 min', value: 30},
       {label: '1 hour', value: 60},
-      {label: '2 hours', value: 120},
+      {label: '4 hours', value: 240},
       {label: '1 day', value: '1D'},
       {label: '1 week', value: '1W'},
     ].map((item) => {
@@ -102,7 +96,7 @@ class MarketInfo extends React.Component{
         key={item.value}
         rounded
         size="ultra_small"
-        type={item.value === this.props.chartTimeFrame ? '' : 'secondary'}
+        type={item.value === this.props.chartTimeFrame ? 'normal' : 'secondary'}
         onClick={() => this.props.changeTimeFrame(item.value)}
       >{item.label}</UI.Button>
     });
@@ -121,23 +115,23 @@ class MarketInfo extends React.Component{
         <div className="MarketInfo__summary_line">
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_volume')}</div>
-            <div className="MarketInfo__info_row__value">{utils.formatDouble(tickerInfo.usd_volume, 2)}</div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={tickerInfo.usd_volume} currency={'usd'} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_high')}</div>
-            <div className="MarketInfo__info_row__value">{utils.formatDouble(tickerInfo.max, utils.isFiat(secondary) ? 2 : void 0)}</div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={tickerInfo.max} currency={secondary} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_low')}</div>
-            <div className="MarketInfo__info_row__value">{utils.formatDouble(tickerInfo.min, utils.isFiat(secondary) ? 2 : void 0)}</div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={tickerInfo.min} currency={secondary} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_ask')}</div>
-            <div className="MarketInfo__info_row__value">{utils.formatDouble(bestAsk ? bestAsk.price : 0, utils.isFiat(secondary) ? 2 : void 0)}</div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={bestAsk ? bestAsk.price : 0} currency={secondary} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_bid')}</div>
-            <div className="MarketInfo__info_row__value">{utils.formatDouble(bestBid ? bestBid.price : 0, utils.isFiat(secondary) ? 2 : void 0)}</div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={bestBid ? bestBid.price : 0} currency={secondary} hiddenCurrency /></div>
           </div>
         </div>
         <div className="MarketInfo__summary_controls">

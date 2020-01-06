@@ -47,8 +47,8 @@ export default class ActionSheet extends React.Component {
             <SVG src={require('../../../asset/24px/menu-more.svg')} />
           )}</div>
         <ContentBox className="ActionsSheet__list">
-          {props.items.map(item => (
-            <div className={cn('ActionsSheet__item', item.type)} onClick={e => {
+          {props.items.map((item, key) => (
+            <div key={key} className={cn('ActionsSheet__item', item.type)} onClick={e => {
               item.onClick();
               this.toggle(false);
             }}>

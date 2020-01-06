@@ -1,45 +1,30 @@
 import './SendCoinsModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import UI from '../../../../ui';
 
 import * as actions from '../../../../actions';
+import * as toast from '../../../../actions/toasts';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
 import LoadingStatus from '../../cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../../utils';
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
 
-import * as api from "../../../../services/api";
 
 
 class SendCoinsModal extends React.Component {
+
+  state = {
+    addressError: false,
+  };
+
   componentDidMount() {
     this.__load();
   }
 
-  state = {
-    errorAddress: false
-  };
-
-  get getSelectedWalletInfo() {
-    return this.props.thisState.wallets.filter(wallet => wallet.currency === this.props.thisState.selectedWallet.value);
-  }
-
-  get wallet() {
-    for (let i = 0; i < this.props.thisState.wallets.length; i++) {
-      if (this.props.thisState.wallets[i].currency === this.props.thisState.currency) {
-        return this.props.thisState.wallets[i];
-      }
-    }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
-
   render() {
+
     return (
       <UI.Modal isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
@@ -50,78 +35,137 @@ class SendCoinsModal extends React.Component {
     )
   }
 
+  get currentWallet() {
+    return this.props.wallets.find(w => w.id == this.props.walletId);
+  }
+
+  get currentFee() {
+    return this.props.limits[this.currentWallet.currency].fee;
+  }
+
+  get currentMin() {
+    return this.props.limits[this.currentWallet.currency].min;
+  }
+
+  __handleChange(property) {
+    return value => {
+      this.props.sendCoinModalSetValue(property, value);
+      if (property === 'address') {
+        this.setState({ addressError: false });
+      }
+      if (property === 'amount') {
+        this.props.sendCoinModalSetValue('amountUsd', utils.formatDouble(value * this.currentWallet.to_usd, 2));
+      }
+      if (property === 'amountUsd') {
+        this.props.sendCoinModalSetValue('amount', utils.formatDouble(value / this.currentWallet.to_usd));
+      }
+    }
+  }
+
+  get maxAmount() {
+    const currentWallet = this.currentWallet;
+    return currentWallet.amount - this.currentFee;
+  }
+
+  __maxDidPress = () => {
+    const currentWallet = this.currentWallet;
+    const amount = this.maxAmount;
+    const amountUsd = amount * currentWallet.to_usd;
+    this.props.sendCoinModalSetValue('amount', utils.formatDouble(Math.max(amount, 0)));
+    this.props.sendCoinModalSetValue('amountUsd', utils.formatDouble(Math.max(amountUsd, 0), 2));
+  };
+
+  __handleSubmit = () => {
+    if (this.props.amount > this.maxAmount) {
+      toast.error(
+        utils.getLang('cabinet_sendCoinsModal_maximumAmountText') + ': ' +
+        utils.formatDouble(this.maxAmount) + ' ' +
+        this.currentWallet.currency.toUpperCase()
+      );
+      return false;
+    }
+    if (this.props.amount >= this.currentMin) {
+      if (this.props.address.length < 15 ) {
+        walletsActions.checkLogin(this.props.address).then(response => {
+          this.setState({ addressError: false });
+          actions.openModal('send_confirm');
+        }).catch(response => {
+          this.setState({ addressError: true });
+        })
+      } else {
+        actions.openModal('send_confirm');
+      }
+    } else {
+      toast.error(
+        utils.getLang('cabinet_sendCoinsModal_minimumAmountText') + ': ' +
+        utils.formatDouble(this.currentMin) + ' ' +
+        this.currentWallet.currency.toUpperCase()
+      );
+    }
+  }
+
   __renderContent() {
-    if (this.props.thisState.loadingStatus) {
+    const { wallets, walletId } = this.props;
+
+    if (this.props.loadingStatus) {
       return (
         <LoadingStatus
           inline
-          status={this.props.thisState.loadingStatus}
+          status={this.props.loadingStatus}
         />
       )
     } else {
-      const currencyInfo = actions.getCurrencyInfo(this.props.thisState.currency);
-      this.options = this.props.thisState.wallets.filter(w => w.status !== 'pending');
-      this.options = this.options.map(item => {
-        const info = actions.getCurrencyInfo(item.currency);
-        return {
-          title: utils.ucfirst(info.name),
-          note: `${utils.formatDouble(item.amount)} ${item.currency.toUpperCase()}`,
-          value: item.currency
-        }
-      });
-
-      if (!(this.options.length > 0)) {
-        return <div style={{textAlign:'center'}}>
-          {utils.getLang('cabinet_sendCoinsModal_available')}
-        </div>;
-      }
-
-      let sendButtonDisabled = true;
-      if (this.__checkItsReady()) {
-        sendButtonDisabled = false;
-      }
+      const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
 
       return (
         <div className="SendCoinsModal">
           <div className="SendCoinsModal__wallet">
             <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
-            {this.options.length > 0 && <UI.Dropdown
-              placeholder={this.props.thisState.selectedWallet}
-              value={this.props.thisState.selectedWallet}
-              options={this.options}
-              onChange={item => {
-                this.__setState({currency: item.value, selectedWallet: item, address: '' });
-                this.__amountDidChange(0);
-              }}
+            {wallets.length > 0 && <UI.Dropdown
+              placeholder={""}
+              value={walletId}
+              options={wallets.map(w => {
+                const { name, abbr } = actions.getCurrencyInfo(w.currency);
+                return {
+                  title: name,
+                  note: utils.formatDouble(w.amount) + ' ' + abbr.toUpperCase(),
+                  value: w.id,
+                }
+              })}
+              onChangeValue={this.__handleChange('walletId')}
             />}
           </div>
           <div className="SendCoinsModal__row">
             <UI.Input
-              value={this.props.thisState.address}
+              value={this.props.address}
               placeholder={utils.getLang('cabinet__coinsAddressPlaceholder')}
-              onTextChange={this.__addressChange}
-              error={this.state.errorAddress}
+              onTextChange={this.__handleChange('address')}
+              error={this.state.addressError}
             />
           </div>
           <div className="SendCoinsModal__row SendCoinsModal__amount">
             <UI.Input
               placeholder="0"
-              indicator={this.props.thisState.currency.toUpperCase()}
-              onTextChange={this.__amountDidChange}
-              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.props.thisState.amount)}
-              value={this.props.thisState.amount || undefined}
-              // description={
-              //   <span style={{color: currencyInfo.color}}>
-              //     {utils.getLang('global_fee')}: <UI.NumberFormat number={0.01} currency={currencyInfo.abbr} /></span>
-              // }
-              error={this.state.errorAmount}
+              indicator={currencyInfo.abbr.toUpperCase()}
+              onTextChange={this.__handleChange('amount')}
+              type="number"
+              error={this.props.amount && this.props.amount < this.currentMin || this.props.amount > this.maxAmount}
+              value={this.props.amount}
+              description={
+                <span style={{color: currencyInfo.color}}>
+                  {utils.getLang('global_fee')}: <UI.NumberFormat
+                    number={utils.formatDouble(this.currentFee)}
+                    currency={currencyInfo.abbr}
+                  />
+                </span>
+              }
             />
             <UI.Input
               placeholder="0"
               indicator="USD"
-              onTextChange={this.__usdAmountDidChange}
-              onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.props.thisState.amountUSD)}
-              value={this.props.thisState.amountUSD || undefined}
+              type="number"
+              onTextChange={this.__handleChange('amountUsd')}
+              value={this.props.amountUsd}
             />
             <UI.Button
               smallPadding
@@ -135,8 +179,8 @@ class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
               currency={currencyInfo}
-              onClick={this.__sendButtonHandler}
-              disabled={sendButtonDisabled}
+              onClick={this.__handleSubmit}
+              disabled={!this.props.amount || !this.props.address}
             >
               {utils.getLang("global_send")}
             </UI.Button>
@@ -147,114 +191,17 @@ class SendCoinsModal extends React.Component {
   }
 
   __load = () => {
-    this.__setState({ loadingStatus: 'loading' });
-
-    walletsActions.getWallets().then(wallets => {
-      this.__setState({ loadingStatus: '', wallets });
-      let preset = 'Bitcoin';
-
-      if (this.props.hasOwnProperty('preset')) {
-        preset = this.options.filter(opt => opt.title === this.props.preset)[0];
-        this.__setState({currency: preset.value, selectedWallet: preset });
-      } else {
-        if (this.props.thisState.currency !== null) {
-          let currency = actions.getCurrencyInfo(this.props.thisState.currency);
-          preset = utils.ucfirst(currency.name)
-        }
-        preset = this.options.filter(opt => opt.title === preset)[0];
-        this.__setState({currency: preset.value, selectedWallet: preset});
-      }
-    }).catch(() => {
-      this.__setState({ loadingStatus: 'failed' });
-    });
+    walletsActions.getWallets();
+    this.props.getLimits();
   };
-
-  __amountDidChange = (amount) => {
-    if (amount && !`${amount}`.match(/^\d{0,8}(\.\d{0,8}){0,1}$/)) {
-      return false;
-    }
-
-    this.__setState({ amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd, 2) });
-  };
-
-  __usdAmountDidChange = (amountUSD) => {
-    if (amountUSD && !`${amountUSD}`.match(/^\d{0,15}(\.\d{0,2}){0,1}$/)) {
-      return false;
-    }
-
-    this.__setState({ amountUSD, amount: utils.formatDouble(amountUSD / this.wallet.to_usd) });
-  };
-
-  __addressChange = (address) => {
-    this.__setState({ address });
-  };
-
-  __maxDidPress = () => {
-    const amount = this.wallet.amount;
-    this.__setState({ amount: amount, amountUSD: utils.formatDouble(amount * this.wallet.to_usd).toFixed(2) });
-  };
-
-  __setState = (value, key = null) => {
-    this.props.setStateByModalPage('send', value, key);
-  };
-
-  __checkItsReady() {
-    return this.props.thisState.address.length > 0 &&
-      this.props.thisState.address.length < 256 &&
-      this.props.thisState.selectedWallet &&
-      (this.props.thisState.amount > 0 || this.props.thisState.amountUSD > 0)
-  }
-
-  __openConfirmModal = () => {
-    const params = {
-      wallet_id: this.getSelectedWalletInfo[0].id,
-      currency: this.props.thisState.currency,
-      amount: this.props.thisState.amount,
-      address: this.props.thisState.address
-    };
-    actions.openModal('send_confirm', params, params);
-  };
-
-  __sendButtonHandler = () => {
-    if (!this.__checkItsReady()) return;
-    if (
-      this.props.thisState.amount >
-      this.props.wallets.find(w => w.currency === this.props.thisState.currency).amount
-    ) {
-      this.props.toastPush(utils.getLang("cabinet_notEnoughFunds"), "error");
-      this.setState({
-        errorAmount: true
-      }, () => {
-        setTimeout(() => {
-          this.setState({
-            errorAmount: false
-          });
-        }, 1000)
-      });
-      return;
-    }
-
-    if (this.props.thisState.address.length < 15) {
-      api.post('profile/check_login/', {login: this.props.thisState.address}).then((data) => {
-        this.__openConfirmModal();
-      }).catch((err) => {
-        this.setState({
-          errorAddress: true
-        }, () => {
-          setTimeout(() => {
-            this.setState({
-              errorAddress: false
-            });
-          }, 1000)
-        })
-      });
-    } else {
-      this.__openConfirmModal();
-    }
-  }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.SEND_COINS_MODAL,
-  SendCoinsModal
-);
+export default connect(state => ({
+  loadingStatus: (state.wallets.loadingStatus.limits || state.wallets.loadingStatus.default),
+  wallets: state.wallets.wallets,
+  limits: state.wallets.limits,
+  ...state.wallets.sendCoinModal
+}), {
+  sendCoinModalSetValue: walletsActions.sendCoinModalSetValue,
+  getLimits: walletsActions.getLimits,
+})(SendCoinsModal);

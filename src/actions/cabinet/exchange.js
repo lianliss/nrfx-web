@@ -24,6 +24,10 @@ export function load(market) {
   };
 }
 
+export function setStatus(status) {
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status });
+}
+
 export function chooseMarket(market) {
   return (dispatch, getState) => {
     exchangeService.unbind(getState().exchange.market);
@@ -34,7 +38,9 @@ export function chooseMarket(market) {
 
 export function orderCreate(params) {
   return api.call(apiSchema.Exchange.OrderPut, params).then(({balance}) => {
-    store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance });
+    if (params.type !== 'market') {
+      store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance });
+    }
   }).catch((err) => {
     toast.error(err.message);
   })
@@ -59,7 +65,12 @@ export function getMarkets() {
 }
 
 export function removeOrders(orderIds) {
-  store.dispatch({ type: actionTypes.EXCHANGE_REMOVE_ORDER, orderIds });
+  store.dispatch({ type: actionTypes.EXCHANGE_REMOVE_ORDERS, orderIds });
+}
+
+export function orderBookInit(payload) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_INIT, ...payload });
+  store.dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'orderBook', status: '' });
 }
 
 export function orderBookUpdateOrders(orders) {
@@ -78,8 +89,12 @@ export function addOpenOrder(order) {
   store.dispatch({ type: actionTypes.EXCHANGE_ADD_OPEN_ORDER, order });
 }
 
-export function addTrades(orders) {
-  store.dispatch({ type: actionTypes.EXCHANGE_ADD_TRADES, orders });
+export function orderBookRemoveOrders(orders) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_REMOVE_ORDER, orders });
+}
+
+export function addTrades(trades) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ADD_TRADES, trades });
 }
 
 export function updateBalance(currency, amount) {

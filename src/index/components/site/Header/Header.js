@@ -15,7 +15,6 @@ import MobileDropdown from './components/MobileDropdown';
 import * as actions from 'actions';
 import * as auth from 'actions/auth';
 
-
 function Header({ showLightLogo, langList, routerState, profile }) {
   const headerLinks = [
     {

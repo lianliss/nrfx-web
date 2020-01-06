@@ -56,8 +56,11 @@ export function payForm({merchant, amount, currency}) {
 
 export function getRate({base, currency}) {
   return (dispatch, getState) => {
+    dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'rate', status: 'loading'});
     api.call(apiSchema.Fiat_wallet.RateGet, {base, currency}).then(({rate}) => {
-      dispatch({type: actionTypes.FIAT_WALLETS_SET_RATE, rate});
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_RATE, rate, uprateTime: new Date().getTime() });
+    }).finally(() => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'rate', status: null });
     })
   }
 }

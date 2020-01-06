@@ -11,16 +11,21 @@ class Exchange {
 
     this.listeners = [
       ['new_orders', this.__orderBookDidUpdated],
+      ['order_book', this.__orderBookInit],
       ['orders_filled', this.__orderBookDidUpdated],
       ['order_failed', this.__orderDidFailed],
       ['order_completed', this.__orderDidCompleted],
       ['cancel_order', this.__orderDidCancel],
+      ['cancel_orders', this.__ordersDidCancel],
       ['order_cancelled', this.__orderDidCancelled],
       ['cancel_order_failed', this.__orderDidCancelFailed],
       ['order_created', this.__orderDidCreated],
       ['trade_list', this.__orderDidTrade],
       ['balance_update', this.__balanceDidUpdate],
-      ['ticker', this.__tickerUpdate]
+      ['ticker', this.__tickerUpdate],
+      ['error_connection', this.__errorConnection],
+      ['close_connection', this.__errorConnection],
+      ['completed_orders', this.__orderBookRemoveOrder]
     ];
 
     this.__bind();
@@ -42,7 +47,13 @@ class Exchange {
     }
   }
 
+  __errorConnection = () => {
+    unbind(this.market);
+    exchange.setStatus('failed');
+  };
+
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
+  __orderBookInit = payload => exchange.orderBookInit(payload);
 
   __orderDidFailed = body => {
     exchange.setOrderStatus(body.order_id, 'completed');
@@ -55,6 +66,7 @@ class Exchange {
   };
 
   __orderDidCancel = (orderId) => exchange.removeOrders([orderId]);
+  __ordersDidCancel = (orderId) => exchange.removeOrders(orderId);
 
   __orderDidCancelled = (orderId) => {
     exchange.setOrderStatus(orderId, 'cancelled');
@@ -66,6 +78,10 @@ class Exchange {
   __orderDidCreated = (order) => {
     exchange.addOpenOrder(order);
     toasts.success(utils.getLang('exchange_toastOrderCreated'));
+  }
+
+  __orderBookRemoveOrder = (orders) => {
+    exchange.orderBookRemoveOrders(orders);
   }
 
   __orderDidTrade = (orders) => {
@@ -80,6 +96,7 @@ class Exchange {
 
 
 export function bind(market) {
+  realTime.shared.reconnect();
   markets[market] = new Exchange(market);
 }
 

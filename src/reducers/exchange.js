@@ -2,7 +2,10 @@ import * as actionTypes from '../actions/actionTypes';
 import * as utils from '../utils';
 
 const initialState = {
-  loadingStatus: {},
+  loadingStatus: {
+    default: 'loading',
+    orderBook: 'loading'
+  },
   balances: [],
   trades: {},
   openOrders: {},
@@ -24,7 +27,7 @@ const initialState = {
   },
   chart: [],
   chartTimeFrame: 5,
-  fullscreen: false
+  fullscreen: false,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -34,6 +37,9 @@ export default function reduce(state = initialState, action = {}) {
 
       let balanceInfo = {};
       let [primary, secondary] = action.market.toUpperCase().split('/');
+
+      balanceInfo.primary = { amount: 0, currency: primary };
+      balanceInfo.secondary = { amount: 0, currency: secondary };
 
       if (action.balances) {
         for (let balance of action.balances) {
@@ -45,20 +51,20 @@ export default function reduce(state = initialState, action = {}) {
         }
       }
 
-      let depth = {
-        asks: {},
-        bids: {},
-      };
-
-      for (let i = 0; i < Math.max(action.depth.asks.length, action.depth.bids.length); i++) {
-        if (action.depth.asks[i]) {
-          depth.asks[action.depth.asks[i].id] = action.depth.asks[i];
-        }
-
-        if (action.depth.bids[i]) {
-          depth.bids[action.depth.bids[i].id] = action.depth.bids[i];
-        }
-      }
+      // let depth = {
+      //   asks: {},
+      //   bids: {},
+      // };
+      //
+      // for (let i = 0; i < Math.max(action.depth.asks.length, action.depth.bids.length); i++) {
+      //   if (action.depth.asks[i]) {
+      //     depth.asks[action.depth.asks[i].id] = action.depth.asks[i];
+      //   }
+      //
+      //   if (action.depth.bids[i]) {
+      //     depth.bids[action.depth.bids[i].id] = action.depth.bids[i];
+      //   }
+      // }
 
       let openOrders = {};
       if (action.open_orders) {
@@ -67,39 +73,59 @@ export default function reduce(state = initialState, action = {}) {
           openOrders[order.id] = order;
         }
       }
-
-      let trades = {};
-      for (let i = 0; i < action.trades.length; i++) {
-        const order = action.trades[i];
-        trades[order.id] = order;
-      }
+      //
+      // let trades = {};
+      // for (let i = 0; i < action.trades.length; i++) {
+      //   const order = action.trades[i];
+      //   trades[order.id] = order;
+      // }
 
       return Object.assign({}, state, {
-        ...utils.removeProperty(action, 'type', 'depth', 'open_orders', trades),
+        ...utils.removeProperty(action, 'type', 'depth', 'open_orders'),
         tickerInfo,
         balanceInfo,
-        depth,
+        // depth,
         openOrders,
-        trades,
+        trades: action.trades,
         market: action.market
       })
     }
 
     case actionTypes.EXCHANGE_SET_LOADING_STATUS: {
-      return Object.assign({}, state, {
-        loadingStatus: Object.assign({}, state.loadingStatus, { [action.section]: action.status })
-      });
+      return {
+        ...state,
+        depth: (action.section === 'default' && action.status === 'loading' ? initialState.depth : state.depth),
+        loadingStatus: {
+          ...state.loadingStatus,
+          [action.section]: action.status
+        }
+      };
     }
 
-    case actionTypes.EXCHANGE_REMOVE_ORDER: {
-      let depth = Object.assign({}, state.depth);
+    case actionTypes.EXCHANGE_REMOVE_ORDERS: {
+      const depth = { ...state.depth };
+      const openOrders = { ...state.openOrders };
 
-      for (let orderId of action.orderIds) {
+      action.orderIds.forEach((orderId) => {
         delete depth.asks[orderId];
         delete depth.bids[orderId];
-      }
+        delete openOrders[orderId];
+      });
+      return ({ ...state, depth, openOrders });
+    }
 
-      return Object.assign({}, state, { depth });
+    case actionTypes.EXCHANGE_ORDER_BOOK_INIT: {
+      const asks = {};
+      const bids = {};
+      action.asks.forEach(i => { asks[i.id] = i });
+      action.bids.forEach(i => { bids[i.id] = i });
+      return {
+        ...state,
+        depth: {
+          asks: asks,
+          bids: bids,
+        },
+      };
     }
 
     case actionTypes.EXCHANGE_ORDER_BOOK_UPDATE: {
@@ -158,22 +184,33 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.EXCHANGE_ADD_OPEN_ORDER: {
-      let openOrders = Object.assign({}, state.openOrders);
-      openOrders[action.order.id] = action.order;
-      return Object.assign({}, state, { openOrders });
+      return { ...state, openOrders: {
+        ...state.openOrders,
+        [action.order.id]: action.order
+      }};
     }
 
-    case actionTypes.EXCHANGE_ADD_TRADES: {
-      const trades = { ...state.trades };
+    case actionTypes.EXCHANGE_ORDER_BOOK_REMOVE_ORDER: {
+      const depth = { ...state.depth };
+      const openOrders = { ...state.depth };
 
-      action.orders.forEach(order => {
-        trades[order.id] = order;
+      action.orders.forEach( order => {
+        delete depth.asks[order.id];
+        delete depth.bids[order.id];
+        delete openOrders[order.id];
       });
 
       return {
         ...state,
-        last_orders: [...action.orders, ...state.last_orders].slice(0, 20),
-        trades: trades
+        depth,
+        openOrders
+      };
+    }
+
+    case actionTypes.EXCHANGE_ADD_TRADES: {
+      return {
+        ...state,
+        trades: [ ...action.trades, ...state.trades ]
       };
     }
 

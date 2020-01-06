@@ -42,7 +42,7 @@ export default function CurrentPayments({ payments, adaptive }) {
     const currency = item.currency.toUpperCase();
     if (adaptive) {
       return (
-        <UI.TableCell key={Math.random()}>
+        <UI.TableCell key={i}>
           <UI.TableColumn align="left" style={{ width: 50, position: 'relative' }}>
             <div className="Investments__CurrentPayments__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
           </UI.TableColumn>
@@ -61,7 +61,7 @@ export default function CurrentPayments({ payments, adaptive }) {
       )
     }
     return (
-      <UI.TableCell key={Math.random()}>
+      <UI.TableCell key={i}>
         <UI.TableColumn align="right" style={{ width: 20, position: 'relative' }}>
           <div className="Investments__CurrentPayments__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
         </UI.TableColumn>
@@ -83,11 +83,11 @@ export default function CurrentPayments({ payments, adaptive }) {
     )
   });
 
-  return [
+  return (
     <div>
       <UI.Table headings={headings} hidden={true} adaptive={adaptive} header={utils.getLang('global_current')}>
         {rows}
       </UI.Table>
     </div>
-  ]
+  )
 }

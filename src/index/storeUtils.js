@@ -48,21 +48,6 @@ export function getWithState(caseName, caseClass) {
         loadNotifications: notificationsActions.loadNotifications
       };
       break;
-    case CLASSES.COMPONENT_CABINET_HEADER:
-      mapState2Props = state => ({
-        internalNotifications: state.internalNotifications,
-        profile: state.default.profile,
-        notifications: state.notifications,
-        router: state.router,
-        langList: state.default.langList,
-        title: state.default.title,
-      });
-      mapDispatch2Props = {
-        dropInternalNotifications: internalNotifications.drop,
-        loadNotifications: notificationsActions.loadNotifications,
-        notificationAction: notificationsActions.submitAction,
-      };
-      break;
     case CLASSES.COMPONENT_PROFILE_SIDEBAR:
       mapState2Props = state => ({
         profile: state.default.profile
@@ -144,21 +129,6 @@ export function getWithState(caseName, caseClass) {
         toastPush: toastsActions.toastPush
       };
       break;
-    case CLASSES.SEND_COINS_MODAL:
-      mapState2Props = state => ({
-        thisState: state.modalGroup.states.send,
-        wallets: state.wallets.wallets
-      });
-      mapDispatch2Props = {
-        setStateByModalPage: modalGroupActions.setStateByModalPage,
-        toastPush: toastsActions.toastPush
-      };
-      break;
-    case CLASSES.SEND_COINS_CONFIRM_MODAL:
-      mapDispatch2Props = {
-        toastPush: toastsActions.toastPush
-      };
-      break;
     case CLASSES.CHANGE_SECRET_KEY_MODAL:
       mapDispatch2Props = {
         changeSecretKay: profileActions.changeSecretKay,
@@ -225,18 +195,6 @@ export function getWithState(caseName, caseClass) {
       mapDispatch2Props = {
         setTitle: actions.setTitle,
         toastPush: toastsActions.toastPush
-      };
-      break;
-    case CLASSES.CABINET_EXCHANGE_SCREEN:
-      mapState2Props = (state) => ({
-        ...state.exchange,
-        adaptive: state.default.adaptive,
-        router: state.router,
-        user: state.default.profile.user
-      });
-      mapDispatch2Props = {
-        load: exchangeActions.load,
-        setTitle: actions.setTitle
       };
       break;
     case CLASSES.EXCHANGE_CHOSE_MARKET_MODAL:

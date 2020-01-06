@@ -28,7 +28,7 @@ class Balances extends React.Component {
       return (
         <UI.TableCell key={balance.id}>
           <UI.TableColumn>{balance.currency.toUpperCase()}</UI.TableColumn>
-          <UI.TableColumn align="right">{utils.formatDouble(balance.amount, balance.currency === 'usdt' ? 2 : void 0)}</UI.TableColumn>
+          <UI.TableColumn align="right"><UI.NumberFormat number={balance.amount} currency={balance.currency} hiddenCurrency /></UI.TableColumn>
         </UI.TableCell>
       )
     });

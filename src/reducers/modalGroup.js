@@ -40,8 +40,10 @@ export default function reduce(state = initialState, action = {}) {
       switch (typeof action.value) {
         default:
         case 'string':
+        case 'number': {
           copy.states[action.modalPageName][action.key] = action.value;
           break;
+        }
         case 'object':
           copy.states[action.modalPageName] = Object.assign({}, copy.states[action.modalPageName], action.value);
           break;

@@ -4,7 +4,12 @@ import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
 import { getLang } from '../../../../../../services/lang';
 import { classNames } from '../../../../../../utils/index'
-import * as actions from '../../../../../../actions/cabinet/exchange';
+import { setItem, getItem } from '../../../../../../services/storage'
+import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
+import * as actions from '../../../../../../actions/';
+import { API_ENTRY } from '../../../../../../services/api';
+import getTimezone from './timezones';
+import langCodes from './langCodes';
 
 
 export default class Chart extends React.PureComponent {
@@ -13,8 +18,10 @@ export default class Chart extends React.PureComponent {
     interval: '1',
     resolution: '1',
     containerId: 'tv_chart_container',
-    datafeedUrl: 'https://api.narfex.com/api/v1/exchange_chart',
+    //datafeedUrl: API_ENTRY + '/api/v1/exchange_chart',
+    datafeedUrl: 'https://exchange.bitcoinbot.pro/chart',
     // datafeedUrl: 'http://demo_feed.tradingview.com',
+
     libraryPath: 'charting_library/',
     chartsStorageUrl: 'https://saveload.tradingview.com',
     chartsStorageApiVersion: '1.1',
@@ -29,13 +36,16 @@ export default class Chart extends React.PureComponent {
 
   __handleFullscreen() {
     if (!document.webkitIsFullScreen && !document.fullscreen ) {
-      actions.setFullscreen(false);
+      exchangeActions.setFullscreen(false);
     }
   }
 
   componentDidMount() {
     document.addEventListener('fullscreenchange', this.__handleFullscreen.bind(this), false);
     document.addEventListener('webkitfullscreenchange', this.__handleFullscreen.bind(this), false);
+
+    const lang = actions.getCurrentLang();
+    const locale = langCodes[lang.value] || lang.value;
 
     const widgetOptions = {
       symbol: this.props.symbol,
@@ -46,7 +56,7 @@ export default class Chart extends React.PureComponent {
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
 
-      locale: getLang(),
+      locale: locale,
       disabled_features: [
         ...(!this.props.fullscreen ? [
           (!this.props.adaptive && 'header_widget'),
@@ -102,11 +112,34 @@ export default class Chart extends React.PureComponent {
         'mainSeriesProperties.candleStyle.downColor': '#eb6456'
       },
       allow_symbol_change: false,
+      timezone: getTimezone(),
       time_frames: [],
     };
 
     const tvWidget = new widget(widgetOptions);
     this.tvWidget = tvWidget;
+
+    // tvWidget.onChartReady(() => {
+    //   const symbol = this.props.symbol.toLowerCase().replace(':', '_');
+    //   const key = 'tv_template_' + symbol + '_' + this.props.interval;
+    //   const templateString = getItem(key);
+    //   if (templateString) {
+    //     let template = JSON.parse(templateString);
+    //     template = {
+    //       charts: template.charts.map(chart => ({
+    //         panes: []
+    //       }))
+    //     }
+    //     tvWidget.load(template);
+    //   }
+    //
+    //   this.chartSetInterval = setInterval(() => {
+    //     tvWidget.save(template => {
+    //       console.log(111, template);
+    //       setItem(key, JSON.stringify(template));
+    //     })
+    //   }, 1000);
+    // });
 
     if (this.props.fullscreen) {
       const { tradingView } = this.refs;
@@ -119,6 +152,7 @@ export default class Chart extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    // clearInterval(this.chartSetInterval);
     if (this.tvWidget !== null) {
       this.tvWidget.remove();
       this.tvWidget = null;

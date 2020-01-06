@@ -16,7 +16,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
   let walletsBalanceInUSD = 0;
   let walletsBalanceInAlign = 0;
   let walletsCurrencies = [];
-  
+
   wallets.forEach(item => {
     walletsAmount += item.amount;
     walletsBalanceInUSD += item.amount * item.to_usd;
@@ -35,7 +35,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
         currency: wallet.currency,
         value: (wallet.amount * wallet.to_usd) / walletsBalanceInUSD * 100
       });
-    } 
+    }
   });
 
   return {
@@ -89,7 +89,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
                   size={adaptive ? 'middle' : 'large'}
                   disabled={amount === 0}
                   onClick={() => {actions.openModal('send', {
-                    preset: currencyName
+                    currency: currencyInfo.abbr
                   })}}
                   currency={currencyInfo}
                 >

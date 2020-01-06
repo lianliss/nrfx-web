@@ -25,6 +25,8 @@ import FiatOperationModal from '../index/components/cabinet/FiatOperationModal/F
 import DepositPoolSuccessModal from '../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal';
 import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
 import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlockModal';
+import VerificationModal from '../index/components/cabinet/VerificationModal/VerificationModal';
+import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewBotModal';
 import router from '../router';
 
 export default function Modals(props) {
@@ -101,11 +103,17 @@ export default function Modals(props) {
     case 'deposit_pool_success':
       Component = DepositPoolSuccessModal;
       break;
+    case 'trader_new_bot':
+      Component = TraderNewBotModal;
+      break;
     case 'user_block':
       Component = UserBlockModal;
       break;
     case 'translator':
       Component = TranslatorModal;
+      break;
+    case 'verification':
+      Component = VerificationModal;
       break;
     default: return null;
   }

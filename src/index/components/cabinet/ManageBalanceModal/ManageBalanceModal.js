@@ -93,7 +93,7 @@ export default class extends React.Component {
   }
 
   __maxDidPress = () => {
-    this.setState({ amount: this.currentOption.amount || 0 });
+    this.setState({ amount: utils.formatDouble(this.currentOption.amount || 0) });
   };
 
   render() {

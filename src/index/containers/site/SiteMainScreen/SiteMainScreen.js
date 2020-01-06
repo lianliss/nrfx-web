@@ -70,25 +70,27 @@ export default class SiteMainScreen extends BaseScreen {
               seeMoreLink={pages.SITE_EXCHANGE}
             >{[this.lang.site.homeExchangeSubTitile1, this.lang.site.homeExchangeSubTitile2, this.lang.site.homeExchangeSubTitile3]}</HomepageProduct>
             <HomepageProduct
+              title={this.lang.site.homeRobots}
+              bgTitle={this.lang.site.homeRobots}
+              icon="robot"
+              reverse
+              seeMoreLink={pages.ROBOTS}
+            >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]}</HomepageProduct>
+            <HomepageProduct
               title={this.lang.site.homeWallet}
               bgTitle={this.lang.site.homeWallet}
               icon="wallet"
               seeMoreLink={pages.WALLET}
-              reverse
             >{[this.lang.site.homeWalletSubTitle1, this.lang.site.homeWalletSubTitle4, this.lang.site.homeWalletSubTitle3]}</HomepageProduct>
-            <HomepageProduct
-              title={this.lang.site.homeRobots}
-              bgTitle={this.lang.site.homeRobots}
-              icon="robot"
-              seeMoreLink={pages.ROBOTS}
-            >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]}</HomepageProduct>
-            <HomepageProduct
-              title={this.lang.site.homeInvestments}
-              bgTitle={this.lang.site.homeInvestments}
-              icon="investment"
-              seeMoreLink={pages.INVESTMENT}
-              reverse
-            >{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>
+
+            {/*<HomepageProduct*/}
+            {/*  title={this.lang.site.homeInvestments}*/}
+            {/*  bgTitle={this.lang.site.homeInvestments}*/}
+            {/*  icon="investment"*/}
+            {/*  seeMoreLink={pages.INVESTMENT}*/}
+            {/*  reverse*/}
+            {/*>{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>*/}
+
             {/*<HomepageProduct*/}
             {/*  title={this.lang.site.homePayment}*/}
             {/*  bgTitle={this.lang.site.homePayment}*/}

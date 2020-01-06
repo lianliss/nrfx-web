@@ -177,14 +177,14 @@ class CabinetInvestmentsScreen extends React.PureComponent {
       return <LoadingStatus status="loading" />;
     }
 
-    return [
+    return <>
       <ChartProfit
         chart={this.props.chart}
         adaptive={this.props.adaptive}
-      />,
-      this.__renderCurrentPayments(),
-      this.__renderAllPayments()
-    ];
+      />
+      {this.__renderCurrentPayments()}
+      {this.__renderAllPayments()}
+    </>
   };
 
   __renderBalances() {

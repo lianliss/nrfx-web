@@ -10,7 +10,7 @@ import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScree
 import SiteTechnologyScreen from './containers/site/SiteTechnologyScreen/SiteTechnologyScreen';
 import SiteSafetyScreen from './containers/site/SiteSafetyScreen/SiteSafetyScreen';
 import SiteExchangeScreen from './containers/site/SiteExchangeScreen/SiteExchangeScreen';
-import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
+// import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
 import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactScreen';
 import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
 import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
@@ -28,11 +28,13 @@ import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/Cab
 import * as CabinetResetPassword from './containers/site/SiteResetPasswordScreen/SiteResetPasswordScreen';
 import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen/MenuScreen';
 import * as NotificationsScreen from './containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen';
-// import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
+import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
 import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import SiteFeeScreen from './containers/site/SiteFeeScreen/SiteFeeScreen';
+import TraderScreen from './containers/cabinet/TraderScreen/TraderScreen';
+import { connect } from 'react-redux';
 
-export default function Routes(props) {
+function Routes(props) {
   const routeState = props.router.getState();
   const routerParams = routeState.params;
   const route = routeState.name;
@@ -82,10 +84,10 @@ export default function Routes(props) {
     //   Component = SiteCommerceScreen;
     //   WrapperComponent = SiteWrapper;
     //   break;
-    case pages.INVESTMENT:
-      Component = SiteInvestmentScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.INVESTMENT:
+    //   Component = SiteInvestmentScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     case pages.CONTACT:
       Component = SiteContactScreen;
       WrapperComponent = SiteWrapper;
@@ -131,12 +133,15 @@ export default function Routes(props) {
     case pages.NOTIFICATIONS:
       Component = NotificationsScreen.default;
       break;
-    // case pages.EXCHANGE:
-    //   Component = CabinetExchangeScreen;
-    //   break;
+    case pages.EXCHANGE:
+      Component = props.isExchangeEnabled ? CabinetExchangeScreen : SiteNotFoundScreen;
+      break;
     case pages.MERCHANT:
       WrapperComponent = props => (<>{props.children}</>);
       Component = CabinetMerchantStatusScreen;
+      break;
+    case pages.TRADER:
+      Component = TraderScreen;
       break;
     default:
       Component = SiteNotFoundScreen;
@@ -166,3 +171,8 @@ export default function Routes(props) {
     </WrapperComponent>
   );
 }
+
+
+export default connect(state => ({
+  isExchangeEnabled: state.default.profile.is_exchange_enabled
+}))(Routes);
