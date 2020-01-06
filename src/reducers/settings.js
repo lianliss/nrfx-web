@@ -37,13 +37,13 @@ export default function reduce(state = initialState, action = {}) {
       });
     }
 
-    
     case actionTypes.IS_TRANSLATER: {
       return {
         ...state,
         translaterSetting: action.translat
       };
     }
+
     case actionTypes.APIKEY_SET: {
       const { apikey } = action;
       const items = state.dataApiKeys

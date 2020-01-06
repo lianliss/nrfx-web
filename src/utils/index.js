@@ -45,7 +45,7 @@ export function getLang(key) {
   let langString = store.getState().default.lang[key] || key
   
   if(store.getState().settings.translaterSetting && key !== 'global_meta_title') {
-    return <TranslaterMode langString={langString} />
+    return <TranslaterMode langString={langString} keys={key}/>
   }
   return langString;
 }

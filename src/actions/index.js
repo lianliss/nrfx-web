@@ -95,6 +95,11 @@ export function sendInviteLinkView(link) {
 export function isTranslater(translat) {
   return store.dispatch({ type: actionTypes.IS_TRANSLATER, translat });
 }
+
+export function saveTranslater(lang, key, value) {
+  return store.dispatch({ type: actionTypes.SAVE_TRANSLATER, lang, key, value });
+}
+
 export function registrationSetValue(property, value) {
   return (dispatch) => {
     dispatch({type: actionTypes.REGISTRATION_SET_VALUE, property, value});
