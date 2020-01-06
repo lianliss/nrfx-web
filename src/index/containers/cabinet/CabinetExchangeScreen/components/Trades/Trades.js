@@ -5,6 +5,7 @@ import moment from 'moment/moment';
 import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import Block from '../Block/Block';
+import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
 class Trades extends React.Component {
   // shouldComponentUpdate(nextProps) {
@@ -15,8 +16,17 @@ class Trades extends React.Component {
   //   return Object.keys(nextProps.trades)[0].id !== currentOrders[0].id;
   // }
 
-  render() {
-    console.log('RENDER Trades');
+  renderContent() {
+    if (!this.props.trades.length) {
+      return <div>
+        <EmptyContentBlock
+          icon={require('../../../../../../asset/120/exchange.svg')}
+          message={utils.getLang('exchange_tradesEmpty')}
+          skipContentClass
+          height={280}
+        />
+      </div>
+    }
 
     const { trades, market } = this.props;
     const [,currency] = market.split('/');
@@ -41,10 +51,14 @@ class Trades extends React.Component {
       )
     });
 
-    const table = <UI.Table className="Exchange__orders_table" headings={headings} compact skipContentBox inline>{rows}</UI.Table>
+    return <UI.Table className="Exchange__orders_table" headings={headings} compact skipContentBox inline>{rows}</UI.Table>
+  }
+
+  render() {
+    console.log('RENDER Trades');
 
     if (this.props.adaptive) {
-      return table;
+      return this.renderContent();
     }
 
     return (
@@ -55,7 +69,7 @@ class Trades extends React.Component {
         //   <UI.Button key="all" size="ultra_small" rounded type="secondary">{utils.getLang('global_viewAll')}</UI.Button>,
         // ]}
       >
-        {table}
+        {this.renderContent()}
       </Block>
     )
   }
