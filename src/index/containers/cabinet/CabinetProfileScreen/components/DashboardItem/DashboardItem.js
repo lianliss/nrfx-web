@@ -78,7 +78,7 @@ class DashboardItem extends React.Component {
         this.show = false;
         this.icon = <ShoppingCartSvg />;
         this.content = {
-          label: 'soon',
+          label: 'new',
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_revenue'),
           firstMainContext: '0',
           firstMainContextInvert: '0',
@@ -87,13 +87,12 @@ class DashboardItem extends React.Component {
           secondMainContextInvert: '',
           emptyIcon: <TradeSvg />,
           emptyDescription: <span>
-            {utils.getLang('cabinet_profileScreen_actionCard_tradeTextSoon')}<br />
-            {utils.getLang('cabinet_profileScreen_actionCard_tradeTextSoonDate')}
+            {utils.getLang('cabinet_profileScreen_exchangeCard')}
           </span>,
         };
         this.button = {
           children: utils.getLang('global_soon'),
-          disabled: true
+          onClick: () => router.navigate(pages.EXCHANGE),
         };
         break;
       case 'currency':

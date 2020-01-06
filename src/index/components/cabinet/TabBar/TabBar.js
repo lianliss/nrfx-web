@@ -24,7 +24,7 @@ const Tabs = props => {
       <Tab route={PAGES.PROFILE}><SVG src={require('../../../../asset/24px/user.svg')} /></Tab>
       <Tab route={PAGES.CABINET_WALLET}><SVG src={require('../../../../asset/24px/wallet.svg')} /></Tab>
       <Tab route={PAGES.INVESTMENTS}><SVG src={require('../../../../asset/24px/invest.svg')} /></Tab>
-      {props.isExchangeEnabled && <Tab route={PAGES.EXCHANGE}><SVG src={require('../../../../asset/24px/loop.svg')} /></Tab> }
+      <Tab route={PAGES.EXCHANGE}><SVG src={require('../../../../asset/24px/loop.svg')} /></Tab>
       <Tab route={PAGES.MENU}><SVG src={require('../../../../asset/24px/menu.svg')} /></Tab>
     </div>
   )
@@ -32,5 +32,4 @@ const Tabs = props => {
 
 export default connect(state => ({
   router: state.router,
-  isExchangeEnabled: state.default.profile.is_exchange_enabled
 }))(Tabs);
