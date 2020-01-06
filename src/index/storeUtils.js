@@ -63,22 +63,6 @@ export function getWithState(caseName, caseClass) {
         modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal
       };
       break;
-    case CLASSES.CABINET_PFOFILE_SCREEN:
-      mapState2Props = state => {
-        return {
-          ...state.wallets,
-          ...state.profile,
-          ...state.default,
-          adaptive: state.default.adaptive
-        }
-      };
-      mapDispatch2Props = {
-        setTitle: actions.setTitle,
-        loadWallets: walletsActions.loadWallets,
-        loadDashboard: profileActions.loadDashboard,
-        getPartner: profileActions.getPartner
-      };
-      break;
     case CLASSES.CABINET_START_PFOFILE_SCREEN:
       mapState2Props = state => ({
         ...state.wallets

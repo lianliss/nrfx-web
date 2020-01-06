@@ -20,6 +20,15 @@ import * as pages from '../../../../../constants/pages';
 class DashboardItem extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  state = {
+    invert: true,
+  };
+
+  render() {
+    const { props } = this;
+
     switch (props.type) {
       case 'investments':
         this.show = false;
@@ -90,13 +99,6 @@ class DashboardItem extends React.Component {
       case 'currency':
       default: break;
     }
-  }
-
-  state = {
-    invert: true,
-  };
-
-  render() {
 
     if (this.props.type === 'currency') {
       return (
