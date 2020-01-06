@@ -48,21 +48,6 @@ export function getWithState(caseName, caseClass) {
         loadNotifications: notificationsActions.loadNotifications
       };
       break;
-    case CLASSES.COMPONENT_CABINET_HEADER:
-      mapState2Props = state => ({
-        internalNotifications: state.internalNotifications,
-        profile: state.default.profile,
-        notifications: state.notifications,
-        router: state.router,
-        langList: state.default.langList,
-        title: state.default.title,
-      });
-      mapDispatch2Props = {
-        dropInternalNotifications: internalNotifications.drop,
-        loadNotifications: notificationsActions.loadNotifications,
-        notificationAction: notificationsActions.submitAction,
-      };
-      break;
     case CLASSES.COMPONENT_PROFILE_SIDEBAR:
       mapState2Props = state => ({
         profile: state.default.profile

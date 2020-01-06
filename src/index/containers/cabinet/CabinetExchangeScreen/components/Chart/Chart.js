@@ -19,7 +19,7 @@ export default class Chart extends React.PureComponent {
     resolution: '1',
     containerId: 'tv_chart_container',
     //datafeedUrl: API_ENTRY + '/api/v1/exchange_chart',
-    datafeedUrl: 'https://stageapi.bitcoinbot.pro/chart',
+    datafeedUrl: 'https://exchange.bitcoinbot.pro/chart',
     // datafeedUrl: 'http://demo_feed.tradingview.com',
 
     libraryPath: 'charting_library/',

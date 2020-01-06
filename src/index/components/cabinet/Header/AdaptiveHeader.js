@@ -8,6 +8,9 @@ import * as CLASSES from "../../../constants/classes";
 import * as utils from "../../../../utils/";
 import UI from '../../../../ui';
 import url from "url";
+import {connect} from 'react-redux';
+import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
+import * as notificationsActions from '../../../../actions/cabinet/notifications';
 
 class AdaptiveHeader extends React.Component {
   state = {activePage: null};
@@ -72,7 +75,17 @@ AdaptiveHeader.defaultProps = {
   rightContent: ""
 };
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_CABINET_HEADER,
-  AdaptiveHeader
-);
+
+export default connect(state => ({
+  internalNotifications: state.internalNotifications,
+  profile: state.default.profile,
+  notifications: state.notifications,
+  router: state.router,
+  langList: state.default.langList,
+  title: state.default.title,
+  isExchangeEnabled: state.default.profile.is_exchange_enabled
+}), {
+  dropInternalNotifications: internalNotifications.drop,
+  loadNotifications: notificationsActions.loadNotifications,
+  notificationAction: notificationsActions.submitAction,
+})(AdaptiveHeader);

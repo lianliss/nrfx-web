@@ -17,6 +17,9 @@ import * as steps from '../../../../components/AuthModal/fixtures';
 import * as actions from '../../../../actions';
 import {getLang} from '../../../../services/lang';
 import COMPANY from '../../../constants/company';
+import {connect} from 'react-redux';
+import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
+import * as notificationsActions from '../../../../actions/cabinet/notifications';
 
 
 class Header extends React.Component {
@@ -38,7 +41,7 @@ class Header extends React.Component {
 
   render() {
     const isLogged = this.props.profile.role;
-    const { internalNotifications } = this.props;
+    const { internalNotifications, isExchangeEnabled } = this.props;
     const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
     const { notifications } = this.props.notifications;
 
@@ -73,10 +76,10 @@ class Header extends React.Component {
                 {utils.getLang('cabinet_header_bots')}
               </div>
 
-              {/*<BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>*/}
-              {/*  <SVG src={require('../../../../asset/cabinet/exchange_icon.svg')} />*/}
-              {/*  {utils.getLang('cabinet_header_exchange')}*/}
-              {/*</BaseLink>*/}
+              { isExchangeEnabled && <BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>
+                <SVG src={require('../../../../asset/cabinet/exchange_icon.svg')} />
+                {utils.getLang('cabinet_header_exchange')}
+              </BaseLink> }
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../../asset/cabinet/commerce_icon.svg')} />
@@ -151,7 +154,16 @@ class Header extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_CABINET_HEADER,
-  Header
-);
+export default connect(state => ({
+  internalNotifications: state.internalNotifications,
+  profile: state.default.profile,
+  notifications: state.notifications,
+  router: state.router,
+  langList: state.default.langList,
+  title: state.default.title,
+  isExchangeEnabled: state.default.profile.is_exchange_enabled
+}), {
+  dropInternalNotifications: internalNotifications.drop,
+  loadNotifications: notificationsActions.loadNotifications,
+  notificationAction: notificationsActions.submitAction,
+})(Header);
