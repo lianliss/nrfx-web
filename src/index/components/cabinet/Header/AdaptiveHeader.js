@@ -3,8 +3,6 @@ import './Header.less';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from "../../../constants/classes";
 import * as utils from "../../../../utils/";
 import UI from '../../../../ui';
 import url from "url";

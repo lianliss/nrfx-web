@@ -1,4 +1,5 @@
 import "./Footer.less";
+
 import React from "react";
 import { connect } from 'react-redux';
 import { classNames, getLang } from 'utils';

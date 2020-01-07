@@ -1,10 +1,9 @@
 import './SettingPersonal.less';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import * as modalGroupActions from "../../../../../../actions/modalGroup";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
-import * as CLASSES from "../../../../../constants/classes";
-import * as storeUtils from "../../../../../storeUtils";
 import * as utils from "../../../../../../utils";
 import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 import UI from '../../../../../../ui';
@@ -189,11 +188,9 @@ class SettingPersonal extends React.Component{
       </div>
     )
   }
-  
+
 }
 
-
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_PROFILE_SIDEBAR,
-  SettingPersonal
-);
+export default connect(state => ({
+  profile: state.default.profile
+}))(SettingPersonal);

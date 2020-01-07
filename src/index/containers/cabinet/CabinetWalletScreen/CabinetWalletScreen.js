@@ -1,6 +1,7 @@
 import './CabinetWalletScreen.less';
 //
 import React from 'react';
+import { connect } from 'react-redux';
 //
 import UI from '../../../../ui';
 import router from '../../../../router';
@@ -24,8 +25,6 @@ import * as modalGroupActions from '../../../../actions/modalGroup';
 import * as actions from '../../../../actions';
 import * as PAGES from '../../../constants/pages';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as utils from '../../../../utils';
 
 class CabinetWalletScreen extends CabinetBaseScreen {
@@ -251,7 +250,12 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   });
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_WALLET_SCREEN,
-  CabinetWalletScreen
-);
+export default connect(state => ({
+  ...state.wallets,
+  adaptive: state.default.adaptive
+}), {
+  setTitle: actions.setTitle,
+  loadWallets: walletsActions.loadWallets,
+  loadMoreTransactions: walletsActions.loadMoreTransactions,
+  loadMoreTransfers: walletsActions.loadMoreTransfers,
+})(CabinetWalletScreen);

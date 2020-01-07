@@ -1,13 +1,12 @@
 // styles
 // external
 import React from 'react';
+import { connect } from 'react-redux';
 // internal
 import ModalPage from '../ModalPage/ModalPage';
 import * as modalGroupActions from '../../../actions/modalGroup';
 import * as modalGroupHandlers from '../../../actions/modalGroupHandlers';
 import * as modalGroupConstants from '../../../index/constants/modalGroup';
-import * as storeUtils from "../../../index/storeUtils";
-import * as CLASSES from "../../../index/constants/classes";
 
 class ModalGroup extends React.Component {
   constructor(props) {
@@ -145,7 +144,9 @@ class ModalGroup extends React.Component {
   };
 }
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_MODALGROUP,
-  ModalGroup
-);
+export default connect(state => ({
+  ...state.modalGroup,
+  adaptive: state.default.adaptive,
+}), {
+  modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal
+})(ModalGroup);

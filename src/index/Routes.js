@@ -32,9 +32,8 @@ import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import SiteFeeScreen from './containers/site/SiteFeeScreen/SiteFeeScreen';
 import TraderScreen from './containers/cabinet/TraderScreen/TraderScreen';
-import { connect } from 'react-redux';
 
-function Routes(props) {
+export default function Routes(props) {
   const routeState = props.router.getState();
   const routerParams = routeState.params;
   const route = routeState.name;
@@ -134,7 +133,7 @@ function Routes(props) {
       Component = NotificationsScreen.default;
       break;
     case pages.EXCHANGE:
-      Component = props.isExchangeEnabled ? CabinetExchangeScreen : SiteNotFoundScreen;
+      Component = CabinetExchangeScreen;
       break;
     case pages.MERCHANT:
       WrapperComponent = props => (<>{props.children}</>);
@@ -171,8 +170,3 @@ function Routes(props) {
     </WrapperComponent>
   );
 }
-
-
-export default connect(state => ({
-  isExchangeEnabled: state.default.profile.is_exchange_enabled
-}))(Routes);

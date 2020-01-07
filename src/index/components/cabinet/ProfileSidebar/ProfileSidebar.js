@@ -4,11 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
+import { connect } from 'react-redux';
 
 import { classNames, makeModalParams } from '../../../../utils';
 import router from '../../../../router';
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
 import Footer from "../Footer/Footer";
 import ProfileUser from '../ProfileUser/ProfileUser';
 
@@ -176,7 +175,6 @@ ProfileSidebarItem.propTypes = {
   baselink: PropTypes.bool
 };
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_PROFILE_SIDEBAR,
-  ProfileSidebar
-);
+export default connect(state => ({
+  profile: state.default.profile
+}))(ProfileSidebar);

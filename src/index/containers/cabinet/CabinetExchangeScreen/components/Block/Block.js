@@ -19,13 +19,13 @@ export default function Block(props) {
     name
   } = props;
 
-  const storagekey = name + '_collapsed';
+  const storageKey = name + '_collapsed';
 
-  const [collapsed, setCollapsed] = useState(!!storage.getItem(storagekey));
+  const [collapsed, setCollapsed] = useState(!!storage.getItem(storageKey));
 
   const __setCollapsed = (stage) => {
     setCollapsed(stage);
-    stage ? storage.setItem(storagekey, true) : storage.removeItem(storagekey);
+    stage ? storage.setItem(storageKey, true) : storage.removeItem(storageKey);
   };
 
   const classNames = utils.classNames({

@@ -8,9 +8,7 @@ import url from 'url';
 import Badge from '../Badge/Badge';
 import router from '../../../../router';
 import * as pages from '../../../constants/pages';
-import * as storeUtils from '../../../storeUtils';
 import * as utils from '../../../../utils';
-import * as CLASSES from "../../../constants/classes";
 import UI from "../../../../ui/index";
 import * as auth from '../../../../actions/auth';
 import * as steps from '../../../../components/AuthModal/fixtures';
@@ -76,10 +74,10 @@ class Header extends React.Component {
                 {utils.getLang('cabinet_header_bots')}
               </div>
 
-              { isExchangeEnabled && <BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>
+              <BaseLink router={router} routeName={pages.EXCHANGE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>
                 <SVG src={require('../../../../asset/cabinet/exchange_icon.svg')} />
                 {utils.getLang('cabinet_header_exchange')}
-              </BaseLink> }
+              </BaseLink>
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../../asset/cabinet/commerce_icon.svg')} />
@@ -161,7 +159,6 @@ export default connect(state => ({
   router: state.router,
   langList: state.default.langList,
   title: state.default.title,
-  isExchangeEnabled: state.default.profile.is_exchange_enabled
 }), {
   dropInternalNotifications: internalNotifications.drop,
   loadNotifications: notificationsActions.loadNotifications,

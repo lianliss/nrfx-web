@@ -20,6 +20,15 @@ import * as pages from '../../../../../constants/pages';
 class DashboardItem extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  state = {
+    invert: true,
+  };
+
+  render() {
+    const { props } = this;
+
     switch (props.type) {
       case 'investments':
         this.show = false;
@@ -69,7 +78,7 @@ class DashboardItem extends React.Component {
         this.show = false;
         this.icon = <ShoppingCartSvg />;
         this.content = {
-          label: 'soon',
+          label: 'new',
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_revenue'),
           firstMainContext: '0',
           firstMainContextInvert: '0',
@@ -78,25 +87,17 @@ class DashboardItem extends React.Component {
           secondMainContextInvert: '',
           emptyIcon: <TradeSvg />,
           emptyDescription: <span>
-            {utils.getLang('cabinet_profileScreen_actionCard_tradeTextSoon')}<br />
-            {utils.getLang('cabinet_profileScreen_actionCard_tradeTextSoonDate')}
+            {utils.getLang('cabinet_profileScreen_exchangeCard')}
           </span>,
         };
         this.button = {
-          children: utils.getLang('global_soon'),
-          disabled: true
+          children: utils.getLang('global_trade'),
+          onClick: () => router.navigate(pages.EXCHANGE),
         };
         break;
       case 'currency':
       default: break;
     }
-  }
-
-  state = {
-    invert: true,
-  };
-
-  render() {
 
     if (this.props.type === 'currency') {
       return (

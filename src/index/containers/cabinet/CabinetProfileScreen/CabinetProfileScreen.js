@@ -1,11 +1,10 @@
 import './CabinetProfileScreen.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 
-import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../../utils";
-import * as CLASSES from "../../../constants/classes";
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
@@ -20,6 +19,9 @@ import RightPartnersSection from './components/RightPartnersSection';
 import {ReactComponent as SettingsSvg} from '../../../../asset/24px/settings.svg';
 import {ReactComponent as UsersSvg} from '../../../../asset/24px/users.svg';
 import * as PAGES from '../../../constants/pages';
+import * as actions from '../../../../actions';
+import * as walletsActions from '../../../../actions/cabinet/wallets';
+import * as profileActions from '../../../../actions/cabinet/profile';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
   state = {
@@ -245,7 +247,14 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   });
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_PFOFILE_SCREEN,
-  CabinetProfileScreen
-);
+export default connect(state => ({
+  ...state.wallets,
+  ...state.profile,
+  ...state.default,
+  adaptive: state.default.adaptive
+}), {
+  setTitle: actions.setTitle,
+  loadWallets: walletsActions.loadWallets,
+  loadDashboard: profileActions.loadDashboard,
+  getPartner: profileActions.getPartner
+})(CabinetProfileScreen);
