@@ -11,8 +11,6 @@ import Trades from './components/Trades/Trades';
 import Balances from './components/Balances/Balances';
 import SVG from 'react-inlinesvg';
 
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as utils from '../../../../utils';
 import OrderBook from './components/OrderBook/OrderBook';
 import TradeForm from './components/TradeForm/TradeForm';

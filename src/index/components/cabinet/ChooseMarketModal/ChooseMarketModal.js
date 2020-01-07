@@ -1,17 +1,16 @@
 import './ChooseMarketModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 
 import UI from '../../../../ui';
 import * as exchange from '../../../../actions/cabinet/exchange'
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as actions from '../../../../actions';
-import * as utils from '../../../../utils/';
 import ChartSimple from '../Chart/ChartSimple';
 import ModalState from '../ModalState/ModalState';
 import router from '../../../../router';
+import * as exchangeActions from 'src/actions/cabinet/exchange';
 import * as PAGES from '../../../constants/pages';
 
 class ChooseMarketModal extends React.Component {
@@ -159,8 +158,10 @@ class ChooseMarketModal extends React.Component {
   }
 }
 
-
-export default storeUtils.getWithState(
-  CLASSES.EXCHANGE_CHOSE_MARKET_MODAL,
-  ChooseMarketModal
-);
+export default connect(state => ({
+  adaptive: state.default.adaptive,
+  markets: state.exchange.markets,
+  status: state.exchange.loadingStatus.getMarkets
+}), {
+  chooseMarket: exchangeActions.chooseMarket,
+})(ChooseMarketModal);

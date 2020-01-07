@@ -1,9 +1,10 @@
 import "./Footer.less";
+
 import React from "react";
+import { connect } from 'react-redux';
+
 import { classNames } from '../../../../utils/index';
 import * as actions from '../../../../actions';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import COMPANY from '../../../constants/company';
 
 const Footer = (props) => {
@@ -23,8 +24,6 @@ const Footer = (props) => {
   )
 };
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_FOOTER,
-  Footer
-);
-
+export default connect(state => ({
+  langList: state.default.langList,
+}))(Footer);

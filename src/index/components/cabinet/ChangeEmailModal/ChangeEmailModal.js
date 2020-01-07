@@ -1,15 +1,15 @@
 import './ChangeEmailModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import * as settingsActions from "../../../../actions/cabinet/settings";
 import * as modalGroupActions from "../../../../actions/modalGroup";
 import CheckNewEmailModal from "../CheckNewEmailModal/CheckNewEmailModal";
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import SVG from 'react-inlinesvg';
+import * as toastsActions from '../../../../actions/toasts';
 
 class ChangeEmailModal extends React.Component {
   state = {
@@ -123,7 +123,6 @@ class ChangeEmailModal extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CHANGE_EMAIL_MODAL,
-  ChangeEmailModal
-);
+export default connect(null, {
+  toastPush: toastsActions.toastPush
+})(ChangeEmailModal);

@@ -1,6 +1,7 @@
 import './OpenDepositModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 import SVG from 'react-inlinesvg';
 import apiSchema from '../../../../services/apiSchema';
@@ -8,8 +9,6 @@ import * as api from "../../../../services/api";
 import * as walletsActions from "../../../../actions/cabinet/wallets";
 import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
 import * as investmentsActions from "../../../../actions/cabinet/investments";
 import * as toasts from '../../../../actions/toasts';
 
@@ -327,7 +326,9 @@ class OpenDepositModal extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.OPEN_DEPOSIT_MODAL,
-  OpenDepositModal
-);
+export default connect(state => ({
+  profile: state.default.profile,
+  wallets: state.wallets.wallets,
+  router: state.router,
+  thisState: state.investments.openDepositModal
+}))(OpenDepositModal);

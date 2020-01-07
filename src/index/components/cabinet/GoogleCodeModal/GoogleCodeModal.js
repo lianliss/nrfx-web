@@ -1,13 +1,13 @@
 import './GoogleCodeModal.less';
 
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import copyText from 'clipboard-copy';
 
 import UI from '../../../../ui';
 import * as utils from '../../../../utils';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as toasts from '../../../../actions/toasts';
+import * as profileActions from '../../../../actions/cabinet/profile';
 
 const GoogleCodeModal = props => {
   const [code, setCode] = useState("");
@@ -59,7 +59,9 @@ const GoogleCodeModal = props => {
   )
 }
 
-export default storeUtils.getWithState(
-  CLASSES.GOOGLE_CODE_MODAL,
-  GoogleCodeModal
-);
+export default connect(state => ({
+  router: state.router
+}), {
+  gaInit: profileActions.gaInit,
+  toastPush: toasts.toastPush
+})(GoogleCodeModal);

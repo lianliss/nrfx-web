@@ -1,6 +1,8 @@
 import './CabinetRegisterScreen.less';
 //
 import React from 'react';
+import { connect } from 'react-redux';
+
 import ReactPhoneInput from 'react-phone-input-2';
 import moment from 'moment';
 //
@@ -9,12 +11,12 @@ import {withRouter} from 'react-router5';
 import {GetParamsContext} from '../../../contexts';
 import apiSchema from '../../../../services/apiSchema';
 import * as api from '../../../../services/api';
-import * as storeUtils from '../../../storeUtils';
 import * as utils from '../../../../utils';
-import * as CLASSES from '../../../constants/classes';
 import * as pages from '../../../constants/pages';
 import * as auth from '../../../../services/auth';
 import SVG from 'react-inlinesvg';
+import * as toastsActions from '../../../../actions/toasts';
+import * as actions from '../../../../actions';
 
 class CabinetRegister extends React.PureComponent {
   state = {
@@ -231,7 +233,7 @@ class CabinetRegister extends React.PureComponent {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_REGISTER,
-  withRouter(CabinetRegister)
-);
+export default connect(null, {
+  toastPush: toastsActions.toastPush,
+  setTitle: actions.setTitle
+})(withRouter(CabinetRegister));

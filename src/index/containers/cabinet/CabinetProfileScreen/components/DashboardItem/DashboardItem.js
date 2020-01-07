@@ -91,7 +91,7 @@ class DashboardItem extends React.Component {
           </span>,
         };
         this.button = {
-          children: utils.getLang('global_soon'),
+          children: utils.getLang('global_trade'),
           onClick: () => router.navigate(pages.EXCHANGE),
         };
         break;

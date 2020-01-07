@@ -4,9 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import UI from '../../../../ui';
 
-import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../../utils";
-import * as CLASSES from "../../../constants/classes";
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';

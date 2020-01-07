@@ -5,8 +5,6 @@ import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
 import UI from '../../../../ui';
 import { connect } from 'react-redux';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import { getLang, setLang } from '../../../../services/lang';
 
 const getLanguageFlag = (langCode) => {
