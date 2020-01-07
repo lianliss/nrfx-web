@@ -228,6 +228,9 @@ class Orders extends React.Component {
   }
 }
 
-export default connect((state) => ({ ...state.exchange }), {
+export default connect((state) => ({
+  ...state.exchange,
+  lang: state.default.lang
+}), {
 
 })(memo(Orders));

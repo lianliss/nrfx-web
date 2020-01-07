@@ -19,6 +19,7 @@ export function loadLang(code) {
       store.dispatch({
         type: actionTypes.SET_LANG,
         lang: translations,
+        currentLang: code,
         langList,
       });
       resolve();

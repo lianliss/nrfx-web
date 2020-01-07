@@ -202,6 +202,7 @@ export default connect(
   state => ({
     ...state.exchange,
     adaptive: state.default.adaptive,
+    lang: state.default.lang,
     router: state.router,
     user: state.default.profile.user
   }), {

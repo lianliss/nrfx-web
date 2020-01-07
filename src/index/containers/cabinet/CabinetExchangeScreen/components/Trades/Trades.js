@@ -75,6 +75,9 @@ class Trades extends React.Component {
   }
 }
 
-export default connect((state) => ({ ...state.exchange }), {
+export default connect((state) => ({
+  ...state.exchange,
+  currentLang: state.default.currentLang
+}), {
 
 })(memo(Trades));

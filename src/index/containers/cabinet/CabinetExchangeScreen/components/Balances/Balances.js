@@ -10,7 +10,9 @@ import { openModal } from '../../../../../../actions/';
 
 class Balances extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.adaptive !== this.props.adaptive || nextProps.balances !== this.props.balances;
+    return nextProps.adaptive !== this.props.adaptive ||
+      nextProps.balances !== this.props.balances ||
+      nextProps.lang !== this.props.lang;
   }
 
   __handleOpenBalance() {
@@ -65,6 +67,9 @@ class Balances extends React.Component {
   }
 }
 
-export default connect((state) => ({ ...state.exchange }), {
+export default connect((state) => ({
+  ...state.exchange,
+  lang: state.default.lang
+}), {
 
 })(memo(Balances));
