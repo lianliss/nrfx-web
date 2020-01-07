@@ -5,7 +5,6 @@ import './TranslaterMode.less';
 export default function TranslaterMode({langString, keys}) {
   const __handleOpenModalTranslate = (e, langString, keys) => {
     e.preventDefault();
-    console.log(keys)
     openModal('translator', {langString, keys})
   }
 
