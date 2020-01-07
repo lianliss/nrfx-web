@@ -159,6 +159,7 @@ export default connect(state => ({
   router: state.router,
   langList: state.default.langList,
   title: state.default.title,
+  translate: state.settings.translaterSetting
 }), {
   dropInternalNotifications: internalNotifications.drop,
   loadNotifications: notificationsActions.loadNotifications,

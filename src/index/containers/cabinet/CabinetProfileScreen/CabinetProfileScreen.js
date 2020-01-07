@@ -251,7 +251,8 @@ export default connect(state => ({
   ...state.wallets,
   ...state.profile,
   ...state.default,
-  adaptive: state.default.adaptive
+  adaptive: state.default.adaptive,
+  translate: state.settings.translaterSetting
 }), {
   setTitle: actions.setTitle,
   loadWallets: walletsActions.loadWallets,
