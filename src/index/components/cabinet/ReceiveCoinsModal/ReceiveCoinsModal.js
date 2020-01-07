@@ -89,7 +89,7 @@ export default class ReceiveCoinsModal extends React.Component {
           }, 0)
         }
       }
-
+      console.log(this.props)
       return (
         <div className="ReceiveCoinsModal">
           <div className="SendCoinsModal__wallet">
@@ -129,7 +129,7 @@ export default class ReceiveCoinsModal extends React.Component {
                 currency={currencyInfo}
                 onClick={() => {
                   if (this.state.isCopied) {
-                    this.props.close();
+                    this.props.onClose();
                   } else {
                     this.__copy();
                   }
