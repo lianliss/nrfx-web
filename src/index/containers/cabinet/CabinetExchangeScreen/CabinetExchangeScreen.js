@@ -51,8 +51,25 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
     )
   }
 
+  renderDisconnectedModal() {
+    if (this.loadingStatus === 'disconnected') {
+      this.load();
+    }
+
+    if (!['disconnected', 'reloading'].includes(this.loadingStatus)) return null;
+    return (
+      <UI.Modal skipClose className="Exchange__disconnectModal" isOpen={true} onClose={this.props.onClose}>
+        <div className="Exchange__disconnectModal__content">
+          <p>{utils.getLang('exchange_failedConnect')}</p>
+          <LoadingStatus inline status={'loading'} />
+          <p>{utils.getLang('exchange_reconnect')}</p>
+        </div>
+      </UI.Modal>
+    )
+  }
+
   __renderContent() {
-    if (this.isLoading) {
+    if (this.isLoading && !['disconnected', 'reloading'].includes(this.loadingStatus)) {
       return <LoadingStatus status={this.loadingStatus} onRetry={() => this.load()} />;
     }
 
@@ -62,6 +79,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   __renderExchangeAdaptive() {
     return (
       <div className="Exchange__wrapper">
+        {this.renderDisconnectedModal()}
         <UI.ContentBox>
           <MarketInfoAdaptive {...this.props.tickerInfo} />
           <Chart
@@ -115,6 +133,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   __renderExchange() {
     return (
       <div className="Exchange__wrapper">
+        {this.renderDisconnectedModal()}
         <div className="Exchange__left_content">
           { this.props.user && <Balances /> }
           <Trades market={this.props.market}  />
@@ -193,8 +212,8 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   load() {
     let { market } = this.props.router.route.params;
     market = (market && market.toLowerCase().replace('_', '/')) || this.props.market;
-    exchangeService.bind(market);
     this.props.load(market);
+    exchangeService.bind(market);
   }
 }
 

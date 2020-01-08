@@ -49,7 +49,7 @@ class Exchange {
 
   __errorConnection = () => {
     unbind(this.market);
-    exchange.setStatus('failed');
+    exchange.setStatus('disconnected');
   };
 
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);

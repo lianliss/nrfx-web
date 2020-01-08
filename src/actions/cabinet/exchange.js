@@ -7,7 +7,13 @@ import * as exchangeService from '../../services/exchange';
 
 export function load(market) {
   return (dispatch, getState) => {
-    dispatch({ type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'default', status: 'loading' });
+    const { loadingStatus } = getState().exchange;
+    dispatch({
+      type: actionTypes.EXCHANGE_SET_LOADING_STATUS,
+      section: 'default',
+      status: (loadingStatus.default === 'disconnected' ? 'reloading' : 'loading' )
+    });
+
     api.call(apiSchema.Exchange.DefaultGet, {
       market,
       chart_time_frame: getState().exchange.chartTimeFrame,
