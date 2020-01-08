@@ -7,6 +7,7 @@ import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import Block from '../Block/Block';
 import { openModal } from '../../../../../../actions/';
+import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
 class Balances extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -19,8 +20,27 @@ class Balances extends React.Component {
     openModal('manage_balance',);
   }
 
-  render() {
-    console.log('RENDER balances');
+  get isEmpty() {
+    return !this.props.balances.filter(balance => balance.amount).length;
+  }
+
+  renderContent() {
+    if (this.isEmpty) {
+      return (
+        <EmptyContentBlock
+          skipContentClass
+          icon={require('src/asset/120/wallet.svg')}
+          message={utils.getLang('exchange_emptyBalance')}
+
+          button={{
+            text: utils.getLang('cabinet_manage'),
+            onClick: this.__handleOpenBalance,
+            size: 'small'
+          }}
+        />
+      );
+    }
+
     const headings = [
       <UI.TableColumn>{utils.getLang('global_currency')}</UI.TableColumn>,
       <UI.TableColumn align="right">{utils.getLang('global_amount')}</UI.TableColumn>,
@@ -35,33 +55,36 @@ class Balances extends React.Component {
       )
     });
 
-    const table = (
+    return (
       <UI.Table headings={headings} compact skipContentBox>
         {rows}
       </UI.Table>
     )
+  }
 
-    return  this.props.adaptive ? (
+  render() {
+    return this.props.adaptive ? (
       <div className="Exchange__balance">
-        {table}
-        <UI.Button
+        {this.renderContent()}
+        { !this.isEmpty && <UI.Button
           onClick={this.__handleOpenBalance}
-        >{utils.getLang('cabinet_manage')}</UI.Button>
+        >{utils.getLang('cabinet_manage')}</UI.Button> }
       </div>
     ) : (
       <Block
+        className="Exchange__balance"
         name="balance"
         title={utils.getLang('global_balance')}
-        controls={[
+        controls={!this.isEmpty ? [
           <UI.Button
             key="withdraw"
             size="ultra_small"
             rounded type="secondary"
             onClick={this.__handleOpenBalance}
           >{utils.getLang('cabinet_manage')}</UI.Button>
-        ]}
+        ] : null }
       >
-        {table}
+        {this.renderContent()}
       </Block>
     )
   }
