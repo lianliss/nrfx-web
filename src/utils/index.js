@@ -41,10 +41,10 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
-export function getLang(key) {
+export function getLang(key, onlyString = false) {
   let langString = store.getState().default.lang[key] || key
   
-  if(store.getState().settings.translaterSetting && key !== 'global_meta_title') {
+  if(store.getState().settings.translaterSetting && !onlyString) {
     return <TranslaterMode langString={langString} keys={key}/>
   }
   return langString;
