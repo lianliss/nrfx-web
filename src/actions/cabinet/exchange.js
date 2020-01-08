@@ -80,7 +80,15 @@ export function orderBookInit(payload) {
 }
 
 export function orderBookUpdateOrders(orders) {
-  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_UPDATE, orders });
+  const [primaryCoin, secondaryCoin] = store.getState().exchange.market.split('/');
+
+  store.dispatch({
+    type: actionTypes.EXCHANGE_ORDER_BOOK_UPDATE,
+    orders: orders.filter(order => (
+      order.primary_coin === primaryCoin &&
+      order.secondary_coin === secondaryCoin
+    ))
+  });
 }
 
 export function tickerUpdate(ticker) {
