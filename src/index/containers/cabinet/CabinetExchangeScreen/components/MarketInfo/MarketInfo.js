@@ -16,7 +16,7 @@ class MarketInfo extends React.Component{
     actions.openModal('choose_market');
   }
 
-  
+
 
   render() {
     const [primary, secondary] = this.props.market.toUpperCase().split('/');
@@ -152,6 +152,9 @@ class MarketInfo extends React.Component{
   }
 }
 
-export default connect((state) => ({ ...state.exchange }), {
+export default connect((state) => ({
+  ...state.exchange,
+  currentLang: state.default.currentLang
+}), {
   changeTimeFrame: exchangeActions.changeTimeFrame
 })(memo(MarketInfo));

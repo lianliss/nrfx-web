@@ -1,7 +1,7 @@
 .Exchange__wrapper {
   width: 100%;
   margin: 0 auto;
-  padding: 8px 16px;
+  padding: 16px;
   box-sizing: border-box;
   display: flex;
 
@@ -142,6 +142,22 @@
   }
 }
 
+
+.Exchange__disconnectModal {
+  //background: rgba(255,255,255,.8);
+  //backdrop-filter: blur(8px);
+  z-index: 90;
+
+  .Exchange__disconnectModal__content {
+    text-align: center;
+    width: 260px;
+  }
+
+  .LoadingStatus__wrap {
+    height: 100px;
+  }
+}
+
 @keyframes order-loader {
   from {
     transform: rotate(0deg);
@@ -154,6 +170,10 @@
 .adaptive .Exchange__wrapper {
   padding: 24px 0;
   display: block;
+
+  .Exchange__disconnectModal__content {
+    width: auto;
+  }
 }
 
 .Exchange__orders__side {

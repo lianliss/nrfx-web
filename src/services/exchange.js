@@ -49,7 +49,7 @@ class Exchange {
 
   __errorConnection = () => {
     unbind(this.market);
-    exchange.setStatus('failed');
+    exchange.setStatus('disconnected');
   };
 
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
@@ -61,7 +61,7 @@ class Exchange {
   };
 
   __orderDidCompleted = body => {
-    exchange.setOrderStatus(body.order_id, 'completed');
+    exchange.setOrderStatus(body.order.id, 'completed');
     toasts.success(utils.getLang('exchange_toastOrderCompleted'));
   };
 

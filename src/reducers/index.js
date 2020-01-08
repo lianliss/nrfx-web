@@ -6,6 +6,7 @@ const initialState = {
   lang: {},
   auth: {},
   profile: {},
+  currentLang: null,
   langList: [],
   adaptive: false,
   title: "Bitcoinbot",
@@ -26,7 +27,12 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {page: action.to.name});
 
     case actionTypes.SET_LANG: {
-      return Object.assign({}, state, {lang: action.lang, langList: action.langList});
+      return {
+        ...state,
+        currentLang: action.currentLang,
+        lang: action.lang,
+        langList: action.langList
+      };
     }
 
     case actionTypes.AUTH: {

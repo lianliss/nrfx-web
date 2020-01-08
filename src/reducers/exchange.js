@@ -192,12 +192,12 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.EXCHANGE_ORDER_BOOK_REMOVE_ORDER: {
       const depth = { ...state.depth };
-      const openOrders = { ...state.depth };
+      const openOrders = { ...state.openOrders };
 
-      action.orders.forEach( order => {
-        delete depth.asks[order.id];
-        delete depth.bids[order.id];
-        delete openOrders[order.id];
+      action.orders.forEach( orderId => {
+        delete depth.asks[orderId];
+        delete depth.bids[orderId];
+        delete openOrders[orderId];
       });
 
       return {

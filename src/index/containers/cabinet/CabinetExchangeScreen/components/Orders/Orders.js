@@ -131,7 +131,7 @@ class Orders extends React.Component {
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>
           <UI.TableColumn><UI.NumberFormat number={order.price} currency={order.secondary_coin} /></UI.TableColumn>
-          <UI.TableColumn><UI.NumberFormat number={order.amount} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn><UI.NumberFormat number={order.amount} currency={order.primary_coin} /></UI.TableColumn>
           <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       );
@@ -228,6 +228,9 @@ class Orders extends React.Component {
   }
 }
 
-export default connect((state) => ({ ...state.exchange }), {
+export default connect((state) => ({
+  ...state.exchange,
+  lang: state.default.lang
+}), {
 
 })(memo(Orders));
