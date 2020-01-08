@@ -19,18 +19,10 @@ export default function HistoryTable({ history, adaptive, header}) {
     )
   }
 
-  let __transformLang = (langKey) => {
-    const lang = utils.getLang(langKey)
-    if ( typeof lang === 'object'){
-      return lang.props.langString
-    }
-    return lang
-  }
-
   let headings = [
     <UI.TableColumn>{utils.getLang('global_currency')}</UI.TableColumn>,
     <UI.TableColumn>{utils.getLang('global_type')}</UI.TableColumn>,
-    <UI.TableColumn align="right">{`${__transformLang('global_amount')} (${__transformLang('global_price')})`}</UI.TableColumn>,
+    <UI.TableColumn align="right">{`${utils.getLang('global_amount', true)} (${utils.getLang('global_price', true)})`}</UI.TableColumn>,
     <UI.TableColumn align="right">{utils.getLang('global_date')}</UI.TableColumn>,
   ];
 

@@ -76,7 +76,7 @@ class App extends React.Component {
 
     return <div>
       <Helmet>
-        <title>{utils.getLang('global_meta_title')}</title>
+        <title>{utils.getLang('global_meta_title', true)}</title>
       </Helmet>
       <ModalGroup {...this.props} />
       <Modals {...this.props} />
