@@ -89,7 +89,7 @@ export default class ReceiveCoinsModal extends React.Component {
           }, 0)
         }
       }
-      console.log(this.props)
+      
       return (
         <div className="ReceiveCoinsModal">
           <div className="SendCoinsModal__wallet">

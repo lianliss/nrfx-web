@@ -59,7 +59,7 @@ const CalcDepositModal = class extends React.Component {
           value: p.dynamic.id,
           percent: p.dynamic.percent,
           days: p.dynamic.days,
-          note: `${p.dynamic.percent}% ${p.dynamic.days} ${utils.getLang('global_days')}`,
+          note: `${p.dynamic.percent}% ${p.dynamic.days} ${this.__indicatorLang('global_days')}`,
         })),
         planId: plans[0].dynamic.id,
         maxDay: plans[0].dynamic.days,
@@ -78,6 +78,14 @@ const CalcDepositModal = class extends React.Component {
 
   __daysIsFilled (allField = false) {
     return !!this.state.days.length && this.state.amount && this.state.days.every( d => !!d.dayNumber && (!allField || !!d.amount) );
+  }
+
+  __indicatorLang = (langKey) => {
+    const lang = utils.getLang(langKey)
+    if ( typeof lang === 'object'){
+      return lang.props.langString
+    }
+    return lang
   }
 
   __calculate () {
