@@ -44,6 +44,4 @@ class App extends React.Component {
 }
 
 
-export default connect(state => {
-  return {state};
-})(App);
+export default connect(state => ({state}))(App);

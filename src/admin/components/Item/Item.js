@@ -7,7 +7,7 @@ import Button from '../../../ui/components/Button/Button';
 import Input from '../Input/Input';
 import DropDown from '../Dropdown/Dropdown';
 import action from '../../../actions/admin/index';
-import List from '../../../ui/components/List/List';
+import List from '../List/List';
 import Tabs from '../Tabs/Tabs';
 import Paging from '../Paging/Paging';
 import PagingItem from '../Paging/PagingItem';
@@ -43,6 +43,9 @@ const Item = (props) => {
       break;
     case 'list':
       Component = List;
+      break;
+    case 'list_item':
+      Component = props => <div {...props} />;
       break;
     case 'group':
       Component = Group;

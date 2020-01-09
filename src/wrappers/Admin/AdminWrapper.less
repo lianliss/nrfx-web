@@ -9,14 +9,29 @@ html, body, #root, #root > div {
   display: flex;
   flex-direction: column;
 
+  .Admin_wrapper__loader {
+    display: none;
+  }
+
   &.pending {
     cursor: progress;
+
+    .Admin_wrapper__loader {
+      top: 0;
+      left: 0;
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255,255,255,.6);
+      display: block;
+    }
   }
 
   .Admin_wrapper__header {
     position: relative;
-    z-index: 100;
     position: sticky;
+    z-index: 100;
     top: 0;
   }
 
