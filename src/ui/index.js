@@ -32,6 +32,7 @@ import WalletCard from './components/WalletCard/WalletCard';
 import StatusIndicator from './components/StatusIndicator/StatusIndicator';
 import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
 import Tooltip from './components/Tooltip/Tooltip';
+import WalletAddress from './components/WalletAddress/WalletAddress';
 
 export default {
   Button,
@@ -69,5 +70,6 @@ export default {
   Collapse,
   WalletCard,
   StatusIndicator,
-  Tooltip
+  Tooltip,
+  WalletAddress
 };

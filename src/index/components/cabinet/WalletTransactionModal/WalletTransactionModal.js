@@ -2,7 +2,6 @@ import './WalletTransactionModal.less';
 
 import React from 'react';
 import UI from '../../../../ui';
-import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../../actions';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
@@ -79,15 +78,13 @@ export default class WalletTransactionModal extends React.Component {
             <InfoRow label={utils.getLang("global_from")}>
               {data.category === 'send' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
                 <div className="Wallets__history__address">
-                  {data.type === 'transfer' && <div className="Wallets__history__bb" />}
-                  {address}
+                  <UI.WalletAddress isUser={data.type === 'transfer'} address={address} />
                 </div>}
             </InfoRow>
             <InfoRow label={utils.getLang("global_to")}>
               {data.category === 'receive' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
                 <div className="Wallets__history__address">
-                  {data.type === 'transfer' && <div className="Wallets__history__bb" />}
-                  {address}
+                  <UI.WalletAddress isUser={data.type === 'transfer'} address={address} />
                 </div>}
             </InfoRow>
             <InfoRow label={utils.getLang("global_amount")}><UI.NumberFormat number={data.amount} currency={currency} /></InfoRow>

@@ -29,21 +29,13 @@ class AdaptiveHeader extends React.Component {
             </div>
           </div>
           <div className="CabinetHeader__mainContent">
-            {utils.switchMatch(this.props.mainContent.type, {
-              'logotype': <div className="CabinetHeader__mainContent_logo">
-                <SVG src={require("../../../../asset/logo_full_adaptive.svg")} />
-              </div>,
-              'default': <div className="CabinetHeader__mainContent_text">
-                <span>
-                  {this.props.mainContent.content}
-                </span>
-              </div>
-            })}
+            <div className="CabinetHeader__mainContent_text">
+              <span>{this.props.mainContent.content}</span>
+            </div>
           </div>
           <div className="CabinetHeader__rightContent">
             {this.props.rightContent}
           </div>
-
         </div>
         {internalNotification && <UI.InternalNotification
           adaptive={true}

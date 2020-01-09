@@ -56,8 +56,7 @@ export default function HistoryTable({ history, adaptive, header}) {
         <UI.TableCell key={i} onClick={() => modalGroupActions.openModalPage('transaction', {id:item.id, type:item.type})}>
           <UI.TableColumn>
             <div className="Wallets__history__address">
-              {item.type === 'transfer' && <div className="Wallets__history__bb" />}
-              <div title={item.address}>{address}</div>
+              <UI.WalletAddress isUser={item.type === 'transfer'} address={address} />
             </div>
             <div className={utils.classNames({
               Wallets__history__status: true,
@@ -83,8 +82,7 @@ export default function HistoryTable({ history, adaptive, header}) {
         </UI.TableColumn>
         <UI.TableColumn>
           <div className="Wallets__history__address">
-            {item.type === 'transfer' && <div className="Wallets__history__bb" />}
-            <div title={item.address}>{address}</div>
+            <UI.WalletAddress isUser={item.type === 'transfer'} address={address} />
           </div>
         </UI.TableColumn>
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)}</UI.TableColumn>
