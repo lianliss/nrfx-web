@@ -60,7 +60,7 @@ export default class Chart extends React.PureComponent {
       disabled_features: [
         ...(!this.props.fullscreen ? [
           (!this.props.adaptive && 'header_widget'),
-          (!this.props.adaptive && 'left_toolbar'),
+          // (!this.props.adaptive && 'left_toolbar'),
           'edit_buttons_in_legend',
           'context_menus',
           'use_localstorage_for_settings',
