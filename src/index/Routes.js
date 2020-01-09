@@ -1,6 +1,7 @@
 // styles
 // external
 import React from 'react';
+import { connect } from 'react-redux';
 // internal
 import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
 import SiteAboutScreen from './containers/site/SiteAboutScreen/SiteAboutScreen';
@@ -32,8 +33,9 @@ import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import SiteFeeScreen from './containers/site/SiteFeeScreen/SiteFeeScreen';
 import TraderScreen from './containers/cabinet/TraderScreen/TraderScreen';
+import router from '../router';
 
-export default function Routes(props) {
+function Routes(props) {
   const routeState = props.router.getState();
   const routerParams = routeState.params;
   const route = routeState.name;
@@ -41,6 +43,7 @@ export default function Routes(props) {
   let actions = {};
   let Component = false;
   let WrapperComponent = CabinetWrapper;
+  let needAuthorization = false;
 
   switch (route) {
     case pages.MAIN:
@@ -106,15 +109,19 @@ export default function Routes(props) {
       break;
     // Cabinet
     case pages.CABINET_WALLET:
+      needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
     case pages.PROFILE:
+      needAuthorization = true;
       Component = CabinetProfileScreen.default;
       break;
     case pages.SETTINGS:
+      needAuthorization = true;
       Component = CabinetSettingsScreen.default;
       break;
     case pages.INVESTMENTS:
+      needAuthorization = true;
       Component = CabinetInvestmentsScreen.default;
       break;
     case pages.CHANGE_EMAIL:
@@ -127,9 +134,11 @@ export default function Routes(props) {
       Component = CabinetResetPassword.default;
       break;
     case pages.MENU:
+      needAuthorization = true;
       Component = MenuScreen.default;
       break;
     case pages.NOTIFICATIONS:
+      needAuthorization = true;
       Component = NotificationsScreen.default;
       break;
     case pages.EXCHANGE:
@@ -140,6 +149,7 @@ export default function Routes(props) {
       Component = CabinetMerchantStatusScreen;
       break;
     case pages.TRADER:
+      needAuthorization = true;
       Component = TraderScreen;
       break;
     default:
@@ -164,9 +174,19 @@ export default function Routes(props) {
     pages.FEE
   ].includes(route);
 
+  if (needAuthorization === true && !props.user) {
+    router.navigate(pages.MAIN);
+    return null;
+  }
+
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
       <Component {...defaultProps} {...actions} routerParams={routerParams} />
     </WrapperComponent>
   );
 }
+
+
+export default connect(state => ({
+  user: state.default.profile.user
+}))(Routes);
