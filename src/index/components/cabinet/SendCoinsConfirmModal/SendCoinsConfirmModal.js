@@ -14,7 +14,7 @@ class SendCoinsConfirmModal extends React.Component {
 
 
   render() {
-    if (!this.props.amount || this.props.loadingStatus === 'success') {
+    if (!this.props.amount || this.props.loadingStatus.send === 'success') {
       this.props.onClose();
       return false;
     }
@@ -91,14 +91,14 @@ class SendCoinsConfirmModal extends React.Component {
           value={gaCode}
           onTextChange={this.__handleChange}
           placeholder={utils.getLang('site__authModalGAPlaceholder')}
-          error={gaCode.length === 6 && this.props.loadingStatus === 'ga_auth_code_incorrect'}
+          error={gaCode.length === 6 && this.props.loadingStatus.sendCode === 'ga_auth_code_incorrect'}
           indicator={
             <SVG src={require('../../../../asset/google_auth.svg')} />
           }
         />
         <div className="SendCoinsConfirmModal__submit_wrapper">
           <UI.Button
-            state={this.props.loadingStatus}
+            state={this.props.loadingStatus.send}
             currency={currencyInfo}
             onClick={() => this.__handleSubmit()}
             disabled={gaCode.length !== 6}
@@ -112,7 +112,7 @@ class SendCoinsConfirmModal extends React.Component {
 }
 
 export default connect(state => ({
-  loadingStatus: state.wallets.loadingStatus.sendCode,
+  loadingStatus: state.wallets.loadingStatus,
   wallets: state.wallets.wallets,
   limits: state.wallets.limits,
   ...state.wallets.sendCoinModal,

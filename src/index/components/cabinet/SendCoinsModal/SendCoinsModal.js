@@ -16,6 +16,7 @@ import * as utils from '../../../../utils';
 class SendCoinsModal extends React.Component {
 
   state = {
+    status: null,
     addressError: false,
   };
 
@@ -86,11 +87,14 @@ class SendCoinsModal extends React.Component {
     }
     if (this.props.amount >= this.currentMin) {
       if (this.props.address.length < 15 ) {
+        this.setState({status: 'loading'});
         walletsActions.checkLogin(this.props.address).then(response => {
           this.setState({ addressError: false });
           actions.openModal('send_confirm');
         }).catch(response => {
           this.setState({ addressError: true });
+        }).finally(() => {
+          this.setState({status: null});
         })
       } else {
         actions.openModal('send_confirm');
@@ -178,6 +182,7 @@ class SendCoinsModal extends React.Component {
           </div>
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
+              state={this.state.status}
               currency={currencyInfo}
               onClick={this.__handleSubmit}
               disabled={!this.props.amount || !this.props.address}

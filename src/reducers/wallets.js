@@ -122,7 +122,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         sendCoinModal: {
           ...initialState.sendCoinModal,
-          walletId: state.initialState.walletId
+          walletId: state.sendCoinModal.walletId
         }
       }
     }
