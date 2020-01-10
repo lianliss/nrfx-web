@@ -7,6 +7,7 @@ import SVG from 'react-inlinesvg';
 // internal
 import MarkDown from '../MarkDown/MarkDown';
 import { classNames, __doubleInputOnKeyPressHandler } from '../../utils';
+import { openModal } from 'actions'
 
 class Input extends React.Component {
   constructor(props) {
@@ -30,6 +31,16 @@ class Input extends React.Component {
 
   focus() {
     this.refs['input'].focus();
+  }
+  
+  __openModalTranslate = (e) => {
+    if(typeof this.props.placeholder === 'object') {
+      e.preventDefault();
+      openModal('translator', {
+        langString: this.props.placeholder.props.langString,
+        keys:this.props.placeholder.props.keys
+      })
+    }
   }
 
   render() {
@@ -58,8 +69,8 @@ class Input extends React.Component {
 
     let params = {
       className,
-      placeholder: this.props.placeholder,
-      type: type,
+      placeholder: typeof this.props.placeholder === 'object' ?  this.props.placeholder.props.langString : this.props.placeholder,
+      type: (this.props.type === "password" && this.state.displayPassword) ? "text" : this.props.type,
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,
       onKeyPress: this.props.onKeyPress,
@@ -84,6 +95,7 @@ class Input extends React.Component {
         onBlur={this.props.onBlur || (() => {})}
         disabled={this.props.disabled}
         autoFocus={this.props.autoFocus}
+        onContextMenu={this.__openModalTranslate}
       />;
     }
 
@@ -171,6 +183,7 @@ Input.propTypes = {
   mouseWheel: PropTypes.bool,
   placeholder: PropTypes.any,
   onChange: PropTypes.func,
+  openModalTranslate: PropTypes.func,
   onTextChange: PropTypes.func,
   multiLine: PropTypes.bool,
   value: PropTypes.any,

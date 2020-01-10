@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import store from '../store';
 import router from '../router';
 import moment from 'moment/min/moment-with-locales';
+import TranslaterMode from 'src/index/components/cabinet/TranslaterMode'
 
 export function classNames() {
   let result = [];
@@ -40,8 +41,13 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
-export function getLang(key) {
-  return store.getState().default.lang[key] || key;
+export function getLang(key, onlyString = false) {
+  let langString = store.getState().default.lang[key] || key
+  
+  if(store.getState().settings.translaterSetting && !onlyString) {
+    return <TranslaterMode langString={langString} keys={key}/>
+  }
+  return langString;
 }
 
 export function getLanguage() {

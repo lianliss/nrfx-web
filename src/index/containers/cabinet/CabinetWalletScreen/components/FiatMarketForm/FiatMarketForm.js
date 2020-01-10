@@ -96,6 +96,9 @@ class FiatMarketForm extends React.Component {
   };
 
   getCurrenciesOptions(prefix) {
+    if( typeof prefix === 'object') {
+      prefix = prefix.props.langString
+    }
     return this.props.canExchange
       .map(key => this.props.currencies[key])
       .map(c => ({

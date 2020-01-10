@@ -59,7 +59,7 @@ const CalcDepositModal = class extends React.Component {
           value: p.dynamic.id,
           percent: p.dynamic.percent,
           days: p.dynamic.days,
-          note: `${p.dynamic.percent}% ${p.dynamic.days} ${utils.getLang('global_days')}`,
+          note: `${p.dynamic.percent}% ${p.dynamic.days} ${utils.getLang('global_days', true)}`,
         })),
         planId: plans[0].dynamic.id,
         maxDay: plans[0].dynamic.days,

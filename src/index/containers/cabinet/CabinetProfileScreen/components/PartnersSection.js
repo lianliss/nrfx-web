@@ -119,6 +119,7 @@ class PartnersSection extends React.Component {
 export default connect(state => ({
   ...state.profile.partner,
   ...state.default,
+  translate: state.settings.translaterSetting
 }), {
   setTitle: actions.setTitle,
   loadWallets: walletsActions.loadWallets,

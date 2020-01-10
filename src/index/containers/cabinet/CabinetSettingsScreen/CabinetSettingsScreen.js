@@ -240,7 +240,8 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
 export default connect(state => ({
   ...state.settings,
   profile: state.default.profile,
-  adaptive: state.default.adaptive
+  adaptive: state.default.adaptive,
+  translate: state.settings.translaterSetting
 }), {
   setTitle: actions.setTitle,
   loadSettings: settingsActions.loadSettings,

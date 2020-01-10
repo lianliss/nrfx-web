@@ -94,7 +94,7 @@ class OpenDepositModal extends React.Component {
         return {
           value: p.id,
           title: p.description,
-          note: `${p.percent}% ${p.days} ${utils.getLang('global_days')}`,
+          note: `${p.percent}% ${p.days} ${utils.getLang('global_days', true)}`,
           max: p.max,
           min: p.min
         }
@@ -232,7 +232,7 @@ class OpenDepositModal extends React.Component {
                 this.__setState({ amount: (amount > amountMax ? amountMax : amount) }, null, this.__getPlans);
               }}
               placeholder={utils.getLang('cabinet_openNewDeposit_amount')}
-              indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.props.thisState.amountMin} ${this.props.thisState.currency && this.props.thisState.currency.toUpperCase()}`}
+              indicator={`${utils.getLang('cabinet_openNewDeposit_min', true)} ${this.props.thisState.amountMin} ${this.props.thisState.currency && this.props.thisState.currency.toUpperCase()}`}
               onTextChange={amount => {
                 this.__setState({ amount });
               }}

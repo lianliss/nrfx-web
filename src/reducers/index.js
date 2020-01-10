@@ -98,6 +98,16 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
+    case actionTypes.SAVE_TRANSLATER: {
+      return {
+        ...state,
+        lang: {
+          ...state.lang,
+          [action.key]: action.value
+        }
+      }
+    }
+
     default: return state;
   }
 }
