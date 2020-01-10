@@ -2,6 +2,7 @@ export default {
   name: 'Narfex',
   url: 'https://narfex.com/',
   wikiUrl: 'https://narfex.info/',
+  faqUrl: 'https://narfex.zendesk.com/',
   email: {
     support: 'support@narfex.com',
     info: 'info@narfex.com',

@@ -118,7 +118,7 @@ class Header extends React.Component {
               <div className="CabinetHeader__icon">
                 <UI.ActionSheet position="left" items={[
                   { title: utils.getLang('cabinet_header_settings'), onClick: () => router.navigate(pages.SETTINGS) },
-                  { title: "FAQ", onClick: () => window.location.href = COMPANY.wikiUrl },
+                  { title: "FAQ", onClick: () => window.open(COMPANY.faqUrl) },
                   { title: lang.title, onClick: () => actions.openModal('language'), subContent: (
                     <SVG src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
                   )},

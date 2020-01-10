@@ -14,6 +14,7 @@ import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import * as actions from 'actions';
 import * as auth from 'actions/auth';
+import COMPANY from '../../../constants/company';
 
 function Header({ showLightLogo, langList, routerState, profile }) {
   const headerLinks = [
@@ -54,10 +55,6 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           route: pages.FEE,
         },
         {
-          title: utils.getLang('site__headerContactUs'),
-          route: pages.CONTACT,
-        },
-        {
           title: utils.getLang('site__headerTechnology'),
           route: pages.TECHNOLOGY,
         },
@@ -71,8 +68,12 @@ function Header({ showLightLogo, langList, routerState, profile }) {
       title: utils.getLang('site__headerHelp'),
       children: [
         {
+          title: utils.getLang('site__headerContactUs'),
+          route: pages.CONTACT,
+        },
+        {
           title: utils.getLang('site__headerFAQ'),
-          route: pages.FAQ,
+          route: COMPANY.faqUrl,
         },
         {
           title: (

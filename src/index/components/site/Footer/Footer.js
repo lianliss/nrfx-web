@@ -27,12 +27,13 @@ export default function Footer() {
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerCompany')}</div>
             <a href={`/${pages.ABOUT}`} className="Footer__links__item">{utils.getLang('site__footerAboutUs')}</a>
+            <a href={`/${pages.FEE}`} className="Footer__links__item">{utils.getLang('site__headerFee')}</a>
             <a href={`/${pages.TECHNOLOGY}`} className="Footer__links__item">{utils.getLang('site__footerTechnology')}</a>
             <a href={`/${pages.SAFETY}`} className="Footer__links__item">{utils.getLang('site__footerSecurity')}</a>
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
-            <a href={COMPANY.wikiUrl} className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
+            <a href={COMPANY.faqUrl} target="_blank" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
             <span onClick={() => actions.openModal('static_content',{ type: "terms", title: utils.getLang('site__footerTermsUse') })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
             <span onClick={() => actions.openModal('static_content',{ type: "privacy", title: utils.getLang('site__footerPrivacyPolicy') })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
@@ -49,19 +50,19 @@ export default function Footer() {
           </div>
           <div className="Footer__copyright">© 2017-{new Date().getYear() + 1900} {COMPANY.name}</div>
           <div className="Footer__socials">
-            {COMPANY.social.facebook && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.facebook} className="Footer__social">
+            {COMPANY.social.facebook && <a target="_blank" rel="noopener noreferrer" href={'https://' + COMPANY.social.facebook} className="Footer__social">
               <SVG src={require('../../../../asset/social/facebook.svg')} />
             </a>}
-            {COMPANY.social.twitter && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.twitter} className="Footer__social">
+            {COMPANY.social.twitter && <a target="_blank" rel="noopener noreferrer" href={'https://' + COMPANY.social.twitter} className="Footer__social">
               <SVG src={require('../../../../asset/social/twitter.svg')} />
             </a>}
-            {COMPANY.social.instagram && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.instagram} className="Footer__social">
+            {COMPANY.social.instagram && <a target="_blank" rel="noopener noreferrer" href={'https://' + COMPANY.social.instagram} className="Footer__social">
               <SVG src={require('../../../../asset/social/instagram.svg')} />
             </a>}
-            {COMPANY.social.telegram && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.telegram} className="Footer__social">
+            {COMPANY.social.telegram && <a target="_blank" rel="noopener noreferrer" href={'https://' + COMPANY.social.telegram} className="Footer__social">
               <SVG src={require('../../../../asset/social/telegram.svg')} />
             </a>}
-            {COMPANY.social.vk && <a target="_blank" rel="noopener noreferrer" href={COMPANY.social.vk} className="Footer__social">
+            {COMPANY.social.vk && <a target="_blank" rel="noopener noreferrer" href={'https://' + COMPANY.social.vk} className="Footer__social">
               <SVG src={require('../../../../asset/social/vk.svg')} />
             </a>}
           </div>

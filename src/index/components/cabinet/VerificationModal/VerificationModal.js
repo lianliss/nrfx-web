@@ -1,5 +1,5 @@
 import './VerificationModal.less';
-import sumsubStyle from './sumsub.css';
+import sumsubStyle from './sumsub.base64.css';
 import React from 'react';
 import UI from '../../../../ui';
 import { classNames as cn } from 'src/utils/index';
