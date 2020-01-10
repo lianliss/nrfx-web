@@ -56,12 +56,13 @@ class Exchange {
   __orderBookInit = payload => exchange.orderBookInit(payload);
 
   __orderDidFailed = body => {
-    exchange.setOrderStatus(body.order_id, 'completed');
+    exchange.setOrderStatus(body.order_id, 'failed');
     toasts.error(utils.getLang('exchange_toastOrderFailed'));
   };
 
   __orderDidCompleted = body => {
-    exchange.setOrderStatus(body.order.id, 'completed');
+    // exchange.setOrderStatus(body.order.id, 'completed');
+    exchange.orderCompleted(body.order);
     toasts.success(utils.getLang('exchange_toastOrderCompleted'));
   };
 

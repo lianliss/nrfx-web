@@ -95,6 +95,10 @@ export function tickerUpdate(ticker) {
   store.dispatch({ type: actionTypes.EXCHANGE_TICKER_UPDATE, ticker });
 }
 
+export function orderCompleted(order) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_COMPLETED, order });
+}
+
 export function setOrderStatus(orderId, status) {
   store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_STATUS, orderId, status });
 }

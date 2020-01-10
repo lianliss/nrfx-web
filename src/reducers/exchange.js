@@ -152,22 +152,23 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.EXCHANGE_SET_ORDER_STATUS: {
-      let openOrders = Object.assign({}, state.openOrders);
-      let lastOrders = Object.assign([], state.last_orders);
+      let openOrders = { ...state.openOrders };
+      let lastOrders = [ ...state.last_orders ];
 
       if (openOrders[action.orderId]) {
-        let order = Object.assign({}, openOrders[action.orderId]);
+        let order = { ...openOrders[action.orderId] };
         delete openOrders[action.orderId];
-        if (lastOrders.findIndex((order) => order.id === action.orderId) === -1) {
+        if (lastOrders.find(order => order.id === action.orderId)) {
           order.status = action.status;
           lastOrders.unshift(order);
         }
       }
 
-      return Object.assign({}, state, {
+      return {
+        ...state,
         openOrders,
         last_orders: lastOrders,
-      });
+      };
     }
 
     case actionTypes.EXCHANGE_SET_ORDER_PENDING: {
@@ -180,6 +181,23 @@ export default function reduce(state = initialState, action = {}) {
             status: "pending"
           }
         }
+      }
+    }
+
+    case actionTypes.EXCHANGE_ORDER_COMPLETED: {
+      let openOrders = { ...state.openOrders };
+
+      let lastOrders = [
+        { ...action.order, status: 'completed' },
+        ...state.last_orders,
+      ];
+
+      delete openOrders[action.order.id];
+
+      return {
+        ...state,
+        openOrders,
+        last_orders: lastOrders
       }
     }
 
