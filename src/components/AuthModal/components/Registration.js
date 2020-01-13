@@ -25,7 +25,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
       setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
       let inviteLink = initGetParams.params.i;
-      registerUser(email.trim(), referrer, inviteLink)
+      registerUser(email.trim(), (refParam || referrer), inviteLink)
         .then(() => changeStep(steps.REGISTRATION_SUCCESS))
         .catch((err) => setErrorMsg(err.message));
     }

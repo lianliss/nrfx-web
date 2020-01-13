@@ -11,7 +11,6 @@ import Registration from './components/Registration';
 import ConfirmPhone from './components/ConfirmPhone';
 import SmsCode from './components/SmsCode';
 import GoogleAuth from './components/GoogleAuth';
-import initGetParams from '../../../src/services/initialGetParams';
 
 function AuthModal({ type, className, onClose, defaultEmail, onBack }) {
   const [currentStep, changeStep] = useState(type || steps.LOGIN);
