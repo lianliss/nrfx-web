@@ -82,7 +82,7 @@ export default class SiteContactScreen extends BaseScreen {
                 <p>{this.lang.site.contactChatDescription}</p>
               </UI.ContentBox>
 
-              <UI.ContentBox onClick={() => router.navigate(PAGES.FAQ)} className="SiteContactScreen__link_item">
+              <UI.ContentBox onClick={() => window.open(COMPANY.faqUrl)} className="SiteContactScreen__link_item">
                 <SVG src={require('../../../../asset/120/info.svg')}/>
                 <h3 className="SiteContactScreen__link_item__title">{this.lang.site.contactFaqTitle}</h3>
                 <p>{this.lang.site.contactFaqDescription}</p>
