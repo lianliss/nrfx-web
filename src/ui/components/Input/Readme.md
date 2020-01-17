@@ -23,6 +23,13 @@ import Button from '../Button/Button';
 </div>
 ```
 
+Indicator & description
 ```js
 <Input description="Fee: 0.1%" indicator="USD" />
+```
+
+
+small
+```js
+<Input size="small" description="Fee: 0.1%" indicator="USD" />
 ```

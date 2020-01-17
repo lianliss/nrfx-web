@@ -61,3 +61,51 @@ const currencies = {
   ]}
 />
 ```
+
+Disabled
+```js
+<SwitchTabs
+  disabled
+  selected="static"
+  onChange={console.log}
+  tabs={[
+    { value: 'static', label: 'Static' },
+    { value: 'dynamic', label: 'Dynamic' }
+  ]}
+/>
+```
+
+ultra_small
+```js
+<div style={{maxWidth: 300}}>
+    <SwitchTabs
+      selected={50}
+      onChange={console.log}
+      size="ultra_small"
+      tabs={[
+        { value: 25, label: '25%' },
+        { value: 50, label: '50%' },
+        { value: 75, label: '75%' },
+        { value: 100, label: '100%' },
+      ]}
+    />
+</div>
+```
+
+ultra_small & secondary
+```js
+<div style={{maxWidth: 300}}>
+    <SwitchTabs
+      selected={50}
+      onChange={console.log}
+      size="ultra_small"
+      type="secondary"
+      tabs={[
+        { value: 25, label: '25%' },
+        { value: 50, label: '50%' },
+        { value: 75, label: '75%' },
+        { value: 100, label: '100%' },
+      ]}
+    />
+</div>
+```

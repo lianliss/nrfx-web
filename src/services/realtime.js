@@ -2,7 +2,8 @@ import * as auth from './auth';
 
 class RealTime {
   constructor() {
-    this.endpoint = 'wss://ex.bitcoinbot.pro/?access_token=' + auth.getToken();
+    const token = auth.getToken();
+    this.endpoint = 'wss://exchange.bitcoinbot.pro/' + (token ? `?access_token=${token}` : '');
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;

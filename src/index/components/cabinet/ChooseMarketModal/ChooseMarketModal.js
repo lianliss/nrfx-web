@@ -12,6 +12,7 @@ import ModalState from '../ModalState/ModalState';
 import router from '../../../../router';
 import * as exchangeActions from 'src/actions/cabinet/exchange';
 import * as PAGES from '../../../constants/pages';
+import { getLang } from 'src/utils/index';
 
 class ChooseMarketModal extends React.Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class ChooseMarketModal extends React.Component {
       <UI.Modal className="ChooseMarketModal__wrapper" noSpacing isOpen={true} onClose={this.props.onClose}>
         <div className="ChooseMarketModal">
           <div className="ChooseMarketModal__filters">
-            <UI.ModalHeader>Choose Pair</UI.ModalHeader>
+            <UI.ModalHeader>{getLang('exchange_choosePair')}</UI.ModalHeader>
             <div className="ChooseMarketModal__filters__form">
               <UI.Input
                 value={this.state.search}

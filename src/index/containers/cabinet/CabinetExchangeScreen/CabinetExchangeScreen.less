@@ -1,7 +1,7 @@
 .Exchange__wrapper {
   width: 100%;
   margin: 0 auto;
-  padding: 16px;
+  padding: 16px 8px;
   box-sizing: border-box;
   display: flex;
 
@@ -38,13 +38,14 @@
 }
 
 .Exchange__chart_wrapper {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   margin-right: 8px;
 }
 
 .Exchange__chart {
-  display: flex;
-  height: calc(100% - 128px);
+  flex: 1;
   flex-direction: column;
   margin-bottom: 8px;
 
@@ -56,21 +57,8 @@
   }
 }
 
-.Exchange__order_book {
+.Exchange__orderBook {
   width: 272px;
-
-  .ContentBox {
-    margin-bottom: 0;
-  }
-
-  .ContentBox__content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .Exchange__block {
-    height: 616px;
-  }
 }
 
 .Exchange__cancel_order_btn__wrap {
@@ -168,8 +156,12 @@
 }
 
 .adaptive .Exchange__wrapper {
-  padding: 24px 0;
+  padding: 8px 0;
   display: block;
+
+  .OrderBook {
+    margin-bottom: 8px;
+  }
 
   .Exchange__disconnectModal__content {
     width: auto;

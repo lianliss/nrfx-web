@@ -94,5 +94,4 @@ export default connect((state) => ({
   ...state.exchange,
   lang: state.default.lang
 }), {
-
 })(memo(Balances));

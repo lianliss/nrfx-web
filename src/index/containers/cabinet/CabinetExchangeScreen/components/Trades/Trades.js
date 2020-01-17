@@ -57,7 +57,7 @@ class Trades extends React.Component {
   render() {
     console.log('RENDER Trades');
 
-    if (this.props.adaptive) {
+    if (this.props.skipWrapper) {
       return this.renderContent();
     }
 
@@ -76,7 +76,8 @@ class Trades extends React.Component {
 }
 
 export default connect((state) => ({
-  ...state.exchange,
+  trades: state.exchange.trades,
+  market: state.exchange.market,
   currentLang: state.default.currentLang
 }), {
 

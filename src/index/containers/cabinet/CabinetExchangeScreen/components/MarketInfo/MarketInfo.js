@@ -11,12 +11,9 @@ import * as actions from '../../../../../../actions';
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
 
 class MarketInfo extends React.Component{
-
   __handleChooseMarket() {
     actions.openModal('choose_market');
   }
-
-
 
   render() {
     const [primary, secondary] = this.props.market.toUpperCase().split('/');
@@ -28,6 +25,11 @@ class MarketInfo extends React.Component{
             <div className="MarketInfo__pair__primary">{primary}</div>
             <div className="MarketInfo__pair__secondary">{secondary}</div>
           </div>
+          <UI.Button
+            size="ultra_small"
+            type="secondary"
+            onClick={this.__handleChooseMarket}
+          >Изменить пару</UI.Button>
         </div>
         {this.__renderPrice()}
         {this.__renderSummary()}
@@ -36,25 +38,25 @@ class MarketInfo extends React.Component{
   }
 
   __renderPrice() {
-    const { tickerInfo, market } = this.props;
+    const { ticker, market } = this.props;
     const [, secondary] = market.split('/');
 
-    const type = tickerInfo.percent >= 0 ? 'up' : 'down';
+    const type = ticker.price > ticker.prevPrice ? 'up' : 'down';
 
     return (
       <div className="MarketInfo__row price">
         <div className="MarketInfo__info_row">
           <div className="MarketInfo__info_row__label">{utils.getLang('exchange_lastPrice')}</div>
           <div className="MarketInfo__info_row__value">
-            <div className="MarketInfo__info_row__value__primary"><UI.NumberFormat type={type} indicator number={tickerInfo.price} currency={secondary} hiddenCurrency /></div>
-            $<UI.NumberFormat number={tickerInfo.usd_price} currency={'usd'} hiddenCurrency />
+            <div className="MarketInfo__info_row__value__primary"><UI.NumberFormat type={type} indicator number={ticker.price} currency={secondary} hiddenCurrency /></div>
+            $<UI.NumberFormat number={ticker.usd_price} currency={'usd'} hiddenCurrency />
           </div>
         </div>
         <div className="MarketInfo__info_row">
           <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_change')}</div>
           <div className="MarketInfo__info_row__value">
-            <div className="MarketInfo__info_row__value__primary"><UI.NumberFormat number={tickerInfo.percent} type={type} indicator percent fractionDigits={2} /></div>
-            <UI.NumberFormat number={tickerInfo.diff} currency={secondary} hiddenCurrency />
+            <div className="MarketInfo__info_row__value__primary"><UI.NumberFormat number={ticker.percent} type={type} indicator percent fractionDigits={2} /></div>
+            <UI.NumberFormat number={ticker.diff} currency={secondary} hiddenCurrency />
           </div>
         </div>
       </div>
@@ -62,26 +64,8 @@ class MarketInfo extends React.Component{
   }
 
   __renderSummary() {
-    const { tickerInfo, market, depth } = this.props;
+    const { ticker, market, depth } = this.props;
     const [, secondary] = market.split('/');
-
-    // const timeFrames =  [
-    //   { minutes: 5, value: 5 },
-    //   { minutes: 15, value: 15 },
-    //   { minutes: 30, value: 30 },
-    //   { minutes: 60, value: 60 },
-    //   { minutes: 120, value: 120 },
-    //   { minutes: 1440, value: '1D' },
-    //   { minutes: 10080, value: '1W' }
-    // ].map((item) => {
-    //   return  <UI.Button
-    //     key={item.minutes}
-    //     roundedMarketInfo__info_row__value
-    //     size="ultra_small"
-    //     type={item.value === this.props.chartTimeFrame ? '' : 'secondary'}
-    //     onClick={() => this.props.changeTimeFrame(item.value)}
-    //   >{moment().to(moment().subtract(item.minutes, 'minutes'), true)}</UI.Button>
-    // });
 
     const timeFrames = [
       {label: '5 min', value: 5},
@@ -94,7 +78,6 @@ class MarketInfo extends React.Component{
     ].map((item) => {
       return  <UI.Button
         key={item.value}
-        rounded
         size="ultra_small"
         type={item.value === this.props.chartTimeFrame ? 'normal' : 'secondary'}
         onClick={() => this.props.changeTimeFrame(item.value)}
@@ -115,15 +98,15 @@ class MarketInfo extends React.Component{
         <div className="MarketInfo__summary_line">
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_volume')}</div>
-            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={tickerInfo.usd_volume} currency={'usd'} hiddenCurrency /></div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={ticker.usd_volume} currency={'usd'} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_high')}</div>
-            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={tickerInfo.max} currency={secondary} hiddenCurrency /></div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={ticker.max} currency={secondary} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_24h_low')}</div>
-            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={tickerInfo.min} currency={secondary} hiddenCurrency /></div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={ticker.min} currency={secondary} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_ask')}</div>
@@ -137,7 +120,6 @@ class MarketInfo extends React.Component{
         <div className="MarketInfo__summary_controls">
           {timeFrames}
           <UI.Button
-            rounded
             size="ultra_small"
             onClick={() => {
               exchangeActions.setFullscreen();

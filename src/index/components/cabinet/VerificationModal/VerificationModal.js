@@ -39,6 +39,9 @@ export default class WalletTransactionModal extends React.Component {
             if ( messageType === 'idCheck.onApplicantLoaded') {
               this.setState({ status: null });
             }
+            if ( messageType === 'idCheck.onInitialized') {
+              this.setState({ status: null });
+            }
             console.log('[IDENSIC DEMO] Idensic message:', messageType, payload)
           }
         )

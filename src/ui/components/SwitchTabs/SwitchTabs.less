@@ -9,6 +9,28 @@
   height: 48px;
   display: flex;
   user-select: none;
+
+  &.ultra_small {
+    height: 24px;
+  }
+
+  &.secondary {
+    color: var(--uikit-button-secondary-background);
+
+    .SwitchTabs__item {
+      color: var(--uikit-foreground-secondary);
+      border-color:  var(--uikit-button-secondary-background);
+    }
+
+    .SwitchTabs__indicator {
+      background: var(--uikit-button-secondary-background);
+    }
+  }
+
+  &.disabled {
+    opacity: .8;
+    pointer-events: none;
+  }
 }
 
 .SwitchTabs__item {
@@ -32,10 +54,10 @@
 
   &.active {
     color: var(--uikit-contrast-primary);
-    border-color: transparent;
+    border-color: transparent !important;
 
     & + * {
-      border-color: transparent;
+      border-color: transparent !important;
     }
   }
 }

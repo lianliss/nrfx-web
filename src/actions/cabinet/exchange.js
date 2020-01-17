@@ -43,13 +43,30 @@ export function chooseMarket(market) {
 }
 
 export function orderCreate(params) {
-  return api.call(apiSchema.Exchange.OrderPut, params).then(({balance}) => {
-    if (params.type !== 'market') {
-      store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance });
-    }
-  }).catch((err) => {
-    toast.error(err.message);
-  })
+  return dispatch => {
+    dispatch({type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: params.type, status: 'loading'});
+    api.call(apiSchema.Exchange.OrderPut, params).then(({balance}) => {
+      if (params.type !== 'market') {
+        dispatch({type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance});
+      }
+    }).catch((err) => {
+      toast.error(err.message);
+    }).finally(() => {
+      dispatch({type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'order', status: ''});
+    })
+  }
+}
+
+export function tradeFormSetType(type) {
+  return dispatch => {
+    dispatch({type: actionTypes.EXCHANGE_TRADING_FORM_SET_TYPE, payload: type });
+  }
+}
+
+export function tradeFormSetProperties(type, properties) {
+  return dispatch => {
+    dispatch({type: actionTypes.EXCHANGE_TRADING_FORM_SET_PROPERTIES, tradeType: type, properties });
+  }
 }
 
 export function orderDelete(orderId) {
@@ -72,6 +89,12 @@ export function getMarkets() {
 
 export function removeOrders(orderIds) {
   store.dispatch({ type: actionTypes.EXCHANGE_REMOVE_ORDERS, orderIds });
+}
+
+export function orderBookSelectOrder(order) {
+  return dispatch => {
+    dispatch({type: actionTypes.EXCHANGE_ORDER_BOOK_SELECT_ORDER, order});
+  }
 }
 
 export function orderBookInit(payload) {

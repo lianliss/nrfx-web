@@ -16,7 +16,7 @@ export default function Block(props) {
     controls,
     skipCollapse,
     skipPadding,
-    name
+    name,
   } = props;
 
   const storageKey = name + '_collapsed';
@@ -31,7 +31,7 @@ export default function Block(props) {
   const classNames = cn({
     Exchange__block: true,
     skip_padding: !!skipPadding
-  });
+  }, props.className);
 
   if (tabs) {
     title = tabs.map(({tag, label}) => {
@@ -69,7 +69,7 @@ export default function Block(props) {
         }}>{title}</div>
         <div className="Exchange__block__head__controls">{controls}</div>
       </div>}
-      <div className={cn("Exchange__block__content", props.className)}>
+      <div className={cn("Exchange__block__content")}>
         {children}
       </div>
     </Wrapper>

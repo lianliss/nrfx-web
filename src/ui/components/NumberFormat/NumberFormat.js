@@ -6,7 +6,7 @@ import { classNames } from '../../utils';
 
 import * as utils from '../../utils/index';
 
-const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
+const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
 
   if (isNaN(number)) return null;
 
@@ -23,7 +23,10 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, currency, hidd
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
   let displayNumber = Math.floor((number * coefficient).toFixed(0)) / coefficient;
 
-  displayNumber = displayNumber.toLocaleString(undefined, { maximumFractionDigits: fractionDigits });
+  displayNumber = displayNumber.toLocaleString(undefined, {
+    maximumFractionDigits: fractionDigits,
+    minimumFractionDigits: (accurate ? fractionDigits : undefined)
+  });
 
   if (currency && !percent ) {
     displayNumber += ' ' + ( !hiddenCurrency ? currency.toUpperCase() : ''); // nbsp
@@ -75,6 +78,7 @@ NumberFormat.propTypes = {
   percent: PropTypes.bool,
   indicator: PropTypes.bool,
   brackets: PropTypes.bool,
+  accurate: PropTypes.bool,
   hiddenCurrency: PropTypes.bool,
   type: PropTypes.oneOf([null, 'sell', 'buy', 'down', 'up']),
   currency: PropTypes.string

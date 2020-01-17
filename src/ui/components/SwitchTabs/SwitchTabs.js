@@ -7,8 +7,7 @@ import PropTypes from 'prop-types';
 import {classNames} from '../../../utils';
 import UI from '../../index';
 
-export default function SwitchTabs({ tabs, selected, onChange, currency }) {
-
+export default function SwitchTabs({ tabs, selected, onChange, currency, size, type, disabled }) {
   const getSelectedIndex = () => {
     for (let i = 0; i < tabs.length; i++) {
       if (tabs[i].value === selected) {
@@ -26,7 +25,7 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
 
   const indicatorWidth = 100 / tabs.length;
   return (
-    <div className="SwitchTabs" style={{ color }}>
+    <div className={classNames("SwitchTabs", size, type, { disabled })} style={{ color }}>
       {tabs.map((tab) => {
         return (
           <div
@@ -39,13 +38,13 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
           >{tab.label}</div>
         )
       })}
-      <div
+      { selected && <div
         className="SwitchTabs__indicator"
         style={{
           width: `calc(${indicatorWidth}% + 2px)`,
           transform: `translateX(calc((100% - 2px) * ${getSelectedIndex()}))`,
           ...fillIndicatorStyle
-        }} />
+        }} /> }
     </div>
   )
 }
@@ -61,5 +60,8 @@ SwitchTabs.propTypes = {
   })).isRequired,
   selected: PropTypes.any,
   currency: PropTypes.object,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  size: PropTypes.string,
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
 };
