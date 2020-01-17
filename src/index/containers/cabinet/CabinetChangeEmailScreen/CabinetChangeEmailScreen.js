@@ -4,7 +4,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router5';
 //
-import {GetParamsContext} from '../../../contexts';
 import UI from '../../../../ui';
 import { setTitle } from '../../../../actions/index';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';

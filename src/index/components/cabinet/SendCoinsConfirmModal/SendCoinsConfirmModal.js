@@ -30,7 +30,7 @@ class SendCoinsConfirmModal extends React.Component {
   }
 
   get currentWallet() {
-    return this.props.wallets.find(w => w.id == this.props.walletId);
+    return this.props.wallets.find(w => w.id === this.props.walletId);
   }
 
   __handleChange = value => {

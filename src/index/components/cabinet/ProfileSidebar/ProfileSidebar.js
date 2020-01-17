@@ -13,15 +13,15 @@ import ProfileUser from '../ProfileUser/ProfileUser';
 
 class ProfileSidebar extends React.Component {
   render() {
-    let verified = false; //verificationText = 'Not verified';
-
-    switch (this.props.verification) {
-      case 'verified':
-        verified = true;
-        //verificationText = 'Verified';
-        break;
-      default: break;
-    }
+    // let verified = false; //verificationText = 'Not verified';
+    //
+    // switch (this.props.verification) {
+    //   case 'verified':
+    //     verified = true;
+    //     //verificationText = 'Verified';
+    //     break;
+    //   default: break;
+    // }
 
     return <div className="ProfileSidebar">
       <div className="ProfileSidebar__top">

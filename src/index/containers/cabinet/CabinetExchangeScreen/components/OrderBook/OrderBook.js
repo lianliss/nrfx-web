@@ -23,13 +23,13 @@ const OrderBook = props => {
   useEffect(() => {
     const { current } = scrollBlock;
     setTimeout(() => {
-      current.scroll(0, type == 'sell' ? current.clientHeight : 0);
+      current.scroll(0, type === 'sell' ? current.clientHeight : 0);
     }, 1);
   }, [type]);
 
   const getSumOrders = (orders, type) => {
     return props.orders
-      .filter(o => o.action == type)
+      .filter(o => o.action === type)
       .reduce((total, order) => total + order.amount, 0);
   };
 
@@ -50,7 +50,7 @@ const OrderBook = props => {
 
   const renderList = (type, limit) => {
 
-    const range = type == 'sell' ? [-limit] : [0, limit];
+    const range = type === 'sell' ? [-limit] : [0, limit];
 
     const handleOrderClick = order => {
       const primaryFractionDigits = utils.isFiat(order.primary_coin) ? 2 : 8;
@@ -66,7 +66,7 @@ const OrderBook = props => {
 
     return (
       <div className="OrderBook__list" ref={scrollBlock}>
-        {props.orders.filter(o => o.action == type)
+        {props.orders.filter(o => o.action === type)
           .sort((a, b) => b.price - a.price)
           .slice(...range)
           .map(order => {
@@ -126,7 +126,7 @@ const OrderBook = props => {
           }))} />
       )}
     >
-      { status == 'loading' && <LoadingStatus status="loading" /> }
+      { status === 'loading' && <LoadingStatus status="loading" /> }
       <div className="OrderBook__wrapper">
         <div className="OrderBook__title">
           <div className="OrderBook__title__price">{utils.getLang('global_price')}</div>
@@ -142,14 +142,14 @@ const OrderBook = props => {
           ))}
         </div>
         <div className="OrderBook__content">
-          {type == 'all' ? <>
+          {type === 'all' ? <>
             {renderList('sell', listLength)}
             {renderTicker()}
             {renderList('buy', listLength)}
           </> : <>
-            {type == 'buy' && renderTicker()}
+            {type === 'buy' && renderTicker()}
             {renderList(type)}
-            {type == 'sell' && renderTicker()}
+            {type === 'sell' && renderTicker()}
           </>}
         </div>
       </div>

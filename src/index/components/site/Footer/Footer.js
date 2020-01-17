@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
-            <a href={COMPANY.faqUrl} target="_blank" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
+            <a href={COMPANY.faqUrl} rel="noopener noreferrer" target="_blank" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
             <span onClick={() => actions.openModal('static_content',{ type: "terms", title: utils.getLang('site__footerTermsUse') })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
             <span onClick={() => actions.openModal('static_content',{ type: "privacy", title: utils.getLang('site__footerPrivacyPolicy') })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>

@@ -18,10 +18,6 @@ import { classNames as cn } from '../../../../../../utils';
 import * as pages from '../../../../../constants/pages';
 
 class DashboardItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     invert: true,
   };

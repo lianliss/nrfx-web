@@ -77,7 +77,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <UI.FloatingButtonItem
               onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'withdrawals' })}}
               icon={require('../../../../asset/24px/send.svg')}
-            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,,
+            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,
             <UI.FloatingButtonItem
               onClick={() => { actions.openModal('calc_deposit')}}
               icon={require('../../../../asset/24px/calc.svg')}

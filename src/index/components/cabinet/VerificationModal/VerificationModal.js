@@ -7,14 +7,9 @@ import LoadingStatus from '../LoadingStatus/LoadingStatus';
 
 
 export default class WalletTransactionModal extends React.Component {
-
   state = {
     status: 'loading',
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   __load() {
     this.setState({ status: 'loading' });

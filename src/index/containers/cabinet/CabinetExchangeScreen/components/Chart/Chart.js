@@ -2,12 +2,10 @@ import './Chart.less';
 
 import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
-import { getLang } from '../../../../../../services/lang';
 import { classNames } from '../../../../../../utils/index'
-import { setItem, getItem } from '../../../../../../services/storage'
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
 import * as actions from '../../../../../../actions/';
-import { API_ENTRY } from '../../../../../../services/api';
+// import { API_ENTRY } from '../../../../../../services/api';
 import getTimezone from './timezones';
 import langCodes from './langCodes';
 
@@ -83,6 +81,7 @@ export default class Chart extends React.PureComponent {
         'move_logo_to_main_pane',
         // 'hide_left_toolbar_by_default'
       ],
+
       charts_storage_url: this.props.chartsStorageUrl,
       charts_storage_api_version: this.props.chartsStorageApiVersion,
       client_id: this.props.clientId,

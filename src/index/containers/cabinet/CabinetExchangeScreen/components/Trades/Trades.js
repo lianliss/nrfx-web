@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment/moment';
 
 import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
@@ -55,7 +54,8 @@ class Trades extends React.Component {
   }
 
   render() {
-    console.log('RENDER Trades');
+    console.log('RE' +
+      'NDER Trades');
 
     if (this.props.skipWrapper) {
       return this.renderContent();

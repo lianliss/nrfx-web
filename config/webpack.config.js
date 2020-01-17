@@ -535,6 +535,7 @@ module.exports = function(webpackEnv) {
         ...env.stringified,
         'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN)
       }),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       //new webpack.DefinePlugin({'define': define}),
       new webpack.ProvidePlugin({
         'define': 'global.define'

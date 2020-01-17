@@ -142,7 +142,7 @@ class FiatMarketForm extends React.Component {
       const secondaryAmount = this.getSecondaryAmount(amount, secondaryType);
       return <UI.NumberFormat skipTitle onClick={() => {
         // TODO: Думаю что код ниже (if, else) можно написать лучше :-)
-        if (type == 'from') {
+        if (type === 'from') {
           this.setState({
             typeActive: type,
             amount: amount,

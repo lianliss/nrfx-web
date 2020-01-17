@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import UI from '../../../../../../ui';
 
 import * as traderActions from '../../../../../../actions/cabinet/trader';
-import * as utils from '../../../../../../utils';
 
 const BotForm = props => {
   const { bot, exchanges, symbols, bot_types: types, time_frames: timeFrames } = props;

@@ -37,7 +37,7 @@ class SendCoinsModal extends React.Component {
   }
 
   get currentWallet() {
-    return this.props.wallets.find(w => w.id == this.props.walletId);
+    return this.props.wallets.find(w => w.id === this.props.walletId);
   }
 
   get currentFee() {
@@ -153,7 +153,7 @@ class SendCoinsModal extends React.Component {
               indicator={currencyInfo.abbr.toUpperCase()}
               onTextChange={this.__handleChange('amount')}
               type="number"
-              error={this.props.amount && this.props.amount < this.currentMin || this.props.amount > this.maxAmount}
+              error={this.props.amount && (this.props.amount < this.currentMin || this.props.amount > this.maxAmount)}
               value={this.props.amount}
               description={
                 <span style={{color: currencyInfo.color}}>

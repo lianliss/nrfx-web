@@ -1,6 +1,5 @@
+
 import React from 'react';
-import moment from 'moment/min/moment-with-locales';
-import SVG from 'react-inlinesvg';
 import UI from '../../../../../../ui';
 
 import * as utils from '../../../../../../utils';

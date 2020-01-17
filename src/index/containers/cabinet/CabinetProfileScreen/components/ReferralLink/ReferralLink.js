@@ -1,3 +1,4 @@
+
 import './ReferralLink.less';
 
 import React from 'react';
@@ -19,13 +20,13 @@ class ReferralLink extends React.Component {
         </div>
         <div className="ReferralLink__right">
           <div className="ReferralLink__right__social_buttons">
-            <a href={this.__buildVKUrl()} className="ReferralLink__right__social_button" target="_blank">
+            <a href={this.__buildVKUrl()} className="ReferralLink__right__social_button" rel="noopener noreferrer" target="_blank">
               <VkIcon />
             </a>
-            <a href={this.__buildTwitterUrl()} className="ReferralLink__right__social_button" target="_blank">
+            <a href={this.__buildTwitterUrl()} className="ReferralLink__right__social_button" rel="noopener noreferrer" target="_blank">
               <TwitterIcon />
             </a>
-            <a href={this.__buildFbUrl()} className="ReferralLink__right__social_button" target="_blank">
+            <a href={this.__buildFbUrl()} className="ReferralLink__right__social_button" rel="noopener noreferrer" target="_blank">
               <FbIcon />
             </a>
           </div>

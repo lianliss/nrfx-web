@@ -4,8 +4,8 @@ import React, { useEffect, useRef } from 'react';
 // internal
 import store from '../store';
 import router from '../router';
-import moment from 'moment/min/moment-with-locales';
-import TranslaterMode from 'src/index/components/cabinet/TranslaterMode'
+import moment from 'moment';
+import TranslaterMode from 'src/index/components/cabinet/TranslaterMode';
 
 export function classNames() {
   let result = [];
@@ -43,7 +43,7 @@ export function removeProperty(object, ...properties) {
 
 export function getLang(key, onlyString = false) {
   let langString = store.getState().default.lang[key] || key
-  
+
   if(store.getState().settings.translaterSetting && !onlyString) {
     return <TranslaterMode langString={langString} keys={key}/>
   }
@@ -56,7 +56,10 @@ export function getLanguage() {
 
 export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
 
-export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase())) ? true : false;
+/* eslint-disable-next-line */
+export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase()));
+
+/* eslint-disable-next-line */
 export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase())
 
 export function useInterval(callback, delay) {
@@ -108,7 +111,7 @@ export function ucfirst(input = "") {
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  if (parseFloat(input) === NaN) return null;
+  if (isNaN(parseFloat(input))) return null;
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
   return Math.floor((input * coefficient).toFixed(0)) / coefficient;
   // return parseFloat(parseFloat(input).toFixed(fractionDigits));
@@ -146,7 +149,7 @@ export function InputNumberOnKeyPressHandler(e) {
 export function __doubleInputOnKeyPressHandler(e, value = '') {
   switch (e.key) {
     default:
-      if (isNaN(parseInt(e.key)) || value.length === 1 && value[0] === '0') {
+      if (isNaN(parseInt(e.key)) || (value.length === 1 && value[0] === '0')) {
         e.preventDefault();
       }
       break;

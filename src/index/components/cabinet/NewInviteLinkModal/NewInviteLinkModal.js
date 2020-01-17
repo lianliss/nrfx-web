@@ -2,10 +2,7 @@ import React, {memo} from 'react';
 import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
-import apiSchema from '../../../../services/apiSchema';
-import * as api from '../../../../services/api';
 import {connect} from 'react-redux';
-import * as actions from '../../../../actions';
 import * as toastsActions from '../../../../actions/toasts';
 import * as profileActions from '../../../../actions/cabinet/profile';
 

@@ -146,7 +146,7 @@ class OpenDepositModal extends React.Component {
   }
 
   __handleClickMax = () => {
-    const { amount } = this.props.wallets.find(w => w.currency ==  this.props.thisState.currency);
+    const { amount } = this.props.wallets.find(w => w.currency ===  this.props.thisState.currency);
     const { amountMax } =  this.props.thisState
     this.__setState({ amount: amount > amountMax ? amountMax : amount });
   }

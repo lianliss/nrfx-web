@@ -4,8 +4,6 @@ import * as modalGroupActions from '../../../../actions/modalGroup';
 import UploadAvatarModal from '../UploadAvatarModal/UploadAvatarModal';
 import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
-import UI from 'src/ui/index';
-import * as actions from '../../../../actions';
 
 export default function ProfileSidebarUser({ profile }) {
   if (!profile || !Object.keys(profile).length) {

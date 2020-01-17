@@ -1,6 +1,5 @@
 import React from 'react';
 import UI from '../../../../../ui';
-import moment from 'moment/min/moment-with-locales';
 
 import * as utils from '../../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';

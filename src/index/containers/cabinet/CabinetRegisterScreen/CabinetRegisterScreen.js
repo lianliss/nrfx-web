@@ -133,14 +133,14 @@ class CabinetRegister extends React.PureComponent {
           <UI.Input
             error={state.touched && !state.firstName}
             value={state.firstName}
-            pattern={/[a-z\- ]+/i}
+            pattern={/^[a-z ,.'-]+$/i}
             placeholder={utils.getLang('cabinet_registerScreen_firstName')}
             onTextChange={text => this.__handleChange("firstName", text)}
           />
           <UI.Input
             error={state.touched && !state.lastName}
             value={state.lastName}
-            pattern={/[a-zs\-]+/i}
+            pattern={/^[a-z ,.'-]+$/i}
             placeholder={utils.getLang('cabinet_registerScreen_lastName')}
             onTextChange={text => this.__handleChange("lastName", text)}
           />

@@ -1,9 +1,8 @@
+
 import './Header.less';
 
 import React from 'react';
-import SVG from 'react-inlinesvg';
 import router from '../../../../router';
-import * as utils from "../../../../utils/";
 import UI from '../../../../ui';
 import url from "url";
 import {connect} from 'react-redux';
@@ -12,10 +11,6 @@ import * as notificationsActions from '../../../../actions/cabinet/notifications
 
 class AdaptiveHeader extends React.Component {
   state = {activePage: null};
-
-  handleNavigate = (route) => {
-    router.navigate(route);
-  };
 
   render() {
     const { internalNotifications } = this.props;

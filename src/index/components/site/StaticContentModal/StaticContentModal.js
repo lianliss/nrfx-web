@@ -22,9 +22,7 @@ export default props => {
     });
   };
 
-  useEffect(() => {
-    __load();
-  }, [type]);
+  useEffect(__load, [type]);
 
   return status ? (
     <ModalState status={status} onRetry={__load} />

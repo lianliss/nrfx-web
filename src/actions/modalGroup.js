@@ -5,7 +5,6 @@ import store from '../store';
 import router from '../router';
 import * as actionTypes from './actionTypes';
 import * as modalGroupConstant from '../index/constants/modalGroup';
-import React from 'react';
 
 export function modalGroupSetActiveModal(name) {
   return store.dispatch({

@@ -2,7 +2,6 @@ import './MarketInfoAdaptive.less';
 
 import React from 'react';
 
-import * as utils from '../../../../../../utils';
 import * as actions from '../../../../../../actions/';
 import UI from '../../../../../../ui';
 
@@ -18,9 +17,6 @@ export default ({ market, price, percent, diff }) => {
     actions.openModal('choose_market');
   }
 
-  const valueClassName = utils.classNames("MarketInfoAdaptive__value", {
-    [percent >= 0 ? 'up' : 'down']: true
-  })
 
   return (
     <div className="MarketInfoAdaptive">

@@ -25,7 +25,7 @@ export function Status(props) {
 }
 
 export default props => {
-  const {merchant, status} = router.getState().params;
+  const { status } = router.getState().params;
   return (
     <div className="MerchantScreen">
       <Status status={status.toLowerCase()} />

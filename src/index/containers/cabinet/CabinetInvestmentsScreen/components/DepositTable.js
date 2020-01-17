@@ -3,9 +3,7 @@ import UI from '../../../../../ui';
 
 import * as utils from '../../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as modalGroupActions from "../../../../../actions/modalGroup";
 import * as actions from "../../../../../actions";
-import SVG from "react-inlinesvg";
 
 export default function WithdrawalTable({ deposits, adaptive, fromPartners, skipContentBox }) {
   if (!deposits.length) {

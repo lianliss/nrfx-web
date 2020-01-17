@@ -2,10 +2,11 @@ import "./Footer.less";
 
 import React from "react";
 import { connect } from 'react-redux';
-import { classNames, getLang } from 'utils';
+import { classNames } from 'utils';
 import * as actions from 'actions';
 import COMPANY from '../../../constants/company';
-import UI from 'src/ui'
+// import UI from 'src/ui'
+
 
 const Footer = (props) => {
   const handleChangeLanguage = e => {
@@ -13,9 +14,9 @@ const Footer = (props) => {
     actions.openModal('language');
   };
 
-  const __handleIsTranslate = () => {
-    actions.isTranslater(!props.translaterSetting);
-  }
+  // const __handleIsTranslate = () => {
+  //   actions.isTranslater(!props.translaterSetting);
+  // }
 
   const lang = actions.getCurrentLang();
 

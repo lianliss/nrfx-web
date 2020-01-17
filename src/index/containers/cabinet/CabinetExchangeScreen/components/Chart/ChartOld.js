@@ -6,7 +6,7 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 
 import * as utils from '../../../../../../utils';
-import moment from 'moment/min/moment-with-locales';
+import moment from 'moment';
 
 //require("highcharts/modules/map")(Highcharts);
 

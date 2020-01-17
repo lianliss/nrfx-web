@@ -1,6 +1,6 @@
 import './ActionSheet.less';
 
-import React, { Component } from 'react';
+import React from 'react';
 import SVG from 'react-inlinesvg';
 
 import { classNames as cn } from '../../utils/index';

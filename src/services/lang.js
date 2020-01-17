@@ -1,8 +1,12 @@
 import * as storage from './storage';
-import moment from 'moment/min/moment-with-locales';
-import {loadLang} from '../actions'
+import moment from 'moment';
+import { loadLang } from '../actions'
 
 export function setLang(lang, callback) {
+  const momentLang = (lang === 'ru' ? 'ru' : 'en-au');
+  require('moment/locale/' + momentLang);
+  moment.locale(momentLang);
+
   if (lang) {
     storage.setItem("lang", lang);
     moment.locale(lang);

@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server'
 import { connect } from 'react-redux';
 
 import UI from '../../../../ui/';
-import {getLang, throttle, classNames as cn, default as utils} from '../../../../utils';
+import { getLang, throttle, classNames as cn } from '../../../../utils';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
 import * as actions from '../../../../actions';
@@ -56,9 +56,7 @@ const MerchantModal = props => {
     }
   };
 
-  useEffect(() => {
-    props.getMerchant();
-  },[]);
+  useEffect(props.getMerchant,[]);
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];
@@ -259,7 +257,7 @@ const MerchantModal = props => {
         </div>
         <UI.List items={[
           { label: 'Company Reciever', value: 'WIN ALWAYS 1900 LTD' },
-          { label: 'Address', value: '91 Battersea Park Road,  London, England, SW8 4DU', margin: true },
+          { label: 'Address', value: '91 Battersea Park Road, London, England, SW8 4DU', margin: true },
           { label: 'SWIFT Code', value: 'STPVHKHH' },
           { label: 'Account', value: '099790001101' },
           { label: 'Purpose of Payment', value: 'Balance Replenishment', margin: true },

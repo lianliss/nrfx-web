@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment/min/moment-with-locales';
 import UI from '../../../../../ui';
 
 import * as utils from '../../../../../utils';

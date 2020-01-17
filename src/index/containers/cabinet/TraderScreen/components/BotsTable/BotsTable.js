@@ -2,10 +2,8 @@ import './BotsTable.less';
 
 import React from 'react';
 import UI from '../../../../../../ui';
-import { classNames as cn } from '../../../../../../utils/index';
 
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as modalGroupActions from '../../../../../../actions/modalGroup';
 import router from '../../../../../../router';
 import * as PAGES from '../../../../../constants/pages';
 

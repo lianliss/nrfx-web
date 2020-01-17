@@ -9,9 +9,6 @@ import UI from '../../../../ui';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import SVG from 'react-inlinesvg';
 import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
-import router from '../../../../router';
-import * as PAGES from '../../../constants/pages';
-
 
 const SnItem = props => {
   return props.link ? (

@@ -1,3 +1,4 @@
+
 import './Header.less';
 
 import React from 'react';
@@ -39,7 +40,7 @@ class Header extends React.Component {
 
   render() {
     const isLogged = this.props.profile.role;
-    const { internalNotifications, isExchangeEnabled } = this.props;
+    const { internalNotifications } = this.props;
     const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
     const { notifications } = this.props.notifications;
 
