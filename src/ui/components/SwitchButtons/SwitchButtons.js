@@ -34,7 +34,7 @@ SwitchButtons.propTypes = {
   selected: PropTypes.any,
   currency: PropTypes.string,
   className: PropTypes.string,
-  rounded: PropTypes.symbol,
+  rounded: PropTypes.bool,
   onChange: PropTypes.func.isRequired
 };
 

@@ -82,7 +82,7 @@ Button.propTypes = {
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
   title: PropTypes.string,
-  state: PropTypes.oneOf(['default', 'loading', 'disabled'])
+  state: PropTypes.oneOf(['default', 'loading', 'disabled', ''])
 };
 
 export default React.memo(Button);

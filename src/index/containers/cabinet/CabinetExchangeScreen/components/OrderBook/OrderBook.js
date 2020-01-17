@@ -73,7 +73,7 @@ const OrderBook = props => {
             const total = order.amount * order.price;
             const filled = total / maxTotal * 100;
             return (
-              <div onClick={() => handleOrderClick(order)} className={cn("OrderBook__order", order.action)}>
+              <div key={order.id} onClick={() => handleOrderClick(order)} className={cn("OrderBook__order", order.action)}>
                 <div className="OrderBook__order__price">
                   <UI.NumberFormat accurate number={order.price} currency={order.secondary_coin} hiddenCurrency/>
                 </div>
@@ -135,7 +135,7 @@ const OrderBook = props => {
         </div>
         <div className="OrderBook__indicator">
           {['sell', 'buy'].map(sideType => (
-            <div className={cn("OrderBook__indicator__side", sideType)}>
+            <div key={sideType} className={cn("OrderBook__indicator__side", sideType)}>
               <span>{ diff > 0 && diff + '%' }</span>
               <div style={{ height: fillPercent[sideType] + '%' }} className="OrderBook__indicator__side__fill"></div>
             </div>

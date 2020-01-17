@@ -226,7 +226,7 @@ export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
   } else {
     const offsetMoscow = 60 * 3;
     const offset = new Date().getTimezoneOffset() + offsetMoscow;
-    dateObject = moment(date).subtract('minutes', offset);;
+    dateObject = moment(date).subtract(offset,'minutes');;
   }
 
   return !!format ? dateObject.format(format) : dateObject;

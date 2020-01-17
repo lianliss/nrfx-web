@@ -69,7 +69,7 @@ class TradeForm extends React.Component {
     const marketTotalPrice = utils.formatDouble(form.amount * this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
 
     return (
-      <div className="TradeForm__form">
+      <div className="TradeForm__form" key={type}>
         <div className="TradeForm__form__header">
           <div className="TradeForm__form__title">{utils.ucfirst(type)} {primaryCurrency.toUpperCase()}</div>
           <div className="TradeForm__form__balance">
@@ -162,9 +162,10 @@ class TradeForm extends React.Component {
         <div className="TradeForm__tradeTypeButtons">
           {['limit', 'market'].map(type => (
             <UI.Button
+              key={type}
               size="ultra_small"
               onClick={() => this.props.tradeFormSetType(type)}
-              type={type !== this.props.form.type && "secondary"}
+              type={type !== this.props.form.type ? "secondary" : undefined}
             >{utils.ucfirst(type)}</UI.Button>
           ))}
         </div>
