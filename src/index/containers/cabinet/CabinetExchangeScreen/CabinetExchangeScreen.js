@@ -8,7 +8,6 @@ import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import SwitchBlock from './components/SwitchBlock/SwitchBlock';
 import Trades from './components/Trades/Trades';
 import Balances from './components/Balances/Balances';
-import SVG from 'react-inlinesvg';
 
 import * as utils from '../../../../utils';
 import OrderBook from './components/OrderBook/OrderBook';
@@ -140,15 +139,6 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
         </div>
       </div>
     )
-  }
-
-  __renderOrderBookControlOptions () {
-    return ['all', 'bids', 'asks'].map(type => ({
-      label: utils.ucfirst(type),
-      value: type,
-      className: type,
-      icon: <SVG src={require('../../../../asset/16px/list.svg')} />
-    }))
   }
 
   load() {
