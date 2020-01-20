@@ -24,7 +24,8 @@ class Exchange {
       ['balance_update', this.__balanceDidUpdate],
       ['ticker', this.__tickerUpdate],
       ['error_connection', this.__errorConnection],
-      ['close_connection', this.__errorConnection],
+      ['close_connection', this.__closeConnection],
+      ['open_connection', this.__openConnection],
       ['completed_orders', this.__orderBookRemoveOrder]
     ];
 
@@ -47,8 +48,18 @@ class Exchange {
     }
   }
 
+  __openConnection = () => {
+    // exchange.setStatus('loading');
+    exchange.load(this.market);
+  };
+
+  __closeConnection = () => {
+    // unbind(this.market);
+    exchange.setStatus('disconnected');
+  };
+
   __errorConnection = () => {
-    unbind(this.market);
+    // unbind(this.market);
     exchange.setStatus('disconnected');
   };
 
@@ -97,7 +108,6 @@ class Exchange {
 
 
 export function bind(market) {
-  realTime.shared.reconnect();
   markets[market] = new Exchange(market);
 }
 

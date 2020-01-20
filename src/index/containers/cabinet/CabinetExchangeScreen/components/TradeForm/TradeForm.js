@@ -58,7 +58,7 @@ class TradeForm extends React.Component {
   };
 
   getBalance = currency => {
-    return this.props.balances.find(b => b.currency.toLowerCase() === currency.toLowerCase());
+    return this.props.balances.find(b => b.currency.toLowerCase() === currency.toLowerCase()) || {};
   };
 
   renderForm = (type) => {

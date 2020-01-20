@@ -64,7 +64,7 @@ class MarketInfo extends React.Component{
   }
 
   __renderSummary() {
-    const { ticker, market, depth } = this.props;
+    const { ticker, market, orderBook } = this.props;
     const [, secondary] = market.split('/');
 
     const timeFrames = [
@@ -84,14 +84,8 @@ class MarketInfo extends React.Component{
       >{item.label}</UI.Button>
     });
 
-    let asks = Object.values(depth.asks);
-    let bids = Object.values(depth.bids);
-
-    asks.sort((a, b) => a.price > b.price ? -1 : 1);
-    bids.sort((a, b) => a.price > b.price ? -1 : 1);
-
-    const bestAsk = asks[asks.length - 1];
-    const bestBid = bids[0];
+    let bestAsk = Math.min(...orderBook.filter(o => o.action === 'sell').map(o => o.price));
+    let bestBid = Math.max(...orderBook.filter(o => o.action === 'buy').map(o => o.price));
 
     return (
       <div className="MarketInfo__row summary">
@@ -110,11 +104,11 @@ class MarketInfo extends React.Component{
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_ask')}</div>
-            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={bestAsk ? bestAsk.price : 0} currency={secondary} hiddenCurrency /></div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={bestAsk ? bestAsk : 0} currency={secondary} hiddenCurrency /></div>
           </div>
           <div className="MarketInfo__info_row">
             <div className="MarketInfo__info_row__label">{utils.getLang('exchange_bid')}</div>
-            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={bestBid ? bestBid.price : 0} currency={secondary} hiddenCurrency /></div>
+            <div className="MarketInfo__info_row__value"><UI.NumberFormat number={bestBid ? bestBid : 0} currency={secondary} hiddenCurrency /></div>
           </div>
         </div>
         <div className="MarketInfo__summary_controls">

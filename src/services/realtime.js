@@ -13,13 +13,12 @@ class RealTime {
     this.__connect();
   }
 
-  reconnect = () => {
-    if (this.connection.readyState === 3) {
-      this.__connect();
-    }
-  };
-
   __connect = () => {
+
+    // setTimeout(() => {
+    //   this.connection.close();
+    // }, 6000);
+
     this.connected = false;
     this.connection = new WebSocket(this.endpoint);
 
@@ -33,17 +32,20 @@ class RealTime {
       }
 
       this.__restoreSubscriptions();
+      console.log(this);
+      this.triggerListeners('open_connection');
     };
 
     this.connection.onerror = (error) => {
       console.log('[WS] Error: ', error.message);
       this.triggerListeners('error_connection');
+      setTimeout(this.__connect, 1000);
     };
 
     this.connection.onclose = () => {
+      console.log('[WS] Close');
       this.connected = false;
       this.triggerListeners('close_connection');
-      console.log('[WS] Disconnected, reconnection..');
     };
 
     this.connection.onmessage = this.__messageDidReceive;
@@ -84,10 +86,16 @@ class RealTime {
     if (!this.listeners[name]) {
       this.listeners[name] = [];
     }
+
     this.listeners[name].push(callback);
+
+    if (this.connected && name === 'open_connection') {
+      this.triggerListeners(name);
+    }
   }
 
   removeListener(name, callback) {
+    console.log(111, 'removeListener', name);
     if (!this.listeners[name]) {
       return;
     }
@@ -100,7 +108,7 @@ class RealTime {
   }
 
   triggerListeners(name, data = {}) {
-    console.log('triggerListeners');
+    console.log('triggerListeners', name);
     if (!this.listeners[name]) {
       return;
     }

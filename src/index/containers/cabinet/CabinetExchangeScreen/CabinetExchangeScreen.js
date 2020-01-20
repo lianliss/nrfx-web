@@ -50,10 +50,6 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   renderDisconnectedModal() {
-    if (this.loadingStatus === 'disconnected') {
-      this.load();
-    }
-
     if (!['disconnected', 'reloading'].includes(this.loadingStatus)) return null;
     return (
       <UI.Modal skipClose className="Exchange__disconnectModal" isOpen={true} onClose={this.props.onClose}>
@@ -67,8 +63,8 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   __renderContent() {
-    if (this.isLoading && !['disconnected', 'reloading'].includes(this.loadingStatus)) {
-      return <LoadingStatus status={this.loadingStatus} onRetry={() => this.load()} />;
+    if (this.loadingStatus === 'loading') {
+      return <LoadingStatus status={this.loadingStatus} />;
     }
 
     return this.props.adaptive ? this.__renderExchangeAdaptive() : this.__renderExchange();
