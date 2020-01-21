@@ -30,7 +30,6 @@ export default class SiteMainScreen extends BaseScreen {
       site.homeSlideWallet,
       site.homeSlideInvestments,
       site.homeSlideRobots,
-      site.homeSlidePayment
     ];
 
     return (

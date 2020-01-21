@@ -1,49 +1,33 @@
-.ExchangeChart__wrap {
-  padding: 0 16px;
-}
-
-.ExchangeChart__tooltip {
-  width: 432px;
-  display: flex;
-  background: #fff;
-}
-
-.ExchangeChart__tooltip__column {
+.ExchangeChart {
+  position: relative;
   flex: 1;
-}
 
-.ExchangeChart__tooltip__row {
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 12px;
-}
+  &.loading {
+    .ExchangeChart__tradingView {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
 
-.ExchangeChart__tooltip__row__label {
-  color: var(--primary-grey);
-}
+  .ExchangeChart__tradingView {
+    height: 100%;
+    padding: 0 16px 16px;
+    box-sizing: border-box;
+    overflow: hidden;
 
-.ExchangeChart__tooltip__row__value {
-  margin-left: 8px;
-}
-
-.Exchange__trading_view {
-  padding: 0 16px 16px;
-  box-sizing: border-box;
-  flex: 1;
-  overflow: hidden;
-
-  &.fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
+    &.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 0;
+    }
   }
 }
 
 .adaptive {
-  .Exchange__trading_view {
+  .ExchangeChart__tradingView {
     padding: 0;
     margin: 0 -16px;
     height: 400px;

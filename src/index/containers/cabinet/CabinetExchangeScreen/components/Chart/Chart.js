@@ -2,12 +2,13 @@ import './Chart.less';
 
 import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
-import { classNames } from '../../../../../../utils/index'
+import { classNames as cn } from '../../../../../../utils/index'
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
 import * as actions from '../../../../../../actions/';
 // import { API_ENTRY } from '../../../../../../services/api';
 import getTimezone from './timezones';
 import langCodes from './langCodes';
+import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
 
 
 export default class Chart extends React.PureComponent {
@@ -28,6 +29,10 @@ export default class Chart extends React.PureComponent {
     fullscreen: false,
     autosize: true,
     studiesOverrides: {},
+  };
+
+  state = {
+    status: 'loading'
   };
 
   tvWidget = null;
@@ -115,6 +120,7 @@ export default class Chart extends React.PureComponent {
 
     tvWidget.onChartReady(() => {
       this.activeChart = this.tvWidget.activeChart();
+      this.setState({status: ''});
     });
   }
 
@@ -146,11 +152,14 @@ export default class Chart extends React.PureComponent {
 
   render() {
     return (
-      <div
-        id={ this.props.containerId }
-        ref="tradingView"
-        className={ classNames("Exchange__trading_view", { fullscreen: this.props.fullscreen })}
-      />
+      <div className={cn("ExchangeChart", this.state.status)}>
+        {this.state.status && <LoadingStatus status={this.state.status} />}
+        <div
+          id={ this.props.containerId }
+          ref="tradingView"
+          className={ cn("ExchangeChart__tradingView", { fullscreen: this.props.fullscreen })}
+        />
+      </div>
     );
   }
 }

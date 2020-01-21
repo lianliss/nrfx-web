@@ -112,6 +112,10 @@ export function loadPartnerInfo(login) {
   });
 }
 
+export function getSumsub() {
+  return api.call(apiSchema.Sumsub.GetAccessTokenGet);
+}
+
 export function inviteAgent(login) {
   return new Promise((resolve, reject) => {
     api.call(apiSchema.Partner.SendInvitePost, {

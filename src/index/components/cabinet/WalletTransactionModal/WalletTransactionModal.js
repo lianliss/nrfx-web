@@ -10,7 +10,7 @@ import * as utils from '../../../../utils';
 import InfoRow, { InfoRowGroup } from '../../cabinet/InfoRow/InfoRow';
 
 
-export default class WalletTransactionModal extends React.Component {
+export default class VerificationModalWalletTransactionModal extends React.Component {
   constructor(props) {
     super(props);
 
