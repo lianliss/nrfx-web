@@ -23,13 +23,13 @@ export default class WalletTransactionModal extends React.Component {
     document.body.appendChild(this.script);
 
     this.script.onload = () => {
-      actions.getSumsub().then(sumsub => {
+      actions.getSumsub().then(data => {
         window.idensic && window.idensic.init(
           '#sumsub',
           {
             clientId: 'Narfex',
-            externalUserId: sumsub.userId,
-            accessToken: sumsub.token,
+            externalUserId: data.sumsub.access_token,
+            accessToken: data.sumsub.access_token,
             uiConf: {
               customCss: sumsubStyle,
               lang: 'ru'
