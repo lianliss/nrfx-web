@@ -63,8 +63,8 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   __renderContent() {
-    if (this.loadingStatus === 'loading') {
-      return <LoadingStatus status={this.loadingStatus} />;
+    if (['loading', 'failed'].includes(this.loadingStatus)) {
+      return <LoadingStatus status={this.loadingStatus} onRetry={() => this.load()} />;
     }
 
     return this.props.adaptive ? this.__renderExchangeAdaptive() : this.__renderExchange();
