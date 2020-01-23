@@ -3,7 +3,7 @@ import * as auth from './auth';
 class RealTime {
   constructor() {
     const token = auth.getToken();
-    this.endpoint = 'wss://ex.bitcoinbot.pro/' + (token ? `?access_token=${token}` : '');
+    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo' + (token ? `?access_token=${token}` : '');
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;
@@ -17,7 +17,7 @@ class RealTime {
 
     // setTimeout(() => {
     //   this.connection.close();
-    // }, 6000);
+    // }, 20000);
 
     this.connected = false;
     this.connection = new WebSocket(this.endpoint);
@@ -32,20 +32,19 @@ class RealTime {
       }
 
       this.__restoreSubscriptions();
-      console.log(this);
       this.triggerListeners('open_connection');
     };
 
     this.connection.onerror = (error) => {
       console.log('[WS] Error: ', error.message);
       this.triggerListeners('error_connection');
-      setTimeout(this.__connect, 1000);
     };
 
     this.connection.onclose = () => {
       console.log('[WS] Close');
-      this.connected = false;
+      // this.connected = false;
       this.triggerListeners('close_connection');
+      setTimeout(this.__connect, 1000);
     };
 
     this.connection.onmessage = this.__messageDidReceive;
@@ -95,7 +94,6 @@ class RealTime {
   }
 
   removeListener(name, callback) {
-    console.log(111, 'removeListener', name);
     if (!this.listeners[name]) {
       return;
     }

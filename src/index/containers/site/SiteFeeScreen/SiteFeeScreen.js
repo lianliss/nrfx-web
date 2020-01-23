@@ -134,7 +134,7 @@ class SiteFeeScreen extends BaseScreen {
             </tr>
             <tr>
               <td>{getLang('site__fee_exchangeFee')}</td>
-              <td><NumberFormat number={0.2} percent /></td>
+              <td><NumberFormat number={0.01} percent /></td>
               <td><p>{getLang('site__fee_minimumBiddingFee')}</p></td>
               <td><p>{getLang('site__fee_maximumBiddingFee')}</p></td>
             </tr>
@@ -342,7 +342,7 @@ class SiteFeeScreen extends BaseScreen {
           <div className="SiteFeeScreen__list__title">{getLang('site__fee_exchangeFee')}</div>
           <div className="SiteFeeScreen__list__item">
             <div className="SiteFeeScreen__list__label">{getLang('site__fee_percent')}</div>
-            <div className="SiteFeeScreen__list__value"><NumberFormat number={0.2} percent /></div>
+            <div className="SiteFeeScreen__list__value"><NumberFormat number={0.01} percent /></div>
           </div>
           <div className="SiteFeeScreen__list__item">
             <div className="SiteFeeScreen__list__label">{getLang('site__fee_minimumBidding')}</div>

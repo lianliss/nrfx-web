@@ -44,7 +44,7 @@ export function chooseMarket(market) {
 
 export function orderCreate(params) {
   return dispatch => {
-    dispatch({type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: params.type, status: 'loading'});
+    dispatch({type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: params.action, status: 'loading'});
     api.call(apiSchema.Exchange.OrderPut, params).then(({balance}) => {
       if (params.type !== 'market') {
         dispatch({type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...balance});
@@ -52,7 +52,7 @@ export function orderCreate(params) {
     }).catch((err) => {
       toast.error(err.message);
     }).finally(() => {
-      dispatch({type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: 'order', status: ''});
+      dispatch({type: actionTypes.EXCHANGE_SET_LOADING_STATUS, section: params.action, status: ''});
     })
   }
 }
@@ -120,6 +120,10 @@ export function tickerUpdate(ticker) {
 
 export function orderCompleted(order) {
   store.dispatch({ type: actionTypes.EXCHANGE_ORDER_COMPLETED, order });
+}
+
+export function orderFailed(orderId) {
+  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_FAILED, orderId });
 }
 
 export function setOrderStatus(orderId, status) {

@@ -30,7 +30,7 @@ class TradeForm extends React.Component {
         ...(this.props.form.type === 'limit' && {price: form.price})
       });
     }
-  }
+  };
 
   handleChangePrice = type => value => {
     const form = this.props.form[type];
@@ -57,6 +57,10 @@ class TradeForm extends React.Component {
     });
   };
 
+  calcFee = amount => {
+    return amount / 100 * this.props.fee;
+  }
+
   getBalance = currency => {
     return this.props.balances.find(b => b.currency.toLowerCase() === currency.toLowerCase()) || {};
   };
@@ -65,7 +69,7 @@ class TradeForm extends React.Component {
     const isMarket = this.props.form.type === 'market';
     const form = this.props.form[type];
     const [primaryCurrency, secondaryCurrency] = this.props.market.toUpperCase().split('/');
-    const balance = this.props.isLogged ? this.getBalance(type === "buy" ? primaryCurrency : secondaryCurrency) : {};
+    const balance = this.props.isLogged ? this.getBalance(type === "buy" ? secondaryCurrency : primaryCurrency) : {};
     const marketTotalPrice = utils.formatDouble(form.amount * this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
 
     return (
@@ -105,7 +109,14 @@ class TradeForm extends React.Component {
         <div className="TradeForm__form__row">
           <div className="TradeForm__form__coll">
             <UI.SwitchTabs
-              onChange={value => this.handleChangeAmount(type)(balance.amount / 100 * value)}
+              onChange={value => {
+                let amount = (balance.amount - this.calcFee(balance.amount)) / 100 * value;
+                if (type === 'sell') {
+                  this.handleChangeAmount(type)(utils.formatDouble(amount));
+                } else {
+                  this.handleChangeTotal(type)(utils.formatDouble(amount, utils.isFiat(secondaryCurrency) ? 2 : undefined));
+                }
+              }}
               size="ultra_small"
               disabled={!balance.amount}
               type="secondary"

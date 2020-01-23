@@ -140,7 +140,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   load() {
     let { market } = this.props.router.route.params;
     market = (market && market.toLowerCase().replace('_', '/')) || this.props.market;
-    this.props.load(market);
+    // this.props.load(market);
     exchangeService.bind(market);
   }
 }

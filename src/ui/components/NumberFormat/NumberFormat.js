@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { classNames } from '../../utils';
 
-import * as utils from '../../utils/index';
+import { isFiat, noExponents } from '../../utils/index';
 
 const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
 
@@ -14,7 +14,7 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, curr
     if (percent) {
       fractionDigits = 2;
     } else {
-      fractionDigits = (utils.isFiat(currency) || currency.toLowerCase() === 'usdt' ) ? 2 : 8;
+      fractionDigits = (isFiat(currency) || currency.toLowerCase() === 'usdt' ) ? 2 : 8;
     }
     // TODO: Вынести количество символов после точки в объект валют
   }
@@ -48,6 +48,10 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, curr
     displayNumber = `(${displayNumber})`;
   }
 
+  if (number > 0 && number < 1e-8) {
+    displayNumber = `~${displayNumber}`;
+  }
+
   if (color) {
     type = number >= 0 ? 'up' : 'down';
   }
@@ -55,9 +59,9 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, curr
   return (
     <span onClick={onClick} className={classNames("Number", {
       [type]: type
-    })} title={!skipTitle && number}>{displayNumber}</span>
+    })} title={!skipTitle && noExponents(number)}>{displayNumber}</span>
   );
-}
+};
 
 NumberFormat.defaultProps = {
   fractionDigits: null,

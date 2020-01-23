@@ -117,6 +117,8 @@ class OpenDepositModal extends React.Component {
   };
 
   handleSubmit() {
+    // TODO: ВЫНЕСТИ ЭТУ ФУНКЦИЮ В ACTIONS!
+
     !this.props.thisState.touched && this.__setState({ touched: true });
 
     if (this.props.thisState.amount) {
@@ -124,21 +126,18 @@ class OpenDepositModal extends React.Component {
 
       const pool = this.props.thisState.selectDepositType === 'pool';
 
-      api.call(apiSchema.Investment[pool ? 'PoolDepositPut' : 'DepositPut'], {
+      investmentsActions.createDeposit(pool, {
         amount: this.props.thisState.amount,
         wallet_id: this.props.thisState.walletId,
         plan_id: this.props.thisState.planId,
         deposit_type: this.props.thisState.selectDepositType
-      }).then(({plans}) => {
+      }).then(() => {
         if (pool) {
           actions.openModal('deposit_pool_success');
         } else {
           toasts.success(utils.getLang('cabinet_openNewDeposit_depositCreated'));
           this.props.onClose();
         }
-      }).catch((err) => {
-        toasts.error(err.message);
-        // this.__setState({error: err.message});
       }).finally(() => {
         this.setState({ pending: false });
       });

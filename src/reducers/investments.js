@@ -102,6 +102,14 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
+    case actionTypes.INVESTMENTS_OPEN_DEPOSIT_SUCCESS: {
+      return {
+        ...state,
+        balances: action.balances,
+        deposits: [ action.deposit, ...state.deposits]
+      }
+    }
+
     default:
       return state;
   }

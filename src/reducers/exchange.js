@@ -83,7 +83,18 @@ export default function reduce(state = initialState, action = {}) {
         balanceInfo,
         openOrders,
         trades: action.trades,
-        market: action.market
+        market: action.market,
+        form: {
+          ...state.form,
+          buy: {
+            ...state.form.buy,
+            price: ticker.price
+          },
+          sell: {
+            ...state.form.sell,
+            price: ticker.price
+          },
+        }
       })
     }
 
@@ -222,6 +233,24 @@ export default function reduce(state = initialState, action = {}) {
       ];
 
       delete openOrders[action.order.id];
+
+      return {
+        ...state,
+        openOrders,
+        last_orders: lastOrders
+      }
+    }
+
+    case actionTypes.EXCHANGE_ORDER_FAILED: {
+      let order = { ...state.openOrders[action.orderId], status: 'failed' };
+      let openOrders = { ...state.openOrders };
+
+      delete openOrders[action.orderId];
+
+      let lastOrders = [
+        order,
+        ...state.last_orders,
+      ];
 
       return {
         ...state,

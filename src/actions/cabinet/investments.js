@@ -126,6 +126,16 @@ export function getWithdraw(currency) {
   return api.call(apiSchema.Investment.WithdrawGet, { currency })
 }
 
+export function createDeposit(pool, params) {
+  return api.call(apiSchema.Investment[pool ? 'PoolDepositPut' : 'DepositPut'], params)
+    .then(({ balances, deposit}) => {
+      store.dispatch({ type: actionTypes.INVESTMENTS_OPEN_DEPOSIT_SUCCESS, balances, deposit });
+    }).catch((err) => {
+      toastsActions.error(err.message);
+      throw err;
+    })
+}
+
 export function openDepositModalPropertySet(payload) {
   store.dispatch({ type: actionTypes.INVESTMENTS_OPEN_DEPOSIT_MODAL_PROPERTY_SET, payload });
 }

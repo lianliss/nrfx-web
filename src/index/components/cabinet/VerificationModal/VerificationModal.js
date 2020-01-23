@@ -3,6 +3,7 @@ import sumsubStyle from './sumsub.base64.css';
 
 import React from 'react';
 import * as actions from 'src/actions/cabinet/profile';
+import { getCurrentLang } from 'src/actions/index';
 
 import UI from '../../../../ui';
 import { classNames as cn } from 'src/utils/index';
@@ -23,16 +24,16 @@ export default class WalletTransactionModal extends React.Component {
     document.body.appendChild(this.script);
 
     this.script.onload = () => {
-      actions.getSumsub().then(data => {
+      actions.getSumsub().then(({ sumsub }) => {
         window.idensic && window.idensic.init(
           '#sumsub',
           {
-            clientId: data.sumsub.client_id,
-            externalUserId: data.user_id,
-            accessToken: data.sumsub.access_token,
+            clientId: sumsub.client_id,
+            externalUserId: sumsub.user_id,
+            accessToken: sumsub.access_token,
             uiConf: {
               customCss: sumsubStyle,
-              lang: 'ru'
+              lang: getCurrentLang().value
             }
           },
           (messageType, payload) => {

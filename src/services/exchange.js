@@ -2,6 +2,7 @@ import * as realTime from './realtime';
 import * as exchange from '../actions/cabinet/exchange';
 import * as toasts from '../actions/toasts';
 import * as utils from '../utils';
+import store from '../store';
 
 let markets = {};
 
@@ -49,8 +50,7 @@ class Exchange {
   }
 
   __openConnection = () => {
-    // exchange.setStatus('loading');
-    exchange.load(this.market);
+    exchange.load(this.market)(store.dispatch, store.getState); // store HACK
   };
 
   __closeConnection = () => {
@@ -67,7 +67,8 @@ class Exchange {
   __orderBookInit = payload => exchange.orderBookInit(payload);
 
   __orderDidFailed = body => {
-    exchange.setOrderStatus(body.order_id, 'failed');
+    // exchange.setOrderStatus(body.order_id, 'failed');
+    exchange.orderFailed(body.order_id);
     toasts.error(utils.getLang('exchange_toastOrderFailed'));
   };
 
