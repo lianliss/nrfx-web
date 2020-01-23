@@ -34,8 +34,11 @@ class SettingPersonal extends React.Component{
 
     return(
       <>
-        <UI.ContentBox className="CabinetSettingsScreen__verificationBlock">
-          <UI.Message title={utils.getLang('cabinet_profile_verificationTitle')} type="error">
+        <div className="CabinetSettingsScreen__main Content_box">
+          <div className="CabinetSettingsScreen__header">
+            {utils.getLang('cabinet_settingsPersonalInformation')}
+          </div>
+          <div className="CabinetSettingsScreen__content">
             <p>{utils.getLang('cabinet_profile_verificationText')}</p>
             <ul>
               <li>{utils.getLang('cabinet_profile_verificationItem1')}</li>
@@ -43,11 +46,11 @@ class SettingPersonal extends React.Component{
               <li>{utils.getLang('cabinet_profile_verificationItem3')}</li>
               <li>{utils.getLang('cabinet_profile_verificationItem4')}</li>
             </ul>
-            <div className="CabinetSettingsScreen__verificationBlock__buttonWrapper">
-              <UI.Button onClick={() => actions.openModal('verification')} type="danger">Пройти верификацию</UI.Button>
+            <div className="CabinetSettingsScreen__buttonWrapper">
+              <UI.Button onClick={() => actions.openModal('verification')}>Пройти верификацию</UI.Button>
             </div>
-          </UI.Message>
-        </UI.ContentBox>
+          </div>
+        </div>
         <div className="CabinetSettingsScreen__main Content_box">
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsPersonalInformation')}

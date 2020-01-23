@@ -117,24 +117,6 @@ class DashboardItem extends React.Component {
       )
     }
 
-    if (this.props.type === 'verification') {
-      return (
-        <UI.ContentBox className={cn("DashboardItem", this.props.type)}>
-          <div className="DashboardItemAction__icon">
-            <div className="DashboardItemAction__icon_content">
-              <SVG src={require('src/asset/120/verification_required_info.svg')} />
-            </div>
-            <div className="DashboardItemAction__description">
-              {"Пользуйтесь платформой без ограничений"}
-            </div>
-          </div>
-          <div className="DashboardItem__buttonAction">
-            <UI.Button onClick={() => router.navigate(pages.SETTINGS)} type="danger" size="middle">{"Верифицировать"}</UI.Button>
-          </div>
-        </UI.ContentBox>
-      )
-    }
-
     return utils.switchMatch(this.show, {
       false: <UI.ContentBox className={cn("DashboardItem", this.props.type)}>
         {this.content.label && <div className={utils.classNames('DashboardItem__label', this.content.label)}>{this.content.label.toUpperCase()}</div>}

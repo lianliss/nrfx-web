@@ -230,9 +230,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     return (
       <div className="CabinetProfileScreen__dashboard">
         <div className="CabinetProfileScreen__dashboard__wrapper">
-          <DashboardItem
-            type="verification"
-          />
           { !this.props.adaptive && <DashboardItem
             type="currency"
           /> }
