@@ -77,7 +77,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           />*/
         ]}
       >
-        {this.props.adaptive && <ProfileUser profile={this.props.profile} />}
+        {this.props.adaptive && <ProfileUser />}
         {this.__renderContent()}
       </PageContainer>
     </div>);

@@ -25,7 +25,7 @@ class ProfileSidebar extends React.Component {
 
     return <div className="ProfileSidebar">
       <div className="ProfileSidebar__top">
-        <ProfileUser profile={this.props.profile} />
+        <ProfileUser />
         <div className="ProfileSidebar__menu">
           {this.__getBackButton()}
           {this.props.sidebarOptions && this.props.sidebarOptions.map(child => {

@@ -1,5 +1,8 @@
 import './ProfileUser.less';
+
 import React from 'react';
+import { connect } from 'react-redux';
+
 import * as modalGroupActions from '../../../../actions/modalGroup';
 import UploadAvatarModal from '../UploadAvatarModal/UploadAvatarModal';
 import SVG from 'react-inlinesvg';
@@ -7,7 +10,7 @@ import * as utils from '../../../../utils';
 import UI from 'src/ui/index';
 import * as actions from 'src/actions/index';
 
-export default function ProfileSidebarUser({ profile }) {
+const ProfileSidebarUser = ({profile}) => {
   if (!profile || !Object.keys(profile).length) {
     return null;
   }
@@ -26,18 +29,25 @@ export default function ProfileSidebarUser({ profile }) {
         <img className="ProfileUser__avatar" src={profile.user.photo_url} alt="" />
       </div>
       <div className="ProfileUser__description">
-        <h3 className="ProfileUser__title">{utils.ucfirst(profile.user.first_name)} {utils.ucfirst(profile.user.last_name)}</h3>
+        <h3 className="ProfileUser__title">
+          {utils.ucfirst(profile.user.first_name)} {utils.ucfirst(profile.user.last_name)}
+          { profile.verification === "verified" && <SVG className="ProfileUser__verified" src={require('src/asset/16px/verified.svg')} /> }
+        </h3>
         <p className="ProfileUser__txt">{profile.user.login}</p>
         <p className="ProfileUser__txt">{profile.role}</p>
-        <UI.Button
-          onClick={() => {
-            actions.openModal('verification');
-          }}
-          className="ProfileUser__verifyButton"
-          size="small"
-          type="negative"
-        >{utils.getLang('global_verify')}</UI.Button>
+        {/*<UI.Button*/}
+        {/*  onClick={() => {*/}
+        {/*    actions.openModal('verification');*/}
+        {/*  }}*/}
+        {/*  className="ProfileUser__verifyButton"*/}
+        {/*  size="small"*/}
+        {/*  type="negative"*/}
+        {/*>{utils.getLang('global_verify')}</UI.Button>*/}
       </div>
     </div>
   )
 }
+
+export default connect(
+  state => ({ profile: state.default.profile })
+)(ProfileSidebarUser);

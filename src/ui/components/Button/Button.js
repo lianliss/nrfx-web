@@ -70,7 +70,7 @@ Button.defaultProps = {
 
 Button.propTypes = {
   size: PropTypes.oneOf(['middle', 'small', 'large', 'ultra_small']),
-  type: PropTypes.oneOf(['normal', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'primary']),
+  type: PropTypes.oneOf(['normal', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'danger', 'success', 'primary']),
   currency: PropTypes.object,
   className: PropTypes.string,
   btnType: PropTypes.string,

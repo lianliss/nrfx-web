@@ -16,6 +16,7 @@ import { ReactComponent as InviteSvg } from '../../../../../../asset/120/invite.
 import * as actions from '../../../../../../actions';
 import { classNames as cn } from '../../../../../../utils';
 import * as pages from '../../../../../constants/pages';
+import SVG from 'react-inlinesvg';
 
 class DashboardItem extends React.Component {
   state = {
@@ -111,6 +112,24 @@ class DashboardItem extends React.Component {
           </ol>
           <div className="DashboardItem__buttonAction">
             <UI.Button onClick={() => router.navigate(pages.CABINET_WALLET, { section: 'fiat' })} size="middle">{utils.getLang('global_buy')}</UI.Button>
+          </div>
+        </UI.ContentBox>
+      )
+    }
+
+    if (this.props.type === 'verification') {
+      return (
+        <UI.ContentBox className={cn("DashboardItem", this.props.type)}>
+          <div className="DashboardItemAction__icon">
+            <div className="DashboardItemAction__icon_content">
+              <SVG src={require('src/asset/120/verification_required_info.svg')} />
+            </div>
+            <div className="DashboardItemAction__description">
+              {"Пользуйтесь платформой без ограничений"}
+            </div>
+          </div>
+          <div className="DashboardItem__buttonAction">
+            <UI.Button onClick={() => router.navigate(pages.SETTINGS)} type="danger" size="middle">{"Верифицировать"}</UI.Button>
           </div>
         </UI.ContentBox>
       )

@@ -61,11 +61,22 @@
   }
 
   &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     word-break: break-word;
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
     margin-bottom: 8px;
+  }
+
+  &__verified {
+    margin-left: 4px;
+    margin-right: -20px;
+    width: 16px;
+    height: 16px;
   }
 
   &__txt {
@@ -102,8 +113,7 @@
 
 .adaptive {
   .ProfileUser {
-    margin: -8px 0;
-    margin-left: 24px;
+    margin: -8px 0 24px 24px;
     display: flex;
     align-items: center;
 

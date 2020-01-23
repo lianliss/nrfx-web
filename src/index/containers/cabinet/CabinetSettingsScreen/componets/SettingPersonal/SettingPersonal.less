@@ -18,10 +18,12 @@
   width: 100%;
   padding: 40px;
   box-sizing: border-box;
+
   .CabinetSettingsScreen__w100wrapper {
     width: 100%;
     display: flex;
   }
+
   .CabinetSettingsScreen__w100wrapper:hover {
     .CabinetSettingsScreen__form.right {
       .Button {
@@ -120,9 +122,46 @@
   margin-top: 24px;
 }
 
-.adaptive {
-  .CabinetSettingsScreen {
+.CabinetSettingsScreen__verificationBlock {
+  .ContentBox__content {
+    padding: 0;
+  }
 
+  .Message {
+    padding: 40px;
+
+    font-size: 13px;
+    line-height: 24px;
+  }
+
+  .CabinetSettingsScreen__verificationBlock__buttonWrapper {
+    margin-top: 32px;
+
+    .Button {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+}
+
+.adaptive {
+  .CabinetSettingsScreen__verificationBlock {
+    .Message {
+      padding: 24px 16px;
+
+      ul {
+        padding-left: 24px;
+      }
+    }
+  }
+
+  .CabinetSettingsScreen__verificationBlock__buttonWrapper {
+    .Button {
+      margin: 0 auto;
+    }
+  }
+
+  .CabinetSettingsScreen {
     &__main {
       padding: 24px 16px;
     }
