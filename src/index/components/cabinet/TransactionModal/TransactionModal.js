@@ -6,7 +6,6 @@ import SVG from 'react-inlinesvg';
 import Modal from '../../../../ui/components/Modal/Modal';
 import TransactionTable from './components/TransactionTable';
 
-
 function TransactionModal({ children, isOpen, onChange }) {
   const data = [
     {

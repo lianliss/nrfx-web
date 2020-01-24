@@ -6,7 +6,8 @@ export function setItem(key, value) {
 
 export function getItem(key) {
   try {
-    return localStorage.getItem(key);
+    const item = localStorage.getItem(key);
+    return item === 'false' ? false : item;
   } catch (error) {
     return null;
   }

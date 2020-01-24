@@ -51,34 +51,34 @@ export default class SiteTechnologyScreen extends BaseScreen {
     return (
       <div>
         <div className="Layout_spacing">
-          <h1 className="SiteTechnologyScreen__heading">{this.lang.site.technologyTitle}</h1>
+          <h1 className="SiteTechnologyScreen__heading">{utils.getLang('site__technologyTitle')}</h1>
 
           <p className="SiteTechnologyScreen__intro">
-            {this.lang.site.technologySubTitle}
+            {utils.getLang('site__technologySubTitle')}
           </p>
 
           <div className="SiteTechnologyScreen__description">
-            <TitleWithBg title={this.lang.site.technologyArtificialIntelligence} bgTitle={this.lang.site.technologyArtificialIntelligence} centered darkBg />
+            <TitleWithBg title={utils.getLang('site__technologyArtificialIntelligence')} bgTitle={utils.getLang('site__technologyArtificialIntelligence')} centered darkBg />
             <p className="SiteTechnologyScreen__description__text">
-              {this.lang.site.technologyArtificialIntelligenceText}
+              {utils.getLang('site__technologyArtificialIntelligenceText')}
             </p>
             <br /><br />
 
             {isAllTextVisible
               ? (
                 <p className="SiteTechnologyScreen__description__text">
-                  {utils.nl2br(this.lang.site.technologyDescriptionText)}
+                  {utils.getLang('site__technologyDescriptionText')}
                 </p>
               )
               : null}
 
             {!isAllTextVisible
-              ? <p className="SiteTechnologyScreen__see_more" onClick={this.showMoreText}>{this.lang.site.technologyReadMore}</p>
+              ? <p className="SiteTechnologyScreen__see_more" onClick={this.showMoreText}>{utils.getLang('site__technologyReadMore')}</p>
               : null}
           </div>
 
           <div className="SiteTechnologyScreen__features">
-            <h2 className="SiteTechnologyScreen__title">{this.lang.site.technologyQuestionTitle}</h2>
+            <h2 className="SiteTechnologyScreen__title">{utils.getLang('site__technologyQuestionTitle')}</h2>
             {this._renderFeatures()}
           </div>
 
@@ -92,22 +92,22 @@ export default class SiteTechnologyScreen extends BaseScreen {
   _renderFeatures() {
     const features = [
       {
-        caption: this.lang.site.technologyAnswers1,
+        caption: utils.getLang('site__technologyAnswers1'),
       },
       {
-        caption: this.lang.site.technologyAnswers2,
+        caption: utils.getLang('site__technologyAnswers2'),
       },
       {
-        caption: this.lang.site.technologyAnswers3,
+        caption: utils.getLang('site__technologyAnswers3'),
       },
       {
-        caption: this.lang.site.technologyAnswers4,
+        caption: utils.getLang('site__technologyAnswers4'),
       },
       {
-        caption: this.lang.site.technologyAnswers5,
+        caption: utils.getLang('site__technologyAnswers5'),
       },
       {
-        caption: this.lang.site.technologyAnswers6,
+        caption: utils.getLang('site__technologyAnswers6'),
       },
     ];
 

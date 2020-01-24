@@ -1,6 +1,7 @@
 // default
 export const NAVIGATE = 'NAVIGATE';
 export const SET_LANG = 'SET_LANG';
+export const SET_CURRENT_LANG = 'SET_CURRENT_LANG';
 export const AUTH = 'AUTH';
 export const PROFILE = 'PROFILE';
 export const LOGOUT = 'LOGOUT';
@@ -16,7 +17,8 @@ export const WALLET_HISTORY = 'WALLET_HISTORY';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SET_ADAPTIVE = 'SET_ADAPTIVE';
 export const SET_TITLE = 'SET_TITLE';
-export const IS_TRANSLATER = 'IS_TRANSLATER';
+export const TRANSLATOR_TOGGLE = 'TRANSLATOR_TOGGLE';
+export const TRANSLATOR_SET_LANG_CODE = 'TRANSLATOR_SET_LANG_CODE';
 export const APIKEY_SET = 'APIKEY_SET';
 export const SECRETKEY_SET = 'SECRETKEY_SET';
 export const IS_SECRETKEY = 'IS_SECRETKEY';
@@ -28,7 +30,7 @@ export const SETTINGS_IP_ADDRESS_FIELD_SET = 'SETTINGS_IP_ADDRESS_FIELD_SET';
 export const DELETE_IP_ADDRESS = 'DELETE_IP_ADDRESS';
 export const ADD_IP_ADDRESS = 'ADD_IP_ADDRESS';
 export const REGISTRATION_SET_VALUE = 'REGISTRATION_SET_VALUE';
-export const SAVE_TRANSLATER = 'SAVE_TRANSLATER';
+export const SAVE_TRANSLATOR = 'SAVE_TRANSLATOR';
 
 // NotificationsScreen
 export const NOTIFICATIONS_SET = 'NOTIFICATIONS_SET';

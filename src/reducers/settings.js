@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import * as storage from '../services/storage';
 
 const initialState = {
   user: {
@@ -7,7 +8,8 @@ const initialState = {
     re_password: '',
   },
   loadingStatus: {},
-  translaterSetting: false
+  translator: storage.getItem('translatorMode') || false,
+  translatorLangCode: storage.getItem('translatorLangCode') || 'en',
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -37,10 +39,17 @@ export default function reduce(state = initialState, action = {}) {
       });
     }
 
-    case actionTypes.IS_TRANSLATER: {
+    case actionTypes.TRANSLATOR_TOGGLE: {
       return {
         ...state,
-        translaterSetting: action.translat
+        translator: action.value
+      };
+    }
+
+    case actionTypes.TRANSLATOR_SET_LANG_CODE: {
+      return {
+        ...state,
+        translatorLangCode: action.code
       };
     }
 
@@ -49,7 +58,7 @@ export default function reduce(state = initialState, action = {}) {
       const items = state.dataApiKeys
       const apiKeys = apikey.keys ? [...apikey.keys] : []
       const apiKey = apikey.key ? [apikey.key] : []
-      const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] : 
+      const dataApiKeys = apiKey.length !== 0 && items ? [...items, ...apiKey ] :
         apiKeys.map(item => item.allow_ips !== '' ? {...item, addIpAddress: true, radioCheck: 'second', allow_ips: item.allow_ips.split(',').map(ip => {return {address: ip, touched: false}})} : item)
       return {
         ...state,
@@ -131,11 +140,11 @@ export default function reduce(state = initialState, action = {}) {
         dataApiKeys
       }
     }
-    
+
     case actionTypes.SETTINGS_IP_ADDRESS_FIELD_SET: {
       const { key_id, id_ip } = action;
-      const dataApiKeys = state.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, canSave: true, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? { address: action.value, touched: true } : data_ip)} 
+      const dataApiKeys = state.dataApiKeys.map(item => item.id === key_id ?
+        {...item, canSave: true, allow_ips: item.allow_ips.map((data_ip, i) => i === id_ip ? { address: action.value, touched: true } : data_ip)}
         : item)
       return {
         ...state,
@@ -145,8 +154,8 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.ADD_IP_ADDRESS: {
       const { key_id } = action;
-      const dataApiKeys = state.dataApiKeys.map(item => item.id === key_id ? 
-        {...item, allow_ips: item.allow_ips.concat({address: '', touched: false}), canSave: true} 
+      const dataApiKeys = state.dataApiKeys.map(item => item.id === key_id ?
+        {...item, allow_ips: item.allow_ips.concat({address: '', touched: false}), canSave: true}
         : item)
       return {
         ...state,
@@ -156,8 +165,8 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.DELETE_IP_ADDRESS: {
       const { key_id, id_ip } = action;
-      const dataApiKeys = state.dataApiKeys.map(item => item.id === key_id ? 
-        {...item,canSave: true, allow_ips: item.allow_ips.filter((data_ip, i) => i !== id_ip)} 
+      const dataApiKeys = state.dataApiKeys.map(item => item.id === key_id ?
+        {...item,canSave: true, allow_ips: item.allow_ips.filter((data_ip, i) => i !== id_ip)}
         : item)
       return {
         ...state,

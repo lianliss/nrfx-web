@@ -11,7 +11,7 @@ import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/Se
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
-import TranslatorModal from './components/cabinet/TranslatorModal';
+import TranslatorModal from './components/cabinet/TranslatorModal/TranslatorModal';
 import NewInviteLinkModal from './components/cabinet/NewInviteLinkModal/NewInviteLinkModal';
 import PartnerInfoModal from './components/cabinet/PartnerInfoModal/PartnerInfoModal';
 import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBalanceModal';
@@ -30,7 +30,6 @@ import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewB
 import router from '../router';
 
 export default function Modals(props) {
-
   const routeState = props.router.getState();
   const routerParams = routeState.params;
   delete routerParams.ref;
@@ -123,6 +122,8 @@ export default function Modals(props) {
       {...routerParams}
       {...options}
       onBack={() => {
+        // console.log(router.getState());
+        // debugger;
         window.history.back();
       }}
       onClose={() => {

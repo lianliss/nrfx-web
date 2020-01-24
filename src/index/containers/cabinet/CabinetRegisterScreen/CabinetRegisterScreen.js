@@ -233,7 +233,9 @@ class CabinetRegister extends React.PureComponent {
   }
 }
 
-export default connect(null, {
+export default connect(state => ({
+  translator: state.settings.translator
+}), {
   toastPush: toastsActions.toastPush,
   setTitle: actions.setTitle
 })(withRouter(CabinetRegister));

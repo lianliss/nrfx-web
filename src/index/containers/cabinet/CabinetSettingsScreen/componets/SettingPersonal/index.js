@@ -8,6 +8,7 @@ import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
 import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 import UI from '../../../../../../ui';
+import VerificationBlock from '../VerificationBlock/VerificationBlock';
 
 class SettingPersonal extends React.Component{
 
@@ -34,23 +35,7 @@ class SettingPersonal extends React.Component{
 
     return(
       <>
-        <div className="CabinetSettingsScreen__main Content_box">
-          <div className="CabinetSettingsScreen__header">
-            {utils.getLang('cabinet_settingsPersonalInformation')}
-          </div>
-          <div className="CabinetSettingsScreen__content">
-            <p>{utils.getLang('cabinet_profile_verificationText')}</p>
-            <ul>
-              <li>{utils.getLang('cabinet_profile_verificationItem1')}</li>
-              <li>{utils.getLang('cabinet_profile_verificationItem2')}</li>
-              <li>{utils.getLang('cabinet_profile_verificationItem3')}</li>
-              <li>{utils.getLang('cabinet_profile_verificationItem4')}</li>
-            </ul>
-            <div className="CabinetSettingsScreen__buttonWrapper">
-              <UI.Button onClick={() => actions.openModal('verification')}>Пройти верификацию</UI.Button>
-            </div>
-          </div>
-        </div>
+        <VerificationBlock />
         <div className="CabinetSettingsScreen__main Content_box">
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsPersonalInformation')}

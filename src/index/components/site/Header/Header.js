@@ -77,7 +77,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content',{type: "terms", title: getLang('site__headerTerms')})}>
+            <span onClick={ () => actions.openModal('static_content',{type: "terms"})}>
               {getLang('site__headerTerms')}
             </span>
           ),
@@ -85,7 +85,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content', {type: "privacy", title: getLang('site__headerPrivacyPolicy')})}>
+            <span onClick={ () => actions.openModal('static_content', {type: "privacy"})}>
               {getLang('site__headerPrivacyPolicy')}
             </span>
           ),
@@ -127,14 +127,14 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                 <UI.Button
                   type="outline"
                   fontSize={15}
-                  onClick={() => actions.openModal('auth', { type: steps.LOGIN, title: getLang('site__headerLogIn') })}
+                  onClick={() => actions.openModal('auth', { type: steps.LOGIN })}
                 >
                   {getLang('site__headerLogIn')}
                 </UI.Button>,
                 <UI.Button
                   type="outline_white"
                   fontSize={15}
-                  onClick={() => actions.openModal('auth', { type: steps.REGISTRATION, title: getLang('site__commerceRegistration') })}
+                  onClick={() => actions.openModal('auth', { type: steps.REGISTRATION })}
                 >
                   {getLang('site__commerceRegistration')}
                 </UI.Button>
@@ -188,9 +188,9 @@ function Header({ showLightLogo, langList, routerState, profile }) {
 
               <div className="SiteHeader__menu_controls">
                 { !isLogin ? [
-                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN, title: getLang('site__headerLogIn')})}>{getLang('site__headerLogIn')}</MenuItem>,
+                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN})}>{getLang('site__headerLogIn')}</MenuItem>,
                   <UI.Button
-                    onClick={() => actions.openModal('auth', {type: steps.REGISTRATION, title: getLang('site__commerceRegistration')})}
+                    onClick={() => actions.openModal('auth', {type: steps.REGISTRATION })}
                     type="outline_white"
                     rounded
                     fontSize={15}

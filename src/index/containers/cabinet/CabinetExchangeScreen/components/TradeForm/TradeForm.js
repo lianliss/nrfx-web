@@ -146,7 +146,7 @@ class TradeForm extends React.Component {
               type={type}
               onClick={this.handleOrderCreate(type)}
               state={this.props.loadingStatus[type]}
-              children={utils.getLang('global_' + type ) + ' ' + primaryCurrency}
+              children={<>{utils.getLang('global_' + type )} {primaryCurrency}</>}
               size="small"
             />
           </div>

@@ -7,7 +7,7 @@ import SVG from 'react-inlinesvg';
 // internal
 import MarkDown from '../MarkDown/MarkDown';
 import { classNames, __doubleInputOnKeyPressHandler } from '../../utils';
-import { openModal } from 'actions'
+import { openModal } from 'src/actions';
 
 class Input extends React.Component {
   constructor(props) {
@@ -33,17 +33,19 @@ class Input extends React.Component {
     this.refs['input'].focus();
   }
 
-  __openModalTranslate = (e) => {
-    if(typeof this.props.placeholder === 'object') {
+  __handleContextMenu = (e) => {
+    if (this.props.placeholder && this.props.placeholder.props) {
       e.preventDefault();
       openModal('translator', {
-        langString: this.props.placeholder.props.langString,
-        keys:this.props.placeholder.props.keys
+        langKey: this.props.placeholder.props.langKey
       })
     }
   }
 
   render() {
+    let { placeholder } = this.props;
+    placeholder = typeof placeholder === 'string' ? placeholder : ( placeholder && placeholder.props.langContent );
+
     const className = classNames({
       Input: true,
       multiLine: this.props.multiLine,
@@ -67,10 +69,11 @@ class Input extends React.Component {
       type = "datetime-local";
     }
 
+
     let params = {
       className,
       type,
-      placeholder: typeof this.props.placeholder === 'object' ?  this.props.placeholder.props.langString : this.props.placeholder,
+      placeholder: placeholder,
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,
       onKeyPress: this.props.onKeyPress,
@@ -84,7 +87,12 @@ class Input extends React.Component {
 
     let cont;
     if (this.props.multiLine) {
-      cont = <textarea ref="input" {...params} onChange={this.__onChange}>{this.props.value}</textarea>;
+      cont = <textarea
+        ref="input"
+        {...params}
+        onContextMenu={this.__handleContextMenu}
+        onChange={this.__onChange}
+      >{this.props.value}</textarea>;
     } else {
       cont = <input
         ref="input"
@@ -95,7 +103,7 @@ class Input extends React.Component {
         onBlur={this.props.onBlur || (() => {})}
         disabled={this.props.disabled}
         autoFocus={this.props.autoFocus}
-        onContextMenu={this.__openModalTranslate}
+        onContextMenu={this.__handleContextMenu}
       />;
     }
 

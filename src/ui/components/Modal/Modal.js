@@ -42,13 +42,14 @@ function Modal(props) {
         </div>
       </div>
     );
-  } 
-  
+  }
+
   return null;
 }
 
 Modal.propTypes = {
   isOpen: PropTypes.bool,
+  noSpacing: PropTypes.bool,
   onClose: PropTypes.func,
   width: PropTypes.number,
   skipClose: PropTypes.bool,

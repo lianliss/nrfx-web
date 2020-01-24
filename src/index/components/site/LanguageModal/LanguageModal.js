@@ -1,18 +1,19 @@
 import './LanguageModal.less';
 
 import React, { memo } from 'react';
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
 import UI from '../../../../ui';
-import { connect } from 'react-redux';
-import { openModal } from 'actions'
+import {openModal, translatorSetLangCode} from 'src/actions/index'
 import { setLang } from '../../../../services/lang';
 
-function LanguageModal({ langList, onClose, byTransletor }, props) {
+function LanguageModal({ langList, onClose, byTranslator, translatorSetLangCode }) {
 
   const handleLanguageChange = (langCode) => {
-    if(byTransletor){
-      return openModal('translator', {langCode})
+    if (byTranslator) {
+      translatorSetLangCode(langCode);
+      return openModal('translator');
     }
     setLang(langCode);
     onClose();
@@ -50,4 +51,6 @@ function LanguageModal({ langList, onClose, byTransletor }, props) {
 
 export default connect( state => ({
   langList: state.default.langList
-}))(memo(LanguageModal));
+}), {
+  translatorSetLangCode: translatorSetLangCode
+})(memo(LanguageModal));

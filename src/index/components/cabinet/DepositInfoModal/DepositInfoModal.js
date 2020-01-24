@@ -45,7 +45,7 @@ export default class DepositInfoModal extends React.Component {
     return (
       <UI.Modal noSpacing className="DepositInfoModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
-          {isPool ? utils.getLang('cabinet_detailsInvestmentPoolTitle') : (`${utils.getLang('cabinet_depositInfoModal_deposit')} ${deposit.plan_percent}% ${deposit.description}`)}
+          {isPool ? utils.getLang('cabinet_detailsInvestmentPoolTitle') : <span>{utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.plan_percent}% {deposit.description}</span>}
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />

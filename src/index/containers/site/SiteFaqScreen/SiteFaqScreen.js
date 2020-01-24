@@ -6,6 +6,7 @@ import BaseScreen from '../../BaseScreen';
 import UI from '../../../../ui';
 import Question from './components/Question';
 import COMPANY from '../../../constants/company';
+import * as utils from '../../../../utils';
 
 
 const questions = {
@@ -51,21 +52,21 @@ export default class SiteFaqScreen extends BaseScreen {
       <div>
         <div className="Layout_spacing">
           <div className="SiteFaqScreen__heading">
-            <h1 className="SiteFaqScreen__heading__title">{this.lang.site.faqTitle}</h1>
-            <p className="SiteFaqScreen__heading__subtitle">{this.lang.site.faqSubTitle}</p>
+            <h1 className="SiteFaqScreen__heading__title">{utils.getLang('site__faqTitle')}</h1>
+            <p className="SiteFaqScreen__heading__subtitle">{utils.getLang('site__faqSubTitle')}</p>
           </div>
 
-          <UI.Search placeholder={this.lang.site.faqPlaceHolder} />
+          <UI.Search placeholder={utils.getLang('site__faqPlaceHolder')} />
 
 
           <div className="SiteFaqScreen__questions">
             <div className="SiteFaqScreen__questions__section">
-              <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle1}</h2>
+              <h2 className="SiteFaqScreen__questions__title">{utils.getLang('site__faqQuestionsTitle1')}</h2>
 
               {this._renderQuestions(questions.general)}
             </div>
             <div className="SiteFaqScreen__questions__section">
-              <h2 className="SiteFaqScreen__questions__title">{this.lang.site.faqQuestionsTitle2}</h2>
+              <h2 className="SiteFaqScreen__questions__title">{utils.getLang('site__faqQuestionsTitle2')}</h2>
 
               {this._renderQuestions(questions.another)}
             </div>
@@ -76,7 +77,7 @@ export default class SiteFaqScreen extends BaseScreen {
             <img src={require('./asset/questions.svg')} alt="Questions" />
 
             <p className="SiteFaqScreen__more_questions__text">
-              {this.lang.site.faqMoreQuestions}
+              {utils.getLang('site__faqMoreQuestions')}
               <br />
               <a className="SiteFaqScreen__more_questions__email" href={`mailto:${COMPANY.email.support}`} target="_top">
                 {COMPANY.email.support}

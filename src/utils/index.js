@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import store from '../store';
 import router from '../router';
 import moment from 'moment';
-import TranslaterMode from 'src/index/components/cabinet/TranslaterMode';
+import TranslatorMode from 'src/index/components/cabinet/TranslatorMode/TranslatorModal';
 
 export function classNames() {
   let result = [];
@@ -41,20 +41,23 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
-export function getLang(key, onlyString = false) {
-  let langString = store.getState().default.lang[key] || key
+export function getLang(key, string = false, code = false) {
+  const state = store.getState();
+  const { currentLang, translations } = state.default;
+  let langString = translations[code || currentLang][key] || key;
 
-  if(store.getState().settings.translaterSetting && !onlyString) {
-    return <TranslaterMode langString={langString} keys={key}/>
+  if ((['object', 'string'].includes(typeof string) || !string) && state.default.profile.user && state.settings.translator ) {
+    return <TranslatorMode langContent={string || langString} langKey={key} />;
   }
+
   return langString;
 }
 
-export function getLanguage() {
-  return store.getState();
-}
-
-export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
+export const nl2br = text => {
+  if (text.includes('\\n')) {
+    return text.split('\\n').map((item, i) => <>{item}<br /></>);
+  } return text;
+};
 
 /* eslint-disable-next-line */
 export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase()));

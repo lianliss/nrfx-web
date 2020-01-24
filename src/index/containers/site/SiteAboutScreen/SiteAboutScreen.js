@@ -61,9 +61,9 @@ export default class SiteAboutScreen extends BaseScreen {
             <h1 className="SiteAboutScreen__heading">{getHeading(currentTab)}</h1>
 
             <div className="SiteAboutScreen__tabs">
-              <TabButton title={this.lang.site.headerAboutUs} tabName={ABOUT} currentTab={currentTab} />
-              <TabButton title={this.lang.site.aboutFixturesMissionTitle} tabName={MISSION} currentTab={currentTab} />
-              <TabButton title={this.lang.site.aboutFixturesMapRoadTitle} tabName={HISTORY} currentTab={currentTab} />
+              <TabButton title={utils.getLang('site__headerAboutUs')} tabName={ABOUT} currentTab={currentTab} />
+              <TabButton title={utils.getLang('site__aboutFixturesMissionTitle')} tabName={MISSION} currentTab={currentTab} />
+              <TabButton title={utils.getLang('site__aboutFixturesMapRoadTitle')} tabName={HISTORY} currentTab={currentTab} />
             </div>
 
             {currentTab === ABOUT

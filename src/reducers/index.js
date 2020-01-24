@@ -3,7 +3,7 @@ import initGetParams from '../services/initialGetParams';
 
 const initialState = {
   page: null,
-  lang: {},
+  translations: {},
   auth: {},
   profile: {},
   currentLang: null,
@@ -29,9 +29,18 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.SET_LANG: {
       return {
         ...state,
+        translations: {
+          ...state.translations,
+          [action.currentLang]: action.translations
+        },
+        langList: action.languages
+      };
+    }
+
+    case actionTypes.SET_CURRENT_LANG: {
+      return {
+        ...state,
         currentLang: action.currentLang,
-        lang: action.lang,
-        langList: action.langList
       };
     }
 
@@ -98,12 +107,15 @@ export default function reduce(state = initialState, action = {}) {
       }
     }
 
-    case actionTypes.SAVE_TRANSLATER: {
+    case actionTypes.SAVE_TRANSLATOR: {
       return {
         ...state,
-        lang: {
-          ...state.lang,
-          [action.key]: action.value
+        translations: {
+          ...state.translations,
+          [action.code]: {
+            ...state.translations[action.code],
+            [action.key]: action.value
+          }
         }
       }
     }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import UI from 'src/ui';
 import * as steps from '../fixtures';
 import * as utils from 'utils';
-import * as actions from 'actions';
+import * as actions from 'src/actions';
 import {registerUser} from 'actions/auth';
 import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
 import initGetParams from 'src/services/initialGetParams';

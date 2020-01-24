@@ -13,23 +13,23 @@ export default class SiteSafetyScreen extends BaseScreen {
     return (
       <div>
         <div className="Layout_spacing">
-          <h1 className="SiteSafetyScreen__heading">{this.lang.site.safetyTitle}</h1>
+          <h1 className="SiteSafetyScreen__heading">{utils.getLang('site__safetyTitle')}</h1>
 
           <p className="SiteSafetyScreen__intro">
-            {this.lang.site.safetySubTitle}
+            {utils.getLang('site__safetySubTitle')}
           </p>
 
 
           <div className="SiteSafetyScreen__features">
-            <h2 className="SiteSafetyScreen__title">{utils.nl2br(this.lang.site.safetyFeaturesTitle)}</h2>
+            <h2 className="SiteSafetyScreen__title">{utils.getLang('site__safetyFeaturesTitle')}</h2>
             {this._renderFeatures()}
           </div>
 
 
           <div className="SiteSafetyScreen__banner">
             <div className="SiteSafetyScreen__banner__cont">
-              <h3 className="SiteSafetyScreen__banner__title">{this.lang.site.safetyDoubleProtectionTitle}</h3>
-              <p className="SiteSafetyScreen__banner__caption">{this.lang.site.safetyDoubleProtectionSubTitle}</p>
+              <h3 className="SiteSafetyScreen__banner__title">{utils.getLang('site__safetyDoubleProtectionTitle')}</h3>
+              <p className="SiteSafetyScreen__banner__caption">{utils.getLang('site__safetyDoubleProtectionSubTitle')}</p>
             </div>
             <img src={require('./asset/safety_iphone.svg')} alt="phone" />
           </div>
@@ -46,18 +46,18 @@ export default class SiteSafetyScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/safety_feature_1.svg'),
-        title: this.lang.site.safetyTrafficTitle,
-        caption: this.lang.site.safetyTrafficSubTitle
+        title: utils.getLang('site__safetyTrafficTitle'),
+        caption: utils.getLang('site__safetyTrafficSubTitle')
       },
       {
         icon: require('./asset/safety_feature_2.svg'),
-        title: this.lang.site.safetyEncryptionTitle,
-        caption: this.lang.site.safetyEncryptionSubTitle
+        title: utils.getLang('site__safetyEncryptionTitle'),
+        caption: utils.getLang('site__safetyEncryptionSubTitle')
       },
       {
         icon: require('./asset/safety_feature_3.svg'),
-        title: this.lang.site.safetyDataTitle,
-        caption: this.lang.site.safetyDataSubTitle
+        title: utils.getLang('site__safetyDataTitle'),
+        caption: utils.getLang('site__safetyDataSubTitle')
       },
     ].map((item) => {
       return (

@@ -1,6 +1,6 @@
 import './ScrollBox.less';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { classNames as cn, getScrollbarWidth } from '../../utils';
 
 export default class ScrollBox extends React.Component {

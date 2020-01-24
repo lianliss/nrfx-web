@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 //
 import UI from 'src/ui';
 import * as utils from 'utils';
-import { getStaticPageContent } from 'actions';
+import { getStaticPageContent } from 'src/actions';
 import ModalState from '../../cabinet/ModalState/ModalState';
 
 export default props => {
@@ -28,7 +28,7 @@ export default props => {
     <ModalState status={status} onRetry={__load} />
   ) : (
     <UI.Modal isOpen={true} className="StaticContentModal" onClose={props.onBack}>
-      <UI.ModalHeader>{props.title}</UI.ModalHeader>
+      <UI.ModalHeader>{data.title}</UI.ModalHeader>
       <div className="StaticContentModal__content__wrapper">
         <div className="StaticContentModal__content" dangerouslySetInnerHTML={{ __html: data.content }} />
         <UI.Button

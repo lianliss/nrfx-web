@@ -17,14 +17,14 @@ export default class SiteRobotsScreen extends BaseScreen {
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('./asset/robots_main_image.svg')}
-            title={<span>{utils.nl2br(this.lang.site.robotsTitle)}</span>}
-            caption={<span>{this.lang.site.robotsSubTitle}</span>}
-            buttonText={this.lang.site.toTryBtn}
+            title={<span>{utils.getLang('site__robotsTitle')}</span>}
+            caption={<span>{utils.getLang('site__robotsSubTitle')}</span>}
+            buttonText={utils.getLang('site__site.toTryBtn')}
           />
 
           <div className="SiteSectionHeader">
-            <div className="SiteSectionHeaderTitle">{this.lang.site.robotsHowEarnMoreTitle}</div>
-            <div className="SiteSectionHeaderCaption">{this.lang.site.robotsHowEarnMoreSubTitle}</div>
+            <div className="SiteSectionHeaderTitle">{utils.getLang('site__robotsHowEarnMoreTitle')}</div>
+            <div className="SiteSectionHeaderCaption">{utils.getLang('site__robotsHowEarnMoreSubTitle')}</div>
           </div>
 
           {this._renderFeatures()}
@@ -42,33 +42,33 @@ export default class SiteRobotsScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/robots_feature_1.svg'),
-        title: this.lang.site.robotsTradingStrategiesTitle,
-        caption: this.lang.site.robotsTradingStrategiesSubTitle
+        title: utils.getLang('site__robotsTradingStrategiesTitle'),
+        caption: utils.getLang('site__robotsTradingStrategiesSubTitle')
       },
       {
         icon: require('./asset/robots_feature_2.svg'),
-        title: this.lang.site.robotsSpeedTitle,
-        caption: this.lang.site.robotsSpeedSubTitle
+        title: utils.getLang('site__robotsSpeedTitle'),
+        caption: utils.getLang('site__robotsSpeedSubTitle')
       },
       {
         icon: require('./asset/robots_feature_3.svg'),
-        title: this.lang.site.robotsAutomationTitle,
-        caption: this.lang.site.robotsAutomationSubTitle
+        title: utils.getLang('site__robotsAutomationTitle'),
+        caption: utils.getLang('site__robotsAutomationSubTitle')
       },
       {
         icon: require('./asset/robots_feature_4.svg'),
-        title: this.lang.site.robotsMulticurrencyTitle,
-        caption: this.lang.site.robotsMulticurrencySubTitle
+        title: utils.getLang('site__robotsMulticurrencyTitle'),
+        caption: utils.getLang('site__robotsMulticurrencySubTitle')
       },
       {
         icon: require('./asset/robots_feature_5.svg'),
-        title: this.lang.site.robotsArtificialIntelligenceTitle,
-        caption: this.lang.site.robotsArtificialIntelligenceSubTitle
+        title: utils.getLang('site__robotsArtificialIntelligenceTitle'),
+        caption: utils.getLang('site__robotsArtificialIntelligenceSubTitle')
       },
       {
         icon: require('./asset/robots_feature_6.svg'),
-        title: this.lang.site.robotsTimeSavingTitle,
-        caption: this.lang.site.robotsTimeSavingSubTitle
+        title: utils.getLang('site__robotsTimeSavingTitle'),
+        caption: utils.getLang('site__robotsTimeSavingSubTitle')
       },
     ].map((item) => {
       return (

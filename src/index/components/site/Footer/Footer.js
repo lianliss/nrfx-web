@@ -35,8 +35,8 @@ export default function Footer() {
             <div className="Footer__links__title">{utils.getLang('site__footerHelp')}</div>
             <a href={COMPANY.faqUrl} rel="noopener noreferrer" target="_blank" className="Footer__links__item">{utils.getLang('site__footerFAQ')}</a>
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">{utils.getLang('site__footerContactUs')}</a>
-            <span onClick={() => actions.openModal('static_content',{ type: "terms", title: utils.getLang('site__footerTermsUse') })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
-            <span onClick={() => actions.openModal('static_content',{ type: "privacy", title: utils.getLang('site__footerPrivacyPolicy') })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
+            <span onClick={() => actions.openModal('static_content',{ type: "terms" })} className="Footer__links__item">{utils.getLang('site__footerTermsUse')}</span>
+            <span onClick={() => actions.openModal('static_content',{ type: "privacy" })} className="Footer__links__item">{utils.getLang('site__footerPrivacyPolicy')}</span>
           </div>
           <div className="Footer__links">
             <div className="Footer__links__title">{utils.getLang('site__footerApplication')}</div>
@@ -68,8 +68,8 @@ export default function Footer() {
           </div>
         </div>
         {isIndonesia() &&
-          <div className="Footer__notice" onClick={ () => actions.openModal('static_content', {type: "risk_statement", title:utils.getLang('site_footer_notice')})}>
-            <MarkDown content={utils.getLang('site_footer_notice')}/>
+          <div className="Footer__notice" onClick={ () => actions.openModal('static_content', {type: "risk_statement"})}>
+            {utils.getLang('site_footer_notice', <MarkDown content={utils.getLang('site_footer_notice', true)}/>)}
           </div>
         }
       </div>
