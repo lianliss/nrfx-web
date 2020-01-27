@@ -34,11 +34,12 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.WALLETS_SET: {
+      const wallet = action.wallets.find(w => w.currency === action.currency) || action.wallets[0];
       return {
         ...state,
         wallets: action.wallets,
         sendCoinModal: {
-          walletId: (action.wallets.find(w => w.currency === action.currency) || action.wallets[0]).id,
+          walletId: wallet ? wallet.id : null
         }
       };
     }
