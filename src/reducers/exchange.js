@@ -77,6 +77,8 @@ export default function reduce(state = initialState, action = {}) {
       //   trades[order.id] = order;
       // }
 
+      const currentPrice = utils.formatDouble(ticker.price, utils.isFiat(secondary) ? 2 : undefined);
+
       return Object.assign({}, state, {
         ...utils.removeProperty(action, 'type', 'open_orders'),
         ticker,
@@ -88,11 +90,11 @@ export default function reduce(state = initialState, action = {}) {
           ...state.form,
           buy: {
             ...state.form.buy,
-            price: ticker.price
+            price: currentPrice
           },
           sell: {
             ...state.form.sell,
-            price: ticker.price
+            price: currentPrice
           },
         }
       })
@@ -120,7 +122,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         openOrders,
-        orderBook: state.orderBook.filter( o => action.orderIds.includes(o.id) )
+        orderBook: state.orderBook.filter( o => !action.orderIds.includes(o.id) )
       };
     }
 
@@ -275,7 +277,7 @@ export default function reduce(state = initialState, action = {}) {
 
       return {
         ...state,
-        orderBook: state.orderBook.filter( o => action.orders.includes(o.id) ),
+        orderBook: state.orderBook.filter( o => !action.orders.includes(o.id) ),
         openOrders
       };
     }
