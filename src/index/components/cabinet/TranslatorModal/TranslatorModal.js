@@ -12,6 +12,7 @@ class TranslatorModal extends React.Component {
 
   state = {
     status: 'loading',
+    saveStatus: '',
     currentValue: '',
     value: ''
   };
@@ -38,13 +39,16 @@ class TranslatorModal extends React.Component {
   }
 
   __handleSave = () => {
+    this.setState({ saveStatus: 'loading' });
     saveTranslator(
       this.props.translatorLangCode,
       this.props.langKey,
       this.state.value
     ).then(() => {
       this.props.onClose();
-    });
+    }).finally(() => {
+      this.setState({ saveStatus: '' });
+    })
   };
 
   __handleChangeValue = (value) => {
@@ -89,6 +93,7 @@ class TranslatorModal extends React.Component {
           <UI.Button
             size="large"
             onClick={this.__handleSave}
+            state={this.state.saveStatus}
             disabled={disabled}>
             {getLang('cabinet_settingsSave', true)}
           </UI.Button>

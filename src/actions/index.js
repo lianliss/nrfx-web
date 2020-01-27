@@ -125,10 +125,14 @@ export function translatorSetLangCode(code) {
 };
 
 export function saveTranslator(code, key, value) {
-  return api.call(apiSchema.LangPost, { code, key, value }).then(() => {
-    store.dispatch({type: actionTypes.SAVE_TRANSLATOR, code, key, value});
-    toast.success('Success');
-  });
+  return api.call(apiSchema.LangPost, { code, key, value })
+    .then(resolve => {
+      store.dispatch({type: actionTypes.SAVE_TRANSLATOR, code, key, value});
+      toast.success(utils.getLang('cabinet_translationSuccess'));
+    }).catch((e) => {
+      toast.error(utils.getLang('cabinet_translationFail'));
+      throw e;
+    });
 }
 
 export function registrationSetValue(property, value) {
