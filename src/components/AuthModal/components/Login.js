@@ -8,6 +8,7 @@ import * as steps from '../fixtures';
 
 function Login({ changeStep, email, password, handleChange, currentStep }) {
   const [errorMsg, setErrorMsg] = useState('');
+  const [status, setStatus] = useState('');
 
   const handleSubmit = () => {
     if (!email) {
@@ -15,6 +16,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
     } else if (!password) {
       setErrorMsg(utils.getLang('site__authModalPwdRequired'));
     } else {
+      setStatus('loading');
       getAuth(email.trim(), password)
         .then((res) => {
           setErrorMsg('');
@@ -22,6 +24,8 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
         })
         .catch((err) => {
           setErrorMsg(err.message);
+        }).finally(() => {
+          setStatus('loading');
         });
     }
   };
@@ -58,7 +62,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
 
       <div className="AuthModal__footer">
         <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__commerceRegistration')}</h4>
-        <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
+        <UI.Button state={status} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </>
   )
