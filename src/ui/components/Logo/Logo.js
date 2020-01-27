@@ -17,9 +17,9 @@ const Logo = props => {
 
   let type = props.type;
 
-  if (type === 'default') {
-    type = 'christmas';
-  }
+  // if (type === 'default') {
+  //   type = 'christmas';
+  // }
 
   return (
     <div className={cn("Logo", props.size, {currentColor: props.currentColor})}>
