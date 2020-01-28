@@ -2,7 +2,6 @@ import './NewWalletModal.less';
 
 import React from 'react';
 import UI from '../../../../ui';
-
 import Currency from './components/Currency';
 import EmptyContentBlock from '../../cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as walletsActions from '../../../../actions/cabinet/wallets';

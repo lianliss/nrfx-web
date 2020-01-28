@@ -103,6 +103,21 @@ export default class extends React.Component {
       );
     };
 
+    if (!this.state.wallets.length) {
+      return (
+        <ModalState
+          icon={require('src/asset/120/wallet.svg')}
+          status={utils.getLang('exchange_noWallets')}
+          description={
+            <UI.Button
+              onClick={() => {actions.openModal('new_wallet')}}
+              size={'small'}>{utils.getLang('global_create')}
+            </UI.Button>
+          }
+        />
+      );
+    };
+
     const currencyInfo = actions.getCurrencyInfo(this.currency);
 
     return (

@@ -9,7 +9,7 @@ import * as profileActions from '../../../../actions/cabinet/profile';
 const ChangeSecretKeyModal = props => {
   const [code, setCode] = useState("");
   return (
-    <UI.Modal isOpen={true} onClose={() => {props.close()}} width={424}>
+    <UI.Modal isOpen={true} onClose={() => {props.onClose()}} width={424}>
       <UI.ModalHeader>
         {utils.getLang('cabinet_enterSecretKey')}
       </UI.ModalHeader>

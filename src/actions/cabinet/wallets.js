@@ -83,23 +83,8 @@ export function loadMoreTransfers() {
 
 export function getNoGeneratedCurrencies() {
   const state = store.getState();
-  if (state.wallets.loadingStatus.default) {
-    return [];
-  }
-
-  let exist = {};
-  for (let i = 0; i < state.wallets.wallets.length; i++) {
-    exist[state.wallets.wallets[i].currency] = true;
-  }
-
-  let currencies = [];
-  for (let name in state.cabinet.currencies) {
-    if (exist[name] || !state.cabinet.currencies[name].can_generate ) {
-      continue;
-    }
-    currencies.push(state.cabinet.currencies[name]);
-  }
-  return currencies;
+  return Object.values(state.cabinet.currencies)
+    .filter((c) => c.can_generate && !c.is_exists);
 }
 
 export function loadTransactionInfo(id, type) {

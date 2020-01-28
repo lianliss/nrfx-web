@@ -5,7 +5,9 @@ const initialState = {
   page: null,
   translations: {},
   auth: {},
-  profile: {},
+  profile: {
+
+  },
   currentLang: null,
   langList: [],
   adaptive: false,
@@ -105,6 +107,13 @@ export default function reduce(state = initialState, action = {}) {
           [action.property]: action.value
         }
       }
+    }
+
+    case actionTypes.PROFILE_SET_VERIFICATION_STATUS: {
+      return { ...state, profile: {
+        ...state.profile,
+        verification: action.status
+      }}
     }
 
     case actionTypes.SAVE_TRANSLATOR: {

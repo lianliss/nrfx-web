@@ -13,6 +13,7 @@ const VerificationBlock = (props) => {
     not_verified: {
       status: utils.getLang('cabinet_verificationStatus_not_verified'),
       icon: require('src/asset/120/verify.svg'),
+      // icon: require('src/asset/120/verification_required_info.svg'),
       action: true
     },
     rejected: {

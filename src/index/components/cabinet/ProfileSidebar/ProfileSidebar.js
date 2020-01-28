@@ -79,7 +79,7 @@ ProfileSidebar.defaultProps = {
 //     if (!section || !appName) {
 //       return '';
 //     }
-//     const routeName = section ? window.location.pathname.substr(1) : 'profile';
+//     const routeName = section ? window.location.pathname.substr(1) : 'dashboard';
 //     return (
 //       <BaseLink
 //         router={router}
@@ -88,7 +88,7 @@ ProfileSidebar.defaultProps = {
 //         activeClassName="_a"
 //       >
 //         <SVG src={require('../../../asset/cabinet/angle_left.svg')} />
-//         {section ? appName : 'Profile'}
+//         {section ? appName : 'Dashboard'}
 //       </BaseLink>
 //     )
 //   };

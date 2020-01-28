@@ -112,7 +112,7 @@ function Routes(props) {
       needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
-    case pages.PROFILE:
+    case pages.DASHBOARD:
       needAuthorization = true;
       Component = CabinetProfileScreen.default;
       break;

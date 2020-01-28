@@ -19,7 +19,7 @@ class SiteNotFoundScreen extends BaseScreen {
           <h2>404</h2>
           <p>{getLang('global_pageNotFound')}<br />{getLang('global_pageNotFoundDescription')}</p>
           {this.props.isLogin ? (
-            <UI.Button onClick={() => router.navigate(pages.PROFILE)}>{getLang('global_pageNotFoundGoToProfile')}</UI.Button>
+            <UI.Button onClick={() => router.navigate(pages.DASHBOARD)}>{getLang('global_pageNotFoundGoToProfile')}</UI.Button>
           ) : (
             <UI.Button onClick={() => router.navigate(pages.MAIN)}>{getLang('global_pageNotFoundGoToMainPage')}</UI.Button>
           )}

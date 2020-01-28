@@ -108,8 +108,8 @@ export const routes = process.env.DOMAIN === 'admin' ? [
     path: '/settings',
   },
   {
-    name: pages.PROFILE,
-    path: '/profile',
+    name: pages.DASHBOARD,
+    path: '/dashboard',
     params: { section: 'test' }
   },
   {
@@ -165,6 +165,7 @@ router.usePlugin(browserPlugin({
   preserveHash: false,
   // forceDeactivate: true,
 }));
+
 router.usePlugin(listenersPlugin());
 
 router.addListener((state, prevState)  => {
@@ -173,6 +174,10 @@ router.addListener((state, prevState)  => {
   }
   if (state.params && state.params.modal_group) {
     modalGroup.modalGroupSetActiveModal(state.params.modal_group);
+  }
+
+  if (state.params.path === '/profile') {
+    router.navigate(pages.DASHBOARD);
   }
 });
 

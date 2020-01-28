@@ -28,7 +28,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         } else if (process.env.DOMAIN === 'admin') {
           router.navigate(adminPages.PANEL);
         } else {
-          window.location.href = router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.PROFILE;
+          window.location.href = router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.DASHBOARD;
         }
       })
       .catch((err) => setErrorMsg(err.message))
@@ -92,7 +92,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
             <SVG src={require('../../../asset/google_auth.svg')} />
           }
         />
-        
+
         {loginRes.need_ga_setup !== true && (
           <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>{utils.getLang('site__authModalResetKey')}</h4>
         )}

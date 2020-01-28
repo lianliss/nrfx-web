@@ -7,6 +7,9 @@ import RateDetailsModal from './components/cabinet/RateDetailsModal/RateDetailsM
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
 import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
+import SecretKeyDescModal from './components/cabinet/SecretKeyDescModal/SecretKeyDescModal';
+import SecretKeyInfoModal from './components/cabinet/SecretKeyInfoModal/SecretKeyInfoModal';
+import ChangeSecretKeyModal from './components/cabinet/ChangeSecretKeyModal/ChangeSecretKeyModal';
 import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
@@ -113,6 +116,15 @@ export default function Modals(props) {
       break;
     case 'verification':
       Component = VerificationModal;
+      break;
+    case 'change_secret_key':
+      Component = ChangeSecretKeyModal;
+      break;
+    case 'secret_key':
+      Component = SecretKeyDescModal;
+      break;
+    case 'secret_key_info':
+      Component = SecretKeyInfoModal;
       break;
     default: return null;
   }

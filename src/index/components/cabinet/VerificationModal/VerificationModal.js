@@ -2,6 +2,7 @@ import './VerificationModal.less';
 import sumsubStyle from './sumsub.base64.css';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import * as actions from 'src/actions/cabinet/profile';
 import { getCurrentLang } from 'src/actions/index';
 
@@ -10,7 +11,7 @@ import { classNames as cn } from 'src/utils/index';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 
 
-export default class WalletTransactionModal extends React.Component {
+class VerificationModal extends React.Component {
   state = {
     status: 'loading',
   };
@@ -46,6 +47,10 @@ export default class WalletTransactionModal extends React.Component {
             if ( messageType === 'idCheck.onError') {
               this.setState({ status: 'failed' });
             }
+            if ( messageType === 'idCheck.onApplicantLoaded') {
+              this.props.setVerificationStatus('pending');
+            }
+
             console.log('[IDENSIC DEMO] Idensic message:', messageType, payload)
           }
         )
@@ -75,3 +80,7 @@ export default class WalletTransactionModal extends React.Component {
     )
   }
 };
+
+export default connect(null, {
+  setVerificationStatus: actions.setVerificationStatus
+})(VerificationModal);

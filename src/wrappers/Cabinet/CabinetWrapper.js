@@ -54,7 +54,7 @@ class CabinetWrapper extends Component {
 
     let contentRules = {
       [PAGES.NOTIFICATIONS]: {
-        left: <BaseLink router={router} routeName={PAGES.PROFILE}>
+        left: <BaseLink router={router} routeName={PAGES.DASHBOARD}>
           <SVG src={require("../../asset/24px/angle-left.svg")} />
         </BaseLink>
       },
@@ -67,7 +67,7 @@ class CabinetWrapper extends Component {
     };
 
     if (!Object.keys(route.params)) {
-      contentRules[PAGES.PROFILE] = {
+      contentRules[PAGES.DASHBOARD] = {
         left: <BaseLink router={router} routeName={PAGES.NOTIFICATIONS}>
           <SVG src={require("../../asset/24px/bell.svg")} />
         </BaseLink>

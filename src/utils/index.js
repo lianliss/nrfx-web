@@ -46,7 +46,12 @@ export function getLang(key, string = false, code = false) {
   const { currentLang, translations } = state.default;
   let langString = translations[code || currentLang][key] || key;
 
-  if ((['object', 'string'].includes(typeof string) || !string) && state.default.profile.user && state.settings.translator ) {
+  if (
+    (['object', 'string'].includes(typeof string) || !string) &&
+    state.default.profile.user &&
+    state.default.profile.role === 'Translator' &&
+    state.settings.translator
+  ) {
     return <TranslatorMode langContent={string || langString} langKey={key} />;
   }
 
@@ -110,6 +115,7 @@ export function throttle (func, ms)  {
 }
 
 export function ucfirst(input = "") {
+  if (typeof input !== 'string') return "";
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 

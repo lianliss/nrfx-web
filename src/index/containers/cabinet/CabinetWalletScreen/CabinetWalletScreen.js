@@ -93,14 +93,14 @@ class CabinetWalletScreen extends CabinetBaseScreen {
             !!walletsActions.getNoGeneratedCurrencies().length &&
             <UI.FloatingButtonItem
               icon={require('../../../../asset/24px/plus-circle.svg')}
-              onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+              onClick={() => {actions.openModal('new_wallet')}}
             >
               {utils.getLang("cabinet_walletBox_create")}
             </UI.FloatingButtonItem>
           ] : [
             !!walletsActions.getNoGeneratedCurrencies().length &&
             <ProfileSidebarItem
-              onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+              onClick={() => {actions.openModal('new_wallet')}}
               icon={<PlusCircleSvg />}
               label={utils.getLang("cabinet_walletBox_create")}
             />,

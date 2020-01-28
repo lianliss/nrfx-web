@@ -140,7 +140,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                 </UI.Button>
               ] : [
                 <UI.Button
-                  onClick={() => router.navigate(pages.PROFILE)}
+                  onClick={() => router.navigate(pages.DASHBOARD)}
                   fontSize={15}
                   type="outline"
                 >
@@ -203,7 +203,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                     type="outline_white"
                     rounded
                     fontSize={15}
-                    onClick={() => router.navigate(pages.PROFILE)}
+                    onClick={() => router.navigate(pages.DASHBOARD)}
                   >
                     {getLang("cabinet_header_cabinet")}
                   </UI.Button>

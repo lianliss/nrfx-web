@@ -88,7 +88,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         </UI.FloatingButtonItem>,
         <UI.FloatingButtonItem
           icon={require('../../../../asset/24px/users.svg')}
-          onClick={() => router.navigate(PAGES.PROFILE, { section: 'partners' })}
+          onClick={() => router.navigate(PAGES.DASHBOARD, { section: 'partners' })}
         >
           {utils.getLang('cabinet_profileScreen_partners')}
         </UI.FloatingButtonItem>,
@@ -204,6 +204,10 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   };
 
   __renderWallets = () => {
+    if (!this.wallets.length) {
+      return null;
+    }
+
     const rows = this.wallets.map((wallet, i) => {
       return <WalletBox
         key={i}

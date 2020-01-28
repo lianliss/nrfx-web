@@ -65,7 +65,7 @@ class DashboardItem extends React.Component {
         };
         this.button = {
           children: utils.getLang('global_invite'),
-          onClick: () => router.navigate(pages.PROFILE, { section: 'partners' }),
+          onClick: () => router.navigate(pages.DASHBOARD, { section: 'partners' }),
         };
         if (props.count > 0) {
           this.show = true;
