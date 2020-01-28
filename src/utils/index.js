@@ -42,17 +42,19 @@ export function removeProperty(object, ...properties) {
 }
 
 export function getLang(key, string = false, code = false) {
+  console.log('string', string);
   const state = store.getState();
   const { currentLang, translations } = state.default;
   let langString = translations[code || currentLang][key] || key;
 
-  if (
-    (['object', 'string'].includes(typeof string) || !string) &&
-    state.default.profile.user &&
-    state.default.profile.role === 'Translator' &&
-    state.settings.translator
-  ) {
-    return <TranslatorMode langContent={string || langString} langKey={key} />;
+  if ((['object', 'string'].includes(typeof string) || !string)) {
+    if (
+      state.default.profile.user &&
+      state.default.profile.role === 'Translator' &&
+      state.settings.translator
+    ) {
+      return <TranslatorMode langContent={string !== false ? string : langString} langKey={key} />;
+    } return nl2br(typeof string === 'string' ? string : langString);
   }
 
   return langString;

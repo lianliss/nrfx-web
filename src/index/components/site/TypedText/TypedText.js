@@ -4,7 +4,6 @@ import './TypedText.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import TranslatorMode from '../../cabinet/TranslatorMode/TranslatorModal';
 import { getLang } from '../../../../utils';
 
 let currentProductIndex = 0;
@@ -25,7 +24,8 @@ class TypedText extends React.PureComponent {
     const { products } = this.props;
     this.setState({
       currentKey: products[currentProductIndex]
-    })
+    });
+
     const currentProduct = getLang(products[currentProductIndex], true);
     const currentProductArr = currentProduct ? currentProduct.split("") : [];
     let curString = '';
@@ -73,7 +73,7 @@ class TypedText extends React.PureComponent {
 
     return (
       <div className="TypedText">
-        { (this.props.translatorMode && currentKey && currentString) ? <TranslatorMode langKey={currentKey} langContent={currentString} /> : currentString }
+        {getLang(currentKey, currentString)}
       </div>
     )
   }
