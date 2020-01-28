@@ -5,6 +5,7 @@ import React from 'react';
 import { getLang } from '../../../../utils'
 import UI from '../../../../ui';
 import router from '../../../../router';
+import * as pages from 'src/index/constants/pages';
 
 export function Status(props) {
 
@@ -19,7 +20,13 @@ export function Status(props) {
         })`}}
       />
       <h2 className="MerchantStatus__text">{success ? getLang('cabinet_merchantSuccessText') : getLang('cabinet_merchantErrorText')}</h2>
-      <UI.Button onClick={props.onClose || console.log}>{getLang('global_continue')}</UI.Button>
+      <UI.Button onClick={() => {
+        if (props.onClose) {
+          props.onClose();
+        } else {
+          router.navigate(pages.CABINET_WALLET, { section: 'fiat' })
+        }
+      }}>{getLang('global_continue')}</UI.Button>
     </div>
   )
 }
