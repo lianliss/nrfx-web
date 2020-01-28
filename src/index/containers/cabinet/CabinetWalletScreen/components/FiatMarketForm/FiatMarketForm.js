@@ -98,13 +98,13 @@ class FiatMarketForm extends React.Component {
   getCurrenciesOptions(prefix) {
     return this.props.canExchange
       .map(key => this.props.currencies[key])
+      // .sort((a,b) => a.abbr.toLowerCase() < b.abbr.toLowerCase() ? -1 : 1)
       .map(c => ({
         ...c,
-        title: prefix + ' ' + ucfirst(c.name),
+        title: <>{prefix} {ucfirst(c.name)}</>,
         note: c.abbr.toUpperCase(),
         value: c.abbr,
-      }))
-      .sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
+      }));
   }
 
   getSecondaryAmount = (amount, type) => {
@@ -119,7 +119,7 @@ class FiatMarketForm extends React.Component {
 
   formatAmount = (amount, currency) => {
     return formatDouble(amount, isFiat(currency) ? 2 : undefined);
-  }
+  };
 
   renderRate(type) {
     if (!this.props.rate) return null;
@@ -172,14 +172,14 @@ class FiatMarketForm extends React.Component {
     const { typeActive } = this.state;
 
     return (
-      <Wrapper title={getLang('cabinet_fiatMarketExchangeTitle')} isOpenDefault={false} className="FiatMarketForm">
+      <Wrapper title={getLang('cabinet_fiatMarketExchangeTitle')} isOpenDefault={true} className="FiatMarketForm">
         { !this.props.adaptive && <h2 className="FiatMarketForm__title">{getLang('cabinet_fiatMarketExchangeTitle')}</h2> }
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
             <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGet')}</span>
             <UI.Input
               disabled={disabled}
-              value={(typeActive !== 'to' ? "~ " : '') + this.state.toAmount}
+              value={(typeActive !== 'to' ? "~ " : '') + (this.state.toAmount || '')}
               onTextChange={this.handleAmountChange('to')}
               onFocus={this.handleAmountFocus('to')}
               placeholder={getLang('global_amount')}
@@ -205,7 +205,7 @@ class FiatMarketForm extends React.Component {
             <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGive')}</span>
             <UI.Input
               disabled={disabled}
-              value={(typeActive !== 'from' ? "~ " : '') + this.state.fromAmount}
+              value={(typeActive !== 'from' ? "~ " : '') + (this.state.fromAmount || '')}
               onTextChange={this.handleAmountChange('from')}
               onFocus={this.handleAmountFocus('from')}
               placeholder={getLang('global_amount')}
@@ -248,7 +248,8 @@ export default connect(store => ({
   rate: store.fiatWallets.rate,
   rateUpdateTime: store.fiatWallets.rateUpdateTime,
   exchangeFee: store.fiatWallets.exchange_fee,
-  rateStatus: store.fiatWallets.loadingStatus.rate
+  rateStatus: store.fiatWallets.loadingStatus.rate,
+  translator: store.settings.translator
 }),{
   exchange: actions.exchange,
   getRate: actions.getRate

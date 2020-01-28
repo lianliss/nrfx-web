@@ -11,7 +11,13 @@ export default class SecretKeyDescModal extends React.Component {
       <UI.Modal isOpen={true} className="SecretKeyDescModal__wrapper" onClose={() => {this.props.onClose()}}>
         <UI.ModalHeader>{utils.getLang('global_attention')}</UI.ModalHeader>
         <div className="SecretKeyDescModal">
-          <UI.MarkDown className="SecretKeyDescModal__content" content={utils.getLang("cabinet_secretKeyDescriptionText")} />
+          {utils.getLang(
+            "cabinet_secretKeyDescriptionText",
+            <UI.MarkDown
+              className="SecretKeyDescModal__content"
+              content={utils.getLang("cabinet_secretKeyDescriptionText", true)}
+            />
+          )}
           <div className="SecretKeyDescModal__content">
             <UI.Button onClick={() => {
               action.openModal('change_secret_key');

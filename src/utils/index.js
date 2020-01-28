@@ -54,7 +54,7 @@ export function getLang(key, string = false, code = false) {
       state.settings.translator
     ) {
       return <TranslatorMode langContent={string !== false ? string : langString} langKey={key} />;
-    } return nl2br(typeof string === 'string' ? string : langString);
+    } return ['object', 'string'].includes(typeof string) ? string : langString;
   }
 
   return langString;

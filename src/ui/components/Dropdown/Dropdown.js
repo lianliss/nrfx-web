@@ -22,9 +22,9 @@ class Dropdown extends React.Component {
     isOpen: false
   };
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return JSON.stringify(this.props) !== JSON.stringify(nextProps) || this.state.isOpen !== nextState.isOpen;
-  }
+  // shouldComponentUpdate(nextProps, nextState, nextContext) {
+  //   return JSON.stringify(this.props) !== JSON.stringify(nextProps) || this.state.isOpen !== nextState.isOpen;
+  // }
 
   toggle = (value) => {
     this.setState({ isOpen: value });
