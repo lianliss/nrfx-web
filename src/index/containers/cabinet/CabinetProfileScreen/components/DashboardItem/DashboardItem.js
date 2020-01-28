@@ -16,7 +16,6 @@ import { ReactComponent as InviteSvg } from '../../../../../../asset/120/invite.
 import * as actions from '../../../../../../actions';
 import { classNames as cn } from '../../../../../../utils';
 import * as pages from '../../../../../constants/pages';
-import SVG from 'react-inlinesvg';
 
 class DashboardItem extends React.Component {
   state = {

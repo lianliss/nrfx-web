@@ -47,11 +47,11 @@ class VerificationModal extends React.Component {
             if ( messageType === 'idCheck.onError') {
               this.setState({ status: 'failed' });
             }
-            if ( messageType === 'idCheck.onApplicantLoaded') {
+            if ( messageType === 'idCheck.applicantStatus' && payload.reviewStatus === "pending" ) {
               this.props.setVerificationStatus('pending');
             }
 
-            console.log('[IDENSIC DEMO] Idensic message:', messageType, payload)
+            // console.log('[IDENSIC DEMO] Idensic message:', messageType, payload)
           }
         )
       }).catch((err) => {

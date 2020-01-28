@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as modalGroupActions from "../../../../../../actions/modalGroup";
-import * as actions from "../../../../../../actions/index";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
 import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';

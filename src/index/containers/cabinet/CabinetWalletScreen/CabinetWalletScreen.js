@@ -21,7 +21,6 @@ import {ReactComponent as HistorySvg} from '../../../../asset/24px/history.svg';
 import {ReactComponent as FiatSvg} from '../../../../asset/24px/fiat.svg';
 import {ReactComponent as SendSvg} from '../../../../asset/24px/send.svg';
 import {ReactComponent as ReceiveSvg} from '../../../../asset/24px/receive.svg';
-import * as modalGroupActions from '../../../../actions/modalGroup';
 import * as actions from '../../../../actions';
 import * as PAGES from '../../../constants/pages';
 import * as walletsActions from '../../../../actions/cabinet/wallets';

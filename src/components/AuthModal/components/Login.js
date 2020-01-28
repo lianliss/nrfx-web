@@ -25,7 +25,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
         .catch((err) => {
           setErrorMsg(err.message);
         }).finally(() => {
-          setStatus('loading');
+          setStatus('');
         });
     }
   };

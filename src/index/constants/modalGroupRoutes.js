@@ -39,8 +39,6 @@ export const MODALGROUP_ROUTES = {
   profile: {
     send: Modals.SendCoinsModal,
     receive: Modals.ReceiveCoinsModal,
-    change_secret_key: Modals.ChangeSecretKeyModal,
-    secret_key: Modals.SecretKeyDescModal,
     google_code: Modals.GoogleCodeModal
   },
   cabinet_wallet: {
@@ -55,7 +53,6 @@ export const MODALGROUP_ROUTES = {
   settings: {
     change_email: Modals.ChangeEmailModal,
     change_number: Modals.ChangeNumberModal,
-    secret_key_info: Modals.SecretKeyInfoModal,
   },
   menu: {},
   exchange: {}
