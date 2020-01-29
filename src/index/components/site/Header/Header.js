@@ -188,7 +188,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
 
               <div className="SiteHeader__menu_controls">
                 { !isLogin ? <>
-                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN})}>{getLang('site__headerLogIn')}</MenuItem>,
+                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN})}>{getLang('site__headerLogIn')}</MenuItem>
                   <UI.Button
                     onClick={() => actions.openModal('auth', {type: steps.REGISTRATION })}
                     type="outline_white"
@@ -198,7 +198,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                     {getLang('site__commerceRegistration')}
                   </UI.Button>
                 </> : <>
-                  <MenuItem onClick={auth.logout}>{getLang("cabinet_header_exit")}</MenuItem>,
+                  <MenuItem onClick={auth.logout}>{getLang("cabinet_header_exit")}</MenuItem>
                   <UI.Button
                     type="outline_white"
                     rounded
