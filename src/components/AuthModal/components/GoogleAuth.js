@@ -19,10 +19,10 @@ function GoogleAuth({ changeStep, email, password, params }) {
   const handleSubmit = (code) => {
     const googleCode = code ? code : gaCode;
     setPending(true);
+    setErrorMsg('');
 
     getGoogleCode(email, password, googleCode)
       .then((data) => {
-        setErrorMsg('');
         if (data.status === 'phone_not_verified') {
           changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
         } else if (process.env.DOMAIN === 'admin') {

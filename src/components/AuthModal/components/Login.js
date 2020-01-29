@@ -17,6 +17,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
       setErrorMsg(utils.getLang('site__authModalPwdRequired'));
     } else {
       setStatus('loading');
+      setErrorMsg('');
       getAuth(email.trim(), password)
         .then((res) => {
           setErrorMsg('');
