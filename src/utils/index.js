@@ -42,7 +42,6 @@ export function removeProperty(object, ...properties) {
 }
 
 export function getLang(key, string = false, code = false) {
-  console.log('string', string);
   const state = store.getState();
   const { currentLang, translations } = state.default;
   let langString = translations[code || currentLang][key] || key;

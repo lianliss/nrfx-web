@@ -30,7 +30,6 @@ export function loadProfitHistory() {
       dispatch({ type: actionTypes.INVESTMENTS_PROFITS_SET, profits, total: total_count });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: '' });
     }).catch((err) => {
-      console.log(err);
       toastsActions.toastPush("Error load profit history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'failed' });
     });

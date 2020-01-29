@@ -30,6 +30,11 @@ const VerificationBlock = (props) => {
       icon: require('src/asset/120/verification_required_info.svg'),
       action: true
     },
+    verified: {
+      status: utils.getLang('cabinet_verificationStatus_temporary_success'),
+      icon: require('src/asset/120/verification_success.svg'),
+      action: false
+    },
   };
 
   const status = statuses[props.verification];
