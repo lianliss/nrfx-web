@@ -136,7 +136,9 @@ const OrderBook = props => {
         <div className="OrderBook__indicator">
           {['sell', 'buy'].map(sideType => (
             <div key={sideType} className={cn("OrderBook__indicator__side", sideType)}>
-              <span>{ diff > 0 && diff + '%' }</span>
+              {(sideType === 'sell' ? diff > 0 : diff < 0) && (
+                <span>{ Math.abs(diff) + '%' }</span>
+              )}
               <div style={{ height: fillPercent[sideType] + '%' }} className="OrderBook__indicator__side__fill"></div>
             </div>
           ))}
