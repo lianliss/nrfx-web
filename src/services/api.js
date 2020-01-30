@@ -3,6 +3,7 @@ import * as action from '../actions/';
 import { logout } from '../actions/auth';
 import router from '../router';
 import * as adminPages from '../admin/constants/pages';
+import recaptcha from 'src/services/recaptcha';
 
 // const API_ENTRY = 'https://api.narfex.com';
 const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
@@ -65,13 +66,22 @@ export function invoke(method, name, params, options = {}) {
           } else {
             if (json.code === 'withdraw_disabled') {
               action.openModal('user_block');
+              reject();
+            } else if (json.code === 'recaptcha_needed') {
+              recaptcha(json.token).then(token => {
+                invoke(method, name,  { ...params, recaptcha_response: token }, options)
+                  .then(resolve).catch(reject);
+              });
+            } else {
+              json.error_name = 'failed';
+              reject(json);
             }
-            json.error_name = 'failed';
-            reject(json);
           }
         }).catch(() => reject({code: -1, message: 'Cant\'t parse JSON', error_name: 'failed'}));
       })
-      .catch((err) => reject({code: -2, ...err, error_name: 'failed_connection'}));
+      .catch((err) => {
+        reject({code: -2, ...err, error_name: 'failed_connection'})
+      });
   });
 }
 
