@@ -26,7 +26,6 @@ export default class SiteMainScreen extends BaseScreen {
     const products = [
       'site__homeSlideExchange',
       'site__homeSlideWallet',
-      'site__homeSlideInvestments',
       'site__homeSlideRobots',
     ];
 
