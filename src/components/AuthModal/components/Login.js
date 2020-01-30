@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import UI from 'src/ui';
 import { getAuth } from 'src/actions/auth';
@@ -11,8 +11,11 @@ function Login({ changeStep, email, password, token, handleChange, currentStep }
   const [errorMsg, setErrorMsg] = useState('');
   const [status, setStatus] = useState('');
   const disabled = !email || !password || !token;
+  const captchaRef = useRef();
 
   const handleSubmit = () => {
+    const { grecaptcha } = captchaRef.current.props;
+
     if (!email) {
       setErrorMsg(utils.getLang('site__authModalEmailRequired'));
     } else if (!password) {
@@ -26,6 +29,7 @@ function Login({ changeStep, email, password, token, handleChange, currentStep }
           changeStep(steps.GOOGLE_AUTH, { loginRes: res });
         })
         .catch((err) => {
+          grecaptcha.reset();
           setErrorMsg(err.message);
         }).finally(() => {
           setStatus('');
@@ -62,7 +66,7 @@ function Login({ changeStep, email, password, token, handleChange, currentStep }
           />
         </div>
 
-        <Captcha onChange={token => handleChange(token, 'token')} />
+        <Captcha ref={captchaRef} onChange={token => handleChange(token, 'token')} />
 
         <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>{utils.getLang('site__authModalForgotPwd')}</h4>
 

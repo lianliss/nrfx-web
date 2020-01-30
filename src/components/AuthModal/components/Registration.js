@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
 import UI from 'src/ui';
@@ -16,10 +16,11 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
   const [isChecked, toggleCheck] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [token, setToken] = useState(null);
-
+  const captchaRef = useRef();
   const disabled = !token || !email;
 
   const handleSubmit = () => {
+    const { grecaptcha } = captchaRef.current.props;
 
     if (!email) {
       setErrorMsg(utils.getLang('site__authModalEmailRequired'));
@@ -31,7 +32,10 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
       let inviteLink = initGetParams.params.i;
       registerUser(email.trim(), (refParam || referrer), inviteLink, token)
         .then(() => changeStep(steps.REGISTRATION_SUCCESS))
-        .catch((err) => setErrorMsg(err.message));
+        .catch((err) => {
+          grecaptcha.reset();
+          setErrorMsg(err.message);
+        });
     }
   };
 
@@ -78,7 +82,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
                 onKeyPress={handleKeyPress}
               />
 
-              <Captcha onChange={setToken} />
+              <Captcha ref={captchaRef} onChange={setToken} />
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
