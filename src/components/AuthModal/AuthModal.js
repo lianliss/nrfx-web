@@ -16,6 +16,7 @@ function AuthModal({ type, className, onClose, defaultEmail, onBack }) {
   const [currentStep, changeStep] = useState(type || steps.LOGIN);
   const [params, changeParams] = useState({});
   const [email, changeEmail] = useState(defaultEmail);
+  const [token, changeToken] = useState(null);
   const [password, changePassword] = useState('');
 
   const changeStepWithParams = (step, params) => {
@@ -26,7 +27,7 @@ function AuthModal({ type, className, onClose, defaultEmail, onBack }) {
   const getCurrentContent = () => {
     switch (currentStep) {
       case steps.LOGIN:
-        return <Login email={email} password={password} handleChange={handleChange} changeStep={changeStepWithParams} currentStep={currentStep} />;
+        return <Login email={email} password={password} token={token} handleChange={handleChange} changeStep={changeStepWithParams} currentStep={currentStep} />;
       case steps.GOOGLE_AUTH:
         return <GoogleAuth params={params} email={email} password={password} handleChange={handleChange} changeStep={changeStepWithParams} currentStep={currentStep} />;
       case steps.RESET_AUTH:
@@ -52,6 +53,8 @@ function AuthModal({ type, className, onClose, defaultEmail, onBack }) {
       changeEmail(value);
     } else if (type === 'password') {
       changePassword(value);
+    } else if (type === 'token') {
+      changeToken(value);
     }
   };
 

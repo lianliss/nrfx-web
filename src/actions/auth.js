@@ -10,12 +10,18 @@ import * as user from './user';
 import router from '../router';
 import * as pages from '../index/constants/pages';
 
-export function getAuth(login, password) {
+export function getAuth(login, password, token) {
   const app_id = 8;
   const public_key = '1a4b26bc31-a91649-b63396-253abb8d69';
 
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignInPost, { login, password, app_id, public_key })
+    api.call(apiSchema.Profile.SignInPost, {
+      login,
+      password,
+      app_id,
+      public_key,
+      recaptcha_response: token
+    })
       .then((auth) => {
         store.dispatch({ type: actionTypes.AUTH, auth });
         resolve(auth);
@@ -146,9 +152,9 @@ export function checkSmsCode(countryCode, number, code) {
   });
 }
 
-export function registerUser(email, refer = null, invite_link = null) {
+export function registerUser(email, refer = null, invite_link = null, token) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignUpPut, { email, refer, invite_link })
+    api.call(apiSchema.Profile.SignUpPut, { email, refer, invite_link, recaptcha_response: token })
       .then(() => resolve())
       .catch((err) => reject(err));
   });

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 
 import UI from 'src/ui';
-import { getAuth } from 'actions/auth';
+import { getAuth } from 'src/actions/auth';
+import Captcha from 'src/components/Captcha/Captcha';
 import * as utils from 'utils';
 import * as steps from '../fixtures';
 
 
-function Login({ changeStep, email, password, handleChange, currentStep }) {
+function Login({ changeStep, email, password, token, handleChange, currentStep }) {
   const [errorMsg, setErrorMsg] = useState('');
   const [status, setStatus] = useState('');
+  const disabled = !email || !password || !token;
 
   const handleSubmit = () => {
     if (!email) {
@@ -18,7 +20,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
     } else {
       setStatus('loading');
       setErrorMsg('');
-      getAuth(email.trim(), password)
+      getAuth(email.trim(), password, token)
         .then((res) => {
           setErrorMsg('');
           changeStep(steps.GOOGLE_AUTH, { loginRes: res });
@@ -30,6 +32,8 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
         });
     }
   };
+
+
 
   return (
     <>
@@ -57,13 +61,16 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
             type="password"
           />
         </div>
+
+        <Captcha onChange={token => handleChange(token, 'token')} />
+
         <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>{utils.getLang('site__authModalForgotPwd')}</h4>
 
       </div>
 
       <div className="AuthModal__footer">
         <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__commerceRegistration')}</h4>
-        <UI.Button state={status} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
+        <UI.Button disabled={disabled} state={status} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </>
   )

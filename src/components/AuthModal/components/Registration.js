@@ -5,15 +5,19 @@ import UI from 'src/ui';
 import * as steps from '../fixtures';
 import * as utils from 'utils';
 import * as actions from 'src/actions';
-import {registerUser} from 'actions/auth';
+import { registerUser } from 'src/actions/auth';
 import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
 import initGetParams from 'src/services/initialGetParams';
 import { registrationSetValue } from 'src/actions/index';
+import Captcha from '../../Captcha/Captcha';
 
 function Registration({ changeStep, currentStep, email, onClose, refParam, referrer, registrationSetValue }) {
 
   const [isChecked, toggleCheck] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [token, setToken] = useState(null);
+
+  const disabled = !token || !email;
 
   const handleSubmit = () => {
 
@@ -25,7 +29,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
       setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
       let inviteLink = initGetParams.params.i;
-      registerUser(email.trim(), (refParam || referrer), inviteLink)
+      registerUser(email.trim(), (refParam || referrer), inviteLink, token)
         .then(() => changeStep(steps.REGISTRATION_SUCCESS))
         .catch((err) => setErrorMsg(err.message));
     }
@@ -74,6 +78,8 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
                 onKeyPress={handleKeyPress}
               />
 
+              <Captcha onChange={setToken} />
+
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
                 <span onClick={ () => actions.openModal('static_content', {type: "terms"})} className="AuthModal__content__terms__link">{utils.getLang('site__authModalTermsConditions')}</span>
@@ -82,7 +88,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
 
             <div className="AuthModal__footer">
               <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.LOGIN)}>{utils.getLang('site__authModalLogInBtn')}</h4>
-              <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
+              <UI.Button disabled={disabled} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
             </div>
           </>
         ) : (
