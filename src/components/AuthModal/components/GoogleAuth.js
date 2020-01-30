@@ -28,7 +28,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
         } else if (process.env.DOMAIN === 'admin') {
           router.navigate(adminPages.PANEL);
         } else {
-          window.location.href = router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.DASHBOARD;
+          router.navigate(router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.DASHBOARD);
         }
       })
       .catch((err) => setErrorMsg(err.message))
