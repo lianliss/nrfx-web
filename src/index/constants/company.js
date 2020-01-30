@@ -18,5 +18,5 @@ export default {
     android: 'https://play.google.com/store/apps/details?id=com.bitcoinbot&hl=en',
     // ios: '#'
   },
-  reCaptchaSiteKey: '6Lfy2dMUAAAAAIFeewrBg2mn1cmz-U6dqTP2Mb8l'
+  reCaptchaSiteKey: '6LdRL9QUAAAAAE45WnoX0AM_MSiYgS2aJsbiNI0a'
 }
