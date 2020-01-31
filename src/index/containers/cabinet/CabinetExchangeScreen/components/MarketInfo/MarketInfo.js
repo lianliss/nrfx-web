@@ -3,12 +3,14 @@ import './MarketInfo.less';
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
+import { Helmet } from 'react-helmet';
 // import moment from 'moment/min/moment-with-locales';
 
 import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import * as actions from '../../../../../../actions';
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
+import company from '../../../../../constants/company';
 
 class MarketInfo extends React.Component{
   __handleChooseMarket() {
@@ -17,9 +19,13 @@ class MarketInfo extends React.Component{
 
   render() {
     const [primary, secondary] = this.props.market.toUpperCase().split('/');
+    const price = utils.formatDouble(this.props.ticker.price, utils.isFiat(secondary) ? 2 : undefined);;
 
     return (
       <div className="MarketInfo">
+        <Helmet>
+          <title>{[price, this.props.market.toUpperCase(), company.name].join(' | ')}</title>
+        </Helmet>
         <div className="MarketInfo__row pair">
           <div className="MarketInfo__pair" onClick={this.__handleChooseMarket}>
             <div className="MarketInfo__pair__primary">{primary}</div>
@@ -129,7 +135,10 @@ class MarketInfo extends React.Component{
 }
 
 export default connect((state) => ({
-  ...state.exchange,
+  ticker: state.exchange.ticker,
+  chartTimeFrame: state.exchange.chartTimeFrame,
+  market: state.exchange.market,
+  orderBook: state.exchange.orderBook,
   currentLang: state.default.currentLang
 }), {
   changeTimeFrame: exchangeActions.changeTimeFrame

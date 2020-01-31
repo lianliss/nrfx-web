@@ -41,7 +41,6 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   render() {
-    console.log("render CabinetExchangeScreen");
     return (
       <div>
         {this.__renderContent()}
@@ -147,12 +146,12 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
 
 export default connect(
   state => ({
-    ...state.exchange,
+    ...state.exchange, // TODO не передавать лишнии props
     adaptive: state.default.adaptive,
     lang: state.default.lang,
     router: state.router,
     user: state.default.profile.user,
-    translator: state.settings.translator
+    translator: state.settings.translator,
   }), {
     load: exchangeActions.load,
     chooseMarket: exchangeActions.chooseMarket,
