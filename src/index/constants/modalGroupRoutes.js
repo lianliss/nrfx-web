@@ -11,7 +11,7 @@ import WithdrawalModal from '../components/cabinet/WithdrawalModal/WithdrawalMod
 // settings
 import GAConfirmModal from '../components/cabinet/GAConfirmModal/GAConfirmModal';
 import ChangeEmailModal from '../components/cabinet/ChangeEmailModal/ChangeEmailModal';
-import ChangeNumberModal from '../components/cabinet/ChangeNumberModal/ChangeNumberModal';
+// import ChangeNumberModal from '../components/cabinet/ChangeNumberModal/ChangeNumberModal';
 import SecretKeyInfoModal from '../components/cabinet/SecretKeyInfoModal/SecretKeyInfoModal';
 import SecretKeyDescModal from '../components/cabinet/SecretKeyDescModal/SecretKeyDescModal';
 
@@ -27,7 +27,7 @@ const Modals = {
   DepositInfoModal: {children: DepositInfoModal},
   GAConfirmModal: {children: GAConfirmModal},
   ChangeEmailModal: {children: ChangeEmailModal},
-  ChangeNumberModal: {children: ChangeNumberModal},
+  // ChangeNumberModal: {children: ChangeNumberModal},
   WithdrawalModal: {children: WithdrawalModal},
   SecretKeyInfoModal: {children: SecretKeyInfoModal},
   SecretKeyDescModal: {children: SecretKeyDescModal},

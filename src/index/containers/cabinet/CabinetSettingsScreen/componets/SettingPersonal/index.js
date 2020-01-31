@@ -153,22 +153,22 @@ class SettingPersonal extends React.Component{
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsPhoneNumber')}
           </div>
-          <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
-            <div className="CabinetSettingsScreen__form left">
-              <div className="CabinetSettingsScreen__input_field">
-                <UI.Input
-                  classNameWrapper="CabinetSettingsScreen__inputWithoutEffects"
-                  disabled={true}
-                  value={this.props.user.phone_number}
-                />
-              </div>
-            </div>
-            <div className="CabinetSettingsScreen__form right">
-              <UI.Button type={buttonType} onClick={() => {modalGroupActions.openModalPage('change_number')}}>
-                {utils.getLang('cabinet_settingsChange')}
-              </UI.Button>
-            </div>
-          </div>
+          {/*<div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">*/}
+          {/*  <div className="CabinetSettingsScreen__form left">*/}
+          {/*    <div className="CabinetSettingsScreen__input_field">*/}
+          {/*      <UI.Input*/}
+          {/*        classNameWrapper="CabinetSettingsScreen__inputWithoutEffects"*/}
+          {/*        disabled={true}*/}
+          {/*        value={this.props.user.phone_number}*/}
+          {/*      />*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*  <div className="CabinetSettingsScreen__form right">*/}
+          {/*    <UI.Button type={buttonType} onClick={() => {modalGroupActions.openModalPage('change_number')}}>*/}
+          {/*      {utils.getLang('cabinet_settingsChange')}*/}
+          {/*    </UI.Button>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsEmail')}
           </div>
