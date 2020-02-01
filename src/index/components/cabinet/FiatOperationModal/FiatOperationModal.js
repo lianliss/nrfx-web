@@ -4,32 +4,99 @@ import React from 'react';
 
 import Modal from '../../../../ui/components/Modal/Modal';
 import UI from '../../../../ui';
-import { getLang, dateFormat, classNames as cn } from '../../../../utils';
-import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';
+import * as utils from 'src/utils/index';
+import { getCurrencyInfo } from '../../../../actions';
+
+//
+// function FiatOperationModal(props) {
+//   const { operation } = props;
+//   return (
+//     <Modal className="FiatOperationModal" isOpen={true} onClose={props.onBack}>
+//       <UI.ModalHeader>
+//         {getLang('cabinet_fiatWalletOperationModalTitle')}
+//       </UI.ModalHeader>
+//       <div>
+//         {typeof operation === "object" ? (
+//           <UI.List items={[
+//             { label: getLang('global_date'), value: dateFormat(operation.created_at) },
+//             { label: getLang('global_type'), value: <div className={cn('FiatOperationModal__status', operation.type)} >{operation.type_label}</div> },
+//             { label: getLang('global_amount'), value: <UI.NumberFormat number={operation.primary_amount} currency={operation.primary_currency} /> },
+//             { label: getLang('global_price'), value: <UI.NumberFormat number={operation.price} currency={operation.secondary_currency} /> },
+//           ]} />
+//         ) : (
+//           <EmptyContentBlock
+//             skipContentClass
+//             icon={require('../../../../asset/120/buy_currency.svg')}
+//             message={getLang("cabinet_merchantEmptyList")}
+//           />
+//         )}
+//       </div>
+//     </Modal>
+//   )
+// }
 
 function FiatOperationModal(props) {
-  const { operation } = props;
+  const { operation, icon } = props;
+
+  if (!operation) {
+    props.onClose();
+    return null;
+  }
+
+  const [primaryCurrency, secondaryCurrency] = [operation.primary_currency, operation.secondary_currency].map(getCurrencyInfo);
+
+  const [primaryPrice, secondaryPrice] = [operation.price, 1 / operation.price][operation.type === 'crypto_exchange' ? 'reverse' : 'slice']();
+
   return (
-    <Modal className="FiatOperationModal" isOpen={true} onClose={props.onBack}>
+    <Modal className="FiatOperationModal" isOpen={true} onClose={props.onClose}>
       <UI.ModalHeader>
-        {getLang('cabinet_fiatWalletOperationModalTitle')}
+        {operation.type_label}
       </UI.ModalHeader>
-      <div>
-        {typeof operation === "object" ? (
-          <UI.List items={[
-            { label: getLang('global_date'), value: dateFormat(operation.created_at) },
-            { label: getLang('global_type'), value: <div className={cn('FiatOperationModal__status', operation.type)} >{operation.type_label}</div> },
-            { label: getLang('global_amount'), value: <UI.NumberFormat number={operation.primary_amount} currency={operation.primary_currency} /> },
-            { label: getLang('global_price'), value: <UI.NumberFormat number={operation.price} currency={operation.secondary_currency} /> },
-          ]} />
+      <UI.CircleIcon currency={primaryCurrency} icon={icon} />
+      {
+        operation.type === 'income' ? (
+          <div className="FiatOperationModal__content">
+            <UI.WalletCard balance={operation.primary_amount} currency={primaryCurrency} />
+            <div className="FiatOperationModal__row">
+              <div className="FiatOperationModal__row__left">
+                <div className="FiatOperationModal__label">{utils.getLang('global_date')}</div>
+                <div>{utils.dateFormat(operation.created_at)}</div>
+              </div>
+              <div className="FiatOperationModal__row__right">
+                {/*<div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}
+                {/*<div><UI.NumberFormat number={1} currency={secondaryCurrency.abbr} /></div>*/}
+              </div>
+            </div>
+          </div>
         ) : (
-          <EmptyContentBlock
-            skipContentClass
-            icon={require('../../../../asset/120/buy_currency.svg')}
-            message={getLang("cabinet_merchantEmptyList")}
-          />
-        )}
-      </div>
+          <div className="FiatOperationModal__content">
+            <div className="FiatOperationModal__row">
+              <div className="FiatOperationModal__row__left">
+                <div className="FiatOperationModal__price"><UI.NumberFormat number={-operation.primary_amount} symbol currency={primaryCurrency.abbr} /></div>
+                <div className="FiatOperationModal__label">{utils.getLang('cabinet_fiatWalletGave')} {primaryCurrency.name}</div>
+              </div>
+              <div className="FiatOperationModal__row__right">
+                <div className="FiatOperationModal__price" style={{color: secondaryCurrency.color}}><UI.NumberFormat symbol number={operation.secondary_amount} currency={secondaryCurrency.abbr} /></div>
+                <div className="FiatOperationModal__label">{utils.getLang('cabinet_fiatWalletGot')} {secondaryCurrency.name}</div>
+              </div>
+            </div>
+            <div className="FiatOperationModal__row">
+              <div className="FiatOperationModal__row__left">{utils.getLang('global_price')}: <UI.NumberFormat number={primaryPrice} currency={primaryCurrency.abbr} /></div>
+              <div className="FiatOperationModal__row__right">{utils.getLang('global_price')}: <UI.NumberFormat number={secondaryPrice} currency={secondaryCurrency.abbr} /></div>
+            </div>
+            <div className="FiatOperationModal__row">
+              <div className="FiatOperationModal__row__left">
+                <div className="FiatOperationModal__label">{utils.getLang('global_date')}</div>
+                <div>{utils.dateFormat(operation.created_at)}</div>
+              </div>
+              <div className="FiatOperationModal__row__right">
+                {/*<div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}
+                {/*<div><UI.NumberFormat number={1} currency={secondaryCurrency.abbr} /></div>*/}
+              </div>
+            </div>
+          </div>
+        )
+      }
     </Modal>
   )
 }
