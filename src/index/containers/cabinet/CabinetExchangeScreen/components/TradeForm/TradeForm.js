@@ -15,6 +15,21 @@ class TradeForm extends React.Component {
     return utils.formatDouble(number, (utils.isFiat(secondaryCurrency) ? 2 : 8));
   };
 
+  componentWillUnmount() {
+    this.reset();
+  }
+
+  reset = () => {
+    ['sell', 'buy'].map( action => {
+      this.props.tradeFormSetProperties(action, { touched: false });
+    })
+  }
+
+  handleChangeOrderType = orderType => {
+    this.props.tradeFormSetType(orderType);
+    this.reset();
+  }
+
   handleOrderCreate = action => () => {
     this.props.tradeFormSetProperties(action, {
       touched: true
@@ -34,10 +49,17 @@ class TradeForm extends React.Component {
 
   handleChangePrice = type => value => {
     const form = this.props.form[type];
-    this.props.tradeFormSetProperties(type, {
-      price: value,
-      total: (this.numberFormat(value * form.amount) || form.total)
-    });
+    if (!form.amount && form.total) {
+      this.props.tradeFormSetProperties(type, {
+        price: value,
+        amount: (this.numberFormat(form.total / value))
+      });
+    } else {
+      this.props.tradeFormSetProperties(type, {
+        price: value,
+        total: (this.numberFormat(value * form.amount) || form.total)
+      });
+    }
   };
 
   handleChangeAmount = type => value => {
@@ -175,7 +197,7 @@ class TradeForm extends React.Component {
             <UI.Button
               key={type}
               size="ultra_small"
-              onClick={() => this.props.tradeFormSetType(type)}
+              onClick={() => this.handleChangeOrderType(type)}
               type={type !== this.props.form.type ? "secondary" : undefined}
             >{utils.ucfirst(type)}</UI.Button>
           ))}

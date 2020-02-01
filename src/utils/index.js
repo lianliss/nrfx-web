@@ -52,8 +52,8 @@ export function getLang(key, string = false, code = false) {
       state.default.profile.role === 'Translator' &&
       state.settings.translator
     ) {
-      return <TranslatorMode langContent={string !== false ? string : langString} langKey={key} />;
-    } return ['object', 'string'].includes(typeof string) ? string : langString;
+      return <TranslatorMode langContent={string !== false ? string : nl2br(langString)} langKey={key} />;
+    } return ['object', 'string'].includes(typeof string) ? string : nl2br(langString);
   }
 
   return langString;

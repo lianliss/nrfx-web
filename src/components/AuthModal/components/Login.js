@@ -52,7 +52,7 @@ function Login({ changeStep, email, password, token, handleChange, currentStep }
         <UI.Input
           value={email}
           onChange={(e) => handleChange(e.target.value, 'email')}
-          placeholder={utils.getLang('site__authModalPlaceholderEmail')}
+          placeholder={utils.getLang('site__authModalPlaceholderEmailOrUsername')}
           onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
         />
         <div className="AuthModal__input_wrapper">
