@@ -7,7 +7,7 @@ import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
 import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 import UI from '../../../../../../ui';
-import VerificationBlock from '../VerificationBlock/VerificationBlock';
+// import VerificationBlock from '../VerificationBlock/VerificationBlock';
 
 class SettingPersonal extends React.Component{
 
@@ -34,7 +34,7 @@ class SettingPersonal extends React.Component{
 
     return(
       <>
-        <VerificationBlock />
+        {/*<VerificationBlock />*/}
         <div className="CabinetSettingsScreen__main Content_box">
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsPersonalInformation')}
