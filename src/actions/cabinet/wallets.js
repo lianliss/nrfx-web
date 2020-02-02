@@ -84,7 +84,7 @@ export function loadMoreTransfers() {
 export function getNoGeneratedCurrencies() {
   const state = store.getState();
   return Object.values(state.cabinet.currencies)
-    .filter((c) => c.can_generate && !c.is_exists);
+    .filter((c) => c.can_generate && c.is_exists === false);
 }
 
 export function loadTransactionInfo(id, type) {
