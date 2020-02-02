@@ -245,6 +245,7 @@ function MenuItem(props) {
 }
 
 const mapStateToProps = (state) => ({
+  currentLang: state.default.currentLang,
   profile: state.default.profile,
   langList: state.default.langList,
   lang: state.default.lang,
