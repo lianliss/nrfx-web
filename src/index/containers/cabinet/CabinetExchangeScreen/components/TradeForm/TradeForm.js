@@ -20,7 +20,7 @@ class TradeForm extends React.Component {
   }
 
   reset = () => {
-    ['sell', 'buy'].map( action => {
+    ['sell', 'buy'].forEach( action => {
       this.props.tradeFormSetProperties(action, { touched: false });
     })
   }
