@@ -42,8 +42,8 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
 
     const currencyInfo = actions.getCurrencyInfo(this.state.info.currency);
 
-    return `${this.state.info.category === 'send' ? utils.getLang('cabinet_walletTransactionModal_sent') 
-      : utils.getLang('cabinet_walletTransactionModal_receive')} ${utils.ucfirst(currencyInfo.name)}`;
+    return this.state.info.category === 'send' ? utils.getLang('cabinet_walletTransactionModal_sent')
+      : <span>{utils.getLang('cabinet_walletTransactionModal_receive')} {utils.ucfirst(currencyInfo.name)}</span>
   }
 
   __renderContent() {
@@ -76,25 +76,25 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
           <div className="WalletTransactionModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
           <InfoRowGroup align="left">
             <InfoRow label={utils.getLang("global_from")}>
-              {data.category === 'send' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
+              {data.category === 'send' ? <>{utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)}</> :
                 <div className="Wallets__history__address">
                   <UI.WalletAddress isUser={data.type === 'transfer'} address={address} />
                 </div>}
             </InfoRow>
             <InfoRow label={utils.getLang("global_to")}>
-              {data.category === 'receive' ? `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)}` :
+              {data.category === 'receive' ? <>{utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)}</> :
                 <div className="Wallets__history__address">
                   <UI.WalletAddress isUser={data.type === 'transfer'} address={address} />
                 </div>}
             </InfoRow>
             <InfoRow label={utils.getLang("global_amount")}><UI.NumberFormat number={data.amount} currency={currency} /></InfoRow>
-            <InfoRow label={utils.getLang("global_fee")}><UI.NumberFormat number={data.fee} currency={currency} /></InfoRow>
+            {data.fee && <InfoRow label={utils.getLang("global_fee")}><UI.NumberFormat number={data.fee} currency={currency} /></InfoRow>}
             <InfoRow label={utils.getLang("global_date")}>{ utils.dateFormat(data.created_at)}</InfoRow>
           </InfoRowGroup>
 
           <UI.WalletCard
             title={utils.getLang('cabinet_walletTransactionModal_total')}
-            balance={data.amount + data.fee}
+            balance={data.amount + (data.fee || 0)}
             currency={currencyInfo}
           />
 
