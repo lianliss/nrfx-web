@@ -92,8 +92,9 @@
     "workbox-webpack-plugin": "4.2.0"
   },
   "scripts": {
-    "start": "DOMAIN=index cross-env HOST=127.0.0.1 PORT=3000 HTTPS=false node scripts/start.js",
-    "start:admin": "DOMAIN=admin npm start",
+    "dev": "cross-env HOST=127.0.0.1 PORT=3000 HTTPS=false node scripts/start.js",
+    "start": "DOMAIN=index npm run run dev",
+    "start:admin": "DOMAIN=admin npm run dev",
     "build": "DOMAIN=index node scripts/build.js && npm run build:admin",
     "build:admin": "DOMAIN=admin node scripts/build.js",
     "ui": "npx styleguidist server",
