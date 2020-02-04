@@ -20,6 +20,7 @@ import PartnerInfoModal from './components/cabinet/PartnerInfoModal/PartnerInfoM
 import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBalanceModal';
 import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
+import GAConfirmModal from './components/cabinet/GAConfirmModal/GAConfirmModal';
 import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
 import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
 import AuthModal from '../components/AuthModal/AuthModal';
@@ -125,6 +126,9 @@ export default function Modals(props) {
       break;
     case 'secret_key_info':
       Component = SecretKeyInfoModal;
+      break;
+    case 'ga_code':
+      Component = GAConfirmModal;
       break;
     default: return null;
   }
