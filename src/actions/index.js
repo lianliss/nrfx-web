@@ -96,6 +96,21 @@ export function confirm(props) {
   })
 }
 
+export function gaCode() {
+  return new Promise((resolve, reject) => {
+    openModal('ga_code');
+    const acceptListener = emitter.addListener('ga_submit', ({code}) => {
+      emitter.removeListener(acceptListener);
+      resolve(code);
+    });
+
+    const closeListener = emitter.addListener('ga_cancel', () => {
+      emitter.removeListener(closeListener);
+      reject();
+    });
+  })
+}
+
 export function setAdaptive(adaptive) {
   return store.dispatch({ type: actionTypes.SET_ADAPTIVE, adaptive });
 }

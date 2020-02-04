@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import * as modalGroupActions from "../../../../../../actions/modalGroup";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
-import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 import UI from '../../../../../../ui';
 import VerificationBlock from '../VerificationBlock/VerificationBlock';
+// import VerificationBlock from '../VerificationBlock/VerificationBlock';
+import * as actions from 'src/actions/index';
+import * as toasts from 'src/actions/toasts';
 
 class SettingPersonal extends React.Component{
 
@@ -67,34 +69,18 @@ class SettingPersonal extends React.Component{
                   } else if (!utils.isName(this.props.user.last_name)) {
                     return this.__inputError(this, 'lastNameInputError');
                   }
-                  modalGroupActions.openModalPage(null, {}, {
-                    children: GAConfirmModal,
-                    params: {
-                      onChangeHandler: (data, modal) => {
-                        settingsActions.changeInfo({
-                          first_name: this.props.user.first_name,
-                          last_name: this.props.user.last_name,
-                          ga_code: data.gaCode
-                        }).then((data) => {
-                          if (data.hasOwnProperty('response') && data.response === "ok") {
-                            this.props.toastPush(utils.getLang("cabinet_nameChangedSuccessfully"), "success");
-                            modal.this.props.close();
-                          }
-                        }).catch((info) => {
-                          switch (info.code) {
-                            case "ga_auth_code_incorrect":
-                              return this.__inputError(modal, 'errorGaCode');
-                              // TODO: Переделать на нормальные модалки, не прокидывать функции в redux
-                            default:
-                              this.props.toastPush(info.message, "error");
-                              break;
-                          }
-                        });
-                      }
-                    }
-                  })}
-                }
-              >
+                  actions.gaCode().then(code => {
+                    settingsActions.changeInfo({
+                      first_name: this.props.user.first_name,
+                      last_name: this.props.user.last_name,
+                      ga_code: code
+                    }).then((data) => {
+                      toasts.success(utils.getLang("cabinet_nameChangedSuccessfully"));
+                    }).catch(error => {
+                      toasts.error(error.message);
+                    });
+                  });
+                }}>
                 {utils.getLang('cabinet_settingsSave')}
               </UI.Button>
             </div>
@@ -116,43 +102,29 @@ class SettingPersonal extends React.Component{
             </div>
             <div className="CabinetSettingsScreen__form right">
               <UI.Button type={buttonType} onClick={() => {
-                if (this.props.user.login.length < 1) {
+                if (!utils.isLogin(this.props.user.login)) {
                   return this.__inputError(this, 'loginInputError');
                 }
-                modalGroupActions.openModalPage(false, {}, {
-                  children: GAConfirmModal,
-                  params: {
-                    onChangeHandler: (data, modal) => {
-                      settingsActions.changeLogin({
-                        login: this.props.user.login,
-                        ga_code: data.gaCode
-                      }).then((data) => {
-                        if (data.hasOwnProperty('response') && data.response === "ok") {
-                          modal.this.props.close();
-                          this.props.toastPush(utils.getLang("cabinet_loginChangedSuccessfully"), "success");
-                        }
-                      }).catch((info) => {
-                        switch (info.code) {
-                          case "ga_auth_code_incorrect":
-                            return this.__inputError(modal, 'errorGaCode');
-                          default:
-                            this.props.toastPush(info.message, "error");
-                            break;
-                        }
-                      });
-                    }
-                  }
+
+                actions.gaCode().then(code => {
+                  settingsActions.changeLogin({
+                    login: this.props.user.login,
+                    ga_code: code
+                  }).then(()=> {
+                    toasts.success(utils.getLang("cabinet_loginChangedSuccessfully"));
+                  }).catch((info) => {
+                    toasts.error(info.message);
+                  });
                 })
               }}>
                 {utils.getLang('cabinet_settingsChange')}
               </UI.Button>
             </div>
           </div>
-          <div className="CabinetSettingsScreen__space">
-          </div>
-          <div className="CabinetSettingsScreen__header">
-            {utils.getLang('cabinet_settingsPhoneNumber')}
-          </div>
+          <div className="CabinetSettingsScreen__space" />
+          {/*<div className="CabinetSettingsScreen__header">*/}
+          {/*  {utils.getLang('cabinet_settingsPhoneNumber')}*/}
+          {/*</div>*/}
           {/*<div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">*/}
           {/*  <div className="CabinetSettingsScreen__form left">*/}
           {/*    <div className="CabinetSettingsScreen__input_field">*/}
