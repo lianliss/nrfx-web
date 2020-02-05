@@ -10,6 +10,7 @@ import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
 import initGetParams from 'src/services/initialGetParams';
 import { registrationSetValue } from 'src/actions/index';
 import Captcha from '../../Captcha/Captcha';
+import * as pages from 'src/index/constants/pages';
 
 function Registration({ changeStep, currentStep, email, onClose, refParam, referrer, registrationSetValue }) {
 
@@ -31,7 +32,14 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
     } else {
       let inviteLink = initGetParams.params.i;
       registerUser(email.trim(), (refParam || referrer), inviteLink, token)
-        .then(() => changeStep(steps.REGISTRATION_SUCCESS))
+        .then(({ hash }) => {
+          if (hash) {
+            window.location.href = '/' + pages.REGISTER + '?hash=' + hash;
+            // router.navigate(pages.REGISTER, { hash });
+          } else {
+            changeStep(steps.REGISTRATION_SUCCESS);
+          }
+        })
         .catch((err) => {
           grecaptcha.reset();
           setErrorMsg(err.message);

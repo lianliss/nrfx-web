@@ -153,9 +153,5 @@ export function checkSmsCode(countryCode, number, code) {
 }
 
 export function registerUser(email, refer = null, invite_link = null, token) {
-  return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignUpPut, { email, refer, invite_link, recaptcha_response: token })
-      .then(() => resolve())
-      .catch((err) => reject(err));
-  });
+  return api.call(apiSchema.Profile.SignUpPut, { email, refer, invite_link, recaptcha_response: token })
 }
