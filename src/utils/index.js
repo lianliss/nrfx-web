@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import store from '../store';
 import router from '../router';
 import moment from 'moment';
+import company from '../index/constants/company';
 import TranslatorMode from 'src/index/components/cabinet/TranslatorMode/TranslatorModal';
 
 export function classNames() {
@@ -105,6 +106,10 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
   return null;
 };
 
+export function isProduction ()  {
+  return true;
+  return window.location.host === company.host;
+}
 export function throttle (func, ms)  {
   let timeout = null;
 

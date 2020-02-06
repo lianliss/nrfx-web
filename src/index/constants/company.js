@@ -1,5 +1,6 @@
 export default {
   name: 'Narfex',
+  host: 'narfex.com',
   url: 'https://narfex.com/',
   wikiUrl: 'https://narfex.info/',
   faqUrl: 'https://narfex.zendesk.com/',
