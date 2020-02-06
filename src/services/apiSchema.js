@@ -849,9 +849,9 @@ export default {
       "params": [],
       "path": "wallet/send"
     },
-    "SendPut": {
+    "TransactionSendPut": {
       "method": "PUT",
-      "name": "send",
+      "name": "transaction_send",
       "params": {
         "WalletId": {
           "name": "wallet_id",
@@ -889,7 +889,49 @@ export default {
           "type": "body"
         }
       },
-      "path": "wallet/send"
+      "path": "wallet/transaction_send"
+    },
+    "TransferSendPut": {
+      "method": "PUT",
+      "name": "transfer_send",
+      "params": {
+        "WalletId": {
+          "name": "wallet_id",
+          "filters": [
+            "required",
+            "positive",
+            "int"
+          ],
+          "type": "body"
+        },
+        "Login": {
+          "name": "login",
+          "filters": {
+            "0": "required",
+            "maxLen": 256
+          },
+          "type": "body"
+        },
+        "Amount": {
+          "name": "amount",
+          "filters": [
+            "required",
+            "positive",
+            "double"
+          ],
+          "type": "body"
+        },
+        "GaCode": {
+          "name": "ga_code",
+          "filters": {
+            "0": "required",
+            "minLen": 6,
+            "maxLen": 6
+          },
+          "type": "body"
+        }
+      },
+      "path": "wallet/transfer_send"
     },
     "GeneratePut": {
       "method": "PUT",
@@ -993,6 +1035,29 @@ export default {
       },
       "path": "investment/calculate"
     },
+    "DepositCalculateGet": {
+      "method": "GET",
+      "name": "deposit_calculate",
+      "params": {
+        "Amount": {
+          "name": "amount",
+          "filters": [
+            "required",
+            "positive"
+          ],
+          "type": "body"
+        },
+        "DepositId": {
+          "name": "deposit_id",
+          "filters": [
+            "required",
+            "positive"
+          ],
+          "type": "body"
+        }
+      },
+      "path": "investment/deposit_calculate"
+    },
     "WithdrawGet": {
       "method": "GET",
       "name": "withdraw",
@@ -1000,7 +1065,8 @@ export default {
         "Currency": {
           "name": "currency",
           "filters": [
-            "required"
+            "required",
+            "positive"
           ],
           "type": "body"
         }
@@ -1038,6 +1104,38 @@ export default {
         }
       },
       "path": "investment/withdraw"
+    },
+    "DepositWithdrawPut": {
+      "method": "PUT",
+      "name": "deposit_withdraw",
+      "params": {
+        "DepositId": {
+          "name": "deposit_id",
+          "filters": [
+            "required",
+            "positive"
+          ],
+          "type": "body"
+        },
+        "Amount": {
+          "name": "amount",
+          "filters": [
+            "required",
+            "positive"
+          ],
+          "type": "body"
+        },
+        "GaCode": {
+          "name": "ga_code",
+          "filters": {
+            "0": "required",
+            "minLen": 6,
+            "maxLen": 6
+          },
+          "type": "body"
+        }
+      },
+      "path": "investment/deposit_withdraw"
     },
     "DepositPut": {
       "method": "PUT",
@@ -1249,7 +1347,13 @@ export default {
     "DefaultGet": {
       "method": "GET",
       "name": "",
-      "params": [],
+      "params": {
+        "StartFrom": {
+          "name": "start_from",
+          "filters": [],
+          "type": "body"
+        }
+      },
       "path": "partner"
     },
     "ProfitChartGet": {
