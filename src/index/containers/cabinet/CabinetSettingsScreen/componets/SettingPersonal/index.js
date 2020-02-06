@@ -37,6 +37,10 @@ class SettingPersonal extends React.Component{
     return(
       <>
         <VerificationBlock />
+        { this.props.profile.user.applicant_id && <div className="CabinetSettingsScreen__main Content_box">
+          <div className="CabinetSettingsScreen__header">applicant_id</div>
+          <pre>{this.props.profile.user.applicant_id}</pre>
+        </div> }
         <div className="CabinetSettingsScreen__main Content_box">
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsPersonalInformation')}
