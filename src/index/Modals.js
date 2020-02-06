@@ -13,6 +13,7 @@ import ChangeSecretKeyModal from './components/cabinet/ChangeSecretKeyModal/Chan
 import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
+import DepositWithdrawModal from './components/cabinet/DepositWithdrawModal/DepositWithdrawModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
 import TranslatorModal from './components/cabinet/TranslatorModal/TranslatorModal';
 import NewInviteLinkModal from './components/cabinet/NewInviteLinkModal/NewInviteLinkModal';
@@ -125,6 +126,9 @@ export default function Modals(props) {
       break;
     case 'secret_key_info':
       Component = SecretKeyInfoModal;
+      break;
+    case 'deposit_withdraw':
+      Component = DepositWithdrawModal;
       break;
     default: return null;
   }
