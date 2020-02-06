@@ -46,11 +46,14 @@ class SendCoinsConfirmModal extends React.Component {
   }
 
   get currentFee() {
+    if (this.props.type === 'login') return 0;
     return this.props.limits[this.currentWallet.currency].fee;
   }
 
   __handleSubmit = (gaCode) => {
     this.props.sendCoins({
+      type: this.props.type,
+      login: this.props.login,
       address: this.props.address,
       wallet_id: this.props.walletId,
       amount: this.props.amount,

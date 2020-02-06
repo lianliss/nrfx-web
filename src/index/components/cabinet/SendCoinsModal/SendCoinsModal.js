@@ -178,12 +178,12 @@ class SendCoinsModal extends React.Component {
               error={this.props.amount && (this.props.amount < this.currentMin || this.props.amount > this.maxAmount)}
               value={this.props.amount}
               description={
-                <span style={{color: currencyInfo.color}}>
+                this.props.type === 'address' ? <span style={{color: currencyInfo.color}}>
                   {utils.getLang('global_fee')}: <UI.NumberFormat
                     number={utils.formatDouble(this.currentFee)}
                     currency={currencyInfo.abbr}
                   />
-                </span>
+                </span> : <span style={{opacity: 0}}>-</span>
               }
             />
             <UI.Tooltip title={utils.getLang('cabinet_sendCoinsModal_tooltipText')}>

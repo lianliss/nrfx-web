@@ -120,7 +120,7 @@ class Input extends React.Component {
         }
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
           this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
-        {this.props.description ? <div className="Input__description">
+        {this.props.description !== undefined ? <div className="Input__description">
           { typeof this.props.description !== 'string' ? this.props.description : <MarkDown content={this.props.description} /> }
         </div> : null}
       </div>
