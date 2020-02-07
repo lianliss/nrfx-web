@@ -107,9 +107,9 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
 };
 
 export function isProduction ()  {
-  return true;
   return window.location.host === company.host;
 }
+
 export function throttle (func, ms)  {
   let timeout = null;
 
