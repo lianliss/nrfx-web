@@ -11,12 +11,14 @@ import initGetParams from 'src/services/initialGetParams';
 import { registrationSetValue } from 'src/actions/index';
 import Captcha from '../../Captcha/Captcha';
 import * as pages from 'src/index/constants/pages';
+// import router from '../../../router';
 
 function Registration({ changeStep, currentStep, email, onClose, refParam, referrer, registrationSetValue }) {
 
   const [isChecked, toggleCheck] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [token, setToken] = useState(null);
+  const [pending, setPending] = useState(false);
   const captchaRef = useRef();
   const isProduction = utils.isProduction();
   const disabled = utils.isProduction() ? (!token || !email) : !email;
@@ -30,6 +32,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
       setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
       let inviteLink = initGetParams.params.i;
+      setPending(true);
       registerUser(email.trim(), (refParam || referrer), inviteLink, token)
         .then(({ hash }) => {
           if (hash) {
@@ -44,7 +47,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
             captchaRef.current.props.grecaptcha.reset();
           }
           setErrorMsg(err.message);
-        });
+        }).finally(() => setPending(false));
     }
   };
 
@@ -101,7 +104,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
 
             <div className="AuthModal__footer">
               <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.LOGIN)}>{utils.getLang('site__authModalLogInBtn')}</h4>
-              <UI.Button disabled={disabled} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
+              <UI.Button disabled={disabled} state={pending && 'loading'} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
             </div>
           </>
         ) : (

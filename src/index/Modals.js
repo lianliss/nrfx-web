@@ -130,6 +130,7 @@ export default function Modals(props) {
       break;
     case 'deposit_withdraw':
       Component = DepositWithdrawModal;
+      break;
     case 'ga_code':
       Component = GAConfirmModal;
       break;

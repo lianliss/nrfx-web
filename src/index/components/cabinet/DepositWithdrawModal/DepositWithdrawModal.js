@@ -14,6 +14,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 import { getDeposit } from '../../../../actions/cabinet/investments';
 import * as actions from '../../../../actions';
 import * as toasts from '../../../../actions/toasts';
+import * as utils from 'src/utils/index';
 import { depositCalculate, depositWithdraw } from '../../../../actions/cabinet/investments';
 
 const DepositWithdrawModal = props => {
@@ -82,9 +83,9 @@ const DepositWithdrawModal = props => {
   };
 
   const handleClickMax = () => {
-    const amount = deposit.can_withdraw_amount;
+    const amount = utils.formatDouble(deposit.can_withdraw_amount, 8);
     setAmount(amount);
-    handleDepositCalculate(deposit, amount);
+    handleDepositCalculate(deposit);
   };
 
   if (!deposit) {

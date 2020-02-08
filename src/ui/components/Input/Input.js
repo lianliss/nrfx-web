@@ -85,6 +85,8 @@ class Input extends React.Component {
       }
     };
 
+    const value = this.props.pattern ? ((this.props.value || "").match(this.props.pattern) || []).join("") : this.props.value;
+
     let cont;
     if (this.props.multiLine) {
       cont = <textarea
@@ -97,7 +99,7 @@ class Input extends React.Component {
       cont = <input
         ref="input"
         {...params}
-        value={this.props.value}
+        value={value}
         onKeyPress={this.__onKeyPress}
         onChange={this.__onChange}
         onBlur={this.props.onBlur || (() => {})}
@@ -138,10 +140,8 @@ class Input extends React.Component {
       }
     }
 
-    if (this.props.pattern) {
-      if (!this.props.pattern.test(e.key)) {
-        e.preventDefault();
-      }
+    if (this.props.pattern && !this.props.pattern.test(e.key)) {
+      e.preventDefault();
     }
 
     if (this.props.type === 'number') {
