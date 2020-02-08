@@ -9,6 +9,10 @@ import * as auth from '../services/auth';
 import * as user from './user';
 import router from '../router';
 import * as pages from '../index/constants/pages';
+import * as actions from './index';
+import * as utils from '../utils';
+import * as exchange from './cabinet/exchange';
+import * as toasts from './toasts';
 
 export function getAuth(login, password, token) {
   const app_id = 8;
@@ -59,9 +63,20 @@ export function getAuth(login, password, token) {
 // }
 
 export function logout() {
-  router.navigate(pages.MAIN);
-  auth.logout();
-  store.dispatch({type: actionTypes.LOGOUT});
+  actions.confirm({
+    title: utils.getLang('cabinet_header_exit'),
+    content: utils.getLang('cabinet_exitConfirmText'),
+    okText: utils.getLang('cabinet_exitActionButton'),
+    type: 'delete'
+  }).then(() => {
+    router.navigate(pages.MAIN);
+    store.dispatch({type: actionTypes.LOGOUT});
+    api.call(apiSchema.Profile.LogoutPost).then(() => {
+      auth.logout();
+    }).catch(err => {
+      toasts.error(err.message);
+    });
+  });
 }
 
 export function setSecretKey() {

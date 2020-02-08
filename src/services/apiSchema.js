@@ -747,6 +747,12 @@ export default {
         }
       },
       "path": "profile/confirm_email"
+    },
+    "LogoutPost": {
+      "method": "POST",
+      "name": "logout",
+      "params": [],
+      "path": "profile/logout"
     }
   },
   "Wallet": {

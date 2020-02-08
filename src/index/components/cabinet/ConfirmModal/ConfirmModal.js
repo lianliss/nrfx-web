@@ -25,6 +25,11 @@ class ConfirmModal extends React.Component {
   render() {
     const { props } = this;
 
+    if (!props.title) {
+      this.props.onClose();
+      return null;
+    }
+
     return <UI.Modal isOpen={true} onClose={this.__handleClose}>
       <UI.ModalHeader>{props.title}</UI.ModalHeader>
       <div className="ConfirmModal">
