@@ -3,6 +3,7 @@ import './index.less';
 // external
 // internal
 import Button from './components/Button/Button';
+import Badge from './components/Badge/Badge';
 import WatchButton from './components/Button/WatchButton';
 import Input from './components/Input/Input';
 import Dropdown from './components/Dropdown/Dropdown';
@@ -37,6 +38,7 @@ import LogoLoader from './components/LogoLoader/LogoLoader';
 
 export default {
   Button,
+  Badge,
   WatchButton,
   Input,
   Dropdown,

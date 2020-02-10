@@ -92,6 +92,7 @@ class TradeForm extends React.Component {
     const form = this.props.form[type];
     const [primaryCurrency, secondaryCurrency] = this.props.market.toUpperCase().split('/');
     const balance = this.props.isLogged ? this.getBalance(type === "buy" ? secondaryCurrency : primaryCurrency) : {};
+    const tickerPrice = utils.formatDouble(this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
     const marketTotalPrice = utils.formatDouble(form.amount * this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
 
     return (
@@ -106,9 +107,9 @@ class TradeForm extends React.Component {
         <div className="TradeForm__form__row">
           <div className="TradeForm__form__coll">
             <UI.Input
-              type="number"
+              type={isMarket ? "text" : "number"}
               error={form.touched && !isMarket && !form.price}
-              value={!isMarket && form.price}
+              value={!isMarket ? form.price : '~' + tickerPrice}
               onTextChange={this.handleChangePrice(type)}
               size="small"
               placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_price')}
@@ -118,7 +119,7 @@ class TradeForm extends React.Component {
           </div>
           <div className="TradeForm__form__coll">
             <UI.Input
-              type="number"
+              type={isMarket ? "text" : "number"}
               error={form.touched && !form.amount}
               value={form.amount}
               onTextChange={this.handleChangeAmount(type)}
@@ -147,10 +148,10 @@ class TradeForm extends React.Component {
           </div>
           <div className="TradeForm__form__coll">
             <UI.Input
-              type="number"
+              type={isMarket ? "text" : "number"}
               error={form.touched && !isMarket && !form.total}
               value={(isMarket ? ( marketTotalPrice ? "~" + marketTotalPrice : '') : form.total)}
-              onTextChange={this.handleChangeTotal(type)}
+              onTextChange={console.log}
               size="small"
               disabled={isMarket}
               placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_total')}

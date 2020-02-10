@@ -12,6 +12,7 @@ const LogoLoader = props => {
     'small': 24,
     'middle': 39,
     'large': 48,
+    'big': 400,
   };
 
   return (

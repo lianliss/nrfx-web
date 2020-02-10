@@ -9,6 +9,7 @@ import * as utils from "../../../../utils";
 import ModalState from '../ModalState/ModalState';
 import * as actions from '../../../../actions'
 import * as toasts from '../../../../actions/toasts'
+import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 class WithdrawalModal extends React.Component {
   state = {
@@ -58,7 +59,7 @@ class WithdrawalModal extends React.Component {
             <div className="WithdrawalModal__info_row">
               <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_beAware')}</div>
               <div className="WithdrawalModal__info_row__caption">
-                {utils.getLang('cabinet_withoutCaption')} {utils.formatDouble(this.state.availableWithoutDrop)} {this.state.currency.toUpperCase()} {utils.getLang('cabinet_withoutCaption2')}
+                {utils.getLang('cabinet_withoutCaption')} <NumberFormat number={this.state.availableWithoutDrop} /> {utils.getLang('cabinet_withoutCaption2')}
               </div>
             </div>
             <div className="WithdrawalModal__info_row">
