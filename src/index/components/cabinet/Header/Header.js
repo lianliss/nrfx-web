@@ -6,7 +6,7 @@ import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 import url from 'url';
 
-import Badge from '../Badge/Badge';
+import Badge from '../../../../ui/components/Badge/Badge';
 import router from '../../../../router';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../../utils';

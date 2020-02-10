@@ -5,14 +5,16 @@
 .Notifications {
   cursor: default;
   width: fit-content;
-  overflow: hidden;
-  overflow-y: auto;
+  //overflow: hidden;
+  //overflow-y: auto;
   box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.15), 0px 0px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
-  max-height: 450px;
   background: #FBF8F6;
   z-index: 101;
-  position: fixed;
+
+  &:not(.inline) {
+    position: fixed;
+  }
 
   &.empty {
     background: var(--uitkit-background);
@@ -21,13 +23,29 @@
   &__empty_text {
     white-space: nowrap;
     display: block;
-    margin: 24px 54px;
+    padding: 24px 54px;
     font-size: 13px;
     color: var(--primary-grey);
+  }
+
+  .LoadingStatus__wrap {
+    height: 100px;
+    width: 200px;
+  }
+
+  .ScrollBox, .ScrollBox__contentWrapper {
+    border-radius: 8px;
+    max-height: 450px;
+  }
+
+  .ScrollBox .ScrollBox__bar__button::before {
+    margin: 6px 0;
+    height: calc(100% - 12px);
   }
 }
 
 .Notification__close_helper {
+  background: #f0f;
   position: fixed;
   top: 0;
   left: 0;
