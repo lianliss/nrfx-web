@@ -11,18 +11,18 @@ function Mission({ lang }) {
   const _renderValues = () => {
     const values = [
       {
-        title: lang.site__aboutMissionTechnologyDevelopmentTitle,
-        caption: lang.site__aboutMissionTechnologyDevelopmentSubTitle,
+        title: utils.getLang('site__aboutMissionTechnologyDevelopmentTitle'),
+        caption: utils.getLang('site__aboutMissionTechnologyDevelopmentSubTitle'),
         icon: require('../asset/change.svg'),
       },
       {
-        title: lang.site__aboutMissionCommunityUsersTitle,
-        caption: lang.site__aboutMissionCommunityUsersSubTitle,
+        title: utils.getLang('site__aboutMissionCommunityUsersTitle'),
+        caption: utils.getLang('site__aboutMissionCommunityUsersSubTitle'),
         icon: require('../asset/community.svg'),
       },
       {
-        title: lang.site__aboutMissionTrustReliabilityTitle,
-        caption: lang.site__aboutMissionTrustReliabilitySubTitle,
+        title: utils.getLang('site__aboutMissionTrustReliabilityTitle'),
+        caption: utils.getLang('site__aboutMissionTrustReliabilitySubTitle'),
         icon: require('../asset/trust.svg'),
       },
     ]
@@ -41,12 +41,12 @@ function Mission({ lang }) {
   return (
     <>
       <div className="SiteAboutScreen__intro">
-        <TitleWithBg title={lang.site__aboutMissionOurMissionTitle} bgTitle={lang.site__aboutMissionOurMissionTitle} centered />
-        <p className="SiteAboutScreen__caption">{utils.nl2br(lang.site__aboutMissionOurMissionSubTitle)}</p>
+        <TitleWithBg title={utils.getLang('site__aboutMissionOurMissionTitle')} bgTitle={utils.getLang('site__aboutMissionOurMissionTitle')} centered />
+        <p className="SiteAboutScreen__caption">{utils.nl2br(utils.getLang('site__aboutMissionOurMissionSubTitle'))}</p>
       </div>
 
       <div className="SiteAboutScreen__mission__values">
-        <h2 className="SiteAboutScreen__mission__values__title">{lang.site__aboutMissionValuesUnitUs}</h2>
+        <h2 className="SiteAboutScreen__mission__values__title">{utils.getLang('site__aboutMissionValuesUnitUs')}</h2>
 
         {_renderValues()}
       </div>
