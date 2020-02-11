@@ -53,11 +53,12 @@ export default class DepositInfoModal extends React.Component {
           {isPool ? utils.getLang('cabinet_detailsInvestmentPoolTitle') : <span>{utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.plan_percent}% {deposit.description}</span>}
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
-          <UI.WalletCard
+          { deposit.can_withdraw && <UI.WalletCard
             balance={deposit.can_withdraw_amount}
             title={utils.getLang('cabinet_investmentsAvailableWithdrawal')}
             currency={currencyInfo}
-          />
+          /> }
+
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
 
           <div className="DepositInfoModal__columns">
@@ -86,7 +87,7 @@ export default class DepositInfoModal extends React.Component {
 
           { deposit.can_withdraw && <div className="DepositInfoModal__withdrawAction">
             <UI.Button
-              disable={!deposit.can_withdraw_amount}
+              disabled={!deposit.can_withdraw_amount}
               onClick={this.handleWithdraw}
               currency={currencyInfo}
             >{utils.getLang('global_withdrawAction')}</UI.Button>
