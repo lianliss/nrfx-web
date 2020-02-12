@@ -15,3 +15,6 @@ git pull
 # Build
 npm i
 npm run build
+
+- rm -R postbuild/*
+cp -R buid/* postbuild/
