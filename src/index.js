@@ -42,6 +42,6 @@ router.start((err, state) => {
   ReactDOM.render(wrappedApp, document.getElementById('root'))
 });
 
-setTimeout(() => console.log('test'), 2000);
+setTimeout(() => console.log(`%c Version: ${React.version}`, 'color: lightgreen'), 2000);
 
 // serviceWorker.register();

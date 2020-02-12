@@ -26,5 +26,3 @@ yarn-error.log*
 
 .idea
 src/swagger
-
-postbuild
