@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# test
-
 # Saves uncommitted changes and reset repo
 git stash
 git reset --hard
