@@ -1,6 +1,7 @@
 import './ChangeNumberModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 
 import ConfirmSmsModal from '../../cabinet/ConfirmSmsModal/ConfirmSmsModal';
@@ -10,10 +11,9 @@ import ReactPhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/dist/style.css'
 import {isValidPhoneNumber} from 'react-phone-number-input';
 import * as settingsActions from '../../../../actions/cabinet/settings';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 
 import SVG from 'react-inlinesvg';
+import * as toastsActions from '../../../../actions/toasts';
 
 class ChangeNumberModal extends React.Component {
   state = {
@@ -140,7 +140,7 @@ class ChangeNumberModal extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CHANGE_PHONE_NUMBER_MODAL,
-  ChangeNumberModal
-);
+
+export default connect(null, {
+  toastPush: toastsActions.toastPush
+})(ChangeNumberModal);

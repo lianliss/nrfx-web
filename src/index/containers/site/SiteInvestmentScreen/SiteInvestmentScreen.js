@@ -7,6 +7,7 @@ import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePa
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import Banner from '../../../components/site/Banner/Banner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
+import { getLang } from '../../../../utils';
 
 
 export default class SiteInvestmentScreen extends BaseScreen {
@@ -17,9 +18,9 @@ export default class SiteInvestmentScreen extends BaseScreen {
           <SitePageInfoBlock
             hideWatchButton
             image={require('./asset/investment_main_image.png')}
-            title={<span>{this.lang.site.investmentTitleInvestment}</span>}
-            caption={<span>{this.lang.site.investmentSubTitle}</span>}
-            buttonText={this.lang.site.investmentInvestBtn}
+            title={<span>{getLang('site__investmentTitleInvestment')}</span>}
+            caption={<span>{getLang('site__site.investmentSubTitle')}</span>}
+            buttonText={getLang('site__site.investmentInvestBtn')}
           />
 
           <div className="SiteInvestmentScreen__numbers">
@@ -27,20 +28,20 @@ export default class SiteInvestmentScreen extends BaseScreen {
           </div>
 
           <div className="SiteInvestmentScreen__intro">
-            <TitleWithBg title={this.lang.site.investmentWhatIsInvestmentTitle} bgTitle={this.lang.site.investmentWhatIsInvestmentTitle} bgTitleUppercase centered darkBg />
+            <TitleWithBg title={getLang('site__investmentWhatIsInvestmentTitle')} bgTitle={getLang('site__investmentWhatIsInvestmentTitle')} bgTitleUppercase centered darkBg />
             <p className="SiteInvestmentScreen__caption">
-              {this.lang.site.investmentWhatIsInvestmentSubTitle}
+              {getLang('site__investmentWhatIsInvestmentSubTitle')}
             </p>
           </div>
 
-          <h2 className="SiteInvestmentScreen__title">{this.lang.site.investmentMoreThanDeposit}</h2>
+          <h2 className="SiteInvestmentScreen__title">{getLang('site__investmentMoreThanDeposit')}</h2>
           {this._renderFeatures()}
         </div>
 
         <Banner
-          title={this.lang.site.investmentNeverBeenEasier}
-          caption={this.lang.site.investmentIncreaseCapital}
-          btnText={this.lang.site.investmentInvestBtn}
+          title={getLang('site__investmentNeverBeenEasier')}
+          caption={getLang('site__investmentIncreaseCapital')}
+          btnText={getLang('site__investmentInvestBtn')}
         />
 
       </div>
@@ -51,16 +52,16 @@ export default class SiteInvestmentScreen extends BaseScreen {
   _renderNumbers = () => {
     const dataWithNumbers = [
       {
-        title: this.lang.site.investmentNumbersTitle1,
-        caption: this.lang.site.investmentNumbersSubTitle1,
+        title: getLang('site__investmentNumbersTitle1'),
+        caption: getLang('site__investmentNumbersSubTitle1'),
       },
       {
-        title: this.lang.site.investmentNumbersTitle2,
-        caption: this.lang.site.investmentNumbersSubTitle2,
+        title: getLang('site__investmentNumbersTitle2'),
+        caption: getLang('site__investmentNumbersSubTitle2'),
       },
       {
-        title: this.lang.site.investmentNumbersTitle3,
-        caption: this.lang.site.investmentNumbersSubTitle3,
+        title: getLang('site__investmentNumbersTitle3'),
+        caption: getLang('site__investmentNumbersSubTitle3'),
       },
     ]
 
@@ -77,28 +78,28 @@ export default class SiteInvestmentScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/investment_feature_1.svg'),
-        title: this.lang.site.investmentHighYieldTitle,
-        caption: this.lang.site.investmentHighYieldSubTitle
+        title: getLang('site__investmentHighYieldTitle'),
+        caption: getLang('site__investmentHighYieldSubTitle')
       },
       {
         icon: require('./asset/investment_feature_2.svg'),
-        title: this.lang.site.investmentInsuredDepositTitle,
-        caption: this.lang.site.investmentInsuredDepositSubTitle
+        title: getLang('site__investmentInsuredDepositTitle'),
+        caption: getLang('site__investmentInsuredDepositSubTitle')
       },
       {
         icon: require('./asset/investment_feature_3.svg'),
-        title: this.lang.site.investmentConvenientOutputTitle,
-        caption: this.lang.site.investmentConvenientOutputSubTitle
+        title: getLang('site__investmentConvenientOutputTitle'),
+        caption: getLang('site__investmentConvenientOutputSubTitle')
       },
       {
         icon: require('./asset/investment_feature_4.svg'),
-        title: this.lang.site.investmentVariableDepositsTitle,
-        caption: this.lang.site.investmentVariableDepositsSubTitle
+        title: getLang('site__investmentVariableDepositsTitle'),
+        caption: getLang('site__investmentVariableDepositsSubTitle')
       },
       {
         icon: require('./asset/investment_feature_5.svg'),
-        title: this.lang.site.investmentReliablePartnerTitle,
-        caption: this.lang.site.investmentReliablePartnerSubTitle
+        title: getLang('site__investmentReliablePartnerTitle'),
+        caption: getLang('site__investmentReliablePartnerSubTitle')
       },
     ].map((item) => {
       return (

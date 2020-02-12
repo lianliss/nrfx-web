@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
   Sentry.init({dsn: "https://2f062902440147cfab7ea204358fdd26@sentry.io/1816477"});
 }
 
-require('define').noConflict();
+// require('define').noConflict();
 auth.setup();
 realTimeService();
 

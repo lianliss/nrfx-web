@@ -12,10 +12,10 @@ import LoadingStatus from '../../cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../../utils';
 
 
-
 class SendCoinsModal extends React.Component {
 
   state = {
+    status: null,
     addressError: false,
   };
 
@@ -26,7 +26,7 @@ class SendCoinsModal extends React.Component {
   render() {
 
     return (
-      <UI.Modal isOpen={true} onClose={this.props.onClose}>
+      <UI.Modal className="SendCoinsModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_sendCoinsModal_name')}
         </UI.ModalHeader>
@@ -36,7 +36,7 @@ class SendCoinsModal extends React.Component {
   }
 
   get currentWallet() {
-    return this.props.wallets.find(w => w.id == this.props.walletId);
+    return this.props.wallets.find(w => w.id === this.props.walletId);
   }
 
   get currentFee() {
@@ -56,6 +56,9 @@ class SendCoinsModal extends React.Component {
       if (property === 'amount') {
         this.props.sendCoinModalSetValue('amountUsd', utils.formatDouble(value * this.currentWallet.to_usd, 2));
       }
+      if (property === 'walletId') {
+        ['amount', 'amountUsd'].forEach(property => this.props.sendCoinModalSetValue(property, ""));
+      }
       if (property === 'amountUsd') {
         this.props.sendCoinModalSetValue('amount', utils.formatDouble(value / this.currentWallet.to_usd));
       }
@@ -64,7 +67,7 @@ class SendCoinsModal extends React.Component {
 
   get maxAmount() {
     const currentWallet = this.currentWallet;
-    return  currentWallet.amount - this.currentFee;
+    return currentWallet.amount - this.currentFee;
   }
 
   __maxDidPress = () => {
@@ -78,19 +81,20 @@ class SendCoinsModal extends React.Component {
   __handleSubmit = () => {
     if (this.props.amount > this.maxAmount) {
       toast.error(
-        utils.getLang('cabinet_sendCoinsModal_maximumAmountText') + ': ' +
-        utils.formatDouble(this.maxAmount) + ' ' +
-        this.currentWallet.currency.toUpperCase()
+        <>{utils.getLang('cabinet_sendCoinsModal_maximumAmountText')} : {utils.formatDouble(this.maxAmount)} {this.currentWallet.currency.toUpperCase()}</>
       );
       return false;
     }
     if (this.props.amount >= this.currentMin) {
-      if (this.props.address.length < 15 ) {
-        walletsActions.checkLogin(this.props.address).then(response => {
+      if (this.props.type === 'login' ) {
+        this.setState({status: 'loading'});
+        walletsActions.checkLogin(this.props.login).then(response => {
           this.setState({ addressError: false });
           actions.openModal('send_confirm');
         }).catch(response => {
           this.setState({ addressError: true });
+        }).finally(() => {
+          this.setState({status: null});
         })
       } else {
         actions.openModal('send_confirm');
@@ -105,9 +109,20 @@ class SendCoinsModal extends React.Component {
   }
 
   __renderContent() {
+    const types = {
+      address: {
+        label: utils.getLang('cabinet_sendCoinsModal_viaBlockchain'),
+        inputPlaceholder: utils.getLang('cabinet_sendCoinsModal_viaBlockchainInputPlaceholder')
+      },
+      login: {
+        label: utils.getLang('cabinet_sendCoinsModal_insidePlatform'),
+        inputPlaceholder: utils.getLang('cabinet_sendCoinsModal_insidePlatformInputPlaceholder')
+      }
+    };
+
     const { wallets, walletId } = this.props;
 
-    if (this.props.loadingStatus) {
+    if (this.props.loadingStatus ) {
       return (
         <LoadingStatus
           inline
@@ -136,10 +151,21 @@ class SendCoinsModal extends React.Component {
             />}
           </div>
           <div className="SendCoinsModal__row">
+            <UI.SwitchTabs
+              currency={currencyInfo}
+              selected={this.props.type}
+              onChange={this.__handleChange('type')}
+              tabs={Object.keys(types).map(type => ({
+                value: type,
+                label: types[type].label,
+              }))}
+            />
+          </div>
+          <div className="SendCoinsModal__row">
             <UI.Input
-              value={this.props.address}
-              placeholder={utils.getLang('cabinet__coinsAddressPlaceholder')}
-              onTextChange={this.__handleChange('address')}
+              value={this.props[this.props.type]}
+              placeholder={types[this.props.type].inputPlaceholder}
+              onTextChange={this.__handleChange(this.props.type)}
               error={this.state.addressError}
             />
           </div>
@@ -149,24 +175,26 @@ class SendCoinsModal extends React.Component {
               indicator={currencyInfo.abbr.toUpperCase()}
               onTextChange={this.__handleChange('amount')}
               type="number"
-              error={this.props.amount && this.props.amount < this.currentMin || this.props.amount > this.maxAmount}
+              error={this.props.amount && (this.props.amount < this.currentMin || this.props.amount > this.maxAmount)}
               value={this.props.amount}
               description={
-                <span style={{color: currencyInfo.color}}>
+                this.props.type === 'address' ? <span style={{color: currencyInfo.color}}>
                   {utils.getLang('global_fee')}: <UI.NumberFormat
                     number={utils.formatDouble(this.currentFee)}
                     currency={currencyInfo.abbr}
                   />
-                </span>
+                </span> : <span style={{opacity: 0}}>-</span>
               }
             />
-            <UI.Input
-              placeholder="0"
-              indicator="USD"
-              type="number"
-              onTextChange={this.__handleChange('amountUsd')}
-              value={this.props.amountUsd}
-            />
+            <UI.Tooltip title={utils.getLang('cabinet_sendCoinsModal_tooltipText')}>
+              <UI.Input
+                placeholder="0"
+                indicator="USD"
+                type="number"
+                onTextChange={this.__handleChange('amountUsd')}
+                value={this.props.amountUsd}
+              />
+            </UI.Tooltip>
             <UI.Button
               smallPadding
               type="outline"
@@ -178,9 +206,13 @@ class SendCoinsModal extends React.Component {
           </div>
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
+              state={this.state.status}
               currency={currencyInfo}
               onClick={this.__handleSubmit}
-              disabled={!this.props.amount || !this.props.address}
+              disabled={!(this.props.amount && (
+                (this.props.type === 'address' && this.props.address) ||
+                (this.props.type === 'login' && this.props.login)
+              ))}
             >
               {utils.getLang("global_send")}
             </UI.Button>

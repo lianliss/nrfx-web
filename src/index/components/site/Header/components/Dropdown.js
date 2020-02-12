@@ -36,7 +36,9 @@ function Dropdown({ title, subItems, onChange, onNavigate, lastItemText, onLastI
                   <span
                     key={item.title}
                     className="SiteHeader__dropdown__link"
-                    onClick={() => onNavigate(item.route)}
+                    onClick={() => {
+                      item.route.includes('http') ? window.open(item.route) : onNavigate(item.route)
+                    }}
                   >
                     {item.title}
                   </span>

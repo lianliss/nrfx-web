@@ -4,8 +4,6 @@ import React from 'react';
 
 import BaseScreen from '../BaseScreen';
 import UI from '../../../ui/index';
-import * as utils from '../../../utils';
-import NumberFormat from '../../../ui/components/NumberFormat/NumberFormat';
 
 export default class UIKitScreen extends BaseScreen {
   constructor(props) {

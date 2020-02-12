@@ -7,15 +7,21 @@ import RateDetailsModal from './components/cabinet/RateDetailsModal/RateDetailsM
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
 import SendCoinsModal from './components/cabinet/SendCoinsModal/SendCoinsModal';
+import SecretKeyDescModal from './components/cabinet/SecretKeyDescModal/SecretKeyDescModal';
+import SecretKeyInfoModal from './components/cabinet/SecretKeyInfoModal/SecretKeyInfoModal';
+import ChangeSecretKeyModal from './components/cabinet/ChangeSecretKeyModal/ChangeSecretKeyModal';
 import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
+import DepositWithdrawModal from './components/cabinet/DepositWithdrawModal/DepositWithdrawModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
+import TranslatorModal from './components/cabinet/TranslatorModal/TranslatorModal';
 import NewInviteLinkModal from './components/cabinet/NewInviteLinkModal/NewInviteLinkModal';
 import PartnerInfoModal from './components/cabinet/PartnerInfoModal/PartnerInfoModal';
 import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBalanceModal';
 import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
+import GAConfirmModal from './components/cabinet/GAConfirmModal/GAConfirmModal';
 import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
 import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
 import AuthModal from '../components/AuthModal/AuthModal';
@@ -24,11 +30,11 @@ import FiatOperationModal from '../index/components/cabinet/FiatOperationModal/F
 import DepositPoolSuccessModal from '../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal';
 import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
 import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlockModal';
+import VerificationModal from '../index/components/cabinet/VerificationModal/VerificationModal';
 import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewBotModal';
 import router from '../router';
 
 export default function Modals(props) {
-
   const routeState = props.router.getState();
   const routerParams = routeState.params;
   delete routerParams.ref;
@@ -107,6 +113,27 @@ export default function Modals(props) {
     case 'user_block':
       Component = UserBlockModal;
       break;
+    case 'translator':
+      Component = TranslatorModal;
+      break;
+    case 'verification':
+      Component = VerificationModal;
+      break;
+    case 'change_secret_key':
+      Component = ChangeSecretKeyModal;
+      break;
+    case 'secret_key':
+      Component = SecretKeyDescModal;
+      break;
+    case 'secret_key_info':
+      Component = SecretKeyInfoModal;
+      break;
+    case 'deposit_withdraw':
+      Component = DepositWithdrawModal;
+      break;
+    case 'ga_code':
+      Component = GAConfirmModal;
+      break;
     default: return null;
   }
 
@@ -115,6 +142,8 @@ export default function Modals(props) {
       {...routerParams}
       {...options}
       onBack={() => {
+        // console.log(router.getState());
+        // debugger;
         window.history.back();
       }}
       onClose={() => {

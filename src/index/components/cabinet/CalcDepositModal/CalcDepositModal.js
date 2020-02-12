@@ -1,14 +1,13 @@
 import './CalcDepositModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 
 import UI from '../../../../ui/';
 import * as utils from '../../../../utils';
 import * as investmentsActions from '../../../../actions/cabinet/investments';
 import * as actions from '../../../../actions';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as api from '../../../../services/api';
 import apiSchema from '../../../../services/apiSchema';
 import * as toastsActions from '../../../../actions/toasts';
@@ -60,7 +59,7 @@ const CalcDepositModal = class extends React.Component {
           value: p.dynamic.id,
           percent: p.dynamic.percent,
           days: p.dynamic.days,
-          note: `${p.dynamic.percent}% ${p.dynamic.days} ${utils.getLang('global_days')}`,
+          note: `${p.dynamic.percent}% ${p.dynamic.days} ${utils.getLang('global_days', true)}`,
         })),
         planId: plans[0].dynamic.id,
         maxDay: plans[0].dynamic.days,
@@ -276,7 +275,6 @@ const CalcDepositModal = class extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CALC_DEPOSIT_MODAL,
-  CalcDepositModal
-);
+export default connect(state => ({
+  currencies: state.cabinet.currencies
+}))(CalcDepositModal);

@@ -10,12 +10,12 @@ class ChartProfit extends React.Component {
     if (!(Object.keys(this.props.chart.data).length > 0)) {
       return <EmptyContentBlock
         icon={require('../../../../asset/120/start_invest_second.svg')}
-        message={utils.getLang("cabinet_placeholder_ investmentsProfitCharts")}
+        message={utils.getLang("cabinet_placeholder_investmentsProfitCharts")}
       />
     }
 
     const chartCurrencies = {};
-    Object.keys(this.props.chart.data).map(currency => {
+    Object.keys(this.props.chart.data).forEach(currency => {
       if (!chartCurrencies.hasOwnProperty(currency)){
         const currencyColor = getCurrencyInfo(currency).color;
         chartCurrencies[currency] = {
@@ -32,13 +32,11 @@ class ChartProfit extends React.Component {
           }
         }
       }
-      this.props.chart.data[currency].map(item => {
-        chartCurrencies[currency]['data'].push({
-          x: item.created_at * 1000,
-          y: item.usd_amount,
-          title: item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
-        });
-      });
+      this.props.chart.data[currency].forEach(item => chartCurrencies[currency]['data'].push({
+        x: item.created_at * 1000,
+        y: item.usd_amount,
+        title: item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
+      }));
     });
 
     let marker = false;

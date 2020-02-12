@@ -7,6 +7,7 @@ import SVG from 'react-inlinesvg';
 // internal
 import MarkDown from '../MarkDown/MarkDown';
 import { classNames, __doubleInputOnKeyPressHandler } from '../../utils';
+import { openModal } from 'src/actions';
 
 class Input extends React.Component {
   constructor(props) {
@@ -32,7 +33,19 @@ class Input extends React.Component {
     this.refs['input'].focus();
   }
 
+  __handleContextMenu = (e) => {
+    if (this.props.placeholder && this.props.placeholder.props) {
+      e.preventDefault();
+      openModal('translator', {
+        langKey: this.props.placeholder.props.langKey
+      })
+    }
+  }
+
   render() {
+    let { placeholder } = this.props;
+    placeholder = typeof placeholder === 'string' ? placeholder : ( placeholder && placeholder.props.langContent );
+
     const className = classNames({
       Input: true,
       multiLine: this.props.multiLine,
@@ -56,10 +69,11 @@ class Input extends React.Component {
       type = "datetime-local";
     }
 
+
     let params = {
       className,
-      placeholder: this.props.placeholder,
-      type: type,
+      type,
+      placeholder: placeholder,
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,
       onKeyPress: this.props.onKeyPress,
@@ -71,19 +85,27 @@ class Input extends React.Component {
       }
     };
 
+    const value = this.props.pattern ? ((this.props.value || "").match(this.props.pattern) || []).join("") : this.props.value;
+
     let cont;
     if (this.props.multiLine) {
-      cont = <textarea ref="input" {...params} onChange={this.__onChange}>{this.props.value}</textarea>;
+      cont = <textarea
+        ref="input"
+        {...params}
+        onContextMenu={this.__handleContextMenu}
+        onChange={this.__onChange}
+      >{this.props.value}</textarea>;
     } else {
       cont = <input
         ref="input"
         {...params}
-        value={this.props.value}
+        value={value}
         onKeyPress={this.__onKeyPress}
         onChange={this.__onChange}
         onBlur={this.props.onBlur || (() => {})}
         disabled={this.props.disabled}
         autoFocus={this.props.autoFocus}
+        onContextMenu={this.__handleContextMenu}
       />;
     }
 
@@ -100,7 +122,7 @@ class Input extends React.Component {
         }
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
           this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
-        {this.props.description ? <div className="Input__description">
+        {this.props.description !== undefined ? <div className="Input__description">
           { typeof this.props.description !== 'string' ? this.props.description : <MarkDown content={this.props.description} /> }
         </div> : null}
       </div>
@@ -118,10 +140,8 @@ class Input extends React.Component {
       }
     }
 
-    if (this.props.pattern) {
-      if (!this.props.pattern.test(e.key)) {
-        e.preventDefault();
-      }
+    if (this.props.pattern && !this.props.pattern.test(e.key)) {
+      e.preventDefault();
     }
 
     if (this.props.type === 'number') {
@@ -171,6 +191,7 @@ Input.propTypes = {
   mouseWheel: PropTypes.bool,
   placeholder: PropTypes.any,
   onChange: PropTypes.func,
+  openModalTranslate: PropTypes.func,
   onTextChange: PropTypes.func,
   multiLine: PropTypes.bool,
   value: PropTypes.any,

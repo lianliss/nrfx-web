@@ -1,13 +1,15 @@
 import './SettingSecurity.less';
-import React from 'react';
 
-import * as modalGroupActions from "../../../../../../actions/modalGroup";
+import React from 'react';
+import { connect } from 'react-redux';
+
+import * as actions from "../../../../../../actions/index";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
-import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
 import UI from '../../../../../../ui';
+import * as toastsActions from '../../../../../../actions/toasts';
 
-export default function SettingSecurity({props}) {
+function SettingSecurity(props) {
   const { user } = props;
 
   const __handleChangePassword = () => {
@@ -25,26 +27,20 @@ export default function SettingSecurity({props}) {
       props.toastPush(utils.getLang('global_passwordsMustBeSame'), "error");
       return false;
     }
-    modalGroupActions.openModalPage(null, {}, {
-      children: GAConfirmModal,
-      params: {
-        onChangeHandler: (data, modal) => {
-          settingsActions.changeNewPassword({
-            old_password: props.user.old_password,
-            password: props.user.new_password,
-            ga_code: data.gaCode
-          }).then(() => {
-            modal.props.close();
-            props.toastPush(utils.getLang("cabinet_passwordUpdateSuccess"), "success");
-            props.setUserFieldValue({field: 'old_password', value: ""});
-            props.setUserFieldValue({field: 'new_password', value: ""});
-            props.setUserFieldValue({field: 're_password', value: ""});
-          }).catch(err => {
-            props.toastPush(err.message, "error");
-          });
-          return this.__inputError(modal, 'errorGaCode');
-        }
-      }
+
+    actions.gaCode().then(code => {
+      settingsActions.changeNewPassword({
+        old_password: props.user.old_password,
+        password: props.user.new_password,
+        ga_code: code
+      }).then(() => {
+        props.toastPush(utils.getLang("cabinet_passwordUpdateSuccess"), "success");
+        props.setUserFieldValue({field: 'old_password', value: ""});
+        props.setUserFieldValue({field: 'new_password', value: ""});
+        props.setUserFieldValue({field: 're_password', value: ""});
+      }).catch(err => {
+        props.toastPush(err.message, "error");
+      });
     })
   }
 
@@ -98,7 +94,7 @@ export default function SettingSecurity({props}) {
       <div className="CabinetSettingsScreen__w100wrapper CabinetSettingsScreen__relative">
         <div className="CabinetSettingsScreen__form left">
           <div className="CabinetSettingsScreen__input_field">
-            <UI.Button onClick={() => {modalGroupActions.openModalPage('secret_key_info')}}>
+            <UI.Button onClick={() => {actions.openModal(props.hasSecretKey ? 'secret_key_info' : 'secret_key')}}>
               {utils.getLang("global_update")}
             </UI.Button>
           </div>
@@ -133,3 +129,18 @@ export default function SettingSecurity({props}) {
     </div>
   )
 }
+
+
+
+export default connect(state => ({
+  ...state.settings,
+  profile: state.default.profile,
+  adaptive: state.default.adaptive,
+  translator: state.settings.translator,
+  hasSecretKey: state.default.profile.has_secret_key
+}), {
+  setTitle: actions.setTitle,
+  loadSettings: settingsActions.loadSettings,
+  setUserFieldValue: settingsActions.setUserFieldValue,
+  toastPush: toastsActions.toastPush
+})(SettingSecurity);

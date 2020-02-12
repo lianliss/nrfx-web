@@ -1,6 +1,7 @@
 import './CabinetInvestmentsScreen.less';
 //
 import React from 'react';
+import { connect } from 'react-redux';
 //
 import UI from '../../../../ui';
 import router from '../../../../router';
@@ -20,12 +21,10 @@ import {ReactComponent as InvestSvg} from '../../../../asset/24px/invest.svg';
 import {ReactComponent as SendSvg} from '../../../../asset/24px/send.svg';
 import {ReactComponent as CalcSvg} from '../../../../asset/24px/calc.svg';
 import * as PAGES from '../../../constants/pages';
-import * as modalGroupActions from '../../../../actions/modalGroup';
 import * as actions from '../../../../actions';
-import * as storeUtils from '../../../storeUtils';
 import * as utils from '../../../../utils';
-import * as CLASSES from '../../../constants/classes';
 import Show from '../../../components/hoc/ShowContent';
+import * as investmentsActions from '../../../../actions/cabinet/investments';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -78,7 +77,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <UI.FloatingButtonItem
               onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'withdrawals' })}}
               icon={require('../../../../asset/24px/send.svg')}
-            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,,
+            >{utils.getLang('cabinet_investmentsScreen_withdrawals')}</UI.FloatingButtonItem>,
             <UI.FloatingButtonItem
               onClick={() => { actions.openModal('calc_deposit')}}
               icon={require('../../../../asset/24px/calc.svg')}
@@ -230,7 +229,15 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   };
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_INVESTMENTS_SCREEN,
-  CabinetInvestmentsScreen
-);
+export default connect(state => ({
+  ...state.investments,
+  adaptive: state.default.adaptive,
+  translator: state.settings.translator
+}),{
+  setTitle: actions.setTitle,
+  loadInvestments: investmentsActions.loadInvestments,
+  loadProfitHistory: investmentsActions.loadProfitHistory,
+  loadWithdrawalHistory: investmentsActions.loadWithdrawalHistory,
+  loadMoreWithdrawalHistory: investmentsActions.loadMoreWithdrawalHistory,
+  loadMoreProfitHistory: investmentsActions.loadMoreProfitHistory,
+})(CabinetInvestmentsScreen);

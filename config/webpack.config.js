@@ -333,7 +333,7 @@ module.exports = function(webpackEnv) {
             // smaller than specified limit in bytes as data URLs to avoid requests.
             // A missing `test` is equivalent to a match.
             {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.base64.css$/,],
               loader: require.resolve('url-loader'),
               options: {
                 limit: 10000,
@@ -535,6 +535,7 @@ module.exports = function(webpackEnv) {
         ...env.stringified,
         'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN)
       }),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       //new webpack.DefinePlugin({'define': define}),
       new webpack.ProvidePlugin({
         'define': 'global.define'

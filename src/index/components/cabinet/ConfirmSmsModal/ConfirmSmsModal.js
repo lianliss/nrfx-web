@@ -1,13 +1,13 @@
 import './ConfirmSmsModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import * as settingsActions from "../../../../actions/cabinet/settings";
 import * as modalGroupActions from "../../../../actions/modalGroup";
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
+import * as toastsActions from '../../../../actions/toasts';
 
 class ConfirmSmsModal extends React.Component {
   state = {
@@ -98,7 +98,7 @@ class ConfirmSmsModal extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CONFIRM_SMS_MODAL,
-  ConfirmSmsModal
-);
+export default connect(null, {
+  setUserFieldValue: settingsActions.setUserFieldValue,
+  toastPush: toastsActions.toastPush
+})(ConfirmSmsModal);

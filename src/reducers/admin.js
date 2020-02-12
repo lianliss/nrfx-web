@@ -1,5 +1,5 @@
+
 import * as actionTypes from '../actions/actionTypes';
-import * as utils from '../utils';
 
 const initialState = {
   menu: [],
@@ -37,7 +37,7 @@ const deleteById = (id, state) => {
 const updateTable = (id, state, layout) => {
   if (state && ['object', 'array'].includes(typeof state)) {
     if (state.id === id) {
-      Object.keys(layout).map(key => {
+      Object.keys(layout).forEach(key => {
         state[key] = layout[key];
       })
     } else {
@@ -121,15 +121,14 @@ export default function reduce(state = initialState, action = {}) {
     case 'reload_table': {
       const newState = { ...state };
       updateTable(params.id, newState, params.layout);
-
       return newState;
     }
 
     case 'reload_table_rows': {
       const newState = { ...state };
-      params.map(row => {
+      params.forEach(row => {
         updateTable(row.id, newState, { items: [] });
-      })
+      });
 
       return newState;
     }

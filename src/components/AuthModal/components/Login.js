@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import UI from 'src/ui';
-import { getAuth } from 'actions/auth';
-import * as utils from 'utils';
+import { getAuth } from 'src/actions/auth';
+import Captcha from 'src/components/Captcha/Captcha';
+import * as utils from 'src/utils';
 import * as steps from '../fixtures';
 
 
-function Login({ changeStep, email, password, handleChange, currentStep }) {
+function Login({ changeStep, email, password, token, handleChange, currentStep }) {
   const [errorMsg, setErrorMsg] = useState('');
+  const [status, setStatus] = useState('');
+  const isProduction = utils.isProduction();
+  const disabled = isProduction ? (!email || !password || !token) : (!email || !password);
+
+  const captchaRef = useRef();
 
   const handleSubmit = () => {
     if (!email) {
@@ -15,16 +21,25 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
     } else if (!password) {
       setErrorMsg(utils.getLang('site__authModalPwdRequired'));
     } else {
-      getAuth(email.trim(), password)
+      setStatus('loading');
+      setErrorMsg('');
+      getAuth(email.trim(), password, token)
         .then((res) => {
           setErrorMsg('');
           changeStep(steps.GOOGLE_AUTH, { loginRes: res });
         })
         .catch((err) => {
+          if (isProduction) {
+            captchaRef.current.props.grecaptcha.reset();
+          }
           setErrorMsg(err.message);
+        }).finally(() => {
+          setStatus('');
         });
     }
   };
+
+
 
   return (
     <>
@@ -39,7 +54,7 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
         <UI.Input
           value={email}
           onChange={(e) => handleChange(e.target.value, 'email')}
-          placeholder={utils.getLang('site__authModalPlaceholderEmail')}
+          placeholder={utils.getLang('site__authModalPlaceholderEmailOrUsername')}
           onKeyPress={(e) => e.key === 'Enter' ? handleSubmit() : null}
         />
         <div className="AuthModal__input_wrapper">
@@ -52,13 +67,16 @@ function Login({ changeStep, email, password, handleChange, currentStep }) {
             type="password"
           />
         </div>
+
+        { isProduction && <Captcha ref={captchaRef} onChange={token => handleChange(token, 'token')} /> }
+
         <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESTORE_PASSWORD)}>{utils.getLang('site__authModalForgotPwd')}</h4>
 
       </div>
 
       <div className="AuthModal__footer">
         <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.REGISTRATION)}>{utils.getLang('site__commerceRegistration')}</h4>
-        <UI.Button fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
+        <UI.Button disabled={disabled} state={status} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </>
   )

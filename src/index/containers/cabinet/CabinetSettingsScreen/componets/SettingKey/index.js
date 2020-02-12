@@ -4,119 +4,111 @@ import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 import copyText from 'clipboard-copy';
 
-import * as modalGroupActions from "../../../../../../actions/modalGroup";
-import * as settingsActions from '../../../../../../actions/cabinet/settings';
-import * as utils from "../../../../../../utils";
-import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
-import GAConfirmModal from '../../../../../components/cabinet/GAConfirmModal/GAConfirmModal';
+import * as settingsActions from 'src/actions/cabinet/settings';
+import * as utils from "src/utils";
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
+import EmptyContentBlock from 'src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
-import ContentBox from '../../../../../../ui/components/ContentBox/ContentBox';
-import UI from '../../../../../../ui';
+import ContentBox from 'src/ui/components/ContentBox/ContentBox';
+import UI from 'src/ui';
+import * as actions from 'src/actions';
+import * as toasts from 'src/actions/toasts';
 
 class SettingKey extends React.Component {
+
+  state = {
+    apiKeyName: null
+  };
 
   componentDidMount() {
     const { dataApiKeys } = this.props
     if(!dataApiKeys){
       this.__handleCheckData()
+    } else {
+      this._handleIsSecretKey()
     }
+
   }
 
   __handleCheckData = () => {
     settingsActions.getApiKeys()
   }
 
-  __gaModalAction = (action) => {
-    modalGroupActions.openModalPage(null, {}, {
-      children: GAConfirmModal,
-      params: {
-        onChangeHandler: action
-      }
-    })
+  _handleIsSecretKey = () => {
+    settingsActions.isSecretKey()
   }
 
   __handleCreateKey = () => {
-    const {user, toastPush} = this.props
-    if(!user.ApiKeyName){
-      toastPush(utils.getLang('cabinet__requiredApiName'), "error");
+    const {apiKeyName} = this.state
+    if (!apiKeyName) {
+      toasts.error(utils.getLang('cabinet__requiredApiName'));
       return false;
     }
-    this.__gaModalAction(
-      (data, modal) => {
-        settingsActions.createKey({
-          name: user.ApiKeyName,
-          ga_code: data.gaCode
-        }).then(() => {
-          modal.props.close();
-          this.props.toastPush(utils.getLang('cabinet__successCreateKey'), "success");
-        }).catch(err => {
-          this.props.toastPush(err.message, "error");
-        })
-      }
-    )
+
+    actions.gaCode().then(code => {
+      settingsActions.createKey({
+        name: apiKeyName,
+        ga_code: code
+      }).then(() => {
+        toasts.success(utils.getLang('cabinet__successCreateKey'));
+        this.setState({apiKeyName: ''})
+      }).catch(err => {
+        toasts.error(err.message);
+      })
+    })
   }
 
   __handleDeleteApiKey = (key_id) => {
     if (!key_id) { return false }
-    this.__gaModalAction(
-      (data, modal) => {
-        settingsActions.deleteKey({
-          key_id,
-          ga_code: data.gaCode
-        }).then(() => {
-          modal.props.close();
-          this.props.toastPush(utils.getLang('cabinet__succesDeleteKey'), "success");
-          this.__handleCheckData()
-        }).catch(err => {
-          this.props.toastPush(err.message, "error");
-        });
-      }
-    )
+    actions.gaCode().then(code => {
+      settingsActions.deleteKey({
+        key_id,
+        ga_code: code
+      }).then(() => {
+        toasts.success(utils.getLang('cabinet__succesDeleteKey'));
+        this.__handleCheckData()
+      }).catch(err => {
+        toasts.error(err.message);
+      });
+    });
   }
 
   __handleGetSecretKey = (key_id) => {
     if (!key_id) { return false }
-    this.__gaModalAction(
-      (data, modal) => {
-        settingsActions.getSecretKey({
-          key_id,
-          ga_code: data.gaCode
-        }).then((item) => {
-          modal.props.close();
-          this.__toggleDisplaySecret()
-        }).catch(err => {
-          this.props.toastPush(err.message, "error");
-        });
-      }
-    )
+    actions.gaCode().then(code => {
+      settingsActions.getSecretKey({
+        key_id,
+        ga_code: code
+      }).then((item) => {
+      }).catch(err => {
+        toasts.error(err.message);
+      });
+    });
   }
 
   __handleSaveItem = (item) => {
     if (!item.id) { return false }
     if (Array.isArray(item.allow_ips) && item.allow_ips){
-      const filter = item.allow_ips.filter(item => item.address === '')
+      const filter = item.allow_ips.filter(item => item.address === '');
       if(filter.length > 0){
-        this.props.toastPush(utils.getLang('cabinet_ip_address_empty'), "error");
+        toasts.error(utils.getLang('cabinet_ip_address_empty'));
         return false
       }
     }
-    this.__gaModalAction(
-      (data, modal) => {
-        settingsActions.saveItemKey({
-          key_id: item.id,
-          allow_ips: item.allow_ips.map(item => item.address).join(', '),
-          name: item.name,
-          permission_trading: item.permission_trading,
-          permission_withdraw: item.permission_withdraw,
-          ga_code: data.gaCode
-        }).then((item) => {
-          modal.props.close();
-          this.props.toastPush(utils.getLang('cabinet_satting_save_key'), "success");
-        }).catch(err => {
-          this.props.toastPush(err.message, "error");
-        });
-      }
-    )
+    actions.gaCode().then(code => {
+      settingsActions.saveItemKey({
+        key_id: item.id,
+        allow_ips: item.allow_ips.map(item => item.address).join(', '),
+        name: item.name,
+        permission_trading: item.permission_trading,
+        permission_withdraw: item.permission_withdraw,
+        ga_code: code
+      }).then((item) => {
+        toasts.success(utils.getLang('cabinet_satting_save_key'));
+      }).catch(err => {
+        toasts.error(err.message);
+      });
+    });
   }
 
   __handleSettingIpAccess = (id, radio) => {
@@ -135,10 +127,6 @@ class SettingKey extends React.Component {
     settingsActions.deleteIpAddress(key_id, id_ip)
   }
 
-  __toggleDisplaySecret = () => {
-    this.setState({ displayPassword: !this.state.displayPassword });
-  }
-
   __handleSettingsCheckTrading = (id, permission_trading) => {
     settingsActions.settingsCheckTrading(id, permission_trading)
   }
@@ -149,20 +137,30 @@ class SettingKey extends React.Component {
 
   __copy = (public_key) => {
     copyText(public_key).then(() => {
-      this.props.toastPush(utils.getLang('cabinet_ keyCopiedSuccessfully'), "success");
+      toasts.success(utils.getLang('cabinet_ keyCopiedSuccessfully'));
     });
   };
 
 
   __renderListApiKeys = () => {
     const { dataApiKeys } = this.props
-    if (!dataApiKeys){return <LoadingStatus inline status="loading" />}
+    if (!dataApiKeys) {
+      return <LoadingStatus inline status="loading" />
+    }
+    if (dataApiKeys.length === 0){
+      return (
+        <EmptyContentBlock
+          icon={require('asset/120/noApiKey.svg')}
+          message={utils.getLang("cabinet__noApiKey")}
+        />
+      )
+    }
 
-    const closeEyeSvg = require('../../../../../../asset/16px/eye-closed.svg');
-    const openEyeSvg = require('../../../../../../asset/16px/eye-open.svg');
-    const copySvg = require('../../../../../../asset/16px/copy.svg');
-    const plusSvg = require('../../../../../../asset/16px/plus.svg');
-    const basketSvg = require('../../../../../../asset/24px/basket.svg');
+    const closeEyeSvg = require('asset/16px/eye-closed.svg');
+    const openEyeSvg = require('asset/16px/eye-open.svg');
+    const copySvg = require('asset/16px/copy.svg');
+    const plusSvg = require('asset/16px/plus.svg');
+    const basketSvg = require('asset/24px/basket.svg');
 
     const listApiKeys = dataApiKeys.map((item,i) => {
       const ip_recomended = !item.radioCheck ? 'first' : item.radioCheck
@@ -186,7 +184,7 @@ class SettingKey extends React.Component {
                 <span className="ApiKey__svg">
                   <SVG src={copySvg}/>
                 </span>
-                {utils.getLang("cabinet_apiKey")}: 
+                {utils.getLang("cabinet_apiKey")}:
               </div>
               <div className="ApiKey__text">
                 {item.public_key}
@@ -196,7 +194,7 @@ class SettingKey extends React.Component {
               <div className="ApiKey__information-title">
                 <span className="ApiKey__svg">
                   <SVG  src={item.displaySecretKey ? openEyeSvg : closeEyeSvg} />
-                </span> 
+                </span>
                 {utils.getLang("cabinet_secretKey")}:
               </div>
               <div className="ApiKey__text">
@@ -211,7 +209,7 @@ class SettingKey extends React.Component {
             </div>
             <div className="ApiKey__ipAddress">
               <div className="ApiKey__information-title">{utils.getLang("ip_access_restrictions:")}:</div>
-              <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio)}> 
+              <UI.RadioGroup selected={ip_recomended} onChange={(radio) => this.__handleSettingIpAccess(item.id, radio)}>
                 <UI.Radio value="first">{utils.getLang("unrestricted_ip")} <br /> <span>{utils.getLang("unrestricted_ip_warning")}</span></UI.Radio>
                 <UI.Radio value="second">{utils.getLang("unrestricted_ip_recommended")}</UI.Radio>
               </UI.RadioGroup>
@@ -220,10 +218,11 @@ class SettingKey extends React.Component {
                 {
                   item.allow_ips.map((data, i) => {
                     return (
-                      <UI.Input 
+                      <UI.Input
                         indicator={<div className="svg_basket" onClick={() => this.__handleDeleteIpAddress({ key_id: item.id, id_ip: i })}><SVG src={basketSvg}/></div>}
                         onTextChange={(value) => this.__handleIpFieldValue({ key_id: item.id, id_ip: i, value })}
                         placeholder={utils.getLang("trusted_ip_address") }
+                        autoFocus={true}
                         error={data.address === "" && data.touched}
                         value={data.address}
                         key={i}
@@ -252,24 +251,25 @@ class SettingKey extends React.Component {
           </div>
         </ContentBox>
       )
-    })
-    
+    });
+
     return(
       listApiKeys
     )
-  }
-
-  
+  };
 
   render(){
+    const { apiKeyName } =  this.state;
     return(
-      <React.Fragment>
+      <>
         <ContentBox className="ApiKey">
           <div className="ApiKey__title">{utils.getLang('cabinet__newCreateKey')}</div>
           <div className="ApiCreateKey__form">
             <UI.Input
-              placeholder={utils.getLang('cabinet__apiKeyName')} 
-              onTextChange={value => this.props.setUserFieldValue({field: 'ApiKeyName', value})}
+              placeholder={utils.getLang('cabinet__apiKeyName')}
+              onTextChange={value => this.setState({apiKeyName: value})}
+              autoFocus={true}
+              value={apiKeyName}
             />
             <UI.Button
               size="large"
@@ -279,16 +279,12 @@ class SettingKey extends React.Component {
             </UI.Button>
           </div>
         </ContentBox>
-        {
-          this.__renderListApiKeys()
-        }
-      </React.Fragment>
+        {this.__renderListApiKeys()}
+      </>
     )
   }
 }
 
-export default connect(state => {
-  return { 
-    dataApiKeys: state.settings.dataApiKeys
-  };
-})(SettingKey);
+export default connect(state => ({
+  dataApiKeys: state.settings.dataApiKeys
+}))(SettingKey);

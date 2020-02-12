@@ -1,20 +1,16 @@
+
 import './Header.less';
 
 import React from 'react';
-import SVG from 'react-inlinesvg';
 import router from '../../../../router';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from "../../../constants/classes";
-import * as utils from "../../../../utils/";
 import UI from '../../../../ui';
 import url from "url";
+import {connect} from 'react-redux';
+import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
+import * as notificationsActions from '../../../../actions/cabinet/notifications';
 
 class AdaptiveHeader extends React.Component {
   state = {activePage: null};
-
-  handleNavigate = (route) => {
-    router.navigate(route);
-  };
 
   render() {
     const { internalNotifications } = this.props;
@@ -28,21 +24,13 @@ class AdaptiveHeader extends React.Component {
             </div>
           </div>
           <div className="CabinetHeader__mainContent">
-            {utils.switchMatch(this.props.mainContent.type, {
-              'logotype': <div className="CabinetHeader__mainContent_logo">
-                <SVG src={require("../../../../asset/logo_full_adaptive.svg")} />
-              </div>,
-              'default': <div className="CabinetHeader__mainContent_text">
-                <span>
-                  {this.props.mainContent.content}
-                </span>
-              </div>
-            })}
+            <div className="CabinetHeader__mainContent_text">
+              <span>{this.props.mainContent.content}</span>
+            </div>
           </div>
           <div className="CabinetHeader__rightContent">
             {this.props.rightContent}
           </div>
-
         </div>
         {internalNotification && <UI.InternalNotification
           adaptive={true}
@@ -72,7 +60,15 @@ AdaptiveHeader.defaultProps = {
   rightContent: ""
 };
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_CABINET_HEADER,
-  AdaptiveHeader
-);
+export default connect(state => ({
+  internalNotifications: state.internalNotifications,
+  profile: state.default.profile,
+  notifications: state.notifications,
+  router: state.router,
+  langList: state.default.langList,
+  title: state.default.title,
+}), {
+  dropInternalNotifications: internalNotifications.drop,
+  loadNotifications: notificationsActions.loadNotifications,
+  notificationAction: notificationsActions.submitAction,
+})(AdaptiveHeader);

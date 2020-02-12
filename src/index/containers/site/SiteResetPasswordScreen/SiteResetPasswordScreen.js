@@ -1,13 +1,16 @@
 import './SiteResetPasswordScreen.less';
+
 import React from 'react';
+import { connect } from 'react-redux';
+
 import UI from '../../../../ui';
 import { withRouter } from 'react-router5';
 import { GetParamsContext } from '../../../contexts';
 import apiSchema from '../../../../services/apiSchema';
 import * as api from "../../../../services/api";
-import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../../utils";
-import * as CLASSES from "../../../constants/classes";
+import * as actions from '../../../../actions';
+import * as toastsActions from '../../../../actions/toasts';
 
 class CabinetRegister extends React.PureComponent {
   state = {
@@ -105,7 +108,8 @@ class CabinetRegister extends React.PureComponent {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_RESET_PASSWORD,
-  withRouter(CabinetRegister)
-);
+
+export default connect(null, {
+  setTitle: actions.setTitle,
+  toastPush: toastsActions.toastPush
+})(withRouter(CabinetRegister));

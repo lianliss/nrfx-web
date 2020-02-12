@@ -2,7 +2,6 @@ import './Badge.less';
 
 import React from 'react';
 
-
 function Badge({ count, children }) {
   return (
     <div className="Badge">

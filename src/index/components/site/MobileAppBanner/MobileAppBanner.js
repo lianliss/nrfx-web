@@ -11,7 +11,7 @@ export default function MobileAppBanner() {
       <div className="MobileAppBanner__bg" />
       <div className="MobileAppBanner__cont">
         <div className="MobileAppBanner__text">
-          <div className="MobileAppBanner__title">{utils.nl2br(utils.getLang('site__mobileAppBannerTitle'))}</div>
+          <div className="MobileAppBanner__title">{utils.getLang('site__mobileAppBannerTitle')}</div>
           <div className="MobileAppBanner__caption">{utils.getLang('site__mobileAppBannerSubTitle')}</div>
         </div>
         <div className="MobileAppBanner__buttons">

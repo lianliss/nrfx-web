@@ -30,7 +30,6 @@ export function loadProfitHistory() {
       dispatch({ type: actionTypes.INVESTMENTS_PROFITS_SET, profits, total: total_count });
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: '' });
     }).catch((err) => {
-      console.log(err);
       toastsActions.toastPush("Error load profit history", "error")(dispatch, getState);
       dispatch({ type: actionTypes.INVESTMENTS_SET_LOADING_STATUS, section: 'profits', status: 'failed' });
     });
@@ -41,6 +40,17 @@ export function getDeposit(id) {
   return api.call(apiSchema.Investment.DepositGet, {
     deposit_id: id
   })
+}
+
+export function depositCalculate(depositId, amount) {
+  return api.call(apiSchema.Investment.DepositCalculateGet, {
+    deposit_id: depositId,
+    amount
+  });
+}
+
+export function depositWithdraw(params) {
+  return api.call(apiSchema.Investment.DepositWithdrawPut, params);
 }
 
 export function calculate({ currency, planId, amount, days }) {
@@ -124,6 +134,16 @@ export function withdrawAdd({amount, wallet_id, ga_code}) {
 
 export function getWithdraw(currency) {
   return api.call(apiSchema.Investment.WithdrawGet, { currency })
+}
+
+export function createDeposit(pool, params) {
+  return api.call(apiSchema.Investment[pool ? 'PoolDepositPut' : 'DepositPut'], params)
+    .then(({ balances, deposit}) => {
+      store.dispatch({ type: actionTypes.INVESTMENTS_OPEN_DEPOSIT_SUCCESS, balances, deposit });
+    }).catch((err) => {
+      toastsActions.error(err.message);
+      throw err;
+    })
 }
 
 export function openDepositModalPropertySet(payload) {

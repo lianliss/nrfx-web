@@ -1,12 +1,13 @@
 import './NotificationsScreen.less';
 //
 import React from 'react';
+import { connect } from 'react-redux';
 //
 import UI from '../../../../../ui';
 import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
 import * as utils from '../../../../../utils';
-import * as storeUtils from '../../../../storeUtils';
-import * as CLASSES from '../../../../constants/classes';
+import * as actions from '../../../../../actions';
+import * as notificationsActions from '../../../../../actions/cabinet/notifications';
 
 class Notifications extends CabinetBaseScreen {
   componentDidMount() {
@@ -52,7 +53,9 @@ class Notifications extends CabinetBaseScreen {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_NOTIFICATIONS_SCREEN,
-  Notifications
-);
+export default connect(state => ({
+  notifications: state.notifications,
+}), {
+  setTitle: actions.setTitle,
+  loadNotifications: notificationsActions.loadNotifications
+})(Notifications);

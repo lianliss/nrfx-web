@@ -3,7 +3,6 @@ import './Button.less';
 // external
 import React from 'react';
 import PropTypes from 'prop-types';
-import SVG from 'react-inlinesvg';
 // internal
 import {classNames} from '../../utils';
 
@@ -71,7 +70,7 @@ Button.defaultProps = {
 
 Button.propTypes = {
   size: PropTypes.oneOf(['middle', 'small', 'large', 'ultra_small']),
-  type: PropTypes.oneOf(['normal', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'primary']),
+  type: PropTypes.oneOf(['normal', 'secondary', 'outline', 'negative', 'negative_outline', 'outline_white', 'sell', 'buy', 'danger', 'success', 'primary']),
   currency: PropTypes.object,
   className: PropTypes.string,
   btnType: PropTypes.string,
@@ -83,7 +82,7 @@ Button.propTypes = {
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
   title: PropTypes.string,
-  state: PropTypes.oneOf(['default', 'loading', 'disabled'])
+  state: PropTypes.oneOf(['default', 'loading', 'disabled', ''])
 };
 
 export default React.memo(Button);

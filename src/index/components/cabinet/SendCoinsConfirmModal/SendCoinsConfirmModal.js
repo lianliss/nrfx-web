@@ -14,7 +14,7 @@ class SendCoinsConfirmModal extends React.Component {
 
 
   render() {
-    if (!this.props.amount || this.props.loadingStatus === 'success') {
+    if (!this.props.amount || this.props.loadingStatus.send === 'success') {
       this.props.onClose();
       return false;
     }
@@ -30,7 +30,7 @@ class SendCoinsConfirmModal extends React.Component {
   }
 
   get currentWallet() {
-    return this.props.wallets.find(w => w.id == this.props.walletId);
+    return this.props.wallets.find(w => w.id === this.props.walletId);
   }
 
   __handleChange = value => {
@@ -42,16 +42,18 @@ class SendCoinsConfirmModal extends React.Component {
 
   __getTitle() {
     const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
-    return `${utils.getLang('cabinet_sendCoinsConfirmModal_name')} ${utils.ucfirst(currencyInfo.name)}`;
+    return <span>{utils.getLang('cabinet_sendCoinsConfirmModal_name')} {utils.ucfirst(currencyInfo.name)}</span>;
   }
 
   get currentFee() {
-    const fee = this.props.limits[this.currentWallet.currency];
-    return Math.max(fee.min, this.props.amount * fee.fee);
+    if (this.props.type === 'login') return 0;
+    return this.props.limits[this.currentWallet.currency].fee;
   }
 
   __handleSubmit = (gaCode) => {
     this.props.sendCoins({
+      type: this.props.type,
+      login: this.props.login,
       address: this.props.address,
       wallet_id: this.props.walletId,
       amount: this.props.amount,
@@ -60,7 +62,7 @@ class SendCoinsConfirmModal extends React.Component {
   };
 
   __renderContent() {
-    const { address, amount, gaCode = '' } = this.props;
+    const { address, login, amount, gaCode = '' } = this.props;
     const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
 
     return (
@@ -69,16 +71,16 @@ class SendCoinsConfirmModal extends React.Component {
         <UI.List items={[
           {
             label: utils.getLang('global_from'),
-            value: `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)} ${utils.getLang('global_wallet')}`
+            value: <span>{utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)} {utils.getLang('global_wallet')}</span>
           },
-          { label: utils.getLang('global_to'), value: address },
+          { label: utils.getLang('global_to'), value: address || login },
           { label: utils.getLang('global_amount'), value: <NumberFormat number={amount} currency={currencyInfo.abbr} /> },
           { label: utils.getLang('global_fee'), value: <NumberFormat number={this.currentFee} currency={currencyInfo.abbr} /> }
         ]} />
 
         <UI.WalletCard
           title={utils.getLang('cabinet_sendCoinsConfirmModal_total')}
-          balance={amount + this.currentFee}
+          balance={parseFloat(amount) + this.currentFee}
           currency={currencyInfo}
         />
 
@@ -92,14 +94,14 @@ class SendCoinsConfirmModal extends React.Component {
           value={gaCode}
           onTextChange={this.__handleChange}
           placeholder={utils.getLang('site__authModalGAPlaceholder')}
-          error={gaCode.length === 6 && this.props.loadingStatus === 'failed'}
+          error={gaCode.length === 6 && this.props.loadingStatus.sendCode === 'ga_auth_code_incorrect'}
           indicator={
             <SVG src={require('../../../../asset/google_auth.svg')} />
           }
         />
         <div className="SendCoinsConfirmModal__submit_wrapper">
           <UI.Button
-            state={this.props.loadingStatus}
+            state={this.props.loadingStatus.send}
             currency={currencyInfo}
             onClick={() => this.__handleSubmit()}
             disabled={gaCode.length !== 6}
@@ -113,7 +115,7 @@ class SendCoinsConfirmModal extends React.Component {
 }
 
 export default connect(state => ({
-  loadingStatus: state.wallets.loadingStatus.send,
+  loadingStatus: state.wallets.loadingStatus,
   wallets: state.wallets.wallets,
   limits: state.wallets.limits,
   ...state.wallets.sendCoinModal,

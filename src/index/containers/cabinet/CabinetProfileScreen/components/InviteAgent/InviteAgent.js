@@ -2,9 +2,7 @@ import './InviteAgent.less';
 
 import React from 'react';
 import UI from '../../../../../../ui/index';
-import SVG from 'react-inlinesvg';
 
-import * as actions from '../../../../../../actions';
 import * as toastsActions from '../../../../../../actions/toasts';
 import * as profileActions from '../../../../../../actions/cabinet/profile';
 import * as utils from '../../../../../../utils';

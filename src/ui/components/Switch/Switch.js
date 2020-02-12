@@ -18,7 +18,7 @@ function Switch(props) {
       <div className="Switch__control">
         <div className="Switch__indicator" />
       </div>
-      <div className="Switch__label">{props.children}</div>
+      { props.children && <div className="Switch__label">{props.children}</div> }
     </div>
   );
 }

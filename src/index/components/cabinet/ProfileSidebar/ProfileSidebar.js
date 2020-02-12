@@ -4,29 +4,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
+import { connect } from 'react-redux';
 
 import { classNames, makeModalParams } from '../../../../utils';
 import router from '../../../../router';
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
 import Footer from "../Footer/Footer";
 import ProfileUser from '../ProfileUser/ProfileUser';
 
 class ProfileSidebar extends React.Component {
   render() {
-    let verified = false; //verificationText = 'Not verified';
-
-    switch (this.props.verification) {
-      case 'verified':
-        verified = true;
-        //verificationText = 'Verified';
-        break;
-      default: break;
-    }
+    // let verified = false; //verificationText = 'Not verified';
+    //
+    // switch (this.props.verification) {
+    //   case 'verified':
+    //     verified = true;
+    //     //verificationText = 'Verified';
+    //     break;
+    //   default: break;
+    // }
 
     return <div className="ProfileSidebar">
       <div className="ProfileSidebar__top">
-        <ProfileUser profile={this.props.profile} />
+        <ProfileUser />
         <div className="ProfileSidebar__menu">
           {this.__getBackButton()}
           {this.props.sidebarOptions && this.props.sidebarOptions.map(child => {
@@ -80,7 +79,7 @@ ProfileSidebar.defaultProps = {
 //     if (!section || !appName) {
 //       return '';
 //     }
-//     const routeName = section ? window.location.pathname.substr(1) : 'profile';
+//     const routeName = section ? window.location.pathname.substr(1) : 'dashboard';
 //     return (
 //       <BaseLink
 //         router={router}
@@ -89,7 +88,7 @@ ProfileSidebar.defaultProps = {
 //         activeClassName="_a"
 //       >
 //         <SVG src={require('../../../asset/cabinet/angle_left.svg')} />
-//         {section ? appName : 'Profile'}
+//         {section ? appName : 'Dashboard'}
 //       </BaseLink>
 //     )
 //   };
@@ -176,7 +175,6 @@ ProfileSidebarItem.propTypes = {
   baselink: PropTypes.bool
 };
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_PROFILE_SIDEBAR,
-  ProfileSidebar
-);
+export default connect(state => ({
+  profile: state.default.profile
+}))(ProfileSidebar);

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import UI from 'src/ui';
 import * as utils from 'utils';
 import Resend from 'src/index/components/site/Resend/Resend';
+import * as PAGES from 'src/index/constants/pages';
 import { checkSmsCode } from 'actions/auth';
 
 
@@ -15,7 +16,7 @@ function SmsCode({ changeStep, params }) {
     checkSmsCode(countryCode, number, code)
       .then(() => {
         setErrorMsg('');
-        setTimeout(() => window.location = '/profile', 100);
+        setTimeout(() => window.location = '/' + PAGES.DASHBOARD, 100);
       })
       .catch((err) => setErrorMsg(err.message));
   }

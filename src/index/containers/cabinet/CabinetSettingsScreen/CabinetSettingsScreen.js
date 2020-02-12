@@ -1,6 +1,7 @@
 import './CabinetSettingsScreen.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/ProfileSidebar';
@@ -11,13 +12,14 @@ import SettingKey from './componets/SettingKey';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import ProfileUser from '../../../components/cabinet/ProfileUser/ProfileUser';
 import UI from '../../../../ui';
-import * as storeUtils from "../../../storeUtils";
 import * as utils from "../../../../utils";
-import * as CLASSES from "../../../constants/classes";
 
 import {ReactComponent as IdBadgeSvg} from '../../../../asset/24px/id-badge.svg';
 import {ReactComponent as ShieldSvg} from '../../../../asset/24px/shield.svg';
 import {ReactComponent as KeySvg} from '../../../../asset/24px/key.svg';
+import * as actions from '../../../../actions';
+import * as settingsActions from '../../../../actions/cabinet/settings';
+import * as toastsActions from '../../../../actions/toasts';
 
 
 class CabinetSettingsScreen extends CabinetBaseScreen {
@@ -75,7 +77,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
           />*/
         ]}
       >
-        {this.props.adaptive && <ProfileUser profile={this.props.profile} />}
+        {this.props.adaptive && <ProfileUser />}
         {this.__renderContent()}
       </PageContainer>
     </div>);
@@ -235,7 +237,14 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_SETTINGS_SCREEN,
-  CabinetSettingsScreen
-);
+export default connect(state => ({
+  ...state.settings,
+  profile: state.default.profile,
+  adaptive: state.default.adaptive,
+  translator: state.settings.translator
+}), {
+  setTitle: actions.setTitle,
+  loadSettings: settingsActions.loadSettings,
+  setUserFieldValue: settingsActions.setUserFieldValue,
+  toastPush: toastsActions.toastPush
+})(CabinetSettingsScreen);

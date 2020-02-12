@@ -1,3 +1,22 @@
+export function noExponents(number) {
+  let data = String(number).split(/[eE]/);
+  if (data.length === 1) return data[0];
+
+  let z = '', sign= this < 0 ? '-' : '',
+    str = data[0].replace('.', ''),
+    mag = Number(data[1]) + 1;
+
+  if (mag < 0) {
+    z = sign + '0.';
+    while (mag++) z += '0';
+    // eslint-disable-next-line
+    return z + str.replace(/^\-/,'');
+  }
+  mag -= str.length;
+  while(mag--) z += '0';
+  return str + z;
+}
+
 export function classNames() {
   let result = [];
 
@@ -27,7 +46,7 @@ export function classNames() {
 export function __doubleInputOnKeyPressHandler(e, value = '') {
   switch (e.key) {
     default:
-      if (isNaN(parseInt(e.key)) || value.length === 1 && value[0] === '0') {
+      if (isNaN(parseInt(e.key)) || (value.length === 1 && value[0] === '0')) {
         e.preventDefault();
       }
       break;
@@ -37,31 +56,46 @@ export function __doubleInputOnKeyPressHandler(e, value = '') {
   }
 }
 
+export function getScrollbarWidth() {
+  const outer = document.createElement("div");
+  outer.style.visibility = "hidden";
+  outer.style.width = "100px";
+  document.body.appendChild(outer);
+  const widthNoScroll = outer.offsetWidth;
+  outer.style.overflow = "scroll";
+  const inner = document.createElement("div");
+  inner.style.width = "100%";
+  outer.appendChild(inner);
+  const widthWithScroll = inner.offsetWidth;
+  outer.parentNode.removeChild(outer);
+  return widthNoScroll - widthWithScroll;
+}
+
+
 
 export function parseMd(md){
-
   // \n
   md = md.replace(/(\\n)/g, "\n");
 
   //h
-  md = md.replace(/[\#]{6}(.+)/g, '<h6>$1</h6>');
-  md = md.replace(/[\#]{5}(.+)/g, '<h5>$1</h5>');
-  md = md.replace(/[\#]{4}(.+)/g, '<h4>$1</h4>');
-  md = md.replace(/[\#]{3}(.+)/g, '<h3>$1</h3>');
-  md = md.replace(/[\#]{2}(.+)/g, '<h2>$1</h2>');
-  md = md.replace(/[\#]{1}(.+)/g, '<h1>$1</h1>');
+  md = md.replace(/[\#]{6}(.+)/g, '<h6>$1</h6>'); // eslint-disable-line
+  md = md.replace(/[\#]{5}(.+)/g, '<h5>$1</h5>'); // eslint-disable-line
+  md = md.replace(/[\#]{4}(.+)/g, '<h4>$1</h4>'); // eslint-disable-line
+  md = md.replace(/[\#]{3}(.+)/g, '<h3>$1</h3>'); // eslint-disable-line
+  md = md.replace(/[\#]{2}(.+)/g, '<h2>$1</h2>'); // eslint-disable-line
+  md = md.replace(/[\#]{1}(.+)/g, '<h1>$1</h1>'); // eslint-disable-line
 
   //links
-  md = md.replace(/[\[]{1}([^\]]+)[\]]{1}[\(]{1}([^\)\"]+)(\"(.+)\")?[\)]{1}/g, '<a href="$2" title="$4">$1</a>');
+  md = md.replace(/[\[]{1}([^\]]+)[\]]{1}[\(]{1}([^\)\"]+)(\"(.+)\")?[\)]{1}/g, '<a href="$2" title="$4">$1</a>'); // eslint-disable-line
 
   //font styles
-  md = md.replace(/[\*\_]{2}([^\*\_]+)[\*\_]{2}/g, '<b>$1</b>');
-  md = md.replace(/[\*\_]{1}([^\*\_]+)[\*\_]{1}/g, '<i>$1</i>');
-  md = md.replace(/[\~]{2}([^\~]+)[\~]{2}/g, '<del>$1</del>');
+  md = md.replace(/[\*\_]{2}([^\*\_]+)[\*\_]{2}/g, '<b>$1</b>'); // eslint-disable-line
+  md = md.replace(/[\*\_]{1}([^\*\_]+)[\*\_]{1}/g, '<i>$1</i>'); // eslint-disable-line
+  md = md.replace(/[\~]{2}([^\~]+)[\~]{2}/g, '<del>$1</del>'); // eslint-disable-line
 
   //p
   md = md.replace(/^\s*(\n)?(.+)/gm, function(m){
-    return  /\<(\/)?(h\d|ul|ol|li|blockquote|pre|img)/.test(m) ? m : '<p>'+m+'</p>';
+    return  /\<(\/)?(h\d|ul|ol|li|blockquote|pre|img)/.test(m) ? m : '<p>'+m+'</p>'; // eslint-disable-line
   });
   return md;
 }

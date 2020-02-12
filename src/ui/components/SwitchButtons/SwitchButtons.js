@@ -17,7 +17,7 @@ const SwitchButtons = props => {
           key={tab.value}
           size="ultra_small"
           disabled={tab.disabled}
-          rounded
+          rounded={props.rounded}
           type={tab.value !== props.selected ? "secondary" : 'normal'}
           onClick={() => props.onChange(tab.value)}
         >{tab.icon || tab.label}</UI.Button>
@@ -34,6 +34,7 @@ SwitchButtons.propTypes = {
   selected: PropTypes.any,
   currency: PropTypes.string,
   className: PropTypes.string,
+  rounded: PropTypes.bool,
   onChange: PropTypes.func.isRequired
 };
 

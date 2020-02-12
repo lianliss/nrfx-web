@@ -1,6 +1,7 @@
 import './CabinetWalletScreen.less';
 //
 import React from 'react';
+import { connect } from 'react-redux';
 //
 import UI from '../../../../ui';
 import router from '../../../../router';
@@ -20,12 +21,9 @@ import {ReactComponent as HistorySvg} from '../../../../asset/24px/history.svg';
 import {ReactComponent as FiatSvg} from '../../../../asset/24px/fiat.svg';
 import {ReactComponent as SendSvg} from '../../../../asset/24px/send.svg';
 import {ReactComponent as ReceiveSvg} from '../../../../asset/24px/receive.svg';
-import * as modalGroupActions from '../../../../actions/modalGroup';
 import * as actions from '../../../../actions';
 import * as PAGES from '../../../constants/pages';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as utils from '../../../../utils';
 
 class CabinetWalletScreen extends CabinetBaseScreen {
@@ -94,14 +92,14 @@ class CabinetWalletScreen extends CabinetBaseScreen {
             !!walletsActions.getNoGeneratedCurrencies().length &&
             <UI.FloatingButtonItem
               icon={require('../../../../asset/24px/plus-circle.svg')}
-              onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+              onClick={() => {actions.openModal('new_wallet')}}
             >
               {utils.getLang("cabinet_walletBox_create")}
             </UI.FloatingButtonItem>
           ] : [
             !!walletsActions.getNoGeneratedCurrencies().length &&
             <ProfileSidebarItem
-              onClick={() => {modalGroupActions.openModalPage('new_wallet')}}
+              onClick={() => {actions.openModal('new_wallet')}}
               icon={<PlusCircleSvg />}
               label={utils.getLang("cabinet_walletBox_create")}
             />,
@@ -251,7 +249,13 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   });
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_WALLET_SCREEN,
-  CabinetWalletScreen
-);
+export default connect(state => ({
+  ...state.wallets,
+  adaptive: state.default.adaptive,
+  translator: state.settings.translator
+}), {
+  setTitle: actions.setTitle,
+  loadWallets: walletsActions.loadWallets,
+  loadMoreTransactions: walletsActions.loadMoreTransactions,
+  loadMoreTransfers: walletsActions.loadMoreTransfers,
+})(CabinetWalletScreen);

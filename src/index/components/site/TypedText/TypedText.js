@@ -2,15 +2,19 @@
 
 import './TypedText.less';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { getLang } from '../../../../utils';
 
 let currentProductIndex = 0;
 
-export default class TypedText extends React.PureComponent {
+class TypedText extends React.PureComponent {
   animationTimer = null;
+
   state = {
+    currentKey: this.props.products[0],
     currentString: ''
-  }
+  };
 
   componentDidMount() {
     this.typeMessage();
@@ -18,13 +22,17 @@ export default class TypedText extends React.PureComponent {
 
   typeMessage() {
     const { products } = this.props;
-    const currentProduct = products[currentProductIndex];
+    this.setState({
+      currentKey: products[currentProductIndex]
+    });
+
+    const currentProduct = getLang(products[currentProductIndex], true);
     const currentProductArr = currentProduct ? currentProduct.split("") : [];
     let curString = '';
     let currentLetter = 0;
     let int1 = setInterval(() => {
       if (!currentProductArr[currentLetter]) {
-        if (currentProductIndex < products.length) {
+        if (currentProductIndex < products.length - 1) {
           currentProductIndex++;
         } else {
           currentProductIndex = 0;
@@ -61,10 +69,16 @@ export default class TypedText extends React.PureComponent {
   }
 
   render() {
-    const { currentString } = this.state;
+    const { currentString, currentKey } = this.state;
 
     return (
-      <div className="TypedText">{currentString}</div>
+      <div className="TypedText">
+        {getLang(currentKey, currentString)}
+      </div>
     )
   }
 }
+
+export default connect(state => ({
+  translatorMode: state.default.profile.user && state.settings.translator
+}))(TypedText);

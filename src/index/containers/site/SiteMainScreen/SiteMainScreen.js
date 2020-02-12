@@ -15,7 +15,6 @@ import TypedText from '../../../components/site/TypedText/TypedText';
 import initGetParams from '../../../../services/initialGetParams';
 import COMPANY from '../../../constants/company';
 
-
 export default class SiteMainScreen extends BaseScreen {
   componentDidMount() {
     if (initGetParams.params.i) {
@@ -24,13 +23,10 @@ export default class SiteMainScreen extends BaseScreen {
   }
 
   getAnimatedTitle = () => {
-    const { site } = this.lang;
     const products = [
-      site.homeSlideExchange,
-      site.homeSlideWallet,
-      site.homeSlideInvestments,
-      site.homeSlideRobots,
-      site.homeSlidePayment
+      'site__homeSlideExchange',
+      'site__homeSlideWallet',
+      'site__homeSlideRobots',
     ];
 
     return (
@@ -49,13 +45,13 @@ export default class SiteMainScreen extends BaseScreen {
           <SitePageInfoBlock
             image={require('../../site/SiteMainScreen/asset/homepage_screen.png')}
             title={<span>{COMPANY.name}:<br />{this.getAnimatedTitle()}</span>}
-            caption={<span>{utils.nl2br(this.lang.site.homeWalletSubTitile)}</span>}
-            buttonText={this.lang.site.homeBegin}
+            caption={<span>{utils.getLang('site__homeWalletSubTitile')}</span>}
+            buttonText={utils.getLang('site__homeBegin')}
           />
 
           <div className="SiteSectionHeader">
-            <div className="SiteSectionHeaderTitle">{this.lang.site.homeBitcoibotCombine}</div>
-            <div className="SiteSectionHeaderCaption">{this.lang.site.homeBitcoibotCombineSubTitle}</div>
+            <div className="SiteSectionHeaderTitle">{utils.getLang('site__homeBitcoibotCombine')}</div>
+            <div className="SiteSectionHeaderCaption">{utils.getLang('site__homeBitcoibotCombineSubTitle')}</div>
           </div>
         </div>
 
@@ -64,31 +60,33 @@ export default class SiteMainScreen extends BaseScreen {
           <div className="Layout_spacing">
 
             <HomepageProduct
-              title={this.lang.site.homeExchange}
-              bgTitle={this.lang.site.homeExchange}
+              title={utils.getLang('site__homeExchange')}
+              bgTitle={utils.getLang('site__homeExchange')}
               icon="exchange"
               seeMoreLink={pages.SITE_EXCHANGE}
-            >{[this.lang.site.homeExchangeSubTitile1, this.lang.site.homeExchangeSubTitile2, this.lang.site.homeExchangeSubTitile3]}</HomepageProduct>
+            >{[utils.getLang('site__homeExchangeSubTitile1'), utils.getLang('site__homeExchangeSubTitile2'), utils.getLang('site__homeExchangeSubTitile3')]}</HomepageProduct>
             <HomepageProduct
-              title={this.lang.site.homeWallet}
-              bgTitle={this.lang.site.homeWallet}
+              title={utils.getLang('site__homeRobots')}
+              bgTitle={utils.getLang('site__homeRobots')}
+              icon="robot"
+              reverse
+              seeMoreLink={pages.ROBOTS}
+            >{[utils.getLang('site__homeRobotsSubTitle1'), utils.getLang('site__homeRobotsSubTitle2'), utils.getLang('site__homeRobotsSubTitle3')]}</HomepageProduct>
+            <HomepageProduct
+              title={utils.getLang('site__homeWallet')}
+              bgTitle={utils.getLang('site__homeWallet')}
               icon="wallet"
               seeMoreLink={pages.WALLET}
-              reverse
-            >{[this.lang.site.homeWalletSubTitle1, this.lang.site.homeWalletSubTitle4, this.lang.site.homeWalletSubTitle3]}</HomepageProduct>
-            <HomepageProduct
-              title={this.lang.site.homeRobots}
-              bgTitle={this.lang.site.homeRobots}
-              icon="robot"
-              seeMoreLink={pages.ROBOTS}
-            >{[this.lang.site.homeRobotsSubTitle1, this.lang.site.homeRobotsSubTitle2, this.lang.site.homeRobotsSubTitle3]}</HomepageProduct>
-            <HomepageProduct
-              title={this.lang.site.homeInvestments}
-              bgTitle={this.lang.site.homeInvestments}
-              icon="investment"
-              seeMoreLink={pages.INVESTMENT}
-              reverse
-            >{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>
+            >{[utils.getLang('site__homeWalletSubTitle1'), utils.getLang('site__homeWalletSubTitle4'), utils.getLang('site__homeWalletSubTitle3')]}</HomepageProduct>
+
+            {/*<HomepageProduct*/}
+            {/*  title={this.lang.site.homeInvestments}*/}
+            {/*  bgTitle={this.lang.site.homeInvestments}*/}
+            {/*  icon="investment"*/}
+            {/*  seeMoreLink={pages.INVESTMENT}*/}
+            {/*  reverse*/}
+            {/*>{[this.lang.site.homeInvestmentsSubTitle1, this.lang.site.homeInvestmentsSubTitle2, this.lang.site.homeInvestmentsSubTitle3]}</HomepageProduct>*/}
+
             {/*<HomepageProduct*/}
             {/*  title={this.lang.site.homePayment}*/}
             {/*  bgTitle={this.lang.site.homePayment}*/}
@@ -101,8 +99,8 @@ export default class SiteMainScreen extends BaseScreen {
 
         <div className="SiteMainScreen__safety">
           <div className="SiteSectionHeader">
-            <div className="SiteSectionHeaderTitle">{this.lang.site.homeSecurityTitle}</div>
-            <div className="SiteSectionHeaderCaption">{this.lang.site.homeSecuritySubTitle}</div>
+            <div className="SiteSectionHeaderTitle">{utils.getLang('site__homeSecurityTitle')}</div>
+            <div className="SiteSectionHeaderCaption">{utils.getLang('site__homeSecuritySubTitle')}</div>
           </div>
 
           {this._renderSafety()}
@@ -120,18 +118,18 @@ export default class SiteMainScreen extends BaseScreen {
   _renderSafety() {
     const items = [{
       icon: require('./asset/homepage_safety_1.svg'),
-      title: this.lang.site.homeSafetyTitle1,
-      caption: this.lang.site.homeSafetySubTitle1,
+      title: utils.getLang('site__homeSafetyTitle1'),
+      caption: utils.getLang('site__homeSafetySubTitle1'),
       route: pages.SAFETY,
     }, {
       icon: require('./asset/homepage_safety_2.svg'),
-      title: this.lang.site.homeSafetyTitle2,
-      caption: this.lang.site.homeSafetySubTitle2,
+      title: utils.getLang('site__homeSafetyTitle2'),
+      caption: utils.getLang('site__homeSafetySubTitle2'),
       route: pages.SAFETY,
     }, {
       icon: require('./asset/homepage_safety_3.svg'),
-      title: this.lang.site.homeSafetyTitle3,
-      caption: this.lang.site.homeSafetySubTitle3,
+      title: utils.getLang('site__homeSafetyTitle3'),
+      caption: utils.getLang('site__homeSafetySubTitle3'),
       route: pages.TECHNOLOGY,
     }].map((item) => {
       return (
@@ -141,7 +139,7 @@ export default class SiteMainScreen extends BaseScreen {
           caption={item.caption}
           icon={item.icon}
           className="SiteHomepageSafety__item"
-          btn={<a href={`/${item.route}`} className="SiteHomepageSafety__item__more">{this.lang.site.homeLearnMore}</a>}
+          btn={<a href={`/${item.route}`} className="SiteHomepageSafety__item__more">{utils.getLang('site__homeLearnMore')}</a>}
         />
       )
     });

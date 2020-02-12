@@ -5,6 +5,7 @@ import UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import SVG from 'react-inlinesvg';
+import * as emitter from '../../../../services/emitter';
 
 export default class GAConfirmModal extends React.Component {
 
@@ -13,9 +14,19 @@ export default class GAConfirmModal extends React.Component {
     errorGaCode: false
   };
 
+  __handleClose = () => {
+    emitter.emit('ga_cancel');
+    this.props.onClose();
+  }
+
+  __handleSubmit = () => {
+    emitter.emit('ga_submit', { code: this.state.gaCode });
+    this.props.onClose();
+  }
+
   render() {
     return (
-      <UI.Modal className="GAConfirmModal" isOpen={true} onClose={() => {this.props.close()}} width={384}>
+      <UI.Modal className="GAConfirmModal" isOpen={true} onClose={this.__handleClose} width={384}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_ga_modal_name')}
         </UI.ModalHeader>
@@ -34,7 +45,7 @@ export default class GAConfirmModal extends React.Component {
           mouseWheel={false}
           autoComplete="off"
           value={this.state.gaCode}
-          onChange={this.__handleChange}
+          onTextChange={this.__handleChange}
           placeholder={utils.getLang('site__authModalGAPlaceholder')}
           error={this.state.errorGaCode}
           indicator={
@@ -50,8 +61,7 @@ export default class GAConfirmModal extends React.Component {
     )
   }
 
-  __handleChange = e => {
-    const val = e.target.value;
+  __handleChange = val => {
     if (val.length < 6) {
       this.setState({gaCode: val});
     } else if (val.length === 6) {
@@ -60,10 +70,6 @@ export default class GAConfirmModal extends React.Component {
       });
     }
   };
-
-  __handleSubmit = () => {
-    this.props.params.onChangeHandler(this.state, this);
-  }
 }
 
 GAConfirmModal.defaultProps = {

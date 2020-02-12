@@ -19,16 +19,16 @@ function GoogleAuth({ changeStep, email, password, params }) {
   const handleSubmit = (code) => {
     const googleCode = code ? code : gaCode;
     setPending(true);
+    setErrorMsg('');
 
     getGoogleCode(email, password, googleCode)
       .then((data) => {
-        setErrorMsg('');
         if (data.status === 'phone_not_verified') {
           changeStep(steps.CONFIRM_NUMBER, { phoneCode: data.phone_code, phoneNumber: data.phone_number, googleCode });
         } else if (process.env.DOMAIN === 'admin') {
           router.navigate(adminPages.PANEL);
         } else {
-          window.location.href = router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.PROFILE;
+          router.navigate(router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.DASHBOARD);
         }
       })
       .catch((err) => setErrorMsg(err.message))
@@ -92,7 +92,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
             <SVG src={require('../../../asset/google_auth.svg')} />
           }
         />
-        
+
         {loginRes.need_ga_setup !== true && (
           <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>{utils.getLang('site__authModalResetKey')}</h4>
         )}

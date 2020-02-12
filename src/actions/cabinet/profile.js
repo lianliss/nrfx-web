@@ -21,6 +21,13 @@ export function loadDashboard() {
   };
 }
 
+
+export function setVerificationStatus(status) {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.PROFILE_SET_VERIFICATION_STATUS, status });
+  };
+}
+
 export function changeSecretKay(secret) {
   return (dispatch, getState) => {
     api.call(apiSchema.Profile.SecretKeyLoggedPost, { secret }).then((dashboard) => {
@@ -110,6 +117,10 @@ export function loadPartnerInfo(login) {
       .then((info) => resolve(info))
       .catch((err) => reject(err));
   });
+}
+
+export function getSumsub() {
+  return api.call(apiSchema.Sumsub.GetAccessTokenGet);
 }
 
 export function inviteAgent(login) {

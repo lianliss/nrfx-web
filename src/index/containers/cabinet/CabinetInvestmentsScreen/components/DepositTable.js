@@ -3,9 +3,7 @@ import UI from '../../../../../ui';
 
 import * as utils from '../../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as modalGroupActions from "../../../../../actions/modalGroup";
 import * as actions from "../../../../../actions";
-import SVG from "react-inlinesvg";
 
 export default function WithdrawalTable({ deposits, adaptive, fromPartners, skipContentBox }) {
   if (!deposits.length) {
@@ -51,7 +49,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
       }>
         <div>{utils.getLang('cabinet_profileScreen_invested')}</div>
       </UI.TableColumn>,
-      <UI.TableColumn align="right" sub={`${utils.getLang('global_days')}/ID`}>
+      <UI.TableColumn align="right" sub={<>{utils.getLang('global_days')}/ID</>}>
         {utils.getLang('cabinet_investmentsScreen_profit')}
       </UI.TableColumn>,
     ];
@@ -102,7 +100,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
             {utils.formatDouble(item.amount)} {item.currency.toUpperCase()}
           </UI.TableColumn>
           <UI.TableColumn
-            sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')} / ${utils.formatTableId(deposits.length - i)}`}
+            sub={<>{item.passed_days} / {item.days} {utils.getLang('global_days', true)} / {utils.formatTableId(deposits.length - i)}</>}
             align="right">{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
         </UI.TableCell>
       )
@@ -129,7 +127,7 @@ export default function WithdrawalTable({ deposits, adaptive, fromPartners, skip
         )}
         <UI.TableColumn align="right">{utils.formatDouble(item.amount)} {item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn
-          sub={`${item.passed_days} / ${item.days} ${utils.getLang('global_days')}`}
+          sub={<>{item.passed_days} / {item.days} {utils.getLang('global_days')}</>}
           align={fromPartners ? 'left' : 'right'}>{utils.formatDouble(item.profit)} {item.currency.toUpperCase()}</UI.TableColumn>
         {fromPartners && <UI.TableColumn>{utils.formatDouble(item.agent_profit)} {item.currency.toUpperCase()}</UI.TableColumn>}
       </UI.TableCell>

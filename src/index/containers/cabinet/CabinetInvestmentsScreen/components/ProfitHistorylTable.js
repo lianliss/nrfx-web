@@ -1,10 +1,8 @@
 import React from 'react';
-import moment from 'moment/min/moment-with-locales';
 import UI from '../../../../../ui';
 
 import * as utils from '../../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import SVG from "react-inlinesvg";
 
 export default function WithdrawalTable({ profits, total, adaptive }) {
   if (!profits.items || !profits.items.length) {
@@ -35,7 +33,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
       <UI.TableColumn sub={utils.getLang("rate") + ' / ' + utils.getLang("global_type")}>
         {utils.getLang("global_invested")}
       </UI.TableColumn>,
-      <UI.TableColumn align="right" sub={utils.getLang("global_date") + ' / ' + 'ID'}>
+      <UI.TableColumn align="right" sub={utils.getLang("global_date") + ' / ID'}>
         {utils.getLang("cabinet_investmentsScreen_profit")}
       </UI.TableColumn>,
     ];

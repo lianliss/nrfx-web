@@ -2,11 +2,17 @@
   display: flex;
   margin: 0 5px;
 
-  .Button {
+  & > * {
+    margin-right: 8px;
+    align-self: center;
+  }
+
+  & > .Button {
     margin-right: 16px;
   }
 
   .Block {
+    align-self: auto;
     flex: 1;
     margin: 12px;
   }

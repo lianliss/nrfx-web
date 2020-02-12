@@ -2,7 +2,9 @@ import * as auth from './auth';
 
 class RealTime {
   constructor() {
-    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo?access_token=' + auth.getToken();
+    const token = auth.getToken();
+    // this.endpoint = 'wss://ex.bitcoinbot.pro/' + (token ? `?access_token=${token}` : '');
+    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo' + (token ? `?access_token=${token}` : '');
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;
@@ -12,13 +14,12 @@ class RealTime {
     this.__connect();
   }
 
-  reconnect = () => {
-    if (this.connection.readyState === 3) {
-      this.__connect();
-    }
-  };
-
   __connect = () => {
+
+    // setTimeout(() => {
+    //   this.connection.close();
+    // }, 20000);
+
     this.connected = false;
     this.connection = new WebSocket(this.endpoint);
 
@@ -32,6 +33,7 @@ class RealTime {
       }
 
       this.__restoreSubscriptions();
+      this.triggerListeners('open_connection');
     };
 
     this.connection.onerror = (error) => {
@@ -40,9 +42,10 @@ class RealTime {
     };
 
     this.connection.onclose = () => {
-      this.connected = false;
+      console.log('[WS] Close');
+      // this.connected = false;
       this.triggerListeners('close_connection');
-      console.log('[WS] Disconnected, reconnection..');
+      setTimeout(this.__connect, 1000);
     };
 
     this.connection.onmessage = this.__messageDidReceive;
@@ -83,7 +86,12 @@ class RealTime {
     if (!this.listeners[name]) {
       this.listeners[name] = [];
     }
+
     this.listeners[name].push(callback);
+
+    if (this.connected && name === 'open_connection') {
+      this.triggerListeners(name);
+    }
   }
 
   removeListener(name, callback) {
@@ -99,7 +107,7 @@ class RealTime {
   }
 
   triggerListeners(name, data = {}) {
-    console.log('triggerListeners');
+    console.log('triggerListeners', name);
     if (!this.listeners[name]) {
       return;
     }

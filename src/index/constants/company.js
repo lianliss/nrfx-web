@@ -1,7 +1,9 @@
 export default {
   name: 'Narfex',
+  host: 'narfex.com',
   url: 'https://narfex.com/',
   wikiUrl: 'https://narfex.info/',
+  faqUrl: 'https://narfex.zendesk.com/',
   email: {
     support: 'support@narfex.com',
     info: 'info@narfex.com',
@@ -16,5 +18,6 @@ export default {
   apps: {
     android: 'https://play.google.com/store/apps/details?id=com.bitcoinbot&hl=en',
     // ios: '#'
-  }
+  },
+  reCaptchaSiteKey: '6LdRL9QUAAAAAE45WnoX0AM_MSiYgS2aJsbiNI0a'
 }

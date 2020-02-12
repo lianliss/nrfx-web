@@ -2,7 +2,7 @@ import './Block.less';
 
 import React, { useState } from 'react';
 
-import * as utils from '../../../../../../utils';
+import { classNames as cn } from '../../../../../../utils';
 import * as storage from '../../../../../../services/storage';
 import UI from '../../../../../../ui/index';
 
@@ -16,26 +16,26 @@ export default function Block(props) {
     controls,
     skipCollapse,
     skipPadding,
-    name
+    name,
   } = props;
 
-  const storagekey = name + '_collapsed';
+  const storageKey = name + '_collapsed';
 
-  const [collapsed, setCollapsed] = useState(!!storage.getItem(storagekey));
+  const [collapsed, setCollapsed] = useState(!!storage.getItem(storageKey));
 
   const __setCollapsed = (stage) => {
     setCollapsed(stage);
-    stage ? storage.setItem(storagekey, true) : storage.removeItem(storagekey);
+    stage ? storage.setItem(storageKey, true) : storage.removeItem(storageKey);
   };
 
-  const classNames = utils.classNames({
+  const classNames = cn({
     Exchange__block: true,
     skip_padding: !!skipPadding
-  });
+  }, props.className);
 
   if (tabs) {
     title = tabs.map(({tag, label}) => {
-      const className = utils.classNames({
+      const className = cn({
         Exchange__block__tab: true,
         active: tag === selectedTab,
       });
@@ -69,7 +69,7 @@ export default function Block(props) {
         }}>{title}</div>
         <div className="Exchange__block__head__controls">{controls}</div>
       </div>}
-      <div className="Exchange__block__content">
+      <div className={cn("Exchange__block__content")}>
         {children}
       </div>
     </Wrapper>

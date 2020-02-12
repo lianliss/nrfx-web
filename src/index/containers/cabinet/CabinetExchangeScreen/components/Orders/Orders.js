@@ -3,7 +3,6 @@ import React, { memo } from 'react';
 import Block from '../Block/Block';
 import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
-import moment from 'moment/min/moment-with-locales';
 import { connect } from 'react-redux';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as exchange from '../../../../../../actions/cabinet/exchange';
@@ -50,6 +49,8 @@ class Orders extends React.Component {
         return this.__renderOpen(adaptive);
       case 'history':
         return this.__renderHistory(adaptive);
+      default:
+        return null;
     }
   }
 
@@ -131,7 +132,7 @@ class Orders extends React.Component {
       ) : (
         <UI.TableCell className={sideClassName} key={order.id}>
           <UI.TableColumn><UI.NumberFormat number={order.price} currency={order.secondary_coin} /></UI.TableColumn>
-          <UI.TableColumn><UI.NumberFormat number={order.amount} currency={order.secondary_coin} /></UI.TableColumn>
+          <UI.TableColumn><UI.NumberFormat number={order.amount} currency={order.primary_coin} /></UI.TableColumn>
           <UI.TableColumn align="right">{utils.dateFormat(order.updated_at, 'HH:mm:ss')}</UI.TableColumn>
         </UI.TableCell>
       );
@@ -228,6 +229,9 @@ class Orders extends React.Component {
   }
 }
 
-export default connect((state) => ({ ...state.exchange }), {
+export default connect((state) => ({
+  ...state.exchange,
+  lang: state.default.lang
+}), {
 
 })(memo(Orders));

@@ -3,6 +3,10 @@
   max-width: 472px;
 }
 
+.SendCoinsModal__wrapper .LoadingStatus__wrap {
+  width: 300px;
+}
+
 .SendCoinsModal__wallet {
   display: flex;
   align-items: center;
@@ -30,8 +34,10 @@
 
 .SendCoinsModal__amount {
   display: flex;
+  align-items: flex-start;
 
-  .Input__wrapper {
+  & > .Input__wrapper,
+  .Tooltip__wrapper {
     flex: 1;
   }
 
@@ -39,7 +45,9 @@
     flex: 0 0 auto;
   }
 
-  .Input__wrapper, .Button {
+  & > .Input__wrapper,
+  .Tooltip__wrapper,
+  .Button {
     margin-left: 16px;
 
     &:first-child {
@@ -58,6 +66,10 @@
     max-width: 100%;
   }
 
+  .SendCoinsModal__wrapper .LoadingStatus__wrap {
+    width: 100%;
+  }
+
   .Modal .SendCoinsModal {
     &__amount {
       width: calc(100% - 80px);
@@ -67,6 +79,15 @@
       .Input__wrapper {
         margin: 0;
         margin-bottom: 24px;
+      }
+
+      .Tooltip__wrapper {
+        width: 100%;
+        margin-left: 0;
+
+        .Input__wrapper {
+          margin-bottom: 0;
+        }
       }
 
       .Button {

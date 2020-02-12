@@ -61,11 +61,21 @@
   }
 
   &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     word-break: break-word;
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
     margin-bottom: 8px;
+  }
+
+  &__verified {
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
   }
 
   &__txt {
@@ -75,6 +85,10 @@
     letter-spacing: 0.444444px;
     color: var(--secondary-grey);
     margin-bottom: 4px;
+  }
+
+  &__verifyButton {
+    margin-top: 8px;
   }
 
   &__verify.verified {
@@ -98,8 +112,7 @@
 
 .adaptive {
   .ProfileUser {
-    margin: -8px 0;
-    margin-left: 24px;
+    margin: -8px 0 24px 24px;
     display: flex;
     align-items: center;
 
@@ -118,7 +131,7 @@
 
     &__txt {
       margin-bottom: 8px;
-      
+
       &:last-child {
         margin-bottom: 0;
       }

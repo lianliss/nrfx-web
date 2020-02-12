@@ -2,11 +2,14 @@
   position: relative;
   flex: 1;
 
+  .ContentBox__content {
+    overflow: hidden;
+  }
+
   &.currency {
     grid-column-start: span 2;
 
     .ContentBox__content {
-      overflow: hidden;
       background-position: right top;
       background-repeat: no-repeat;
       background-image: url('./assets/currencyBackground.svg');
@@ -22,7 +25,6 @@
     font-weight: 600;
     font-size: 11px;
     line-height: 16px;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,7 +32,13 @@
     transform: rotate(45deg) translate(34px, -12px);
 
     &.new {
+      color: white;
       background: var(--uikit-primary-green);
+    }
+
+    &.soon {
+      color: #4D4D4D;
+      background: var(--uikit-primary-light);
     }
   }
 

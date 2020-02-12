@@ -1,3 +1,4 @@
+
 import './Header.less';
 
 import React from 'react';
@@ -5,18 +6,19 @@ import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 import url from 'url';
 
-import Badge from '../Badge/Badge';
+import Badge from '../../../../ui/components/Badge/Badge';
 import router from '../../../../router';
 import * as pages from '../../../constants/pages';
-import * as storeUtils from '../../../storeUtils';
 import * as utils from '../../../../utils';
-import * as CLASSES from "../../../constants/classes";
 import UI from "../../../../ui/index";
 import * as auth from '../../../../actions/auth';
 import * as steps from '../../../../components/AuthModal/fixtures';
 import * as actions from '../../../../actions';
 import {getLang} from '../../../../services/lang';
 import COMPANY from '../../../constants/company';
+import {connect} from 'react-redux';
+import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
+import * as notificationsActions from '../../../../actions/cabinet/notifications';
 
 
 class Header extends React.Component {
@@ -49,12 +51,13 @@ class Header extends React.Component {
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
           <div className="CabinetHeader__content">
-            <BaseLink router={router} routeName={isLogged ? pages.PROFILE : pages.MAIN}>
+            <BaseLink router={router} routeName={isLogged ? pages.DASHBOARD : pages.MAIN}>
               <UI.Logo />
             </BaseLink>
             { isLogged && <div className="CabinetHeader__links">
-              <BaseLink router={router} routeName={pages.PROFILE} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.PROFILE})}}>
-                <SVG src={require('../../../../asset/cabinet/user.svg')} />
+
+              <BaseLink router={router} routeName={pages.DASHBOARD} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.DASHBOARD})}}>
+                <SVG src={require('../../../../asset/24px/layout.svg')} />
                 {utils.getLang('cabinet_header_profile')}
               </BaseLink>
 
@@ -117,7 +120,7 @@ class Header extends React.Component {
               <div className="CabinetHeader__icon">
                 <UI.ActionSheet position="left" items={[
                   { title: utils.getLang('cabinet_header_settings'), onClick: () => router.navigate(pages.SETTINGS) },
-                  { title: "FAQ", onClick: () => window.location.href = COMPANY.wikiUrl },
+                  { title: "FAQ", onClick: () => window.open(COMPANY.faqUrl) },
                   { title: lang.title, onClick: () => actions.openModal('language'), subContent: (
                     <SVG src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
                   )},
@@ -151,7 +154,16 @@ class Header extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_CABINET_HEADER,
-  Header
-);
+export default connect(state => ({
+  internalNotifications: state.internalNotifications,
+  profile: state.default.profile,
+  notifications: state.notifications,
+  router: state.router,
+  langList: state.default.langList,
+  title: state.default.title,
+  translator: state.settings.translator
+}), {
+  dropInternalNotifications: internalNotifications.drop,
+  loadNotifications: notificationsActions.loadNotifications,
+  notificationAction: notificationsActions.submitAction,
+})(Header);

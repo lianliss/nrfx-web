@@ -12,7 +12,7 @@ import AdminWrapper from '../wrappers/Admin/AdminWrapper';
 import router from '../router';
 
 router.addListener((state, prevState)  => {
-  if (state.name == pages.PANEL_PAGE && !state.params.modal) {
+  if (state.name === pages.PANEL_PAGE && !state.params.modal) {
     action({
       type: 'show_page',
       params: {

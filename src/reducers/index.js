@@ -1,17 +1,26 @@
 import * as actionTypes from '../actions/actionTypes';
+import initGetParams from '../services/initialGetParams';
 
 const initialState = {
   page: null,
-  lang: {},
+  translations: {},
   auth: {},
-  profile: {},
+  profile: {
+
+  },
+  currentLang: null,
   langList: [],
   adaptive: false,
   title: "Bitcoinbot",
   static: {
     status: 'loading'
   },
-  modals: []
+  modals: [],
+  registration: {
+    email: '',
+    referrer: '',
+    refParam: initGetParams.params.hasOwnProperty('ref') ? initGetParams.params.ref : null
+  }
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -20,7 +29,21 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {page: action.to.name});
 
     case actionTypes.SET_LANG: {
-      return Object.assign({}, state, {lang: action.lang, langList: action.langList});
+      return {
+        ...state,
+        translations: {
+          ...state.translations,
+          [action.currentLang]: action.translations
+        },
+        langList: action.languages
+      };
+    }
+
+    case actionTypes.SET_CURRENT_LANG: {
+      return {
+        ...state,
+        currentLang: action.currentLang,
+      };
     }
 
     case actionTypes.AUTH: {
@@ -71,6 +94,36 @@ export default function reduce(state = initialState, action = {}) {
             ...state.profile.user,
             first_name,
             last_name
+          }
+        }
+      }
+    }
+
+    case actionTypes.REGISTRATION_SET_VALUE: {
+      return {
+        ...state,
+        registration: {
+          ...state.registration,
+          [action.property]: action.value
+        }
+      }
+    }
+
+    case actionTypes.PROFILE_SET_VERIFICATION_STATUS: {
+      return { ...state, profile: {
+        ...state.profile,
+        verification: action.status
+      }}
+    }
+
+    case actionTypes.SAVE_TRANSLATOR: {
+      return {
+        ...state,
+        translations: {
+          ...state.translations,
+          [action.code]: {
+            ...state.translations[action.code],
+            [action.key]: action.value
           }
         }
       }

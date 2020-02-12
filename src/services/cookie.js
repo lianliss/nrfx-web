@@ -13,7 +13,7 @@ export function setCookie(name, value, props) {
 
   var exp = props.expires
 
-  if (typeof exp == "number" && exp) {
+  if (typeof exp === "number" && exp) {
 
     var d = new Date()
 

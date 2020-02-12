@@ -18,8 +18,13 @@ import { classNames as cn } from '../../../../../../utils';
 import * as pages from '../../../../../constants/pages';
 
 class DashboardItem extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    invert: true,
+  };
+
+  render() {
+    const { props } = this;
+
     switch (props.type) {
       case 'investments':
         this.show = false;
@@ -59,16 +64,17 @@ class DashboardItem extends React.Component {
         };
         this.button = {
           children: utils.getLang('global_invite'),
-          onClick: () => router.navigate(pages.PROFILE, { section: 'partners' }),
+          onClick: () => router.navigate(pages.DASHBOARD, { section: 'partners' }),
         };
         if (props.count > 0) {
           this.show = true;
         }
         break;
-      case 'commerce':
+      case 'exchange':
         this.show = false;
         this.icon = <ShoppingCartSvg />;
         this.content = {
+          label: 'new',
           firstHeaderLeftContext: utils.getLang('cabinet_profileScreen_revenue'),
           firstMainContext: '0',
           firstMainContextInvert: '0',
@@ -76,23 +82,18 @@ class DashboardItem extends React.Component {
           secondMainContext: '',
           secondMainContextInvert: '',
           emptyIcon: <TradeSvg />,
-          emptyDescription: utils.getLang('cabinet_profileScreen_actionCard_tradeText'),
+          emptyDescription: <span>
+            {utils.getLang('cabinet_profileScreen_exchangeCard')}
+          </span>,
         };
         this.button = {
-          children: utils.getLang('cabinet_profileScreen_actionCard_comingSoon'),
-          disabled: true
+          children: utils.getLang('global_trade'),
+          onClick: () => router.navigate(pages.EXCHANGE),
         };
         break;
       case 'currency':
       default: break;
     }
-  }
-
-  state = {
-    invert: true,
-  };
-
-  render() {
 
     if (this.props.type === 'currency') {
       return (
@@ -117,6 +118,7 @@ class DashboardItem extends React.Component {
 
     return utils.switchMatch(this.show, {
       false: <UI.ContentBox className={cn("DashboardItem", this.props.type)}>
+        {this.content.label && <div className={utils.classNames('DashboardItem__label', this.content.label)}>{this.content.label.toUpperCase()}</div>}
         <div className="DashboardItemAction__icon">
           <div className="DashboardItemAction__icon_content">
             {this.content.emptyIcon}

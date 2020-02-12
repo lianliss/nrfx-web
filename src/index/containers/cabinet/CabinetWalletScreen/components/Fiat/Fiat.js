@@ -93,6 +93,7 @@ class CabinetWalletFiatScreen extends React.Component {
 export default connect(store => ({
   ...store.fiatWallets,
   adaptive: store.default.adaptive,
+  translator: store.settings.translator
 }), {
   getFiatWallets: actions.getFiatWallets
 })(CabinetWalletFiatScreen);

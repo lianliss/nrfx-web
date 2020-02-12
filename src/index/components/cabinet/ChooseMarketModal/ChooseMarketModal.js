@@ -1,18 +1,18 @@
 import './ChooseMarketModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 
 import UI from '../../../../ui';
 import * as exchange from '../../../../actions/cabinet/exchange'
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
 import * as actions from '../../../../actions';
-import * as utils from '../../../../utils/';
 import ChartSimple from '../Chart/ChartSimple';
 import ModalState from '../ModalState/ModalState';
 import router from '../../../../router';
+import * as exchangeActions from 'src/actions/cabinet/exchange';
 import * as PAGES from '../../../constants/pages';
+import { getLang } from 'src/utils/index';
 
 class ChooseMarketModal extends React.Component {
   constructor(props) {
@@ -69,7 +69,7 @@ class ChooseMarketModal extends React.Component {
       <UI.Modal className="ChooseMarketModal__wrapper" noSpacing isOpen={true} onClose={this.props.onClose}>
         <div className="ChooseMarketModal">
           <div className="ChooseMarketModal__filters">
-            <UI.ModalHeader>Choose Pair</UI.ModalHeader>
+            <UI.ModalHeader>{getLang('exchange_choosePair')}</UI.ModalHeader>
             <div className="ChooseMarketModal__filters__form">
               <UI.Input
                 value={this.state.search}
@@ -91,6 +91,7 @@ class ChooseMarketModal extends React.Component {
           <div className="ChooseMarketModal__market_list">
             <UI.Table header={false} inline >
               {markets.map(({ market, ticker, chart }, key) => {
+                if (!ticker) ticker = {};
                 const [primary, secondary] = market.name.split('/').map(actions.getCurrencyInfo);
 
                 if (
@@ -158,8 +159,10 @@ class ChooseMarketModal extends React.Component {
   }
 }
 
-
-export default storeUtils.getWithState(
-  CLASSES.EXCHANGE_CHOSE_MARKET_MODAL,
-  ChooseMarketModal
-);
+export default connect(state => ({
+  adaptive: state.default.adaptive,
+  markets: state.exchange.markets,
+  status: state.exchange.loadingStatus.getMarkets
+}), {
+  chooseMarket: exchangeActions.chooseMarket,
+})(ChooseMarketModal);

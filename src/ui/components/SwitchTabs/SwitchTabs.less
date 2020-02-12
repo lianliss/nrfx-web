@@ -1,5 +1,8 @@
 @import "../../vars";
 
+@animType: ease-in-out;
+@animTime: 500ms;
+
 .SwitchTabs {
   position: relative;
   border: 1px solid;
@@ -9,6 +12,29 @@
   height: 48px;
   display: flex;
   user-select: none;
+  transition: border-color @animTime @animType;
+
+  &.ultra_small {
+    height: 24px;
+  }
+
+  &.secondary {
+    color: var(--uikit-button-secondary-background);
+
+    .SwitchTabs__item {
+      color: var(--uikit-foreground-secondary);
+      border-color:  var(--uikit-button-secondary-background);
+    }
+
+    .SwitchTabs__indicator {
+      background: var(--uikit-button-secondary-background);
+    }
+  }
+
+  &.disabled {
+    opacity: .8;
+    pointer-events: none;
+  }
 }
 
 .SwitchTabs__item {
@@ -21,21 +47,29 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 2;
   cursor: pointer;
-  transition: color 150ms ease-in-out, border-color 150ms ease-in-out;
   border-left: 1px solid;
+  border-color: inherit;
+
+  & > span {
+    transition: color @animTime @animType;
+    position: relative;
+    z-index: 3;
+  }
 
   &:first-child {
     border-left: none;
   }
 
   &.active {
-    color: var(--uikit-contrast-primary);
-    border-color: transparent;
+    & > span {
+      color: var(--uikit-contrast-primary);
+    }
+    transition: border-color @animTime @animType;
+    border-color: transparent !important;
 
     & + * {
-      border-color: transparent;
+      border-left-color: transparent !important;
     }
   }
 }
@@ -44,9 +78,29 @@
   position: absolute;
   top: -1px;
   bottom: -1px;
-  border-radius: @border-radius;
-  background: var(--uikit-gradient-primary);
-  z-index: 1;
-  transition: transform 150ms ease-in-out;
   left: -1px;
+  z-index: 2;
+  transition: transform @animTime @animType;
+
+  span {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: @border-radius;
+    background: var(--uikit-gradient-primary);
+    transition: background 3s ease;
+  }
+
+  &.animation span {
+    animation: SwitchTabsAnimation @animTime @animType;
+  }
+}
+
+@keyframes SwitchTabsAnimation {
+  0%, 100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.3, 1);
+  }
 }

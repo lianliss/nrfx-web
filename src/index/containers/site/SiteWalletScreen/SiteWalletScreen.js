@@ -16,13 +16,13 @@ export default class SiteWalletScreen extends BaseScreen {
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require('./asset/wallet_main_image.png')}
-            title={<span>{utils.nl2br(this.lang.site.walletTitle)}</span>}
-            caption={<span>{this.lang.site.walletSubTitle}</span>}
-            buttonText={this.lang.site.walletCreateBtn}
+            title={<span>{utils.getLang('site__walletTitle')}</span>}
+            caption={<span>{utils.getLang('site__walletSubTitle')}</span>}
+            buttonText={utils.getLang('site__walletCreateBtn')}
           />
 
           <div className="SiteSectionHeader">
-            <div className="SiteSectionHeaderTitle">{this.lang.site.walletBitcoinbotWallet}</div>
+            <div className="SiteSectionHeaderTitle">{utils.getLang('site__walletBitcoinbotWallet')}</div>
           </div>
 
           {this._renderFeatures()}
@@ -37,23 +37,23 @@ export default class SiteWalletScreen extends BaseScreen {
     const items = [
       {
         icon: require('./asset/wallet_feature_1.svg'),
-        title: this.lang.site.walletSimpleTitle,
-        caption: this.lang.site.walletSimpleSubTitle
+        title: utils.getLang('site__walletSimpleTitle'),
+        caption: utils.getLang('site__walletSimpleSubTitle')
       },
       {
         icon: require('./asset/wallet_feature_2.svg'),
-        title: this.lang.site.walletReliableTitle,
-        caption:this.lang.site.walletReliableSubTitle
+        title: utils.getLang('site__walletReliableTitle'),
+        caption: utils.getLang('site__walletReliableSubTitle')
       },
       {
         icon: require('./asset/wallet_feature_3.svg'),
-        title: this.lang.site.walletConvenientTitle,
-        caption:  this.lang.site.walletConvenientSubTitle
+        title: utils.getLang('site__walletConvenientTitle'),
+        caption: utils.getLang('site__walletConvenientSubTitle')
       },
       {
         icon: require('./asset/wallet_feature_4.svg'),
-        title: this.lang.site.walletFreeTitle,
-        caption: this.lang.site.walletFreeSubTitle
+        title: utils.getLang('site__walletFreeTitle'),
+        caption: utils.getLang('site__walletFreeSubTitle')
       },
     ].map((item) => {
       return (

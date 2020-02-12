@@ -4,7 +4,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router5';
 //
-import {GetParamsContext} from '../../../contexts';
 import UI from '../../../../ui';
 import { setTitle } from '../../../../actions/index';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
@@ -40,7 +39,7 @@ class CabinetChangeEmail extends React.PureComponent {
         <UI.ContentBox className="CabinetChangeEmail__content">
           {this.state.success && <div className="CabinetChangeEmail__content__icon" style={{backgroundImage: `url(${require('../../../../asset/120/success.svg')})`}} />}
           <p>{this.state.message}</p>
-          <UI.Button onClick={() => this.props.router.navigate(pages.PROFILE)}>{utils.getLang('global_understand')}</UI.Button>
+          <UI.Button onClick={() => this.props.router.navigate(pages.DASHBOARD)}>{utils.getLang('global_understand')}</UI.Button>
         </UI.ContentBox>
       </div>
     )

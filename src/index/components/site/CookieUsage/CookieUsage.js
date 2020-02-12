@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import UI from '../../../../ui';
+import { getLang } from '../../../../utils';
 import * as storage from '../../../../services/storage';
 
 
@@ -18,13 +19,13 @@ function CookieUsage({ lang }) {
   if (isOpen) {
     return (
       <div className="CookieUsage">
-        <h3 className="CookieUsage__title">{lang.site__cookieTitle}</h3>
+        <h3 className="CookieUsage__title">{getLang('site__cookieTitle')}</h3>
         <p className="CookieUsage__text">
-          {lang.site__cookieText1}
-          <span> {lang.site__cookiePrivacyPolicy}</span>
-          {lang.site__cookieText2}
+          {getLang('site__cookieText1')}
+          <span> {getLang('site__cookiePrivacyPolicy')}</span>
+          {getLang('site__cookieText2')}
         </p>
-        <UI.Button fontSize={15} onClick={handleAgree}>{lang.site__cookieAgree}</UI.Button>
+        <UI.Button fontSize={15} onClick={handleAgree}>{getLang('site__cookieAgree')}</UI.Button>
       </div>
     )
   }

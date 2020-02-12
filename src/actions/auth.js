@@ -9,13 +9,23 @@ import * as auth from '../services/auth';
 import * as user from './user';
 import router from '../router';
 import * as pages from '../index/constants/pages';
+import * as actions from './index';
+import * as utils from '../utils';
+import * as exchange from './cabinet/exchange';
+import * as toasts from './toasts';
 
-export function getAuth(login, password) {
+export function getAuth(login, password, token) {
   const app_id = 8;
   const public_key = '1a4b26bc31-a91649-b63396-253abb8d69';
 
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignInPost, { login, password, app_id, public_key })
+    api.call(apiSchema.Profile.SignInPost, {
+      login,
+      password,
+      app_id,
+      public_key,
+      recaptcha_response: token
+    })
       .then((auth) => {
         store.dispatch({ type: actionTypes.AUTH, auth });
         resolve(auth);
@@ -53,9 +63,20 @@ export function getAuth(login, password) {
 // }
 
 export function logout() {
-  router.navigate(pages.MAIN);
-  auth.logout();
-  store.dispatch({type: actionTypes.LOGOUT});
+  actions.confirm({
+    title: utils.getLang('cabinet_header_exit'),
+    content: utils.getLang('cabinet_exitConfirmText'),
+    okText: utils.getLang('cabinet_exitActionButton'),
+    type: 'delete'
+  }).then(() => {
+    router.navigate(pages.MAIN);
+    store.dispatch({type: actionTypes.LOGOUT});
+    api.call(apiSchema.Profile.LogoutPost).then(() => {
+      auth.logout();
+    }).catch(err => {
+      toasts.error(err.message);
+    });
+  });
 }
 
 export function setSecretKey() {
@@ -146,10 +167,9 @@ export function checkSmsCode(countryCode, number, code) {
   });
 }
 
-export function registerUser(email, refer = null, invite_link = null) {
-  return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignUpPut, { email, refer, invite_link })
-      .then(() => resolve())
-      .catch((err) => reject(err));
-  });
+export function registerUser(email, refer = null, invite_link = null, token) {
+  return api.call(apiSchema.Profile.SignUpPut, {
+    email, refer, invite_link,
+    ...(token ? { recaptcha_response: token } : {})
+  })
 }

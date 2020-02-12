@@ -3,11 +3,10 @@ import './MenuScreen.less';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 import {BaseLink} from 'react-router5';
+import { connect } from 'react-redux';
 //
 import router from '../../../../../router';
 import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
-import * as CLASSES from "../../../../constants/classes";
-import * as storeUtils from "../../../../storeUtils";
 import * as PAGES from '../../../../constants/pages';
 import * as utils from '../../../../../utils';
 import * as auth from '../../../../../actions/auth';
@@ -90,7 +89,9 @@ class MenuScreen extends CabinetBaseScreen {
   };
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CABINET_MENU_SCREEN,
-  MenuScreen
-);
+export default connect(state => ({
+  adaptive: state.default.adaptive,
+  langList: state.default.langList
+}), {
+  setTitle: actions.setTitle
+})(MenuScreen);

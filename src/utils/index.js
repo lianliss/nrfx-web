@@ -4,7 +4,9 @@ import React, { useEffect, useRef } from 'react';
 // internal
 import store from '../store';
 import router from '../router';
-import moment from 'moment/min/moment-with-locales';
+import moment from 'moment';
+import company from '../index/constants/company';
+import TranslatorMode from 'src/index/components/cabinet/TranslatorMode/TranslatorModal';
 
 export function classNames() {
   let result = [];
@@ -40,18 +42,36 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
-export function getLang(key) {
-  return store.getState().default.lang[key] || key;
+export function getLang(key, string = false, code = false) {
+  const state = store.getState();
+  const { currentLang, translations } = state.default;
+  let langString = translations[code || currentLang][key] || key;
+
+  if ((['object', 'string'].includes(typeof string) || !string)) {
+    if (
+      state.default.profile.user &&
+      state.default.profile.role === 'Translator' &&
+      state.settings.translator
+    ) {
+      return <TranslatorMode langContent={string !== false ? string : nl2br(langString)} langKey={key} />;
+    } return ['object', 'string'].includes(typeof string) ? string : nl2br(langString);
+  }
+
+  return langString;
 }
 
-export function getLanguage() {
-  return store.getState();
-}
+export const nl2br = text => {
+  if (text.includes('\\n')) {
+    return text.split('\\n').map((item, i) => <>{item}<br /></>);
+  } return text;
+};
 
-export const nl2br = text => text.split('\\n').map((item, i) => <span key={i}>{item}<br /></span>);
+/* eslint-disable-next-line */
+export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase()));
 
-export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase())) ? true : false;
-export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase())
+/* eslint-disable-next-line */
+export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase());
+export const isLogin = name => /^[a-zA-Z0-9\_]+$/i.test((name||"").toLowerCase());
 
 export function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -86,6 +106,10 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
   return null;
 };
 
+export function isProduction ()  {
+  return window.location.host === company.host;
+}
+
 export function throttle (func, ms)  {
   let timeout = null;
 
@@ -98,13 +122,14 @@ export function throttle (func, ms)  {
 }
 
 export function ucfirst(input = "") {
+  if (typeof input !== 'string') return "";
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  if (parseFloat(input) === NaN) return null;
+  if (isNaN(parseFloat(input))) return null;
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
-  return Math.floor(input * coefficient) / coefficient;
+  return Math.floor((input * coefficient)) / coefficient;
   // return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 
@@ -140,7 +165,7 @@ export function InputNumberOnKeyPressHandler(e) {
 export function __doubleInputOnKeyPressHandler(e, value = '') {
   switch (e.key) {
     default:
-      if (isNaN(parseInt(e.key)) || value.length === 1 && value[0] === '0') {
+      if (isNaN(parseInt(e.key)) || (value.length === 1 && value[0] === '0')) {
         e.preventDefault();
       }
       break;
@@ -217,7 +242,7 @@ export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
   } else {
     const offsetMoscow = 60 * 3;
     const offset = new Date().getTimezoneOffset() + offsetMoscow;
-    dateObject = moment(date).subtract('minutes', offset);;
+    dateObject = moment(date).subtract(offset,'minutes');;
   }
 
   return !!format ? dateObject.format(format) : dateObject;

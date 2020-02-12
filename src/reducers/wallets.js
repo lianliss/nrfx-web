@@ -11,15 +11,18 @@ const initialState = {
   transfersNext: null,
   loadingStatus: {
     default: 'loading',
-    limits: 'loading'
+    limits: 'loading',
+    sendCode: null,
   },
   limits: [],
   sendCoinModal: {
+    type: 'address',
     gaCode: '',
     walletId: null,
-    address: null,
-    amount: 0,
-    amountUsd: 0,
+    address: '',
+    login: '',
+    amount: '',
+    amountUsd: '',
   }
 };
 
@@ -33,11 +36,13 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.WALLETS_SET: {
+      const wallet = action.wallets.find(w => w.currency === action.currency) || action.wallets[0];
       return {
         ...state,
         wallets: action.wallets,
         sendCoinModal: {
-          walletId: (action.wallets.find(w => w.currency === action.currency) || action.wallets[0]).id,
+          ...initialState.sendCoinModal,
+          walletId: wallet ? wallet.id : null
         }
       };
     }
@@ -121,7 +126,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         sendCoinModal: {
           ...initialState.sendCoinModal,
-          walletId: state.initialState.walletId
+          walletId: state.sendCoinModal.walletId
         }
       }
     }

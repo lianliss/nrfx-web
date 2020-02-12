@@ -28,13 +28,15 @@
   user-select: none;
   box-sizing: border-box;
 
-  &.buy  {
+  &.buy,
+  &.success {
     background: var(--uikit-primary-green);
     color: var(--uikit-contrast-primary);
     opacity: .8;
   }
 
-  &.sell  {
+  &.sell,
+  &.danger {
     background: var(--uikit-primary-red);
     color: var(--uikit-contrast-primary);
     opacity: .8;
@@ -130,6 +132,7 @@
   &.ultra_small {
     height: @ultra-small-height;
     padding: 0 8px;
+    border-radius: 6px;
 
     &.rounded {
       border-radius: @border-radius-rounded-ultra-small;
@@ -266,7 +269,7 @@
   .Button.ultra_small & {
     font-weight: 500;
     font-size: 11px;
-    line-height: 16px;
+    line-height: 11px;
   }
 
   .Button.middle & {

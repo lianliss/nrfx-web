@@ -7,22 +7,26 @@ import Button from '../../../ui/components/Button/Button';
 import Input from '../Input/Input';
 import DropDown from '../Dropdown/Dropdown';
 import action from '../../../actions/admin/index';
-import List from '../../../ui/components/List/List';
+import List from '../List/List';
 import Tabs from '../Tabs/Tabs';
 import Paging from '../Paging/Paging';
 import PagingItem from '../Paging/PagingItem';
-import TableFilter from '../TableFilter/TableFilter';
 import Label from '../../../ui/components/Label/Label';
 import Json from '../Json/Json';
 import Message from '../../../ui/components/Message/Message';
 import ActionSheet from '../../../ui/components/ActionSheet/ActionSheet';
+import {connect} from 'react-redux';
 
 const Item = (props) => {
   const { item } = props;
 
   let Component = null;
 
-  if (typeof item !== 'object') {
+  if (!item) {
+    return null;
+  }
+
+  if (['string', 'number'].includes(typeof item)) {
     return <p>{item}</p>;
   }
 
@@ -39,6 +43,9 @@ const Item = (props) => {
       break;
     case 'list':
       Component = List;
+      break;
+    case 'list_item':
+      Component = props => <div {...props} />;
       break;
     case 'group':
       Component = Group;
@@ -91,4 +98,7 @@ const Item = (props) => {
   })}</Component>
 }
 
-export default Item;
+export default connect(state => ({
+  state: state.admin
+}))(Item);
+

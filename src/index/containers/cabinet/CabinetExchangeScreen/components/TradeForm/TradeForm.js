@@ -1,308 +1,226 @@
 import './TradeForm.less';
 
 import React from 'react';
-
+import { connect } from 'react-redux';
 import UI from '../../../../../../ui';
+import * as actions from 'src/actions/cabinet/exchange';
+import { openModal } from 'src/actions/index';
 import * as utils from '../../../../../../utils';
-import * as actions from '../../../../../../actions';
-import * as exchange from '../../../../../../actions/cabinet/exchange';
-import OrderBook from '../OrderBook/OrderBook';
-
 import * as steps from '../../../../../../components/AuthModal/fixtures';
 
 
-export default class TradeForm extends React.Component {
-  constructor(props) {
-    super(props);
+class TradeForm extends React.Component {
+  numberFormat = number => {
+    const [,secondaryCurrency] = this.props.market.toUpperCase().split('/');
+    return utils.formatDouble(number, (utils.isFiat(secondaryCurrency) ? 2 : 8));
+  };
 
-    this.state = {
-      orderType: 'limit',
-      price: null,
-      amount: null,
-      amountSecondary: null,
-      touched: false,
-      pending: {
-        buy: false,
-        sell: false,
-      }
-    };
+  componentWillUnmount() {
+    this.reset();
   }
 
-  get isFiat() {
-    const [, secondary] = this.props.market.split('/');
-    return secondary === 'usdt';
+  reset = () => {
+    ['sell', 'buy'].forEach( action => {
+      this.props.tradeFormSetProperties(action, { touched: false });
+    })
   }
 
-  __renderPlaceholder() {
+  handleChangeOrderType = orderType => {
+    this.props.tradeFormSetType(orderType);
+    this.reset();
+  }
+
+  handleOrderCreate = action => () => {
+    this.props.tradeFormSetProperties(action, {
+      touched: true
+    });
+
+    const form = this.props.form[action];
+    if (form.amount && (this.props.form.type === 'market' || form.price)) {
+      this.props.orderCreate({
+        action,
+        type: this.props.form.type,
+        market: this.props.market,
+        amount: form.amount,
+        ...(this.props.form.type === 'limit' && {price: form.price})
+      });
+    }
+  };
+
+  handleChangePrice = type => value => {
+    const form = this.props.form[type];
+    if (!form.amount && form.total) {
+      this.props.tradeFormSetProperties(type, {
+        price: value,
+        amount: (this.numberFormat(form.total / value))
+      });
+    } else {
+      this.props.tradeFormSetProperties(type, {
+        price: value,
+        total: (this.numberFormat(value * form.amount) || form.total)
+      });
+    }
+  };
+
+  handleChangeAmount = type => value => {
+    const form = this.props.form[type];
+    this.props.tradeFormSetProperties(type, {
+      amount: value,
+      total: (this.numberFormat(value * form.price) || '')
+    });
+  };
+
+  handleChangeTotal = type => value => {
+    const { price, amount } = this.props.form[type];
+    this.props.tradeFormSetProperties(type, {
+      total: value,
+      price: ( value && !price ? ( amount ? this.numberFormat(value / amount) : '') : price),
+      amount: (value && price ? utils.formatDouble(value / price) : amount)
+    });
+  };
+
+  calcFee = amount => {
+    return amount / 100 * this.props.fee;
+  }
+
+  getBalance = currency => {
+    return this.props.balances.find(b => b.currency.toLowerCase() === currency.toLowerCase()) || {};
+  };
+
+  renderForm = (type) => {
+    const isMarket = this.props.form.type === 'market';
+    const form = this.props.form[type];
+    const [primaryCurrency, secondaryCurrency] = this.props.market.toUpperCase().split('/');
+    const balance = this.props.isLogged ? this.getBalance(type === "buy" ? secondaryCurrency : primaryCurrency) : {};
+    const tickerPrice = utils.formatDouble(this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
+    const marketTotalPrice = utils.formatDouble(form.amount * this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
+
+    return (
+      <div className="TradeForm__form" key={type}>
+        <div className="TradeForm__form__header">
+          <div className="TradeForm__form__title">{utils.ucfirst(type)} {primaryCurrency.toUpperCase()}</div>
+          <div className="TradeForm__form__balance">
+            <span className="TradeForm__form__fee__label">{utils.getLang('global_balance')}:</span>
+            <UI.NumberFormat number={balance.amount} currency={balance.currency} />
+          </div>
+        </div>
+        <div className="TradeForm__form__row">
+          <div className="TradeForm__form__coll">
+            <UI.Input
+              type={isMarket ? "text" : "number"}
+              error={form.touched && !isMarket && !form.price}
+              value={!isMarket ? form.price : '~' + tickerPrice}
+              onTextChange={this.handleChangePrice(type)}
+              size="small"
+              placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_price')}
+              disabled={isMarket}
+              indicator={secondaryCurrency}
+            />
+          </div>
+          <div className="TradeForm__form__coll">
+            <UI.Input
+              type={isMarket ? "text" : "number"}
+              error={form.touched && !form.amount}
+              value={form.amount}
+              onTextChange={this.handleChangeAmount(type)}
+              size="small"
+              placeholder={utils.getLang('exchange_amount')}
+              indicator={primaryCurrency}
+            />
+          </div>
+        </div>
+        <div className="TradeForm__form__row">
+          <div className="TradeForm__form__coll">
+            <UI.SwitchTabs
+              onChange={value => {
+                let amount = (balance.amount - this.calcFee(balance.amount)) / 100 * value;
+                if (type === 'sell') {
+                  this.handleChangeAmount(type)(utils.formatDouble(amount));
+                } else {
+                  this.handleChangeTotal(type)(utils.formatDouble(amount, utils.isFiat(secondaryCurrency) ? 2 : undefined));
+                }
+              }}
+              size="ultra_small"
+              disabled={!balance.amount}
+              type="secondary"
+              tabs={[25, 50, 75, 100].map(value => ({ value, label: value + '%' }))}
+            />
+          </div>
+          <div className="TradeForm__form__coll">
+            <UI.Input
+              type={isMarket ? "text" : "number"}
+              error={form.touched && !isMarket && !form.total}
+              value={(isMarket ? ( marketTotalPrice ? "~" + marketTotalPrice : '') : form.total)}
+              onTextChange={console.log}
+              size="small"
+              disabled={isMarket}
+              placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_total')}
+              indicator={secondaryCurrency}
+            />
+          </div>
+        </div><div className="TradeForm__form__row">
+          <div className="TradeForm__form__coll fee">
+            <div className="TradeForm__form__fee">
+              {utils.getLang('global_fee')}: <UI.NumberFormat number={this.props.fee} percent />
+            </div>
+          </div>
+          <div className="TradeForm__form__coll">
+            <UI.Button
+              type={type}
+              onClick={this.handleOrderCreate(type)}
+              state={this.props.loadingStatus[type]}
+              children={<>{utils.getLang('global_' + type )} {primaryCurrency}</>}
+              size="small"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  renderPlaceholder() {
+    if (this.props.isLogged) return null;
     return <div className="TradeForm__placeholder">
       <div className="TradeForm__placeholder__wrapper">
-        <UI.Button onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})} size="small" >{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
+        <UI.Button onClick={() => openModal('auth', {type: steps.REGISTRATION})} size="small" >{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
         <span className="TradeForm__placeholder__or">{utils.getLang('global_or')}</span>
-        <UI.Button onClick={() => actions.openModal('auth', {type: steps.LOGIN})} size="small" type="secondary">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
+        <UI.Button onClick={() => openModal('auth', {type: steps.LOGIN})} size="small" type="secondary">{utils.getLang('site__authModalLogInBtn')}</UI.Button>
       </div>
     </div>
   }
 
   render() {
-
-    const { balance, market, fee, user, ticker } = this.props;
-    const { state: { pending } } = this;
-
-    const [primary, secondary] = market.split('/');
-    const isMarket = this.state.orderType === "market";
-
-
-    const marketPrice = utils.formatDouble(ticker.price, utils.isFiat(secondary) ? 2 : undefined);
-    const marketTotalPrice = utils.formatDouble(this.state.amount * ticker.price, utils.isFiat(secondary) ? 2 : undefined);
-
-    if (user && !balance.primary) {
-      return null;
-    }
-
-    if (this.props.adaptive) {
-      return (
-        <div className="TradeForm">
-          <div className="TradeForm__adaptive_form">
-            <div className="TradeForm__adaptive_form__row">
-              <UI.Dropdown
-                size="small"
-                placeholder="Placeholder"
-                value={this.state.orderType}
-                onChange={e => this.setState({ orderType: e.value })}
-                options={[
-                  { title: utils.getLang('exchange_type_limit'), value: 'limit' },
-                  { title: utils.getLang('exchange_type_market'), value: 'market' }
-                ]}
-              />
-            </div>
-
-            <div className="TradeForm__adaptive_form__row">
-              <UI.Input
-                error={this.state.touched && !this.state.amount}
-                placeholder={utils.getLang('global_amount')}
-                indicator={primary.toUpperCase()}
-                size="small"
-                value={this.state.amount}
-                onTextChange={this.__amountDidChange}
-              />
-              {user && <p>{primary.toUpperCase()}  {utils.getLang('global_balance')}: <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
-            </div>
-            <div className="TradeForm__adaptive_form__row">
-              <UI.Input
-                error={this.state.touched && !this.state.price && !isMarket}
-                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_price')}
-                disabled={isMarket}
-                indicator={secondary.toUpperCase()}
-                size="small"
-                value={(isMarket ? "~" + marketPrice : this.state.price) || ""}
-                onTextChange={this.__priceDidChange}
-              />
-              {user && <p>{secondary.toUpperCase()} {utils.getLang('global_balance')}:  <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p>}
-            </div>
-            <div className="TradeForm__adaptive_form__row">
-              <UI.Input
-                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_total')}
-                indicator={secondary.toUpperCase()}
-                size="small"
-                disabled={isMarket}
-                onTextChange={this.__amountSecondaryDidChange}
-                value={(isMarket ? ( marketTotalPrice && "~" + marketTotalPrice) : this.state.amountSecondary) || ""}
-              />
-              <p>{utils.getLang('exchange_fee')}: <UI.NumberFormat number={fee} percent /></p>
-            </div>
-            <div className="TradeForm__adaptive_form__row TradeForm__amount_selector">
-              {this.__renderAmountsSelector()}
-            </div>
-
-            <div className="TradeForm__adaptive_form__buttons">
-              <UI.Button
-                type="buy"
-                state={pending.buy && "loading"}
-                onClick={() => this.__handleOrderCreate("buy")}
-              >{utils.getLang('exchange_action_buy')}</UI.Button>
-
-              <UI.Button
-                type="sell"
-                state={pending.sell && "loading"}
-                onClick={() => this.__handleOrderCreate("sell")}
-              >{utils.getLang('exchange_action_sell')}</UI.Button>
-            </div>
-          </div>
-          <OrderBook
-            adaptive={true}
-            type="all"
-            ticker={this.props.ticker}
-            onOrderPress={(order) => {}}
-            {...this.props.depth}
-            loading={this.props.loadingStatus.orderBook}
-          />
-        </div>
-      )
-    }
-
     return (
       <UI.ContentBox className="TradeForm">
-        {!user && this.__renderPlaceholder()}
-        <div className="TradeForm__types">
-          {this.__renderOrderType()}
+        {this.renderPlaceholder()}
+        <div className="TradeForm__tradeTypeButtons">
+          {['limit', 'market'].map(type => (
+            <UI.Button
+              key={type}
+              size="ultra_small"
+              onClick={() => this.handleChangeOrderType(type)}
+              type={type !== this.props.form.type ? "secondary" : undefined}
+            >{utils.ucfirst(type)}</UI.Button>
+          ))}
         </div>
-        <div className="TradeForm__form__wrap">
-          <div className="TradeForm__form">
-            <div className="TradeForm__form__row">
-              <UI.Input
-                error={this.state.touched && !this.state.amount}
-                placeholder={utils.getLang('global_amount')}
-                indicator={primary.toUpperCase()}
-                size="small"
-                value={this.state.amount}
-                onTextChange={this.__amountDidChange}
-              />
-              { user && <p className="Form__helper__text">{primary.toUpperCase()}  {utils.getLang('global_balance')}: <UI.NumberFormat number={balance.primary.amount} currency={primary} hiddenCurrency /></p> }
-            </div>
-            <div className="TradeForm__form__row">
-              <UI.Input
-                error={this.state.touched && !this.state.price && !isMarket}
-                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_price')}
-                disabled={isMarket}
-                indicator={secondary.toUpperCase()}
-                size="small"
-                value={(isMarket ? "~" + marketPrice : this.state.price) || ""}
-                onTextChange={this.__priceDidChange}
-              />
-              { user && <p className="Form__helper__text">{secondary.toUpperCase()} {utils.getLang('global_balance')}: <UI.NumberFormat number={balance.secondary.amount} currency={secondary} hiddenCurrency /></p> }
-            </div>
-            <div className="TradeForm__form__row">
-              <UI.Input
-                placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_total')}
-                indicator={secondary.toUpperCase()}
-                size="small"
-                disabled={isMarket}
-                onTextChange={this.__amountSecondaryDidChange}
-                value={(isMarket ? ( marketTotalPrice && "~" + marketTotalPrice) : this.state.amountSecondary) || ""}
-              />
-              <p className="Form__helper__text">{utils.getLang('exchange_fee')}: <UI.NumberFormat number={fee} percent /></p>
-            </div>
-          </div>
-          <div className="TradeForm__form__controls">
-            <div className="TradeForm__form__row">
-              <UI.Button
-                size="middle"
-                type="buy"
-                onClick={() => this.__handleOrderCreate("buy")}
-                state={pending.buy ? 'loading' : 'default'}
-              >{utils.getLang('exchange_action_buy')}</UI.Button>
-            </div>
-            <div className="TradeForm__form__row percents">
-              {this.__renderAmountsSelector()}
-            </div>
-            <div className="TradeForm__form__row">
-              <UI.Button
-                size="middle"
-                type="sell"
-                state={pending.sell ? 'loading' : 'default'}
-                onClick={() => this.__handleOrderCreate("sell")}
-              >{utils.getLang('exchange_action_sell')}</UI.Button>
-            </div>
-          </div>
+        <div className="TradeForm__forms">
+          {['buy', 'sell'].map(this.renderForm)}
         </div>
       </UI.ContentBox>
-    )
-  }
-
-  __priceDidChange = (value) => {
-    if (isNaN(value)) {
-      return;
-    }
-
-    const amount = value > 0 ? utils.formatDouble(value * this.state.amount, this.isFiat ? 2 : void 0) : 0;
-    this.setState({
-      price: value,
-      amountSecondary: amount > 0 ? amount : null,
-    });
-  };
-
-  __amountDidChange = (value) => {
-    if (isNaN(value)) {
-      return;
-    }
-    this.setState({
-      amount: value,
-      amountSecondary: value > 0 && this.state.price > 0 ? utils.formatDouble(value * this.state.price, this.isFiat ? 2 : void 0) : null,
-    });
-  };
-
-  __amountSecondaryDidChange = (value) => {
-    if (isNaN(value)) {
-      return;
-    }
-    this.setState({
-      amount: value > 0 && this.state.price > 0 ? utils.formatDouble(parseFloat(value) / this.state.price) : null,
-      amountSecondary: value,
-    });
-  };
-
-  __renderOrderType() {
-    return ['limit', 'market'].map((type, key) => {
-      return (
-        <UI.Button
-          key={key}
-          size="ultra_small"
-          rounded
-          type={this.state.orderType === type ? 'normal' : 'secondary'}
-          onClick={() => this.setState({ orderType: type })}
-        >{utils.getLang('exchange_type_' + type)}</UI.Button>
-      )
-    });
-  }
-
-  __renderAmountsSelector() {
-    const { balance, user } = this.props;
-
-    return [25, 50, 75, 100].map((percent) => {
-      const percentAmount = user ? utils.formatDouble(percent / 100 * balance.primary.amount) : 0;
-      return (
-        <UI.Button
-          key={percent}
-          disabled={user && balance.primary.amount === 0}
-          size="ultra_small"
-          rounded
-          type={this.state.amount === percentAmount ? 'normal' : 'secondary'}
-          onClick={() => this.__handlechangePercent(percentAmount)}
-        >{`${percent}%`}</UI.Button>
-      )
-    });
-  }
-
-  __handleOrderCreate(action) {
-    this.setState({ touched: true });
-    if (this.state.amount && (this.state.orderType === 'market' || this.state.price)) {
-      this.setState({ pending: { ...this.state.pending, [action]: true }});
-      exchange.orderCreate({
-        action,
-        type: this.state.orderType,
-        market: this.props.market,
-        amount: this.state.amount,
-        ...(this.state.orderType === 'limit' && { price: this.state.price })
-      }).finally(() => {
-        this.setState({ pending: { ...this.state.pending, [action]: false }});
-      });
-    }
-  }
-
-  __handlechangePercent = percent => {
-    this.setState({
-      amount: percent,
-      amountSecondary:  percent * this.state.price || null
-    });
-  };
-
-  set(amount, price) {
-    amount = utils.formatDouble(amount);
-    price = utils.formatDouble(price);
-    this.setState({
-      amount,
-      price,
-      amountSecondary: utils.formatDouble(amount * price, this.isFiat ? 2 : void 0)
-    });
+    );
   }
 }
+
+export default connect(state => ({
+  form: state.exchange.form,
+  ticker: state.exchange.ticker,
+  market: state.exchange.market,
+  balances: state.exchange.balances,
+  loadingStatus: state.exchange.loadingStatus,
+  fee: state.exchange.fee,
+  isLogged: !!state.default.profile.user,
+}), {
+  orderCreate: actions.orderCreate,
+  tradeFormSetType: actions.tradeFormSetType,
+  tradeFormSetProperties: actions.tradeFormSetProperties,
+})(TradeForm);

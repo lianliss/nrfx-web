@@ -1,14 +1,12 @@
 // styles
 import './Table.less';
 // external
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 // internal
 import Hover from '../Hover/Hover';
 import * as utils from '../../utils';
 
-import { ReactComponent as AngleDownSmall } from '../../asset/angle-down-small.svg';
-import { ReactComponent as AngleUpSmall } from '../../asset/angle-up-small.svg';
 import Collapse from '../Collapse/Collapse';
 import ContentBox from '../ContentBox/ContentBox';
 

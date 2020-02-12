@@ -1,15 +1,15 @@
 import './ChangeSecretKeyModal.less';
 
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 import * as utils from '../../../../utils';
-import * as storeUtils from '../../../storeUtils';
-import * as CLASSES from '../../../constants/classes';
+import * as profileActions from '../../../../actions/cabinet/profile';
 
 const ChangeSecretKeyModal = props => {
   const [code, setCode] = useState("");
   return (
-    <UI.Modal isOpen={true} onClose={() => {props.close()}} width={424}>
+    <UI.Modal isOpen={true} onClose={() => {props.onClose()}} width={424}>
       <UI.ModalHeader>
         {utils.getLang('cabinet_enterSecretKey')}
       </UI.ModalHeader>
@@ -35,7 +35,6 @@ const ChangeSecretKeyModal = props => {
   )
 }
 
-export default storeUtils.getWithState(
-  CLASSES.CHANGE_SECRET_KEY_MODAL,
-  ChangeSecretKeyModal
-);
+export default connect(null, {
+  changeSecretKay: profileActions.changeSecretKay
+})(ChangeSecretKeyModal);

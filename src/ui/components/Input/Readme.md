@@ -23,6 +23,21 @@ import Button from '../Button/Button';
 </div>
 ```
 
+Indicator & description
 ```js
 <Input description="Fee: 0.1%" indicator="USD" />
+```
+
+
+small
+```js
+<Input size="small" description="Fee: 0.1%" indicator="USD" />
+```
+
+pattern
+```js
+import { useState } from 'react';
+const [value, setValue] = useState('');
+
+<Input pattern={/[A-Za-z ,.'-]/g} value={value} onTextChange={setValue} indicator="A-Z" />
 ```

@@ -3,6 +3,7 @@ import './index.less';
 // external
 // internal
 import Button from './components/Button/Button';
+import Badge from './components/Badge/Badge';
 import WatchButton from './components/Button/WatchButton';
 import Input from './components/Input/Input';
 import Dropdown from './components/Dropdown/Dropdown';
@@ -31,9 +32,13 @@ import Collapse from './components/Collapse/Collapse';
 import WalletCard from './components/WalletCard/WalletCard';
 import StatusIndicator from './components/StatusIndicator/StatusIndicator';
 import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
+import Tooltip from './components/Tooltip/Tooltip';
+import WalletAddress from './components/WalletAddress/WalletAddress';
+import LogoLoader from './components/LogoLoader/LogoLoader';
 
 export default {
   Button,
+  Badge,
   WatchButton,
   Input,
   Dropdown,
@@ -67,5 +72,8 @@ export default {
   ContentBox,
   Collapse,
   WalletCard,
-  StatusIndicator
+  StatusIndicator,
+  Tooltip,
+  WalletAddress,
+  LogoLoader
 };

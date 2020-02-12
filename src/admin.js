@@ -14,7 +14,7 @@ import * as emitter from './services/emitter';
 import * as user from './actions/user';
 
 
-require('define').noConflict();
+// require('define').noConflict();
 auth.setup();
 
 emitter.addListener('userInstall', user.install);

@@ -1,8 +1,6 @@
 import './SwitchBlock.less';
 import React, { useState } from 'react';
 
-import Balances from '../Balances/Balances';
-
 import UI from '../../../../../../ui';
 
 export default props => {

@@ -1,14 +1,13 @@
 // styles
 import './SwitchTabs.less';
 // external
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { classNames as cn } from '../../utils/index'
 import PropTypes from 'prop-types';
 // internal
 import {classNames} from '../../../utils';
-import UI from '../../index';
 
-export default function SwitchTabs({ tabs, selected, onChange, currency }) {
-
+export default function SwitchTabs({ tabs, selected, onChange, currency, size, type, disabled }) {
   const getSelectedIndex = () => {
     for (let i = 0; i < tabs.length; i++) {
       if (tabs[i].value === selected) {
@@ -18,6 +17,20 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
     return 0;
   };
 
+  const [animation, setAnimation] = useState(false);
+  const didMountRef = useRef(false);
+
+  useEffect(() => {
+    if (didMountRef.current) {
+      setAnimation(true);
+      setTimeout(() => {
+        setAnimation(false);
+      }, 500)
+    } else {
+      didMountRef.current = true;
+    }
+  }, [selected]);
+
   const { gradient, color } = currency;
 
   const fillIndicatorStyle = {
@@ -26,7 +39,7 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
 
   const indicatorWidth = 100 / tabs.length;
   return (
-    <div className="SwitchTabs" style={{ color }}>
+    <div className={classNames("SwitchTabs", size, type, { disabled })} style={{ color, borderColor: color }}>
       {tabs.map((tab) => {
         return (
           <div
@@ -36,16 +49,17 @@ export default function SwitchTabs({ tabs, selected, onChange, currency }) {
               active: tab.value === selected,
             })}
             onClick={tab.onClick || (() => onChange(tab.value))}
-          >{tab.label}</div>
+          ><span>{tab.label}</span></div>
         )
       })}
-      <div
-        className="SwitchTabs__indicator"
+      { selected && <div
+        className={cn("SwitchTabs__indicator", { animation })}
         style={{
           width: `calc(${indicatorWidth}% + 2px)`,
           transform: `translateX(calc((100% - 2px) * ${getSelectedIndex()}))`,
-          ...fillIndicatorStyle
-        }} />
+        }}>
+        <span style={fillIndicatorStyle} />
+      </div>}
     </div>
   )
 }
@@ -61,5 +75,8 @@ SwitchTabs.propTypes = {
   })).isRequired,
   selected: PropTypes.any,
   currency: PropTypes.object,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  size: PropTypes.string,
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
 };

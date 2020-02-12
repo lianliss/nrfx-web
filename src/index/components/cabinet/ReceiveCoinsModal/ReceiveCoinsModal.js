@@ -1,3 +1,4 @@
+
 import './ReceiveCoinsModal.less';
 
 import React from 'react';
@@ -28,12 +29,14 @@ export default class ReceiveCoinsModal extends React.Component {
     this.__load();
   }
 
-  get wallet() {
+  get wallet () {
+    let wallet = null;
     for (let i = 0; i < this.state.wallets.length; i++) {
       if (this.state.wallets[i].currency === this.state.currency) {
-        return this.state.wallets[i];
+        wallet = this.state.wallets[i];
       }
     }
+    return wallet;
   }
 
   render() {
@@ -129,7 +132,7 @@ export default class ReceiveCoinsModal extends React.Component {
                 currency={currencyInfo}
                 onClick={() => {
                   if (this.state.isCopied) {
-                    this.props.close();
+                    this.props.onClose();
                   } else {
                     this.__copy();
                   }

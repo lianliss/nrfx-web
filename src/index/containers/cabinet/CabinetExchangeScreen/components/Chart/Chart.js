@@ -2,14 +2,13 @@ import './Chart.less';
 
 import React from 'react';
 import { widget } from '../../../../../charting_library/charting_library.min';
-import { getLang } from '../../../../../../services/lang';
-import { classNames } from '../../../../../../utils/index'
-import { setItem, getItem } from '../../../../../../services/storage'
+import { classNames as cn } from '../../../../../../utils/index'
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
 import * as actions from '../../../../../../actions/';
-import { API_ENTRY } from '../../../../../../services/api';
+// import { API_ENTRY } from '../../../../../../services/api';
 import getTimezone from './timezones';
 import langCodes from './langCodes';
+import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
 
 
 export default class Chart extends React.PureComponent {
@@ -19,7 +18,7 @@ export default class Chart extends React.PureComponent {
     resolution: '1',
     containerId: 'tv_chart_container',
     //datafeedUrl: API_ENTRY + '/api/v1/exchange_chart',
-    datafeedUrl: 'https://stageapi.bitcoinbot.pro/chart',
+    datafeedUrl: 'https://exchange.bitcoinbot.pro/chart',
     // datafeedUrl: 'http://demo_feed.tradingview.com',
 
     libraryPath: 'charting_library/',
@@ -30,6 +29,10 @@ export default class Chart extends React.PureComponent {
     fullscreen: false,
     autosize: true,
     studiesOverrides: {},
+  };
+
+  state = {
+    status: 'loading'
   };
 
   tvWidget = null;
@@ -58,36 +61,32 @@ export default class Chart extends React.PureComponent {
 
       locale: locale,
       disabled_features: [
-        ...(!this.props.fullscreen ? [
-          (!this.props.adaptive && 'header_widget'),
-          (!this.props.adaptive && 'left_toolbar'),
-          'edit_buttons_in_legend',
-          'context_menus',
-          'use_localstorage_for_settings',
-          'go_to_date',
-          'timeframes_toolbar',
-          'shift_visible_range_on_new_bar',
-          'compare_symbol',
-          'header_symbol_search',
-          'symbol_search_hot_key',
-          'header_settings',
-          'header_compare',
-          'header_screenshot',
-          'header_saveload',
-          'symbol_info',
-          'header_resolutions',
-          'border_around_the_chart',
-          'remove_library_container_border',
-        ] : [
-          'use_localstorage_for_settings',
-        ]),
+        'header_widget',
+        'edit_buttons_in_legend',
+        'context_menus',
+        'use_localstorage_for_settings',
+        'go_to_date',
+        'timeframes_toolbar',
+        'shift_visible_range_on_new_bar',
+        'compare_symbol',
+        'header_symbol_search',
+        'symbol_search_hot_key',
+        'header_settings',
+        'header_fullscreen_button',
+        'header_compare',
+        'header_screenshot',
+        'header_saveload',
+        'symbol_info',
+        'header_resolutions',
+        'border_around_the_chart',
       ],
       enabled_features: [
         'charting_library_debug_mode',
         'side_toolbar_in_fullscreen_mode',
         'move_logo_to_main_pane',
-        (!this.props.fullscreen && 'hide_left_toolbar_by_default')
+        // 'hide_left_toolbar_by_default'
       ],
+
       charts_storage_url: this.props.chartsStorageUrl,
       charts_storage_api_version: this.props.chartsStorageApiVersion,
       client_id: this.props.clientId,
@@ -119,36 +118,28 @@ export default class Chart extends React.PureComponent {
     const tvWidget = new widget(widgetOptions);
     this.tvWidget = tvWidget;
 
-    // tvWidget.onChartReady(() => {
-    //   const symbol = this.props.symbol.toLowerCase().replace(':', '_');
-    //   const key = 'tv_template_' + symbol + '_' + this.props.interval;
-    //   const templateString = getItem(key);
-    //   if (templateString) {
-    //     let template = JSON.parse(templateString);
-    //     template = {
-    //       charts: template.charts.map(chart => ({
-    //         panes: []
-    //       }))
-    //     }
-    //     tvWidget.load(template);
-    //   }
-    //
-    //   this.chartSetInterval = setInterval(() => {
-    //     tvWidget.save(template => {
-    //       console.log(111, template);
-    //       setItem(key, JSON.stringify(template));
-    //     })
-    //   }, 1000);
-    // });
+    tvWidget.onChartReady(() => {
+      this.activeChart = this.tvWidget.activeChart();
+      this.setState({status: ''});
+    });
+  }
 
-    if (this.props.fullscreen) {
-      const { tradingView } = this.refs;
-      if (tradingView.requestFullscreen) {
-        tradingView.requestFullscreen();
-      } else {
-        tradingView.webkitRequestFullScreen();
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.interval !== this.props.interval && this.activeChart) {
+      this.activeChart.setResolution(this.props.interval.toString());
+    }
+
+    if (prevProps.fullscreen !== this.props.fullscreen) {
+      if (this.props.fullscreen) {
+        const { tradingView } = this.refs;
+        if (tradingView.requestFullscreen) {
+          tradingView.requestFullscreen();
+        } else {
+          tradingView.webkitRequestFullScreen();
+        }
       }
     }
+    return false;
   }
 
   componentWillUnmount() {
@@ -161,11 +152,14 @@ export default class Chart extends React.PureComponent {
 
   render() {
     return (
-      <div
-        id={ this.props.containerId }
-        ref="tradingView"
-        className={ classNames("Exchange__trading_view", { fullscreen: this.props.fullscreen })}
-      />
+      <div className={cn("ExchangeChart", this.state.status)}>
+        {this.state.status && <LoadingStatus status={this.state.status} />}
+        <div
+          id={ this.props.containerId }
+          ref="tradingView"
+          className={ cn("ExchangeChart__tradingView", { fullscreen: this.props.fullscreen })}
+        />
+      </div>
     );
   }
 }

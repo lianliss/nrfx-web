@@ -5,87 +5,88 @@ import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 
 import UI from 'src/ui';
-import * as utils from 'utils/index';
+import { getLang } from 'utils/index';
 import * as pages from 'src/index/constants/pages';
 import router from 'src/router';
 import * as steps from 'src/components/AuthModal/fixtures';
-import { getLang, setLang } from 'src/services/lang';
+import { setLang } from 'src/services/lang';
 import Dropdown from './components/Dropdown';
 import MobileDropdown from './components/MobileDropdown';
 import * as actions from 'actions';
 import * as auth from 'actions/auth';
+import COMPANY from '../../../constants/company';
 
 function Header({ showLightLogo, langList, routerState, profile }) {
   const headerLinks = [
     {
-      title: utils.getLang('site__headerProducts'),
+      title: getLang('site__headerProducts'),
       children: [
         {
-          title: utils.getLang('site__homeWallet'),
+          title: getLang('site__homeWallet'),
           route: pages.WALLET,
         },
         {
-          title: utils.getLang('site__headerExchange'),
+          title: getLang('site__headerExchange'),
           route: pages.SITE_EXCHANGE,
         },
         {
-          title: utils.getLang('site__headerRobots'),
+          title: getLang('site__headerRobots'),
           route: pages.ROBOTS,
         },
-        {
-          title: utils.getLang('site__headerInvestment'),
-          route: pages.INVESTMENT,
-        },
         // {
-        //   title: utils.getLang('site__headerPayment'),
+        //   title: getLang('site__headerInvestment'),
+        //   route: pages.INVESTMENT,
+        // },
+        // {
+        //   title: getLang('site__headerPayment'),
         //   route: pages.COMMERCE,
         // },
       ]
     },
     {
-      title: utils.getLang('site__headerCompany'),
+      title: getLang('site__headerCompany'),
       children: [
         {
-          title: utils.getLang('site__headerAboutUs'),
+          title: getLang('site__headerAboutUs'),
           route: pages.ABOUT,
         },
         {
-          title: utils.getLang('site__headerFee'),
+          title: getLang('site__headerFee'),
           route: pages.FEE,
         },
         {
-          title: utils.getLang('site__headerContactUs'),
-          route: pages.CONTACT,
-        },
-        {
-          title: utils.getLang('site__headerTechnology'),
+          title: getLang('site__headerTechnology'),
           route: pages.TECHNOLOGY,
         },
         {
-          title: utils.getLang('site__headerSecurity'),
+          title: getLang('site__headerSecurity'),
           route: pages.SAFETY,
         },
       ]
     },
     {
-      title: utils.getLang('site__headerHelp'),
+      title: getLang('site__headerHelp'),
       children: [
         {
-          title: utils.getLang('site__headerFAQ'),
-          route: pages.FAQ,
+          title: getLang('site__headerContactUs'),
+          route: pages.CONTACT,
+        },
+        {
+          title: getLang('site__headerFAQ'),
+          route: COMPANY.faqUrl,
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content',{type: "terms", title: utils.getLang('site__headerTerms')})}>
-              {utils.getLang('site__headerTerms')}
+            <span onClick={ () => actions.openModal('static_content',{type: "terms"})}>
+              {getLang('site__headerTerms')}
             </span>
           ),
           route: null,
         },
         {
           title: (
-            <span onClick={ () => actions.openModal('static_content', {type: "privacy", title: utils.getLang('site__headerPrivacyPolicy')})}>
-              {utils.getLang('site__headerPrivacyPolicy')}
+            <span onClick={ () => actions.openModal('static_content', {type: "privacy"})}>
+              {getLang('site__headerPrivacyPolicy')}
             </span>
           ),
           route: null,
@@ -126,31 +127,31 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                 <UI.Button
                   type="outline"
                   fontSize={15}
-                  onClick={() => actions.openModal('auth', { type: steps.LOGIN, title: utils.getLang('site__headerLogIn') })}
+                  onClick={() => actions.openModal('auth', { type: steps.LOGIN })}
                 >
-                  {utils.getLang('site__headerLogIn')}
+                  {getLang('site__headerLogIn')}
                 </UI.Button>,
                 <UI.Button
                   type="outline_white"
                   fontSize={15}
-                  onClick={() => actions.openModal('auth', { type: steps.REGISTRATION, title: utils.getLang('site__commerceRegistration') })}
+                  onClick={() => actions.openModal('auth', { type: steps.REGISTRATION })}
                 >
-                  {utils.getLang('site__commerceRegistration')}
+                  {getLang('site__commerceRegistration')}
                 </UI.Button>
               ] : [
                 <UI.Button
-                  onClick={() => router.navigate(pages.PROFILE)}
+                  onClick={() => router.navigate(pages.DASHBOARD)}
                   fontSize={15}
                   type="outline"
                 >
-                  {utils.getLang('cabinet_header_cabinet')}
+                  {getLang('cabinet_header_cabinet')}
                 </UI.Button>,
                 <UI.Button
                   onClick={auth.logout}
                   type="outline_white"
                   fontSize={15}
                 >
-                  {utils.getLang('cabinet_header_exit')}
+                  {getLang('cabinet_header_exit')}
                 </UI.Button>
               ]}
             </div>
@@ -162,7 +163,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
               title={currentLangTitle}
               subItems={langList.slice(0, 3)}
               onChange={handleLangChange}
-              lastItemText={utils.getLang('site__headerMore')}
+              lastItemText={getLang('site__headerMore')}
               onLastItemClick={() => {
                 actions.openModal('language');
               }}
@@ -186,34 +187,34 @@ function Header({ showLightLogo, langList, routerState, profile }) {
               ))}
 
               <div className="SiteHeader__menu_controls">
-                { !isLogin ? [
-                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN, title: utils.getLang('site__headerLogIn')})}>{utils.getLang('site__headerLogIn')}</MenuItem>,
+                { !isLogin ? <>
+                  <MenuItem onClick={() => actions.openModal('auth', {type: steps.LOGIN})}>{getLang('site__headerLogIn')}</MenuItem>
                   <UI.Button
-                    onClick={() => actions.openModal('auth', {type: steps.REGISTRATION, title: utils.getLang('site__commerceRegistration')})}
+                    onClick={() => actions.openModal('auth', {type: steps.REGISTRATION })}
                     type="outline_white"
                     rounded
                     fontSize={15}
                   >
-                    {utils.getLang('site__commerceRegistration')}
+                    {getLang('site__commerceRegistration')}
                   </UI.Button>
-                ] : [
-                  <MenuItem onClick={auth.logout}>{utils.getLang("cabinet_header_exit")}</MenuItem>,
+                </> : <>
+                  <MenuItem onClick={auth.logout}>{getLang("cabinet_header_exit")}</MenuItem>
                   <UI.Button
                     type="outline_white"
                     rounded
                     fontSize={15}
-                    onClick={() => router.navigate(pages.PROFILE)}
+                    onClick={() => router.navigate(pages.DASHBOARD)}
                   >
-                    {utils.getLang("cabinet_header_cabinet")}
+                    {getLang("cabinet_header_cabinet")}
                   </UI.Button>
-                ]}
+                </>}
 
                 <Dropdown
                   className="SiteHeader__lang__dropdown"
                   title={currentLangTitle}
                   subItems={langList.slice(0, 3)}
                   onChange={handleLangChange}
-                  lastItemText={utils.getLang('site__headerMore')}
+                  lastItemText={getLang('site__headerMore')}
                   onLastItemClick={() => {
                     actions.openModal('language');
                   }}
@@ -244,6 +245,7 @@ function MenuItem(props) {
 }
 
 const mapStateToProps = (state) => ({
+  currentLang: state.default.currentLang,
   profile: state.default.profile,
   langList: state.default.langList,
   lang: state.default.lang,

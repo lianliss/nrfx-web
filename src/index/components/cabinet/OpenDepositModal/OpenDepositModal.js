@@ -1,6 +1,7 @@
 import './OpenDepositModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import UI from '../../../../ui';
 import SVG from 'react-inlinesvg';
 import apiSchema from '../../../../services/apiSchema';
@@ -8,8 +9,6 @@ import * as api from "../../../../services/api";
 import * as walletsActions from "../../../../actions/cabinet/wallets";
 import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";
-import * as storeUtils from "../../../storeUtils";
-import * as CLASSES from "../../../constants/classes";
 import * as investmentsActions from "../../../../actions/cabinet/investments";
 import * as toasts from '../../../../actions/toasts';
 
@@ -95,7 +94,7 @@ class OpenDepositModal extends React.Component {
         return {
           value: p.id,
           title: p.description,
-          note: `${p.percent}% ${p.days} ${utils.getLang('global_days')}`,
+          note: `${p.percent}% ${p.days} ${utils.getLang('global_days', true)}`,
           max: p.max,
           min: p.min
         }
@@ -118,6 +117,8 @@ class OpenDepositModal extends React.Component {
   };
 
   handleSubmit() {
+    // TODO: ВЫНЕСТИ ЭТУ ФУНКЦИЮ В ACTIONS!
+
     !this.props.thisState.touched && this.__setState({ touched: true });
 
     if (this.props.thisState.amount) {
@@ -125,21 +126,18 @@ class OpenDepositModal extends React.Component {
 
       const pool = this.props.thisState.selectDepositType === 'pool';
 
-      api.call(apiSchema.Investment[pool ? 'PoolDepositPut' : 'DepositPut'], {
+      investmentsActions.createDeposit(pool, {
         amount: this.props.thisState.amount,
         wallet_id: this.props.thisState.walletId,
         plan_id: this.props.thisState.planId,
         deposit_type: this.props.thisState.selectDepositType
-      }).then(({plans}) => {
+      }).then(() => {
         if (pool) {
           actions.openModal('deposit_pool_success');
         } else {
           toasts.success(utils.getLang('cabinet_openNewDeposit_depositCreated'));
           this.props.onClose();
         }
-      }).catch((err) => {
-        toasts.error(err.message);
-        // this.__setState({error: err.message});
       }).finally(() => {
         this.setState({ pending: false });
       });
@@ -147,7 +145,7 @@ class OpenDepositModal extends React.Component {
   }
 
   __handleClickMax = () => {
-    const { amount } = this.props.wallets.find(w => w.currency ==  this.props.thisState.currency);
+    const { amount } = this.props.wallets.find(w => w.currency ===  this.props.thisState.currency);
     const { amountMax } =  this.props.thisState
     this.__setState({ amount: amount > amountMax ? amountMax : amount });
   }
@@ -233,7 +231,7 @@ class OpenDepositModal extends React.Component {
                 this.__setState({ amount: (amount > amountMax ? amountMax : amount) }, null, this.__getPlans);
               }}
               placeholder={utils.getLang('cabinet_openNewDeposit_amount')}
-              indicator={`${utils.getLang('cabinet_openNewDeposit_min')} ${this.props.thisState.amountMin} ${this.props.thisState.currency && this.props.thisState.currency.toUpperCase()}`}
+              indicator={`${utils.getLang('cabinet_openNewDeposit_min', true)} ${this.props.thisState.amountMin} ${this.props.thisState.currency && this.props.thisState.currency.toUpperCase()}`}
               onTextChange={amount => {
                 this.__setState({ amount });
               }}
@@ -327,7 +325,9 @@ class OpenDepositModal extends React.Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.OPEN_DEPOSIT_MODAL,
-  OpenDepositModal
-);
+export default connect(state => ({
+  profile: state.default.profile,
+  wallets: state.wallets.wallets,
+  router: state.router,
+  thisState: state.investments.openDepositModal
+}))(OpenDepositModal);

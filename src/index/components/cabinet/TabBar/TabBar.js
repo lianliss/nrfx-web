@@ -1,12 +1,13 @@
 import './TabBar.less';
 import React from 'react';
+import { connect } from 'react-redux';
 import { BaseLink } from 'react-router5';
 import router from '../../../../router';
 import SVG from 'react-inlinesvg';
 import * as PAGES from '../../../constants/pages';
 
 
-const ToastsItem = props => (
+const Tab = props => (
   <BaseLink
     router={router}
     routeName={props.route}
@@ -17,14 +18,18 @@ const ToastsItem = props => (
   </BaseLink>
 )
 
-export default function Toasts(props) {
+const Tabs = props => {
   return (
     <div className="TabBar">
-      <ToastsItem route={PAGES.PROFILE}><SVG src={require('../../../../asset/24px/user.svg')} /></ToastsItem>
-      <ToastsItem route={PAGES.CABINET_WALLET}><SVG src={require('../../../../asset/24px/wallet.svg')} /></ToastsItem>
-      <ToastsItem route={PAGES.INVESTMENTS}><SVG src={require('../../../../asset/24px/invest.svg')} /></ToastsItem>
-      {/*<ToastsItem route={PAGES.EXCHANGE}><SVG src={require('../../../../asset/24px/loop.svg')} /></ToastsItem>*/}
-      <ToastsItem route={PAGES.MENU}><SVG src={require('../../../../asset/24px/menu.svg')} /></ToastsItem>
+      <Tab route={PAGES.DASHBOARD}><SVG src={require('../../../../asset/24px/user.svg')} /></Tab>
+      <Tab route={PAGES.CABINET_WALLET}><SVG src={require('../../../../asset/24px/wallet.svg')} /></Tab>
+      <Tab route={PAGES.INVESTMENTS}><SVG src={require('../../../../asset/24px/invest.svg')} /></Tab>
+      <Tab route={PAGES.EXCHANGE}><SVG src={require('../../../../asset/24px/loop.svg')} /></Tab>
+      <Tab route={PAGES.MENU}><SVG src={require('../../../../asset/24px/menu.svg')} /></Tab>
     </div>
   )
 }
+
+export default connect(state => ({
+  router: state.router,
+}))(Tabs);

@@ -1,115 +1,170 @@
 import './OrderBook.less';
 
-import React from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
+import * as actions from 'src/actions/cabinet/exchange';
+import { connect } from 'react-redux';
+import UI from 'src/ui/index';
+import { getLang, ucfirst, classNames as cn } from 'src/utils/index';
+import Block from '../Block/Block';
+import SVG from 'react-inlinesvg';
 import * as utils from '../../../../../../utils';
-import UI from '../../../../../../ui/index';
 import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
 
-export default function OrderBook({ asks, bids, loading, onOrderPress, adaptive, ticker, type }) {
+const OrderBook = props => {
 
-  [asks, bids] = [asks, bids].map(prepareOrders);
+  const listLength = props.adaptive ? 6 : 14;
 
-  const sideLimit = adaptive ? 7 : 11;
+  const { status } = props;
+  const [type, setType] = useState('all');
+  const [,secondaryCurrency] = props.market.toUpperCase().split('/');
 
-  const sumAsks = asks.reduce((total, order) => total + order.amount, 0);
-  const sumBids = bids.reduce((total, order) => total + order.amount, 0);
+  const scrollBlock = useRef(null);
 
-  const asksMaxTotal = Math.max(...asks.map(order => order.amount * order.price));
-  const bidsMaxTotal = Math.max(...bids.map(order => order.amount * order.price));
+  useEffect(() => {
+    const { current } = scrollBlock;
+    setTimeout(() => {
+      current.scroll(0, type === 'sell' ? current.clientHeight : 0);
+    }, 1);
+  }, [type]);
 
-  const whole = Math.max(asksMaxTotal, bidsMaxTotal);
+  const getSumOrders = (orders, type) => {
+    return props.orders
+      .filter(o => o.action === type)
+      .reduce((total, order) => total + order.amount, 0);
+  };
 
-  let total = sumAsks + sumBids;
-  let asksPercent = sumAsks / total * 100;
-  let bidsPercent = sumBids / total * 100;
-  let diff = Math.round(Math.abs(asksPercent - bidsPercent));
+  const sum = {
+    sell: getSumOrders(props.orders, 'sell'),
+    buy: getSumOrders(props.orders, 'buy')
+  };
 
-  if (loading) {
+  const total = sum.sell + sum.buy;
+
+  const fillPercent = {
+    sell: sum.sell / total * 100,
+    buy: sum.buy / total * 100,
+  };
+
+  const maxTotal = Math.max(...props.orders.map(order => order.amount * order.price));
+  const diff = Math.round(fillPercent.sell) - Math.round(fillPercent.buy);
+
+  const renderList = (type, limit) => {
+
+    const range = type === 'sell' ? [-limit] : [0, limit];
+
+    const handleOrderClick = order => {
+      const primaryFractionDigits = utils.isFiat(order.primary_coin) ? 2 : 8;
+      const secondaryFractionDigits = utils.isFiat(order.secondary_coin) ? 2 : 8;
+
+      props.selectOrder({
+        action: order.action,
+        price: utils.formatDouble(order.price, secondaryFractionDigits),
+        amount: utils.formatDouble(order.amount, primaryFractionDigits),
+        total: utils.formatDouble(order.price * order.amount, secondaryFractionDigits),
+      });
+    }
+
     return (
-      <div className={utils.classNames("OrderBook", type)}>
-        <LoadingStatus status="loading" />
+      <div className="OrderBook__list" ref={scrollBlock}>
+        {props.orders.filter(o => o.action === type)
+          .sort((a, b) => b.price - a.price)
+          .slice(...range)
+          .map(order => {
+            const total = order.amount * order.price;
+            const filled = total / maxTotal * 100;
+            return (
+              <div key={order.id} onClick={() => handleOrderClick(order)} className={cn("OrderBook__order", order.action)}>
+                <div className="OrderBook__order__price">
+                  <UI.NumberFormat accurate number={order.price} currency={order.secondary_coin} hiddenCurrency/>
+                </div>
+                <div className="OrderBook__order__amount">
+                  <UI.NumberFormat accurate number={order.amount} currency={order.primary_coin} hiddenCurrency/>
+                </div>
+                <div className="OrderBook__order__total">
+                  <UI.NumberFormat accurate number={order.price * order.amount} currency={order.secondary_coin} hiddenCurrency/>
+                </div>
+                <div style={{width: filled + '%'}} className="OrderBook__order__fill"/>
+              </div>
+            )
+          })
+        }
+      </div>
+    )
+  };
+
+  const renderTicker = () => {
+    const { ticker } = props;
+    return (
+      <div className="OrderBook__ticker">
+        <div className="OrderBook__ticker__price">
+          <UI.NumberFormat number={ticker.price} type={ticker.price > ticker.prevPrice ? 'up' : 'down'} currency={secondaryCurrency} indicator hiddenCurrency />
+        </div>
+        <div className="OrderBook__ticker__priceUsd">
+          $<UI.NumberFormat number={ticker.usd_price} hiddenCurrency />
+        </div>
+        <div />
       </div>
     )
   }
 
   return (
-    <div className={utils.classNames("OrderBook", type)}>
-      <div className="OrderBook__header OrderBook__order">
-        <div className="OrderBook__order__row">{utils.getLang('global_price')}</div>
-        <div className="OrderBook__order__row">{utils.getLang('global_amount')}</div>
-        {!adaptive && <div className="OrderBook__order__row">{utils.getLang('global_total')}</div>}
+    <Block
+      className={cn("OrderBook", type, status)}
+      title={getLang('exchange_orderBook')}
+      skipCollapse
+      controls={(
+        <UI.SwitchButtons
+          rounded
+          className="OrderBook__controls"
+          selected={type}
+          onChange={setType}
+          tabs={['all', 'buy', 'sell'].map(type => ({
+            label: ucfirst(type),
+            value: type,
+            className: type,
+            icon: <SVG src={require('src/asset/16px/list.svg')} />
+          }))} />
+      )}
+    >
+      { status === 'loading' && <LoadingStatus status="loading" /> }
+      <div className="OrderBook__wrapper">
+        <div className="OrderBook__title">
+          <div className="OrderBook__title__price">{utils.getLang('global_price')}</div>
+          <div className="OrderBook__title__amount">{utils.getLang('global_amount')}</div>
+          <div className="OrderBook__title__total">{utils.getLang('global_total')}</div>
+        </div>
+        <div className="OrderBook__indicator">
+          {['sell', 'buy'].map(sideType => (
+            <div key={sideType} className={cn("OrderBook__indicator__side", sideType)}>
+              {(sideType === 'sell' ? diff > 0 : diff < 0) && (
+                <span>{ Math.abs(diff) + '%' }</span>
+              )}
+              <div style={{ height: fillPercent[sideType] + '%' }} className="OrderBook__indicator__side__fill"></div>
+            </div>
+          ))}
+        </div>
+        <div className="OrderBook__content">
+          {type === 'all' ? <>
+            {renderList('sell', listLength)}
+            {renderTicker()}
+            {renderList('buy', listLength)}
+          </> : <>
+            {type === 'buy' && renderTicker()}
+            {renderList(type)}
+            {type === 'sell' && renderTicker()}
+          </>}
+        </div>
       </div>
-      <div className="OrderBook__cont__wrap">
-        {!adaptive && <div className="OrderBook__cont indicator">
-          <div className="OrderBook__side red_bg">
-            {diff > 0 && asksPercent > bidsPercent && `${diff}%`}
-            <div className="OrderBook__percent_indicator" style={{height: `${asksPercent}%`}} />
-          </div>
-          <div className="OrderBook__side green_bg">
-            {diff > 0 && bidsPercent > asksPercent && `${diff}%`}
-            <div className="OrderBook__percent_indicator" style={{height: `${bidsPercent}%`}} />
-          </div>
-        </div>}
-        {type !== 'all' ? (
-          <div className="OrderBook__cont">
-            <div className="OrderBook__side">
-              {makeRows((type === "bids" ? bids : asks), onOrderPress, whole, adaptive)}
-            </div>
-          </div>
-        ) : (
-          <div className="OrderBook__cont">
-            <div className="OrderBook__side">
-              {makeRows(asks.slice(-sideLimit), onOrderPress, whole, adaptive)}
-            </div>
-            {adaptive && <div className="OrderBook__price">
-              <UI.NumberFormat number={ticker.price} type={ticker.price  > ticker.prevPrice ? 'up' : 'down'} indicator />
-            </div>}
-            <div className="OrderBook__side">
-              {makeRows(bids.slice(0, sideLimit), onOrderPress, whole, adaptive)}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    </Block>
   )
 }
 
-function prepareOrders(orders) {
-  // Group and Sort function
-  let result = [];
-  Object.values(orders).reduce((res, value) => {
-    if (!res[value.price]) {
-      res[value.price] = { ...value, amount: 0, filled: 0 };
-      result.push(res[value.price])
-    }
-    res[value.price].amount += value.amount;
-    res[value.price].filled += value.filled;
-    return res;
-  }, {});
-
-  return result.sort((a, b) => a.price > b.price ? -1 : 1);
-}
-
-function makeRows(items, onOrderPress, whole, adaptive,) {
-  return items.map((order) => {
-    const className = utils.classNames({
-      OrderBook__order: true,
-      [order.action]: true,
-    });
-
-    const total = order.amount * order.price;
-    const filled = total / whole * 100;
-
-    return (
-      <div title={`Filled: ${Math.floor(order.filled / order.amount * 100)}%`} key={order.id} className={className} onClick={() => onOrderPress(order)}>
-        <div className="OrderBook__order__row"><UI.NumberFormat number={order.price} currency={order.secondary_coin} hiddenCurrency /></div>
-        <div className="OrderBook__order__row"><UI.NumberFormat number={order.amount - order.filled} currency={order.primary_coin} hiddenCurrency /></div>
-        {!adaptive && <div className="OrderBook__order__row"><UI.NumberFormat number={order.price * order.amount} currency={order.secondary_coin} hiddenCurrency /></div>}
-        <div className="OrderBook__order__filled" style={{
-          width: `${filled}%`
-        }}/>
-      </div>
-    )
-  });
-}
+export default connect(state => ({
+  orders: state.exchange.orderBook,
+  ticker: state.exchange.ticker,
+  market: state.exchange.market,
+  adaptive: state.default.adaptive,
+  status: state.exchange.loadingStatus.orderBook,
+}), {
+  selectOrder: actions.orderBookSelectOrder,
+})(OrderBook);

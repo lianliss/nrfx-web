@@ -10,6 +10,7 @@ import ModalGroup from '../ui/components/ModalGroup/ModalGroup';
 import Toasts from './components/cabinet/Toasts/Toasts';
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
 import UI from '../ui';
+import LogoLoader from '../ui/components/LogoLoader/LogoLoader';
 import * as actions from '../actions';
 import * as internalNotifications from '../actions/cabinet/internalNotifications';
 import * as storage from '../services/storage';
@@ -53,13 +54,8 @@ class App extends React.Component {
     const { error } = this.state;
 
     if (this.state.isLoading) {
-      const loadingText = {
-        ru: "Загрузка...",
-        id: "memuat...",
-        // TODO
-      }[currentLang] || "Loading...";
       return (
-        <div className="AppLoading">{loadingText}</div>
+        <LogoLoader className="AppLoading" />
       )
     }
 
@@ -76,7 +72,7 @@ class App extends React.Component {
 
     return <div>
       <Helmet>
-        <title>{utils.getLang('global_meta_title')}</title>
+        <title>{utils.getLang('global_meta_title', true)}</title>
       </Helmet>
       <ModalGroup {...this.props} />
       <Modals {...this.props} />

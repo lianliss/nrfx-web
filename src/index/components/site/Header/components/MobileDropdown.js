@@ -32,7 +32,9 @@ function MobileDropdown({ title, subItems, onChange, onNavigate, lastItemText, o
                   <span
                     key={item.title}
                     className="SiteHeader__mobileDropdown__link"
-                    onClick={() => onNavigate(item.route)}
+                    onClick={() => {
+                      item.route.includes('http') ? window.open(item.route) : onNavigate(item.route)
+                    }}
                   >
                     {item.title}
                   </span>

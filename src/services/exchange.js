@@ -2,6 +2,7 @@ import * as realTime from './realtime';
 import * as exchange from '../actions/cabinet/exchange';
 import * as toasts from '../actions/toasts';
 import * as utils from '../utils';
+import store from '../store';
 
 let markets = {};
 
@@ -24,7 +25,8 @@ class Exchange {
       ['balance_update', this.__balanceDidUpdate],
       ['ticker', this.__tickerUpdate],
       ['error_connection', this.__errorConnection],
-      ['close_connection', this.__errorConnection],
+      ['close_connection', this.__closeConnection],
+      ['open_connection', this.__openConnection],
       ['completed_orders', this.__orderBookRemoveOrder]
     ];
 
@@ -47,21 +49,32 @@ class Exchange {
     }
   }
 
+  __openConnection = () => {
+    exchange.load(this.market)(store.dispatch, store.getState); // store HACK
+  };
+
+  __closeConnection = () => {
+    // unbind(this.market);
+    exchange.setStatus('disconnected');
+  };
+
   __errorConnection = () => {
-    unbind(this.market);
-    exchange.setStatus('failed');
+    // unbind(this.market);
+    exchange.setStatus('disconnected');
   };
 
   __orderBookDidUpdated = (orders) => exchange.orderBookUpdateOrders(orders);
   __orderBookInit = payload => exchange.orderBookInit(payload);
 
   __orderDidFailed = body => {
-    exchange.setOrderStatus(body.order_id, 'completed');
+    // exchange.setOrderStatus(body.order_id, 'failed');
+    exchange.orderFailed(body.order_id);
     toasts.error(utils.getLang('exchange_toastOrderFailed'));
   };
 
   __orderDidCompleted = body => {
-    exchange.setOrderStatus(body.order_id, 'completed');
+    // exchange.setOrderStatus(body.order.id, 'completed');
+    exchange.orderCompleted(body.order);
     toasts.success(utils.getLang('exchange_toastOrderCompleted'));
   };
 
@@ -96,7 +109,6 @@ class Exchange {
 
 
 export function bind(market) {
-  realTime.shared.reconnect();
   markets[market] = new Exchange(market);
 }
 

@@ -83,23 +83,8 @@ export function loadMoreTransfers() {
 
 export function getNoGeneratedCurrencies() {
   const state = store.getState();
-  if (state.wallets.loadingStatus.default) {
-    return [];
-  }
-
-  let exist = {};
-  for (let i = 0; i < state.wallets.wallets.length; i++) {
-    exist[state.wallets.wallets[i].currency] = true;
-  }
-
-  let currencies = [];
-  for (let name in state.cabinet.currencies) {
-    if (exist[name] || !state.cabinet.currencies[name].can_generate ) {
-      continue;
-    }
-    currencies.push(state.cabinet.currencies[name]);
-  }
-  return currencies;
+  return Object.values(state.cabinet.currencies)
+    .filter((c) => c.can_generate && !c.is_exists);
 }
 
 export function loadTransactionInfo(id, type) {
@@ -123,15 +108,20 @@ export function generateWallet(currency) {
 
 export function sendCoins(params) {
   return (dispatch) => {
+    console.log(params);
+    debugger;
+    const method = params.type == 'login' ? apiSchema.Wallet.TransferSendPut : apiSchema.Wallet.TransactionSendPut;
     dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'loading' });
-    api.call(apiSchema.Wallet.SendPut, params).then(({wallet}) => {
+    api.call(method, params).then(({wallet}) => {
       toastsActions.success(utils.getLang('cabinet_sendCoinsModal_success'));
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'success' });
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: null });
       dispatch({ type: actionTypes.WALLETS_SEND_COIN_MODAL_CLEAR });
-      dispatch({ type: actionTypes.WALLETS_WALLET_UPDATE });
+      dispatch({ type: actionTypes.WALLETS_WALLET_UPDATE, wallet });
     }).catch((err) => {
-      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'failed' });
+      toastsActions.error(err.message);
+      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: null });
+      dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'sendCode', status: err.code });
     })
   }
 }

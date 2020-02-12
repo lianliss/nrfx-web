@@ -2,14 +2,13 @@
 import './CabinetWrapper.less';
 // external
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 // internal
 import {classNames} from '../../../src/utils';
 import router from '../../../src/router';
 import Header from '../../index/components/cabinet/Header/Header'
 import AdaptiveHeader from '../../index/components/cabinet/Header/AdaptiveHeader';
-import * as CLASSES from '../../index/constants/classes';
-import * as storeUtils from '../../index/storeUtils';
 import * as PAGES from '../../index/constants/pages'
 import * as utils from '../../utils'
 import TabBar from '../../index/components/cabinet/TabBar/TabBar';
@@ -55,7 +54,7 @@ class CabinetWrapper extends Component {
 
     let contentRules = {
       [PAGES.NOTIFICATIONS]: {
-        left: <BaseLink router={router} routeName={PAGES.PROFILE}>
+        left: <BaseLink router={router} routeName={PAGES.DASHBOARD}>
           <SVG src={require("../../asset/24px/angle-left.svg")} />
         </BaseLink>
       },
@@ -68,7 +67,7 @@ class CabinetWrapper extends Component {
     };
 
     if (!Object.keys(route.params)) {
-      contentRules[PAGES.PROFILE] = {
+      contentRules[PAGES.DASHBOARD] = {
         left: <BaseLink router={router} routeName={PAGES.NOTIFICATIONS}>
           <SVG src={require("../../asset/24px/bell.svg")} />
         </BaseLink>
@@ -123,7 +122,10 @@ class CabinetWrapper extends Component {
   }
 }
 
-export default storeUtils.getWithState(
-  CLASSES.COMPONENT_CABINET_WRAPPER,
-  CabinetWrapper
-);
+export default connect(state => ({
+  ...state.default,
+  router: state.router,
+  user: state.default.profile.user
+}), {
+  setAdaptive: actions.setAdaptive
+})(CabinetWrapper);
