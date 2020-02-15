@@ -5,7 +5,6 @@ import React, { useEffect, useRef } from 'react';
 import store from '../store';
 import router from '../router';
 import moment from 'moment';
-import company from '../index/constants/company';
 import * as api from 'src/services/api';
 import TranslatorMode from 'src/index/components/cabinet/TranslatorMode/TranslatorModal';
 
@@ -60,6 +59,11 @@ export function getLang(key, string = false, code = false) {
 
   return langString;
 }
+
+export const getCssVar = (v, fallback) => {
+  return getComputedStyle ? getComputedStyle(document.body)
+    .getPropertyValue(v).trim() : fallback;
+};
 
 export const nl2br = text => {
   if (text.includes('\\n')) {

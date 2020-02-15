@@ -10,6 +10,7 @@ import * as actions from '../../../../../../actions/';
 import getTimezone from './timezones';
 import langCodes from './langCodes';
 import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
+import { getCssVar } from 'src/utils/index';
 
 
 class Chart extends React.PureComponent {
@@ -43,12 +44,6 @@ class Chart extends React.PureComponent {
       exchangeActions.setFullscreen(false);
     }
   }
-
-  getVar(v) {
-    return getComputedStyle ? getComputedStyle(document.body)
-      .getPropertyValue(v).trim() : undefined;
-  };
-
 
   componentDidMount() {
     document.addEventListener('fullscreenchange', this.__handleFullscreen.bind(this), false);
@@ -106,17 +101,17 @@ class Chart extends React.PureComponent {
         ...this.props.studiesOverrides,
       },
       overrides: {
-        'paneProperties.background': this.getVar('--primary-background'),
-        'paneProperties.crossHairProperties.color': this.getVar('--light-gray'),
-        'scalesProperties.lineColor': this.getVar('--light-gray'),
-        'scalesProperties.textColor': this.getVar('--dark-gray'),
+        'paneProperties.background': getCssVar('--primary-background'),
+        'paneProperties.crossHairProperties.color': getCssVar('--light-gray'),
+        'scalesProperties.lineColor': getCssVar('--light-gray'),
+        'scalesProperties.textColor': getCssVar('--dark-gray'),
         'mainSeriesProperties.candleStyle.drawBorder': false,
-        'mainSeriesProperties.candleStyle.wickUpColor': this.getVar('--green'),
-        'mainSeriesProperties.candleStyle.wickDownColor': this.getVar('--red'),
-        'paneProperties.horzGridProperties.color': this.getVar('--light-gray'),
-        'paneProperties.vertGridProperties.color': this.getVar('--light-gray'),
-        'mainSeriesProperties.candleStyle.upColor': this.getVar('--green'),
-        'mainSeriesProperties.candleStyle.downColor': this.getVar('--red'),
+        'mainSeriesProperties.candleStyle.wickUpColor': getCssVar('--green'),
+        'mainSeriesProperties.candleStyle.wickDownColor': getCssVar('--red'),
+        'paneProperties.horzGridProperties.color': getCssVar('--light-gray'),
+        'paneProperties.vertGridProperties.color': getCssVar('--light-gray'),
+        'mainSeriesProperties.candleStyle.upColor': getCssVar('--green'),
+        'mainSeriesProperties.candleStyle.downColor': getCssVar('--red'),
       },
       allow_symbol_change: false,
       timezone: getTimezone(),
@@ -140,18 +135,18 @@ class Chart extends React.PureComponent {
     if (prevProps.theme !== this.props.theme) {
       if (this.tvWidget && !this.state.status) {
         this.tvWidget.changeTheme(ucfirst(this.props.theme));
-        this.tvWidget.applyOverrides({ 'paneProperties.background': this.getVar('--primary-background') });
-        this.tvWidget.applyOverrides({ 'paneProperties.background': this.getVar('--primary-background')});
-        this.tvWidget.applyOverrides({ 'paneProperties.crossHairProperties.color': this.getVar('--light-gray')});
-        this.tvWidget.applyOverrides({ 'scalesProperties.lineColor': this.getVar('--light-gray')});
-        this.tvWidget.applyOverrides({ 'scalesProperties.textColor': this.getVar('--dark-gray')});
+        this.tvWidget.applyOverrides({ 'paneProperties.background': getCssVar('--primary-background') });
+        this.tvWidget.applyOverrides({ 'paneProperties.background': getCssVar('--primary-background')});
+        this.tvWidget.applyOverrides({ 'paneProperties.crossHairProperties.color': getCssVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'scalesProperties.lineColor': getCssVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'scalesProperties.textColor': getCssVar('--dark-gray')});
         this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.drawBorder': false});
-        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.wickUpColor': this.getVar('--green')});
-        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.wickDownColor': this.getVar('--red')});
-        this.tvWidget.applyOverrides({ 'paneProperties.horzGridProperties.color': this.getVar('--light-gray')});
-        this.tvWidget.applyOverrides({ 'paneProperties.vertGridProperties.color': this.getVar('--light-gray')});
-        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.upColor': this.getVar('--green')});
-        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.downColor': this.getVar('--red')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.wickUpColor': getCssVar('--green')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.wickDownColor': getCssVar('--red')});
+        this.tvWidget.applyOverrides({ 'paneProperties.horzGridProperties.color': getCssVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'paneProperties.vertGridProperties.color': getCssVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.upColor': getCssVar('--green')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.downColor': getCssVar('--red')});
         // TODO: HACK необходимо обновиться до версии tw 1.16 где есть поддержка тем через кастомные сваойства
       }
     }
