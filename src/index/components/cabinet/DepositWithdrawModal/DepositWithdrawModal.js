@@ -21,7 +21,7 @@ const DepositWithdrawModal = props => {
   const [gaCode, changeGaCode] = useState('');
   const [gaCodeError, setGaError] = useState(false);
   const [gaAmountError, setAmountError] = useState(false);
-  const [deposit, setDeposit] = useState(props.deposit);
+  const [deposit, setDeposit] = useState(props.deposit || false);
   const [amount, setAmount] = useState('');
   const [calcPending, setCalcPending] = useState(false);
   const [submitPending, setSubmitPending] = useState(false);
@@ -39,7 +39,7 @@ const DepositWithdrawModal = props => {
 
   useEffect(() => {
     !deposit && getDeposit(props.depositId).then(setDeposit);
-  }, []);
+  },  [deposit, props.depositId]);
 
   const handleDepositCalculate = (deposit, amount) => {
     if (amount > 0 && amount <= deposit.can_withdraw_amount) {

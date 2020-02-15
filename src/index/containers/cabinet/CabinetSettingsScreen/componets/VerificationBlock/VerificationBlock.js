@@ -40,7 +40,7 @@ const VerificationBlock = (props) => {
   const status = statuses[props.verification];
 
   return (
-    <div className="CabinetSettingsScreen__main VerificationBlock Content_box">
+    <UI.ContentBox className="CabinetSettingsScreen__main VerificationBlock">
       <div className="CabinetSettingsScreen__header">
         {utils.getLang('global_verification')}
       </div>
@@ -63,7 +63,7 @@ const VerificationBlock = (props) => {
           </div>}
         </div>
       </div>
-    </div>
+    </UI.ContentBox>
   )
 }
 

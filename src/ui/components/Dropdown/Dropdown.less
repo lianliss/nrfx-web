@@ -1,6 +1,6 @@
 .Dropdown {
-  background: var(--contrast-primary);
-  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
+  background: var(--secondary-background);
+  box-shadow: var(--main-shadow);
   border-radius: 8px;
   position: relative;
   user-select: none;
@@ -34,14 +34,14 @@
 
   .Dropdown__options {
     position: absolute;
-    background: var(--contrast-primary);
-    box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
+    background: var(--secondary-background);
+    box-shadow: var(--main-shadow);
     border-radius: 0  0 8px 8px;
     width: 100%;
     z-index: 12;
     max-height: 200px;
     overflow-y: auto;
-    border-top: 1px solid var(--uikit-checkbox-disabled-background);
+    border-top: 1px solid var(--dairy);
 
     .Dropdown__option {
       box-sizing: border-box;
@@ -52,9 +52,9 @@
         opacity: .5;
         pointer-events: none;
       }
-  
+
       &:hover {
-        color: var(--primary);
+        color: var(--primary-orange);
       }
     }
   }
@@ -64,7 +64,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    color: var(--foreground-primary-opacity);
+    color: var(--black);
 
     .Dropdown__option__title {
       white-space: nowrap;
@@ -80,15 +80,15 @@
       font-size: 13px;
       line-height: 16px;
       letter-spacing: 0.444444px;
-      color: var(--primary-grey);
+      color: var(--dark-gray);
       padding-left: 10px;
     }
   }
 
   &.small {
     border-radius: 12px;
-    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.15), 0px 2px 4px rgba(0, 0, 0, 0.08);
-    color: var(--uikit-foreground-secondary);
+    box-shadow: var(--small-shadow);
+    color: var(--dark-gray);
 
     .Dropdown__header {
       padding: 0;
@@ -119,8 +119,8 @@
 
       .Dropdown__option {
         &:hover {
-          background: var(--uikit-button-secondary-background);
-          color: black;
+          background: var(--dairy);
+          color: var(--text-black);
         }
       }
     }

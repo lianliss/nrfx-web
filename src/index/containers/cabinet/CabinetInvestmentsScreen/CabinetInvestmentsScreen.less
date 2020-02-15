@@ -17,13 +17,16 @@
 .Investments__balances__item {
   flex: 1;
   margin-left: 28px;
-  padding: 16px;
   position: relative;
   margin-top: 0 !important;
   max-width: 33.3%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+
+  .ContentBox__content {
+    padding: 16px;
+  }
 
   &:first-child {
     margin-left: 0;
@@ -76,7 +79,7 @@
 }
 
 .Investments__balances__item__info_row__label {
-  color: var(--primary-grey);
+  color: var(--dark-gray);
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
@@ -89,7 +92,7 @@
   margin-top: 2px;
 
   &.highlighted {
-    color: var(--primary);
+    color: var(--primary-orange);
   }
 }
 
@@ -118,11 +121,11 @@
   font-weight: 500;
   font-size: 11px;
   line-height: 16px;
-  color: var(--primary-grey);
+  color: var(--dark-gray);
 }
 
 .Investment__profit__header__fiat {
-  color: var(--color-green);
+  color: var(--green);
   font-weight: 600;
   font-size: 24px;
   line-height: 32px;
@@ -139,7 +142,7 @@
 
 .Investment__withdrawal_table {
   &__status {
-    &.accepted { color: var(--color-green); }
+    &.accepted { color: var(--green); }
     &.deleted { color: var(--color-yellow); }
   }
 }
@@ -174,7 +177,7 @@
     display: block;
     width: 100%;
     margin-top: 24px;
-    background-color: white;
+    background-color: var(--white);
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;

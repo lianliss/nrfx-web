@@ -46,7 +46,7 @@ function SettingSecurity(props) {
 
 
   return (
-    <div className="CabinetSettingsScreen__main Content_box">
+    <UI.ContentBox className="CabinetSettingsScreen__main">
       <div className="CabinetSettingsScreen__header">
         {utils.getLang("cabinet_changePassword")}
       </div>
@@ -126,7 +126,7 @@ function SettingSecurity(props) {
         <p>Session timeout represents the event occuring when a user do not perform any action on a web site during a interval (defined by web server). The event, on server side, change the status of the user session to 'invalid' (ie. "not used anymore") and instruct the web server to destroy it (deleting all data contained into it).</p>
         <UI.Range min={0} max={12} formatLabel={value => value + " Hour"} value={3} />
       </div>*/}
-    </div>
+    </UI.ContentBox>
   )
 }
 

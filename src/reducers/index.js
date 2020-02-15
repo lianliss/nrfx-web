@@ -1,9 +1,12 @@
 import * as actionTypes from '../actions/actionTypes';
 import initGetParams from '../services/initialGetParams';
+import * as storage from '../services/storage';
 
 const initialState = {
   page: null,
   translations: {},
+  theme: storage.getItem('theme') || 'light',
+  cabinet: true, // HACK
   auth: {},
   profile: {
 
@@ -81,6 +84,20 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         title: action.title
+      }
+    }
+
+    case actionTypes.SET_THEME: {
+      return {
+        ...state,
+        theme: action.theme
+      }
+    }
+
+    case actionTypes.SET_CABINET: { // HACK
+      return {
+        ...state,
+        cabinet: action.value
       }
     }
 

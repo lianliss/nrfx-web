@@ -21,7 +21,7 @@
 
     &.on {
       .Switch__control:after {
-        background: var(--uikit-switch-control-disabled-background);
+        background: var(--light-gray);
       }
     }
   }
@@ -34,7 +34,7 @@
   transition: box-shadow.15s ease-in-out;
   border-radius: 16px;
   position: relative;
-  background: white;
+  background: var(--primary-background);
   overflow: hidden;
 
   &::after {
@@ -45,7 +45,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    background: var(--uikit-gradient-primary);
+    background: var(--orange-gradient);
     transition: opacity .15s ease-in-out;
   }
 
@@ -65,7 +65,7 @@
   position: absolute;
   top: 3px;
   left: 3px;
-  background: var(--uikit-gradient-primary);
+  background: var(--orange-gradient);
   overflow: hidden;
   transition: transform .15s ease-in-out;
   z-index: 1;
@@ -78,7 +78,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    background: white;
+    background: var(--primary-background);
     transition: opacity .15s ease-in-out;
   }
 
@@ -91,7 +91,7 @@
   }
 
   .Switch.disabled & {
-    background: var(--uikit-switch-control-disabled-background);
+    background: var(--light-gray);
   }
 }
 

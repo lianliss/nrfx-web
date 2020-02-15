@@ -17,7 +17,7 @@
 }
 
 .CheckBox__indicator {
-  border: 2px solid var(--uikit-primary-light);
+  border: 2px solid var(--primary-orange);
   width: 24px;
   height: 24px;
   box-shadow: 0 7px 64px rgba(0, 0, 0, 0.07);
@@ -25,13 +25,13 @@
   position: relative;
 
   .CheckBox.disabled & {
-    background: var(--uikit-checkbox-disabled-background);
+    background: var(--dairy);
     border: 0;
   }
 }
 
 .CheckBox__indicator__active {
-  background: var(--uikit-gradient-primary);
+  background: var(--orange-gradient);
   position: absolute;
   top: -2px;
   left: -2px;
@@ -40,7 +40,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--uikit-contrast-primary);
+  color: var(--primary-background);
   opacity: 0;
   transition: opacity 150ms ease-in-out;
 
@@ -54,7 +54,7 @@
 
   .CheckBox.disabled & {
     background: none;
-    color: var(--uikit-foreground-secondary);
+    color: var(--dark-gray);
   }
 }
 

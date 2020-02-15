@@ -1,5 +1,5 @@
 // styles
-import './index/index.less';
+import './index.less';
 
 // external
 import React from 'react';

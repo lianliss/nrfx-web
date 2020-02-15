@@ -106,7 +106,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
 
   __getNotificationsPageContent = () => {
     return <div>
-      <div className="CabinetSettingsScreen__padding_box Content_box">
+      <UI.ContentBox className="CabinetSettingsScreen__padding_box">
         <div className="CabinetSettingsScreen__header withPadding">
           Вход
         </div>
@@ -126,8 +126,8 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Switch on={Math.random() >= 0.5} onChange={(e) => {console.log(e)}}/>
           </span>
         </div>
-      </div>
-      <div className="CabinetSettingsScreen__padding_box Content_box">
+      </UI.ContentBox>
+      <UI.ContentBox className="CabinetSettingsScreen__padding_box">
         <div className="CabinetSettingsScreen__header withPadding">
           Кошелек
         </div>
@@ -155,8 +155,8 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Switch on={Math.random() >= 0.5} onChange={(e) => {console.log(e)}}/>
           </span>
         </div>
-      </div>
-      <div className="CabinetSettingsScreen__padding_box Content_box">
+      </UI.ContentBox>
+      <UI.ContentBox className="CabinetSettingsScreen__padding_box">
         <div className="CabinetSettingsScreen__header withPadding">
           Инвестиции
         </div>
@@ -200,7 +200,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Switch on={Math.random() >= 0.5} onChange={(e) => {console.log(e)}}/>
           </span>
         </div>
-      </div>
+      </UI.ContentBox>
     </div>
   };
 

@@ -25,19 +25,19 @@
       }
 
       &.buy {
-        color: var(--primary-green);
+        color: var(--green);
 
         &:not(.secondary) {
-          background: var(--primary-green);
-          color: white;
+          background: var(--green);
+          color: var(--white);
         }
       }
 
       &.sell {
-        color: var(--primary-red);
+        color: var(--red);
         &:not(.secondary) {
-          background: var(--primary-red);
-          color: white;
+          background: var(--red);
+          color: var(--white);
         }
       }
     }
@@ -105,14 +105,14 @@
       &.sell {
         &::before,
         .OrderBook__indicator__side__fill {
-          background: var(--uikit-primary-red);
+          background: var(--red);
         }
       }
 
       &.buy {
         &::before,
         .OrderBook__indicator__side__fill {
-          background: var(--uikit-primary-green);
+          background: var(--green);
         }
       }
       &:first-child {
@@ -155,7 +155,7 @@
     height: 32px;
     display: flex;
     align-items: center;
-    background: #FAF7F5;
+    background: var(--light-dairy);
 
     .OrderBook__ticker__price {
       padding: 0 12px;
@@ -206,11 +206,11 @@
     }
 
     &.buy .OrderBook__order__fill {
-      background: var(--uikit-primary-green);
+      background: var(--green);
     }
 
     &.sell .OrderBook__order__fill {
-      background: var(--uikit-primary-red);
+      background: var(--red);
     }
   }
 

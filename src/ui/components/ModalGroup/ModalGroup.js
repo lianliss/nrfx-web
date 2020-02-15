@@ -7,12 +7,13 @@ import ModalPage from '../ModalPage/ModalPage';
 import * as modalGroupActions from '../../../actions/modalGroup';
 import * as modalGroupHandlers from '../../../actions/modalGroupHandlers';
 import * as modalGroupConstants from '../../../index/constants/modalGroup';
+import router from '../../../router';
 
 class ModalGroup extends React.Component {
   constructor(props) {
     super(props);
     this.modalGroup = [];
-    this.routeState = props.router.getState();
+    this.routeState = router.getState();
     if (modalGroupConstants.MODALGROUP_GET_PARAM in this.routeState.params) {
       this.__checkAllow();
       if (this.routeState.params[modalGroupConstants.MODALGROUP_GET_PARAM].length > 0) {
@@ -23,7 +24,7 @@ class ModalGroup extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (!(nextProps.router.getState().name in this.props.modalGroupRoutes)) {
+    if (!(nextProps.route.name in this.props.modalGroupRoutes)) {
       return false;
     }
     return true;
@@ -74,7 +75,7 @@ class ModalGroup extends React.Component {
   };
 
   __getRouteName = () => {
-    return this.props.router.getState().name;
+    return router.getState().name;
   };
 
   __routerNavigateToBaseModuleLink = () => {
@@ -88,7 +89,7 @@ class ModalGroup extends React.Component {
   };
 
   __getPrevModal = () => {
-    const routerParams = {...this.props.router.getState().params};
+    const routerParams = {...router.getState().params};
     if (!(modalGroupConstants.MODALGROUP_GET_PARAM in routerParams)) {
       return {};
     }
@@ -118,7 +119,7 @@ class ModalGroup extends React.Component {
     if (Object.keys(prevModal).length < 1) {
       return;
     }
-    const {name, params} = {...this.props.router.getState()};
+    const {name, params} = {...router.getState()};
     if ('rp' in params) {
       const rp = params.rp.split(modalGroupConstants.MODALGROUP_SEPARATOR);
       rp.push('rp');
@@ -128,7 +129,7 @@ class ModalGroup extends React.Component {
         }
       });
     }
-    this.props.router.navigate(name, prevModal.params, () => {
+    router.navigate(name, prevModal.params, () => {
       this.props.modalGroupSetActiveModal(prevModal.modal);
     });
   };
@@ -147,6 +148,7 @@ class ModalGroup extends React.Component {
 export default connect(state => ({
   ...state.modalGroup,
   adaptive: state.default.adaptive,
+  route: state.router.route
 }), {
   modalGroupSetActiveModal: modalGroupActions.modalGroupSetActiveModal
 })(ModalGroup);

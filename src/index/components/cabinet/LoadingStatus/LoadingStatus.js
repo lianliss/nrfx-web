@@ -11,7 +11,9 @@ export default function LoadingStatus({ status, icon, description, onRetry, inli
   let cont;
   switch (status) {
     case 'loading':
-      cont = <div className="LoadingStatus__spinner" />;
+      cont = <div className="LoadingStatus__spinner">
+        <SVG src={require( 'src/asset/cabinet/loading_34.svg')} />
+      </div>;
       break;
     default:
       cont = (

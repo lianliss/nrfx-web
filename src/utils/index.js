@@ -72,6 +72,7 @@ export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(em
 
 /* eslint-disable-next-line */
 export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase());
+/* eslint-disable-next-line */
 export const isLogin = name => /^[a-zA-Z0-9\_]+$/i.test((name||"").toLowerCase());
 
 export function useInterval(callback, delay) {
