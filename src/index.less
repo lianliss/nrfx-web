@@ -1,11 +1,15 @@
-body, input, textarea {
+@import "./vars.less";
+
+.body, body, input, textarea {
   font-family: 'Montserrat', sans-serif;
 }
 
-body {
+.body, body {
   padding: 0;
   margin: 0;
   overflow-y: scroll;
+  color: var(--text-black);
+  background: var(--primary-background);
 
   &.adaptive {
     user-select: none;
@@ -18,15 +22,73 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--dark-blue);
 
   &:hover {
     text-decoration: underline;
   }
 }
 
+h1, .h1 {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 49px;
+}
+
+h2, .h2 {
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 41px;
+}
+
+h3, .h3 {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 37px;
+}
+
+h4 .h4 {
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+h5 .h5 {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h6 .h6 {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.body-1 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.body-2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+small, .samll {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+}
+
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
 }
+
 
 .AppLoading {
   display: flex;
@@ -48,8 +110,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .Content_box {
-  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
-  background: var(--contrast-primary);
+  box-shadow: var(--main-shadow);
+  background: var(--primary-background);
   border-radius: 8px;
   margin-top: 24px;
 
@@ -70,39 +132,8 @@ h3 {
   line-height: 24px;
 }
 
-:root {
-  --foreground-primary: #000;
-  --foreground-primary-opacity: rgba(0, 0, 0, 0.87);
-  --foreground-secondary: #9A9A9A;
-  --contrast-primary: #fff;
-
-  --site-homepage-product-bg-title-color: #FAF7F5;
-
-  --primary: #FF9E65;
-  --primary-light: #FFCC5C;
-  --primary-grey: #808080;
-  --primary-red: #FA4E3E;
-  --primary-green: #24B383;
-  --background-secondary: #F5F1EE;
-  --gradient-primary: linear-gradient(to right bottom, #FFC75D 0%, #FFA363 100%);
-  --negative: #FA6443;
-
-  --accent: #658BF5;
-  --accent-light: #8DB0FF;
-
-  --secondary-active-background: #FBF9F6;
-  --secondary-grey: #BFBFBF;
-  --grey-logo-color: #C8C8C8;
-
-  --link-color: #FFA640;
-
-  --color-green: #24B383;
-  --color-yellow: #FFB560;
-}
-
-
 .Form__helper__text {
-  color: var(--primary-grey);
+  color: var(--dark-gray);
   font-weight: 500;
   font-size: 11px;
   line-height: 16px;
@@ -123,3 +154,5 @@ h3 {
     }
   }
 }
+
+

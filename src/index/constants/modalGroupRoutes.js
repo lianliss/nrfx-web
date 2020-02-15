@@ -9,7 +9,6 @@ import DepositInfoModal from '../components/cabinet/DepositInfoModal/DepositInfo
 import WithdrawalModal from '../components/cabinet/WithdrawalModal/WithdrawalModal';
 
 // settings
-import GAConfirmModal from '../components/cabinet/GAConfirmModal_old/GAConfirmModal';
 import ChangeEmailModal from '../components/cabinet/ChangeEmailModal/ChangeEmailModal';
 // import ChangeNumberModal from '../components/cabinet/ChangeNumberModal/ChangeNumberModal';
 import SecretKeyInfoModal from '../components/cabinet/SecretKeyInfoModal/SecretKeyInfoModal';

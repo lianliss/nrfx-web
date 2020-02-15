@@ -22,27 +22,31 @@
     transform: translateX(-50%);
     background: no-repeat center/72px;
     cursor: pointer;
+    z-index: 61;
   }
 
   .WalletBox__content {
-    padding-left: 40px;
-    min-height: 72px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     margin-top: 0;
     cursor: pointer;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
     user-select: none;
+    background: var(--primary-background);
+
+    .ContentBox__content {
+      min-height: 72px;
+      padding: 0;
+      padding-left: 40px;
+      background: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+    }
 
     &.new {
-      border: 1px solid var(--primary);
+      border: 1px solid var(--primary-orange);
       border-radius: 8px;
       padding-left: 0;
-      color: var(--primary);
+      color: var(--primary-orange);
       text-align: center;
       cursor: pointer;
       transition: opacity 150ms ease-in-out;
@@ -56,14 +60,14 @@
       font-weight: 500;
       font-size: 13px;
       line-height: 16px;
-      color: var(--primary-grey);
+      color: var(--dark-gray);
     }
 
     p {
       font-weight: 500;
       font-size: 16px;
       line-height: 24px;
-      color: rgba(0, 0, 0, 0.87);
+      color: var(--text-black);
       margin-top: 4px;
     }
   }
@@ -85,7 +89,7 @@
 
 .WalletBox__selected {
   .WalletBox__content h3, .WalletBox__content p {
-    color: white !important;
+    color: var(--white) !important;
   }
 }
 

@@ -1,5 +1,4 @@
 //styles
-import './index.less';
 // external
 // internal
 import Button from './components/Button/Button';

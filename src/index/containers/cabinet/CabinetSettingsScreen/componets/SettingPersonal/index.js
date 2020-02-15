@@ -37,11 +37,11 @@ class SettingPersonal extends React.Component{
     return(
       <>
         <VerificationBlock />
-        { this.props.profile.user.applicant_id && <div className="CabinetSettingsScreen__main Content_box">
+        { this.props.profile.user.applicant_id && <UI.ContentBox className="CabinetSettingsScreen__main">
           <div className="CabinetSettingsScreen__header">applicant_id</div>
           <pre>{this.props.profile.user.applicant_id}</pre>
-        </div> }
-        <div className="CabinetSettingsScreen__main Content_box">
+        </UI.ContentBox> }
+        <UI.ContentBox className="CabinetSettingsScreen__main">
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsPersonalInformation')}
           </div>
@@ -164,7 +164,7 @@ class SettingPersonal extends React.Component{
               </UI.Button>
             </div>
           </div>
-        </div>
+        </UI.ContentBox>
       </>
     )
   }

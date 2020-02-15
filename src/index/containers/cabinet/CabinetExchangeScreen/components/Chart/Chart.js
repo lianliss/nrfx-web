@@ -1,8 +1,9 @@
 import './Chart.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 import { widget } from '../../../../../charting_library/charting_library.min';
-import { classNames as cn } from '../../../../../../utils/index'
+import { classNames as cn, ucfirst } from '../../../../../../utils/index'
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
 import * as actions from '../../../../../../actions/';
 // import { API_ENTRY } from '../../../../../../services/api';
@@ -11,7 +12,7 @@ import langCodes from './langCodes';
 import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
 
 
-export default class Chart extends React.PureComponent {
+class Chart extends React.PureComponent {
   static defaultProps = {
     symbol: 'ETH:USDT',
     interval: '1',
@@ -43,6 +44,12 @@ export default class Chart extends React.PureComponent {
     }
   }
 
+  getVar(v) {
+    return getComputedStyle ? getComputedStyle(document.body)
+      .getPropertyValue(v).trim() : undefined;
+  };
+
+
   componentDidMount() {
     document.addEventListener('fullscreenchange', this.__handleFullscreen.bind(this), false);
     document.addEventListener('webkitfullscreenchange', this.__handleFullscreen.bind(this), false);
@@ -58,7 +65,7 @@ export default class Chart extends React.PureComponent {
       interval: this.props.interval,
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
-
+      theme: ucfirst(this.props.theme),
       locale: locale,
       disabled_features: [
         'header_widget',
@@ -99,16 +106,17 @@ export default class Chart extends React.PureComponent {
         ...this.props.studiesOverrides,
       },
       overrides: {
-        'paneProperties.crossHairProperties.color': '#808080',
-        'scalesProperties.lineColor': '#F5F1EE',
-        'scalesProperties.textColor': '#808080',
+        'paneProperties.background': this.getVar('--primary-background'),
+        'paneProperties.crossHairProperties.color': this.getVar('--light-gray'),
+        'scalesProperties.lineColor': this.getVar('--light-gray'),
+        'scalesProperties.textColor': this.getVar('--dark-gray'),
         'mainSeriesProperties.candleStyle.drawBorder': false,
-        'mainSeriesProperties.candleStyle.wickUpColor': '#68c2ab',
-        'mainSeriesProperties.candleStyle.wickDownColor': '#eb6456',
-        'paneProperties.horzGridProperties.color': '#F5F1EE',
-        'paneProperties.vertGridProperties.color': '#F5F1EE',
-        'mainSeriesProperties.candleStyle.upColor': '#68c2ab',
-        'mainSeriesProperties.candleStyle.downColor': '#eb6456'
+        'mainSeriesProperties.candleStyle.wickUpColor': this.getVar('--green'),
+        'mainSeriesProperties.candleStyle.wickDownColor': this.getVar('--red'),
+        'paneProperties.horzGridProperties.color': this.getVar('--light-gray'),
+        'paneProperties.vertGridProperties.color': this.getVar('--light-gray'),
+        'mainSeriesProperties.candleStyle.upColor': this.getVar('--green'),
+        'mainSeriesProperties.candleStyle.downColor': this.getVar('--red'),
       },
       allow_symbol_change: false,
       timezone: getTimezone(),
@@ -127,6 +135,25 @@ export default class Chart extends React.PureComponent {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.interval !== this.props.interval && this.activeChart) {
       this.activeChart.setResolution(this.props.interval.toString());
+    }
+
+    if (prevProps.theme !== this.props.theme) {
+      if (this.tvWidget && !this.state.status) {
+        this.tvWidget.changeTheme(ucfirst(this.props.theme));
+        this.tvWidget.applyOverrides({ 'paneProperties.background': this.getVar('--primary-background') });
+        this.tvWidget.applyOverrides({ 'paneProperties.background': this.getVar('--primary-background')});
+        this.tvWidget.applyOverrides({ 'paneProperties.crossHairProperties.color': this.getVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'scalesProperties.lineColor': this.getVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'scalesProperties.textColor': this.getVar('--dark-gray')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.drawBorder': false});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.wickUpColor': this.getVar('--green')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.wickDownColor': this.getVar('--red')});
+        this.tvWidget.applyOverrides({ 'paneProperties.horzGridProperties.color': this.getVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'paneProperties.vertGridProperties.color': this.getVar('--light-gray')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.upColor': this.getVar('--green')});
+        this.tvWidget.applyOverrides({ 'mainSeriesProperties.candleStyle.downColor': this.getVar('--red')});
+        // TODO: HACK необходимо обновиться до версии tw 1.16 где есть поддержка тем через кастомные сваойства
+      }
     }
 
     if (prevProps.fullscreen !== this.props.fullscreen) {
@@ -164,3 +191,6 @@ export default class Chart extends React.PureComponent {
   }
 }
 
+export default connect(state => ({
+  theme: state.default.theme
+}))(Chart);

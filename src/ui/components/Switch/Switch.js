@@ -13,12 +13,18 @@ function Switch(props) {
     disabled: props.disabled
   });
 
+  const handleChange = (e) => {
+    props.onChange && props.onChange(!props.on, e);
+  };
+
+  const label = props.children || props.label;
+
   return (
-    <div className={className} onClick={props.onChange}>
+    <div className={className} onClick={handleChange}>
       <div className="Switch__control">
         <div className="Switch__indicator" />
       </div>
-      { props.children && <div className="Switch__label">{props.children}</div> }
+      { label && <div className="Switch__label">{label}</div> }
     </div>
   );
 }

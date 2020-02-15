@@ -35,8 +35,8 @@ class WalletBox extends React.Component {
       <div className={this.className} onClick={this.isGenerating ? () => {} : this.__onClick}>
         <div style={{ backgroundImage: `url(${this.currencyInfo.icon})` }} className="WalletBox__icon" />
 
-        <div
-          className="WalletBox__content Content_box"
+        <UI.ContentBox
+          className="WalletBox__content"
           style={selected ? {background: this.currencyInfo.background} : {}}
         >
           {selected
@@ -44,7 +44,7 @@ class WalletBox extends React.Component {
           }
           <h3>{utils.ucfirst(this.currencyInfo.name)}</h3>
           <p>{this.__getAmount()}</p>
-        </div>
+        </UI.ContentBox>
 
         {this.isGenerating
           ? <SVG className="WalletBox__loader" src={require('../../../../asset/cabinet/loading.svg')} />

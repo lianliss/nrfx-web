@@ -17,7 +17,7 @@
   }
 
   &.empty {
-    background: var(--uitkit-background);
+    background: var(--primary-background);
   }
 
   &__empty_text {
@@ -25,7 +25,7 @@
     display: block;
     padding: 24px 54px;
     font-size: 13px;
-    color: var(--primary-grey);
+    color: var(--dark-gray);
   }
 
   .LoadingStatus__wrap {
@@ -59,14 +59,14 @@
   font-size: 11px;
   width: 488px;
   padding: 16px 0;
-  border-bottom: 1px solid #F5F1EE;
+  border-bottom: 1px solid var(--light-gray);
 
   &:last-child {
     border-bottom: none;
   }
 
   &.unread {
-    background: var(--uitkit-background);
+    background: var(--primary-background);
   }
 
   &:not(.unread) {
@@ -92,7 +92,7 @@
 
   &__message {
     font-weight: 500;
-    color: #212121;
+    color: var(--text-black);
   }
 
   &__icon {
@@ -104,7 +104,7 @@
   }
 
   &__date {
-    color: var(--primary-grey);
+    color: var(--dark-gray);
     margin: 0 16px;
   }
 }
@@ -114,5 +114,5 @@
   margin: 16px;
   margin-bottom: 0;
   font-size: 13px;
-  color: var(--primary-grey);
+  color: var(--dark-gray);
 }

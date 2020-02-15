@@ -1,8 +1,9 @@
 Types
 ```js
-<Toast message="success" type="success" />
-<Toast message="error" type="error" />
 <Toast message="info" type="info" />
+<Toast message="success" type="success" />
+<Toast message="warning" type="warning" />
+<Toast message="error" type="error" />
 ```
 Multiline
 ```js

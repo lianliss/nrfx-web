@@ -1,7 +1,7 @@
 .ReceiveCoinsModal__warning.ReceiveCoinsModal__copy_btn {
   width: 24px;
   height: 24px;
-  color: var(--primary-grey);
+  color: var(--dark-gray);
   cursor: pointer;
 }
 
@@ -30,19 +30,23 @@
   left: 16px;
   width: 16px;
   height: 16px;
-  color: var(--contrast-primary);
+  color: var(--primary-background);
   z-index: 2;
 }
 
 .ReceiveCoinsModal__qrcode {
   text-align: center;
+
+  canvas {
+    border: 7px solid white;
+  }
 }
 
 .ReceiveCoinsModal__warning {
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
-  color: var(--primary-red);
+  color: var(--red);
   text-align: center;
   width: 100%;
   margin: 10px auto 0;

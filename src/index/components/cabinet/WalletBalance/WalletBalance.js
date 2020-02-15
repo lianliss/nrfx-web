@@ -63,7 +63,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
           {' ' + convert_currency}
         </span>
       </div>;
-      return <div className="WalletBalance Content_box">
+      return <UI.ContentBox className="WalletBalance">
         {!adaptive && convertBlock}
         <div className="WalletBalance__selected_wallet">
           <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletTransactionModal_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
@@ -108,7 +108,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
             )
           }
         </div>
-      </div>
+      </UI.ContentBox>
     }
   }
 
@@ -117,7 +117,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
   </h3>;
 
   return (
-    <div className="WalletBalance Content_box">
+    <UI.ContentBox className="WalletBalance">
       {walletsBalance
         ? (
           <>
@@ -187,7 +187,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
           </div>
         )
       }
-    </div>
+    </UI.ContentBox>
   )
 }
 
