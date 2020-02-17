@@ -60,11 +60,7 @@ class CabinetWalletFiatScreen extends React.Component {
             moreButton={false}
             isLoading={false}
           >
-            <FiatHistoryTable
-              header={utils.getLang('global_operations')}
-              adaptive={this.props.adaptive}
-              history={this.props.history}
-            />
+            <FiatHistoryTable />
           </Paging>
         </div>
         <div className="PageContainer__content__secondary">

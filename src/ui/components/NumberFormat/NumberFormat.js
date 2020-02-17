@@ -6,7 +6,7 @@ import { classNames } from '../../utils';
 
 import { isFiat, noExponents } from '../../utils/index';
 
-const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
+const NumberFormat = ({ number, symbol, fractionDigits, color, skipTitle, accurate, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
 
   if (isNaN(number)) return null;
 
@@ -54,6 +54,10 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, curr
 
   if (color) {
     type = number >= 0 ? 'up' : 'down';
+  }
+
+  if (symbol && number > 0) {
+    displayNumber = "+" + displayNumber;
   }
 
   return (
