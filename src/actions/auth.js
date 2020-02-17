@@ -78,6 +78,11 @@ export function logout() {
   });
 }
 
+export function clearProfile() {
+  store.dispatch({type: actionTypes.LOGOUT});
+  auth.logout();
+}
+
 export function setSecretKey() {
   return false;
 }
