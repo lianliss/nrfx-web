@@ -1071,8 +1071,7 @@ export default {
         "Currency": {
           "name": "currency",
           "filters": [
-            "required",
-            "positive"
+            "required"
           ],
           "type": "body"
         }
@@ -1361,6 +1360,18 @@ export default {
         }
       },
       "path": "partner"
+    },
+    "ClientsGet": {
+      "method": "GET",
+      "name": "clients",
+      "params": {
+        "StartFrom": {
+          "name": "start_from",
+          "filters": [],
+          "type": "body"
+        }
+      },
+      "path": "partner/clients"
     },
     "ProfitChartGet": {
       "method": "GET",

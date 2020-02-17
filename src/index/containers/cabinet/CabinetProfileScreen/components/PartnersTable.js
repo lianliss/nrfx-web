@@ -6,7 +6,7 @@ import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/
 import * as actions from '../../../../../actions';
 
 export default function PartnersTable({partners, adaptive, skipContentBox}) {
-  if (!partners.length) {
+  if (!partners || !partners.length) {
     return (
       <EmptyContentBlock
         adaptive={adaptive}
