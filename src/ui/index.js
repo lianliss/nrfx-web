@@ -1,5 +1,4 @@
 //styles
-import './index.less';
 // external
 // internal
 import Button from './components/Button/Button';
@@ -35,6 +34,7 @@ import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/
 import Tooltip from './components/Tooltip/Tooltip';
 import WalletAddress from './components/WalletAddress/WalletAddress';
 import LogoLoader from './components/LogoLoader/LogoLoader';
+import CircleIcon from './components/CircleIcon/CircleIcon';
 
 export default {
   Button,
@@ -75,5 +75,6 @@ export default {
   StatusIndicator,
   Tooltip,
   WalletAddress,
-  LogoLoader
+  LogoLoader,
+  CircleIcon
 };

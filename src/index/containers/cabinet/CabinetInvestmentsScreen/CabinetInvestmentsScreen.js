@@ -232,7 +232,8 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 export default connect(state => ({
   ...state.investments,
   adaptive: state.default.adaptive,
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }),{
   setTitle: actions.setTitle,
   loadInvestments: investmentsActions.loadInvestments,

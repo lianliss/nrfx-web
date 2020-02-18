@@ -21,15 +21,15 @@
   border-radius: 50%;
 
   &.done {
-    background: var(--color-green);
+    background: var(--green);
   }
 
   &.pending {
-    background: var(--primary-light);
+    background: var(--yellow);
   }
 
   &.failed {
-    background: var(--primary-red);
+    background: var(--red);
   }
 }
 
@@ -42,11 +42,11 @@
   max-width: 100%;
 
   &.receive {
-    color: var(--color-green);
+    color: var(--green);
   }
 
   &.send {
-    color: var(--accent);
+    color: var(--dark-blue);
   }
 }
 
@@ -73,7 +73,7 @@
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.444444px;
-    color: var(--foreground-primary-opacity);
+    color: var(--black);
   }
 
   .WalletBalance__selected_amount {
@@ -81,7 +81,7 @@
     font-size: 24px;
     line-height: 32px;
     letter-spacing: 1.02px;
-    color: var(--foreground-primary-opacity);
+    color: var(--black);
     margin-top: 20px;
   }
 }
@@ -97,7 +97,7 @@
     font-size: 16px;
     line-height: 24px;
     letter-spacing: 0.444444px;
-    color: var(--foreground-primary-opacity);
+    color: var(--black);
     text-align: left;
   }
 
@@ -118,7 +118,7 @@
         flex: 4;
 
         .Input {
-          box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
+          box-shadow: var(--main-shadow);
         }
       }
 
@@ -127,11 +127,11 @@
         margin-left: 16px;
 
         .Input {
-          box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
+          box-shadow: var(--main-shadow);
         }
 
         .Drpdown__helper__text {
-          color: var(--secondary-grey);
+          color: var(--gray);
           font-weight: 500;
           font-size: 11px;
           line-height: 16px;
@@ -165,7 +165,7 @@
     line-height: 24px;
     text-align: center;
     letter-spacing: 0.444444px;
-    color: var(--primary-grey);
+    color: var(--dark-gray);
     max-width: 150px;
   }
 }
@@ -183,7 +183,7 @@
       }
       .WalletBox__content {
         padding-left: 72px;
-        padding-right: 24px;
+        //padding-right: 24px;
         box-sizing: border-box;
       }
       .Content_box {
@@ -200,8 +200,8 @@
   }
 
   .CabinetWalletsScreen__walletsContentBox {
-    background-color: white;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+    background-color: var(--primary-background);
+    //box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;

@@ -13,7 +13,7 @@ function History({ lang }) {
     <>
       <div className="SiteAboutScreen__intro SiteAboutScreen__history">
         <TitleWithBg title={getLang('site__aboutHistoryTitle')} bgTitle={getLang('site__aboutHistoryTitle')} centered />
-        <p className="SiteAboutScreen__caption">{getLang('site__aboutHistoryTitle')}</p>
+        <p className="SiteAboutScreen__caption">{getLang('site__aboutHistorySubTitle')}</p>
       </div>
 
       <div className="SiteAboutScreen__history__timeline">
@@ -26,7 +26,7 @@ function History({ lang }) {
 }
 
 const mapStateToProps = (state) => ({
-  lang: state.default.lang,
+  currentLang: state.default.currentLang,
 });
 
 export default React.memo(connect(mapStateToProps)(History));

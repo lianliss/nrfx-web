@@ -25,7 +25,7 @@ export default function SwitchTabs({ tabs, selected, onChange, currency, size, t
       setAnimation(true);
       setTimeout(() => {
         setAnimation(false);
-      }, 500)
+      }, 400)
     } else {
       didMountRef.current = true;
     }

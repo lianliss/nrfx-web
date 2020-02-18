@@ -20,7 +20,7 @@
   margin: 10px 0 10px -5px !important;
   width: 343px !important;
   border-radius: 8px !important;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: var(--main-shadow) !important;
   max-height: 250px !important;
 }
 
@@ -32,8 +32,8 @@
 
 .ChangeNumberModal__PhoneInput_inputClass {
   height: 48px !important;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.05);
-  background: var(--uitkit-background) !important;
+  box-shadow: var(--main-shadow);
+  background: var(--primary-background) !important;
   border-radius: 8px !important;
   font-size: 15px !important;
   line-height: 20px !important;
@@ -45,7 +45,7 @@
   width: 100% !important;
 
   &:focus {
-    border-color: var(--uikit-primary) !important;
+    border-color: var(--primary-orange) !important;
   }
 }
 
@@ -68,7 +68,7 @@
   }
 
   .Input {
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--main-shadow);
     margin: 40px 0 0 0;
     width: 100%;
     box-sizing: border-box;
@@ -77,7 +77,7 @@
     -webkit-appearance: none;
 
     &::placeholder {
-      color: var(--primary-grey);
+      color: var(--dark-gray);
     }
   }
 }

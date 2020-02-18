@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // internal
 import {classNames} from '../../../utils/index';
 import {MODALGROUP_SEPARATOR} from '../../../index/constants/modalGroup';
+import {connect} from 'react-redux';
 
 class ModalPage extends Component {
   static propTypes = {
@@ -36,7 +37,7 @@ class ModalPage extends Component {
 
   get child() {
     const Child = this.props.children;
-    const getStateParams = this.props.router.getState().params;
+    const getStateParams = this.props.route.params;
     const getParams = {};
     if (getStateParams.hasOwnProperty('rp')) {
       let rp = getStateParams.rp.split(MODALGROUP_SEPARATOR);
@@ -74,5 +75,7 @@ ModalPage.defaultProps = {
   onCloseHandler: () => {}
 };
 
-export default React.memo(ModalPage);
+export default connect(state => ({
+  route: state.router.route
+}))(ModalPage);
 

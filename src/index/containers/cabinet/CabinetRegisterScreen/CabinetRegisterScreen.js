@@ -133,7 +133,7 @@ class CabinetRegister extends React.PureComponent {
     const { state } = this;
     return (
       <div className="CabinetRegister">
-        <div className="CabinetRegister__content Content_box">
+        <UI.ContentBox className="CabinetRegister__content">
           <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_complete')}</h3>
           <UI.Input
             error={state.touched && !state.firstName}
@@ -234,14 +234,15 @@ class CabinetRegister extends React.PureComponent {
               {utils.getLang('site__commerceRegistration')}
             </UI.Button>
           </div>
-        </div>
+        </UI.ContentBox>
       </div>
     )
   }
 }
 
 export default connect(state => ({
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   toastPush: toastsActions.toastPush,
   setTitle: actions.setTitle

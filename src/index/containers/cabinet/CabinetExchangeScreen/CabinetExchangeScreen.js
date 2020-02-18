@@ -148,10 +148,10 @@ export default connect(
   state => ({
     ...state.exchange, // TODO не передавать лишнии props
     adaptive: state.default.adaptive,
-    lang: state.default.lang,
     router: state.router,
     user: state.default.profile.user,
     translator: state.settings.translator,
+    currentLang: state.default.currentLang
   }), {
     load: exchangeActions.load,
     chooseMarket: exchangeActions.chooseMarket,

@@ -36,30 +36,30 @@
   position: relative;
 
   .Table__row {
-    background: var(--contrast-primary);
+    background: var(--primary-background);
   }
 
   .Table__dark__row {
-    background: var(--secondary-active-background);
+    background: var(--light-dairy);
   }
-  
+
   tr {
 
     &.dark .Table__td__cont {
-      background: var(--secondary-active-background);
+      background: var(--light-dairy);
     }
 
     &.Hover:hover {
-      background: var(--contrast-primary);
+      background: var(--primary-background);
 
       .Table__td__cont {
-        background: var(--contrast-primary);
+        background: var(--primary-background);
       }
     }
   }
 
   &.compact tr.dark .Table__td__cont {
-    background: var(--background-secondary);
+    background: var(--light-dairy);
   }
 
   &.compact tbody td:first-child .Table__td__cont {
@@ -71,7 +71,7 @@
   }
 
   thead td {
-    color: var(--primary-grey);
+    color: var(--dark-gray);
     font-weight: 500;
   }
 
@@ -84,7 +84,7 @@
     line-height: 24px;
     height: 56px;
   }
-  
+
   th, td {
     font-size: 13px;
     border: none;
@@ -161,11 +161,11 @@
   }
 
   td.highlighted {
-    color: var(--primary);
+    color: var(--primary-orange);
   }
 
   .Table__sub {
-    color: var(--secondary-grey);
+    color: var(--gray);
     font-weight: 500;
     font-size: 11px;
     line-height: 16px;
@@ -198,7 +198,7 @@
 }
 
 .Table__item_highlighted {
-  color: var(--primary);
+  color: var(--primary-orange);
 }
 
 .Table__item__type_sent {

@@ -43,12 +43,12 @@ class ClientChart extends React.Component {
                 name: 'Clients',
                 type: 'spline',
                 showInLegend: false,
-                color: 'var(--color-green)',
+                color: 'var(--green)',
                 tooltip: {
                   valueDecimals: 2
                 },
                 shadow: {
-                  color: 'var(--color-green)',
+                  color: 'var(--green)',
                 }
               }
             ]}

@@ -18,8 +18,8 @@
   -webkit-overflow-scrolling: touch;
 
   .Modal__box {
-    background: #FFFFFF;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.08);
+    background: var(--primary-background);
+    box-shadow: var(--main-shadow);
     border-radius: 8px;
     padding: 32px 40px;
     margin: auto;
@@ -30,13 +30,23 @@
 
     .Modal__box__close {
       position: absolute;
+      display: flex;
       right: 0;
       cursor: pointer;
       top: 0;
-      background: url('../../../asset/site/close.svg') no-repeat center;
       background-size: 14px;
       width: 14px + 12 * 2;
       height: 14px + 12 * 2;
+      color: var(--gray);
+
+      .isvg {
+        display: block;
+        margin: auto;
+
+        svg {
+          display: block;
+        }
+      }
     }
   }
 
@@ -80,13 +90,12 @@
 .adaptive {
   .Modal {
     align-items: start;
-    background: var(--secondary-active-background);
+    background: var(--light-dairy);
     min-height: 100%;
     padding: 64px 0 16px;
 
     .Modal__box {
       width: 100% !important;
-      border-radius: 0;
       max-height: none;
       overflow: initial;
       border-radius: 8px;
@@ -97,13 +106,12 @@
         left: 12px;
         right: auto;
         z-index: 101;
-        background: url('../../../asset/cabinet/angle_left.svg') no-repeat center;
       }
     }
 
     &__header {
-      background: var(--uitkit-background);
-      box-shadow: 0 1px 16px rgba(0, 0, 0, 0.1);
+      background: var(--primary-background);
+      box-shadow: var(--main-shadow);
       border-radius: 0 0 8px 8px;
       overflow: initial;
       position: fixed;

@@ -1,5 +1,6 @@
 import './Range.less';
 import React from 'react';
+import { classNames as cn } from '../../utils';
 
 export default class Range extends React.Component {
 
@@ -11,7 +12,7 @@ export default class Range extends React.Component {
   };
 
   componentDidMount() {
-    
+
   }
 
   __handleClick = (e) => {
@@ -54,7 +55,7 @@ export default class Range extends React.Component {
     const value = this.percentToValue(this.state.percent);
     const width = this.valueToPercent(value) + '%';
     return (
-      <div className="Range" ref="range">
+      <div className={cn("Range", { disabled: this.props.disabled })} ref="range">
         <div style={{width: width}} className="Range__filler">
           <div className="Range__thumb" style={{left: width}} onMouseDown={this.__handleClick}>
             <div className="Range__label">{this.props.formatLabel(value)}</div>

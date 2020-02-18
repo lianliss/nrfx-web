@@ -231,7 +231,7 @@ class Orders extends React.Component {
 
 export default connect((state) => ({
   ...state.exchange,
-  lang: state.default.lang
+  currentLang: state.default.currentLang,
 }), {
 
 })(memo(Orders));

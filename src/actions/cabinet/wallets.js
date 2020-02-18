@@ -110,7 +110,7 @@ export function sendCoins(params) {
   return (dispatch) => {
     console.log(params);
     debugger;
-    const method = params.type == 'login' ? apiSchema.Wallet.TransferSendPut : apiSchema.Wallet.TransactionSendPut;
+    const method = params.type === 'login' ? apiSchema.Wallet.TransferSendPut : apiSchema.Wallet.TransactionSendPut;
     dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'loading' });
     api.call(method, params).then(({wallet}) => {
       toastsActions.success(utils.getLang('cabinet_sendCoinsModal_success'));

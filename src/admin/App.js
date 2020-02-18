@@ -1,4 +1,4 @@
-import '../index/index.less';
+import '../index.less';
 // import '../index/vars.less';
 
 import React from 'react';

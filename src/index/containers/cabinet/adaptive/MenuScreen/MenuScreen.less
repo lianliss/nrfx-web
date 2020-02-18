@@ -2,11 +2,15 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  color: #212121;
+  color: var(--text-black);
 
   & &__section {
     margin: 16px 0;
-    padding: 8px 0;
+
+    .ContentBox__content {
+      padding: 8px 0;
+    }
+
 
     &__noSpacing {
       padding: 0;
@@ -26,14 +30,19 @@
       .isvg {
         line-height: 0;
         display: block;
-        color: var(--primary-grey);
+        color: var(--dark-gray);
         margin-right: 16px;
       }
 
       &__flag {
         width: 16px;
         height: 12px;
-        border: 1px solid var(--primary-grey);
+        border: 1px solid var(--dark-gray);
+      }
+
+      .Switch {
+        margin-top: 0;
+        margin-left: auto;
       }
     }
   }

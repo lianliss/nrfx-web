@@ -30,7 +30,10 @@ const getClassName = (tab, currentTab) => {
 };
 
 const TabButton = ({ title, tabName, currentTab }) => (
-  <span onClick={() => router.navigate(tabName)}>
+  <span onClick={() => {
+    router.navigate(tabName);
+    window.scroll(0,0);
+  }}>
     <UI.Button
       fontSize={15}
       rounded
@@ -43,12 +46,6 @@ const TabButton = ({ title, tabName, currentTab }) => (
 );
 
 export default class SiteAboutScreen extends BaseScreen {
-  componentDidUpdate(prevProps) {
-    if (prevProps.state.page !== router.getState().name) {
-      window.scroll(0,0);
-    }
-  }
-
   render() {
     const currentTab = router.getState().name;
 

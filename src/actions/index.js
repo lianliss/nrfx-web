@@ -119,6 +119,22 @@ export function setTitle(title) {
   return store.dispatch({ type: actionTypes.SET_TITLE, title });
 }
 
+export function toggleTheme() {
+  const currentTheme = store.getState().default.theme;
+  const themes = [
+    'light',
+    'dark'
+  ];
+
+  const theme = currentTheme === themes[0] ? themes[1] : themes[0];
+  storage.setItem('theme', theme);
+  return store.dispatch({ type: actionTypes.SET_THEME, theme });
+}
+
+export function setCabinet(value) { // TODO: Hack
+  return store.dispatch({ type: actionTypes.SET_CABINET, value });
+}
+
 export function sendInviteLinkView(link) {
   api.call(apiSchema.Partner.InviteLinkViewPost, {
     link

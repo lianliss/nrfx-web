@@ -69,6 +69,10 @@ class Input extends React.Component {
       type = "datetime-local";
     }
 
+    if (this.props.type === 'code') {
+      type = "number";
+    }
+
 
     let params = {
       className,

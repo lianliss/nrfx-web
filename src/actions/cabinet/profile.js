@@ -7,6 +7,7 @@ import * as api from '../../services/api';
 import * as toastsActions from '../toasts';
 import * as modalGroup from '../modalGroup';
 import * as utils from '../../utils';
+import store from '../../store';
 
 export function loadDashboard() {
   return (dispatch, getState) => {
@@ -59,6 +60,23 @@ export function getPartner() {
     }).catch(() => {
       toastsActions.toastPush("Error load partner", "error")(dispatch, getState);
       dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partners', status: 'failed' });
+    });
+  };
+}
+
+
+export function getPartnerMore() {
+  return (dispatch, getState) => {
+    dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partnersTable', status: 'loading' });
+    api.call(apiSchema.Partner.ClientsGet, {
+      start_from: store.getState().profile.partner.clients.next,
+      count: 20,
+    }).then(({clients: { items, next }}) => {
+      dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partnersTable', status: '' });
+      dispatch({ type: actionTypes.PROFILE_PARTNER_APPEND, items, next });
+    }).catch(() => {
+      toastsActions.toastPush("Error load more partners", "error")(dispatch, getState);
+      dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'partnersTable', status: 'failed' });
     });
   };
 }

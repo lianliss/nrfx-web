@@ -33,14 +33,14 @@ import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import SiteFeeScreen from './containers/site/SiteFeeScreen/SiteFeeScreen';
 import TraderScreen from './containers/cabinet/TraderScreen/TraderScreen';
+import * as actions from '../actions/index';
 import router from '../router';
 
 function Routes(props) {
-  const routeState = props.router.getState();
+  const routeState = props.route;
   const routerParams = routeState.params;
   const route = routeState.name;
 
-  let actions = {};
   let Component = false;
   let WrapperComponent = CabinetWrapper;
   let needAuthorization = false;
@@ -157,11 +157,6 @@ function Routes(props) {
       break;
   }
 
-  const defaultProps = {
-    state: props.state.default,
-    router: props.router,
-  };
-
   const isWithOrangeBg = [
     pages.CONTACT,
     pages.FAQ,
@@ -179,14 +174,17 @@ function Routes(props) {
     return null;
   }
 
+  actions.setCabinet(WrapperComponent === CabinetWrapper); // HACK
+
   return (
     <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
-      <Component {...defaultProps} {...actions} routerParams={routerParams} />
+      <Component routerParams={routerParams} />
     </WrapperComponent>
   );
 }
 
 
 export default connect(state => ({
-  user: state.default.profile.user
+  user: state.default.profile.user,
+  route: state.router.route
 }))(Routes);

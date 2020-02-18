@@ -138,20 +138,21 @@
         left: 10px;
       }
       .WalletBox__content {
-        padding-left: 72px;
-        padding-right: 24px;
         box-sizing: border-box;
-      }
-      .Content_box {
         box-shadow: none;
-        background-color: rgba(0, 0, 0, 0);
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
+      }
+      .ContentBox {
+        box-shadow: none;
         border-radius: 8px;
+
+        .ContentBox__content {
+          padding-left: 72px;
+          padding-right: 24px;
+        }
       }
     }
     .CabinetProfileScreen__walletsContentBox {
-      background-color: white;
+      background-color: var(--white);
       box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
       -webkit-border-radius: 8px;
       -moz-border-radius: 8px;
@@ -173,7 +174,7 @@
     top: 0;
     padding: 0;
     span {
-      color: black;
+      color: var(--text-black);
     }
   }
 

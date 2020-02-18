@@ -33,12 +33,12 @@ import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlock
 import VerificationModal from '../index/components/cabinet/VerificationModal/VerificationModal';
 import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewBotModal';
 import router from '../router';
+import {connect} from 'react-redux';
 
-export default function Modals(props) {
-  const routeState = props.router.getState();
-  const routerParams = routeState.params;
+function Modals(props) {
+  const routerParams = props.route.params;
   delete routerParams.ref;
-  const { options } = routeState.meta;
+  const { options } = props.route.meta;
   const modal = routerParams.modal;
 
   let Component = false;
@@ -147,11 +147,14 @@ export default function Modals(props) {
         window.history.back();
       }}
       onClose={() => {
-        const route = router.getState();
-        router.navigate(route.name, {
-          section: route.params.section
+        router.navigate(props.route.name, {
+          section: props.route.params.section
         })
       }}
     />
   );
 }
+
+export default connect(state => ({
+  route: state.router.route
+}))(Modals);

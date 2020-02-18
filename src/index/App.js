@@ -17,6 +17,7 @@ import * as storage from '../services/storage';
 import { getLang, setLang } from '../services/lang';
 import * as utils from '../utils';
 import {Helmet} from 'react-helmet';
+import router from '../router';
 
 class App extends React.Component {
   state = {
@@ -25,6 +26,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    document.body.classList.add(['theme', this.props.theme].join('-'));
     loadReCaptcha();
     this._loadAssets();
   }
@@ -37,8 +39,12 @@ class App extends React.Component {
     }});
   }
 
-  componentDidUpdate() {
-    const { params } = this.props.router.getState();
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.theme !== this.props.theme) {
+      document.body.classList.remove(['theme', prevProps.theme].join('-'));
+      document.body.classList.add(['theme', this.props.theme].join('-'));
+    }
+    const { params } = router.getState();
     if (params.modal || params.modal_group) {
       document.body.classList.add('modal-open');
       document.body.style.marginRight = utils.getScrollbarWidth() + "px";
@@ -50,7 +56,6 @@ class App extends React.Component {
 
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
-    const currentLang = getLang();
     const { error } = this.state;
 
     if (this.state.isLoading) {
@@ -74,7 +79,7 @@ class App extends React.Component {
       <Helmet>
         <title>{utils.getLang('global_meta_title', true)}</title>
       </Helmet>
-      <ModalGroup {...this.props} />
+      <ModalGroup />
       <Modals {...this.props} />
       <Routes {...this.props} />
       <Toasts />
@@ -97,8 +102,8 @@ class App extends React.Component {
 }
 
 
-export default connect(state => {
-  return {state};
-}, {
+export default connect(state => ({
+  theme: state.default.cabinet ? state.default.theme : 'light'
+}), {
   loadInternalNotifications: internalNotifications.load
 })(App);
