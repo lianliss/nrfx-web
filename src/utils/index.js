@@ -135,7 +135,7 @@ export function ucfirst(input = "") {
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  if (isNaN(parseFloat(input)) || Math.abs(Infinity) === Infinity) return null;
+  if (isNaN(parseFloat(input)) || Math.abs(input) === Infinity) return null;
   console.log(input);
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
   return Math.floor(bn(input).mul(coefficient).toExponential()) / coefficient;
