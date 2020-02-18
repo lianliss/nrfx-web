@@ -1,6 +1,7 @@
 //styles
 // external
 import React, { useEffect, useRef } from 'react';
+import bn from 'big.js';
 // internal
 import store from '../store';
 import router from '../router';
@@ -134,9 +135,10 @@ export function ucfirst(input = "") {
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  if (isNaN(parseFloat(input))) return null;
+  if (isNaN(parseFloat(input)) || Math.abs(Infinity) === Infinity) return null;
+  console.log(input);
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
-  return Math.floor((input * coefficient)) / coefficient;
+  return Math.floor(bn(input).mul(coefficient).toExponential()) / coefficient;
   // return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 

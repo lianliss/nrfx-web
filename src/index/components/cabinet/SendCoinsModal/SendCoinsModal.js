@@ -2,6 +2,7 @@ import './SendCoinsModal.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
+import big from 'big.js';
 
 import UI from '../../../../ui';
 
@@ -67,7 +68,11 @@ class SendCoinsModal extends React.Component {
 
   get maxAmount() {
     const currentWallet = this.currentWallet;
-    return currentWallet.amount - this.currentFee;
+    if (this.props.type === 'address') {
+      return big(currentWallet.amount).minus(this.currentFee).toPrecision();
+    } else {
+      return currentWallet.amount;
+    }
   }
 
   __maxDidPress = () => {
