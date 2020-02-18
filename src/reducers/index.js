@@ -34,6 +34,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.SET_LANG: {
       return {
         ...state,
+        currentLang: action.currentLang,
         translations: {
           ...state.translations,
           [action.currentLang]: action.translations

@@ -13,7 +13,7 @@ class Balances extends React.Component {
   shouldComponentUpdate(nextProps) {
     return nextProps.adaptive !== this.props.adaptive ||
       nextProps.balances !== this.props.balances ||
-      nextProps.lang !== this.props.lang;
+      nextProps.currentLang !== this.props.currentLang;
   }
 
   __handleOpenBalance() {
@@ -92,6 +92,6 @@ class Balances extends React.Component {
 
 export default connect((state) => ({
   ...state.exchange,
-  lang: state.default.lang
+  currentLang: state.default.currentLang
 }), {
 })(memo(Balances));

@@ -252,7 +252,8 @@ class CabinetWalletScreen extends CabinetBaseScreen {
 export default connect(state => ({
   ...state.wallets,
   adaptive: state.default.adaptive,
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   setTitle: actions.setTitle,
   loadWallets: walletsActions.loadWallets,

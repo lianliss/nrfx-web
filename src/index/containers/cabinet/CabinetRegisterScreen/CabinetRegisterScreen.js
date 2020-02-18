@@ -241,7 +241,8 @@ class CabinetRegister extends React.PureComponent {
 }
 
 export default connect(state => ({
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   toastPush: toastsActions.toastPush,
   setTitle: actions.setTitle

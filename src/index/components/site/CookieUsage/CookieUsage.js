@@ -34,7 +34,7 @@ function CookieUsage({ lang }) {
 }
 
 const mapStateToProps = (state) => ({
-  lang: state.default.lang,
+  currentLang: state.default.currentLang,
 })
 
 export default connect(mapStateToProps)(CookieUsage);

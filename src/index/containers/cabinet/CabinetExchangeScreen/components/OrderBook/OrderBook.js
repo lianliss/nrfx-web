@@ -164,6 +164,7 @@ export default connect(state => ({
   ticker: state.exchange.ticker,
   market: state.exchange.market,
   adaptive: state.default.adaptive,
+  currentLang: state.default.currentLang,
   status: state.exchange.loadingStatus.orderBook,
 }), {
   selectOrder: actions.orderBookSelectOrder,

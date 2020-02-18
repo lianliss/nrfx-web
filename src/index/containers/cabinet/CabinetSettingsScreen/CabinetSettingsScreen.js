@@ -241,7 +241,8 @@ export default connect(state => ({
   ...state.settings,
   profile: state.default.profile,
   adaptive: state.default.adaptive,
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   setTitle: actions.setTitle,
   loadSettings: settingsActions.loadSettings,

@@ -52,7 +52,7 @@ class TradeForm extends React.Component {
     if (!form.amount && form.total) {
       this.props.tradeFormSetProperties(type, {
         price: value,
-        amount: (this.numberFormat(form.total / value))
+        amount: 1
       });
     } else {
       this.props.tradeFormSetProperties(type, {
@@ -98,7 +98,7 @@ class TradeForm extends React.Component {
     return (
       <div className="TradeForm__form" key={type}>
         <div className="TradeForm__form__header">
-          <div className="TradeForm__form__title">{utils.ucfirst(type)} {primaryCurrency.toUpperCase()}</div>
+          <div className="TradeForm__form__title">{utils.getLang(['global', type].join('_'))} {primaryCurrency.toUpperCase()}</div>
           <div className="TradeForm__form__balance">
             <span className="TradeForm__form__fee__label">{utils.getLang('global_balance')}:</span>
             <UI.NumberFormat number={balance.amount} currency={balance.currency} />
@@ -219,6 +219,7 @@ export default connect(state => ({
   loadingStatus: state.exchange.loadingStatus,
   fee: state.exchange.fee,
   isLogged: !!state.default.profile.user,
+  currentLang: state.default.currentLang,
 }), {
   orderCreate: actions.orderCreate,
   tradeFormSetType: actions.tradeFormSetType,

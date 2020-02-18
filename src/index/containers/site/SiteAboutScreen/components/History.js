@@ -26,7 +26,7 @@ function History({ lang }) {
 }
 
 const mapStateToProps = (state) => ({
-  lang: state.default.lang,
+  currentLang: state.default.currentLang,
 });
 
 export default React.memo(connect(mapStateToProps)(History));
