@@ -6,6 +6,7 @@ import React, { useEffect, useRef }  from 'react';
 import PropTypes from 'prop-types';
 // internal
 import {classNames} from '../../utils';
+import SVG from 'react-inlinesvg';
 
 function Modal(props) {
   const node = useRef();
@@ -37,7 +38,9 @@ function Modal(props) {
       <div className={className}>
         <div className="Modal__back" onClick={props.onClose} />
         <div className="Modal__box" onClick={e => e.stopPropagation()} ref={node} style={{ width: props.width }}>
-          {!props.skipClose && <div className="Modal__box__close" onClick={props.onClose} />}
+          {!props.skipClose && <div className="Modal__box__close" onClick={props.onClose}>
+            <SVG src={adaptive ? require('src/asset/cabinet/angle_left.svg') : require('src/asset/site/close.svg')} />
+          </div>}
           {props.children}
         </div>
       </div>
