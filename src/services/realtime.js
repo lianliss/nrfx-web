@@ -4,7 +4,7 @@ class RealTime {
   constructor() {
     const token = auth.getToken();
     // this.endpoint = 'wss://ex.bitcoinbot.pro/' + (token ? `?access_token=${token}` : '');
-    this.endpoint = 'wss://stageapi.bitcoinbot.pro/echo' + (token ? `?access_token=${token}` : '');
+    this.endpoint = 'wss://api-stage.bitcoinbot.pro/echo' + (token ? `?access_token=${token}` : '');
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;
