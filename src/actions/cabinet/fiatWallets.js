@@ -64,3 +64,15 @@ export function getRate({base, currency}) {
     })
   }
 }
+
+
+export function getBankList() {
+  return (dispatch, getState) => {
+    dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'bankList', status: 'loading'});
+    api.call(apiSchema.Fiat_wallet.Xendit.BanksGet).then(({rate}) => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_BANK_LIST, rate, uprateTime: new Date().getTime() });
+    }).finally(() => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'bankList', status: null });
+    })
+  }
+}

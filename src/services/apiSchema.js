@@ -2072,6 +2072,14 @@ export default {
       "params": [],
       "path": "fiat_wallet/pay_methods"
     },
+    "Xendit": {
+      "BanksGet": {
+        "method": "GET",
+        "name": "banks",
+        "params": [],
+        "path": "fiat_wallet/xendit/banks"
+      }
+    },
     "RateGet": {
       "method": "GET",
       "name": "rate",

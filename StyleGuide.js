@@ -1,4 +1,4 @@
-let theme = 'light';
+let theme = 'dark';
 
 const toggleTheme = () => {
   document.body.classList.remove(['theme', theme].join('-'));

@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 
-const domain = process.argv.pop() === '--stage' ? 'stageapi.bitcoinbot.pro' : 'api.narfex.com';
+const domain = process.argv.pop() === '--stage' ? 'api-stage.bitcoinbot.pro' : 'api.narfex.com';
 fetch(`https://${domain}/api/v1/documentation/schema`)
   .then(res => res.json())
   .then(schema => {
