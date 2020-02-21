@@ -28,10 +28,10 @@ export default class SiteExchangeScreen extends BaseScreen {
           />
 
 
-          <div className="SiteExchangeScreen__market">
-            <img src={require('./asset/exchange_data.svg')} alt="Exchange market" className="SiteExchangeScreen__market__image" />
-            <UI.Button fontSize={15} rounded>{utils.getLang('site__exchangeViewExchange')}</UI.Button>
-          </div>
+          {/*<div className="SiteExchangeScreen__market">*/}
+          {/*  <img src={require('./asset/exchange_data.svg')} alt="Exchange market" className="SiteExchangeScreen__market__image" />*/}
+          {/*  <UI.Button fontSize={15} rounded>{utils.getLang('site__exchangeViewExchange')}</UI.Button>*/}
+          {/*</div>*/}
 
 
           <h2 className="SiteExchangeScreen__title">{utils.getLang('site__exchangeFeaturesTitle')}</h2>
