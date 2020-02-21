@@ -70,10 +70,10 @@ function Routes(props) {
       Component = SiteWalletScreen;
       WrapperComponent = SiteWrapper;
       break;
-    case pages.ROBOTS:
-      Component = SiteRobotsScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.ROBOTS:
+    //   Component = SiteRobotsScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     case pages.TECHNOLOGY:
       Component = SiteTechnologyScreen;
       WrapperComponent = SiteWrapper;
