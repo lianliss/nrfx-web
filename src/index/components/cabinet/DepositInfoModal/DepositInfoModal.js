@@ -53,11 +53,12 @@ export default class DepositInfoModal extends React.Component {
           {isPool ? utils.getLang('cabinet_detailsInvestmentPoolTitle') : <span>{utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.plan_percent}% {deposit.description}</span>}
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
-          { deposit.can_withdraw && <UI.WalletCard
-            balance={deposit.can_withdraw_amount}
-            title={utils.getLang('cabinet_investmentsAvailableWithdrawal')}
-            currency={currencyInfo}
-          /> }
+
+          {/*{ deposit.can_withdraw && <UI.WalletCard*/}
+          {/*  balance={deposit.can_withdraw_amount}*/}
+          {/*  title={utils.getLang('cabinet_investmentsAvailableWithdrawal')}*/}
+          {/*  currency={currencyInfo}*/}
+          {/*/> }*/}
 
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
 
@@ -85,13 +86,13 @@ export default class DepositInfoModal extends React.Component {
             </InfoRowGroup>
           </div>
 
-          { deposit.can_withdraw && <div className="DepositInfoModal__withdrawAction">
-            <UI.Button
-              disabled={!deposit.can_withdraw_amount}
-              onClick={this.handleWithdraw}
-              currency={currencyInfo}
-            >{utils.getLang('global_withdrawAction')}</UI.Button>
-          </div> }
+          {/*{ deposit.can_withdraw && <div className="DepositInfoModal__withdrawAction">*/}
+          {/*  <UI.Button*/}
+          {/*    disabled={!deposit.can_withdraw_amount}*/}
+          {/*    onClick={this.handleWithdraw}*/}
+          {/*    currency={currencyInfo}*/}
+          {/*  >{utils.getLang('global_withdrawAction')}</UI.Button>*/}
+          {/*</div> }*/}
 
           {/*<Table className="DepositInfoModal__withdrawalHistory" skipContentBox header={utils.getLang('cabinet_investmentsWithdrawalHistory')} headings={[*/}
           {/*  <TableColumn>{utils.getLang('global_amount')}</TableColumn>,*/}
@@ -107,13 +108,6 @@ export default class DepositInfoModal extends React.Component {
           {/*  ))}*/}
           {/*</Table>*/}
 
-          {/*<div className="DepositInfoModal__withdrawal_form" style={{display:'flex'}}>*/}
-          {/*<UI.Input placeholder="Type amount" indicator={<div className="DepositInfoModal__withdrawal_form__currency">LTC</div>} />*/}
-          {/*<UI.Button type="outline">Max</UI.Button>*/}
-          {/*<UI.Button style={{width: 208, margin: 'auto'}} onClick={() => modalGroupActions.openModalPage('withdrawal', { currency })}>*/}
-          {/*Withdraw*/}
-          {/*</UI.Button>*/}
-          {/*</div>*/}
         </div>
       </UI.Modal>
     )
