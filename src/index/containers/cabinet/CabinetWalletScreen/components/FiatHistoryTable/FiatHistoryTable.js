@@ -6,8 +6,9 @@ import moment from 'moment';
 
 import UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
-import {getCurrencyInfo} from '../../../../../../actions';
+import { getCurrencyInfo } from '../../../../../../actions';
 import { openModal } from '../../../../../../actions';
+import Status from 'src/ui/components/Status/Status';
 
 const FiatHistoryTable = props => {
 
@@ -77,7 +78,10 @@ const FiatHistoryTable = props => {
         <div className="FiatHistoryTable__group__item__body">
           <div className="FiatHistoryTable__group__item__left">
             <div className="FiatHistoryTable__label">{item.type_label}</div>
-            <div className="FiatHistoryTable__description">{item.status}</div>
+            <div className="FiatHistoryTable__description">{item.extra.bank_code}</div>
+            <div className="FiatHistoryTable__description">
+              <Status status={item.status} label={item.status_label} />
+            </div>
           </div>
           <div className="FiatHistoryTable__group__item__right">
             <div className="FiatHistoryTable__price" style={{ color: primaryCurrency.color }}>

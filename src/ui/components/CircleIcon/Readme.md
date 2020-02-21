@@ -11,6 +11,5 @@ const icon = require('src/asset/24px/loop.svg');
 
 <>
   <CircleIcon currency={currency} icon={icon} />
-  <CircleIcon currency={currency} icon={icon} />
 </>
 ```

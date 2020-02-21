@@ -9,7 +9,3 @@
 ```js
 <LogoLoader size="large" />
 ```
-
-```js
-<LogoLoader size="big" />
-```

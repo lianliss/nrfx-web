@@ -7,6 +7,7 @@ import * as utils from '../../../../../../utils';
 import UI from '../../../../../../ui';
 import * as actions from '../../../../../../actions';
 import SVG from 'react-inlinesvg';
+import { ButtonWrapper } from '../../../../../../ui/components/Button/Button';
 
 const VerificationBlock = (props) => {
   const statuses = {
@@ -58,9 +59,9 @@ const VerificationBlock = (props) => {
             <li>{utils.getLang('cabinet_profile_verificationItem4')}</li>
           </ul>
 
-          {status.action && <div className="CabinetSettingsScreen__buttonWrapper">
+          {<ButtonWrapper align="right">
             <UI.Button onClick={() => actions.openModal('verification')}>{utils.getLang('cabinet_settings_passVerification')}</UI.Button>
-          </div>}
+          </ButtonWrapper>}
         </div>
       </div>
     </UI.ContentBox>

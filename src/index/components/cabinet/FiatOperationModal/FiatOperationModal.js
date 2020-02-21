@@ -6,6 +6,7 @@ import Modal from '../../../../ui/components/Modal/Modal';
 import UI from '../../../../ui';
 import * as utils from 'src/utils/index';
 import { getCurrencyInfo } from '../../../../actions';
+import Status from 'src/ui/components/Status/Status';
 
 //
 // function FiatOperationModal(props) {
@@ -57,15 +58,40 @@ function FiatOperationModal(props) {
         ['income', 'withdrawal'].includes(operation.type) ? (
           <div className="FiatOperationModal__content">
             <UI.WalletCard balance={operation.primary_amount * (operation.type === 'withdrawal' ? -1 : 1) } currency={primaryCurrency} />
+
+            {operation.type === 'withdrawal' && <>
+              <div className="FiatOperationModal__row">
+                <div className="FiatOperationModal__row__left">
+                  <div className="FiatOperationModal__label">{utils.getLang('global_status')}</div>
+                  <div><Status status={operation.status} /></div>
+                </div>
+                <div className="FiatOperationModal__row__right">
+                  <div className="FiatOperationModal__label">{utils.getLang('global_bank')}</div>
+                  <div>{operation.extra.bank_code}</div>
+                </div>
+              </div>
+
+              <div className="FiatOperationModal__row">
+                <div className="FiatOperationModal__row__left">
+                  <div className="FiatOperationModal__label">{utils.getLang('cabinet_fiatWithdrawalModal__accountHolderName')}</div>
+                  <div>{operation.extra.account_holder_name}</div>
+                </div>
+                <div className="FiatOperationModal__row__right">
+                  <div className="FiatOperationModal__label">{utils.getLang('cabinet_fiatWithdrawalModal__accountNumber')}</div>
+                  <div>{operation.extra.account_number}</div>
+                </div>
+              </div>
+            </> }
+
             <div className="FiatOperationModal__row">
               <div className="FiatOperationModal__row__left">
                 <div className="FiatOperationModal__label">{utils.getLang('global_date')}</div>
                 <div>{utils.dateFormat(operation.created_at)}</div>
               </div>
-              <div className="FiatOperationModal__row__right">
-                {/*<div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}
-                {/*<div><UI.NumberFormat number={1} currency={secondaryCurrency.abbr} /></div>*/}
-              </div>
+              {/*<div className="FiatOperationModal__row__right">*/}
+              {/*  <div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}
+              {/*  <div><UI.NumberFormat number={1} currency={secondaryCurrency.abbr} /></div>*/}
+              {/*</div>*/}
             </div>
           </div>
         ) : (
