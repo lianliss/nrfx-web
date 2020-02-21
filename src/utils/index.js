@@ -114,7 +114,7 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
 };
 
 export function isProduction ()  {
-  return !api.API_ENTRY.includes('stage');
+  return !api.API_ENTRY.includes('stage') && !api.API_ENTRY.includes('api-');
   // return window.location.host === company.host;
 }
 
