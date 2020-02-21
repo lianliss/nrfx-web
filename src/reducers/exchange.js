@@ -155,7 +155,10 @@ export default function reduce(state = initialState, action = {}) {
 
       for (let order of action.orders) {
         if (openOrders[order.id]) {
-          openOrders[order.id] = order;
+          openOrders[order.id] = {
+            ...openOrders[order.id],
+            ...order
+          }
         }
 
         if (order.type !== 'limit') {
@@ -264,7 +267,9 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.EXCHANGE_ADD_OPEN_ORDER: {
       return { ...state, openOrders: {
         ...state.openOrders,
-        [action.order.id]: action.order
+        [action.order.id]: {
+          ...action.order,
+        }
       }};
     }
 
