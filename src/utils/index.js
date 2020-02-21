@@ -61,9 +61,9 @@ export function getLang(key, string = false, code = false) {
   return langString;
 }
 
-export const getCssVar = (v, fallback) => {
-  return getComputedStyle ? getComputedStyle(document.body)
-    .getPropertyValue(v).trim() : fallback;
+export const getCssVar = (v, fallback = '#AAA') => {
+  return (window.getComputedStyle && window.getComputedStyle(document.body)
+    .getPropertyValue(v).trim()) || fallback;
 };
 
 export const nl2br = text => {
@@ -114,7 +114,7 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
 };
 
 export function isProduction ()  {
-  return !api.API_ENTRY.includes('stage');
+  return !api.API_ENTRY.includes('stage') && !api.API_ENTRY.includes('api-');
   // return window.location.host === company.host;
 }
 

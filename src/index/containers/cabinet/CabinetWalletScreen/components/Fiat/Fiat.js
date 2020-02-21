@@ -7,7 +7,7 @@ import * as utils from '../../../../../../utils';
 import { setTitle } from '../../../../../../actions';
 import * as actions from '../../../../../../actions/cabinet/fiatWallets';
 import WalletBox from '../../../../../components/cabinet/WalletBox/WalletBox';
-import FiatHistoryTable from '../FiatHistoryTable/HistoryTable';
+import FiatHistoryTable from '../FiatHistoryTable/FiatHistoryTable';
 import FiatMarketForm from '../FiatMarketForm/FiatMarketForm';
 import Paging from '../../../../../components/cabinet/Paging/Paging';
 import WalletBalance from '../../../../../components/cabinet/WalletBalance/WalletBalance';

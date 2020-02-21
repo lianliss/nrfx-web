@@ -35,6 +35,7 @@ import Tooltip from './components/Tooltip/Tooltip';
 import WalletAddress from './components/WalletAddress/WalletAddress';
 import LogoLoader from './components/LogoLoader/LogoLoader';
 import CircleIcon from './components/CircleIcon/CircleIcon';
+import BankLogo from './components/BankLogo/BankLogo';
 
 export default {
   Button,
@@ -76,5 +77,6 @@ export default {
   Tooltip,
   WalletAddress,
   LogoLoader,
-  CircleIcon
+  CircleIcon,
+  BankLogo
 };

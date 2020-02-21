@@ -9,7 +9,9 @@ const initialState = {
   rateUpdateTime: 0,
   merchants: [],
   exchange_fee: 0,
+  bankList: null,
   loadingStatus: {
+    bankList: '',
     default: 'loading',
     merchants: '',
     marketForm: ''
@@ -60,6 +62,23 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         merchants: action.methods
+      };
+    }
+
+    case actionTypes.FIAT_WALLETS_SET_BANK_LIST: {
+      return {
+        ...state,
+        bankList: action.banks
+      };
+    }
+
+    case actionTypes.FIAT_WALLETS_APPEND_TRANSACTION: {
+      return {
+        ...state,
+        history: [
+          action.transaction,
+          ...state.history
+        ]
       };
     }
 

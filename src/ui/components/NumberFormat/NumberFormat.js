@@ -9,7 +9,7 @@ import bn from 'big.js';
 
 const NumberFormat = ({ number, symbol, fractionDigits, color, skipTitle, accurate, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
 
-  if (isNaN(number) || Math.abs(number) === Infinity) return null;
+  if (isNaN(parseFloat(number)) || Math.abs(number) === Infinity) return null;
 
   if (!fractionDigits) {
     if (percent) {

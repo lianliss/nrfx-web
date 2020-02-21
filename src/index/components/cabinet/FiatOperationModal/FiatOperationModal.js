@@ -54,9 +54,9 @@ function FiatOperationModal(props) {
       </UI.ModalHeader>
       <UI.CircleIcon currency={primaryCurrency} icon={icon} />
       {
-        operation.type === 'income' ? (
+        ['income', 'withdrawal'].includes(operation.type) ? (
           <div className="FiatOperationModal__content">
-            <UI.WalletCard balance={operation.primary_amount} currency={primaryCurrency} />
+            <UI.WalletCard balance={operation.primary_amount * (operation.type === 'withdrawal' ? -1 : 1) } currency={primaryCurrency} />
             <div className="FiatOperationModal__row">
               <div className="FiatOperationModal__row__left">
                 <div className="FiatOperationModal__label">{utils.getLang('global_date')}</div>

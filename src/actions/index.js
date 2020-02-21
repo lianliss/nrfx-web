@@ -80,6 +80,12 @@ export function openModal(name, params = {}, props = {}) {
     props
   );
 }
+export function closeModal() {
+  const { route } = store.getState().router;
+  router.navigate(route.name, {
+    section: route.params.section
+  })
+}
 
 export function confirm(props) {
   return new Promise((resolve, reject) => {

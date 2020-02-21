@@ -2072,6 +2072,67 @@ export default {
       "params": [],
       "path": "fiat_wallet/pay_methods"
     },
+    "WithdrawPut": {
+      "method": "PUT",
+      "name": "withdraw",
+      "params": {
+        "BankCode": {
+          "name": "bank_code",
+          "filters": {
+            "0": "required",
+            "oneOf": [
+              "BRI",
+              "MANDIRI",
+              "BNI",
+              "PERMATA"
+            ]
+          },
+          "type": "body"
+        },
+        "AccountHolderName": {
+          "name": "account_holder_name",
+          "filters": [
+            "required"
+          ],
+          "type": "body"
+        },
+        "AccountNumber": {
+          "name": "account_number",
+          "filters": [
+            "required"
+          ],
+          "type": "body"
+        },
+        "Amount": {
+          "name": "amount",
+          "filters": [
+            "required",
+            "positive"
+          ],
+          "type": "body"
+        },
+        "EmailTo": {
+          "name": "email_to",
+          "filters": [],
+          "type": "body"
+        }
+      },
+      "path": "fiat_wallet/withdraw"
+    },
+    "WithdrawMethodsGet": {
+      "method": "GET",
+      "name": "withdraw_methods",
+      "params": [],
+      "path": "fiat_wallet/withdraw_methods"
+    },
+    "Xendit": {
+      "BanksGet": {
+        "method": "GET",
+        "name": "banks",
+        "params": [],
+        "path": "fiat_wallet/xendit/banks"
+      }
+    },
     "RateGet": {
       "method": "GET",
       "name": "rate",
