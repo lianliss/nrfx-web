@@ -20,8 +20,7 @@ export function getMerchant(type) {
     const apiMethod = type === 'withdrawal' ? apiSchema.Fiat_wallet.WithdrawMethodsGet : apiSchema.Fiat_wallet.PayMethodsGet;
 
     dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'merchants', status: 'loading'});
-    api.call(apiMethod).then(response => {
-      let methods = type === 'withdrawal' ? response : response.methods; // TODO: HACK
+    api.call(apiMethod).then(({ methods }) => {
       dispatch({type: actionTypes.FIAT_WALLETS_SET_MERCHANTS, methods });
     }).finally(() => {
       dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'merchants', status: ''});
