@@ -103,8 +103,7 @@
     "eslint": "eslint . --ext .js",
     "eslint:fix": "eslint . --ext .js --fix",
     "test": "node scripts/test.js",
-    "getSchema": "node getScema.js",
-    "getSchema:stage": "node getScema.js --stage"
+    "getSchema": "node scripts/getScema.js"
   },
   "browserslist": {
     "production": [

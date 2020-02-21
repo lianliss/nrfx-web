@@ -35,18 +35,27 @@
     .BankList__item__arrow {
       color: var(--gray);
       margin-left: 32px;
+      width: 24px;
+
+      .isvg {
+        width: inherit;
+
+        svg {
+          display: block;
+        }
+      }
     }
 
     .BankList__item__logo {
       margin-left: auto;
-      .isvg {
-        display: block;
+    }
+  }
+}
 
-        svg {
-          display: block;
-          height: 32px;
-        }
-      }
+.adaptive {
+  .BankList {
+    .BankList__item {
+      padding: 32px 16px;
     }
   }
 }

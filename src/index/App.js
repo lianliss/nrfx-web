@@ -17,7 +17,6 @@ import * as storage from '../services/storage';
 import { getLang, setLang } from '../services/lang';
 import * as utils from '../utils';
 import {Helmet} from 'react-helmet';
-import router from '../router';
 
 class App extends React.Component {
   state = {
@@ -44,7 +43,7 @@ class App extends React.Component {
       document.body.classList.remove(['theme', prevProps.theme].join('-'));
       document.body.classList.add(['theme', this.props.theme].join('-'));
     }
-    const { params } = router.getState();
+    const { params } = this.props.route;
     if (params.modal || params.modal_group) {
       document.body.classList.add('modal-open');
       document.body.style.marginRight = utils.getScrollbarWidth() + "px";
@@ -103,6 +102,7 @@ class App extends React.Component {
 
 
 export default connect(state => ({
+  route: state.router.route,
   theme: state.default.cabinet ? state.default.theme : 'light'
 }), {
   loadInternalNotifications: internalNotifications.load

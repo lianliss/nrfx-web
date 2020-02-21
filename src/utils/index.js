@@ -61,9 +61,9 @@ export function getLang(key, string = false, code = false) {
   return langString;
 }
 
-export const getCssVar = (v, fallback) => {
-  return getComputedStyle ? getComputedStyle(document.body)
-    .getPropertyValue(v).trim() : fallback;
+export const getCssVar = (v, fallback = '#AAA') => {
+  return (window.getComputedStyle && window.getComputedStyle(document.body)
+    .getPropertyValue(v).trim()) || fallback;
 };
 
 export const nl2br = text => {

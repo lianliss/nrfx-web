@@ -6,6 +6,10 @@ import PropTypes from 'prop-types';
 // internal
 import {classNames} from '../../utils';
 
+const ButtonWrapper = (props) => (
+  <div className={classNames("ButtonWrapper", props.className, props.align)}>{props.children}</div>
+);
+
 function Button(props) {
   const className = classNames(props.className, {
     Button: true,
@@ -86,3 +90,10 @@ Button.propTypes = {
 };
 
 export default React.memo(Button);
+
+ButtonWrapper.propTypes = {
+  align: PropTypes.oneOf(['left', 'center', 'right'])
+};
+
+export { ButtonWrapper };
+

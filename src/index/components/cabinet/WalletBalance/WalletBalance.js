@@ -1,5 +1,6 @@
 import './WalletBalance.less';
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 import PieChart from 'react-minimal-pie-chart';
 
@@ -81,6 +82,16 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
                   currency={currencyInfo}
                 >
                   {utils.getLang('cabinet_fiatBalance_add')}
+                </UI.Button>
+                <UI.Button
+                  disabled={!amount}
+                  size={adaptive ? 'middle' : 'large'}
+                  onClick={() => {actions.openModal('merchant', {
+                    currency: currency
+                  }, { type: 'withdrawal' })}}
+                  currency={currencyInfo}
+                >
+                  {utils.getLang('global_withdrawal')}
                 </UI.Button>
               </div>
             ) : (
@@ -191,4 +202,6 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
   )
 }
 
-export default React.memo(WalletBalance);
+export default connect(state => ({
+  currentLang: state.default.currentLang
+}))(WalletBalance);

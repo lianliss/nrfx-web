@@ -3,6 +3,7 @@ import './BankLogo.less';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 import PropTypes from 'prop-types';
+import { classNames as cn } from '../../utils';
 
 const BankLogo = props => {
   const logos = {
@@ -12,11 +13,11 @@ const BankLogo = props => {
     permata: require('src/asset/banks/permata.svg'),
   };
 
-  const logo = logos[props.name];
+  const name = props.name.toLocaleLowerCase();
+  const logo = logos[name];
 
   return (
-
-    <div className="BankLogo">
+    <div title={name} className={cn("BankLogo", props.className)}>
       {logo ? <SVG src={logo} /> : <small className="BankLogo__placeholder">{props.name}</small>}
     </div>
   )
@@ -24,7 +25,7 @@ const BankLogo = props => {
 
 
 BankLogo.propTypes = {
-  size: PropTypes.oneOf(['bni', 'bri', 'mandiri', 'permata']),
+  name: PropTypes.string
 };
 
 export default BankLogo;

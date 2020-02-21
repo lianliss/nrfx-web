@@ -1,20 +1,26 @@
 import './BankList.less'
+import BankLogo from '../../../../../../ui/components/BankLogo/BankLogo';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
 
 export default props => {
+
+  const handleSelect = (name) => () => {
+    props.onChange(name);
+  };
+
   return (
     <div className="BankList">
-      <div className="BankList__item">
-        <div className="BankList__item__title">Bank Negara Indonesia</div>
-        <div className="BankList__item__logo">
-          <SVG src={require('src/asset/banks/bni.svg')} />
+      {props.items.map((bank) => (
+        <div className="BankList__item" onClick={handleSelect(bank)}>
+          <div className="BankList__item__title">{bank.name}</div>
+          <BankLogo className="BankList__item__logo" name={bank.code} />
+          <div className="BankList__item__arrow">
+            <SVG src={require('src/asset/24px/angle-right.svg')} />
+          </div>
         </div>
-        <div className="BankList__item__arrow">
-          <SVG src={require('src/asset/24px/angle-right.svg')} />
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

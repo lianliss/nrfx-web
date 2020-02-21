@@ -326,3 +326,25 @@
 .buttonFontSizeStyle {
   font-size: 15px !important;
 }
+
+
+.ButtonWrapper {
+  display: flex;
+  align-items: center;
+
+  .Button {
+    margin: 0 8px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &.left { justify-content: flex-start }
+  &.right { justify-content: flex-end }
+  &.center { justify-content: center }
+}

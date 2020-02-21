@@ -3,6 +3,7 @@ import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as toast from '../toasts';
 import { getLang } from '../../utils';
+import { closeModal } from '../index';
 
 export function getFiatWallets() {
   return (dispatch, getState) => {
@@ -14,10 +15,13 @@ export function getFiatWallets() {
   }
 }
 
-export function getMerchant() {
+export function getMerchant(type) {
   return (dispatch, getState) => {
+    const apiMethod = type === 'withdrawal' ? apiSchema.Fiat_wallet.WithdrawMethodsGet : apiSchema.Fiat_wallet.PayMethodsGet;
+
     dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'merchants', status: 'loading'});
-    api.call(apiSchema.Fiat_wallet.PayMethodsGet).then(({methods}) => {
+    api.call(apiMethod).then(response => {
+      let methods = type === 'withdrawal' ? response : response.methods; // TODO: HACK
       dispatch({type: actionTypes.FIAT_WALLETS_SET_MERCHANTS, methods });
     }).finally(() => {
       dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'merchants', status: ''});
@@ -69,10 +73,32 @@ export function getRate({base, currency}) {
 export function getBankList() {
   return (dispatch, getState) => {
     dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'bankList', status: 'loading'});
-    api.call(apiSchema.Fiat_wallet.Xendit.BanksGet).then(({rate}) => {
-      dispatch({type: actionTypes.FIAT_WALLETS_SET_BANK_LIST, rate, uprateTime: new Date().getTime() });
+    api.call(apiSchema.Fiat_wallet.Xendit.BanksGet).then(banks => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_BANK_LIST, banks });
     }).finally(() => {
       dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'bankList', status: null });
+    })
+  }
+}
+
+export function fiatWithdrawal(params) {
+  return (dispatch, getState) => {
+    dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'withdrawal', status: 'loading'});
+    api.call(apiSchema.Fiat_wallet.WithdrawPut, {
+      bank_code: params.bank.code,
+      account_holder_name: params.accountHolderName,
+      account_number: params.accountNumber,
+      amount: params.amount,
+      email_to: params.email,
+      balance_id: params.balance.id,
+    }).then(({transaction}) => {
+      toast.success('Success');
+      closeModal();
+      dispatch({type: actionTypes.FIAT_WALLETS_APPEND_TRANSACTION, transaction });
+    }).finally(() => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'withdrawal', status: null });
+    }).catch((err) => {
+      toast.error(err.message);
     })
   }
 }
