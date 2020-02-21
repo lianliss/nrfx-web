@@ -8,9 +8,10 @@ export default {
     info: 'info@narfex.com',
   },
   social: {
-    vk: 'vk.com/narfex',
-    telegram: 't.me/narfex',
-    twitter: "twitter.com/narfex_official",
+    vk: 'vk.com/narfex_com',
+    // telegram: 't.me/narfex',
+    twitter: "twitter.com/Narfex_id",
+    facebook: 'facebook.com/narfex.indonesia',
     // facebook: 'https://facebook.com/Bitcoinbotpro-432506870546401',
     // instagram: 'https://instagram.com/bitcoinbot_pro',
   },
