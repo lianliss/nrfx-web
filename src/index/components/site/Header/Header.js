@@ -29,10 +29,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           title: getLang('site__headerExchange'),
           route: pages.SITE_EXCHANGE,
         },
-        {
-          title: getLang('site__headerRobots'),
-          route: pages.ROBOTS,
-        },
+        // {
+        //   title: getLang('site__headerRobots'),
+        //   route: pages.ROBOTS,
+        // },
         // {
         //   title: getLang('site__headerInvestment'),
         //   route: pages.INVESTMENT,

@@ -65,19 +65,23 @@ export default class SiteMainScreen extends BaseScreen {
               icon="exchange"
               seeMoreLink={pages.SITE_EXCHANGE}
             >{[utils.getLang('site__homeExchangeSubTitile1'), utils.getLang('site__homeExchangeSubTitile2'), utils.getLang('site__homeExchangeSubTitile3')]}</HomepageProduct>
-            <HomepageProduct
-              title={utils.getLang('site__homeRobots')}
-              bgTitle={utils.getLang('site__homeRobots')}
-              icon="robot"
-              reverse
-              seeMoreLink={pages.ROBOTS}
-            >{[utils.getLang('site__homeRobotsSubTitle1'), utils.getLang('site__homeRobotsSubTitle2'), utils.getLang('site__homeRobotsSubTitle3')]}</HomepageProduct>
+
             <HomepageProduct
               title={utils.getLang('site__homeWallet')}
               bgTitle={utils.getLang('site__homeWallet')}
               icon="wallet"
               seeMoreLink={pages.WALLET}
+              reverse
             >{[utils.getLang('site__homeWalletSubTitle1'), utils.getLang('site__homeWalletSubTitle4'), utils.getLang('site__homeWalletSubTitle3')]}</HomepageProduct>
+
+
+            {/*<HomepageProduct*/}
+            {/*  title={utils.getLang('site__homeRobots')}*/}
+            {/*  bgTitle={utils.getLang('site__homeRobots')}*/}
+            {/*  icon="robot"*/}
+            {/*  reverse*/}
+            {/*  seeMoreLink={pages.ROBOTS}*/}
+            {/*>{[utils.getLang('site__homeRobotsSubTitle1'), utils.getLang('site__homeRobotsSubTitle2'), utils.getLang('site__homeRobotsSubTitle3')]}</HomepageProduct>*/}
 
             {/*<HomepageProduct*/}
             {/*  title={this.lang.site.homeInvestments}*/}
@@ -109,7 +113,7 @@ export default class SiteMainScreen extends BaseScreen {
 
         <RegisterBanner isCurly />
 
-        <MobileAppBanner />
+        {/*<MobileAppBanner />*/}
 
       </div>
     )
