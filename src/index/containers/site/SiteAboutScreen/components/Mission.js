@@ -5,24 +5,25 @@ import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import { data } from '../fixtures';
 import * as utils from '../../../../../utils';
+import {getLang} from '../../../../../utils';
 
 
 function Mission({ lang }) {
   const _renderValues = () => {
     const values = [
       {
-        title: utils.getLang('site__aboutMissionTechnologyDevelopmentTitle'),
-        caption: utils.getLang('site__aboutMissionTechnologyDevelopmentSubTitle'),
+        title: getLang('site__aboutMissionTechnologyDevelopmentTitle'),
+        caption: getLang('site__aboutMissionTechnologyDevelopmentSubTitle'),
         icon: require('../asset/change.svg'),
       },
       {
-        title: utils.getLang('site__aboutMissionCommunityUsersTitle'),
-        caption: utils.getLang('site__aboutMissionCommunityUsersSubTitle'),
+        title: getLang('site__aboutMissionCommunityUsersTitle'),
+        caption: getLang('site__aboutMissionCommunityUsersSubTitle'),
         icon: require('../asset/community.svg'),
       },
       {
-        title: utils.getLang('site__aboutMissionTrustReliabilityTitle'),
-        caption: utils.getLang('site__aboutMissionTrustReliabilitySubTitle'),
+        title: getLang('site__aboutMissionTrustReliabilityTitle'),
+        caption: getLang('site__aboutMissionTrustReliabilitySubTitle'),
         icon: require('../asset/trust.svg'),
       },
     ]
@@ -41,12 +42,12 @@ function Mission({ lang }) {
   return (
     <>
       <div className="SiteAboutScreen__intro">
-        <TitleWithBg title={utils.getLang('site__aboutMissionOurMissionTitle')} bgTitle={utils.getLang('site__aboutMissionOurMissionTitle')} centered />
-        <p className="SiteAboutScreen__caption">{utils.nl2br(utils.getLang('site__aboutMissionOurMissionSubTitle'))}</p>
+        <TitleWithBg title={getLang('site__aboutMissionOurMissionTitle')} bgTitle={getLang('site__aboutMissionOurMissionTitle')} centered />
+        <p className="SiteAboutScreen__caption">{utils.nl2br(getLang('site__aboutMissionOurMissionSubTitle'))}</p>
       </div>
 
       <div className="SiteAboutScreen__mission__values">
-        <h2 className="SiteAboutScreen__mission__values__title">{utils.getLang('site__aboutMissionValuesUnitUs')}</h2>
+        <h2 className="SiteAboutScreen__mission__values__title">{getLang('site__aboutMissionValuesUnitUs')}</h2>
 
         {_renderValues()}
       </div>

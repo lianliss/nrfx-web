@@ -28,7 +28,7 @@ export default class SiteWalletScreen extends BaseScreen {
           {this._renderFeatures()}
         </div>
 
-        <MobileAppBanner />
+        {/*<MobileAppBanner />*/}
       </div>
     )
   }

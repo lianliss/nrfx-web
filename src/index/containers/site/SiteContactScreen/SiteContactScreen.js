@@ -18,7 +18,7 @@ const SnItem = props => {
       <SVG src={props.icon}/>
       <div className="SiteContactScreen__sn__item__content">
         <h3>{props.title}</h3>
-        <a href={"https://" + props.link}>{props.link.replace('https://', '')}</a>
+        <a href={"https://" + props.link}>{props.displayLink || props.link.replace('https://', '')}</a>
       </div>
     </UI.ContentBox>
   ) : null;
@@ -145,13 +145,14 @@ export default class SiteContactScreen extends BaseScreen {
               <SnItem
                 icon={require('../../../../asset/social/telegram.svg')}
                 title="Indonesian"
-                link="bit.ly/bbproidn"
+                displayLink="t.me"
+                link="t.me/joinchat/CqRVWE7w_5mKt76bc1q79A"
               />
             </div>
 
           </div>
         </div>
-        <MobileAppBanner />
+        {/*<MobileAppBanner />*/}
       </div>
     )
   }
