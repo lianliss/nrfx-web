@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import { getAuth } from 'src/actions/auth';
 import Captcha from 'src/components/Captcha/Captcha';
 import * as utils from 'src/utils';

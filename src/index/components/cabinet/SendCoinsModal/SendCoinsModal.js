@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import big from 'big.js';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as actions from '../../../../actions';
 import * as toast from '../../../../actions/toasts';

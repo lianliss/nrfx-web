@@ -1,7 +1,7 @@
 import './WalletTransactionModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as actions from '../../../../actions';
 import * as walletsActions from '../../../../actions/cabinet/wallets';

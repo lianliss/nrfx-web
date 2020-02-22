@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as modalGroupActions from "../../../../../../actions/modalGroup";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import VerificationBlock from '../VerificationBlock/VerificationBlock';
 // import VerificationBlock from '../VerificationBlock/VerificationBlock';
 import * as actions from 'src/actions/index';

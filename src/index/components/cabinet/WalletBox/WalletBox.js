@@ -5,7 +5,7 @@ import SVG from 'react-inlinesvg';
 
 import * as utils from '../../../../utils';
 import * as actions from '../../../../actions';
-import UI from '../../../../ui/';
+import * as UI from '../../../../ui/';
 
 class WalletBox extends React.Component {
   constructor(props) {

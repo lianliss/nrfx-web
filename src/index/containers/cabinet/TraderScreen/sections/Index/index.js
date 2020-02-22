@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import CabinetBaseScreen from '../../../CabinetBaseScreen/CabinetBaseScreen';
 
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import PageContainer from '../../../../../components/cabinet/PageContainer/PageContainer';
 import { ProfileSidebarItem } from '../../../../../components/cabinet/ProfileSidebar/ProfileSidebar';
 

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // import ReactPhoneInput from 'react-phone-input-2';
 // import moment from 'moment';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import {withRouter} from 'react-router5';
 import {GetParamsContext} from '../../../contexts';
 import apiSchema from '../../../../services/apiSchema';

@@ -1,7 +1,7 @@
 import './DepositInfoModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import InfoRow, { InfoRowGroup } from '../../cabinet/InfoRow/InfoRow';
 import * as utils from '../../../../utils';

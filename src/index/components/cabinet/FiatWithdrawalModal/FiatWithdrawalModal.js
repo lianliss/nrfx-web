@@ -30,7 +30,7 @@ const FiatWithdrawalModal = props => {
     if (!amount || !balance) {
       props.onClose();
     }
-  }, []);
+  });
 
   if (!amount || !balance) {
     return null;

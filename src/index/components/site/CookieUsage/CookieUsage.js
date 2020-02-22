@@ -3,7 +3,7 @@ import './CookieUsage.less';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import { getLang } from '../../../../utils';
 import * as storage from '../../../../services/storage';
 

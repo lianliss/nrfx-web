@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as exchange from '../../../../actions/cabinet/exchange'
 import * as actions from '../../../../actions';
 import ChartSimple from '../Chart/ChartSimple';

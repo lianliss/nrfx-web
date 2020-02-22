@@ -2,7 +2,7 @@ import './TradeForm.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as actions from 'src/actions/cabinet/exchange';
 import { openModal } from 'src/actions/index';
 import * as utils from '../../../../../../utils';
@@ -101,7 +101,7 @@ class TradeForm extends React.Component {
           <div className="TradeForm__form__title">{utils.getLang(['global', type].join('_'))} {primaryCurrency.toUpperCase()}</div>
           <div className="TradeForm__form__balance">
             <span className="TradeForm__form__fee__label">{utils.getLang('global_balance')}:</span>
-            <UI.NumberFormat number={balance.amount} currency={balance.currency} />
+            <UI.NumberFormat  number={balance.amount} currency={balance.currency} />
           </div>
         </div>
         <div className="TradeForm__form__row">

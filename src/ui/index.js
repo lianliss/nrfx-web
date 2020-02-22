@@ -1,82 +1,35 @@
-//styles
-// external
-// internal
-import Button from './components/Button/Button';
-import Badge from './components/Badge/Badge';
-import WatchButton from './components/Button/WatchButton';
-import Input from './components/Input/Input';
-import Dropdown from './components/Dropdown/Dropdown';
-import Search from './components/Search/Search';
-import CheckBox from './components/CheckBox/CheckBox';
-import Modal, { ModalHeader } from './components/Modal/Modal';
-import Radio from './components/Radio/Radio';
-import Switch from './components/Switch/Switch';
-import Notifications, { Notification, NotificationSeparator } from './components/Notifications/Notifications';
-import Message from './components/Message/Message';
-import Hover from './components/Hover/Hover';
-import Table, { TableCell, TableColumn } from './components/Table/Table';
-import SwitchTabs from './components/SwitchTabs/SwitchTabs';
-import SwitchButtons from './components/SwitchButtons/SwitchButtons';
-import RadioGroup from './components/Radio/RadioGroup';
-import Toast from './components/Toast/Toast';
-import Range from './components/Range/Range';
-import MarkDown from './components/MarkDown/MarkDown';
-import InternalNotification from './components/InternalNotification/InternalNotification';
-import NumberFormat from './components/NumberFormat/NumberFormat';
-import ActionSheet from './components/ActionSheet/ActionSheet';
-import Logo from './components/Logo/Logo';
-import List from './components/List/List';
-import ContentBox from './components/ContentBox/ContentBox';
-import Collapse from './components/Collapse/Collapse';
-import WalletCard from './components/WalletCard/WalletCard';
-import StatusIndicator from './components/StatusIndicator/StatusIndicator';
-import FloatingButton, { FloatingButtonItem } from './components/FloatingButton/FloatingButton';
-import Tooltip from './components/Tooltip/Tooltip';
-import WalletAddress from './components/WalletAddress/WalletAddress';
-import LogoLoader from './components/LogoLoader/LogoLoader';
-import CircleIcon from './components/CircleIcon/CircleIcon';
-import BankLogo from './components/BankLogo/BankLogo';
-
-export default {
-  Button,
-  Badge,
-  WatchButton,
-  Input,
-  Dropdown,
-  Search,
-  CheckBox,
-  Modal,
-  ModalHeader,
-  Radio,
-  RadioGroup,
-  Switch,
-  Message,
-  Hover,
-  Table,
-  TableCell,
-  TableColumn,
-  SwitchTabs,
-  SwitchButtons,
-  Notifications,
-  Notification,
-  NotificationSeparator,
-  Toast,
-  Range,
-  MarkDown,
-  FloatingButton,
-  FloatingButtonItem,
-  InternalNotification,
-  NumberFormat,
-  ActionSheet,
-  Logo,
-  List,
-  ContentBox,
-  Collapse,
-  WalletCard,
-  StatusIndicator,
-  Tooltip,
-  WalletAddress,
-  LogoLoader,
-  CircleIcon,
-  BankLogo
-};
+export { default as Button } from './components/Button/Button';
+export { default as Badge } from './components/Badge/Badge';
+export { default as WatchButton } from './components/Button/WatchButton';
+export { default as Input } from './components/Input/Input';
+export { default as Dropdown } from './components/Dropdown/Dropdown';
+export { default as Search } from './components/Search/Search';
+export { default as CheckBox } from './components/CheckBox/CheckBox';
+export { default as Modal, ModalHeader }from './components/Modal/Modal';
+export { default as Radio } from './components/Radio/Radio';
+export { default as Switch } from './components/Switch/Switch';
+export { default as Notifications, Notification, NotificationSeparator } from './components/Notifications/Notifications';
+export { default as Message } from './components/Message/Message';
+export { default as Hover } from './components/Hover/Hover';
+export { default as Table, TableCell, TableColumn } from './components/Table/Table';
+export { default as SwitchTabs } from './components/SwitchTabs/SwitchTabs';
+export { default as SwitchButtons } from './components/SwitchButtons/SwitchButtons';
+export { default as RadioGroup } from './components/Radio/RadioGroup';
+export { default as Toast } from './components/Toast/Toast';
+export { default as Range } from './components/Range/Range';
+export { default as MarkDown } from './components/MarkDown/MarkDown';
+export { default as InternalNotification } from './components/InternalNotification/InternalNotification';
+export { default as NumberFormat } from './components/NumberFormat/NumberFormat';
+export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
+export { default as Logo } from './components/Logo/Logo';
+export { default as List } from './components/List/List';
+export { default as ContentBox } from './components/ContentBox/ContentBox';
+export { default as Collapse } from './components/Collapse/Collapse';
+export { default as WalletCard } from './components/WalletCard/WalletCard';
+export { default as StatusIndicator } from './components/StatusIndicator/StatusIndicator';
+export { default as FloatingButton, FloatingButtonItem } from './components/FloatingButton/FloatingButton';
+export { default as Tooltip } from './components/Tooltip/Tooltip';
+export { default as WalletAddress } from './components/WalletAddress/WalletAddress';
+export { default as LogoLoader } from './components/LogoLoader/LogoLoader';
+export { default as CircleIcon } from './components/CircleIcon/CircleIcon';
+export { default as BankLogo } from './components/BankLogo/BankLogo';

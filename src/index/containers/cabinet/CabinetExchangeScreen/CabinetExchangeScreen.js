@@ -17,7 +17,7 @@ import MarketInfo from './components/MarketInfo/MarketInfo';
 import MarketInfoAdaptive from './components/MarketInfoAdaptive/MarketInfoAdaptive';
 import Chart from './components/Chart/Chart';
 import * as exchangeService from '../../../../services/exchange';
-import UI from '../../../../ui/';
+import * as UI from '../../../../ui/';
 import * as exchangeActions from '../../../../actions/cabinet/exchange';
 import * as actions from '../../../../actions';
 

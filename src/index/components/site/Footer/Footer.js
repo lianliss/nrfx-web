@@ -8,7 +8,7 @@ import * as utils from '../../../../utils/index';
 import * as actions from 'actions';
 import MarkDown from 'ui/MarkDown/MarkDown';
 import { isIndonesia } from 'src/services/locations';
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import COMPANY from 'src/index/constants/company';
 
 export default function Footer() {

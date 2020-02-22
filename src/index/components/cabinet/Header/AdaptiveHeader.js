@@ -3,7 +3,7 @@ import './Header.less';
 
 import React from 'react';
 import router from '../../../../router';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import url from "url";
 import {connect} from 'react-redux';
 import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';

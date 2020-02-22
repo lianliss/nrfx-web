@@ -4,7 +4,7 @@ import './Notifications.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 // internal
-import UI from '../../index';
+import * as UI from '../../index';
 import MarkDown from '../MarkDown/MarkDown';
 import ScrollBox from '../ScrollBox/ScrollBox';
 import { classNames } from '../../utils';

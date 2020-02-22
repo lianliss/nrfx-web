@@ -3,7 +3,7 @@ import './FiatOperationModal.less';
 import React from 'react';
 
 import Modal from '../../../../ui/components/Modal/Modal';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as utils from 'src/utils/index';
 import { getCurrencyInfo } from '../../../../actions';
 import Status from 'src/ui/components/Status/Status';

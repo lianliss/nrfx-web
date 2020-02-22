@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
 import SiteAboutScreen from './containers/site/SiteAboutScreen/SiteAboutScreen';
 import SiteWalletScreen from './containers/site/SiteWalletScreen/SiteWalletScreen';
-import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
+// import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
 import SiteTechnologyScreen from './containers/site/SiteTechnologyScreen/SiteTechnologyScreen';
 import SiteSafetyScreen from './containers/site/SiteSafetyScreen/SiteSafetyScreen';

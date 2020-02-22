@@ -7,7 +7,7 @@ import PieChart from 'react-minimal-pie-chart';
 import { formatNumber, classNames } from '../../../../utils/index';
 import * as actions from "../../../../actions";
 import * as utils from "../../../../utils/index";
-import UI from '../../../../ui/index';
+import * as UI from '../../../../ui/index';
 import { getCurrencyInfo } from '../../../../actions';
 import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 

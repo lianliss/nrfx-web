@@ -2,7 +2,7 @@ import './CabinetProfileScreen.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from "../../../../utils";
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';

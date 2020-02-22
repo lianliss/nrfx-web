@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import { getLang } from 'utils/index';
 import * as pages from 'src/index/constants/pages';
 import router from 'src/router';

@@ -2,7 +2,7 @@
 import './ReferralLink.less';
 
 import React from 'react';
-import UI from '../../../../../../ui/index';
+import * as UI from '../../../../../../ui/index';
 
 import * as utils from '../../../../../../utils';
 

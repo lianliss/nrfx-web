@@ -2,7 +2,7 @@ import './WithdrawalModal.less';
 
 import React from 'react';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as investmentsActions from "../../../../actions/cabinet/investments";
 import * as utils from "../../../../utils";

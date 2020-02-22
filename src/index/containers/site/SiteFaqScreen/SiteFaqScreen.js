@@ -3,7 +3,7 @@ import './SiteFaqScreen.less';
 import React from 'react';
 
 import BaseScreen from '../../BaseScreen';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import Question from './components/Question';
 import COMPANY from '../../../constants/company';
 import * as utils from '../../../../utils';

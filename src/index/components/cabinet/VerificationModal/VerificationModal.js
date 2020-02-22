@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from 'src/actions/cabinet/profile';
 import { getCurrentLang } from 'src/actions/index';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import { classNames as cn } from 'src/utils/index';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 

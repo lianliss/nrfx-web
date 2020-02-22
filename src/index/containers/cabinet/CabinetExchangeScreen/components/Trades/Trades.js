@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { connect } from 'react-redux';
 
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import Block from '../Block/Block';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';

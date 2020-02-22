@@ -1,6 +1,6 @@
 
 import React from 'react';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 
 import * as utils from '../../../../../../utils';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';

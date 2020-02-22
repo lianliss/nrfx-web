@@ -7,7 +7,6 @@ import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePa
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import Banner from '../../../components/site/Banner/Banner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
-import UI from '../../../../ui';
 import * as utils from '../../../../utils/index';
 import router from '../../../../router';
 import * as PAGES from '../../../constants/pages';

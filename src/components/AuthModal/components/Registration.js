@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import * as steps from '../fixtures';
 import * as utils from 'src/utils';
 import * as actions from 'src/actions';

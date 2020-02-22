@@ -1,7 +1,7 @@
 import './PartnerInfoModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import ModalState from '../ModalState/ModalState';

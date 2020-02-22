@@ -3,7 +3,7 @@ import './History.less';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 
 import * as traderActions from '../../../../../../actions/cabinet/trader';
 import * as utils from '../../../../../../utils';

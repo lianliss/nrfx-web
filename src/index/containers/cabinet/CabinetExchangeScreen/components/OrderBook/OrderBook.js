@@ -3,7 +3,7 @@ import './OrderBook.less';
 import React, { useState, useEffect, useRef } from 'react';
 import * as actions from 'src/actions/cabinet/exchange';
 import { connect } from 'react-redux';
-import UI from 'src/ui/index';
+import * as UI from 'src/ui/index';
 import { getLang, ucfirst, classNames as cn } from 'src/utils/index';
 import Block from '../Block/Block';
 import SVG from 'react-inlinesvg';

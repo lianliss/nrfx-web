@@ -10,7 +10,7 @@ import Badge from '../../../../ui/components/Badge/Badge';
 import router from '../../../../router';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../../utils';
-import UI from "../../../../ui/index";
+import * as UI from "../../../../ui/index";
 import * as auth from '../../../../actions/auth';
 import * as steps from '../../../../components/AuthModal/fixtures';
 import * as actions from '../../../../actions';

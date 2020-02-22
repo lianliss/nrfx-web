@@ -9,7 +9,7 @@ import Modals from './Modals';
 import ModalGroup from '../ui/components/ModalGroup/ModalGroup';
 import Toasts from './components/cabinet/Toasts/Toasts';
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
-import UI from '../ui';
+import * as UI from '../ui';
 import LogoLoader from '../ui/components/LogoLoader/LogoLoader';
 import * as actions from '../actions';
 import * as internalNotifications from '../actions/cabinet/internalNotifications';

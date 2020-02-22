@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { classNames, getLang } from 'utils';
 import * as actions from 'src/actions/index';
 import COMPANY from '../../../constants/company';
-import UI from 'src/ui'
+import * as UI from 'src/ui'
 
 
 const Footer = (props) => {

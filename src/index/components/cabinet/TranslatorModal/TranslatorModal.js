@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import SVG from 'react-inlinesvg';
 import { openModal, loadLang, saveTranslator } from 'src/actions/index';
 import { getLang } from 'src/utils';

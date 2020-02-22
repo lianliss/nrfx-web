@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { renderToString } from 'react-dom/server'
 import { connect } from 'react-redux';
 
-import UI from '../../../../ui/';
+import * as UI from '../../../../ui/';
 import { getLang, throttle, classNames as cn } from '../../../../utils';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
@@ -56,7 +56,7 @@ const MerchantModal = props => {
     }
   };
 
-  useEffect(() => props.getMerchant(props.type),[]);
+  useEffect(() => props.getMerchant(props.type));
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];

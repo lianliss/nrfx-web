@@ -2,7 +2,7 @@ import './Chart.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { widget } from '../../../../../charting_library/charting_library.min';
+import { widget } from '../../../../../../libs/charting_library/charting_library.min';
 import { classNames as cn, ucfirst } from '../../../../../../utils/index'
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';
 import * as actions from '../../../../../../actions/';

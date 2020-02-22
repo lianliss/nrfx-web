@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getLang, formatDouble, isFiat, ucfirst } from '../../../../../../utils/index';
-import UI from '../../../../../../ui/index';
+import * as UI from '../../../../../../ui/index';
 
 import * as actions from '../../../../../../actions/cabinet/fiatWallets';
 import NumberFormat from '../../../../../../ui/components/NumberFormat/NumberFormat';

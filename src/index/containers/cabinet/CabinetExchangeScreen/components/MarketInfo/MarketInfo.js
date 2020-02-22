@@ -6,7 +6,7 @@ import SVG from 'react-inlinesvg';
 import { Helmet } from 'react-helmet';
 // import moment from 'moment/min/moment-with-locales';
 
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import * as actions from '../../../../../../actions';
 import * as exchangeActions from '../../../../../../actions/cabinet/exchange';

@@ -2,7 +2,7 @@ import './EmptyContentBlock.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import SVG from 'react-inlinesvg';

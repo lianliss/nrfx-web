@@ -3,7 +3,7 @@ import './CabinetWalletScreen.less';
 import React from 'react';
 import { connect } from 'react-redux';
 //
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import router from '../../../../router';
 import Show from '../../../components/hoc/ShowContent';
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';

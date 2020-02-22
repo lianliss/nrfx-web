@@ -1,7 +1,7 @@
 import './DynamicModal.less';
 
 import React from 'react';
-import UI from '../ui';
+import * as UI from '../ui';
 import Item from './components/Item/Item';
 import { closeModal } from '../actions/admin';
 

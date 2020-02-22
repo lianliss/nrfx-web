@@ -3,7 +3,7 @@ import './CabinetInvestmentsScreen.less';
 import React from 'react';
 import { connect } from 'react-redux';
 //
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import router from '../../../../router';
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import Balances from './components/Balances';

@@ -3,7 +3,7 @@ import './SiteAboutScreen.less';
 import React from 'react';
 
 import BaseScreen from '../../BaseScreen';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import About from './components/About';
 import Mission from './components/Mission';
 import History from './components/History';

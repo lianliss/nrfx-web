@@ -3,7 +3,7 @@ import './MarketInfoAdaptive.less';
 import React from 'react';
 
 import * as actions from '../../../../../../actions/';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 
 export default ({ market, price, percent, diff }) => {
 

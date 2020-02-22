@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from "../../../../../../actions/index";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as toastsActions from '../../../../../../actions/toasts';
 
 function SettingSecurity(props) {

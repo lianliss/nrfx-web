@@ -4,7 +4,7 @@ import React from 'react';
 
 import BaseScreen from '../../BaseScreen';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
-import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
+// import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import * as utils from '../../../../utils/index';
 

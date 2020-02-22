@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as utils from '../../../../../../utils';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as actions from '../../../../../../actions';
 import SVG from 'react-inlinesvg';
 import { ButtonWrapper } from '../../../../../../ui/components/Button/Button';

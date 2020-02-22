@@ -11,7 +11,7 @@ import SettingPersonal from './componets/SettingPersonal';
 import SettingKey from './componets/SettingKey';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import ProfileUser from '../../../components/cabinet/ProfileUser/ProfileUser';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as utils from "../../../../utils";
 
 import {ReactComponent as IdBadgeSvg} from '../../../../asset/24px/id-badge.svg';

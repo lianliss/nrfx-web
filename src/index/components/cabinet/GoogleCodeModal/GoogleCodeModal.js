@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import copyText from 'clipboard-copy';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as utils from '../../../../utils';
 import * as toasts from '../../../../actions/toasts';
 import * as profileActions from '../../../../actions/cabinet/profile';

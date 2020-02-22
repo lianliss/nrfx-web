@@ -2,7 +2,7 @@ import './ChangeNumberModal.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import ConfirmSmsModal from '../../cabinet/ConfirmSmsModal/ConfirmSmsModal';
 

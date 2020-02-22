@@ -2,7 +2,7 @@ import './ChangeEmailModal.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import * as settingsActions from "../../../../actions/cabinet/settings";

@@ -4,7 +4,7 @@ import React from 'react';
 import { ReCaptcha } from 'react-recaptcha-google'
 
 import { GOOGLE_RECAPTCHA_SITEKEY } from '../../../config';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as utils from '../../../../utils/index';
 
 
@@ -14,7 +14,7 @@ class RecaptchaModal extends React.PureComponent {
     isOpen: false,
     verified: false,
   }
-  
+
   componentDidMount() {
     this.onLoadRecaptcha();
   }
@@ -26,7 +26,7 @@ class RecaptchaModal extends React.PureComponent {
   }
 
   verifyCallback = (recaptchaToken) => {
-    // Here you will get the final recaptchaToken!!!  
+    // Here you will get the final recaptchaToken!!!
     this.props.onVerify(recaptchaToken);
     this.setState({
       verified: true,
@@ -47,20 +47,20 @@ class RecaptchaModal extends React.PureComponent {
   render() {
     const { className, children, disabled } = this.props;
     const { verified } = this.state;
-  
+
     return (
       <div className={"RecaptchaModal " + className}>
         <span className={disabled ? "disabled-btn" : ""} onClick={() => !disabled ? this.toggleModal(true) : null}>
           {children}
         </span>
-  
+
         <UI.Modal
           isOpen={this.state.isOpen}
           onClose={() => this.toggleModal(false)}
         >
           <div className="RecaptchaModal__content">
 
-            {!verified 
+            {!verified
               ? (
                 <div className="RecaptchaModal__recaptcha_wrapper">
                   <ReCaptcha
@@ -81,8 +81,8 @@ class RecaptchaModal extends React.PureComponent {
                 </div>
               )}
           </div>
-  
-  
+
+
         </UI.Modal>
       </div>
     )
