@@ -35,7 +35,7 @@ class MarketInfo extends React.Component{
             size="ultra_small"
             type="secondary"
             onClick={this.__handleChooseMarket}
-          >Изменить пару</UI.Button>
+          >{utils.getLang('exchange_choosePair')}</UI.Button>
         </div>
         {this.__renderPrice()}
         {this.__renderSummary()}
