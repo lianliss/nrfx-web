@@ -52,6 +52,7 @@ export function getLang(key, string = false, code = false) {
     if (
       state.default.profile.user &&
       state.default.profile.role === 'Translator' &&
+      state.settings &&
       state.settings.translator
     ) {
       return <TranslatorMode langContent={string !== false ? string : nl2br(langString)} langKey={key} />;

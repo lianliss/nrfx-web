@@ -59,7 +59,7 @@ class Orders extends React.Component {
       title: utils.getLang('exchange_confirmDeleteOrder_title'),
       content: utils.getLang('exchange_confirm_orderDeleteText'),
       okText: utils.getLang('global_delete'),
-      type: 'delete'
+      type: 'negative'
     }).then(() => {
       exchange.orderDelete(orderId);
     });

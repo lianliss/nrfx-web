@@ -36,7 +36,7 @@ class ConfirmModal extends React.Component {
         {!!props.content && <p className="ConfirmModal__content">{props.content}</p>}
         <div className="ConfirmModal__buttons">
           <UI.Button
-            type={props.type === "delete" ? "negative" : undefined}
+            type={props.type}
             onClick={this.__handleAccept}>
             { props.okText || utils.getLang("global_confirm") }
           </UI.Button>

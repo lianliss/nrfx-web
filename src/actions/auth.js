@@ -66,7 +66,7 @@ export function logout() {
     title: utils.getLang('cabinet_header_exit'),
     content: utils.getLang('cabinet_exitConfirmText'),
     okText: utils.getLang('cabinet_exitActionButton'),
-    type: 'delete'
+    type: 'negative'
   }).then(() => {
     router.navigate(pages.MAIN);
     store.dispatch({type: actionTypes.LOGOUT});
