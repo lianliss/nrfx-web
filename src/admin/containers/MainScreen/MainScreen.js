@@ -1,7 +1,6 @@
 import './MainScreen.less';
 import React from 'react';
 import * as UI from '../../../ui';
-import * as toast from '../../../actions/toasts';
 import * as actions from '../../../actions/';
 
 export default props => {

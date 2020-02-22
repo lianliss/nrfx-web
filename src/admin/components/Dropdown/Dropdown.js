@@ -5,7 +5,7 @@ import { valueChange } from '../../../actions/admin/';
 const DropdownWrapper = props => {
   const value = props.values[props.id] || props.value;
 
-  useEffect(() => valueChange(props.id, ""), []);
+  useEffect(() => valueChange(props.id, ""), [props.id]);
 
   return (
     <Dropdown
