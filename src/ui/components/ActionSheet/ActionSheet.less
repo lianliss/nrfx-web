@@ -8,7 +8,7 @@
   }
 
   .isvg {
-    color: var(--uikit-foreground-secondary);
+    //color: var(--dark-gray);
   }
 
   &:not(.visible) .ActionsSheet__list{
@@ -36,18 +36,19 @@
   }
 
   .ActionsSheet__item {
+    display: flex;
+    align-items: center;
     white-space: nowrap;
     cursor: pointer;
     padding: 12px 24px;
-    color: var(--uikit-foreground-secondary);
-    display: flex;
+    color: var(--dark-gray);
 
     &.destructive .ActionsSheet__item__title {
-      color: var(--primary-red);
+      color: var(--red);
     }
 
     &:not(.destructive):hover .ActionsSheet__item__title {
-      color: black;
+      color: var(--black);
     }
 
     .ActionsSheet__item__sub {

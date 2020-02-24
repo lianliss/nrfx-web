@@ -1,27 +1,29 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import * as steps from '../fixtures';
-import * as utils from 'utils';
+import * as utils from 'src/utils';
 import * as actions from 'src/actions';
 import { registerUser } from 'src/actions/auth';
 import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';
 import initGetParams from 'src/services/initialGetParams';
 import { registrationSetValue } from 'src/actions/index';
 import Captcha from '../../Captcha/Captcha';
+import * as pages from 'src/index/constants/pages';
+// import router from '../../../router';
 
 function Registration({ changeStep, currentStep, email, onClose, refParam, referrer, registrationSetValue }) {
 
   const [isChecked, toggleCheck] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [token, setToken] = useState(null);
+  const [pending, setPending] = useState(false);
   const captchaRef = useRef();
-  const disabled = !token || !email;
+  const isProduction = utils.isProduction();
+  const disabled = utils.isProduction() ? (!token || !email) : !email;
 
   const handleSubmit = () => {
-    const { grecaptcha } = captchaRef.current.props;
-
     if (!email) {
       setErrorMsg(utils.getLang('site__authModalEmailRequired'));
     } else if (!utils.isEmail(email)) {
@@ -30,12 +32,22 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
       setErrorMsg(utils.getLang('site__authModalTermsConditionsAccept'));
     } else {
       let inviteLink = initGetParams.params.i;
+      setPending(true);
       registerUser(email.trim(), (refParam || referrer), inviteLink, token)
-        .then(() => changeStep(steps.REGISTRATION_SUCCESS))
+        .then(({ hash }) => {
+          if (hash) {
+            window.location.href = '/' + pages.REGISTER + '?hash=' + hash;
+            // router.navigate(pages.REGISTER, { hash });
+          } else {
+            changeStep(steps.REGISTRATION_SUCCESS);
+          }
+        })
         .catch((err) => {
-          grecaptcha.reset();
+          if (isProduction) {
+            captchaRef.current.props.grecaptcha.reset();
+          }
           setErrorMsg(err.message);
-        });
+        }).finally(() => setPending(false));
     }
   };
 
@@ -82,7 +94,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
                 onKeyPress={handleKeyPress}
               />
 
-              <Captcha ref={captchaRef} onChange={setToken} />
+              { isProduction && <Captcha ref={captchaRef} onChange={setToken} /> }
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
@@ -92,7 +104,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
 
             <div className="AuthModal__footer">
               <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.LOGIN)}>{utils.getLang('site__authModalLogInBtn')}</h4>
-              <UI.Button disabled={disabled} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
+              <UI.Button disabled={disabled} state={pending && 'loading'} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
             </div>
           </>
         ) : (

@@ -11,7 +11,7 @@ import SettingPersonal from './componets/SettingPersonal';
 import SettingKey from './componets/SettingKey';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import ProfileUser from '../../../components/cabinet/ProfileUser/ProfileUser';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as utils from "../../../../utils";
 
 import {ReactComponent as IdBadgeSvg} from '../../../../asset/24px/id-badge.svg';
@@ -106,7 +106,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
 
   __getNotificationsPageContent = () => {
     return <div>
-      <div className="CabinetSettingsScreen__padding_box Content_box">
+      <UI.ContentBox className="CabinetSettingsScreen__padding_box">
         <div className="CabinetSettingsScreen__header withPadding">
           Вход
         </div>
@@ -126,8 +126,8 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Switch on={Math.random() >= 0.5} onChange={(e) => {console.log(e)}}/>
           </span>
         </div>
-      </div>
-      <div className="CabinetSettingsScreen__padding_box Content_box">
+      </UI.ContentBox>
+      <UI.ContentBox className="CabinetSettingsScreen__padding_box">
         <div className="CabinetSettingsScreen__header withPadding">
           Кошелек
         </div>
@@ -155,8 +155,8 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Switch on={Math.random() >= 0.5} onChange={(e) => {console.log(e)}}/>
           </span>
         </div>
-      </div>
-      <div className="CabinetSettingsScreen__padding_box Content_box">
+      </UI.ContentBox>
+      <UI.ContentBox className="CabinetSettingsScreen__padding_box">
         <div className="CabinetSettingsScreen__header withPadding">
           Инвестиции
         </div>
@@ -200,7 +200,7 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
             <UI.Switch on={Math.random() >= 0.5} onChange={(e) => {console.log(e)}}/>
           </span>
         </div>
-      </div>
+      </UI.ContentBox>
     </div>
   };
 
@@ -241,7 +241,8 @@ export default connect(state => ({
   ...state.settings,
   profile: state.default.profile,
   adaptive: state.default.adaptive,
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   setTitle: actions.setTitle,
   loadSettings: settingsActions.loadSettings,

@@ -6,11 +6,8 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import store from '../../store';
 import * as toast from '../toasts';
-import * as pages from '../../index/constants/pages';
 import * as adminPages from '../../admin/constants/pages';
 import * as actions from '../index';
-import * as utils from '../../utils';
-import * as exchange from '../cabinet/exchange';
 
 export function init() {
 
@@ -41,7 +38,7 @@ function __action(action) {
 
   const state = store.getState();
 
-  values && Object.keys(newValues).map(key => {
+  values && Object.keys(newValues).forEach(key => {
     const value = state.admin.values[newValues[key]];
     if (value) {
       newValues[key] = value;
@@ -57,7 +54,7 @@ function __action(action) {
     params: JSON.stringify(params),
     values: JSON.stringify(newValues || {})
   }).then((actions) => {
-    actions.map(action => {
+    actions.forEach(action => {
       switch(action.type) {
         case 'show_toast':
           toast[action.params.type](action.params.message);
@@ -65,6 +62,8 @@ function __action(action) {
         case 'show_page':
           router.navigate(adminPages.PANEL_PAGE, { page: action.params.page});
           break;
+        default:
+          return false;
       }
       store.dispatch({type: action.type, params: action.params});
     });
@@ -79,7 +78,7 @@ export default function action(action) {
   if (action.confirm_type) {
     actions.confirm({
       title: 'Confirm action',
-      type: (action.confirm_type === 'destructive' ? 'delete' : 'default')
+      type: (action.confirm_type === 'destructive' ? 'negative' : 'default')
     }).then(() => {
       __action(action);
     });

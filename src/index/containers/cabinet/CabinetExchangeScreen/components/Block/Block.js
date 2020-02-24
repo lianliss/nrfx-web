@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { classNames as cn } from '../../../../../../utils';
 import * as storage from '../../../../../../services/storage';
-import UI from '../../../../../../ui/index';
+import * as UI from '../../../../../../ui/index';
 
 export default function Block(props) {
   let {

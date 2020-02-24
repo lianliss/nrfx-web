@@ -2,7 +2,7 @@ import './LoadingMore.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as utils from "../../../../utils";
 
 export default function LoadingMore({ status, onClick }) {

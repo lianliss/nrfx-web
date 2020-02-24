@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 import BaseScreen from '../../BaseScreen';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as actions from '../../../../actions';
 import { getLang } from '../../../../utils/index';
 

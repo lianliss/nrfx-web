@@ -2,7 +2,7 @@ import './DashboardItem.less';
 
 import React from 'react';
 import * as utils from '../../../../../../utils';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import router from "../../../../../../router";
 
 import { ReactComponent as UsersSvg } from '../../../../../../asset/24px/users.svg';

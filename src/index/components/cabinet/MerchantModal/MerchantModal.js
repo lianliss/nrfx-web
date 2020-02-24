@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { renderToString } from 'react-dom/server'
 import { connect } from 'react-redux';
 
-import UI from '../../../../ui/';
+import * as UI from '../../../../ui/';
 import { getLang, throttle, classNames as cn } from '../../../../utils';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
@@ -18,7 +18,7 @@ import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';
 import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 const MerchantModal = props => {
-  const { adaptive } = props;
+  const { adaptive, balances } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(params.currency.toLowerCase() || 'usd');
   const [merchant, setMerchant] = useState(null);
@@ -28,7 +28,6 @@ const MerchantModal = props => {
   const [status, setStatus] = useState(null);
   const [urlStatus, setUrlStatus] = useState(null);
   const [url, setUrl] = useState(null);
-
 
   const merchants = {
     advcash: {
@@ -56,15 +55,20 @@ const MerchantModal = props => {
     }
   };
 
-  useEffect(props.getMerchant,[]);
+  useEffect(() => {
+    if (!props.merchants) {
+      props.getMerchant(props.type);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];
     const currencyLabel = currency.toUpperCase();
     if (value < min_amount) {
-      return `${getLang('cabinet_amount_shouldBeMore')} ${min_amount} ${currencyLabel}`;
+      return <>{getLang('cabinet_amount_shouldBeMore')} {min_amount} {currencyLabel}</>
     } else if (value > max_amount) {
-      return `${getLang('cabinet_amount_shouldBeLess')} ${max_amount} ${currencyLabel}`;
+      return <>{getLang('cabinet_amount_shouldBeLess')} {max_amount} {currencyLabel}</>;
     } return null;
   }
 
@@ -82,6 +86,11 @@ const MerchantModal = props => {
         setStatus('error');
       })
     }
+  };
+
+  const handleFiatWithdrawal = () => {
+    const balance = balances.find(b => b.currency.toLowerCase() === currency);
+    actions.openModal('fiat_withdrawal', null, { amount, balance });
   };
 
   const handleSubmitInvoice = () => {
@@ -114,7 +123,7 @@ const MerchantModal = props => {
   const handleChangeAmount = (value) => {
     setAmount(value);
     if (!value || checkAmount(value)) return false;
-    if (merchant !== 'invoice') {
+    if (props.type !== 'withdrawal' && merchant !== 'invoice') {
       getMerchantUrlThrottled({
         amount: value,
         merchant,
@@ -162,7 +171,7 @@ const MerchantModal = props => {
           <EmptyContentBlock
             skipContentClass
             icon={require('../../../../asset/120/buy_currency.svg')}
-            message={getLang("cabinet_merchantEmptyList")}
+            message={props.type === 'withdrawal' ? getLang("cabinet_merchantWithdrawalEmptyList") : getLang("cabinet_merchantEmptyList")}
           />
         )}
       </div>
@@ -170,16 +179,27 @@ const MerchantModal = props => {
   }
 
   const getFee = () => {
-    const fee = props.merchants[merchant].fee_conf[currency];
-    return {
-      ...fee,
-      fee: Math.max(fee.min, amount / 100 * fee.percent),
+    const m = props.merchants[merchant];
+    if (m.fee_conf) {
+      const fee = m.fee_conf[currency];
+      return {
+        ...fee,
+        fee: Math.max(fee.min, amount / 100 * fee.percent),
+      }
     }
-  }
+    return 0;
+  };
 
   const renderForm = () => {
     const currencyInfo = actions.getCurrencyInfo(currency);
     const { fee, percent } = getFee();
+
+    const currentMerchantCurrency = props.merchants[merchant].currencies[currency]
+
+    const minAmount = currentMerchantCurrency.min_amount;
+    const maxAmount = currentMerchantCurrency.max_amount;
+
+    const indicator = <span>{ minAmount ? getLang('cabinet_merchantModal_min') : getLang('cabinet_merchantModal_max')} <NumberFormat number={minAmount || maxAmount} currency={currencyInfo.abbr} /></span>;
 
     return (
       <div className="MerchantModal__form">
@@ -212,7 +232,7 @@ const MerchantModal = props => {
             onTextChange={handleChangeAmount}
             type="number"
             placeholder="0.00"
-            indicator={`${getLang('cabinet_merchantModal_min')} ${props.merchants[merchant].currencies[currency].min_amount} ${currencyInfo.abbr.toUpperCase()}`}
+            indicator={indicator}
           />
           {/*<div className="MerchantModal__form__input__description">*/}
           {/*  <span>Комиссия 1%: $10</span>*/}
@@ -233,9 +253,13 @@ const MerchantModal = props => {
           { merchant === 'invoice' ? (
             <UI.Button disabled={!amount} currency={currencyInfo} onClick={handleSubmitInvoice}>{getLang('global_next')}</UI.Button>
           ) : (
-            <div dangerouslySetInnerHTML={{__html: `<div onclick="handleSubmit()">${renderToString(
-              <UI.Button currency={currencyInfo} state={urlStatus}>{getLang('global_next')}</UI.Button>
-            )}</div>`}} />
+            props.type === 'withdrawal' ? (
+              <UI.Button disabled={!amount} currency={currencyInfo} onClick={handleFiatWithdrawal}>{getLang('global_withdrawal')}</UI.Button>
+            ) : (
+              <div dangerouslySetInnerHTML={{__html: `<div onclick="handleSubmit()">${renderToString(
+                <UI.Button currency={currencyInfo} state={urlStatus}>{getLang('global_next')}</UI.Button>
+              )}</div>`}} />
+            )
           )}
         </div>
       </div>
@@ -298,7 +322,9 @@ const MerchantModal = props => {
     <UI.Modal className={cn("MerchantModal", {
       'MerchantModal__list_wrapper': (!status && !merchant)
     })} onClose={props.onBack} isOpen={true}>
-      <UI.ModalHeader>{getLang('cabinet_merchantModalTitle')}</UI.ModalHeader>
+      <UI.ModalHeader>
+        { props.type === 'withdrawal' ? getLang('cabinet_balanceWithdrawal') : getLang('cabinet_balanceDeposit')}
+      </UI.ModalHeader>
       { renderContent() }
     </UI.Modal>
   );

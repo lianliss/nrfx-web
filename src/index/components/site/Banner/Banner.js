@@ -2,7 +2,7 @@ import './Banner.less';
 
 import React from 'react';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as actions from '../../../../actions';
 import * as steps from '../../../../components/AuthModal/fixtures';
 

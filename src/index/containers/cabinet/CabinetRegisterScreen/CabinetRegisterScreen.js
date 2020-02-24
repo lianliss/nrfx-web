@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // import ReactPhoneInput from 'react-phone-input-2';
 // import moment from 'moment';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import {withRouter} from 'react-router5';
 import {GetParamsContext} from '../../../contexts';
 import apiSchema from '../../../../services/apiSchema';
@@ -24,6 +24,7 @@ class CabinetRegister extends React.PureComponent {
     sendSmsStatus: null,
     timer: null,
     codeForm: false,
+    pending: false,
   };
 
   componentDidMount() {
@@ -35,6 +36,7 @@ class CabinetRegister extends React.PureComponent {
 
   __handleSubmit() {
     this.setState({ touched: true });
+
     const { params } = this.context;
     const { state } = this;
 
@@ -60,6 +62,7 @@ class CabinetRegister extends React.PureComponent {
       // state.phoneWithoutCode &&
       // state.smsCode
     ) {
+      this.setState({ pending: true });
       api.call(apiSchema.Profile.FillAccountPut, {
         first_name: state.firstName,
         last_name: state.lastName,
@@ -75,6 +78,8 @@ class CabinetRegister extends React.PureComponent {
         window.location.href = "/" + pages.DASHBOARD;
       }).catch((err) => {
         this.props.toastPush(err.message, "error");
+      }).finally(() => {
+        this.setState({ pending: false });
       })
     }
   }
@@ -128,19 +133,19 @@ class CabinetRegister extends React.PureComponent {
     const { state } = this;
     return (
       <div className="CabinetRegister">
-        <div className="CabinetRegister__content Content_box">
+        <UI.ContentBox className="CabinetRegister__content">
           <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_complete')}</h3>
           <UI.Input
             error={state.touched && !state.firstName}
             value={state.firstName}
-            pattern={/^[a-z ,.'-]+$/i}
+            pattern={/[a-zA-Z ,.'-]+/g}
             placeholder={utils.getLang('cabinet_registerScreen_firstName')}
             onTextChange={text => this.__handleChange("firstName", text)}
           />
           <UI.Input
             error={state.touched && !state.lastName}
             value={state.lastName}
-            pattern={/^[a-z ,.'-]+$/i}
+            pattern={/[a-zA-Z ,.'-]+/g}
             placeholder={utils.getLang('cabinet_registerScreen_lastName')}
             onTextChange={text => this.__handleChange("lastName", text)}
           />
@@ -148,7 +153,7 @@ class CabinetRegister extends React.PureComponent {
           <UI.Input
             error={state.touched && !state.login}
             value={state.login}
-            pattern={/[a-z0-9\-_]+/i}
+            pattern={/[a-zA-Z0-9\-_]+/g}
             placeholder={utils.getLang('site__contactLogin')}
             onTextChange={text => this.__handleChange("login", text)}
           />
@@ -225,18 +230,19 @@ class CabinetRegister extends React.PureComponent {
           />
 
           <div className="CabinetRegister__content__submit_wrapper">
-            <UI.Button onClick={this.__handleSubmit.bind(this)}>
+            <UI.Button state={this.state.pending && 'loading'} onClick={this.__handleSubmit.bind(this)}>
               {utils.getLang('site__commerceRegistration')}
             </UI.Button>
           </div>
-        </div>
+        </UI.ContentBox>
       </div>
     )
   }
 }
 
 export default connect(state => ({
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   toastPush: toastsActions.toastPush,
   setTitle: actions.setTitle

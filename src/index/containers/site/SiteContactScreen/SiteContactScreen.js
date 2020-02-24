@@ -5,10 +5,10 @@ import React from 'react';
 import BaseScreen from '../../BaseScreen';
 import COMPANY from '../../../constants/company';
 import * as utils from '../../../../utils';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import TitleWithBg from '../../../components/site/TitleWithBg/TitleWithBg';
 import SVG from 'react-inlinesvg';
-import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
+// import MobileAppBanner from '../../../components/site//MobileAppBanner';
 
 const SnItem = props => {
   return props.link ? (

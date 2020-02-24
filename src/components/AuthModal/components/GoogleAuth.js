@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-import UI from '../../../ui';
+import * as UI from '../../../ui';
 import * as steps from '../fixtures';
 import * as utils from '../../../utils';
 import { getGoogleCode } from '../../../actions/auth';

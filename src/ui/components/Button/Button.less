@@ -14,8 +14,8 @@
   border: none;
   font-family: @font-family;
   padding: 0 32px;
-  background: var(--uikit-gradient-primary);
-  color: var(--uikit-primary);
+  background: var(--orange-gradient);
+  color: var(--primary-orange);
   border-radius: @border-radius;
   display: inline-flex;
   height: @height;
@@ -30,20 +30,18 @@
 
   &.buy,
   &.success {
-    background: var(--uikit-primary-green);
-    color: var(--uikit-contrast-primary);
-    opacity: .8;
+    background: var(--green);
+    color: var(--primary-background);
   }
 
   &.sell,
   &.danger {
-    background: var(--uikit-primary-red);
-    color: var(--uikit-contrast-primary);
-    opacity: .8;
+    background: var(--red);
+    color: var(--primary-background);
   }
 
   &:not(.outline):not(.lite):not(.negative_outline):not(.secondary) {
-    color: var(--uikit-contrast-primary);
+    color: var(--primary-background);
   }
 
   &.loading {
@@ -81,7 +79,7 @@
   &.negative_outline {
     &::before {
       content: '';
-      background: var(--uitkit-background);
+      background: var(--primary-background);
       position: absolute;
       background-clip: padding-box;
       border: 1px solid transparent;
@@ -99,7 +97,7 @@
       }
 
       .Button__label {
-        color: white;
+        color: var(--white);
       }
     }
   }
@@ -163,11 +161,11 @@
   }
 
   &.secondary {
-    background: var(--uikit-button-secondary-background);
-    color: var(--uikit-foreground-secondary);
+    background: var(--dairy);
+    color: var(--dark-gray);
 
     &:after {
-      background: var(--uikit-button-secondary-active-background);
+      //background: #f0f;
     }
   }
 
@@ -181,31 +179,30 @@
   }
 
   &.negative {
-    background: var(--uikit-negative);
-    opacity: .8;
+    background: var(--red);
 
     &:after {
-      background: var(--uikit-negative);
+      background: var(--red);
     }
   }
 
   &.negative_outline {
-    color: var(--uikit-negative);
-    background: var(--uikit-negative);
+    color: var(--red);
+    background: var(--red);
 
     &:after {
-      background: var(--uikit-negative);
+      background: var(--red);
     }
 
     &:hover, &:active {
       opacity: .8;
-      color: var(--uikit-contrast-primary);
+      color: var(--primary-background);
     }
   }
 
   &.outline_white {
     background: transparent;
-    border: 2px solid var(--uikit-contrast-primary);
+    border: 2px solid var(--primary-background);
     transition: background 150ms ease-in-out;
 
     &:after {
@@ -213,10 +210,10 @@
     }
 
     &:active {
-      background: var(--uikit-contrast-primary);
+      background: var(--primary-background);
 
       .Button__label {
-        color: var(--uikit-primary);
+        color: var(--primary-orange);
       }
     }
 
@@ -304,7 +301,7 @@
 .WatchButton__icon {
   width: 28px;
   height: 28px;
-  background: var(--uikit-gradient-primary);
+  background: var(--orange-gradient);
   border-radius: 50%;
   position: relative;
 
@@ -323,9 +320,31 @@
   font-weight: 500;
   font-size: 15px;
   margin-left: 14px;
-  color: var(--uikit-primary);
+  color: var(--primary-orange);
 }
 
 .buttonFontSizeStyle {
   font-size: 15px !important;
+}
+
+
+.ButtonWrapper {
+  display: flex;
+  align-items: center;
+
+  .Button {
+    margin: 0 8px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &.left { justify-content: flex-start }
+  &.right { justify-content: flex-end }
+  &.center { justify-content: center }
 }

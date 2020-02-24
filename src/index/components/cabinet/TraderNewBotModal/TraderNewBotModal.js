@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../../actions/cabinet/trader';
 
 import Modal from '../../../../ui/components/Modal/Modal';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 function FiatOperationModal(props) {
   const [name, setName] = useState();

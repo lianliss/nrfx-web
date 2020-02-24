@@ -1,6 +1,6 @@
 import * as auth from './auth';
 import * as action from '../actions/';
-import { logout } from '../actions/auth';
+import { clearProfile } from '../actions/auth';
 import router from '../router';
 import * as adminPages from '../admin/constants/pages';
 
@@ -53,7 +53,7 @@ export function invoke(method, name, params, options = {}) {
     fetch(url, init)
       .then(resp => {
         if (resp.status === 403) {
-          logout();
+          clearProfile();
           reject({ message: '403 Forbidden: Invalid credentials' });
           router.navigate(adminPages.MAIN);
           return;

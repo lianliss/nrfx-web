@@ -1,5 +1,5 @@
 import React from 'react';
-import UI from '../../../../../ui';
+import * as UI from '../../../../../ui';
 import * as auth from '../../../../../services/auth';
 import * as api from '../../../../../services/api';
 import * as modalActions from '../../../../../actions/modalGroup';

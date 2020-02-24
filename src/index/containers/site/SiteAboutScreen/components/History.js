@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TitleWithBg from '../../../../components/site/TitleWithBg/TitleWithBg';
 import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import Timeline from '../../../../components/site/Timeline/Timeline';
+import { getLang } from 'src/utils/index';
 import { data } from '../fixtures';
 import { getLang } from '../../../../../utils';
 
@@ -26,7 +27,7 @@ function History({ lang }) {
 }
 
 const mapStateToProps = (state) => ({
-  lang: state.default.lang,
+  currentLang: state.default.currentLang,
 });
 
 export default React.memo(connect(mapStateToProps)(History));

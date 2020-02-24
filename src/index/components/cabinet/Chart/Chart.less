@@ -7,11 +7,13 @@
 }
 
 .Chart__tooltip {
-  color: var(--contrast-primary);
+  background: var(--secondary-background);
+  z-index: 2;
   font-weight: 500;
   font-size: 13px;
   line-height: 24px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--main-shadow);
+  color: var(--text-black);
   border-radius: 8px;
   padding: 0 8px;
   font-family: 'Montserrat', sans-serif;
@@ -21,7 +23,7 @@
   font-weight: 500;
   font-size: 11px;
   line-height: 16px;
-  color: var(--primary-grey);
+  color: var(--dark-gray);
   margin-top: 8px;
 }
 
@@ -30,7 +32,7 @@
 }
 
 .Chart__legend_item {
-  color: var(--contrast-primary);
+  color: var(--primary-background);
   font-weight: 500;
   font-size: 12px;
   line-height: 28px;

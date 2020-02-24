@@ -16,9 +16,10 @@ export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
 
     case actionTypes.PROFILE_SET_LOADING_STATUS: {
-      return Object.assign({}, state, {
-        loadingStatus: Object.assign({}, state.loadingStatus, { [action.section]: action.status })
-      });
+      return {
+        ...state,
+        loadingStatus: { ...state.loadingStatus, [action.section]: action.status }
+      };
     }
 
     case actionTypes.PROFILE_DASHBOARD_SET: {
@@ -28,9 +29,27 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.PROFILE_PARTNER_SET: {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         partner: action.partner
-      });
+      };
+    }
+
+    case actionTypes.PROFILE_PARTNER_APPEND: {
+      return {
+        ...state,
+        partner: {
+          ...state.partner,
+          clients: {
+            ...state.partner.clients,
+            next: action.next,
+            items: [
+              ...state.partner.clients.items,
+              ...action.items
+            ],
+          }
+        }
+      };
     }
 
     case actionTypes.PROFILE_INVITE_LINK_UPDATE: {

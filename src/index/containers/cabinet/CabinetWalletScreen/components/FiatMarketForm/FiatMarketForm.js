@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { getLang, formatDouble, isFiat, ucfirst } from '../../../../../../utils/index';
-import UI from '../../../../../../ui/index';
+import * as UI from '../../../../../../ui/index';
 
 import * as actions from '../../../../../../actions/cabinet/fiatWallets';
 import NumberFormat from '../../../../../../ui/components/NumberFormat/NumberFormat';
@@ -240,6 +240,7 @@ class FiatMarketForm extends React.Component {
 }
 
 export default connect(store => ({
+
   canExchange: store.fiatWallets.can_exchange,
   balances: store.fiatWallets.balances,
   wallets: store.fiatWallets.wallets,
@@ -249,6 +250,7 @@ export default connect(store => ({
   rateUpdateTime: store.fiatWallets.rateUpdateTime,
   exchangeFee: store.fiatWallets.exchange_fee,
   rateStatus: store.fiatWallets.loadingStatus.rate,
+  loadingStatus: store.fiatWallets.loadingStatus.marketForm,
   translator: store.settings.translator
 }),{
   exchange: actions.exchange,

@@ -3,7 +3,7 @@ import './SiteResetPasswordScreen.less';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import { withRouter } from 'react-router5';
 import { GetParamsContext } from '../../../contexts';
 import apiSchema from '../../../../services/apiSchema';

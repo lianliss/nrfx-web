@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
 import Block from '../Block/Block';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as utils from '../../../../../../utils';
 import { connect } from 'react-redux';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
@@ -59,7 +59,7 @@ class Orders extends React.Component {
       title: utils.getLang('exchange_confirmDeleteOrder_title'),
       content: utils.getLang('exchange_confirm_orderDeleteText'),
       okText: utils.getLang('global_delete'),
-      type: 'delete'
+      type: 'negative'
     }).then(() => {
       exchange.orderDelete(orderId);
     });
@@ -231,7 +231,7 @@ class Orders extends React.Component {
 
 export default connect((state) => ({
   ...state.exchange,
-  lang: state.default.lang
+  currentLang: state.default.currentLang,
 }), {
 
 })(memo(Orders));

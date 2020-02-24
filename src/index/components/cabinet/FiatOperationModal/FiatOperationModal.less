@@ -1,10 +1,62 @@
 .FiatOperationModal {
-  .FiatOperationModal__status {
-    &.crypto_exchange {
-      color: var(--primary);
+  .CircleIcon {
+    position: absolute;
+    top: 32px;
+    left: -16px;
+  }
+
+  .WalletCard {
+    margin-bottom: 16px;
+  }
+
+  .FiatOperationModal__price {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .FiatOperationModal__label {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--primary-grey);
+  }
+
+  .FiatOperationModal__content {
+    min-width: 320px;
+    margin-top: 32px;
+  }
+
+  .FiatOperationModal__row {
+    display: flex;
+    margin-bottom: 16px;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+
+    .FiatOperationModal__row__right {
+      text-align: right;
+      margin-left: auto;
     }
-    &.fiat_exchange {
-      color: var(--color-green);
+  }
+}
+
+.adaptive {
+  .FiatOperationModal {
+    .CircleIcon {
+      position: absolute;
+      top: -16px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+    }
+
+    .Modal__box {
+      margin-top: 16px;
+    }
+
+    .FiatOperationModal__content {
+      width: 100%;
     }
   }
 }

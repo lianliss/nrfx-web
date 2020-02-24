@@ -42,6 +42,17 @@ export function getDeposit(id) {
   })
 }
 
+export function depositCalculate(depositId, amount) {
+  return api.call(apiSchema.Investment.DepositCalculateGet, {
+    deposit_id: depositId,
+    amount
+  });
+}
+
+export function depositWithdraw(params) {
+  return api.call(apiSchema.Investment.DepositWithdrawPut, params);
+}
+
 export function calculate({ currency, planId, amount, days }) {
   return api.call(apiSchema.Investment.CalculateGet, {
     currency: currency,

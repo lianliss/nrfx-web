@@ -16,11 +16,13 @@ const initialState = {
   },
   limits: [],
   sendCoinModal: {
+    type: 'address',
     gaCode: '',
     walletId: null,
-    address: null,
-    amount: 0,
-    amountUsd: 0,
+    address: '',
+    login: '',
+    amount: '',
+    amountUsd: '',
   }
 };
 
@@ -39,6 +41,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         wallets: action.wallets,
         sendCoinModal: {
+          ...initialState.sendCoinModal,
           walletId: wallet ? wallet.id : null
         }
       };

@@ -2,7 +2,7 @@ import './AuthModal.less';
 
 import React, { useState } from 'react';
 
-import UI from '../../../src/ui';
+import * as UI from '../../../src/ui';
 import * as steps from './fixtures';
 import Login from './components/Login';
 import ResetAuth from './components/ResetAuth';

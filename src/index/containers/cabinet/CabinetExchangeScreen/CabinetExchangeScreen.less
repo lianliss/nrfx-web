@@ -4,6 +4,7 @@
   padding: 16px 8px;
   box-sizing: border-box;
   display: flex;
+  --gap-size: 8px;
 
   .Content_box {
     margin-top: 8px;
@@ -21,7 +22,7 @@
 
 .Exchange__right_content {
   flex: 1;
-  margin-left: 8px;
+  margin-left: var(--gap-size);
 }
 
 .Exchange__balances__currency {
@@ -34,20 +35,20 @@
 
 .Exchange__trade_content {
   display: flex;
-  margin-bottom: 8px;
+  margin-bottom: var(--gap-size);
 }
 
 .Exchange__chart_wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-right: 8px;
+  margin-right: var(--gap-size);
 }
 
 .Exchange__chart {
   flex: 1;
   flex-direction: column;
-  margin-bottom: 8px;
+  margin-bottom: var(--gap-size);
 
   .ContentBox__content {
     padding: 0;
@@ -113,17 +114,17 @@
     }
 
     &.bids {
-      color: var(--primary-green);
+      color: var(--green);
       &:not(.secondary) {
-        background: var(--primary-green);
-        color: white;
+        background: var(--green);
+        color: var(--white);
       }
     }
 
     &.asks {
-      color: var(--primary-red);
+      color: var(--red);
       &:not(.secondary) {
-        background: var(--primary-red);
+        background: var(--red);
         color: white;
       }
     }
@@ -160,7 +161,7 @@
   display: block;
 
   .OrderBook {
-    margin-bottom: 8px;
+    margin-bottom: var(--gap-size);
   }
 
   .Exchange__disconnectModal__content {
@@ -170,12 +171,12 @@
 
 .Exchange__orders__side {
   .Exchange__orders__mark {
-    color: var(--primary-green);
+    color: var(--green);
   }
 
   &.sell {
     .Exchange__orders__mark {
-      color: var(--primary-red);
+      color: var(--red);
     }
   }
 }

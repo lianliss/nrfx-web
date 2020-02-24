@@ -4,8 +4,11 @@ import './Notifications.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 // internal
-import UI from '../../index';
-import {classNames} from '../../utils';
+import * as UI from '../../index';
+import MarkDown from '../MarkDown/MarkDown';
+import ScrollBox from '../ScrollBox/ScrollBox';
+import { classNames } from '../../utils';
+import LoadingStatus from '../../../index/components/cabinet/LoadingStatus/LoadingStatus';
 
 export function Notification(props) {
   return (
@@ -17,12 +20,11 @@ export function Notification(props) {
       </div>
       <div className="Notification__body">
         <div className="Notification__message">{props.message}</div>
-        {!!props.markText && <div className="Notification__text">{props.markText}</div>}
+        {!!props.markText && <MarkDown lassName="Notification__text" content={props.markText} />}
         {props.actions &&
         <div className="Notification__body__buttons">{props.actions.map((action, key) => (
           <UI.Button
             key={key}
-            rounded
             type={action.type}
             size="ultra_small"
             onClick={(e) => props.onAction(action)}>
@@ -53,7 +55,7 @@ export function NotificationSeparator(props) {
 
 NotificationSeparator.propTypes = {
   title: PropTypes.string
-}
+};
 
 export default class Notifications extends React.Component {
   constructor(props) {
@@ -63,26 +65,36 @@ export default class Notifications extends React.Component {
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleClickEsc, false);
+    document.addEventListener('click', this.handleClick, false);
   }
+
+  handleClick = e => {
+    if (this.refs.notifications && !this.refs.notifications.contains(e.target) && this.props.onClose) {
+      this.props.onClose();
+    }
+  };
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleClickEsc, false);
+    document.removeEventListener('click', this.handleClick, false);
   }
 
-  handleClickEsc(e){
+  handleClickEsc(e) {
     if(e.keyCode === 27) {
       this.props.onClose && this.props.onClose();
     }
   }
 
   render() {
-    const empty = !this.props.pending && (!this.props.children || !this.props.children.length);
-    return [
-      <div key="notify_close_helper" className="Notification__close_helper" onClick={() => this.props.onClose && this.props.onClose()} />,
-      <div key="notify_body" className={classNames(this.props.classNames, "Notifications", { empty: empty })} ref="notifications">
-        {!empty ? this.props.children : <span className="Notifications__empty_text">{this.props.emptyText}</span>}
+    const empty = !this.props.children || this.props.pending;
+    return (
+      <div ref="notifications" className={classNames('Notifications', this.props.classNames, { empty: empty, inline: this.props.inline })}>
+        <ScrollBox>
+          {this.props.pending && <LoadingStatus inline status="loading" />}
+          {!this.props.pending && (!empty ? this.props.children : <span className="Notifications__empty_text">{this.props.emptyText}</span>)}
+        </ScrollBox>
       </div>
-    ]
+    )
   }
 }
 

@@ -2,7 +2,7 @@ import './PageContainer.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import ProfileSidebar from '../../cabinet/ProfileSidebar/ProfileSidebar';
 
 function PageContainer({ children, leftContent, sidebarOptions }) {

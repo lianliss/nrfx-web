@@ -2,7 +2,7 @@ import './DepositPoolSuccessModal.less';
 
 import React from 'react';
 import { getLang } from '../../../../utils';
-import UI from '../../../../ui/';
+import * as UI from '../../../../ui/';
 
 export default props => (
   <UI.Modal className="DepositPoolSuccessModal" isOpen={true} onClose={props.onClose}>

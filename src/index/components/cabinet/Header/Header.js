@@ -6,20 +6,19 @@ import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
 import url from 'url';
 
-import Badge from '../Badge/Badge';
+import Badge from '../../../../ui/components/Badge/Badge';
 import router from '../../../../router';
 import * as pages from '../../../constants/pages';
 import * as utils from '../../../../utils';
-import UI from "../../../../ui/index";
+import * as UI from "../../../../ui/index";
 import * as auth from '../../../../actions/auth';
 import * as steps from '../../../../components/AuthModal/fixtures';
 import * as actions from '../../../../actions';
-import {getLang} from '../../../../services/lang';
+import { getLang } from '../../../../services/lang';
 import COMPANY from '../../../constants/company';
 import {connect} from 'react-redux';
 import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
 import * as notificationsActions from '../../../../actions/cabinet/notifications';
-
 
 class Header extends React.Component {
   state = {
@@ -111,11 +110,9 @@ class Header extends React.Component {
                     ]
                   ))}
                 </UI.Notifications>}
-                <div onClick={this.toggleNotifications.bind(this)}>
-                  <Badge count={!!this.props.profile.has_notifications ? 1 : null}>
-                    <SVG src={require('../../../../asset/cabinet/notification.svg')} />
-                  </Badge>
-                </div>
+                <Badge onClick={this.toggleNotifications.bind(this)} count={!!this.props.profile.has_notifications ? 1 : null}>
+                  <SVG className="CabinetHeader__icon__svg" src={require('../../../../asset/cabinet/notification.svg')} />
+                </Badge>
               </div>
               <div className="CabinetHeader__icon">
                 <UI.ActionSheet position="left" items={[
@@ -124,9 +121,10 @@ class Header extends React.Component {
                   { title: lang.title, onClick: () => actions.openModal('language'), subContent: (
                     <SVG src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
                   )},
+                  // { title: utils.getLang('global_darkMode'), onClick: actions.toggleTheme, subContent: <UI.Switch on={this.props.theme === 'dark'} /> },
                   { title: utils.getLang('cabinet_header_exit'), onClick: auth.logout },
                 ]}>
-                  <SVG src={require('../../../../asset/cabinet/settings.svg')} />
+                  <SVG className="CabinetHeader__icon__svg" src={require('../../../../asset/cabinet/settings.svg')} />
                 </UI.ActionSheet>
               </div>
             </div>}
@@ -161,6 +159,7 @@ export default connect(state => ({
   router: state.router,
   langList: state.default.langList,
   title: state.default.title,
+  theme: state.default.theme,
   translator: state.settings.translator
 }), {
   dropInternalNotifications: internalNotifications.drop,

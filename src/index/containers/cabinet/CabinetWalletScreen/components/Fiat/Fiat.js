@@ -7,7 +7,7 @@ import * as utils from '../../../../../../utils';
 import { setTitle } from '../../../../../../actions';
 import * as actions from '../../../../../../actions/cabinet/fiatWallets';
 import WalletBox from '../../../../../components/cabinet/WalletBox/WalletBox';
-import FiatHistoryTable from '../FiatHistoryTable/HistoryTable';
+import FiatHistoryTable from '../FiatHistoryTable/FiatHistoryTable';
 import FiatMarketForm from '../FiatMarketForm/FiatMarketForm';
 import Paging from '../../../../../components/cabinet/Paging/Paging';
 import WalletBalance from '../../../../../components/cabinet/WalletBalance/WalletBalance';
@@ -60,11 +60,7 @@ class CabinetWalletFiatScreen extends React.Component {
             moreButton={false}
             isLoading={false}
           >
-            <FiatHistoryTable
-              header={utils.getLang('global_operations')}
-              adaptive={this.props.adaptive}
-              history={this.props.history}
-            />
+            <FiatHistoryTable />
           </Paging>
         </div>
         <div className="PageContainer__content__secondary">

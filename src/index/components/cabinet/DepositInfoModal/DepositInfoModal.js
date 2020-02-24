@@ -1,13 +1,14 @@
 import './DepositInfoModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import InfoRow, { InfoRowGroup } from '../../cabinet/InfoRow/InfoRow';
 import * as utils from '../../../../utils';
 import { getDeposit } from '../../../../actions/cabinet/investments';
 import * as actions from '../../../../actions';
 import ModalState from '../ModalState/ModalState';
+// import Table, { TableCell, TableColumn } from 'src/ui/components/Table/Table.js';
 
 export default class DepositInfoModal extends React.Component {
 
@@ -24,6 +25,11 @@ export default class DepositInfoModal extends React.Component {
     })
   }
 
+  handleWithdraw = () => {
+    const { deposit } = this.state;
+    actions.openModal('deposit_withdraw', { depositId: deposit.id}, { deposit })
+  };
+
   componentDidMount() {
     this.load();
   }
@@ -36,7 +42,6 @@ export default class DepositInfoModal extends React.Component {
       return <ModalState status={status} onRetry={this.__load} />
     }
 
-    const adaptive = document.body.classList.contains('adaptive');
     const currency = deposit.currency.toUpperCase();
     const currencyInfo = actions.getCurrencyInfo(currency);
 
@@ -48,11 +53,15 @@ export default class DepositInfoModal extends React.Component {
           {isPool ? utils.getLang('cabinet_detailsInvestmentPoolTitle') : <span>{utils.getLang('cabinet_depositInfoModal_deposit')} {deposit.plan_percent}% {deposit.description}</span>}
         </UI.ModalHeader>
         <div className="DepositInfoModal__cont">
+
+          {/*{ deposit.can_withdraw && <UI.WalletCard*/}
+          {/*  balance={deposit.can_withdraw_amount}*/}
+          {/*  title={utils.getLang('cabinet_investmentsAvailableWithdrawal')}*/}
+          {/*  currency={currencyInfo}*/}
+          {/*/> }*/}
+
           <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
-          {adaptive && <div className="DepositInfoModal__amount">
-            <div className="DepositInfoModal__amount__label">{utils.getLang("site__headerInvestment")}</div>
-            <div className="DepositInfoModal__amount__number">{deposit.amount} {currency}</div>
-          </div> }
+
           <div className="DepositInfoModal__columns">
             <InfoRowGroup className="DepositInfoModal__column">
               {/*<InfoRow label="ID">{deposit.localId}</InfoRow>*/}
@@ -62,21 +71,43 @@ export default class DepositInfoModal extends React.Component {
               <InfoRow label={utils.getLang("period")}>{deposit.passed_days} / {deposit.days} {utils.getLang('cabinet_openNewDeposit_days')}</InfoRow>
             </InfoRowGroup>
             <InfoRowGroup className="DepositInfoModal__column">
-              { !isPool && <InfoRow label={utils.getLang("global_amount")}>{deposit.amount} {currency}</InfoRow> }
-              { isPool && <InfoRow label={utils.getLang('cabinet_depositModalProposedAmount')}>{deposit.proposed_amount} {currency}</InfoRow> }
+              { !isPool && <InfoRow label={utils.getLang("global_invested")}>{deposit.amount} {currency}</InfoRow> }
+              { isPool && <InfoRow label={utils.getLang('cabinet_depositModalProposedAmount')}><UI.NumberFormat number={deposit.proposed_amount} currency={currency} /></InfoRow> }
               { isPool && <InfoRow label={utils.getLang('cabinet_depositModalAmount')}>{deposit.amount} {currency}</InfoRow> }
-              <InfoRow label={utils.getLang("cabinet_investmentsScreen_profit")}>{utils.formatDouble(deposit.profit, 8)} {currency} ({utils.formatDouble(deposit.current_percent, 2)}%)</InfoRow>
-              <InfoRow label={utils.getLang("in_fiat")}>{utils.formatDouble(deposit.usd_profit, 2)} USD</InfoRow>
-              { !isPool && <InfoRow label={utils.getLang("global_estimated")}>{deposit.percent}%</InfoRow>}
+              <InfoRow label={utils.getLang("cabinet_investmentsScreen_profit")}>
+                <UI.NumberFormat number={deposit.profit} currency={currency} /> <UI.NumberFormat number={deposit.current_percent} brackets percent />
+              </InfoRow>
+              <InfoRow label={utils.getLang("in_fiat")}>
+                ~<UI.NumberFormat number={deposit.usd_profit} currency="usd" />
+              </InfoRow>
+              { !isPool && <InfoRow label={utils.getLang("global_estimated")}>
+                <UI.NumberFormat number={deposit.amount / 100 * deposit.percent} currency={currency} /> <UI.NumberFormat number={deposit.percent} brackets percent />
+              </InfoRow>}
             </InfoRowGroup>
           </div>
-          {/*<div className="DepositInfoModal__withdrawal_form" style={{display:'flex'}}>*/}
-          {/*<UI.Input placeholder="Type amount" indicator={<div className="DepositInfoModal__withdrawal_form__currency">LTC</div>} />*/}
-          {/*<UI.Button type="outline">Max</UI.Button>*/}
-          {/*<UI.Button style={{width: 208, margin: 'auto'}} onClick={() => modalGroupActions.openModalPage('withdrawal', { currency })}>*/}
-          {/*Withdraw*/}
-          {/*</UI.Button>*/}
-          {/*</div>*/}
+
+          {/*{ deposit.can_withdraw && <div className="DepositInfoModal__withdrawAction">*/}
+          {/*  <UI.Button*/}
+          {/*    disabled={!deposit.can_withdraw_amount}*/}
+          {/*    onClick={this.handleWithdraw}*/}
+          {/*    currency={currencyInfo}*/}
+          {/*  >{utils.getLang('global_withdrawAction')}</UI.Button>*/}
+          {/*</div> }*/}
+
+          {/*<Table className="DepositInfoModal__withdrawalHistory" skipContentBox header={utils.getLang('cabinet_investmentsWithdrawalHistory')} headings={[*/}
+          {/*  <TableColumn>{utils.getLang('global_amount')}</TableColumn>,*/}
+          {/*  <TableColumn>{utils.getLang('cabinet_investmentsIncomeReduction')}</TableColumn>,*/}
+          {/*  <TableColumn>{utils.getLang('global_date')}</TableColumn>,*/}
+          {/*]}>*/}
+          {/*  {[1,2,3,4,5].map(i => (*/}
+          {/*    <TableCell>*/}
+          {/*      <TableColumn><UI.NumberFormat number={22} currency="usd" /></TableColumn>*/}
+          {/*      <TableColumn><UI.NumberFormat number={i} percent /></TableColumn>*/}
+          {/*      <TableColumn>{utils.dateFormat(1000 * i)}</TableColumn>*/}
+          {/*    </TableCell>*/}
+          {/*  ))}*/}
+          {/*</Table>*/}
+
         </div>
       </UI.Modal>
     )

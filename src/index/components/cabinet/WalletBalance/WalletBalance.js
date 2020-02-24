@@ -1,12 +1,13 @@
 import './WalletBalance.less';
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import SVG from 'react-inlinesvg';
 import PieChart from 'react-minimal-pie-chart';
 
 import { formatNumber, classNames } from '../../../../utils/index';
 import * as actions from "../../../../actions";
 import * as utils from "../../../../utils/index";
-import UI from '../../../../ui/index';
+import * as UI from '../../../../ui/index';
 import { getCurrencyInfo } from '../../../../actions';
 import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
@@ -63,7 +64,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
           {' ' + convert_currency}
         </span>
       </div>;
-      return <div className="WalletBalance Content_box">
+      return <UI.ContentBox className="WalletBalance">
         {!adaptive && convertBlock}
         <div className="WalletBalance__selected_wallet">
           <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletTransactionModal_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
@@ -81,6 +82,16 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
                   currency={currencyInfo}
                 >
                   {utils.getLang('cabinet_fiatBalance_add')}
+                </UI.Button>
+                <UI.Button
+                  disabled={!amount}
+                  size={adaptive ? 'middle' : 'large'}
+                  onClick={() => {actions.openModal('merchant', {
+                    currency: currency
+                  }, { type: 'withdrawal' })}}
+                  currency={currencyInfo}
+                >
+                  {utils.getLang('global_withdrawal')}
                 </UI.Button>
               </div>
             ) : (
@@ -108,7 +119,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
             )
           }
         </div>
-      </div>
+      </UI.ContentBox>
     }
   }
 
@@ -117,7 +128,7 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
   </h3>;
 
   return (
-    <div className="WalletBalance Content_box">
+    <UI.ContentBox className="WalletBalance">
       {walletsBalance
         ? (
           <>
@@ -187,8 +198,10 @@ function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
           </div>
         )
       }
-    </div>
+    </UI.ContentBox>
   )
 }
 
-export default React.memo(WalletBalance);
+export default connect(state => ({
+  currentLang: state.default.currentLang
+}))(WalletBalance);

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { classNames, dateFormat } from "../../../../utils/index";
+import {classNames, dateFormat, getCssVar} from "../../../../utils/index";
 import {getCurrencyInfo} from '../../../../actions';
 
 export default function Chart({ series, ...props }) {
@@ -15,6 +15,7 @@ export default function Chart({ series, ...props }) {
   const options = {
     chart: {
       height: 200,
+      backgroundColor: 'transparent',
     },
     title: {
       text: undefined,
@@ -40,12 +41,12 @@ export default function Chart({ series, ...props }) {
           fontSize: '11px',
           fontWeight: 500,
           lineHeight: '16px',
-          color: '#808080',
+          color: getCssVar('--gray', '#808080'),
           fontFamily: 'Montserrat'
         }
       },
       crosshair: {
-        color: '#C4C4C4'
+        color: getCssVar('--gray', '#808080'),
       },
     },
     yAxis: {
@@ -104,7 +105,7 @@ export default function Chart({ series, ...props }) {
           enabled: props.marker,
           radius: 3,
           symbol: 'circle',
-          fillColor: '#fff',
+          fillColor: getCssVar('--primary-background', '#fff'),
           lineColor: null,
           lineWidth: 2,
         },

@@ -108,8 +108,11 @@ export function generateWallet(currency) {
 
 export function sendCoins(params) {
   return (dispatch) => {
+    console.log(params);
+    debugger;
+    const method = params.type === 'login' ? apiSchema.Wallet.TransferSendPut : apiSchema.Wallet.TransactionSendPut;
     dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'loading' });
-    api.call(apiSchema.Wallet.SendPut, params).then(({wallet}) => {
+    api.call(method, params).then(({wallet}) => {
       toastsActions.success(utils.getLang('cabinet_sendCoinsModal_success'));
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: 'success' });
       dispatch({ type: actionTypes.WALLETS_SET_LOADING_STATUS, section: 'send', status: null });

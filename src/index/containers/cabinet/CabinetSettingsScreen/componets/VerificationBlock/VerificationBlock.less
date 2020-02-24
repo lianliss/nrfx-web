@@ -3,6 +3,7 @@
     display: flex;
 
     .CabinetSettingsScreen__content__status {
+      flex: 0 0 auto;
       width: 120px;
       margin-right: 32px;
 
@@ -13,6 +14,10 @@
         line-height: 16px;
       }
     }
+  }
+
+  .ButtonWrapper {
+    margin-top: 24px;
   }
 }
 
@@ -26,6 +31,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+  }
+  .ButtonWrapper {
+    .Button {
+      width: 100%;
     }
   }
 }

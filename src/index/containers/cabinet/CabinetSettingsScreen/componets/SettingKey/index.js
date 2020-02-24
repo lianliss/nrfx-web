@@ -10,7 +10,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 import EmptyContentBlock from 'src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
 
 import ContentBox from 'src/ui/components/ContentBox/ContentBox';
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import * as actions from 'src/actions';
 import * as toasts from 'src/actions/toasts';
 
@@ -137,7 +137,7 @@ class SettingKey extends React.Component {
 
   __copy = (public_key) => {
     copyText(public_key).then(() => {
-      toasts.success(utils.getLang('cabinet_ keyCopiedSuccessfully'));
+      this.props.toastPush(utils.getLang('cabinet_ keyCopiedSuccessfully'), "success");
     });
   };
 

@@ -2,13 +2,14 @@ import './WithdrawalModal.less';
 
 import React from 'react';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as investmentsActions from "../../../../actions/cabinet/investments";
 import * as utils from "../../../../utils";
 import ModalState from '../ModalState/ModalState';
 import * as actions from '../../../../actions'
 import * as toasts from '../../../../actions/toasts'
+import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 
 class WithdrawalModal extends React.Component {
   state = {
@@ -58,7 +59,7 @@ class WithdrawalModal extends React.Component {
             <div className="WithdrawalModal__info_row">
               <div className="WithdrawalModal__info_row__title">{utils.getLang('cabinet_withdrawalModal_beAware')}</div>
               <div className="WithdrawalModal__info_row__caption">
-                {utils.getLang('cabinet_withoutCaption')} {utils.formatDouble(this.state.availableWithoutDrop)} {this.state.currency.toUpperCase()} {utils.getLang('cabinet_withoutCaption2')}
+                {utils.getLang('cabinet_withoutCaption')} <NumberFormat number={this.state.availableWithoutDrop} currency={this.state.currency} /> {utils.getLang('cabinet_withoutCaption2')}
               </div>
             </div>
             <div className="WithdrawalModal__info_row">
@@ -80,7 +81,7 @@ class WithdrawalModal extends React.Component {
                   error={this.state.amount > this.state.available}
                 />
                 <p className="Form__helper__text">
-                  {utils.getLang("global_available")}: {utils.formatDouble(this.state.available)} {this.state.currency.toUpperCase()}
+                  {utils.getLang("global_available")}:  <NumberFormat number={this.state.available} currency={this.state.currency} />
                 </p>
               </div>
               <UI.Button
