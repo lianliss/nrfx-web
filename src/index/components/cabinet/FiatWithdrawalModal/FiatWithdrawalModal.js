@@ -16,7 +16,7 @@ import Form from '../../../../ui/components/Form/Form';
 import {getLang, isEmail} from '../../../../utils';
 
 const FiatWithdrawalModal = props => {
-  const { amount, balance, adaptive } = props;
+  const { amount, balance, adaptive, bankList } = props;
   const [bank, changeBank] = useState(null);
   const [accountHolderName, setAccountHolderName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
@@ -30,7 +30,8 @@ const FiatWithdrawalModal = props => {
     if (!amount || !balance) {
       props.onClose();
     }
-  });
+    // eslint-disable-next-line
+  }, []);
 
   if (!amount || !balance) {
     return null;
@@ -75,7 +76,7 @@ const FiatWithdrawalModal = props => {
           { !bank ? (
             <div>
               <div className="FiatWithdrawalModal__header">{headerText}</div>
-              { (props.bankList && !props.loadingStatus) ? <BankList onChange={changeBank} items={props.bankList} /> : <LoadingStatus status="loading" /> }
+              { (bankList && !props.loadingStatus) ? <BankList onChange={changeBank} items={bankList} /> : <LoadingStatus status="loading" /> }
             </div>
           ) : (
             !filled ? (

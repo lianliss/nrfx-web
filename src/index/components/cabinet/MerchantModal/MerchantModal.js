@@ -29,7 +29,6 @@ const MerchantModal = props => {
   const [urlStatus, setUrlStatus] = useState(null);
   const [url, setUrl] = useState(null);
 
-
   const merchants = {
     advcash: {
       icon: require('../../../../asset/merchants/adv_cash.svg'),
@@ -56,7 +55,12 @@ const MerchantModal = props => {
     }
   };
 
-  useEffect(() => props.getMerchant(props.type));
+  useEffect(() => {
+    if (!props.merchants) {
+      props.getMerchant(props.type);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];
@@ -196,7 +200,6 @@ const MerchantModal = props => {
     const maxAmount = currentMerchantCurrency.max_amount;
 
     const indicator = <span>{ minAmount ? getLang('cabinet_merchantModal_min') : getLang('cabinet_merchantModal_max')} <NumberFormat number={minAmount || maxAmount} currency={currencyInfo.abbr} /></span>;
-
 
     return (
       <div className="MerchantModal__form">
