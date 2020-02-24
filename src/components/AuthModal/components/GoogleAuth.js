@@ -75,7 +75,7 @@ function GoogleAuth({ changeStep, email, password, params }) {
               <UI.ModalHeader>{utils.getLang("site__authModalTitle")}</UI.ModalHeader>
               <p className="AuthModal__content__ga__msg">{utils.getLang('site__authModalContentGA')}</p>
               <img src={loginRes.url} alt="GA QR Code" />
-              <input className="AuthModal__content__ga__hash" ref={hashRef} value={loginRes.hash} readOnly />
+              <b className="AuthModal__content__ga__hash">{loginRes.hash}</b>
             </div>
           )}
 

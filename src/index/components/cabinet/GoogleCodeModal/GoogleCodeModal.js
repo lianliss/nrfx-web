@@ -19,7 +19,7 @@ const GoogleCodeModal = props => {
   }
 
   return (
-    <UI.Modal isOpen={true} onClose={() => {props.close()}} width={424}>
+    <UI.Modal isOpen={true} onClose={props.onClose} width={424}>
       <UI.ModalHeader>
         {utils.getLang('site__authModalTitle')}
       </UI.ModalHeader>

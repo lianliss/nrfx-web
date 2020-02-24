@@ -16,7 +16,7 @@ import SecretKeyDescModal from '../components/cabinet/SecretKeyDescModal/SecretK
 
 // profile
 import ChangeSecretKeyModal from '../components/cabinet/ChangeSecretKeyModal/ChangeSecretKeyModal';
-import GoogleCodeModal from '../components/cabinet/GoogleCodeModal/GoogleCodeModal';
+// import GoogleCodeModal from '../components/cabinet/GoogleCodeModal/GoogleCodeModal';
 
 const Modals = {
   SendCoinsModal: {children: SendCoinsModal},
@@ -30,7 +30,7 @@ const Modals = {
   SecretKeyInfoModal: {children: SecretKeyInfoModal},
   SecretKeyDescModal: {children: SecretKeyDescModal},
   ChangeSecretKeyModal: {children: ChangeSecretKeyModal},
-  GoogleCodeModal: {children: GoogleCodeModal}
+  // GoogleCodeModal: {children: GoogleCodeModal}
 };
 
 export const MODALGROUP_ROUTES = {

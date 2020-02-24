@@ -22,6 +22,7 @@ import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBa
 import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
 import GAConfirmModal from './components/cabinet/GAConfirmModal/GAConfirmModal';
+import GoogleCodeModal from './components/cabinet/GoogleCodeModal/GoogleCodeModal';
 import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
 import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
 import AuthModal from '../components/AuthModal/AuthModal';
@@ -137,6 +138,9 @@ function Modals(props) {
       break;
     case 'ga_code':
       Component = GAConfirmModal;
+      break;
+    case 'google_code':
+      Component = GoogleCodeModal;
       break;
     default: return null;
   }
