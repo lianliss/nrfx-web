@@ -11,7 +11,6 @@ import * as PAGES from '../../../../constants/pages';
 import * as utils from '../../../../../utils';
 import * as auth from '../../../../../actions/auth';
 import * as actions from '../../../../../actions';
-import Switch from 'src/ui/components/Switch/Switch';
 import ContentBox from 'src/ui/components/ContentBox/ContentBox'
 
 class MenuScreen extends CabinetBaseScreen {

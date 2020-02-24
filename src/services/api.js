@@ -4,12 +4,9 @@ import { clearProfile } from '../actions/auth';
 import router from '../router';
 import * as adminPages from '../admin/constants/pages';
 
-const API_ENTRY = 'https://api.narfex.com';
-// const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
-const API_VERSION = 1;
-
-export const EXPORT_API_VERSION = API_VERSION;
-export const EXPORT_API_ENTRY = API_ENTRY;
+export const API_ENTRY = 'https://api.narfex.com';
+// export const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
+export const API_VERSION = 1;
 
 export const Errors = {
   FATAL: 1,

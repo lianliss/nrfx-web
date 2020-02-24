@@ -6,7 +6,6 @@ import InfoSection from '../../../../components/site/InfoSection/InfoSection';
 import Timeline from '../../../../components/site/Timeline/Timeline';
 import { getLang } from 'src/utils/index';
 import { data } from '../fixtures';
-import { getLang } from '../../../../../utils';
 
 
 function History({ lang }) {

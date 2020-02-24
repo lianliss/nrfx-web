@@ -113,6 +113,10 @@ export function isProduction ()  {
   // return window.location.host === company.host;
 }
 
+export function getCssVar() {
+  return '#fff';
+}
+
 export function throttle (func, ms)  {
   let timeout = null;
 

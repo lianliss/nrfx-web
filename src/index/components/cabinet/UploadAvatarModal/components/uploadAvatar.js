@@ -24,7 +24,7 @@ export default class ImageUpload extends React.Component {
     if (!this.state.file) return;
 
     let uploader = new XMLHttpRequest();
-    let url = `${api.EXPORT_API_ENTRY}/api/v${api.EXPORT_API_VERSION}/profile/upload_photo`;
+    let url = `${api.API_ENTRY}/api/v${api.API_VERSION}/profile/upload_photo`;
 
     uploader.open("POST", url, true);
     uploader.setRequestHeader('X-Token', auth.getToken());
