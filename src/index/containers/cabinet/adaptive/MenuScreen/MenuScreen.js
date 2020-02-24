@@ -68,14 +68,14 @@ class MenuScreen extends CabinetBaseScreen {
             <SVG className={"Menu__section__item__flag"} src={require(`../../../../../asset/site/lang-flags/${lang.value}.svg`)} />
             <span>{lang.title} {lang.value.toUpperCase()}</span>
           </div>
-          <div
-            onClick={this.__handleToggleTheme}
-            className="Menu__section__item"
-          >
-            <SVG src={require(`src/asset/24px/sun.svg`)} />
-            <span>{utils.getLang("global_darkMode")}</span>
-            <Switch on={this.props.theme === 'dark'} />
-          </div>
+          {/*<div*/}
+          {/*  onClick={this.__handleToggleTheme}*/}
+          {/*  className="Menu__section__item"*/}
+          {/*>*/}
+          {/*  <SVG src={require(`src/asset/24px/sun.svg`)} />*/}
+          {/*  <span>{utils.getLang("global_darkMode")}</span>*/}
+          {/*  <Switch on={this.props.theme === 'dark'} />*/}
+          {/*</div>*/}
         </ContentBox>
         <ContentBox className="Menu__section Menu__section__noSpacing">
           <BaseLink

@@ -121,7 +121,7 @@ class Header extends React.Component {
                   { title: lang.title, onClick: () => actions.openModal('language'), subContent: (
                     <SVG src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)} />
                   )},
-                  { title: utils.getLang('global_darkMode'), onClick: actions.toggleTheme, subContent: <UI.Switch on={this.props.theme === 'dark'} /> },
+                  // { title: utils.getLang('global_darkMode'), onClick: actions.toggleTheme, subContent: <UI.Switch on={this.props.theme === 'dark'} /> },
                   { title: utils.getLang('cabinet_header_exit'), onClick: auth.logout },
                 ]}>
                   <SVG className="CabinetHeader__icon__svg" src={require('../../../../asset/cabinet/settings.svg')} />

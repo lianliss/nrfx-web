@@ -36,7 +36,7 @@ class SettingPersonal extends React.Component{
 
     return(
       <>
-        <VerificationBlock />
+        { !utils.isProduction() && <VerificationBlock /> }
         { this.props.profile.user.applicant_id && <UI.ContentBox className="CabinetSettingsScreen__main">
           <div className="CabinetSettingsScreen__header">applicant_id</div>
           <pre>{this.props.profile.user.applicant_id}</pre>
