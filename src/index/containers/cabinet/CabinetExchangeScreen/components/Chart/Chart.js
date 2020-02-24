@@ -65,7 +65,7 @@ class Chart extends React.PureComponent {
       disabled_features: [
         'header_widget',
         'edit_buttons_in_legend',
-        'context_menus',
+        // 'context_menus',
         'use_localstorage_for_settings',
         'go_to_date',
         'timeframes_toolbar',
