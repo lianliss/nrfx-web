@@ -56,9 +56,7 @@ const MerchantModal = props => {
   };
 
   useEffect(() => {
-    if (!props.merchants) {
-      props.getMerchant(props.type);
-    }
+    props.getMerchant(props.type);
     // eslint-disable-next-line
   }, []);
 
