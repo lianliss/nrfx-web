@@ -25,6 +25,7 @@ class CabinetRegister extends React.PureComponent {
     timer: null,
     codeForm: false,
     pending: false,
+    touched: false
   };
 
   componentDidMount() {
@@ -131,33 +132,40 @@ class CabinetRegister extends React.PureComponent {
       return false;
     }
     const { state } = this;
+
+    const validFirstName = (state.firstName && /^[a-zA-Z -]+$/i.test(state.firstName));
+    const validLastName = (state.lastName && /^[a-zA-Z -]+$/i.test(state.lastName));
+
     return (
       <div className="CabinetRegister">
         <UI.ContentBox className="CabinetRegister__content">
           <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_complete')}</h3>
           <UI.Input
-            error={state.touched && !state.firstName}
+            error={state.touched && !validFirstName}
             value={state.firstName}
-            pattern={/[a-zA-Z ,.'-]+/g}
             placeholder={utils.getLang('cabinet_registerScreen_firstName')}
             onTextChange={text => this.__handleChange("firstName", text)}
           />
           <UI.Input
-            error={state.touched && !state.lastName}
+            error={state.touched && !validLastName}
             value={state.lastName}
-            pattern={/[a-zA-Z ,.'-]+/g}
             placeholder={utils.getLang('cabinet_registerScreen_lastName')}
             onTextChange={text => this.__handleChange("lastName", text)}
           />
-          <p className="CabinetRegister__description">{utils.getLang('registration_nameDescription')}</p>
+          <p className={utils.classNames("CabinetRegister__description", {
+            error: state.touched && (
+              !(state.firstName && validFirstName) ||
+              !(state.lastName && validLastName)
+            )
+          })}>
+            {utils.getLang('registration_nameDescription')}
+          </p>
           <UI.Input
-            error={state.touched && !state.login}
+            error={state.touched && !(state.login && utils.isLogin(state.login))}
             value={state.login}
-            pattern={/[a-zA-Z0-9\-_]+/g}
             placeholder={utils.getLang('site__contactLogin')}
             onTextChange={text => this.__handleChange("login", text)}
           />
-
 
           {/*<h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_phoneNumber')}</h3>*/}
           {/*{ !state.codeForm ? <div>*/}
