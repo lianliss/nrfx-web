@@ -113,3 +113,32 @@
   color: #D9D4CF;
   user-select: none;
 }
+
+.Input__reliability {
+  color: var(--primary-orange);
+  margin: 6px 16px;
+  display: flex;
+  align-items: center;
+
+  .Input__reliability__label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 16px;
+    margin-right: 8px;
+  }
+
+  .Input__reliability__indicator {
+    flex: 1;
+    height: 2px;
+    background: #f0f;
+    border-radius: 1px;
+    background: var(--extra-light-green);
+
+    .Input__reliability__indicator__fill {
+      width: 40%;
+      background: currentColor;
+      height: inherit;
+    }
+  }
+}

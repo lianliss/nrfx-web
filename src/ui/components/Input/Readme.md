@@ -34,6 +34,11 @@ small
 <Input size="small" description="Fee: 0.1%" indicator="USD" />
 ```
 
+reliability
+```js
+<Input reliability type="password" />
+```
+
 pattern
 ```js
 import { useState } from 'react';

@@ -116,6 +116,15 @@ class Input extends React.Component {
     const closeEyeSvg = require('../../asset/closed_eye_24.svg');
     const openEyeSvg = require('../../asset/opened_eye_24.svg');
 
+    const reliability =  this.props.reliability ? (
+      <div className="Input__reliability">
+        <div className="Input__reliability__label">Weak</div>
+        <div className="Input__reliability__indicator">
+          <div className="Input__reliability__indicator__fill"></div>
+        </div>
+      </div>
+    ) : null;
+
     return (
       <div className={wrapperClassName} onClick={this.props.onClick}>
         {cont}
@@ -124,6 +133,7 @@ class Input extends React.Component {
             <SVG onClick={alert} src={this.state.displayPassword ? closeEyeSvg : openEyeSvg} />
           </div>
         }
+        {reliability}
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
           this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
         {this.props.description !== undefined ? <div className="Input__description">
