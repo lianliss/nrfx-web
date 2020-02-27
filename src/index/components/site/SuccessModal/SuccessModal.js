@@ -1,13 +1,26 @@
 import './SuccessModal.less';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import * as UI from '../../../../ui';
 import * as utils from '../../../../utils';
 import Resend from '../Resend/Resend';
+import Captcha from '../../../../components/Captcha/Captcha';
 
 
 function SuccessModal({ title, subtitle, onClose, onResend }) {
+
+  const [displayCaptcha, setDisplayCaptcha] = useState(false);
+
+  const handleResend = () => {
+    setDisplayCaptcha(true);
+  };
+
+  const handleCaptchaChange = (token) => {
+    setDisplayCaptcha(false);
+    onResend(token);
+  };
+
   return (
     <div className="SuccessModal">
       <div className="SuccessModal__content">
@@ -18,8 +31,12 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
       </div>
 
       <div className="Resend__footer">
-        {!!onResend && <Resend onResend={onResend} />}
-        <UI.Button fontSize={15} onClick={onClose}>{utils.getLang('site__authModalOk')}</UI.Button>
+        { displayCaptcha ? (
+          <Captcha onChange={handleCaptchaChange} />
+        ) : <>
+          {!!onResend && <Resend onResend={handleResend} />}
+          <UI.Button fontSize={15} onClick={onClose}>{utils.getLang('site__authModalOk')}</UI.Button>
+        </> }
       </div>
     </div>
   )

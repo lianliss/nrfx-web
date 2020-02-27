@@ -23,7 +23,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
   const isProduction = utils.isProduction();
   const disabled = utils.isProduction() ? (!token || !email) : !email;
 
-  const handleSubmit = () => {
+  const handleSubmit = (token) => {
     if (!email) {
       setErrorMsg(utils.getLang('site__authModalEmailRequired'));
     } else if (!utils.isEmail(email)) {
@@ -59,7 +59,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      handleSubmit();
+      handleSubmit(token);
     }
   };
 
@@ -94,7 +94,9 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
                 onKeyPress={handleKeyPress}
               />
 
-              { isProduction && <Captcha ref={captchaRef} onChange={setToken} /> }
+              { isProduction && <Captcha ref={captchaRef} onChange={(token) => {
+                setToken(token);
+              }} /> }
 
               <div className="AuthModal__content__terms">
                 <UI.CheckBox checked={isChecked} onChange={() => toggleCheck(!isChecked)} />
@@ -104,7 +106,7 @@ function Registration({ changeStep, currentStep, email, onClose, refParam, refer
 
             <div className="AuthModal__footer">
               <h4 className="AuthModal__footer__link" onClick={() => changeStep(steps.LOGIN)}>{utils.getLang('site__authModalLogInBtn')}</h4>
-              <UI.Button disabled={disabled} state={pending && 'loading'} fontSize={15} onClick={handleSubmit}>{utils.getLang('site__authModalNext')}</UI.Button>
+              <UI.Button disabled={disabled} state={pending && 'loading'} fontSize={15} onClick={() => handleSubmit(token)}>{utils.getLang('site__authModalNext')}</UI.Button>
             </div>
           </>
         ) : (

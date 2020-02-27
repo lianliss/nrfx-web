@@ -15,6 +15,7 @@
     }
 
     .SuccessModal__content__msg {
+      box-sizing: border-box;
       font-weight: 500;
       font-size: 13px;
       line-height: 16px;
@@ -36,5 +37,21 @@
   .Button {
     width: 160px;
     margin: 0;
+  }
+
+  .Resend__footer {
+    height: 78px;
+    min-width: 304px;
+    .Captcha {
+      margin: auto;
+    }
+  }
+}
+
+.adaptive {
+  .SuccessModal {
+    .SuccessModal__content__msg {
+      max-width: 100%;
+    }
   }
 }
