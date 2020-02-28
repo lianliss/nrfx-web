@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 // internal
 import MarkDown from '../MarkDown/MarkDown';
-import { classNames, __doubleInputOnKeyPressHandler } from '../../utils';
+import { classNames } from '../../utils';
 import { openModal } from 'src/actions';
 
 class Input extends React.Component {
@@ -40,26 +40,14 @@ class Input extends React.Component {
         langKey: this.props.placeholder.props.langKey
       })
     }
-  }
+  };
 
   render() {
     let { placeholder } = this.props;
     placeholder = typeof placeholder === 'string' ? placeholder : ( placeholder && placeholder.props.langContent );
 
-    const className = classNames({
-      Input: true,
-      multiLine: this.props.multiLine,
-      error: this.props.error,
-      password: this.props.type === "password",
-    });
-
-    const wrapperClassName = classNames({
-      Input__wrapper: true,
-      [this.props.classNameWrapper]: !!this.props.classNameWrapper,
-      [this.props.size]: !!this.props.size,
-    });
-
     let type = this.props.type;
+    let error = false;
 
     if (this.props.type === "password" && this.state.displayPassword) {
       type = "text";
@@ -73,6 +61,25 @@ class Input extends React.Component {
       type = "number";
     }
 
+    if (this.props.type === 'number') {
+      console.log(this.props.value, isNaN(this.props.value))
+      if (isNaN(this.props.value)) {
+        error = true;
+      }
+    }
+
+    const className = classNames({
+      Input: true,
+      multiLine: this.props.multiLine,
+      error: this.props.error || error,
+      password: this.props.type === "password",
+    });
+
+    const wrapperClassName = classNames({
+      Input__wrapper: true,
+      [this.props.classNameWrapper]: !!this.props.classNameWrapper,
+      [this.props.size]: !!this.props.size,
+    });
 
     let params = {
       className,
@@ -90,6 +97,7 @@ class Input extends React.Component {
     };
 
     const value = this.props.pattern ? ((this.props.value || "").match(this.props.pattern) || []).join("") : this.props.value;
+
 
     let cont;
     if (this.props.multiLine) {
@@ -163,8 +171,6 @@ class Input extends React.Component {
         if (isNaN(e.key)) {
           e.preventDefault();
         }
-      } else {
-        __doubleInputOnKeyPressHandler(e, e.target.value);
       }
     }
 
@@ -179,9 +185,9 @@ class Input extends React.Component {
         e.target.value = 0;
       }
 
-      if (this.props.cell && e.target.value) {
-        e.target.value = parseInt(e.target.value);
-      }
+      // if (this.props.cell && e.target.value) {
+      //   e.target.value = parseInt(e.target.value);
+      // }
     }
 
     this.props.onChange && this.props.onChange(e);
