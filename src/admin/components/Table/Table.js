@@ -40,6 +40,14 @@ class TableComponent extends React.Component {
     )
   }
 
+  __renderColumn(value) {
+    if (typeof value === 'object') {
+      return value.map(item => <Item item={item}/>);
+    } else {
+      return <Item item={value}/>;
+    }
+  }
+
   render() {
     const { props } = this;
 
@@ -61,11 +69,11 @@ class TableComponent extends React.Component {
         </div>
 
         <Table skipContentBox headings={props.header.items.map(column => (
-          <TableColumn sub={column.sub_value}><Item item={column.value}/></TableColumn>
+          <TableColumn sub={column.sub_value}>{this.__renderColumn(column.value)}</TableColumn>
         ))}>
           {props.items.filter(row => row.type !== 'deleted').map(row => (
             <TableCell>{row.items.map(column => (
-              <TableColumn sub={column.sub_value}><Item item={column.value}/></TableColumn>
+              <TableColumn sub={column.sub_value}>{this.__renderColumn(column.value)}</TableColumn>
             ))}</TableCell>
           ))}
         </Table>
