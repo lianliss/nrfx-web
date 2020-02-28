@@ -62,17 +62,21 @@ const MerchantModal = props => {
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];
+    console.log(min_amount, max_amount, value);
     const currencyLabel = currency.toUpperCase();
-    if (value < min_amount) {
+    debugger;
+    if (value <= min_amount) {
       return <>{getLang('cabinet_amount_shouldBeMore')} {min_amount} {currencyLabel}</>
     } else if (value > max_amount) {
       return <>{getLang('cabinet_amount_shouldBeLess')} {max_amount} {currencyLabel}</>;
     } return null;
-  }
+  };
 
   const handleSubmit = () => {
     setTouched(true);
     const message = checkAmount();
+    console.log(message);
+    debugger;
     if (message) {
       toasts.error(message);
       return false;
@@ -87,6 +91,12 @@ const MerchantModal = props => {
   };
 
   const handleFiatWithdrawal = () => {
+    setTouched(true);
+    const message = checkAmount();
+    if (message) {
+      toasts.error(message);
+      return false;
+    }
     const balance = balances.find(b => b.currency.toLowerCase() === currency);
     actions.openModal('fiat_withdrawal', null, { amount, balance });
   };

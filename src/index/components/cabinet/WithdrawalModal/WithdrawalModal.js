@@ -71,9 +71,9 @@ class WithdrawalModal extends React.Component {
                 <UI.Input
                   autoFocus
                   placeholder="0"
+                  type="number"
                   indicator={this.state.currency.toUpperCase()}
                   indicatorWidth={32}
-                  onKeyPress={e => utils.__doubleInputOnKeyPressHandler(e, this.state.amount)}
                   onTextChange={amount => {
                     this.setState({amount});
                   }}

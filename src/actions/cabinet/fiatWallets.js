@@ -90,10 +90,12 @@ export function fiatWithdrawal(params) {
       amount: params.amount,
       email_to: params.email,
       balance_id: params.balance.id,
-    }).then(({transaction}) => {
+    }).then(payload => {
       toast.success(getLang('cabinet_fiatWithdrawalModal_WithdrawalCreated'));
       closeModal();
+      const { transaction } = payload;
       dispatch({type: actionTypes.FIAT_WALLETS_APPEND_TRANSACTION, transaction });
+      dispatch({type: actionTypes.FIAT_WALLETS_UPDATE, payload });
     }).finally(() => {
       dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'withdrawal', status: null });
     }).catch((err) => {

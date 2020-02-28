@@ -17,10 +17,17 @@ import Button from '../Button/Button';
     <br />
     <Input type="password" placeholder="Password" />
     <br />
-    <Input onTextChange={console.log} type="number" placeholder="Number" />
-    <br />
     <Input onTextChange={console.log} cell type="number" placeholder="Number call" />
 </div>
+```
+
+Number
+```js
+
+import { useState } from 'react';
+const [value, setValue] = useState('0.00');
+
+<Input onTextChange={setValue} value={value} type="number" placeholder="0.00" />
 ```
 
 Indicator & description
