@@ -32,13 +32,13 @@
     transform: rotate(45deg) translate(34px, -12px);
 
     &.new {
-      color: white;
-      background: var(--uikit-primary-green);
+      color: var(--white);
+      background: var(--green);
     }
 
     &.soon {
       color: #4D4D4D;
-      background: var(--uikit-primary-light);
+      background: var(--primary-orange);
     }
   }
 
@@ -110,7 +110,7 @@
         width: 24px !important;
         height: 24px;
         margin: auto 0;
-        color: var(--primary-grey);
+        color: var(--dark-gray);
       }
       .DashboardItem__headerText {
         font-size: 16px;
@@ -129,7 +129,7 @@
         width: 100%;
         position: relative;
         font-size: 13px;
-        color: #808080;
+        color: var(--dark-gray);
       }
       .DashboardItem__content_item_header_left {
         position: absolute;
@@ -139,7 +139,7 @@
         position: absolute;
         right: 0;
         cursor: pointer;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.56);
+        border-bottom: 1px solid;
       }
 
       .DashboardItem__content_item_context {
@@ -147,7 +147,7 @@
         font-size: 16px;
         height: 30px;
         line-height: 30px;
-        color: #212121;
+        color: var(--text-black);
       }
     }
 
@@ -155,7 +155,7 @@
       font-weight: 500;
       font-size: 13px;
       line-height: 16px;
-      color: var(--primary-grey);
+      color: var(--dark-gray);
     }
 
     p {
@@ -199,7 +199,7 @@
 
 .DashboardItem__selected {
   .DashboardItem__content h3, .DashboardItem__content p {
-    color: white !important;
+    color: var(--white) !important;
   }
 }
 

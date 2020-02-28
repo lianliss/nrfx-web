@@ -2,7 +2,7 @@ import './CabinetProfileScreen.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from "../../../../utils";
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
@@ -256,7 +256,8 @@ export default connect(state => ({
   ...state.profile,
   ...state.default,
   adaptive: state.default.adaptive,
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   setTitle: actions.setTitle,
   loadWallets: walletsActions.loadWallets,

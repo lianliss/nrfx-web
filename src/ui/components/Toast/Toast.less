@@ -9,31 +9,41 @@
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
+  background: var(--background);
   animation: toast-show.15s ease-out;
   transition: opacity 2s ease;
   pointer-events: all;
+  box-shadow: var(--main-shadow);
+  color: var(--gray);
 
-  background: var(--uikit-toast-info-background);
-  box-shadow: var(--uikit-toast-info-shadow);
-  color: var(--uikit-toast-info-color);
+  &:before {
+    top: 0;
+    left: 0;
+    position: absolute;
+    content: '';
+    display: block;
+    width: inherit;
+    height: 100%;
+    border-radius: inherit;
+    box-shadow: 0 6px 24px var(--background), 0 0 2px var(--background);
+    opacity: .3;
+    pointer-events: none;
+  }
 
   &.success {
-    background: var(--uikit-toast-success-background);
-    box-shadow: var(--uikit-toast-success-shadow);
-    color: var(--uikit-contrast-primary);
+    --background: var(--text-green);
+    color: var(--white);
   }
 
   &.warning {
-    background: var(--uikit-toast-warning-background);
-    box-shadow: var(--uikit-toast-warning-shadow);
-    color: var(--uikit-contrast-primary);
+    --background: var(--text-yellow);
+    color: var(--white);
   }
 
   &.fail,
   &.error {
-    background: var(--uikit-toast-fail-background);
-    box-shadow: var(--uikit-toast-fail-shadow);
-    color: var(--uikit-contrast-primary);
+    --background: var(--text-red);
+    color: var(--white);
   }
 
   &__icon {

@@ -1,0 +1,33 @@
+.Status {
+  display: inline-flex;
+  align-items: center;
+
+  &.confirmation,
+  &.pending {
+    color: var(--dark-blue);
+  }
+
+  &.completed {
+    color: var(--text-yellow);
+  }
+
+  &.online{
+    color: var(--green);
+  }
+  &.failed,
+  &.offline,
+  &.cancelled {
+    color: var(--text-red);
+  }
+
+
+  .Status__indicator {
+    font-size: 0;
+    background: currentColor;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+}
+

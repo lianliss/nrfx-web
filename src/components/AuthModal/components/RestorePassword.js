@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import * as utils from 'utils';
 import * as steps from '../fixtures';
 import SuccessModal from 'src/index/components/site/SuccessModal/SuccessModal';

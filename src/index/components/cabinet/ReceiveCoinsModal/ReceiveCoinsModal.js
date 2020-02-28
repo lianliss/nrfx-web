@@ -2,7 +2,7 @@
 import './ReceiveCoinsModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import SVG from 'react-inlinesvg';
 import QRCode from 'qrcode.react';
 

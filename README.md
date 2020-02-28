@@ -1,7 +1,9 @@
-### `npm start`
+# Narfex web app
 
-Запуск приложения
+#### Запуск приложения
+`npm start`
 
-### `npx run ui`
+#### Запуск UI кита в watch режиме
+`npx run ui`
 
-Запуск UI кита в watch режиме
+

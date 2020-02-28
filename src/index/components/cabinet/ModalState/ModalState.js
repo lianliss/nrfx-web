@@ -1,7 +1,7 @@
 import './ModalState.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';

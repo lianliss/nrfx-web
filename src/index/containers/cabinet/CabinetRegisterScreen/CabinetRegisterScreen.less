@@ -6,7 +6,7 @@
   padding: 40px;
 
   .Input__indicator {
-    color: var(--primary-green);
+    color: var(--green);
   }
 
   &__description {
@@ -15,7 +15,11 @@
     text-align: center;
     font-size: 13px;
     line-height: 16px;
-    color: var(--primary-grey);
+    color: var(--dark-gray);
+
+    &.error {
+      color: var(--text-red);
+    }
   }
 
   &__PhoneInput {
@@ -53,7 +57,7 @@
     &_inputClass {
       height: 48px !important;
       box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.05);
-      background: var(--uitkit-background) !important;
+      background: var(--primary-background) !important;
       border-radius: 8px !important;
       font-size: 15px !important;
       line-height: 20px !important;
@@ -65,7 +69,7 @@
       width: 100% !important;
 
       &:focus {
-        border-color: var(--uikit-primary) !important;
+        border-color: var(--primary-orange) !important;
       }
     }
 
@@ -76,9 +80,11 @@
   }
 
   &__content {
-    padding: 50px;
-    width: 424px;
-    box-sizing: border-box;
+    .ContentBox__content {
+      padding: 40px;
+      width: 424px;
+      box-sizing: border-box;
+    }
 
     &__send_code_button {
       margin-top: -15px;
@@ -88,7 +94,7 @@
 
     &__timer,
     &__resend_code_button {
-      color: var(--primary-grey);
+      color: var(--dark-gray);
       margin: 0 24px;
     }
 
@@ -122,8 +128,10 @@
     padding: 16px 0;
 
     &__content {
-      width: 100%;
-      padding: 24px 16px;
+      .ContentBox__content {
+        width: 100%;
+        padding: 24px 16px;
+      }
 
       &__submit_wrapper {
         .Button {

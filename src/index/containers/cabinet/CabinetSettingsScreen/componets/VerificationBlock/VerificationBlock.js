@@ -4,9 +4,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as utils from '../../../../../../utils';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as actions from '../../../../../../actions';
 import SVG from 'react-inlinesvg';
+import { ButtonWrapper } from '../../../../../../ui/components/Button/Button';
 
 const VerificationBlock = (props) => {
   const statuses = {
@@ -40,7 +41,7 @@ const VerificationBlock = (props) => {
   const status = statuses[props.verification];
 
   return (
-    <div className="CabinetSettingsScreen__main VerificationBlock Content_box">
+    <UI.ContentBox className="CabinetSettingsScreen__main VerificationBlock">
       <div className="CabinetSettingsScreen__header">
         {utils.getLang('global_verification')}
       </div>
@@ -58,12 +59,12 @@ const VerificationBlock = (props) => {
             <li>{utils.getLang('cabinet_profile_verificationItem4')}</li>
           </ul>
 
-          {status.action && <div className="CabinetSettingsScreen__buttonWrapper">
+          {<ButtonWrapper align="right">
             <UI.Button onClick={() => actions.openModal('verification')}>{utils.getLang('cabinet_settings_passVerification')}</UI.Button>
-          </div>}
+          </ButtonWrapper>}
         </div>
       </div>
-    </div>
+    </UI.ContentBox>
   )
 }
 

@@ -5,7 +5,7 @@ import React from 'react';
 import BaseScreen from '../../BaseScreen';
 import SitePageInfoBlock from '../../../components/site/SitePageInfoBlock/SitePageInfoBlock';
 import HomepageProduct from '../../../components/site/HomepageProduct/HomepageProduct';
-import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
+// import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import RegisterBanner from '../../../components/site/RegisterBanner/RegisterBanner';
 import InfoCard from '../../../components/site/InfoCard/InfoCard';
 import * as pages from '../../../constants/pages';

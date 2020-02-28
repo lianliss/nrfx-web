@@ -1,7 +1,7 @@
 import React from 'react';
 // internal
 import BaseScreen from './BaseScreen';
-import UI from '../../ui';
+import * as UI from '../../ui';
 
 export default class TestScreen extends BaseScreen {
   render() {

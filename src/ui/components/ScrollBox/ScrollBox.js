@@ -33,6 +33,11 @@ export default class ScrollBox extends React.Component {
     this.interval = setInterval(this.setSizes, 1000);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setSizes);
+    window.removeEventListener('resize', this.setSizes);
+  }
+
   componentWillUpdate() {
     clearInterval(this.interval);
   }

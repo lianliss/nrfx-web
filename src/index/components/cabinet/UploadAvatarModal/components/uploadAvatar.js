@@ -1,5 +1,5 @@
 import React from 'react';
-import UI from '../../../../../ui';
+import * as UI from '../../../../../ui';
 import * as auth from '../../../../../services/auth';
 import * as api from '../../../../../services/api';
 import * as modalActions from '../../../../../actions/modalGroup';
@@ -24,7 +24,7 @@ export default class ImageUpload extends React.Component {
     if (!this.state.file) return;
 
     let uploader = new XMLHttpRequest();
-    let url = `${api.EXPORT_API_ENTRY}/api/v${api.EXPORT_API_VERSION}/profile/upload_photo`;
+    let url = `${api.API_ENTRY}/api/v${api.API_VERSION}/profile/upload_photo`;
 
     uploader.open("POST", url, true);
     uploader.setRequestHeader('X-Token', auth.getToken());

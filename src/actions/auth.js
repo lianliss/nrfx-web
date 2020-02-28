@@ -9,6 +9,9 @@ import * as auth from '../services/auth';
 import * as user from './user';
 import router from '../router';
 import * as pages from '../index/constants/pages';
+import * as actions from './index';
+import * as utils from '../utils';
+import * as toasts from './toasts';
 
 export function getAuth(login, password, token) {
   const app_id = 8;
@@ -59,9 +62,25 @@ export function getAuth(login, password, token) {
 // }
 
 export function logout() {
-  router.navigate(pages.MAIN);
-  auth.logout();
+  actions.confirm({
+    title: utils.getLang('cabinet_header_exit'),
+    content: utils.getLang('cabinet_exitConfirmText'),
+    okText: utils.getLang('cabinet_exitActionButton'),
+    type: 'negative'
+  }).then(() => {
+    router.navigate(pages.MAIN);
+    store.dispatch({type: actionTypes.LOGOUT});
+    api.call(apiSchema.Profile.LogoutPost).then(() => {
+      auth.logout();
+    }).catch(err => {
+      toasts.error(err.message);
+    });
+  });
+}
+
+export function clearProfile() {
   store.dispatch({type: actionTypes.LOGOUT});
+  auth.logout();
 }
 
 export function setSecretKey() {
@@ -153,9 +172,8 @@ export function checkSmsCode(countryCode, number, code) {
 }
 
 export function registerUser(email, refer = null, invite_link = null, token) {
-  return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignUpPut, { email, refer, invite_link, recaptcha_response: token })
-      .then(() => resolve())
-      .catch((err) => reject(err));
-  });
+  return api.call(apiSchema.Profile.SignUpPut, {
+    email, refer, invite_link,
+    ...(token ? { recaptcha_response: token } : {})
+  })
 }

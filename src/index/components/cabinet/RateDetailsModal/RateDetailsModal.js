@@ -1,7 +1,7 @@
 import './RateDetailsModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import * as utils from "../../../../utils";
 import SVG from 'react-inlinesvg';
 import * as actions from "../../../../actions";

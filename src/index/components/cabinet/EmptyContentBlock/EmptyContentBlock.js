@@ -2,9 +2,10 @@ import './EmptyContentBlock.less';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
+import SVG from 'react-inlinesvg';
 
 export default function EmptyContentBlock({ icon, message, button, skipContentClass, height, adaptive }) {
   let style = {};
@@ -22,7 +23,9 @@ export default function EmptyContentBlock({ icon, message, button, skipContentCl
       })}
       style={style}
     >
-      <div className="EmptyContentBlock__content__icon" style={{ backgroundImage: `url(${icon})` }} />
+      <div className="EmptyContentBlock__content__icon" >
+        <SVG src={icon} />
+      </div>
       <div className="EmptyContentBlock__content__message">{message}</div>
       {button && <div className="EmptyContentBlock__call_to_action">
         <UI.Button onClick={button.onClick} size={button.size || (!adaptive ? 'large' : 'small')} style={adaptive ? {marginTop: 16} : {}}>

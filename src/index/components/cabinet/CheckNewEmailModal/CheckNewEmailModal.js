@@ -1,7 +1,7 @@
 import './CheckNewEmailModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as modalGroupActions from "../../../../actions/modalGroup";
 import * as utils from "../../../../utils";

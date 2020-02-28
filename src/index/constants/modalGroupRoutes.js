@@ -9,7 +9,6 @@ import DepositInfoModal from '../components/cabinet/DepositInfoModal/DepositInfo
 import WithdrawalModal from '../components/cabinet/WithdrawalModal/WithdrawalModal';
 
 // settings
-import GAConfirmModal from '../components/cabinet/GAConfirmModal_old/GAConfirmModal';
 import ChangeEmailModal from '../components/cabinet/ChangeEmailModal/ChangeEmailModal';
 // import ChangeNumberModal from '../components/cabinet/ChangeNumberModal/ChangeNumberModal';
 import SecretKeyInfoModal from '../components/cabinet/SecretKeyInfoModal/SecretKeyInfoModal';
@@ -17,7 +16,7 @@ import SecretKeyDescModal from '../components/cabinet/SecretKeyDescModal/SecretK
 
 // profile
 import ChangeSecretKeyModal from '../components/cabinet/ChangeSecretKeyModal/ChangeSecretKeyModal';
-import GoogleCodeModal from '../components/cabinet/GoogleCodeModal/GoogleCodeModal';
+// import GoogleCodeModal from '../components/cabinet/GoogleCodeModal/GoogleCodeModal';
 
 const Modals = {
   SendCoinsModal: {children: SendCoinsModal},
@@ -31,7 +30,7 @@ const Modals = {
   SecretKeyInfoModal: {children: SecretKeyInfoModal},
   SecretKeyDescModal: {children: SecretKeyDescModal},
   ChangeSecretKeyModal: {children: ChangeSecretKeyModal},
-  GoogleCodeModal: {children: GoogleCodeModal}
+  // GoogleCodeModal: {children: GoogleCodeModal}
 };
 
 export const MODALGROUP_ROUTES = {

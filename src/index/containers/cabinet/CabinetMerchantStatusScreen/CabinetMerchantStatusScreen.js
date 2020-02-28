@@ -3,7 +3,7 @@ import './CabinetMerchantStatusScreen.less';
 import React from 'react';
 
 import { getLang } from '../../../../utils'
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import router from '../../../../router';
 import * as pages from 'src/index/constants/pages';
 

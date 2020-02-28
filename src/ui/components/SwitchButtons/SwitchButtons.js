@@ -4,7 +4,7 @@ import './SwitchButtons.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 // internal
-import UI from '../../index';
+import * as UI from '../../index';
 import * as utils from '../../utils';
 
 const SwitchButtons = props => {

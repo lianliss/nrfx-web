@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import * as modalGroupActions from "../../../../../../actions/modalGroup";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
-import UI from '../../../../../../ui';
-// import VerificationBlock from '../VerificationBlock/VerificationBlock';
+import * as UI from '../../../../../../ui';
+import VerificationBlock from '../VerificationBlock/VerificationBlock';
 import * as actions from 'src/actions/index';
 import * as toasts from 'src/actions/toasts';
 
@@ -35,8 +35,12 @@ class SettingPersonal extends React.Component{
 
     return(
       <>
-        {/*<VerificationBlock />*/}
-        <div className="CabinetSettingsScreen__main Content_box">
+        { !utils.isProduction() && <VerificationBlock /> }
+        { this.props.profile.user.applicant_id && <UI.ContentBox className="CabinetSettingsScreen__main">
+          <div className="CabinetSettingsScreen__header">applicant_id</div>
+          <pre>{this.props.profile.user.applicant_id}</pre>
+        </UI.ContentBox> }
+        <UI.ContentBox className="CabinetSettingsScreen__main">
           <div className="CabinetSettingsScreen__header">
             {utils.getLang('cabinet_settingsPersonalInformation')}
           </div>
@@ -159,7 +163,7 @@ class SettingPersonal extends React.Component{
               </UI.Button>
             </div>
           </div>
-        </div>
+        </UI.ContentBox>
       </>
     )
   }

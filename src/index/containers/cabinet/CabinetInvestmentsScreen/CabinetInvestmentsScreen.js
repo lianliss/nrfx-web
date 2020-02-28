@@ -3,7 +3,7 @@ import './CabinetInvestmentsScreen.less';
 import React from 'react';
 import { connect } from 'react-redux';
 //
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import router from '../../../../router';
 import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
 import Balances from './components/Balances';
@@ -232,7 +232,8 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 export default connect(state => ({
   ...state.investments,
   adaptive: state.default.adaptive,
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }),{
   setTitle: actions.setTitle,
   loadInvestments: investmentsActions.loadInvestments,

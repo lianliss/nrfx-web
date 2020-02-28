@@ -2,7 +2,7 @@ import './SendCoinsConfirmModal.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import SVG from 'react-inlinesvg';
 
 import * as actions from '../../../../actions';
@@ -42,15 +42,18 @@ class SendCoinsConfirmModal extends React.Component {
 
   __getTitle() {
     const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
-    return `${utils.getLang('cabinet_sendCoinsConfirmModal_name')} ${utils.ucfirst(currencyInfo.name)}`;
+    return <span>{utils.getLang('cabinet_sendCoinsConfirmModal_name')} {utils.ucfirst(currencyInfo.name)}</span>;
   }
 
   get currentFee() {
+    if (this.props.type === 'login') return 0;
     return this.props.limits[this.currentWallet.currency].fee;
   }
 
   __handleSubmit = (gaCode) => {
     this.props.sendCoins({
+      type: this.props.type,
+      login: this.props.login,
       address: this.props.address,
       wallet_id: this.props.walletId,
       amount: this.props.amount,
@@ -59,7 +62,7 @@ class SendCoinsConfirmModal extends React.Component {
   };
 
   __renderContent() {
-    const { address, amount, gaCode = '' } = this.props;
+    const { address, login, amount, gaCode = '' } = this.props;
     const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
 
     return (
@@ -68,9 +71,9 @@ class SendCoinsConfirmModal extends React.Component {
         <UI.List items={[
           {
             label: utils.getLang('global_from'),
-            value: `${utils.getLang('cabinet_walletTransactionModal_my')} ${utils.ucfirst(currencyInfo.name)} ${utils.getLang('global_wallet')}`
+            value: <span>{utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)} {utils.getLang('global_wallet')}</span>
           },
-          { label: utils.getLang('global_to'), value: address },
+          { label: utils.getLang('global_to'), value: address || login },
           { label: utils.getLang('global_amount'), value: <NumberFormat number={amount} currency={currencyInfo.abbr} /> },
           { label: utils.getLang('global_fee'), value: <NumberFormat number={this.currentFee} currency={currencyInfo.abbr} /> }
         ]} />

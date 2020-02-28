@@ -18,7 +18,7 @@ export default props => {
   return (
     <div className="WalletCard" style={{background: getBackground(props.currency), color: props.currency.color}} >
       {props.title && <div className="WalletCard__title">{props.title}</div>}
-      {props.balance && <div className="WalletCard__balance">
+      {!isNaN(props.balance) && <div className="WalletCard__balance">
         <NumberFormat number={props.balance} currency={props.currency.abbr} />
       </div>}
       {props.balanceUsd && <div className="WalletCard__balanceUsd">

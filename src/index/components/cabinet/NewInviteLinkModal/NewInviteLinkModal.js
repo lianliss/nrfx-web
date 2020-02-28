@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import {connect} from 'react-redux';

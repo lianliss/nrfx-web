@@ -2,7 +2,7 @@ import './DashboardItem.less';
 
 import React from 'react';
 import * as utils from '../../../../../../utils';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import router from "../../../../../../router";
 
 import { ReactComponent as UsersSvg } from '../../../../../../asset/24px/users.svg';
@@ -110,7 +110,7 @@ class DashboardItem extends React.Component {
             <li>{utils.getLang('cabinet_profileScreenCurrencyText2')}</li>
           </ol>
           <div className="DashboardItem__buttonAction">
-            <UI.Button onClick={() => router.navigate(pages.CABINET_WALLET, { section: 'fiat' })} size="middle">{utils.getLang('global_buy')}</UI.Button>
+            <UI.Button type="outline" onClick={() => router.navigate(pages.CABINET_WALLET, { section: 'fiat' })} size="middle">{utils.getLang('global_buy')}</UI.Button>
           </div>
         </UI.ContentBox>
       )
@@ -127,7 +127,7 @@ class DashboardItem extends React.Component {
             {this.content.emptyDescription}
           </div>
           <div className="DashboardItem__buttonAction">
-            <UI.Button size="middle" {...this.button} />
+            <UI.Button type="outline" size="middle" {...this.button} />
           </div>
         </div>
       </UI.ContentBox>,
@@ -173,7 +173,7 @@ class DashboardItem extends React.Component {
           </div>
         </div>
         <div className="DashboardItem__buttonAction">
-          <UI.Button size="middle" {...this.button} />
+          <UI.Button type="outline" size="middle" {...this.button} />
         </div>
       </UI.ContentBox>
     });

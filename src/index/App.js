@@ -9,7 +9,8 @@ import Modals from './Modals';
 import ModalGroup from '../ui/components/ModalGroup/ModalGroup';
 import Toasts from './components/cabinet/Toasts/Toasts';
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
-import UI from '../ui';
+import * as UI from '../ui';
+import LogoLoader from '../ui/components/LogoLoader/LogoLoader';
 import * as actions from '../actions';
 import * as internalNotifications from '../actions/cabinet/internalNotifications';
 import * as storage from '../services/storage';
@@ -24,6 +25,7 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    document.body.classList.add(['theme', this.props.theme].join('-'));
     loadReCaptcha();
     this._loadAssets();
   }
@@ -36,8 +38,12 @@ class App extends React.Component {
     }});
   }
 
-  componentDidUpdate() {
-    const { params } = this.props.router.getState();
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.theme !== this.props.theme) {
+      document.body.classList.remove(['theme', prevProps.theme].join('-'));
+      document.body.classList.add(['theme', this.props.theme].join('-'));
+    }
+    const { params } = this.props.route;
     if (params.modal || params.modal_group) {
       document.body.classList.add('modal-open');
       document.body.style.marginRight = utils.getScrollbarWidth() + "px";
@@ -49,17 +55,11 @@ class App extends React.Component {
 
   render() {
     const acceptedCookies = storage.getItem('acceptedCookies');
-    const currentLang = getLang();
     const { error } = this.state;
 
     if (this.state.isLoading) {
-      const loadingText = {
-        ru: "Загрузка...",
-        id: "memuat...",
-        // TODO
-      }[currentLang] || "Loading...";
       return (
-        <div className="AppLoading">{loadingText}</div>
+        <LogoLoader className="AppLoading" />
       )
     }
 
@@ -78,7 +78,7 @@ class App extends React.Component {
       <Helmet>
         <title>{utils.getLang('global_meta_title', true)}</title>
       </Helmet>
-      <ModalGroup {...this.props} />
+      <ModalGroup />
       <Modals {...this.props} />
       <Routes {...this.props} />
       <Toasts />
@@ -101,8 +101,9 @@ class App extends React.Component {
 }
 
 
-export default connect(state => {
-  return {state};
-}, {
+export default connect(state => ({
+  route: state.router.route,
+  theme: state.default.cabinet ? state.default.theme : 'light'
+}), {
   loadInternalNotifications: internalNotifications.load
 })(App);

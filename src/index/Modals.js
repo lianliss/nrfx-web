@@ -13,6 +13,7 @@ import ChangeSecretKeyModal from './components/cabinet/ChangeSecretKeyModal/Chan
 import SendCoinsConfirmModal from './components/cabinet/SendCoinsConfirmModal/SendCoinsConfirmModal';
 import ReceiveCoinsModal from './components/cabinet/ReceiveCoinsModal/ReceiveCoinsModal';
 import WalletTransactionModal from './components/cabinet/WalletTransactionModal/WalletTransactionModal';
+import DepositWithdrawModal from './components/cabinet/DepositWithdrawModal/DepositWithdrawModal';
 import LanguageModal from './components/site/LanguageModal/LanguageModal';
 import TranslatorModal from './components/cabinet/TranslatorModal/TranslatorModal';
 import NewInviteLinkModal from './components/cabinet/NewInviteLinkModal/NewInviteLinkModal';
@@ -21,10 +22,12 @@ import ManageBalanceModal from './components/cabinet/ManageBalanceModal/ManageBa
 import ChooseMarketModal from './components/cabinet/ChooseMarketModal/ChooseMarketModal';
 import ConfirmModal from './components/cabinet/ConfirmModal/ConfirmModal';
 import GAConfirmModal from './components/cabinet/GAConfirmModal/GAConfirmModal';
+import GoogleCodeModal from './components/cabinet/GoogleCodeModal/GoogleCodeModal';
 import DepositInfoModal from './components/cabinet/DepositInfoModal/DepositInfoModal';
 import CalcDepositModal from './components/cabinet/CalcDepositModal/CalcDepositModal';
 import AuthModal from '../components/AuthModal/AuthModal';
 import MerchantModal from '../index/components/cabinet/MerchantModal/MerchantModal';
+import FiatWithdrawalModal from '../index/components/cabinet/FiatWithdrawalModal/FiatWithdrawalModal';
 import FiatOperationModal from '../index/components/cabinet/FiatOperationModal/FiatOperationModal';
 import DepositPoolSuccessModal from '../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal';
 import StaticContentModal from './components/site/StaticContentModal/StaticContentModal';
@@ -32,12 +35,12 @@ import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlock
 import VerificationModal from '../index/components/cabinet/VerificationModal/VerificationModal';
 import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewBotModal';
 import router from '../router';
+import {connect} from 'react-redux';
 
-export default function Modals(props) {
-  const routeState = props.router.getState();
-  const routerParams = routeState.params;
+function Modals(props) {
+  const routerParams = props.route.params;
   delete routerParams.ref;
-  const { options } = routeState.meta;
+  const { options } = props.route.meta;
   const modal = routerParams.modal;
 
   let Component = false;
@@ -66,6 +69,9 @@ export default function Modals(props) {
       break;
     case 'withdrawal':
       Component = WithdrawalModal;
+      break;
+    case 'fiat_withdrawal':
+      Component = FiatWithdrawalModal;
       break;
     case 'new_wallet':
       Component = NewWalletModal;
@@ -127,8 +133,14 @@ export default function Modals(props) {
     case 'secret_key_info':
       Component = SecretKeyInfoModal;
       break;
+    case 'deposit_withdraw':
+      Component = DepositWithdrawModal;
+      break;
     case 'ga_code':
       Component = GAConfirmModal;
+      break;
+    case 'google_code':
+      Component = GoogleCodeModal;
       break;
     default: return null;
   }
@@ -143,11 +155,14 @@ export default function Modals(props) {
         window.history.back();
       }}
       onClose={() => {
-        const route = router.getState();
-        router.navigate(route.name, {
-          section: route.params.section
+        router.navigate(props.route.name, {
+          section: props.route.params.section
         })
       }}
     />
   );
 }
+
+export default connect(state => ({
+  route: state.router.route
+}))(Modals);

@@ -1,7 +1,7 @@
 import './BotsTable.less';
 
 import React from 'react';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import router from '../../../../../../router';

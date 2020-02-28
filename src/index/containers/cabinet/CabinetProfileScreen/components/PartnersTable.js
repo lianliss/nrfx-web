@@ -1,12 +1,12 @@
 import React from 'react';
-import UI from '../../../../../ui';
+import * as UI from '../../../../../ui';
 
 import * as utils from '../../../../../utils';
 import EmptyContentBlock from '../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import * as actions from '../../../../../actions';
 
 export default function PartnersTable({partners, adaptive, skipContentBox}) {
-  if (!partners.length) {
+  if (!partners || !partners.length) {
     return (
       <EmptyContentBlock
         adaptive={adaptive}

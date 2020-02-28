@@ -12,9 +12,9 @@ const Menu = props => {
 
   const [ hiddenItems, setHiddenItems ] = useState({});
 
-  const handleClick = () => {
-    action(props.params.action);
-  };
+  // const handleClick = () => {
+  //   action(props.params.action);
+  // };
 
   const toggleItem = (itemName) => {
 

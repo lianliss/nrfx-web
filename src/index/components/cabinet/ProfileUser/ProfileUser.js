@@ -28,7 +28,7 @@ const ProfileSidebarUser = ({profile}) => {
       </div>
       <div className="ProfileUser__description">
         <h3 className="ProfileUser__title">
-          {utils.ucfirst(profile.user.first_name)} {utils.ucfirst(profile.user.last_name)}
+          <span>{utils.ucfirst(profile.user.first_name)} {utils.ucfirst(profile.user.last_name)}</span>
           { profile.verification === "verified" && <SVG className="ProfileUser__verified" src={require('src/asset/16px/verified.svg')} /> }
         </h3>
         <p className="ProfileUser__txt">{profile.user.login}</p>

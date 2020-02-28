@@ -1,5 +1,5 @@
 // styles
-import './index/index.less';
+import './index.less';
 // external
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -22,6 +22,8 @@ import './index/polyfill';
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({dsn: "https://2f062902440147cfab7ea204358fdd26@sentry.io/1816477"});
 }
+
+// test
 
 // require('define').noConflict();
 auth.setup();

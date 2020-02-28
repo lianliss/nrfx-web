@@ -1,10 +1,12 @@
 //styles
 // external
 import React, { useEffect, useRef } from 'react';
+import bn from 'big.js';
 // internal
 import store from '../store';
 import router from '../router';
 import moment from 'moment';
+import * as api from 'src/services/api';
 import TranslatorMode from 'src/index/components/cabinet/TranslatorMode/TranslatorModal';
 
 export function classNames() {
@@ -59,6 +61,11 @@ export function getLang(key, string = false, code = false) {
   return langString;
 }
 
+export const getCssVar = (v, fallback = '#AAA') => {
+  return (window.getComputedStyle && window.getComputedStyle(document.body)
+    .getPropertyValue(v).trim()) || fallback;
+};
+
 export const nl2br = text => {
   if (text.includes('\\n')) {
     return text.split('\\n').map((item, i) => <>{item}<br /></>);
@@ -70,6 +77,7 @@ export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(em
 
 /* eslint-disable-next-line */
 export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase());
+/* eslint-disable-next-line */
 export const isLogin = name => /^[a-zA-Z0-9\_]+$/i.test((name||"").toLowerCase());
 
 export function useInterval(callback, delay) {
@@ -105,6 +113,11 @@ export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigi
   return null;
 };
 
+export function isProduction ()  {
+  return !api.API_ENTRY.includes('stage') && !api.API_ENTRY.includes('api-');
+  // return window.location.host === company.host;
+}
+
 export function throttle (func, ms)  {
   let timeout = null;
 
@@ -122,9 +135,9 @@ export function ucfirst(input = "") {
 }
 
 export function formatDouble(input, fractionDigits = 8) {
-  if (isNaN(parseFloat(input))) return null;
+  if (isNaN(parseFloat(input)) || Math.abs(input) === Infinity) return null;
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
-  return Math.floor((input * coefficient).toFixed(0)) / coefficient;
+  return Math.floor(bn(input).mul(coefficient).toExponential()) / coefficient;
   // return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 

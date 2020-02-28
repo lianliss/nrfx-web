@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import * as utils from 'utils';
 import Resend from 'src/index/components/site/Resend/Resend';
 import * as PAGES from 'src/index/constants/pages';

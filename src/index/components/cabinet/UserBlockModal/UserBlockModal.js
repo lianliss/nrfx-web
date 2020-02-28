@@ -2,7 +2,7 @@ import './UserBlockModal.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
 import company from '../../../constants/company';

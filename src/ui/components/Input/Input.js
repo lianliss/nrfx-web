@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SVG from 'react-inlinesvg';
 // internal
 import MarkDown from '../MarkDown/MarkDown';
-import { classNames, __doubleInputOnKeyPressHandler } from '../../utils';
+import { classNames } from '../../utils';
 import { openModal } from 'src/actions';
 
 class Input extends React.Component {
@@ -40,26 +40,14 @@ class Input extends React.Component {
         langKey: this.props.placeholder.props.langKey
       })
     }
-  }
+  };
 
   render() {
     let { placeholder } = this.props;
     placeholder = typeof placeholder === 'string' ? placeholder : ( placeholder && placeholder.props.langContent );
 
-    const className = classNames({
-      Input: true,
-      multiLine: this.props.multiLine,
-      error: this.props.error,
-      password: this.props.type === "password",
-    });
-
-    const wrapperClassName = classNames({
-      Input__wrapper: true,
-      [this.props.classNameWrapper]: !!this.props.classNameWrapper,
-      [this.props.size]: !!this.props.size,
-    });
-
     let type = this.props.type;
+    let error = false;
 
     if (this.props.type === "password" && this.state.displayPassword) {
       type = "text";
@@ -69,6 +57,29 @@ class Input extends React.Component {
       type = "datetime-local";
     }
 
+    if (this.props.type === 'code') {
+      type = "number";
+    }
+
+    if (this.props.type === 'number') {
+      console.log(this.props.value, isNaN(this.props.value))
+      if (isNaN(this.props.value)) {
+        error = true;
+      }
+    }
+
+    const className = classNames({
+      Input: true,
+      multiLine: this.props.multiLine,
+      error: this.props.error || error,
+      password: this.props.type === "password",
+    });
+
+    const wrapperClassName = classNames({
+      Input__wrapper: true,
+      [this.props.classNameWrapper]: !!this.props.classNameWrapper,
+      [this.props.size]: !!this.props.size,
+    });
 
     let params = {
       className,
@@ -85,6 +96,9 @@ class Input extends React.Component {
       }
     };
 
+    const value = this.props.pattern ? ((this.props.value || "").match(this.props.pattern) || []).join("") : this.props.value;
+
+
     let cont;
     if (this.props.multiLine) {
       cont = <textarea
@@ -97,7 +111,7 @@ class Input extends React.Component {
       cont = <input
         ref="input"
         {...params}
-        value={this.props.value}
+        value={value}
         onKeyPress={this.__onKeyPress}
         onChange={this.__onChange}
         onBlur={this.props.onBlur || (() => {})}
@@ -110,6 +124,15 @@ class Input extends React.Component {
     const closeEyeSvg = require('../../asset/closed_eye_24.svg');
     const openEyeSvg = require('../../asset/opened_eye_24.svg');
 
+    const reliability =  this.props.reliability ? (
+      <div className="Input__reliability">
+        <div className="Input__reliability__label">Weak</div>
+        <div className="Input__reliability__indicator">
+          <div className="Input__reliability__indicator__fill"></div>
+        </div>
+      </div>
+    ) : null;
+
     return (
       <div className={wrapperClassName} onClick={this.props.onClick}>
         {cont}
@@ -118,9 +141,10 @@ class Input extends React.Component {
             <SVG onClick={alert} src={this.state.displayPassword ? closeEyeSvg : openEyeSvg} />
           </div>
         }
+        {reliability}
         {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
           this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
-        {this.props.description ? <div className="Input__description">
+        {this.props.description !== undefined ? <div className="Input__description">
           { typeof this.props.description !== 'string' ? this.props.description : <MarkDown content={this.props.description} /> }
         </div> : null}
       </div>
@@ -138,10 +162,8 @@ class Input extends React.Component {
       }
     }
 
-    if (this.props.pattern) {
-      if (!this.props.pattern.test(e.key)) {
-        e.preventDefault();
-      }
+    if (this.props.pattern && !this.props.pattern.test(e.key)) {
+      e.preventDefault();
     }
 
     if (this.props.type === 'number') {
@@ -149,8 +171,6 @@ class Input extends React.Component {
         if (isNaN(e.key)) {
           e.preventDefault();
         }
-      } else {
-        __doubleInputOnKeyPressHandler(e, e.target.value);
       }
     }
 
@@ -165,9 +185,9 @@ class Input extends React.Component {
         e.target.value = 0;
       }
 
-      if (this.props.cell && e.target.value) {
-        e.target.value = parseInt(e.target.value);
-      }
+      // if (this.props.cell && e.target.value) {
+      //   e.target.value = parseInt(e.target.value);
+      // }
     }
 
     this.props.onChange && this.props.onChange(e);

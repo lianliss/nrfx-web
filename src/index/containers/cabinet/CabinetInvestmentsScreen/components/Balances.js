@@ -1,5 +1,5 @@
 import React from 'react';
-import UI from '../../../../../ui';
+import * as UI from '../../../../../ui';
 
 import * as utils from '../../../../../utils';
 import * as actions from '../../../../../actions';
@@ -9,7 +9,7 @@ function BalanceItem({ amount, currency }, key ) {
   currency = currency.toUpperCase();
 
   return (
-    <div key={key} className="Investments__balances__item Content_box">
+    <UI.ContentBox key={key} className="Investments__balances__item">
       <div className="Investments__balances__item__rows">
         <InfoRow label={utils.ucfirst(currencyInfo.name)}>{amount} {currency}</InfoRow>
       </div>
@@ -25,7 +25,7 @@ function BalanceItem({ amount, currency }, key ) {
         </UI.Button>
       </div>
       <div className="Investments__balances__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
-    </div>
+    </UI.ContentBox>
   )
 }
 

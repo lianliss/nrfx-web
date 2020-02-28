@@ -2,7 +2,7 @@ import './TradeForm.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 import * as actions from 'src/actions/cabinet/exchange';
 import { openModal } from 'src/actions/index';
 import * as utils from '../../../../../../utils';
@@ -20,7 +20,7 @@ class TradeForm extends React.Component {
   }
 
   reset = () => {
-    ['sell', 'buy'].map( action => {
+    ['sell', 'buy'].forEach( action => {
       this.props.tradeFormSetProperties(action, { touched: false });
     })
   }
@@ -52,7 +52,7 @@ class TradeForm extends React.Component {
     if (!form.amount && form.total) {
       this.props.tradeFormSetProperties(type, {
         price: value,
-        amount: (this.numberFormat(form.total / value))
+        amount: 1
       });
     } else {
       this.props.tradeFormSetProperties(type, {
@@ -92,23 +92,24 @@ class TradeForm extends React.Component {
     const form = this.props.form[type];
     const [primaryCurrency, secondaryCurrency] = this.props.market.toUpperCase().split('/');
     const balance = this.props.isLogged ? this.getBalance(type === "buy" ? secondaryCurrency : primaryCurrency) : {};
+    const tickerPrice = utils.formatDouble(this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
     const marketTotalPrice = utils.formatDouble(form.amount * this.props.ticker.price, utils.isFiat(secondaryCurrency) ? 2 : undefined);
 
     return (
       <div className="TradeForm__form" key={type}>
         <div className="TradeForm__form__header">
-          <div className="TradeForm__form__title">{utils.ucfirst(type)} {primaryCurrency.toUpperCase()}</div>
+          <div className="TradeForm__form__title">{utils.getLang(['global', type].join('_'))} {primaryCurrency.toUpperCase()}</div>
           <div className="TradeForm__form__balance">
             <span className="TradeForm__form__fee__label">{utils.getLang('global_balance')}:</span>
-            <UI.NumberFormat number={balance.amount} currency={balance.currency} />
+            <UI.NumberFormat  number={balance.amount} currency={balance.currency} />
           </div>
         </div>
         <div className="TradeForm__form__row">
           <div className="TradeForm__form__coll">
             <UI.Input
-              type="number"
+              type={isMarket ? "text" : "number"}
               error={form.touched && !isMarket && !form.price}
-              value={!isMarket && form.price}
+              value={!isMarket ? form.price : '~' + tickerPrice}
               onTextChange={this.handleChangePrice(type)}
               size="small"
               placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_price')}
@@ -118,7 +119,7 @@ class TradeForm extends React.Component {
           </div>
           <div className="TradeForm__form__coll">
             <UI.Input
-              type="number"
+              type={isMarket ? "text" : "number"}
               error={form.touched && !form.amount}
               value={form.amount}
               onTextChange={this.handleChangeAmount(type)}
@@ -147,10 +148,10 @@ class TradeForm extends React.Component {
           </div>
           <div className="TradeForm__form__coll">
             <UI.Input
-              type="number"
+              type={isMarket ? "text" : "number"}
               error={form.touched && !isMarket && !form.total}
               value={(isMarket ? ( marketTotalPrice ? "~" + marketTotalPrice : '') : form.total)}
-              onTextChange={this.handleChangeTotal(type)}
+              onTextChange={console.log}
               size="small"
               disabled={isMarket}
               placeholder={isMarket ? utils.getLang('exchange_type_market') : utils.getLang('global_total')}
@@ -218,6 +219,7 @@ export default connect(state => ({
   loadingStatus: state.exchange.loadingStatus,
   fee: state.exchange.fee,
   isLogged: !!state.default.profile.user,
+  currentLang: state.default.currentLang,
 }), {
   orderCreate: actions.orderCreate,
   tradeFormSetType: actions.tradeFormSetType,

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { connect } from 'react-redux';
 
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import { getLang } from 'utils/index';
 import * as pages from 'src/index/constants/pages';
 import router from 'src/router';
@@ -248,7 +248,6 @@ const mapStateToProps = (state) => ({
   currentLang: state.default.currentLang,
   profile: state.default.profile,
   langList: state.default.langList,
-  lang: state.default.lang,
   routerState: state.router,
 });
 

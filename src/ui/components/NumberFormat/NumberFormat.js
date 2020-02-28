@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import { classNames } from '../../utils';
 
 import { isFiat, noExponents } from '../../utils/index';
+import bn from 'big.js';
 
-const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
+const NumberFormat = ({ number, symbol, fractionDigits, color, skipTitle, accurate, currency, hiddenCurrency, type, percent, indicator, brackets, onClick }) => {
 
-  if (isNaN(number)) return null;
+  if (isNaN(parseFloat(number)) || Math.abs(number) === Infinity) return null;
 
   if (!fractionDigits) {
     if (percent) {
@@ -21,7 +22,7 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, curr
 
 
   const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
-  let displayNumber = Math.floor((number * coefficient).toFixed(0)) / coefficient;
+  let displayNumber =  Math.floor(bn(number).mul(coefficient).toExponential()) / coefficient;
 
   displayNumber = displayNumber.toLocaleString(undefined, {
     maximumFractionDigits: fractionDigits,
@@ -54,6 +55,10 @@ const NumberFormat = ({ number, fractionDigits, color, skipTitle, accurate, curr
 
   if (color) {
     type = number >= 0 ? 'up' : 'down';
+  }
+
+  if (symbol && number > 0) {
+    displayNumber = "+" + displayNumber;
   }
 
   return (

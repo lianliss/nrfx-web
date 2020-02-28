@@ -2,7 +2,7 @@ import './StaticContentModal.less';
 //
 import React, { useState, useEffect } from 'react';
 //
-import UI from 'src/ui';
+import * as UI from 'src/ui';
 import * as utils from 'utils';
 import { getStaticPageContent } from 'src/actions';
 import ModalState from '../../cabinet/ModalState/ModalState';

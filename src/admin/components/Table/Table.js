@@ -5,9 +5,8 @@ import React from 'react';
 import Table, { TableCell, TableColumn } from '../../../ui/components/Table/Table';
 import Item from '../Item/Item';
 import {connect} from 'react-redux';
-import * as utils from '../../../utils';
 import EmptyContentBlock from '../../../index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import action, {valueChange} from '../../../actions/admin';
+import action from '../../../actions/admin';
 import Button from '../../../ui/components/Button/Button';
 
 class TableComponent extends React.Component {

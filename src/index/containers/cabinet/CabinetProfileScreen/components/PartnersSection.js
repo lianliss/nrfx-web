@@ -15,6 +15,7 @@ import AgentsTable from './AgentsTable';
 import InviteLinks from './InviteLinks/InviteLinks';
 import InviteAgent from './InviteAgent/InviteAgent';
 import COMPANY from '../../../../constants/company';
+import Paging from '../../../../components/cabinet/Paging/Paging';
 
 class PartnersSection extends React.Component {
   constructor(props) {
@@ -63,19 +64,26 @@ class PartnersSection extends React.Component {
           />
         ];
       default:
-        return [
+        return <div>
           <ReferralLink
             key="link"
             profile={this.props.profile}
             linkDidCopy={this.__linkDidCopy}
             inviteLink={this.inviteLink}
-          />,
-          <PartnersTable
-            key="table"
-            partners={this.props.clients}
-            adaptive={this.props.adaptive}
           />
-        ]
+          <Paging
+            isCanMore={!!this.props.clients.next && !this.props.partnersTableStatus}
+            onMore={this.props.getPartnerMore}
+            moreButton={!!this.props.clients.next}
+            isLoading={this.props.partnersTableStatus}
+          >
+            <PartnersTable
+              key="table"
+              partners={this.props.clients.items}
+              adaptive={this.props.adaptive}
+            />
+          </Paging>
+        </div>
     }
   };
 
@@ -119,12 +127,14 @@ class PartnersSection extends React.Component {
 export default connect(state => ({
   ...state.profile.partner,
   ...state.default,
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  partnersTableStatus: state.profile.loadingStatus.partnersTable,
+
 }), {
   setTitle: actions.setTitle,
   loadWallets: walletsActions.loadWallets,
-  loadDashboard: profileActions.loadDashboard,
   getPartner: profileActions.getPartner,
+  getPartnerMore: profileActions.getPartnerMore,
   saveInviteLink: profileActions.saveInviteLink,
   deleteInviteLink: profileActions.deleteInviteLink,
   restoreInviteLink: profileActions.restoreInviteLink

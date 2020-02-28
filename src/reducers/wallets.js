@@ -3,10 +3,10 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   wallets: [],
   history: [],
-  transactions: [],
+  transactions: {},
   transactionsNext: null,
   transactionsLoadingMore: '',
-  transfers: [],
+  transfers: {},
   transfersLoadingMore: '',
   transfersNext: null,
   loadingStatus: {
@@ -16,11 +16,13 @@ const initialState = {
   },
   limits: [],
   sendCoinModal: {
+    type: 'address',
     gaCode: '',
     walletId: null,
-    address: null,
-    amount: 0,
-    amountUsd: 0,
+    address: '',
+    login: '',
+    amount: '',
+    amountUsd: '',
   }
 };
 
@@ -39,6 +41,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         wallets: action.wallets,
         sendCoinModal: {
+          ...initialState.sendCoinModal,
           walletId: wallet ? wallet.id : null
         }
       };
@@ -55,6 +58,26 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {
         transactionsLoadingMore: action.status,
       });
+    }
+
+    case actionTypes.WALLETS_NEW_TRANSFER: {
+      return {
+        ...state,
+        transfers: {
+          ...state.transfers,
+          items: [ action.transfer, ...state.transfers.items ]
+        }
+      }
+    }
+
+    case actionTypes.WALLETS_NEW_TRANSACTION: {
+      return {
+        ...state,
+        transactions: {
+          ...state.transactions,
+          items: [ action.transaction, ...state.transactions.items ]
+        }
+      }
     }
 
     case actionTypes.WALLETS_TRANSACTIONS_APPEND: {

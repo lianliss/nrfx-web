@@ -2,12 +2,12 @@ import './ChangeNumberModal.less';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 import ConfirmSmsModal from '../../cabinet/ConfirmSmsModal/ConfirmSmsModal';
 
 import * as utils from '../../../../utils';
-import ReactPhoneInput from 'react-phone-input-2'
+// import ReactPhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/dist/style.css'
 import {isValidPhoneNumber} from 'react-phone-number-input';
 import * as settingsActions from '../../../../actions/cabinet/settings';
@@ -40,23 +40,23 @@ class ChangeNumberModal extends React.Component {
     return (
       <div className="ChangeNumberModal__input_padding">
         <div className="ChangeNumberModal__input_wrapper">
-          <ReactPhoneInput
-            defaultCountry={'ru'}
-            value={this.state.phone}
-            onChange={this.__handleOnChangePhone}
-            enableSearchField={true}
-            disableSearchIcon={true}
-            countryCodeEditable={false}
-            searchPlaceholder="Сountry search or code"
-            autoFocus={true}
-            searchClass="ChangeNumberModal__PhoneInput_searchClass"
-            dropdownClass="ChangeNumberModal__PhoneInput_dropdownClass"
-            buttonClass="ChangeNumberModal__PhoneInput_buttonClass"
-            inputClass="ChangeNumberModal__PhoneInput_inputClass"
-            //containerClass={'ChangeNumberModal__PhoneInput_containerClass'}
+          {/*<ReactPhoneInput*/}
+          {/*  defaultCountry={'ru'}*/}
+          {/*  value={this.state.phone}*/}
+          {/*  onChange={this.__handleOnChangePhone}*/}
+          {/*  enableSearchField={true}*/}
+          {/*  disableSearchIcon={true}*/}
+          {/*  countryCodeEditable={false}*/}
+          {/*  searchPlaceholder="Сountry search or code"*/}
+          {/*  autoFocus={true}*/}
+          {/*  searchClass="ChangeNumberModal__PhoneInput_searchClass"*/}
+          {/*  dropdownClass="ChangeNumberModal__PhoneInput_dropdownClass"*/}
+          {/*  buttonClass="ChangeNumberModal__PhoneInput_buttonClass"*/}
+          {/*  inputClass="ChangeNumberModal__PhoneInput_inputClass"*/}
+          {/*  //containerClass={'ChangeNumberModal__PhoneInput_containerClass'}*/}
 
-            preferredCountries={['ru', 'id']}
-          />
+          {/*  preferredCountries={['ru', 'id']}*/}
+          {/*/>*/}
         </div>
         <UI.Input
           type="code"

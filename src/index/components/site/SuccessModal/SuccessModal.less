@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-  
+
     .SuccessModal__content__title {
       font-weight: 500;
       font-size: 13px;
@@ -13,19 +13,20 @@
       letter-spacing: 0.444444px;
       color: #40BF9D;
     }
-  
+
     .SuccessModal__content__msg {
+      box-sizing: border-box;
       font-weight: 500;
       font-size: 13px;
       line-height: 16px;
       text-align: center;
       letter-spacing: 0.444444px;
-      color: var(--primary-grey);
+      color: var(--dark-gray);
       padding: 10px 20px;
       max-width: 200px;
       margin: 0 40px;
     }
-  
+
     .SuccessModal__tick {
       width: 28px;
       height: 29px;
@@ -36,5 +37,21 @@
   .Button {
     width: 160px;
     margin: 0;
+  }
+
+  .Resend__footer {
+    height: 78px;
+    min-width: 304px;
+    .Captcha {
+      margin: auto;
+    }
+  }
+}
+
+.adaptive {
+  .SuccessModal {
+    .SuccessModal__content__msg {
+      max-width: 100%;
+    }
   }
 }

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import TitleWithBg from '../TitleWithBg/TitleWithBg';
 import * as utils from '../../../../utils';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 
 
 export default function HomepageProduct(props) {

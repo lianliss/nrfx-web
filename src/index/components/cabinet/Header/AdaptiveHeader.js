@@ -3,7 +3,7 @@ import './Header.less';
 
 import React from 'react';
 import router from '../../../../router';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import url from "url";
 import {connect} from 'react-redux';
 import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
@@ -60,7 +60,6 @@ AdaptiveHeader.defaultProps = {
   rightContent: ""
 };
 
-
 export default connect(state => ({
   internalNotifications: state.internalNotifications,
   profile: state.default.profile,
@@ -68,7 +67,6 @@ export default connect(state => ({
   router: state.router,
   langList: state.default.langList,
   title: state.default.title,
-  isExchangeEnabled: state.default.profile.is_exchange_enabled
 }), {
   dropInternalNotifications: internalNotifications.drop,
   loadNotifications: notificationsActions.loadNotifications,

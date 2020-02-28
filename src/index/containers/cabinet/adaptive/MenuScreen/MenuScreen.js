@@ -11,6 +11,7 @@ import * as PAGES from '../../../../constants/pages';
 import * as utils from '../../../../../utils';
 import * as auth from '../../../../../actions/auth';
 import * as actions from '../../../../../actions';
+import ContentBox from 'src/ui/components/ContentBox/ContentBox'
 
 class MenuScreen extends CabinetBaseScreen {
   componentDidMount() {
@@ -26,7 +27,7 @@ class MenuScreen extends CabinetBaseScreen {
 
     return (
       <div className="Menu">
-        <div className="Menu__section Content_box">
+        <ContentBox className="Menu__section">
           <div className="Menu__section__title">{utils.getLang('cabinet_header_settings')}</div>
           <BaseLink
             router={router}
@@ -57,8 +58,8 @@ class MenuScreen extends CabinetBaseScreen {
             <SVG src={require('../../../../../asset/24px/key.svg')} />
             <span>{utils.getLang("cabinet_apiKey")}</span>
           </BaseLink>
-        </div>
-        <div className="Menu__section Menu__section__noSpacing Content_box">
+        </ContentBox>
+        <ContentBox className="Menu__section Menu__section__noSpacing">
           <div
             onClick={this.__handleChangeLanguage}
             className="Menu__section__item"
@@ -66,8 +67,16 @@ class MenuScreen extends CabinetBaseScreen {
             <SVG className={"Menu__section__item__flag"} src={require(`../../../../../asset/site/lang-flags/${lang.value}.svg`)} />
             <span>{lang.title} {lang.value.toUpperCase()}</span>
           </div>
-        </div>
-        <div className="Menu__section Menu__section__noSpacing Content_box">
+          {/*<div*/}
+          {/*  onClick={this.__handleToggleTheme}*/}
+          {/*  className="Menu__section__item"*/}
+          {/*>*/}
+          {/*  <SVG src={require(`src/asset/24px/sun.svg`)} />*/}
+          {/*  <span>{utils.getLang("global_darkMode")}</span>*/}
+          {/*  <Switch on={this.props.theme === 'dark'} />*/}
+          {/*</div>*/}
+        </ContentBox>
+        <ContentBox className="Menu__section Menu__section__noSpacing">
           <BaseLink
             router={router}
             onClick={auth.logout}
@@ -78,11 +87,15 @@ class MenuScreen extends CabinetBaseScreen {
             <SVG src={require('../../../../../asset/24px/exit.svg')} />
             <span>{utils.getLang("cabinet_header_exit")}</span>
           </BaseLink>
-        </div>
+        </ContentBox>
       </div>
 
     );
   }
+
+  __handleToggleTheme = () => {
+    actions.toggleTheme();
+  };
 
   __handleChangeLanguage = () => {
     actions.openModal('language');
@@ -91,7 +104,8 @@ class MenuScreen extends CabinetBaseScreen {
 
 export default connect(state => ({
   adaptive: state.default.adaptive,
-  langList: state.default.langList
+  langList: state.default.langList,
+  theme: state.default.theme
 }), {
   setTitle: actions.setTitle
 })(MenuScreen);

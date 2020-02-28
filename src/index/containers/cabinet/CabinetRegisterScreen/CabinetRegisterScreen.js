@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 // import ReactPhoneInput from 'react-phone-input-2';
 // import moment from 'moment';
 
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import {withRouter} from 'react-router5';
 import {GetParamsContext} from '../../../contexts';
 import apiSchema from '../../../../services/apiSchema';
@@ -24,6 +24,8 @@ class CabinetRegister extends React.PureComponent {
     sendSmsStatus: null,
     timer: null,
     codeForm: false,
+    pending: false,
+    touched: false
   };
 
   componentDidMount() {
@@ -35,6 +37,7 @@ class CabinetRegister extends React.PureComponent {
 
   __handleSubmit() {
     this.setState({ touched: true });
+
     const { params } = this.context;
     const { state } = this;
 
@@ -60,6 +63,7 @@ class CabinetRegister extends React.PureComponent {
       // state.phoneWithoutCode &&
       // state.smsCode
     ) {
+      this.setState({ pending: true });
       api.call(apiSchema.Profile.FillAccountPut, {
         first_name: state.firstName,
         last_name: state.lastName,
@@ -75,6 +79,8 @@ class CabinetRegister extends React.PureComponent {
         window.location.href = "/" + pages.DASHBOARD;
       }).catch((err) => {
         this.props.toastPush(err.message, "error");
+      }).finally(() => {
+        this.setState({ pending: false });
       })
     }
   }
@@ -126,33 +132,40 @@ class CabinetRegister extends React.PureComponent {
       return false;
     }
     const { state } = this;
+
+    const validFirstName = (state.firstName && /^[a-zA-Z -]+$/i.test(state.firstName));
+    const validLastName = (state.lastName && /^[a-zA-Z -]+$/i.test(state.lastName));
+
     return (
       <div className="CabinetRegister">
-        <div className="CabinetRegister__content Content_box">
+        <UI.ContentBox className="CabinetRegister__content">
           <h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_complete')}</h3>
           <UI.Input
-            error={state.touched && !state.firstName}
+            error={state.touched && !validFirstName}
             value={state.firstName}
-            pattern={/^[a-z ,.'-]+$/i}
             placeholder={utils.getLang('cabinet_registerScreen_firstName')}
             onTextChange={text => this.__handleChange("firstName", text)}
           />
           <UI.Input
-            error={state.touched && !state.lastName}
+            error={state.touched && !validLastName}
             value={state.lastName}
-            pattern={/^[a-z ,.'-]+$/i}
             placeholder={utils.getLang('cabinet_registerScreen_lastName')}
             onTextChange={text => this.__handleChange("lastName", text)}
           />
-          <p className="CabinetRegister__description">{utils.getLang('registration_nameDescription')}</p>
+          <p className={utils.classNames("CabinetRegister__description", {
+            error: state.touched && (
+              !(state.firstName && validFirstName) ||
+              !(state.lastName && validLastName)
+            )
+          })}>
+            {utils.getLang('registration_nameDescription')}
+          </p>
           <UI.Input
-            error={state.touched && !state.login}
+            error={state.touched && !(state.login && utils.isLogin(state.login))}
             value={state.login}
-            pattern={/[a-z0-9\-_]+/i}
             placeholder={utils.getLang('site__contactLogin')}
             onTextChange={text => this.__handleChange("login", text)}
           />
-
 
           {/*<h3 className="CabinetRegister__content__title">{utils.getLang('cabinet_registerScreen_phoneNumber')}</h3>*/}
           {/*{ !state.codeForm ? <div>*/}
@@ -225,18 +238,19 @@ class CabinetRegister extends React.PureComponent {
           />
 
           <div className="CabinetRegister__content__submit_wrapper">
-            <UI.Button onClick={this.__handleSubmit.bind(this)}>
+            <UI.Button state={this.state.pending && 'loading'} onClick={this.__handleSubmit.bind(this)}>
               {utils.getLang('site__commerceRegistration')}
             </UI.Button>
           </div>
-        </div>
+        </UI.ContentBox>
       </div>
     )
   }
 }
 
 export default connect(state => ({
-  translator: state.settings.translator
+  translator: state.settings.translator,
+  currentLang: state.default.currentLang
 }), {
   toastPush: toastsActions.toastPush,
   setTitle: actions.setTitle

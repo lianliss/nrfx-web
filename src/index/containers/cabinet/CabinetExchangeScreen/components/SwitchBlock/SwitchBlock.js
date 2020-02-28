@@ -1,7 +1,7 @@
 import './SwitchBlock.less';
 import React, { useState } from 'react';
 
-import UI from '../../../../../../ui';
+import * as UI from '../../../../../../ui';
 
 export default props => {
 

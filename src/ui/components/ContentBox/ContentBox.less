@@ -1,17 +1,17 @@
 .ContentBox {
   position: static !important;
   z-index: 50;
-  box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.08), 0px 0px 4px rgba(0, 0, 0, 0.05);
-  background: var(--contrast-primary);
+  box-shadow: var(--main-shadow);
   border-radius: 8px;
 
   .ContentBox__content {
+    width: 100%;
     box-sizing: border-box;
     padding: 16px;
     position: relative !important;
     z-index: 60;
     height: inherit;
     border-radius: 8px;
-    background: white;
+    background: var(--primary-background);
   }
 }

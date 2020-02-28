@@ -1,7 +1,7 @@
 import './UploadAvatarModal.less';
 
 import React from 'react';
-import UI from '../../../../ui';
+import * as UI from '../../../../ui';
 import "./UploadAvatarModal.less";
 
 import UploadAvatar from './components/uploadAvatar';

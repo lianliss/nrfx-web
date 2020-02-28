@@ -1,15 +1,12 @@
 import * as auth from './auth';
 import * as action from '../actions/';
-import { logout } from '../actions/auth';
+import { clearProfile } from '../actions/auth';
 import router from '../router';
 import * as adminPages from '../admin/constants/pages';
 
-const API_ENTRY = 'https://api.narfex.com';
-// const API_ENTRY = 'https://stageapi.bitcoinbot.pro';
-const API_VERSION = 1;
-
-export const EXPORT_API_VERSION = API_VERSION;
-export const EXPORT_API_ENTRY = API_ENTRY;
+// export const API_ENTRY = 'https://api.narfex.com';
+export const API_ENTRY = 'https://api-payments.bitcoinbot.pro';
+export const API_VERSION = 1;
 
 export const Errors = {
   FATAL: 1,
@@ -53,7 +50,7 @@ export function invoke(method, name, params, options = {}) {
     fetch(url, init)
       .then(resp => {
         if (resp.status === 403) {
-          logout();
+          clearProfile();
           reject({ message: '403 Forbidden: Invalid credentials' });
           router.navigate(adminPages.MAIN);
           return;

@@ -1,7 +1,7 @@
 import './InviteAgent.less';
 
 import React from 'react';
-import UI from '../../../../../../ui/index';
+import * as UI from '../../../../../../ui/index';
 
 import * as toastsActions from '../../../../../../actions/toasts';
 import * as profileActions from '../../../../../../actions/cabinet/profile';
