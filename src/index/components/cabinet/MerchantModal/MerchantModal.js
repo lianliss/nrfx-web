@@ -65,7 +65,7 @@ const MerchantModal = props => {
     console.log(min_amount, max_amount, value);
     const currencyLabel = currency.toUpperCase();
     debugger;
-    if (value <= min_amount) {
+    if (value < min_amount) {
       return <>{getLang('cabinet_amount_shouldBeMore')} {min_amount} {currencyLabel}</>
     } else if (value > max_amount) {
       return <>{getLang('cabinet_amount_shouldBeLess')} {max_amount} {currencyLabel}</>;
