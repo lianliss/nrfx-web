@@ -119,7 +119,10 @@ export function tickerUpdate(ticker) {
 }
 
 export function orderCompleted(order) {
-  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_COMPLETED, order });
+  store.dispatch({ type: actionTypes.EXCHANGE_ORDER_COMPLETED, order: {
+    ...order,
+    updated_at: Math.ceil(Date.now() / 1000)
+  }});
 }
 
 export function orderFailed(orderId) {
@@ -131,7 +134,10 @@ export function setOrderStatus(orderId, status) {
 }
 
 export function addOpenOrder(order) {
-  store.dispatch({ type: actionTypes.EXCHANGE_ADD_OPEN_ORDER, order });
+  store.dispatch({ type: actionTypes.EXCHANGE_ADD_OPEN_ORDER, order: {
+    ...order,
+    updated_at: Math.ceil(Date.now() / 1000)
+  }});
 }
 
 export function orderBookRemoveOrders(orders) {
