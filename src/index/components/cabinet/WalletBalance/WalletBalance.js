@@ -49,79 +49,7 @@ const getWalletsBalance = (wallets, isInFiat) => {
 
 function WalletBalance({ wallets, adaptive, title, isFiat, emptyPlaceholder }) {
   const [ isInFiat, setIsInFiat ] = useState(true);
-  const [ convert_currency, setConvert_currency ] = useState('BTC');
   const walletsBalance = getWalletsBalance(wallets, isInFiat);
-  if (arguments[0].hasOwnProperty('walletSelected')) {
-    if (arguments[0].walletSelected !== null) {
-      const {amount, currency, to_usd, align} = arguments[0].walletSelected;
-      const currencyInfo = actions.getCurrencyInfo(currency);
-      const currencyName = utils.ucfirst(currencyInfo.name);
-      const convertBlock = <div className="WalletBalance__convert" onClick={() => {
-        convert_currency === 'BTC' ? setConvert_currency('USD') : setConvert_currency('BTC')
-      }}>
-        <span>
-          {amount > 0 ? ( convert_currency === 'BTC' ? align.toFixed(6) : (amount * to_usd).toFixed(2) ) : 0}
-          {' ' + convert_currency}
-        </span>
-      </div>;
-      return <UI.ContentBox className="WalletBalance">
-        {!adaptive && convertBlock}
-        <div className="WalletBalance__selected_wallet">
-          <div className="WalletBalance__currency_name">{utils.getLang('cabinet_walletTransactionModal_my')} {currencyName} {utils.getLang('cabinet_wallet')}</div>
-          <div className="WalletBalance__selected_amount">
-            {adaptive ? convertBlock : <NumberFormat number={amount} currency={currency} />}
-          </div>
-          {
-            isFiat ? (
-              <div className="WalletBalance__selected_buttons">
-                <UI.Button
-                  size={adaptive ? 'middle' : 'large'}
-                  onClick={() => {actions.openModal('merchant', {
-                    currency: currency
-                  })}}
-                  currency={currencyInfo}
-                >
-                  {utils.getLang('cabinet_fiatBalance_add')}
-                </UI.Button>
-                <UI.Button
-                  disabled={!amount}
-                  size={adaptive ? 'middle' : 'large'}
-                  onClick={() => {actions.openModal('merchant', {
-                    currency: currency
-                  }, { type: 'withdrawal' })}}
-                  currency={currencyInfo}
-                >
-                  {utils.getLang('global_withdrawal')}
-                </UI.Button>
-              </div>
-            ) : (
-              <div className="WalletBalance__selected_buttons">
-                <UI.Button
-                  size={adaptive ? 'middle' : 'large'}
-                  disabled={amount === 0}
-                  onClick={() => {actions.openModal('send', {
-                    currency: currencyInfo.abbr
-                  })}}
-                  currency={currencyInfo}
-                >
-                  {utils.getLang('site__contactSend')}
-                </UI.Button>
-                <UI.Button
-                  size={adaptive ? 'middle' : 'large'}
-                  onClick={() => {actions.openModal('receive', {
-                    preset: currencyName
-                  })}}
-                  currency={currencyInfo}
-                >
-                  {utils.getLang('cabinet_walletTransactionModal_receive')}
-                </UI.Button>
-              </div>
-            )
-          }
-        </div>
-      </UI.ContentBox>
-    }
-  }
 
   const balanceHeader = <h3 className="WalletBalance__header">
     {title}

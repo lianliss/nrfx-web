@@ -35,10 +35,6 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     }
   };
 
-  state = {
-    walletSelected: null
-  };
-
   get wallets() {
     return this.props.wallets.sort(
       (a, b) => a.currency < b.currency ? -1 : 1
@@ -141,7 +137,6 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         title={utils.getLang('cabinet_walletBalance_name')}
         adaptive={this.props.adaptive}
         wallets={this.wallets}
-        walletSelected={this.state.walletSelected}
       />
       <Show showIf={this.props.adaptive}>
         <div className="CabinetWalletScreen__height_padding"> </div>
@@ -228,7 +223,6 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         key={wallet.id}
         {...wallet}
         onClick={() => {this.__walletSelect(wallet)}}
-        walletSelected={this.state.walletSelected}
       />
     });
 
@@ -244,9 +238,9 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     )
   };
 
-  __walletSelect = wallet => this.setState({
-    walletSelected: wallet === this.state.walletSelected ? null : wallet
-  });
+  __walletSelect = wallet => {
+    actions.openModal('wallet', null, { wallet });
+  }
 }
 
 export default connect(state => ({

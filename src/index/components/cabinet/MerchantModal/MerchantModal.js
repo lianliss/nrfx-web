@@ -62,9 +62,7 @@ const MerchantModal = props => {
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[currency];
-    console.log(min_amount, max_amount, value);
     const currencyLabel = currency.toUpperCase();
-    debugger;
     if (value < min_amount) {
       return <>{getLang('cabinet_amount_shouldBeMore')} {min_amount} {currencyLabel}</>
     } else if (value > max_amount) {
@@ -75,8 +73,6 @@ const MerchantModal = props => {
   const handleSubmit = () => {
     setTouched(true);
     const message = checkAmount();
-    console.log(message);
-    debugger;
     if (message) {
       toasts.error(message);
       return false;

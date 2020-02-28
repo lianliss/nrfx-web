@@ -50,6 +50,11 @@ function Modal(props) {
   return null;
 }
 
+Modal.defaultProps = {
+  isOpen: true,
+  skipClose: false
+};
+
 Modal.propTypes = {
   isOpen: PropTypes.bool,
   noSpacing: PropTypes.bool,

@@ -92,7 +92,7 @@ Button.propTypes = {
 export default React.memo(Button);
 
 ButtonWrapper.propTypes = {
-  align: PropTypes.oneOf(['left', 'center', 'right'])
+  align: PropTypes.oneOf(['left', 'center', 'right', 'fill'])
 };
 
 export { ButtonWrapper };

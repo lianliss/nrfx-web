@@ -3,27 +3,28 @@ import React from 'react';
 
 
 import NumberFormat from '../NumberFormat/NumberFormat';
+import PropTypes from 'prop-types';
 
-export default props => {
+const WalletCard = props => {
 
-  const getBackground = (currency) => {
-    const { gradient } = currency;
-    if (gradient) {
-      return `linear-gradient(45deg, ${gradient[0]} 0%, ${gradient[1]} 100%)`
-    } else {
-      return currency.color;
-    }
-  };
-
+  const { currency } = props;
   return (
-    <div className="WalletCard" style={{background: getBackground(props.currency), color: props.currency.color}} >
+    <div className="WalletCard" style={{background: currency.background, color: currency.color}} >
       {props.title && <div className="WalletCard__title">{props.title}</div>}
       {!isNaN(props.balance) && <div className="WalletCard__balance">
         <NumberFormat number={props.balance} currency={props.currency.abbr} />
       </div>}
-      {props.balanceUsd && <div className="WalletCard__balanceUsd">
+      {props.balanceUsd > 0 && <div className="WalletCard__balanceUsd">
         <NumberFormat number={props.balanceUsd} currency={'usd'} />
       </div>}
     </div>
   )
-}
+};
+
+WalletCard.propTypes = {
+  balance: PropTypes.number,
+  balanceUsd: PropTypes.number,
+  currency: PropTypes.object
+};
+
+export default WalletCard;

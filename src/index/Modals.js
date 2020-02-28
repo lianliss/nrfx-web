@@ -34,6 +34,7 @@ import StaticContentModal from './components/site/StaticContentModal/StaticConte
 import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlockModal';
 import VerificationModal from '../index/components/cabinet/VerificationModal/VerificationModal';
 import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewBotModal';
+import WalletModal from './components/cabinet/WalletModal/WalletModal';
 import router from '../router';
 import {connect} from 'react-redux';
 
@@ -141,6 +142,9 @@ function Modals(props) {
       break;
     case 'google_code':
       Component = GoogleCodeModal;
+      break;
+    case 'wallet':
+      Component = WalletModal;
       break;
     default: return null;
   }

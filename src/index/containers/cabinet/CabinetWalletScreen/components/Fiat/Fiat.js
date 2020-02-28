@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 //
 import * as utils from '../../../../../../utils';
-import { setTitle } from '../../../../../../actions';
+import { setTitle, openModal } from '../../../../../../actions';
 import * as actions from '../../../../../../actions/cabinet/fiatWallets';
 import WalletBox from '../../../../../components/cabinet/WalletBox/WalletBox';
 import FiatHistoryTable from '../FiatHistoryTable/FiatHistoryTable';
@@ -16,10 +16,6 @@ import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/Loadi
 class CabinetWalletFiatScreen extends React.Component {
   load = () => {
     this.props.getFiatWallets();
-  };
-
-  state = {
-    balanceSelected: null
   };
 
   componentDidMount() {
@@ -38,7 +34,6 @@ class CabinetWalletFiatScreen extends React.Component {
         {...balance}
         isFiat
         onClick={() => this.__balanceSelect(balance)}
-        walletSelected={this.state.balanceSelected || null} // HAck
       />
     ));
 
@@ -69,7 +64,6 @@ class CabinetWalletFiatScreen extends React.Component {
             adaptive={this.props.adaptive}
             isFiat
             wallets={this.props.balances}
-            walletSelected={this.state.balanceSelected || null}
           />
 
           { !this.props.adaptive && <>
@@ -81,9 +75,9 @@ class CabinetWalletFiatScreen extends React.Component {
     );
   }
 
-  __balanceSelect = wallet => this.setState({
-    balanceSelected: wallet === this.state.balanceSelected ? null : wallet
-  });
+  __balanceSelect = wallet => {
+    openModal('wallet', null, { wallet });
+  }
 }
 
 export default connect(store => ({

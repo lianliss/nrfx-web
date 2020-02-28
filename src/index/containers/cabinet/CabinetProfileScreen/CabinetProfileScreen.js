@@ -24,10 +24,6 @@ import * as walletsActions from '../../../../actions/cabinet/wallets';
 import * as profileActions from '../../../../actions/cabinet/profile';
 
 class CabinetProfileScreen extends CabinetBaseScreen {
-  state = {
-    walletSelected: null
-  };
-
   load = (section = null) => {
     switch (section || this.props.routerParams.section) {
       case 'partners':
@@ -139,7 +135,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
                 title={utils.getLang('cabinet_walletBalance_name')}
                 adaptive={this.props.adaptive}
                 wallets={this.wallets}
-                walletSelected={this.state.walletSelected}
               />
             </div>
             <div className="CabinetProfileScreen__height24">
@@ -213,7 +208,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         key={i}
         {...wallet}
         onClick={() => {this.__walletSelect(wallet)}}
-        walletSelected={this.state.walletSelected}
       />
     });
     return <div className="CabinetProfileScreen__wallets">
@@ -246,9 +240,9 @@ class CabinetProfileScreen extends CabinetBaseScreen {
     )
   };
 
-  __walletSelect = wallet => this.setState({
-    walletSelected: wallet === this.state.walletSelected ? null : wallet
-  });
+  __walletSelect = wallet => {
+    actions.openModal('wallet', null, { wallet });
+  }
 }
 
 export default connect(state => ({
