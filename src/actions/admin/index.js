@@ -62,8 +62,6 @@ function __action(action) {
         case 'show_page':
           router.navigate(adminPages.PANEL_PAGE, { page: action.params.page});
           break;
-        default:
-          return false;
       }
       store.dispatch({type: action.type, params: action.params});
     });
