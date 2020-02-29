@@ -70,7 +70,6 @@ export function logout() {
   }).then(() => {
     store.dispatch({type: actionTypes.LOGOUT});
     api.call(apiSchema.Profile.LogoutPost).then(() => {
-      router.navigate(pages.MAIN);
       auth.logout();
     }).catch(err => {
       toasts.error(err.message);

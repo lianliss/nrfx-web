@@ -87,7 +87,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         profile: {
           ...state.profile,
-          user: null
+          user: false
         },
       };
     }

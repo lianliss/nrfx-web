@@ -98,7 +98,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
   const [ isVerticalMenuOpen, toggleVerticalMenu ] = useState(false);
   const currentLangTitle = actions.getCurrentLang().title;
 
-  const isLogin = !!profile.role;
+  const isLogin = !!profile.user;
 
   const handleLangChange = (value) => {
     setLang(value);
