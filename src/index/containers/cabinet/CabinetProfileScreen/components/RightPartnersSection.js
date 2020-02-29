@@ -26,7 +26,6 @@ class RightPartnersSection extends React.Component {
       emptyPlaceholder={utils.getLang('cabinet_balance_statistics_placeholder')}
       adaptive={this.props.adaptive}
       wallets={this.props.wallets}
-      walletSelected={this.props.walletSelected}
     />
   };
 

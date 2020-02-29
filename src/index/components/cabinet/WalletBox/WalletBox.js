@@ -17,13 +17,6 @@ class WalletBox extends React.Component {
 
   render() {
     let selected = false;
-    if (this.props.hasOwnProperty('walletSelected')) {
-      if (this.props.walletSelected !== null) {
-        if (this.props.walletSelected.currency.toLowerCase() === this.currencyInfo.abbr) {
-          selected = true;
-        }
-      }
-    }
 
     this.className = utils.classNames({
       WalletBox: true,

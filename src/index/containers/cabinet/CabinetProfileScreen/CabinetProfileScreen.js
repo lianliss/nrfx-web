@@ -123,7 +123,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
             {...this.props.partner}
             adaptive={this.props.adaptive}
             wallets={this.props.partner.balances}
-            walletSelected={this.state.walletSelected}
           />
         )
       }
