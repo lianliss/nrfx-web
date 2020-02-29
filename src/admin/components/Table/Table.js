@@ -60,11 +60,11 @@ class TableComponent extends React.Component {
         </div>
 
         <Table skipContentBox headings={props.header.items.map(column => (
-          <TableColumn sub={column.sub_value}><Item item={column.value}/></TableColumn>
+          <TableColumn sub={column.sub_value}>{column.items}</TableColumn>
         ))}>
           {props.items.filter(row => row.type !== 'deleted').map(row => (
             <TableCell>{row.items.map(column => (
-              <TableColumn sub={column.sub_value}><Item item={column.value}/></TableColumn>
+              <TableColumn sub={column.sub_value}><Item item={column.items} /></TableColumn>
             ))}</TableCell>
           ))}
         </Table>

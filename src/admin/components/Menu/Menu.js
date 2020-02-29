@@ -7,10 +7,16 @@ import { connect } from 'react-redux';
 import action from '../../../actions/admin';
 
 import { classNames as cn } from '../../../utils/index';
+import LoadingStatus from '../../../index/components/cabinet/LoadingStatus/LoadingStatus';
 
 const Menu = props => {
 
+
   const [ hiddenItems, setHiddenItems ] = useState({});
+
+  if (!props.menu) {
+    return <LoadingStatus inline status="loading" />
+  }
 
   // const handleClick = () => {
   //   action(props.params.action);
@@ -22,7 +28,7 @@ const Menu = props => {
       ...hiddenItems,
       [itemName]: !hiddenItems[itemName]
     })
-  }
+  };
 
   return (
     <ul className="Menu">

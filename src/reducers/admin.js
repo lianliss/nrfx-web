@@ -2,9 +2,10 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  menu: [],
+  menu: null,
   layout: [],
   modals: {},
+  modalsIds: [],
   values: {},
   pending: false,
   tabs: {}
@@ -50,6 +51,7 @@ const updateTable = (id, state, layout) => {
 
 export default function reduce(state = initialState, action = {}) {
   const { params } = action;
+
   switch (action.type) {
     case actionTypes.ADMIN_INIT: {
       return {
@@ -74,16 +76,23 @@ export default function reduce(state = initialState, action = {}) {
             ...params,
             visible: true
           },
-        }
+        },
+        modalsIds: [...state.modalsIds, params.layout[0].id]
       }
     }
 
     case 'close_modal': {
+      let modalsIds = [...state.modalsIds];
+      let modalId = modalsIds[modalsIds.length - 1];
+
       const modals = {...state.modals};
-      modals[action.params.id].visible = false;
+      delete modals[modalId];
+      modalsIds.pop();
+
       return {
         ...state,
-        modals
+        modals,
+        modalsIds
       }
     }
 

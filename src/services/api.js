@@ -5,7 +5,7 @@ import router from '../router';
 import * as adminPages from '../admin/constants/pages';
 
 // export const API_ENTRY = 'https://api.narfex.com';
-export const API_ENTRY = 'https://api-payments.bitcoinbot.pro';
+export const API_ENTRY = 'https://api-admin.bitcoinbot.pro';
 export const API_VERSION = 1;
 
 export const Errors = {

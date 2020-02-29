@@ -13,9 +13,13 @@ export function install() {
   if (!auth.isLogged()) {
     return Promise.reject();
   }
+
+  store.dispatch({ type: actionTypes.PROFILE_PENDING, value: true });
   return api.call(apiSchema.Profile.DefaultGet).then(({ ...props }) => {
     store.dispatch({ type: actionTypes.PROFILE, props });
-    actions.loadCurrencies();
+    actions.loadCurrencies(); // TOTO: помоему это здесь лишнее
     internalNotifications.load()(store.dispatch, store.getState);
+  }).finally(() => {
+    store.dispatch({ type: actionTypes.PROFILE_PENDING, value: false });
   });
 }

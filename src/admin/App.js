@@ -10,6 +10,7 @@ import Modals from './Modals';
 import DynamcModals from './DynamcModals';
 import {getLang, setLang} from '../services/lang';
 import * as actions from '../actions';
+import * as UI from 'src/ui/index';
 
 class App extends React.Component {
   state = {
@@ -21,7 +22,9 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading) return 'Loading...';
+    if (this.state.isLoading || this.props.state.default.profile.pending) {
+      return ( <UI.LogoLoader />);
+    }
 
     return <div>
       <Routes {...this.props} />

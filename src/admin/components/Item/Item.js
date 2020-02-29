@@ -13,6 +13,7 @@ import Paging from '../Paging/Paging';
 import PagingItem from '../Paging/PagingItem';
 import Label from '../../../ui/components/Label/Label';
 import Json from '../Json/Json';
+import Text from '../Text/Text';
 import Message from '../../../ui/components/Message/Message';
 import ActionSheet from '../../../ui/components/ActionSheet/ActionSheet';
 import {connect} from 'react-redux';
@@ -28,6 +29,10 @@ const Item = (props) => {
 
   if (['string', 'number'].includes(typeof item)) {
     return <p>{item}</p>;
+  }
+
+  if (Array.isArray(item)) {
+    return item.map(item =>  <Item item={item} />);
   }
 
   const handleClick = item.params && item.params.action ? () => {
@@ -77,7 +82,7 @@ const Item = (props) => {
       );
       break;
     case 'button':
-      Component = () => <Button onClick={handleClick} children={item.title} />;
+      Component = () => <Button onClick={handleClick} children={item.title} type={item.button_type} size={item.size} />;
       break;
     case 'input':
       Component = Input;
@@ -87,6 +92,9 @@ const Item = (props) => {
       break;
     case 'json':
       Component = Json;
+      break;
+    case 'text':
+      Component = Text;
       break;
     default:
       Component = props => <Message type="error">Error item type [{props.type}]</Message>;

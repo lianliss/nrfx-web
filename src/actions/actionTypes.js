@@ -4,6 +4,7 @@ export const SET_LANG = 'SET_LANG';
 export const SET_CURRENT_LANG = 'SET_CURRENT_LANG';
 export const AUTH = 'AUTH';
 export const PROFILE = 'PROFILE';
+export const PROFILE_PENDING = 'PROFILE_PENDING';
 export const LOGOUT = 'LOGOUT';
 export const SET_USER_NAME = 'SET_USER_NAME';
 

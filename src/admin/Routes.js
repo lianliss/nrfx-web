@@ -31,8 +31,9 @@ function Routes(props) {
   let Component = null;
   let WrapperComponent = props => <>{props.children}</>;
 
-  if (route !== pages.MAIN && !props.user) {
+  if (route !== pages.MAIN && !props.pending && !props.user) {
     router.navigate(pages.MAIN);
+    console.log(route !== pages.MAIN, !props.pending, !props.user);
   }
 
   if (route === pages.MAIN && props.user) {
@@ -66,5 +67,6 @@ function Routes(props) {
 }
 
 export default connect(state => ({
-  user: state.default.profile.user
+  user: state.default.profile.user,
+  pending: (state.admin.pending || state.default.profile.pending)
 }))(Routes);
