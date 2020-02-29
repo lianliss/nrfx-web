@@ -8,19 +8,6 @@ import * as adminPages from '../admin/constants/pages';
 export const API_ENTRY = 'https://api-admin.bitcoinbot.pro';
 export const API_VERSION = 1;
 
-export const Errors = {
-  FATAL: 1,
-  AUTH: 2,
-  PARAM: 3,
-  LOGIN_BAD_PARAMS: 4,
-  BLOCKED: 5,
-  PHONE_VERIFICATION: 6,
-  BAD_CODE: 7,
-  BAD_EMAIL: 8,
-  BAD_REFERER: 9,
-  EMAIL_USED: 10,
-};
-
 export function invoke(method, name, params, options = {}) {
   return new Promise((resolve, reject) => {
 
@@ -66,9 +53,9 @@ export function invoke(method, name, params, options = {}) {
             json.error_name = 'failed';
             reject(json);
           }
-        }).catch(() => reject({code: -1, message: 'Cant\'t parse JSON', error_name: 'failed'}));
+        }).catch(() => reject({message: 'Cant\'t parse JSON', error_name: 'failed'}));
       })
-      .catch((err) => reject({code: -2, ...err, error_name: 'failed_connection'}));
+      .catch((err) => reject({...err, message: 'Failed connection', error_name: 'failed_connection'}));
   });
 }
 

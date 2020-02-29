@@ -9,7 +9,7 @@ const initialState = {
   cabinet: true, // HACK
   auth: {},
   profile: {
-    pending: true,
+    pending: false,
   },
   currentLang: null,
   langList: [],
@@ -83,7 +83,13 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.LOGOUT: {
-      return { ...state, profile: {} };
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          user: null
+        },
+      };
     }
 
     case actionTypes.SET_ADAPTIVE: {

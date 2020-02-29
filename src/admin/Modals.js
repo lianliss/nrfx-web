@@ -1,16 +1,16 @@
 // styles
 // external
 import React from 'react';
+import { connect } from 'react-redux';
 // internal
 import router from '../router';
 import AuthModal from '../components/AuthModal/AuthModal';
 import ConfirmModal from '../index/components/cabinet/ConfirmModal/ConfirmModal';
 
-export default function Modals(props) {
-  const routeState = props.router.getState();
-  const routerParams = routeState.params;
+function Modals(props) {
+  const routerParams = props.route.params;
   delete routerParams.ref;
-  const { options } = routeState.meta;
+  const { options } = props.route.meta;
   const modal = routerParams.modal;
 
   let Component = false;
@@ -44,3 +44,7 @@ export default function Modals(props) {
     />
   );
 }
+
+export default connect(state => ({
+  route: state.router.route
+}))(Modals);

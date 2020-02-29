@@ -22,14 +22,14 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.state.isLoading || this.props.state.default.profile.pending) {
+    if (this.state.isLoading || this.props.profile.pending) {
       return ( <UI.LogoLoader />);
     }
 
     return <div>
-      <Routes {...this.props} />
-      <DynamcModals modals={this.props.state.admin.modals} />
-      <Modals {...this.props} />
+      <Routes />
+      <DynamcModals modals={this.props.modals} />
+      <Modals />
       <Toasts />
     </div>
   }
@@ -47,4 +47,8 @@ class App extends React.Component {
 }
 
 
-export default connect(state => ({state}))(App);
+export default connect(state => ({
+  ...state,
+  profile: state.default.profile,
+  modals: state.admin.modals,
+}))(App);

@@ -68,9 +68,9 @@ export function logout() {
     okText: utils.getLang('cabinet_exitActionButton'),
     type: 'negative'
   }).then(() => {
-    router.navigate(pages.MAIN);
     store.dispatch({type: actionTypes.LOGOUT});
     api.call(apiSchema.Profile.LogoutPost).then(() => {
+      router.navigate(pages.MAIN);
       auth.logout();
     }).catch(err => {
       toasts.error(err.message);

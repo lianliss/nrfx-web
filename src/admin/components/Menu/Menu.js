@@ -32,8 +32,8 @@ const Menu = props => {
 
   return (
     <ul className="Menu">
-      {props.menu.map(item => (
-        <li className={cn("Menu__item", { open: !hiddenItems[item.title]})}>
+      {props.menu.map((item, key) => (
+        <li key={key} className={cn("Menu__item", { open: !hiddenItems[item.title]})}>
           <b onClick={() => toggleItem(item.title)}>
             {item.title}
             <div onClick={() => toggleItem(item.title)} className="Menu__toggle_icon">

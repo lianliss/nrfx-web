@@ -23,9 +23,8 @@ router.addListener((state, prevState)  => {
 });
 
 function Routes(props) {
-  const routeState = props.router.getState();
-  const routerParams = routeState.params;
-  const route = routeState.name;
+  const routerParams = props.route.params;
+  const route = props.route.name;
 
   let actions = {};
   let Component = null;
@@ -54,19 +53,20 @@ function Routes(props) {
       break;
   }
 
-  const defaultProps = {
-    state: props.state.default,
-    router: props.router,
-  };
+  // const defaultProps = {
+  //   state: props.state.default,
+  //   router: props.router,
+  // };
 
   return (
     <WrapperComponent>
-      <Component {...defaultProps} {...actions} routerParams={routerParams} />
+      <Component {...actions} routerParams={routerParams} />
     </WrapperComponent>
   );
 }
 
 export default connect(state => ({
   user: state.default.profile.user,
+  route: state.router.route,
   pending: (state.admin.pending || state.default.profile.pending)
 }))(Routes);

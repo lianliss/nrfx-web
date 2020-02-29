@@ -13,16 +13,14 @@ class PanelScreen extends React.Component {
   }
 
   render() {
-    if (this.props.router.getState().name === pages.PANEL) {
+    if (this.props.route.name === pages.PANEL) {
       return <div className="PanelScreen">
         <div className="PanelScreen__placeholder">Select a page in the sidebar</div>
       </div>
     }
     return (
       <div className="PanelScreen">
-        {this.props.layout.map(item => (
-          <Item item={item} />
-        ))}
+        <Item item={this.props.layout} />
       </div>
     );
   }
@@ -31,6 +29,7 @@ class PanelScreen extends React.Component {
 export default connect(
   state => ({
     layout: state.admin.layout,
-    user: state.default.profile.user
+    user: state.default.profile.user,
+    route: state.router.route
   })
 )(PanelScreen);

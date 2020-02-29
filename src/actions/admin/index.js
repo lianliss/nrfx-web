@@ -66,7 +66,7 @@ function __action(action) {
       store.dispatch({type: action.type, params: action.params});
     });
   }).catch(err => {
-    toast.error(err.code + ': ' + err.message);
+    toast.error(err.message);
   }).finally(() => {
     store.dispatch({type: 'pending', params: false});
   })

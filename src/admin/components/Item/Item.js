@@ -32,7 +32,7 @@ const Item = (props) => {
   }
 
   if (Array.isArray(item)) {
-    return item.map(item =>  <Item item={item} />);
+    return item.map((item, key) =>  <Item key={key} item={item} />);
   }
 
   const handleClick = item.params && item.params.action ? () => {
@@ -101,8 +101,8 @@ const Item = (props) => {
       break;
   }
 
-  return <Component {...props} {...item}>{item.items && item.items.map(item => {
-    return <Item item={item} />
+  return <Component {...props} {...item}>{item.items && item.items.map((item, key) => {
+    return <Item key={key} item={item} />
   })}</Component>
 }
 
