@@ -1,5 +1,3 @@
 import React from 'react';
 
-export default function Text({ text }) {
-  return text;
-}
+export default ({text, item}) => (<span>{text}</span>);

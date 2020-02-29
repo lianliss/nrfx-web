@@ -7,8 +7,6 @@ import * as actionTypes from './actionTypes';
 import * as api from '../services/api';
 import * as auth from '../services/auth';
 import * as user from './user';
-import router from '../router';
-import * as pages from '../index/constants/pages';
 import * as actions from './index';
 import * as utils from '../utils';
 import * as toasts from './toasts';
