@@ -82,7 +82,7 @@ const Item = (props) => {
       );
       break;
     case 'button':
-      Component = () => <Button onClick={handleClick} children={item.title} />;
+      Component = () => <Button onClick={handleClick} children={item.title} type={item.button_type} size={item.size} />;
       break;
     case 'input':
       Component = Input;
