@@ -32,7 +32,7 @@ const Item = (props) => {
   }
 
   if (Array.isArray(item)) {
-    return item.map(i =>  <Item item={i} />);
+    return item.map(item =>  <Item item={item} />);
   }
 
   const handleClick = item.params && item.params.action ? () => {

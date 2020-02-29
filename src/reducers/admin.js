@@ -2,7 +2,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  menu: [],
+  menu: null,
   layout: [],
   modals: {},
   modalsIds: [],

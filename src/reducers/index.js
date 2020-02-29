@@ -9,7 +9,7 @@ const initialState = {
   cabinet: true, // HACK
   auth: {},
   profile: {
-
+    pending: true,
   },
   currentLang: null,
   langList: [],
@@ -54,8 +54,20 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {auth: action.auth});
     }
 
+    case actionTypes.PROFILE_PENDING: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pending: action.value
+        }
+      }
+    }
     case actionTypes.PROFILE: {
-      return Object.assign({}, state, {profile: action.props});
+      return {
+        ...state,
+        profile: action.props
+      }
     }
 
     case actionTypes.PUSH_MODAL: {
