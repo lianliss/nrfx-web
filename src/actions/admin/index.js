@@ -63,7 +63,6 @@ function __action(action) {
           router.navigate(adminPages.PANEL_PAGE, { page: action.params.page});
           break;
         default:
-          toast.error(`Action ${action.type} not supported`);
       }
       store.dispatch({type: action.type, params: action.params});
     });

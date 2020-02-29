@@ -169,7 +169,7 @@ function Routes(props) {
     pages.FEE
   ].includes(route);
 
-  if (needAuthorization === true && !props.user) {
+  if (needAuthorization === true && !props.profile.pending && !props.profile.user) {
     router.navigate(pages.MAIN);
     return null;
   }
@@ -185,6 +185,6 @@ function Routes(props) {
 
 
 export default connect(state => ({
-  user: state.default.profile.user,
+  profile: state.default.profile,
   route: state.router.route
 }))(Routes);
