@@ -26,7 +26,7 @@ class WalletBox extends React.Component {
 
     return (
       <div className={this.className} onClick={this.isGenerating ? () => {} : this.__onClick}>
-        <div style={{ backgroundImage: `url(${this.currencyInfo.icon})` }} className="WalletBox__icon" />
+        <UI.CircleIcon currency={this.currencyInfo} />
 
         <UI.ContentBox
           className="WalletBox__content"

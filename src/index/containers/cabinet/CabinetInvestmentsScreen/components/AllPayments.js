@@ -29,7 +29,7 @@ export default function CurrentPayments({ payments, adaptive }) {
     return (
       <UI.TableCell key={Math.random()}>
         <UI.TableColumn align="right" style={{ width: 20, position: 'relative' }}>
-          <div className="Investments__CurrentPayments__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
+          <UI.CircleIcon size="small" currency={currencyInfo} />
         </UI.TableColumn>
         <UI.TableColumn align="right">
           {utils.formatDouble(item.total_invested_amount, 6) + ' ' + currency}

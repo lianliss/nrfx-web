@@ -25,6 +25,15 @@
     z-index: 61;
   }
 
+  .CircleIcon {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: -16px;
+    margin: auto 0;
+    z-index: 61;
+  }
+
   .WalletBox__content {
     margin-top: 0;
     cursor: pointer;
@@ -119,9 +128,17 @@
     &:nth-child(n + 4) {
       margin-top: 0;
     }
+
+    .CircleIcon {
+      left: 16px;
+    }
   }
 
   .WalletBox__content {
     box-shadow: none;
+
+    .ContentBox__content {
+      padding-left: 0;
+    }
   }
 }

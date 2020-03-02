@@ -73,7 +73,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
 
       return (
         <div>
-          <div className="WalletTransactionModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+          <UI.CircleIcon className="WalletTransactionModal__icon" currency={currencyInfo} />
           <InfoRowGroup align="left">
             <InfoRow label={utils.getLang("global_from")}>
               {data.category === 'send' ? <>{utils.getLang('cabinet_walletTransactionModal_my')} {utils.ucfirst(currencyInfo.name)}</> :

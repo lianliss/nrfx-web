@@ -67,7 +67,7 @@ class SendCoinsConfirmModal extends React.Component {
 
     return (
       <div className="SendCoinsConfirmModal">
-        <div className="SendCoinsConfirmModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+        <UI.CircleIcon className="SendCoinsConfirmModal__icon" currency={currencyInfo} />
         <UI.List items={[
           {
             label: utils.getLang('global_from'),

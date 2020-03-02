@@ -119,7 +119,7 @@ class WithdrawalModal extends React.Component {
                 {utils.getLang('general_withdraw')}
               </UI.Button>
             </div>
-            <div className="WithdrawalModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+            <UI.CircleIcon className="WithdrawalModal__icon" currency={currencyInfo} />
           </div>
         ) : (
           <div className="WithdrawalModal success">

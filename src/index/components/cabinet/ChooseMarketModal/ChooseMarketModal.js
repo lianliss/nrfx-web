@@ -123,8 +123,8 @@ class ChooseMarketModal extends React.Component {
                   <UI.TableCell key={key} onClick={() => this.__handleChooseMarket(market.name)}>
                     <UI.TableColumn>
                       <div className="ChooseMarketModal__icons">
-                        <div style={{backgroundImage: `url(${primary.icon})`}} className="ChooseMarketModal__icon" />
-                        <div style={{backgroundImage: `url(${secondary.icon})`}} className="ChooseMarketModal__icon" />
+                        <UI.CircleIcon className="ChooseMarketModal__icon" currency={primary} />
+                        <UI.CircleIcon className="ChooseMarketModal__icon" currency={secondary} />
                       </div>
                     </UI.TableColumn>
                     <UI.TableColumn align="left">

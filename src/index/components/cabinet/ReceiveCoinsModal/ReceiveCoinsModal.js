@@ -96,7 +96,7 @@ export default class ReceiveCoinsModal extends React.Component {
       return (
         <div className="ReceiveCoinsModal">
           <div className="SendCoinsModal__wallet">
-            <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+            <UI.CircleIcon currency={currencyInfo} />
             {options.length > 0 &&
               <UI.Dropdown
                 value={placeholder}

@@ -203,7 +203,7 @@ class OpenDepositModal extends React.Component {
           {utils.getLang('cabinet_openNewDeposit_name')} {this.state.amount}
         </UI.ModalHeader>
         <div className="OpenDepositModal">
-          <div className="OpenDepositModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+          <UI.CircleIcon className="OpenDepositModal__icon" currency={currencyInfo} />
           <div className="OpenDepositModal__row">
             <UI.Dropdown
               value={this.props.thisState.walletCurrentOption}
@@ -222,8 +222,10 @@ class OpenDepositModal extends React.Component {
             <UI.Input
               type="number"
               error={
-                (!this.props.thisState.amount && this.props.thisState.touched) || (this.props.thisState.amount > this.props.thisState.amountMax) ||
-                (this.props.thisState.amount < this.props.thisState.amountMin)
+                this.props.thisState.touched && (
+                  (!this.props.thisState.amount || (this.props.thisState.amount > this.props.thisState.amountMax)) ||
+                  (this.props.thisState.amount < this.props.thisState.amountMin)
+                )
               }
               value={this.props.thisState.amount}
               onBlur={() => {

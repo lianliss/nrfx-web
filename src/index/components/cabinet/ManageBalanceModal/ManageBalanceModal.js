@@ -136,7 +136,7 @@ export default class extends React.Component {
             />}
           </div>
           <div className="ManageBalanceModal__row">
-            <div style={{backgroundImage: `url(${this.currentOption.icon})`}} className="ManageBalanceModal__icon" />
+            <UI.CircleIcon className="ManageBalanceModal__icon" currency={currencyInfo} />
             <UI.Dropdown
               value={this.currentOption}
               placeholder=""

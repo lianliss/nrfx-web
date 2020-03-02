@@ -140,7 +140,7 @@ class SendCoinsModal extends React.Component {
       return (
         <div className="SendCoinsModal">
           <div className="SendCoinsModal__wallet">
-            <div className="SendCoinsModal__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+            <UI.CircleIcon currency={currencyInfo} />
             {wallets.length > 0 && <UI.Dropdown
               placeholder={""}
               value={walletId}

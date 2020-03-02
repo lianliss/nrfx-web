@@ -24,7 +24,7 @@ function BalanceItem({ amount, currency }, key ) {
           {utils.getLang('cabinet_profileScreen_actionCard_invest')}
         </UI.Button>
       </div>
-      <div className="Investments__balances__item__icon" style={{backgroundImage: `url(${currencyInfo.icon})`}} />
+      <UI.CircleIcon currency={currencyInfo} />
     </UI.ContentBox>
   )
 }

@@ -60,7 +60,7 @@ export default class DepositInfoModal extends React.Component {
           {/*  currency={currencyInfo}*/}
           {/*/> }*/}
 
-          <div className="DepositInfoModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+          <UI.CircleIcon className="DepositInfoModal__icon" currency={currencyInfo} />
 
           <div className="DepositInfoModal__columns">
             <InfoRowGroup className="DepositInfoModal__column">

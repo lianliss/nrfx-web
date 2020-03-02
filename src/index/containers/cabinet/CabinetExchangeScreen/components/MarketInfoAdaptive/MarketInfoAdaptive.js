@@ -21,8 +21,8 @@ export default ({ market, price, percent, diff }) => {
   return (
     <div className="MarketInfoAdaptive">
       <div className="MarketInfoAdaptive__icons" onClick={__handleChangeMarket}>
-        <div style={{backgroundImage: `url(${primary.icon})`}} className="MarketInfoAdaptive__icons__icon" />
-        <div style={{backgroundImage: `url(${secondary.icon})`}} className="MarketInfoAdaptive__icons__icon" />
+      	<UI.CircleIcon currency={primary} className="MarketInfoAdaptive__icons__icon" />
+      	<UI.CircleIcon currency={secondary} className="MarketInfoAdaptive__icons__icon" />
       </div>
       <div className="MarketInfoAdaptive__info">
         <div className="MarketInfoAdaptive__row">
