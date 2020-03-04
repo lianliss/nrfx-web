@@ -30,7 +30,7 @@ function Login({ changeStep, email, password, token, handleChange, currentStep }
       getAuth(email.trim(), password, token)
         .then((res) => {
           setErrorMsg('');
-          if (res.need_ga_setup) {
+          if (res.need_ga_code) {
             changeStep(steps.GOOGLE_AUTH, { loginRes: res });
           } else {
             router.navigate(router.getState().name === pages.EXCHANGE ? pages.EXCHANGE : pages.DASHBOARD);

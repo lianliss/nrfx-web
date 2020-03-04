@@ -587,6 +587,12 @@ export default {
       },
       "path": "profile/secret_key_logged"
     },
+    "GaInitGet": {
+      "method": "GET",
+      "name": "ga_init",
+      "params": [],
+      "path": "profile/ga_init"
+    },
     "ChangeInfoPut": {
       "method": "PUT",
       "name": "change_info",
@@ -1041,29 +1047,6 @@ export default {
       },
       "path": "investment/calculate"
     },
-    "DepositCalculateGet": {
-      "method": "GET",
-      "name": "deposit_calculate",
-      "params": {
-        "Amount": {
-          "name": "amount",
-          "filters": [
-            "required",
-            "positive"
-          ],
-          "type": "body"
-        },
-        "DepositId": {
-          "name": "deposit_id",
-          "filters": [
-            "required",
-            "positive"
-          ],
-          "type": "body"
-        }
-      },
-      "path": "investment/deposit_calculate"
-    },
     "WithdrawGet": {
       "method": "GET",
       "name": "withdraw",
@@ -1109,38 +1092,6 @@ export default {
         }
       },
       "path": "investment/withdraw"
-    },
-    "DepositWithdrawPut": {
-      "method": "PUT",
-      "name": "deposit_withdraw",
-      "params": {
-        "DepositId": {
-          "name": "deposit_id",
-          "filters": [
-            "required",
-            "positive"
-          ],
-          "type": "body"
-        },
-        "Amount": {
-          "name": "amount",
-          "filters": [
-            "required",
-            "positive"
-          ],
-          "type": "body"
-        },
-        "GaCode": {
-          "name": "ga_code",
-          "filters": {
-            "0": "required",
-            "minLen": 6,
-            "maxLen": 6
-          },
-          "type": "body"
-        }
-      },
-      "path": "investment/deposit_withdraw"
     },
     "DepositPut": {
       "method": "PUT",

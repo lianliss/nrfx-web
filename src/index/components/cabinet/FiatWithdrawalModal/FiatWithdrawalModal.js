@@ -139,9 +139,9 @@ const FiatWithdrawalModal = props => {
 export default connect(state => ({
   accountName: [state.default.profile.user.first_name, state.default.profile.user.last_name].join(' '),
   adaptive: state.default.adaptive,
-  loadingStatus: state.fiatWallets.loadingStatus.bankList,
+  loadingStatus: state.fiatWallets.loadingStatus.withdrawalBankList,
   withdrawalStatus: state.fiatWallets.loadingStatus.withdrawal,
-  bankList: state.fiatWallets.bankList
+  bankList: state.fiatWallets.withdrawalBankList
 }), {
   withdrawalBanksGet,
   fiatWithdrawal

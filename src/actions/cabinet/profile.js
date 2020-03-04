@@ -137,6 +137,11 @@ export function loadPartnerInfo(login) {
   });
 }
 
+
+export function getGAHash() {
+  return api.call(apiSchema.Profile.GaInitGet);
+}
+
 export function getSumsub() {
   return api.call(apiSchema.Sumsub.GetAccessTokenGet);
 }

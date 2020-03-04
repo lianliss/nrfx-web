@@ -209,7 +209,7 @@ const MerchantModal = props => {
     return (
       <div className="MerchantModal__form">
         <div className="MerchantModal__form__wallet">
-          <div className="MerchantModal__form__wallet__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+          <UI.CircleIcon className="MerchantModal__form__wallet__icon" currency={currencyInfo} />
           <UI.Dropdown
             value={currency}
             options={Object.keys(props.merchants[merchant].currencies)
