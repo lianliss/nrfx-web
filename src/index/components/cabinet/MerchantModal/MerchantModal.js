@@ -1,18 +1,16 @@
 import './MerchantModal.less'
 
-import React, { useEffect, useState, useRef } from 'react';
-import { renderToString } from 'react-dom/server'
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import * as UI from '../../../../ui/';
-import { getLang, throttle, classNames as cn } from '../../../../utils';
+import { getLang, classNames as cn } from '../../../../utils';
 import SVG from 'react-inlinesvg';
 import router from '../../../../router';
 import * as actions from '../../../../actions';
 import * as toasts from '../../../../actions/toasts';
 import * as fiatActions from '../../../../actions/cabinet/fiatWallets';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
-import * as merchantService from '../../../../services/merchant';
 import { Status } from '../../../containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';
 import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
@@ -25,9 +23,6 @@ const MerchantModal = props => {
   const [amount, setAmount] = useState(null);
   const [touched, setTouched] = useState(null);
   const [invoice, setInvoice] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [urlStatus, setUrlStatus] = useState(null);
-  const [url, setUrl] = useState(null);
 
   const merchants = {
     advcash: {
@@ -70,20 +65,26 @@ const MerchantModal = props => {
     } return null;
   };
 
-  const handleSubmit = () => {
+  const handleFiatRefill = () => {
     setTouched(true);
     const message = checkAmount();
     if (message) {
       toasts.error(message);
       return false;
-    } else if (url && amount && !urlStatus) {
-      setStatus('loading');
-      merchantService.open(url).then(() => {
-        setStatus('success');
-      }).catch(() => {
-        setStatus('error');
-      })
     }
+
+    const balance = balances.find(b => b.currency.toLowerCase() === currency);
+    actions.openModal('fiat_refill', null, { amount, balance });
+
+
+    // } else if (url && amount && !urlStatus) {
+    // setStatus('loading');
+    // merchantService.open(url).then(() => {
+    //   setStatus('success');
+    // }).catch(() => {
+    //   setStatus('error');
+    // })
+    // }
   };
 
   const handleFiatWithdrawal = () => {
@@ -113,30 +114,30 @@ const MerchantModal = props => {
     });
   };
 
-  const getMerchantUrl = (params) =>  {
-    setUrlStatus('loading');
-    fiatActions.payForm(params).then(({url}) => {
-      setUrl(url);
-    }).finally(() => {
-      setUrlStatus(null);
-    });
-  };
+  // const getMerchantUrl = (params) =>  {
+  //   setUrlStatus('loading');
+  //   fiatActions.payForm(params).then(({url}) => {
+  //     setUrl(url);
+  //   }).finally(() => {
+  //     setUrlStatus(null);
+  //   });
+  // };
 
-  const getMerchantUrlThrottled = useRef(throttle(getMerchantUrl, 500)).current;
+  // const getMerchantUrlThrottled = useRef(throttle(getMerchantUrl, 500)).current;
 
   const handleChangeAmount = (value) => {
     setAmount(value);
     if (!value || checkAmount(value)) return false;
-    if (props.type !== 'withdrawal' && merchant !== 'invoice') {
-      getMerchantUrlThrottled({
-        amount: value,
-        merchant,
-        currency
-      });
-    }
+    // if (props.type !== 'withdrawal' && merchant !== 'invoice') {
+    //   getMerchantUrlThrottled({
+    //     amount: value,
+    //     merchant,
+    //     currency
+    //   });
+    // }
   };
 
-  window.handleSubmit = handleSubmit;
+  // window.handleSubmit = handleSubmit;
 
   const renderMerchantsList = () => {
     const merchants2 = Object.keys(props.merchants).map(name => ({
@@ -221,11 +222,11 @@ const MerchantModal = props => {
             }
             onChange={e => {
               setCurrency(e.value);
-              getMerchantUrlThrottled({
-                amount,
-                merchant,
-                currency: e.value
-              });
+              // getMerchantUrlThrottled({
+              //   amount,
+              //   merchant,
+              //   currency: e.value
+              // });
             }}
           />
         </div>
@@ -260,9 +261,7 @@ const MerchantModal = props => {
             props.type === 'withdrawal' ? (
               <UI.Button disabled={!amount} currency={currencyInfo} onClick={handleFiatWithdrawal}>{getLang('global_withdrawal')}</UI.Button>
             ) : (
-              <div dangerouslySetInnerHTML={{__html: `<div onclick="handleSubmit()">${renderToString(
-                <UI.Button currency={currencyInfo} state={urlStatus}>{getLang('global_next')}</UI.Button>
-              )}</div>`}} />
+              <UI.Button currency={currencyInfo} /* state={urlStatus} */ onClick={handleFiatRefill}>{getLang('global_next')}</UI.Button>
             )
           )}
         </div>
@@ -307,11 +306,11 @@ const MerchantModal = props => {
   }
 
   const renderContent = () => {
-    if (status === 'loading' || props.loadingStatus.merchants) {
+    if ( /* status === 'loading' || */ props.loadingStatus.merchants === 'loading') {
       return <LoadingStatus inline status="loading" />
     }
-    if (['success', 'error'].includes(status)) {
-      return <Status onClose={props.onClose} status={status} />
+    if (['success', 'error'].includes(props.loadingStatus.merchants)) {
+      return <Status onClose={props.onClose} status={props.loadingStatus.merchants} />
     }
     if (!merchant) {
       return renderMerchantsList();
@@ -324,7 +323,7 @@ const MerchantModal = props => {
 
   return (
     <UI.Modal className={cn("MerchantModal", {
-      'MerchantModal__list_wrapper': (!status && !merchant)
+      'MerchantModal__list_wrapper': (/* !status && */ !merchant)
     })} onClose={props.onBack} isOpen={true}>
       <UI.ModalHeader>
         { props.type === 'withdrawal' ? getLang('cabinet_balanceWithdrawal') : getLang('cabinet_balanceDeposit')}
@@ -332,7 +331,7 @@ const MerchantModal = props => {
       { renderContent() }
     </UI.Modal>
   );
-}
+};
 
 export default connect(state => ({
   balances: state.fiatWallets.balances,

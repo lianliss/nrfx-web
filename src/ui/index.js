@@ -33,3 +33,5 @@ export { default as WalletAddress } from './components/WalletAddress/WalletAddre
 export { default as LogoLoader } from './components/LogoLoader/LogoLoader';
 export { default as CircleIcon } from './components/CircleIcon/CircleIcon';
 export { default as BankLogo } from './components/BankLogo/BankLogo';
+export { default as Clipboard } from './components/Clipboard/Clipboard';
+export { default as Spoiler } from './components/Spoiler/Spoiler';

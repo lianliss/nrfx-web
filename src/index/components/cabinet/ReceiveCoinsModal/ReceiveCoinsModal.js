@@ -3,14 +3,13 @@ import './ReceiveCoinsModal.less';
 
 import React from 'react';
 import * as UI from '../../../../ui';
-import SVG from 'react-inlinesvg';
 import QRCode from 'qrcode.react';
 
 import * as actions from '../../../../actions';
 import * as walletsActions from '../../../../actions/cabinet/wallets';
 import LoadingStatus from '../../cabinet/LoadingStatus/LoadingStatus';
 import * as utils from '../../../../utils';
-import copyText from 'clipboard-copy';
+import Clipboard from '../Clipboard/Clipboard';
 
 export default class ReceiveCoinsModal extends React.Component {
   constructor(props) {
@@ -20,7 +19,6 @@ export default class ReceiveCoinsModal extends React.Component {
       currency: 'btc',
       loadingStatus: 'loading',
       wallets: [],
-      isCopied: false,
       dropDownCurrentItem: {}
     };
   }
@@ -42,7 +40,7 @@ export default class ReceiveCoinsModal extends React.Component {
   render() {
     const currencyInfo = this.state.currency ? actions.getCurrencyInfo(this.state.currency) : {};
     return (
-      <UI.Modal isOpen={true} onClose={this.props.onClose} width={480}>
+      <UI.Modal isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_receiveCoinsModal_name')} { utils.ucfirst(currencyInfo.name)}
         </UI.ModalHeader>
@@ -88,7 +86,7 @@ export default class ReceiveCoinsModal extends React.Component {
         if (this.props.hasOwnProperty('preset')) {
           preset = options.filter((opt) => opt.title === this.props.preset)[0];
           setTimeout(() => {
-            this.setState({ currency: preset.value, isCopied: false, dropDownCurrentItem: preset });
+            this.setState({ currency: preset.value, dropDownCurrentItem: preset });
           }, 0)
         }
       }
@@ -102,41 +100,19 @@ export default class ReceiveCoinsModal extends React.Component {
                 value={placeholder}
                 options={options}
                 onChange={(item) => {
-                  this.setState({ currency: item.value, isCopied: false, dropDownCurrentItem: item })
+                  this.setState({ currency: item.value, dropDownCurrentItem: item })
                 }}
               />
             }
           </div>
-          <div className="SendCoinsModal__row ReceiveCoinsModal__qrcode">
-            <QRCode value={wallet.address} size={192} />
-          </div>
-          <div className="ReceiveCoinsModal__warning">
-            {utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()}
-            {' ' + utils.getLang('cabinet_receiveCoinsModal_toThisAddress')}
-          </div>
-          <div className="SendCoinsModal__row">
-            <UI.Input
-              value={wallet.address}
-              onClick={this.__copy}
-              indicatorWidth={34}
-              indicator={
-                <SVG src={require('../../../../asset/24px/copy.svg')} className="ReceiveCoinsModal__copy_btn" />
-              }
-              readOnly
-            />
-          </div>
-          <div className="SendCoinsModal__row ReceiveCoinsModal__button_wrap">
-            <div className="ReceiveCoinsModal__button">
-              {this.state.isCopied && <SVG src={require('../../../../asset/16px/check.svg')} className="ReceiveCoinsModal__copied_icon" />}
-              <UI.Button
-                currency={currencyInfo}
-                onClick={() => {
-                  if (this.state.isCopied) {
-                    this.props.onClose();
-                  } else {
-                    this.__copy();
-                  }
-                }}>{this.state.isCopied ? utils.getLang('global_close') : utils.getLang('cabinet_copyWalletAddress')}</UI.Button>
+          <div className="ReceiveCoinsModal__body">
+            <div className="SendCoinsModal__row ReceiveCoinsModal__qrcode">
+              <QRCode value={wallet.address} size={192} />
+            </div>
+            <div className="ReceiveCoinsModal__content">
+              <Clipboard text={wallet.address} />
+              <UI.Message title={utils.getLang('global_attention')} type="error">{utils.getLang('cabinet_receiveCoinsModal_onlySend')} {utils.ucfirst(currencyInfo.name)} {this.state.currency.toUpperCase()}
+                {' ' + utils.getLang('cabinet_receiveCoinsModal_toThisAddress')}</UI.Message>
             </div>
           </div>
         </div>
@@ -150,12 +126,6 @@ export default class ReceiveCoinsModal extends React.Component {
       this.setState({ loadingStatus: '', wallets });
     }).catch(() => {
       this.setState({ loadingStatus: 'failed' });
-    });
-  };
-
-  __copy = () => {
-    copyText(this.wallet.address).then(() => {
-      this.setState({ isCopied: true });
     });
   };
 }

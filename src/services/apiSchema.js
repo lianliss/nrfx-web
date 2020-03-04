@@ -1990,6 +1990,150 @@ export default {
     }
   },
   "Fiat_wallet": {
+    "Xendit": {
+      "Disbursements/webhookPost": {
+        "method": "POST",
+        "name": "disbursements/webhook",
+        "params": {
+          "ExternalId": {
+            "name": "external_id",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "Amount": {
+            "name": "amount",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "BankCode": {
+            "name": "bank_code",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "Status": {
+            "name": "status",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "FailureCode": {
+            "name": "failure_code",
+            "filters": [],
+            "type": "body"
+          },
+          "Id": {
+            "name": "id",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          }
+        },
+        "path": "fiat_wallet/xendit/disbursements/webhook"
+      },
+      "Refill/webhookPost": {
+        "method": "POST",
+        "name": "refill/webhook",
+        "params": {
+          "PaymentId": {
+            "name": "payment_id",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "ExternalId": {
+            "name": "external_id",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "OwnerId": {
+            "name": "owner_id",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "Amount": {
+            "name": "amount",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "BankCode": {
+            "name": "bank_code",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "AccountNumber": {
+            "name": "account_number",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "Id": {
+            "name": "id",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          },
+          "TransactionTimestamp": {
+            "name": "transaction_timestamp",
+            "filters": [
+              "required"
+            ],
+            "type": "body"
+          }
+        },
+        "path": "fiat_wallet/xendit/refill/webhook"
+      },
+      "WithdrawalBanksGet": {
+        "method": "GET",
+        "name": "withdrawal_banks",
+        "params": [],
+        "path": "fiat_wallet/xendit/withdrawal_banks"
+      },
+      "RefillBanksGet": {
+        "method": "GET",
+        "name": "refill_banks",
+        "params": [],
+        "path": "fiat_wallet/xendit/refill_banks"
+      },
+      "VirtualAccountGet": {
+        "method": "GET",
+        "name": "virtual_account",
+        "params": {
+          "BankCode": {
+            "name": "bank_code",
+            "filters": {
+              "0": "required",
+              "oneOf": [
+                "BRI",
+                "MANDIRI",
+                "BNI",
+                "PERMATA"
+              ]
+            },
+            "type": "body"
+          }
+        },
+        "path": "fiat_wallet/xendit/virtual_account"
+      }
+    },
     "DefaultGet": {
       "method": "GET",
       "name": "",
@@ -2036,9 +2180,9 @@ export default {
       },
       "path": "fiat_wallet/exchange"
     },
-    "PayFormGet": {
+    "RefillFormGet": {
       "method": "GET",
-      "name": "pay_form",
+      "name": "refill_form",
       "params": {
         "Merchant": {
           "name": "merchant",
@@ -2064,13 +2208,13 @@ export default {
           "type": "body"
         }
       },
-      "path": "fiat_wallet/pay_form"
+      "path": "fiat_wallet/refill_form"
     },
-    "PayMethodsGet": {
+    "RefillMethodsGet": {
       "method": "GET",
-      "name": "pay_methods",
+      "name": "refill_methods",
       "params": [],
-      "path": "fiat_wallet/pay_methods"
+      "path": "fiat_wallet/refill_methods"
     },
     "WithdrawPut": {
       "method": "PUT",
@@ -2111,6 +2255,14 @@ export default {
           ],
           "type": "body"
         },
+        "BalanceId": {
+          "name": "balance_id",
+          "filters": [
+            "required",
+            "positive"
+          ],
+          "type": "body"
+        },
         "EmailTo": {
           "name": "email_to",
           "filters": [],
@@ -2124,14 +2276,6 @@ export default {
       "name": "withdraw_methods",
       "params": [],
       "path": "fiat_wallet/withdraw_methods"
-    },
-    "Xendit": {
-      "BanksGet": {
-        "method": "GET",
-        "name": "banks",
-        "params": [],
-        "path": "fiat_wallet/xendit/banks"
-      }
     },
     "RateGet": {
       "method": "GET",
@@ -2192,6 +2336,11 @@ export default {
           "filters": [
             "required"
           ],
+          "type": "body"
+        },
+        "FeesPaidAmount": {
+          "name": "fees_paid_amount",
+          "filters": [],
           "type": "body"
         }
       },

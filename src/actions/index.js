@@ -11,6 +11,7 @@ import * as emitter from '../services/emitter';
 import { getLang } from '../services/lang';
 import * as storage from '../services/storage';
 import * as toast from './toasts';
+import clipboardCopy from 'clipboard-copy';
 
 export function loadLang(code, toggleCurrentLang = true) {
   return new Promise((resolve, reject) => {
@@ -170,6 +171,14 @@ export function saveTranslator(code, key, value) {
       toast.error(utils.getLang('cabinet_translationFail'));
       throw e;
     });
+}
+
+export function copyText(text) {
+  clipboardCopy(text).then(() => {
+    toast.success(utils.getLang('global_copyText_success'));
+  }).catch(() => {
+    toast.error(utils.getLang('global_copyText_fail'));
+  });
 }
 
 export function registrationSetValue(property, value) {

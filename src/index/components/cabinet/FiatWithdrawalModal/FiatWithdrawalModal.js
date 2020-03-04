@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Modal, { ModalHeader } from '../../../../ui/components/Modal/Modal';
 import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 import BankList from './components/BankList/BankList';
-import { getBankList, fiatWithdrawal } from '../../../../actions/cabinet/fiatWallets';
+import { withdrawalBanksGet, fiatWithdrawal } from '../../../../actions/cabinet/fiatWallets';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import BankLogo from '../../../../ui/components/BankLogo/BankLogo';
 import Input from '../../../../ui/components/Input/Input';
@@ -25,7 +25,7 @@ const FiatWithdrawalModal = props => {
   const [filled, fill] = useState(false);
 
   useEffect(() => {
-    props.getBankList();
+    props.withdrawalBanksGet();
 
     if (!amount || !balance) {
       props.onClose();
@@ -143,6 +143,6 @@ export default connect(state => ({
   withdrawalStatus: state.fiatWallets.loadingStatus.withdrawal,
   bankList: state.fiatWallets.bankList
 }), {
-  getBankList,
+  withdrawalBanksGet,
   fiatWithdrawal
 })(FiatWithdrawalModal);

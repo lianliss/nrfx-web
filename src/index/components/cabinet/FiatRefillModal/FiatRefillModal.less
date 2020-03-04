@@ -1,8 +1,8 @@
-.FiatWithdrawalModal {
+.FiatRefillModal {
   display: flex;
   min-height: 700px;
 
-  .FiatWithdrawalModal__sideBar {
+  .FiatRefillModal__sideBar {
     width: 304px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -11,7 +11,7 @@
     padding: 40px;
     box-sizing: border-box;
 
-    .FiatWithdrawalModal__sideBar__content {
+    .FiatRefillModal__sideBar__content {
       box-sizing: border-box;
       width: 100%;
       margin-top: 96px;
@@ -39,7 +39,7 @@
     }
   }
 
-  .FiatWithdrawalModal__body {
+  .FiatRefillModal__body {
     flex: 1;
     overflow: hidden;
     position: relative;
@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: column;
 
-    .FiatWithdrawalModal__body__content {
+    .FiatRefillModal__body__content {
       flex: 1;
 
       & > p {
@@ -59,7 +59,7 @@
         line-height: 16px;
       }
 
-      .FiatWithdrawalModal__accountName {
+      .FiatRefillModal__accountName {
         font-weight: 500;
         font-size: 16px;
         line-height: 24px;
@@ -71,7 +71,7 @@
       }
     }
 
-    .FiatWithdrawalModal__body__footer {
+    .FiatRefillModal__body__footer {
       margin-top: auto;
     }
 
@@ -80,13 +80,13 @@
     }
   }
 
-  .FiatWithdrawalModal__header {
+  .FiatRefillModal__header {
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
   }
 
-  .FiatWithdrawalModal__dataList {
+  .FiatRefillModal__dataList {
     display: block;
     list-style: none;
     font-weight: 500;
@@ -103,21 +103,39 @@
     }
   }
 
+  .FiatRefillModal__accountInfo {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: -16px;
+
+    span {
+      color: var(--dark-blue);
+      font-weight: 600;
+    }
+  }
+
   .BankList {
+    margin: 24px -40px;
+  }
+
+  .MethodsList {
     margin: 24px -40px;
   }
 }
 
 
 .adaptive {
-  .FiatWithdrawalModal {
+  .FiatRefillModal {
     flex-direction: column;
 
-    .FiatWithdrawalModal__header {
+    .FiatRefillModal__header {
       display: none;
     }
 
-    .FiatWithdrawalModal__sideBar {
+    .FiatRefillModal__sideBar {
       height: 152px;
       display: flex;
       align-items: center;
@@ -125,18 +143,18 @@
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
 
-      .FiatWithdrawalModal__sideBar__content {
+      .FiatRefillModal__sideBar__content {
         margin-top: 0;
       }
     }
 
-    .FiatWithdrawalModal__sideBar,
-    .FiatWithdrawalModal__body {
+    .FiatRefillModal__sideBar,
+    .FiatRefillModal__body {
       width: 100%;
       padding: 16px;
     }
 
-    .FiatWithdrawalModal__body {
+    .FiatRefillModal__body {
       form {
         width: 100%;
       }

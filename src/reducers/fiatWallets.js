@@ -9,9 +9,11 @@ const initialState = {
   rateUpdateTime: 0,
   merchants: [],
   exchange_fee: 0,
-  bankList: null,
+  withdrawalBankList: null,
+  refillBankList: null,
   loadingStatus: {
-    bankList: '',
+    withdrawalBankList: '',
+    refillBankList: '',
     default: 'loading',
     merchants: '',
     marketForm: ''
@@ -65,10 +67,17 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
 
-    case actionTypes.FIAT_WALLETS_SET_BANK_LIST: {
+    case actionTypes.FIAT_WALLETS_SET_WITHDRAWAL_BANK_LIST: {
       return {
         ...state,
-        bankList: action.banks
+        withdrawalBankList: action.banks
+      };
+    }
+
+    case actionTypes.FIAT_WALLETS_SET_REFILL_BANK_LIST: {
+      return {
+        ...state,
+        refillBankList: action.banks
       };
     }
 

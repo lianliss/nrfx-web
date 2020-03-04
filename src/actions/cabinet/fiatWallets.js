@@ -17,7 +17,7 @@ export function getFiatWallets() {
 
 export function getMerchant(type) {
   return (dispatch, getState) => {
-    const apiMethod = type === 'withdrawal' ? apiSchema.Fiat_wallet.WithdrawMethodsGet : apiSchema.Fiat_wallet.PayMethodsGet;
+    const apiMethod = type === 'withdrawal' ? apiSchema.Fiat_wallet.WithdrawMethodsGet : apiSchema.Fiat_wallet.RefillMethodsGet;
 
     dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'merchants', status: 'loading'});
     api.call(apiMethod).then(({ methods }) => {
@@ -69,13 +69,24 @@ export function getRate({base, currency}) {
 }
 
 
-export function getBankList() {
-  return (dispatch, getState) => {
-    dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'bankList', status: 'loading'});
-    api.call(apiSchema.Fiat_wallet.Xendit.BanksGet).then(banks => {
-      dispatch({type: actionTypes.FIAT_WALLETS_SET_BANK_LIST, banks });
+export function withdrawalBanksGet() {
+  return dispatch => {
+    dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'withdrawalBankList', status: 'loading'});
+    api.call(apiSchema.Fiat_wallet.Xendit.WithdrawalBanksGet).then(banks => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_WITHDRAWAL_BANK_LIST, banks });
     }).finally(() => {
-      dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'bankList', status: null });
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'withdrawalBankList', status: null });
+    })
+  }
+}
+
+export function refillBanksGet() {
+  return dispatch => {
+    dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'refillBankList', status: 'loading'});
+    api.call(apiSchema.Fiat_wallet.Xendit.RefillBanksGet).then(banks => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_REFILL_BANK_LIST, banks });
+    }).finally(() => {
+      dispatch({type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS, section: 'refillBankList', status: null });
     })
   }
 }
@@ -91,7 +102,7 @@ export function fiatWithdrawal(params) {
       email_to: params.email,
       balance_id: params.balance.id,
     }).then(payload => {
-      toast.success(getLang('cabinet_fiatWithdrawalModal_WithdrawalCreated'));
+      toast.success(getLang('cabinet_FiatRefillModal_WithdrawalCreated'));
       closeModal();
       const { transaction } = payload;
       dispatch({type: actionTypes.FIAT_WALLETS_APPEND_TRANSACTION, transaction });

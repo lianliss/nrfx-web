@@ -15,10 +15,6 @@
   }
 }
 
-.ReceiveCoinsModal__button_wrap {
-  text-align: center;
-}
-
 .ReceiveCoinsModal__button {
   display: inline-block;
   position: relative;
@@ -40,11 +36,34 @@
   z-index: 2;
 }
 
-.ReceiveCoinsModal__qrcode {
-  text-align: center;
+.ReceiveCoinsModal__body {
+  margin-top: 40px;
+  display: flex;
 
-  canvas {
-    border: 7px solid white;
+  .ReceiveCoinsModal__qrcode {
+    text-align: center;
+    margin-top: auto;
+    margin-right: 24px;
+
+    canvas {
+      display: block;
+      border: 7px solid white;
+    }
+  }
+
+  .Clipboard {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+
+    margin-bottom: auto;
+  }
+
+  .ReceiveCoinsModal__content {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    margin: 7px 0;
   }
 }
 
@@ -56,4 +75,20 @@
   text-align: center;
   width: 100%;
   margin: 10px auto 0;
+}
+
+
+.adaptive {
+  .ReceiveCoinsModal__body {
+    flex-direction: column;
+  }
+
+  .ReceiveCoinsModal__qrcode {
+    align-self: center;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+  .ReceiveCoinsModal__content {
+    width: 100%;
+  }
 }
