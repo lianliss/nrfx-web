@@ -23,9 +23,17 @@ export function getAuth(login, password, token) {
       public_key,
       recaptcha_response: token
     })
-      .then((auth) => {
-        store.dispatch({ type: actionTypes.AUTH, auth });
-        resolve(auth);
+      .then((res) => {
+        store.dispatch({ type: actionTypes.AUTH, res });
+
+        if (res.access_token) {
+          auth.login(res.access_token);
+          user.install().then(() => {
+            resolve(res);
+          });
+        } else {
+          resolve(res);
+        }
       })
       .catch((err) => reject(err));
   });
