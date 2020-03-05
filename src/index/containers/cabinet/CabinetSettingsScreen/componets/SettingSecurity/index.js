@@ -130,7 +130,7 @@ function SettingSecurity(props) {
           {utils.getLang("cabinet_settings2FA")}
         </div>
 
-        <UI.Switch on={props.profile['2fa_enabled']} disabled={props.profile['2fa_enabled']} onChange={() => {
+        <UI.Switch on={props.profile.ga_enabled} disabled={props.profile.ga_enabled} onChange={() => {
           openModal('google_code');
         }} label={utils.getLang('global_ga')} />
       </UI.ContentBox>

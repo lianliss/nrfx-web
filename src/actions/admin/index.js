@@ -74,7 +74,7 @@ function __action(action) {
 }
 
 export default function action(action) {
-  if (action.confirm_type) {
+  if (action.confirm) {
     actions.confirm({
       title: 'Confirm action',
       type: (action.confirm_type === 'destructive' ? 'negative' : 'default')

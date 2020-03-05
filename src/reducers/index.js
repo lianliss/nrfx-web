@@ -59,7 +59,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         profile: {
           ...state.profile,
-          '2fa_enabled': false
+          ga_enabled: true
         }
       };
     }

@@ -1,9 +1,9 @@
 import './WithdrawalModal.less';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import * as UI from '../../../../ui';
-
 import * as investmentsActions from "../../../../actions/cabinet/investments";
 import * as utils from "../../../../utils";
 import ModalState from '../ModalState/ModalState';
@@ -96,19 +96,21 @@ class WithdrawalModal extends React.Component {
                 {utils.getLang('cabinet_withoutDropInfo')} {this.state.currency.toUpperCase()} {utils.getLang('cabinet_withoutDropInfo2')}
               </p>
             }
-            <div className="WithdrawalModal__row">
-              <UI.Input
-                type="number"
-                autoComplete="off"
-                indicator={<div className="OpenDepositModal__ga_icon" /> }
-                value={this.state.gaCode}
-                onChange={this.__handleGAChange}
-                placeholder={utils.getLang('site__authModalGAPlaceholder')}
-                onKeyPress={this.__onKeyPressHandler}
-                error={this.state.errorGaCode}
-                disabled={this.state.amount.length < 1}
-              />
-            </div>
+            {this.props.gaEnabled && (
+              <div className="WithdrawalModal__row">
+                <UI.Input
+                  type="code"
+                  autoComplete="off"
+                  indicator={<div className="OpenDepositModal__ga_icon" /> }
+                  value={this.state.gaCode}
+                  onChange={this.__handleGAChange}
+                  placeholder={utils.getLang('site__authModalGAPlaceholder')}
+                  onKeyPress={this.__onKeyPressHandler}
+                  error={this.state.errorGaCode}
+                  disabled={this.state.amount.length < 1}
+                />
+              </div>
+            )}
             <div className="WithdrawalModal__button_wrap">
               <UI.Button
                 currency={this.state.currency}
@@ -146,7 +148,7 @@ class WithdrawalModal extends React.Component {
   };
 
   __formIsValid = () => {
-    return this.state.gaCode.length === 6 && this.state.amount > 0;
+    return (!this.props.gaEnabled || this.state.gaCode.length === 6) && this.state.amount > 0;
   };
 
   __maxDidPress = (max) => {
@@ -195,4 +197,6 @@ class WithdrawalModal extends React.Component {
   };
 }
 
-export default WithdrawalModal
+export default connect(stage => ({
+  gaEnabled: stage.default.profile.ga_enabled
+}))(WithdrawalModal);

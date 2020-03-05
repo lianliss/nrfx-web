@@ -106,16 +106,22 @@ export function confirm(props) {
 
 export function gaCode() {
   return new Promise((resolve, reject) => {
-    openModal('ga_code');
-    const acceptListener = emitter.addListener('ga_submit', ({code}) => {
-      emitter.removeListener(acceptListener);
-      resolve(code);
-    });
+    const { profile } = store.getState().default;
 
-    const closeListener = emitter.addListener('ga_cancel', () => {
-      emitter.removeListener(closeListener);
-      reject();
-    });
+    if (profile.ga_enabled) {
+      openModal('ga_code');
+      const acceptListener = emitter.addListener('ga_submit', ({code}) => {
+        emitter.removeListener(acceptListener);
+        resolve(code);
+      });
+
+      const closeListener = emitter.addListener('ga_cancel', () => {
+        emitter.removeListener(closeListener);
+        reject();
+      });
+    } else {
+      resolve();
+    }
   })
 }
 

@@ -95,7 +95,7 @@ class Exchange {
 
   __orderBookRemoveOrder = (orders) => {
     exchange.orderBookRemoveOrders(orders);
-  }
+  };
 
   __orderDidTrade = (orders) => {
     exchange.removeOrders(orders.map(order => order.id));

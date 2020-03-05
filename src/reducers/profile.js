@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   loadingStatus: {
     setGa: "",
+    secretKey: "",
   },
   dashboard: {},
   partner: {

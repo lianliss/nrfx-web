@@ -32,11 +32,14 @@ export function setVerificationStatus(status) {
 
 export function changeSecretKay(secret) {
   return (dispatch, getState) => {
+    dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'secretKey', status: 'loading' });
     api.call(apiSchema.Profile.SecretKeyLoggedPost, { secret }).then((dashboard) => {
       toastsActions.toastPush(utils.getLang("cabinet_secretKeyChangedSuccessfully"), "success")(dispatch, getState);
-      modalGroup.modalGroupClear();
+      closeModal();
     }).catch((err) => {
       toastsActions.toastPush(err.message, "error")(dispatch, getState);
+    }).finally(() => {
+      dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'secretKey', status: '' });
     });
   };
 }

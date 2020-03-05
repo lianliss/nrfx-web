@@ -120,7 +120,7 @@ class SendCoinsConfirmModal extends React.Component {
 export default connect(state => ({
   loadingStatus: state.wallets.loadingStatus,
   wallets: state.wallets.wallets,
-  gaEnabled: state.default.profile['2fa_enabled'],
+  gaEnabled: state.default.profile.ga_enabled,
   limits: state.wallets.limits,
   ...state.wallets.sendCoinModal,
   gaCode: state.wallets.sendCoinModal.gaCode,

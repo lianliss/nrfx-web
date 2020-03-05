@@ -24,7 +24,7 @@ const ChangeSecretKeyModal = props => {
           error={false}
         />
         <div className="ChangeSecretKayModal__submit_wrapper">
-          <UI.Button onClick={() => {
+          <UI.Button state={props.state} onClick={() => {
             props.changeSecretKay(code);
           }}>
             {utils.getLang('cabinet_settingsSave')}
@@ -33,8 +33,10 @@ const ChangeSecretKeyModal = props => {
       </div>
     </UI.Modal>
   )
-}
+};
 
-export default connect(null, {
+export default connect(state => ({
+  state: state.profile.loadingStatus.secretKey
+}), {
   changeSecretKay: profileActions.changeSecretKay
 })(ChangeSecretKeyModal);
