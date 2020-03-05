@@ -54,6 +54,16 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, {auth: action.auth});
     }
 
+    case actionTypes.PROFILE_SET_GA_SUCCESS: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          '2fa_enabled': false
+        }
+      };
+    }
+
     case actionTypes.PROFILE_PENDING: {
       return {
         ...state,

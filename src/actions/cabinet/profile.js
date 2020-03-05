@@ -45,6 +45,7 @@ export function gaInit(code) {
   return (dispatch, getState) => {
     dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'setGa', status: 'loading' });
     api.call(apiSchema.Profile.GaInitPost, { ga_code: code }).then((dashboard) => {
+      dispatch({ type: actionTypes.PROFILE_SET_GA_SUCCESS });
       modalGroup.modalGroupClear();
       toastsActions.toastPush(utils.getLang("cabinet_gaCodeChangedSuccessfully"), "success")(dispatch, getState);
     }).catch((err) => {

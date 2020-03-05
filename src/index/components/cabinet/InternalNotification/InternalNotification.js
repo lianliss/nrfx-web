@@ -43,7 +43,7 @@ const InternalNotification = props => {
       message={notification.caption}
       onAccept={handleAction}
       onClose={() => {
-        this.props.dropInternalNotifications(notification.type)
+        props.dropInternalNotifications(notification.type)
       }}
     />
   )

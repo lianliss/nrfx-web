@@ -35,7 +35,7 @@ class SendCoinsConfirmModal extends React.Component {
 
   __handleChange = value => {
     this.props.sendCoinModalSetValue('gaCode', value);
-    if (value.length === 6) {
+    if (!this.props.gaEnabled || value.length === 6) {
       this.__handleSubmit(value);
     }
   };
@@ -84,27 +84,30 @@ class SendCoinsConfirmModal extends React.Component {
           currency={currencyInfo}
         />
 
-        <UI.Input
-          autoFocus
-          type="code"
-          cell
-          autoComplete="off"
-          mouseWheel={false}
-          maxLength={6}
-          value={gaCode}
-          onTextChange={this.__handleChange}
-          placeholder={utils.getLang('site__authModalGAPlaceholder')}
-          error={gaCode.length === 6 && this.props.loadingStatus.sendCode === 'ga_auth_code_incorrect'}
-          indicator={
-            <SVG src={require('../../../../asset/google_auth.svg')} />
-          }
-        />
+        {this.props.gaEnabled &&
+          <UI.Input
+            autoFocus
+            type="code"
+            cell
+            autoComplete="off"
+            mouseWheel={false}
+            maxLength={6}
+            value={gaCode}
+            onTextChange={this.__handleChange}
+            placeholder={utils.getLang('site__authModalGAPlaceholder')}
+            error={gaCode.length === 6 && this.props.loadingStatus.sendCode === 'ga_auth_code_incorrect'}
+            indicator={
+              <SVG src={require('../../../../asset/google_auth.svg')} />
+            }
+          />
+        }
+
         <div className="SendCoinsConfirmModal__submit_wrapper">
           <UI.Button
             state={this.props.loadingStatus.send}
             currency={currencyInfo}
             onClick={() => this.__handleSubmit()}
-            disabled={gaCode.length !== 6}
+            disabled={this.props.gaEnabled && gaCode.length !== 6}
           >
             {utils.getLang('site__authModalSubmit')}
           </UI.Button>
@@ -117,6 +120,7 @@ class SendCoinsConfirmModal extends React.Component {
 export default connect(state => ({
   loadingStatus: state.wallets.loadingStatus,
   wallets: state.wallets.wallets,
+  gaEnabled: state.default.profile['2fa_enabled'],
   limits: state.wallets.limits,
   ...state.wallets.sendCoinModal,
   gaCode: state.wallets.sendCoinModal.gaCode,
