@@ -5,6 +5,7 @@ import apiSchema from '../../services/apiSchema';
 import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import * as toastsActions from '../toasts';
+import { closeModal } from '../index';
 import * as modalGroup from '../modalGroup';
 import * as utils from '../../utils';
 import store from '../../store';
@@ -42,11 +43,16 @@ export function changeSecretKay(secret) {
 
 export function gaInit(code) {
   return (dispatch, getState) => {
+    dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'setGa', status: 'loading' });
     api.call(apiSchema.Profile.GaInitPost, { ga_code: code }).then((dashboard) => {
       modalGroup.modalGroupClear();
       toastsActions.toastPush(utils.getLang("cabinet_gaCodeChangedSuccessfully"), "success")(dispatch, getState);
     }).catch((err) => {
-      toastsActions.toastPush(err.message, "error")(dispatch, getState);
+      throw toastsActions.toastPush(err.message, "error")(dispatch, getState);
+    }).finally(() => {
+      dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'setGa', status: '' });
+    }).then(() => {
+      closeModal();
     });
   };
 }

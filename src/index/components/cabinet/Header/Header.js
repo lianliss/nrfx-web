@@ -17,7 +17,7 @@ import * as actions from '../../../../actions';
 import { getLang } from '../../../../services/lang';
 import COMPANY from '../../../constants/company';
 import {connect} from 'react-redux';
-import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
+import InternalNotification from '../InternalNotification/InternalNotification';
 import * as notificationsActions from '../../../../actions/cabinet/notifications';
 
 class Header extends React.Component {
@@ -39,8 +39,6 @@ class Header extends React.Component {
 
   render() {
     const isLogged = this.props.profile.role;
-    const { internalNotifications } = this.props;
-    const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
     const { notifications } = this.props.notifications;
 
     const currentLang = getLang();
@@ -133,19 +131,9 @@ class Header extends React.Component {
               <UI.Button onClick={() => actions.openModal('auth', {type: steps.REGISTRATION})}  size="middle" type="outline">{utils.getLang('site__authModalSignUpBtn')}</UI.Button>
             </div> }
           </div>
-          {internalNotification && <UI.InternalNotification
-            acceptText={internalNotification.button_text}
-            message={internalNotification.caption}
-            onAccept={() => {
-              const link = url.parse(internalNotification.link, true);
-              router.navigate(link.pathname.substr(1), link.query, internalNotification.params, () => {
-                this.props.dropInternalNotifications(internalNotification.type);
-              });
-            }}
-            onClose={() => {
-              this.props.dropInternalNotifications(internalNotification.type)
-            }}
-          />}
+
+          <InternalNotification />
+
         </div>
       </div>
     )
@@ -153,7 +141,6 @@ class Header extends React.Component {
 }
 
 export default connect(state => ({
-  internalNotifications: state.internalNotifications,
   profile: state.default.profile,
   notifications: state.notifications,
   router: state.router,
@@ -162,7 +149,6 @@ export default connect(state => ({
   theme: state.default.theme,
   translator: state.settings.translator
 }), {
-  dropInternalNotifications: internalNotifications.drop,
   loadNotifications: notificationsActions.loadNotifications,
   notificationAction: notificationsActions.submitAction,
 })(Header);

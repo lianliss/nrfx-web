@@ -1,7 +1,9 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  loadingStatus: {},
+  loadingStatus: {
+    setGa: "",
+  },
   dashboard: {},
   partner: {
     balances: [],

@@ -9,15 +9,22 @@ import * as utils from '../../../../utils';
 import * as toasts from '../../../../actions/toasts';
 import * as profileActions from '../../../../actions/cabinet/profile';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
+import Clipboard from '../Clipboard/Clipboard';
 
 const GoogleCodeModal = props => {
   const [code, setCode] = useState("");
+  const [touched, setTouched] = useState(false);
   const [ga, setGa] = useState(null);
 
   useEffect(() => {
-    profileActions.getGAHash().then(setGa);
+    profileActions.getGAHash().then(setGa).catch(props.onClose);
+    // eslint-disable-next-line
   }, []);
 
+  const handleSubmit = () => {
+    setTouched(true);
+    code && props.gaInit(code);
+  };
 
   return (
     <UI.Modal isOpen={true} onClose={props.onClose} width={424}>
@@ -28,7 +35,7 @@ const GoogleCodeModal = props => {
         <div className="GoogleCodeModal">
           <p className="GoogleCodeModal__description">{utils.getLang('site__authModalContentGA')}</p>
           <img className="GoogleCodeModal__qr_code" src={ga.url} alt="GA QR Code" />
-          <UI.Clipboard className="GoogleCodeModal__hash" text={ga.hash} />
+          <Clipboard className="GoogleCodeModal__hash" text={ga.hash} />
           <UI.Input
             autoFocus={true}
             autoComplete="off"
@@ -42,7 +49,7 @@ const GoogleCodeModal = props => {
               }
             }}
             placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            error={false}
+            error={touched && !code}
           />
           <div className="GoogleCodeModal__submit_wrapper">
             <UI.Button onClick={() => {
@@ -50,9 +57,7 @@ const GoogleCodeModal = props => {
                 toasts.success(utils.getLang("cabinet_ keyCopiedSuccessfully"));
               })
             }} type="outline">{utils.getLang('cabinet_CopyKey')}</UI.Button>
-            <UI.Button onClick={() => {
-              props.gaInit(code);
-            }}>
+            <UI.Button state={props.status} onClick={handleSubmit}>
               {utils.getLang('site__authModalSubmit')}
             </UI.Button>
           </div>
@@ -67,7 +72,8 @@ const GoogleCodeModal = props => {
 }
 
 export default connect(state => ({
-  router: state.router
+  router: state.router,
+  status: state.profile.loadingStatus.setGa
 }), {
   gaInit: profileActions.gaInit,
   toastPush: toasts.toastPush

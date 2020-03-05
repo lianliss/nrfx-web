@@ -8,13 +8,12 @@ import url from "url";
 import {connect} from 'react-redux';
 import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
 import * as notificationsActions from '../../../../actions/cabinet/notifications';
+import InternalNotification from '../InternalNotification/InternalNotification';
 
 class AdaptiveHeader extends React.Component {
   state = {activePage: null};
 
   render() {
-    const { internalNotifications } = this.props;
-    const internalNotification = internalNotifications.items.length ? internalNotifications.items[0] : null;
     return (
       <div className="CabinetHeaderContainer">
         <div className="CabinetHeader">
@@ -32,20 +31,7 @@ class AdaptiveHeader extends React.Component {
             {this.props.rightContent}
           </div>
         </div>
-        {internalNotification && <UI.InternalNotification
-          adaptive={true}
-          acceptText={internalNotification.button_text}
-          message={internalNotification.caption}
-          onAccept={() => {
-            const link = url.parse(internalNotification.link, true);
-            router.navigate(link.pathname.substr(1), link.query, internalNotification.params, () => {
-              this.props.dropInternalNotifications(internalNotification.type);
-            });
-          }}
-          onClose={() => {
-            this.props.dropInternalNotifications(internalNotification.type)
-          }}
-        />}
+        <InternalNotification />
       </div>
     )
   }
@@ -61,14 +47,12 @@ AdaptiveHeader.defaultProps = {
 };
 
 export default connect(state => ({
-  internalNotifications: state.internalNotifications,
   profile: state.default.profile,
   notifications: state.notifications,
   router: state.router,
   langList: state.default.langList,
   title: state.default.title,
 }), {
-  dropInternalNotifications: internalNotifications.drop,
   loadNotifications: notificationsActions.loadNotifications,
   notificationAction: notificationsActions.submitAction,
 })(AdaptiveHeader);

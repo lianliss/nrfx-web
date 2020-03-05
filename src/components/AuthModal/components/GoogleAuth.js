@@ -16,8 +16,6 @@ function GoogleAuth({ changeStep, email, password, params }) {
   const hashRef = useRef(null);
   const { loginRes } = params;
 
-  alert(JSON.stringify(loginRes, null, 2));
-
   const handleSubmit = (code) => {
     const googleCode = code ? code : gaCode;
     setPending(true);

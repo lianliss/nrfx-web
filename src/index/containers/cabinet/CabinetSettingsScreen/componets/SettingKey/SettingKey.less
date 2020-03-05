@@ -2,8 +2,8 @@
   padding: 40px 40px 48px;
 }
 
-.ApiKey .ContentBox__content {
-  margin-bottom: 22px;
+.ApiKey {
+  margin-bottom: var(--gap-size);
 }
 
 .ApiKey__title {
@@ -22,7 +22,8 @@
 }
 
 .ApiKey__Item {
-  margin-bottom: 22px;
+  margin-bottom: var(--gap-size);
+
   .ApiKey__block{
     display: flex;
     flex-direction: row;
@@ -127,4 +128,10 @@
 
 .adaptive .Radio__indicator {
   flex: 0 0 auto;
+}
+
+.adaptive {
+  .ApiKey .ContentBox__content, .ApiKey__Item .ContentBox__content {
+    padding: 16px;
+  }
 }

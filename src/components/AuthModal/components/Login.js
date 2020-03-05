@@ -5,8 +5,6 @@ import { getAuth } from 'src/actions/auth';
 import Captcha from 'src/components/Captcha/Captcha';
 import * as utils from 'src/utils';
 import * as steps from '../fixtures';
-import * as auth from '../../../services/auth';
-import * as user from '../../../actions/user';
 import router from '../../../router';
 import * as pages from '../../../index/constants/pages';
 

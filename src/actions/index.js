@@ -74,11 +74,12 @@ export function getCurrencyInfo(name) {
   }
 }
 
-export function openModal(name, params = {}, props = {}) {
+export function openModal(name, params = {}, props = {}, done) {
   router.navigate(
     router.getState().name,
     utils.makeModalParams(name, params),
-    props
+    props,
+    done
   );
 }
 export function closeModal() {
