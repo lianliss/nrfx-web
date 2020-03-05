@@ -6,22 +6,22 @@ import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import * as settingsActions from "../../../../actions/cabinet/settings";
-import * as modalGroupActions from "../../../../actions/modalGroup";
-import CheckNewEmailModal from "../CheckNewEmailModal/CheckNewEmailModal";
 import SVG from 'react-inlinesvg';
 import * as toastsActions from '../../../../actions/toasts';
+import {openModal} from '../../../../actions';
 
 class ChangeEmailModal extends React.Component {
   state = {
     gaCode: '',
+    state: '',
     errorGaCode: false,
-    newEmail: this.props.params.newEmail || '',
+    newEmail: this.props.newEmail || '',
     errorNewEmail: false,
   };
 
   render() {
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={424}>
+      <UI.Modal isOpen={true} onClose={this.props.onClose} width={424}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_changeEmailModal_name')}
         </UI.ModalHeader>
@@ -41,22 +41,24 @@ class ChangeEmailModal extends React.Component {
             onChange={(e) => this.__handleChange(e, 'EMAIL')}
             error={this.state.errorNewEmail}
           />
-          <UI.Input
-            type="code"
-            cell
-            autoComplete="off"
-            mouseWheel={false}
-            value={this.state.gaCode}
-            onChange={e => this.__handleChange(e, 'GA')}
-            placeholder={utils.getLang('site__authModalGAPlaceholder')}
-            error={this.state.errorGaCode}
-            indicator={
-              <SVG src={require('../../../../asset/google_auth.svg')} />
-            }
-          />
+          { this.props.gaEnabled && (
+            <UI.Input
+              type="code"
+              cell
+              autoComplete="off"
+              mouseWheel={false}
+              value={this.state.gaCode}
+              onChange={e => this.__handleChange(e, 'GA')}
+              placeholder={utils.getLang('site__authModalGAPlaceholder')}
+              error={this.state.errorGaCode}
+              indicator={
+                <SVG src={require('../../../../asset/google_auth.svg')} />
+              }
+            />
+          )}
         </div>
         <div className="ChangeEmailModal__submit_wrapper">
-          <UI.Button onClick={this.__handleSubmit} disabled={this.state.gaCode.length < 6}>
+          <UI.Button state={this.state.state} onClick={this.__handleSubmit} disabled={this.props.gaEnabled && this.state.gaCode.length !== 6}>
             {utils.getLang('cabinet_settingsSave')}
           </UI.Button>
         </div>
@@ -73,7 +75,7 @@ class ChangeEmailModal extends React.Component {
         const val = e.target.value;
         if (val.length <= 6) {
           this.setState({gaCode: val}, e => {
-            if (val.length === 6) {
+            if (!this.props.gaEnabled || val.length === 6) {
               this.__handleSubmit();
             }
           });
@@ -87,26 +89,27 @@ class ChangeEmailModal extends React.Component {
     if (!utils.isEmail(this.state.newEmail)) {
       return this.__inputError(this, 'errorNewEmail');
     }
+    this.setState({ state: 'loading' });
+
     settingsActions.changeEmail({
       email: this.state.newEmail,
       ga_code: this.state.gaCode
     }).then((data) => {
-      modalGroupActions.openModalPage(null, {}, {
-        children: CheckNewEmailModal,
-        params: {
-          newEmail: this.state.newEmail
-        }
-      })
+      openModal('check_change_email', {}, {
+        newEmail: this.state.newEmail
+      });
     }).catch((info) => {
       this.props.toastPush(info.message, "error");
       switch (info.code) {
         case "ga_auth_code_incorrect":
-          return this.__inputError(this, 'errorGaCode');
+          return this.__inputError(this,'errorGaCode');
         case "email_incorrect":
-          return this.__inputError(this, 'errorNewEmail');
+          return this.__inputError(this,'errorNewEmail');
         default:
           break;
       }
+    }).finally(() => {
+      this.setState({ state: '' });
     });
   };
 
@@ -123,6 +126,8 @@ class ChangeEmailModal extends React.Component {
   }
 }
 
-export default connect(null, {
+export default connect(state => ({
+  gaEnabled: state.default.profile.ga_enabled
+}), {
   toastPush: toastsActions.toastPush
 })(ChangeEmailModal);

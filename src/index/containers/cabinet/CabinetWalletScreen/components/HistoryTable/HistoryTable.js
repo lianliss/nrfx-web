@@ -4,7 +4,7 @@ import * as UI from '../../../../../../ui';
 
 import * as utils from '../../../../../../utils';
 import EmptyContentBlock from '../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import * as modalGroupActions from '../../../../../../actions/modalGroup';
+import { openModal } from '../../../../../../actions';
 
 export default function HistoryTable({ history, adaptive, header}) {
 
@@ -52,7 +52,7 @@ export default function HistoryTable({ history, adaptive, header}) {
 
     if (adaptive) {
       return (
-        <UI.TableCell key={i} onClick={() => modalGroupActions.openModalPage('transaction', {id:item.id, type:item.type})}>
+        <UI.TableCell key={i} onClick={() => openModal('transaction', {id:item.id, type:item.type})}>
           <UI.TableColumn>
             <div className="Wallets__history__address">
               <UI.WalletAddress isUser={item.type === 'transfer'} address={address} />
@@ -72,7 +72,7 @@ export default function HistoryTable({ history, adaptive, header}) {
     }
 
     return (
-      <UI.TableCell key={i} onClick={() => modalGroupActions.openModalPage('transaction', {id:item.id, type:item.type})}>
+      <UI.TableCell key={i} onClick={() => openModal('transaction', {id:item.id, type:item.type})}>
         <UI.TableColumn align="center">
           <div className={utils.classNames({
             Wallets__history_indicator: true,

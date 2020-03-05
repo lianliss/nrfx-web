@@ -2,7 +2,6 @@ import React from 'react';
 import * as UI from '../../../../../ui';
 import * as auth from '../../../../../services/auth';
 import * as api from '../../../../../services/api';
-import * as modalActions from '../../../../../actions/modalGroup';
 import * as emitter from "../../../../../services/emitter";
 import * as utils from "../../../../../utils";
 
@@ -40,7 +39,7 @@ export default class ImageUpload extends React.Component {
       let response = JSON.parse(e.currentTarget.response);
       if (response.hasOwnProperty('response')) {
         emitter.emit('userInstall');
-        modalActions.modalGroupClear();
+        this.props.onClose();
       } else {
         console.error('status' + response.status, "error upload");
       }

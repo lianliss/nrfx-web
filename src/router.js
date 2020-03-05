@@ -3,7 +3,6 @@
 import createRouter from 'router5';
 import browserPlugin from 'router5-plugin-browser';
 import listenersPlugin from 'router5-plugin-listeners';
-import * as modalGroup from './actions/modalGroup';
 // internal
 import * as pages from './index/constants/pages';
 import * as adminPages from './admin/constants/pages';
@@ -169,13 +168,6 @@ router.usePlugin(browserPlugin({
 router.usePlugin(listenersPlugin());
 
 router.addListener((state, prevState)  => {
-  if (prevState && prevState.params && prevState.params.modal_group && !state.params.modal_group) {
-    modalGroup.modalGroupClear();
-  }
-  if (state.params && state.params.modal_group) {
-    modalGroup.modalGroupSetActiveModal(state.params.modal_group);
-  }
-
   if (state.params.path === '/profile') {
     router.navigate(pages.DASHBOARD);
   }

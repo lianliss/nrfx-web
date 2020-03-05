@@ -6,7 +6,6 @@ import {loadReCaptcha} from 'react-recaptcha-google';
 // internal
 import Routes from './Routes';
 import Modals from './Modals';
-import ModalGroup from '../ui/components/ModalGroup/ModalGroup';
 import Toasts from './components/cabinet/Toasts/Toasts';
 import CookieUsage from './components/site/CookieUsage/CookieUsage';
 import * as UI from '../ui';
@@ -78,7 +77,6 @@ class App extends React.Component {
       <Helmet>
         <title>{utils.getLang('global_meta_title', true)}</title>
       </Helmet>
-      <ModalGroup />
       <Modals {...this.props} />
       <Routes {...this.props} />
       <Toasts />

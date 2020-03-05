@@ -6,7 +6,6 @@ import * as UI from '../../../../ui';
 
 import * as utils from '../../../../utils';
 import * as settingsActions from "../../../../actions/cabinet/settings";
-import * as modalGroupActions from "../../../../actions/modalGroup";
 import * as toastsActions from '../../../../actions/toasts';
 
 class ConfirmSmsModal extends React.Component {
@@ -70,7 +69,7 @@ class ConfirmSmsModal extends React.Component {
         phone_number: this.props.params.phoneWithoutCode,
         sms_code: this.state.smsCode
       }).then(({ phone_number }) => {
-        modalGroupActions.modalGroupClear();
+        this.props.onClose();
         this.props.setUserFieldValue({
           field: "phone_number",
           value: phone_number

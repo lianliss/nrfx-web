@@ -26,7 +26,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
 
   render() {
     return (
-      <UI.Modal className="WalletTransactionModal__wrapper" isOpen={true} onClose={() => {this.props.close()}} width={464}>
+      <UI.Modal className="WalletTransactionModal__wrapper" isOpen={true} onClose={this.props.onClose} width={464}>
         <UI.ModalHeader>
           {this.__getTitle()}
         </UI.ModalHeader>

@@ -36,6 +36,9 @@ import UserBlockModal from '../index/components/cabinet/UserBlockModal/UserBlock
 import VerificationModal from '../index/components/cabinet/VerificationModal/VerificationModal';
 import TraderNewBotModal from './components/cabinet/TraderNewBotModal/TraderNewBotModal';
 import WalletModal from './components/cabinet/WalletModal/WalletModal';
+import ChangeEmailModal from './components/cabinet/ChangeEmailModal/ChangeEmailModal';
+import CheckNewEmailModal from './components/cabinet/CheckNewEmailModal/CheckNewEmailModal';
+import UploadAvatarModal from './components/cabinet/UploadAvatarModal/UploadAvatarModal';
 import router from '../router';
 import {connect} from 'react-redux';
 
@@ -132,6 +135,12 @@ function Modals(props) {
     case 'change_secret_key':
       Component = ChangeSecretKeyModal;
       break;
+    case 'change_email':
+      Component = ChangeEmailModal;
+      break;
+    case 'check_change_email':
+      Component = CheckNewEmailModal;
+      break;
     case 'secret_key':
       Component = SecretKeyDescModal;
       break;
@@ -146,6 +155,9 @@ function Modals(props) {
       break;
     case 'google_code':
       Component = GoogleCodeModal;
+      break;
+    case 'upload_avatar':
+      Component = UploadAvatarModal;
       break;
     case 'wallet':
       Component = WalletModal;

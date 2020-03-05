@@ -1,14 +1,13 @@
 import './SettingPersonal.less';
 import React from 'react';
 import { connect } from 'react-redux';
-
-import * as modalGroupActions from "../../../../../../actions/modalGroup";
 import * as settingsActions from '../../../../../../actions/cabinet/settings';
 import * as utils from "../../../../../../utils";
 import * as UI from '../../../../../../ui';
 import VerificationBlock from '../VerificationBlock/VerificationBlock';
 import * as actions from 'src/actions/index';
 import * as toasts from 'src/actions/toasts';
+import {openModal} from 'src/actions/index';
 
 class SettingPersonal extends React.Component{
 
@@ -158,7 +157,7 @@ class SettingPersonal extends React.Component{
               </div>
             </div>
             <div className="CabinetSettingsScreen__form right">
-              <UI.Button type={buttonType} onClick={() => {modalGroupActions.openModalPage('change_email')}}>
+              <UI.Button type={buttonType} onClick={() => {openModal('change_email')}}>
                 {utils.getLang('cabinet_settingsChange')}
               </UI.Button>
             </div>

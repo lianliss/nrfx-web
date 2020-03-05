@@ -6,7 +6,6 @@ import * as actionTypes from '../actionTypes';
 import * as api from '../../services/api';
 import * as toastsActions from '../toasts';
 import { closeModal } from '../index';
-import * as modalGroup from '../modalGroup';
 import * as utils from '../../utils';
 import store from '../../store';
 
@@ -49,7 +48,7 @@ export function gaInit(code) {
     dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'setGa', status: 'loading' });
     api.call(apiSchema.Profile.GaInitPost, { ga_code: code }).then((dashboard) => {
       dispatch({ type: actionTypes.PROFILE_SET_GA_SUCCESS });
-      modalGroup.modalGroupClear();
+      closeModal();
       toastsActions.toastPush(utils.getLang("cabinet_gaCodeChangedSuccessfully"), "success")(dispatch, getState);
     }).catch((err) => {
       throw toastsActions.toastPush(err.message, "error")(dispatch, getState);

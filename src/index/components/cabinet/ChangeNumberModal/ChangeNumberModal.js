@@ -27,7 +27,7 @@ class ChangeNumberModal extends React.Component {
 
   render() {
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={424}>
+      <UI.Modal isOpen={true} onClose={this.props.onClose} width={424}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_changeNumberModal_name')}
         </UI.ModalHeader>

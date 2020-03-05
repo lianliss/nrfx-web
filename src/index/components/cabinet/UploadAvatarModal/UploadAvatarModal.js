@@ -10,7 +10,7 @@ import * as utils from "../../../../utils";
 export default class UploadAvatarModal extends React.Component {
   render() {
     return (
-      <UI.Modal isOpen={true} onClose={() => {this.props.close()}} width={384}>
+      <UI.Modal isOpen={true} onClose={this.props.onClose} width={384}>
         <UI.ModalHeader>
           {utils.getLang('cabinet_uploadAvatarModal_name')}
         </UI.ModalHeader>

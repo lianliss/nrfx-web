@@ -3,8 +3,7 @@ import './ProfileUser.less';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import * as modalGroupActions from '../../../../actions/modalGroup';
-import UploadAvatarModal from '../UploadAvatarModal/UploadAvatarModal';
+import { openModal } from '../../../../actions';
 import SVG from 'react-inlinesvg';
 import * as utils from '../../../../utils';
 
@@ -16,9 +15,7 @@ const ProfileSidebarUser = ({profile}) => {
   return (
     <div className="ProfileUser">
       <div className="ProfileUser__avatar__wrap" onClick={() => {
-        modalGroupActions.openModalPage('upload_avatar', {}, {
-          children: UploadAvatarModal
-        })
+        openModal('upload_avatar')
       }}>
         <div className="ProfileUser__avatar__over">
           <SVG src={require("../../../../asset/24px/camera.svg")} />
