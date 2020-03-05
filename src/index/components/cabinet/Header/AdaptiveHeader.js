@@ -2,11 +2,7 @@
 import './Header.less';
 
 import React from 'react';
-import router from '../../../../router';
-import * as UI from '../../../../ui';
-import url from "url";
 import {connect} from 'react-redux';
-import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
 import * as notificationsActions from '../../../../actions/cabinet/notifications';
 import InternalNotification from '../InternalNotification/InternalNotification';
 

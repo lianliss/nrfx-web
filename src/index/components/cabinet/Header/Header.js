@@ -1,10 +1,8 @@
-
 import './Header.less';
 
 import React from 'react';
 import SVG from 'react-inlinesvg';
 import { BaseLink } from 'react-router5';
-import url from 'url';
 
 import Badge from '../../../../ui/components/Badge/Badge';
 import router from '../../../../router';
