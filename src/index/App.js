@@ -77,8 +77,8 @@ class App extends React.Component {
       <Helmet>
         <title>{utils.getLang('global_meta_title', true)}</title>
       </Helmet>
-      <Modals {...this.props} />
-      <Routes {...this.props} />
+      <Modals />
+      <Routes />
       <Toasts />
       {!acceptedCookies ? <CookieUsage /> : null}
     </div>

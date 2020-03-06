@@ -78,10 +78,6 @@ class CabinetWrapper extends Component {
 
     const {className, adaptive, user} = this.props;
 
-    if (!user) {
-      return null;
-    }
-
     const mainClassName = classNames({
       CabinetWrapper: true,
       [className]: !!className
