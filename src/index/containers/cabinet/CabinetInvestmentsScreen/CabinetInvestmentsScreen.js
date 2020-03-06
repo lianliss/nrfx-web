@@ -25,6 +25,7 @@ import * as actions from '../../../../actions';
 import * as utils from '../../../../utils';
 import Show from '../../../components/hoc/ShowContent';
 import * as investmentsActions from '../../../../actions/cabinet/investments';
+import SVG from 'react-inlinesvg';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -93,6 +94,12 @@ class CabinetInvestmentsScreen extends React.PureComponent {
             <ProfileSidebarItem onClick={() => { actions.openModal('calc_deposit')}} icon={<CalcSvg />} label={utils.getLang('cabinet_calculate')} />
           ]}
         >
+          <div className="Investments__stub">
+            <UI.ContentBox>
+              <SVG src={require('src/asset/120/failed.svg')} />
+              <p>{utils.getLang('investmentsStubText')}</p>
+            </UI.ContentBox>
+          </div>
           <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>
             {this.__renderRightContent()}
           </Show>
