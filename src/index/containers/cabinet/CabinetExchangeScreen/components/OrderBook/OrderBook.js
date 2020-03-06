@@ -69,11 +69,12 @@ const OrderBook = props => {
         {props.orders.filter(o => o.action === type)
           .sort((a, b) => b.price - a.price)
           .slice(...range)
-          .map(order => {
+          .map((order, i) => {
             const total = order.amount * order.price;
             const filled = total / maxTotal * 100;
             return (
-              <div key={order.id} onClick={() => handleOrderClick(order)} className={cn("OrderBook__order", order.action)}>
+              // TODO: Если прописать order.id в key это приводит к дублированию ордеров и к переполнению ордербука
+              <div key={i} onClick={() => handleOrderClick(order)} className={cn("OrderBook__order", order.action)}>
                 <div className="OrderBook__order__price">
                   <UI.NumberFormat accurate number={order.price} currency={order.secondary_coin} hiddenCurrency/>
                 </div>

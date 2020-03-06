@@ -9,7 +9,7 @@ const initialState = {
     orderBook: 'loading'
   },
   balances: [],
-  trades: {},
+  trades: [],
   openOrders: {},
   last_orders: [],
   fee: 0,
@@ -111,17 +111,9 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.EXCHANGE_REMOVE_ORDERS: {
-      const openOrders = {
-        ...state.openOrders
-      };
-
-      action.orderIds.forEach((orderId) => {
-        delete openOrders[orderId];
-      });
 
       return {
         ...state,
-        openOrders,
         orderBook: state.orderBook.filter( o => !action.orderIds.includes(o.id) )
       };
     }
@@ -180,7 +172,7 @@ export default function reduce(state = initialState, action = {}) {
       if (openOrders[action.orderId]) {
         let order = { ...openOrders[action.orderId] };
         delete openOrders[action.orderId];
-        if (lastOrders.find(order => order.id === action.orderId)) {
+        if (!lastOrders.find(order => order.id === action.orderId)) {
           order.status = action.status;
           lastOrders.unshift(order);
         }
