@@ -142,6 +142,26 @@ export const routes = process.env.DOMAIN === 'admin' ? [
   {
     name: pages.TRADER,
     path: '/trader',
+  },
+  {
+    name: pages.DOCUMENTATION,
+    path: '/documentation',
+  },
+  {
+    name: pages.DOCUMENTATION_API,
+    path: '/documentation/api',
+  },
+  {
+    name: pages.DOCUMENTATION_PAGE,
+    path: '/documentation/:page',
+  },
+  {
+    name: pages.DOCUMENTATION_API_GROUP,
+    path: '/documentation/api/:group',
+  },
+  {
+    name: pages.DOCUMENTATION_API_GROUP_METHOD,
+    path: '/documentation/api/:group/:method',
   }
 ];
 

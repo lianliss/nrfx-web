@@ -1,0 +1,42 @@
+html, body, #root, #root > div {
+  height: 100%;
+}
+
+.Documentation_wrapper {
+  min-height: 100%;
+  width: 100%;
+  min-width: 1368px;
+  display: flex;
+  flex-direction: column;
+
+
+  .Documentation_wrapper__header {
+    position: relative;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+  }
+
+  .Documentation_wrapper__layout {
+    background: var(--light-dairy);
+    padding: 24px 16px;
+    flex: 1;
+    display: flex;
+  }
+
+  .Documentation_wrapper__menu {
+    width: 200px;
+  }
+
+  .Documentation_wrapper__content {
+    width: 680px;
+    margin: 0 16px;
+
+    .ContentBox__content {
+      padding: 40px;
+    }
+  }
+  .Documentation_wrapper__subContent {
+
+  }
+}

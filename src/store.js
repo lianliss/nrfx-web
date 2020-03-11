@@ -11,6 +11,7 @@ import cabinetReducer from './reducers/cabinet';
 import investmentsReducer from './reducers/investments';
 import profileReducer from './reducers/profile';
 import settingsReducer from './reducers/settings';
+import documentation from './reducers/documentation';
 import walletsReducer from './reducers/wallets';
 import fiatWalletsReducer from './reducers/fiatWallets';
 import notificationsReducer from './reducers/notifications';
@@ -39,6 +40,7 @@ export function configureStore() {
       admin: adminReducer,
     } : {
       router: router5Reducer,
+      documentation: documentation,
       default: defaultReducer,
       cabinet: cabinetReducer,
       investments: investmentsReducer,

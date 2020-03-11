@@ -18,6 +18,7 @@ import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoun
 import UIKitScreen from './containers/UIKit/UIKitScreen';
 import SiteWrapper from '../wrappers/Site/SiteWrapper';
 import CabinetWrapper from '../wrappers/Cabinet/CabinetWrapper';
+import DocumentationWrapper from '../wrappers/Documentation/DocumentationWrapper';
 
 import * as pages from './constants/pages';
 import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
@@ -33,6 +34,8 @@ import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import SiteFeeScreen from './containers/site/SiteFeeScreen/SiteFeeScreen';
 import TraderScreen from './containers/cabinet/TraderScreen/TraderScreen';
+import DocumentationPage from './containers/documentation/Page/Page';
+import DocumentationMethod from './containers/documentation/Method/Method';
 import * as actions from '../actions/index';
 import router from '../router';
 
@@ -152,6 +155,22 @@ function Routes(props) {
       needAuthorization = true;
       Component = TraderScreen;
       break;
+    case pages.DOCUMENTATION:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationPage;
+      break;
+    case pages.DOCUMENTATION_API:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationPage;
+      break;
+    case pages.DOCUMENTATION_API_GROUP:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationPage;
+      break;
+    case pages.DOCUMENTATION_API_GROUP_METHOD:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationMethod;
+      break;
     default:
       Component = SiteNotFoundScreen;
       break;
@@ -177,7 +196,7 @@ function Routes(props) {
   actions.setCabinet(WrapperComponent === CabinetWrapper); // HACK
 
   return (
-    <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
+    <WrapperComponent>
       <Component routerParams={routerParams} />
     </WrapperComponent>
   );
