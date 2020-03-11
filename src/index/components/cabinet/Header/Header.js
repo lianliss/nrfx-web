@@ -61,10 +61,10 @@ class Header extends React.Component {
                 {utils.getLang('cabinet_header_wallets')}
               </BaseLink>
 
-              <BaseLink router={router} routeName={pages.INVESTMENTS} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.INVESTMENTS})}}>
+              { this.props.profile.has_deposits && <BaseLink router={router} routeName={pages.INVESTMENTS} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.INVESTMENTS})}}>
                 <SVG src={require('../../../../asset/cabinet/investment_icon.svg')} />
                 {utils.getLang('cabinet_header_investments')}
-              </BaseLink>
+              </BaseLink> }
 
               <div className="CabinetHeader__link" style={{display:'none'}}>
                 <SVG src={require('../../../../asset/cabinet/bots_icon.svg')} />

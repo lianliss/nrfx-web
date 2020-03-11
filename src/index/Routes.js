@@ -122,7 +122,7 @@ function Routes(props) {
       break;
     case pages.INVESTMENTS:
       needAuthorization = true;
-      Component = CabinetInvestmentsScreen.default;
+      Component = props.profile.has_deposits ? CabinetInvestmentsScreen.default : SiteNotFoundScreen;
       break;
     case pages.CHANGE_EMAIL:
       Component = CabinetChangeEmail.default;

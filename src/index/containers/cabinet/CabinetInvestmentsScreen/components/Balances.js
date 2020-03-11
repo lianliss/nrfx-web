@@ -13,17 +13,17 @@ function BalanceItem({ amount, currency }, key ) {
       <div className="Investments__balances__item__rows">
         <InfoRow label={utils.ucfirst(currencyInfo.name)}>{amount} {currency}</InfoRow>
       </div>
-      <div className="Investments__balances__item__actions empty disable_active_button">
-        <UI.Button
-          style={{background: currencyInfo.background}}
-          key="button"
-          type="normal"
-          size="middle"
-          onClick={() => actions.openModal('open_deposit', { currency })}
-        >
-          {utils.getLang('cabinet_profileScreen_actionCard_invest')}
-        </UI.Button>
-      </div>
+      {/*<div className="Investments__balances__item__actions empty disable_active_button">*/}
+      {/*  <UI.Button*/}
+      {/*    style={{background: currencyInfo.background}}*/}
+      {/*    key="button"*/}
+      {/*    type="normal"*/}
+      {/*    size="middle"*/}
+      {/*    onClick={() => actions.openModal('open_deposit', { currency })}*/}
+      {/*  >*/}
+      {/*    {utils.getLang('cabinet_profileScreen_actionCard_invest')}*/}
+      {/*  </UI.Button>*/}
+      {/*</div>*/}
       <UI.CircleIcon currency={currencyInfo} />
     </UI.ContentBox>
   )
