@@ -13,11 +13,11 @@ const ChangeSecretKeyModal = props => {
       <UI.ModalHeader>
         {utils.getLang('cabinet_enterSecretKey')}
       </UI.ModalHeader>
-      <div className="ChangeSecretKayModal">
+      <form className="ChangeSecretKayModal">
         <UI.Input
+          autoComplete="off"
           autoFocus={true}
           type="password"
-          autoComplete="off"
           value={code}
           onTextChange={setCode}
           placeholder={utils.getLang('site__authModalSecretKey')}
@@ -30,7 +30,7 @@ const ChangeSecretKeyModal = props => {
             {utils.getLang('cabinet_settingsSave')}
           </UI.Button>
         </div>
-      </div>
+      </form>
     </UI.Modal>
   )
 };

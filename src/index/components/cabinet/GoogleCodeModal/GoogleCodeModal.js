@@ -32,7 +32,7 @@ const GoogleCodeModal = props => {
         {utils.getLang('site__authModalTitle')}
       </UI.ModalHeader>
       { ga ? (
-        <div className="GoogleCodeModal">
+        <form className="GoogleCodeModal">
           <p className="GoogleCodeModal__description">{utils.getLang('site__authModalContentGA')}</p>
           <img className="GoogleCodeModal__qr_code" src={ga.url} alt="GA QR Code" />
           <Clipboard className="GoogleCodeModal__hash" text={ga.hash} />
@@ -61,7 +61,7 @@ const GoogleCodeModal = props => {
               {utils.getLang('site__authModalSubmit')}
             </UI.Button>
           </div>
-        </div>
+        </form>
       ) : (
         <div className="GoogleCodeModal">
           <LoadingStatus inline status="loading" />
