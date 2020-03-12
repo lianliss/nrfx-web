@@ -16,7 +16,6 @@ import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/Pro
 import ChartProfit from '../../../components/cabinet/ChartProfit/ChartProfit';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import Paging from '../../../components/cabinet/Paging/Paging';
-import {ReactComponent as PlusCircleSvg} from '../../../../asset/24px/plus-circle.svg';
 import {ReactComponent as InvestSvg} from '../../../../asset/24px/invest.svg';
 import {ReactComponent as SendSvg} from '../../../../asset/24px/send.svg';
 import {ReactComponent as CalcSvg} from '../../../../asset/24px/calc.svg';
@@ -25,7 +24,6 @@ import * as actions from '../../../../actions';
 import * as utils from '../../../../utils';
 import Show from '../../../components/hoc/ShowContent';
 import * as investmentsActions from '../../../../actions/cabinet/investments';
-import SVG from 'react-inlinesvg';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {

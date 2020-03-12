@@ -84,7 +84,6 @@ class DashboardItem extends React.Component {
             </div>
           </UI.ContentBox>
         );
-        break;
       default:
         return null;
     }
