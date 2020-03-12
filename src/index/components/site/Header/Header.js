@@ -161,12 +161,8 @@ function Header({ showLightLogo, langList, routerState, profile }) {
             ))}
             <MobileDropdown
               title={currentLangTitle}
-              subItems={langList.slice(0, 3)}
+              subItems={langList.filter(l => l.display)}
               onChange={handleLangChange}
-              lastItemText={getLang('site__headerMore')}
-              onLastItemClick={() => {
-                actions.openModal('language');
-              }}
             />
 
           </div>
@@ -212,12 +208,8 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                 <Dropdown
                   className="SiteHeader__lang__dropdown"
                   title={currentLangTitle}
-                  subItems={langList.slice(0, 3)}
+                  subItems={langList.filter(l => l.display)}
                   onChange={handleLangChange}
-                  lastItemText={getLang('site__headerMore')}
-                  onLastItemClick={() => {
-                    actions.openModal('language');
-                  }}
                 />
               </div>
             </div>

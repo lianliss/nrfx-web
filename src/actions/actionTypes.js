@@ -49,6 +49,7 @@ export const INTERNAL_NOTIFICATION_DROP = 'INTERNAL_NOTIFICATION_DROP';
 export const TOASTS_PUSH = 'TOASTS_PUSH';
 export const TOASTS_DROP = 'TOASTS_DROP';
 export const TOASTS_HIDE = 'TOASTS_HIDE';
+export const TOASTS_SET_HIDE = 'TOASTS_SET_HIDE';
 
 // test
 export const TEST = 'TEST';

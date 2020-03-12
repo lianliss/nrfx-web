@@ -9,7 +9,7 @@ import { classNames } from '../../utils';
 
 export default function Toast(props) {
   return (
-    <div className={classNames("Toast", props.type, { hidden: props.hidden })}>
+    <div onMouseOver={props.onMouseOver} onMouseLeave={props.onMouseLeave} className={classNames("Toast", props.type, { hidden: props.hidden })}>
       <div className="Toast__icon">
         <SVG src={props.type === "success" ? require('../../asset/check_24.svg') : require('../../asset/warning.svg')} />
       </div>
