@@ -56,6 +56,11 @@ class Header extends React.Component {
                 {utils.getLang('cabinet_header_profile')}
               </BaseLink>
 
+              <BaseLink router={router} routeName={pages.FIAT} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.FIAT})}}>
+                <SVG src={require('src/asset/24px/fiat.svg')} />
+                {utils.getLang('cabinet_header_fiat')}
+              </BaseLink>
+
               <BaseLink router={router} routeName={pages.CABINET_WALLET} className="CabinetHeader__link" activeClassName="active" onClick={() => {this.setState({activePage:pages.CABINET_WALLET})}}>
                 <SVG src={require('../../../../asset/cabinet/wallet_icon.svg')} />
                 {utils.getLang('cabinet_header_wallets')}

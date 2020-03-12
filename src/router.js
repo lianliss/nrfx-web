@@ -103,6 +103,10 @@ export const routes = process.env.DOMAIN === 'admin' ? [
     path: '/cabinet_wallet',
   },
   {
+    name: pages.FIAT,
+    path: '/fiat',
+  },
+  {
     name: pages.SETTINGS,
     path: '/settings',
   },
@@ -156,6 +160,7 @@ const params = {
 };
 
 let router = createRouter(routes, params);
+
 router.usePlugin(browserPlugin({
   base: '',
   useHash: false,

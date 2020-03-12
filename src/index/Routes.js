@@ -21,6 +21,7 @@ import CabinetWrapper from '../wrappers/Cabinet/CabinetWrapper';
 
 import * as pages from './constants/pages';
 import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
+import * as CabinetFiatScreen from './containers/cabinet/CabinetFiatScreen/CabinetFiatScreen';
 import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
 import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
 import * as CabinetSettingsScreen from './containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen';
@@ -82,14 +83,15 @@ function Routes(props) {
       Component = SiteSafetyScreen;
       WrapperComponent = SiteWrapper;
       break;
-    // case pages.COMMERCE:
-    //   Component = SiteCommerceScreen;
-    //   WrapperComponent = SiteWrapper;
-    //   break;
-    // case pages.INVESTMENT:
-    //   Component = SiteInvestmentScreen;
-    //   WrapperComponent = SiteWrapper;
-    //   break;
+
+      // case pages.COMMERCE:
+      //   Component = SiteCommerceScreen;
+      //   WrapperComponent = SiteWrapper;
+      //   break;
+      // case pages.INVESTMENT:
+      //   Component = SiteInvestmentScreen;
+      //   WrapperComponent = SiteWrapper;
+      //   break;
     case pages.CONTACT:
       Component = SiteContactScreen;
       WrapperComponent = SiteWrapper;
@@ -111,6 +113,10 @@ function Routes(props) {
     case pages.CABINET_WALLET:
       needAuthorization = true;
       Component = CabinetWalletScreen.default;
+      break;
+    case pages.FIAT:
+      needAuthorization = true;
+      Component = CabinetFiatScreen.default;
       break;
     case pages.DASHBOARD:
       needAuthorization = true;

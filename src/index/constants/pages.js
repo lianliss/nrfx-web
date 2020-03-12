@@ -8,6 +8,7 @@ export const MISSION = 'mission';
 export const HISTORY = 'history';
 export const SITE_EXCHANGE = 'site/exchange';
 export const WALLET = 'wallet';
+export const FIAT = 'fiat';
 export const ROBOTS = 'robots';
 export const TECHNOLOGY = 'technology';
 export const SAFETY = 'safety';
