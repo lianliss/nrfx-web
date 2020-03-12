@@ -9,6 +9,8 @@ function Toasts(props) {
     <div className="Toasts">
       {props.toasts.items.map(toast => (
         <Toast
+          onMouseOver={() => toastActions.setHide(toast.id, false)}
+          onMouseLeave={() => toastActions.setHide(toast.id, true)}
           type={toast.type}
           key={toast.id}
           message={toast.message}

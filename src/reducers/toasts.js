@@ -26,6 +26,14 @@ export default function reduce(state = initialState, action = {}) {
           hidden: true,
         })
       };
+    case actionTypes.TOASTS_SET_HIDE:
+      return {
+        ...state,
+        items: state.items.map(toast => toast.id === action.payload.id ? {
+          ...toast,
+          hide: action.payload.value,
+        } : toast)
+      };
     default:
       return state;
   }
