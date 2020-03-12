@@ -15,7 +15,7 @@ import Button, { ButtonWrapper } from '../../../../ui/components/Button/Button';
 import {getLang} from '../../../../utils';
 
 const WithdrawalRefillModal = props => {
-  const { amount, balance, adaptive, bankList } = props;
+  const { amount, balance, adaptive, bankList, fee } = props;
   const [bank, changeBank] = useState(null);
 
   useEffect(() => {
@@ -31,7 +31,8 @@ const WithdrawalRefillModal = props => {
     return null;
   }
 
-  const amountUsd = amount * balance.to_usd;
+  const total = amount + fee;
+  const amountUsd = total * balance.to_usd;
 
   return (
     <Modal noSpacing isOpen={true} onClose={props.onClose}>
@@ -40,16 +41,26 @@ const WithdrawalRefillModal = props => {
         <div className="FiatRefillModal__sideBar">
           <div className="FiatRefillModal__header">{getLang('cabinet_balanceDeposit')}</div>
           <div className="FiatRefillModal__sideBar__content">
-            <h2><NumberFormat number={amount} currency={balance.currency} /></h2>
-            <small>{getLang('cabinet_fiatWithdrawalModal_estimatedAt')} <NumberFormat number={amountUsd} currency="usd" /></small>
+            <div className="FiatRefillModal__sideBar__fee">
+              <small><NumberFormat number={amount} currency={balance.currency} /></small>
+              <small>{getLang('global_fee')}: <NumberFormat number={fee} currency={balance.currency} /></small>
+            </div>
+            <div className="FiatRefillModal__sideBar__total">
+              <h2>{getLang('global_total')}</h2>
+              <h2><NumberFormat number={total} currency={balance.currency} /></h2>
+              <small>{getLang('cabinet_fiatWithdrawalModal_estimatedAt')} <NumberFormat number={amountUsd} currency="usd" /></small>
+            </div>
           </div>
         </div>
         <div className="FiatRefillModal__body">
           { !bank ? (
-            <div>
+            <>
               <div className="FiatRefillModal__header">{getLang('cabinet_fiatWithdrawalModal_chooseBank')}</div>
               { (bankList && !props.loadingStatus) ? <BankList onChange={changeBank} items={bankList} /> : <LoadingStatus status="loading" /> }
-            </div>
+              <ButtonWrapper align="right" className="FiatRefillModal__body__footer">
+                <Button onClick={props.onBack} type="secondary">{getLang('global_back')}</Button>
+              </ButtonWrapper>
+            </>
           ) : (
             <>
               <div className="FiatRefillModal__body__content">

@@ -16,7 +16,7 @@ import Form from '../../../../ui/components/Form/Form';
 import {getLang, isEmail} from '../../../../utils';
 
 const FiatWithdrawalModal = props => {
-  const { amount, balance, adaptive, bankList } = props;
+  const { amount, balance, adaptive, bankList, fee } = props;
   const [bank, changeBank] = useState(null);
   const [accountHolderName, setAccountHolderName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
@@ -55,7 +55,8 @@ const FiatWithdrawalModal = props => {
     });
   };
 
-  const amountUsd = amount * balance.to_usd;
+  const total = amount + fee;
+  const amountUsd = total * balance.to_usd;
 
   const headerText = !bank ? getLang('cabinet_fiatWithdrawalModal_chooseBank') :
     ( !filled ? <span>{getLang('cabinet_fiatWithdrawalModal__toBankAccount')} {bank.name}</span> : getLang('cabinet_fiatWithdrawalModal_confirmWithdrawal') );
@@ -67,17 +68,30 @@ const FiatWithdrawalModal = props => {
         <div className="FiatWithdrawalModal__sideBar">
           <div className="FiatWithdrawalModal__header">{getLang('cabinet_fiatWithdrawalModal_title')}</div>
           <div className="FiatWithdrawalModal__sideBar__content">
-            {/*<h3>Имя Фамилия</h3>*/}
-            <h2><NumberFormat number={amount} currency={balance.currency} /></h2>
-            <small>{getLang('cabinet_fiatWithdrawalModal_estimatedAt')} <NumberFormat number={amountUsd} currency="usd" /></small>
+            <div className="FiatWithdrawalModal__sideBar__fee">
+              <small><NumberFormat number={amount} currency={balance.currency} /></small>
+              <small>{getLang('global_fee')}: <NumberFormat number={fee} currency={balance.currency} /></small>
+            </div>
+            <div className="FiatWithdrawalModal__sideBar__total">
+              <h2>{getLang('global_total')}</h2>
+              <h2><NumberFormat number={total} currency={balance.currency} /></h2>
+              <small>{getLang('cabinet_fiatWithdrawalModal_estimatedAt')} <NumberFormat number={amountUsd} currency="usd" /></small>
+            </div>
           </div>
         </div>
         <div className="FiatWithdrawalModal__body">
           { !bank ? (
-            <div>
-              <div className="FiatWithdrawalModal__header">{headerText}</div>
-              { (bankList && !props.loadingStatus) ? <BankList onChange={changeBank} items={bankList} /> : <LoadingStatus status="loading" /> }
-            </div>
+            <>
+              { (bankList && !props.loadingStatus) ? <>
+                <div className="FiatWithdrawalModal__body__content">
+                  <div className="FiatWithdrawalModal__header">{headerText}</div>
+                  <BankList onChange={changeBank} items={bankList} />
+                </div>
+                <ButtonWrapper align="right" className="FiatRefillModal__body__footer">
+                  <Button onClick={props.onBack} type="secondary">{getLang('global_back')}</Button>
+                </ButtonWrapper>
+              </> : <LoadingStatus status="loading" /> }
+            </>
           ) : (
             !filled ? (
               <>
@@ -88,7 +102,7 @@ const FiatWithdrawalModal = props => {
 
                   <p>{getLang('cabinet_fiatWithdrawalModal__infoText')}</p>
 
-                  <Message title={getLang('global_attention')} type="error">{getLang('cabinet_fiatWithdrawalModal__warningText')}</Message>
+                  {/*<Message title={getLang('global_attention')} type="error">{getLang('cabinet_fiatWithdrawalModal__warningText')}</Message>*/}
 
                   {/*<p className="FiatWithdrawalModal__accountName">*/}
                   {/*  Account Name: <span onClick={() => setAccountName(props.accountName)}>{props.accountName}</span>*/}
