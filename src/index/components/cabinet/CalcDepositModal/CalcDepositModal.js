@@ -146,7 +146,7 @@ const CalcDepositModal = class extends React.Component {
     return (
       <UI.Modal className="CalcDepositModal__wrapper" isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>{utils.getLang('cabinet_depositCalc')}</UI.ModalHeader>
-        <div className="CalcDepositModal__icon" style={{ backgroundImage: `url(${currencyInfo.icon})` }} />
+        <UI.CircleIcon className="CalcDepositModal__icon" currency={currencyInfo} />
         <div className="CalcDepositModal">
           <div  className="CalcDepositModal__row">
             <div  className="CalcDepositModal__column">

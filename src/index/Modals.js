@@ -2,7 +2,7 @@
 // external
 import React from 'react';
 // internal
-import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
+// import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
 import RateDetailsModal from './components/cabinet/RateDetailsModal/RateDetailsModal';
 import WithdrawalModal from './components/cabinet/WithdrawalModal/WithdrawalModal';
 import NewWalletModal from './components/cabinet/NewWalletModal/NewWalletModal';
@@ -51,9 +51,9 @@ function Modals(props) {
   let Component = false;
 
   switch (modal) {
-    case 'open_deposit':
-      Component = OpenDepositModal;
-      break;
+    // case 'open_deposit':
+    //   Component = OpenDepositModal;
+    //   break;
     case 'merchant':
       Component = MerchantModal;
       break;

@@ -16,7 +16,6 @@ import {ProfileSidebarItem} from '../../../components/cabinet/ProfileSidebar/Pro
 import ChartProfit from '../../../components/cabinet/ChartProfit/ChartProfit';
 import LoadingStatus from '../../../components/cabinet/LoadingStatus/LoadingStatus';
 import Paging from '../../../components/cabinet/Paging/Paging';
-import {ReactComponent as PlusCircleSvg} from '../../../../asset/24px/plus-circle.svg';
 import {ReactComponent as InvestSvg} from '../../../../asset/24px/invest.svg';
 import {ReactComponent as SendSvg} from '../../../../asset/24px/send.svg';
 import {ReactComponent as CalcSvg} from '../../../../asset/24px/calc.svg';
@@ -25,7 +24,6 @@ import * as actions from '../../../../actions';
 import * as utils from '../../../../utils';
 import Show from '../../../components/hoc/ShowContent';
 import * as investmentsActions from '../../../../actions/cabinet/investments';
-import SVG from 'react-inlinesvg';
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -68,10 +66,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
           leftContent={!this.props.adaptive && !this.props.routerParams.section && !this.isLoading && this.__renderRightContent()}
           sidebarOptions={this.props.adaptive ? [
             <UI.FloatingButtonItem
-              icon={require('../../../../asset/24px/plus-circle.svg')}
-              onClick={() => {actions.openModal('open_deposit')}}
-            >{utils.getLang('cabinet_investmentsScreen_new')}</UI.FloatingButtonItem>,
-            <UI.FloatingButtonItem
               icon={require('../../../../asset/24px/invest.svg')}
               onClick={() => { router.navigate(PAGES.INVESTMENTS, { section: 'profits' })}}
             >{utils.getLang('cabinet_investmentsProfit')}</UI.FloatingButtonItem>,
@@ -84,22 +78,11 @@ class CabinetInvestmentsScreen extends React.PureComponent {
               icon={require('../../../../asset/24px/calc.svg')}
             >{utils.getLang('cabinet_calculate')}</UI.FloatingButtonItem>,
           ] : [
-            <ProfileSidebarItem
-              onClick={() => {actions.openModal('open_deposit', {})}}
-              icon={<PlusCircleSvg />}
-              label={utils.getLang('cabinet_investmentsScreen_new')}
-            />,
             <ProfileSidebarItem section="profits" icon={<InvestSvg />} label={utils.getLang('cabinet_investmentsProfit')} />,
             <ProfileSidebarItem section="withdrawals" icon={<SendSvg />} label={utils.getLang('cabinet_investmentsScreen_withdrawals')} />,
             <ProfileSidebarItem onClick={() => { actions.openModal('calc_deposit')}} icon={<CalcSvg />} label={utils.getLang('cabinet_calculate')} />
           ]}
         >
-          <div className="Investments__stub">
-            <UI.ContentBox>
-              <SVG src={require('src/asset/120/failed.svg')} />
-              <p>{utils.getLang('investmentsStubText')}</p>
-            </UI.ContentBox>
-          </div>
           <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>
             {this.__renderRightContent()}
           </Show>
