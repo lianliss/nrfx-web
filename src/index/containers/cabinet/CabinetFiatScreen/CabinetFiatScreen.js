@@ -14,7 +14,7 @@ import {setTitle} from "../../../../actions";
 import FiatMarketForm from "./components/FiatMarketForm/FiatMarketForm";
 import FiatHistoryTable from "./components/FiatHistoryTable/FiatHistoryTable";
 import {openModal} from "../../../../actions";
-import * as actions from 'src/actions/cabinet/fiatWallets';
+import * as actions from 'src/actions/cabinet/fiat';
 
 class CabinetFiatScreen extends CabinetBaseScreen {
   load = () => {
@@ -98,7 +98,7 @@ class CabinetFiatScreen extends CabinetBaseScreen {
 
 
 export default connect(store => ({
-  ...store.fiatWallets,
+  ...store.fiat,
   adaptive: store.default.adaptive,
   translator: store.settings.translator
 }), {

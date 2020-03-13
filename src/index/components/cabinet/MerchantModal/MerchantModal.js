@@ -9,7 +9,7 @@ import SVG from 'react-inlinesvg';
 import router from '../../../../router';
 import * as actions from '../../../../actions';
 import * as toasts from '../../../../actions/toasts';
-import * as fiatActions from '../../../../actions/cabinet/fiatWallets';
+import * as fiatActions from '../../../../actions/cabinet/fiat';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import { Status } from '../../../containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';

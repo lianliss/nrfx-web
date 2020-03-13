@@ -9,11 +9,12 @@ export default props => {
   const { currency, icon, className, size } = props;
   return <div
     className={cn("CircleIcon", size, className )}
-    style={{
+    style={currency ? {
       background: currency.background,
-      boxShadow: `0px 4px 8px ${hexToRgba(currency.color || '#AAA', .3)}`
-    }}
+      boxShadow: `0px 4px 8px ${hexToRgba(currency.color || '#AAA', .3)}`,
+      color: 'white'
+    } : null}
   >
-    { icon ? <SVG src={icon}/> : (currency.icon && <div className="CircleIcon__icon" style={{ backgroundImage: `url(${currency.icon}` }} />) }
+    { icon ? <SVG src={icon}/> : (currency && currency.icon && <div className="CircleIcon__icon" style={{ backgroundImage: `url(${currency.icon}` }} />) }
   </div>
 }
