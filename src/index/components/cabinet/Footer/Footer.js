@@ -31,6 +31,7 @@ const Footer = (props) => {
 };
 
 export default connect(state => ({
+  currentLang: state.default.currentLang,
   langList: state.default.langList,
   translator: state.settings.translator,
   role: state.default.profile.role

@@ -1,6 +1,7 @@
 .LanguageModal {
   .Modal__box {
     max-height: 440px;
+    min-width: 320px;
     overflow-y: auto;
   }
 }
@@ -21,18 +22,28 @@
 
   .LanguageModal__cont__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(60px, 1fr));
-    grid-gap: 24px 100px;
+    grid-template-columns: repeat(1, minmax(60px, 1fr));
+    grid-gap: 12px 100px;
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(2, minmax(80px, 1fr));
-      grid-gap: 24px;
+      grid-template-columns: repeat(1, minmax(80px, 1fr));
+      grid-gap: 12px;
     }
 
     .LanguageModal__cont__lang {
       display: flex;
       align-items: center;
       cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 4px;
+
+      &.current {
+        background: var(--light-dairy)
+      }
+
+      &:not(.display) {
+        display: none;
+      }
 
       .isvg {
         width: 18px;
@@ -50,7 +61,7 @@
     }
 
     &__cont {
-      padding: 8px 18px;
+      padding: 18px;
 
       .LanguageModal__cont__grid {
         display: block;

@@ -59,25 +59,13 @@ function GoogleAuth({ changeStep, email, password, params }) {
 
   return (
     <div className="AuthModal__ga">
-      {(loginRes.need_ga_setup !== true)
-        && <UI.ModalHeader>{utils.getLang("site__authModalLogIn")}</UI.ModalHeader>
-      }
+      <UI.ModalHeader>{utils.getLang("site__authModalLogIn")}</UI.ModalHeader>
 
       <div className="AuthModal__content">
 
         {errorMsg
           ? <p className="AuthModal__err_msg">{errorMsg}</p>
           : null}
-
-        {loginRes.need_ga_setup === true
-          && (
-            <div className="AuthModal__content__ga">
-              <UI.ModalHeader>{utils.getLang("site__authModalTitle")}</UI.ModalHeader>
-              <p className="AuthModal__content__ga__msg">{utils.getLang('site__authModalContentGA')}</p>
-              <img src={loginRes.url} alt="GA QR Code" />
-              <b className="AuthModal__content__ga__hash">{loginRes.hash}</b>
-            </div>
-          )}
 
         <UI.Input
           autoFocus
@@ -93,15 +81,10 @@ function GoogleAuth({ changeStep, email, password, params }) {
           }
         />
 
-        {loginRes.need_ga_setup !== true && (
-          <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>{utils.getLang('site__authModalResetKey')}</h4>
-        )}
+        <h4 className="AuthModal__help_link" onClick={() => changeStep(steps.RESET_AUTH)}>{utils.getLang('site__authModalResetKey')}</h4>
       </div>
 
       <div className="AuthModal__footer">
-        {(loginRes.need_ga_setup === true && document.queryCommandSupported('copy')) &&
-          <UI.Button fontSize={15} type="outline" outlined onClick={handleHashCopy}>Copy Key</UI.Button>
-        }
         <UI.Button  fontSize={15} onClick={() => handleSubmit()} state={pending && "loading"} disabled={gaCode.length < 6}>{utils.getLang('site__authModalSubmit')}</UI.Button>
       </div>
     </div>

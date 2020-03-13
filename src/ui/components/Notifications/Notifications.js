@@ -86,7 +86,7 @@ export default class Notifications extends React.Component {
   }
 
   render() {
-    const empty = !this.props.children || this.props.pending;
+    const empty = !(this.props.children && this.props.children.length) || this.props.pending;
     return (
       <div ref="notifications" className={classNames('Notifications', this.props.classNames, { empty: empty, inline: this.props.inline })}>
         <ScrollBox>

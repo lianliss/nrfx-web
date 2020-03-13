@@ -64,6 +64,16 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
 
+    case actionTypes.PROFILE_SET_SECRET_SUCCESS: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          has_secret_key: true
+        }
+      };
+    }
+
     case actionTypes.PROFILE_PENDING: {
       return {
         ...state,

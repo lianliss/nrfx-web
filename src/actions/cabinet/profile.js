@@ -37,6 +37,8 @@ export function changeSecretKay(secret) {
       closeModal();
     }).catch((err) => {
       toastsActions.toastPush(err.message, "error")(dispatch, getState);
+    }).then(() => {
+      dispatch({ type: actionTypes.PROFILE_SET_SECRET_SUCCESS});
     }).finally(() => {
       dispatch({ type: actionTypes.PROFILE_SET_LOADING_STATUS, section: 'secretKey', status: '' });
     });

@@ -7,8 +7,9 @@ import * as utils from '../../../../utils';
 import * as UI from '../../../../ui';
 import {openModal, translatorSetLangCode} from 'src/actions/index'
 import { setLang } from '../../../../services/lang';
+import { classNames as cn } from 'src/utils';
 
-function LanguageModal({ langList, onClose, byTranslator, translatorSetLangCode }) {
+function LanguageModal({ langList, onClose, currentLang, byTranslator, translatorSetLangCode }) {
 
   const handleLanguageChange = (langCode) => {
     if (byTranslator) {
@@ -35,7 +36,10 @@ function LanguageModal({ langList, onClose, byTranslator, translatorSetLangCode 
             {!!langList && langList.map(lang => (
               <p
                 key={lang.value}
-                className="LanguageModal__cont__lang"
+                className={cn("LanguageModal__cont__lang", {
+                  display: lang.display,
+                  current: currentLang === lang.value
+                })}
                 onClick={() => handleLanguageChange(lang.value)}
               >
                 {getLanguageFlag(lang.value)}
@@ -50,7 +54,8 @@ function LanguageModal({ langList, onClose, byTranslator, translatorSetLangCode 
 }
 
 export default connect( state => ({
-  langList: state.default.langList
+  langList: state.default.langList,
+  currentLang: state.default.currentLang
 }), {
   translatorSetLangCode: translatorSetLangCode
 })(memo(LanguageModal));

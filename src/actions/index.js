@@ -26,12 +26,16 @@ export function loadLang(code, toggleCurrentLang = true) {
     api.call(apiSchema.LangGet, { code }, {
       apiEntry: 'https://api.narfex.com' // TODO
     }).then(({ translations, languages }) => {
-      languages = languages.map(lang => ({ value: lang[0], title: lang[1] }));
+      languages = languages.map(lang => ({
+        value: lang[0],
+        title: lang[1],
+        display: ['en', 'ru', 'id'].includes(lang[0])
+      }));
       store.dispatch({
         type: actionTypes.SET_LANG,
         translations: translations,
         currentLang: code,
-        languages,
+        languages
       });
       toggleCurrentLang && store.dispatch({
         type: actionTypes.SET_CURRENT_LANG,

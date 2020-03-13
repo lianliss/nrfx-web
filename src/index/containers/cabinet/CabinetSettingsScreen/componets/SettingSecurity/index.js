@@ -121,7 +121,7 @@ function SettingSecurity(props) {
           {utils.getLang("cabinet_secretKey")}
         </div>
         <UI.Button onClick={() => {actions.openModal(props.hasSecretKey ? 'secret_key_info' : 'secret_key')}}>
-          {utils.getLang("global_update")}
+          {props.hasSecretKey ? utils.getLang("global_update") : utils.getLang("cabinet_setupSecretKey")}
         </UI.Button>
       </UI.ContentBox>
 

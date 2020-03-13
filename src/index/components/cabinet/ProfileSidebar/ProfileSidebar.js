@@ -176,5 +176,5 @@ ProfileSidebarItem.propTypes = {
 };
 
 export default connect(state => ({
-  profile: state.default.profile
+  profile: state.default.profile,
 }))(ProfileSidebar);
