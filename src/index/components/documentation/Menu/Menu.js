@@ -1,10 +1,10 @@
 import './Menu.less';
 import React from 'react';
 import { connect } from 'react-redux';
-import { classNames as cn } from "src/utils";
 import * as UI from 'src/ui';
 import { tootleMenu } from 'src/actions/documentation';
 import router from "../../../../router";
+import { classNames as cn } from "src/utils";
 import * as PAGES from "../../../constants/pages";
 
 const DocumentationMenu = props => {
@@ -15,7 +15,19 @@ const DocumentationMenu = props => {
           const currentPath = [...path, item.title];
           return (
             <div className={cn("DocumentationMenu__list__item", {active: item.active})}>
-              <div onClick={item.items ? () => props.tootleMenu(currentPath) : () => router.navigate(PAGES.DOCUMENTATION_API_GROUP_METHOD, { group: currentPath[0], method: currentPath[1]} )} className="DocumentationMenu__list__item__title">{item.title}</div>
+              <div
+                onClick={item.items ? () => {
+                  props.tootleMenu(currentPath)
+                } : () => {
+                  router.navigate(
+                    PAGES.DOCUMENTATION_API_GROUP_METHOD,{
+                      group: currentPath[0],
+                      method: currentPath[1]
+                    }
+                  );
+                }}
+                className={cn("DocumentationMenu__list__item__title", { active: item.opened })}
+              >{item.title}</div>
               { item.opened && renderItems(item.items, currentPath) }
             </div>
           )
