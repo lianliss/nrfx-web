@@ -37,6 +37,10 @@ const NumberFormat = ({ number, symbol, fractionDigits, color, skipTitle, accura
     type = number > 0 ? 'up' : 'down';
   }
 
+  if (type === 'auto') {
+    type = number > 0 ? 'up' : 'down';
+  }
+
   if (percent) {
     displayNumber = displayNumber + '%';
   }

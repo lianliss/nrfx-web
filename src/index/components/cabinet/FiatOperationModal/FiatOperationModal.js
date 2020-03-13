@@ -37,7 +37,7 @@ import Status from 'src/ui/components/Status/Status';
 // }
 
 function FiatOperationModal(props) {
-  const { operation, icon } = props;
+  const { operation } = props;
 
   if (!operation) {
     props.onClose();
@@ -48,26 +48,28 @@ function FiatOperationModal(props) {
 
   const [primaryPrice, secondaryPrice] = [operation.price, 1 / operation.price][operation.type === 'crypto_exchange' ? 'reverse' : 'slice']();
 
+  const balance = operation.primary_amount * (operation.type === 'withdrawal' ? -1 : 1)
+
   return (
     <Modal className="FiatOperationModal" isOpen={true} onClose={props.onClose}>
       <UI.ModalHeader>
         {operation.type_label}
       </UI.ModalHeader>
-      <UI.CircleIcon currency={primaryCurrency} icon={icon} />
+      {/*<pre>{JSON.stringify(props, null, 2)}</pre>*/}
       {
         ['income', 'withdrawal'].includes(operation.type) ? (
           <div className="FiatOperationModal__content">
-            <UI.WalletCard balance={operation.primary_amount * (operation.type === 'withdrawal' ? -1 : 1) } currency={primaryCurrency} />
+            <UI.WalletCard balance={balance} skipColor={balance < 0} currency={primaryCurrency} />
 
             {operation.type === 'withdrawal' && <>
               <div className="FiatOperationModal__row">
                 <div className="FiatOperationModal__row__left">
                   <div className="FiatOperationModal__label">{utils.getLang('global_status')}</div>
-                  <div><Status status={operation.status} /></div>
+                  <div><Status status={operation.status} label={operation.status_label} /></div>
                 </div>
                 <div className="FiatOperationModal__row__right">
                   <div className="FiatOperationModal__label">{utils.getLang('global_bank')}</div>
-                  <div>{operation.extra.bank_code}</div>
+                  <div>{utils.getLang('global_bank')}: {operation.extra.bank_code}</div>
                 </div>
               </div>
 
@@ -102,7 +104,15 @@ function FiatOperationModal(props) {
                 <div className="FiatOperationModal__label">{utils.getLang('cabinet_fiatWalletGave')} {primaryCurrency.name}</div>
               </div>
               <div className="FiatOperationModal__row__right">
-                <div className="FiatOperationModal__price" style={{color: secondaryCurrency.color}}><UI.NumberFormat symbol number={operation.secondary_amount} currency={secondaryCurrency.abbr} /></div>
+                <div className="FiatOperationModal__price">
+                  <UI.NumberFormat
+                    symbol
+                    number={operation.secondary_amount}
+                    type="auto"
+                    skipColor={operation.secondary_amount < 0}
+                    currency={secondaryCurrency.abbr}
+                  />
+                </div>
                 <div className="FiatOperationModal__label">{utils.getLang('cabinet_fiatWalletGot')} {secondaryCurrency.name}</div>
               </div>
             </div>

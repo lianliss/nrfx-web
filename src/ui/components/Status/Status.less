@@ -7,13 +7,15 @@
     color: var(--dark-blue);
   }
 
-  &.completed {
+  &.warning {
     color: var(--text-yellow);
   }
 
-  &.online{
+  &.online,
+  &.completed {
     color: var(--green);
   }
+
   &.failed,
   &.offline,
   &.cancelled {

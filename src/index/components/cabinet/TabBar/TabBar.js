@@ -22,6 +22,7 @@ const Tabs = props => {
   return (
     <div className="TabBar">
       <Tab route={PAGES.DASHBOARD}><SVG src={require('../../../../asset/24px/user.svg')} /></Tab>
+      <Tab route={PAGES.FIAT}><SVG src={require('../../../../asset/24px/fiat.svg')} /></Tab>
       <Tab route={PAGES.CABINET_WALLET}><SVG src={require('../../../../asset/24px/wallet.svg')} /></Tab>
       <Tab route={PAGES.INVESTMENTS}><SVG src={require('../../../../asset/24px/invest.svg')} /></Tab>
       <Tab route={PAGES.EXCHANGE}><SVG src={require('../../../../asset/24px/loop.svg')} /></Tab>

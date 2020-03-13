@@ -20,7 +20,7 @@ function PageContainer({ children, leftContent, sidebarOptions }) {
           {leftContent}
         </div>}
       </div>
-      { adaptive && sidebarOptions.length && (
+      { adaptive && sidebarOptions && sidebarOptions.length && (
         <UI.FloatingButton wrapper icon={require('../../../../asset/24px/options.svg')}>
           {sidebarOptions}
         </UI.FloatingButton>

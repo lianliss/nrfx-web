@@ -7,7 +7,7 @@ import Modal, { ModalHeader } from '../../../../ui/components/Modal/Modal';
 import NumberFormat from '../../../../ui/components/NumberFormat/NumberFormat';
 import BankList from './components/BankList/BankList';
 import MethodsList from './components/MethodsList/MethodsList';
-import { refillBanksGet } from '../../../../actions/cabinet/fiatWallets';
+import { refillBanksGet } from '../../../../actions/cabinet/fiat';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import BankLogo from '../../../../ui/components/BankLogo/BankLogo';
 import Clipboard from 'src/index/components/cabinet/Clipboard/Clipboard';
@@ -81,9 +81,9 @@ const WithdrawalRefillModal = props => {
 export default connect(state => ({
   accountName: [state.default.profile.user.first_name, state.default.profile.user.last_name].join(' '),
   adaptive: state.default.adaptive,
-  loadingStatus: state.fiatWallets.loadingStatus.bankList,
-  withdrawalStatus: state.fiatWallets.loadingStatus.withdrawal,
-  bankList: state.fiatWallets.refillBankList
+  loadingStatus: state.fiat.loadingStatus.bankList,
+  withdrawalStatus: state.fiat.loadingStatus.withdrawal,
+  bankList: state.fiat.refillBankList
 }), {
   refillBanksGet: refillBanksGet,
 })(WithdrawalRefillModal);

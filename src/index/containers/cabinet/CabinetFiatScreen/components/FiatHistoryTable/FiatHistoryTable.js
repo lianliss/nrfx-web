@@ -32,7 +32,7 @@ const FiatHistoryTable = props => {
     const [primaryCurrency, secondaryCurrency] = [item.primary_currency, item.secondary_currency].map(getCurrencyInfo);
     return (
       <>
-        <UI.CircleIcon currency={primaryCurrency} icon={item.icon} />
+        <UI.CircleIcon icon={item.icon} />
         <div className="FiatHistoryTable__group__item__body">
           <div className="FiatHistoryTable__group__item__left">
             <div className="FiatHistoryTable__label">{item.type_label}</div>
@@ -40,7 +40,9 @@ const FiatHistoryTable = props => {
             <div className="FiatHistoryTable__description">{utils.getLang('cabinet_fiatWalletGave')} {primaryCurrency.name}</div>
           </div>
           <div className="FiatHistoryTable__group__item__right">
-            <div className="FiatHistoryTable__price" style={{ color: secondaryCurrency.color }}><UI.NumberFormat symbol number={item.secondary_amount} currency={secondaryCurrency.abbr} /></div>
+            <div className="FiatHistoryTable__price">
+              <UI.NumberFormat type="auto" symbol number={item.secondary_amount} currency={secondaryCurrency.abbr} />
+            </div>
             <div className="FiatHistoryTable__description">{utils.getLang('cabinet_fiatWalletGot')} {secondaryCurrency.name}</div>
           </div>
         </div>
@@ -53,15 +55,15 @@ const FiatHistoryTable = props => {
 
     return (
       <>
-        <UI.CircleIcon currency={primaryCurrency} icon={item.icon} />
+        <UI.CircleIcon icon={item.icon} />
         <div className="FiatHistoryTable__group__item__body">
           <div className="FiatHistoryTable__group__item__left">
             <div className="FiatHistoryTable__label">{item.type_label}</div>
-            <div className="FiatHistoryTable__description"></div>
+            <div className="FiatHistoryTable__description" />
           </div>
           <div className="FiatHistoryTable__group__item__right">
-            <div className="FiatHistoryTable__price" style={{ color: primaryCurrency.color }}>
-              <UI.NumberFormat symbol number={item.primary_amount} currency={primaryCurrency.abbr} />
+            <div className="FiatHistoryTable__price">
+              <UI.NumberFormat symbol type="auto" number={item.primary_amount} currency={primaryCurrency.abbr} />
             </div>
           </div>
         </div>
@@ -74,7 +76,7 @@ const FiatHistoryTable = props => {
 
     return (
       <>
-        <UI.CircleIcon currency={primaryCurrency} icon={item.icon} />
+        <UI.CircleIcon icon={item.icon} />
         <div className="FiatHistoryTable__group__item__body">
           <div className="FiatHistoryTable__group__item__left">
             <div className="FiatHistoryTable__label">{item.type_label}</div>
@@ -84,8 +86,8 @@ const FiatHistoryTable = props => {
             </div>
           </div>
           <div className="FiatHistoryTable__group__item__right">
-            <div className="FiatHistoryTable__price" style={{ color: primaryCurrency.color }}>
-              <UI.NumberFormat symbol number={-item.primary_amount} currency={primaryCurrency.abbr} />
+            <div className="FiatHistoryTable__price">
+              <UI.NumberFormat symbol number={-item.primary_amount} type={item.status === 'failed' ? 'down' : null} currency={primaryCurrency.abbr} />
             </div>
           </div>
         </div>
@@ -130,7 +132,7 @@ const FiatHistoryTable = props => {
 };
 
 export default connect(stage => ({
-  history: stage.fiatWallets.history,
+  history: stage.fiat.history,
   translator: stage.settings.translator,
   currentLang: stage.default.currentLang
 }), undefined)(FiatHistoryTable);

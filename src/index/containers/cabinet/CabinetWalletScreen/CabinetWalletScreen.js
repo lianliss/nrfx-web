@@ -13,12 +13,10 @@ import WalletBox from '../../../components/cabinet/WalletBox/WalletBox';
 import WalletBoxNew from '../../../components/cabinet/WalletBox/WalletBoxNew';
 import CabinetBaseScreen from '../CabinetBaseScreen/CabinetBaseScreen';
 import HistoryTable from './components/HistoryTable/HistoryTable';
-import Fiat from './components/Fiat/Fiat';
 import WalletBalance from '../../../components/cabinet/WalletBalance/WalletBalance';
 import Paging from '../../../components/cabinet/Paging/Paging';
 import {ReactComponent as PlusCircleSvg} from '../../../../asset/24px/plus-circle.svg';
 import {ReactComponent as HistorySvg} from '../../../../asset/24px/history.svg';
-import {ReactComponent as FiatSvg} from '../../../../asset/24px/fiat.svg';
 import {ReactComponent as SendSvg} from '../../../../asset/24px/send.svg';
 import {ReactComponent as ReceiveSvg} from '../../../../asset/24px/receive.svg';
 import * as actions from '../../../../actions';
@@ -76,15 +74,6 @@ class CabinetWalletScreen extends CabinetBaseScreen {
               {utils.getLang('cabinet_walletScreen_transfers')}
             </UI.FloatingButtonItem>,
 
-            <UI.FloatingButtonItem
-              icon={require('../../../../asset/24px/fiat.svg')}
-              onClick={() => {
-                router.navigate(PAGES.CABINET_WALLET, { section: 'fiat' })
-              }}
-            >
-              {utils.getLang('cabinet_walletScreen_fiat')}
-            </UI.FloatingButtonItem>,
-
             !!walletsActions.getNoGeneratedCurrencies().length &&
             <UI.FloatingButtonItem
               icon={require('../../../../asset/24px/plus-circle.svg')}
@@ -113,12 +102,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
               section="transfers"
               icon={<HistorySvg />}
               label={utils.getLang('cabinet_walletScreen_transfers')}
-            />,
-            <ProfileSidebarItem
-              section="fiat"
-              icon={<FiatSvg />}
-              label={utils.getLang('cabinet_walletScreen_fiat')}
-            />,
+            />
           ]}
         >
           <Show showIf={this.props.adaptive && !this.props.routerParams.section && !this.isLoading}>
@@ -152,9 +136,6 @@ class CabinetWalletScreen extends CabinetBaseScreen {
     switch (this.props.routerParams.section) {
       case 'transfers': {
         return this.__getTransfersPageContent();
-      }
-      case 'fiat': {
-        return this.__renderFiat();
       }
       default: {
         return this.__getWalletsPageContent();
@@ -211,10 +192,6 @@ class CabinetWalletScreen extends CabinetBaseScreen {
         />
       </Paging>
     </div>
-  };
-
-  __renderFiat = () => {
-    return <Fiat />
   };
 
   __renderWallets = () => {

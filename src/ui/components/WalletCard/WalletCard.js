@@ -9,7 +9,7 @@ const WalletCard = props => {
 
   const { currency } = props;
   return (
-    <div className="WalletCard" style={{background: currency.background, color: currency.color}} >
+    <div className="WalletCard" style={!props.skipColor ? {background: currency.background, color: currency.color} : null} >
       {props.title && <div className="WalletCard__title">{props.title}</div>}
       {!isNaN(props.balance) && <div className="WalletCard__balance">
         <NumberFormat number={props.balance} currency={props.currency.abbr} />
