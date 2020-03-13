@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 import * as UI from '../../../ui';
 import * as steps from '../fixtures';
@@ -9,12 +9,10 @@ import * as pages from '../../../index/constants/pages';
 import * as adminPages from '../../../admin/constants/pages';
 import SVG from 'react-inlinesvg';
 
-function GoogleAuth({ changeStep, email, password, params }) {
+function GoogleAuth({ changeStep, email, password }) {
   const [gaCode, changeGaCode] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [pending, setPending] = useState(false);
-  const hashRef = useRef(null);
-  const { loginRes } = params;
 
   const handleSubmit = (code) => {
     const googleCode = code ? code : gaCode;
@@ -35,14 +33,6 @@ function GoogleAuth({ changeStep, email, password, params }) {
       .finally(() => {
         setPending(false);
       });
-  };
-
-  const handleHashCopy = (e) => {
-    hashRef.current.select();
-    document.execCommand('copy');
-
-    // In case don't want to select the hash
-    // e.target.focus();
   };
 
   const handleChange = (e) => {
