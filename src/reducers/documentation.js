@@ -2,6 +2,9 @@ import * as actionTypes from '../actions/actionTypes';
 import apiSchema from "../services/apiSchema";
 
 const initialState = {
+  loadingStatus: {
+    default: 'loading'
+  },
   menu: [
     {
       title: 'Api',
@@ -32,6 +35,8 @@ export default function reduce(state = initialState, action = {}) {
           items: menu(item.items, path.slice(1))
         })) : undefined;
       }
+
+    case actionTypes.DOCUMENTATION_TOGGLE_MENU:
 
       return {
         ...state,

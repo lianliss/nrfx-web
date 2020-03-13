@@ -23,4 +23,5 @@ const DocumentationWrapper = (props) => {
 }
 
 export default connect(state => ({
+
 }))(DocumentationWrapper);

@@ -1219,11 +1219,87 @@ export default {
     }
   },
   "Documentation": {
+    "DefaultGet": {
+      "method": "GET",
+      "name": "",
+      "params": [],
+      "path": "documentation"
+    },
     "SchemaGet": {
       "method": "GET",
       "name": "schema",
       "params": [],
       "path": "documentation/schema"
+    },
+    "MethodPost": {
+      "method": "POST",
+      "name": "method",
+      "params": {
+        "Key": {
+          "name": "key",
+          "filters": {
+            "0": "required",
+            "1": "string",
+            "maxLen": 150
+          },
+          "type": "body"
+        },
+        "Description": {
+          "name": "description",
+          "filters": [],
+          "type": "body"
+        },
+        "Result": {
+          "name": "result",
+          "filters": [],
+          "type": "body"
+        },
+        "ResultExample": {
+          "name": "result_example",
+          "filters": [],
+          "type": "body"
+        },
+        "ParamDescriptions": {
+          "name": "param_descriptions",
+          "filters": [
+            "json"
+          ],
+          "type": "body"
+        }
+      },
+      "path": "documentation/method"
+    },
+    "MethodGet": {
+      "method": "GET",
+      "name": "method",
+      "params": {
+        "Key": {
+          "name": "key",
+          "filters": {
+            "0": "required",
+            "1": "string",
+            "maxLen": 150
+          },
+          "type": "body"
+        }
+      },
+      "path": "documentation/method"
+    },
+    "PageGet": {
+      "method": "GET",
+      "name": "page",
+      "params": {
+        "Key": {
+          "name": "key",
+          "filters": {
+            "0": "required",
+            "1": "string",
+            "maxLen": 150
+          },
+          "type": "body"
+        }
+      },
+      "path": "documentation/page"
     }
   },
   "Notification": {

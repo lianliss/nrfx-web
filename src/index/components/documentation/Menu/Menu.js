@@ -19,12 +19,12 @@ const DocumentationMenu = props => {
                 onClick={item.items ? () => {
                   props.tootleMenu(currentPath)
                 } : () => {
-                  router.navigate(
-                    PAGES.DOCUMENTATION_API_GROUP_METHOD,{
-                      group: currentPath[0],
-                      method: currentPath[1]
-                    }
-                  );
+                  // router.navigate(
+                  //   PAGES.DOCUMENTATION_API_GROUP_METHOD,{
+                  //     group: currentPath[0],
+                  //     method: currentPath[1]
+                  //   }
+                  // );
                 }}
                 className={cn("DocumentationMenu__list__item__title", { active: item.opened })}
               >{item.title}</div>
