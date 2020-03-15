@@ -1,11 +1,11 @@
 // styles
-import './SwitchButtons.less';
+import "./SwitchButtons.less";
 // external
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // internal
-import * as UI from '../../index';
-import * as utils from '../../utils';
+import * as UI from "../../index";
+import * as utils from "../../utils";
 
 const SwitchButtons = props => {
   return (
@@ -18,19 +18,23 @@ const SwitchButtons = props => {
           size="ultra_small"
           disabled={tab.disabled}
           rounded={props.rounded}
-          type={tab.value !== props.selected ? "secondary" : 'normal'}
+          type={tab.value !== props.selected ? "secondary" : "normal"}
           onClick={() => props.onChange(tab.value)}
-        >{tab.icon || tab.label}</UI.Button>
+        >
+          {tab.icon || tab.label}
+        </UI.Button>
       ))}
     </div>
-  )
+  );
 };
 
 SwitchButtons.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.any,
-    label: PropTypes.string
-  })).isRequired,
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.any,
+      label: PropTypes.string
+    })
+  ).isRequired,
   selected: PropTypes.any,
   currency: PropTypes.string,
   className: PropTypes.string,

@@ -1,22 +1,22 @@
-import './PartnerInfoModal.less';
+import "./PartnerInfoModal.less";
 
-import React from 'react';
-import * as UI from '../../../../ui';
+import React from "react";
+import * as UI from "../../../../ui";
 
-import * as utils from '../../../../utils';
-import ModalState from '../ModalState/ModalState';
-import * as profileActions from '../../../../actions/cabinet/profile';
-import WalletBox from '../WalletBox/WalletBox';
-import DepositTable from '../../../containers/cabinet/CabinetInvestmentsScreen/components/DepositTable';
-import ChartProfit from '../../cabinet/ChartProfit/ChartProfit';
-import ClientChart from '../../cabinet/ClientChart/ClientChart';
+import * as utils from "../../../../utils";
+import ModalState from "../ModalState/ModalState";
+import * as profileActions from "../../../../actions/cabinet/profile";
+import WalletBox from "../WalletBox/WalletBox";
+import DepositTable from "../../../containers/cabinet/CabinetInvestmentsScreen/components/DepositTable";
+import ChartProfit from "../../cabinet/ChartProfit/ChartProfit";
+import ClientChart from "../../cabinet/ClientChart/ClientChart";
 
 export default class PartnerInfoModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loadingStatus: 'loading',
+      loadingStatus: "loading"
     };
   }
 
@@ -39,16 +39,18 @@ export default class PartnerInfoModal extends React.Component {
         width={800}
         grayBackground={this.props.adaptive}
       >
-        {this.props.adaptive && <UI.ModalHeader>
-          {utils.getLang('cabinet_customerTitle')}
-        </UI.ModalHeader>}
+        {this.props.adaptive && (
+          <UI.ModalHeader>
+            {utils.getLang("cabinet_customerTitle")}
+          </UI.ModalHeader>
+        )}
         {this.__renderUserInfo()}
         {this.__renderProfit()}
         {this.__renderDeposits()}
         {this.__renderProfitChart()}
         {this.__renderClientChart()}
       </UI.Modal>
-    )
+    );
   }
 
   __renderUserInfo() {
@@ -64,7 +66,7 @@ export default class PartnerInfoModal extends React.Component {
           <div className="PartnerInfoModal__user_info__login">{login}</div>
         </div>
       </div>
-    )
+    );
   }
 
   __renderProfit() {
@@ -80,19 +82,23 @@ export default class PartnerInfoModal extends React.Component {
           skipEmptyLabel
           adaptive={this.props.adaptive}
         />
-      )
+      );
     });
 
     return (
       <Block
         adaptive={this.props.adaptive}
-        title={utils.getLang('cabinet_investmentsScreen_profit')}
+        title={utils.getLang("cabinet_investmentsScreen_profit")}
         modifier="wallets"
       >
         <div className="CabinetProfileScreen__wallets">
-          {this.props.adaptive ? <div className="CabinetProfileScreen__walletsContentBox">
-            {rows}
-          </div> : rows}
+          {this.props.adaptive ? (
+            <div className="CabinetProfileScreen__walletsContentBox">
+              {rows}
+            </div>
+          ) : (
+            rows
+          )}
         </div>
       </Block>
     );
@@ -106,7 +112,7 @@ export default class PartnerInfoModal extends React.Component {
     return (
       <Block
         adaptive={this.props.adaptive}
-        title={utils.getLang('cabinet_referralLinks_deposits')}
+        title={utils.getLang("cabinet_referralLinks_deposits")}
         skipMargin
       >
         <DepositTable
@@ -120,34 +126,32 @@ export default class PartnerInfoModal extends React.Component {
   }
 
   __renderProfitChart() {
-    if (!this.state.profit_chart || !Object.keys(this.state.profit_chart.data).length) {
+    if (
+      !this.state.profit_chart ||
+      !Object.keys(this.state.profit_chart.data).length
+    ) {
       return null;
     }
 
     return (
-      <Block
-        adaptive={this.props.adaptive}
-        padding
-      >
-        <ChartProfit
-          chart={this.state.profit_chart}
-        />
+      <Block adaptive={this.props.adaptive} padding>
+        <ChartProfit chart={this.state.profit_chart} />
       </Block>
     );
   }
 
   __renderClientChart() {
-    if (!this.state.profit_chart || !Object.keys(this.state.profit_chart.data).length) {
+    if (
+      !this.state.profit_chart ||
+      !Object.keys(this.state.profit_chart.data).length
+    ) {
       return null;
     }
 
     return (
-      <Block
-        adaptive={this.props.adaptive}
-        padding
-      >
+      <Block adaptive={this.props.adaptive} padding>
         <ClientChart
-          title={utils.getLang('cabinet_partners_customers')}
+          title={utils.getLang("cabinet_partners_customers")}
           chart={this.state.client_chart}
         />
       </Block>
@@ -155,37 +159,29 @@ export default class PartnerInfoModal extends React.Component {
   }
 
   __load = () => {
-    this.setState({ loadingStatus: 'loading' });
-    profileActions.loadPartnerInfo(this.props.login)
-      .then((resp) => this.setState({ ...resp, loadingStatus: '' }))
-      .catch((err) => this.setState({ loadingStatus: err.error_name }));
+    this.setState({ loadingStatus: "loading" });
+    profileActions
+      .loadPartnerInfo(this.props.login)
+      .then(resp => this.setState({ ...resp, loadingStatus: "" }))
+      .catch(err => this.setState({ loadingStatus: err.error_name }));
   };
 }
 
 function Block(props) {
-  const {
-    title,
-    children,
-    skipMargin,
-    modifier,
-    adaptive,
-    padding,
-  } = props;
+  const { title, children, skipMargin, modifier, adaptive, padding } = props;
 
   const className = utils.classNames({
     PartnerInfoModal__block: true,
     skip_margin: !!skipMargin,
     [modifier]: !!modifier,
     Content_box: !!adaptive,
-    padding: !!padding,
+    padding: !!padding
   });
 
   return (
     <div className={className}>
       {title && <div className="PartnerInfoModal__block__title">{title}</div>}
-      <div className="PartnerInfoModal__block__content">
-        {children}
-      </div>
+      <div className="PartnerInfoModal__block__content">{children}</div>
     </div>
-  )
+  );
 }

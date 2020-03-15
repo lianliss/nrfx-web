@@ -1,10 +1,10 @@
 // styles
-import './Switch.less';
+import "./Switch.less";
 // external
-import React  from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // internal
-import {classNames} from '../../utils';
+import { classNames } from "../../utils";
 
 function Switch(props) {
   const className = classNames({
@@ -13,7 +13,7 @@ function Switch(props) {
     disabled: props.disabled
   });
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     props.onChange && props.onChange(!props.on, e);
   };
 
@@ -24,7 +24,7 @@ function Switch(props) {
       <div className="Switch__control">
         <div className="Switch__indicator" />
       </div>
-      { label && <div className="Switch__label">{label}</div> }
+      {label && <div className="Switch__label">{label}</div>}
     </div>
   );
 }

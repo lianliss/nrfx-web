@@ -1,32 +1,33 @@
-import './PageContainer.less';
+import "./PageContainer.less";
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import * as UI from '../../../../ui';
-import ProfileSidebar from '../../cabinet/ProfileSidebar/ProfileSidebar';
+import React from "react";
+import PropTypes from "prop-types";
+import * as UI from "../../../../ui";
+import ProfileSidebar from "../../cabinet/ProfileSidebar/ProfileSidebar";
 
 function PageContainer({ children, leftContent, sidebarOptions }) {
-  const adaptive = document.body.classList.contains('adaptive');
+  const adaptive = document.body.classList.contains("adaptive");
   return (
     <div className="PageContainer">
       {!adaptive && <ProfileSidebar sidebarOptions={sidebarOptions} />}
 
       <div className="PageContainer__content">
-        <div className="PageContainer__content__primary">
-          {children}
-        </div>
+        <div className="PageContainer__content__primary">{children}</div>
 
-        {leftContent && <div className="PageContainer__content__secondary">
-          {leftContent}
-        </div>}
+        {leftContent && (
+          <div className="PageContainer__content__secondary">{leftContent}</div>
+        )}
       </div>
-      { adaptive && sidebarOptions && sidebarOptions.length && (
-        <UI.FloatingButton wrapper icon={require('../../../../asset/24px/options.svg')}>
+      {adaptive && sidebarOptions && sidebarOptions.length && (
+        <UI.FloatingButton
+          wrapper
+          icon={require("../../../../asset/24px/options.svg")}
+        >
           {sidebarOptions}
         </UI.FloatingButton>
       )}
     </div>
-  )
+  );
 }
 
 PageContainer.propTypes = {

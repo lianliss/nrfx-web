@@ -1,8 +1,7 @@
-import './Block.less';
-import React from 'react';
+import "./Block.less";
+import React from "react";
 
-import ContentBox from '../../../ui/components/ContentBox/ContentBox';
-
+import ContentBox from "../../../ui/components/ContentBox/ContentBox";
 
 export default props => {
   return (
@@ -10,5 +9,5 @@ export default props => {
       <div className="Block__title">{props.title}</div>
       <div>{props.children}</div>
     </ContentBox>
-  )
-}
+  );
+};

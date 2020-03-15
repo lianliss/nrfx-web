@@ -1,38 +1,38 @@
 //styles
 // external
-import React, { useEffect, useRef } from 'react';
-import bn from 'big.js';
+import React, { useEffect, useRef } from "react";
+import bn from "big.js";
 // internal
-import store from '../store';
-import router from '../router';
-import moment from 'moment';
-import * as api from 'src/services/api';
-import TranslatorMode from 'src/index/components/cabinet/TranslatorMode/TranslatorModal';
+import store from "../store";
+import router from "../router";
+import moment from "moment";
+import * as api from "src/services/api";
+import TranslatorMode from "src/index/components/cabinet/TranslatorMode/TranslatorModal";
 
 export function classNames() {
   let result = [];
 
-  [].concat(Array.prototype.slice.call(arguments)).forEach(function (item) {
+  [].concat(Array.prototype.slice.call(arguments)).forEach(function(item) {
     if (!item) {
       return;
     }
-    switch (typeof item === 'undefined' ? 'undefined' : typeof item) {
-      case 'string':
+    switch (typeof item === "undefined" ? "undefined" : typeof item) {
+      case "string":
         result.push(item);
         break;
-      case 'object':
-        Object.keys(item).forEach(function (key) {
+      case "object":
+        Object.keys(item).forEach(function(key) {
           if (item[key]) {
             result.push(key);
           }
         });
         break;
       default:
-        result.push('' + item);
+        result.push("" + item);
     }
   });
 
-  return result.join(' ');
+  return result.join(" ");
 }
 
 export function removeProperty(object, ...properties) {
@@ -48,38 +48,59 @@ export function getLang(key, string = false, code = false) {
   const { currentLang, translations } = state.default;
   let langString = translations[code || currentLang][key] || key;
 
-  if ((['object', 'string'].includes(typeof string) || !string)) {
+  if (["object", "string"].includes(typeof string) || !string) {
     if (
       state.default.profile.user &&
-      state.default.profile.role === 'Translator' &&
+      state.default.profile.role === "Translator" &&
       state.settings &&
       state.settings.translator
     ) {
-      return <TranslatorMode langContent={string !== false ? string : nl2br(langString)} langKey={key} />;
-    } return ['object', 'string'].includes(typeof string) ? string : nl2br(langString);
+      return (
+        <TranslatorMode
+          langContent={string !== false ? string : nl2br(langString)}
+          langKey={key}
+        />
+      );
+    }
+    return ["object", "string"].includes(typeof string)
+      ? string
+      : nl2br(langString);
   }
 
   return langString;
 }
 
-export const getCssVar = (v, fallback = '#AAA') => {
-  return (window.getComputedStyle && window.getComputedStyle(document.body)
-    .getPropertyValue(v).trim()) || fallback;
+export const getCssVar = (v, fallback = "#AAA") => {
+  return (
+    (window.getComputedStyle &&
+      window
+        .getComputedStyle(document.body)
+        .getPropertyValue(v)
+        .trim()) ||
+    fallback
+  );
 };
 
 export const nl2br = text => {
-  if (text.includes('\\n')) {
-    return text.split('\\n').map((item, i) => <>{item}<br /></>);
-  } return text;
+  if (text.includes("\\n")) {
+    return text.split("\\n").map((item, i) => (
+      <>
+        {item}
+        <br />
+      </>
+    ));
+  }
+  return text;
 };
 
-/* eslint-disable-next-line */
-export const isEmail = (email) => (/^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase()));
+export const isEmail = email =>
+  /^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase());
 
-/* eslint-disable-next-line */
-export const isName = name => /^([a-z\-]{2,20})$/i.test((name||"").toLowerCase());
-/* eslint-disable-next-line */
-export const isLogin = name => /^[a-zA-Z0-9\_]+$/i.test((name||"").toLowerCase());
+export const isName = name =>
+  /^([a-z\-]{2,20})$/i.test((name || "").toLowerCase());
+
+export const isLogin = name =>
+  /^[a-zA-Z0-9\_]+$/i.test((name || "").toLowerCase());
 
 export function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -101,44 +122,52 @@ export function useInterval(callback, delay) {
   }, [delay]);
 }
 
-export const formatNumber = (num, minimumFractionDigits = 2, maximumFractionDigits = 2) => {
+export const formatNumber = (
+  num,
+  minimumFractionDigits = 2,
+  maximumFractionDigits = 2
+) => {
   if (num) {
-    return num.toLocaleString(undefined,
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }
-    )
+    return num.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
   }
 
   return null;
 };
 
-export function isProduction ()  {
-  return !api.API_ENTRY.includes('stage') && !api.API_ENTRY.includes('api-');
+export function isProduction() {
+  return !api.API_ENTRY.includes("stage") && !api.API_ENTRY.includes("api-");
   // return window.location.host === company.host;
 }
 
-export function throttle (func, ms)  {
+export function throttle(func, ms) {
   let timeout = null;
 
   return (...args) => {
     if (timeout) {
-      clearTimeout(timeout)
+      clearTimeout(timeout);
     }
     timeout = setTimeout(func.bind(this, ...args), ms);
-  }
+  };
 }
 
 export function ucfirst(input = "") {
-  if (typeof input !== 'string') return "";
+  if (typeof input !== "string") return "";
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 export function formatDouble(input, fractionDigits = 8) {
   if (isNaN(parseFloat(input)) || Math.abs(input) === Infinity) return null;
-  const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
-  return Math.floor(bn(input).mul(coefficient).toExponential()) / coefficient;
+  const coefficient = parseInt(1 + "0".repeat(fractionDigits));
+  return (
+    Math.floor(
+      bn(input)
+        .mul(coefficient)
+        .toExponential()
+    ) / coefficient
+  );
   // return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 
@@ -153,7 +182,7 @@ export function formatTableId(index) {
 
   let arr = new Array(need).fill(0);
   arr.push(index);
-  return arr.join('');
+  return arr.join("");
 }
 
 export function makeModalParams(modal, params) {
@@ -171,15 +200,17 @@ export function InputNumberOnKeyPressHandler(e) {
   }
 }
 
-export function __doubleInputOnKeyPressHandler(e, value = '') {
+export function __doubleInputOnKeyPressHandler(e, value = "") {
   switch (e.key) {
     default:
-      if (isNaN(parseInt(e.key)) || (value.length === 1 && value[0] === '0')) {
+      if (isNaN(parseInt(e.key)) || (value.length === 1 && value[0] === "0")) {
         e.preventDefault();
       }
       break;
-    case '.': {
-      return value.length === 0 ? e.preventDefault() : value.indexOf(e.key) > -1 && e.preventDefault();
+    case ".": {
+      return value.length === 0
+        ? e.preventDefault()
+        : value.indexOf(e.key) > -1 && e.preventDefault();
     }
   }
 }
@@ -189,28 +220,29 @@ export function clipTextMiddle(text, length = 10) {
     return text;
   }
 
-  let parts = [text.substr(0, length), '...', text.substr(-length / 2)];
-  return parts.join('');
+  let parts = [text.substr(0, length), "...", text.substr(-length / 2)];
+  return parts.join("");
 }
 
 export function switchMatch(key, node) {
-  const __DEFAULT__ = 'default';
+  const __DEFAULT__ = "default";
   switch (typeof node) {
-    case 'object': {
+    case "object": {
       switch (typeof key) {
-        case 'boolean':
+        case "boolean":
           return node[key];
         default:
-        case 'string': {
+        case "string": {
           if (node.hasOwnProperty(key)) {
             return node[key];
           } else {
             if (node.hasOwnProperty(__DEFAULT__)) {
               switch (typeof node[__DEFAULT__]) {
-                case 'function': {
+                case "function": {
                   return node[__DEFAULT__]();
                 }
-                default: return node[__DEFAULT__];
+                default:
+                  return node[__DEFAULT__];
               }
             } else {
               return key;
@@ -219,7 +251,8 @@ export function switchMatch(key, node) {
         }
       }
     }
-    default: break;
+    default:
+      break;
   }
 }
 
@@ -239,19 +272,21 @@ export function getScrollbarWidth() {
 }
 
 export function isFiat(currency) {
-  return ['gbp', 'usd', 'usdt', 'eur', 'rub', 'idr', 'cny'].includes(currency.toLowerCase());
+  return ["gbp", "usd", "usdt", "eur", "rub", "idr", "cny"].includes(
+    currency.toLowerCase()
+  );
   // TODO: Бруть из state.default.currency
 }
 
-export function dateFormat(date, format = 'DD MMM YYYY HH:mm') {
+export function dateFormat(date, format = "DD MMM YYYY HH:mm") {
   let dateObject;
 
-  if (typeof date === 'number' && date.toString().length === 10) {
+  if (typeof date === "number" && date.toString().length === 10) {
     dateObject = moment.unix(date);
   } else {
     const offsetMoscow = 60 * 3;
     const offset = new Date().getTimezoneOffset() + offsetMoscow;
-    dateObject = moment(date).subtract(offset,'minutes');;
+    dateObject = moment(date).subtract(offset, "minutes");
   }
 
   return !!format ? dateObject.format(format) : dateObject;

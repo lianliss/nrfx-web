@@ -1,28 +1,34 @@
 // styles
-import './Input.less';
+import "./Input.less";
 // external
-import React  from 'react';
-import PropTypes from 'prop-types';
-import SVG from 'react-inlinesvg';
+import React from "react";
+import PropTypes from "prop-types";
+import SVG from "react-inlinesvg";
 // internal
-import MarkDown from '../MarkDown/MarkDown';
-import { classNames } from '../../utils';
-import { openModal } from 'src/actions';
+import MarkDown from "../MarkDown/MarkDown";
+import { classNames } from "../../utils";
+import { openModal } from "src/actions";
 
 class Input extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      indicatorWidth: this.props.indicatorWidth || (this.props.indicator ? 34 : 0),
-      displayPassword: false,
+      indicatorWidth:
+        this.props.indicatorWidth || (this.props.indicator ? 34 : 0),
+      displayPassword: false
     };
   }
 
   componentDidMount() {
-    !this.props.mouseWheel && this.refs.input.addEventListener('mousewheel', (e) => {
-      e.preventDefault();
-    }, false);
+    !this.props.mouseWheel &&
+      this.refs.input.addEventListener(
+        "mousewheel",
+        e => {
+          e.preventDefault();
+        },
+        false
+      );
   }
 
   __toggleDisplayPassword() {
@@ -30,21 +36,24 @@ class Input extends React.Component {
   }
 
   focus() {
-    this.refs['input'].focus();
+    this.refs["input"].focus();
   }
 
-  __handleContextMenu = (e) => {
+  __handleContextMenu = e => {
     if (this.props.placeholder && this.props.placeholder.props) {
       e.preventDefault();
-      openModal('translator', {
+      openModal("translator", {
         langKey: this.props.placeholder.props.langKey
-      })
+      });
     }
   };
 
   render() {
     let { placeholder } = this.props;
-    placeholder = typeof placeholder === 'string' ? placeholder : ( placeholder && placeholder.props.langContent );
+    placeholder =
+      typeof placeholder === "string"
+        ? placeholder
+        : placeholder && placeholder.props.langContent;
 
     let type = this.props.type;
     let error = false;
@@ -57,11 +66,11 @@ class Input extends React.Component {
       type = "datetime-local";
     }
 
-    if (this.props.type === 'code') {
+    if (this.props.type === "code") {
       type = "number";
     }
 
-    if (this.props.type === 'number') {
+    if (this.props.type === "number") {
       if (isNaN(this.props.value)) {
         error = true;
       }
@@ -71,13 +80,13 @@ class Input extends React.Component {
       Input: true,
       multiLine: this.props.multiLine,
       error: this.props.error || error,
-      password: this.props.type === "password",
+      password: this.props.type === "password"
     });
 
     const wrapperClassName = classNames({
       Input__wrapper: true,
       [this.props.classNameWrapper]: !!this.props.classNameWrapper,
-      [this.props.size]: !!this.props.size,
+      [this.props.size]: !!this.props.size
     });
 
     let params = {
@@ -95,35 +104,42 @@ class Input extends React.Component {
       }
     };
 
-    const value = this.props.pattern ? ((this.props.value || "").match(this.props.pattern) || []).join("") : this.props.value;
-
+    const value = this.props.pattern
+      ? ((this.props.value || "").match(this.props.pattern) || []).join("")
+      : this.props.value;
 
     let cont;
     if (this.props.multiLine) {
-      cont = <textarea
-        ref="input"
-        {...params}
-        onContextMenu={this.__handleContextMenu}
-        onChange={this.__onChange}
-      >{this.props.value}</textarea>;
+      cont = (
+        <textarea
+          ref="input"
+          {...params}
+          onContextMenu={this.__handleContextMenu}
+          onChange={this.__onChange}
+        >
+          {this.props.value}
+        </textarea>
+      );
     } else {
-      cont = <input
-        ref="input"
-        {...params}
-        value={value}
-        onKeyPress={this.__onKeyPress}
-        onChange={this.__onChange}
-        onBlur={this.props.onBlur || (() => {})}
-        disabled={this.props.disabled}
-        autoFocus={this.props.autoFocus}
-        onContextMenu={this.__handleContextMenu}
-      />;
+      cont = (
+        <input
+          ref="input"
+          {...params}
+          value={value}
+          onKeyPress={this.__onKeyPress}
+          onChange={this.__onChange}
+          onBlur={this.props.onBlur || (() => {})}
+          disabled={this.props.disabled}
+          autoFocus={this.props.autoFocus}
+          onContextMenu={this.__handleContextMenu}
+        />
+      );
     }
 
-    const closeEyeSvg = require('../../asset/closed_eye_24.svg');
-    const openEyeSvg = require('../../asset/opened_eye_24.svg');
+    const closeEyeSvg = require("../../asset/closed_eye_24.svg");
+    const openEyeSvg = require("../../asset/opened_eye_24.svg");
 
-    const reliability =  this.props.reliability ? (
+    const reliability = this.props.reliability ? (
       <div className="Input__reliability">
         <div className="Input__reliability__label">Weak</div>
         <div className="Input__reliability__indicator">
@@ -135,28 +151,49 @@ class Input extends React.Component {
     return (
       <div className={wrapperClassName} onClick={this.props.onClick}>
         {cont}
-        { this.props.type === "password" &&
-          <div className="Input__display_password_button" onClick={this.__toggleDisplayPassword.bind(this)}>
-            <SVG onClick={alert} src={this.state.displayPassword ? closeEyeSvg : openEyeSvg} />
+        {this.props.type === "password" && (
+          <div
+            className="Input__display_password_button"
+            onClick={this.__toggleDisplayPassword.bind(this)}
+          >
+            <SVG
+              onClick={alert}
+              src={this.state.displayPassword ? closeEyeSvg : openEyeSvg}
+            />
           </div>
-        }
+        )}
         {reliability}
-        {this.props.indicator && <div className="Input__indicator" ref={(ref) => !this.state.indicatorWidth &&
-          this.setState({ indicatorWidth: ( ref || 0) })}>{this.props.indicator}</div>}
-        {this.props.description !== undefined ? <div className="Input__description">
-          { typeof this.props.description !== 'string' ? this.props.description : <MarkDown content={this.props.description} /> }
-        </div> : null}
+        {this.props.indicator && (
+          <div
+            className="Input__indicator"
+            ref={ref =>
+              !this.state.indicatorWidth &&
+              this.setState({ indicatorWidth: ref || 0 })
+            }
+          >
+            {this.props.indicator}
+          </div>
+        )}
+        {this.props.description !== undefined ? (
+          <div className="Input__description">
+            {typeof this.props.description !== "string" ? (
+              this.props.description
+            ) : (
+              <MarkDown content={this.props.description} />
+            )}
+          </div>
+        ) : null}
       </div>
-    )
+    );
   }
 
-  __onKeyPress = (e) => {
+  __onKeyPress = e => {
     if (this.props.onKeyPress) {
       return this.props.onKeyPress(e);
     }
 
-    if (this.props.type === 'code') {
-      if(isNaN(e.key)) {
+    if (this.props.type === "code") {
+      if (isNaN(e.key)) {
         e.preventDefault();
       }
     }
@@ -165,7 +202,7 @@ class Input extends React.Component {
       e.preventDefault();
     }
 
-    if (this.props.type === 'number') {
+    if (this.props.type === "number") {
       if (this.props.cell) {
         if (isNaN(e.key)) {
           e.preventDefault();
@@ -178,9 +215,9 @@ class Input extends React.Component {
     }
   };
 
-  __onChange = (e) => {
-    if (this.props.type === 'number') {
-      if (this.props.positive &&  e.target.value < 0) {
+  __onChange = e => {
+    if (this.props.type === "number") {
+      if (this.props.positive && e.target.value < 0) {
         e.target.value = 0;
       }
 
@@ -195,7 +232,7 @@ class Input extends React.Component {
 }
 
 Input.defaultProps = {
-  classNameWrapper: '',
+  classNameWrapper: "",
   disabled: false,
   error: false,
   autoFocus: false,
@@ -203,7 +240,7 @@ Input.defaultProps = {
   positive: true,
   cell: false,
   maxLength: null,
-  pattern: null,
+  pattern: null
 };
 
 Input.propTypes = {
@@ -221,10 +258,10 @@ Input.propTypes = {
   maxLength: PropTypes.number,
   pattern: PropTypes.string,
   description: PropTypes.string,
-  size: PropTypes.oneOf(['small']),
-  type: PropTypes.oneOf(['text', 'number', 'password', 'code']),
+  size: PropTypes.oneOf(["small"]),
+  type: PropTypes.oneOf(["text", "number", "password", "code"]),
   positive: PropTypes.bool,
-  cell: PropTypes.bool,
+  cell: PropTypes.bool
 };
 
 export default React.memo(Input);

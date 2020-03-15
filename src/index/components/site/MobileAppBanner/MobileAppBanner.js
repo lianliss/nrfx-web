@@ -1,9 +1,8 @@
-import './MobileAppBanner.less';
+import "./MobileAppBanner.less";
 
-import React from 'react';
-import * as utils from '../../../../utils/index';
-import COMPANY from '../../../constants/company';
-
+import React from "react";
+import * as utils from "../../../../utils/index";
+import COMPANY from "../../../constants/company";
 
 export default function MobileAppBanner() {
   return (
@@ -11,8 +10,12 @@ export default function MobileAppBanner() {
       <div className="MobileAppBanner__bg" />
       <div className="MobileAppBanner__cont">
         <div className="MobileAppBanner__text">
-          <div className="MobileAppBanner__title">{utils.getLang('site__mobileAppBannerTitle')}</div>
-          <div className="MobileAppBanner__caption">{utils.getLang('site__mobileAppBannerSubTitle')}</div>
+          <div className="MobileAppBanner__title">
+            {utils.getLang("site__mobileAppBannerTitle")}
+          </div>
+          <div className="MobileAppBanner__caption">
+            {utils.getLang("site__mobileAppBannerSubTitle")}
+          </div>
         </div>
         <div className="MobileAppBanner__buttons">
           <a
@@ -31,5 +34,5 @@ export default function MobileAppBanner() {
         </div>
       </div>
     </div>
-  )
+  );
 }

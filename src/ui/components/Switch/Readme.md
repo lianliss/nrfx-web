@@ -1,7 +1,7 @@
 ```js
-import { useState } from 'react';
+import { useState } from "react";
 const [state, setState] = useState(false);
-<Switch on={state} onChange={setState} label="Label" />
+<Switch on={state} onChange={setState} label="Label" />;
 ```
 
 ```js

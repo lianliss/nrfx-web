@@ -23,7 +23,7 @@
 
     .SwitchTabs__item {
       color: var(--dark-gray);
-      border-color:  var(--dairy);
+      border-color: var(--dairy);
 
       &.active {
         & > span {
@@ -38,7 +38,7 @@
   }
 
   &.disabled {
-    opacity: .8;
+    opacity: 0.8;
     pointer-events: none;
   }
 }
@@ -103,7 +103,8 @@
 }
 
 @keyframes SwitchTabsAnimation {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1, 1);
   }
   50% {

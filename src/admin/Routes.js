@@ -1,20 +1,20 @@
 // styles
 // external
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 // internal
-import action from '../actions/admin';
-import MainScreen from './containers/MainScreen/MainScreen';
-import PanelScreen from './containers/PanelScreen/PanelScreen';
-import * as pages from './constants/pages';
-import SiteNotFoundScreen from '../index/containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
-import AdminWrapper from '../wrappers/Admin/AdminWrapper';
-import router from '../router';
+import action from "../actions/admin";
+import MainScreen from "./containers/MainScreen/MainScreen";
+import PanelScreen from "./containers/PanelScreen/PanelScreen";
+import * as pages from "./constants/pages";
+import SiteNotFoundScreen from "../index/containers/site/SiteNotFoundScreen/SiteNotFoundScreen";
+import AdminWrapper from "../wrappers/Admin/AdminWrapper";
+import router from "../router";
 
-router.addListener((state, prevState)  => {
+router.addListener((state, prevState) => {
   if (state.name === pages.PANEL_PAGE && !state.params.modal) {
     action({
-      type: 'show_page',
+      type: "show_page",
       params: {
         page: router.getState().params.page
       }
@@ -68,5 +68,5 @@ function Routes(props) {
 export default connect(state => ({
   user: state.default.profile.user,
   route: state.router.route,
-  pending: (state.admin.pending || state.default.profile.pending)
+  pending: state.admin.pending || state.default.profile.pending
 }))(Routes);

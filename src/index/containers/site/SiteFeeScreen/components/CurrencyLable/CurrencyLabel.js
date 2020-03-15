@@ -1,7 +1,7 @@
-import './CurrencyLabel.less'
+import "./CurrencyLabel.less";
 
-import React from 'react';
-import * as actions from '../../../../../../actions';
+import React from "react";
+import * as actions from "../../../../../../actions";
 
 export default ({ abbr }) => {
   const currency = actions.getCurrencyInfo(abbr);
@@ -9,9 +9,11 @@ export default ({ abbr }) => {
     <div className="CurrencyLabel" title={currency.name}>
       <div
         className="CurrencyLabel__icon"
-        style={{ backgroundImage: `url(${currency.icon})`}}
+        style={{ backgroundImage: `url(${currency.icon})` }}
       />
-      <div className="CurrencyLabel__abbr" style={{color: currency.color}}>{currency.abbr}</div>
+      <div className="CurrencyLabel__abbr" style={{ color: currency.color }}>
+        {currency.abbr}
+      </div>
     </div>
-  )
+  );
 };

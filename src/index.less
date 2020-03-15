@@ -1,10 +1,14 @@
 @import "./vars.less";
 
-.body, body, input, textarea {
-  font-family: 'Montserrat', sans-serif;
+.body,
+body,
+input,
+textarea {
+  font-family: "Montserrat", sans-serif;
 }
 
-.body, body {
+.body,
+body {
   padding: 0;
   margin: 0;
   overflow-y: scroll;
@@ -20,7 +24,9 @@
   }
 }
 
-a {
+a,
+.link {
+  cursor: pointer;
   text-decoration: none;
   color: var(--dark-blue);
 
@@ -29,19 +35,22 @@ a {
   }
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-weight: 500;
   font-size: 40px;
   line-height: 49px;
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-weight: 500;
   font-size: 34px;
   line-height: 41px;
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-weight: 500;
   font-size: 30px;
   line-height: 37px;
@@ -79,16 +88,22 @@ h6 .h6 {
   line-height: 16px;
 }
 
-small, .samll {
+small,
+.samll {
   font-weight: 500;
   font-size: 11px;
   line-height: 16px;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin: 0;
 }
-
 
 .AppLoading {
   display: flex;
@@ -104,9 +119,16 @@ h1, h2, h3, h4, h5, h6, p {
 .Layout_spacing {
   padding: 0 100px;
 
-  @media (max-width: 992px) { padding: 0 70px; }
-  @media (max-width: 768px) { padding: 0 30px; }
-  @media (min-width: 1341px) { max-width: 1340px; margin: 0 auto; }
+  @media (max-width: 992px) {
+    padding: 0 70px;
+  }
+  @media (max-width: 768px) {
+    padding: 0 30px;
+  }
+  @media (min-width: 1341px) {
+    max-width: 1340px;
+    margin: 0 auto;
+  }
 }
 
 .Content_box {
@@ -150,9 +172,7 @@ h3 {
     min-width: 200px;
 
     p {
-      margin-top: .5em;
+      margin-top: 0.5em;
     }
   }
 }
-
-

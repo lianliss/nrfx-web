@@ -4,7 +4,9 @@
   justify-content: space-around;
   padding: 120px 10px;
 
-  @media (max-width: 992px) { flex-wrap: wrap; }
+  @media (max-width: 992px) {
+    flex-wrap: wrap;
+  }
 
   .InfoSection__infocard {
     flex-basis: 390px;
@@ -15,11 +17,12 @@
 .InfoSection__divider {
   width: 1px;
   height: 140px;
-  background: #9A9A9A;
+  background: #9a9a9a;
 
-  @media (max-width: 992px) { display: none; }
+  @media (max-width: 992px) {
+    display: none;
+  }
 }
-
 
 .InfoSection__link {
   display: inline-flex;
@@ -29,10 +32,11 @@
   text-decoration: none !important;
 
   &:after {
-    content: '';
+    content: "";
     width: 5px;
     height: 9px;
-    background: url('../../../../asset/site/link_arrow.svg') no-repeat center/contain;
+    background: url("../../../../asset/site/link_arrow.svg") no-repeat
+      center/contain;
     margin-left: 6px;
     display: block;
     flex: 0 0 auto;

@@ -1,12 +1,12 @@
-import * as actionTypes from '../actions/actionTypes';
-import * as utils from '../utils';
+import * as actionTypes from "../actions/actionTypes";
+import * as utils from "../utils";
 
 const initialState = {
   loadingStatus: {
-    sell: '',
-    buy: '',
-    default: 'loading',
-    orderBook: 'loading'
+    sell: "",
+    buy: "",
+    default: "loading",
+    orderBook: "loading"
   },
   balances: [],
   trades: [],
@@ -19,26 +19,26 @@ const initialState = {
   },
   balanceInfo: {
     primary: {},
-    secondary: {},
+    secondary: {}
   },
-  market: 'btc/usdt',
+  market: "btc/usdt",
   markets: [],
   orderBook: [],
   chart: [],
   chartTimeFrame: 5,
   fullscreen: false,
   form: {
-    type: 'limit',
+    type: "limit",
     buy: {
-      price: '',
-      amount: '',
-      total: '',
+      price: "",
+      amount: "",
+      total: ""
     },
     sell: {
-      price: '',
-      amount: '',
-      total: '',
-    },
+      price: "",
+      amount: "",
+      total: ""
+    }
   }
 };
 
@@ -48,7 +48,7 @@ export default function reduce(state = initialState, action = {}) {
       let ticker = action.ticker || state.ticker;
 
       let balanceInfo = {};
-      let [primary, secondary] = action.market.toUpperCase().split('/');
+      let [primary, secondary] = action.market.toUpperCase().split("/");
 
       balanceInfo.primary = { amount: 0, currency: primary };
       balanceInfo.secondary = { amount: 0, currency: secondary };
@@ -77,10 +77,13 @@ export default function reduce(state = initialState, action = {}) {
       //   trades[order.id] = order;
       // }
 
-      const currentPrice = utils.formatDouble(ticker.price, utils.isFiat(secondary) ? 2 : undefined);
+      const currentPrice = utils.formatDouble(
+        ticker.price,
+        utils.isFiat(secondary) ? 2 : undefined
+      );
 
       return Object.assign({}, state, {
-        ...utils.removeProperty(action, 'type', 'open_orders'),
+        ...utils.removeProperty(action, "type", "open_orders"),
         ticker,
         balanceInfo,
         openOrders,
@@ -95,9 +98,9 @@ export default function reduce(state = initialState, action = {}) {
           sell: {
             ...state.form.sell,
             price: currentPrice
-          },
+          }
         }
-      })
+      });
     }
 
     case actionTypes.EXCHANGE_SET_LOADING_STATUS: {
@@ -111,22 +114,21 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.EXCHANGE_REMOVE_ORDERS: {
-
       return {
         ...state,
-        orderBook: state.orderBook.filter( o => !action.orderIds.includes(o.id) )
+        orderBook: state.orderBook.filter(o => !action.orderIds.includes(o.id))
       };
     }
 
     case actionTypes.EXCHANGE_ORDER_BOOK_INIT: {
       return {
         ...state,
-        orderBook: [ ...action.asks, ...action.bids]
+        orderBook: [...action.asks, ...action.bids]
       };
     }
 
     case actionTypes.EXCHANGE_ORDER_BOOK_SELECT_ORDER: {
-      const secondaryAction = action.order.action === 'buy' ? 'sell' : 'buy';
+      const secondaryAction = action.order.action === "buy" ? "sell" : "buy";
       return {
         ...state,
         form: {
@@ -150,10 +152,10 @@ export default function reduce(state = initialState, action = {}) {
           openOrders[order.id] = {
             ...openOrders[order.id],
             ...order
-          }
+          };
         }
 
-        if (order.type !== 'limit') {
+        if (order.type !== "limit") {
           continue;
         }
       }
@@ -167,7 +169,7 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.EXCHANGE_SET_ORDER_STATUS: {
       let openOrders = { ...state.openOrders };
-      let lastOrders = [ ...state.last_orders ];
+      let lastOrders = [...state.last_orders];
 
       if (openOrders[action.orderId]) {
         let order = { ...openOrders[action.orderId] };
@@ -181,7 +183,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         openOrders,
-        last_orders: lastOrders,
+        last_orders: lastOrders
       };
     }
 
@@ -195,7 +197,7 @@ export default function reduce(state = initialState, action = {}) {
             status: "pending"
           }
         }
-      }
+      };
     }
 
     case actionTypes.EXCHANGE_TRADING_FORM_SET_TYPE: {
@@ -205,7 +207,7 @@ export default function reduce(state = initialState, action = {}) {
           ...state.form,
           type: action.payload
         }
-      }
+      };
     }
 
     case actionTypes.EXCHANGE_TRADING_FORM_SET_PROPERTIES: {
@@ -218,15 +220,15 @@ export default function reduce(state = initialState, action = {}) {
             ...action.properties
           }
         }
-      }
+      };
     }
 
     case actionTypes.EXCHANGE_ORDER_COMPLETED: {
       let openOrders = { ...state.openOrders };
 
       let lastOrders = [
-        { ...action.order, status: 'completed' },
-        ...state.last_orders,
+        { ...action.order, status: "completed" },
+        ...state.last_orders
       ];
 
       delete openOrders[action.order.id];
@@ -235,46 +237,46 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         openOrders,
         last_orders: lastOrders
-      }
+      };
     }
 
     case actionTypes.EXCHANGE_ORDER_FAILED: {
-      let order = { ...state.openOrders[action.orderId], status: 'failed' };
+      let order = { ...state.openOrders[action.orderId], status: "failed" };
       let openOrders = { ...state.openOrders };
 
       delete openOrders[action.orderId];
 
-      let lastOrders = [
-        order,
-        ...state.last_orders,
-      ];
+      let lastOrders = [order, ...state.last_orders];
 
       return {
         ...state,
         openOrders,
         last_orders: lastOrders
-      }
+      };
     }
 
     case actionTypes.EXCHANGE_ADD_OPEN_ORDER: {
-      return { ...state, openOrders: {
-        ...state.openOrders,
-        [action.order.id]: {
-          ...action.order,
+      return {
+        ...state,
+        openOrders: {
+          ...state.openOrders,
+          [action.order.id]: {
+            ...action.order
+          }
         }
-      }};
+      };
     }
 
     case actionTypes.EXCHANGE_ORDER_BOOK_REMOVE_ORDER: {
       const openOrders = { ...state.openOrders };
 
-      action.orders.forEach( orderId => {
+      action.orders.forEach(orderId => {
         delete openOrders[orderId];
       });
 
       return {
         ...state,
-        orderBook: state.orderBook.filter( o => !action.orders.includes(o.id) ),
+        orderBook: state.orderBook.filter(o => !action.orders.includes(o.id)),
         openOrders
       };
     }
@@ -282,7 +284,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.EXCHANGE_ADD_TRADES: {
       return {
         ...state,
-        trades: [ ...action.trades, ...state.trades ]
+        trades: [...action.trades, ...state.trades]
       };
     }
 
@@ -296,7 +298,7 @@ export default function reduce(state = initialState, action = {}) {
       }
 
       let balanceInfo = Object.assign({}, state.balanceInfo);
-      const [primary, secondary] = state.market.split('/');
+      const [primary, secondary] = state.market.split("/");
 
       if (primary === action.currency) {
         balanceInfo.primary.amount = action.amount;
@@ -315,14 +317,14 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         markets: action.markets
-      }
+      };
     }
 
     case actionTypes.EXCHANGE_SET_FULLSCREEN: {
       return {
         ...state,
         fullscreen: action.status
-      }
+      };
     }
 
     case actionTypes.EXCHANGE_TICKER_UPDATE: {
@@ -331,9 +333,9 @@ export default function reduce(state = initialState, action = {}) {
         ticker: {
           ...state.ticker,
           ...action.ticker,
-          prevPrice: state.ticker.price,
+          prevPrice: state.ticker.price
         }
-      }
+      };
     }
 
     default:

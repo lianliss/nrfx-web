@@ -1,11 +1,11 @@
-import './Collapse.less';
+import "./Collapse.less";
 
-import React, { useState } from 'react';
-import SVG from 'react-inlinesvg';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import SVG from "react-inlinesvg";
+import PropTypes from "prop-types";
 
-import ContentBox from '../ContentBox/ContentBox';
-import { classNames as cn } from '../../utils/index';
+import ContentBox from "../ContentBox/ContentBox";
+import { classNames as cn } from "../../utils/index";
 
 const Collapse = props => {
   const [isOpenState, toggle] = useState(props.isOpenDefault);
@@ -24,12 +24,21 @@ const Collapse = props => {
     <ContentBox className={cn("Collapse", props.className, { isOpen })}>
       <div className="Collapse__header" onClick={handleToggle}>
         <div className="Collapse__arrow">
-          <SVG src={require('../../../asset/24px/angle-down-small.svg')}/>
+          <SVG src={require("../../../asset/24px/angle-down-small.svg")} />
         </div>
         <div className="Collapse__title">{props.title}</div>
-        {!!props.controls && <div onClick={e => { e.stopPropagation() }} className="Collapse__controls">{props.controls}</div>}
+        {!!props.controls && (
+          <div
+            onClick={e => {
+              e.stopPropagation();
+            }}
+            className="Collapse__controls"
+          >
+            {props.controls}
+          </div>
+        )}
       </div>
-      { isOpen && <div className="Collapse__content">{props.children}</div> }
+      {isOpen && <div className="Collapse__content">{props.children}</div>}
     </ContentBox>
   );
 };

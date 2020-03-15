@@ -1,5 +1,4 @@
-
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   menu: null,
@@ -12,39 +11,39 @@ const initialState = {
 };
 
 const activeTab = (id, state, items) => {
-  if (state && ['object', 'array'].includes(typeof state)) {
-    if (state.type && state.type === 'tabs_item') {
-      state.items = (state.id === id ? items : null);
+  if (state && ["object", "array"].includes(typeof state)) {
+    if (state.type && state.type === "tabs_item") {
+      state.items = state.id === id ? items : null;
     } else {
       Object.keys(state).forEach(key => {
         activeTab(id, state[key], items);
-      })
+      });
     }
   }
 };
 
 const deleteById = (id, state) => {
-  if (state && ['object', 'array'].includes(typeof state)) {
+  if (state && ["object", "array"].includes(typeof state)) {
     if (state.id === id) {
-      state.type = 'deleted';
+      state.type = "deleted";
     } else {
       Object.keys(state).forEach(key => {
         deleteById(id, state[key]);
-      })
+      });
     }
   }
 };
 
 const updateTable = (id, state, layout) => {
-  if (state && ['object', 'array'].includes(typeof state)) {
+  if (state && ["object", "array"].includes(typeof state)) {
     if (state.id === id) {
       Object.keys(layout).forEach(key => {
         state[key] = layout[key];
-      })
+      });
     } else {
       Object.keys(state).forEach(key => {
         updateTable(id, state[key], layout);
-      })
+      });
     }
   }
 };
@@ -57,17 +56,17 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         ...action.data
-      }
+      };
     }
 
-    case 'pending': {
+    case "pending": {
       return {
         ...state,
         pending: params
-      }
+      };
     }
 
-    case 'show_modal': {
+    case "show_modal": {
       return {
         ...state,
         modals: {
@@ -75,17 +74,17 @@ export default function reduce(state = initialState, action = {}) {
           [params.layout[0].id]: {
             ...params,
             visible: true
-          },
+          }
         },
         modalsIds: [...state.modalsIds, params.layout[0].id]
-      }
+      };
     }
 
-    case 'close_modal': {
+    case "close_modal": {
       let modalsIds = [...state.modalsIds];
       let modalId = modalsIds[modalsIds.length - 1];
 
-      const modals = {...state.modals};
+      const modals = { ...state.modals };
       delete modals[modalId];
       modalsIds.pop();
 
@@ -93,7 +92,7 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         modals,
         modalsIds
-      }
+      };
     }
 
     case actionTypes.ADMIN_VALUE_CHANGE: {
@@ -102,38 +101,37 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         values
-      }
+      };
     }
 
-    case 'show_page': {
+    case "show_page": {
       return {
         ...state,
         ...action.params
-      }
+      };
     }
 
-
-    case 'show_tab': {
+    case "show_tab": {
       const newState = { ...state };
       activeTab(params.id, newState, params.layout);
 
       return newState;
     }
 
-    case 'delete_table_row': {
+    case "delete_table_row": {
       const newState = { ...state };
       deleteById(params.id, newState);
 
       return newState;
     }
 
-    case 'reload_table': {
+    case "reload_table": {
       const newState = { ...state };
       updateTable(params.id, newState, params.layout);
       return newState;
     }
 
-    case 'reload_table_rows': {
+    case "reload_table_rows": {
       const newState = { ...state };
       params.forEach(row => {
         updateTable(row.id, newState, { items: [] });

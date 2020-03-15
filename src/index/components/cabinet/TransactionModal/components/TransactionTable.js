@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function TransactionTable({ data }) {
   return (
@@ -12,7 +12,7 @@ function TransactionTable({ data }) {
         ))}
       </tbody>
     </table>
-  )
+  );
 }
 
 export default TransactionTable;

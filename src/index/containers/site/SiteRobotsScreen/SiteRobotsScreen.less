@@ -4,14 +4,16 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 45px 50px;
 
-    @media (min-width: 1400px) { grid-template-columns: repeat(3, minmax(300px, 1fr)) }
-
+    @media (min-width: 1400px) {
+      grid-template-columns: repeat(3, minmax(300px, 1fr));
+    }
 
     .RobotsFeature__item {
       padding-top: 87px;
 
-      @media (max-width: 768px) { padding-top: 27px; }
-
+      @media (max-width: 768px) {
+        padding-top: 27px;
+      }
     }
   }
 
@@ -21,7 +23,6 @@
     flex: 1;
     padding-top: 232px;
     padding-bottom: 150px;
-
 
     .SupportedPlatforms__bg {
       position: absolute;
@@ -58,8 +59,9 @@
       grid-template-columns: repeat(3, minmax(100px, 1fr));
       grid-gap: 20px 50px;
 
-      @media (max-width: 766px) { grid-template-columns: repeat(2, minmax(100px, 1fr)) }
-
+      @media (max-width: 766px) {
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+      }
 
       .SupportedPlatforms__logo {
         height: 60px;
@@ -76,7 +78,6 @@
         }
       }
     }
-
 
     @media (max-width: 1070px) {
       flex-direction: column;

@@ -1,14 +1,13 @@
-import './WalletModal.less';
+import "./WalletModal.less";
 
-import React from 'react';
-import * as UI from 'src/ui/index';
-import * as actions from 'src/actions/index';
-import * as utils from '../../../../utils';
-import {getCurrencyInfo} from '../../../../actions';
-import {getLang} from '../../../../utils';
+import React from "react";
+import * as UI from "src/ui/index";
+import * as actions from "src/actions/index";
+import * as utils from "../../../../utils";
+import { getCurrencyInfo } from "../../../../actions";
+import { getLang } from "../../../../utils";
 
-export default ({onClose, wallet}) => {
-
+export default ({ onClose, wallet }) => {
   if (!wallet) {
     onClose();
     return null;
@@ -18,50 +17,70 @@ export default ({onClose, wallet}) => {
 
   return (
     <UI.Modal className="WalletModal" onClose={onClose}>
-      <UI.ModalHeader>{getLang('cabinet_walletTransactionModal_my')} {currency.name} {getLang('global_wallet')}</UI.ModalHeader>
-      <UI.WalletCard balance={wallet.amount} balanceUsd={wallet.amount * wallet.to_usd} currency={currency} />
+      <UI.ModalHeader>
+        {getLang("cabinet_walletTransactionModal_my")} {currency.name}{" "}
+        {getLang("global_wallet")}
+      </UI.ModalHeader>
+      <UI.WalletCard
+        balance={wallet.amount}
+        balanceUsd={wallet.amount * wallet.to_usd}
+        currency={currency}
+      />
       <UI.ButtonWrapper align="fill">
         {utils.isFiat(wallet.currency) ? (
           <>
             <UI.Button
-              onClick={() => {actions.openModal('merchant', {
-                currency: currency.abbr
-              })}}
-              currency={currency}>
-              {utils.getLang('cabinet_fiatBalance_add')}
+              onClick={() => {
+                actions.openModal("merchant", {
+                  currency: currency.abbr
+                });
+              }}
+              currency={currency}
+            >
+              {utils.getLang("cabinet_fiatBalance_add")}
             </UI.Button>
             <UI.Button
               disabled={wallet.amount === 0}
-              onClick={() => {actions.openModal('merchant', {
-                currency: currency.abbr
-              }, { type: 'withdrawal' })}}
+              onClick={() => {
+                actions.openModal(
+                  "merchant",
+                  {
+                    currency: currency.abbr
+                  },
+                  { type: "withdrawal" }
+                );
+              }}
               currency={currency}
             >
-              {utils.getLang('global_withdrawal')}
+              {utils.getLang("global_withdrawal")}
             </UI.Button>
           </>
         ) : (
           <>
             <UI.Button
               disabled={wallet.amount === 0}
-              onClick={() => {actions.openModal('send', {
-                currency: currency.abbr
-              })}}
+              onClick={() => {
+                actions.openModal("send", {
+                  currency: currency.abbr
+                });
+              }}
               currency={currency}
             >
-              {utils.getLang('site__contactSend')}
+              {utils.getLang("site__contactSend")}
             </UI.Button>
             <UI.Button
-              onClick={() => {actions.openModal('receive', {
-                preset: currency.name
-              })}}
+              onClick={() => {
+                actions.openModal("receive", {
+                  preset: currency.name
+                });
+              }}
               currency={currency}
             >
-              {utils.getLang('cabinet_walletTransactionModal_receive')}
+              {utils.getLang("cabinet_walletTransactionModal_receive")}
             </UI.Button>
           </>
         )}
       </UI.ButtonWrapper>
     </UI.Modal>
-  )
-}
+  );
+};

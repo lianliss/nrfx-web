@@ -1,13 +1,12 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 import url from "url";
-import router from '../../../../router';
-import * as UI from '../../../../ui';
-import * as internalNotifications from '../../../../actions/cabinet/internalNotifications';
-import {openModal} from '../../../../actions';
+import router from "../../../../router";
+import * as UI from "../../../../ui";
+import * as internalNotifications from "../../../../actions/cabinet/internalNotifications";
+import { openModal } from "../../../../actions";
 
 const InternalNotification = props => {
-
   const { items } = props.internalNotifications;
 
   const notification = items.length ? items[0] : null;
@@ -19,19 +18,24 @@ const InternalNotification = props => {
   const handleAction = () => {
     if (notification.link) {
       const link = url.parse(notification.link, true);
-      router.navigate(link.pathname.substr(1), link.query, notification.params, () => {
-        props.dropInternalNotifications(notification.type);
-      });
+      router.navigate(
+        link.pathname.substr(1),
+        link.query,
+        notification.params,
+        () => {
+          props.dropInternalNotifications(notification.type);
+        }
+      );
     }
 
     // TODO: Сделать type: Modal вместо google_code и secret_key
-    if (notification.type === 'google_code') {
-      openModal('google_code', {}, {},() => {
+    if (notification.type === "google_code") {
+      openModal("google_code", {}, {}, () => {
         props.dropInternalNotifications(notification.type);
       });
     }
-    if (notification.type === 'secret_key') {
-      openModal('secret_key', {}, {},() => {
+    if (notification.type === "secret_key") {
+      openModal("secret_key", {}, {}, () => {
         props.dropInternalNotifications(notification.type);
       });
     }
@@ -43,15 +47,17 @@ const InternalNotification = props => {
       message={notification.caption}
       onAccept={handleAction}
       onClose={() => {
-        props.dropInternalNotifications(notification.type)
+        props.dropInternalNotifications(notification.type);
       }}
     />
-  )
+  );
 };
 
-
-export default connect(state => ({
-  internalNotifications: state.internalNotifications,
-}), {
-  dropInternalNotifications: internalNotifications.drop,
-})(InternalNotification);
+export default connect(
+  state => ({
+    internalNotifications: state.internalNotifications
+  }),
+  {
+    dropInternalNotifications: internalNotifications.drop
+  }
+)(InternalNotification);

@@ -1,17 +1,19 @@
-import React from 'react';
-import * as UI from '../../../../../ui';
+import React from "react";
+import * as UI from "../../../../../ui";
 
-import * as utils from '../../../../../utils';
-import * as actions from '../../../../../actions';
+import * as utils from "../../../../../utils";
+import * as actions from "../../../../../actions";
 
-function BalanceItem({ amount, currency }, key ) {
+function BalanceItem({ amount, currency }, key) {
   const currencyInfo = actions.getCurrencyInfo(currency);
   currency = currency.toUpperCase();
 
   return (
     <UI.ContentBox key={key} className="Investments__balances__item">
       <div className="Investments__balances__item__rows">
-        <InfoRow label={utils.ucfirst(currencyInfo.name)}>{amount} {currency}</InfoRow>
+        <InfoRow label={utils.ucfirst(currencyInfo.name)}>
+          {amount} {currency}
+        </InfoRow>
       </div>
       {/*<div className="Investments__balances__item__actions empty disable_active_button">*/}
       {/*  <UI.Button*/}
@@ -26,22 +28,28 @@ function BalanceItem({ amount, currency }, key ) {
       {/*</div>*/}
       <UI.CircleIcon currency={currencyInfo} />
     </UI.ContentBox>
-  )
+  );
 }
 
 function InfoRow({ label, children, highlighted }) {
   return (
     <div className="Investments__balances__item__info_row">
-      <div className="Investments__balances__item__info_row__label">{label}</div>
-      <div className={utils.classNames({
-        Investments__balances__item__info_row__value: true,
-        highlighted: !!highlighted
-      })}>{children}</div>
+      <div className="Investments__balances__item__info_row__label">
+        {label}
+      </div>
+      <div
+        className={utils.classNames({
+          Investments__balances__item__info_row__value: true,
+          highlighted: !!highlighted
+        })}
+      >
+        {children}
+      </div>
     </div>
-  )
+  );
 }
 
-export default function Balances({data}) {
+export default function Balances({ data }) {
   return data.map((item, key) => {
     return BalanceItem(item, key);
   });

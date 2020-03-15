@@ -20,13 +20,13 @@
     top: 0;
     left: 0;
     position: absolute;
-    content: '';
+    content: "";
     display: block;
     width: inherit;
     height: 100%;
     border-radius: inherit;
     box-shadow: 0 6px 24px var(--background), 0 0 2px var(--background);
-    opacity: .3;
+    opacity: 0.3;
     pointer-events: none;
   }
 
@@ -68,6 +68,10 @@
 }
 
 @keyframes toast-show {
-  from { transform: translate(400px, 0); }
-  to { transform: translate(0, 0); }
+  from {
+    transform: translate(400px, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
 }

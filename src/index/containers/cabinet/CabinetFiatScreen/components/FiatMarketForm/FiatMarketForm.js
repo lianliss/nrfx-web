@@ -1,28 +1,33 @@
-import './FiatMarketForm.less';
+import "./FiatMarketForm.less";
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { getLang, formatDouble, isFiat, ucfirst } from '../../../../../../utils/index';
-import * as UI from '../../../../../../ui/index';
+import {
+  getLang,
+  formatDouble,
+  isFiat,
+  ucfirst
+} from "../../../../../../utils/index";
+import * as UI from "../../../../../../ui/index";
 
-import * as actions from '../../../../../../actions/cabinet/fiat';
-import NumberFormat from '../../../../../../ui/components/NumberFormat/NumberFormat';
+import * as actions from "../../../../../../actions/cabinet/fiat";
+import NumberFormat from "../../../../../../ui/components/NumberFormat/NumberFormat";
 
 class FiatMarketForm extends React.Component {
   state = {
-    from: 'usd',
-    to: 'btc',
-    typeActive: 'to',
+    from: "usd",
+    to: "btc",
+    typeActive: "to",
     fromAmount: null,
     toAmount: 1,
-    amount: 1,
+    amount: 1
   };
 
   componentDidMount() {
     this.getRate();
     this.interval = setInterval(this.getRate, 5000);
-  };
+  }
 
   componentDidUpdate(prevProps) {
     if (
@@ -31,10 +36,13 @@ class FiatMarketForm extends React.Component {
     ) {
       const { state } = this;
       const secondaryType = this.invertType(state.typeActive);
-      const secondaryAmount = this.getSecondaryAmount(this.state[state.typeActive + 'Amount'], secondaryType);
+      const secondaryAmount = this.getSecondaryAmount(
+        this.state[state.typeActive + "Amount"],
+        secondaryType
+      );
       this.setState({
-        [secondaryType + 'Amount']: secondaryAmount
-      })
+        [secondaryType + "Amount"]: secondaryAmount
+      });
     }
   }
 
@@ -43,8 +51,10 @@ class FiatMarketForm extends React.Component {
   }
 
   getRate = () => {
-    const [base, currency] = [this.state.from, this.state.to][ isFiat(this.state.to) ? 'reverse' : 'flat']();
-    this.props.getRate({base, currency});
+    const [base, currency] = [this.state.from, this.state.to][
+      isFiat(this.state.to) ? "reverse" : "flat"
+    ]();
+    this.props.getRate({ base, currency });
   };
 
   handleBuy = () => {
@@ -57,64 +67,72 @@ class FiatMarketForm extends React.Component {
     });
   };
 
-  invertType = (type) => {
-    return type === 'from' ? 'to' : 'from';
+  invertType = type => {
+    return type === "from" ? "to" : "from";
   };
 
-  handleCurrencyChange = (type) => (e) => {
+  handleCurrencyChange = type => e => {
     const { state } = this;
     const secondaryType = this.invertType(type);
     let secondaryCurrency = state[secondaryType];
 
     if (isFiat(e.value) === isFiat(state[secondaryType])) {
-      secondaryCurrency = isFiat(e.value) ? 'btc' : 'usd';
+      secondaryCurrency = isFiat(e.value) ? "btc" : "usd";
     }
 
-    this.setState({
-      [type]: e.value,
-      [secondaryType]: secondaryCurrency
-    }, this.getRate);
+    this.setState(
+      {
+        [type]: e.value,
+        [secondaryType]: secondaryCurrency
+      },
+      this.getRate
+    );
   };
 
-  handleAmountFocus = (type) => () => {
+  handleAmountFocus = type => () => {
     // const secondaryType = this.invertType(type);
     this.setState({
-      typeActive: type,
+      typeActive: type
     });
   };
 
-  handleAmountChange = (type) => (value) => {
+  handleAmountChange = type => value => {
     const secondaryType = this.invertType(type);
     const secondaryAmount = this.getSecondaryAmount(value, secondaryType);
 
     this.setState({
-      [type + 'Amount']: value,
+      [type + "Amount"]: value,
       amount: value,
-      [secondaryType + 'Amount']: secondaryAmount,
-      typeActive: type,
+      [secondaryType + "Amount"]: secondaryAmount,
+      typeActive: type
     });
   };
 
   getCurrenciesOptions(prefix) {
-    return this.props.canExchange
-      .map(key => this.props.currencies[key])
-      // .sort((a,b) => a.abbr.toLowerCase() < b.abbr.toLowerCase() ? -1 : 1)
-      .map(c => ({
-        ...c,
-        title: <>{prefix} {ucfirst(c.name)}</>,
-        note: c.abbr.toUpperCase(),
-        value: c.abbr,
-      }));
+    return (
+      this.props.canExchange
+        .map(key => this.props.currencies[key])
+        // .sort((a,b) => a.abbr.toLowerCase() < b.abbr.toLowerCase() ? -1 : 1)
+        .map(c => ({
+          ...c,
+          title: (
+            <>
+              {prefix} {ucfirst(c.name)}
+            </>
+          ),
+          note: c.abbr.toUpperCase(),
+          value: c.abbr
+        }))
+    );
   }
 
   getSecondaryAmount = (amount, type) => {
     const { rate } = this.props;
-    const secondaryAmount = isFiat(this.state[type]) ? (amount * rate) : (amount / rate);
+    const secondaryAmount = isFiat(this.state[type])
+      ? amount * rate
+      : amount / rate;
 
-    return formatDouble(
-      secondaryAmount,
-      isFiat(this.state[type]) ? 2 : 6
-    );
+    return formatDouble(secondaryAmount, isFiat(this.state[type]) ? 2 : 6);
   };
 
   formatAmount = (amount, currency) => {
@@ -124,46 +142,75 @@ class FiatMarketForm extends React.Component {
   renderRate(type) {
     if (!this.props.rate) return null;
     const secondaryType = this.invertType(type);
-    return <div>
-      <UI.NumberFormat number={1} currency={this.state[type]} /> ≈ <UI.NumberFormat number={ this.getSecondaryAmount(1, secondaryType)} currency={this.state[secondaryType]} />
-    </div>;
+    return (
+      <div>
+        <UI.NumberFormat number={1} currency={this.state[type]} /> ≈{" "}
+        <UI.NumberFormat
+          number={this.getSecondaryAmount(1, secondaryType)}
+          currency={this.state[secondaryType]}
+        />
+      </div>
+    );
   }
 
   getBalance(type) {
     const currency = this.state[type];
     const secondaryType = this.invertType(type);
 
-    const balances = this.props[isFiat(currency) ? 'balances' : 'wallets'];
+    const balances = this.props[isFiat(currency) ? "balances" : "wallets"];
     if (balances) {
-      const { amount } = balances.find(item => item.currency.toLowerCase() === currency);
+      const { amount } = balances.find(
+        item => item.currency.toLowerCase() === currency
+      );
       const secondaryAmount = this.getSecondaryAmount(amount, secondaryType);
-      return <UI.NumberFormat skipTitle onClick={() => {
-        // TODO: Думаю что код ниже (if, else) можно написать лучше :-)
-        if (type === 'from') {
-          this.setState({
-            typeActive: type,
-            amount: amount,
-            [secondaryType + 'Amount']: secondaryAmount,
-            [type + 'Amount']: this.formatAmount(amount, this.state[type]),
-          })
-        } else {
-          this.setState({
-            typeActive: secondaryType,
-            [secondaryType + 'Amount']: this.formatAmount(amount, this.state.to),
-            from: this.state.to,
-            to: this.state.from,
-            amount: amount,
-            [type + 'Amount']: secondaryAmount,
-          })
-        }
-      }} number={amount} currency={currency} />
-    } return null;
+      return (
+        <UI.NumberFormat
+          skipTitle
+          onClick={() => {
+            // TODO: Думаю что код ниже (if, else) можно написать лучше :-)
+            if (type === "from") {
+              this.setState({
+                typeActive: type,
+                amount: amount,
+                [secondaryType + "Amount"]: secondaryAmount,
+                [type + "Amount"]: this.formatAmount(amount, this.state[type])
+              });
+            } else {
+              this.setState({
+                typeActive: secondaryType,
+                [secondaryType + "Amount"]: this.formatAmount(
+                  amount,
+                  this.state.to
+                ),
+                from: this.state.to,
+                to: this.state.from,
+                amount: amount,
+                [type + "Amount"]: secondaryAmount
+              });
+            }
+          }}
+          number={amount}
+          currency={currency}
+        />
+      );
+    }
+    return null;
   }
 
   renderFee() {
     const { exchangeFee } = this.props;
-    const fee = this.state.fromAmount / 100 * exchangeFee;
-    return (<>{getLang('cabinet_fiatWalletFee')} ({<NumberFormat number={exchangeFee} percent />} {<NumberFormat number={fee} currency={this.state.from} />}) ≈ <NumberFormat number={parseFloat(this.state.fromAmount) + fee} currency={this.state.from} /></>);
+    const fee = (this.state.fromAmount / 100) * exchangeFee;
+    return (
+      <>
+        {getLang("cabinet_fiatWalletFee")} (
+        {<NumberFormat number={exchangeFee} percent />}{" "}
+        {<NumberFormat number={fee} currency={this.state.from} />}) ≈{" "}
+        <NumberFormat
+          number={parseFloat(this.state.fromAmount) + fee}
+          currency={this.state.from}
+        />
+      </>
+    );
   }
 
   render() {
@@ -172,57 +219,82 @@ class FiatMarketForm extends React.Component {
     const { typeActive } = this.state;
 
     return (
-      <Wrapper title={getLang('cabinet_fiatMarketExchangeTitle')} isOpenDefault={true} className="FiatMarketForm">
-        { !this.props.adaptive && <h2 className="FiatMarketForm__title">{getLang('cabinet_fiatMarketExchangeTitle')}</h2> }
+      <Wrapper
+        title={getLang("cabinet_fiatMarketExchangeTitle")}
+        isOpenDefault={true}
+        className="FiatMarketForm"
+      >
+        {!this.props.adaptive && (
+          <h2 className="FiatMarketForm__title">
+            {getLang("cabinet_fiatMarketExchangeTitle")}
+          </h2>
+        )}
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
-            <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGet')}</span>
+            <span className="FiatMarketForm__inputLabel">
+              {getLang("cabinet_fiatWalletGet")}
+            </span>
             <UI.Input
               disabled={disabled}
-              value={(typeActive !== 'to' ? "~ " : '') + (this.state.toAmount || '')}
-              onTextChange={this.handleAmountChange('to')}
-              onFocus={this.handleAmountFocus('to')}
-              placeholder={getLang('global_amount')}
-              type={typeActive === 'to' ? 'number' : undefined} />
+              value={
+                (typeActive !== "to" ? "~ " : "") + (this.state.toAmount || "")
+              }
+              onTextChange={this.handleAmountChange("to")}
+              onFocus={this.handleAmountFocus("to")}
+              placeholder={getLang("global_amount")}
+              type={typeActive === "to" ? "number" : undefined}
+            />
             <div className="FiatMarketForm__balance">
-              <UI.Tooltip title={getLang('cabinet_fiatWalletMyWalletBalance')}>{this.getBalance('to')}</UI.Tooltip>
+              <UI.Tooltip title={getLang("cabinet_fiatWalletMyWalletBalance")}>
+                {this.getBalance("to")}
+              </UI.Tooltip>
             </div>
           </div>
           <div className="FiatMarketForm__column">
             <UI.Dropdown
               placeholder="Placeholder"
               value={this.state.to}
-              onChange={this.handleCurrencyChange('to')}
-              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletBuy'))}
+              onChange={this.handleCurrencyChange("to")}
+              options={this.getCurrenciesOptions(
+                getLang("cabinet_fiatWalletBuy")
+              )}
             />
-            <div className="FiatMarketForm__rate">
-              {this.renderRate('to')}
-            </div>
+            <div className="FiatMarketForm__rate">{this.renderRate("to")}</div>
           </div>
         </div>
         <div className="FiatMarketForm__row">
           <div className="FiatMarketForm__column">
-            <span className="FiatMarketForm__inputLabel">{getLang('cabinet_fiatWalletGive')}</span>
+            <span className="FiatMarketForm__inputLabel">
+              {getLang("cabinet_fiatWalletGive")}
+            </span>
             <UI.Input
               disabled={disabled}
-              value={(typeActive !== 'from' ? "~ " : '') + (this.state.fromAmount || '')}
-              onTextChange={this.handleAmountChange('from')}
-              onFocus={this.handleAmountFocus('from')}
-              placeholder={getLang('global_amount')}
-              type={typeActive === 'from' ? 'number' : undefined} />
+              value={
+                (typeActive !== "from" ? "~ " : "") +
+                (this.state.fromAmount || "")
+              }
+              onTextChange={this.handleAmountChange("from")}
+              onFocus={this.handleAmountFocus("from")}
+              placeholder={getLang("global_amount")}
+              type={typeActive === "from" ? "number" : undefined}
+            />
             <div className="FiatMarketForm__balance">
-              <UI.Tooltip title={getLang('cabinet_fiatWalletMyWalletBalance')}>{this.getBalance('from')}</UI.Tooltip>
+              <UI.Tooltip title={getLang("cabinet_fiatWalletMyWalletBalance")}>
+                {this.getBalance("from")}
+              </UI.Tooltip>
             </div>
           </div>
           <div className="FiatMarketForm__column">
             <UI.Dropdown
               placeholder="Placeholder"
               value={this.state.from}
-              onChange={this.handleCurrencyChange('from')}
-              options={this.getCurrenciesOptions(getLang('cabinet_fiatWalletWith'))}
+              onChange={this.handleCurrencyChange("from")}
+              options={this.getCurrenciesOptions(
+                getLang("cabinet_fiatWalletWith")
+              )}
             />
             <div className="FiatMarketForm__rate">
-              {this.renderRate('from')}
+              {this.renderRate("from")}
             </div>
           </div>
         </div>
@@ -232,27 +304,31 @@ class FiatMarketForm extends React.Component {
             disabled={disabled || !(this.state.amount > 0)}
             onClick={this.handleBuy}
             state={this.props.loadingStatus}
-          >{getLang('cabinet_fiatMarketExchangeActionButton')}</UI.Button>
+          >
+            {getLang("cabinet_fiatMarketExchangeActionButton")}
+          </UI.Button>
         </div>
       </Wrapper>
-    )
+    );
   }
 }
 
-export default connect(store => ({
-
-  canExchange: store.fiat.can_exchange,
-  balances: store.fiat.balances,
-  wallets: store.fiat.wallets,
-  adaptive: store.default.adaptive,
-  currencies: store.cabinet.currencies,
-  rate: store.fiat.rate,
-  rateUpdateTime: store.fiat.rateUpdateTime,
-  exchangeFee: store.fiat.exchange_fee,
-  rateStatus: store.fiat.loadingStatus.rate,
-  loadingStatus: store.fiat.loadingStatus.marketForm,
-  translator: store.settings.translator
-}),{
-  exchange: actions.exchange,
-  getRate: actions.getRate
-})(FiatMarketForm);
+export default connect(
+  store => ({
+    canExchange: store.fiat.can_exchange,
+    balances: store.fiat.balances,
+    wallets: store.fiat.wallets,
+    adaptive: store.default.adaptive,
+    currencies: store.cabinet.currencies,
+    rate: store.fiat.rate,
+    rateUpdateTime: store.fiat.rateUpdateTime,
+    exchangeFee: store.fiat.exchange_fee,
+    rateStatus: store.fiat.loadingStatus.rate,
+    loadingStatus: store.fiat.loadingStatus.marketForm,
+    translator: store.settings.translator
+  }),
+  {
+    exchange: actions.exchange,
+    getRate: actions.getRate
+  }
+)(FiatMarketForm);

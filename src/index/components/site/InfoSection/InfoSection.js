@@ -1,10 +1,9 @@
-import './InfoSection.less';
+import "./InfoSection.less";
 
-import React from 'react';
+import React from "react";
 
-import InfoCard from '../InfoCard/InfoCard';
-import * as utils from '../../../../utils/index';
-
+import InfoCard from "../InfoCard/InfoCard";
+import * as utils from "../../../../utils/index";
 
 function InfoSection({ firstInfo, secondInfo }) {
   return (
@@ -15,7 +14,11 @@ function InfoSection({ firstInfo, secondInfo }) {
         caption={firstInfo.caption}
         icon={firstInfo.icon}
         className="InfoSection__infocard"
-        btn={<a href={`/${firstInfo.route}`} className="InfoSection__link">{utils.getLang('site_readMore')}</a>}
+        btn={
+          <a href={`/${firstInfo.route}`} className="InfoSection__link">
+            {utils.getLang("site_readMore")}
+          </a>
+        }
       />
 
       <div className="InfoSection__divider"></div>
@@ -26,10 +29,14 @@ function InfoSection({ firstInfo, secondInfo }) {
         caption={secondInfo.caption}
         icon={secondInfo.icon}
         className="InfoSection__infocard"
-        btn={<a href={`/${secondInfo.route}`} className="InfoSection__link">{utils.getLang('site_readMore')}</a>}
+        btn={
+          <a href={`/${secondInfo.route}`} className="InfoSection__link">
+            {utils.getLang("site_readMore")}
+          </a>
+        }
       />
     </div>
-  )
+  );
 }
 
 export default React.memo(InfoSection);

@@ -1,36 +1,35 @@
 /* eslint-disable */
-import './Chart.less';
+import "./Chart.less";
 
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import {classNames, dateFormat, getCssVar} from "../../../../utils/index";
-import {getCurrencyInfo} from '../../../../actions';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+import { classNames, dateFormat, getCssVar } from "../../../../utils/index";
+import { getCurrencyInfo } from "../../../../actions";
 
 export default function Chart({ series, ...props }) {
-
-  const [ hovered, setHovered ] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   const options = {
     chart: {
       height: 200,
-      backgroundColor: 'transparent',
+      backgroundColor: "transparent"
     },
     title: {
-      text: undefined,
+      text: undefined
     },
     subtitle: {
       text: undefined
     },
     xAxis: {
-      type: 'datetime',
+      type: "datetime",
       title: false,
       subtitle: false,
       gridLineWidth: 0,
       lineWidth: 0,
       minorGridLineWidth: 0,
-      lineColor: 'transparent',
+      lineColor: "transparent",
       minorTickLength: 0,
       tickLength: 0,
       labels: {
@@ -38,16 +37,16 @@ export default function Chart({ series, ...props }) {
         distance: 0,
         padding: 0,
         style: {
-          fontSize: '11px',
+          fontSize: "11px",
           fontWeight: 500,
-          lineHeight: '16px',
-          color: getCssVar('--gray', '#808080'),
-          fontFamily: 'Montserrat'
+          lineHeight: "16px",
+          color: getCssVar("--gray", "#808080"),
+          fontFamily: "Montserrat"
         }
       },
       crosshair: {
-        color: getCssVar('--gray', '#808080'),
-      },
+        color: getCssVar("--gray", "#808080")
+      }
     },
     yAxis: {
       title: false,
@@ -56,19 +55,23 @@ export default function Chart({ series, ...props }) {
       subtitle: false,
       labels: {
         enabled: false
-      },
+      }
     },
     legend: {
       useHTML: true,
       symbolPadding: 0,
       symbolWidth: 0,
       symbolRadius: 0,
-      labelFormatter: function (a) {
-        let out = `<div class="${classNames("Chart__legend_item", {visible: this.visible})}" style="background: ${getCurrencyInfo(this.name).background}">${this.name}</div>`;
+      labelFormatter: function(a) {
+        let out = `<div class="${classNames("Chart__legend_item", {
+          visible: this.visible
+        })}" style="background: ${getCurrencyInfo(this.name).background}">${
+          this.name
+        }</div>`;
         if (props.adaptive) {
           out = `<div style="margin: 20px 0">
             ${out}
-          </div>`
+          </div>`;
         }
         return out;
       },
@@ -77,7 +80,7 @@ export default function Chart({ series, ...props }) {
       x: 0,
       padding: 0,
       itemMarginTop: 16,
-      align: 'left',
+      align: "left",
       alignColumns: false,
       itemDistance: 16,
       states: {
@@ -86,14 +89,14 @@ export default function Chart({ series, ...props }) {
         }
       },
       itemStyle: {
-        opacity: 1,
+        opacity: 1
       },
       itemHoverStyle: {
         opacity: 0.7
       }
     },
     credits: {
-      enabled: false,
+      enabled: false
     },
     plotOptions: {
       column: {
@@ -104,13 +107,13 @@ export default function Chart({ series, ...props }) {
         marker: {
           enabled: props.marker,
           radius: 3,
-          symbol: 'circle',
-          fillColor: getCssVar('--primary-background', '#fff'),
+          symbol: "circle",
+          fillColor: getCssVar("--primary-background", "#fff"),
           lineColor: null,
-          lineWidth: 2,
+          lineWidth: 2
         },
         shadow: {
-          enabled: false,
+          enabled: false
         },
         states: {
           hover: {
@@ -118,7 +121,7 @@ export default function Chart({ series, ...props }) {
             halo: {
               size: 10
             }
-          },
+          }
         },
         events: {
           legendItemClick: () => {
@@ -129,17 +132,17 @@ export default function Chart({ series, ...props }) {
           mouseOver: function(e) {
             setHovered(true);
             if (props.count > 1) {
-              this.xAxis.update({ className: 'Chart__xaxis_invisible' });
+              this.xAxis.update({ className: "Chart__xaxis_invisible" });
             }
           },
-          mouseOut: function () {
+          mouseOut: function() {
             setHovered(false);
             if (props.count > 1) {
-              this.xAxis.update({ className: '' });
+              this.xAxis.update({ className: "" });
             }
           }
-        },
-      },
+        }
+      }
     },
     tooltip: {
       shared: true,
@@ -149,16 +152,22 @@ export default function Chart({ series, ...props }) {
       borderWidth: 0,
       shadow: false,
       followPointer: true,
-      backgroundColor: 'transparent',
+      backgroundColor: "transparent",
       crosshairs: true,
       hideDelay: 0,
-      formatter: function (tooltip) {
-        return [`<div class="Chart__tooltip_date">${dateFormat(this.x, 'L')}</div>`].concat(this.points.map((point) => {
-          return `<div class="Chart__tooltip" style="background: ${getCurrencyInfo(point.series.name).background}">
+      formatter: function(tooltip) {
+        return [
+          `<div class="Chart__tooltip_date">${dateFormat(this.x, "L")}</div>`
+        ].concat(
+          this.points.map(point => {
+            return `<div class="Chart__tooltip" style="background: ${
+              getCurrencyInfo(point.series.name).background
+            }">
             ${point.series.data.filter(p => p.y === point.y)[0].title}
           </div>`;
-        }));
-      },
+          })
+        );
+      }
     },
 
     series
@@ -170,7 +179,7 @@ export default function Chart({ series, ...props }) {
       highcharts={Highcharts}
       options={options}
     />
-  )
+  );
 }
 
 Chart.propTypes = {
