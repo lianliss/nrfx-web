@@ -23,14 +23,18 @@ export default function MobileAppBanner() {
             className="MobileAppBanner__button ios"
             target="_blank"
             rel="noopener noreferrer"
-          />
+          >
+            iOS app
+          </a>
 
           <a
             href={COMPANY.apps.android}
             className="MobileAppBanner__button android"
             target="_blank"
             rel="noopener noreferrer"
-          />
+          >
+            Android app
+          </a>
         </div>
       </div>
     </div>

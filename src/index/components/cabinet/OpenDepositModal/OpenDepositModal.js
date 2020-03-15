@@ -340,13 +340,13 @@ class OpenDepositModal extends React.Component {
                 );
               })}
               {selectDepositType !== "pool" && (
-                <a
-                  href="#"
+                <span
+                  className="link"
                   onClick={this.__handleClickMore.bind(this)}
                   className="OpenDepositModal__type_info__more"
                 >
                   {utils.getLang("cabinet_openNewDeposit_more")}
-                </a>
+                </span>
               )}
             </div>
           </div>
