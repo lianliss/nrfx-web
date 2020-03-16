@@ -1,46 +1,47 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
+import { diff } from "src/utils";
 import apiSchema from "../services/apiSchema";
 
 const initialState = {
   loadingStatus: {
-    default: 'loading'
+    default: "loading"
   },
-  menu: [
-    {
-      title: 'Api',
-      opened: false,
-      items: Object.keys(apiSchema).map((group) => {
-        return {
-          title: group,
-          opened: false,
-          items: !apiSchema[group].path ? Object.keys(apiSchema[group]).map(method => ({
-            title: method,
-          })) : undefined
-        }
-      })
-    }
-  ],
+  menu: {},
+  schema: {}
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
     case actionTypes.DOCUMENTATION_TOGGLE_MENU:
-      console.log(action);
-      debugger;
-      function menu(items, path) {
-        return items ? items.map(item => ({
-          ...item,
-          // TODO
-          opened: (path.length === 1 && item.title === path[0] ? !item.opened : item.opened),
-          items: menu(item.items, path.slice(1))
-        })) : undefined;
+      function toggleSchema(schema, path) {
+        const currentPath = path[0];
+        const newSchema = {
+          ...schema,
+          opened: path.length ? schema.opened : !schema.opened
+        };
+
+        if (currentPath) {
+          newSchema[currentPath] = toggleSchema(
+            schema[currentPath],
+            path.slice(1)
+          );
+        }
+
+        return newSchema;
       }
-
-    case actionTypes.DOCUMENTATION_TOGGLE_MENU:
-
       return {
         ...state,
-        menu: menu(state.menu, action.path)
+        schema: toggleSchema(state.schema, action.path)
+      };
+
+    case actionTypes.DOCUMENTATION_INIT:
+      return {
+        ...state,
+        loadingStatus: {
+          ...state.loadingStatus,
+          default: action.status
+        },
+        schema: action.schema
       };
 
     default:

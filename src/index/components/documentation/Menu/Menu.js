@@ -1,37 +1,39 @@
-import './Menu.less';
-import React from 'react';
-import { connect } from 'react-redux';
-import * as UI from 'src/ui';
-import { tootleMenu } from 'src/actions/documentation';
+import "./Menu.less";
+import React from "react";
+import { connect } from "react-redux";
+import * as UI from "src/ui";
+import { tootleMenu } from "src/actions/documentation";
 import router from "../../../../router";
 import { classNames as cn } from "src/utils";
 import * as PAGES from "../../../constants/pages";
 
 const DocumentationMenu = props => {
+  const handleApiMenuClick = path => () => {
+    props.tootleMenu(path);
+  };
+
   const renderItems = (items, path = []) => {
     return items ? (
       <div className="DocumentationMenu__list">
-        {items.map( item => {
-          const currentPath = [...path, item.title];
-          return (
-            <div className={cn("DocumentationMenu__list__item", {active: item.active})}>
-              <div
-                onClick={item.items ? () => {
-                  props.tootleMenu(currentPath)
-                } : () => {
-                  // router.navigate(
-                  //   PAGES.DOCUMENTATION_API_GROUP_METHOD,{
-                  //     group: currentPath[0],
-                  //     method: currentPath[1]
-                  //   }
-                  // );
-                }}
-                className={cn("DocumentationMenu__list__item__title", { active: item.opened })}
-              >{item.title}</div>
-              { item.opened && renderItems(item.items, currentPath) }
-            </div>
-          )
-        })}
+        {Object.keys(items)
+          .filter(i => i !== "opened")
+          .map(item => {
+            const currentPath = [...path, item];
+            return (
+              <div className={cn("DocumentationMenu__list__item")}>
+                <div
+                  className={cn("DocumentationMenu__list__item__title")}
+                  onClick={handleApiMenuClick(currentPath)}
+                >
+                  {item}
+                </div>
+                {items[item] &&
+                  items[item].path === undefined &&
+                  items[item].opened &&
+                  renderItems(items[item], currentPath)}
+              </div>
+            );
+          })}
       </div>
     ) : null;
   };
@@ -42,13 +44,29 @@ const DocumentationMenu = props => {
         <span>Edit mode</span>
         <UI.Switch on={true} />
       </div>
-      {renderItems(props.items)}
+      <div className="DocumentationMenu__list">
+        {["Page", "Documentation"].map(item => (
+          <div className={cn("DocumentationMenu__list__item")}>
+            <div className={cn("DocumentationMenu__list__item__title")}>
+              {item}
+            </div>
+          </div>
+        ))}
+        <div className={cn("DocumentationMenu__list__item")}>
+          <div className={cn("DocumentationMenu__list__item__title")}>API</div>
+          {renderItems(props.schema)}
+        </div>
+      </div>
     </div>
   );
-}
+};
 
-export default connect(state => ({
-  items: state.documentation.menu
-}), {
-  tootleMenu
-})(DocumentationMenu);
+export default connect(
+  state => ({
+    items: state.documentation.menu,
+    schema: state.documentation.schema
+  }),
+  {
+    tootleMenu
+  }
+)(DocumentationMenu);

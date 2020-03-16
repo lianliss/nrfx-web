@@ -122,6 +122,12 @@ export function useInterval(callback, delay) {
   }, [delay]);
 }
 
+export function diff(a1, a2) {
+  return a1
+    .filter(i => !a2.includes(i))
+    .concat(a2.filter(i => !a1.includes(i)));
+}
+
 export const formatNumber = (
   num,
   minimumFractionDigits = 2,
