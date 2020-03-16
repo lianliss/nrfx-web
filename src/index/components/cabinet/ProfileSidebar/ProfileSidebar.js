@@ -1,15 +1,15 @@
-import './ProfileSidebar.less';
+import "./ProfileSidebar.less";
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import SVG from 'react-inlinesvg';
-import { BaseLink } from 'react-router5';
-import { connect } from 'react-redux';
+import React from "react";
+import PropTypes from "prop-types";
+import SVG from "react-inlinesvg";
+import { BaseLink } from "react-router5";
+import { connect } from "react-redux";
 
-import { classNames, makeModalParams } from '../../../../utils';
-import router from '../../../../router';
+import { classNames, makeModalParams } from "../../../../utils";
+import router from "../../../../router";
 import Footer from "../Footer/Footer";
-import ProfileUser from '../ProfileUser/ProfileUser';
+import ProfileUser from "../ProfileUser/ProfileUser";
 
 class ProfileSidebar extends React.Component {
   render() {
@@ -23,54 +23,63 @@ class ProfileSidebar extends React.Component {
     //   default: break;
     // }
 
-    return <div className="ProfileSidebar">
-      <div className="ProfileSidebar__top">
-        <ProfileUser />
-        <div className="ProfileSidebar__menu">
-          {this.__getBackButton()}
-          {this.props.sidebarOptions && this.props.sidebarOptions.map(child => {
-            if (!React.isValidElement(child)) {
-              return child;
-            }
-            return React.cloneElement(child, {
-              isActive: this.section === child.props.section && !!child.props.section,
-              key: Math.random()
-            });
-          })}
+    return (
+      <div className="ProfileSidebar">
+        <div className="ProfileSidebar__top">
+          <ProfileUser />
+          <div className="ProfileSidebar__menu">
+            {this.__getBackButton()}
+            {this.props.sidebarOptions &&
+              this.props.sidebarOptions.map(child => {
+                if (!React.isValidElement(child)) {
+                  return child;
+                }
+                return React.cloneElement(child, {
+                  isActive:
+                    this.section === child.props.section &&
+                    !!child.props.section,
+                  key: Math.random()
+                });
+              })}
+          </div>
         </div>
+        <Footer className="ProfileSidebar__footer" />
       </div>
-      <Footer className="ProfileSidebar__footer" />
-    </div>
+    );
   }
 
   __getBackButton = () => {
     if (!this.section || !this.appName) {
-      return '';
+      return "";
     }
 
-    const routeName = this.section ? window.location.pathname.substr(1) : 'profile';
+    const routeName = this.section
+      ? window.location.pathname.substr(1)
+      : "profile";
 
-    return <BaseLink
-      router={router}
-      routeName={routeName}
-      className="ProfileSidebar__menu__item ProfileSidebar__menu__item_passive"
-      activeClassName="_a"
-    >
-      <SVG src={require('../../../../asset/cabinet/angle_left.svg')} />
-      {this.section ? this.appName : 'Profile'}
-    </BaseLink>
-  }
+    return (
+      <BaseLink
+        router={router}
+        routeName={routeName}
+        className="ProfileSidebar__menu__item ProfileSidebar__menu__item_passive"
+        activeClassName="_a"
+      >
+        <SVG src={require("../../../../asset/cabinet/angle_left.svg")} />
+        {this.section ? this.appName : "Profile"}
+      </BaseLink>
+    );
+  };
 }
 
 ProfileSidebar.defaultProps = {
   appName: null,
   section: null,
-  role: '',
-  verification: '',
+  role: "",
+  verification: "",
   user: {
-    photo_url: '',
-    first_name: '',
-    last_name: '',
+    photo_url: "",
+    first_name: "",
+    last_name: ""
   }
 };
 
@@ -126,9 +135,18 @@ ProfileSidebar.propTypes = {
   items: PropTypes.node
 };
 
-export function ProfileSidebarItem({ icon = null, label, onClick, section, modal, baselink, active, hide = false}) {
+export function ProfileSidebarItem({
+  icon = null,
+  label,
+  onClick,
+  section,
+  modal,
+  baselink,
+  active,
+  hide = false
+}) {
   const isLink = section || modal || baselink;
-  const Component = isLink ? BaseLink : 'div';
+  const Component = isLink ? BaseLink : "div";
   const Icon = () => icon;
 
   let params = {};
@@ -136,13 +154,13 @@ export function ProfileSidebarItem({ icon = null, label, onClick, section, modal
   if (isLink) {
     params.routeName = router.getState().name;
     params.router = router;
-    params.activeClassName = 'active';
+    params.activeClassName = "active";
     params.ignoreQueryParams = false;
     params.activeStrict = true;
   }
 
   if (section) {
-    params.routeParams = {section};
+    params.routeParams = { section };
   } else if (modal) {
     params.routeParams = makeModalParams(modal);
   }
@@ -154,7 +172,7 @@ export function ProfileSidebarItem({ icon = null, label, onClick, section, modal
   return (
     <Component
       className={classNames({
-        ProfileSidebar__menu__item: true,
+        ProfileSidebar__menu__item: true
       })}
       onClick={onClick}
       {...params}
@@ -176,5 +194,5 @@ ProfileSidebarItem.propTypes = {
 };
 
 export default connect(state => ({
-  profile: state.default.profile,
+  profile: state.default.profile
 }))(ProfileSidebar);

@@ -1,17 +1,17 @@
-import './MenuScreen.less';
+import "./MenuScreen.less";
 //
-import React from 'react';
-import SVG from 'react-inlinesvg';
-import {BaseLink} from 'react-router5';
-import { connect } from 'react-redux';
+import React from "react";
+import SVG from "react-inlinesvg";
+import { BaseLink } from "react-router5";
+import { connect } from "react-redux";
 //
-import router from '../../../../../router';
-import CabinetBaseScreen from '../../CabinetBaseScreen/CabinetBaseScreen';
-import * as PAGES from '../../../../constants/pages';
-import * as utils from '../../../../../utils';
-import * as auth from '../../../../../actions/auth';
-import * as actions from '../../../../../actions';
-import ContentBox from 'src/ui/components/ContentBox/ContentBox'
+import router from "../../../../../router";
+import CabinetBaseScreen from "../../CabinetBaseScreen/CabinetBaseScreen";
+import * as PAGES from "../../../../constants/pages";
+import * as utils from "../../../../../utils";
+import * as auth from "../../../../../actions/auth";
+import * as actions from "../../../../../actions";
+import ContentBox from "src/ui/components/ContentBox/ContentBox";
 
 class MenuScreen extends CabinetBaseScreen {
   componentDidMount() {
@@ -28,14 +28,16 @@ class MenuScreen extends CabinetBaseScreen {
     return (
       <div className="Menu">
         <ContentBox className="Menu__section">
-          <div className="Menu__section__title">{utils.getLang('cabinet_header_settings')}</div>
+          <div className="Menu__section__title">
+            {utils.getLang("cabinet_header_settings")}
+          </div>
           <BaseLink
             router={router}
             routeName={PAGES.SETTINGS}
             className="Menu__section__item"
             activeClassName="active"
           >
-            <SVG src={require('../../../../../asset/24px/id-badge.svg')} />
+            <SVG src={require("../../../../../asset/24px/id-badge.svg")} />
             <span>{utils.getLang("cabinet_settingsMenuPersonal")}</span>
           </BaseLink>
           <BaseLink
@@ -45,7 +47,7 @@ class MenuScreen extends CabinetBaseScreen {
             className="Menu__section__item"
             activeClassName="active"
           >
-            <SVG src={require('../../../../../asset/24px/shield.svg')} />
+            <SVG src={require("../../../../../asset/24px/shield.svg")} />
             <span>{utils.getLang("global_security")}</span>
           </BaseLink>
           <BaseLink
@@ -55,7 +57,7 @@ class MenuScreen extends CabinetBaseScreen {
             className="Menu__section__item"
             activeClassName="active"
           >
-            <SVG src={require('../../../../../asset/24px/key.svg')} />
+            <SVG src={require("../../../../../asset/24px/key.svg")} />
             <span>{utils.getLang("cabinet_apiKey")}</span>
           </BaseLink>
         </ContentBox>
@@ -64,8 +66,13 @@ class MenuScreen extends CabinetBaseScreen {
             onClick={this.__handleChangeLanguage}
             className="Menu__section__item"
           >
-            <SVG className={"Menu__section__item__flag"} src={require(`../../../../../asset/site/lang-flags/${lang.value}.svg`)} />
-            <span>{lang.title} {lang.value.toUpperCase()}</span>
+            <SVG
+              className={"Menu__section__item__flag"}
+              src={require(`../../../../../asset/site/lang-flags/${lang.value}.svg`)}
+            />
+            <span>
+              {lang.title} {lang.value.toUpperCase()}
+            </span>
           </div>
           {/*<div*/}
           {/*  onClick={this.__handleToggleTheme}*/}
@@ -84,12 +91,11 @@ class MenuScreen extends CabinetBaseScreen {
             className="Menu__section__item"
             activeClassName="active"
           >
-            <SVG src={require('../../../../../asset/24px/exit.svg')} />
+            <SVG src={require("../../../../../asset/24px/exit.svg")} />
             <span>{utils.getLang("cabinet_header_exit")}</span>
           </BaseLink>
         </ContentBox>
       </div>
-
     );
   }
 
@@ -98,14 +104,17 @@ class MenuScreen extends CabinetBaseScreen {
   };
 
   __handleChangeLanguage = () => {
-    actions.openModal('language');
+    actions.openModal("language");
   };
 }
 
-export default connect(state => ({
-  adaptive: state.default.adaptive,
-  langList: state.default.langList,
-  theme: state.default.theme
-}), {
-  setTitle: actions.setTitle
-})(MenuScreen);
+export default connect(
+  state => ({
+    adaptive: state.default.adaptive,
+    langList: state.default.langList,
+    theme: state.default.theme
+  }),
+  {
+    setTitle: actions.setTitle
+  }
+)(MenuScreen);

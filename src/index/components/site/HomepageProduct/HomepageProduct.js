@@ -1,12 +1,11 @@
-import './HomepageProduct.less';
+import "./HomepageProduct.less";
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import TitleWithBg from '../TitleWithBg/TitleWithBg';
-import * as utils from '../../../../utils';
-import * as UI from '../../../../ui';
-
+import TitleWithBg from "../TitleWithBg/TitleWithBg";
+import * as utils from "../../../../utils";
+import * as UI from "../../../../ui";
 
 export default function HomepageProduct(props) {
   const className = utils.classNames({
@@ -23,12 +22,15 @@ export default function HomepageProduct(props) {
     <div className={className}>
       <div className={iconClassName} />
       <div className="HomepageProduct__cont">
-
         <TitleWithBg title={props.title} bgTitle={props.bgTitle} />
 
         <ul className="HomepageProduct__caption">
-          {React.Children.map(props.children, (child) => {
-            return <li><span>{child}</span></li>;
+          {React.Children.map(props.children, child => {
+            return (
+              <li>
+                <span>{child}</span>
+              </li>
+            );
           })}
         </ul>
 
@@ -38,12 +40,12 @@ export default function HomepageProduct(props) {
             rounded
             afterContent={<div className="HomepageProduct__button_arrow" />}
           >
-            {utils.getLang('site_readMore')}
+            {utils.getLang("site_readMore")}
           </UI.Button>
         </a>
       </div>
     </div>
-  )
+  );
 }
 
 HomepageProduct.propTypes = {

@@ -1,7 +1,6 @@
 @standard-height: 420px;
 @curly-height: 620px;
 
-
 .RegisterBanner {
   height: @standard-height;
   display: flex;
@@ -16,8 +15,8 @@
   overflow: hidden;
 
   &:after {
-    content: '';
-    background: url('asset/curly_register_bg.svg') no-repeat center/contain;
+    content: "";
+    background: url("asset/curly_register_bg.svg") no-repeat center/contain;
     width: 3400px;
     height: @curly-height;
     top: 0;
@@ -28,7 +27,10 @@
   }
 
   .RegisterBanner__content {
-    @media (min-width: 1341px) { width: 1340px; margin: 0 auto; }
+    @media (min-width: 1341px) {
+      width: 1340px;
+      margin: 0 auto;
+    }
   }
 }
 
@@ -97,7 +99,6 @@
   }
 }
 
-
 /*
 .active {
 
@@ -122,7 +123,6 @@
 
 */
 
-
 @media (min-width: 769px) {
   .active {
     .RegisterBanner__form {
@@ -134,7 +134,7 @@
       }
 
       .RegisterBanner__form__button {
-        background: linear-gradient(52.85deg, #FFC75D 21.44%, #FFA363 76.19%);
+        background: linear-gradient(52.85deg, #ffc75d 21.44%, #ffa363 76.19%);
         border: 2px solid var(--primary-background);
         box-sizing: border-box;
         border-radius: 33px;
@@ -191,7 +191,6 @@
 
   .active {
     .RegisterBanner__form {
-
       .RegisterBanner__form__input {
         background: var(--primary-background);
         color: var(--black);

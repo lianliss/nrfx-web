@@ -1,20 +1,19 @@
-import './TitleWithBg.less';
+import "./TitleWithBg.less";
 
-import React from 'react';
+import React from "react";
 
-import { classNames } from '../../../../utils';
-
+import { classNames } from "../../../../utils";
 
 function TitleWithBg({ title, bgTitle, bgTitleUppercase, darkBg, centered }) {
   const className = classNames({
     TitleWithBg: true,
-    centered,
+    centered
   });
 
   const bgClassName = classNames({
     TitleWithBg__title__bg: true,
     bgTitleUppercase,
-    darkBg,
+    darkBg
   });
 
   return (
@@ -22,7 +21,7 @@ function TitleWithBg({ title, bgTitle, bgTitleUppercase, darkBg, centered }) {
       {title}
       <div className={bgClassName}>{bgTitle}</div>
     </div>
-  )
-};
+  );
+}
 
 export default React.memo(TitleWithBg);

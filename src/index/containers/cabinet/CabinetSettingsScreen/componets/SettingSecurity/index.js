@@ -1,22 +1,21 @@
-import './SettingSecurity.less';
+import "./SettingSecurity.less";
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
 import * as actions from "../../../../../../actions/index";
-import * as settingsActions from '../../../../../../actions/cabinet/settings';
+import * as settingsActions from "../../../../../../actions/cabinet/settings";
 import * as utils from "../../../../../../utils";
-import * as UI from '../../../../../../ui';
-import * as toastsActions from '../../../../../../actions/toasts';
-import {openModal} from '../../../../../../actions/index';
+import * as UI from "../../../../../../ui";
+import * as toastsActions from "../../../../../../actions/toasts";
+import { openModal } from "../../../../../../actions/index";
 
 function SettingSecurity(props) {
   const { user } = props;
 
   const __handleChangePassword = () => {
-
     if (user.new_password && user.new_password.length < 6) {
-      props.toastPush(utils.getLang('global_passwordMustBe'), "error");
+      props.toastPush(utils.getLang("global_passwordMustBe"), "error");
       return false;
     }
 
@@ -25,26 +24,31 @@ function SettingSecurity(props) {
       user.re_password &&
       user.new_password !== user.re_password
     ) {
-      props.toastPush(utils.getLang('global_passwordsMustBeSame'), "error");
+      props.toastPush(utils.getLang("global_passwordsMustBeSame"), "error");
       return false;
     }
 
     actions.gaCode().then(code => {
-      settingsActions.changeNewPassword({
-        old_password: props.user.old_password,
-        password: props.user.new_password,
-        ga_code: code
-      }).then(() => {
-        props.toastPush(utils.getLang("cabinet_passwordUpdateSuccess"), "success");
-        props.setUserFieldValue({field: 'old_password', value: ""});
-        props.setUserFieldValue({field: 'new_password', value: ""});
-        props.setUserFieldValue({field: 're_password', value: ""});
-      }).catch(err => {
-        props.toastPush(err.message, "error");
-      });
-    })
-  }
-
+      settingsActions
+        .changeNewPassword({
+          old_password: props.user.old_password,
+          password: props.user.new_password,
+          ga_code: code
+        })
+        .then(() => {
+          props.toastPush(
+            utils.getLang("cabinet_passwordUpdateSuccess"),
+            "success"
+          );
+          props.setUserFieldValue({ field: "old_password", value: "" });
+          props.setUserFieldValue({ field: "new_password", value: "" });
+          props.setUserFieldValue({ field: "re_password", value: "" });
+        })
+        .catch(err => {
+          props.toastPush(err.message, "error");
+        });
+    });
+  };
 
   return (
     <>
@@ -59,7 +63,9 @@ function SettingSecurity(props) {
                 type="password"
                 placeholder={utils.getLang("cabinet_oldPassword")}
                 value={user.old_password}
-                onTextChange={(value) => props.setUserFieldValue({field: 'old_password', value})}
+                onTextChange={value =>
+                  props.setUserFieldValue({ field: "old_password", value })
+                }
               />
             </div>
             <div className="CabinetSettingsScreen__input_field">
@@ -67,7 +73,9 @@ function SettingSecurity(props) {
                 type="password"
                 placeholder={utils.getLang("cabinet_newPassword")}
                 value={user.new_password}
-                onTextChange={(value) => props.setUserFieldValue({field: 'new_password', value})}
+                onTextChange={value =>
+                  props.setUserFieldValue({ field: "new_password", value })
+                }
               />
             </div>
             <div className="CabinetSettingsScreen__input_field">
@@ -75,14 +83,18 @@ function SettingSecurity(props) {
                 type="password"
                 placeholder={utils.getLang("cabinet_reEnterNewPassword")}
                 value={user.re_password}
-                onTextChange={(value) => props.setUserFieldValue({field: 're_password', value})}
+                onTextChange={value =>
+                  props.setUserFieldValue({ field: "re_password", value })
+                }
               />
             </div>
           </div>
           <div className="CabinetSettingsScreen__form right">
             <UI.Button
-              disabled={!user.old_password || !user.new_password || !user.re_password}
-              type={'outline'}
+              disabled={
+                !user.old_password || !user.new_password || !user.re_password
+              }
+              type={"outline"}
               onClick={__handleChangePassword}
             >
               {utils.getLang("cabinet_settingsSave")}
@@ -120,8 +132,16 @@ function SettingSecurity(props) {
         <div className="CabinetSettingsScreen__header">
           {utils.getLang("cabinet_secretKey")}
         </div>
-        <UI.Button onClick={() => {actions.openModal(props.hasSecretKey ? 'secret_key_info' : 'secret_key')}}>
-          {props.hasSecretKey ? utils.getLang("global_update") : utils.getLang("cabinet_setupSecretKey")}
+        <UI.Button
+          onClick={() => {
+            actions.openModal(
+              props.hasSecretKey ? "secret_key_info" : "secret_key"
+            );
+          }}
+        >
+          {props.hasSecretKey
+            ? utils.getLang("global_update")
+            : utils.getLang("cabinet_setupSecretKey")}
         </UI.Button>
       </UI.ContentBox>
 
@@ -130,25 +150,31 @@ function SettingSecurity(props) {
           {utils.getLang("cabinet_settings2FA")}
         </div>
 
-        <UI.Switch on={props.profile.ga_enabled} disabled={props.profile.ga_enabled} onChange={() => {
-          openModal('google_code');
-        }} label={utils.getLang('global_ga')} />
+        <UI.Switch
+          on={props.profile.ga_enabled}
+          disabled={props.profile.ga_enabled}
+          onChange={() => {
+            openModal("google_code");
+          }}
+          label={utils.getLang("global_ga")}
+        />
       </UI.ContentBox>
     </>
-  )
+  );
 }
 
-
-
-export default connect(state => ({
-  ...state.settings,
-  profile: state.default.profile,
-  adaptive: state.default.adaptive,
-  translator: state.settings.translator,
-  hasSecretKey: state.default.profile.has_secret_key
-}), {
-  setTitle: actions.setTitle,
-  loadSettings: settingsActions.loadSettings,
-  setUserFieldValue: settingsActions.setUserFieldValue,
-  toastPush: toastsActions.toastPush
-})(SettingSecurity);
+export default connect(
+  state => ({
+    ...state.settings,
+    profile: state.default.profile,
+    adaptive: state.default.adaptive,
+    translator: state.settings.translator,
+    hasSecretKey: state.default.profile.has_secret_key
+  }),
+  {
+    setTitle: actions.setTitle,
+    loadSettings: settingsActions.loadSettings,
+    setUserFieldValue: settingsActions.setUserFieldValue,
+    toastPush: toastsActions.toastPush
+  }
+)(SettingSecurity);

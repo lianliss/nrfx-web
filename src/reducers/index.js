@@ -1,35 +1,37 @@
-import * as actionTypes from '../actions/actionTypes';
-import initGetParams from '../services/initialGetParams';
-import * as storage from '../services/storage';
+import * as actionTypes from "../actions/actionTypes";
+import initGetParams from "../services/initialGetParams";
+import * as storage from "../services/storage";
 
 const initialState = {
   page: null,
   translations: {},
-  theme: storage.getItem('theme') || 'light',
+  theme: storage.getItem("theme") || "light",
   cabinet: true, // HACK
   auth: {},
   profile: {
-    pending: false,
+    pending: false
   },
   currentLang: null,
   langList: [],
   adaptive: false,
   title: "Bitcoinbot",
   static: {
-    status: 'loading'
+    status: "loading"
   },
   modals: [],
   registration: {
-    email: '',
-    referrer: '',
-    refParam: initGetParams.params.hasOwnProperty('ref') ? initGetParams.params.ref : null
+    email: "",
+    referrer: "",
+    refParam: initGetParams.params.hasOwnProperty("ref")
+      ? initGetParams.params.ref
+      : null
   }
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
     case actionTypes.NAVIGATE:
-      return Object.assign({}, state, {page: action.to.name});
+      return Object.assign({}, state, { page: action.to.name });
 
     case actionTypes.SET_LANG: {
       return {
@@ -46,12 +48,12 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.SET_CURRENT_LANG: {
       return {
         ...state,
-        currentLang: action.currentLang,
+        currentLang: action.currentLang
       };
     }
 
     case actionTypes.AUTH: {
-      return Object.assign({}, state, {auth: action.auth});
+      return Object.assign({}, state, { auth: action.auth });
     }
 
     case actionTypes.PROFILE_SET_GA_SUCCESS: {
@@ -81,13 +83,13 @@ export default function reduce(state = initialState, action = {}) {
           ...state.profile,
           pending: action.value
         }
-      }
+      };
     }
     case actionTypes.PROFILE: {
       return {
         ...state,
         profile: action.props
-      }
+      };
     }
 
     case actionTypes.PUSH_MODAL: {
@@ -108,7 +110,7 @@ export default function reduce(state = initialState, action = {}) {
         profile: {
           ...state.profile,
           user: false
-        },
+        }
       };
     }
 
@@ -116,28 +118,29 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         adaptive: action.adaptive
-      }
+      };
     }
 
     case actionTypes.SET_TITLE: {
       return {
         ...state,
         title: action.title
-      }
+      };
     }
 
     case actionTypes.SET_THEME: {
       return {
         ...state,
         theme: action.theme
-      }
+      };
     }
 
-    case actionTypes.SET_CABINET: { // HACK
+    case actionTypes.SET_CABINET: {
+      // HACK
       return {
         ...state,
         cabinet: action.value
-      }
+      };
     }
 
     case actionTypes.SET_USER_NAME: {
@@ -152,7 +155,7 @@ export default function reduce(state = initialState, action = {}) {
             last_name
           }
         }
-      }
+      };
     }
 
     case actionTypes.REGISTRATION_SET_VALUE: {
@@ -162,14 +165,17 @@ export default function reduce(state = initialState, action = {}) {
           ...state.registration,
           [action.property]: action.value
         }
-      }
+      };
     }
 
     case actionTypes.PROFILE_SET_VERIFICATION_STATUS: {
-      return { ...state, profile: {
-        ...state.profile,
-        verification: action.status
-      }}
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          verification: action.status
+        }
+      };
     }
 
     case actionTypes.SAVE_TRANSLATOR: {
@@ -182,9 +188,10 @@ export default function reduce(state = initialState, action = {}) {
             [action.key]: action.value
           }
         }
-      }
+      };
     }
 
-    default: return state;
+    default:
+      return state;
   }
 }

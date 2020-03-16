@@ -1,4 +1,5 @@
-.ApiKey .ContentBox__content, .ApiKey__Item .ContentBox__content {
+.ApiKey .ContentBox__content,
+.ApiKey__Item .ContentBox__content {
   padding: 40px 40px 48px;
 }
 
@@ -16,7 +17,7 @@
 .ApiCreateKey__form {
   display: flex;
   margin-top: 16px;
-  .Button  {
+  .Button {
     margin-left: 16px;
   }
 }
@@ -24,14 +25,14 @@
 .ApiKey__Item {
   margin-bottom: var(--gap-size);
 
-  .ApiKey__block{
+  .ApiKey__block {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 24px;
   }
-  .ApiKey__buttons .Button{
+  .ApiKey__buttons .Button {
     margin-left: 8px;
   }
 }
@@ -50,15 +51,19 @@
   margin-right: 9px;
 }
 
-.ApiKey__key, .ApiKey__secret, .ApiKey__restrictions {
+.ApiKey__key,
+.ApiKey__secret,
+.ApiKey__restrictions {
   margin-bottom: 24px;
 }
 
-.ApiKey__key, .ApiKey__secret {
+.ApiKey__key,
+.ApiKey__secret {
   cursor: pointer;
 }
 
-.ApiKey__text, .CheckBox__label {
+.ApiKey__text,
+.CheckBox__label {
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -67,7 +72,7 @@
 }
 
 .ApiKey__restrictions {
-  .CheckBox{
+  .CheckBox {
     display: inline-flex;
     margin-right: 25px;
   }
@@ -92,11 +97,11 @@
   .ApiKey__ipAddAddress {
     margin-top: 30px;
     width: 344px;
-    .Input__indicator{
+    .Input__indicator {
       cursor: pointer;
       .svg_basket {
         margin-top: 5px;
-        opacity: .6;
+        opacity: 0.6;
       }
       .svg_basket:hover {
         opacity: 1;
@@ -115,7 +120,7 @@
 
 .ApiKey__saveButton {
   text-align: center;
-  margin-top: 40px
+  margin-top: 40px;
 }
 
 .adaptive .ApiKey {
@@ -131,7 +136,8 @@
 }
 
 .adaptive {
-  .ApiKey .ContentBox__content, .ApiKey__Item .ContentBox__content {
+  .ApiKey .ContentBox__content,
+  .ApiKey__Item .ContentBox__content {
     padding: 16px;
   }
 }

@@ -58,11 +58,11 @@
   }
 
   &.forCabinet {
-    background: linear-gradient(47.71deg, #FFC75D 21.44%, #FFA363 76.19%);
+    background: linear-gradient(47.71deg, #ffc75d 21.44%, #ffa363 76.19%);
   }
 
   &:after {
-    content: '';
+    content: "";
     background: inherit;
     opacity: 0;
     position: absolute;
@@ -78,7 +78,7 @@
   &.outline,
   &.negative_outline {
     &::before {
-      content: '';
+      content: "";
       background: var(--primary-background);
       position: absolute;
       background-clip: padding-box;
@@ -90,8 +90,8 @@
       border-radius: inherit;
     }
 
-    &:hover, &:active {
-
+    &:hover,
+    &:active {
       &::before {
         opacity: 0;
       }
@@ -106,7 +106,8 @@
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
 
     &.ultra_small {
-      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.15), 0px 2px 4px rgba(0, 0, 0, 0.08);
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.15),
+        0px 2px 4px rgba(0, 0, 0, 0.08);
     }
   }
 
@@ -194,8 +195,9 @@
       background: var(--red);
     }
 
-    &:hover, &:active {
-      opacity: .8;
+    &:hover,
+    &:active {
+      opacity: 0.8;
       color: var(--primary-background);
     }
   }
@@ -233,12 +235,12 @@
   z-index: 5;
 
   &::before {
-    content: '';
+    content: "";
     height: inherit;
     width: inherit;
     display: block;
     filter: invert(1);
-    background: url('../../asset/spinner.svg');
+    background: url("../../asset/spinner.svg");
     animation: Button__loader_anim 1s infinite linear;
   }
 }
@@ -306,13 +308,14 @@
   position: relative;
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../../asset/watch_button_icon_28.svg') no-repeat center/contain;
+    background: url("../../asset/watch_button_icon_28.svg") no-repeat
+      center/contain;
   }
 }
 
@@ -326,7 +329,6 @@
 .buttonFontSizeStyle {
   font-size: 15px !important;
 }
-
 
 .ButtonWrapper {
   display: flex;
@@ -344,9 +346,15 @@
     }
   }
 
-  &.left { justify-content: flex-start }
-  &.right { justify-content: flex-end }
-  &.center { justify-content: center }
+  &.left {
+    justify-content: flex-start;
+  }
+  &.right {
+    justify-content: flex-end;
+  }
+  &.center {
+    justify-content: center;
+  }
   &.fill .Button {
     flex: 1;
   }

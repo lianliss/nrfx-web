@@ -6,16 +6,20 @@ export function open(url) {
   const top = screen.height / 2 - height / 2;
 
   return new Promise((resolve, reject) => {
-    const ref = window.open(url, '_blank',
+    const ref = window.open(
+      url,
+      "_blank",
       [
-        ['toolbar', 'yes'],
-        ['scrollbars', 'yes'],
-        ['resizable', 'yes'],
-        ['top', top],
-        ['left', left],
-        ['width', width],
-        ['height', height],
-      ].map(i => i.join('=')).join(',')
+        ["toolbar", "yes"],
+        ["scrollbars", "yes"],
+        ["resizable", "yes"],
+        ["top", top],
+        ["left", left],
+        ["width", width],
+        ["height", height]
+      ]
+        .map(i => i.join("="))
+        .join(",")
     );
 
     if (!ref) {
@@ -32,7 +36,7 @@ export function open(url) {
 
       try {
         if (ref.window.location.origin === window.location.origin) {
-          if (ref.window.location.pathname.split('/').pop() === 'success') {
+          if (ref.window.location.pathname.split("/").pop() === "success") {
             ref.close();
             clearInterval(interval);
             resolve();

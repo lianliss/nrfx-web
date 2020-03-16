@@ -1,12 +1,14 @@
-import './Paging.less';
+import "./Paging.less";
 
-import React from 'react';
+import React from "react";
 
 export default props => {
-  return ( <div className="Paging">
-    <div className="Paging__total_count">
-      Total count: <b>{props.totalCount}</b>
+  return (
+    <div className="Paging">
+      <div className="Paging__total_count">
+        Total count: <b>{props.totalCount}</b>
+      </div>
+      {props.children}
     </div>
-    {props.children}
-  </div> );
-}
+  );
+};

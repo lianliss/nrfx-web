@@ -1,17 +1,17 @@
-import './WalletBox.less';
+import "./WalletBox.less";
 
-import React from 'react';
-import SVG from 'react-inlinesvg';
+import React from "react";
+import SVG from "react-inlinesvg";
 
-import * as utils from '../../../../utils';
-import * as actions from '../../../../actions';
-import * as UI from '../../../../ui/';
+import * as utils from "../../../../utils";
+import * as actions from "../../../../actions";
+import * as UI from "../../../../ui/";
 
 class WalletBox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.isGenerating = props.status === 'pending';
+    this.isGenerating = props.status === "pending";
     this.currencyInfo = actions.getCurrencyInfo(props.currency);
   }
 
@@ -25,34 +25,50 @@ class WalletBox extends React.Component {
     });
 
     return (
-      <div className={this.className} onClick={this.isGenerating ? () => {} : this.__onClick}>
+      <div
+        className={this.className}
+        onClick={this.isGenerating ? () => {} : this.__onClick}
+      >
         <UI.CircleIcon currency={this.currencyInfo} />
 
         <UI.ContentBox
           className="WalletBox__content"
-          style={selected ? {background: this.currencyInfo.background} : {}}
+          style={selected ? { background: this.currencyInfo.background } : {}}
         >
-          {selected
-            ? <SVG className="WalletBox__close" src={require('./asset/close.svg')} /> : ''
-          }
+          {selected ? (
+            <SVG
+              className="WalletBox__close"
+              src={require("./asset/close.svg")}
+            />
+          ) : (
+            ""
+          )}
           <h3>{utils.ucfirst(this.currencyInfo.name)}</h3>
           <p>{this.__getAmount()}</p>
         </UI.ContentBox>
 
-        {this.isGenerating
-          ? <SVG className="WalletBox__loader" src={require('../../../../asset/cabinet/loading.svg')} />
-          : null}
+        {this.isGenerating ? (
+          <SVG
+            className="WalletBox__loader"
+            src={require("../../../../asset/cabinet/loading.svg")}
+          />
+        ) : null}
       </div>
-    )
+    );
   }
 
   __getAmount = () => {
     if (this.isGenerating) {
-      return utils.getLang('cabinet_walletBox_generating');
+      return utils.getLang("cabinet_walletBox_generating");
     } else if (this.props.amount > 0 || this.props.skipEmptyLabel) {
-      return <UI.NumberFormat number={this.props.amount} currency={this.props.currency} />
+      return (
+        <UI.NumberFormat
+          number={this.props.amount}
+          currency={this.props.currency}
+        />
+      );
     } else {
-      return utils.getLang('cabinet_walletScreen_receive');
+      return utils.getLang("cabinet_walletScreen_receive");
     }
   };
 
@@ -64,7 +80,7 @@ class WalletBox extends React.Component {
     if (this.props.amount > 0 || this.props.skipEmptyLabel) {
       return this.props.onClick && this.props.onClick();
     } else {
-      return actions.openModal('receive', {
+      return actions.openModal("receive", {
         preset: utils.ucfirst(this.currencyInfo.name)
       });
     }

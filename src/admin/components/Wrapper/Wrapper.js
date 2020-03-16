@@ -1,5 +1,5 @@
-import './Wrapper.less';
-import React from 'react';
+import "./Wrapper.less";
+import React from "react";
 
 export default props => {
   return (
@@ -7,5 +7,5 @@ export default props => {
       <div className="Wrapper__title">{props.title}</div>
       <div>{props.children}</div>
     </div>
-  )
-}
+  );
+};

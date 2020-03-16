@@ -1,25 +1,25 @@
-import './TransactionModal.less';
+import "./TransactionModal.less";
 
-import React from 'react';
-import SVG from 'react-inlinesvg';
+import React from "react";
+import SVG from "react-inlinesvg";
 
-import Modal from '../../../../ui/components/Modal/Modal';
-import TransactionTable from './components/TransactionTable';
+import Modal from "../../../../ui/components/Modal/Modal";
+import TransactionTable from "./components/TransactionTable";
 
 function TransactionModal({ children, isOpen, onChange }) {
   const data = [
     {
-      key: 'From',
-      value: 'L0748c746172be088d663d8dae715f46fc2c1d14a',
+      key: "From",
+      value: "L0748c746172be088d663d8dae715f46fc2c1d14a"
     },
     {
-      key: 'To',
-      value: 'My Litecoin',
+      key: "To",
+      value: "My Litecoin"
     },
     {
-      key: 'Amount',
-      value: '700.00 LTC',
-    },
+      key: "Amount",
+      value: "700.00 LTC"
+    }
   ];
 
   return (
@@ -31,7 +31,11 @@ function TransactionModal({ children, isOpen, onChange }) {
           <TransactionTable data={data} />
 
           <div className="TransactionModal__summary">
-            <SVG src={require('../../../../asset/cabinet/send_icon.svg')} width={48} height={48} />
+            <SVG
+              src={require("../../../../asset/cabinet/send_icon.svg")}
+              width={48}
+              height={48}
+            />
             <div className="TransactionModal__summary__content">
               <h3>Total</h3>
               <h2>770 LTC</h2>
@@ -40,7 +44,7 @@ function TransactionModal({ children, isOpen, onChange }) {
         </div>
       </Modal>
     </div>
-  )
+  );
 }
 
 export default TransactionModal;

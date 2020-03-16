@@ -1,11 +1,10 @@
 // styles
-import './Search.less';
+import "./Search.less";
 // external
-import React  from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // internal
-import {classNames} from '../../utils';
-
+import { classNames } from "../../utils";
 
 function Search(props) {
   const className = classNames({
@@ -15,7 +14,7 @@ function Search(props) {
 
   return (
     <div className={className}>
-      {props.lite && <div className="Search__icon" /> }
+      {props.lite && <div className="Search__icon" />}
       <input
         type="text"
         className="Search__input"
@@ -24,7 +23,9 @@ function Search(props) {
         onChange={props.onChange}
         required
       />
-      {!props.lite && <div className="Search__button active" onClick={props.onSearch} />}
+      {!props.lite && (
+        <div className="Search__button active" onClick={props.onSearch} />
+      )}
       {!props.lite && <div className="Search__button" />}
     </div>
   );

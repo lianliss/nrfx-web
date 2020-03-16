@@ -5,40 +5,6 @@
   margin-bottom: var(--gap-size);
 }
 
-.Investments__stub {
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 90;
-  background: rgba(0, 0, 0, 0.2);
-
-  .ContentBox {
-    margin: auto;
-
-    .ContentBox__content {
-      padding: 40px;
-      text-align: center;
-      width: 400px;
-    }
-
-    .isvg {
-      display: block;
-      margin: 0 auto;
-      width: 120px;
-      height: 120px;
-    }
-
-    p {
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 24px;
-    }
-  }
-}
-
 .Investments__payments {
   margin-bottom: var(--gap-size);
 }
@@ -75,7 +41,6 @@
 
 .Investments__balances__item__rows {
   flex: 1;
-  margin-bottom: 24px;
   padding-left: 24px;
 }
 
@@ -130,7 +95,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #FFCC5C;
+  background: #ffcc5c;
   display: inline-block;
 }
 
@@ -172,8 +137,12 @@
 
 .Investment__withdrawal_table {
   &__status {
-    &.accepted { color: var(--green); }
-    &.deleted { color: var(--color-yellow); }
+    &.accepted {
+      color: var(--green);
+    }
+    &.deleted {
+      color: var(--color-yellow);
+    }
   }
 }
 
@@ -193,7 +162,8 @@
 }
 
 .disable_active_button {
-  .Button:active, .Button:after {
+  .Button:active,
+  .Button:after {
     background: transparent;
   }
 }

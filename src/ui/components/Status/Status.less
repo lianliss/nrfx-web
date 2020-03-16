@@ -7,19 +7,20 @@
     color: var(--dark-blue);
   }
 
-  &.completed {
+  &.warning {
     color: var(--text-yellow);
   }
 
-  &.online{
+  &.online,
+  &.completed {
     color: var(--green);
   }
+
   &.failed,
   &.offline,
   &.cancelled {
     color: var(--text-red);
   }
-
 
   .Status__indicator {
     font-size: 0;
@@ -30,4 +31,3 @@
     margin-right: 5px;
   }
 }
-

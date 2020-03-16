@@ -1,27 +1,29 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   loadingStatus: {
     setGa: "",
-    secretKey: "",
+    secretKey: ""
   },
   dashboard: {},
   partner: {
     balances: [],
     client_chart: false,
     clients: [],
-    level: '',
+    level: "",
     profit_chart: false
   }
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
-
     case actionTypes.PROFILE_SET_LOADING_STATUS: {
       return {
         ...state,
-        loadingStatus: { ...state.loadingStatus, [action.section]: action.status }
+        loadingStatus: {
+          ...state.loadingStatus,
+          [action.section]: action.status
+        }
       };
     }
 
@@ -46,10 +48,7 @@ export default function reduce(state = initialState, action = {}) {
           clients: {
             ...state.partner.clients,
             next: action.next,
-            items: [
-              ...state.partner.clients.items,
-              ...action.items
-            ],
+            items: [...state.partner.clients.items, ...action.items]
           }
         }
       };

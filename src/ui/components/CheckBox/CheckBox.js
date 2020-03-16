@@ -1,11 +1,11 @@
 // styles
-import './CheckBox.less';
+import "./CheckBox.less";
 // external
-import React  from 'react';
-import PropTypes from 'prop-types';
-import SVG from 'react-inlinesvg';
+import React from "react";
+import PropTypes from "prop-types";
+import SVG from "react-inlinesvg";
 // internal
-import {classNames} from '../../utils';
+import { classNames } from "../../utils";
 
 function CheckBox(props) {
   const className = classNames({
@@ -18,7 +18,7 @@ function CheckBox(props) {
     <div className={className} onClick={props.onChange}>
       <div className="CheckBox__indicator">
         <div className="CheckBox__indicator__active">
-          <SVG src={require('../../asset/check_16.svg')} />
+          <SVG src={require("../../asset/check_16.svg")} />
         </div>
       </div>
       <div className="CheckBox__label">{props.children}</div>

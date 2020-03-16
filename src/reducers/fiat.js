@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   balances: [],
@@ -12,23 +12,21 @@ const initialState = {
   withdrawalBankList: null,
   refillBankList: null,
   loadingStatus: {
-    withdrawalBankList: '',
-    refillBankList: '',
-    default: 'loading',
-    merchants: '',
-    marketForm: ''
-  },
+    withdrawalBankList: "",
+    refillBankList: "",
+    default: "loading",
+    merchants: "",
+    marketForm: ""
+  }
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
-
-
     case actionTypes.FIAT_WALLETS_SET: {
       return {
         ...state,
         ...action.payload,
-        pending: false,
+        pending: false
       };
     }
 
@@ -36,9 +34,19 @@ export default function reduce(state = initialState, action = {}) {
       const { balance, wallet } = action.payload;
       return {
         ...state,
-        history: action.payload.history ? [action.payload.history, ...state.history] : state.history,
-        balances: (balance ? state.balances.map(b => b.id === balance.id ? {...b, ...balance} : b) : state.balances),
-        wallets: (wallet ? state.wallets.map(w => w.id === wallet.id ? {...w, ...wallet} : w) : state.wallets),
+        history: action.payload.history
+          ? [action.payload.history, ...state.history]
+          : state.history,
+        balances: balance
+          ? state.balances.map(b =>
+              b.id === balance.id ? { ...b, ...balance } : b
+            )
+          : state.balances,
+        wallets: wallet
+          ? state.wallets.map(w =>
+              w.id === wallet.id ? { ...w, ...wallet } : w
+            )
+          : state.wallets
       };
     }
 
@@ -84,10 +92,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.FIAT_WALLETS_APPEND_TRANSACTION: {
       return {
         ...state,
-        history: [
-          action.transaction,
-          ...state.history
-        ]
+        history: [action.transaction, ...state.history]
       };
     }
 

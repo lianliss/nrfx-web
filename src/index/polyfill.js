@@ -1,11 +1,11 @@
-import { Component } from 'react';
+import { Component } from "react";
 
-Object.defineProperty(Component.prototype, 'adaptive', {
-  get: function () {
-    if (this.props.hasOwnProperty('adaptive')) {
+Object.defineProperty(Component.prototype, "adaptive", {
+  get: function() {
+    if (this.props.hasOwnProperty("adaptive")) {
       return this.props.adaptive;
     } else {
-      return document.body.classList.contains('adaptive');
+      return document.body.classList.contains("adaptive");
     }
   }
 });
