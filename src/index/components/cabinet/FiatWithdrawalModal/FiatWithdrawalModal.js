@@ -14,7 +14,6 @@ import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import BankLogo from "../../../../ui/components/BankLogo/BankLogo";
 import Input from "../../../../ui/components/Input/Input";
 import Button, { ButtonWrapper } from "../../../../ui/components/Button/Button";
-import Message from "../../../../ui/components/Message/Message";
 import Form from "../../../../ui/components/Form/Form";
 import { getLang, isEmail } from "../../../../utils";
 
@@ -122,7 +121,7 @@ const FiatWithdrawalModal = props => {
                   </ButtonWrapper>
                 </>
               ) : (
-                <LoadingStatus status="loading" />
+                <LoadingStatus status={props.loadingStatus} />
               )}
             </>
           ) : !filled ? (

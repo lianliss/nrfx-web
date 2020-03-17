@@ -12,8 +12,8 @@ const initialState = {
   withdrawalBankList: null,
   refillBankList: null,
   loadingStatus: {
-    withdrawalBankList: "",
-    refillBankList: "",
+    withdrawalBankList: "loading",
+    refillBankList: "loading",
     default: "loading",
     merchants: "",
     marketForm: ""

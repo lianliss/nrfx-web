@@ -77,7 +77,7 @@ const WithdrawalRefillModal = props => {
               {bankList && !props.loadingStatus ? (
                 <BankList onChange={changeBank} items={bankList} />
               ) : (
-                <LoadingStatus status="loading" />
+                <LoadingStatus status={props.loadingStatus} />
               )}
               <ButtonWrapper
                 align="right"
@@ -140,7 +140,7 @@ export default connect(
       state.default.profile.user.last_name
     ].join(" "),
     adaptive: state.default.adaptive,
-    loadingStatus: state.fiat.loadingStatus.bankList,
+    loadingStatus: state.fiat.loadingStatus.refillBankList,
     withdrawalStatus: state.fiat.loadingStatus.withdrawal,
     bankList: state.fiat.refillBankList
   }),

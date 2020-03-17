@@ -439,7 +439,13 @@ const MerchantModal = props => {
         />
       );
     }
+
     if (!merchant) {
+      // HACK for one merchant
+      const merchantsArray = getAvailableMerchants(currency);
+      if (merchantsArray.length === 1) {
+        setMerchant(merchantsArray[0].name);
+      }
       return renderMerchantsList();
     } else if (invoice) {
       return renderInvoice();
