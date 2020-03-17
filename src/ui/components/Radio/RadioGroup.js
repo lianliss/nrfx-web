@@ -1,9 +1,9 @@
-import React  from 'react';
+import React from "react";
 
 function RadioGroup(props) {
   return (
     <div>
-      {React.Children.map(props.children, (child) => {
+      {React.Children.map(props.children, child => {
         if (!React.isValidElement(child)) {
           return child;
         }

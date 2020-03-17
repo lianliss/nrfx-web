@@ -1,12 +1,14 @@
-import * as storage from './storage';
+import * as storage from "./storage";
 
-const savedParams = ['ref', 'i'];
+const savedParams = ["ref", "i"];
 
-const initGetParams = ((location) => {
-  const params = {}, storageParams = {}, search = location.search.slice(1).split('&');
+const initGetParams = (location => {
+  const params = {},
+    storageParams = {},
+    search = location.search.slice(1).split("&");
 
   if (search[0] !== "") {
-    search.forEach((param) => {
+    search.forEach(param => {
       const [key, value] = param.split("=");
       params[key] = value;
 
@@ -26,11 +28,10 @@ const initGetParams = ((location) => {
   return {
     params: {
       ...storageParams,
-      ...params,
+      ...params
     },
     hash: location.hash.slice(1)
   };
-
 })(window.location);
 
 export default initGetParams;

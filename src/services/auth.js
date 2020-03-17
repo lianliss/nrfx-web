@@ -1,8 +1,8 @@
-import * as storage from './storage';
-import { INTERNAL_NOTIFICATION_KEY } from '../index/constants/internalNotifications'
+import * as storage from "./storage";
+import { INTERNAL_NOTIFICATION_KEY } from "../index/constants/internalNotifications";
 
 export function getToken() {
-  return storage.getItem('access_token');
+  return storage.getItem("access_token");
 }
 
 export function isLogged() {
@@ -10,15 +10,16 @@ export function isLogged() {
 }
 
 export function setup(token) {
-  if (isLogged()) {}
+  if (isLogged()) {
+  }
 }
 
 export function login(accessToken) {
   setup(accessToken);
-  return storage.setItem('access_token', accessToken);
+  return storage.setItem("access_token", accessToken);
 }
 
 export function logout() {
-  storage.removeItem('access_token');
+  storage.removeItem("access_token");
   storage.removeItemsByKey(INTERNAL_NOTIFICATION_KEY);
 }

@@ -1,13 +1,19 @@
 // styles
-import './Hover.less';
+import "./Hover.less";
 // external
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // internal
-import {classNames} from '../../utils';
+import { classNames } from "../../utils";
 
-export default function Hover({ bordered, children, className, tagName, onClick }) {
-  const TagName = tagName || 'div';
+export default function Hover({
+  bordered,
+  children,
+  className,
+  tagName,
+  onClick
+}) {
+  const TagName = tagName || "div";
   return (
     <TagName
       className={classNames({
@@ -19,7 +25,7 @@ export default function Hover({ bordered, children, className, tagName, onClick 
     >
       {children}
     </TagName>
-  )
+  );
 }
 
 Hover.propTypes = {

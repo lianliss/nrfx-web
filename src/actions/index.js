@@ -1,54 +1,66 @@
 // styles
 // external
 // internal
-import store from '../store';
-import router from '../router';
-import apiSchema from '../services/apiSchema';
-import * as actionTypes from './actionTypes';
-import * as api from '../services/api';
-import * as utils from '../utils';
-import * as emitter from '../services/emitter';
-import { getLang } from '../services/lang';
-import * as storage from '../services/storage';
-import * as toast from './toasts';
-import clipboardCopy from 'clipboard-copy';
+import store from "../store";
+import router from "../router";
+import apiSchema from "../services/apiSchema";
+import * as actionTypes from "./actionTypes";
+import * as api from "../services/api";
+import * as utils from "../utils";
+import * as emitter from "../services/emitter";
+import { getLang } from "../services/lang";
+import * as storage from "../services/storage";
+import * as toast from "./toasts";
+import clipboardCopy from "clipboard-copy";
 
 export function loadLang(code, toggleCurrentLang = true) {
   return new Promise((resolve, reject) => {
     const state = store.getState();
-    if ( state.default.translations[code]) {
-      toggleCurrentLang && store.dispatch({
-        type: actionTypes.SET_CURRENT_LANG,
-        currentLang: code,
-      });
+    if (state.default.translations[code]) {
+      toggleCurrentLang &&
+        store.dispatch({
+          type: actionTypes.SET_CURRENT_LANG,
+          currentLang: code
+        });
       return resolve();
     }
-    api.call(apiSchema.LangGet, { code }, {
-      apiEntry: 'https://api.narfex.com' // TODO
-    }).then(({ translations, languages }) => {
-      languages = languages.map(lang => ({
-        value: lang[0],
-        title: lang[1],
-        display: ['en', 'ru', 'id'].includes(lang[0])
-      }));
-      store.dispatch({
-        type: actionTypes.SET_LANG,
-        translations: translations,
-        currentLang: code,
-        languages
-      });
-      toggleCurrentLang && store.dispatch({
-        type: actionTypes.SET_CURRENT_LANG,
-        currentLang: code,
-      });
-      resolve();
-    }).catch((err) => reject(err));
+    api
+      .call(
+        apiSchema.LangGet,
+        { code },
+        {
+          apiEntry: "https://api.narfex.com" // TODO
+        }
+      )
+      .then(({ translations, languages }) => {
+        languages = languages.map(lang => ({
+          value: lang[0],
+          title: lang[1],
+          display: ["en", "ru", "id"].includes(lang[0])
+        }));
+        store.dispatch({
+          type: actionTypes.SET_LANG,
+          translations: translations,
+          currentLang: code,
+          languages
+        });
+        toggleCurrentLang &&
+          store.dispatch({
+            type: actionTypes.SET_CURRENT_LANG,
+            currentLang: code
+          });
+        resolve();
+      })
+      .catch(err => reject(err));
   });
 }
 
 export function getCurrentLang() {
   const { langList } = store.getState().default;
-  return langList.find(l => l.value === getLang()) || langList.find(l => l.value === 'en');
+  return (
+    langList.find(l => l.value === getLang()) ||
+    langList.find(l => l.value === "en")
+  );
 }
 
 export function getStaticPageContent(address) {
@@ -57,10 +69,13 @@ export function getStaticPageContent(address) {
 
 export function loadCurrencies() {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Wallet.CurrenciesGet).then((currencies) => {
-      store.dispatch({ type: actionTypes.SET_CURRENCIES, currencies });
-      resolve();
-    }).catch(() => reject());
+    api
+      .call(apiSchema.Wallet.CurrenciesGet)
+      .then(currencies => {
+        store.dispatch({ type: actionTypes.SET_CURRENCIES, currencies });
+        resolve();
+      })
+      .catch(() => reject());
   });
 }
 
@@ -75,7 +90,7 @@ export function getCurrencyInfo(name) {
     ...currency,
     name: utils.ucfirst(currency.name), // HACK, TODO: Форматировать имена валют на бэке
     background: `linear-gradient(45deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`
-  }
+  };
 }
 
 export function openModal(name, params = {}, props = {}, done) {
@@ -90,22 +105,22 @@ export function closeModal() {
   const { route } = store.getState().router;
   router.navigate(route.name, {
     section: route.params.section
-  })
+  });
 }
 
 export function confirm(props) {
   return new Promise((resolve, reject) => {
-    openModal('confirm', {}, props);
-    const acceptListener = emitter.addListener('confirm_accept', () => {
+    openModal("confirm", {}, props);
+    const acceptListener = emitter.addListener("confirm_accept", () => {
       emitter.removeListener(acceptListener);
       resolve();
     });
 
-    const closeListener = emitter.addListener('confirm_cancel', () => {
+    const closeListener = emitter.addListener("confirm_cancel", () => {
       emitter.removeListener(closeListener);
       reject();
     });
-  })
+  });
 }
 
 export function gaCode() {
@@ -113,20 +128,20 @@ export function gaCode() {
     const { profile } = store.getState().default;
 
     if (profile.ga_enabled) {
-      openModal('ga_code');
-      const acceptListener = emitter.addListener('ga_submit', ({code}) => {
+      openModal("ga_code");
+      const acceptListener = emitter.addListener("ga_submit", ({ code }) => {
         emitter.removeListener(acceptListener);
         resolve(code);
       });
 
-      const closeListener = emitter.addListener('ga_cancel', () => {
+      const closeListener = emitter.addListener("ga_cancel", () => {
         emitter.removeListener(closeListener);
         reject();
       });
     } else {
       resolve();
     }
-  })
+  });
 }
 
 export function setAdaptive(adaptive) {
@@ -139,17 +154,15 @@ export function setTitle(title) {
 
 export function toggleTheme() {
   const currentTheme = store.getState().default.theme;
-  const themes = [
-    'light',
-    'dark'
-  ];
+  const themes = ["light", "dark"];
 
   const theme = currentTheme === themes[0] ? themes[1] : themes[0];
-  storage.setItem('theme', theme);
+  storage.setItem("theme", theme);
   return store.dispatch({ type: actionTypes.SET_THEME, theme });
 }
 
-export function setCabinet(value) { // TODO: Hack
+export function setCabinet(value) {
+  // TODO: Hack
   return store.dispatch({ type: actionTypes.SET_CABINET, value });
 }
 
@@ -161,39 +174,43 @@ export function sendInviteLinkView(link) {
 
 export function toggleTranslator(value) {
   return dispatch => {
-    storage.setItem('translatorMode', value);
-    return dispatch({type: actionTypes.TRANSLATOR_TOGGLE, value});
-  }
-};
+    storage.setItem("translatorMode", value);
+    return dispatch({ type: actionTypes.TRANSLATOR_TOGGLE, value });
+  };
+}
 
 export function translatorSetLangCode(code) {
   return dispatch => {
-    storage.setItem('translatorLangCode', code);
-    dispatch({type: actionTypes.TRANSLATOR_SET_LANG_CODE, code});
-  }
-};
+    storage.setItem("translatorLangCode", code);
+    dispatch({ type: actionTypes.TRANSLATOR_SET_LANG_CODE, code });
+  };
+}
 
 export function saveTranslator(code, key, value) {
-  return api.call(apiSchema.LangPost, { code, key, value })
+  return api
+    .call(apiSchema.LangPost, { code, key, value })
     .then(resolve => {
-      store.dispatch({type: actionTypes.SAVE_TRANSLATOR, code, key, value});
-      toast.success(utils.getLang('cabinet_translationSuccess'));
-    }).catch((e) => {
-      toast.error(utils.getLang('cabinet_translationFail'));
+      store.dispatch({ type: actionTypes.SAVE_TRANSLATOR, code, key, value });
+      toast.success(utils.getLang("cabinet_translationSuccess"));
+    })
+    .catch(e => {
+      toast.error(utils.getLang("cabinet_translationFail"));
       throw e;
     });
 }
 
 export function copyText(text) {
-  clipboardCopy(text).then(() => {
-    toast.success(utils.getLang('global_copyText_success'));
-  }).catch(() => {
-    toast.error(utils.getLang('global_copyText_fail'));
-  });
+  clipboardCopy(text)
+    .then(() => {
+      toast.success(utils.getLang("global_copyText_success"));
+    })
+    .catch(() => {
+      toast.error(utils.getLang("global_copyText_fail"));
+    });
 }
 
 export function registrationSetValue(property, value) {
-  return (dispatch) => {
-    dispatch({type: actionTypes.REGISTRATION_SET_VALUE, property, value});
-  }
+  return dispatch => {
+    dispatch({ type: actionTypes.REGISTRATION_SET_VALUE, property, value });
+  };
 }

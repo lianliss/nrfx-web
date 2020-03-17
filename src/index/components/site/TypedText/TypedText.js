@@ -1,10 +1,10 @@
 /* eslint-disable */
 
-import './TypedText.less';
+import "./TypedText.less";
 
-import React from 'react';
-import { connect } from 'react-redux';
-import { getLang } from '../../../../utils';
+import React from "react";
+import { connect } from "react-redux";
+import { getLang } from "../../../../utils";
 
 let currentProductIndex = 0;
 
@@ -13,7 +13,7 @@ class TypedText extends React.PureComponent {
 
   state = {
     currentKey: this.props.products[0],
-    currentString: ''
+    currentString: ""
   };
 
   componentDidMount() {
@@ -28,7 +28,7 @@ class TypedText extends React.PureComponent {
 
     const currentProduct = getLang(products[currentProductIndex], true);
     const currentProductArr = currentProduct ? currentProduct.split("") : [];
-    let curString = '';
+    let curString = "";
     let currentLetter = 0;
     let int1 = setInterval(() => {
       if (!currentProductArr[currentLetter]) {
@@ -56,9 +56,9 @@ class TypedText extends React.PureComponent {
         }, 500);
         clearInterval(int);
       } else {
-        str = str.split('');
+        str = str.split("");
         str.pop();
-        str = str.join('');
+        str = str.join("");
         this.setState({ currentString: str });
       }
     }, 50);
@@ -72,10 +72,8 @@ class TypedText extends React.PureComponent {
     const { currentString, currentKey } = this.state;
 
     return (
-      <div className="TypedText">
-        {getLang(currentKey, currentString)}
-      </div>
-    )
+      <div className="TypedText">{getLang(currentKey, currentString)}</div>
+    );
   }
 }
 

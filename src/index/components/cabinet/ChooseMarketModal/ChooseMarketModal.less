@@ -34,7 +34,8 @@
     &__form {
       display: flex;
 
-      .Input, .Button {
+      .Input,
+      .Button {
         height: 40px;
       }
 
@@ -90,13 +91,13 @@
       }
     }
 
-    tr.Hover{
+    tr.Hover {
       height: 88px;
       position: relative;
 
       &::after {
         position: absolute;
-        content: '';
+        content: "";
         display: block;
         height: 1px;
         left: 0;
@@ -104,7 +105,7 @@
         box-sizing: border-box;
         margin: -1px auto 0;
         width: calc(100% - 48px);
-        background: rgba(0,0,0,.1);
+        background: rgba(0, 0, 0, 0.1);
       }
 
       &:hover + .Hover::after {
@@ -133,7 +134,6 @@
     &__filters {
       box-shadow: none;
       z-index: auto;
-
 
       &__form {
         flex-direction: column;

@@ -1,8 +1,8 @@
 // styles
 // external
 // internal
-import * as actionTypes from './actionTypes';
-import store from '../store';
+import * as actionTypes from "./actionTypes";
+import store from "../store";
 
 export function toastPush(message, type) {
   return () => push(message, type);
@@ -12,26 +12,48 @@ export function toastPush(message, type) {
 function push(message, type) {
   const id = store.getState().toasts.counter;
 
-  store.dispatch({ type: actionTypes.TOASTS_PUSH, payload: { type, message, id }});
+  const hideToast = id => {
+    setTimeout(() => {
+      const currentToast = store
+        .getState()
+        .toasts.items.find(toast => toast.id === id);
+      if (currentToast.hide) {
+        store.dispatch({ type: actionTypes.TOASTS_HIDE, id });
+        setTimeout(
+          () => store.dispatch({ type: actionTypes.TOASTS_DROP, id }),
+          2000
+        );
+      } else {
+        hideToast(id);
+      }
+    }, 3000);
+  };
 
-  setTimeout(() => store.dispatch({ type: actionTypes.TOASTS_HIDE, id }), 3000);
-  setTimeout(() => store.dispatch({ type: actionTypes.TOASTS_DROP, id }), 5000);
+  store.dispatch({
+    type: actionTypes.TOASTS_PUSH,
+    payload: { type, message, id, hide: true }
+  });
+  hideToast(id);
+}
+
+export function setHide(id, value) {
+  store.dispatch({ type: actionTypes.TOASTS_SET_HIDE, payload: { id, value } });
 }
 
 export function success(message) {
-  push(message, 'success');
+  push(message, "success");
 }
 
 export function warning(message) {
-  push(message, 'warning');
+  push(message, "warning");
 }
 
 export function error(message) {
-  push(message, 'error');
+  push(message, "error");
 }
 
 export function toastDrop(id) {
   return dispatch => {
-    dispatch({ type: actionTypes.TOASTS_DROP, id});
+    dispatch({ type: actionTypes.TOASTS_DROP, id });
   };
 }

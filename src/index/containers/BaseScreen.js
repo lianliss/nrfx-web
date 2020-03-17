@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default class BaseScreen extends React.PureComponent {
   componentDidMount() {

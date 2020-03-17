@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import Dropdown from '../../../ui/components/Dropdown/Dropdown';
-import { valueChange } from '../../../actions/admin/';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import Dropdown from "../../../ui/components/Dropdown/Dropdown";
+import { valueChange } from "../../../actions/admin/";
 const DropdownWrapper = props => {
   const value = props.values[props.id] || props.value;
 
@@ -14,9 +14,9 @@ const DropdownWrapper = props => {
         valueChange(props.id, e.value);
       }}
       placeholder={props.placeholder}
-      options={props.options.map(o => ({ title: o.label,  value: o.value }))}
+      options={props.options.map(o => ({ title: o.label, value: o.value }))}
     />
-  )
+  );
 };
 
 export default connect(state => ({

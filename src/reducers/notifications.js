@@ -1,9 +1,9 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   notifications: [],
   unreadCount: 0,
-  pending: true,
+  pending: true
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -26,7 +26,7 @@ export default function reduce(state = initialState, action = {}) {
       }
 
       return Object.assign({}, state, { notifications });
-    };
+    }
 
     case actionTypes.NOTIFICATIONS_RESTORE: {
       let notifications = Object.assign([], state.notifications);

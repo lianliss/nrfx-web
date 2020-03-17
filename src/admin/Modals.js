@@ -1,11 +1,11 @@
 // styles
 // external
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 // internal
-import router from '../router';
-import AuthModal from '../components/AuthModal/AuthModal';
-import ConfirmModal from '../index/components/cabinet/ConfirmModal/ConfirmModal';
+import router from "../router";
+import AuthModal from "../components/AuthModal/AuthModal";
+import ConfirmModal from "../index/components/cabinet/ConfirmModal/ConfirmModal";
 
 function Modals(props) {
   const routerParams = props.route.params;
@@ -16,16 +16,17 @@ function Modals(props) {
   let Component = false;
 
   switch (modal) {
-    case 'test':
-      Component = () => (<div>Test</div>);
+    case "test":
+      Component = () => <div>Test</div>;
       break;
-    case 'auth':
+    case "auth":
       Component = AuthModal;
       break;
-    case 'confirm':
+    case "confirm":
       Component = ConfirmModal;
       break;
-    default: return null;
+    default:
+      return null;
   }
 
   return (
@@ -39,7 +40,7 @@ function Modals(props) {
         const route = router.getState();
         const params = { ...route.params };
         delete params.modal;
-        router.navigate(route.name, params)
+        router.navigate(route.name, params);
       }}
     />
   );

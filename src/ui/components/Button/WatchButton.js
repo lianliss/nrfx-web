@@ -1,7 +1,7 @@
-import './Button.less';
+import "./Button.less";
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function WatchButton(props) {
   return (
@@ -13,7 +13,7 @@ function WatchButton(props) {
       <div className="WatchButton__icon" />
       <div className="WatchButton__label">{props.children}</div>
     </div>
-  )
+  );
 }
 
 WatchButton.propTypes = {

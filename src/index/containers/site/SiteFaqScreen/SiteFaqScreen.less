@@ -50,10 +50,9 @@
   letter-spacing: 0.444444px;
   color: var(--dark-gray);
   padding: 10px 0;
-  border-bottom: 2px solid #EAEAEA;
+  border-bottom: 2px solid #eaeaea;
   width: 475px;
   cursor: pointer;
-
 
   .SiteFaqScreen__question__text {
     position: relative;
@@ -64,18 +63,17 @@
     }
 
     &:hover {
-      color: #FFA845;
+      color: #ffa845;
     }
 
     &:hover:after {
-      content: '';
+      content: "";
       position: absolute;
       transform: translate(458px, -24px);
-      background: url('asset/down_arrow_orange.svg') no-repeat center/contain;
+      background: url("asset/down_arrow_orange.svg") no-repeat center/contain;
       width: 16px;
       height: 16px;
     }
-
   }
 
   .SiteFaqScreen__question__answer {
@@ -86,21 +84,19 @@
 }
 
 .active_question {
-
   .SiteFaqScreen__question__text {
     color: var(--black);
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       transform: translate(458px, -24px);
-      background: url('asset/down_arrow_black.svg') no-repeat center/contain;
+      background: url("asset/down_arrow_black.svg") no-repeat center/contain;
       width: 16px;
       height: 16px;
     }
   }
 }
-
 
 .SiteFaqScreen__more_questions {
   display: flex;
@@ -112,7 +108,9 @@
   margin: 80px auto;
   width: 600px;
 
-  @media (max-width: 992px) { width: auto; }
+  @media (max-width: 992px) {
+    width: auto;
+  }
 
   img {
     margin: 0 20px;
@@ -133,5 +131,4 @@
       }
     }
   }
-
 }

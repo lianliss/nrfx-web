@@ -1,4 +1,4 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   deposits: [],
@@ -7,7 +7,7 @@ const initialState = {
   balances: [],
   profitsTotal: 0,
   withdrawals: {
-    isLoadingMore: false,
+    isLoadingMore: false
   },
   withdrawalsTotalCount: null,
   chart: {},
@@ -15,24 +15,25 @@ const initialState = {
   openDepositModal: {
     walletCurrentOption: {},
     walletOptions: [],
-    selectDepositType: 'static',
+    selectDepositType: "static",
     planOptions: [],
     planCurrentOption: {},
     amountMax: 0,
     amountMin: 0,
-    currency: 'btc',
+    currency: "btc",
     touched: false,
-    amount: undefined,
+    amount: undefined
   },
-  loaded: null,
+  loaded: null
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
-
     case actionTypes.INVESTMENTS_SET_LOADING_STATUS: {
       return Object.assign({}, state, {
-        loadingStatus: Object.assign({}, state.loadingStatus, { [action.section]: action.status })
+        loadingStatus: Object.assign({}, state.loadingStatus, {
+          [action.section]: action.status
+        })
       });
     }
 
@@ -49,7 +50,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.INVESTMENTS_PROFITS_SET: {
       return Object.assign({}, state, {
         profits: action.profits,
-        profitsTotal: action.total,
+        profitsTotal: action.total
       });
     }
 
@@ -65,10 +66,10 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         withdrawals: {
           ...state.withdrawals,
-          items: [ ...state.withdrawals.items, ...action.items ],
+          items: [...state.withdrawals.items, ...action.items],
           next: action.next
         }
-      }
+      };
     }
 
     case actionTypes.INVESTMENTS_PROFITS_APPEND: {
@@ -76,10 +77,10 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         profits: {
           ...state.profits,
-          items: [ ...state.profits.items, ...action.profits.items ],
+          items: [...state.profits.items, ...action.profits.items],
           next: action.profits.next
         }
-      }
+      };
     }
 
     case actionTypes.INVESTMENTS_WITHDRAWALS_SET_LOADING_MORE_STATUS: {
@@ -89,7 +90,7 @@ export default function reduce(state = initialState, action = {}) {
           ...state.withdrawals,
           isLoadingMore: action.payload
         }
-      }
+      };
     }
 
     case actionTypes.INVESTMENTS_OPEN_DEPOSIT_MODAL_PROPERTY_SET: {
@@ -99,15 +100,15 @@ export default function reduce(state = initialState, action = {}) {
           ...state.openDepositModal,
           ...action.payload
         }
-      }
+      };
     }
 
     case actionTypes.INVESTMENTS_OPEN_DEPOSIT_SUCCESS: {
       return {
         ...state,
         balances: action.balances,
-        deposits: [ action.deposit, ...state.deposits]
-      }
+        deposits: [action.deposit, ...state.deposits]
+      };
     }
 
     default:
