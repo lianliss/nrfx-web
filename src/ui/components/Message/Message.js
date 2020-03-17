@@ -1,19 +1,21 @@
 // styles
-import './Message.less';
+import "./Message.less";
 // external
-import React  from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // internal
-import { classNames as cn } from '../../utils';
+import { classNames as cn } from "../../utils";
 
 export default function Message(props) {
   const isAlert = props.alert;
 
   return (
-    <div className={cn('Message', {
-      [props.type]: !!props.type,
-      alert: isAlert
-    })}>
+    <div
+      className={cn("Message", {
+        [props.type]: !!props.type,
+        alert: isAlert
+      })}
+    >
       {props.title && <div className="Message__title">{props.title}</div>}
       <div className="Message__content">
         {isAlert && <div className="Message__icon" />}
@@ -25,7 +27,7 @@ export default function Message(props) {
 }
 
 Message.propTypes = {
-  type: PropTypes.oneOf(['error', 'warning', 'success']),
+  type: PropTypes.oneOf(["error", "warning", "success"]),
   alert: PropTypes.bool,
   onHide: PropTypes.func
 };

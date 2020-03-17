@@ -1,7 +1,7 @@
-import './Captcha.less'
+import "./Captcha.less";
 
-import React from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import company from "src/index/constants/company";
 
 export default React.forwardRef((props, ref) => (

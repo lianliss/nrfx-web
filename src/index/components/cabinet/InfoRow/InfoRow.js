@@ -1,29 +1,33 @@
-import './InfoRow.less';
+import "./InfoRow.less";
 
-import React from 'react';
+import React from "react";
 
-import { classNames } from '../../../../utils';
+import { classNames } from "../../../../utils";
 
 export default function InfoRow({ label, children, align }) {
   return (
-    <tr className={classNames({
-      InfoRow: true,
-      [align]: !!align
-    })}>
+    <tr
+      className={classNames({
+        InfoRow: true,
+        [align]: !!align
+      })}
+    >
       <td className="InfoRow__label">{label}</td>
       <td className="InfoRow__value">{children}</td>
     </tr>
-  )
+  );
 }
 
 export function InfoRowGroup({ children, className, align }) {
   return (
-    <table className={classNames({
-      InfoRow__group: true,
-      [className]: !!className
-    })}>
+    <table
+      className={classNames({
+        InfoRow__group: true,
+        [className]: !!className
+      })}
+    >
       <tbody>
-        {React.Children.map(children, (child) => {
+        {React.Children.map(children, child => {
           if (!React.isValidElement(child)) {
             return child;
           }
@@ -34,5 +38,5 @@ export function InfoRowGroup({ children, className, align }) {
         })}
       </tbody>
     </table>
-  )
+  );
 }

@@ -1,34 +1,52 @@
 // styles
-import './Table.less';
+import "./Table.less";
 // external
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // internal
-import Hover from '../Hover/Hover';
-import * as utils from '../../utils';
+import Hover from "../Hover/Hover";
+import * as utils from "../../utils";
 
-import Collapse from '../Collapse/Collapse';
-import ContentBox from '../ContentBox/ContentBox';
+import Collapse from "../Collapse/Collapse";
+import ContentBox from "../ContentBox/ContentBox";
 
-function Table({ headings, children, className, header, hidden, adaptive, compact, skipContentBox, inline }) {
-
-  const Wrapper = adaptive ? Collapse : (skipContentBox ? props => <div {...props} /> : ContentBox);
+function Table({
+  headings,
+  children,
+  className,
+  header,
+  hidden,
+  adaptive,
+  compact,
+  skipContentBox,
+  inline
+}) {
+  const Wrapper = adaptive
+    ? Collapse
+    : skipContentBox
+    ? props => <div {...props} />
+    : ContentBox;
 
   return (
-    <Wrapper title={header} className={utils.classNames(className, {
-      TableMain: true,
-    })}>
-      {header && !adaptive && <div
-        className="Table__header"
-      >
-        <span>{header}</span>
-      </div>}
+    <Wrapper
+      title={header}
+      className={utils.classNames(className, {
+        TableMain: true
+      })}
+    >
+      {header && !adaptive && (
+        <div className="Table__header">
+          <span>{header}</span>
+        </div>
+      )}
 
-      <table className={utils.classNames({
-        Table: true,
-        compact: !!compact,
-        inline: !!inline,
-      })}>
+      <table
+        className={utils.classNames({
+          Table: true,
+          compact: !!compact,
+          inline: !!inline
+        })}
+      >
         <thead>
           <tr>
             {React.Children.map(headings, (child, i) => {
@@ -55,15 +73,15 @@ function Table({ headings, children, className, header, hidden, adaptive, compac
         </tbody>
       </table>
     </Wrapper>
-  )
+  );
 }
 
-export function TableCell({ children, onClick, dark, className}) {
-  let Component = 'tr';
+export function TableCell({ children, onClick, dark, className }) {
+  let Component = "tr";
   let params = {};
   if (onClick) {
     Component = Hover;
-    params.tagName = 'tr';
+    params.tagName = "tr";
   }
 
   return (
@@ -76,14 +94,21 @@ export function TableCell({ children, onClick, dark, className}) {
     >
       {children}
     </Component>
-  )
+  );
 }
 
 TableCell.propTypes = {
   dark: PropTypes.bool
 };
 
-export function TableColumn({ children, align, style, highlighted, sub, className }) {
+export function TableColumn({
+  children,
+  align,
+  style,
+  highlighted,
+  sub,
+  className
+}) {
   return (
     <td
       className={utils.classNames(className, {
@@ -97,17 +122,17 @@ export function TableColumn({ children, align, style, highlighted, sub, classNam
         {sub !== undefined && <div className="Table__sub">{sub}</div>}
       </div>
     </td>
-  )
+  );
 }
 
 TableColumn.propTypes = {
   highlighted: PropTypes.bool,
-  align: PropTypes.oneOf(['center', 'right', 'left']),
+  align: PropTypes.oneOf(["center", "right", "left"]),
   style: PropTypes.object,
   sub: PropTypes.string,
   compact: PropTypes.bool,
   skipContentBox: PropTypes.bool,
-  inline: PropTypes.bool,
+  inline: PropTypes.bool
 };
 
 export default Table;

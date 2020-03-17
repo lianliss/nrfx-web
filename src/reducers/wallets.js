@@ -1,42 +1,45 @@
-import * as actionTypes from '../actions/actionTypes';
+import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   wallets: [],
   history: [],
   transactions: {},
   transactionsNext: null,
-  transactionsLoadingMore: '',
+  transactionsLoadingMore: "",
   transfers: {},
-  transfersLoadingMore: '',
+  transfersLoadingMore: "",
   transfersNext: null,
   loadingStatus: {
-    default: 'loading',
-    limits: 'loading',
-    sendCode: null,
+    default: "loading",
+    limits: "loading",
+    sendCode: null
   },
   limits: [],
   sendCoinModal: {
-    type: 'address',
-    gaCode: '',
+    type: "address",
+    gaCode: "",
     walletId: null,
-    address: '',
-    login: '',
-    amount: '',
-    amountUsd: '',
+    address: "",
+    login: "",
+    amount: "",
+    amountUsd: ""
   }
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
-
     case actionTypes.WALLETS_SET_LOADING_STATUS: {
       return Object.assign({}, state, {
-        loadingStatus: Object.assign({}, state.loadingStatus, { [action.section]: action.status })
+        loadingStatus: Object.assign({}, state.loadingStatus, {
+          [action.section]: action.status
+        })
       });
     }
 
     case actionTypes.WALLETS_SET: {
-      const wallet = action.wallets.find(w => w.currency === action.currency) || action.wallets[0];
+      const wallet =
+        action.wallets.find(w => w.currency === action.currency) ||
+        action.wallets[0];
       return {
         ...state,
         wallets: action.wallets,
@@ -56,7 +59,7 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.WALLETS_TRANSACTIONS_LOADING_MORE: {
       return Object.assign({}, state, {
-        transactionsLoadingMore: action.status,
+        transactionsLoadingMore: action.status
       });
     }
 
@@ -65,9 +68,9 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         transfers: {
           ...state.transfers,
-          items: [ action.transfer, ...state.transfers.items ]
+          items: [action.transfer, ...state.transfers.items]
         }
-      }
+      };
     }
 
     case actionTypes.WALLETS_NEW_TRANSACTION: {
@@ -75,15 +78,17 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         transactions: {
           ...state.transactions,
-          items: [ action.transaction, ...state.transactions.items ]
+          items: [action.transaction, ...state.transactions.items]
         }
-      }
+      };
     }
 
     case actionTypes.WALLETS_TRANSACTIONS_APPEND: {
       return Object.assign({}, state, {
         transactions: {
-          items:  Object.assign([], state.transactions.items).concat(action.items),
+          items: Object.assign([], state.transactions.items).concat(
+            action.items
+          ),
           next: action.next
         },
         transactionsNext: action.next
@@ -99,7 +104,7 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.WALLETS_TRANFERS_LOADING_MORE: {
       return Object.assign({}, state, {
-        transfersLoadingMore: action.status,
+        transfersLoadingMore: action.status
       });
     }
 
@@ -114,14 +119,14 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.WALLETS_GENERATE_SUCCESS: {
-      return { ...state, wallets: [...state.wallets, action.wallet] }
+      return { ...state, wallets: [...state.wallets, action.wallet] };
     }
 
     case actionTypes.WALLETS_SET_LIMITS: {
       return {
         ...state,
-        limits: action.limits,
-      }
+        limits: action.limits
+      };
     }
 
     case actionTypes.WALLETS_SEND_COIN_MODAL_SET_VALUE: {
@@ -131,14 +136,16 @@ export default function reduce(state = initialState, action = {}) {
           ...state.sendCoinModal,
           [action.property]: action.value
         }
-      }
+      };
     }
 
     case actionTypes.WALLETS_WALLET_UPDATE: {
       return {
         ...state,
-        wallets: state.wallets.map(wallet => (wallet.id === action.wallet.id ? action.wallet : wallet ))
-      }
+        wallets: state.wallets.map(wallet =>
+          wallet.id === action.wallet.id ? action.wallet : wallet
+        )
+      };
     }
 
     case actionTypes.WALLETS_SEND_COIN_MODAL_CLEAR: {
@@ -148,7 +155,7 @@ export default function reduce(state = initialState, action = {}) {
           ...initialState.sendCoinModal,
           walletId: state.sendCoinModal.walletId
         }
-      }
+      };
     }
 
     default:

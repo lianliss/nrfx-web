@@ -1,10 +1,13 @@
-import * as auth from './auth';
+import * as auth from "./auth";
 
 class RealTime {
   constructor() {
     const token = auth.getToken();
-    // this.endpoint = 'wss://ex.bitcoinbot.pro/' + (token ? `?access_token=${token}` : '');
-    this.endpoint = 'wss://api-stage.bitcoinbot.pro/echo' + (token ? `?access_token=${token}` : '');
+    this.endpoint =
+      "wss://ex.narfex.dev" + (token ? `?access_token=${token}` : "");
+    // this.endpoint =
+    //   "wss://api-stage.narfex.dev/echo" +
+    //   (token ? `?access_token=${token}` : "");
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;
@@ -15,7 +18,6 @@ class RealTime {
   }
 
   __connect = () => {
-
     // setTimeout(() => {
     //   this.connection.close();
     // }, 20000);
@@ -25,7 +27,7 @@ class RealTime {
 
     this.connection.onopen = () => {
       this.connected = true;
-      console.log('[WS] Connected');
+      console.log("[WS] Connected");
 
       // resolve queue
       for (let event of this.sendQueue) {
@@ -33,33 +35,33 @@ class RealTime {
       }
 
       this.__restoreSubscriptions();
-      this.triggerListeners('open_connection');
+      this.triggerListeners("open_connection");
     };
 
-    this.connection.onerror = (error) => {
-      console.log('[WS] Error: ', error.message);
-      this.triggerListeners('error_connection');
+    this.connection.onerror = error => {
+      console.log("[WS] Error: ", error.message);
+      this.triggerListeners("error_connection");
     };
 
     this.connection.onclose = () => {
-      console.log('[WS] Close');
+      console.log("[WS] Close");
       // this.connected = false;
-      this.triggerListeners('close_connection');
+      this.triggerListeners("close_connection");
       setTimeout(this.__connect, 1000);
     };
 
     this.connection.onmessage = this.__messageDidReceive;
   };
 
-  __messageDidReceive = ({data}) => {
-    let messages = data.split('\n');
+  __messageDidReceive = ({ data }) => {
+    let messages = data.split("\n");
 
     for (let message of messages) {
       let json;
       try {
         json = JSON.parse(message);
       } catch (e) {
-        console.log('[WS] Error:', e.message, message);
+        console.log("[WS] Error:", e.message, message);
         continue;
       }
 
@@ -73,14 +75,14 @@ class RealTime {
   };
 
   __send(action, params = {}) {
-    const event = {action, params};
+    const event = { action, params };
 
     if (!this.connected) {
       this.sendQueue.push(event);
     } else {
       this.connection.send(JSON.stringify(event));
     }
-  };
+  }
 
   addListener(name, callback) {
     if (!this.listeners[name]) {
@@ -89,7 +91,7 @@ class RealTime {
 
     this.listeners[name].push(callback);
 
-    if (this.connected && name === 'open_connection') {
+    if (this.connected && name === "open_connection") {
       this.triggerListeners(name);
     }
   }
@@ -107,7 +109,7 @@ class RealTime {
   }
 
   triggerListeners(name, data = {}) {
-    console.log('triggerListeners', name);
+    console.log("triggerListeners", name);
     if (!this.listeners[name]) {
       return;
     }
@@ -119,12 +121,12 @@ class RealTime {
 
   subscribe(channel) {
     this.subscribtions[channel] = true;
-    this.__send('subscribe', {channel});
+    this.__send("subscribe", { channel });
   }
 
   unsubscribe(channel) {
     delete this.subscribtions[channel];
-    this.__send('unsubscribe', {channel});
+    this.__send("unsubscribe", { channel });
   }
 
   __restoreSubscriptions() {

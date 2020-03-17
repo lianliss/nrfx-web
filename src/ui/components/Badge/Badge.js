@@ -1,9 +1,8 @@
-import './Badge.less';
+import "./Badge.less";
 
-import React from 'react';
+import React from "react";
 
 function Badge({ count, children, onClick }) {
-
   const handleClick = e => {
     onClick && onClick(e);
   };
@@ -13,7 +12,7 @@ function Badge({ count, children, onClick }) {
       {children}
       <span className="Badge__count">{count}</span>
     </div>
-  )
+  );
 }
 
 export default Badge;

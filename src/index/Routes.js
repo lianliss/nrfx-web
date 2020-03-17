@@ -1,40 +1,41 @@
 // styles
 // external
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 // internal
-import SiteMainScreen from './containers/site/SiteMainScreen/SiteMainScreen';
-import SiteAboutScreen from './containers/site/SiteAboutScreen/SiteAboutScreen';
-import SiteWalletScreen from './containers/site/SiteWalletScreen/SiteWalletScreen';
+import SiteMainScreen from "./containers/site/SiteMainScreen/SiteMainScreen";
+import SiteAboutScreen from "./containers/site/SiteAboutScreen/SiteAboutScreen";
+import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
-import SiteTechnologyScreen from './containers/site/SiteTechnologyScreen/SiteTechnologyScreen';
-import SiteSafetyScreen from './containers/site/SiteSafetyScreen/SiteSafetyScreen';
-import SiteExchangeScreen from './containers/site/SiteExchangeScreen/SiteExchangeScreen';
+import SiteTechnologyScreen from "./containers/site/SiteTechnologyScreen/SiteTechnologyScreen";
+import SiteSafetyScreen from "./containers/site/SiteSafetyScreen/SiteSafetyScreen";
+import SiteExchangeScreen from "./containers/site/SiteExchangeScreen/SiteExchangeScreen";
 // import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
-import SiteContactScreen from './containers/site/SiteContactScreen/SiteContactScreen';
-import SiteFaqScreen from './containers/site/SiteFaqScreen/SiteFaqScreen';
-import SiteNotFoundScreen from './containers/site/SiteNotFoundScreen/SiteNotFoundScreen';
-import UIKitScreen from './containers/UIKit/UIKitScreen';
-import SiteWrapper from '../wrappers/Site/SiteWrapper';
-import CabinetWrapper from '../wrappers/Cabinet/CabinetWrapper';
+import SiteContactScreen from "./containers/site/SiteContactScreen/SiteContactScreen";
+import SiteFaqScreen from "./containers/site/SiteFaqScreen/SiteFaqScreen";
+import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoundScreen";
+import UIKitScreen from "./containers/UIKit/UIKitScreen";
+import SiteWrapper from "../wrappers/Site/SiteWrapper";
+import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
 
-import * as pages from './constants/pages';
-import * as CabinetWalletScreen from './containers/cabinet/CabinetWalletScreen/CabinetWalletScreen';
-import * as CabinetProfileScreen from './containers/cabinet/CabinetProfileScreen/CabinetProfileScreen';
-import * as CabinetInvestmentsScreen from './containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen';
-import * as CabinetSettingsScreen from './containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen';
-import * as CabinetChangeEmail from './containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen';
-import * as CabinetRegister from './containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen';
-import * as CabinetResetPassword from './containers/site/SiteResetPasswordScreen/SiteResetPasswordScreen';
-import * as MenuScreen from './containers/cabinet/adaptive/MenuScreen/MenuScreen';
-import * as NotificationsScreen from './containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen';
-import CabinetExchangeScreen from './containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen';
-import CabinetMerchantStatusScreen from './containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
-import SiteFeeScreen from './containers/site/SiteFeeScreen/SiteFeeScreen';
-import TraderScreen from './containers/cabinet/TraderScreen/TraderScreen';
-import * as actions from '../actions/index';
-import router from '../router';
+import * as pages from "./constants/pages";
+import * as CabinetWalletScreen from "./containers/cabinet/CabinetWalletScreen/CabinetWalletScreen";
+import * as CabinetFiatScreen from "./containers/cabinet/CabinetFiatScreen/CabinetFiatScreen";
+import * as CabinetProfileScreen from "./containers/cabinet/CabinetProfileScreen/CabinetProfileScreen";
+import * as CabinetInvestmentsScreen from "./containers/cabinet/CabinetInvestmentsScreen/CabinetInvestmentsScreen";
+import * as CabinetSettingsScreen from "./containers/cabinet/CabinetSettingsScreen/CabinetSettingsScreen";
+import * as CabinetChangeEmail from "./containers/cabinet/CabinetChangeEmailScreen/CabinetChangeEmailScreen";
+import * as CabinetRegister from "./containers/cabinet/CabinetRegisterScreen/CabinetRegisterScreen";
+import * as CabinetResetPassword from "./containers/site/SiteResetPasswordScreen/SiteResetPasswordScreen";
+import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen/MenuScreen";
+import * as NotificationsScreen from "./containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen";
+import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen";
+import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
+import SiteFeeScreen from "./containers/site/SiteFeeScreen/SiteFeeScreen";
+import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
+import * as actions from "../actions/index";
+import router from "../router";
 
 function Routes(props) {
   const routeState = props.route;
@@ -82,6 +83,7 @@ function Routes(props) {
       Component = SiteSafetyScreen;
       WrapperComponent = SiteWrapper;
       break;
+
     // case pages.COMMERCE:
     //   Component = SiteCommerceScreen;
     //   WrapperComponent = SiteWrapper;
@@ -112,6 +114,10 @@ function Routes(props) {
       needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
+    case pages.FIAT:
+      needAuthorization = true;
+      Component = CabinetFiatScreen.default;
+      break;
     case pages.DASHBOARD:
       needAuthorization = true;
       Component = CabinetProfileScreen.default;
@@ -122,7 +128,9 @@ function Routes(props) {
       break;
     case pages.INVESTMENTS:
       needAuthorization = true;
-      Component = CabinetInvestmentsScreen.default;
+      Component = props.profile.has_deposits
+        ? CabinetInvestmentsScreen.default
+        : SiteNotFoundScreen;
       break;
     case pages.CHANGE_EMAIL:
       Component = CabinetChangeEmail.default;
@@ -145,7 +153,7 @@ function Routes(props) {
       Component = CabinetExchangeScreen;
       break;
     case pages.MERCHANT:
-      WrapperComponent = props => (<>{props.children}</>);
+      WrapperComponent = props => <>{props.children}</>;
       Component = CabinetMerchantStatusScreen;
       break;
     case pages.TRADER:
@@ -169,7 +177,11 @@ function Routes(props) {
     pages.FEE
   ].includes(route);
 
-  if (needAuthorization === true && !props.profile.pending && !props.profile.user) {
+  if (
+    needAuthorization === true &&
+    !props.profile.pending &&
+    !props.profile.user
+  ) {
     router.navigate(pages.MAIN);
     return null;
   }
@@ -177,14 +189,17 @@ function Routes(props) {
   actions.setCabinet(WrapperComponent === CabinetWrapper); // HACK
 
   return (
-    <WrapperComponent isHomepage={route === pages.MAIN} withOrangeBg={isWithOrangeBg}>
-      <Component routerParams={routerParams} />
+    <WrapperComponent
+      isHomepage={route === pages.MAIN}
+      withOrangeBg={isWithOrangeBg}
+    >
+      <Component currentLang={props.currentLang} routerParams={routerParams} />
     </WrapperComponent>
   );
 }
 
-
 export default connect(state => ({
+  currentLang: state.default.currentLang,
   profile: state.default.profile,
   route: state.router.route
 }))(Routes);

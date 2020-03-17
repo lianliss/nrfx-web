@@ -1,10 +1,9 @@
-import './Spoiler.less';
+import "./Spoiler.less";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { classNames as cn } from '../../utils';
+import React, { useState, useEffect, useRef } from "react";
+import { classNames as cn } from "../../utils";
 
 export default props => {
-
   const [height, setHeight] = useState(null);
   const [opened, setOpened] = useState(true);
   const [helper, setHelper] = useState(true);
@@ -15,7 +14,7 @@ export default props => {
   }, [props.opened]);
 
   useEffect(() => {
-    if (helper){
+    if (helper) {
       const { clientHeight } = ref.current;
       setHeight(clientHeight);
       setHelper(false);
@@ -23,7 +22,7 @@ export default props => {
       setOpened(props.opened);
       setTimeout(() => {
         setHeight(null);
-        console.log('animation End');
+        console.log("animation End");
       }, 300);
     }
     // eslint-disable-next-line
@@ -33,7 +32,9 @@ export default props => {
     <div
       ref={ref}
       className={cn("Spoiler", props.className, { opened: opened, helper })}
-      style={{height: ((height === null || helper) ? 'auto' : height + 'px')}}
-    >{props.children}</div>
-  )
-}
+      style={{ height: height === null || helper ? "auto" : height + "px" }}
+    >
+      {props.children}
+    </div>
+  );
+};

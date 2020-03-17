@@ -1,29 +1,30 @@
 // styles
 // external
 // internal
-import store from '../store';
-import apiSchema from '../services/apiSchema';
-import * as actionTypes from './actionTypes';
-import * as api from '../services/api';
-import * as auth from '../services/auth';
-import * as user from './user';
-import * as actions from './index';
-import * as utils from '../utils';
-import * as toasts from './toasts';
+import store from "../store";
+import apiSchema from "../services/apiSchema";
+import * as actionTypes from "./actionTypes";
+import * as api from "../services/api";
+import * as auth from "../services/auth";
+import * as user from "./user";
+import * as actions from "./index";
+import * as utils from "../utils";
+import * as toasts from "./toasts";
 
 export function getAuth(login, password, token) {
   const app_id = 8;
-  const public_key = '1a4b26bc31-a91649-b63396-253abb8d69';
+  const public_key = "1a4b26bc31-a91649-b63396-253abb8d69";
 
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.SignInPost, {
-      login,
-      password,
-      app_id,
-      public_key,
-      recaptcha_response: token
-    })
-      .then((res) => {
+    api
+      .call(apiSchema.Profile.SignInPost, {
+        login,
+        password,
+        app_id,
+        public_key,
+        recaptcha_response: token
+      })
+      .then(res => {
         store.dispatch({ type: actionTypes.AUTH, res });
 
         if (res.access_token) {
@@ -35,7 +36,7 @@ export function getAuth(login, password, token) {
           resolve(res);
         }
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
@@ -68,23 +69,28 @@ export function getAuth(login, password, token) {
 // }
 
 export function logout() {
-  actions.confirm({
-    title: utils.getLang('cabinet_header_exit'),
-    content: utils.getLang('cabinet_exitConfirmText'),
-    okText: utils.getLang('cabinet_exitActionButton'),
-    type: 'negative'
-  }).then(() => {
-    store.dispatch({type: actionTypes.LOGOUT});
-    api.call(apiSchema.Profile.LogoutPost).then(() => {
-      auth.logout();
-    }).catch(err => {
-      toasts.error(err.message);
+  actions
+    .confirm({
+      title: utils.getLang("cabinet_header_exit"),
+      content: utils.getLang("cabinet_exitConfirmText"),
+      okText: utils.getLang("cabinet_exitActionButton"),
+      type: "negative"
+    })
+    .then(() => {
+      store.dispatch({ type: actionTypes.LOGOUT });
+      api
+        .call(apiSchema.Profile.LogoutPost)
+        .then(() => {
+          auth.logout();
+        })
+        .catch(err => {
+          toasts.error(err.message);
+        });
     });
-  });
 }
 
 export function clearProfile() {
-  store.dispatch({type: actionTypes.LOGOUT});
+  store.dispatch({ type: actionTypes.LOGOUT });
   auth.logout();
 }
 
@@ -94,7 +100,7 @@ export function setSecretKey() {
 
 export function getGoogleCode(login, password, code) {
   const appId = 8;
-  const publicKey = '1a4b26bc31-a91649-b63396-253abb8d69';
+  const publicKey = "1a4b26bc31-a91649-b63396-253abb8d69";
 
   return new Promise((resolve, reject) => {
     let params = {
@@ -117,68 +123,82 @@ export function getGoogleCode(login, password, code) {
     //   .then(() => resolve())
     //   .catch((err) => reject(err));
 
-    api.call(apiSchema.Profile.SignInTwoStepPost, {
-      login,
-      password,
-      ga_code: code,
-      app_id: appId,
-      public_key: publicKey
-    })
-      .then((resp) => {
+    api
+      .call(apiSchema.Profile.SignInTwoStepPost, {
+        login,
+        password,
+        ga_code: code,
+        app_id: appId,
+        public_key: publicKey
+      })
+      .then(resp => {
         auth.login(resp.access_token);
         user.install().then(() => {
           resolve(resp);
         });
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
 export function resetGoogleCode(secret, login, password, code) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.ResetGaPost, { secret, login, password })
+    api
+      .call(apiSchema.Profile.ResetGaPost, { secret, login, password })
       .then(() => {
         // store.dispatch({type: actionTypes.SET_LANG, auth});
         resolve();
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
 export function resetPassword(email) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.ResetPasswordPost, { email })
+    api
+      .call(apiSchema.Profile.ResetPasswordPost, { email })
       .then(() => {
         resolve();
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
-
 export function sendSmsCode(phone_code, phone_number, hash) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.FillAccountSendSmsPut, { phone_code, phone_number, hash })
-      .then((auth) => {
+    api
+      .call(apiSchema.Profile.FillAccountSendSmsPut, {
+        phone_code,
+        phone_number,
+        hash
+      })
+      .then(auth => {
         resolve();
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
 export function checkSmsCode(countryCode, number, code) {
   return new Promise((resolve, reject) => {
-    api.call(apiSchema.Profile.ChangePhoneNumberPut, { countryCode, number, code })
-      .then((auth) => {
+    api
+      .call(apiSchema.Profile.ChangePhoneNumberPut, {
+        countryCode,
+        number,
+        code
+      })
+      .then(auth => {
         resolve();
       })
-      .catch((err) => reject(err));
+      .catch(err => reject(err));
   });
 }
 
 export function registerUser(email, refer = null, invite_link = null, token) {
   return api.call(apiSchema.Profile.SignUpPut, {
-    email, refer, invite_link,
+    email,
+    refer,
+    invite_link,
     ...(token ? { recaptcha_response: token } : {})
-  })
+  });
 }

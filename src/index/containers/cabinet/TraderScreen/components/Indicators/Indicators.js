@@ -1,14 +1,13 @@
-import './Indicators.less';
+import "./Indicators.less";
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import * as UI from '../../../../../../ui';
+import * as UI from "../../../../../../ui";
 
-import * as traderActions from '../../../../../../actions/cabinet/trader';
+import * as traderActions from "../../../../../../actions/cabinet/trader";
 
 const Indicators = props => {
-
   const { indicators, bot } = props;
 
   const handleSubmit = e => {
@@ -18,7 +17,7 @@ const Indicators = props => {
 
   const setProperty = (indicator, property) => value => {
     props.setIndicatorProperty(indicator, property, value);
-  }
+  };
 
   return (
     <div className="Bot__indicators">
@@ -36,32 +35,43 @@ const Indicators = props => {
                     size="small"
                     onChangeValue={console.log}
                     options={indicators.map(i => ({
-                      title: i.name, value: i.id
+                      title: i.name,
+                      value: i.id
                     }))}
                   />
                 </div>
                 {indicator.params.map(p => {
                   return (
                     <div className="Bot__indicators__row">
-                      <div className="Bot__indicators__row__label">{p.name}</div>
-                      <UI.Input type={p.format} onTextChange={setProperty(indicator.id, p.id)} size="small" value={bi.params[p.id]} />
+                      <div className="Bot__indicators__row__label">
+                        {p.name}
+                      </div>
+                      <UI.Input
+                        type={p.format}
+                        onTextChange={setProperty(indicator.id, p.id)}
+                        size="small"
+                        value={bi.params[p.id]}
+                      />
                     </div>
-                  )
+                  );
                 })}
               </div>
-            )
+            );
           })}
           <UI.Button size="small">Save</UI.Button>
         </form>
       </UI.ContentBox>
     </div>
-  )
-}
+  );
+};
 
-export default connect(state => ({
-  ...state.trader.bot,
-}), {
-  setBotProperty: traderActions.setBotProperty,
-  saveBot: traderActions.saveBot,
-  setIndicatorProperty: traderActions.setIndicatorProperty
-})(Indicators);
+export default connect(
+  state => ({
+    ...state.trader.bot
+  }),
+  {
+    setBotProperty: traderActions.setBotProperty,
+    saveBot: traderActions.saveBot,
+    setIndicatorProperty: traderActions.setIndicatorProperty
+  }
+)(Indicators);

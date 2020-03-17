@@ -25,9 +25,8 @@
   align-items: center;
   margin-bottom: 30px;
 
-
   &:after {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     bottom: auto;
@@ -35,10 +34,9 @@
     width: 3000px;
     height: 500px;
     transform: translateX(-51%);
-    background: url('asset/security_image.svg') no-repeat center/contain;
+    background: url("asset/security_image.svg") no-repeat center/contain;
     z-index: -2;
   }
-
 }
 
 .SiteSafetyScreen__features {
@@ -47,7 +45,7 @@
   position: relative;
 
   &:after {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     bottom: 0;
@@ -100,7 +98,9 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  @media (max-width: 1200px) { text-align: center; }
+  @media (max-width: 1200px) {
+    text-align: center;
+  }
 
   img {
     max-width: 551px;

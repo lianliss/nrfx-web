@@ -1,21 +1,21 @@
-import '../index.less';
+import "../index.less";
 // import '../index/vars.less';
 
-import React from 'react';
-import {connect} from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import Toasts from '../index/components/cabinet/Toasts/Toasts';
-import Routes from './Routes';
-import Modals from './Modals';
-import DynamcModals from './DynamcModals';
-import {getLang, setLang} from '../services/lang';
-import * as actions from '../actions';
-import * as UI from 'src/ui/index';
+import Toasts from "../index/components/cabinet/Toasts/Toasts";
+import Routes from "./Routes";
+import Modals from "./Modals";
+import DynamcModals from "./DynamcModals";
+import { getLang, setLang } from "../services/lang";
+import * as actions from "../actions";
+import * as UI from "src/ui/index";
 
 class App extends React.Component {
   state = {
     isLoading: true
-  }
+  };
 
   componentDidMount() {
     this._loadAssets();
@@ -23,32 +23,30 @@ class App extends React.Component {
 
   render() {
     if (this.state.isLoading || this.props.profile.pending) {
-      return ( <UI.LogoLoader />);
+      return <UI.LogoLoader />;
     }
 
-    return <div>
-      <Routes />
-      <DynamcModals modals={this.props.modals} />
-      <Modals />
-      <Toasts />
-    </div>
+    return (
+      <div>
+        <Routes />
+        <DynamcModals modals={this.props.modals} />
+        <Modals />
+        <Toasts />
+      </div>
+    );
   }
 
   _loadAssets = () => {
     const lang = getLang();
     setLang(lang);
-    Promise.all([
-      actions.loadLang(lang)
-    ])
-      .then(() => {
-        this.setState({isLoading: false});
-      })
+    Promise.all([actions.loadLang(lang)]).then(() => {
+      this.setState({ isLoading: false });
+    });
   };
 }
-
 
 export default connect(state => ({
   ...state,
   profile: state.default.profile,
-  modals: state.admin.modals,
+  modals: state.admin.modals
 }))(App);

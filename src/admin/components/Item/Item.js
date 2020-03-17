@@ -1,24 +1,24 @@
-import React from 'react';
-import Wrapper from '../Wrapper/Wrapper';
-import Block from '../Block/Block';
-import Group from '../Group/Group';
-import Table from '../Table/Table';
-import Button from '../../../ui/components/Button/Button';
-import Input from '../Input/Input';
-import DropDown from '../Dropdown/Dropdown';
-import action from '../../../actions/admin/index';
-import List from '../List/List';
-import Tabs from '../Tabs/Tabs';
-import Paging from '../Paging/Paging';
-import PagingItem from '../Paging/PagingItem';
-import Label from '../../../ui/components/Label/Label';
-import Json from '../Json/Json';
-import Text from '../Text/Text';
-import Message from '../../../ui/components/Message/Message';
-import ActionSheet from '../../../ui/components/ActionSheet/ActionSheet';
-import {connect} from 'react-redux';
+import React from "react";
+import Wrapper from "../Wrapper/Wrapper";
+import Block from "../Block/Block";
+import Group from "../Group/Group";
+import Table from "../Table/Table";
+import Button from "../../../ui/components/Button/Button";
+import Input from "../Input/Input";
+import DropDown from "../Dropdown/Dropdown";
+import action from "../../../actions/admin/index";
+import List from "../List/List";
+import Tabs from "../Tabs/Tabs";
+import Paging from "../Paging/Paging";
+import PagingItem from "../Paging/PagingItem";
+import Label from "../../../ui/components/Label/Label";
+import Json from "../Json/Json";
+import Text from "../Text/Text";
+import Message from "../../../ui/components/Message/Message";
+import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
+import { connect } from "react-redux";
 
-const Item = (props) => {
+const Item = props => {
   const { item } = props;
 
   let Component = null;
@@ -27,86 +27,103 @@ const Item = (props) => {
     return null;
   }
 
-  if (['string', 'number'].includes(typeof item)) {
+  if (["string", "number"].includes(typeof item)) {
     return <p>{item}</p>;
   }
 
   if (Array.isArray(item)) {
-    return item.map((item, key) =>  <Item key={key} item={item} />);
+    return item.map((item, key) => <Item key={key} item={item} />);
   }
 
-  const handleClick = item.params && item.params.action ? () => {
-    action(item.params.action);
-  } : null;
+  const handleClick =
+    item.params && item.params.action
+      ? () => {
+          action(item.params.action);
+        }
+      : null;
 
   switch (item.type) {
-    case 'wrapper':
+    case "wrapper":
       Component = Wrapper;
       break;
-    case 'block':
+    case "block":
       Component = Block;
       break;
-    case 'list':
+    case "list":
       Component = List;
       break;
-    case 'list_item':
+    case "list_item":
       Component = props => <div {...props} />;
       break;
-    case 'group':
+    case "group":
       Component = Group;
       break;
-    case 'table':
+    case "table":
       Component = Table;
       break;
-    case 'paging':
+    case "paging":
       Component = Paging;
       break;
-    case 'paging_item':
+    case "paging_item":
       Component = PagingItem;
       break;
-    case 'drop_down':
+    case "drop_down":
       Component = DropDown;
       break;
-    case 'table_filter':
-      Component = props => (
-        <Label {...props} onCancel={handleClick} />
-      );
+    case "table_filter":
+      Component = props => <Label {...props} onCancel={handleClick} />;
       break;
-    case 'action_sheet':
+    case "action_sheet":
       Component = () => (
-        <ActionSheet position="left" items={item.items.map(item => ({
-          title: item.title,
-          type: item.action_type,
-          onClick: () => action(item.params.action)
-        }))}/>
+        <ActionSheet
+          position="left"
+          items={item.items.map(item => ({
+            title: item.title,
+            type: item.action_type,
+            onClick: () => action(item.params.action)
+          }))}
+        />
       );
       break;
-    case 'button':
-      Component = () => <Button onClick={handleClick} children={item.title} type={item.button_type} size={item.size} />;
+    case "button":
+      Component = () => (
+        <Button
+          onClick={handleClick}
+          children={item.title}
+          type={item.button_type}
+          size={item.size}
+        />
+      );
       break;
-    case 'input':
+    case "input":
       Component = Input;
       break;
-    case 'tabs':
+    case "tabs":
       Component = Tabs;
       break;
-    case 'json':
+    case "json":
       Component = Json;
       break;
-    case 'text':
+    case "text":
       Component = Text;
       break;
     default:
-      Component = props => <Message type="error">Error item type [{props.type}]</Message>;
+      Component = props => (
+        <Message type="error">Error item type [{props.type}]</Message>
+      );
       break;
   }
 
-  return <Component {...props} {...item}>{item.items && item.items.map((item, key) => {
-    return <Item key={key} item={item} />
-  })}</Component>
-}
+  return (
+    <Component {...props} {...item}>
+      {item.items &&
+        item.items.map((item, key) => {
+          return <Item key={key} item={item} />;
+        })}
+    </Component>
+  );
+};
 
 export default connect(state => ({
   state: state.admin
 }))(Item);
-

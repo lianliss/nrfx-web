@@ -1,26 +1,32 @@
-import './BotForm.less';
+import "./BotForm.less";
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import * as UI from '../../../../../../ui';
+import * as UI from "../../../../../../ui";
 
-import * as traderActions from '../../../../../../actions/cabinet/trader';
+import * as traderActions from "../../../../../../actions/cabinet/trader";
 
 const BotForm = props => {
-  const { bot, exchanges, symbols, bot_types: types, time_frames: timeFrames } = props;
+  const {
+    bot,
+    exchanges,
+    symbols,
+    bot_types: types,
+    time_frames: timeFrames
+  } = props;
 
-  const handleChangeProperty = (property) => (value) => {
+  const handleChangeProperty = property => value => {
     props.setBotProperty(property, value);
-    if (property === 'type') {
+    if (property === "type") {
       props.getOptions();
     }
-  }
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
     props.saveBot();
-  }
+  };
 
   return (
     <div>
@@ -31,9 +37,10 @@ const BotForm = props => {
             <UI.Dropdown
               value={bot.exchange}
               size="small"
-              onChangeValue={handleChangeProperty('exchange')}
+              onChangeValue={handleChangeProperty("exchange")}
               options={exchanges.map(e => ({
-                title: e.name, value: e.id
+                title: e.name,
+                value: e.id
               }))}
             />
           </div>
@@ -43,9 +50,10 @@ const BotForm = props => {
             <UI.Dropdown
               value={bot.symbol}
               size="small"
-              onChangeValue={handleChangeProperty('symbol')}
+              onChangeValue={handleChangeProperty("symbol")}
               options={symbols.map(s => ({
-                title: s.name, value: s.id
+                title: s.name,
+                value: s.id
               }))}
             />
           </div>
@@ -55,16 +63,21 @@ const BotForm = props => {
             <UI.Dropdown
               value={bot.type}
               size="small"
-              onChangeValue={handleChangeProperty('type')}
+              onChangeValue={handleChangeProperty("type")}
               options={types.map(s => ({
-                title: s.name, value: s.id
+                title: s.name,
+                value: s.id
               }))}
             />
           </div>
 
           <div className="Bot__form__row">
             <div className="Bot__form__row__label">Trade Amount</div>
-            <UI.Input value={bot.trade_amount} onTextChange={handleChangeProperty('trade_amount')} size="small" />
+            <UI.Input
+              value={bot.trade_amount}
+              onTextChange={handleChangeProperty("trade_amount")}
+              size="small"
+            />
           </div>
 
           <div className="Bot__form__row">
@@ -72,9 +85,10 @@ const BotForm = props => {
             <UI.Dropdown
               value={bot.time_frame}
               size="small"
-              onChangeValue={handleChangeProperty('time_frame')}
+              onChangeValue={handleChangeProperty("time_frame")}
               options={timeFrames.map(t => ({
-                title: t.name, value: t.id
+                title: t.name,
+                value: t.id
               }))}
             />
           </div>
@@ -82,13 +96,16 @@ const BotForm = props => {
         </form>
       </UI.ContentBox>
     </div>
-  )
-}
+  );
+};
 
-export default connect(state => ({
-  ...state.trader.bot,
-}), {
-  setBotProperty: traderActions.setBotProperty,
-  getOptions: traderActions.getOptions,
-  saveBot: traderActions.saveBot
-})(BotForm);
+export default connect(
+  state => ({
+    ...state.trader.bot
+  }),
+  {
+    setBotProperty: traderActions.setBotProperty,
+    getOptions: traderActions.getOptions,
+    saveBot: traderActions.saveBot
+  }
+)(BotForm);

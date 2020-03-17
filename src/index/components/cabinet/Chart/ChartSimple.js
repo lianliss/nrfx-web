@@ -1,23 +1,22 @@
 /* eslint-disable */
-import './Chart.less';
+import "./Chart.less";
 
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 import { classNames } from "../../../../utils/index";
 
 export default function Chart({ series, ...props }) {
-
-  const [ hovered, setHovered ] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   const options = {
     chart: {
       backgroundColor: null,
-      height: 56,
+      height: 56
     },
     title: {
-      text: undefined,
+      text: undefined
     },
     subtitle: {
       text: undefined
@@ -26,7 +25,7 @@ export default function Chart({ series, ...props }) {
       visible: false,
       labels: {
         enabled: false
-      },
+      }
     },
     yAxis: {
       visible: false,
@@ -36,7 +35,7 @@ export default function Chart({ series, ...props }) {
       subtitle: false,
       labels: {
         enabled: false
-      },
+      }
     },
     legend: {
       enabled: false,
@@ -50,7 +49,7 @@ export default function Chart({ series, ...props }) {
       x: 0,
       padding: 0,
       itemMarginTop: 16,
-      align: 'left',
+      align: "left",
       alignColumns: false,
       itemDistance: 16,
       states: {
@@ -63,7 +62,7 @@ export default function Chart({ series, ...props }) {
       }
     },
     credits: {
-      enabled: false,
+      enabled: false
     },
     plotOptions: {
       column: {
@@ -76,13 +75,13 @@ export default function Chart({ series, ...props }) {
         marker: {
           enabled: props.marker,
           radius: 3,
-          symbol: 'circle',
-          fillColor: '#fff',
+          symbol: "circle",
+          fillColor: "#fff",
           lineColor: null,
-          lineWidth: 2,
+          lineWidth: 2
         },
         shadow: {
-          enabled: false,
+          enabled: false
         },
         states: {
           hover: {
@@ -90,9 +89,9 @@ export default function Chart({ series, ...props }) {
             halo: {
               size: 10
             }
-          },
-        },
-      },
+          }
+        }
+      }
     },
 
     series
@@ -104,7 +103,7 @@ export default function Chart({ series, ...props }) {
       highcharts={Highcharts}
       options={options}
     />
-  )
+  );
 }
 
 Chart.propTypes = {

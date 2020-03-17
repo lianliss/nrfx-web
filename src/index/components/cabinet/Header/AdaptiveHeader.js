@@ -1,13 +1,12 @@
+import "./Header.less";
 
-import './Header.less';
-
-import React from 'react';
-import {connect} from 'react-redux';
-import * as notificationsActions from '../../../../actions/cabinet/notifications';
-import InternalNotification from '../InternalNotification/InternalNotification';
+import React from "react";
+import { connect } from "react-redux";
+import * as notificationsActions from "../../../../actions/cabinet/notifications";
+import InternalNotification from "../InternalNotification/InternalNotification";
 
 class AdaptiveHeader extends React.Component {
-  state = {activePage: null};
+  state = { activePage: null };
 
   render() {
     return (
@@ -29,7 +28,7 @@ class AdaptiveHeader extends React.Component {
         </div>
         <InternalNotification />
       </div>
-    )
+    );
   }
 }
 
@@ -42,13 +41,16 @@ AdaptiveHeader.defaultProps = {
   rightContent: ""
 };
 
-export default connect(state => ({
-  profile: state.default.profile,
-  notifications: state.notifications,
-  router: state.router,
-  langList: state.default.langList,
-  title: state.default.title,
-}), {
-  loadNotifications: notificationsActions.loadNotifications,
-  notificationAction: notificationsActions.submitAction,
-})(AdaptiveHeader);
+export default connect(
+  state => ({
+    profile: state.default.profile,
+    notifications: state.notifications,
+    router: state.router,
+    langList: state.default.langList,
+    title: state.default.title
+  }),
+  {
+    loadNotifications: notificationsActions.loadNotifications,
+    notificationAction: notificationsActions.submitAction
+  }
+)(AdaptiveHeader);

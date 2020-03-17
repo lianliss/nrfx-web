@@ -1,11 +1,11 @@
-import './PanelScreen.less';
+import "./PanelScreen.less";
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import Item from '../../components/Item/Item';
-import * as pages from '../../constants/pages';
-import * as adminActions from '../../../actions/admin';
+import Item from "../../components/Item/Item";
+import * as pages from "../../constants/pages";
+import * as adminActions from "../../../actions/admin";
 
 class PanelScreen extends React.Component {
   componentDidMount() {
@@ -14,9 +14,13 @@ class PanelScreen extends React.Component {
 
   render() {
     if (this.props.route.name === pages.PANEL) {
-      return <div className="PanelScreen">
-        <div className="PanelScreen__placeholder">Select a page in the sidebar</div>
-      </div>
+      return (
+        <div className="PanelScreen">
+          <div className="PanelScreen__placeholder">
+            Select a page in the sidebar
+          </div>
+        </div>
+      );
     }
     return (
       <div className="PanelScreen">
@@ -26,10 +30,8 @@ class PanelScreen extends React.Component {
   }
 }
 
-export default connect(
-  state => ({
-    layout: state.admin.layout,
-    user: state.default.profile.user,
-    route: state.router.route
-  })
-)(PanelScreen);
+export default connect(state => ({
+  layout: state.admin.layout,
+  user: state.default.profile.user,
+  route: state.router.route
+}))(PanelScreen);

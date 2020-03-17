@@ -1,22 +1,22 @@
-import './Bot.less';
+import "./Bot.less";
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import CabinetBaseScreen from '../../../CabinetBaseScreen/CabinetBaseScreen';
-import PageContainer from '../../../../../components/cabinet/PageContainer/PageContainer';
-import LoadingStatus from '../../../../../components/cabinet/LoadingStatus/LoadingStatus';
+import CabinetBaseScreen from "../../../CabinetBaseScreen/CabinetBaseScreen";
+import PageContainer from "../../../../../components/cabinet/PageContainer/PageContainer";
+import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
 
-import * as traderActions from '../../../../../../actions/cabinet/trader';
+import * as traderActions from "../../../../../../actions/cabinet/trader";
 
-import BotInfo from '../../components/BotInfo/BotInfo';
-import BotForm from '../../components/BotForm/BotForm';
-import History from '../../components/History/History';
-import Indicators from '../../components/Indicators/Indicators';
-import {ProfileSidebarItem} from '../../../../../components/cabinet/ProfileSidebar/ProfileSidebar';
-import * as pages from '../../../../../constants/pages';
-import {ReactComponent as PlusCircleSvg} from '../../../../../../asset/24px/angle-left.svg';
-import router from '../../../../../../router';
+import BotInfo from "../../components/BotInfo/BotInfo";
+import BotForm from "../../components/BotForm/BotForm";
+import History from "../../components/History/History";
+import Indicators from "../../components/Indicators/Indicators";
+import { ProfileSidebarItem } from "../../../../../components/cabinet/ProfileSidebar/ProfileSidebar";
+import * as pages from "../../../../../constants/pages";
+import { ReactComponent as PlusCircleSvg } from "../../../../../../asset/24px/angle-left.svg";
+import router from "../../../../../../router";
 
 class Index extends CabinetBaseScreen {
   load() {
@@ -25,7 +25,12 @@ class Index extends CabinetBaseScreen {
 
   render() {
     if (this.isLoading) {
-      return <LoadingStatus status={this.loadingStatus} onRetry={() => this.load()} />;
+      return (
+        <LoadingStatus
+          status={this.loadingStatus}
+          onRetry={() => this.load()}
+        />
+      );
     }
 
     return (
@@ -35,13 +40,13 @@ class Index extends CabinetBaseScreen {
           <ProfileSidebarItem
             onClick={() => router.navigate(pages.TRADER)}
             icon={<PlusCircleSvg />}
-            label={'Create Bot'}
-          />,
+            label={"Create Bot"}
+          />
         ]}
       >
         {this.__renderContent()}
       </PageContainer>
-    )
+    );
   }
 
   __renderContent() {
@@ -53,15 +58,18 @@ class Index extends CabinetBaseScreen {
           <Indicators />
         </div>
       </div>
-    )
+    );
   }
   __renderRightContent() {
-    return <History />
+    return <History />;
   }
 }
 
-export default connect(state => ({
-  loadingStatus: state.trader.loadingStatus
-}), {
-  loadBot: traderActions.loadBot
-})(Index);
+export default connect(
+  state => ({
+    loadingStatus: state.trader.loadingStatus
+  }),
+  {
+    loadBot: traderActions.loadBot
+  }
+)(Index);

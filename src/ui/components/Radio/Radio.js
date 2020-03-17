@@ -1,10 +1,10 @@
 // styles
-import './Radio.less';
+import "./Radio.less";
 // external
-import React  from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // internal
-import {classNames} from '../../utils';
+import { classNames } from "../../utils";
 
 function Radio(props) {
   const className = classNames({
@@ -14,10 +14,11 @@ function Radio(props) {
   });
 
   return (
-    <div className={className} onClick={() => props.onChange && props.onChange(props.value)}>
-      <div className="Radio__indicator">
-
-      </div>
+    <div
+      className={className}
+      onClick={() => props.onChange && props.onChange(props.value)}
+    >
+      <div className="Radio__indicator"></div>
       <div className="Radio__label">{props.children}</div>
     </div>
   );

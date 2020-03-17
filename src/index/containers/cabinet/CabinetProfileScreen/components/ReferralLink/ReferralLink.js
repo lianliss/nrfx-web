@@ -1,43 +1,67 @@
+import "./ReferralLink.less";
 
-import './ReferralLink.less';
+import React from "react";
+import * as UI from "../../../../../../ui/index";
 
-import React from 'react';
-import * as UI from '../../../../../../ui/index';
+import * as utils from "../../../../../../utils";
 
-import * as utils from '../../../../../../utils';
-
-import { ReactComponent as VkIcon } from '../../../../../../asset/social/vk.svg';
-import { ReactComponent as TwitterIcon } from '../../../../../../asset/social/twitter.svg';
-import { ReactComponent as FbIcon } from '../../../../../../asset/social/facebook.svg';
+import { ReactComponent as VkIcon } from "../../../../../../asset/social/vk.svg";
+import { ReactComponent as TwitterIcon } from "../../../../../../asset/social/twitter.svg";
+import { ReactComponent as FbIcon } from "../../../../../../asset/social/facebook.svg";
 
 class ReferralLink extends React.Component {
   render() {
     return (
       <div className="ReferralLink Content_box">
         <div className="ReferralLink__left">
-          <div className="ReferralLink__title">{utils.getLang('cabinet_referralLink')}</div>
-          <div className="ReferralLink__caption">{utils.getLang('cabinet_referralLink_description')}</div>
+          <div className="ReferralLink__title">
+            {utils.getLang("cabinet_referralLink")}
+          </div>
+          <div className="ReferralLink__caption">
+            {utils.getLang("cabinet_referralLink_description")}
+          </div>
         </div>
         <div className="ReferralLink__right">
           <div className="ReferralLink__right__social_buttons">
-            <a href={this.__buildVKUrl()} className="ReferralLink__right__social_button" rel="noopener noreferrer" target="_blank">
+            <a
+              href={this.__buildVKUrl()}
+              className="ReferralLink__right__social_button"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <VkIcon />
             </a>
-            <a href={this.__buildTwitterUrl()} className="ReferralLink__right__social_button" rel="noopener noreferrer" target="_blank">
+            <a
+              href={this.__buildTwitterUrl()}
+              className="ReferralLink__right__social_button"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <TwitterIcon />
             </a>
-            <a href={this.__buildFbUrl()} className="ReferralLink__right__social_button" rel="noopener noreferrer" target="_blank">
+            <a
+              href={this.__buildFbUrl()}
+              className="ReferralLink__right__social_button"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <FbIcon />
             </a>
           </div>
 
           <div className="ReferralLink__link__wrapper">
-            <div className="ReferralLink__link">{this.props.inviteLink.replace('https://', '')}</div>
-            <UI.Button onClick={() => this.props.linkDidCopy(this.props.inviteLink)}>{utils.getLang('cabinet_referralLinks_copyLink')}</UI.Button>
+            <div className="ReferralLink__link">
+              {this.props.inviteLink.replace("https://", "")}
+            </div>
+            <UI.Button
+              onClick={() => this.props.linkDidCopy(this.props.inviteLink)}
+            >
+              {utils.getLang("cabinet_referralLinks_copyLink")}
+            </UI.Button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   __buildVKUrl = () => {

@@ -1,22 +1,24 @@
-import React from 'react';
+import React from "react";
 
-import Chart from '../Chart/Chart';
-import EmptyContentBlock from '../EmptyContentBlock/EmptyContentBlock';
+import Chart from "../Chart/Chart";
+import EmptyContentBlock from "../EmptyContentBlock/EmptyContentBlock";
 import * as utils from "../../../../utils";
 
 class ClientChart extends React.Component {
   render() {
     if (!this.props.chart.data.length) {
-      return <EmptyContentBlock
-        icon={require('../../../../asset/120/start_invest_second.svg')}
-        message={utils.getLang("cabinet_placeholder_investmentsProfitCharts")}
-      />
+      return (
+        <EmptyContentBlock
+          icon={require("../../../../asset/120/start_invest_second.svg")}
+          message={utils.getLang("cabinet_placeholder_investmentsProfitCharts")}
+        />
+      );
     }
 
-    let clients = this.props.chart.data.map((item) => ({
+    let clients = this.props.chart.data.map(item => ({
       x: parseInt(item.date) * 1000,
       y: item.count,
-      title: item.count + ' people'//item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
+      title: item.count + " people" //item.amount.toFixed(8) + ' ' + item.currency.toUpperCase()
     }));
 
     let marker = false;
@@ -29,9 +31,13 @@ class ClientChart extends React.Component {
         <div className="Chart__profit__header">
           <div className="Chart__profit__header__cont">
             <h3>{this.props.title}</h3>
-            <div className="Chart__profit__header__period">30 {utils.getLang('global_days')}</div>
+            <div className="Chart__profit__header__period">
+              30 {utils.getLang("global_days")}
+            </div>
           </div>
-          <div className="Chart__profit__header__fiat">{this.props.chart.total}</div>
+          <div className="Chart__profit__header__fiat">
+            {this.props.chart.total}
+          </div>
         </div>
         <div className="Chart__profit__chart">
           <Chart
@@ -40,15 +46,15 @@ class ClientChart extends React.Component {
             series={[
               {
                 data: clients,
-                name: 'Clients',
-                type: 'spline',
+                name: "Clients",
+                type: "spline",
                 showInLegend: false,
-                color: 'var(--green)',
+                color: "var(--green)",
                 tooltip: {
                   valueDecimals: 2
                 },
                 shadow: {
-                  color: 'var(--green)',
+                  color: "var(--green)"
                 }
               }
             ]}
@@ -56,7 +62,7 @@ class ClientChart extends React.Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

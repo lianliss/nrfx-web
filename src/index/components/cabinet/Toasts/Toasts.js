@@ -1,8 +1,8 @@
-import './Toasts.less';
-import React from 'react';
-import { connect } from 'react-redux';
-import Toast from "../../../../ui/components/Toast/Toast"
-import * as toastActions from '../../../../actions/toasts';
+import "./Toasts.less";
+import React from "react";
+import { connect } from "react-redux";
+import Toast from "../../../../ui/components/Toast/Toast";
+import * as toastActions from "../../../../actions/toasts";
 
 function Toasts(props) {
   return (
@@ -19,13 +19,14 @@ function Toasts(props) {
         />
       ))}
     </div>
-  )
+  );
 }
 
 export default connect(
   state => ({
-    toasts: state.toasts,
-  }), {
+    toasts: state.toasts
+  }),
+  {
     toastDrop: toastActions.toastDrop
   }
 )(Toasts);
