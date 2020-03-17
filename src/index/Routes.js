@@ -35,8 +35,7 @@ import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "./containers/site/SiteFeeScreen/SiteFeeScreen";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
-import DocumentationPage from "./containers/documentation/Page/Page";
-import DocumentationMethod from "./containers/documentation/Method/Method";
+import DocumentationScreen from "./containers/documentation/index";
 import * as actions from "../actions/index";
 import router from "../router";
 
@@ -165,19 +164,16 @@ function Routes(props) {
       break;
     case pages.DOCUMENTATION:
       WrapperComponent = DocumentationWrapper;
-      Component = DocumentationPage;
+      Component = DocumentationScreen;
       break;
     case pages.DOCUMENTATION_API:
+    case pages.DOCUMENTATION_API_1:
+    case pages.DOCUMENTATION_API_2:
+    case pages.DOCUMENTATION_API_3:
+    case pages.DOCUMENTATION_API_4:
+    case pages.DOCUMENTATION_API_5:
       WrapperComponent = DocumentationWrapper;
-      Component = DocumentationPage;
-      break;
-    case pages.DOCUMENTATION_API_GROUP:
-      WrapperComponent = DocumentationWrapper;
-      Component = DocumentationPage;
-      break;
-    case pages.DOCUMENTATION_API_GROUP_METHOD:
-      WrapperComponent = DocumentationWrapper;
-      Component = DocumentationMethod;
+      Component = DocumentationScreen;
       break;
     default:
       Component = SiteNotFoundScreen;
