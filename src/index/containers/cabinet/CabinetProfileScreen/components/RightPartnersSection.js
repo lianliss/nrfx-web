@@ -2,7 +2,6 @@ import React from "react";
 //
 import * as utils from "../../../../../utils";
 import WalletBalance from "../../../../components/cabinet/WalletBalance/WalletBalance";
-import ChartProfit from "../../../../components/cabinet/ChartProfit/ChartProfit";
 import ClientChart from "../../../../components/cabinet/ClientChart/ClientChart";
 
 class RightPartnersSection extends React.Component {
@@ -10,13 +9,6 @@ class RightPartnersSection extends React.Component {
     return (
       <div>
         {this.__renderBalance()}
-        {this.props.profit_chart &&
-          Object.keys(this.props.profit_chart.data).length > 0 && (
-            <ChartProfit
-              chart={this.props.profit_chart}
-              adaptive={this.props.adaptive}
-            />
-          )}
         {!this.props.adaptive &&
           this.props.client_chart &&
           this.props.client_chart.data.length > 0 && (
