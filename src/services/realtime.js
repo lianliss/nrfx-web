@@ -5,7 +5,7 @@ class RealTime {
     const token = auth.getToken();
     // this.endpoint = 'wss://ex.bitcoinbot.pro/' + (token ? `?access_token=${token}` : '');
     this.endpoint =
-      "wss://api-stage.bitcoinbot.pro/echo" +
+      "wss://api-stage.narfex.dev/echo" +
       (token ? `?access_token=${token}` : "");
     this.listeners = {};
     this.sendQueue = [];
