@@ -9,6 +9,7 @@ import * as utils from "../../../../../../utils";
 import { getCurrencyInfo } from "../../../../../../actions";
 import { openModal } from "../../../../../../actions";
 import Status from "src/ui/components/Status/Status";
+import EmptyContentBlock from "../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock";
 
 const FiatHistoryTable = props => {
   const transactions = props.history
@@ -125,6 +126,15 @@ const FiatHistoryTable = props => {
     );
   };
 
+  if (!props.history.length) {
+    return (
+      <EmptyContentBlock
+        icon={require("src/asset/120/clock.svg")}
+        message={utils.getLang("cabinet_noFiatHistory")}
+      />
+    );
+  }
+
   return (
     <UI.ContentBox className="FiatHistoryTable">
       <div className="FiatHistoryTable__header">
@@ -174,7 +184,7 @@ const FiatHistoryTable = props => {
 
 export default connect(
   stage => ({
-    history: stage.fiat.history,
+    history: [],
     translator: stage.settings.translator,
     currentLang: stage.default.currentLang
   }),
