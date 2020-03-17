@@ -16,7 +16,7 @@ import EmptyContentBlock from "../EmptyContentBlock/EmptyContentBlock";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
 
 const MerchantModal = props => {
-  const { adaptive, balances } = props;
+  const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(
     params.currency.toLowerCase() || "usd"
