@@ -14,6 +14,8 @@ import PagingItem from "../Paging/PagingItem";
 import Label from "../../../ui/components/Label/Label";
 import Json from "../Json/Json";
 import Text from "../Text/Text";
+import Chackbox from "../Chackbox/Chackbox";
+import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
 import { connect } from "react-redux";
@@ -106,6 +108,12 @@ const Item = props => {
       break;
     case "text":
       Component = Text;
+      break;
+    case "checkbox":
+      Component = Chackbox;
+      break;
+    case "wysiwyg":
+      Component = Wysiwyg;
       break;
     default:
       Component = props => (

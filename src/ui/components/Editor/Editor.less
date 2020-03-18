@@ -17,4 +17,20 @@
     top: 0;
     left: 0;
   }
+
+  &.border {
+    border-radius: 8px;
+    box-shadow: var(--main-shadow);
+
+    .Editor__wrapper {
+      border-radius: inherit;
+      border: 2px solid transparent;
+      background: var(--white);
+      padding: 14px 16px;
+    }
+
+    &.focus {
+      border-color: var(--primary-orange);
+    }
+  }
 }

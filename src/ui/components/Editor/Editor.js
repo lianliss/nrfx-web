@@ -1,9 +1,9 @@
-import './Editor.less';
-import React from 'react';
-import {Editor as DraftEditor, EditorState, RichUtils,  } from 'draft-js';
-import EditorTooltip from '../EditorTooltip/EditorTooltip';
-import Button from '../Button/Button';
-
+import "./Editor.less";
+import React from "react";
+import { Editor as DraftEditor, EditorState, RichUtils } from "draft-js";
+import EditorTooltip from "../EditorTooltip/EditorTooltip";
+import Button from "../Button/Button";
+import { classNames as cn } from "../../utils/index";
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -11,6 +11,7 @@ export default class Editor extends React.Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       hide: true,
+      focus: false,
       rect: {
         top: 0,
         left: 0,
@@ -20,19 +21,19 @@ export default class Editor extends React.Component {
         height: 0
       }
     };
-    this.onChange = editorState => this.setState({editorState});
+    this.onChange = editorState => this.setState({ editorState });
     this.update = this.update.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
 
-  blockRendererFn = (contentBlock) => {
+  blockRendererFn = contentBlock => {
     const type = contentBlock.getType();
-    if (type === 'button') {
+    if (type === "button") {
       return {
         component: Button,
         props: {
-          foo: 'bar',
-        },
+          foo: "bar"
+        }
       };
     }
     // if (type === 'button') {
@@ -55,9 +56,9 @@ export default class Editor extends React.Component {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
       this.onChange(newState);
-      return 'handled';
+      return "handled";
     }
-    return 'not-handled';
+    return "not-handled";
   }
 
   updateRect(hide) {
@@ -79,15 +80,15 @@ export default class Editor extends React.Component {
         width: currentRect.width,
         height: currentRect.height,
         top: currentRect.top - editorRect.top,
-        left: currentRect.left - editorRect.left,
-      }
+        left: currentRect.left - editorRect.left
+      };
     }
 
-    this.setState({rect, hide});
-    console.log(this.state.rect);
+    this.setState({ rect, hide });
+    // console.log(this.state.rect);
   }
 
-  handleChange = (editorState) => {
+  handleChange = editorState => {
     let selection = editorState.getSelection();
     const anchorKey = selection.getAnchorKey();
     const currentContent = editorState.getCurrentContent();
@@ -103,58 +104,86 @@ export default class Editor extends React.Component {
       this.update(true);
     }
     this.onChange(editorState);
-  }
+  };
 
   render() {
     const style = {
-      transform: `translate(calc(-50% + ${this.state.rect.left + (this.state.rect.width / 2)}px), calc(-100% + ${this.state.rect.top - 10}px))`
+      transform: `translate(calc(-50% + ${this.state.rect.left +
+        this.state.rect.width / 2}px), calc(-100% + ${this.state.rect.top -
+        10}px))`
     };
 
     return (
-      <div className="Editor" ref="editor">
-        <DraftEditor
-          blockRendererFn={this.blockRendererFn}
-          onBlur={() => this.setState({ hide: true })}
-          handleKeyCommand={this.handleKeyCommand}
-          editorState={this.state.editorState}
-          onChange={this.handleChange}
-        />
-        <EditorTooltip
-          onChange={button => {
-            button.block && this.onChange(RichUtils.toggleBlockType(this.state.editorState, button.block));
-            button.style && this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, button.style));
-            this.setState({ hide: true });
-          }}
-          buttons={[
-            {
-              title: 'H1',
-              block: 'header-one',
-            }, {
-              title: 'H2',
-              block: 'header-two',
-            }, {
-              title: '“quote”',
-              block: 'blockquote'
-            }, {
-              title: '<code />',
-              style: 'code-block',
-            }, {
-              title: 'Bold',
-              style: 'BOLD'
-            }, {
-              title: 'Italic',
-              style: 'ITALIC'
-            }, {
-              title: "Underline",
-              style: "UNDERLINE"
-            }
-            // {
-            //   title: "Monospace",
-            //   style: "MONOSPACE"
-            // }
-          ]}
-          visible={!this.state.hide} style={style} />
-        {/*<div className="Editor__shape" style={{ ...this.state.rect }} />*/}
+      <div
+        className={cn("Editor", "border", { focus: this.state.focus })}
+        ref="editor"
+      >
+        <div className="Editor__wrapper">
+          <DraftEditor
+            blockRendererFn={this.blockRendererFn}
+            onFocus={() => this.setState({ focus: true })}
+            onBlur={() => this.setState({ hide: true, focus: false })}
+            handleKeyCommand={this.handleKeyCommand}
+            editorState={this.state.editorState}
+            onChange={this.handleChange}
+          />
+          <EditorTooltip
+            onChange={button => {
+              button.block &&
+                this.onChange(
+                  RichUtils.toggleBlockType(
+                    this.state.editorState,
+                    button.block
+                  )
+                );
+              button.style &&
+                this.onChange(
+                  RichUtils.toggleInlineStyle(
+                    this.state.editorState,
+                    button.style
+                  )
+                );
+              this.setState({ hide: true });
+            }}
+            buttons={[
+              {
+                title: "H1",
+                block: "header-one"
+              },
+              {
+                title: "H2",
+                block: "header-two"
+              },
+              {
+                title: "“quote”",
+                block: "blockquote"
+              },
+              {
+                title: "<code />",
+                style: "code-block"
+              },
+              {
+                title: "Bold",
+                style: "BOLD"
+              },
+              {
+                title: "Italic",
+                style: "ITALIC"
+              },
+              {
+                title: "Underline",
+                style: "UNDERLINE"
+              }
+              // {
+              //   title: "Monospace",
+              //   style: "MONOSPACE"
+              // }
+            ]}
+            visible={!this.state.hide}
+            style={style}
+          />
+          {/*<div className="Editor__shape" style={{ ...this.state.rect }} />*/}
+        </div>
       </div>
     );
   }

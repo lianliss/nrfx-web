@@ -15,7 +15,7 @@ function CheckBox(props) {
   });
 
   return (
-    <div className={className} onClick={props.onChange}>
+    <div className={className} onClick={() => props.onChange(!props.checked)}>
       <div className="CheckBox__indicator">
         <div className="CheckBox__indicator__active">
           <SVG src={require("../../asset/check_16.svg")} />
