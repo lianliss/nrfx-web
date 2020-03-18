@@ -24,6 +24,7 @@ import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";
 import Show from "../../../components/hoc/ShowContent";
 import * as investmentsActions from "../../../../actions/cabinet/investments";
+import SVG from "react-inlinesvg";
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -125,6 +126,13 @@ class CabinetInvestmentsScreen extends React.PureComponent {
                   ]
             }
           >
+            <div className="Investments__stub">
+              <UI.ContentBox>
+                <SVG src={require("src/asset/120/failed.svg")} />
+                <p>{utils.getLang("investmentsStubText")}</p>
+              </UI.ContentBox>
+            </div>
+
             <Show
               showIf={
                 this.props.adaptive &&
