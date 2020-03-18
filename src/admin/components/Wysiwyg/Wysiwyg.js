@@ -7,7 +7,7 @@ const InputWrapper = props => {
 
   useEffect(() => valueChange(props.id, ""), [props.id]);
 
-  return <Editor />;
+  return <Editor border />;
 };
 
 export default connect(state => ({

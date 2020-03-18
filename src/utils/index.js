@@ -93,6 +93,13 @@ export const nl2br = text => {
   return text;
 };
 
+export function isJson(string) {
+  try {
+    return JSON.parse(string);
+  } catch (e) {
+    return false;
+  }
+}
 export const isEmail = email =>
   /^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase());
 

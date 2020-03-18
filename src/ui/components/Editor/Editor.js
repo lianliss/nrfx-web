@@ -1,15 +1,25 @@
 import "./Editor.less";
 import React from "react";
-import { Editor as DraftEditor, EditorState, RichUtils } from "draft-js";
+import {
+  Editor as DraftEditor,
+  EditorState,
+  RichUtils,
+  convertFromHTML
+} from "draft-js";
 import EditorTooltip from "../EditorTooltip/EditorTooltip";
 import Button from "../Button/Button";
+import { isJson } from "src/utils";
 import { classNames as cn } from "../../utils/index";
 
 export default class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorState: this.props.state
+        ? isJson(this.props.state)
+          ? this.props.state
+          : convertFromHTML(this.props.state)
+        : EditorState.createEmpty(),
       hide: true,
       focus: false,
       rect: {
@@ -115,7 +125,10 @@ export default class Editor extends React.Component {
 
     return (
       <div
-        className={cn("Editor", "border", { focus: this.state.focus })}
+        className={cn("Editor", {
+          border: this.props.border,
+          focus: this.state.focus
+        })}
         ref="editor"
       >
         <div className="Editor__wrapper">
