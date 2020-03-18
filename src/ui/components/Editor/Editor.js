@@ -4,22 +4,40 @@ import {
   Editor as DraftEditor,
   EditorState,
   RichUtils,
-  convertFromHTML
+  convertFromHTML,
+  CompositeDecorator,
+  ContentState
 } from "draft-js";
 import EditorTooltip from "../EditorTooltip/EditorTooltip";
 import Button from "../Button/Button";
 import { isJson } from "src/utils";
 import { classNames as cn } from "../../utils/index";
 
+const prepareState = content => {
+  if (content) {
+    if (isJson(content)) {
+      return this.props.state;
+    } else {
+      const blocksFromHTML = convertFromHTML(content);
+      const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap
+      );
+
+      // const decorator = new CompositeDecorator([]);
+
+      return EditorState.createWithContent(state);
+    }
+  } else {
+    return EditorState.createEmpty();
+  }
+};
+
 export default class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: this.props.state
-        ? isJson(this.props.state)
-          ? this.props.state
-          : convertFromHTML(this.props.state)
-        : EditorState.createEmpty(),
+      editorState: prepareState(this.props.content),
       hide: true,
       focus: false,
       rect: {
@@ -31,6 +49,10 @@ export default class Editor extends React.Component {
         height: 0
       }
     };
+
+    // console.log(prepareState(this.props.content));
+    // debugger;
+
     this.onChange = editorState => this.setState({ editorState });
     this.update = this.update.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
@@ -38,6 +60,7 @@ export default class Editor extends React.Component {
 
   blockRendererFn = contentBlock => {
     const type = contentBlock.getType();
+    console.log(1111, type);
     if (type === "button") {
       return {
         component: Button,
@@ -94,7 +117,9 @@ export default class Editor extends React.Component {
       };
     }
 
-    this.setState({ rect, hide });
+    console.log(3, hide);
+    console.trace();
+    this.setState({ rect, hide: !!hide });
     // console.log(this.state.rect);
   }
 
@@ -108,7 +133,10 @@ export default class Editor extends React.Component {
     const end = selection.getEndOffset();
     const selectedText = currentBlock.getText().slice(start, end);
 
+    console.log(1);
+
     if (selectedText) {
+      console.log(4, selectedText);
       this.update();
     } else {
       this.update(true);
@@ -135,7 +163,9 @@ export default class Editor extends React.Component {
           <DraftEditor
             blockRendererFn={this.blockRendererFn}
             onFocus={() => this.setState({ focus: true })}
-            onBlur={() => this.setState({ hide: true, focus: false })}
+            onBlur={() => {
+              this.setState({ hide: true, focus: false });
+            }}
             handleKeyCommand={this.handleKeyCommand}
             editorState={this.state.editorState}
             onChange={this.handleChange}

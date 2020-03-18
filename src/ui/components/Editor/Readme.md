@@ -3,7 +3,9 @@
 ```
 
 ```js
-<Editor state={"<h1>123123</h1><p>1231</p>"} />
+<Editor
+  content={`<h1>Header h1</h1><p>Text text text <a href="#">Link</a></p>`}
+/>
 ```
 
 ```js
