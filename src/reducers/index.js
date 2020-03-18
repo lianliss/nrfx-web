@@ -9,6 +9,7 @@ const initialState = {
   cabinet: true, // HACK
   auth: {},
   profile: {
+    has_deposits: true,
     pending: false
   },
   currentLang: null,
@@ -88,7 +89,10 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.PROFILE: {
       return {
         ...state,
-        profile: action.props
+        profile: {
+          ...state.profile,
+          ...action.props
+        }
       };
     }
 
