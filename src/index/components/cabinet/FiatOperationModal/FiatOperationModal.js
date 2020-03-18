@@ -63,6 +63,7 @@ function FiatOperationModal(props) {
       {["income", "withdrawal"].includes(operation.type) ? (
         <div className="FiatOperationModal__content">
           <UI.WalletCard
+            symbol={true}
             balance={balance}
             skipColor={balance < 0}
             currency={primaryCurrency}
@@ -158,14 +159,14 @@ function FiatOperationModal(props) {
             </div>
           </div>
           <div className="FiatOperationModal__row">
-            <div className="FiatOperationModal__row__left">
+            <div className="FiatOperationModal__row__left FiatOperationModal__value">
               {utils.getLang("global_price")}:{" "}
               <UI.NumberFormat
                 number={primaryPrice}
                 currency={primaryCurrency.abbr}
               />
             </div>
-            <div className="FiatOperationModal__row__right">
+            <div className="FiatOperationModal__row__right FiatOperationModal__value">
               {utils.getLang("global_price")}:{" "}
               <UI.NumberFormat
                 number={secondaryPrice}
@@ -178,7 +179,9 @@ function FiatOperationModal(props) {
               <div className="FiatOperationModal__label">
                 {utils.getLang("global_date")}
               </div>
-              <div>{utils.dateFormat(operation.created_at)}</div>
+              <div className="FiatOperationModal__value">
+                {utils.dateFormat(operation.created_at)}
+              </div>
             </div>
             <div className="FiatOperationModal__row__right">
               {/*<div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}

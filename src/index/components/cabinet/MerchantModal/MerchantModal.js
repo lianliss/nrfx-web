@@ -16,7 +16,7 @@ import EmptyContentBlock from "../EmptyContentBlock/EmptyContentBlock";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
 
 const MerchantModal = props => {
-  const { adaptive, balances } = props;
+  const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(
     params.currency.toLowerCase() || "usd"
@@ -26,7 +26,7 @@ const MerchantModal = props => {
   const [touched, setTouched] = useState(null);
   const [invoice, setInvoice] = useState(null);
 
-  const merchants = {
+  const merchantList = {
     advcash: {
       icon: require("../../../../asset/merchants/adv_cash.svg"),
       title: "AdvCash",
@@ -78,6 +78,10 @@ const MerchantModal = props => {
     return null;
   };
 
+  const getBalance = currency => {
+    return props.balances.find(b => b.currency.toLowerCase() === currency);
+  };
+
   const handleFiatRefill = () => {
     setTouched(true);
     const message = checkAmount();
@@ -86,17 +90,9 @@ const MerchantModal = props => {
       return false;
     }
 
-    const balance = balances.find(b => b.currency.toLowerCase() === currency);
-    actions.openModal("fiat_refill", null, { amount, balance });
-
-    // } else if (url && amount && !urlStatus) {
-    // setStatus('loading');
-    // merchantService.open(url).then(() => {
-    //   setStatus('success');
-    // }).catch(() => {
-    //   setStatus('error');
-    // })
-    // }
+    const balance = getBalance(currency);
+    const fee = props.merchants[merchant].fee_conf[currency];
+    actions.openModal("fiat_refill", null, { amount, balance, fee });
   };
 
   const handleFiatWithdrawal = () => {
@@ -106,8 +102,10 @@ const MerchantModal = props => {
       toasts.error(message);
       return false;
     }
-    const balance = balances.find(b => b.currency.toLowerCase() === currency);
-    actions.openModal("fiat_withdrawal", null, { amount, balance });
+
+    const balance = getBalance(currency);
+    const fee = props.merchants[merchant].fee_count;
+    actions.openModal("fiat_withdrawal", null, { amount, balance, fee });
   };
 
   const handleSubmitInvoice = () => {
@@ -153,19 +151,23 @@ const MerchantModal = props => {
 
   // window.handleSubmit = handleSubmit;
 
-  const renderMerchantsList = () => {
-    const merchants2 = Object.keys(props.merchants)
+  const getAvailableMerchants = currency => {
+    return Object.keys(props.merchants)
       .map(name => ({
         ...props.merchants[name],
-        ...merchants[name],
+        ...merchantList[name],
         name
       }))
       .filter(m => Object.keys(m.currencies).includes(currency));
+  };
+
+  const renderMerchantsList = () => {
+    const merchants = getAvailableMerchants(currency);
 
     return (
       <div className="MerchantModal__list">
-        {merchants2.length ? (
-          merchants2.map(m => (
+        {merchants.length ? (
+          merchants.map(m => (
             <div
               className="MerchantModal__item"
               onClick={() => setMerchant(m.name)}
@@ -242,6 +244,15 @@ const MerchantModal = props => {
       };
     }
     return 0;
+  };
+
+  const handleGoToMerchantList = () => {
+    const merchantsArray = getAvailableMerchants(currency);
+    if (merchantsArray.length === 1) {
+      props.onBack();
+    } else {
+      setMerchant(null);
+    }
   };
 
   const renderForm = () => {
@@ -322,7 +333,7 @@ const MerchantModal = props => {
         <div className="MerchantModal__buttons">
           <UI.Button
             currency={currencyInfo}
-            onClick={() => setMerchant(null)}
+            onClick={handleGoToMerchantList}
             type="outline"
           >
             {getLang("global_back")}
@@ -428,7 +439,13 @@ const MerchantModal = props => {
         />
       );
     }
+
     if (!merchant) {
+      // HACK for one merchant
+      const merchantsArray = getAvailableMerchants(currency);
+      if (merchantsArray.length === 1) {
+        setMerchant(merchantsArray[0].name);
+      }
       return renderMerchantsList();
     } else if (invoice) {
       return renderInvoice();

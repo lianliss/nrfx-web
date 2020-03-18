@@ -1,4 +1,5 @@
 import "./CabinetProfileScreen.less";
+import "./ChartProfit.less";
 
 import React from "react";
 import { connect } from "react-redux";
@@ -12,7 +13,6 @@ import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStat
 import WalletBox from "../../../components/cabinet/WalletBox/WalletBox";
 import WalletBalance from "../../../components/cabinet/WalletBalance/WalletBalance";
 import DashboardItem from "./components/DashboardItem/DashboardItem";
-import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import router from "../../../../router";
 import PartnersSection from "./components/PartnersSection";
 import RightPartnersSection from "./components/RightPartnersSection";
@@ -147,7 +147,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
                 />
               </div>
               <div className="CabinetProfileScreen__height24"></div>
-              {this.__renderChartProfit()}
             </div>
           );
         } else {
@@ -155,17 +154,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         }
       }
     }
-  };
-
-  __renderChartProfit = () => {
-    if (this.props.adaptive || !this.props.dashboard.hasOwnProperty("chart")) {
-      return "";
-    }
-    return (
-      <div>
-        <ChartProfit chart={this.props.dashboard.chart} />
-      </div>
-    );
   };
 
   __renderContent = () => {

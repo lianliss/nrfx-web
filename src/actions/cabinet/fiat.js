@@ -79,6 +79,7 @@ export function exchange({ from, to, amount, amountType }) {
       });
   };
 }
+
 export function payForm({ merchant, amount, currency }) {
   return api
     .call(apiSchema.Fiat_wallet.PayFormGet, {
@@ -132,12 +133,17 @@ export function withdrawalBanksGet() {
           type: actionTypes.FIAT_WALLETS_SET_WITHDRAWAL_BANK_LIST,
           banks
         });
-      })
-      .finally(() => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
           section: "withdrawalBankList",
-          status: null
+          status: ""
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: "withdrawalBankList",
+          status: "failed"
         });
       });
   };
@@ -157,12 +163,17 @@ export function refillBanksGet() {
           type: actionTypes.FIAT_WALLETS_SET_REFILL_BANK_LIST,
           banks
         });
-      })
-      .finally(() => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
           section: "refillBankList",
-          status: null
+          status: ""
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: "refillBankList",
+          status: "failed"
         });
       });
   };
