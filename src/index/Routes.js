@@ -193,12 +193,13 @@ function Routes(props) {
       isHomepage={route === pages.MAIN}
       withOrangeBg={isWithOrangeBg}
     >
-      <Component routerParams={routerParams} />
+      <Component currentLang={props.currentLang} routerParams={routerParams} />
     </WrapperComponent>
   );
 }
 
 export default connect(state => ({
+  currentLang: state.default.currentLang,
   profile: state.default.profile,
   route: state.router.route
 }))(Routes);

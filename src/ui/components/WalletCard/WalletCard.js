@@ -18,7 +18,11 @@ const WalletCard = props => {
       {props.title && <div className="WalletCard__title">{props.title}</div>}
       {!isNaN(props.balance) && (
         <div className="WalletCard__balance">
-          <NumberFormat number={props.balance} currency={props.currency.abbr} />
+          <NumberFormat
+            symbol={props.symbol}
+            number={props.balance}
+            currency={props.currency.abbr}
+          />
         </div>
       )}
       {props.balanceUsd > 0 && (

@@ -8,7 +8,6 @@ import ModalState from "../ModalState/ModalState";
 import * as profileActions from "../../../../actions/cabinet/profile";
 import WalletBox from "../WalletBox/WalletBox";
 import DepositTable from "../../../containers/cabinet/CabinetInvestmentsScreen/components/DepositTable";
-import ChartProfit from "../../cabinet/ChartProfit/ChartProfit";
 import ClientChart from "../../cabinet/ClientChart/ClientChart";
 
 export default class PartnerInfoModal extends React.Component {
@@ -47,7 +46,6 @@ export default class PartnerInfoModal extends React.Component {
         {this.__renderUserInfo()}
         {this.__renderProfit()}
         {this.__renderDeposits()}
-        {this.__renderProfitChart()}
         {this.__renderClientChart()}
       </UI.Modal>
     );
@@ -121,21 +119,6 @@ export default class PartnerInfoModal extends React.Component {
           fromPartners
           skipContentBox
         />
-      </Block>
-    );
-  }
-
-  __renderProfitChart() {
-    if (
-      !this.state.profit_chart ||
-      !Object.keys(this.state.profit_chart.data).length
-    ) {
-      return null;
-    }
-
-    return (
-      <Block adaptive={this.props.adaptive} padding>
-        <ChartProfit chart={this.state.profit_chart} />
       </Block>
     );
   }
