@@ -147,7 +147,6 @@ class CabinetProfileScreen extends CabinetBaseScreen {
                 />
               </div>
               <div className="CabinetProfileScreen__height24"></div>
-              {this.__renderChartProfit()}
             </div>
           );
         } else {
