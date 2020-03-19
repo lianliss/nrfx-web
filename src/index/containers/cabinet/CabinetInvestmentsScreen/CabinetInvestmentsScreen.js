@@ -13,6 +13,7 @@ import DepositTable from "./components/DepositTable";
 import CurrentPayments from "./components/CurrentPayments";
 import AllPayments from "./components/AllPayments";
 import { ProfileSidebarItem } from "../../../components/cabinet/ProfileSidebar/ProfileSidebar";
+import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import Paging from "../../../components/cabinet/Paging/Paging";
 import { ReactComponent as InvestSvg } from "../../../../asset/24px/invest.svg";
@@ -23,6 +24,7 @@ import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";
 import Show from "../../../components/hoc/ShowContent";
 import * as investmentsActions from "../../../../actions/cabinet/investments";
+import SVG from "react-inlinesvg";
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -124,6 +126,13 @@ class CabinetInvestmentsScreen extends React.PureComponent {
                   ]
             }
           >
+            <div className="Investments__stub">
+              <UI.ContentBox>
+                <SVG src={require("src/asset/120/failed.svg")} />
+                <p>{utils.getLang("investmentsStubText")}</p>
+              </UI.ContentBox>
+            </div>
+
             <Show
               showIf={
                 this.props.adaptive &&
@@ -230,6 +239,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
 
     return (
       <>
+        <ChartProfit chart={this.props.chart} adaptive={this.props.adaptive} />
         {this.__renderCurrentPayments()}
         {this.__renderAllPayments()}
       </>
