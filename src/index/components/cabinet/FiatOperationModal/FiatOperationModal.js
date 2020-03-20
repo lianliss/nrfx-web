@@ -76,7 +76,7 @@ function FiatOperationModal(props) {
                   <div className="FiatOperationModal__label">
                     {utils.getLang("global_status")}
                   </div>
-                  <div>
+                  <div className="FiatOperationModal__value">
                     <Status
                       status={operation.status}
                       label={operation.status_label}
@@ -87,8 +87,8 @@ function FiatOperationModal(props) {
                   <div className="FiatOperationModal__label">
                     {utils.getLang("global_bank")}
                   </div>
-                  <div>
-                    {utils.getLang("global_bank")}: {operation.extra.bank_code}
+                  <div className="FiatOperationModal__value">
+                    {operation.extra.bank_code}
                   </div>
                 </div>
               </div>
@@ -100,7 +100,9 @@ function FiatOperationModal(props) {
                       "cabinet_fiatWithdrawalModal__accountHolderName"
                     )}
                   </div>
-                  <div>{operation.extra.account_holder_name}</div>
+                  <div className="FiatOperationModal__value">
+                    {operation.extra.account_holder_name}
+                  </div>
                 </div>
                 <div className="FiatOperationModal__row__right">
                   <div className="FiatOperationModal__label">
@@ -108,7 +110,12 @@ function FiatOperationModal(props) {
                       "cabinet_fiatWithdrawalModal__accountNumber"
                     )}
                   </div>
-                  <div>{operation.extra.account_number}</div>
+                  <div className="FiatOperationModal__value">
+                    <UI.NumberFormat
+                      number={operation.extra.account_number}
+                      currency={secondaryCurrency.abbr}
+                    />
+                  </div>
                 </div>
               </div>
             </>
@@ -119,7 +126,17 @@ function FiatOperationModal(props) {
               <div className="FiatOperationModal__label">
                 {utils.getLang("global_date")}
               </div>
-              <div>{utils.dateFormat(operation.created_at)}</div>
+              <div className="FiatOperationModal__value">
+                {utils.dateFormat(operation.created_at)}
+              </div>
+            </div>
+            <div className="FiatOperationModal__row__right">
+              <div className="FiatOperationModal__label">
+                {utils.getLang("global_fee")}
+              </div>
+              <div className="FiatOperationModal__value">
+                {operation.extra.fee}
+              </div>
             </div>
             {/*<div className="FiatOperationModal__row__right">*/}
             {/*  <div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}

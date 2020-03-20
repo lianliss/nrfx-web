@@ -17,7 +17,13 @@ const ChangeSecretKeyModal = props => {
       width={424}
     >
       <UI.ModalHeader>{utils.getLang("cabinet_enterSecretKey")}</UI.ModalHeader>
-      <form className="ChangeSecretKayModal">
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          props.changeSecretKay(code);
+        }}
+        className="ChangeSecretKayModal"
+      >
         <UI.Input
           autoComplete="off"
           autoFocus={true}
@@ -28,12 +34,7 @@ const ChangeSecretKeyModal = props => {
           error={false}
         />
         <div className="ChangeSecretKayModal__submit_wrapper">
-          <UI.Button
-            state={props.state}
-            onClick={() => {
-              props.changeSecretKay(code);
-            }}
-          >
+          <UI.Button state={props.state}>
             {utils.getLang("cabinet_settingsSave")}
           </UI.Button>
         </div>

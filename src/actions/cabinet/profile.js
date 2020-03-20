@@ -56,6 +56,7 @@ export function changeSecretKay(secret) {
     api
       .call(apiSchema.Profile.SecretKeyLoggedPost, { secret })
       .then(dashboard => {
+        dispatch({ type: actionTypes.PROFILE_SET_SECRET_SUCCESS });
         toastsActions.toastPush(
           utils.getLang("cabinet_secretKeyChangedSuccessfully"),
           "success"
@@ -64,9 +65,6 @@ export function changeSecretKay(secret) {
       })
       .catch(err => {
         toastsActions.toastPush(err.message, "error")(dispatch, getState);
-      })
-      .then(() => {
-        dispatch({ type: actionTypes.PROFILE_SET_SECRET_SUCCESS });
       })
       .finally(() => {
         dispatch({
@@ -104,9 +102,6 @@ export function gaInit(code) {
           section: "setGa",
           status: ""
         });
-      })
-      .then(() => {
-        closeModal();
       });
   };
 }
