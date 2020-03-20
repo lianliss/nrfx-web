@@ -34,7 +34,7 @@ const ChangeSecretKeyModal = props => {
           error={false}
         />
         <div className="ChangeSecretKayModal__submit_wrapper">
-          <UI.Button state={props.state}>
+          <UI.Button btnType="submit" state={props.state}>
             {utils.getLang("cabinet_settingsSave")}
           </UI.Button>
         </div>
