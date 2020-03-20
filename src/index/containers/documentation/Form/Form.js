@@ -9,7 +9,7 @@ import * as toast from "../../../../actions/toasts";
 
 export default ({ method }) => {
   const [formData, setFormData] = useState({});
-  const [response, setResponse] = useState({});
+  const [response, setResponse] = useState(method.result_example);
   const [requestStatus, setRequestStatus] = useState("");
 
   const handleSetProperty = key => value => {
