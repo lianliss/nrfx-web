@@ -17,7 +17,8 @@ function push(message, type) {
       const currentToast = store
         .getState()
         .toasts.items.find(toast => toast.id === id);
-      if (currentToast.hide) {
+
+      if (currentToast && currentToast.hide) {
         store.dispatch({ type: actionTypes.TOASTS_HIDE, id });
         setTimeout(
           () => store.dispatch({ type: actionTypes.TOASTS_DROP, id }),
