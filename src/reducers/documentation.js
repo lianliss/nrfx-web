@@ -7,7 +7,7 @@ const initialState = {
     default: "loading"
   },
   menu: {},
-  schema: {}
+  schema: null
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -34,13 +34,24 @@ export default function reduce(state = initialState, action = {}) {
         schema: toggleSchema(state.schema, action.path)
       };
 
-    case actionTypes.DOCUMENTATION_INIT:
+    case actionTypes.DOCUMENTATION_SET_STATUS:
       return {
         ...state,
         loadingStatus: {
           ...state.loadingStatus,
-          default: action.status
-        },
+          [action.status]: action.value
+        }
+      };
+
+    case actionTypes.DOCUMENTATION_METHOD:
+      return {
+        ...state,
+        method: action.method
+      };
+
+    case actionTypes.DOCUMENTATION_INIT:
+      return {
+        ...state,
         schema: action.schema
       };
 

@@ -11,7 +11,7 @@ import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingS
 
 const DocumentationWrapper = props => {
   useEffect(() => {
-    props.getDocumentation();
+    !props.schema && props.getDocumentation();
   });
 
   const renderContent = () => {
@@ -45,7 +45,8 @@ const DocumentationWrapper = props => {
 
 export default connect(
   state => ({
-    loadingStatus: state.documentation.loadingStatus.default
+    loadingStatus: state.documentation.loadingStatus.default,
+    schema: state.documentation.schema
   }),
   {
     getDocumentation

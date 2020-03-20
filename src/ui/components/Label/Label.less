@@ -1,27 +1,32 @@
 .Label {
-  display: inline-flex;
-  border: 1px solid #f5f1ee;
-  box-sizing: border-box;
-  border-radius: 12px;
-  padding: 4px 8px;
-  align-items: center;
-  margin: 4px;
+  display: inline-block;
+  margin-left: 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 24px;
+  padding: 0 8px;
 
-  .Label__name {
-    color: var(--dark-gray);
-    margin-right: 0.5em;
+  background: #EDF0F5;
+  border: 1px solid #EDF0F5;
+
+  &.get {
+    background: rgba(55, 180, 150, 0.1);
+    border: 1px solid #95E5DD;
   }
 
-  .Label__cancel {
-    cursor: pointer;
-    color: var(--dark-gray);
-    margin: -8px;
-    margin-left: 2px;
-    margin-right: -4px;
+  &.post {
+    background: rgba(137, 176, 229, 0.1);
+    border: 1px solid #89b0e5;
+  }
 
-    .isvg {
-      display: block;
-      line-height: 0;
-    }
+  &.put {
+    background: rgba(150, 144, 229, 0.1);
+    border: 1px solid #9690e5;
+  }
+
+  &.delete {
+    background: rgba(229, 56, 47, 0.1);
+    border: 1px solid #e5382f;
   }
 }

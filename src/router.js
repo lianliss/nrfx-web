@@ -159,24 +159,12 @@ export const routes =
           path: "/documentation/api"
         },
         {
-          name: pages.DOCUMENTATION_API_1,
-          path: "/documentation/api/:param1/"
+          name: pages.DOCUMENTATION_API_LIST,
+          path: "/documentation/api/:path"
         },
         {
-          name: pages.DOCUMENTATION_API_2,
-          path: "/documentation/api/:param1/:param2"
-        },
-        {
-          name: pages.DOCUMENTATION_API_3,
-          path: "/documentation/api/:param1/:param2/:param3"
-        },
-        {
-          name: pages.DOCUMENTATION_API_4,
-          path: "/documentation/api/:param1/:param2/:param3/:param4"
-        },
-        {
-          name: pages.DOCUMENTATION_API_5,
-          path: "/documentation/api/:param1/:param2/:param3/:param4/:param5"
+          name: pages.DOCUMENTATION_API_METHOD,
+          path: "/documentation/api/method/:key"
         }
       ];
 

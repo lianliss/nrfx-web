@@ -8,8 +8,15 @@ import { classNames as cn } from "src/utils";
 import * as PAGES from "../../../constants/pages";
 
 const DocumentationMenu = props => {
-  const handleApiMenuClick = path => () => {
-    props.tootleMenu(path);
+  const handleApiMenuClick = (path, item) => () => {
+    if (item.key) {
+      router.navigate(PAGES.DOCUMENTATION_API_METHOD, {
+        key: item.key.replace(/\./g, "-")
+      });
+    } else {
+      router.navigate(PAGES.DOCUMENTATION_API_LIST, { path: path.join("-") });
+      props.tootleMenu(path);
+    }
   };
 
   const renderItems = (items, path = []) => {
@@ -23,7 +30,7 @@ const DocumentationMenu = props => {
               <div className={cn("DocumentationMenu__list__item")}>
                 <div
                   className={cn("DocumentationMenu__list__item__title")}
-                  onClick={handleApiMenuClick(currentPath)}
+                  onClick={handleApiMenuClick(currentPath, items[item])}
                 >
                   {item}
                 </div>
@@ -40,10 +47,10 @@ const DocumentationMenu = props => {
 
   return (
     <div className="DocumentationMenu">
-      <div className="DocumentationMenu__editMode">
-        <span>Edit mode</span>
-        <UI.Switch on={true} />
-      </div>
+      {/*<div className="DocumentationMenu__editMode">*/}
+      {/*  <span>Edit mode</span>*/}
+      {/*  <UI.Switch on={true} />*/}
+      {/*</div>*/}
       <div className="DocumentationMenu__list">
         {["Page", "Documentation"].map(item => (
           <div className={cn("DocumentationMenu__list__item")}>

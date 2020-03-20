@@ -4,7 +4,7 @@ const fs = require('fs');
 const branch = process.argv[2];
 const schemaPath = './src/services/apiSchema.js';
 
-const domain = branch ? `api-${branch}.bitcoinbot.pro` : `api.narfex.com`;
+const domain = branch ? `api-${branch}.narfex.dev` : `api.narfex.com`;
 console.log('\x1b[36m Get schema from ' + domain + '\x1b[0m');
 fetch(`https://${domain}/api/v1/documentation/schema`)
   .then(res => res.json())

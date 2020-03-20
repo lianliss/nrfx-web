@@ -35,7 +35,8 @@ import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "./containers/site/SiteFeeScreen/SiteFeeScreen";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
-import DocumentationScreen from "./containers/documentation/index";
+import DocumentationMethodScreen from "./containers/documentation/Method/Method";
+import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
 import * as actions from "../actions/index";
 import router from "../router";
 
@@ -162,18 +163,17 @@ function Routes(props) {
       needAuthorization = true;
       Component = TraderScreen;
       break;
-    case pages.DOCUMENTATION:
-      WrapperComponent = DocumentationWrapper;
-      Component = DocumentationScreen;
-      break;
     case pages.DOCUMENTATION_API:
-    case pages.DOCUMENTATION_API_1:
-    case pages.DOCUMENTATION_API_2:
-    case pages.DOCUMENTATION_API_3:
-    case pages.DOCUMENTATION_API_4:
-    case pages.DOCUMENTATION_API_5:
       WrapperComponent = DocumentationWrapper;
-      Component = DocumentationScreen;
+      Component = DocumentationMethodListScreen;
+      break;
+    case pages.DOCUMENTATION_API_LIST:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationMethodListScreen;
+      break;
+    case pages.DOCUMENTATION_API_METHOD:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationMethodScreen;
       break;
     default:
       Component = SiteNotFoundScreen;
