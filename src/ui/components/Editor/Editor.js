@@ -61,7 +61,6 @@ export default class Editor extends React.Component {
 
   blockRendererFn = contentBlock => {
     const type = contentBlock.getType();
-    console.log(1111, type);
     if (type === "button") {
       return {
         component: Button,
@@ -80,10 +79,10 @@ export default class Editor extends React.Component {
     // }
   };
 
-  update(hide) {
+  update() {
     let selection = document.getSelection();
     this.range = selection && selection.rangeCount && selection.getRangeAt(0);
-    this.updateRect(hide);
+    this.updateRect(this.range.startOffset === this.range.endOffset);
   }
 
   handleKeyCommand(command, editorState) {
@@ -118,34 +117,21 @@ export default class Editor extends React.Component {
       };
     }
 
-    console.log(3, hide);
-    console.trace();
     this.setState({ rect, hide: !!hide });
     // console.log(this.state.rect);
   }
 
   handleChange = editorState => {
     let selection = editorState.getSelection();
-    const anchorKey = selection.getAnchorKey();
-    const currentContent = editorState.getCurrentContent();
-    const currentBlock = currentContent.getBlockForKey(anchorKey);
 
-    const start = selection.getStartOffset();
-    const end = selection.getEndOffset();
-    const selectedText = currentBlock.getText().slice(start, end);
+    this.update();
+    this.setState({ focus: selection.hasFocus });
 
-    console.log(1);
-
-    if (selectedText) {
-      console.log(4, selectedText);
-      this.update();
-    } else {
-      this.update(true);
-    }
     this.onChange(editorState);
-    this.props.onChange(
-      JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    );
+    this.props.onChange &&
+      this.props.onChange(
+        JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+      );
   };
 
   render() {
@@ -166,10 +152,6 @@ export default class Editor extends React.Component {
         <div className="Editor__wrapper">
           <DraftEditor
             blockRendererFn={this.blockRendererFn}
-            onFocus={() => this.setState({ focus: true })}
-            onBlur={() => {
-              this.setState({ hide: true, focus: false });
-            }}
             handleKeyCommand={this.handleKeyCommand}
             editorState={this.state.editorState}
             onChange={this.handleChange}

@@ -40,7 +40,7 @@ export default ({ method }) => {
             <Input onTextChange={handleSetProperty(param.name)} />
           </label>
         ))}
-        <Button state={requestStatus} type="submit">
+        <Button state={requestStatus} btnType ype="submit">
           Submit
         </Button>
       </form>
