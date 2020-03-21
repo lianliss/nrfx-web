@@ -98,7 +98,7 @@ class Input extends React.Component {
       onKeyPress: this.props.onKeyPress,
       readOnly: this.props.readOnly,
       onFocus: this.props.onFocus,
-      required: true,
+      required: this.props.required,
       style: {
         paddingRight: 16 + this.state.indicatorWidth
       }

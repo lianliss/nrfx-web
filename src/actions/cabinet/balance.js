@@ -9,10 +9,11 @@ export function getBalance(category) {
   return api.call(apiSchema.Balance.DefaultGet, { category });
 }
 
-export function deposit({ from, amount }) {
+export function deposit({ from, amount, gaCode }) {
   return api
     .call(apiSchema.Balance.DepositPost, {
       wallet_id: from,
+      ga_code: gaCode,
       amount
     })
     .then(res => {
@@ -25,10 +26,11 @@ export function deposit({ from, amount }) {
     });
 }
 
-export function withdraw({ from, amount }) {
+export function withdraw({ from, amount, gaCode }) {
   return api
     .call(apiSchema.Balance.WithdrawPost, {
       balance_id: from,
+      ga_code: gaCode,
       amount
     })
     .then(res => {
