@@ -76,6 +76,7 @@ function Button(props) {
 Button.defaultProps = {
   type: "normal",
   size: "large",
+  btnType: "button",
   currency: {}
 };
 
