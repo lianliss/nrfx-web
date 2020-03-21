@@ -5,9 +5,16 @@ import { valueChange } from "../../../actions/admin/";
 const WysiwygWrapper = props => {
   const value = props.values[props.id] || props.value;
 
-  useEffect(() => valueChange(props.id, ""), [props.id]);
+  useEffect(() => valueChange(props.id, props.value), [props.id]);
 
-  return <Editor border content={props.value} />;
+  return (
+    <Editor
+      onChange={value => valueChange(props.id, value)}
+      border
+      on
+      content={value}
+    />
+  );
 };
 
 export default connect(state => ({

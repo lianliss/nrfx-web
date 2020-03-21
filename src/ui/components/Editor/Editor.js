@@ -6,7 +6,8 @@ import {
   RichUtils,
   convertFromHTML,
   CompositeDecorator,
-  ContentState
+  ContentState,
+  convertToRaw
 } from "draft-js";
 import EditorTooltip from "../EditorTooltip/EditorTooltip";
 import Button from "../Button/Button";
@@ -142,6 +143,9 @@ export default class Editor extends React.Component {
       this.update(true);
     }
     this.onChange(editorState);
+    this.props.onChange(
+      JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+    );
   };
 
   render() {
