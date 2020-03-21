@@ -24,7 +24,8 @@ const GoogleCodeModal = props => {
     // eslint-disable-next-line
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
     setTouched(true);
     code && props.gaInit(code);
   };
@@ -33,7 +34,7 @@ const GoogleCodeModal = props => {
     <UI.Modal isOpen={true} onClose={props.onClose} width={424}>
       <UI.ModalHeader>{utils.getLang("site__authModalTitle")}</UI.ModalHeader>
       {ga ? (
-        <form className="GoogleCodeModal">
+        <form onSubmit={handleSubmit} className="GoogleCodeModal">
           <p className="GoogleCodeModal__description">
             {utils.getLang("site__authModalContentGA")}
           </p>
@@ -71,7 +72,7 @@ const GoogleCodeModal = props => {
             >
               {utils.getLang("cabinet_CopyKey")}
             </UI.Button>
-            <UI.Button state={props.status} onClick={handleSubmit}>
+            <UI.Button btnType="submit" state={props.status}>
               {utils.getLang("site__authModalSubmit")}
             </UI.Button>
           </div>

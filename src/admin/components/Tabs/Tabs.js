@@ -31,5 +31,5 @@ const Tabs = props => {
 };
 
 export default connect(state => ({
-  state: state.admin
+  // state: state.admin
 }))(Tabs);

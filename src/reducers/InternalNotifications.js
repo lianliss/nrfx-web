@@ -20,6 +20,16 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         items: state.items.filter(n => n.type !== action.id)
       };
+    case actionTypes.PROFILE_SET_GA_SUCCESS:
+      return {
+        ...state,
+        items: state.items.filter(item => item.type !== "google_code")
+      };
+    case actionTypes.PROFILE_SET_SECRET_SUCCESS:
+      return {
+        ...state,
+        items: state.items.filter(item => item.type !== "secret_key")
+      };
     default:
       return state;
   }

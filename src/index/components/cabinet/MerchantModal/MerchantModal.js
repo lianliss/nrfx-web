@@ -138,7 +138,7 @@ const MerchantModal = props => {
   // const getMerchantUrlThrottled = useRef(throttle(getMerchantUrl, 500)).current;
 
   const handleChangeAmount = value => {
-    setAmount(value);
+    setAmount(parseInt(value));
     if (!value || checkAmount(value)) return false;
     // if (props.type !== 'withdrawal' && merchant !== 'invoice') {
     //   getMerchantUrlThrottled({
