@@ -47,7 +47,10 @@ class Trades extends React.Component {
         const prevTrade = trades[i + 1];
         const type = prevTrade && trade.price > prevTrade.price ? "up" : "down";
         return (
-          <UI.TableCell className="Exchange__orders__side" key={i}>
+          <UI.TableCell
+            className={utils.classNames("Exchange__orders__side", type)}
+            key={i}
+          >
             <UI.TableColumn>
               <UI.NumberFormat
                 type={type}

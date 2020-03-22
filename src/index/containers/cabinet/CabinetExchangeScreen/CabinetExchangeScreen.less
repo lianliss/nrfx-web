@@ -170,27 +170,18 @@
   }
 }
 
-.Exchange__orders__side {
-  .Exchange__orders__mark {
-    color: var(--green);
-  }
-
-  &.sell {
-    .Exchange__orders__mark {
-      color: var(--red);
-    }
-  }
-}
-
 .adaptive {
-  .Exchange__orders__price {
-    color: inherit !important;
-  }
   .Exchange__orders__side {
-    background-color: rgba(#24b396, 0.1);
+    &.up {
+      background-color: rgba(#24b396, 0.1);
+    }
 
-    &.sell {
+    &.down {
       background-color: rgba(#fa4e3e, 0.1);
+    }
+
+    .Number {
+      color: inherit !important;
     }
   }
 }
