@@ -5,7 +5,11 @@ import { connect } from "react-redux";
 import { Label, Code } from "src/ui/index";
 import { ContentBox } from "src/ui";
 import { getMethod } from "src/actions/documentation";
-import Form from "../Form/Form";
+import Main from "./components/Main/Main";
+import Form from "./components/Form/Form";
+import Params from "./components/Params/Params";
+import Result from "./components/Result/Result";
+
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 
 const DocumentationMethod = props => {
@@ -22,42 +26,9 @@ const DocumentationMethod = props => {
   return (
     <>
       <div className="Documentation_wrapper__content Method">
-        <ContentBox className="Method__main">
-          <h1 className="Method__main__title">{method.name}</h1>
-          <div className="Method__main__path">
-            <h3>{"/" + method.path}</h3>
-            <Label type={method.method} />
-          </div>
-          <p>{method.description}</p>
-          <div className="Method__main__requirements">
-            <div className="Method__main__requirements__title">
-              Requirements:
-            </div>
-            {method.requirements.map(item => (
-              <Label title={item} />
-            ))}
-          </div>
-          <Code lang="json">{JSON.stringify(props.method, null, 2)}</Code>
-        </ContentBox>
-        {!!method.params.length && (
-          <ContentBox className="Method__params">
-            <h2>Parameters</h2>
-            <div className="Method__params__list">
-              {method.params.map(param => (
-                <div className="Method__params__list__line">
-                  <div className="Method__params__param">
-                    <strong>{param.name}</strong>
-                    <small>optional</small>
-                  </div>
-                  <div className="Method__params__description">
-                    <p>Number of results per call.</p>
-                    <p>Accepted values: 0 - 100. Default 25</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ContentBox>
-        )}
+        <Main method={method} />
+        <Params params={method.params} />
+        <Result method={method} />
       </div>
       <div className="Documentation_wrapper__subContent">
         <Form method={method} />

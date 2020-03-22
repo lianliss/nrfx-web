@@ -43,6 +43,12 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
+export function joinComponents(separator = ", ") {
+  return (accu, elem) => {
+    return accu === null ? [elem] : [...accu, separator, elem];
+  };
+}
+
 export function getLang(key, string = false, code = false) {
   const state = store.getState();
   const { currentLang, translations } = state.default;

@@ -1,5 +1,6 @@
 ```js
-    <Code lang="json">{`const exampleFunction = ({ params1, params2}) => {}`}</Code>
+    <Code lang="javascript">{`const exampleFunction = ({ params1, params2}) => {}`}</Code>
+    <Code lang="json" simple>{`const exampleFunction = ({ params1, params2}) => {}`}</Code>
     <Code lang="json">{`[
   {
     "title": "apples",

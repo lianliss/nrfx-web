@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import * as api from "../services/api";
+import { isJson } from "src/utils";
 import apiSchema from "../services/apiSchema";
 
 export function tootleMenu(path) {
@@ -54,5 +55,45 @@ export function getMethod(key) {
           value: "failed"
         });
       });
+  };
+}
+
+export function updateMethodParam(paramName, description) {
+  return dispatch => {
+    dispatch({
+      type: actionTypes.DOCUMENTATION_UPDATE_METHOD_PARAM_DESC,
+      paramName,
+      description
+    });
+  };
+}
+
+export function updateMethod(key, value) {
+  return dispatch => {
+    dispatch({ type: actionTypes.DOCUMENTATION_UPDATE_METHOD, key, value });
+  };
+}
+
+export function saveMethod(values) {
+  return (dispatch, getState) => {
+    const { method } = getState().documentation;
+
+    if (!isJson(method.result)) {
+      return alert("Поле result должно быть валидным json");
+    }
+
+    api
+      .call(apiSchema.Documentation.MethodPost, {
+        ...method,
+        param_descriptions: JSON.stringify(
+          method.params.reduce(
+            (obj, p) => ({ ...obj, [p.name]: p.description }),
+            {}
+          )
+        ),
+        ...values
+      })
+      .then(method => {})
+      .catch(() => {});
   };
 }

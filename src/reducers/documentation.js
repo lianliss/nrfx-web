@@ -55,6 +55,31 @@ export default function reduce(state = initialState, action = {}) {
         schema: action.schema
       };
 
+    case actionTypes.DOCUMENTATION_UPDATE_METHOD:
+      return {
+        ...state,
+        method: {
+          ...state.method,
+          [action.key]: action.value
+        }
+      };
+
+    case actionTypes.DOCUMENTATION_UPDATE_METHOD_PARAM_DESC:
+      return {
+        ...state,
+        method: {
+          ...state.method,
+          params: state.method.params.map(param => {
+            return param.name === action.paramName
+              ? {
+                  ...param,
+                  description: action.description
+                }
+              : param;
+          })
+        }
+      };
+
     default:
       return state;
   }

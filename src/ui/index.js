@@ -38,6 +38,7 @@ export { default as Collapse } from "./components/Collapse/Collapse";
 export { default as WalletCard } from "./components/WalletCard/WalletCard";
 export { default as StatusIndicator } from "./components/StatusIndicator/StatusIndicator";
 export { default as Code } from "./components/Code/Code";
+export { default as Editor } from "./components/Editor/Editor";
 export {
   default as FloatingButton,
   FloatingButtonItem

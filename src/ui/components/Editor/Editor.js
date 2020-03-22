@@ -6,39 +6,20 @@ import {
   RichUtils,
   convertFromHTML,
   CompositeDecorator,
+  convertFromRaw,
   ContentState,
   convertToRaw
 } from "draft-js";
 import EditorTooltip from "../EditorTooltip/EditorTooltip";
-import Button from "../Button/Button";
+import { Button, Code, Input } from "../../index";
 import { isJson } from "src/utils";
 import { classNames as cn } from "../../utils/index";
-
-const prepareState = content => {
-  if (content) {
-    if (isJson(content)) {
-      return this.props.state;
-    } else {
-      const blocksFromHTML = convertFromHTML(content);
-      const state = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      );
-
-      // const decorator = new CompositeDecorator([]);
-
-      return EditorState.createWithContent(state);
-    }
-  } else {
-    return EditorState.createEmpty();
-  }
-};
 
 export default class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: prepareState(this.props.content),
+      editorState: this.prepareState(this.props.content),
       hide: true,
       focus: false,
       rect: {
@@ -59,24 +40,40 @@ export default class Editor extends React.Component {
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
 
+  prepareState = content => {
+    if (content) {
+      if (isJson(content)) {
+        return EditorState.createWithContent(
+          convertFromRaw(JSON.parse(this.props.content))
+        );
+      } else {
+        const blocksFromHTML = convertFromHTML(content);
+        const state = ContentState.createFromBlockArray(
+          blocksFromHTML.contentBlocks,
+          blocksFromHTML.entityMap
+        );
+
+        // const decorator = new CompositeDecorator([]);
+        return EditorState.createWithContent(state);
+      }
+    } else {
+      return EditorState.createEmpty();
+    }
+  };
+
   blockRendererFn = contentBlock => {
     const type = contentBlock.getType();
-    if (type === "button") {
+    const text = contentBlock.getText();
+
+    if (type === "code") {
       return {
-        component: Button,
+        component: props => <Code>{props.blockProps.text}</Code>,
+        editable: false,
         props: {
-          foo: "bar"
+          text
         }
       };
     }
-    // if (type === 'button') {
-    //   return {
-    //     component: ,
-    //     props: {
-    //       foo: 'bar',
-    //     },
-    //   };
-    // }
   };
 
   update() {
@@ -189,7 +186,7 @@ export default class Editor extends React.Component {
               },
               {
                 title: "<code />",
-                style: "code-block"
+                block: "code"
               },
               {
                 title: "Bold",
