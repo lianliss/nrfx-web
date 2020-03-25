@@ -26,13 +26,13 @@ const Main = props => {
         <h3>{"/" + props.path}</h3>
         <Label type={props.method} />
       </div>
-      <p>
+      <div className="Method__main__content">
         <Editor
           readOnly={!props.editMode}
           content={props.description}
           onChange={handleChange}
         />
-      </p>
+      </div>
       {!!props.requirements.length && (
         <div className="Method__main__requirements">
           <div className="Method__main__requirements__title">Requirements:</div>

@@ -163,8 +163,9 @@ export function saveMethod(values) {
         dispatch({ type: actionTypes.DOCUMENTATION_METHOD, method });
         toast.success(utils.getLang("ok"));
       })
-      .catch(() => {
-        toast.error(utils.getLang("error"));
+      .catch(err => {
+        toast.error(err.message);
+        throw err;
       })
       .finally(() => {
         dispatch({

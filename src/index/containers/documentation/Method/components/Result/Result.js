@@ -12,9 +12,9 @@ const Result = ({ result, updateMethod, editMode }) => {
   return (
     <ContentBox className="Method__result">
       <h2>Result</h2>
-      <p>
+      <div className="Method__result__content">
         <Editor readOnly={!editMode} content={result} onChange={handleChange} />
-      </p>
+      </div>
     </ContentBox>
   );
 };

@@ -38,13 +38,31 @@ export default class Editor extends React.Component {
     this.onChange = editorState => this.setState({ editorState });
     this.update = this.update.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    this.setLink = this._setLink.bind(this);
   }
 
   prepareState = content => {
+    const decorator = new CompositeDecorator([
+      {
+        strategy: findLinkEntities,
+        component: Link
+      }
+    ]);
+
     if (content) {
       if (typeof content === "object") {
+        if (this.props.short) {
+          return EditorState.createWithContent(
+            convertFromRaw({
+              ...content,
+              blocks: [content.blocks.filter(b => b.type === "unstyled")[0]]
+            }),
+            decorator
+          );
+        }
         return EditorState.createWithContent(
-          convertFromRaw(this.props.content)
+          convertFromRaw(content),
+          decorator
         );
       } else {
         const blocksFromHTML = convertFromHTML(content);
@@ -54,17 +72,18 @@ export default class Editor extends React.Component {
         );
 
         // const decorator = new CompositeDecorator([]);
-        return EditorState.createWithContent(state);
+        return EditorState.createWithContent(state, decorator);
       }
     } else {
-      return EditorState.createEmpty();
+      return EditorState.createEmpty(decorator);
     }
   };
 
   blockRendererFn = contentBlock => {
     const type = contentBlock.getType();
     const text = contentBlock.getText();
-    const data = contentBlock.getData();
+
+    console.log(1111, type);
 
     if (type === "code") {
       return {
@@ -75,17 +94,42 @@ export default class Editor extends React.Component {
         }
       };
     }
-
-    if (type === "link") {
-      return {
-        strategy: alert,
-        component: props => <a href="#">{props.blockProps.text}</a>,
-        props: {
-          text
-        }
-      };
-    }
+    // if (type === 'unstyled') {
+    //   return {
+    //     component: props => <p>{props.blockProps.text}</p>,
+    //     props: { text }
+    //   };
+    // }
   };
+
+  _setLink(e) {
+    e.preventDefault();
+    const { editorState, urlValue } = this.state;
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(
+      "LINK",
+      "MUTABLE",
+      { url: window.prompt("Enter url") }
+    );
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentStateWithEntity
+    });
+    this.setState(
+      {
+        editorState: RichUtils.toggleLink(
+          newEditorState,
+          newEditorState.getSelection(),
+          entityKey
+        ),
+        showURLInput: false,
+        urlValue: ""
+      },
+      () => {
+        setTimeout(() => this.refs.editor.focus(), 0);
+      }
+    );
+  }
 
   update() {
     let selection = document.getSelection();
@@ -140,6 +184,10 @@ export default class Editor extends React.Component {
       this.props.onChange(convertToRaw(editorState.getCurrentContent()));
   };
 
+  toggleInlineStyle = type => {
+    RichUtils.toggleInlineStyle(this.state.editorState, type);
+  };
+
   render() {
     const style = {
       transform: `translate(calc(-50% + ${this.state.rect.left +
@@ -157,6 +205,7 @@ export default class Editor extends React.Component {
       >
         <div className="Editor__wrapper">
           <DraftEditor
+            ref="editor"
             readOnly={this.props.readOnly}
             blockRendererFn={this.blockRendererFn}
             handleKeyCommand={this.handleKeyCommand}
@@ -164,67 +213,43 @@ export default class Editor extends React.Component {
             onChange={this.handleChange}
           />
           <EditorTooltip
-            onChange={button => {
-              button.block &&
-                this.onChange(
-                  RichUtils.toggleBlockType(
-                    this.state.editorState,
-                    button.block
-                  )
-                );
-              button.style &&
-                this.onChange(
-                  RichUtils.toggleInlineStyle(
-                    this.state.editorState,
-                    button.style
-                  )
-                );
-              this.setState({ hide: true });
+            onToggleBlockType={type => {
+              this.onChange(
+                RichUtils.toggleBlockType(this.state.editorState, type)
+              );
             }}
-            buttons={[
-              {
-                title: "H1",
-                block: "header-one"
-              },
-              {
-                title: "H2",
-                block: "header-two"
-              },
-              {
-                title: "“quote”",
-                block: "blockquote"
-              },
-              {
-                title: "<code />",
-                block: "code"
-              },
-              {
-                title: "link",
-                block: "link"
-              },
-              {
-                title: "Bold",
-                style: "BOLD"
-              },
-              {
-                title: "Italic",
-                style: "ITALIC"
-              },
-              {
-                title: "Underline",
-                style: "UNDERLINE"
-              }
-              // {
-              //   title: "Monospace",
-              //   style: "MONOSPACE"
-              // }
-            ]}
+            onToggleInlineStyle={type => {
+              this.onChange(
+                RichUtils.toggleInlineStyle(this.state.editorState, type)
+              );
+            }}
+            onSetLint={this.setLink}
             visible={!this.state.hide}
             style={style}
           />
           {/*<div className="Editor__shape" style={{ ...this.state.rect }} />*/}
         </div>
+        {/*<pre>{JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()), null, 2)}</pre>*/}
       </div>
     );
   }
 }
+
+function findLinkEntities(contentBlock, callback, contentState) {
+  contentBlock.findEntityRanges(character => {
+    const entityKey = character.getEntity();
+    return (
+      entityKey !== null &&
+      contentState.getEntity(entityKey).getType() === "LINK"
+    );
+  }, callback);
+}
+
+const Link = props => {
+  const { url } = props.contentState.getEntity(props.entityKey).getData();
+  return (
+    <a className="Link" href={url}>
+      {props.children}
+    </a>
+  );
+};

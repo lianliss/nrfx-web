@@ -39,7 +39,7 @@ const MethodList = props => {
                   </div>
                   <div className="MethodList__list__description">
                     <p>
-                      <Editor readOnly content={method.description} />
+                      <Editor short readOnly content={method.description} />
                     </p>
                   </div>
                 </div>

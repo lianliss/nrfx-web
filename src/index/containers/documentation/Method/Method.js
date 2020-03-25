@@ -28,7 +28,7 @@ const DocumentationMethod = props => {
       <div className="Documentation_wrapper__content Method">
         <Main />
         <Params />
-        {/*<Result />*/}
+        <Result />
       </div>
       <div className="Documentation_wrapper__subContent">
         <Form />

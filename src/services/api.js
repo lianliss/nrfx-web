@@ -19,7 +19,7 @@ export function invoke(method, name, params, options = {}) {
     let includesFile = false;
     Object.keys(params).forEach(paramsName => {
       formData.append(paramsName, params[paramsName]);
-      if (typeof params[paramsName].name === "string") {
+      if (params[paramsName] && typeof params[paramsName].name === "string") {
         includesFile = true;
       }
     });

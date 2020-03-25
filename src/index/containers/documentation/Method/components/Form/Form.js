@@ -59,7 +59,7 @@ const Form = ({
   };
 
   const handleChange = e => {
-    const value = e.target.innerText;
+    const value = e.target.value;
     updateMethod("result_example", value);
   };
 
