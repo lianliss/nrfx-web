@@ -1,19 +1,20 @@
 import "./MethodList.less";
 import React from "react";
 import { connect } from "react-redux";
-import { ContentBox } from "../../../../ui";
+import { ContentBox, Editor } from "../../../../ui";
 import router from "../../../../router";
 import * as PAGES from "../../../constants/pages";
+import List from "./List";
 
 const MethodList = props => {
   const handleMethodClick = (method, name) => () => {
     if (method.key) {
       router.navigate(PAGES.DOCUMENTATION_API_METHOD, {
-        key: method.key.replace(/\./g, "-")
+        key: method.key
       });
     } else {
       router.navigate(PAGES.DOCUMENTATION_API_LIST, {
-        path: [...(path ? path.splat("-") : []), name].join("-")
+        path: [...(path ? path.split("-") : []), name].join("-")
       });
     }
   };
@@ -29,6 +30,7 @@ const MethodList = props => {
               const method = schema[name];
               return (
                 <div
+                  key={name}
                   onClick={handleMethodClick(method, name)}
                   className="MethodList__list__line"
                 >
@@ -36,7 +38,9 @@ const MethodList = props => {
                     <strong>{name}</strong>
                   </div>
                   <div className="MethodList__list__description">
-                    <p>{method.description}</p>
+                    <p>
+                      <Editor readOnly content={method.description} />
+                    </p>
                   </div>
                 </div>
               );

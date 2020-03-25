@@ -14,24 +14,24 @@ import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStat
 
 const DocumentationMethod = props => {
   useEffect(() => {
-    props.getMethod(props.routerParams.key.replace(/\-/g, "."));
+    props.getMethod(props.routerParams.key);
   }, [props.routerParams.key]);
 
-  const { method } = props;
+  console.log("METHOD RENDER");
 
-  if (props.loadingStatus || !method) {
+  if (props.loadingStatus || !props.loaded) {
     return <LoadingStatus status={props.loadingStatus} />;
   }
 
   return (
     <>
       <div className="Documentation_wrapper__content Method">
-        <Main method={method} />
-        <Params params={method.params} />
-        <Result method={method} />
+        <Main />
+        <Params />
+        {/*<Result />*/}
       </div>
       <div className="Documentation_wrapper__subContent">
-        <Form method={method} />
+        <Form />
       </div>
     </>
   );
@@ -40,8 +40,8 @@ const DocumentationMethod = props => {
 export default connect(
   state => ({
     route: state.router.route,
-    method: state.documentation.method,
-    loadingStatus: state.documentation.loadingStatus.method
+    loadingStatus: state.documentation.loadingStatus.method,
+    loaded: !!state.documentation.method
   }),
   {
     getMethod

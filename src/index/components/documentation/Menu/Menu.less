@@ -2,14 +2,17 @@
   position: relative;
   color: var(--dark-gray);
 
+  .DocumentationMenu__controls {
+    margin-bottom: 16px;
+  }
+
   .DocumentationMenu__editMode {
     display: flex;
     align-items: center;
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
-    padding-left: 24px;
-    margin-bottom: 24px;
+    margin: 8px 0;
 
     .Switch {
       margin: 0;
@@ -18,10 +21,23 @@
   }
 
   .DocumentationMenu__list {
-
     .DocumentationMenu__list__item {
       display: block;
       cursor: pointer;
+
+      &.active {
+        & > .DocumentationMenu__list__item__title {
+          font-weight: bold;
+          color: var(--text-black);
+
+          &.active {
+            color: var(--dark-blue);
+            //padding-left: 18px;
+            border-left: 2px solid;
+            margin-left: -2px;
+          }
+        }
+      }
 
       .DocumentationMenu__list__item__title {
         display: block;
@@ -29,26 +45,6 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 16px;
-
-        &.active {
-          font-weight: bold;
-          color: var(--text-black);
-        }
-      }
-
-      &.active {
-        .DocumentationMenu__list__item__title {
-          font-weight: bold;
-
-          &:before {
-            border-radius: 2px;
-            position: absolute;
-            left: 0;
-            content: '';
-            display: block;
-            background: var(--dark-blue);
-          }
-        }
       }
     }
 

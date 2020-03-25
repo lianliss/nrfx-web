@@ -2,33 +2,61 @@ import "./Main.less";
 
 import React from "react";
 import { connect } from "react-redux";
-import { updateMethod } from "src/actions/documentation";
-import { ContentBox, Label, Editor } from "src/ui";
+import { updateMethod, saveMethod } from "src/actions/documentation";
+import { ContentBox, Label, Button, Editor } from "src/ui";
 
-const Main = ({ method, updateMethod }) => {
-  const handleChange = value => updateMethod("description", value);
+const Main = props => {
+  const handleChange = value => props.updateMethod("description", value);
 
   return (
     <ContentBox className="Method__main">
-      <h1 className="Method__main__title">{method.name}</h1>
+      <h1 className="Method__main__title">
+        {props.name}
+        {props.editMode && (
+          <Button
+            state={props.saveStatus}
+            onClick={props.saveMethod}
+            size="small"
+          >
+            Save
+          </Button>
+        )}
+      </h1>
       <div className="Method__main__path">
-        <h3>{"/" + method.path}</h3>
-        <Label type={method.method} />
+        <h3>{"/" + props.path}</h3>
+        <Label type={props.method} />
       </div>
       <p>
-        <Editor content={method.description} onChange={handleChange} />
+        <Editor
+          readOnly={!props.editMode}
+          content={props.description}
+          onChange={handleChange}
+        />
       </p>
-      <div className="Method__main__requirements">
-        <div className="Method__main__requirements__title">Requirements:</div>
-        {method.requirements.map(item => (
-          <Label title={item} />
-        ))}
-      </div>
-      {/*<Code lang="json">{JSON.stringify(props.method, null, 2)}</Code>*/}
+      {!!props.requirements.length && (
+        <div className="Method__main__requirements">
+          <div className="Method__main__requirements__title">Requirements:</div>
+          {props.requirements.map(item => (
+            <Label title={item} />
+          ))}
+        </div>
+      )}
     </ContentBox>
   );
 };
 
-export default connect(null, {
-  updateMethod
-})(Main);
+export default connect(
+  state => ({
+    editMode: state.documentation.editMode,
+    name: state.documentation.method.name,
+    description: state.documentation.method.description,
+    method: state.documentation.method.method,
+    path: state.documentation.method.path,
+    saveStatus: state.documentation.loadingStatus.saveMethod,
+    requirements: state.documentation.method.requirements
+  }),
+  {
+    updateMethod,
+    saveMethod
+  }
+)(Main);

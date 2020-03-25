@@ -42,9 +42,9 @@ export default class Editor extends React.Component {
 
   prepareState = content => {
     if (content) {
-      if (isJson(content)) {
+      if (typeof content === "object") {
         return EditorState.createWithContent(
-          convertFromRaw(JSON.parse(this.props.content))
+          convertFromRaw(this.props.content)
         );
       } else {
         const blocksFromHTML = convertFromHTML(content);
@@ -64,11 +64,22 @@ export default class Editor extends React.Component {
   blockRendererFn = contentBlock => {
     const type = contentBlock.getType();
     const text = contentBlock.getText();
+    const data = contentBlock.getData();
 
     if (type === "code") {
       return {
         component: props => <Code>{props.blockProps.text}</Code>,
         editable: false,
+        props: {
+          text
+        }
+      };
+    }
+
+    if (type === "link") {
+      return {
+        strategy: alert,
+        component: props => <a href="#">{props.blockProps.text}</a>,
         props: {
           text
         }
@@ -126,9 +137,7 @@ export default class Editor extends React.Component {
 
     this.onChange(editorState);
     this.props.onChange &&
-      this.props.onChange(
-        JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-      );
+      this.props.onChange(convertToRaw(editorState.getCurrentContent()));
   };
 
   render() {
@@ -148,6 +157,7 @@ export default class Editor extends React.Component {
       >
         <div className="Editor__wrapper">
           <DraftEditor
+            readOnly={this.props.readOnly}
             blockRendererFn={this.blockRendererFn}
             handleKeyCommand={this.handleKeyCommand}
             editorState={this.state.editorState}
@@ -187,6 +197,10 @@ export default class Editor extends React.Component {
               {
                 title: "<code />",
                 block: "code"
+              },
+              {
+                title: "link",
+                block: "link"
               },
               {
                 title: "Bold",

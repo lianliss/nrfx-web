@@ -155,6 +155,10 @@ export const routes =
           path: "/documentation"
         },
         {
+          name: pages.DOCUMENTATION_PAGE,
+          path: "/documentation/page:page"
+        },
+        {
           name: pages.DOCUMENTATION_API,
           path: "/documentation/api"
         },

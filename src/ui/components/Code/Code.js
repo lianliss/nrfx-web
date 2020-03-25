@@ -4,7 +4,7 @@ import { classNames as cn } from "../../utils";
 
 import "./Code.less";
 
-export default props => {
+const Code = props => {
   if (props.simple) {
     return <div className={cn("Code", props.className)}>{props.children}</div>;
   }
@@ -14,3 +14,5 @@ export default props => {
     </Highlight>
   );
 };
+
+export default React.memo(Code);

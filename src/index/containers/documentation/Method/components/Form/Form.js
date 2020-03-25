@@ -1,13 +1,23 @@
 import "./Form.less";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import { updateMethod } from "src/actions/documentation";
 import { Input, Dropdown, Button, Code, ContentBox, Editor } from "src/ui";
 import { invoke } from "src/services/api";
+import Field from "./Field";
 import * as toast from "src/actions/toasts";
+import SVG from "react-inlinesvg";
+import * as utils from "../../../../../../utils";
 
-const Form = ({ method }) => {
+const Form = ({
+  method,
+  resultExample,
+  params,
+  path,
+  updateMethod,
+  editMode
+}) => {
   const [formData, setFormData] = useState({});
   const [response, setResponse] = useState(null);
   const [requestStatus, setRequestStatus] = useState("");
@@ -19,23 +29,24 @@ const Form = ({ method }) => {
   useEffect(() => {
     const defaultFormData = {};
     let value = null;
-    method.params.forEach(param => {
+    params.forEach(param => {
       if (param.filters.default) value = param.filters.default;
       if (param.filters.oneOf) value = param.filters.oneOf[0];
       if (param.filters.double) value = 1.0;
       if (param.filters.positive || param.filters.int) value = 0;
       if (param.filters.min || param.filters.int)
         value = param.filters.min || param.filters.int;
+      if (param.name === "ga_code") value = "";
 
       if (value !== null) defaultFormData[param.name] = value;
     });
     setFormData(defaultFormData);
-  }, [method.params.filters]);
+  }, [params]);
 
   const handleSubmit = e => {
     e.preventDefault();
     setRequestStatus("loading");
-    invoke(method.method, method.path, formData)
+    invoke("POST", path, formData, { redirect: false })
       .then(response => {
         setResponse(response);
       })
@@ -49,36 +60,21 @@ const Form = ({ method }) => {
 
   const handleChange = e => {
     const value = e.target.innerText;
-    updateMethod("result", value);
+    updateMethod("result_example", value);
   };
 
   return (
     <ContentBox className="MethodForm">
       <form onSubmit={handleSubmit}>
-        {method.params.map(param => (
+        {params.map(param => (
           <label className="MethodForm__field">
             <div className="MethodForm__field__label">{param.name}</div>
-            {param.filters.oneOf ? (
-              <Dropdown
-                value={formData[param.name]}
-                onChangeValue={handleSetProperty(param.name)}
-                options={param.filters.oneOf.map(value => ({
-                  title: value,
-                  value
-                }))}
-              />
-            ) : (
-              <Input
-                type={
-                  (param.filters.double ||
-                    param.filters.positive ||
-                    param.filters.int) &&
-                  "number"
-                }
-                value={formData[param.name]}
-                onTextChange={handleSetProperty(param.name)}
-              />
-            )}
+            <Field
+              key={param.name}
+              param={param}
+              value={formData[param.name]}
+              onChange={handleSetProperty(param.name)}
+            />
           </label>
         ))}
         <Button state={requestStatus} btnType ype="submit">
@@ -89,21 +85,33 @@ const Form = ({ method }) => {
         <Code type="json" className="MethodForm__response">
           {JSON.stringify(response, null, 2)}
         </Code>
-      ) : (
+      ) : editMode ? (
         <Code type="json" simple className="MethodForm__response">
-          <div
+          <textarea
             className="MethodForm__response__editor"
-            contentEditable={true}
-            onInput={handleChange}
+            onChange={handleChange}
           >
-            {method.result_example}
-          </div>
+            {resultExample}
+          </textarea>
+        </Code>
+      ) : (
+        <Code type="json" className="MethodForm__response">
+          {JSON.stringify(JSON.parse(resultExample), null, 2)}
         </Code>
       )}
     </ContentBox>
   );
 };
 
-export default connect(null, {
-  updateMethod
-})(Form);
+export default connect(
+  state => ({
+    editMode: state.documentation.editMode,
+    resultExample: state.documentation.method.result_example,
+    path: state.documentation.method.path,
+    method: state.documentation.method.method,
+    params: state.documentation.method.params
+  }),
+  {
+    updateMethod
+  }
+)(Form);

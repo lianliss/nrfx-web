@@ -1,26 +1,30 @@
 import "./Result.less";
 
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { updateMethod } from "src/actions/documentation";
 import { ContentBox } from "../../../../../../ui";
-import { Input, Editor } from "src/ui";
+import { Editor } from "src/ui";
 
-const Result = ({ method, updateMethod }) => {
-  const [value, setValue] = useState(method.result);
-
+const Result = ({ result, updateMethod, editMode }) => {
   const handleChange = value => updateMethod("result", value);
 
   return (
     <ContentBox className="Method__result">
       <h2>Result</h2>
       <p>
-        <Editor content={method.result} onChange={handleChange} />
+        <Editor readOnly={!editMode} content={result} onChange={handleChange} />
       </p>
     </ContentBox>
   );
 };
 
-export default connect(null, {
-  updateMethod
-})(Result);
+export default connect(
+  state => ({
+    editMode: state.documentation.editMode,
+    result: state.documentation.method.result
+  }),
+  {
+    updateMethod
+  }
+)(Result);

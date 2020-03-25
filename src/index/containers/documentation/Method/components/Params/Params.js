@@ -81,7 +81,11 @@ const Params = props => {
                       .reduce(joinComponents(), null)}
                   </p>
                   <p>
-                    <Editor onChange={handleChangeParam(param.name)} />
+                    <Editor
+                      readOnly={!props.editMode}
+                      content={param.description}
+                      onChange={handleChangeParam(param.name)}
+                    />
                   </p>
                 </div>
               </div>
@@ -93,6 +97,12 @@ const Params = props => {
   );
 };
 
-export default connect(null, {
-  updateMethodParam
-})(Params);
+export default connect(
+  state => ({
+    editMode: state.documentation.editMode,
+    params: state.documentation.method.params
+  }),
+  {
+    updateMethodParam
+  }
+)(Params);

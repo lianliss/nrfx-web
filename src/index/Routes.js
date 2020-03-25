@@ -35,6 +35,7 @@ import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "./containers/site/SiteFeeScreen/SiteFeeScreen";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
+import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
 import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
 import * as actions from "../actions/index";
@@ -162,6 +163,10 @@ function Routes(props) {
     case pages.TRADER:
       needAuthorization = true;
       Component = TraderScreen;
+      break;
+    case pages.DOCUMENTATION_PAGE:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationPageScreen;
       break;
     case pages.DOCUMENTATION_API:
       WrapperComponent = DocumentationWrapper;

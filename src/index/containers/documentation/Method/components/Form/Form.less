@@ -5,8 +5,12 @@
 
     form {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: 1fr 1fr;
       grid-gap: 24px;
+
+      .File {
+        width: 100%;
+      }
 
       .Button {
         margin-top: auto;
@@ -30,6 +34,14 @@
     padding: 24px 40px;
 
     .MethodForm__response__editor {
+      display: block;
+      width: 100%;
+      margin: 0;
+      height: 100px;
+      overflow: visible;
+      resize: vertical;
+      background: transparent;
+      border: none;
       outline: none;
     }
   }

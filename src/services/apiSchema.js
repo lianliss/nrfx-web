@@ -162,45 +162,53 @@ export default {
       path: "test/command"
     }
   },
-  LangGet: {
-    method: "GET",
-    name: "lang",
-    params: {
-      Code: {
-        name: "code",
-        filters: {
-          "0": "required",
-          maxLen: 2
-        },
-        type: "body"
-      }
-    },
-    path: "lang"
-  },
-  LangPost: {
-    method: "POST",
-    name: "lang",
-    params: {
-      Code: {
-        name: "code",
-        filters: {
-          "0": "required",
-          maxLen: 2
-        },
-        type: "body"
+  Lang: {
+    DefaultGet: {
+      method: "GET",
+      name: "",
+      params: {
+        Code: {
+          name: "code",
+          filters: {
+            "0": "required",
+            maxLen: 2
+          },
+          type: "body"
+        }
       },
-      Key: {
-        name: "key",
-        filters: ["required"],
-        type: "body"
-      },
-      Value: {
-        name: "value",
-        filters: ["required"],
-        type: "body"
-      }
+      path: "lang"
     },
-    path: "lang"
+    DefaultPost: {
+      method: "POST",
+      name: "",
+      params: {
+        Code: {
+          name: "code",
+          filters: {
+            "0": "required",
+            maxLen: 2
+          },
+          type: "body"
+        },
+        Key: {
+          name: "key",
+          filters: ["required"],
+          type: "body"
+        },
+        Value: {
+          name: "value",
+          filters: ["required"],
+          type: "body"
+        }
+      },
+      path: "lang"
+    },
+    AppExportGet: {
+      method: "GET",
+      name: "app_export",
+      params: [],
+      path: "lang/app_export"
+    }
   },
   Crypto: {
     NotifyGet: {
@@ -287,7 +295,10 @@ export default {
         },
         Login: {
           name: "login",
-          filters: ["required"],
+          filters: {
+            "0": "required",
+            minLen: 4
+          },
           type: "body"
         },
         Hash: {
@@ -395,7 +406,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -514,7 +524,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -535,7 +544,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -556,7 +564,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -585,7 +592,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -601,7 +607,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -763,7 +768,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -797,7 +801,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -921,7 +924,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1145,6 +1147,58 @@ export default {
         }
       },
       path: "page"
+    },
+    DefaultPut: {
+      method: "PUT",
+      name: "",
+      params: {
+        Address: {
+          name: "address",
+          filters: ["required"],
+          type: "body"
+        },
+        Content: {
+          name: "content",
+          filters: ["required"],
+          type: "body"
+        },
+        Title: {
+          name: "title",
+          filters: ["required"],
+          type: "body"
+        },
+        Lang: {
+          name: "lang",
+          filters: {
+            "0": "required",
+            oneOf: [
+              "en",
+              "ru",
+              "ar",
+              "bn",
+              "cs",
+              "de",
+              "es",
+              "fr",
+              "hi",
+              "id",
+              "it",
+              "ja",
+              "ko",
+              "ms",
+              "nl",
+              "pl",
+              "pt",
+              "tr",
+              "ua",
+              "zh",
+              "fa"
+            ]
+          },
+          type: "body"
+        }
+      },
+      path: "page"
     }
   },
   Partner: {
@@ -1333,6 +1387,14 @@ export default {
           name: "amount",
           filters: ["required", "positive"],
           type: "body"
+        },
+        GaCode: {
+          name: "ga_code",
+          filters: {
+            minLen: 6,
+            maxLen: 6
+          },
+          type: "body"
         }
       },
       path: "balance/withdraw"
@@ -1349,6 +1411,14 @@ export default {
         Amount: {
           name: "amount",
           filters: ["required", "positive"],
+          type: "body"
+        },
+        GaCode: {
+          name: "ga_code",
+          filters: {
+            minLen: 6,
+            maxLen: 6
+          },
           type: "body"
         }
       },
@@ -1595,7 +1665,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1616,7 +1685,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1657,7 +1725,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1678,7 +1745,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
