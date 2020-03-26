@@ -159,7 +159,6 @@ class FiatMarketForm extends React.Component {
 
     const balances = this.props[isFiat(currency) ? "balances" : "wallets"];
     if (balances && balances.length) {
-      console.log(1111, balances);
       const { amount } = balances.find(
         item => item.currency.toLowerCase() === currency
       );
