@@ -125,5 +125,6 @@ const Item = props => {
 };
 
 export default connect(state => ({
-  state: state.admin
+  layout: state.admin.layout,
+  pending: state.admin.pending
 }))(Item);

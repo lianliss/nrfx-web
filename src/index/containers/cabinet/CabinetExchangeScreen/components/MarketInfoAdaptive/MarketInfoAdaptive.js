@@ -53,7 +53,6 @@ export default ({ market, price, percent, diff }) => {
           <div className="MarketInfoAdaptive__price">
             <UI.NumberFormat
               number={price}
-              percent
               type={percent >= 0 ? "up" : "down"}
             />
           </div>

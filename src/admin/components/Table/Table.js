@@ -20,7 +20,22 @@ class TableComponent extends React.Component {
 
     if (!this.props.search) return false;
     return (
-      <div className="Table__search">
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          const values = {};
+          this.props.search.fields.forEach(field => {
+            values[field.id] = getKey(field.id);
+          });
+          this.props.search.action &&
+            action({
+              ...this.props.search.action,
+              values
+            });
+          return true;
+        }}
+        className="Table__search"
+      >
         {this.props.search.fields.map(field => (
           <Item
             {...{ ...field, id: getKey(field.id) }}
@@ -30,37 +45,13 @@ class TableComponent extends React.Component {
             }
           />
         ))}
-        <Button
-          onClick={() => {
-            const values = {};
-            this.props.search.fields.forEach(field => {
-              values[field.id] = getKey(field.id);
-            });
-            this.props.search.action &&
-              action({
-                ...this.props.search.action,
-                values
-              });
-          }}
-        >
-          Search
-        </Button>
-      </div>
+        <Button btnType="submit">Search</Button>
+      </form>
     );
   };
 
   render() {
     const { props } = this;
-
-    if (!props.items.length) {
-      return (
-        <EmptyContentBlock
-          skipContentClass
-          icon={require("../../../asset/120/info.svg")}
-          message="Empty table"
-        />
-      );
-    }
 
     return (
       <div>
@@ -78,31 +69,39 @@ class TableComponent extends React.Component {
           )}
         </div>
 
-        <Table
-          skipContentBox
-          headings={props.header.items.map(column => (
-            <TableColumn sub={column.sub_value}>
-              <Item item={column.items} />
-            </TableColumn>
-          ))}
-        >
-          {props.items
-            .filter(row => row.type !== "deleted")
-            .map(row => (
-              <TableCell>
-                {row.items.map(column => (
-                  <TableColumn sub={column.sub_value}>
-                    <Item item={column.items} />
-                  </TableColumn>
-                ))}
-              </TableCell>
+        {props.items.length ? (
+          <Table
+            skipContentBox
+            headings={props.header.items.map(column => (
+              <TableColumn sub={column.sub_value}>
+                <Item item={column.items} />
+              </TableColumn>
             ))}
-        </Table>
+          >
+            {props.items
+              .filter(row => row.type !== "deleted")
+              .map(row => (
+                <TableCell>
+                  {row.items.map(column => (
+                    <TableColumn sub={column.sub_value}>
+                      <Item item={column.items} />
+                    </TableColumn>
+                  ))}
+                </TableCell>
+              ))}
+          </Table>
+        ) : (
+          <EmptyContentBlock
+            skipContentClass
+            icon={require("../../../asset/120/info.svg")}
+            message="Empty table"
+          />
+        )}
       </div>
     );
   }
 }
 
 export default connect(state => ({
-  state: state.admin
+  // state: state.admin.layout
 }))(TableComponent);

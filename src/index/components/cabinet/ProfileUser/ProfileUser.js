@@ -8,7 +8,7 @@ import SVG from "react-inlinesvg";
 import * as utils from "../../../../utils";
 
 const ProfileSidebarUser = ({ profile }) => {
-  if (!profile || !Object.keys(profile).length) {
+  if (!profile || !profile.user) {
     return null;
   }
 
