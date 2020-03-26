@@ -12,6 +12,10 @@ class ConfirmModal extends React.Component {
     this.__handleAccept = this.__handleAccept.bind(this);
   }
 
+  state = {
+    status: ""
+  };
+
   __handleClose() {
     emitter.emit("confirm_cancel");
     this.props.onClose();
@@ -19,7 +23,11 @@ class ConfirmModal extends React.Component {
 
   __handleAccept() {
     emitter.emit("confirm_accept");
-    this.props.onClose();
+    if (!this.props.dontClose) {
+      this.props.onClose();
+    } else {
+      this.setState({ status: "loading" });
+    }
   }
 
   render() {
@@ -38,7 +46,11 @@ class ConfirmModal extends React.Component {
             <p className="ConfirmModal__content">{props.content}</p>
           )}
           <div className="ConfirmModal__buttons">
-            <UI.Button type={props.type} onClick={this.__handleAccept}>
+            <UI.Button
+              type={props.type}
+              state={this.state.status}
+              onClick={this.__handleAccept}
+            >
               {props.okText || utils.getLang("global_confirm")}
             </UI.Button>
             <UI.Button type="secondary" onClick={this.__handleClose}>
