@@ -87,9 +87,7 @@ class DashboardItem extends React.Component {
             <div className="DashboardItem__buttonAction">
               <UI.Button
                 type="outline"
-                onClick={() =>
-                  router.navigate(pages.CABINET_WALLET, { section: "fiat" })
-                }
+                onClick={() => router.navigate(pages.FIAT)}
                 size="middle"
               >
                 {utils.getLang("global_buy")}

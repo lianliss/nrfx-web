@@ -6,7 +6,7 @@ import { widget } from "../../../../../../libs/charting_library/charting_library
 import { classNames as cn, ucfirst } from "../../../../../../utils/index";
 import * as exchangeActions from "../../../../../../actions/cabinet/exchange";
 import * as actions from "../../../../../../actions/";
-// import { API_ENTRY } from '../../../../../../services/api';
+import { API_ENTRY } from "../../../../../../services/api";
 import getTimezone from "./timezones";
 import langCodes from "./langCodes";
 import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
@@ -18,8 +18,8 @@ class Chart extends React.PureComponent {
     interval: "1",
     resolution: "1",
     containerId: "tv_chart_container",
-    //datafeedUrl: API_ENTRY + '/api/v1/exchange_chart',
-    datafeedUrl: "https://ex.narfex.dev/chart",
+    datafeedUrl: API_ENTRY + "/api/v1/exchange_chart",
+    // datafeedUrl: "https://ex.narfex.dev/chart",
     // datafeedUrl: 'http://demo_feed.tradingview.com',
     libraryPath: "charting_library/",
     chartsStorageUrl: "https://saveload.tradingview.com",
