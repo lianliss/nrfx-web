@@ -9,6 +9,7 @@ const initialState = {
     method: "",
     save: ""
   },
+  method: null,
   staticPages: [],
   schema: null,
   editMode: false

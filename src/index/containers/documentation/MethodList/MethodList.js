@@ -38,9 +38,7 @@ const MethodList = props => {
                     <strong>{name}</strong>
                   </div>
                   <div className="MethodList__list__description">
-                    <p>
-                      <Editor short readOnly content={method.description} />
-                    </p>
+                    <Editor short readOnly content={method.description} />
                   </div>
                 </div>
               );

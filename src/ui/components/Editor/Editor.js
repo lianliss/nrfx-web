@@ -19,7 +19,7 @@ export default class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: this.prepareState(this.props.content),
+      editorState: this.prepareState(props.content),
       hide: true,
       focus: false,
       rect: {
@@ -52,10 +52,11 @@ export default class Editor extends React.Component {
     if (content) {
       if (typeof content === "object") {
         if (this.props.short) {
+          const block = content.blocks.filter(b => b.type === "unstyled")[0];
           return EditorState.createWithContent(
             convertFromRaw({
               ...content,
-              blocks: [content.blocks.filter(b => b.type === "unstyled")[0]]
+              blocks: block ? [block] : []
             }),
             decorator
           );
@@ -82,8 +83,6 @@ export default class Editor extends React.Component {
   blockRendererFn = contentBlock => {
     const type = contentBlock.getType();
     const text = contentBlock.getText();
-
-    console.log(1111, type);
 
     if (type === "code") {
       return {
