@@ -9,10 +9,18 @@ import {
   savePage
 } from "src/actions/documentation";
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
+import router from "../../../../router";
+import * as pages from "src/index/constants/pages";
 
 const Page = props => {
   useEffect(() => {
-    props.getPage(props.pageName);
+    if (props.pageName) {
+      props.getPage(props.pageName);
+    } else {
+      router.navigate(pages.DOCUMENTATION_PAGE, {
+        page: props.welcomePage.url
+      });
+    }
   }, [props.pageName]);
 
   if (props.status || !props.page) {
@@ -56,6 +64,7 @@ export default connect(
     editMode: state.documentation.editMode,
     status: state.documentation.loadingStatus.page,
     savePageStatus: state.documentation.loadingStatus.savePage,
+    welcomePage: state.documentation.staticPages[0],
     page: state.documentation.page
   }),
   {

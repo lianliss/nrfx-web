@@ -164,6 +164,10 @@ function Routes(props) {
       needAuthorization = true;
       Component = TraderScreen;
       break;
+    case pages.DOCUMENTATION:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationPageScreen;
+      break;
     case pages.DOCUMENTATION_PAGE:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationPageScreen;
