@@ -48,11 +48,11 @@ export function getMethod(key) {
           value: ""
         });
       })
-      .catch(() => {
+      .catch(err => {
         dispatch({
           type: actionTypes.DOCUMENTATION_SET_STATUS,
           section: "method",
-          value: "failed"
+          value: err.code
         });
       });
   };
@@ -102,11 +102,11 @@ export function getPage(address) {
           value: ""
         });
       })
-      .catch(() => {
+      .catch(err => {
         dispatch({
           type: actionTypes.DOCUMENTATION_SET_STATUS,
           section: "page",
-          value: "failed"
+          value: err.code
         });
       });
   };

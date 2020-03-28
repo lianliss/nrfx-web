@@ -26,8 +26,8 @@ const Page = props => {
   if (props.status || !props.page) {
     return (
       <div className="Documentation_wrapper__content">
-        <ContentBox>
-          <LoadingStatus inline status={props.status} />
+        <ContentBox className="DocPage">
+          <LoadingStatus status={props.status} />
         </ContentBox>
       </div>
     );

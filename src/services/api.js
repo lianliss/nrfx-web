@@ -62,7 +62,12 @@ export function invoke(method, name, params, options = {}) {
               if (json.code === "withdraw_disabled") {
                 action.openModal("user_block");
               }
-              json.error_name = "failed";
+              if (resp.status === 404) {
+                // HACK
+                json.code = "not_found";
+              } else {
+                json.error_name = "failed";
+              }
               reject(json);
             }
           })

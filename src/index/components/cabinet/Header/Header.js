@@ -39,7 +39,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const isLogged = this.props.profile.role;
+    const isLogged = !!this.props.profile.role;
     const { notifications } = this.props.notifications;
 
     const currentLang = getLang();
@@ -240,7 +240,7 @@ class Header extends React.Component {
               <div className="CabinetHeader__controls">
                 <UI.Button
                   onClick={() =>
-                    actions.openModal("auth", { type: steps.LOGIN })
+                    actions.openModal("auth", null, { type: steps.LOGIN })
                   }
                   className="login"
                   size="middle"
@@ -250,7 +250,9 @@ class Header extends React.Component {
                 </UI.Button>
                 <UI.Button
                   onClick={() =>
-                    actions.openModal("auth", { type: steps.REGISTRATION })
+                    actions.openModal("auth", null, {
+                      type: steps.REGISTRATION
+                    })
                   }
                   size="middle"
                   type="outline"
