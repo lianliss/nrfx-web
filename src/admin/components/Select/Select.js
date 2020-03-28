@@ -10,8 +10,7 @@ const InputWrapper = props => {
     ? value
         .map(v => {
           return (
-            Object.values(props.options).find(v2 => v.value === v.value) ||
-            false
+            Object.values(props.options).find(v2 => v2.value === v) || false
           );
         })
         .filter(Boolean)
