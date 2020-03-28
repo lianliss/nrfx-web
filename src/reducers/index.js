@@ -9,7 +9,7 @@ const initialState = {
   cabinet: true, // HACK
   auth: {},
   profile: {
-    has_deposits: true,
+    has_deposits: false,
     pending: false
   },
   currentLang: null,

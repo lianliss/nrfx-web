@@ -17,10 +17,10 @@ export default function WithdrawalTable({
         adaptive={adaptive}
         icon={require("../../../../../asset/120/no_deposits.svg")}
         message={utils.getLang("cabinet_noOpenDeposits")}
-        button={{
-          text: utils.getLang("global_startInvest"),
-          onClick: () => actions.openModal("open_deposit")
-        }}
+        // button={{
+        //   text: utils.getLang("global_startInvest"),
+        //   onClick: () => actions.openModal("open_deposit")
+        // }}
       />
     );
   }
