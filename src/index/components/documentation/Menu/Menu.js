@@ -83,12 +83,14 @@ const DocumentationMenu = props => {
 
   return (
     <div className="DocumentationMenu">
-      <div className="DocumentationMenu__controls">
-        <div className="DocumentationMenu__editMode">
-          <span>Edit mode</span>
-          <Switch on={props.editMode} onChange={props.setEditMode} />
+      {props.role === "Translator" && (
+        <div className="DocumentationMenu__controls">
+          <div className="DocumentationMenu__editMode">
+            <span>Edit mode</span>
+            <Switch on={props.editMode} onChange={props.setEditMode} />
+          </div>
         </div>
-      </div>
+      )}
       <div className="DocumentationMenu__list">
         {Object.values(props.staticPages).map(page => (
           <div
@@ -137,6 +139,7 @@ export default connect(
     items: state.documentation.menu,
     schema: state.documentation.schema,
     staticPages: state.documentation.staticPages,
+    role: state.default.profile.role,
     route: state.router.route
   }),
   {

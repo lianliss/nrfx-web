@@ -23,29 +23,29 @@ const Header = props => {
       <div className="Header__title">Documentation</div>
       {/*<div className="Header__menu"></div>*/}
       <div className="Header__controls">
-        {props.isLogged && (
-          <>
-            <UI.Button
-              onClick={() =>
-                actions.openModal("auth", null, { type: steps.LOGIN })
-              }
-              className="login"
-              size="middle"
-              type="lite"
-            >
-              {utils.getLang("site__authModalLogInBtn")}
-            </UI.Button>
-            <UI.Button
-              onClick={() =>
-                actions.openModal("auth", null, { type: steps.REGISTRATION })
-              }
-              size="middle"
-              type="outline"
-            >
-              {utils.getLang("site__authModalSignUpBtn")}
-            </UI.Button>
-          </>
-        )}
+        {/*{!props.isLogged && (*/}
+        {/*  <>*/}
+        {/*    <UI.Button*/}
+        {/*      onClick={() =>*/}
+        {/*        actions.openModal("auth", null, { type: steps.LOGIN })*/}
+        {/*      }*/}
+        {/*      className="login"*/}
+        {/*      size="middle"*/}
+        {/*      type="lite"*/}
+        {/*    >*/}
+        {/*      {utils.getLang("site__authModalLogInBtn")}*/}
+        {/*    </UI.Button>*/}
+        {/*    <UI.Button*/}
+        {/*      onClick={() =>*/}
+        {/*        actions.openModal("auth", null, { type: steps.REGISTRATION })*/}
+        {/*      }*/}
+        {/*      size="middle"*/}
+        {/*      type="outline"*/}
+        {/*    >*/}
+        {/*      {utils.getLang("site__authModalSignUpBtn")}*/}
+        {/*    </UI.Button>*/}
+        {/*  </>*/}
+        {/*)}*/}
         <div
           onClick={() => actions.openModal("language")}
           className="Header__controls__lang"
