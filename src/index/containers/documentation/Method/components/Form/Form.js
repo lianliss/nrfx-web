@@ -46,7 +46,7 @@ const Form = ({
   const handleSubmit = e => {
     e.preventDefault();
     setRequestStatus("loading");
-    invoke("POST", path, formData, { redirect: false })
+    invoke(method, path, formData, { redirect: false })
       .then(response => {
         setResponse(response);
       })
