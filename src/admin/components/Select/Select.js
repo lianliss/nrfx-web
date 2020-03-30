@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import Select from "../../../ui/components/Select/Select";
 import { valueChange } from "../../../actions/admin/";
 const InputWrapper = props => {
-  const value = props.values[props.id] || props.value || [];
-  const currentValue = [];
+  useEffect(() => valueChange(props.id, props.value), [props.id, props.value]);
+  const value = props.values[props.id] || (props.multiple ? [] : "");
 
   const selectValue = props.multiple
     ? value
@@ -15,8 +15,6 @@ const InputWrapper = props => {
         })
         .filter(Boolean)
     : Object.values(props.options).find(v => v.value === value);
-
-  useEffect(() => valueChange(props.id, ""), [props.id]);
 
   return (
     <Select
