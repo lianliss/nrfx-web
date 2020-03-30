@@ -5,7 +5,7 @@ import router from "../router";
 import * as adminPages from "../admin/constants/pages";
 
 // export const API_ENTRY = "https://api.narfex.com";
-export const API_ENTRY = "https://api-be-107.narfex.dev";
+export const API_ENTRY = "https://api-stage.narfex.dev";
 export const API_VERSION = 1;
 
 export function invoke(method, name, params, options = {}) {
