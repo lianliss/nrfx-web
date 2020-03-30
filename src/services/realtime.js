@@ -3,11 +3,11 @@ import * as auth from "./auth";
 class RealTime {
   constructor() {
     const token = auth.getToken();
-    this.endpoint =
-      "wss://ex.narfex.dev" + (token ? `?access_token=${token}` : "");
     // this.endpoint =
-    //   "wss://api-stage.narfex.dev/echo" +
-    //   (token ? `?access_token=${token}` : "");
+    //   "wss://ex.narfex.dev" + (token ? `?access_token=${token}` : "");
+    this.endpoint =
+      "wss://api-stage.narfex.dev/echo" +
+      (token ? `?access_token=${token}` : "");
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;

@@ -74,10 +74,10 @@ export function logout() {
       title: utils.getLang("cabinet_header_exit"),
       content: utils.getLang("cabinet_exitConfirmText"),
       okText: utils.getLang("cabinet_exitActionButton"),
-      type: "negative"
+      type: "negative",
+      dontClose: true
     })
     .then(() => {
-      store.dispatch({ type: actionTypes.LOGOUT });
       api
         .call(apiSchema.Profile.LogoutPost)
         .then(() => {

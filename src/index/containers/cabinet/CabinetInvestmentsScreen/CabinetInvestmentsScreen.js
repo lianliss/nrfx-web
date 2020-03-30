@@ -126,13 +126,6 @@ class CabinetInvestmentsScreen extends React.PureComponent {
                   ]
             }
           >
-            <div className="Investments__stub">
-              <UI.ContentBox>
-                <SVG src={require("src/asset/120/failed.svg")} />
-                <p>{utils.getLang("investmentsStubText")}</p>
-              </UI.ContentBox>
-            </div>
-
             <Show
               showIf={
                 this.props.adaptive &&

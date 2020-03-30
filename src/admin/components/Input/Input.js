@@ -3,18 +3,23 @@ import { connect } from "react-redux";
 import Input from "../../../ui/components/Input/Input";
 import { valueChange } from "../../../actions/admin/";
 const InputWrapper = props => {
-  const value = props.values[props.id] || props.value;
+  useEffect(() => {
+    valueChange(props.id, props.value);
+  }, [props.id, props.value]);
 
-  useEffect(() => valueChange(props.id, value), [props.id]);
+  const value = props.values[props.id];
 
   return (
-    <Input
-      {...props}
-      onTextChange={value => {
-        valueChange(props.id, value);
-      }}
-      value={value}
-    />
+    <div className="Item Item--input">
+      {!!props.title && <div className="Item__title">{props.title}</div>}
+      <Input
+        {...props}
+        onTextChange={value => {
+          valueChange(props.id, value);
+        }}
+        value={value}
+      />
+    </div>
   );
 };
 
