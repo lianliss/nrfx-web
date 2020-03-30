@@ -10,7 +10,7 @@ const InputWrapper = props => {
   const value = props.values[props.id];
 
   return (
-    <div>
+    <div className="Item Item--input">
       {!!props.title && <div className="Item__title">{props.title}</div>}
       <Input
         {...props}

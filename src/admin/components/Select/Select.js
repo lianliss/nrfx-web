@@ -17,7 +17,7 @@ const InputWrapper = props => {
     : Object.values(props.options).find(v => v.value === value);
 
   return (
-    <div>
+    <div className="Item Item--select">
       {!!props.title && <div className="Item__title">{props.title}</div>}
       <Select
         {...props}

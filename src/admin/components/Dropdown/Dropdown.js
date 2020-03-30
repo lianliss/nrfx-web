@@ -7,7 +7,7 @@ const DropdownWrapper = props => {
   const value = props.values[props.id];
 
   return (
-    <div>
+    <div className="Item Item--dropdown">
       {!!props.title && <div className="Item__title">{props.title}</div>}
       <Dropdown
         value={value}
