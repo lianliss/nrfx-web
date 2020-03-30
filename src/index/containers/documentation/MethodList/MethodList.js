@@ -1,7 +1,7 @@
 import "./MethodList.less";
 import React from "react";
 import { connect } from "react-redux";
-import { ContentBox, Editor } from "../../../../ui";
+import { ContentBox, Editor, Label } from "../../../../ui";
 import router from "../../../../router";
 import * as PAGES from "../../../constants/pages";
 import List from "./List";
@@ -26,6 +26,7 @@ const MethodList = props => {
         <div className="MethodList__list">
           {Object.keys(schema)
             .filter(i => i !== "opened")
+            .sort((a, b) => (schema[a].method ? -1 : 1))
             .map(name => {
               const method = schema[name];
               return (
@@ -35,7 +36,18 @@ const MethodList = props => {
                   className="MethodList__list__line"
                 >
                   <div className="MethodList__list__method">
-                    <strong>{name}</strong>
+                    {schema[name].method && (
+                      <Label
+                        type={
+                          schema[name].method === "DELETE"
+                            ? "DEL"
+                            : schema[name].method
+                        }
+                      />
+                    )}
+                  </div>
+                  <div className="MethodList__list__methodName">
+                    <strong>{schema[name].name || name}</strong>
                   </div>
                   <div className="MethodList__list__description">
                     <Editor short readOnly content={method.description} />

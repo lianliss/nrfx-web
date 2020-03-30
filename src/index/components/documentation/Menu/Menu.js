@@ -1,7 +1,7 @@
 import "./Menu.less";
 import React from "react";
 import { connect } from "react-redux";
-import { Switch } from "src/ui";
+import { Label, Switch } from "src/ui";
 import { setEditMode, saveMethod } from "src/actions/documentation";
 import router from "../../../../router";
 import { classNames as cn } from "src/utils";
@@ -67,7 +67,8 @@ const DocumentationMenu = props => {
                 })}
                 onClick={handleApiMenuClick(currentPath, currentItem)}
               >
-                {item}
+                {items[item].name || item}
+                {/*<Label type={items[item].method} />*/}
               </div>
               {items[item] &&
                 items[item].path === undefined &&
