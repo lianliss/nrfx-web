@@ -10,13 +10,16 @@ const InputWrapper = props => {
   const value = props.values[props.id];
 
   return (
-    <Input
-      {...props}
-      onTextChange={value => {
-        valueChange(props.id, value);
-      }}
-      value={value}
-    />
+    <div>
+      {!!props.title && <div className="Item__title">{props.title}</div>}
+      <Input
+        {...props}
+        onTextChange={value => {
+          valueChange(props.id, value);
+        }}
+        value={value}
+      />
+    </div>
   );
 };
 

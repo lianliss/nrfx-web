@@ -17,20 +17,23 @@ const InputWrapper = props => {
     : Object.values(props.options).find(v => v.value === value);
 
   return (
-    <Select
-      {...props}
-      options={Object.values(props.options)}
-      isMulti={props.multiple}
-      onChange={value => {
-        console.log(value);
-        if (props.multiple) {
-          valueChange(props.id, value ? value.map(v => v.value) : []);
-        } else {
-          valueChange(props.id, value ? value.value : null);
-        }
-      }}
-      value={selectValue}
-    />
+    <div>
+      {!!props.title && <div className="Item__title">{props.title}</div>}
+      <Select
+        {...props}
+        options={Object.values(props.options)}
+        isMulti={props.multiple}
+        onChange={value => {
+          console.log(value);
+          if (props.multiple) {
+            valueChange(props.id, value ? value.map(v => v.value) : []);
+          } else {
+            valueChange(props.id, value ? value.value : null);
+          }
+        }}
+        value={selectValue}
+      />
+    </div>
   );
 };
 

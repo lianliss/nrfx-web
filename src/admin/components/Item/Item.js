@@ -1,3 +1,5 @@
+import "./Item.less";
+
 import React from "react";
 import Wrapper from "../Wrapper/Wrapper";
 import Block from "../Block/Block";
