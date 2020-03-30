@@ -1,3 +1,5 @@
+import "./Item.less";
+
 import React from "react";
 import Wrapper from "../Wrapper/Wrapper";
 import Block from "../Block/Block";
@@ -5,6 +7,7 @@ import Group from "../Group/Group";
 import Table from "../Table/Table";
 import Button from "../../../ui/components/Button/Button";
 import Input from "../Input/Input";
+import Select from "../Select/Select";
 import DropDown from "../Dropdown/Dropdown";
 import action from "../../../actions/admin/index";
 import List from "../List/List";
@@ -97,6 +100,9 @@ const Item = props => {
       break;
     case "input":
       Component = Input;
+      break;
+    case "select":
+      Component = Select;
       break;
     case "tabs":
       Component = Tabs;
