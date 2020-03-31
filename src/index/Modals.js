@@ -176,8 +176,6 @@ function Modals(props) {
         window.history.back();
       }}
       onClose={() => {
-        console.log(props.route);
-        debugger;
         router.navigate(props.route.name, {
           ...props.route.params,
           modal: undefined

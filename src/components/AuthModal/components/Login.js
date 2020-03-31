@@ -39,11 +39,25 @@ function Login({
           if (res.need_ga_code) {
             changeStep(steps.GOOGLE_AUTH, { loginRes: res });
           } else {
-            router.navigate(
-              router.getState().name === pages.EXCHANGE
-                ? pages.EXCHANGE
-                : pages.DASHBOARD
-            );
+            const currentRoute = router.getState();
+            if (
+              ![
+                pages.EXCHANGE,
+                pages.DOCUMENTATION,
+                pages.DOCUMENTATION_API,
+                pages.DOCUMENTATION_PAGE,
+                pages.DOCUMENTATION_API_LIST,
+                pages.DOCUMENTATION_API_METHOD
+              ].includes(currentRoute.name)
+            ) {
+              router.navigate(pages.DASHBOARD);
+            } else {
+              console.log(currentRoute);
+              router.navigate(currentRoute.name, {
+                ...currentRoute.params,
+                modal: undefined
+              });
+            }
           }
         })
         .catch(err => {

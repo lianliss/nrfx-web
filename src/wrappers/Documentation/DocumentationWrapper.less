@@ -1,11 +1,8 @@
-html, body, #root, #root > div {
-  height: 100%;
-}
-
 .Documentation_wrapper {
   background: var(--light-dairy);
   min-height: 100%;
   width: 100%;
+  min-width: 1368px;
   display: flex;
   flex-direction: column;
 
@@ -23,9 +20,9 @@ html, body, #root, #root > div {
   }
 
   .Documentation_wrapper__layout {
-    width: 1360px;
+    width: 1330px;
     margin: 0 auto;
-    padding: 24px 16px;
+    padding: 24px 0;
     flex: 1;
     display: flex;
   }
@@ -35,7 +32,8 @@ html, body, #root, #root > div {
   }
 
   .Documentation_wrapper__content {
-    width: 680px;
+    position: relative;
+    width: 640px;
     flex: 0 0 auto;
     margin: 0 16px;
 

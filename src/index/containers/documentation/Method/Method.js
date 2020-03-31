@@ -2,12 +2,11 @@ import "./Method.less";
 
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Label, Code } from "src/ui/index";
-import { ContentBox } from "src/ui";
 import { getMethod } from "src/actions/documentation";
 import Main from "./components/Main/Main";
 import Form from "./components/Form/Form";
 import Params from "./components/Params/Params";
+import ShortDescription from "./components/ShortDescription/ShortDescription";
 import Result from "./components/Result/Result";
 
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
@@ -15,7 +14,7 @@ import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStat
 const DocumentationMethod = props => {
   useEffect(() => {
     props.getMethod(props.routerParams.key);
-  }, [props.routerParams.key]);
+  }, [props.routerParams.key]); // eslint-disable-line
 
   console.log("METHOD RENDER");
 
@@ -27,6 +26,7 @@ const DocumentationMethod = props => {
     <>
       <div className="Documentation_wrapper__content Method">
         <Main />
+        <ShortDescription />
         <Params />
         <Result />
       </div>

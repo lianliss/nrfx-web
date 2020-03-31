@@ -5,7 +5,12 @@ import { classNames as cn, ucfirst } from "src/utils";
 
 export default props => {
   return (
-    <span className={cn("Label", props.type ? props.type.toLowerCase() : null)}>
+    <span
+      onClick={props.onClick}
+      className={cn("Label", props.type && props.type.toLowerCase(), {
+        haveAction: !!props.onClick
+      })}
+    >
       {props.title || ucfirst(props.type)}
     </span>
   );

@@ -7,6 +7,11 @@ import * as utils from "../utils";
 
 export function getDocumentation() {
   return dispatch => {
+    dispatch({
+      type: actionTypes.DOCUMENTATION_SET_STATUS,
+      section: "default",
+      value: "loading"
+    });
     api
       .call(apiSchema.Documentation.DefaultGet, { description: true })
       .then(({ schema, static_pages }) => {
@@ -106,7 +111,7 @@ export function getPage(address) {
         dispatch({
           type: actionTypes.DOCUMENTATION_SET_STATUS,
           section: "page",
-          value: err.code
+          value: err.error_name
         });
       });
   };
@@ -122,11 +127,18 @@ export function savePage(address) {
       value: "loading"
     });
     return api
-      .call(apiSchema.Page.DefaultPut, { ...page, address })
+      .call(apiSchema.Page.DefaultPut, {
+        content: page.content,
+        title: page.title,
+        address
+      })
       .then(page => {
+        toast.success(utils.getLang("global_success"));
         dispatch({ type: actionTypes.DOCUMENTATION_SET_PAGE, page: page });
       })
-      .catch(() => {})
+      .catch(() => {
+        toast.error(utils.getLang("global_failed"));
+      })
       .finally(() => {
         dispatch({
           type: actionTypes.DOCUMENTATION_SET_STATUS,

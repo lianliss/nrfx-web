@@ -10,6 +10,8 @@ import * as user from "./user";
 import * as actions from "./index";
 import * as utils from "../utils";
 import * as toasts from "./toasts";
+import router from "../router";
+import * as pages from "../admin/constants/pages";
 
 export function getAuth(login, password, token) {
   const app_id = 8;
@@ -82,6 +84,7 @@ export function logout() {
         .call(apiSchema.Profile.LogoutPost)
         .then(() => {
           auth.logout();
+          router.navigate(pages.MAIN);
         })
         .catch(err => {
           toasts.error(err.message);

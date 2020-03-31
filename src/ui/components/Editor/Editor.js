@@ -11,8 +11,7 @@ import {
   convertToRaw
 } from "draft-js";
 import EditorTooltip from "../EditorTooltip/EditorTooltip";
-import { Button, Code, Input } from "../../index";
-import { isJson } from "src/utils";
+import { Code } from "../../index";
 import { classNames as cn } from "../../utils/index";
 
 export default class Editor extends React.Component {
@@ -103,7 +102,7 @@ export default class Editor extends React.Component {
 
   _setLink(e) {
     e.preventDefault();
-    const { editorState, urlValue } = this.state;
+    const { editorState } = this.state;
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
       "LINK",
@@ -183,10 +182,6 @@ export default class Editor extends React.Component {
       this.props.onChange(convertToRaw(editorState.getCurrentContent()));
   };
 
-  toggleInlineStyle = type => {
-    RichUtils.toggleInlineStyle(this.state.editorState, type);
-  };
-
   render() {
     const style = {
       transform: `translate(calc(-50% + ${this.state.rect.left +
@@ -204,6 +199,7 @@ export default class Editor extends React.Component {
       >
         <div className="Editor__wrapper">
           <DraftEditor
+            customStyleMap={styleMap}
             ref="editor"
             readOnly={this.props.readOnly}
             blockRendererFn={this.blockRendererFn}
@@ -233,6 +229,16 @@ export default class Editor extends React.Component {
     );
   }
 }
+
+const styleMap = {
+  CODE: {
+    backgroundColor: "#f8f8f8",
+    padding: "2px 4px",
+    fontFamily: "monospace",
+    fontWeight: "500",
+    border: `1px solid var('--light-gray')`
+  }
+};
 
 function findLinkEntities(contentBlock, callback, contentState) {
   contentBlock.findEntityRanges(character => {

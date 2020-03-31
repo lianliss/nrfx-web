@@ -156,7 +156,7 @@ export const routes =
         },
         {
           name: pages.DOCUMENTATION_PAGE,
-          path: "/documentation/page:page"
+          path: "/documentation/page/:page"
         },
         {
           name: pages.DOCUMENTATION_API,

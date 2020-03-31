@@ -1,14 +1,16 @@
 import "./Menu.less";
 import React from "react";
 import { connect } from "react-redux";
-import { Label, Switch } from "src/ui";
+import { Switch } from "src/ui";
 import { setEditMode, saveMethod } from "src/actions/documentation";
 import router from "../../../../router";
 import { classNames as cn } from "src/utils";
 import * as PAGES from "../../../constants/pages";
+import { sortDocSchema } from "../../../containers/documentation/utils";
 
 const DocumentationMenu = props => {
   const handleApiMenuClick = (path, item) => () => {
+    if (props.loading) return false;
     if (item.key) {
       router.navigate(PAGES.DOCUMENTATION_API_METHOD, {
         key: item.key
@@ -40,44 +42,46 @@ const DocumentationMenu = props => {
   const renderItems = (items, path = []) => {
     return items ? (
       <div className="DocumentationMenu__list">
-        {Object.keys(items).map(item => {
-          const currentPath = [...path, item];
-          const currentItem = items[item];
-          const key = props.route.params.key;
-          const open =
-            props.route.params.path &&
-            isCurrentPath(props.route.params.path.split("-"), currentPath) &&
-            currentPath.join("-") !== props.route.params.path;
-          const includeMethod = findMethod(currentItem, key) || open;
-          const active =
-            props.route.params.path === item ||
-            (key && currentItem.key === key) ||
-            currentPath.join("-") === props.route.params.path;
+        {Object.keys(items)
+          .sort(sortDocSchema(items))
+          .map(item => {
+            const currentPath = [...path, item];
+            const currentItem = items[item];
+            const key = props.route.params.key;
+            const open =
+              props.route.params.path &&
+              isCurrentPath(props.route.params.path.split("-"), currentPath) &&
+              currentPath.join("-") !== props.route.params.path;
+            const includeMethod = findMethod(currentItem, key) || open;
+            const active =
+              props.route.params.path === item ||
+              (key && currentItem.key === key) ||
+              currentPath.join("-") === props.route.params.path;
 
-          return (
-            <div
-              key={item}
-              className={cn("DocumentationMenu__list__item", {
-                active: active || includeMethod
-              })}
-            >
+            return (
               <div
-                className={cn("DocumentationMenu__list__item__title", {
-                  active: active || (includeMethod && active)
+                key={item}
+                className={cn("DocumentationMenu__list__item", {
+                  active: active || includeMethod
                 })}
-                onClick={handleApiMenuClick(currentPath, currentItem)}
               >
-                {items[item].name || item}
-                {/*<Label type={items[item].method} />*/}
+                <div
+                  className={cn("DocumentationMenu__list__item__title", {
+                    active: active || (includeMethod && active)
+                  })}
+                  onClick={handleApiMenuClick(currentPath, currentItem)}
+                >
+                  {items[item].name || item}
+                  {/*<Label type={items[item].method} />*/}
+                </div>
+                {items[item] &&
+                  items[item].path === undefined &&
+                  !active &&
+                  includeMethod &&
+                  renderItems(items[item], currentPath)}
               </div>
-              {items[item] &&
-                items[item].path === undefined &&
-                !active &&
-                includeMethod &&
-                renderItems(items[item], currentPath)}
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     ) : null;
   };
@@ -103,7 +107,8 @@ const DocumentationMenu = props => {
             <div
               className={cn("DocumentationMenu__list__item__title")}
               onClick={() => {
-                router.navigate(PAGES.DOCUMENTATION_PAGE, { page: page.url });
+                props.loading ||
+                  router.navigate(PAGES.DOCUMENTATION_PAGE, { page: page.url });
               }}
             >
               {page.title}
@@ -136,6 +141,10 @@ const DocumentationMenu = props => {
 export default connect(
   state => ({
     saveStatus: state.documentation.loadingStatus.save,
+    loading: !!(
+      state.documentation.loadingStatus.page ||
+      state.documentation.loadingStatus.method
+    ),
     editMode: state.documentation.editMode,
     items: state.documentation.menu,
     schema: state.documentation.schema,

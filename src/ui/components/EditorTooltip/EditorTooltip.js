@@ -39,6 +39,12 @@ export default props => {
         Bold
       </div>
       <div
+        onMouseDown={() => props.onToggleInlineStyle("CODE")}
+        className="EditorTooltip__item code"
+      >
+        [code]
+      </div>
+      <div
         onMouseDown={() => props.onToggleBlockType("code")}
         className="EditorTooltip__item code"
       >{`<CODE />`}</div>

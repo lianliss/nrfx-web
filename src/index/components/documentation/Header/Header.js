@@ -12,6 +12,9 @@ import * as actions from "../../../../actions";
 import * as steps from "../../../../components/AuthModal/fixtures";
 import * as utils from "../../../../utils";
 import SVG from "react-inlinesvg";
+import * as pages from "../../../constants/pages";
+import COMPANY from "../../../constants/company";
+import * as auth from "../../../../actions/auth";
 
 const Header = props => {
   const lang = actions.getCurrentLang();
@@ -20,41 +23,54 @@ const Header = props => {
       <BaseLink router={router} routeName={PAGES.MAIN}>
         <Logo />
       </BaseLink>
-      <div className="Header__title">Documentation</div>
+      <div className="DocumentationHeader__title">
+        {utils.getLang("cabinet_docsTitle")}
+      </div>
       {/*<div className="Header__menu"></div>*/}
-      <div className="Header__controls">
-        {/*{!props.isLogged && (*/}
-        {/*  <>*/}
-        {/*    <UI.Button*/}
-        {/*      onClick={() =>*/}
-        {/*        actions.openModal("auth", null, { type: steps.LOGIN })*/}
-        {/*      }*/}
-        {/*      className="login"*/}
-        {/*      size="middle"*/}
-        {/*      type="lite"*/}
-        {/*    >*/}
-        {/*      {utils.getLang("site__authModalLogInBtn")}*/}
-        {/*    </UI.Button>*/}
-        {/*    <UI.Button*/}
-        {/*      onClick={() =>*/}
-        {/*        actions.openModal("auth", null, { type: steps.REGISTRATION })*/}
-        {/*      }*/}
-        {/*      size="middle"*/}
-        {/*      type="outline"*/}
-        {/*    >*/}
-        {/*      {utils.getLang("site__authModalSignUpBtn")}*/}
-        {/*    </UI.Button>*/}
-        {/*  </>*/}
-        {/*)}*/}
-        <div
-          onClick={() => actions.openModal("language")}
-          className="Header__controls__lang"
+      <div className="DocumentationHeader__controls">
+        <UI.ActionSheet
+          position="left"
+          items={[
+            !props.isLogged && {
+              title: utils.getLang("site__authModalLogInBtn"),
+              onClick: () =>
+                actions.openModal("auth", null, { type: steps.LOGIN })
+            },
+            !props.isLogged && {
+              title: utils.getLang("site__authModalSignUpBtn"),
+              onClick: () =>
+                actions.openModal("auth", null, {
+                  type: steps.REGISTRATION
+                })
+            },
+            props.isLogged && {
+              title: utils.getLang("cabinet_header_settings"),
+              onClick: () => router.navigate(pages.SETTINGS)
+            },
+            {
+              title: "FAQ",
+              onClick: () => window.open(COMPANY.faqUrl)
+            },
+            {
+              title: lang.title,
+              onClick: () => actions.openModal("language"),
+              subContent: (
+                <SVG
+                  src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)}
+                />
+              )
+            },
+            props.isLogged && {
+              title: utils.getLang("cabinet_header_exit"),
+              onClick: auth.logout
+            }
+          ].filter(Boolean)}
         >
-          <span>{lang.title}</span>
           <SVG
-            src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)}
+            className="DocumentationHeader__dropDownMenuIcon"
+            src={require("../../../../asset/cabinet/settings.svg")}
           />
-        </div>
+        </UI.ActionSheet>
       </div>
     </ContentBox>
   );

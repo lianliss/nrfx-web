@@ -6,7 +6,11 @@ import "./Code.less";
 
 const Code = props => {
   if (props.simple) {
-    return <div className={cn("Code", props.className)}>{props.children}</div>;
+    return (
+      <span className={cn("Code", "Code--simple", props.className)}>
+        {props.children}
+      </span>
+    );
   }
   return (
     <Highlight className={cn("Code", props.className)} language={props.lang}>

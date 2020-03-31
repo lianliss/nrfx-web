@@ -4,6 +4,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { updateMethod, saveMethod } from "src/actions/documentation";
 import { ContentBox, Label, Button, Editor } from "src/ui";
+import router from "../../../../../../router";
+import { getLang } from "src/utils";
+import * as PAGES from "../../../../../constants/pages";
 
 const Main = props => {
   const handleChange = value => props.updateMethod("description", value);
@@ -18,7 +21,7 @@ const Main = props => {
             onClick={props.saveMethod}
             size="small"
           >
-            Save
+            {getLang("global_save")}
           </Button>
         )}
       </h1>
@@ -35,9 +38,18 @@ const Main = props => {
       </div>
       {!!props.requirements.length && (
         <div className="Method__main__requirements">
-          <div className="Method__main__requirements__title">Requirements:</div>
+          <div className="Method__main__requirements__title">
+            {getLang("cabinet_docsRequirements")}:
+          </div>
           {props.requirements.map(item => (
-            <Label title={item} />
+            <Label
+              onClick={() => {
+                router.navigate(PAGES.DOCUMENTATION_PAGE, {
+                  page: item
+                });
+              }}
+              title={item}
+            />
           ))}
         </div>
       )}

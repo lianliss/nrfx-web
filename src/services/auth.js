@@ -1,7 +1,5 @@
 import * as storage from "./storage";
 import { INTERNAL_NOTIFICATION_KEY } from "../index/constants/internalNotifications";
-import router from "../router";
-import * as pages from "../admin/constants/pages";
 import store from "../store";
 import * as actionTypes from "../actions/actionTypes";
 
@@ -27,5 +25,4 @@ export function logout() {
   store.dispatch({ type: actionTypes.LOGOUT });
   storage.removeItem("access_token");
   storage.removeItemsByKey(INTERNAL_NOTIFICATION_KEY);
-  router.navigate(pages.MAIN);
 }

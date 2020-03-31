@@ -1,6 +1,4 @@
 import * as actionTypes from "../actions/actionTypes";
-import { diff } from "src/utils";
-import apiSchema from "../services/apiSchema";
 
 const initialState = {
   loadingStatus: {

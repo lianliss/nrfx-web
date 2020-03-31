@@ -11,8 +11,8 @@ import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingS
 
 const DocumentationWrapper = props => {
   useEffect(() => {
-    !props.schema && props.getDocumentation();
-  });
+    props.getDocumentation();
+  }, [props.currentLang]); // eslint-disable-line
 
   const renderContent = () => {
     if (props.loadingStatus) {
@@ -46,6 +46,7 @@ const DocumentationWrapper = props => {
 export default connect(
   state => ({
     loadingStatus: state.documentation.loadingStatus.default,
+    currentLang: state.default.currentLang,
     schema: state.documentation.schema
   }),
   {

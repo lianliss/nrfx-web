@@ -1,14 +1,14 @@
 import "./Form.less";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { updateMethod } from "src/actions/documentation";
-import { Input, Dropdown, Button, Code, ContentBox, Editor } from "src/ui";
+import { Button, Code, ContentBox } from "src/ui";
 import { invoke } from "src/services/api";
 import Field from "./Field";
 import * as toast from "src/actions/toasts";
-import SVG from "react-inlinesvg";
 import * as utils from "../../../../../../utils";
+import { isJson } from "../../../../../../utils";
 
 const Form = ({
   method,
@@ -78,7 +78,7 @@ const Form = ({
           </label>
         ))}
         <Button state={requestStatus} btnType ype="submit">
-          Submit
+          {utils.getLang("global_submit")}
         </Button>
       </form>
       {response ? (
@@ -91,12 +91,16 @@ const Form = ({
             className="MethodForm__response__editor"
             onChange={handleChange}
           >
-            {resultExample}
+            {isJson(resultExample)
+              ? JSON.stringify(JSON.parse(resultExample), null, 2)
+              : resultExample}
           </textarea>
         </Code>
       ) : (
         <Code type="json" className="MethodForm__response">
-          {JSON.stringify(JSON.parse(resultExample), null, 2)}
+          {isJson(resultExample)
+            ? JSON.stringify(JSON.parse(resultExample), null, 2)
+            : resultExample}
         </Code>
       )}
     </ContentBox>

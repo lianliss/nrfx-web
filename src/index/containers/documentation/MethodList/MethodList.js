@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ContentBox, Editor, Label } from "../../../../ui";
 import router from "../../../../router";
 import * as PAGES from "../../../constants/pages";
-import List from "./List";
+import { sortDocSchema } from "../utils";
 
 const MethodList = props => {
   const handleMethodClick = (method, name) => () => {
@@ -26,7 +26,7 @@ const MethodList = props => {
         <div className="MethodList__list">
           {Object.keys(schema)
             .filter(i => i !== "opened")
-            .sort((a, b) => (schema[a].method ? -1 : 1))
+            .sort(sortDocSchema(schema))
             .map(name => {
               const method = schema[name];
               return (

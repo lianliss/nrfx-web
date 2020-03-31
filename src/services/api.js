@@ -2,7 +2,7 @@ import * as auth from "./auth";
 import * as action from "../actions/";
 import { clearProfile } from "../actions/auth";
 import router from "../router";
-import * as adminPages from "../admin/constants/pages";
+import * as PAGES from "../index/constants/pages";
 
 // export const API_ENTRY = "https://api.narfex.dev";
 export const API_ENTRY = "https://api-devivan.narfex.dev";
@@ -49,7 +49,10 @@ export function invoke(method, name, params, options = {}) {
         if (resp.status === 403) {
           clearProfile();
           reject({ message: "403 Forbidden: Invalid credentials" });
-          if (options.redirect !== false) router.navigate(adminPages.MAIN);
+          console.log(1, options.redirect, true);
+          if (options.redirect !== false) {
+            router.navigate(PAGES.MAIN);
+          }
           return;
         }
 

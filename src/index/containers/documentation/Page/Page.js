@@ -1,6 +1,6 @@
 import "./Page.less";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { ContentBox, Editor, Button } from "src/ui";
 import {
@@ -21,7 +21,7 @@ const Page = props => {
         page: props.welcomePage.url
       });
     }
-  }, [props.pageName]);
+  }, [props.pageName]); // eslint-disable-line
 
   if (props.status || !props.page) {
     return (

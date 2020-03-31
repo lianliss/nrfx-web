@@ -63,7 +63,9 @@ const Params = props => {
                       filters.maxLen && filters.minLen && (
                         <>
                           {getLang("docs_paramMinLenMaxLenDescription")}{" "}
-                          {[filters.minLen, filters.maxLen].join(", ")}{" "}
+                          {filters.minLen === filters.maxLen
+                            ? filters.minLen
+                            : [filters.minLen, filters.maxLen].join(" - ")}{" "}
                           {getLang("docs_paramCharacters")}
                         </>
                       ),
