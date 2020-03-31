@@ -47,7 +47,11 @@ const MethodList = props => {
                     )}
                   </div>
                   <div className="MethodList__list__methodName">
-                    <strong>{schema[name].name || name}</strong>
+                    <strong>
+                      {schema[name].name === "Default"
+                        ? "/"
+                        : schema[name].name || name}
+                    </strong>
                   </div>
                   <div className="MethodList__list__description">
                     <Editor short readOnly content={method.description} />

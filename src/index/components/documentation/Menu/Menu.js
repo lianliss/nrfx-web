@@ -71,7 +71,10 @@ const DocumentationMenu = props => {
                   })}
                   onClick={handleApiMenuClick(currentPath, currentItem)}
                 >
-                  {items[item].name || item}
+                  {items[item].name === "Default"
+                    ? null
+                    : items[item].name || item}{" "}
+                  {items[item].method}
                   {/*<Label type={items[item].method} />*/}
                 </div>
                 {items[item] &&

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { updateMethod, saveMethod } from "src/actions/documentation";
 import { ContentBox, Label, Button, Editor } from "src/ui";
 import router from "../../../../../../router";
-import { getLang } from "src/utils";
+import { getLang, ucfirst } from "src/utils";
 import * as PAGES from "../../../../../constants/pages";
 
 const Main = props => {
@@ -14,7 +14,9 @@ const Main = props => {
   return (
     <ContentBox className="Method__main">
       <h1 className="Method__main__title">
-        {props.name}
+        <span>
+          {props.name === "Default" ? ucfirst(props.path) : props.name}
+        </span>
         {props.editMode && (
           <Button
             state={props.saveStatus}
