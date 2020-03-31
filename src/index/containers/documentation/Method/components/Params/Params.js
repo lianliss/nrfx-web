@@ -14,7 +14,7 @@ const Params = props => {
   return (
     !!props.params.length && (
       <ContentBox className="Method__params">
-        <h2>Parameters</h2>
+        <h2>{getLang("cabinet_docsParameters")}</h2>
         <div className="Method__params__list">
           {props.params.map(param => {
             const { filters } = param;

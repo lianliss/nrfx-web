@@ -10,6 +10,7 @@ import MarkDown from "ui/MarkDown/MarkDown";
 import { isIndonesia } from "src/services/locations";
 import * as UI from "src/ui";
 import COMPANY from "src/index/constants/company";
+import router from "../../../../router";
 
 export default function Footer() {
   return (
@@ -62,6 +63,12 @@ export default function Footer() {
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">
               {utils.getLang("site__footerContactUs")}
             </a>
+            <span
+              onClick={() => router.navigate(pages.DOCUMENTATION)}
+              className="Footer__links__item"
+            >
+              {utils.getLang("site__headerDocumentation")}
+            </span>
             <span
               onClick={() =>
                 actions.openModal("static_content", { type: "terms" })

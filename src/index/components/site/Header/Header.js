@@ -76,6 +76,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           route: COMPANY.faqUrl
         },
         {
+          title: getLang("site__headerDocumentation"),
+          route: pages.DOCUMENTATION
+        },
+        {
           title: (
             <span
               onClick={() =>
