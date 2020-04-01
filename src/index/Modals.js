@@ -48,7 +48,7 @@ function Modals(props) {
   const routerParams = props.route.params;
   delete routerParams.ref;
   const { options } = props.route.meta;
-  const modal = routerParams.modal || props.modal.name;
+  const modal = props.modal.name || routerParams.modal;
 
   let Component = false;
 

@@ -207,21 +207,23 @@ export default class Editor extends React.Component {
             editorState={this.state.editorState}
             onChange={this.handleChange}
           />
-          <EditorTooltip
-            onToggleBlockType={type => {
-              this.onChange(
-                RichUtils.toggleBlockType(this.state.editorState, type)
-              );
-            }}
-            onToggleInlineStyle={type => {
-              this.onChange(
-                RichUtils.toggleInlineStyle(this.state.editorState, type)
-              );
-            }}
-            onSetLint={this.setLink}
-            visible={!this.state.hide}
-            style={style}
-          />
+          {!this.props.readOnly && (
+            <EditorTooltip
+              onToggleBlockType={type => {
+                this.onChange(
+                  RichUtils.toggleBlockType(this.state.editorState, type)
+                );
+              }}
+              onToggleInlineStyle={type => {
+                this.onChange(
+                  RichUtils.toggleInlineStyle(this.state.editorState, type)
+                );
+              }}
+              onSetLint={this.setLink}
+              visible={!this.state.hide}
+              style={style}
+            />
+          )}
           {/*<div className="Editor__shape" style={{ ...this.state.rect }} />*/}
         </div>
         {/*<pre>{JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()), null, 2)}</pre>*/}
