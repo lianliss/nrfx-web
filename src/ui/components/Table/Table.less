@@ -45,7 +45,7 @@
   }
 
   tr {
-    &.dark .Table__td__cont {
+    &.dark {
       background: var(--light-dairy);
     }
 
@@ -58,7 +58,7 @@
     }
   }
 
-  &.compact tr.dark .Table__td__cont {
+  &.compact tr.dark {
     background: var(--light-dairy);
   }
 
@@ -82,7 +82,8 @@
     flex-direction: column;
     padding: 0 8px;
     line-height: 24px;
-    height: 56px;
+    min-height: 56px;
+    box-sizing: border-box;
   }
 
   th,
