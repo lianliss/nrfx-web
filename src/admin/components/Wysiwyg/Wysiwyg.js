@@ -1,3 +1,5 @@
+import "./Wisiwyg.less";
+
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Editor from "../../../ui/components/Editor/Editor";
@@ -7,12 +9,16 @@ const WysiwygWrapper = props => {
   const value = props.values[props.id];
 
   return (
-    <Editor
-      onChange={value => valueChange(props.id, value)}
-      border
-      on
-      content={value}
-    />
+    <div className="Item Item--input">
+      {!!props.title && <div className="Item__title">{props.title}</div>}
+      <Editor
+        className="Wysiwyg"
+        onChange={value => valueChange(props.id, value)}
+        border
+        on
+        content={value}
+      />
+    </div>
   );
 };
 

@@ -191,7 +191,7 @@ export default class Editor extends React.Component {
 
     return (
       <div
-        className={cn("Editor", {
+        className={cn("Editor", this.props.className, {
           border: this.props.border,
           focus: this.state.focus
         })}
