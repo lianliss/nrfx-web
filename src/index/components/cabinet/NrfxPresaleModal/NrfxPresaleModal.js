@@ -24,6 +24,9 @@ const NrfxPresaleModal = props => {
   const [state, setState] = useState(null);
   const [rate, setRate] = useRate(0);
 
+  const lang = props.lang === "ru" ? "ru" : "en";
+  const url = `https://storage.googleapis.com/narfex/files/narfex-white-paper-${lang}-1.1.pdf`;
+
   useEffect(() => {
     setRate(currency);
     const intervalId = setInterval(() => {
@@ -65,7 +68,10 @@ const NrfxPresaleModal = props => {
           <Tooltip
             place="bottom"
             title={
-              <a href={"#"}>{getLang("cabinet_nrfxCoinPresaleAboutLink")}</a>
+              <a target="_blank" rel="noopener noreferrer" href={url}>
+                {getLang("cabinet_nrfxCoinPresaleAboutLink")}
+                <SVG src={require("src/asset/16px/link.svg")} />
+              </a>
             }
           >
             <small className="NrfxPresaleModal__promo__presale">
@@ -151,5 +157,6 @@ const useRate = initialState => {
 };
 
 export default connect(state => ({
-  adaptive: state.default.adaptive
+  adaptive: state.default.adaptive,
+  lang: state.default.currentLang
 }))(NrfxPresaleModal);
