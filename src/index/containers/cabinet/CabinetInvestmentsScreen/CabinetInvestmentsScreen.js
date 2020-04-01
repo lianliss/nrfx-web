@@ -24,7 +24,6 @@ import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";
 import Show from "../../../components/hoc/ShowContent";
 import * as investmentsActions from "../../../../actions/cabinet/investments";
-import SVG from "react-inlinesvg";
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
