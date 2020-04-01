@@ -19,6 +19,7 @@ import toastsReducer from "./reducers/toasts";
 import internalNotificationsReducer from "./reducers/InternalNotifications";
 import testReducer from "./reducers/test";
 import exchangeReducer from "./reducers/exchange";
+import modalReducer from "./reducers/modal";
 import adminReducer from "./reducers/admin";
 import traderReducer from "./reducers/trader";
 
@@ -39,13 +40,15 @@ export function configureStore() {
             router: router5Reducer,
             toasts: toastsReducer,
             default: defaultReducer,
-            admin: adminReducer
+            admin: adminReducer,
+            modal: modalReducer
           }
         : {
             router: router5Reducer,
             documentation: documentation,
             default: defaultReducer,
             cabinet: cabinetReducer,
+            modal: modalReducer,
             investments: investmentsReducer,
             wallets: walletsReducer,
             fiat: fiatReducer,

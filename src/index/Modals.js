@@ -39,6 +39,8 @@ import WalletModal from "./components/cabinet/WalletModal/WalletModal";
 import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailModal";
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
+import { openCloseModal } from "src/actions/index";
+
 import router from "../router";
 import { connect } from "react-redux";
 
@@ -46,7 +48,7 @@ function Modals(props) {
   const routerParams = props.route.params;
   delete routerParams.ref;
   const { options } = props.route.meta;
-  const modal = routerParams.modal;
+  const modal = routerParams.modal || props.modal.name;
 
   let Component = false;
 
@@ -169,22 +171,26 @@ function Modals(props) {
   return (
     <Component
       {...routerParams}
+      {...props.modal.params}
       {...options}
       onBack={() => {
-        // console.log(router.getState());
-        // debugger;
         window.history.back();
       }}
       onClose={() => {
-        router.navigate(props.route.name, {
-          ...props.route.params,
-          modal: undefined
-        });
+        if (props.modal.name) {
+          openCloseModal();
+        } else {
+          router.navigate(props.route.name, {
+            ...props.route.params,
+            modal: undefined
+          });
+        }
       }}
     />
   );
 }
 
 export default connect(state => ({
-  route: state.router.route
+  route: state.router.route,
+  modal: state.modal
 }))(Modals);

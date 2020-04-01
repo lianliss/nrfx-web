@@ -6,12 +6,13 @@ import { connect } from "react-redux";
 import router from "../router";
 import AuthModal from "../components/AuthModal/AuthModal";
 import ConfirmModal from "../index/components/cabinet/ConfirmModal/ConfirmModal";
+import { openCloseModal } from "../actions";
 
 function Modals(props) {
   const routerParams = props.route.params;
   delete routerParams.ref;
   const { options } = props.route.meta;
-  const modal = routerParams.modal;
+  const modal = routerParams.modal || props.modal.name;
 
   let Component = false;
 
@@ -32,20 +33,26 @@ function Modals(props) {
   return (
     <Component
       {...routerParams}
+      {...props.modal.params}
       {...options}
       onBack={() => {
         window.history.back();
       }}
       onClose={() => {
-        const route = router.getState();
-        const params = { ...route.params };
-        delete params.modal;
-        router.navigate(route.name, params);
+        if (props.modal.name) {
+          openCloseModal();
+        } else {
+          router.navigate(props.route.name, {
+            ...props.route.params,
+            modal: undefined
+          });
+        }
       }}
     />
   );
 }
 
 export default connect(state => ({
-  route: state.router.route
+  route: state.router.route,
+  modal: state.modal
 }))(Modals);

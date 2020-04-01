@@ -8,6 +8,9 @@ export const PROFILE_PENDING = "PROFILE_PENDING";
 export const LOGOUT = "LOGOUT";
 export const SET_USER_NAME = "SET_USER_NAME";
 
+export const MODAL_OPEN = "MODAL_OPEN";
+export const MODAL_CLOSE = "MODAL_CLOSE";
+
 export const PUSH_MODAL = "PUSH_MODAL";
 export const POP_MODAL = "POP_MODAL";
 

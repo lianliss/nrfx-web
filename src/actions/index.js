@@ -101,6 +101,15 @@ export function openModal(name, params = {}, props = {}, done) {
     done
   );
 }
+
+export function openStateModal(name, params = {}) {
+  store.dispatch({ type: actionTypes.MODAL_OPEN, name, params });
+}
+
+export function openCloseModal(name, params = {}) {
+  store.dispatch({ type: actionTypes.MODAL_CLOSE });
+}
+
 export function closeModal() {
   const { route } = store.getState().router;
   router.navigate(route.name, {
@@ -110,7 +119,8 @@ export function closeModal() {
 
 export function confirm(props) {
   return new Promise((resolve, reject) => {
-    openModal("confirm", {}, props);
+    openStateModal("confirm", props);
+
     const acceptListener = emitter.addListener("confirm_accept", () => {
       emitter.removeListener(acceptListener);
       resolve();
