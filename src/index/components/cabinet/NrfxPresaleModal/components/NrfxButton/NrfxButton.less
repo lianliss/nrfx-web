@@ -1,0 +1,46 @@
+.NrfxButton {
+  position: relative;
+  background: transparent;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--white);
+  outline: none;
+  cursor: pointer;
+
+  &.loading {
+    opacity: 1 !important;
+    color: transparent !important;
+
+    &:before  {
+      position: absolute;
+      margin: auto;
+      right: 0;
+      left: 0;
+      content: '';
+      display: block;
+      height: 16px;
+      width: 16px;
+      background: url("../../../../../../ui/asset/spinner.svg") no-repeat;
+      animation: Button__loader_anim 1s infinite linear;
+    }
+  }
+
+  &[disabled] {
+    opacity: .6;
+    pointer-events: none;
+  }
+
+  &.active {
+    background: var(--white);
+    color: #3A3F4D;
+  }
+
+  &.small {
+    padding: 8px 16px;
+    border-radius: 12px;
+  }
+}

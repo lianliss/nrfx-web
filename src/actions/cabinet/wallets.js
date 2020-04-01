@@ -275,3 +275,27 @@ export function checkLogin(login) {
       }
     });
 }
+
+export function TokenRateGet(currency) {
+  return api.call(apiSchema.Wallet.TokenRateGet, { currency });
+}
+
+export function BuyToken(currency, amount) {
+  return api
+    .call(apiSchema.Wallet.BuyTokenPost, { currency, amount })
+    .then(r => {
+      store.dispatch({
+        type: actionTypes.WALLETS_WALLET_UPDATE,
+        wallet: r.from_wallet
+      });
+      store.dispatch({
+        type: actionTypes.WALLETS_WALLET_UPDATE,
+        wallet: r.to_wallet
+      });
+      toastsActions.success(utils.getLang("global_success"));
+    })
+    .catch(err => {
+      toastsActions.error(err.message);
+      throw err;
+    });
+}

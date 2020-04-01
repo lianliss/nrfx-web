@@ -9,7 +9,7 @@ const Tooltip = props => {
     <div className={cn("Tooltip__wrapper", props.place)}>
       {props.title && (
         <div className={cn("Tooltip", props.size)}>
-          <div className="Tooltip__area"></div>
+          <div className="Tooltip__area" />
           {props.title}
         </div>
       )}
