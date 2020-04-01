@@ -17,6 +17,7 @@ import PagingItem from "../Paging/PagingItem";
 import Label from "../../../ui/components/Label/Label";
 import Json from "../Json/Json";
 import Text from "../Text/Text";
+import Time from "../Time/Time";
 import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
 import { connect } from "react-redux";
@@ -112,6 +113,9 @@ const Item = props => {
       break;
     case "text":
       Component = Text;
+      break;
+    case "time":
+      Component = Time;
       break;
     default:
       Component = props => (

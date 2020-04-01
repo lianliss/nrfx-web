@@ -1,3 +1,3 @@
 import React from "react";
 
-export default ({ text, item }) => <span>{text}</span>;
+export default ({ text }) => <span>{text}</span>;
