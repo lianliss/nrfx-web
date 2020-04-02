@@ -131,7 +131,7 @@ export default class SiteContactScreen extends BaseScreen {
 
               <UI.ContentBox
                 onClick={() => router.navigate(PAGES.DOCUMENTATION)}
-                className="SiteContactScreen__link_item"
+                className="SiteContactScreen__link_item disabled"
               >
                 <SVG src={require("../../../../asset/120/code.svg")} />
                 <h3 className="SiteContactScreen__link_item__title">

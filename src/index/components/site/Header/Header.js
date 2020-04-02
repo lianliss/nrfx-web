@@ -75,10 +75,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           title: getLang("site__headerFAQ"),
           route: COMPANY.faqUrl
         },
-        {
-          title: getLang("site__headerDocumentation"),
-          route: pages.DOCUMENTATION
-        },
+        // {
+        //   title: getLang("site__headerDocumentation"),
+        //   route: pages.DOCUMENTATION
+        // },
         {
           title: (
             <span

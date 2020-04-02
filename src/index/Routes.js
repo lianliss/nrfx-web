@@ -167,22 +167,27 @@ function Routes(props) {
     case pages.DOCUMENTATION:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationPageScreen;
+      needAuthorization = "Translator"; // TEMP
       break;
     case pages.DOCUMENTATION_PAGE:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationPageScreen;
+      needAuthorization = "Translator"; // TEMP
       break;
     case pages.DOCUMENTATION_API:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationMethodListScreen;
+      needAuthorization = "Translator"; // TEMP
       break;
     case pages.DOCUMENTATION_API_LIST:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationMethodListScreen;
+      needAuthorization = "Translator"; // TEMP
       break;
     case pages.DOCUMENTATION_API_METHOD:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationMethodScreen;
+      needAuthorization = "Translator"; // TEMP
       break;
     default:
       Component = SiteNotFoundScreen;
@@ -202,9 +207,10 @@ function Routes(props) {
   ].includes(route);
 
   if (
-    needAuthorization === true &&
-    !props.profile.pending &&
-    !props.profile.user
+    (typeof needAuthorization === "string"
+      ? !props.profile.role || needAuthorization !== props.profile.role
+      : needAuthorization === true || !props.profile.user) &&
+    !props.profile.pending
   ) {
     router.navigate(pages.MAIN);
     return null;

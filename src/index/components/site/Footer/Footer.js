@@ -63,12 +63,12 @@ export default function Footer() {
             <a href={`/${pages.CONTACT}`} className="Footer__links__item">
               {utils.getLang("site__footerContactUs")}
             </a>
-            <span
-              onClick={() => router.navigate(pages.DOCUMENTATION)}
-              className="Footer__links__item"
-            >
-              {utils.getLang("site__headerDocumentation")}
-            </span>
+            {/*<span*/}
+            {/*  onClick={() => router.navigate(pages.DOCUMENTATION)}*/}
+            {/*  className="Footer__links__item"*/}
+            {/*>*/}
+            {/*  {utils.getLang("site__headerDocumentation")}*/}
+            {/*</span>*/}
             <span
               onClick={() =>
                 actions.openModal("static_content", { type: "terms" })
