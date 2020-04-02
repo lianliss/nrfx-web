@@ -45,6 +45,7 @@ const Main = props => {
           </div>
           {props.requirements.map(item => (
             <Label
+              key={item}
               onClick={() => {
                 router.navigate(PAGES.DOCUMENTATION_PAGE, {
                   page: item

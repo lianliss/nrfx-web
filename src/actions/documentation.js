@@ -111,7 +111,7 @@ export function getPage(address) {
         dispatch({
           type: actionTypes.DOCUMENTATION_SET_STATUS,
           section: "page",
-          value: err.error_name
+          value: err.code
         });
       });
   };

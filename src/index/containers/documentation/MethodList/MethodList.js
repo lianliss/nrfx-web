@@ -5,6 +5,7 @@ import { ContentBox, Editor, Label } from "../../../../ui";
 import router from "../../../../router";
 import * as PAGES from "../../../constants/pages";
 import { sortDocSchema } from "../utils";
+import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 
 const MethodList = props => {
   const handleMethodClick = (method, name) => () => {
@@ -66,7 +67,7 @@ const MethodList = props => {
 
   const schemaPath = (name, schema, path) => {
     if (!schema) {
-      return "404";
+      return <LoadingStatus status={"not_found"} />;
     }
 
     if (!path.length) {

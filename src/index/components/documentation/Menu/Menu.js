@@ -144,10 +144,10 @@ const DocumentationMenu = props => {
 export default connect(
   state => ({
     saveStatus: state.documentation.loadingStatus.save,
-    loading: !!(
-      state.documentation.loadingStatus.page ||
+    loading: [
+      state.documentation.loadingStatus.page,
       state.documentation.loadingStatus.method
-    ),
+    ].includes("loading"),
     editMode: state.documentation.editMode,
     items: state.documentation.menu,
     schema: state.documentation.schema,

@@ -19,7 +19,7 @@ const DocumentationMethod = props => {
   console.log("METHOD RENDER");
 
   if (props.loadingStatus || !props.loaded) {
-    return <LoadingStatus status={props.loadingStatus} />;
+    return <LoadingStatus state={props.loadingStatus} />;
   }
 
   return (

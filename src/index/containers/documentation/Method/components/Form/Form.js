@@ -77,7 +77,7 @@ const Form = ({
             />
           </label>
         ))}
-        <Button state={requestStatus} btnType ype="submit">
+        <Button state={requestStatus} btnType="submit">
           {utils.getLang("global_submit")}
         </Button>
       </form>

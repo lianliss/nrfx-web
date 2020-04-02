@@ -69,20 +69,20 @@ export function invoke(method, name, params, options = {}) {
                 // HACK
                 json.code = "not_found";
               } else {
-                json.error_name = "failed";
+                json.code = "failed";
               }
               reject(json);
             }
           })
           .catch(() =>
-            reject({ message: "Cant't parse JSON", error_name: "failed" })
+            reject({ message: "Cant't parse JSON", code: "failed" })
           );
       })
       .catch(err =>
         reject({
           ...err,
           message: "Failed connection",
-          error_name: "failed_connection"
+          code: "failed_connection"
         })
       );
   });
