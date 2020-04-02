@@ -89,7 +89,8 @@ const NrfxPresaleModal = props => {
             error={touched && amount < 10}
             value={amount}
             onTextChange={setAmount}
-            type={"number"}
+            type="number"
+            positive={true}
             indicator="NRFX"
           />
         </div>
