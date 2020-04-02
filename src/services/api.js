@@ -86,5 +86,6 @@ export function del(name, params = {}) {
 }
 
 export function call(API, params = {}, options = {}) {
+  console.log(API);
   return invoke(API.method, API.path, params, options);
 }

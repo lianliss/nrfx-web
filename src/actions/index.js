@@ -26,7 +26,7 @@ export function loadLang(code, toggleCurrentLang = true) {
     }
     api
       .call(
-        apiSchema.LangGet,
+        apiSchema.Lang.DefaultGet,
         { code },
         {
           apiEntry: "https://api.narfex.com" // TODO

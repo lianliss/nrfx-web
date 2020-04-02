@@ -1,3 +1,5 @@
+import "./Item.less";
+
 import React from "react";
 import Wrapper from "../Wrapper/Wrapper";
 import Block from "../Block/Block";
@@ -5,6 +7,7 @@ import Group from "../Group/Group";
 import Table from "../Table/Table";
 import Button from "../../../ui/components/Button/Button";
 import Input from "../Input/Input";
+import Select from "../Select/Select";
 import DropDown from "../Dropdown/Dropdown";
 import action from "../../../actions/admin/index";
 import List from "../List/List";
@@ -14,6 +17,7 @@ import PagingItem from "../Paging/PagingItem";
 import Label from "../../../ui/components/Label/Label";
 import Json from "../Json/Json";
 import Text from "../Text/Text";
+import Time from "../Time/Time";
 import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
 import { connect } from "react-redux";
@@ -98,6 +102,9 @@ const Item = props => {
     case "input":
       Component = Input;
       break;
+    case "select":
+      Component = Select;
+      break;
     case "tabs":
       Component = Tabs;
       break;
@@ -106,6 +113,9 @@ const Item = props => {
       break;
     case "text":
       Component = Text;
+      break;
+    case "time":
+      Component = Time;
       break;
     default:
       Component = props => (

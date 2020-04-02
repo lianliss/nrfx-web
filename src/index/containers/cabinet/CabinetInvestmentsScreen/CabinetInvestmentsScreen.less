@@ -1,8 +1,13 @@
 .Investments__balances {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
-  flex-basis: 33.3%;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
   margin-bottom: var(--gap-size);
+
+  .WalletBox__content {
+    cursor: default; /* TEMP */
+  }
 }
 
 .Investments__payments {
@@ -153,12 +158,6 @@
   background-size: 50px;
   background-position: center;
   top: 7px;
-}
-
-.Investments__balances {
-  display: flex;
-  flex-wrap: wrap;
-  flex-basis: 33.3%;
 }
 
 .disable_active_button {

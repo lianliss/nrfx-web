@@ -1,4 +1,5 @@
 // Файл был сгенерирован автоматически командой npm run getSchema
+// eslint-disable-next-line
 export default {
   DefaultGet: {
     method: "GET",
@@ -161,45 +162,53 @@ export default {
       path: "test/command"
     }
   },
-  LangGet: {
-    method: "GET",
-    name: "lang",
-    params: {
-      Code: {
-        name: "code",
-        filters: {
-          "0": "required",
-          maxLen: 2
-        },
-        type: "body"
-      }
-    },
-    path: "lang"
-  },
-  LangPost: {
-    method: "POST",
-    name: "lang",
-    params: {
-      Code: {
-        name: "code",
-        filters: {
-          "0": "required",
-          maxLen: 2
-        },
-        type: "body"
+  Lang: {
+    DefaultGet: {
+      method: "GET",
+      name: "",
+      params: {
+        Code: {
+          name: "code",
+          filters: {
+            "0": "required",
+            maxLen: 2
+          },
+          type: "body"
+        }
       },
-      Key: {
-        name: "key",
-        filters: ["required"],
-        type: "body"
-      },
-      Value: {
-        name: "value",
-        filters: ["required"],
-        type: "body"
-      }
+      path: "lang"
     },
-    path: "lang"
+    DefaultPost: {
+      method: "POST",
+      name: "",
+      params: {
+        Code: {
+          name: "code",
+          filters: {
+            "0": "required",
+            maxLen: 2
+          },
+          type: "body"
+        },
+        Key: {
+          name: "key",
+          filters: ["required"],
+          type: "body"
+        },
+        Value: {
+          name: "value",
+          filters: ["required"],
+          type: "body"
+        }
+      },
+      path: "lang"
+    },
+    AppExportGet: {
+      method: "GET",
+      name: "app_export",
+      params: [],
+      path: "lang/app_export"
+    }
   },
   Crypto: {
     NotifyGet: {
@@ -286,7 +295,10 @@ export default {
         },
         Login: {
           name: "login",
-          filters: ["required"],
+          filters: {
+            "0": "required",
+            minLen: 4
+          },
           type: "body"
         },
         Hash: {
@@ -816,6 +828,45 @@ export default {
         }
       },
       path: "wallet/generate"
+    },
+    TokenRateGet: {
+      method: "GET",
+      name: "token_rate",
+      params: {
+        Currency: {
+          name: "currency",
+          filters: {
+            "0": "required",
+            oneOf: ["btc", "eth", "ltc"]
+          },
+          type: "body"
+        }
+      },
+      path: "wallet/token_rate"
+    },
+    BuyTokenPost: {
+      method: "POST",
+      name: "buy_token",
+      params: {
+        Currency: {
+          name: "currency",
+          filters: {
+            "0": "required",
+            oneOf: ["btc", "eth", "ltc"]
+          },
+          type: "body"
+        },
+        Amount: {
+          name: "amount",
+          filters: {
+            "0": "required",
+            "1": "positive",
+            min: 10
+          },
+          type: "body"
+        }
+      },
+      path: "wallet/buy_token"
     }
   },
   Investment: {
@@ -1268,6 +1319,15 @@ export default {
           name: "amount",
           filters: ["required", "positive"],
           type: "body"
+        },
+        GaCode: {
+          name: "ga_code",
+          filters: {
+            "0": "required",
+            minLen: 6,
+            maxLen: 6
+          },
+          type: "body"
         }
       },
       path: "balance/withdraw"
@@ -1284,6 +1344,15 @@ export default {
         Amount: {
           name: "amount",
           filters: ["required", "positive"],
+          type: "body"
+        },
+        GaCode: {
+          name: "ga_code",
+          filters: {
+            "0": "required",
+            minLen: 6,
+            maxLen: 6
+          },
           type: "body"
         }
       },
@@ -1720,21 +1789,6 @@ export default {
         name: "refill_banks",
         params: [],
         path: "fiat_wallet/xendit/refill_banks"
-      },
-      VirtualAccountGet: {
-        method: "GET",
-        name: "virtual_account",
-        params: {
-          BankCode: {
-            name: "bank_code",
-            filters: {
-              "0": "required",
-              oneOf: ["BRI", "MANDIRI", "BNI", "PERMATA"]
-            },
-            type: "body"
-          }
-        },
-        path: "fiat_wallet/xendit/virtual_account"
       }
     },
     DefaultGet: {
@@ -2103,6 +2157,25 @@ export default {
         }
       },
       path: "bots/options"
+    }
+  },
+  Development: {
+    GetAccessTokenGet: {
+      method: "GET",
+      name: "get_access_token",
+      params: {
+        AppId: {
+          name: "app_id",
+          filters: ["required"],
+          type: "body"
+        },
+        UserId: {
+          name: "user_id",
+          filters: ["required"],
+          type: "body"
+        }
+      },
+      path: "development/get_access_token"
     }
   }
 };

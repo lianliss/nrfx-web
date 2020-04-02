@@ -104,6 +104,10 @@ class Input extends React.Component {
       }
     };
 
+    if (this.props.positive) {
+      params.min = 0;
+    }
+
     const value = this.props.pattern
       ? ((this.props.value || "").match(this.props.pattern) || []).join("")
       : this.props.value;
@@ -237,7 +241,7 @@ Input.defaultProps = {
   error: false,
   autoFocus: false,
   mouseWheel: true,
-  positive: true,
+  positive: false,
   cell: false,
   maxLength: null,
   pattern: null

@@ -39,6 +39,7 @@ import WalletModal from "./components/cabinet/WalletModal/WalletModal";
 import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailModal";
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
+import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
 import router from "../router";
 import { connect } from "react-redux";
 
@@ -158,6 +159,9 @@ function Modals(props) {
       break;
     case "upload_avatar":
       Component = UploadAvatarModal;
+      break;
+    case "nrfx_presale":
+      Component = NrfxPresaleModal;
       break;
     case "wallet":
       Component = WalletModal;
