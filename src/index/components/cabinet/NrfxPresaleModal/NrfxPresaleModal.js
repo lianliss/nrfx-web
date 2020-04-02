@@ -76,7 +76,7 @@ const NrfxPresaleModal = props => {
           >
             <small className="NrfxPresaleModal__promo__presale">
               {getLang("cabinet_nrfxCoinPresalePresale")}
-              <SVG src={require("../../../../asset/24px/help.svg")} />
+              <SVG src={require("../../../../asset/16px/help.svg")} />
             </small>
           </Tooltip>
         </div>
