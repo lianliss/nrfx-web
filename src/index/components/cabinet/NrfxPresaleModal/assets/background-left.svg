@@ -1,7 +1,1 @@
-<svg width="100" height="300" viewBox="0 0 100 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g opacity="0.1">
-        <path opacity="0.3" fill-rule="evenodd" clip-rule="evenodd" d="M7.45286e-05 0L100 150.001L63.1066 205.343L-27.2583 40.8885L7.45286e-05 0Z" fill="white"/>
-        <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd" d="M-57.2088 85.8152L100.001 150.001L63.1074 205.343L-99.9988 150.001L-57.2088 85.8152Z" fill="white"/>
-        <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M-0.000284291 300L-100 149.999L-57.2099 85.8122L38.7415 241.887L-0.000284291 300Z" fill="white"/>
-    </g>
-</svg>
+<svg width="100" height="300" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity=".1" fill-rule="evenodd" clip-rule="evenodd" fill="#fff"><path opacity=".3" d="M0 0l100 150.001-36.893 55.342-90.365-164.454L0 0z"/><path opacity=".4" d="M-57.209 85.815l157.21 64.186-36.894 55.342-163.106-55.342 42.79-64.186z"/><path opacity=".5" d="M0 300l-100-150.001 42.79-64.187 95.952 156.075L0 300z"/></g></svg>
