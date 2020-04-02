@@ -253,6 +253,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       <div className="CabinetProfileScreen__dashboard">
         <div className="CabinetProfileScreen__dashboard__wrapper">
           {!this.props.adaptive && <DashboardItem type="currency" />}
+          <DashboardItem type="token" />
           <DashboardItem type="exchange" />
           {rows}
         </div>

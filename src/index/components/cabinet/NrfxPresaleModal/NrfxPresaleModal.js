@@ -24,8 +24,10 @@ const NrfxPresaleModal = props => {
   const [state, setState] = useState(null);
   const [rate, setRate] = useRate(0);
 
-  const lang = props.lang === "ru" ? "ru" : "en";
-  const url = `https://storage.googleapis.com/narfex/files/narfex-white-paper-${lang}-1.1.pdf`;
+  // const lang = props.lang === "ru" ? "ru" : "en";
+  // const url = `https://storage.googleapis.com/narfex/files/narfex-white-paper-${lang}-1.1.pdf`;
+  const url =
+    "https://storage.googleapis.com/narfex/files/narfex-white-paper-en.pdf";
 
   useEffect(() => {
     setRate(currency);
