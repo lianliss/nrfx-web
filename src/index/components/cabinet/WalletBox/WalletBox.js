@@ -73,6 +73,9 @@ class WalletBox extends React.Component {
   };
 
   __onClick = () => {
+    if (this.props.action === false) {
+      return false;
+    }
     if (this.props.currency === "nrfx") {
       return actions.openModal("nrfx_presale");
     }
