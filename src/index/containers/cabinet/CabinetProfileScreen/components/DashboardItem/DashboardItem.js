@@ -99,7 +99,7 @@ class DashboardItem extends React.Component {
       case "token": {
         this.show = false;
         this.content = {
-          label: "new",
+          label: "hot",
           emptyIcon: (
             <InlineSVG src={require("src/asset/token/dashboard.svg")} />
           )
