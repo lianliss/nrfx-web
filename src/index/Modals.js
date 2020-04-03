@@ -42,7 +42,6 @@ import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailM
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
-import router from "../router";
 import { connect } from "react-redux";
 
 import { Modal } from "../ui";
