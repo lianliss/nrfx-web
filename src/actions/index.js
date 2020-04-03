@@ -200,12 +200,16 @@ export function saveTranslator(code, key, value) {
 }
 
 export function copyText(text) {
+  document.body.classList.add("allow-user-select");
   clipboardCopy(text)
     .then(() => {
       toast.success(utils.getLang("global_copyText_success"));
     })
     .catch(() => {
-      toast.error(utils.getLang("global_copyText_fail"));
+      toast.error(utils.getLang("error"));
+    })
+    .finally(() => {
+      document.body.classList.remove("allow-user-select");
     });
 }
 
