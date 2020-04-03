@@ -37,6 +37,7 @@ const NrfxPresaleModal = props => {
     return () => {
       clearInterval(intervalId);
     };
+    // eslint-disable-next-line
   }, [props, currency]);
 
   const handleBuy = () => {
