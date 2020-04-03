@@ -45,6 +45,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
+    border-radius: inherit; /* hack for safari */
     background: var(--orange-gradient);
     transition: opacity 0.15s ease-in-out;
   }
@@ -67,7 +68,7 @@
   left: 3px;
   background: var(--orange-gradient);
   overflow: hidden;
-  transition: transform 0.15s ease-in-out;
+  transition: transform 0.15zs ease-in-out;
   z-index: 1;
 
   &:after {
@@ -78,6 +79,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
+    border-radius: inherit; /* hack for safari */
     background: var(--primary-background);
     transition: opacity 0.15s ease-in-out;
   }
