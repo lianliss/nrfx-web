@@ -30,7 +30,7 @@ export default function ModalState({
           icon={icon}
           status={status}
           description={description}
-          inline={status !== "loading"}
+          inline
           onRetry={onRetry}
         />
       </div>
