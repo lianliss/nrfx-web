@@ -57,16 +57,21 @@ export default class ReceiveCoinsModal extends React.Component {
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.state.currency);
       let options = this.state.wallets.filter(w => w.status !== "pending");
-      options = options.map(item => {
-        const info = actions.getCurrencyInfo(item.currency);
-        return {
-          title: utils.ucfirst(info.name),
-          note: `${utils.formatDouble(
-            item.amount
-          )} ${item.currency.toUpperCase()}`,
-          value: item.currency
-        };
-      });
+      options = options
+        .map(item => {
+          const info = actions.getCurrencyInfo(item.currency);
+          if (info.is_available === false) {
+            return false;
+          }
+          return {
+            title: utils.ucfirst(info.name),
+            note: `${utils.formatDouble(
+              item.amount
+            )} ${item.currency.toUpperCase()}`,
+            value: item.currency
+          };
+        })
+        .filter(Boolean);
 
       if (!(options.length > 0)) {
         return (

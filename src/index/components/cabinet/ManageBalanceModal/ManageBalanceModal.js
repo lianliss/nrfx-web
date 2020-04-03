@@ -77,18 +77,23 @@ class ManageBalanceModal extends React.Component {
       items = this.state.balances;
     }
 
-    return items.map(item => {
-      const currencyInfo = actions.getCurrencyInfo(item.currency);
-      return {
-        value: item.id,
-        title: utils.ucfirst(currencyInfo.name),
-        amount: item.amount,
-        currency: item.currency,
-        icon: currencyInfo.icon,
-        note:
-          utils.formatDouble(item.amount) + " " + item.currency.toUpperCase()
-      };
-    });
+    return items
+      .map(item => {
+        const currencyInfo = actions.getCurrencyInfo(item.currency);
+        if (currencyInfo.is_available === false) {
+          return false;
+        }
+        return {
+          value: item.id,
+          title: utils.ucfirst(currencyInfo.name),
+          amount: item.amount,
+          currency: item.currency,
+          icon: currencyInfo.icon,
+          note:
+            utils.formatDouble(item.amount) + " " + item.currency.toUpperCase()
+        };
+      })
+      .filter(Boolean);
   }
 
   __amountDidChange = amount => {

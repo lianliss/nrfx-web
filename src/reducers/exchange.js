@@ -133,12 +133,12 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         form: {
           ...state.form,
-          [action.order.action]: {
-            ...state.form[action.order.action],
+          [secondaryAction]: {
+            ...state.form[secondaryAction],
             ...action.order
           },
-          [secondaryAction]: {
-            ...initialState.form[secondaryAction]
+          [action.order.action]: {
+            ...initialState.form[action.order.action]
           }
         }
       };

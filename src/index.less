@@ -15,9 +15,10 @@ body {
   color: var(--text-black);
   background: var(--primary-background);
 
-  &.adaptive {
+  &:not(.allow-user-select).adaptive {
     user-select: none;
   }
+
 
   &.modal-open {
     overflow-y: hidden;

@@ -24,11 +24,6 @@ const ProfileSidebarUser = ({ profile }) => {
           <SVG src={require("../../../../asset/24px/camera.svg")} />
         </div>
         <img
-          className="ProfileUser__avatar blur"
-          src={profile.user.photo_url}
-          alt=""
-        />
-        <img
           className="ProfileUser__avatar"
           src={profile.user.photo_url}
           alt=""
