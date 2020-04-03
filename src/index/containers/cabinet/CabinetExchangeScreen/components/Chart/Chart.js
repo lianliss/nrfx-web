@@ -6,7 +6,7 @@ import { widget } from "../../../../../../libs/charting_library/charting_library
 import { classNames as cn, ucfirst } from "../../../../../../utils/index";
 import * as exchangeActions from "../../../../../../actions/cabinet/exchange";
 import * as actions from "../../../../../../actions/";
-import { API_ENTRY } from "../../../../../../services/api";
+// import { API_ENTRY } from "../../../../../../services/api";
 import getTimezone from "./timezones";
 import langCodes from "./langCodes";
 import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
