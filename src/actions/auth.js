@@ -84,6 +84,7 @@ export function logout() {
         .call(apiSchema.Profile.LogoutPost)
         .then(() => {
           auth.logout();
+          actions.closeModal();
           router.navigate(pages.MAIN);
         })
         .catch(err => {

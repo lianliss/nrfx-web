@@ -112,7 +112,7 @@ class Chart extends React.PureComponent {
         "paneProperties.background": getCssVar("--primary-background"),
         "paneProperties.crossHairProperties.color": getCssVar("--light-gray"),
         "scalesProperties.lineColor": getCssVar("--light-gray"),
-        "scalesProperties.textColor": getCssVar("--dark-gray"),
+        "scalesProperties.textColor": getCssVar("--text-black"),
         "mainSeriesProperties.candleStyle.drawBorder": false,
         "mainSeriesProperties.candleStyle.wickUpColor": getCssVar("--green"),
         "mainSeriesProperties.candleStyle.wickDownColor": getCssVar("--red"),
@@ -156,7 +156,7 @@ class Chart extends React.PureComponent {
           "scalesProperties.lineColor": getCssVar("--light-gray")
         });
         this.tvWidget.applyOverrides({
-          "scalesProperties.textColor": getCssVar("--dark-gray")
+          "scalesProperties.textColor": getCssVar("--text-black")
         });
         this.tvWidget.applyOverrides({
           "mainSeriesProperties.candleStyle.drawBorder": false

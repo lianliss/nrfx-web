@@ -6,7 +6,7 @@
 .SwitchTabs {
   position: relative;
   border: 1px solid;
-  color: var(--primary-orange);
+  color: var(--primary-blue);
   box-sizing: border-box;
   border-radius: @border-radius;
   height: 48px;
@@ -19,21 +19,21 @@
   }
 
   &.secondary {
-    color: var(--dairy);
+    color: var(--cloudy);
 
     .SwitchTabs__item {
-      color: var(--dark-gray);
-      border-color: var(--dairy);
+      color: var(--text-black);
+      border-color: var(--cloudy);
 
       &.active {
         & > span {
-          color: var(--text-black);
+          color: var(--almost-black);
         }
       }
     }
 
     .SwitchTabs__indicator span {
-      background: var(--dairy);
+      background: var(--cloudy);
     }
   }
 
@@ -93,7 +93,7 @@
     height: 100%;
     display: block;
     border-radius: @border-radius;
-    background: var(--orange-gradient);
+    background: var(--blue-gradient);
     transition: background 3s ease;
   }
 

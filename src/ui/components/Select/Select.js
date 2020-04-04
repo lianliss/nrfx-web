@@ -77,7 +77,7 @@ const customStyles = {
   },
   placeholder: provider => ({
     ...provider,
-    color: getCssVar("--dark-gray")
+    color: getCssVar("--text-black")
   })
 };
 

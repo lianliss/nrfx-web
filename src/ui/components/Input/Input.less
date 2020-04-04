@@ -9,20 +9,20 @@
     font-size: 11px;
     line-height: 16px;
     margin: 8px 16px;
-    color: var(--dark-gray);
+    color: var(--text-black);
   }
 }
 
 .Input {
   height: 48px;
-  color: var(--text-black);
+  color: var(--almost-black);
   box-shadow: var(--main-shadow);
   background: var(--secondary-background);
   border-radius: @border-radius;
   font-size: 15px;
   line-height: 20px;
   box-sizing: border-box;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   outline: none;
   padding: 14px 16px;
   transition: all 150ms ease-in-out;
@@ -43,7 +43,7 @@
   }
 
   &:focus {
-    border-color: var(--primary-orange);
+    border-color: var(--primary-blue);
     box-shadow: none;
   }
 
@@ -51,6 +51,11 @@
     height: 100px;
     resize: none;
     padding: 12px 16px;
+  }
+
+  &[disabled] {
+    background: #FAFAFA;
+    color: var(--dark-gray);
   }
 }
 
@@ -93,7 +98,7 @@
   padding-right: 16px;
   font-size: 14px;
   line-height: 20px;
-  color: var(--dark-gray);
+  color: var(--text-black);
 
   .isvg {
     line-height: 0;
@@ -132,7 +137,7 @@
     height: 2px;
     background: #f0f;
     border-radius: 1px;
-    background: var(--extra-light-green);
+    background: var(--extra-light-gray);
 
     .Input__reliability__indicator__fill {
       width: 40%;
