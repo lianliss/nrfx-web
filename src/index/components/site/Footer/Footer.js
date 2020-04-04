@@ -10,7 +10,7 @@ import MarkDown from "ui/MarkDown/MarkDown";
 import { isIndonesia } from "src/services/locations";
 import * as UI from "src/ui";
 import COMPANY from "src/index/constants/company";
-import router from "../../../../router";
+// import router from "../../../../router";
 
 export default function Footer() {
   return (

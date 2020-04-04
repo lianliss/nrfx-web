@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Editor from "../../../ui/components/Editor/Editor";
 import { valueChange } from "../../../actions/admin/";
 const WysiwygWrapper = props => {
-  useEffect(() => valueChange(props.id, props.value), [props.id]);
+  useEffect(() => valueChange(props.id, props.value), [props.id, props.value]);
   let value = props.value;
 
   if (typeof value === "string") {

@@ -3,7 +3,6 @@
 import React from "react";
 import { connect } from "react-redux";
 // internal
-import router from "../router";
 import AuthModal from "../components/AuthModal/AuthModal";
 import ConfirmModal from "../index/components/cabinet/ConfirmModal/ConfirmModal";
 import { closeModal } from "../actions";
