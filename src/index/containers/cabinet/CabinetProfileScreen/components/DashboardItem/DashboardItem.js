@@ -1,5 +1,4 @@
 import "./DashboardItem.less";
-
 import React from "react";
 import * as utils from "../../../../../../utils";
 import * as UI from "../../../../../../ui";
@@ -13,6 +12,8 @@ import { ReactComponent as TradeSvg } from "../../../../../../asset/120/trade.sv
 import { ReactComponent as InviteSvg } from "../../../../../../asset/120/invite.svg";
 import { classNames as cn } from "../../../../../../utils";
 import * as pages from "../../../../../constants/pages";
+import InlineSVG from "react-inlinesvg";
+import * as actions from "../../../../../../actions";
 
 class DashboardItem extends React.Component {
   state = {
@@ -95,6 +96,22 @@ class DashboardItem extends React.Component {
             </div>
           </UI.ContentBox>
         );
+      case "token": {
+        this.show = false;
+        this.content = {
+          label: "hot",
+          emptyIcon: (
+            <InlineSVG src={require("src/asset/token/dashboard.svg")} />
+          )
+        };
+        this.button = {
+          type: "normal",
+          children: utils.getLang("global_buy"),
+          onClick: () => actions.openModal("nrfx_presale")
+        };
+        break;
+      }
+
       default:
         return null;
     }
@@ -174,7 +191,11 @@ class DashboardItem extends React.Component {
             </div>
           </div>
           <div className="DashboardItem__buttonAction">
-            <UI.Button type="outline" size="middle" {...this.button} />
+            <UI.Button
+              type={this.button.type || "outline"}
+              size="middle"
+              {...this.button}
+            />
           </div>
         </UI.ContentBox>
       )

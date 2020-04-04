@@ -45,7 +45,7 @@
   }
 
   tr {
-    &.dark .Table__td__cont {
+    &.dark {
       background: var(--light-dairy);
     }
 
@@ -58,8 +58,11 @@
     }
   }
 
-  &.compact tr.dark .Table__td__cont {
-    background: var(--light-dairy);
+  &.compact tr.dark {
+    background: transparent;
+    .Table__td__cont {
+      background: var(--light-dairy);
+    }
   }
 
   &.compact tbody td:first-child .Table__td__cont {
@@ -82,7 +85,8 @@
     flex-direction: column;
     padding: 0 8px;
     line-height: 24px;
-    height: 56px;
+    min-height: 56px;
+    box-sizing: border-box;
   }
 
   th,
@@ -108,6 +112,10 @@
       font-weight: 500;
       font-size: 11px;
       line-height: 16px;
+
+      .Table__td__cont {
+        min-height: 0;
+      }
 
       &:first-child .Table__td__cont {
         padding-left: 16px;

@@ -163,6 +163,22 @@ class SendCoinsModal extends React.Component {
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
 
+      const options = wallets
+        .map(w => {
+          const { name, abbr, is_available } = actions.getCurrencyInfo(
+            w.currency
+          );
+          if (is_available === false) {
+            return false;
+          }
+          return {
+            title: name,
+            note: utils.formatDouble(w.amount) + " " + abbr.toUpperCase(),
+            value: w.id
+          };
+        })
+        .filter(Boolean);
+
       return (
         <div className="SendCoinsModal">
           <div className="SendCoinsModal__wallet">
@@ -171,15 +187,7 @@ class SendCoinsModal extends React.Component {
               <UI.Dropdown
                 placeholder={""}
                 value={walletId}
-                options={wallets.map(w => {
-                  const { name, abbr } = actions.getCurrencyInfo(w.currency);
-                  return {
-                    title: name,
-                    note:
-                      utils.formatDouble(w.amount) + " " + abbr.toUpperCase(),
-                    value: w.id
-                  };
-                })}
+                options={options}
                 onChangeValue={this.__handleChange("walletId")}
               />
             )}

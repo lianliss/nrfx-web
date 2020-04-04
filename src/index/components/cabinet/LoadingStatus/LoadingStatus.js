@@ -88,13 +88,9 @@ export default function LoadingStatus({
       break;
   }
 
-  let result = <div className="LoadingStatus">{cont}</div>;
-
-  if (inline) {
-    return <div className="LoadingStatus__wrap">{result}</div>;
-  } else {
-    return result;
-  }
+  return (
+    <div className={utils.classNames("LoadingStatus", { inline })}>{cont}</div>
+  );
 }
 
 LoadingStatus.propTypes = {

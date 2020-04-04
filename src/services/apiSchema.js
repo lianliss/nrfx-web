@@ -30,7 +30,7 @@ export default {
         },
         ReviewResult: {
           name: "reviewResult",
-          filters: ["required", "json"],
+          filters: ["required", "array"],
           type: "body"
         },
         ApplicantId: {
@@ -820,6 +820,45 @@ export default {
         }
       },
       path: "wallet/generate"
+    },
+    TokenRateGet: {
+      method: "GET",
+      name: "token_rate",
+      params: {
+        Currency: {
+          name: "currency",
+          filters: {
+            "0": "required",
+            oneOf: ["btc", "eth", "ltc"]
+          },
+          type: "body"
+        }
+      },
+      path: "wallet/token_rate"
+    },
+    BuyTokenPost: {
+      method: "POST",
+      name: "buy_token",
+      params: {
+        Currency: {
+          name: "currency",
+          filters: {
+            "0": "required",
+            oneOf: ["btc", "eth", "ltc"]
+          },
+          type: "body"
+        },
+        Amount: {
+          name: "amount",
+          filters: {
+            "0": "required",
+            "1": "positive",
+            min: 10
+          },
+          type: "body"
+        }
+      },
+      path: "wallet/buy_token"
     }
   },
   Investment: {
@@ -1059,19 +1098,24 @@ export default {
           },
           type: "body"
         },
+        ShortDescription: {
+          name: "short_description",
+          filters: ["string"],
+          type: "body"
+        },
         Description: {
           name: "description",
-          filters: [],
+          filters: ["json"],
           type: "body"
         },
         Result: {
           name: "result",
-          filters: [],
+          filters: ["json"],
           type: "body"
         },
         ResultExample: {
           name: "result_example",
-          filters: [],
+          filters: ["json"],
           type: "body"
         },
         ParamDescriptions: {
@@ -1159,7 +1203,7 @@ export default {
         },
         Content: {
           name: "content",
-          filters: ["required"],
+          filters: ["required", "json"],
           type: "body"
         },
         Title: {
@@ -1167,34 +1211,14 @@ export default {
           filters: ["required"],
           type: "body"
         },
-        Lang: {
-          name: "lang",
-          filters: {
-            "0": "required",
-            oneOf: [
-              "en",
-              "ru",
-              "ar",
-              "bn",
-              "cs",
-              "de",
-              "es",
-              "fr",
-              "hi",
-              "id",
-              "it",
-              "ja",
-              "ko",
-              "ms",
-              "nl",
-              "pl",
-              "pt",
-              "tr",
-              "ua",
-              "zh",
-              "fa"
-            ]
-          },
+        MetaDescription: {
+          name: "meta_description",
+          filters: ["string"],
+          type: "body"
+        },
+        MetaKeywords: {
+          name: "meta_keywords",
+          filters: ["string"],
           type: "body"
         }
       },
@@ -1851,21 +1875,6 @@ export default {
         name: "refill_banks",
         params: [],
         path: "fiat_wallet/xendit/refill_banks"
-      },
-      VirtualAccountGet: {
-        method: "GET",
-        name: "virtual_account",
-        params: {
-          BankCode: {
-            name: "bank_code",
-            filters: {
-              "0": "required",
-              oneOf: ["BRI", "MANDIRI", "BNI", "PERMATA"]
-            },
-            type: "body"
-          }
-        },
-        path: "fiat_wallet/xendit/virtual_account"
       }
     },
     DefaultGet: {
@@ -2234,6 +2243,25 @@ export default {
         }
       },
       path: "bots/options"
+    }
+  },
+  Development: {
+    GetAccessTokenGet: {
+      method: "GET",
+      name: "get_access_token",
+      params: {
+        AppId: {
+          name: "app_id",
+          filters: ["required"],
+          type: "body"
+        },
+        UserId: {
+          name: "user_id",
+          filters: ["required"],
+          type: "body"
+        }
+      },
+      path: "development/get_access_token"
     }
   }
 };

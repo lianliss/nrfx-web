@@ -6,10 +6,17 @@ import * as UI from "../../../../ui";
 import * as utils from "../../../../utils";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
 
-export default function ModalState({ status, icon, description, onRetry }) {
+export default function ModalState({
+  status,
+  className,
+  icon,
+  description,
+  onRetry
+}) {
   return (
     <UI.Modal
       isOpen
+      className={className}
       skipClose={status === "loading"}
       onClose={() => window.history.back()}
     >
@@ -23,7 +30,7 @@ export default function ModalState({ status, icon, description, onRetry }) {
           icon={icon}
           status={status}
           description={description}
-          inline={status !== "loading"}
+          inline
           onRetry={onRetry}
         />
       </div>

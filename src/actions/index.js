@@ -106,14 +106,16 @@ export function openStateModal(name, params = {}) {
   store.dispatch({ type: actionTypes.MODAL_OPEN, name, params });
 }
 
-export function openCloseModal(name, params = {}) {
+export function closeStateModal() {
   store.dispatch({ type: actionTypes.MODAL_CLOSE });
 }
 
 export function closeModal() {
   const { route } = store.getState().router;
+  closeStateModal();
   router.navigate(route.name, {
-    section: route.params.section
+    ...route.params,
+    modal: undefined
   });
 }
 
@@ -210,12 +212,16 @@ export function saveTranslator(code, key, value) {
 }
 
 export function copyText(text) {
+  document.body.classList.add("allow-user-select");
   clipboardCopy(text)
     .then(() => {
       toast.success(utils.getLang("global_copyText_success"));
     })
     .catch(() => {
-      toast.error(utils.getLang("global_copyText_fail"));
+      toast.error(utils.getLang("error"));
+    })
+    .finally(() => {
+      document.body.classList.remove("allow-user-select");
     });
 }
 

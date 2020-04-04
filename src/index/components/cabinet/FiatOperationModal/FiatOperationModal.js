@@ -130,12 +130,13 @@ function FiatOperationModal(props) {
                 {utils.dateFormat(operation.created_at)}
               </div>
             </div>
+
             <div className="FiatOperationModal__row__right">
               <div className="FiatOperationModal__label">
                 {utils.getLang("global_fee")}
               </div>
               <div className="FiatOperationModal__value">
-                {operation.extra.fee}
+                {operation.fee || "-"}
               </div>
             </div>
             {/*<div className="FiatOperationModal__row__right">*/}

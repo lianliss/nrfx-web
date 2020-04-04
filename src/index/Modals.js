@@ -1,6 +1,7 @@
 // styles
 // external
 import React from "react";
+import { connect } from "react-redux";
 // internal
 // import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
 import RateDetailsModal from "./components/cabinet/RateDetailsModal/RateDetailsModal";
@@ -39,10 +40,10 @@ import WalletModal from "./components/cabinet/WalletModal/WalletModal";
 import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailModal";
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
-import { openCloseModal } from "src/actions/index";
-
-import router from "../router";
-import { connect } from "react-redux";
+import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
+import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
+import { closeModal } from "src/actions/index";
+import { Modal } from "../ui";
 
 function Modals(props) {
   const routerParams = props.route.params;
@@ -161,6 +162,9 @@ function Modals(props) {
     case "upload_avatar":
       Component = UploadAvatarModal;
       break;
+    case "nrfx_presale":
+      Component = NrfxPresaleModal;
+      break;
     case "wallet":
       Component = WalletModal;
       break;
@@ -174,23 +178,47 @@ function Modals(props) {
       {...props.modal.params}
       {...options}
       onBack={() => {
+        // console.log(router.getState());
+        // debugger;
         window.history.back();
       }}
-      onClose={() => {
-        if (props.modal.name) {
-          openCloseModal();
-        } else {
-          router.navigate(props.route.name, {
-            ...props.route.params,
-            modal: undefined
-          });
-        }
-      }}
+      onClose={closeModal}
     />
   );
+}
+
+class ModalsWrapper extends React.Component {
+  state = {};
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      error: {
+        name: error.name,
+        message: error.message
+      }
+    });
+  }
+
+  render() {
+    return this.state.error ? (
+      <Modal
+        onClose={() => {
+          this.setState({ error: null });
+          closeModal();
+        }}
+      >
+        <LoadingStatus
+          inline
+          description={this.state.error.message}
+          status={this.state.error.name}
+        />
+      </Modal>
+    ) : (
+      <Modals {...this.props} />
+    );
+  }
 }
 
 export default connect(state => ({
   route: state.router.route,
   modal: state.modal
-}))(Modals);
+}))(ModalsWrapper);

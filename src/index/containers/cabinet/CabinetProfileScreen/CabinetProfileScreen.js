@@ -135,7 +135,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
           !(this.props.adaptive && !show) &&
           !this.props.routerParams.section &&
           !this.isLoading &&
-          this.props.dashboard.hasOwnProperty("chart")
+          this.props.dashboard.hasOwnProperty("balances")
         ) {
           return (
             <div>
@@ -143,7 +143,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
                 <WalletBalance
                   title={utils.getLang("cabinet_walletBalance_name")}
                   adaptive={this.props.adaptive}
-                  wallets={this.wallets}
+                  wallets={this.props.dashboard.balances}
                 />
               </div>
               <div className="CabinetProfileScreen__height24"></div>
@@ -253,6 +253,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
       <div className="CabinetProfileScreen__dashboard">
         <div className="CabinetProfileScreen__dashboard__wrapper">
           {!this.props.adaptive && <DashboardItem type="currency" />}
+          <DashboardItem type="token" />
           <DashboardItem type="exchange" />
           {rows}
         </div>
