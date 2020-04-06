@@ -19,6 +19,7 @@ import UIKitScreen from "./containers/UIKit/UIKitScreen";
 import SiteWrapper from "../wrappers/Site/SiteWrapper";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
 import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
+import TokenWrapper from "../wrappers/Token/TokenWrapper";
 
 import * as pages from "./constants/pages";
 import * as CabinetWalletScreen from "./containers/cabinet/CabinetWalletScreen/CabinetWalletScreen";
@@ -34,6 +35,7 @@ import * as NotificationsScreen from "./containers/cabinet/adaptive/Notification
 import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen";
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "./containers/site/SiteFeeScreen/SiteFeeScreen";
+import SiteTokenScreen from "./containers/site/SiteTokenScreen/SiteTokenScreen";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
 import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
@@ -107,6 +109,10 @@ function Routes(props) {
     case pages.FEE:
       Component = SiteFeeScreen;
       WrapperComponent = SiteWrapper;
+      break;
+    case pages.TOKEN:
+      Component = SiteTokenScreen;
+      WrapperComponent = TokenWrapper;
       break;
     case pages.UIKIT:
       if (process.env.NODE_ENV === `development`) {

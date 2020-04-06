@@ -147,6 +147,10 @@ export const routes =
           path: "/fee"
         },
         {
+          name: pages.TOKEN,
+          path: "/token"
+        },
+        {
           name: pages.TRADER,
           path: "/trader"
         },

@@ -30,6 +30,7 @@ export const MERCHANT = "merchant";
 export const EXCHANGE = "exchange";
 export const TRADER = "trader";
 export const FEE = "fee";
+export const TOKEN = "token";
 export const DOCUMENTATION = "documentation";
 export const DOCUMENTATION_PAGE = "documentation_page";
 export const DOCUMENTATION_API = "documentation_api";
