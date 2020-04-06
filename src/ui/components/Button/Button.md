@@ -119,6 +119,31 @@ import Button, { ButtonWrapper } from "./Button";
 </ButtonWrapper>;
 ```
 
+size="extra_large"
+
+```js
+import Button, { ButtonWrapper } from "./Button";
+
+<ButtonWrapper>
+  <Button size="extra_large">Button</Button>
+  <Button size="extra_large" type="secondary">
+    Secondary
+  </Button>
+  <Button size="extra_large" type="outline">
+    Outline
+  </Button>
+  <Button size="extra_large" type="negative">
+    Negative
+  </Button>
+  <Button size="extra_large" type="negative_outline">
+    Negative outline
+  </Button>
+  <Button size="extra_large" type="lite">
+    Button
+  </Button>
+</ButtonWrapper>;
+```
+
 size="middle"
 
 ```js
