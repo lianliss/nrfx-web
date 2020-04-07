@@ -21,6 +21,15 @@ const Header = props => {
 
   const handleMenu = () => setMenu(!menu);
 
+  const links = [
+    { title: getLang("token_whitePaper"), href: "#Main" },
+    { title: getLang("token_Benefits"), href: "#Benefits" },
+    { title: getLang("token_TokenData"), href: "#TokenData" },
+    { title: getLang("token_Roadmap"), href: "#RoadMap" },
+    { title: getLang("token_Burning"), href: "#TokenBurning" }
+    // { title: getLang("token_SmartContract"), link: "Address" },
+  ];
+
   return (
     <div className={cn("TokenWrapper__header", { shadow })}>
       <div className="TokenWrapper__content">
@@ -33,24 +42,18 @@ const Header = props => {
           </div>
         </div>
         <div className="TokenWrapper__header__menu">
-          <a className="TokenWrapper__header__menu__link" href="#Main">
-            {getLang("token_whitePaper")}
-          </a>
-          <a className="TokenWrapper__header__menu__link" href="#Benefits">
-            {getLang("token_Benefits")}
-          </a>
-          <a className="TokenWrapper__header__menu__link" href="#TokenData">
-            {getLang("token_TokenData")}
-          </a>
-          <a className="TokenWrapper__header__menu__link" href="#RoadMap">
-            {getLang("token_Roadmap")}
-          </a>
-          <a className="TokenWrapper__header__menu__link" href="#TokenBurning">
-            {getLang("token_Burning")}
-          </a>
-          {/*<a className="TokenWrapper__header__menu__link" href="#Address">*/}
-          {/*  {getLang("token_SmartContract")}*/}
-          {/*</a>*/}
+          {links.map((link, key) => (
+            <a
+              key={key}
+              className={cn("TokenWrapper__header__menu__link", {
+                active: window.location.hash === link.href
+              })}
+              href={link.href}
+            >
+              {link.title}
+            </a>
+          ))}
+
           <Button
             rounded
             size="small"
