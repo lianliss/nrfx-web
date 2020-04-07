@@ -15,6 +15,7 @@ export default () => {
     window.addEventListener("scroll", handleDocumentScrollThrottled);
     return () =>
       window.removeEventListener("scroll", handleDocumentScrollThrottled);
+    // eslint-disable-next-line
   }, []);
 
   return [scrollPosition];
