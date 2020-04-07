@@ -38,6 +38,9 @@ export default function Footer() {
             <a href={`/${pages.ABOUT}`} className="Footer__links__item">
               {utils.getLang("site__footerAboutUs")}
             </a>
+            <a href={`/${pages.TOKEN}`} className="Footer__links__item">
+              {utils.getLang("global_nrfxToken")}
+            </a>
             <a href={`/${pages.FEE}`} className="Footer__links__item">
               {utils.getLang("site__headerFee")}
             </a>
