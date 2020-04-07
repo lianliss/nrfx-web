@@ -51,7 +51,7 @@ export default props => {
           </div>
         </div>
         <ButtonWrapper>
-          <Button onClick={props.onBuy}>{getLang("global_buy")}</Button>
+          <Button onClick={props.onBuy}>{getLang("token_buyToken")}</Button>
         </ButtonWrapper>
       </div>
     </div>

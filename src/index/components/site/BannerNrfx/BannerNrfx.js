@@ -26,7 +26,7 @@ const BannerNrfx = props => {
             <h2>{getLang("site_bannerNrfx_title")}</h2>
             <ButtonWrapper>
               <Button size="extra_large" onClick={handleBuy} rounded>
-                {getLang("global_buy")}
+                {getLang("token_buyToken")}
               </Button>
               <Button
                 size="extra_large"

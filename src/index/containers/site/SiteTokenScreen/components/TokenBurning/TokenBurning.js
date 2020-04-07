@@ -17,7 +17,7 @@ export default props => {
           <p>{getLang("token_TokenBurning_p1")}</p>
           <p>{getLang("token_TokenBurning_p2")}</p>
           <ButtonWrapper align="right">
-            <Button onClick={props.onBuy}>{getLang("global_buy")}</Button>
+            <Button onClick={props.onBuy}>{getLang("token_buyToken")}</Button>
           </ButtonWrapper>
         </div>
         <div className="SiteTokenScreen__TokenBurning__amount">
@@ -31,7 +31,7 @@ export default props => {
         className="SiteTokenScreen__TokenBurning__mobileButton"
         onClick={props.onBuy}
       >
-        {getLang("global_buy")}
+        {getLang("token_buyToken")}
       </Button>
     </div>
   );

@@ -15,7 +15,7 @@ export default props => {
           {getLang("token_JoinUsTitle2Link")}
         </span>
       </h2>
-      <Button onClick={props.onBuy}>{getLang("global_buy")}</Button>
+      <Button onClick={props.onBuy}>{getLang("token_buyToken")}</Button>
     </div>
   );
 };

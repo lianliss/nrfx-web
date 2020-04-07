@@ -1,6 +1,6 @@
 import "./Promo.less";
 import React from "react";
-import { NumberFormat, ButtonWrapper, Button } from "src/ui";
+import { NumberFormat, Button } from "src/ui";
 import { getLang } from "src/utils";
 import SVG from "react-inlinesvg";
 
@@ -22,8 +22,8 @@ export default props => {
           </div>
           <Timer roadMap={props.roadMap} />
         </div>
-        <ButtonWrapper>
-          <Button onClick={props.onBuy}>{getLang("global_buy")}</Button>
+        <div className="SiteTokenScreen__Promo__buttons">
+          <Button onClick={props.onBuy}>{getLang("token_buyToken")}</Button>
           <Button
             type="lite"
             onClick={() => {
@@ -33,7 +33,7 @@ export default props => {
             {getLang("token_whitePaper")}
             <SVG src={require("src/asset/16px/link.svg")} />
           </Button>
-        </ButtonWrapper>
+        </div>
       </div>
       <div className="SiteTokenScreen__Promo__logo">
         <SVG src={require("src/asset/token/logo_big.svg")} />
