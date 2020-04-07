@@ -2,7 +2,7 @@ import * as auth from "./auth";
 import * as action from "../actions/";
 import { clearProfile } from "../actions/auth";
 import router from "../router";
-import * as adminPages from "../admin/constants/pages";
+import * as PAGES from "../index/constants/pages";
 
 export const API_ENTRY = "https://api.narfex.com";
 // export const API_ENTRY = "https://api-stage.narfex.dev";
@@ -15,12 +15,23 @@ export function invoke(method, name, params, options = {}) {
       params_arr.push(`${key}=${encodeURIComponent(params[key])}`);
     }
 
+    const formData = new FormData();
+    let includesFile = false;
+    Object.keys(params).forEach(paramsName => {
+      formData.append(paramsName, params[paramsName]);
+      if (params[paramsName] && typeof params[paramsName].name === "string") {
+        includesFile = true;
+      }
+    });
+
     let init = {
       method,
       headers: {
         "X-Token": auth.getToken(),
         "X-Beta": 1,
-        "Content-Type": "application/json",
+        "Content-Type": includesFile
+          ? "application/x-www-form-urlencoded"
+          : "application/json",
         "Accept-Language": window.localStorage.lang || "en"
       }
     };
@@ -30,7 +41,7 @@ export function invoke(method, name, params, options = {}) {
     if (method === "GET") {
       url += `?${params_arr.join("&")}`;
     } else {
-      init.body = JSON.stringify(params);
+      init.body = includesFile ? formData : JSON.stringify(params);
     }
 
     fetch(url, init)
@@ -38,7 +49,9 @@ export function invoke(method, name, params, options = {}) {
         if (resp.status === 403) {
           clearProfile();
           reject({ message: "403 Forbidden: Invalid credentials" });
-          router.navigate(adminPages.MAIN);
+          if (options.redirect !== false) {
+            router.navigate(PAGES.MAIN);
+          }
           return;
         }
 
@@ -51,19 +64,24 @@ export function invoke(method, name, params, options = {}) {
               if (json.code === "withdraw_disabled") {
                 action.openModal("user_block");
               }
-              json.error_name = "failed";
+              if (resp.status === 404) {
+                // HACK
+                json.code = "not_found";
+              } else {
+                json.code = "failed";
+              }
               reject(json);
             }
           })
           .catch(() =>
-            reject({ message: "Cant't parse JSON", error_name: "failed" })
+            reject({ message: "Cant't parse JSON", code: "failed" })
           );
       })
       .catch(err =>
         reject({
           ...err,
           message: "Failed connection",
-          error_name: "failed_connection"
+          code: "failed_connection"
         })
       );
   });

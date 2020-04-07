@@ -43,7 +43,7 @@ function __action(action) {
   values &&
     Object.keys(newValues).forEach(key => {
       const value = state.admin.values[newValues[key]];
-      if (value) {
+      if (value !== undefined) {
         newValues[key] = value;
       } else {
         delete newValues[key];

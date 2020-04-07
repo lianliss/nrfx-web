@@ -12,7 +12,7 @@ body {
   padding: 0;
   margin: 0;
   overflow-y: scroll;
-  color: var(--text-black);
+  color: var(--almost-black);
   background: var(--primary-background);
 
   &:not(.allow-user-select).adaptive {
@@ -89,6 +89,13 @@ h6 .h6 {
   line-height: 16px;
 }
 
+blockquote {
+  display: block;
+  margin: 16px 0;
+  border-left: 4px solid var(--primary-blue);
+  padding-left: 16px;
+}
+
 small,
 .samll {
   font-weight: 500;
@@ -156,7 +163,7 @@ h3 {
 }
 
 .Form__helper__text {
-  color: var(--dark-gray);
+  color: var(--text-black);
   font-weight: 500;
   font-size: 11px;
   line-height: 16px;

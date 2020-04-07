@@ -30,7 +30,7 @@ export default {
         },
         ReviewResult: {
           name: "reviewResult",
-          filters: ["required", "json"],
+          filters: ["required", "array"],
           type: "body"
         },
         ApplicantId: {
@@ -406,7 +406,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -525,7 +524,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -546,7 +544,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -567,7 +564,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -596,7 +592,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -612,7 +607,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -774,7 +768,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -808,7 +801,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -867,6 +859,12 @@ export default {
         }
       },
       path: "wallet/buy_token"
+    },
+    TokenSoldAmountGet: {
+      method: "GET",
+      name: "token_sold_amount",
+      params: [],
+      path: "wallet/token_sold_amount"
     }
   },
   Investment: {
@@ -971,7 +969,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1076,11 +1073,80 @@ export default {
     }
   },
   Documentation: {
+    DefaultGet: {
+      method: "GET",
+      name: "",
+      params: {
+        Description: {
+          name: "description",
+          filters: ["bool"],
+          type: "body"
+        }
+      },
+      path: "documentation"
+    },
     SchemaGet: {
       method: "GET",
       name: "schema",
       params: [],
       path: "documentation/schema"
+    },
+    MethodPost: {
+      method: "POST",
+      name: "method",
+      params: {
+        Key: {
+          name: "key",
+          filters: {
+            "0": "required",
+            "1": "string",
+            maxLen: 150
+          },
+          type: "body"
+        },
+        ShortDescription: {
+          name: "short_description",
+          filters: ["string"],
+          type: "body"
+        },
+        Description: {
+          name: "description",
+          filters: ["json"],
+          type: "body"
+        },
+        Result: {
+          name: "result",
+          filters: ["json"],
+          type: "body"
+        },
+        ResultExample: {
+          name: "result_example",
+          filters: ["json"],
+          type: "body"
+        },
+        ParamDescriptions: {
+          name: "param_descriptions",
+          filters: ["json"],
+          type: "body"
+        }
+      },
+      path: "documentation/method"
+    },
+    MethodGet: {
+      method: "GET",
+      name: "method",
+      params: {
+        Key: {
+          name: "key",
+          filters: {
+            "0": "required",
+            "1": "string",
+            maxLen: 150
+          },
+          type: "body"
+        }
+      },
+      path: "documentation/method"
     }
   },
   Notification: {
@@ -1127,6 +1193,38 @@ export default {
         Address: {
           name: "address",
           filters: ["required"],
+          type: "body"
+        }
+      },
+      path: "page"
+    },
+    DefaultPut: {
+      method: "PUT",
+      name: "",
+      params: {
+        Address: {
+          name: "address",
+          filters: ["required"],
+          type: "body"
+        },
+        Content: {
+          name: "content",
+          filters: ["required", "json"],
+          type: "body"
+        },
+        Title: {
+          name: "title",
+          filters: ["required"],
+          type: "body"
+        },
+        MetaDescription: {
+          name: "meta_description",
+          filters: ["string"],
+          type: "body"
+        },
+        MetaKeywords: {
+          name: "meta_keywords",
+          filters: ["string"],
           type: "body"
         }
       },
@@ -1323,7 +1421,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1349,7 +1446,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1599,7 +1695,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1620,7 +1715,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1661,7 +1755,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },
@@ -1682,7 +1775,6 @@ export default {
         GaCode: {
           name: "ga_code",
           filters: {
-            "0": "required",
             minLen: 6,
             maxLen: 6
           },

@@ -1,8 +1,7 @@
 // styles
 // external
 import React from "react";
-
-import { closeModal } from "src/actions/index";
+import { connect } from "react-redux";
 // internal
 // import OpenDepositModal from './components/cabinet/OpenDepositModal/OpenDepositModal';
 import RateDetailsModal from "./components/cabinet/RateDetailsModal/RateDetailsModal";
@@ -42,16 +41,15 @@ import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailM
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
-import { connect } from "react-redux";
-
-import { Modal } from "../ui";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
+import { closeModal } from "src/actions/index";
+import { Modal } from "../ui";
 
 function Modals(props) {
   const routerParams = props.route.params;
   delete routerParams.ref;
   const { options } = props.route.meta;
-  const modal = routerParams.modal;
+  const modal = props.modal.name || routerParams.modal;
 
   let Component = false;
 
@@ -177,6 +175,7 @@ function Modals(props) {
   return (
     <Component
       {...routerParams}
+      {...props.modal.params}
       {...options}
       onBack={() => {
         // console.log(router.getState());
@@ -220,5 +219,6 @@ class ModalsWrapper extends React.Component {
 }
 
 export default connect(state => ({
-  route: state.router.route
+  route: state.router.route,
+  modal: state.modal
 }))(ModalsWrapper);

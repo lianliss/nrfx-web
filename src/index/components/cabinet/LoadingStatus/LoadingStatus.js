@@ -76,6 +76,16 @@ export default function LoadingStatus({
         </div>
       );
       break;
+    case "not_found":
+      cont = (
+        <div className="LoadingStatus__failed">
+          <SVG src={require("src/asset/120/error.svg")} />
+          <div className="LoadingStatus__failed__message">
+            {utils.getLang("global_pageNotFound")}
+          </div>
+        </div>
+      );
+      break;
   }
 
   return (

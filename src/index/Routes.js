@@ -18,6 +18,8 @@ import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoun
 import UIKitScreen from "./containers/UIKit/UIKitScreen";
 import SiteWrapper from "../wrappers/Site/SiteWrapper";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
+import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
+import TokenWrapper from "../wrappers/Token/TokenWrapper";
 
 import * as pages from "./constants/pages";
 import * as CabinetWalletScreen from "./containers/cabinet/CabinetWalletScreen/CabinetWalletScreen";
@@ -33,7 +35,11 @@ import * as NotificationsScreen from "./containers/cabinet/adaptive/Notification
 import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen";
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "./containers/site/SiteFeeScreen/SiteFeeScreen";
+import SiteTokenScreen from "./containers/site/SiteTokenScreen/SiteTokenScreen";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
+import DocumentationPageScreen from "./containers/documentation/Page/Page";
+import DocumentationMethodScreen from "./containers/documentation/Method/Method";
+import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
 import * as actions from "../actions/index";
 import router from "../router";
 
@@ -104,6 +110,10 @@ function Routes(props) {
       Component = SiteFeeScreen;
       WrapperComponent = SiteWrapper;
       break;
+    case pages.TOKEN:
+      Component = SiteTokenScreen;
+      WrapperComponent = TokenWrapper;
+      break;
     case pages.UIKIT:
       if (process.env.NODE_ENV === `development`) {
         Component = UIKitScreen;
@@ -159,6 +169,26 @@ function Routes(props) {
     case pages.TRADER:
       needAuthorization = true;
       Component = TraderScreen;
+      break;
+    case pages.DOCUMENTATION:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationPageScreen;
+      break;
+    case pages.DOCUMENTATION_PAGE:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationPageScreen;
+      break;
+    case pages.DOCUMENTATION_API:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationMethodListScreen;
+      break;
+    case pages.DOCUMENTATION_API_LIST:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationMethodListScreen;
+      break;
+    case pages.DOCUMENTATION_API_METHOD:
+      WrapperComponent = DocumentationWrapper;
+      Component = DocumentationMethodScreen;
       break;
     default:
       Component = SiteNotFoundScreen;

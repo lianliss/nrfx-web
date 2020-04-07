@@ -96,11 +96,12 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.ADMIN_VALUE_CHANGE: {
-      const values = { ...state.values };
-      values[action.key] = action.value;
       return {
         ...state,
-        values
+        values: {
+          ...state.values,
+          [action.key]: action.value
+        }
       };
     }
 

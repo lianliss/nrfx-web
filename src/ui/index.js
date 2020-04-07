@@ -8,6 +8,9 @@ export { default as CheckBox } from "./components/CheckBox/CheckBox";
 export { default as Modal, ModalHeader } from "./components/Modal/Modal";
 export { default as Radio } from "./components/Radio/Radio";
 export { default as Switch } from "./components/Switch/Switch";
+export { default as Label } from "./components/Label/Label";
+export { default as Filter } from "./components/Filter/Filter";
+export { default as HamburgerButton } from "./components/HamburgerButton/HamburgerButton";
 export {
   default as Notifications,
   Notification,
@@ -35,6 +38,9 @@ export { default as ContentBox } from "./components/ContentBox/ContentBox";
 export { default as Collapse } from "./components/Collapse/Collapse";
 export { default as WalletCard } from "./components/WalletCard/WalletCard";
 export { default as StatusIndicator } from "./components/StatusIndicator/StatusIndicator";
+export { default as Code } from "./components/Code/Code";
+export { default as Editor } from "./components/Editor/Editor";
+export { default as File } from "./components/File/File";
 export {
   default as FloatingButton,
   FloatingButtonItem

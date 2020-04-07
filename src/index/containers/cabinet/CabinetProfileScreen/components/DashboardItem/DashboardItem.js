@@ -106,7 +106,7 @@ class DashboardItem extends React.Component {
         };
         this.button = {
           type: "normal",
-          children: utils.getLang("global_buy"),
+          children: utils.getLang("token_buyToken"),
           onClick: () => actions.openModal("nrfx_presale")
         };
         break;

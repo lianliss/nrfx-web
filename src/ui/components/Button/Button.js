@@ -81,7 +81,13 @@ Button.defaultProps = {
 };
 
 Button.propTypes = {
-  size: PropTypes.oneOf(["middle", "small", "large", "ultra_small"]),
+  size: PropTypes.oneOf([
+    "middle",
+    "small",
+    "large",
+    "extra_large",
+    "ultra_small"
+  ]),
   type: PropTypes.oneOf([
     "normal",
     "secondary",
@@ -112,7 +118,12 @@ Button.propTypes = {
 export default React.memo(Button);
 
 ButtonWrapper.propTypes = {
-  align: PropTypes.oneOf(["left", "center", "right", "fill"])
+  align: PropTypes.oneOf([
+    "left",
+    "center",
+    "<Button onClick={props.onBuy}>{getLang('global_buy')}</Button>",
+    "fill"
+  ])
 };
 
 export { ButtonWrapper };

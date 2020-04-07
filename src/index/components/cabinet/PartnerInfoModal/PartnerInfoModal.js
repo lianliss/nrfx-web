@@ -163,7 +163,7 @@ export default class PartnerInfoModal extends React.Component {
     profileActions
       .loadPartnerInfo(this.props.login)
       .then(resp => this.setState({ ...resp, loadingStatus: "" }))
-      .catch(err => this.setState({ loadingStatus: err.error_name }));
+      .catch(err => this.setState({ loadingStatus: err.code }));
   };
 }
 

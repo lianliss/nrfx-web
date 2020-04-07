@@ -43,6 +43,12 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
+export function joinComponents(separator = ", ") {
+  return (accu, elem) => {
+    return accu === null ? [elem] : [...accu, separator, elem];
+  };
+}
+
 export function getLang(key, string = false, code = false) {
   const state = store.getState();
   const { currentLang, translations } = state.default;
@@ -93,6 +99,13 @@ export const nl2br = text => {
   return text;
 };
 
+export function isJson(string) {
+  try {
+    return JSON.parse(string);
+  } catch (e) {
+    return false;
+  }
+}
 export const isEmail = email =>
   /^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase());
 
@@ -120,6 +133,12 @@ export function useInterval(callback, delay) {
       return () => clearInterval(id);
     }
   }, [delay]);
+}
+
+export function diff(a1, a2) {
+  return a1
+    .filter(i => !a2.includes(i))
+    .concat(a2.filter(i => !a1.includes(i)));
 }
 
 export const formatNumber = (
@@ -150,6 +169,45 @@ export function throttle(func, ms) {
       clearTimeout(timeout);
     }
     timeout = setTimeout(func.bind(this, ...args), ms);
+  };
+}
+
+export function throttle2(func, ms) {
+  let isThrottled = false,
+    savedArgs,
+    savedThis;
+
+  function wrapper() {
+    if (isThrottled) {
+      // (2)
+      savedArgs = arguments;
+      savedThis = this;
+      return;
+    }
+
+    func.apply(this, arguments); // (1)
+
+    isThrottled = true;
+
+    setTimeout(function() {
+      isThrottled = false; // (3)
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = savedThis = null;
+      }
+    }, ms);
+  }
+
+  return wrapper;
+}
+
+export function debounce(func, ms) {
+  let isCooldown = false;
+  return function() {
+    if (isCooldown) return;
+    func.apply(this, arguments);
+    isCooldown = true;
+    setTimeout(() => (isCooldown = false), ms);
   };
 }
 

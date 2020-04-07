@@ -1,24 +1,16 @@
 @import "../../vars";
 
-@height: 48px;
-@middle-height: 40px;
-@small-height: 32px;
-@ultra-small-height: 24px;
-@border-radius-rounded: @height / 2;
-@border-radius-rounded-middle: @middle-height / 2;
-@border-radius-rounded-small: @small-height / 2;
-@border-radius-rounded-ultra-small: @ultra-small-height / 2;
-
 .Button {
+  --button-height: 48px;
   outline: none;
   border: none;
   font-family: @font-family;
   padding: 0 32px;
-  background: var(--orange-gradient);
-  color: var(--primary-orange);
+  background: var(--blue-gradient);
+  color: var(--primary-blue);
   border-radius: @border-radius;
   display: inline-flex;
-  height: @height;
+  height: var(--button-height);
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -55,7 +47,7 @@
   }
 
   &.rounded {
-    border-radius: @border-radius-rounded;
+    border-radius: calc(var(--button-height) / 2);
   }
 
   &.forCabinet {
@@ -121,31 +113,19 @@
   }
 
   &.small {
-    height: @small-height;
+    --button-height: 32px;
     padding: 0 16px;
-
-    &.rounded {
-      border-radius: @border-radius-rounded-small;
-    }
   }
 
   &.ultra_small {
-    height: @ultra-small-height;
+    --button-height: 24px;
     padding: 0 8px;
     border-radius: 6px;
-
-    &.rounded {
-      border-radius: @border-radius-rounded-ultra-small;
-    }
   }
 
   &.middle {
-    height: @middle-height;
+    --button-height: 40px;
     padding: 0 24px;
-
-    &.rounded {
-      border-radius: @border-radius-rounded-middle;
-    }
   }
 
   &.large {
@@ -157,14 +137,21 @@
     }
   }
 
+  &.extra_large {
+    --button-height: 64px;
+    .Button__label {
+      font-size: 15px;
+    }
+  }
+
   &.disabled {
     pointer-events: none;
     opacity: 0.65;
   }
 
   &.secondary {
-    background: var(--dairy);
-    color: var(--dark-gray);
+    background: var(--cloudy);
+    color: var(--text-black);
 
     &:after {
       //background: #f0f;

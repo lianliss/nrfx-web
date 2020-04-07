@@ -14,9 +14,11 @@ import List from "../List/List";
 import Tabs from "../Tabs/Tabs";
 import Paging from "../Paging/Paging";
 import PagingItem from "../Paging/PagingItem";
-import Label from "../../../ui/components/Label/Label";
+import Filter from "../../../ui/components/Filter/Filter";
 import Json from "../Json/Json";
 import Text from "../Text/Text";
+import Chackbox from "../Chackbox/Chackbox";
+import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import Time from "../Time/Time";
 import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
@@ -75,7 +77,7 @@ const Item = props => {
       Component = DropDown;
       break;
     case "table_filter":
-      Component = props => <Label {...props} onCancel={handleClick} />;
+      Component = props => <Filter {...props} onCancel={handleClick} />;
       break;
     case "action_sheet":
       Component = () => (
@@ -113,6 +115,12 @@ const Item = props => {
       break;
     case "text":
       Component = Text;
+      break;
+    case "checkbox":
+      Component = Chackbox;
+      break;
+    case "wysiwyg":
+      Component = Wysiwyg;
       break;
     case "time":
       Component = Time;

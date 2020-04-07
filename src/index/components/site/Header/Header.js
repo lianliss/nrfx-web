@@ -75,6 +75,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           title: getLang("site__headerFAQ"),
           route: COMPANY.faqUrl
         },
+        // {
+        //   title: getLang("site__headerDocumentation"),
+        //   route: pages.DOCUMENTATION
+        // },
         {
           title: (
             <span
@@ -174,6 +178,16 @@ function Header({ showLightLogo, langList, routerState, profile }) {
             )}
           </div>
 
+          <div
+            onClick={() => {
+              router.navigate(pages.TOKEN);
+            }}
+            className="SiteHeader__menu__item nrfxToken"
+          >
+            <SVG src={require("src/asset/token/28px.svg")} />
+            {getLang("global_nrfxToken")}
+          </div>
+
           {headerLinks.map(item => (
             <MobileDropdown
               key={item.title}
@@ -198,6 +212,15 @@ function Header({ showLightLogo, langList, routerState, profile }) {
             </div>
           </a>
           <div className="SiteHeader__menu__horizontal">
+            <div
+              onClick={() => {
+                router.navigate(pages.TOKEN);
+              }}
+              className="SiteHeader__menu__item nrfxToken"
+            >
+              <SVG src={require("src/asset/token/28px.svg")} />
+              {getLang("global_nrfxToken")}
+            </div>
             {headerLinks.map(item => (
               <Dropdown
                 key={item.title}

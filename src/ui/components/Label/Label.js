@@ -1,16 +1,17 @@
 import "./Label.less";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import { classNames as cn, ucfirst } from "src/utils";
 
-export default props => (
-  <div className="Label">
-    <div className="Label__name">{props.name}</div>
-    <div className="Label__value">
-      {typeof props.value === "object" ? props.value.join("; ") : props.value}
-    </div>
-    <div className="Label__cancel" onClick={props.onCancel}>
-      <SVG src={require("../../../asset/24px/close-xs.svg")} />
-    </div>
-  </div>
-);
+export default props => {
+  return (
+    <span
+      onClick={props.onClick}
+      className={cn("Label", props.type && props.type.toLowerCase(), {
+        haveAction: !!props.onClick
+      })}
+    >
+      {props.title || ucfirst(props.type)}
+    </span>
+  );
+};

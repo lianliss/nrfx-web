@@ -23,6 +23,8 @@ import Button from "../Button/Button";
   <br />
   <Input type="password" placeholder="Password" />
   <br />
+  <Input disabled value="disabled" />
+  <br />
   <Input
     onTextChange={console.log}
     cell

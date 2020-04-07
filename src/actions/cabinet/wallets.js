@@ -276,6 +276,10 @@ export function checkLogin(login) {
     });
 }
 
+export function tokenSoldAmountGet() {
+  return api.call(apiSchema.Wallet.TokenSoldAmountGet);
+}
+
 export function TokenRateGet(currency) {
   return api.call(apiSchema.Wallet.TokenRateGet, { currency });
 }

@@ -4,10 +4,12 @@ import React from "react";
 
 import BaseScreen from "../../BaseScreen";
 import COMPANY from "../../../constants/company";
+import * as PAGES from "src/index/constants/pages";
 import * as utils from "../../../../utils";
 import * as UI from "../../../../ui";
 import TitleWithBg from "../../../components/site/TitleWithBg/TitleWithBg";
 import SVG from "react-inlinesvg";
+import router from "../../../../router";
 // import MobileAppBanner from '../../../components/site//MobileAppBanner';
 
 const SnItem = props => {
@@ -127,7 +129,10 @@ export default class SiteContactScreen extends BaseScreen {
                 <p>{utils.getLang("site__contactEmailDescription")}</p>
               </UI.ContentBox>
 
-              <UI.ContentBox className="SiteContactScreen__link_item disabled">
+              <UI.ContentBox
+                onClick={() => router.navigate(PAGES.DOCUMENTATION)}
+                className="SiteContactScreen__link_item disabled"
+              >
                 <SVG src={require("../../../../asset/120/code.svg")} />
                 <h3 className="SiteContactScreen__link_item__title">
                   {utils.getLang("site__contactApiTitle")}

@@ -3,9 +3,9 @@ import "./StaticContentModal.less";
 import React, { useState, useEffect } from "react";
 //
 import * as UI from "src/ui";
-import * as utils from "utils";
 import { getStaticPageContent } from "src/actions";
 import ModalState from "../../cabinet/ModalState/ModalState";
+import { Editor } from "src/ui";
 
 export default props => {
   const { type } = props;
@@ -32,17 +32,14 @@ export default props => {
     <UI.Modal
       isOpen={true}
       className="StaticContentModal"
-      onClose={props.onBack}
+      onClose={props.onClose}
     >
       <UI.ModalHeader>{data.title}</UI.ModalHeader>
       <div className="StaticContentModal__content__wrapper">
-        <div
-          className="StaticContentModal__content"
-          dangerouslySetInnerHTML={{ __html: data.content }}
-        />
-        <UI.Button fontSize={15} onClick={props.onBack}>
-          {utils.getLang("site__goBack")}
-        </UI.Button>
+        {data.content && <Editor readOnly content={data.content} />}
+        {/*<UI.Button fontSize={15} onClick={props.onBack}>*/}
+        {/*  {utils.getLang("site__goBack")}*/}
+        {/*</UI.Button>*/}
       </div>
     </UI.Modal>
   );

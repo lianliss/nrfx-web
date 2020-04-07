@@ -66,7 +66,7 @@ class ManageBalanceModal extends React.Component {
 
         this.setState({ loadingStatus: "", ...res });
       })
-      .catch(err => this.setState({ loadingStatus: err.error_name }));
+      .catch(err => this.setState({ loadingStatus: err.code }));
   }
 
   get options() {
