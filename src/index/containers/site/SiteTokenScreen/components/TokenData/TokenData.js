@@ -18,7 +18,7 @@ export default props => {
           <div className="SiteTokenScreen__TokenData__scaleWrapper">
             <div className="SiteTokenScreen__TokenData__scale">
               <div
-                style={{ height: "50%", width: "50%" }}
+                style={{ height: "0%", width: "0%" }}
                 className="SiteTokenScreen__TokenData__scale__value"
               ></div>
             </div>

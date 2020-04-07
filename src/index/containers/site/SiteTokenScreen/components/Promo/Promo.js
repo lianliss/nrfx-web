@@ -1,8 +1,10 @@
 import "./Promo.less";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NumberFormat, ButtonWrapper, Button } from "src/ui";
 import { getLang } from "src/utils";
 import SVG from "react-inlinesvg";
+
+import Timer from "./timer";
 
 export default props => {
   return (
@@ -18,10 +20,7 @@ export default props => {
               <NumberFormat number={0.1} currency="usd" />
             </strong>
           </div>
-          <div className="SiteTokenScreen__Promo__numbers__item">
-            <small>{getLang("token_privatPresale")}</small>
-            <strong>24D 17H 44M</strong>
-          </div>
+          <Timer roadMap={props.roadMap} />
         </div>
         <ButtonWrapper>
           <Button onClick={props.onBuy}>{getLang("global_buy")}</Button>

@@ -44,9 +44,9 @@ const Header = props => {
           <a className="TokenWrapper__header__menu__link" href="#TokenBurning">
             {getLang("token_Burning")}
           </a>
-          <a className="TokenWrapper__header__menu__link" href="#Address">
-            {getLang("token_SmartContract")}
-          </a>
+          {/*<a className="TokenWrapper__header__menu__link" href="#Address">*/}
+          {/*  {getLang("token_SmartContract")}*/}
+          {/*</a>*/}
           <Button
             rounded
             size="small"
