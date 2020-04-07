@@ -68,5 +68,6 @@ const BannerNrfx = props => {
 };
 
 export default connect(state => ({
-  isLogin: !!state.default.profile.user
+  isLogin: !!state.default.profile.user,
+  currentLang: state.default.currentLang
 }))(BannerNrfx);
