@@ -5,6 +5,8 @@ import { getLang } from "src/utils";
 import { ButtonWrapper, Button } from "src/ui";
 import SVG from "react-inlinesvg";
 import * as actions from "../../../../actions";
+import router from "../../../../router";
+import * as pages from "../../../../index/constants/pages";
 
 const BannerNrfx = props => {
   const handleBuy = () => {
@@ -26,7 +28,13 @@ const BannerNrfx = props => {
               <Button size="extra_large" onClick={handleBuy} rounded>
                 {getLang("global_buy")}
               </Button>
-              <Button size="extra_large" type="lite">
+              <Button
+                size="extra_large"
+                type="lite"
+                onClick={() => {
+                  router.navigate(pages.TOKEN);
+                }}
+              >
                 {getLang("site_readMore")}
                 <SVG src={require("src/asset/16px/link.svg")} />
               </Button>

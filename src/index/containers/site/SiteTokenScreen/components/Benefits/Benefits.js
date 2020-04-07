@@ -6,6 +6,7 @@ import SVG from "react-inlinesvg";
 export default props => {
   return (
     <div className="SiteTokenScreen__Benefits">
+      <div className="anchor" id="Benefits" />
       <div className="SiteTokenScreen__Benefits__content">
         <h2>{getLang("token_Benefits")}</h2>
         <p>{getLang("token_Benefits_p1")}</p>

@@ -6,6 +6,7 @@ import Clipboard from "src/index/components/cabinet/Clipboard/Clipboard";
 export default props => {
   return (
     <div className="SiteTokenScreen__Address">
+      <div className="anchor" id="Address" />
       <h2>{getLang("token_AddressTitle")}</h2>
       <div className="SiteTokenScreen__Address__Clipboard">
         <Clipboard

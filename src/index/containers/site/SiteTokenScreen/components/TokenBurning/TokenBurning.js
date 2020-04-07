@@ -7,6 +7,7 @@ import SVG from "react-inlinesvg";
 export default props => {
   return (
     <div className="SiteTokenScreen__TokenBurning">
+      <div className="anchor" id="TokenBurning" />
       <h2>
         {getLang("token_TokenBurning")}
         <SVG src={require("./assets/flame.svg")} />
@@ -28,7 +29,6 @@ export default props => {
       </div>
       <Button
         className="SiteTokenScreen__TokenBurning__mobileButton"
-        size="middle"
         onClick={props.onBuy}
       >
         {getLang("global_buy")}

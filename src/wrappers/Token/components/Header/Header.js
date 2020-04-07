@@ -29,22 +29,22 @@ const Header = props => {
           </div>
         </div>
         <div className="TokenWrapper__header__menu">
-          <a className="TokenWrapper__header__menu__link" href="#sdf">
+          <a className="TokenWrapper__header__menu__link" href="#Main">
             {getLang("token_whitePaper")}
           </a>
-          <a className="TokenWrapper__header__menu__link" href="#sdf">
+          <a className="TokenWrapper__header__menu__link" href="#Benefits">
             {getLang("token_Benefits")}
           </a>
-          <a className="TokenWrapper__header__menu__link" href="#sdf">
+          <a className="TokenWrapper__header__menu__link" href="#TokenData">
             {getLang("token_TokenData")}
           </a>
-          <a className="TokenWrapper__header__menu__link" href="#sdf">
+          <a className="TokenWrapper__header__menu__link" href="#RoadMap">
             {getLang("token_Roadmap")}
           </a>
-          <a className="TokenWrapper__header__menu__link" href="#sdf">
+          <a className="TokenWrapper__header__menu__link" href="#TokenBurning">
             {getLang("token_Burning")}
           </a>
-          <a className="TokenWrapper__header__menu__link" href="#sdf">
+          <a className="TokenWrapper__header__menu__link" href="#Address">
             {getLang("token_SmartContract")}
           </a>
           <Button
