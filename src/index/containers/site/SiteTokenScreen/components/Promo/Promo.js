@@ -5,11 +5,11 @@ import { getLang } from "src/utils";
 import SVG from "react-inlinesvg";
 
 import Timer from "./timer";
+import COMPANY from "src/index/constants/company";
 
 export default props => {
   return (
-    <div className="SiteTokenScreen__Promo">
-      <div className="anchor" id="Main" />
+    <div id="Main" className="SiteTokenScreen__Promo">
       <div className="SiteTokenScreen__Promo__content">
         <h1>{getLang("token_promoTitle")}</h1>
         <p>{getLang("token_promoText")}</p>
@@ -24,7 +24,12 @@ export default props => {
         </div>
         <ButtonWrapper>
           <Button onClick={props.onBuy}>{getLang("global_buy")}</Button>
-          <Button type="lite">
+          <Button
+            type="lite"
+            onClick={() => {
+              window.open(COMPANY.whitePaper.en);
+            }}
+          >
             {getLang("token_whitePaper")}
             <SVG src={require("src/asset/16px/link.svg")} />
           </Button>

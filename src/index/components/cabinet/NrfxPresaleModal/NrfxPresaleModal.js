@@ -16,6 +16,7 @@ import { TokenRateGet, BuyToken } from "src/actions/cabinet/wallets";
 import * as toast from "src/actions/toasts";
 import SVG from "react-inlinesvg";
 import ModalState from "../ModalState/ModalState";
+import COMPANY from "src/index/constants/company";
 
 const NrfxPresaleModal = props => {
   const [currency, setCurrency] = useState("btc");
@@ -26,8 +27,7 @@ const NrfxPresaleModal = props => {
 
   // const lang = props.lang === "ru" ? "ru" : "en";
   // const url = `https://storage.googleapis.com/narfex/files/narfex-white-paper-${lang}-1.1.pdf`;
-  const url =
-    "https://storage.googleapis.com/narfex/files/narfex-white-paper-en.pdf";
+  const url = COMPANY.whitePaper.en;
 
   useEffect(() => {
     setRate(currency);

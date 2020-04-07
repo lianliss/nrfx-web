@@ -1,10 +1,21 @@
 import "./TokenData.less";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getLang } from "src/utils";
 import { Button, NumberFormat, ButtonWrapper } from "src/ui";
+import { tokenSoldAmountGet } from "src/actions/cabinet/wallets";
 
 export default props => {
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    tokenSoldAmountGet().then(r => {
+      setAmount(r.amount);
+    });
+  }, []);
+
+  const amountPercent = Math.min((amount / 60000000) * 100, 100) + "%";
+
   return (
     <div className="SiteTokenScreen__TokenDataWrapper">
       <div className="anchor" id="TokenData" />
@@ -18,9 +29,10 @@ export default props => {
           <div className="SiteTokenScreen__TokenData__scaleWrapper">
             <div className="SiteTokenScreen__TokenData__scale">
               <div
-                style={{ height: "0%", width: "0%" }}
+                title={amount + " USD"}
+                style={{ height: amountPercent, width: amountPercent }}
                 className="SiteTokenScreen__TokenData__scale__value"
-              ></div>
+              />
             </div>
             <div className="SiteTokenScreen__TokenData__scaleLabels">
               <div className="SiteTokenScreen__TokenData__scaleLabel">

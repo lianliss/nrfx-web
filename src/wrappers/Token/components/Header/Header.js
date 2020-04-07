@@ -12,10 +12,14 @@ import router from "../../../../router";
 import * as pages from "../../../../admin/constants/pages";
 import { classNames as cn } from "src/utils";
 import useDocumentScroll from "src/hooks/useDocumentScroll";
+import Menu from "../Menu/Menu";
 
 const Header = props => {
   const [scrollPosition] = useDocumentScroll();
+  const [menu, setMenu] = useState(false);
   const shadow = scrollPosition > 0;
+
+  const handleMenu = () => setMenu(!menu);
 
   return (
     <div className={cn("TokenWrapper__header", { shadow })}>
@@ -72,8 +76,13 @@ const Header = props => {
           </ActionSheet>
         </div>
 
-        <HamburgerButton className={"TokenWrapper__header__hamburgerButton"} />
+        <HamburgerButton
+          active={menu}
+          onClick={handleMenu}
+          className={"TokenWrapper__header__hamburgerButton"}
+        />
       </div>
+      {menu && <Menu onClose={() => setMenu(false)} />}
     </div>
   );
 };

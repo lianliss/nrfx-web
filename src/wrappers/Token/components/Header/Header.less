@@ -33,6 +33,31 @@
     align-items: center;
     margin-left: auto;
     display: flex;
+
+    .Button.rounded {
+      margin: 0 16px;
+    }
+
+    .Button.lite {
+      .Button__label {
+        color: var(--white);
+        display: flex;
+        text-transform: uppercase;
+        align-items: center;
+
+        & > span {
+          display: block;
+          text-align: right;
+          width: 24px;
+        }
+
+        svg {
+          display: block;
+          margin-left: 4px;
+          margin-bottom: -2px;
+        }
+      }
+    }
   }
 
   .TokenWrapper__header__menu__link {
@@ -52,38 +77,19 @@
     }
   }
 
-  .Button.rounded {
-    margin: 0 16px;
-  }
-
-  .Button.lite {
-    .Button__label {
-      color: var(--white);
-      display: flex;
-      text-transform: uppercase;
-      align-items: center;
-
-      & > span {
-        display: block;
-        text-align: right;
-        width: 24px;
-      }
-
-      svg {
-        display: block;
-        margin-left: 4px;
-        margin-bottom: -2px;
-      }
-    }
-  }
-
   .ActionsSheet__list {
     left: auto;
     right: 0;
     top: 36px;
   }
 
+  .TokenWrapper__menu {
+    z-index: 2;
+  }
+
   .TokenWrapper__header__hamburgerButton {
+    position: relative;
+    z-index: 3;
     display: none;
     margin-left: auto;
   }

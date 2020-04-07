@@ -859,6 +859,12 @@ export default {
         }
       },
       path: "wallet/buy_token"
+    },
+    TokenSoldAmountGet: {
+      method: "GET",
+      name: "token_sold_amount",
+      params: [],
+      path: "wallet/token_sold_amount"
     }
   },
   Investment: {

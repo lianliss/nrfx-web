@@ -2,11 +2,15 @@ import "./TokenWrapper.less";
 import React, { useEffect } from "react";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import useAdaptive from "src/hooks/adaptive";
 
 export default props => {
+  const adaptive = useAdaptive();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <div className="TokenWrapper">
       <Header />
