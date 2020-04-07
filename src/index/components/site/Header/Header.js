@@ -178,12 +178,15 @@ function Header({ showLightLogo, langList, routerState, profile }) {
             )}
           </div>
 
-          {/*<div onClick={() => {*/}
-          {/*  router.navigate(pages.TOKEN);*/}
-          {/*}} className="SiteHeader__menu__item nrfxToken">*/}
-          {/*  <SVG src={require('src/asset/token/28px.svg')} />*/}
-          {/*  {getLang('global_nrfxToken')}*/}
-          {/*</div>*/}
+          <div
+            onClick={() => {
+              router.navigate(pages.TOKEN);
+            }}
+            className="SiteHeader__menu__item nrfxToken"
+          >
+            <SVG src={require("src/asset/token/28px.svg")} />
+            {getLang("global_nrfxToken")}
+          </div>
 
           {headerLinks.map(item => (
             <MobileDropdown
