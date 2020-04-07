@@ -29,7 +29,7 @@ const SiteTokenScreen = props => {
   ];
 
   return (
-    <div className="SiteTokenScreen">
+    <div id="Main" className="SiteTokenScreen">
       <Promo roadMap={roadMap} onBuy={handleBuy} />
       <Benefits />
       <TokenData onBuy={handleBuy} />

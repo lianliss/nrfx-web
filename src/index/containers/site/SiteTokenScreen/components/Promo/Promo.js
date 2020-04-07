@@ -1,5 +1,5 @@
 import "./Promo.less";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NumberFormat, ButtonWrapper, Button } from "src/ui";
 import { getLang } from "src/utils";
 import SVG from "react-inlinesvg";
@@ -9,7 +9,7 @@ import COMPANY from "src/index/constants/company";
 
 export default props => {
   return (
-    <div id="Main" className="SiteTokenScreen__Promo">
+    <div className="SiteTokenScreen__Promo">
       <div className="SiteTokenScreen__Promo__content">
         <h1>{getLang("token_promoTitle")}</h1>
         <p>{getLang("token_promoText")}</p>
