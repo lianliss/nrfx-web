@@ -11,12 +11,19 @@ const Params = props => {
     props.updateMethodParam(paramName, description);
   };
 
+  const params = props.params.filter(p => p.type === props.type);
+
+  const titles = {
+    body: getLang("cabinet_docsParameters"),
+    header: getLang("cabinet_docsHttpHeaders")
+  };
+
   return (
-    !!props.params.length && (
+    params.length && (
       <ContentBox className="Method__params">
-        <h2>{getLang("cabinet_docsParameters")}</h2>
+        <h2>{titles[props.type]}</h2>
         <div className="Method__params__list">
-          {props.params.map(param => {
+          {params.map(param => {
             const { filters } = param;
             return (
               <div className="Method__params__list__line">
