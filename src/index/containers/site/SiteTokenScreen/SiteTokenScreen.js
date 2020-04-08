@@ -11,6 +11,8 @@ import RoadMap from "./components/RoadMap/RoadMap";
 import JoinUs from "./components/JounUs/JoinUs";
 import * as actions from "../../../../actions";
 import { getLang } from "src/utils";
+import { Helmet } from "react-helmet";
+import * as utils from "../../../../utils";
 
 const SiteTokenScreen = props => {
   const handleBuy = () => {
@@ -30,6 +32,13 @@ const SiteTokenScreen = props => {
 
   return (
     <div id="Main" className="SiteTokenScreen">
+      <Helmet>
+        <title>{utils.getLang("global_nrfxToken", true)}</title>
+        <meta
+          name="description"
+          content={utils.getLang("token_promoText", true)}
+        />
+      </Helmet>
       <Promo roadMap={roadMap} onBuy={handleBuy} />
       <Benefits />
       <TokenData onBuy={handleBuy} />

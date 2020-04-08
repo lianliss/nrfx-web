@@ -6,11 +6,24 @@ import BaseScreen from "../../BaseScreen";
 import InfoCard from "../../../components/site/InfoCard/InfoCard";
 import SafetyBanner from "./components/SafetyBanner/SafetyBanner";
 import * as utils from "../../../../utils/index";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 export default class SiteSafetyScreen extends BaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("site__safetyTitle", true)].join(
+              " - "
+            )}
+          </title>
+          <meta
+            name="description"
+            content={utils.getLang("site__safetyDoubleProtectionSubTitle")}
+          />
+        </Helmet>
         <div className="Layout_spacing">
           <h1 className="SiteSafetyScreen__heading">
             {utils.getLang("site__safetyTitle")}

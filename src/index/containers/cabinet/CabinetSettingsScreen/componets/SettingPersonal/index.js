@@ -8,6 +8,8 @@ import VerificationBlock from "../VerificationBlock/VerificationBlock";
 import * as actions from "src/actions/index";
 import * as toasts from "src/actions/toasts";
 import { openModal } from "src/actions/index";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../../../constants/company";
 
 class SettingPersonal extends React.Component {
   state = {

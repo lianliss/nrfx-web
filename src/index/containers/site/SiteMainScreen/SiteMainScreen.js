@@ -15,6 +15,7 @@ import * as actions from "../../../../actions";
 import TypedText from "../../../components/site/TypedText/TypedText";
 import initGetParams from "../../../../services/initialGetParams";
 import COMPANY from "../../../constants/company";
+import { Helmet } from "react-helmet";
 
 export default class SiteMainScreen extends BaseScreen {
   componentDidMount() {
@@ -40,6 +41,14 @@ export default class SiteMainScreen extends BaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[
+              COMPANY.name,
+              utils.getLang("site__homeWalletSubTitile", true).replace("\n", "")
+            ].join(" - ")}
+          </title>
+        </Helmet>
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require("../../site/SiteMainScreen/asset/homepage_screen.png")}

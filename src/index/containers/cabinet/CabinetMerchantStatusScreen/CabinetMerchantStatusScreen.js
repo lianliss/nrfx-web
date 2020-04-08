@@ -2,16 +2,24 @@ import "./CabinetMerchantStatusScreen.less";
 
 import React from "react";
 
-import { getLang } from "../../../../utils";
+import { getLang, default as utils } from "../../../../utils";
 import * as UI from "../../../../ui";
 import router from "../../../../router";
 import * as pages from "src/index/constants/pages";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 export function Status(props) {
   const success = props.status === "success";
+  const title = success
+    ? getLang("cabinet_merchantSuccessText")
+    : getLang("cabinet_merchantErrorText");
 
   return (
     <div className="MerchantStatus">
+      <Helmet>
+        <title>{[COMPANY.name, title].join(" - ")}</title>
+      </Helmet>
       <div
         className="MerchantStatus__icon"
         style={{
@@ -22,11 +30,7 @@ export function Status(props) {
           })`
         }}
       />
-      <h2 className="MerchantStatus__text">
-        {success
-          ? getLang("cabinet_merchantSuccessText")
-          : getLang("cabinet_merchantErrorText")}
-      </h2>
+      <h2 className="MerchantStatus__text">{title}</h2>
       <UI.Button
         onClick={() => {
           if (props.onClose) {

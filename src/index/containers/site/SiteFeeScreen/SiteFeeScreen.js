@@ -11,6 +11,9 @@ import { getLang } from "../../../../utils/index";
 
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import CurrencyLabel from "./components/CurrencyLable/CurrencyLabel";
+import { Helmet } from "react-helmet";
+import * as utils from "../../../../utils";
+import COMPANY from "../../../constants/company";
 
 class SiteFeeScreen extends BaseScreen {
   state = {
@@ -633,6 +636,15 @@ class SiteFeeScreen extends BaseScreen {
 
     return (
       <div className="SiteFeeScreen Layout_spacing">
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("site__fee_title", true)].join(" - ")}
+          </title>
+          <meta
+            name="description"
+            content={utils.getLang("site__fee_description")}
+          />
+        </Helmet>
         <div className="SiteContactScreen__heading">
           <h1>{getLang("site__fee_title")}</h1>
           <p>

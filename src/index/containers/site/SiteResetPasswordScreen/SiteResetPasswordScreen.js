@@ -11,6 +11,8 @@ import * as api from "../../../../services/api";
 import * as utils from "../../../../utils";
 import * as actions from "../../../../actions";
 import * as toastsActions from "../../../../actions/toasts";
+import COMPANY from "../../../constants/company";
+import { Helmet } from "react-helmet";
 
 class CabinetRegister extends React.PureComponent {
   state = {
@@ -72,6 +74,14 @@ class CabinetRegister extends React.PureComponent {
     const { state } = this;
     return (
       <div className="CabinetResetPassword">
+        <Helmet>
+          <title>
+            {[
+              COMPANY.name,
+              utils.getLang("cabinet_resetPassword_title", true)
+            ].join(" - ")}
+          </title>
+        </Helmet>
         <div className="CabinetResetPassword__content Content_box">
           {this.state.success ? (
             <div>

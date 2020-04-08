@@ -10,6 +10,9 @@ import ShortDescription from "./components/ShortDescription/ShortDescription";
 import Result from "./components/Result/Result";
 
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
+import { Helmet } from "react-helmet";
+import * as utils from "../../../../utils";
+import COMPANY from "../../../constants/company";
 
 const DocumentationMethod = props => {
   useEffect(() => {

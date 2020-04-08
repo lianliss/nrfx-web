@@ -20,6 +20,8 @@ import * as exchangeService from "../../../../services/exchange";
 import * as UI from "../../../../ui/";
 import * as exchangeActions from "../../../../actions/cabinet/exchange";
 import * as actions from "../../../../actions";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 class CabinetExchangeScreen extends CabinetBaseScreen {
   constructor(props) {
@@ -41,7 +43,19 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
   }
 
   render() {
-    return <div>{this.__renderContent()}</div>;
+    return (
+      <div>
+        <Helmet>
+          <title>
+            {[
+              COMPANY.name,
+              utils.getLang("cabinet_header_exchange", true)
+            ].join(" - ")}
+          </title>
+        </Helmet>
+        {this.__renderContent()}
+      </div>
+    );
   }
 
   renderDisconnectedModal() {

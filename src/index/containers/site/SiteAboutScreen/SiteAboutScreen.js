@@ -10,6 +10,8 @@ import History from "./components/History";
 import { ABOUT, MISSION, HISTORY } from "../../../constants/pages";
 import * as utils from "../../../../utils/index";
 import router from "../../../../router";
+import { Helmet } from "react-helmet";
+import COMPANY from "src/index/constants/company";
 
 const getHeading = currentTab => {
   switch (currentTab) {
@@ -52,6 +54,17 @@ export default class SiteAboutScreen extends BaseScreen {
 
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("site__headerAboutUs", true)].join(
+              " - "
+            )}
+          </title>
+          <meta
+            name="description"
+            content={utils.getLang("site__aboutShortTitleText")}
+          />
+        </Helmet>
         <div className="Layout_spacing">
           <div className="SiteAboutScreen">
             <h1 className="SiteAboutScreen__heading">

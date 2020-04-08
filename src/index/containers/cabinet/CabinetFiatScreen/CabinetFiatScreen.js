@@ -15,6 +15,8 @@ import FiatMarketForm from "./components/FiatMarketForm/FiatMarketForm";
 import FiatHistoryTable from "./components/FiatHistoryTable/FiatHistoryTable";
 import { openModal } from "../../../../actions";
 import * as actions from "src/actions/cabinet/fiat";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 class CabinetFiatScreen extends CabinetBaseScreen {
   load = () => {
@@ -42,6 +44,13 @@ class CabinetFiatScreen extends CabinetBaseScreen {
 
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("cabinet_header_fiat", true)].join(
+              " - "
+            )}
+          </title>
+        </Helmet>
         <PageContainer leftContent={this.__renderRightContent()}>
           <div className="CabinetWalletScreen__wallets">
             {this.props.adaptive ? (

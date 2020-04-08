@@ -13,7 +13,7 @@ import SiteSafetyScreen from "./containers/site/SiteSafetyScreen/SiteSafetyScree
 import SiteExchangeScreen from "./containers/site/SiteExchangeScreen/SiteExchangeScreen";
 // import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
 import SiteContactScreen from "./containers/site/SiteContactScreen/SiteContactScreen";
-import SiteFaqScreen from "./containers/site/SiteFaqScreen/SiteFaqScreen";
+// import SiteFaqScreen from "./containers/site/SiteFaqScreen/SiteFaqScreen";
 import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoundScreen";
 import UIKitScreen from "./containers/UIKit/UIKitScreen";
 import SiteWrapper from "../wrappers/Site/SiteWrapper";
@@ -102,10 +102,10 @@ function Routes(props) {
       Component = SiteContactScreen;
       WrapperComponent = SiteWrapper;
       break;
-    case pages.FAQ:
-      Component = SiteFaqScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.FAQ:
+    //   Component = SiteFaqScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     case pages.FEE:
       Component = SiteFeeScreen;
       WrapperComponent = SiteWrapper;

@@ -7,11 +7,24 @@ import SitePageInfoBlock from "../../../components/site/SitePageInfoBlock/SitePa
 // import MobileAppBanner from '../../../components/site/MobileAppBanner/MobileAppBanner';
 import InfoCard from "../../../components/site/InfoCard/InfoCard";
 import * as utils from "../../../../utils/index";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 export default class SiteWalletScreen extends BaseScreen {
   render() {
     return (
       <div className="Wallet__screen">
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("cabinet_header_wallets")].join(
+              " - "
+            )}
+          </title>
+          <meta
+            name="description"
+            content={utils.getLang("site__walletSubTitle")}
+          />
+        </Helmet>
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require("./asset/wallet_main_image.png")}

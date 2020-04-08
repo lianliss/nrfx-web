@@ -24,6 +24,8 @@ import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";
 import Show from "../../../components/hoc/ShowContent";
 import * as investmentsActions from "../../../../actions/cabinet/investments";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 class CabinetInvestmentsScreen extends React.PureComponent {
   get section() {
@@ -62,6 +64,14 @@ class CabinetInvestmentsScreen extends React.PureComponent {
   render() {
     return (
       <>
+        <Helmet>
+          <title>
+            {[
+              COMPANY.name,
+              utils.getLang("cabinet_header_investments", true)
+            ].join(" - ")}
+          </title>
+        </Helmet>
         <div>
           <PageContainer
             leftContent={

@@ -22,6 +22,8 @@ import * as PAGES from "../../../constants/pages";
 import * as actions from "../../../../actions";
 import * as walletsActions from "../../../../actions/cabinet/wallets";
 import * as profileActions from "../../../../actions/cabinet/profile";
+import COMPANY from "../../../constants/company";
+import { Helmet } from "react-helmet";
 
 class CabinetProfileScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -62,6 +64,13 @@ class CabinetProfileScreen extends CabinetBaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("cabinet_header_profile")].join(
+              " - "
+            )}
+          </title>
+        </Helmet>
         <PageContainer
           leftContent={this.__renderRightContent()}
           sidebarOptions={this.__renderSideBarOptions()}

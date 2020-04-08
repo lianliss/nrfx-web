@@ -10,11 +10,24 @@ import InfoCard from "../../../components/site/InfoCard/InfoCard";
 import * as utils from "../../../../utils/index";
 import router from "../../../../router";
 import * as PAGES from "../../../constants/pages";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 export default class SiteExchangeScreen extends BaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("site__exchangeTitle", true)].join(
+              " - "
+            )}
+          </title>
+          <meta
+            name="description"
+            content={utils.getLang("site__exchangeSubTitle")}
+          />
+        </Helmet>
         <div className="Layout_spacing">
           <SitePageInfoBlock
             image={require("./asset/exchange_main_image.png")}

@@ -11,6 +11,9 @@ import {
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import router from "../../../../router";
 import * as pages from "src/index/constants/pages";
+import { Helmet } from "react-helmet";
+import * as utils from "../../../../utils";
+import COMPANY from "../../../constants/company";
 
 const Page = props => {
   useEffect(() => {
@@ -35,6 +38,9 @@ const Page = props => {
 
   return (
     <div className="Documentation_wrapper__content">
+      <Helmet>
+        <title>{[COMPANY.name, props.page.title].join(" - ")}</title>
+      </Helmet>
       <ContentBox className="DocPage">
         <h1 className="DocPage__title">
           {props.page.title}

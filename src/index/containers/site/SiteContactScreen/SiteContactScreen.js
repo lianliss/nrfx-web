@@ -10,6 +10,7 @@ import * as UI from "../../../../ui";
 import TitleWithBg from "../../../components/site/TitleWithBg/TitleWithBg";
 import SVG from "react-inlinesvg";
 import router from "../../../../router";
+import { Helmet } from "react-helmet";
 // import MobileAppBanner from '../../../components/site//MobileAppBanner';
 
 const SnItem = props => {
@@ -72,6 +73,17 @@ export default class SiteContactScreen extends BaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("site__contactContactUs", true)].join(
+              " - "
+            )}
+          </title>
+          <meta
+            name="description"
+            content={utils.getLang("site__contactDescription")}
+          />
+        </Helmet>
         <div className="SiteContactScreen Layout_spacing">
           <h1 className="SiteContactScreen__heading">
             {utils.getLang("site__contactContactUs")}
