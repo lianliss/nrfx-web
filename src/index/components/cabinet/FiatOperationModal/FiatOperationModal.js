@@ -60,7 +60,7 @@ function FiatOperationModal(props) {
     <Modal className="FiatOperationModal" isOpen={true} onClose={props.onClose}>
       <UI.ModalHeader>{operation.type_label}</UI.ModalHeader>
       {/*<pre>{JSON.stringify(props, null, 2)}</pre>*/}
-      {["income", "withdrawal"].includes(operation.type) ? (
+      {["refill", "withdrawal"].includes(operation.type) ? (
         <div className="FiatOperationModal__content">
           <UI.WalletCard
             symbol={true}
@@ -139,11 +139,20 @@ function FiatOperationModal(props) {
                 {operation.fee || "-"}
               </div>
             </div>
-            {/*<div className="FiatOperationModal__row__right">*/}
-            {/*  <div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}
-            {/*  <div><UI.NumberFormat number={1} currency={secondaryCurrency.abbr} /></div>*/}
-            {/*</div>*/}
           </div>
+
+          {operation.type === "refill" && (
+            <div className="FiatOperationModal__row">
+              <div className="FiatOperationModal__row__left">
+                <div className="FiatOperationModal__label">
+                  {utils.getLang("global_bank")}
+                </div>
+                <div className="FiatOperationModal__value">
+                  {operation.bank_code}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="FiatOperationModal__content">
