@@ -126,12 +126,12 @@ function Header({ showLightLogo, langList, routerState, profile }) {
       {isVerticalMenuOpen ? (
         <div className="SiteHeader__menu__vertical">
           <div className="SiteHeader__header">
-            <a
-              href="/"
+            <div
+              onClick={() => router.navigate(pages.MAIN)}
               className="SiteHeader__header__logo SiteHeader__logo_white"
             >
               <UI.Logo type="white" />
-            </a>
+            </div>
             <div onClick={() => toggleVerticalMenu(false)}>
               <SVG src={require("./asset/close.svg")} />
             </div>
@@ -206,11 +206,11 @@ function Header({ showLightLogo, langList, routerState, profile }) {
 
       {!isVerticalMenuOpen ? (
         <div className="SiteHeader__cont">
-          <a href="/">
+          <div onClick={() => router.navigate(pages.MAIN)}>
             <div className="SiteHeader__logo">
               <UI.Logo type={showLightLogo ? "white" : "default"} />
             </div>
-          </a>
+          </div>
           <div className="SiteHeader__menu__horizontal">
             <div
               onClick={() => {
