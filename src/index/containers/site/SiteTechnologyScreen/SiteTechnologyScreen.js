@@ -10,7 +10,6 @@ import { data } from "../SiteAboutScreen/fixtures";
 import { PHONE } from "../../../constants/breakpoints";
 import * as utils from "../../../../utils/index";
 import { Helmet } from "react-helmet";
-import COMPANY from "../../../constants/company";
 
 export default class SiteTechnologyScreen extends BaseScreen {
   state = {

@@ -7,7 +7,6 @@ import { ContentBox, Label, Button, Editor } from "src/ui";
 import router from "../../../../../../router";
 import { getLang, ucfirst } from "src/utils";
 import * as PAGES from "../../../../../constants/pages";
-import * as utils from "../../../../../../utils";
 import COMPANY from "../../../../../constants/company";
 import { Helmet } from "react-helmet";
 

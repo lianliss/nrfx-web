@@ -7,7 +7,6 @@ import * as PAGES from "../../../constants/pages";
 import { sortDocSchema } from "../utils";
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import { Helmet } from "react-helmet";
-import * as utils from "../../../../utils";
 import COMPANY from "../../../constants/company";
 
 const MethodList = props => {
