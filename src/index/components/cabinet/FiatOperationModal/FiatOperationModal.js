@@ -88,7 +88,7 @@ function FiatOperationModal(props) {
                     {utils.getLang("global_bank")}
                   </div>
                   <div className="FiatOperationModal__value">
-                    {operation.extra.bank_code}
+                    {operation.bank_code}
                   </div>
                 </div>
               </div>
@@ -101,7 +101,7 @@ function FiatOperationModal(props) {
                     )}
                   </div>
                   <div className="FiatOperationModal__value">
-                    {operation.extra.account_holder_name}
+                    {operation.account_holder_name}
                   </div>
                 </div>
                 <div className="FiatOperationModal__row__right">
@@ -112,7 +112,7 @@ function FiatOperationModal(props) {
                   </div>
                   <div className="FiatOperationModal__value">
                     <UI.NumberFormat
-                      number={operation.extra.account_number}
+                      number={operation.account_number}
                       currency={secondaryCurrency.abbr}
                     />
                   </div>
