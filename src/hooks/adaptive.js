@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { setAdaptive } from "src/actions";
 
 export default () => {
-  const [adaptive, setAdaptive] = useState(0);
-
   const handleResize = () => {
     if (document.body.offsetWidth <= 650) {
       document.body.classList.add("adaptive");
@@ -18,6 +17,4 @@ export default () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  return adaptive;
 };

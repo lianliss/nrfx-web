@@ -280,11 +280,11 @@ export function tokenSoldAmountGet() {
   return api.call(apiSchema.Wallet.TokenSoldAmountGet);
 }
 
-export function TokenRateGet(currency) {
+export function tokenRateGet(currency) {
   return api.call(apiSchema.Wallet.TokenRateGet, { currency });
 }
 
-export function BuyToken(currency, amount) {
+export function buyToken(currency, amount) {
   return api
     .call(apiSchema.Wallet.BuyTokenPost, { currency, amount })
     .then(r => {

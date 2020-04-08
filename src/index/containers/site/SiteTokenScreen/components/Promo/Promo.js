@@ -1,13 +1,21 @@
 import "./Promo.less";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NumberFormat, Button } from "src/ui";
 import { getLang } from "src/utils";
 import SVG from "react-inlinesvg";
-
+import { tokenRateGet } from "src/actions/cabinet/wallets";
 import Timer from "./timer";
 import COMPANY from "src/index/constants/company";
+import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
 
 export default props => {
+  const [price, setPrice] = useState(null);
+  useEffect(() => {
+    tokenRateGet("usd").then(({ rate }) => {
+      setPrice(rate);
+    });
+  }, []);
+
   return (
     <div className="SiteTokenScreen__Promo">
       <div className="SiteTokenScreen__Promo__content">
@@ -17,7 +25,7 @@ export default props => {
           <div className="SiteTokenScreen__Promo__numbers__item">
             <small>{getLang("global_price")}</small>
             <strong>
-              <NumberFormat number={0.1} currency="usd" />
+              {price ? <NumberFormat number={price} currency="usd" /> : "-"}
             </strong>
           </div>
           <Timer roadMap={props.roadMap} />

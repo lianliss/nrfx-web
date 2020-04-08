@@ -12,7 +12,7 @@ import {
 import NrfxButton from "./components/NrfxButton/NrfxButton";
 import NrfxSwitch from "./components/NrfxSwitch/NrfxSwitch";
 import { getLang } from "../../../../utils";
-import { TokenRateGet, BuyToken } from "src/actions/cabinet/wallets";
+import { tokenRateGet, buyToken } from "src/actions/cabinet/wallets";
 import * as toast from "src/actions/toasts";
 import SVG from "react-inlinesvg";
 import ModalState from "../ModalState/ModalState";
@@ -46,7 +46,7 @@ const NrfxPresaleModal = props => {
       toast.error(getLang("cabinet_nrfxCoinPresaleMinAmount"));
     } else {
       setState("loading");
-      BuyToken(currency, amount)
+      buyToken(currency, amount)
         .then(() => {
           props.onClose();
         })
@@ -154,7 +154,7 @@ const useRate = initialState => {
   return [
     rate,
     currency =>
-      TokenRateGet(currency).then(r => {
+      tokenRateGet(currency).then(r => {
         setRate(r.rate);
       })
   ];
