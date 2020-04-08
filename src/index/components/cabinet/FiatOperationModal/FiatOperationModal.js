@@ -136,7 +136,14 @@ function FiatOperationModal(props) {
                 {utils.getLang("global_fee")}
               </div>
               <div className="FiatOperationModal__value">
-                {operation.fee || "-"}
+                {operation.fee ? (
+                  <UI.NumberFormat
+                    number={operation.fee}
+                    currency={primaryCurrency.abbr}
+                  />
+                ) : (
+                  "-"
+                )}
               </div>
             </div>
           </div>

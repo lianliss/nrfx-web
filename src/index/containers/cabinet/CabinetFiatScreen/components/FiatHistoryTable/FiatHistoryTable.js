@@ -106,7 +106,7 @@ const FiatHistoryTable = props => {
           <div className="FiatHistoryTable__group__item__left">
             <div className="FiatHistoryTable__label">{item.type_label}</div>
             <div className="FiatHistoryTable__description">
-              {item.extra.bank_code}
+              {item.bank_code}
             </div>
             <div className="FiatHistoryTable__description">
               <Status status={item.status} label={item.status_label} />
