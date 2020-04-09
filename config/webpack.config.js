@@ -533,7 +533,8 @@ module.exports = function(webpackEnv) {
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin({
         ...env.stringified,
-        'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN)
+        'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
+        'process.env.BRANCH_NAME': JSON.stringify(process.env.BRANCH_NAME)
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       //new webpack.DefinePlugin({'define': define}),
