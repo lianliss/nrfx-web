@@ -9,11 +9,21 @@ import { getLang, ucfirst } from "src/utils";
 import * as PAGES from "../../../../../constants/pages";
 import COMPANY from "../../../../../constants/company";
 import { Helmet } from "react-helmet";
+import { API_VERSION } from "src/services/api";
 
 const Main = props => {
   const handleChange = value => props.updateMethod("description", value);
 
   const title = props.name === "Default" ? ucfirst(props.path) : props.name;
+
+  let pathLink = "";
+  const pathList = props.path.split("/").map(p => {
+    pathLink = [pathLink, ucfirst(p)].filter(Boolean).join("-");
+    return {
+      label: p,
+      path: pathLink
+    };
+  });
 
   return (
     <ContentBox className="Method__main">
@@ -33,7 +43,37 @@ const Main = props => {
         )}
       </h1>
       <div className="Method__main__path">
-        <h3>{"/" + props.path}</h3>
+        <h3>
+          /
+          <span
+            className="link"
+            onClick={() => {
+              router.navigate(PAGES.DOCUMENTATION_API);
+            }}
+          >
+            api
+          </span>
+          {`/v${API_VERSION}/`}
+          {pathList.map((p, i) => {
+            return i < pathList.length - 1 ? (
+              <>
+                <span
+                  className="link"
+                  onClick={() => {
+                    router.navigate(PAGES.DOCUMENTATION_API_LIST, {
+                      path: p.path
+                    });
+                  }}
+                >
+                  {p.label}
+                </span>
+                /
+              </>
+            ) : (
+              p.label
+            );
+          })}
+        </h3>
         <Label type={props.method} />
       </div>
       <div className="Method__main__content">

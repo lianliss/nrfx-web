@@ -19,7 +19,7 @@ const Params = props => {
   };
 
   return (
-    params.length && (
+    !!params.length && (
       <ContentBox className="Method__params">
         <h2>{titles[props.type]}</h2>
         <div className="Method__params__list">
