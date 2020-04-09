@@ -27,7 +27,8 @@ const DocumentationMethod = props => {
       <div className="Documentation_wrapper__content Method">
         <Main />
         <ShortDescription />
-        <Params />
+        <Params type="header" />
+        <Params type="body" />
         <Result />
       </div>
       <div className="Documentation_wrapper__subContent">

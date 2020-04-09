@@ -60,7 +60,7 @@ function FiatOperationModal(props) {
     <Modal className="FiatOperationModal" isOpen={true} onClose={props.onClose}>
       <UI.ModalHeader>{operation.type_label}</UI.ModalHeader>
       {/*<pre>{JSON.stringify(props, null, 2)}</pre>*/}
-      {["income", "withdrawal"].includes(operation.type) ? (
+      {["refill", "withdrawal"].includes(operation.type) ? (
         <div className="FiatOperationModal__content">
           <UI.WalletCard
             symbol={true}
@@ -88,7 +88,7 @@ function FiatOperationModal(props) {
                     {utils.getLang("global_bank")}
                   </div>
                   <div className="FiatOperationModal__value">
-                    {operation.extra.bank_code}
+                    {operation.bank_code}
                   </div>
                 </div>
               </div>
@@ -101,7 +101,7 @@ function FiatOperationModal(props) {
                     )}
                   </div>
                   <div className="FiatOperationModal__value">
-                    {operation.extra.account_holder_name}
+                    {operation.account_holder_name}
                   </div>
                 </div>
                 <div className="FiatOperationModal__row__right">
@@ -112,7 +112,7 @@ function FiatOperationModal(props) {
                   </div>
                   <div className="FiatOperationModal__value">
                     <UI.NumberFormat
-                      number={operation.extra.account_number}
+                      number={operation.account_number}
                       currency={secondaryCurrency.abbr}
                     />
                   </div>
@@ -136,14 +136,30 @@ function FiatOperationModal(props) {
                 {utils.getLang("global_fee")}
               </div>
               <div className="FiatOperationModal__value">
-                {operation.fee || "-"}
+                {operation.fee ? (
+                  <UI.NumberFormat
+                    number={operation.fee}
+                    currency={primaryCurrency.abbr}
+                  />
+                ) : (
+                  "-"
+                )}
               </div>
             </div>
-            {/*<div className="FiatOperationModal__row__right">*/}
-            {/*  <div className="FiatOperationModal__label">{utils.getLang('global_fee')}</div>*/}
-            {/*  <div><UI.NumberFormat number={1} currency={secondaryCurrency.abbr} /></div>*/}
-            {/*</div>*/}
           </div>
+
+          {operation.type === "refill" && (
+            <div className="FiatOperationModal__row">
+              <div className="FiatOperationModal__row__left">
+                <div className="FiatOperationModal__label">
+                  {utils.getLang("global_bank")}
+                </div>
+                <div className="FiatOperationModal__value">
+                  {operation.bank_code}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="FiatOperationModal__content">

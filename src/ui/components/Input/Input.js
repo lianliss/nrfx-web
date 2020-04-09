@@ -67,7 +67,7 @@ class Input extends React.Component {
     }
 
     if (this.props.type === "code") {
-      type = "number";
+      type = "tel";
     }
 
     if (this.props.type === "number") {

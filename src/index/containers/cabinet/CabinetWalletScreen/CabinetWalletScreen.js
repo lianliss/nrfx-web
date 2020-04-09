@@ -23,6 +23,8 @@ import * as actions from "../../../../actions";
 import * as PAGES from "../../../constants/pages";
 import * as walletsActions from "../../../../actions/cabinet/wallets";
 import * as utils from "../../../../utils";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 class CabinetWalletScreen extends CabinetBaseScreen {
   load = (section = null) => {
@@ -47,6 +49,13 @@ class CabinetWalletScreen extends CabinetBaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("cabinet_header_wallets", true)].join(
+              " - "
+            )}
+          </title>
+        </Helmet>
         <PageContainer
           leftContent={
             !this.props.adaptive &&

@@ -6,6 +6,8 @@ import router from "../../../../router";
 import * as PAGES from "../../../constants/pages";
 import { sortDocSchema } from "../utils";
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 const MethodList = props => {
   const handleMethodClick = (method, name) => () => {
@@ -22,6 +24,9 @@ const MethodList = props => {
 
   const render = (name, schema) => (
     <div className="Documentation_wrapper__content MethodList">
+      <Helmet>
+        <title>{[COMPANY.name, name].join(" - ")}</title>
+      </Helmet>
       <ContentBox>
         <h1 className="MethodList__title">{name}</h1>
         <div className="MethodList__list">

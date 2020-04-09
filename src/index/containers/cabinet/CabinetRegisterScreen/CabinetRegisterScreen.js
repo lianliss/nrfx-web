@@ -17,6 +17,8 @@ import * as auth from "../../../../services/auth";
 // import SVG from 'react-inlinesvg';
 import * as toastsActions from "../../../../actions/toasts";
 import * as actions from "../../../../actions";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 class CabinetRegister extends React.PureComponent {
   state = {
@@ -150,6 +152,14 @@ class CabinetRegister extends React.PureComponent {
 
     return (
       <div className="CabinetRegister">
+        <Helmet>
+          <title>
+            {[
+              COMPANY.name,
+              utils.getLang("cabinet_registerScreen_complete")
+            ].join(" - ")}
+          </title>
+        </Helmet>
         <UI.ContentBox className="CabinetRegister__content">
           <h3 className="CabinetRegister__content__title">
             {utils.getLang("cabinet_registerScreen_complete")}

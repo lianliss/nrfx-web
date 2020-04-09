@@ -84,10 +84,10 @@ export const routes =
           name: pages.CONTACT,
           path: "/contact"
         },
-        {
-          name: pages.FAQ,
-          path: "/faq"
-        },
+        // {
+        //   name: pages.FAQ,
+        //   path: "/faq"
+        // },
         {
           name: pages.HELLO,
           path: "/hello"

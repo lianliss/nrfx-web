@@ -7,16 +7,21 @@ import { ContentBox, Label, Button, Editor } from "src/ui";
 import router from "../../../../../../router";
 import { getLang, ucfirst } from "src/utils";
 import * as PAGES from "../../../../../constants/pages";
+import COMPANY from "../../../../../constants/company";
+import { Helmet } from "react-helmet";
 
 const Main = props => {
   const handleChange = value => props.updateMethod("description", value);
 
+  const title = props.name === "Default" ? ucfirst(props.path) : props.name;
+
   return (
     <ContentBox className="Method__main">
+      <Helmet>
+        <title>{[COMPANY.name, title].join(" - ")}</title>
+      </Helmet>
       <h1 className="Method__main__title">
-        <span>
-          {props.name === "Default" ? ucfirst(props.path) : props.name}
-        </span>
+        <span>{title}</span>
         {props.editMode && (
           <Button
             state={props.saveStatus}

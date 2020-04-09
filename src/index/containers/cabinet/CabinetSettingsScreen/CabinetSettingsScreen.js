@@ -20,6 +20,8 @@ import { ReactComponent as KeySvg } from "../../../../asset/24px/key.svg";
 import * as actions from "../../../../actions";
 import * as settingsActions from "../../../../actions/cabinet/settings";
 import * as toastsActions from "../../../../actions/toasts";
+import { Helmet } from "react-helmet";
+import COMPANY from "../../../constants/company";
 
 class CabinetSettingsScreen extends CabinetBaseScreen {
   get section() {
@@ -48,6 +50,13 @@ class CabinetSettingsScreen extends CabinetBaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("cabinet_header_settings")].join(
+              " - "
+            )}
+          </title>
+        </Helmet>
         <PageContainer
           leftContent={
             !this.props.adaptive &&

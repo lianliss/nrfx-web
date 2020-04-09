@@ -11,6 +11,7 @@ import Footer from "src/index/components/site/Footer/Footer";
 
 class SiteWrapper extends React.Component {
   componentDidMount() {
+    window.scroll(0, 0);
     window.addEventListener("resize", this.__handleOnResize);
     this.__handleResize(document.body.offsetWidth);
   }

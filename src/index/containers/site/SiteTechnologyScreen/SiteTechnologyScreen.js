@@ -9,6 +9,7 @@ import InfoSection from "../../../components/site/InfoSection/InfoSection";
 import { data } from "../SiteAboutScreen/fixtures";
 import { PHONE } from "../../../constants/breakpoints";
 import * as utils from "../../../../utils/index";
+import { Helmet } from "react-helmet";
 
 export default class SiteTechnologyScreen extends BaseScreen {
   state = {
@@ -49,6 +50,13 @@ export default class SiteTechnologyScreen extends BaseScreen {
 
     return (
       <div>
+        <Helmet>
+          <title>{utils.getLang("site__technologyTitle", true)}</title>
+          <meta
+            name="description"
+            content={utils.getLang("SiteTechnologyScreen__description")}
+          />
+        </Helmet>
         <div className="Layout_spacing">
           <h1 className="SiteTechnologyScreen__heading">
             {utils.getLang("site__technologyTitle")}

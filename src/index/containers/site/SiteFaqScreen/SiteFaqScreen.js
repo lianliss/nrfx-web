@@ -7,6 +7,7 @@ import * as UI from "../../../../ui";
 import Question from "./components/Question";
 import COMPANY from "../../../constants/company";
 import * as utils from "../../../../utils";
+import { Helmet } from "react-helmet";
 
 const questions = {
   general: [
@@ -53,6 +54,17 @@ export default class SiteFaqScreen extends BaseScreen {
   render() {
     return (
       <div>
+        <Helmet>
+          <title>
+            {[COMPANY.name, utils.getLang("site__exchangeTitle", true)].join(
+              " - "
+            )}
+          </title>
+          <meta
+            name="description"
+            content={utils.getLang("site__exchangeSubTitle")}
+          />
+        </Helmet>
         <div className="Layout_spacing">
           <div className="SiteFaqScreen__heading">
             <h1 className="SiteFaqScreen__heading__title">

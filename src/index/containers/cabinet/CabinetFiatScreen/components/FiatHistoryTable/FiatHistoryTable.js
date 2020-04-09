@@ -25,7 +25,7 @@ const FiatHistoryTable = props => {
   const icons = {
     fiat_exchange: require("src/asset/24px/loop.svg"),
     crypto_exchange: require("src/asset/24px/loop.svg"),
-    income: require("src/asset/24px/fiat-plus.svg"),
+    refill: require("src/asset/24px/fiat-plus.svg"),
     withdrawal: require("src/asset/24px/withdraw.svg"),
     buy_token: require("src/asset/24px/shopping-cart.svg")
   };
@@ -106,7 +106,7 @@ const FiatHistoryTable = props => {
           <div className="FiatHistoryTable__group__item__left">
             <div className="FiatHistoryTable__label">{item.type_label}</div>
             <div className="FiatHistoryTable__description">
-              {item.extra.bank_code}
+              {item.bank_code}
             </div>
             <div className="FiatHistoryTable__description">
               <Status status={item.status} label={item.status_label} />
@@ -154,6 +154,7 @@ const FiatHistoryTable = props => {
                 case "withdrawal":
                   return renderWithdrawalItem(item);
                 case "income":
+                case "refill":
                   return renderIncomeItem(item);
                 // case 'crypto_exchange':
                 // case 'fiat_exchange':
