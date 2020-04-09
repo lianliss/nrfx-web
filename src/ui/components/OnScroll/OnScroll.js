@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import useDocumentScroll from "src/hooks/useDocumentScroll";
 import { classNames as cn } from "src/utils";
 
