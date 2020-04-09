@@ -11,7 +11,7 @@ export default props => {
     if (!isVisible && rect.top < window.innerHeight) {
       setVisible(true);
     } else {
-      // setVisible(false);
+      setVisible(false);
     }
   });
 
