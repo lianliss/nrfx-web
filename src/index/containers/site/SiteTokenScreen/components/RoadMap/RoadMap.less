@@ -3,6 +3,14 @@
   width: 100%;
   max-width: 800px;
   margin: var(--block-margin) auto;
+  opacity: 0;
+  transform: translate(0 -100px);
+  transition: opacity 1s ease, transform 1s ease;
+
+  &.isVisible {
+    opacity: 1;
+    transform: translate(0);
+  }
 
   h2 {
     font-size: var(--title1-font-size);

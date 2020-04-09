@@ -1,11 +1,12 @@
 import "./RoadMap.less";
 import React from "react";
 import { getLang, dateFormat, classNames as cn } from "src/utils";
+import { OnScroll } from "src/ui";
 
 export default props => {
   const currentTime = Date.now();
   return (
-    <div className="SiteTokenScreen__RoadMap">
+    <OnScroll className="SiteTokenScreen__RoadMap">
       <div className="anchor" id="RoadMap" />
       <h2>{getLang("token_roadMapTitle")}</h2>
       <h3>{getLang("token_roadMapSubTitle")}</h3>
@@ -25,6 +26,6 @@ export default props => {
           </div>
         ))}
       </div>
-    </div>
+    </OnScroll>
   );
 };
