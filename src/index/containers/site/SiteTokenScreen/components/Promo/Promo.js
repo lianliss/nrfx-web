@@ -6,7 +6,6 @@ import SVG from "react-inlinesvg";
 import { tokenRateGet } from "src/actions/cabinet/wallets";
 import Timer from "./timer";
 import COMPANY from "src/index/constants/company";
-import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
 
 export default props => {
   const [price, setPrice] = useState(null);

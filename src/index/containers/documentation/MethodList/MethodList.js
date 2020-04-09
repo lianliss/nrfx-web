@@ -79,17 +79,19 @@ const MethodList = props => {
                     onClick={handleMethodClick(method, name)}
                     className="MethodList__list__line"
                   >
-                    <div className="MethodList__list__method">
-                      {schema[name].method && (
-                        <Label
-                          type={
-                            schema[name].method === "DELETE"
-                              ? "DEL"
-                              : schema[name].method
-                          }
-                        />
-                      )}
-                    </div>
+                    {pathList && (
+                      <div className="MethodList__list__method">
+                        {schema[name].method && (
+                          <Label
+                            type={
+                              schema[name].method === "DELETE"
+                                ? "DEL"
+                                : schema[name].method
+                            }
+                          />
+                        )}
+                      </div>
+                    )}
                     <div className="MethodList__list__methodName">
                       <strong>
                         {schema[name].name === "Default"
