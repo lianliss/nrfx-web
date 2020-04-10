@@ -1,6 +1,6 @@
 import "./Promo.less";
 import React, { useEffect, useState } from "react";
-import { NumberFormat, Button } from "src/ui";
+import { NumberFormat, Button, OnScroll } from "src/ui";
 import { getLang } from "src/utils";
 import SVG from "react-inlinesvg";
 import { tokenRateGet } from "src/actions/cabinet/wallets";
@@ -16,7 +16,7 @@ export default props => {
   }, []);
 
   return (
-    <div className="SiteTokenScreen__Promo">
+    <OnScroll className="SiteTokenScreen__Promo">
       <div className="SiteTokenScreen__Promo__content">
         <h1>{getLang("token_promoTitle")}</h1>
         <p>{getLang("token_promoText")}</p>
@@ -45,6 +45,6 @@ export default props => {
       <div className="SiteTokenScreen__Promo__logo">
         <SVG src={require("src/asset/token/logo_big.svg")} />
       </div>
-    </div>
+    </OnScroll>
   );
 };

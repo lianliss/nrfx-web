@@ -7,6 +7,9 @@
 
   .SiteTokenScreen__Promo__content {
     width: 500px;
+    opacity: 1;
+    transition: opacity 1s ease;
+    transition-delay: .5s;
 
     h1 {
       font-size: var(--title1-font-size);
@@ -71,11 +74,21 @@
   .SiteTokenScreen__Promo__logo {
     margin: auto;
     display: flex;
+    opacity: 1;
+    transition: opacity 1s ease;
+    transition-delay: .6s;
 
     .isvg {
       display: block;
       margin: auto;
     }
+  }
+}
+
+.SiteTokenScreen__Promo.notVisible {
+  .SiteTokenScreen__Promo__content,
+  .SiteTokenScreen__Promo__logo {
+    opacity: 0;
   }
 }
 
