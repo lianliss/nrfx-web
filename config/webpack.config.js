@@ -19,12 +19,12 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const paths = require('./paths');
 const modules = require('./modules');
+const branches = require('./branches');
 const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
 const postcssNormalize = require('postcss-normalize');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -534,7 +534,7 @@ module.exports = function(webpackEnv) {
       new webpack.DefinePlugin({
         ...env.stringified,
         'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
-        'process.env.BRANCH_NAME': JSON.stringify(process.env.BRANCH_NAME)
+        'process.env.BRANCH_NAME': JSON.stringify(("xendit" || process.env.BRANCH_NAME))
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       //new webpack.DefinePlugin({'define': define}),

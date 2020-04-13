@@ -38,7 +38,7 @@ const WithdrawalRefillModal = props => {
     <Modal noSpacing isOpen={true} onClose={props.onClose}>
       {adaptive && (
         <ModalHeader>
-          {getLang("cabinet_fiatWithdrawalModal_chooseBank")}Z
+          {getLang("cabinet_fiatWithdrawalModal_chooseBank")}
         </ModalHeader>
       )}
       <div className="FiatRefillModal">
@@ -99,7 +99,7 @@ const WithdrawalRefillModal = props => {
                   <li>
                     {getLang("cabinet_virtualAccount")} #{" "}
                     <span>
-                      <Clipboard text={bank.virtual_number} />
+                      <Clipboard text={bank.account_number} />
                     </span>
                   </li>
                 </ul>
@@ -107,7 +107,10 @@ const WithdrawalRefillModal = props => {
 
                 {/*<pre>{JSON.stringify(bank.methods, null, 2)}</pre>*/}
                 <MethodsList
-                  accountNumber={bank.virtual_number}
+                  keys={{
+                    account_number: bank.account_number,
+                    service_provider_code: bank.service_provider_code
+                  }}
                   methods={bank.methods}
                 />
               </div>
