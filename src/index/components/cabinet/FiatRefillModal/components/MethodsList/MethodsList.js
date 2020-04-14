@@ -12,16 +12,16 @@ export default props => {
     setOpenedId(id === openedId ? null : id);
   };
 
-  const formatRow = row => {
-    return row
-      .split(/({account_number})/)
-      .map(e =>
-        e === "{account_number}" ? (
-          <Clipboard skipIcon text={props.accountNumber} />
-        ) : (
-          e
-        )
-      );
+  const formatRow = (row, keys) => {
+    const keysOfKeys = Object.keys(keys);
+    return row.split(/({account_number}|{service_provider_code})/).map(e => {
+      const key = e.slice(1, e.length - 1);
+      if (keysOfKeys.includes(key)) {
+        return <Clipboard skipIcon text={keys[key]} />;
+      } else {
+        return e;
+      }
+    });
   };
 
   return (
@@ -45,7 +45,7 @@ export default props => {
                   <div className="MethodsList__steps__step__number">
                     {i + 1}
                   </div>
-                  <span>{formatRow(step)}</span>
+                  <span>{formatRow(step, props.keys)}</span>
                 </li>
               ))}
             </ol>
