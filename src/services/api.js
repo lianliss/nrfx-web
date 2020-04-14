@@ -5,9 +5,10 @@ import router from "../router";
 import * as PAGES from "../index/constants/pages";
 
 const BRANCH_NAME = process.env.BRANCH_NAME;
-export const API_ENTRY = BRANCH_NAME
-  ? `https://api-${BRANCH_NAME}.narfex.dev`
-  : "https://api.narfex.com";
+export const API_ENTRY =
+  BRANCH_NAME && BRANCH_NAME !== "gcloud"
+    ? `https://api-${BRANCH_NAME}.narfex.dev`
+    : "https://api.narfex.com";
 export const API_VERSION = 1;
 
 export function invoke(method, name, params, options = {}) {
