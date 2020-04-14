@@ -7,7 +7,6 @@ import * as PAGES from "../index/constants/pages";
 // export const API_ENTRY = "https://api.narfex.dev";
 const BRANCH_NAME = process.env.BRANCH_NAME;
 
-console.log(1, BRANCH_NAME);
 const branch =
   BRANCH_NAME && !!~BRANCH_NAME.indexOf("fe-") ? "stage" : BRANCH_NAME;
 
