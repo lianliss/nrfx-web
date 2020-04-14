@@ -4,14 +4,9 @@ import { clearProfile } from "../actions/auth";
 import router from "../router";
 import * as PAGES from "../index/constants/pages";
 
-// export const API_ENTRY = "https://api.narfex.dev";
 const BRANCH_NAME = process.env.BRANCH_NAME;
-
-const branch =
-  BRANCH_NAME && !!~BRANCH_NAME.indexOf("fe-") ? "stage" : BRANCH_NAME;
-
 export const API_ENTRY = BRANCH_NAME
-  ? `https://api-${branch}.narfex.dev`
+  ? `https://api-${BRANCH_NAME}.narfex.dev`
   : "https://api.narfex.com";
 export const API_VERSION = 1;
 
