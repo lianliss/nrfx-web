@@ -2,7 +2,7 @@ import "./TokenData.less";
 
 import React, { useEffect, useState } from "react";
 import { getLang } from "src/utils";
-import { Button, NumberFormat, ButtonWrapper } from "src/ui";
+import { Button, NumberFormat, ButtonWrapper, OnScroll } from "src/ui";
 import { tokenSoldAmountGet } from "src/actions/cabinet/wallets";
 
 export default props => {
@@ -17,7 +17,7 @@ export default props => {
   const amountPercent = Math.min((amount / 60000000) * 100, 100) + "%";
 
   return (
-    <div className="SiteTokenScreen__TokenDataWrapper">
+    <OnScroll className="SiteTokenScreen__TokenDataWrapper">
       <div className="anchor" id="TokenData" />
       <div className="SiteTokenScreen__TokenData">
         <h2>{getLang("token_narfexTokenDataTitle")}</h2>
@@ -54,6 +54,6 @@ export default props => {
           <Button onClick={props.onBuy}>{getLang("token_buyToken")}</Button>
         </ButtonWrapper>
       </div>
-    </div>
+    </OnScroll>
   );
 };

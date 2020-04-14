@@ -15,8 +15,9 @@ import useDocumentScroll from "src/hooks/useDocumentScroll";
 import Menu from "../Menu/Menu";
 
 const Header = props => {
-  const [scrollPosition] = useDocumentScroll();
   const [menu, setMenu] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  useDocumentScroll(setScrollPosition);
   const shadow = scrollPosition > 0;
 
   const handleMenu = () => setMenu(!menu);

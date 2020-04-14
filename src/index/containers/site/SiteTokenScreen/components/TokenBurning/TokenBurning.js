@@ -1,12 +1,12 @@
 import "./TokenBurning.less";
 import React from "react";
 import { getLang } from "src/utils";
-import { Button, ButtonWrapper } from "src/ui";
+import { Button, ButtonWrapper, OnScroll } from "src/ui";
 import SVG from "react-inlinesvg";
 
 export default props => {
   return (
-    <div className="SiteTokenScreen__TokenBurning">
+    <OnScroll className="SiteTokenScreen__TokenBurning">
       <div className="anchor" id="TokenBurning" />
       <h2>
         {getLang("token_TokenBurning")}
@@ -33,6 +33,6 @@ export default props => {
       >
         {getLang("token_buyToken")}
       </Button>
-    </div>
+    </OnScroll>
   );
 };

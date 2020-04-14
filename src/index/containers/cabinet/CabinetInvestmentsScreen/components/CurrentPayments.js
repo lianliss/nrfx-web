@@ -3,6 +3,7 @@ import * as UI from "../../../../../ui";
 
 import * as utils from "../../../../../utils";
 import * as actions from "../../../../../actions";
+import { ReactComponent as WithdrawSvg } from "../../../../../asset/24px/withdraw.svg";
 
 export default function CurrentPayments({ payments, adaptive }) {
   if (!payments.length) {
@@ -59,22 +60,22 @@ export default function CurrentPayments({ payments, adaptive }) {
           <UI.TableColumn align="center">
             {utils.formatDouble(item.available, 6)}
           </UI.TableColumn>
-          {/*<UI.TableColumn*/}
-          {/*  align="right"*/}
-          {/*  style={{ width: 20, position: "relative" }}*/}
-          {/*>*/}
-          {/*  <UI.Button*/}
-          {/*    key="button"*/}
-          {/*    type="secondary"*/}
-          {/*    size="small"*/}
-          {/*    style={{ width: 15 }}*/}
-          {/*    onClick={() =>*/}
-          {/*      actions.openModal("withdrawal", { currency: item.currency })*/}
-          {/*    }*/}
-          {/*  >*/}
-          {/*    <WithdrawSvg />*/}
-          {/*  </UI.Button>*/}
-          {/*</UI.TableColumn>*/}
+          <UI.TableColumn
+            align="right"
+            style={{ width: 20, position: "relative" }}
+          >
+            <UI.Button
+              key="button"
+              type="secondary"
+              size="small"
+              style={{ width: 15 }}
+              onClick={() =>
+                actions.openModal("withdrawal", { currency: item.currency })
+              }
+            >
+              <WithdrawSvg />
+            </UI.Button>
+          </UI.TableColumn>
         </UI.TableCell>
       );
     }
@@ -99,22 +100,22 @@ export default function CurrentPayments({ payments, adaptive }) {
         <UI.TableColumn align="right">
           {utils.formatDouble(item.available, 6)}
         </UI.TableColumn>
-        {/*<UI.TableColumn*/}
-        {/*  align="right"*/}
-        {/*  style={{ width: 20, position: "relative" }}*/}
-        {/*>*/}
-        {/*  <UI.Button*/}
-        {/*    key="button"*/}
-        {/*    type="secondary"*/}
-        {/*    size="small"*/}
-        {/*    style={{ width: 15 }}*/}
-        {/*    onClick={() =>*/}
-        {/*      actions.openModal("withdrawal", { currency: item.currency })*/}
-        {/*    }*/}
-        {/*  >*/}
-        {/*    <WithdrawSvg />*/}
-        {/*  </UI.Button>*/}
-        {/*</UI.TableColumn>*/}
+        <UI.TableColumn
+          align="right"
+          style={{ width: 20, position: "relative" }}
+        >
+          <UI.Button
+            key="button"
+            type="secondary"
+            size="small"
+            style={{ width: 15 }}
+            onClick={() =>
+              actions.openModal("withdrawal", { currency: item.currency })
+            }
+          >
+            <WithdrawSvg />
+          </UI.Button>
+        </UI.TableColumn>
       </UI.TableCell>
     );
   });
