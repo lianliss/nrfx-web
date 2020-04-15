@@ -7,8 +7,10 @@ const initialState = {
     method: "",
     save: ""
   },
+  page: null,
   method: null,
   staticPages: [],
+  welcomePageUrl: "",
   schema: null,
   editMode: false
 };
@@ -37,13 +39,15 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         schema: action.schema,
-        staticPages: action.staticPages
+        staticPages: action.staticPages,
+        welcomePageUrl: action.welcomePage.url,
+        page: action.welcomePage
       };
 
     case actionTypes.DOCUMENTATION_SET_PAGE:
       return {
         ...state,
-        page: action.page
+        page: { ...action.page, url: action.address }
       };
 
     case actionTypes.DOCUMENTATION_UPDATE_PAGE_CONTENT:
