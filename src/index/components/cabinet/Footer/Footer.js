@@ -4,6 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { classNames, getLang } from "utils";
 import * as actions from "src/actions/index";
+import { userRole } from "src/actions/cabinet/profile";
 import COMPANY from "../../../constants/company";
 import * as UI from "src/ui";
 
@@ -21,7 +22,7 @@ const Footer = props => {
 
   return (
     <ul className={classNames("CabinetFooter", props.className)}>
-      {props.role === "Translator" && (
+      {userRole("translator") && (
         <div className="CabinetFooter__translator">
           {getLang("cabinet__translation_mode", true)}
           <UI.Switch on={props.translator} onChange={toggleTranslator} />
@@ -46,8 +47,7 @@ export default connect(
   state => ({
     currentLang: state.default.currentLang,
     langList: state.default.langList,
-    translator: state.settings.translator,
-    role: state.default.profile.role
+    translator: state.settings.translator
   }),
   {
     toggleTranslator: actions.toggleTranslator

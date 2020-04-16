@@ -8,6 +8,7 @@ import router from "../router";
 import moment from "moment";
 import * as api from "src/services/api";
 import TranslatorMode from "src/index/components/cabinet/TranslatorMode/TranslatorModal";
+import { userRole } from "../actions/cabinet/profile";
 
 export function classNames() {
   let result = [];
@@ -57,7 +58,7 @@ export function getLang(key, string = false, code = false) {
   if (["object", "string"].includes(typeof string) || !string) {
     if (
       state.default.profile.user &&
-      state.default.profile.role === "Translator" &&
+      userRole("translator") &&
       state.settings &&
       state.settings.translator
     ) {
