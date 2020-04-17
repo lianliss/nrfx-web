@@ -67,12 +67,11 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
         address = address.toUpperCase();
       }
 
-      let status;
-      if (data.status === "done") {
-        status = utils.getLang("cabinet_walletTransactionModal_confirmed");
-      } else {
-        status = utils.getLang("cabinet_walletTransactionModal_confirmation");
-      }
+      const status = {
+        done: utils.getLang("cabinet_walletTransactionModal_confirmed"),
+        pending: utils.getLang("cabinet_walletTransactionModal_confirmation"),
+        canceled: utils.getLang("cabinet_walletTransactionModal_canceled")
+      }[data.status];
 
       return (
         <div>
