@@ -14,10 +14,11 @@ export function getDocumentation() {
     });
     api
       .call(apiSchema.Documentation.DefaultGet, { description: true })
-      .then(({ schema, static_pages }) => {
+      .then(({ schema, static_pages, welcome_page }) => {
         dispatch({
           type: actionTypes.DOCUMENTATION_INIT,
           schema,
+          welcomePage: welcome_page,
           staticPages: static_pages
         });
         dispatch({
@@ -100,7 +101,11 @@ export function getPage(address) {
     return api
       .call(apiSchema.Page.DefaultGet, { address })
       .then(page => {
-        dispatch({ type: actionTypes.DOCUMENTATION_SET_PAGE, page: page });
+        dispatch({
+          type: actionTypes.DOCUMENTATION_SET_PAGE,
+          page: page,
+          address
+        });
         dispatch({
           type: actionTypes.DOCUMENTATION_SET_STATUS,
           section: "page",
@@ -112,6 +117,11 @@ export function getPage(address) {
           type: actionTypes.DOCUMENTATION_SET_STATUS,
           section: "page",
           value: err.code
+        });
+        dispatch({
+          type: actionTypes.DOCUMENTATION_SET_PAGE,
+          page: {},
+          address
         });
       });
   };

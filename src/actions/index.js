@@ -200,7 +200,7 @@ export function translatorSetLangCode(code) {
 
 export function saveTranslator(code, key, value) {
   return api
-    .call(apiSchema.LangPost, { code, key, value })
+    .call(apiSchema.Lang.DefaultPost, { code, key, value })
     .then(resolve => {
       store.dispatch({ type: actionTypes.SAVE_TRANSLATOR, code, key, value });
       toast.success(utils.getLang("cabinet_translationSuccess"));

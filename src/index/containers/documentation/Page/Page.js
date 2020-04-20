@@ -16,11 +16,11 @@ import COMPANY from "../../../constants/company";
 
 const Page = props => {
   useEffect(() => {
-    if (props.pageName) {
+    if (props.pageName && props.page.url !== props.pageName) {
       props.getPage(props.pageName);
     } else {
       router.navigate(pages.DOCUMENTATION_PAGE, {
-        page: props.welcomePage.url
+        page: props.welcomePageUrl
       });
     }
   }, [props.pageName]); // eslint-disable-line
@@ -69,7 +69,7 @@ export default connect(
     editMode: state.documentation.editMode,
     status: state.documentation.loadingStatus.page,
     savePageStatus: state.documentation.loadingStatus.savePage,
-    welcomePage: state.documentation.staticPages[0],
+    welcomePageUrl: state.documentation.welcomePageUrl,
     page: state.documentation.page
   }),
   {

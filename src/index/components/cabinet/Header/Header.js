@@ -39,7 +39,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const isLogged = !!this.props.profile.role;
+    const isLogged = !!this.props.profile.user;
     const { notifications } = this.props.notifications;
 
     const currentLang = getLang();

@@ -43,7 +43,9 @@ const ProfileSidebarUser = ({ profile }) => {
           )}
         </h3>
         <p className="ProfileUser__txt">{profile.user.login}</p>
-        <p className="ProfileUser__txt">{profile.role}</p>
+        <p className="ProfileUser__txt">
+          {profile.roles.map(utils.ucfirst).join(", ")}
+        </p>
         {/*<UI.Button*/}
         {/*  onClick={() => {*/}
         {/*    actions.openModal('verification');*/}

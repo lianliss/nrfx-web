@@ -7,6 +7,7 @@ import router from "../../../../router";
 import { classNames as cn } from "src/utils";
 import * as PAGES from "../../../constants/pages";
 import { sortDocSchema } from "../../../containers/documentation/utils";
+import { userRole } from "../../../../actions/cabinet/profile";
 
 const DocumentationMenu = props => {
   const handleApiMenuClick = (path, item) => () => {
@@ -91,7 +92,7 @@ const DocumentationMenu = props => {
 
   return (
     <div className="DocumentationMenu">
-      {props.role === "Translator" && (
+      {userRole("translator") && (
         <div className="DocumentationMenu__controls">
           <div className="DocumentationMenu__editMode">
             <span>Edit mode</span>
@@ -152,7 +153,6 @@ export default connect(
     items: state.documentation.menu,
     schema: state.documentation.schema,
     staticPages: state.documentation.staticPages,
-    role: state.default.profile.role,
     route: state.router.route
   }),
   {

@@ -137,6 +137,11 @@ export function getPartner() {
   };
 }
 
+export function userRole(role) {
+  const { profile } = store.getState().default;
+  return profile.roles && profile.roles.includes(role);
+}
+
 export function getPartnerMore() {
   return (dispatch, getState) => {
     dispatch({
