@@ -51,10 +51,10 @@ class FiatMarketForm extends React.Component {
   }
 
   getRate = () => {
-    const [base, currency] = [this.state.from, this.state.to][
-      isFiat(this.state.to) ? "reverse" : "flat"
-    ]();
-    this.props.getRate({ base, currency });
+    this.props.getRate({
+      base: this.state.from,
+      currency: this.state.to
+    });
   };
 
   handleBuy = () => {
