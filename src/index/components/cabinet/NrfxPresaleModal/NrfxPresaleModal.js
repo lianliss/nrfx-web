@@ -11,7 +11,7 @@ import {
 } from "../../../../ui";
 import NrfxButton from "./components/NrfxButton/NrfxButton";
 import NrfxSwitch from "./components/NrfxSwitch/NrfxSwitch";
-import { getLang } from "../../../../utils";
+import { getLang, classNames as cn } from "../../../../utils";
 import { tokenRateGet, buyToken } from "src/actions/cabinet/wallets";
 import * as toast from "src/actions/toasts";
 import SVG from "react-inlinesvg";
@@ -20,6 +20,7 @@ import COMPANY from "src/index/constants/company";
 
 const NrfxPresaleModal = props => {
   const [currency, setCurrency] = useState("btc");
+  const [pending, setPending] = useState(false);
   const [amount, setAmount] = useState(100);
   const [touched, setTouched] = useState(false);
   const [state, setState] = useState(null);
@@ -30,6 +31,7 @@ const NrfxPresaleModal = props => {
   const url = COMPANY.whitePaper.en;
 
   useEffect(() => {
+    setPending(true);
     setRate(currency);
     const intervalId = setInterval(() => {
       setRate(currency);
@@ -39,6 +41,10 @@ const NrfxPresaleModal = props => {
     };
     // eslint-disable-next-line
   }, [props, currency]);
+
+  useEffect(() => {
+    setPending(false);
+  }, [rate]);
 
   const handleBuy = () => {
     setTouched(true);
@@ -116,19 +122,20 @@ const NrfxPresaleModal = props => {
               {getLang("cabinet_nrfxCoinPresalePrice")}{" "}
               <NumberFormat number={1} currency="nrfx" />
             </span>
-            <strong>
-              <NumberFormat number={rate} currency={currency} />
+            <strong className={cn({ pending })}>
+              <NumberFormat prefix="~" number={rate} currency={currency} />
             </strong>
           </div>
         </div>
 
-        <div className="NrfxPresaleModal__total">
+        <div className={cn("NrfxPresaleModal__total", { pending })}>
+          <SVG src={require("../../../../asset/24px/loading-small.svg")} />
           <div className="NrfxPresaleModal__label">
             {getLang("cabinet_nrfxCoinPresaleTotalAmount")}
           </div>
           <div className="NrfxPresaleModal__total__amount">
             <strong>
-              <NumberFormat number={amount * rate} />
+              <NumberFormat prefix="~" number={amount * rate} />
             </strong>
             <small>{currency}</small>
           </div>
@@ -138,7 +145,7 @@ const NrfxPresaleModal = props => {
           <NrfxButton
             state={state}
             onClick={handleBuy}
-            disabled={!amount}
+            disabled={!amount || pending}
             active
           >
             {getLang("global_buy")}

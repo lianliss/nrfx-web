@@ -108,18 +108,56 @@
 
     strong {
       margin-left: auto;
+      transition: opacity.2s ease;
+
+      &.pending {
+        transition: none;
+        opacity: 0;
+      }
     }
   }
 
   .NrfxPresaleModal__total {
+    position: relative;
     text-align: center;
     margin: 40px 0;
 
+    .isvg {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      bottom: 0; right: 0;
+      margin: auto;
+      width: 24px;
+      height: 24px;
+      animation: nrfxLoader 1s linear infinite;
+
+      svg {
+        display: block;
+      }
+    }
+
+    &.pending {
+
+      .NrfxPresaleModal__label,
+      .NrfxPresaleModal__total__amount {
+        opacity: 0;
+      }
+
+      .isvg {
+        display: block;
+      }
+    }
+
+
     .NrfxPresaleModal__label {
       margin-bottom: 8px;
+      transition: opacity.2s ease;
     }
 
     .NrfxPresaleModal__total__amount {
+      transition: opacity.2s ease;
+
       strong {
         font-weight: 600;
         font-size: 24px;
@@ -154,5 +192,14 @@
     .Modal__box {
       padding: 40px 16px;
     }
+  }
+}
+
+@keyframes nrfxLoader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -16,6 +16,7 @@ const NumberFormat = ({
   accurate,
   currency,
   hiddenCurrency,
+  prefix,
   type,
   percent,
   indicator,
@@ -83,6 +84,10 @@ const NumberFormat = ({
     displayNumber = "+" + displayNumber;
   }
 
+  if (prefix) {
+    displayNumber = prefix + displayNumber;
+  }
+
   return (
     <span
       onClick={onClick}
@@ -103,6 +108,7 @@ NumberFormat.defaultProps = {
   brackets: false,
   color: false,
   currency: "",
+  prefix: "",
   type: null,
   hiddenCurrency: false
 };
@@ -113,6 +119,7 @@ NumberFormat.propTypes = {
   skipTitle: PropTypes.bool,
   color: PropTypes.bool,
   percent: PropTypes.bool,
+  prefix: PropTypes.string,
   indicator: PropTypes.bool,
   brackets: PropTypes.bool,
   accurate: PropTypes.bool,
