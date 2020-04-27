@@ -13,6 +13,7 @@ import * as UI from "../../../../../../ui/index";
 
 import * as actions from "../../../../../../actions/cabinet/fiat";
 import NumberFormat from "../../../../../../ui/components/NumberFormat/NumberFormat";
+import SVG from "react-inlinesvg";
 
 class FiatMarketForm extends React.Component {
   state = {
@@ -224,6 +225,13 @@ class FiatMarketForm extends React.Component {
         isOpenDefault={true}
         className="FiatMarketForm"
       >
+        {this.props.loadingStatus && (
+          <div className="FiatMarketForm__loader">
+            <SVG src={require("src/asset/120/exchange.svg")} />
+            <h2>{getLang("cabinet_fiatMarketExchangeWeMakeAnExchange")}</h2>
+            <p>{getLang("cabinet_fiatMarketExchangeLoaderDescription")}</p>
+          </div>
+        )}
         {!this.props.adaptive && (
           <h2 className="FiatMarketForm__title">
             {getLang("cabinet_fiatMarketExchangeTitle")}

@@ -1,4 +1,60 @@
 .FiatMarketForm {
+  .FiatMarketForm__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    padding: 40px;
+    box-sizing: border-box;
+    background-color: var(--primary-background);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 14;
+
+
+    .isvg {
+      display: block;
+      width: 120px;
+      height: 120px;
+      animation-fill-mode: forwards;
+      animation: FiatMarketFormLoader 1500ms ease-in-out infinite;
+      margin-bottom: 24px;
+
+      @keyframes FiatMarketFormLoader {
+        0%, 13% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      svg {
+        display: block;
+      }
+    }
+
+    h2 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 24px;
+    }
+
+    p {
+      font-size: 13px;
+      line-height: 24px;
+      max-width: 320px;
+      color: var(--dark-gray);
+    }
+  }
+
   .ContentBox__content {
     padding: 40px;
   }
