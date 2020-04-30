@@ -11,10 +11,10 @@ const initialState = {
   transfersNext: null,
   loadingStatus: {
     default: "loading",
-    limits: "loading",
+    limits: null,
     sendCode: null
   },
-  limits: [],
+  limits: null,
   sendCoinModal: {
     type: "address",
     gaCode: "",
