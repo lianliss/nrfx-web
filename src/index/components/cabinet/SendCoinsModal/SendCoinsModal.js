@@ -42,6 +42,7 @@ class SendCoinsModal extends React.Component {
   }
 
   get currentFee() {
+    console.log(this.props.limits, this.currentWallet.currency);
     return this.props.limits[this.currentWallet.currency].fee;
   }
 
@@ -158,7 +159,7 @@ class SendCoinsModal extends React.Component {
 
     const { wallets, walletId } = this.props;
 
-    if (this.props.loadingStatus) {
+    if (this.props.loadingStatus || !this.props.limits) {
       return <LoadingStatus inline status={this.props.loadingStatus} />;
     } else {
       const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
