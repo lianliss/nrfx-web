@@ -79,6 +79,7 @@ export default class PartnerInfoModal extends React.Component {
         <WalletBox
           key={i}
           {...profit}
+          action={false}
           skipEmptyLabel
           adaptive={this.props.adaptive}
         />

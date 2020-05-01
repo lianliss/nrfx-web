@@ -107,6 +107,7 @@ class PartnersSection extends React.Component {
         <WalletBox
           key={i}
           {...wallet}
+          action={false}
           skipEmptyLabel
           onClick={() => this.__withdrawal(wallet)}
           adaptive={this.props.adaptive}

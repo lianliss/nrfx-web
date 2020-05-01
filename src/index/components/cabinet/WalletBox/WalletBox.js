@@ -21,7 +21,8 @@ class WalletBox extends React.Component {
     this.className = utils.classNames({
       WalletBox: true,
       WalletBox__inactive: this.isGenerating,
-      WalletBox__selected: selected
+      WalletBox__selected: selected,
+      noAction: this.props.action === false
     });
 
     return (
