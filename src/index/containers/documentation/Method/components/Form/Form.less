@@ -4,9 +4,16 @@
     overflow: hidden;
 
     form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 24px;
+      .MethodForm__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 24px;
+        margin-bottom: 32px;
+
+        &.headers {
+          grid-template-columns: 1fr;
+        }
+      }
 
       .File {
         width: 100%;

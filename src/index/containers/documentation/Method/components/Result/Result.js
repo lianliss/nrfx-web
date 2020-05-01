@@ -14,7 +14,12 @@ const Result = ({ result, updateMethod, editMode }) => {
     <ContentBox className="Method__result">
       <h2>{getLang("cabinet_docsResult")}</h2>
       <div className="Method__result__content">
-        <Editor readOnly={!editMode} content={result} onChange={handleChange} />
+        <Editor
+          readOnly={!editMode}
+          border={editMode}
+          content={result}
+          onChange={handleChange}
+        />
       </div>
     </ContentBox>
   );

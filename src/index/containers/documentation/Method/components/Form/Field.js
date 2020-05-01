@@ -18,6 +18,20 @@ export default props => {
     );
   }
 
+  let type = "text";
+
+  if (param.filters.double || param.filters.positive || param.filters.int) {
+    type = "number";
+  }
+
+  if (param.name === "ga_code") {
+    type = "code";
+  }
+
+  if (param.name === "password" || param.name.toUpperCase() === "X_TOKEN") {
+    type = "password";
+  }
+
   if (param.name === "object") {
     return <File onChange={onChange} />;
   }
@@ -29,10 +43,7 @@ export default props => {
   );
   return (
     <Input
-      type={
-        (param.filters.double || param.filters.positive || param.filters.int) &&
-        "number"
-      }
+      type={type}
       placeholder={placeholder}
       indicator={indicator}
       value={value}

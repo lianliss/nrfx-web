@@ -92,6 +92,7 @@ const Params = props => {
                   <p>
                     <Editor
                       readOnly={!props.editMode}
+                      border={props.editMode}
                       content={param.description}
                       onChange={handleChangeParam(param.name)}
                     />

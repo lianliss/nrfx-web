@@ -9,6 +9,7 @@ import Field from "./Field";
 import * as toast from "src/actions/toasts";
 import * as utils from "../../../../../../utils";
 import { isJson } from "../../../../../../utils";
+import * as auth from "../../../../../../services/auth";
 
 const Form = ({
   method,
@@ -28,8 +29,8 @@ const Form = ({
 
   useEffect(() => {
     const defaultFormData = {};
-    let value = null;
     params.forEach(param => {
+      let value = null;
       if (param.filters.default) value = param.filters.default;
       if (param.filters.oneOf) value = param.filters.oneOf[0];
       if (param.filters.double) value = 1.0;
@@ -37,6 +38,8 @@ const Form = ({
       if (param.filters.min || param.filters.int)
         value = param.filters.min || param.filters.int;
       if (param.name === "ga_code") value = "";
+      if (param.name.toUpperCase() === "X_TOKEN") value = auth.getToken();
+      if (param.name === "app_id") value = "8";
 
       if (value !== null) defaultFormData[param.name] = value;
     });
@@ -66,17 +69,36 @@ const Form = ({
   return (
     <ContentBox className="MethodForm">
       <form onSubmit={handleSubmit}>
-        {params.map(param => (
-          <label className="MethodForm__field">
-            <div className="MethodForm__field__label">{param.name}</div>
-            <Field
-              key={param.name}
-              param={param}
-              value={formData[param.name]}
-              onChange={handleSetProperty(param.name)}
-            />
-          </label>
-        ))}
+        <div className="MethodForm__grid headers">
+          {params
+            .filter(p => p.type === "header")
+            .map(param => (
+              <label className="MethodForm__field">
+                <div className="MethodForm__field__label">{param.name}</div>
+                <Field
+                  key={param.name}
+                  param={param}
+                  value={formData[param.name]}
+                  onChange={handleSetProperty(param.name)}
+                />
+              </label>
+            ))}
+        </div>
+        <div className="MethodForm__grid">
+          {params
+            .filter(p => p.type === "body")
+            .map(param => (
+              <label className="MethodForm__field">
+                <div className="MethodForm__field__label">{param.name}</div>
+                <Field
+                  key={param.name}
+                  param={param}
+                  value={formData[param.name]}
+                  onChange={handleSetProperty(param.name)}
+                />
+              </label>
+            ))}
+        </div>
         <Button state={requestStatus} btnType="submit">
           {utils.getLang("global_submit")}
         </Button>

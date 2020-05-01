@@ -79,6 +79,7 @@ const Main = props => {
       <div className="Method__main__content">
         <Editor
           readOnly={!props.editMode}
+          border={props.editMode}
           content={props.description}
           onChange={handleChange}
         />
