@@ -14,6 +14,13 @@ import * as UI from "../../../../../../ui/index";
 import * as actions from "../../../../../../actions/cabinet/fiat";
 import NumberFormat from "../../../../../../ui/components/NumberFormat/NumberFormat";
 import SVG from "react-inlinesvg";
+import { classNames as cn } from "src/utils";
+
+const indicatorIcon = (
+  <div className="FiatMarketForm__indicatorIcon">
+    <SVG src={require("src/asset/24px/loading-small.svg")} />
+  </div>
+);
 
 class FiatMarketForm extends React.Component {
   state = {
@@ -45,17 +52,28 @@ class FiatMarketForm extends React.Component {
         [secondaryType + "Amount"]: secondaryAmount
       });
     }
+
+    if (
+      prevProps.rateStatus === "loading" &&
+      !this.props.rateStatus &&
+      this.props.rateType === "currencyChange"
+    ) {
+      this.setState({ loading: false });
+    }
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+  [[]];
 
-  getRate = () => {
-    this.props.getRate({
-      base: this.state.from,
-      currency: this.state.to
-    });
+  getRate = type => {
+    (this.props.rateStatus !== "loading" || type) &&
+      this.props.getRate({
+        base: this.state.from,
+        currency: this.state.to,
+        type: type || "update"
+      });
   };
 
   handleBuy = () => {
@@ -84,9 +102,10 @@ class FiatMarketForm extends React.Component {
     this.setState(
       {
         [type]: e.value,
-        [secondaryType]: secondaryCurrency
+        [secondaryType]: secondaryCurrency,
+        loading: true
       },
-      this.getRate
+      this.getRate("currencyChange")
     );
   };
 
@@ -243,7 +262,10 @@ class FiatMarketForm extends React.Component {
               {getLang("cabinet_fiatWalletGet")}
             </span>
             <UI.Input
-              disabled={disabled}
+              indicator={
+                this.state.loading && typeActive === "from" && indicatorIcon
+              }
+              disabled={disabled || this.state.loading}
               value={
                 (typeActive !== "to" ? "~ " : "") + (this.state.toAmount || "")
               }
@@ -262,12 +284,19 @@ class FiatMarketForm extends React.Component {
             <UI.Dropdown
               placeholder="Placeholder"
               value={this.state.to}
+              disabled={this.state.loading}
               onChange={this.handleCurrencyChange("to")}
               options={this.getCurrenciesOptions(
                 getLang("cabinet_fiatWalletBuy")
               )}
             />
-            <div className="FiatMarketForm__rate">{this.renderRate("to")}</div>
+            <div
+              className={cn("FiatMarketForm__rate", {
+                hidden: this.state.loading
+              })}
+            >
+              {this.renderRate("to")}
+            </div>
           </div>
         </div>
         <div className="FiatMarketForm__row">
@@ -276,7 +305,10 @@ class FiatMarketForm extends React.Component {
               {getLang("cabinet_fiatWalletGive")}
             </span>
             <UI.Input
-              disabled={disabled}
+              indicator={
+                this.state.loading && typeActive === "to" && indicatorIcon
+              }
+              disabled={disabled || this.state.loading}
               value={
                 (typeActive !== "from" ? "~ " : "") +
                 (this.state.fromAmount || "")
@@ -296,12 +328,17 @@ class FiatMarketForm extends React.Component {
             <UI.Dropdown
               placeholder="Placeholder"
               value={this.state.from}
+              disabled={this.state.loading}
               onChange={this.handleCurrencyChange("from")}
               options={this.getCurrenciesOptions(
                 getLang("cabinet_fiatWalletWith")
               )}
             />
-            <div className="FiatMarketForm__rate">
+            <div
+              className={cn("FiatMarketForm__rate", {
+                hidden: this.state.loading
+              })}
+            >
               {this.renderRate("from")}
             </div>
           </div>
@@ -309,7 +346,9 @@ class FiatMarketForm extends React.Component {
         <div className="FiatMarketForm__button_wrapper">
           {/*<p className="FiatMarketForm__fee">{this.renderFee()}</p>*/}
           <UI.Button
-            disabled={disabled || !(this.state.amount > 0)}
+            disabled={
+              disabled || !(this.state.amount > 0) || this.state.loading
+            }
             onClick={this.handleBuy}
             state={this.props.loadingStatus}
           >
@@ -333,7 +372,8 @@ export default connect(
     exchangeFee: store.fiat.exchange_fee,
     rateStatus: store.fiat.loadingStatus.rate,
     loadingStatus: store.fiat.loadingStatus.marketForm,
-    translator: store.settings.translator
+    translator: store.settings.translator,
+    rateType: store.fiat.rateType
   }),
   {
     exchange: actions.exchange,

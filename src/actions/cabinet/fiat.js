@@ -93,8 +93,12 @@ export function payForm({ merchant, amount, currency }) {
     });
 }
 
-export function getRate({ base, currency }) {
+export function getRate({ base, currency, type }) {
   return (dispatch, getState) => {
+    dispatch({
+      type: actionTypes.FIAT_WALLETS_SET_RATE_TYPE,
+      rateType: type
+    });
     dispatch({
       type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
       section: "rate",
@@ -106,10 +110,11 @@ export function getRate({ base, currency }) {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_RATE,
           rate,
+          rateType: type,
           uprateTime: new Date().getTime()
         });
       })
-      .finally(() => {
+      .catch(() => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
           section: "rate",

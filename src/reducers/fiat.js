@@ -6,6 +6,7 @@ const initialState = {
   history: [],
   rates: {},
   rate: 0,
+  rateType: "update",
   rateUpdateTime: 0,
   merchants: [],
   exchange_fee: 0,
@@ -60,10 +61,21 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
 
+    case actionTypes.FIAT_WALLETS_SET_RATE_TYPE: {
+      return {
+        ...state,
+        rateType: action.rateType
+      };
+    }
+
     case actionTypes.FIAT_WALLETS_SET_RATE: {
       return {
         ...state,
         rate: action.rate,
+        loadingStatus: {
+          ...state.loadingStatus,
+          rate: null
+        },
         rateUpdateTime: action.uprateTime
       };
     }
