@@ -54,7 +54,7 @@ class TableComponent extends React.Component {
     const { props } = this;
 
     return (
-      <div>
+      <div className="AdminTable">
         {this.renderSearch()}
         <div className="Table__controls">
           {props.filters && (
