@@ -7,6 +7,28 @@ export default {
     params: [],
     path: ""
   },
+  QueuePost: {
+    method: "POST",
+    name: "queue",
+    params: {
+      Secret: {
+        name: "secret",
+        filters: ["required"],
+        type: "body"
+      },
+      Type: {
+        name: "type",
+        filters: ["required"],
+        type: "body"
+      },
+      Params: {
+        name: "params",
+        filters: ["required"],
+        type: "body"
+      }
+    },
+    path: "queue"
+  },
   Sumsub: {
     GetAccessTokenGet: {
       method: "GET",
@@ -269,6 +291,11 @@ export default {
           },
           type: "body"
         },
+        AppId: {
+          name: "app_id",
+          filters: ["required", "positive"],
+          type: "body"
+        },
         InviteLink: {
           name: "invite_link",
           filters: {
@@ -316,6 +343,27 @@ export default {
         }
       },
       path: "profile/fill_account"
+    },
+    ConfirmEmailMobilePost: {
+      method: "POST",
+      name: "confirm_email_mobile",
+      params: {
+        Code: {
+          name: "code",
+          filters: {
+            "0": "required",
+            minLen: 6,
+            maxLen: 6
+          },
+          type: "body"
+        },
+        RegisterToken: {
+          name: "register_token",
+          filters: ["required"],
+          type: "body"
+        }
+      },
+      path: "profile/confirm_email_mobile"
     },
     SignInPost: {
       method: "POST",
@@ -821,21 +869,6 @@ export default {
       },
       path: "wallet/generate"
     },
-    TokenRateGet: {
-      method: "GET",
-      name: "token_rate",
-      params: {
-        Currency: {
-          name: "currency",
-          filters: {
-            "0": "required",
-            oneOf: ["btc", "eth", "ltc"]
-          },
-          type: "body"
-        }
-      },
-      path: "wallet/token_rate"
-    },
     BuyTokenPost: {
       method: "POST",
       name: "buy_token",
@@ -859,6 +892,21 @@ export default {
         }
       },
       path: "wallet/buy_token"
+    },
+    TokenRateGet: {
+      method: "GET",
+      name: "token_rate",
+      params: {
+        Currency: {
+          name: "currency",
+          filters: {
+            "0": "required",
+            oneOf: ["btc", "eth", "ltc", "usd"]
+          },
+          type: "body"
+        }
+      },
+      path: "wallet/token_rate"
     },
     TokenSoldAmountGet: {
       method: "GET",
@@ -1538,7 +1586,13 @@ export default {
     OrdersHistoryGet: {
       method: "GET",
       name: "orders_history",
-      params: [],
+      params: {
+        StartFrom: {
+          name: "start_from",
+          filters: ["required", "positive"],
+          type: "body"
+        }
+      },
       path: "exchange/orders_history"
     },
     CancelAllOrdersDelete: {
@@ -1870,6 +1924,48 @@ export default {
         },
         path: "fiat_wallet/xendit/refill/webhook"
       },
+      "VirtualAccount/webhookPost": {
+        method: "POST",
+        name: "virtual_account/webhook",
+        params: {
+          ExternalId: {
+            name: "external_id",
+            filters: ["required"],
+            type: "body"
+          },
+          MerchantCode: {
+            name: "merchant_code",
+            filters: ["required"],
+            type: "body"
+          },
+          Name: {
+            name: "name",
+            filters: ["required"],
+            type: "body"
+          },
+          BankCode: {
+            name: "bank_code",
+            filters: ["required"],
+            type: "body"
+          },
+          AccountNumber: {
+            name: "account_number",
+            filters: ["required"],
+            type: "body"
+          },
+          Id: {
+            name: "id",
+            filters: ["required"],
+            type: "body"
+          },
+          Status: {
+            name: "status",
+            filters: ["required"],
+            type: "body"
+          }
+        },
+        path: "fiat_wallet/xendit/virtual_account/webhook"
+      },
       WithdrawalBanksGet: {
         method: "GET",
         name: "withdrawal_banks",
@@ -1882,6 +1978,12 @@ export default {
         params: [],
         path: "fiat_wallet/xendit/refill_banks"
       }
+    },
+    BalancesGet: {
+      method: "GET",
+      name: "balances",
+      params: [],
+      path: "fiat_wallet/balances"
     },
     DefaultGet: {
       method: "GET",

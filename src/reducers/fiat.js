@@ -17,6 +17,8 @@ const initialState = {
     refillBankList: "loading",
     default: "loading",
     merchants: "",
+    rate: "",
+    newRate: "",
     marketForm: ""
   }
 };
@@ -61,21 +63,10 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
 
-    case actionTypes.FIAT_WALLETS_SET_RATE_TYPE: {
-      return {
-        ...state,
-        rateType: action.rateType
-      };
-    }
-
     case actionTypes.FIAT_WALLETS_SET_RATE: {
       return {
         ...state,
         rate: action.rate,
-        loadingStatus: {
-          ...state.loadingStatus,
-          rate: null
-        },
         rateUpdateTime: action.uprateTime
       };
     }

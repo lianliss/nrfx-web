@@ -95,29 +95,37 @@ export function payForm({ merchant, amount, currency }) {
 
 export function getRate({ base, currency, type }) {
   return (dispatch, getState) => {
-    dispatch({
-      type: actionTypes.FIAT_WALLETS_SET_RATE_TYPE,
-      rateType: type
-    });
+    const { newRate } = getState().fiat.loadingStatus;
+    if (type === "rate" && newRate) {
+      return false;
+    }
     dispatch({
       type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
-      section: "rate",
+      section: type,
       status: "loading"
     });
     api
       .call(apiSchema.Fiat_wallet.RateGet, { base, currency })
       .then(({ rate }) => {
+        const { newRate } = getState().fiat.loadingStatus;
+        if (type === "rate" && newRate) {
+          return false;
+        }
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_RATE,
-          rate,
-          rateType: type,
-          uprateTime: new Date().getTime()
+          uprateTime: new Date().getTime(),
+          rate
+        });
+        dispatch({
+          type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: type,
+          status: null
         });
       })
       .catch(() => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
-          section: "rate",
+          section: type,
           status: null
         });
       });
