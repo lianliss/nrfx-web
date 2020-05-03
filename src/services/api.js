@@ -4,6 +4,7 @@ import { clearProfile } from "../actions/auth";
 import router from "../router";
 import * as PAGES from "../index/constants/pages";
 
+export const APP_ID = 8;
 const BRANCH_NAME = process.env.BRANCH_NAME;
 export const API_ENTRY =
   BRANCH_NAME && BRANCH_NAME !== "gcloud"

@@ -12,9 +12,9 @@ import * as utils from "../utils";
 import * as toasts from "./toasts";
 import router from "../router";
 import * as pages from "../admin/constants/pages";
+import { APP_ID } from "src/services/api";
 
 export function getAuth(login, password, token) {
-  const app_id = 8;
   const public_key = "1a4b26bc31-a91649-b63396-253abb8d69";
 
   return new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ export function getAuth(login, password, token) {
       .call(apiSchema.Profile.SignInPost, {
         login,
         password,
-        app_id,
+        app_id: APP_ID,
         public_key,
         recaptcha_response: token
       })
@@ -203,6 +203,7 @@ export function registerUser(email, refer = null, invite_link = null, token) {
     email,
     refer,
     invite_link,
+    app_id: APP_ID,
     ...(token ? { recaptcha_response: token } : {})
   });
 }
