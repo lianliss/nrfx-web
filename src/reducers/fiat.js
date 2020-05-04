@@ -12,6 +12,7 @@ const initialState = {
   exchange_fee: 0,
   withdrawalBankList: null,
   refillBankList: null,
+  market: "",
   loadingStatus: {
     withdrawalBankList: "loading",
     refillBankList: "loading",
@@ -50,6 +51,13 @@ export default function reduce(state = initialState, action = {}) {
               w.id === wallet.id ? { ...w, ...wallet } : w
             )
           : state.wallets
+      };
+    }
+
+    case actionTypes.FIAT_WALLETS_SET_MARKET_EXCHANGE: {
+      return {
+        ...state,
+        market: action.payload
       };
     }
 

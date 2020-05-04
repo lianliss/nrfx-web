@@ -94,6 +94,7 @@ export function payForm({ merchant, amount, currency }) {
 }
 
 export function getRate({ base, currency, type }) {
+  const newMarket = [base, currency].join("_");
   return (dispatch, getState) => {
     const { newRate } = getState().fiat.loadingStatus;
     if (type === "rate" && newRate) {
@@ -104,11 +105,20 @@ export function getRate({ base, currency, type }) {
       section: type,
       status: "loading"
     });
+    dispatch({
+      type: actionTypes.FIAT_WALLETS_SET_MARKET_EXCHANGE,
+      section: type,
+      payload: newMarket
+    });
     api
       .call(apiSchema.Fiat_wallet.RateGet, { base, currency })
       .then(({ rate }) => {
-        const { newRate } = getState().fiat.loadingStatus;
-        if (type === "rate" && newRate) {
+        const {
+          loadingStatus: { newRate },
+          market
+        } = getState().fiat;
+
+        if ((type === "rate" && newRate) || (market && newMarket !== market)) {
           return false;
         }
         dispatch({
