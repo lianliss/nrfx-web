@@ -95,7 +95,9 @@ class FiatMarketForm extends React.Component {
         [type]: e.value,
         [secondaryType]: secondaryCurrency
       },
-      this.getRate("newRate")
+      () => {
+        this.getRate("newRate");
+      }
     );
   };
 
