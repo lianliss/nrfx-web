@@ -121,7 +121,7 @@ class SiteFeeScreen extends BaseScreen {
                 <NumberFormat number={6000} currency="rub" />
               </td>
               <td>
-                <NumberFormat number={200000} currency="idr" />
+                <NumberFormat number={350000} currency="idr" />
               </td>
             </tr>
             <tr>
@@ -170,7 +170,7 @@ class SiteFeeScreen extends BaseScreen {
                 <NumberFormat number={6000} currency="rub" />
               </td>
               <td>
-                <NumberFormat number={200000} currency="idr" />
+                <NumberFormat number={100000} currency="idr" />
               </td>
             </tr>
             <tr>
@@ -548,7 +548,7 @@ class SiteFeeScreen extends BaseScreen {
               {getLang("site__fee_minimumInput")}
             </div>
             <div className="SiteFeeScreen__list__value">
-              <NumberFormat number={200000} currency="idr" />
+              <NumberFormat number={350000} currency="idr" />
             </div>
           </div>
           <div className="SiteFeeScreen__list__row">
@@ -573,7 +573,7 @@ class SiteFeeScreen extends BaseScreen {
               {getLang("site__fee_minimumWithdrawal")}
             </div>
             <div className="SiteFeeScreen__list__value">
-              <NumberFormat number={200000} currency="idr" />
+              <NumberFormat number={100000} currency="idr" />
             </div>
           </div>
           <div className="SiteFeeScreen__list__row">
