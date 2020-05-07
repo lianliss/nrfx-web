@@ -127,8 +127,8 @@ export default class ReceiveCoinsModal extends React.Component {
               >
                 {utils.getLang("cabinet_receiveCoinsModal_onlySend")}{" "}
                 {utils.ucfirst(currencyInfo.name)}{" "}
-                {this.state.currency.toUpperCase()}
-                {" " + utils.getLang("cabinet_receiveCoinsModal_toThisAddress")}
+                {this.state.currency.toUpperCase()}{" "}
+                {utils.getLang("cabinet_receiveCoinsModal_toThisAddress")}
               </UI.Message>
             </div>
           </div>
