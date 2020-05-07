@@ -11,6 +11,7 @@ import Select from "../Select/Select";
 import DropDown from "../Dropdown/Dropdown";
 import action from "../../../actions/admin/index";
 import List from "../List/List";
+import Title from "../Title/Title";
 import Tabs from "../Tabs/Tabs";
 import Paging from "../Paging/Paging";
 import PagingItem from "../Paging/PagingItem";
@@ -22,6 +23,7 @@ import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import Time from "../Time/Time";
 import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
+import NumberFormat from "../../../ui/components/NumberFormat/NumberFormat";
 import { connect } from "react-redux";
 
 const Item = props => {
@@ -58,6 +60,9 @@ const Item = props => {
     case "list":
       Component = List;
       break;
+    case "title":
+      Component = Title;
+      break;
     case "list_item":
       Component = props => <div {...props} />;
       break;
@@ -90,6 +95,9 @@ const Item = props => {
           }))}
         />
       );
+      break;
+    case "number_format":
+      Component = props => <NumberFormat {...props} />;
       break;
     case "button":
       Component = () => (
