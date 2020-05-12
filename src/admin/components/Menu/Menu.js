@@ -16,16 +16,14 @@ const Menu = props => {
     return <LoadingStatus inline status="loading" />;
   }
 
-  // const handleClick = () => {
-  //   action(props.params.action);
-  // };
-
   const toggleItem = itemName => {
     setHiddenItems({
       ...hiddenItems,
       [itemName]: !hiddenItems[itemName]
     });
   };
+
+  console.log(props.menu);
 
   return (
     <ul className="Menu">

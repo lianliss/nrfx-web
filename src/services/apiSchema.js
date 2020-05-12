@@ -723,6 +723,18 @@ export default {
       },
       path: "wallet"
     },
+    "%n:idGet": {
+      method: "GET",
+      name: "%n:id",
+      params: {
+        Id: {
+          name: "id",
+          filters: ["required", "int", "positive"],
+          type: "query"
+        }
+      },
+      path: "wallet/%n:id"
+    },
     TransactionGet: {
       method: "GET",
       name: "transaction",
@@ -1452,6 +1464,18 @@ export default {
       },
       path: "balance"
     },
+    "%n:idGet": {
+      method: "GET",
+      name: "%n:id",
+      params: {
+        Id: {
+          name: "id",
+          filters: ["required", "int", "positive"],
+          type: "query"
+        }
+      },
+      path: "balance/%n:id"
+    },
     WithdrawPost: {
       method: "POST",
       name: "withdraw",
@@ -2180,6 +2204,70 @@ export default {
         }
       },
       path: "admin/action"
+    },
+    Langs: {
+      DefaultGet: {
+        method: "GET",
+        name: "",
+        params: {
+          Lang: {
+            name: "lang",
+            filters: [],
+            type: "body"
+          },
+          Type: {
+            name: "type",
+            filters: {
+              oneOf: ["backend", "web", "mobile", "all"]
+            },
+            type: "body"
+          },
+          Name: {
+            name: "name",
+            filters: [],
+            type: "body"
+          },
+          StartFrom: {
+            name: "start_from",
+            filters: {
+              default: 0
+            },
+            type: "body"
+          },
+          Count: {
+            name: "count",
+            filters: {
+              default: null
+            },
+            type: "body"
+          }
+        },
+        path: "admin/langs"
+      },
+      DefaultPost: {
+        method: "POST",
+        name: "",
+        params: {
+          Items: {
+            name: "items",
+            filters: ["required", "json"],
+            type: "body"
+          }
+        },
+        path: "admin/langs"
+      },
+      DefaultDelete: {
+        method: "DELETE",
+        name: "",
+        params: {
+          Id: {
+            name: "id",
+            filters: ["required", "positive", "int"],
+            type: "body"
+          }
+        },
+        path: "admin/langs"
+      }
     }
   },
   Bots: {

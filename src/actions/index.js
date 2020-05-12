@@ -29,7 +29,7 @@ export function loadLang(code, toggleCurrentLang = true) {
         apiSchema.Lang.DefaultGet,
         { code },
         {
-          apiEntry: "https://api.narfex.com" // TODO
+          // apiEntry: "https://api.narfex.com" // TODO
         }
       )
       .then(({ translations, languages }) => {
@@ -200,7 +200,16 @@ export function translatorSetLangCode(code) {
 
 export function saveTranslator(code, key, value) {
   return api
-    .call(apiSchema.Lang.DefaultPost, { code, key, value })
+    .call(apiSchema.Admin.Langs.DefaultPost, {
+      items: [
+        {
+          name: key,
+          lang: code,
+          type: "web",
+          value
+        }
+      ]
+    })
     .then(resolve => {
       store.dispatch({ type: actionTypes.SAVE_TRANSLATOR, code, key, value });
       toast.success(utils.getLang("cabinet_translationSuccess"));

@@ -12,13 +12,21 @@ import AdminWrapper from "../wrappers/Admin/AdminWrapper";
 import router from "../router";
 
 router.addListener((state, prevState) => {
-  if (state.name === pages.PANEL_PAGE && !state.params.modal) {
-    action({
-      type: "show_page",
-      params: {
-        page: router.getState().params.page
-      }
-    });
+  const page = router.getState().params.page;
+  const ignorePages = ["langs"];
+  if (
+    state.name === pages.PANEL_PAGE &&
+    !state.params.modal &&
+    !ignorePages.includes(page)
+  ) {
+    if (!prevState || state.name !== prevState.name) {
+      action({
+        type: "show_page",
+        params: {
+          page: router.getState().params.page
+        }
+      });
+    }
   }
 });
 
@@ -32,7 +40,6 @@ function Routes(props) {
 
   if (route !== pages.MAIN && !props.pending && !props.user) {
     router.navigate(pages.MAIN);
-    console.log(route !== pages.MAIN, !props.pending, !props.user);
   }
 
   if (route === pages.MAIN && props.user) {

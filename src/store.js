@@ -21,6 +21,7 @@ import testReducer from "./reducers/test";
 import exchangeReducer from "./reducers/exchange";
 import modalReducer from "./reducers/modal";
 import adminReducer from "./reducers/admin";
+import langsReducer from "./reducers/langs";
 import traderReducer from "./reducers/trader";
 
 const middlewares = [];
@@ -41,6 +42,7 @@ export function configureStore() {
             toasts: toastsReducer,
             default: defaultReducer,
             admin: adminReducer,
+            langs: langsReducer,
             modal: modalReducer
           }
         : {

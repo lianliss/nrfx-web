@@ -3,6 +3,8 @@ import "./PanelScreen.less";
 import React from "react";
 import { connect } from "react-redux";
 
+import LangsScreen from "../LangsScreen/LangsScreen";
+
 import Item from "../../components/Item/Item";
 import * as pages from "../../constants/pages";
 import * as adminActions from "../../../actions/admin";
@@ -21,6 +23,9 @@ class PanelScreen extends React.Component {
           </div>
         </div>
       );
+    }
+    if (this.props.route.params.page === "AdminTranslationModule") {
+      return <LangsScreen />;
     }
     return (
       <div className="PanelScreen">

@@ -65,6 +65,7 @@ function __action(action) {
             toast[action.params.type](action.params.message);
             break;
           case "show_page":
+          case "show_custom_page":
             router.navigate(adminPages.PANEL_PAGE, {
               page: action.params.page
             });
