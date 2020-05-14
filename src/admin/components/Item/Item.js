@@ -25,6 +25,7 @@ import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
 import NumberFormat from "../../../ui/components/NumberFormat/NumberFormat";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const Item = props => {
   const { item } = props;
@@ -97,7 +98,14 @@ const Item = props => {
       );
       break;
     case "number_format":
-      Component = props => <NumberFormat {...props} />;
+      Component = props => (
+        <NumberFormat
+          {...props}
+          fractionDigits={props.fraction_digits}
+          skipTitle={props.skip_title}
+          hiddenCurrency={props.hidden_currency}
+        />
+      );
       break;
     case "button":
       Component = () => (
