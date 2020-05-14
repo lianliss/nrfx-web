@@ -7,4 +7,5 @@ module.exports = {
   'fe-246': 'hedging',
   'fe-251': 'agents',
   'fe-266': 'langs',
+  'langs-test': 'langs',
 };
