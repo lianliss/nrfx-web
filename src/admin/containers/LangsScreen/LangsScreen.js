@@ -41,7 +41,7 @@ const LangsScreen = ({
 }) => {
   useEffect(() => {
     getLangs();
-  }, [langs.langType, langs.lang]);
+  }, [getLangs, langs.langType, langs.lang]);
 
   return (
     <div className="LangsScreen">
@@ -93,7 +93,7 @@ const LangsScreen = ({
                       value={
                         langs.update[item.name] !== undefined
                           ? langs.update[item.name]
-                          : item.value
+                          : item.value || ""
                       }
                       onTextChange={value => {
                         setKeyNewValue(item.name, value);
