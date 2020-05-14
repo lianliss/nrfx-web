@@ -13,20 +13,19 @@ import router from "../router";
 
 router.addListener((state, prevState) => {
   const page = router.getState().params.page;
-  const ignorePages = ["langs"];
+  const ignorePages = ["AdminTranslationModule"];
   if (
     state.name === pages.PANEL_PAGE &&
     !state.params.modal &&
-    !ignorePages.includes(page)
+    !ignorePages.includes(page) &&
+    (!prevState || state.name !== prevState.name)
   ) {
-    if (!prevState || state.name !== prevState.name) {
-      action({
-        type: "show_page",
-        params: {
-          page: router.getState().params.page
-        }
-      });
-    }
+    action({
+      type: "show_page",
+      params: {
+        page: router.getState().params.page
+      }
+    });
   }
 });
 
