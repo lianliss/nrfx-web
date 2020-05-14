@@ -6,4 +6,5 @@ module.exports = {
   'fe-243': 'withdrawal',
   'fe-246': 'hedging',
   'fe-251': 'agents',
+  'fe-266': 'langs',
 };
