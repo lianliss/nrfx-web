@@ -18,13 +18,14 @@ import Form from "../../../../ui/components/Form/Form";
 import { getLang, isEmail } from "../../../../utils";
 
 const FiatWithdrawalModal = props => {
-  const { amount, balance, adaptive, bankList, fee } = props;
+  const { amount, balance, adaptive, bankList, minFee, percentFee } = props;
   const [bank, changeBank] = useState(null);
   const [accountHolderName, setAccountHolderName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [email, setEmail] = useState("");
   const [touched, touch] = useState(false);
   const [filled, fill] = useState(false);
+  const fee = Math.max((amount / 100) * percentFee, minFee);
 
   useEffect(() => {
     props.withdrawalBanksGet();

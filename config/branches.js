@@ -8,4 +8,5 @@ module.exports = {
   'fe-251': 'agents',
   'fe-266': 'langs',
   'langs-test': 'langs',
+  'fe-271': 'extrafee',
 };

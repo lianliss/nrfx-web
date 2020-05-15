@@ -15,8 +15,9 @@ import Button, { ButtonWrapper } from "../../../../ui/components/Button/Button";
 import { getLang } from "../../../../utils";
 
 const WithdrawalRefillModal = props => {
-  const { amount, balance, adaptive, bankList, fee } = props;
+  const { amount, balance, adaptive, bankList, percentFee, minFee } = props;
   const [bank, changeBank] = useState(null);
+  const fee = Math.max((amount / 100) * percentFee, minFee);
 
   useEffect(() => {
     props.refillBanksGet();

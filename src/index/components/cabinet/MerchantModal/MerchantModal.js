@@ -91,8 +91,16 @@ const MerchantModal = props => {
     }
 
     const balance = getBalance(currency);
-    const fee = props.merchants[merchant].fee_conf[currency];
-    actions.openModal("fiat_refill", null, { amount, balance, fee });
+
+    const { min_fee: minFee, percent_fee: percentFee } = props.merchants[
+      merchant
+    ].currencies[currency].fees;
+    actions.openModal("fiat_refill", null, {
+      amount,
+      balance,
+      minFee,
+      percentFee
+    });
   };
 
   const handleFiatWithdrawal = () => {
@@ -104,8 +112,15 @@ const MerchantModal = props => {
     }
 
     const balance = getBalance(currency);
-    const fee = props.merchants[merchant].fee_count;
-    actions.openModal("fiat_withdrawal", null, { amount, balance, fee });
+    const { min_fee: minFee, percent_fee: percentFee } = props.merchants[
+      merchant
+    ].currencies[currency].fees;
+    actions.openModal("fiat_withdrawal", null, {
+      amount,
+      balance,
+      minFee,
+      percentFee
+    });
   };
 
   const handleSubmitInvoice = () => {
