@@ -101,6 +101,7 @@ const Item = props => {
       Component = props => (
         <NumberFormat
           {...props}
+          type={props.display_type}
           fractionDigits={props.fraction_digits}
           skipTitle={props.skip_title}
           hiddenCurrency={props.hidden_currency}
