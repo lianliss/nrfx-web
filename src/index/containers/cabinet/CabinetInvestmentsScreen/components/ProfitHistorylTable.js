@@ -52,14 +52,17 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
         <UI.TableCell key={i}>
           <UI.TableColumn
             sub={
+              item.deposit &&
               item.deposit.percent +
-              "% " +
-              item.plan.description +
-              " / " +
-              utils.ucfirst(item.deposit.type)
+                "% " +
+                item.plan.description +
+                " / " +
+                utils.ucfirst(item.deposit.type)
             }
           >
-            {item.deposit.amount} {item.deposit.currency.toUpperCase()}
+            {item.deposit
+              ? `${item.deposit.amount} ${item.deposit.currency.toUpperCase()}`
+              : "-"}
           </UI.TableColumn>
           <UI.TableColumn
             align="right"
@@ -70,7 +73,7 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
             }
           >
             {utils.formatDouble(item.profit.amount)}{" "}
-            {item.deposit.currency.toUpperCase()}
+            {item.profit.currency.toUpperCase()}
           </UI.TableColumn>
         </UI.TableCell>
       );
@@ -79,17 +82,23 @@ export default function WithdrawalTable({ profits, total, adaptive }) {
       <UI.TableCell key={i}>
         <UI.TableColumn />
         <UI.TableColumn>{utils.formatTableId(total - i)}</UI.TableColumn>
-        <UI.TableColumn sub={item.plan.description}>
-          {item.deposit.plan_percent}
+        <UI.TableColumn sub={item.plan ? item.plan.description : undefined}>
+          {item.deposit ? item.deposit.plan_percent : "-"}
         </UI.TableColumn>
-        <UI.TableColumn>{utils.ucfirst(item.deposit.type)}</UI.TableColumn>
         <UI.TableColumn>
-          {item.deposit.amount} {item.deposit.currency.toUpperCase()}
+          {item.deposit ? utils.ucfirst(item.deposit.type) : "-"}
+        </UI.TableColumn>
+        <UI.TableColumn>
+          {item.deposit
+            ? `${item.deposit.amount} ${item.deposit.currency.toUpperCase()}`
+            : "-"}
         </UI.TableColumn>
         <UI.TableColumn align="right">
           {utils.formatDouble(item.profit.amount)}
         </UI.TableColumn>
-        <UI.TableColumn>{item.deposit.currency.toUpperCase()}</UI.TableColumn>
+        <UI.TableColumn>
+          {item.profit ? item.profit.currency.toUpperCase() : "-"}
+        </UI.TableColumn>
         <UI.TableColumn>
           {utils.getLang(`type_${item.profit.type}`)}
         </UI.TableColumn>
