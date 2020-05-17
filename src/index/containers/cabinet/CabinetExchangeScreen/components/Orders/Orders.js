@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import EmptyContentBlock from "../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock";
 import * as exchange from "../../../../../../actions/cabinet/exchange";
 import * as actions from "../../../../../../actions";
+import Paging from "../../../../../components/cabinet/Paging/Paging";
 
 class Orders extends React.Component {
   constructor(props) {
@@ -210,7 +211,7 @@ class Orders extends React.Component {
   }
 
   __renderHistory(adaptive) {
-    if (!this.props.last_orders.length) {
+    if (!this.props.last_orders.items.length) {
       return (
         <EmptyContentBlock
           icon={require("../../../../../../asset/120/no_orders.svg")}
@@ -270,7 +271,7 @@ class Orders extends React.Component {
           </UI.TableColumn>
         ];
 
-    let rows = this.props.last_orders.map(order => {
+    let rows = this.props.last_orders.items.map(order => {
       const sideClassName = utils.classNames({
         Exchange__orders__side: true,
         sell: order.action === "sell"
@@ -355,15 +356,23 @@ class Orders extends React.Component {
     });
 
     return (
-      <UI.Table
-        inline={adaptive}
-        className="Exchange__orders_table"
-        headings={headings}
-        compact
-        skipContentBox
+      <Paging
+        isLoading={this.props.loadingStatus.lastOrders}
+        moreButton={this.props.last_orders.next_from !== null}
+        onMore={() => {
+          this.props.moreOrderHistory();
+        }}
       >
-        {rows}
-      </UI.Table>
+        <UI.Table
+          inline={adaptive}
+          className="Exchange__orders_table"
+          headings={headings}
+          compact
+          skipContentBox
+        >
+          {rows}
+        </UI.Table>
+      </Paging>
     );
   }
 }
@@ -373,5 +382,7 @@ export default connect(
     ...state.exchange,
     currentLang: state.default.currentLang
   }),
-  {}
+  {
+    moreOrderHistory: exchange.moreOrderHistory
+  }
 )(memo(Orders));

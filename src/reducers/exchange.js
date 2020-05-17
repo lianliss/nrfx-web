@@ -11,7 +11,10 @@ const initialState = {
   balances: [],
   trades: [],
   openOrders: {},
-  last_orders: [],
+  last_orders: {
+    items: [],
+    next_from: 0
+  },
   fee: 0,
   ticker: {
     diff: 0,
@@ -109,6 +112,16 @@ export default function reduce(state = initialState, action = {}) {
         loadingStatus: {
           ...state.loadingStatus,
           [action.section]: action.status
+        }
+      };
+    }
+
+    case actionTypes.EXCHANGE_ADD_ORDER_HISTORY: {
+      return {
+        ...state,
+        last_orders: {
+          items: [...state.last_orders.items, ...action.payload.items],
+          next_from: action.payload.next_from
         }
       };
     }

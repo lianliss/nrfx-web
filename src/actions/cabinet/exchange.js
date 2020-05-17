@@ -147,6 +147,33 @@ export function orderBookSelectOrder(order) {
   };
 }
 
+export function moreOrderHistory() {
+  return (dispatch, getState) => {
+    dispatch({
+      type: actionTypes.EXCHANGE_SET_LOADING_STATUS,
+      section: "lastOrders",
+      status: "loading"
+    });
+    api
+      .call(apiSchema.Exchange.OrdersHistoryGet, {
+        start_from: getState().exchange.last_orders.next_from
+      })
+      .then(payload => {
+        dispatch({ type: actionTypes.EXCHANGE_ADD_ORDER_HISTORY, payload });
+      })
+      .catch(err => {
+        toast.error(err.message);
+      })
+      .finally(() => {
+        dispatch({
+          type: actionTypes.EXCHANGE_SET_LOADING_STATUS,
+          section: "lastOrders",
+          status: ""
+        });
+      });
+  };
+}
+
 export function orderBookInit(payload) {
   store.dispatch({ type: actionTypes.EXCHANGE_ORDER_BOOK_INIT, ...payload });
   store.dispatch({
