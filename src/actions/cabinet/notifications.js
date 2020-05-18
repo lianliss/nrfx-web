@@ -10,7 +10,7 @@ export function loadNotifications() {
   return (dispatch, getState) => {
     api
       .call(apiSchema.Notification.DefaultGet)
-      .then(({ notifications }) => {
+      .then(({ items: notifications }) => {
         dispatch({ type: actionTypes.NOTIFICATIONS_SET, notifications });
       })
       .catch(err => {
