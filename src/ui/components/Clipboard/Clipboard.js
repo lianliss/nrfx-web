@@ -7,6 +7,7 @@ import { classNames as cn } from "../../utils";
 export default props => {
   return (
     <div
+      title={props.title}
       onClick={() => props.onClick(props.text)}
       className={cn("Clipboard", props.className)}
     >

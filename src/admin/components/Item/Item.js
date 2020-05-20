@@ -21,6 +21,7 @@ import Text from "../Text/Text";
 import Chackbox from "../Chackbox/Chackbox";
 import Wysiwyg from "../Wysiwyg/Wysiwyg";
 import Time from "../Time/Time";
+import Clipboard from "../Clipboard/Clipboard";
 import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
 import NumberFormat from "../../../ui/components/NumberFormat/NumberFormat";
@@ -141,6 +142,9 @@ const Item = props => {
       break;
     case "time":
       Component = Time;
+      break;
+    case "clipboard":
+      Component = Clipboard;
       break;
     default:
       Component = props => (
