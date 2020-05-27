@@ -1,16 +1,14 @@
 import "./ManageBalanceModal.less";
 
 import React from "react";
-import { connect } from "react-redux";
 import * as UI from "../../../../ui";
 
 import * as utils from "../../../../utils";
 import * as balanceActions from "../../../../actions/cabinet/balance";
 import * as actions from "../../../../actions";
 import ModalState from "../ModalState/ModalState";
-import SVG from "react-inlinesvg";
 
-class ManageBalanceModal extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +17,6 @@ class ManageBalanceModal extends React.Component {
 
     this.state = {
       amount: "",
-      gaCode: "",
       type: this.isWithdrawalOnly ? "withdraw" : "deposit",
       wallets: [],
       balances: [],
@@ -38,10 +35,6 @@ class ManageBalanceModal extends React.Component {
   componentDidMount() {
     this.__load();
   }
-
-  __handleGAChange = gaCode => {
-    this.setState({ gaCode });
-  };
 
   __load() {
     this.setState({ loadingStatus: "loading" });
@@ -210,23 +203,6 @@ class ManageBalanceModal extends React.Component {
               {utils.getLang("cabinet_sendCoinsModal_max")}
             </UI.Button>
           </div>
-          {this.props.gaEnabled && (
-            <div className="ManageBalanceModal__row">
-              <UI.Input
-                type="code"
-                cell
-                autoComplete="off"
-                value={this.state.gaCode}
-                onTextChange={this.__handleGAChange}
-                mouseWheel={false}
-                placeholder={utils.getLang("site__authModalGAPlaceholder")}
-                error={this.state.touched && !this.state.gaCode}
-                indicator={
-                  <SVG src={require("../../../../asset/google_auth.svg")} />
-                }
-              />
-            </div>
-          )}
           <div className="ManageBalanceModal__submit_wrap">
             <UI.Button
               currency={currencyInfo}
@@ -245,20 +221,15 @@ class ManageBalanceModal extends React.Component {
 
   __handleSubmit = () => {
     this.setState({ touched: true });
-    if (this.state.amount > 0 && (!this.props.gaEnabled || this.state.gaCode)) {
+    if (this.state.amount > 0) {
       this.setState({ isFormSending: true });
       balanceActions[this.state.type]({
         from: this.currentOption.value,
         amount: this.state.amount,
-        currency: this.currency,
-        gaCode: this.state.gaCode
+        currency: this.currency
       })
         .then(() => this.props.onClose())
         .catch(() => this.setState({ isFormSending: false }));
     }
   };
 }
-
-export default connect(state => ({
-  gaEnabled: state.default.profile.ga_enabled
-}))(ManageBalanceModal);
