@@ -12,6 +12,9 @@ import langCodes from "./langCodes";
 import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
 import { getCssVar } from "src/utils/index";
 
+const endpoint =
+  process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT ?? "https://ex.narfex.dev";
+
 class Chart extends React.PureComponent {
   static defaultProps = {
     symbol: "ETH:USDT",
@@ -19,7 +22,7 @@ class Chart extends React.PureComponent {
     resolution: "1",
     containerId: "tv_chart_container",
     // datafeedUrl: API_ENTRY + "/api/v1/exchange_chart",
-    datafeedUrl: "https://ex.narfex.dev/chart",
+    datafeedUrl: `${endpoint}/chart`,
     // datafeedUrl: 'http://demo_feed.tradingview.com',
     libraryPath: "charting_library/",
     chartsStorageUrl: "https://saveload.tradingview.com",

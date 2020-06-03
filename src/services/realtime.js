@@ -5,7 +5,7 @@ class RealTime {
     const token = auth.getToken();
 
     const LOCAL_EXCHANGE_ENDPOINT =
-      process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT;
+      process.env.REACT_APP_LOCAL_EXCHANGE_WS_ENDPOINT;
     if (LOCAL_EXCHANGE_ENDPOINT) {
       this.endpoint = LOCAL_EXCHANGE_ENDPOINT;
     } else {
