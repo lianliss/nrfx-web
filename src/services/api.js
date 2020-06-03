@@ -6,10 +6,19 @@ import * as PAGES from "../index/constants/pages";
 
 export const APP_ID = 8;
 const BRANCH_NAME = process.env.BRANCH_NAME;
-export const API_ENTRY =
-  BRANCH_NAME && BRANCH_NAME !== "gcloud"
-    ? `https://api-${BRANCH_NAME}.narfex.dev`
-    : "https://api.narfex.com";
+const LOCAL_API_ENDPOINT = process.env.REACT_APP_LOCAL_API_ENDPOINT;
+
+function getApiEntry() {
+  if (LOCAL_API_ENDPOINT) {
+    return LOCAL_API_ENDPOINT;
+  } else {
+    return BRANCH_NAME && BRANCH_NAME !== "gcloud"
+      ? `https://api-${BRANCH_NAME}.narfex.dev`
+      : "https://api.narfex.com";
+  }
+}
+
+export const API_ENTRY = getApiEntry();
 export const API_VERSION = 1;
 
 export function invoke(method, name, params, options = {}) {

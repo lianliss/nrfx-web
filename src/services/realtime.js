@@ -3,11 +3,15 @@ import * as auth from "./auth";
 class RealTime {
   constructor() {
     const token = auth.getToken();
-    this.endpoint =
-      "wss://ex.narfex.dev" + (token ? `?access_token=${token}` : "");
-    // this.endpoint =
-    //   "wss://api-stage.narfex.dev/echo" +
-    //   (token ? `?access_token=${token}` : "");
+
+    const LOCAL_EXCHANGE_ENDPOINT =
+      process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT;
+    if (LOCAL_EXCHANGE_ENDPOINT) {
+      this.endpoint = LOCAL_EXCHANGE_ENDPOINT;
+    } else {
+      this.endpoint = "wss://ex.narfex.dev";
+    }
+    this.endpoint += token ? `?access_token=${token}` : "";
     this.listeners = {};
     this.sendQueue = [];
     this.connected = false;

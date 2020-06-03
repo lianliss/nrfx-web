@@ -158,8 +158,11 @@ export const formatNumber = (
 };
 
 export function isProduction() {
-  return !api.API_ENTRY.includes("stage") && !api.API_ENTRY.includes("api-");
-  // return window.location.host === company.host;
+  return (
+    !api.API_ENTRY.includes("stage") &&
+    !api.API_ENTRY.includes("api-") &&
+    !api.API_ENTRY.includes("127.0.0.1")
+  );
 }
 
 export function throttle(func, ms) {
