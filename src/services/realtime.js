@@ -13,7 +13,7 @@ class RealTime {
       if (utils.isProduction()) {
         this.endpoint = "wss://ex.narfex.dev";
       } else {
-        this.endpoint = "wss://stage.narfex.dev/echo";
+        this.endpoint = "wss://api-stage.narfex.dev/echo";
       }
     }
     this.endpoint += token ? `?access_token=${token}` : "";
