@@ -1,4 +1,5 @@
 import * as auth from "./auth";
+import * as utils from "../utils";
 
 class RealTime {
   constructor() {
@@ -9,7 +10,11 @@ class RealTime {
     if (LOCAL_EXCHANGE_ENDPOINT) {
       this.endpoint = LOCAL_EXCHANGE_ENDPOINT;
     } else {
-      this.endpoint = "wss://ex.narfex.dev";
+      if (utils.isProduction()) {
+        this.endpoint = "wss://ex.narfex.dev";
+      } else {
+        this.endpoint = "wss://stage.narfex.dev/echo";
+      }
     }
     this.endpoint += token ? `?access_token=${token}` : "";
     this.listeners = {};

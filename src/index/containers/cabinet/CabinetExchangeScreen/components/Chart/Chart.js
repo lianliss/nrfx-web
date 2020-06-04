@@ -11,9 +11,16 @@ import getTimezone from "./timezones";
 import langCodes from "./langCodes";
 import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
 import { getCssVar } from "src/utils/index";
+import * as utils from "../../../../../../utils";
 
-const endpoint =
-  process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT ?? "https://ex.narfex.dev";
+let endpoint;
+if (utils.isProduction()) {
+  endpoint = "wss://ex.narfex.dev";
+} else {
+  endpoint =
+    process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT ??
+    "wss://stage.narfex.dev/echo";
+}
 
 class Chart extends React.PureComponent {
   static defaultProps = {
