@@ -19,7 +19,7 @@ if (utils.isProduction()) {
 } else {
   endpoint =
     process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT ??
-    "wss://api-stage.narfex.dev/echo";
+    "https://api-stage.narfex.dev/chart";
 }
 
 class Chart extends React.PureComponent {
