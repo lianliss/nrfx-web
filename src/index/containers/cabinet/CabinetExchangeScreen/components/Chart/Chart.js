@@ -15,7 +15,7 @@ import * as utils from "../../../../../../utils";
 
 let endpoint;
 if (utils.isProduction()) {
-  endpoint = "wss://ex.narfex.dev";
+  endpoint = "https://ex.narfex.dev";
 } else {
   endpoint =
     process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT ??
