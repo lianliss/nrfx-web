@@ -104,9 +104,29 @@ export function tradeFormSetProperties(type, properties) {
 }
 
 export function orderDelete(orderId) {
-  store.dispatch({ type: actionTypes.EXCHANGE_SET_ORDER_PENDING, orderId });
-  return api.call(apiSchema.Exchange.OrderDelete, {
-    order_id: orderId
+  store.dispatch({
+    type: actionTypes.EXCHANGE_SET_ORDER_PENDING,
+    orderId,
+    value: true
+  });
+  return api
+    .call(apiSchema.Exchange.OrderDelete, {
+      order_id: orderId
+    })
+    .catch(() => {
+      store.dispatch({
+        type: actionTypes.EXCHANGE_SET_ORDER_PENDING,
+        orderId,
+        value: false
+      });
+    });
+}
+
+export function setOrderPending(orderId, value) {
+  store.dispatch({
+    type: actionTypes.EXCHANGE_SET_ORDER_PENDING,
+    orderId,
+    value
   });
 }
 

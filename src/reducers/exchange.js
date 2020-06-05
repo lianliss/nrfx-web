@@ -182,21 +182,24 @@ export default function reduce(state = initialState, action = {}) {
 
     case actionTypes.EXCHANGE_SET_ORDER_STATUS: {
       let openOrders = { ...state.openOrders };
-      let lastOrders = [...state.last_orders];
+      let lastOrdersItems = [...state.last_orders.items];
 
       if (openOrders[action.orderId]) {
         let order = { ...openOrders[action.orderId] };
         delete openOrders[action.orderId];
-        if (!lastOrders.find(order => order.id === action.orderId)) {
+        if (!lastOrdersItems.find(order => order.id === action.orderId)) {
           order.status = action.status;
-          lastOrders.unshift(order);
+          lastOrdersItems.unshift(order);
         }
       }
 
       return {
         ...state,
         openOrders,
-        last_orders: lastOrders
+        last_orders: {
+          ...state.last_orders,
+          items: lastOrdersItems
+        }
       };
     }
 
@@ -207,7 +210,7 @@ export default function reduce(state = initialState, action = {}) {
           ...state.openOrders,
           [action.orderId]: {
             ...state.openOrders[action.orderId],
-            status: "pending"
+            status: action.value ? "pending" : ""
           }
         }
       };
@@ -239,9 +242,9 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.EXCHANGE_ORDER_COMPLETED: {
       let openOrders = { ...state.openOrders };
 
-      let lastOrders = [
+      let lastOrdersItems = [
         { ...action.order, status: "completed" },
-        ...state.last_orders
+        ...state.last_orders.items
       ];
 
       delete openOrders[action.order.id];
@@ -249,7 +252,10 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         openOrders,
-        last_orders: lastOrders
+        last_orders: {
+          ...state.last_orders,
+          items: lastOrdersItems
+        }
       };
     }
 
@@ -259,12 +265,15 @@ export default function reduce(state = initialState, action = {}) {
 
       delete openOrders[action.orderId];
 
-      let lastOrders = [order, ...state.last_orders];
+      let lastOrdersItems = [order, ...state.last_orders.items];
 
       return {
         ...state,
         openOrders,
-        last_orders: lastOrders
+        last_orders: {
+          ...state.last_orders,
+          items: lastOrdersItems
+        }
       };
     }
 

@@ -54,7 +54,12 @@ class MarketInfo extends React.Component {
     const { ticker, market } = this.props;
     const [, secondary] = market.split("/");
 
-    const type = ticker.price > ticker.prevPrice ? "up" : "down";
+    const type =
+      ticker.price === ticker.prevPrice
+        ? undefined
+        : ticker.price > ticker.prevPrice
+        ? "up"
+        : "down";
 
     return (
       <div className="MarketInfo__row price">

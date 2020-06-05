@@ -75,6 +75,7 @@ class Exchange {
   __orderDidCompleted = body => {
     // exchange.setOrderStatus(body.order.id, 'completed');
     exchange.orderCompleted(body.order);
+    exchange.removeOrders([body.order.id]);
     toasts.success(utils.getLang("exchange_toastOrderCompleted"));
   };
 
@@ -86,7 +87,10 @@ class Exchange {
     toasts.success(utils.getLang("exchange_toastOrderCanceled"));
   };
 
-  __orderDidCancelFailed = () => toasts.error("Can't cancel order");
+  __orderDidCancelFailed = orderId => {
+    exchange.setOrderPending(orderId, false);
+    toasts.error("Can't cancel order");
+  };
 
   __orderDidCreated = order => {
     exchange.addOpenOrder(order);
@@ -98,7 +102,6 @@ class Exchange {
   };
 
   __orderDidTrade = orders => {
-    exchange.removeOrders(orders.map(order => order.id));
     exchange.addTrades(orders);
   };
 
