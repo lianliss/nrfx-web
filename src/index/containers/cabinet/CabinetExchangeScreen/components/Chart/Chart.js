@@ -203,6 +203,10 @@ class Chart extends React.PureComponent {
         }
       }
     }
+
+    if (prevProps.loadingStatus === "reloading" && !this.props.loadingStatus) {
+      // TODO reload Chart
+    }
     return false;
   }
 
@@ -231,5 +235,6 @@ class Chart extends React.PureComponent {
 }
 
 export default connect(state => ({
-  theme: state.default.theme
+  theme: state.default.theme,
+  loadingStatus: state.exchange.loadingStatus.default
 }))(Chart);
