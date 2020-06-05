@@ -71,51 +71,61 @@ const OrderBook = props => {
 
     return (
       <div className="OrderBook__list" ref={scrollBlock}>
-        {props.orders
-          .filter(o => o.action === type)
-          .sort((a, b) => b.price - a.price)
-          .slice(...range)
-          .map((order, i) => {
-            const total = order.amount * order.price;
-            const filled = (total / maxTotal) * 100;
-            return (
-              // TODO: Если прописать order.id в key это приводит к дублированию ордеров и к переполнению ордербука
-              <div
-                key={i}
-                onClick={() => handleOrderClick(order)}
-                className={cn("OrderBook__order", order.action)}
-              >
-                <div className="OrderBook__order__price">
-                  <UI.NumberFormat
-                    accurate
-                    number={order.price}
-                    currency={order.secondary_coin}
-                    hiddenCurrency
-                  />
-                </div>
-                <div className="OrderBook__order__amount">
-                  <UI.NumberFormat
-                    accurate
-                    number={order.amount}
-                    currency={order.primary_coin}
-                    hiddenCurrency
-                  />
-                </div>
-                <div className="OrderBook__order__total">
-                  <UI.NumberFormat
-                    accurate
-                    number={order.price * order.amount}
-                    currency={order.secondary_coin}
-                    hiddenCurrency
-                  />
-                </div>
-                <div
-                  style={{ width: filled + "%" }}
-                  className="OrderBook__order__fill"
+        {Object.values(
+          props.orders
+            .filter(o => o.action === type)
+            .sort((a, b) => b.price - a.price)
+            .slice(...range)
+            .reduce(
+              (r, o) => (
+                r[o.price]
+                  ? (r[o.price].amount += o.amount)
+                  : (r[o.price] = { ...o }),
+                r
+              ),
+              {}
+            )
+        ).map((order, i) => {
+          const total = order.amount * order.price;
+          const filled = (total / maxTotal) * 100;
+          return (
+            // TODO: Если прописать order.id в key это приводит к дублированию ордеров и к переполнению ордербука
+            <div
+              key={i}
+              onClick={() => handleOrderClick(order)}
+              className={cn("OrderBook__order", order.action)}
+            >
+              <div className="OrderBook__order__price">
+                <UI.NumberFormat
+                  accurate
+                  number={order.price}
+                  currency={order.secondary_coin}
+                  hiddenCurrency
                 />
               </div>
-            );
-          })}
+              <div className="OrderBook__order__amount">
+                <UI.NumberFormat
+                  accurate
+                  number={order.amount}
+                  currency={order.primary_coin}
+                  hiddenCurrency
+                />
+              </div>
+              <div className="OrderBook__order__total">
+                <UI.NumberFormat
+                  accurate
+                  number={order.price * order.amount}
+                  currency={order.secondary_coin}
+                  hiddenCurrency
+                />
+              </div>
+              <div
+                style={{ width: filled + "%" }}
+                className="OrderBook__order__fill"
+              />
+            </div>
+          );
+        })}
       </div>
     );
   };
