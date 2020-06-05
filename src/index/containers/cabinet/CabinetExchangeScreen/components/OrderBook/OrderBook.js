@@ -76,15 +76,12 @@ const OrderBook = props => {
             .filter(o => o.action === type)
             .sort((a, b) => b.price - a.price)
             .slice(...range)
-            .reduce(
-              (r, o) => (
-                r[o.price]
-                  ? (r[o.price].amount += o.amount)
-                  : (r[o.price] = { ...o }),
-                r
-              ),
-              {}
-            )
+            .reduce((r, o) => {
+              r[o.price]
+                ? (r[o.price].amount += o.amount)
+                : (r[o.price] = { ...o });
+              return r;
+            }, {})
         ).map((order, i) => {
           const total = order.amount * order.price;
           const filled = (total / maxTotal) * 100;
