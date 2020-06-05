@@ -26,7 +26,6 @@ import Message from "../../../ui/components/Message/Message";
 import ActionSheet from "../../../ui/components/ActionSheet/ActionSheet";
 import NumberFormat from "../../../ui/components/NumberFormat/NumberFormat";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 
 const Item = props => {
   const { item } = props;
