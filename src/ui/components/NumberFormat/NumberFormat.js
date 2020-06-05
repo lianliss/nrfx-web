@@ -124,7 +124,8 @@ NumberFormat.propTypes = {
   brackets: PropTypes.bool,
   accurate: PropTypes.bool,
   hiddenCurrency: PropTypes.bool,
-  type: PropTypes.oneOf([null, "sell", "buy", "down", "up"]),
+  symbol: PropTypes.bool,
+  type: PropTypes.oneOf([null, "auto", "sell", "buy", "down", "up"]),
   currency: PropTypes.string
 };
 

@@ -54,12 +54,7 @@ class MarketInfo extends React.Component {
     const { ticker, market } = this.props;
     const [, secondary] = market.split("/");
 
-    const type =
-      ticker.price === ticker.prevPrice
-        ? undefined
-        : ticker.price > ticker.prevPrice
-        ? "up"
-        : "down";
+    const type = ticker.price < ticker.prevPrice ? "down" : "up";
 
     return (
       <div className="MarketInfo__row price">
@@ -72,6 +67,7 @@ class MarketInfo extends React.Component {
               <UI.NumberFormat
                 type={type}
                 indicator
+                symbol
                 number={ticker.price}
                 currency={secondary}
                 hiddenCurrency
@@ -93,7 +89,8 @@ class MarketInfo extends React.Component {
             <div className="MarketInfo__info_row__value__primary">
               <UI.NumberFormat
                 number={ticker.percent}
-                type={type}
+                symbol
+                type="auto"
                 indicator
                 percent
                 fractionDigits={2}

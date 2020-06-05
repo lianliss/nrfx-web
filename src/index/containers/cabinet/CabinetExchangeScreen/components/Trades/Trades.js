@@ -45,7 +45,8 @@ class Trades extends React.Component {
       .map((trade, i) => {
         // .slice(0, 30) можно сделать скролл в ордерах
         const prevTrade = trades[i + 1];
-        const type = prevTrade && trade.price > prevTrade.price ? "up" : "down";
+        const type =
+          prevTrade && trade.price >= prevTrade.price ? "up" : "down";
         return (
           <UI.TableCell
             className={utils.classNames("Exchange__orders__side", type)}
