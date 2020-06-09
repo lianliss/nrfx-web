@@ -50,7 +50,7 @@ function FiatOperationModal(props) {
   ].map(getCurrencyInfo);
 
   const [primaryPrice, secondaryPrice] = [operation.price, 1 / operation.price][
-    operation.type === "crypto_exchange" ? "reverse" : "slice"
+    utils.isFiat(operation.primary_currency) ? "slice" : "reverse"
   ]();
 
   const balance =
@@ -58,7 +58,9 @@ function FiatOperationModal(props) {
 
   return (
     <Modal className="FiatOperationModal" isOpen={true} onClose={props.onClose}>
-      <UI.ModalHeader>{operation.type_label}</UI.ModalHeader>
+      <UI.ModalHeader>
+        {utils.getLang("cabinet__historyItemTitle_" + operation.type)}
+      </UI.ModalHeader>
       {/*<pre>{JSON.stringify(props, null, 2)}</pre>*/}
       {["refill", "withdrawal"].includes(operation.type) ? (
         <div className="FiatOperationModal__content">

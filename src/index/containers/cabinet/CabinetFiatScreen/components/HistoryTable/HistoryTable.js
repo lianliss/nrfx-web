@@ -59,9 +59,9 @@ export default function HistoryTable({ history, adaptive, header }) {
         ? utils.getLang("cabinet_wallets_historyTable_sent")
         : utils.getLang("cabinet_wallets_historyTable_received");
 
-    let address =
-      utils.clipTextMiddle(item.address) ||
-      utils.getLang("cabinet_wallets_historyTable_unknown");
+    let address = item.address
+      ? utils.clipTextMiddle(item.address)
+      : utils.getLang("cabinet_wallets_historyTable_unknown");
     if (item.type === "transfer") {
       address = address.toUpperCase();
     }

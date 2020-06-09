@@ -23,14 +23,13 @@ const FiatHistoryTable = props => {
     }, {});
 
   const icons = {
-    fiat_exchange: require("src/asset/24px/loop.svg"),
-    crypto_exchange: require("src/asset/24px/loop.svg"),
+    swap: require("src/asset/24px/loop.svg"),
     refill: require("src/asset/24px/fiat-plus.svg"),
     withdrawal: require("src/asset/24px/withdraw.svg"),
     buy_token: require("src/asset/24px/shopping-cart.svg")
   };
 
-  const renderExchangeItem = item => {
+  const renderSwapItem = item => {
     const [primaryCurrency, secondaryCurrency] = [
       item.primary_currency,
       item.secondary_currency
@@ -40,7 +39,9 @@ const FiatHistoryTable = props => {
         <UI.CircleIcon icon={item.icon} />
         <div className="FiatHistoryTable__group__item__body">
           <div className="FiatHistoryTable__group__item__left">
-            <div className="FiatHistoryTable__label">{item.type_label}</div>
+            <div className="FiatHistoryTable__label">
+              {utils.getLang("cabinet__historyItemTitle_swap")}
+            </div>
             <div className="FiatHistoryTable__price">
               <UI.NumberFormat
                 symbol
@@ -78,6 +79,9 @@ const FiatHistoryTable = props => {
         <UI.CircleIcon icon={item.icon} />
         <div className="FiatHistoryTable__group__item__body">
           <div className="FiatHistoryTable__group__item__left">
+            <div className="FiatHistoryTable__label">
+              {utils.getLang("cabinet__historyItemTitle_refill")}
+            </div>
             <div className="FiatHistoryTable__label">{item.type_label}</div>
             <div className="FiatHistoryTable__description" />
           </div>
@@ -104,7 +108,9 @@ const FiatHistoryTable = props => {
         <UI.CircleIcon icon={item.icon} />
         <div className="FiatHistoryTable__group__item__body">
           <div className="FiatHistoryTable__group__item__left">
-            <div className="FiatHistoryTable__label">{item.type_label}</div>
+            <div className="FiatHistoryTable__label">
+              {utils.getLang("cabinet__historyItemTitle_withdrawal")}
+            </div>
             <div className="FiatHistoryTable__description">
               {item.bank_code}
             </div>
@@ -157,9 +163,9 @@ const FiatHistoryTable = props => {
                 case "refill":
                   return renderIncomeItem(item);
                 // case 'crypto_exchange':
-                // case 'fiat_exchange':
+                case "swap":
                 default:
-                  return renderExchangeItem(item);
+                  return renderSwapItem(item);
               }
             };
 
