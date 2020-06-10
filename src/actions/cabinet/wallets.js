@@ -85,7 +85,7 @@ export function loadMoreTransactions() {
       status: "loading"
     });
     api
-      .call(apiSchema.Wallet.TransactionGet, {
+      .call(apiSchema.Wallet.TransactionsGet, {
         start_from: store.getState().wallets.transactions.next,
         count: 20
       })
@@ -122,7 +122,7 @@ export function loadMoreTransfers() {
       status: "loading"
     });
     api
-      .call(apiSchema.Wallet.TransferGet, {
+      .call(apiSchema.Wallet.TransfersGet, {
         start_from: store.getState().wallets.transfers.next,
         count: 20
       })

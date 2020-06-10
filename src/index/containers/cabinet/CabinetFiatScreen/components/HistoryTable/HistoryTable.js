@@ -73,7 +73,10 @@ export default function HistoryTable({ history, adaptive, header }) {
         <UI.TableCell
           key={i}
           onClick={() =>
-            openModal("transaction", { id: item.id, type: item.type })
+            openModal("transaction", {
+              id: item.id,
+              type: item.transaction_state
+            })
           }
         >
           <UI.TableColumn>
@@ -109,7 +112,10 @@ export default function HistoryTable({ history, adaptive, header }) {
       <UI.TableCell
         key={i}
         onClick={() =>
-          openModal("transaction", { id: item.id, type: item.type })
+          openModal("transaction", {
+            id: item.id,
+            type: item.transaction_state
+          })
         }
       >
         <UI.TableColumn align="center">

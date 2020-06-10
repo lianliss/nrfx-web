@@ -222,6 +222,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
           isLoading={this.props.transactionsLoadingMore}
         >
           <HistoryTable
+            type="transaction"
             header={utils.getLang("global_transactions")}
             adaptive={this.props.adaptive}
             history={
@@ -248,6 +249,7 @@ class CabinetWalletScreen extends CabinetBaseScreen {
           isLoading={this.props.transfersLoadingMore}
         >
           <HistoryTable
+            type="transfer"
             header={utils.getLang("cabinet_walletScreen_transfers")}
             adaptive={this.props.adaptive}
             history={

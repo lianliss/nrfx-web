@@ -63,7 +63,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
       const currency = data.currency.toUpperCase();
 
       let address = data.address;
-      if (this.props.type === "transfer") {
+      if (address && this.props.type === "transfer") {
         address = address.toUpperCase();
       }
 
@@ -81,7 +81,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
           />
           <InfoRowGroup align="left">
             <InfoRow label={utils.getLang("global_from")}>
-              {data.category === "send" ? (
+              {data.type !== "transaction_receive" ? (
                 <>
                   {utils.getLang("cabinet_walletTransactionModal_my")}{" "}
                   {utils.ucfirst(currencyInfo.name)}
@@ -90,13 +90,16 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
                 <div className="Wallets__history__address">
                   <UI.WalletAddress
                     isUser={data.type === "transfer"}
-                    address={address}
+                    address={
+                      address ||
+                      utils.getLang("cabinet_wallets_historyTable_unknown")
+                    }
                   />
                 </div>
               )}
             </InfoRow>
             <InfoRow label={utils.getLang("global_to")}>
-              {data.category === "receive" ? (
+              {data.type === "transaction_receive" ? (
                 <>
                   {utils.getLang("cabinet_walletTransactionModal_my")}{" "}
                   {utils.ucfirst(currencyInfo.name)}
@@ -113,9 +116,11 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
             <InfoRow label={utils.getLang("global_amount")}>
               <UI.NumberFormat number={data.amount} currency={currency} />
             </InfoRow>
-            <InfoRow label={utils.getLang("global_fee")}>
-              <UI.NumberFormat number={data.fee} currency={currency} />
-            </InfoRow>
+            {this.props.type !== "transfer" && (
+              <InfoRow label={utils.getLang("global_fee")}>
+                <UI.NumberFormat number={data.fee} currency={currency} />
+              </InfoRow>
+            )}
             <InfoRow label={utils.getLang("global_date")}>
               {utils.dateFormat(data.created_at)}
             </InfoRow>

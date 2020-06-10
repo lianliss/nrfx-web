@@ -9,6 +9,7 @@ import MarkDown from "../MarkDown/MarkDown";
 import ScrollBox from "../ScrollBox/ScrollBox";
 import { classNames } from "../../utils";
 import LoadingStatus from "../../../index/components/cabinet/LoadingStatus/LoadingStatus";
+import InlineSVG from "react-inlinesvg";
 
 export function Notification(props) {
   return (
@@ -19,8 +20,13 @@ export function Notification(props) {
     >
       <div
         className="Notification__icon"
-        style={{ backgroundImage: props.icon && `url(${props.icon})` }}
-      ></div>
+        style={{
+          backgroundImage: props.icon && `url(${props.iconUrl})`,
+          color: props.iconFill
+        }}
+      >
+        <InlineSVG src={props.icon} />
+      </div>
       <div className="Notification__body">
         <div className="Notification__message">{props.message}</div>
         {!!props.markText && (
@@ -51,6 +57,8 @@ Notification.propTypes = {
   classNames: PropTypes.string,
   message: PropTypes.string,
   icon: PropTypes.string,
+  iconUrl: PropTypes.string,
+  iconFill: PropTypes.string,
   markText: PropTypes.string,
   actions: PropTypes.array
 };

@@ -15,6 +15,7 @@ import * as actions from "../../../../actions";
 import { getLang } from "../../../../services/lang";
 import COMPANY from "../../../constants/company";
 import { connect } from "react-redux";
+import Notification from "../Notification/Notification";
 import InternalNotification from "../InternalNotification/InternalNotification";
 import * as notificationsActions from "../../../../actions/cabinet/notifications";
 
@@ -174,19 +175,20 @@ class Header extends React.Component {
                               title={utils.getLang("cabinet_header_viewed")}
                             />
                           ),
-                          <UI.Notification
-                            key={i}
-                            icon={n.icon}
-                            unread={n.unread}
-                            actions={n.actions}
-                            onAction={action =>
-                              this.props.notificationAction(n.id, action)
-                            }
-                            message={n.message}
-                            date={utils
-                              .dateFormat(n.created_at, false)
-                              .fromNow()}
-                          />
+                          <Notification {...n} />
+                          // <UI.Notification
+                          //   key={i}
+                          //   icon={n.icon}
+                          //   unread={n.unread}
+                          //   actions={n.actions}
+                          //   onAction={action =>
+                          //     this.props.notificationAction(n.id, action)
+                          //   }
+                          //   message={n.message}
+                          //   date={utils
+                          //     .dateFormat(n.created_at, false)
+                          //     .fromNow()}
+                          // />
                         ])}
                     </UI.Notifications>
                   )}

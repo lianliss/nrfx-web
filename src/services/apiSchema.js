@@ -291,11 +291,6 @@ export default {
           },
           type: "body"
         },
-        AppId: {
-          name: "app_id",
-          filters: ["required", "positive"],
-          type: "body"
-        },
         InviteLink: {
           name: "invite_link",
           filters: {
@@ -328,11 +323,6 @@ export default {
           },
           type: "body"
         },
-        Hash: {
-          name: "hash",
-          filters: ["required"],
-          type: "body"
-        },
         Password: {
           name: "password",
           filters: {
@@ -340,30 +330,24 @@ export default {
             minLen: 6
           },
           type: "body"
-        }
-      },
-      path: "profile/fill_account"
-    },
-    ConfirmEmailMobilePost: {
-      method: "POST",
-      name: "confirm_email_mobile",
-      params: {
+        },
+        Hash: {
+          name: "hash",
+          filters: [],
+          type: "body"
+        },
         Code: {
           name: "code",
-          filters: {
-            "0": "required",
-            minLen: 6,
-            maxLen: 6
-          },
+          filters: [],
           type: "body"
         },
         RegisterToken: {
           name: "register_token",
-          filters: ["required"],
+          filters: [],
           type: "body"
         }
       },
-      path: "profile/confirm_email_mobile"
+      path: "profile/fill_account"
     },
     SignInPost: {
       method: "POST",
@@ -377,11 +361,6 @@ export default {
         Password: {
           name: "password",
           filters: ["required"],
-          type: "body"
-        },
-        AppId: {
-          name: "app_id",
-          filters: ["required", "positive"],
           type: "body"
         },
         PublicKey: {
@@ -404,11 +383,6 @@ export default {
         Password: {
           name: "password",
           filters: ["required"],
-          type: "body"
-        },
-        AppId: {
-          name: "app_id",
-          filters: ["required", "positive"],
           type: "body"
         },
         PublicKey: {
@@ -439,11 +413,6 @@ export default {
         Password: {
           name: "password",
           filters: ["required"],
-          type: "body"
-        },
-        AppId: {
-          name: "app_id",
-          filters: ["required", "positive"],
           type: "body"
         },
         PublicKey: {
@@ -663,6 +632,24 @@ export default {
       },
       path: "profile/ga_init"
     },
+    ConfirmEmailPost: {
+      method: "POST",
+      name: "confirm_email",
+      params: {
+        Hash: {
+          name: "hash",
+          filters: ["required"],
+          type: "body"
+        }
+      },
+      path: "profile/confirm_email"
+    },
+    LogoutPost: {
+      method: "POST",
+      name: "logout",
+      params: [],
+      path: "profile/logout"
+    },
     CheckLoginPost: {
       method: "POST",
       name: "check_login",
@@ -677,29 +664,6 @@ export default {
         }
       },
       path: "profile/check_login"
-    },
-    ConfirmEmailPost: {
-      method: "POST",
-      name: "confirm_email",
-      params: {
-        Hash: {
-          name: "hash",
-          filters: ["required"],
-          type: "body"
-        },
-        Email: {
-          name: "email",
-          filters: ["required"],
-          type: "body"
-        }
-      },
-      path: "profile/confirm_email"
-    },
-    LogoutPost: {
-      method: "POST",
-      name: "logout",
-      params: [],
-      path: "profile/logout"
     }
   },
   Wallet: {
@@ -735,28 +699,15 @@ export default {
       },
       path: "wallet/%n:id"
     },
-    TransactionGet: {
+    SendGet: {
       method: "GET",
-      name: "transaction",
-      params: {
-        StartFrom: {
-          name: "start_from",
-          filters: ["required"],
-          type: "body"
-        },
-        Count: {
-          name: "count",
-          filters: {
-            default: 20
-          },
-          type: "body"
-        }
-      },
-      path: "wallet/transaction"
+      name: "send",
+      params: [],
+      path: "wallet/send"
     },
-    TransferGet: {
+    TransactionsGet: {
       method: "GET",
-      name: "transfer",
+      name: "transactions",
       params: {
         StartFrom: {
           name: "start_from",
@@ -771,7 +722,44 @@ export default {
           type: "body"
         }
       },
-      path: "wallet/transfer"
+      path: "wallet/transactions"
+    },
+    TransfersGet: {
+      method: "GET",
+      name: "transfers",
+      params: {
+        StartFrom: {
+          name: "start_from",
+          filters: ["required"],
+          type: "body"
+        },
+        Count: {
+          name: "count",
+          filters: {
+            default: 20
+          },
+          type: "body"
+        },
+        Currency: {
+          name: "currency",
+          filters: [],
+          type: "body"
+        },
+        WalletId: {
+          name: "wallet_id",
+          filters: [],
+          type: "body"
+        },
+        OrderBy: {
+          name: "order_by",
+          filters: {
+            default: "desc",
+            oneOf: ["asc", "desc"]
+          },
+          type: "body"
+        }
+      },
+      path: "wallet/transfers"
     },
     TransactionIdGet: {
       method: "GET",
@@ -796,12 +784,6 @@ export default {
         }
       },
       path: "wallet/transfer/%n:id"
-    },
-    SendGet: {
-      method: "GET",
-      name: "send",
-      params: [],
-      path: "wallet/send"
     },
     TransactionSendPut: {
       method: "PUT",
@@ -1124,6 +1106,44 @@ export default {
       path: "profit"
     }
   },
+  History: {
+    DefaultGet: {
+      method: "GET",
+      name: "",
+      params: {
+        StartFrom: {
+          name: "start_from",
+          filters: {
+            default: 0
+          },
+          type: "body"
+        },
+        Count: {
+          name: "count",
+          filters: {
+            default: 20
+          },
+          type: "body"
+        },
+        BalanceId: {
+          name: "balance_id",
+          filters: ["positive"],
+          type: "body"
+        },
+        WalletId: {
+          name: "wallet_id",
+          filters: ["positive"],
+          type: "body"
+        },
+        Operations: {
+          name: "operations",
+          filters: [],
+          type: "body"
+        }
+      },
+      path: "history"
+    }
+  },
   Dashboard: {
     DefaultGet: {
       method: "GET",
@@ -1213,8 +1233,28 @@ export default {
     DefaultGet: {
       method: "GET",
       name: "",
-      params: [],
+      params: {
+        StartFrom: {
+          name: "start_from",
+          filters: [],
+          type: "body"
+        },
+        Count: {
+          name: "count",
+          filters: {
+            "0": "int",
+            default: 25
+          },
+          type: "body"
+        }
+      },
       path: "notification"
+    },
+    UnreadCountGet: {
+      method: "GET",
+      name: "unread_count",
+      params: [],
+      path: "notification/unread_count"
     },
     DefaultDelete: {
       method: "DELETE",
@@ -1489,14 +1529,6 @@ export default {
           name: "amount",
           filters: ["required", "positive"],
           type: "body"
-        },
-        GaCode: {
-          name: "ga_code",
-          filters: {
-            minLen: 6,
-            maxLen: 6
-          },
-          type: "body"
         }
       },
       path: "balance/withdraw"
@@ -1513,14 +1545,6 @@ export default {
         Amount: {
           name: "amount",
           filters: ["required", "positive"],
-          type: "body"
-        },
-        GaCode: {
-          name: "ga_code",
-          filters: {
-            minLen: 6,
-            maxLen: 6
-          },
           type: "body"
         }
       },
@@ -2015,6 +2039,40 @@ export default {
       params: [],
       path: "fiat_wallet"
     },
+    TransactionsGet: {
+      method: "GET",
+      name: "transactions",
+      params: {
+        BalanceId: {
+          name: "balance_id",
+          filters: [],
+          type: "body"
+        },
+        StartFrom: {
+          name: "start_from",
+          filters: {
+            default: 0
+          },
+          type: "body"
+        },
+        Count: {
+          name: "count",
+          filters: {
+            default: 20
+          },
+          type: "body"
+        },
+        OrderBy: {
+          name: "order_by",
+          filters: {
+            default: "desc",
+            oneOf: ["asc", "desc"]
+          },
+          type: "body"
+        }
+      },
+      path: "fiat_wallet/transactions"
+    },
     ExchangePost: {
       method: "POST",
       name: "exchange",
@@ -2212,13 +2270,14 @@ export default {
         params: {
           Lang: {
             name: "lang",
-            filters: [],
+            filters: ["required"],
             type: "body"
           },
           Type: {
             name: "type",
             filters: {
-              oneOf: ["backend", "web", "mobile", "all"]
+              "0": "required",
+              oneOf: ["backend", "web", "mobile"]
             },
             type: "body"
           },
@@ -2260,9 +2319,14 @@ export default {
         method: "DELETE",
         name: "",
         params: {
-          Id: {
-            name: "id",
-            filters: ["required", "positive", "int"],
+          Name: {
+            name: "name",
+            filters: ["required"],
+            type: "body"
+          },
+          Type: {
+            name: "type",
+            filters: ["required"],
             type: "body"
           }
         },

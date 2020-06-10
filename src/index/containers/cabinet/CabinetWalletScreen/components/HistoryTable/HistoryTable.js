@@ -5,7 +5,7 @@ import * as utils from "../../../../../../utils";
 import EmptyContentBlock from "../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock";
 import { openModal } from "../../../../../../actions";
 
-export default function HistoryTable({ history, adaptive, header }) {
+export default function HistoryTable({ history, adaptive, header, type }) {
   if (!history.length) {
     return (
       <EmptyContentBlock
@@ -72,9 +72,7 @@ export default function HistoryTable({ history, adaptive, header }) {
       return (
         <UI.TableCell
           key={i}
-          onClick={() =>
-            openModal("transaction", { id: item.id, type: item.type })
-          }
+          onClick={() => openModal("transaction", { id: item.id, type })}
         >
           <UI.TableColumn>
             <div className="Wallets__history__address">
@@ -108,9 +106,7 @@ export default function HistoryTable({ history, adaptive, header }) {
     return (
       <UI.TableCell
         key={i}
-        onClick={() =>
-          openModal("transaction", { id: item.id, type: item.type })
-        }
+        onClick={() => openModal("transaction", { id: item.id, type })}
       >
         <UI.TableColumn align="center">
           <div
