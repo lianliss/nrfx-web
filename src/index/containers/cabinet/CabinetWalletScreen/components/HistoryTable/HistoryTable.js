@@ -54,16 +54,22 @@ export default function HistoryTable({ history, adaptive, header, type }) {
 
   const rows = history.map((item, i) => {
     let status;
-    status =
-      item.category === "send"
-        ? utils.getLang("cabinet_wallets_historyTable_sent")
-        : utils.getLang("cabinet_wallets_historyTable_received");
+
+    status = item.type.includes("send")
+      ? utils.getLang("cabinet_wallets_historyTable_sent")
+      : utils.getLang("cabinet_wallets_historyTable_received");
 
     let address = item.address
       ? utils.clipTextMiddle(item.address)
       : utils.getLang("cabinet_wallets_historyTable_unknown");
-    if (item.type === "transfer") {
-      address = address.toUpperCase();
+
+    if (item.type === "transaction_receive") {
+      address = (
+        <span>
+          {utils.getLang("cabinet_walletTransactionModal_my")}{" "}
+          {item.currency.toUpperCase()} {utils.getLang("global_wallet")}
+        </span>
+      );
     }
 
     const createdAt = utils.dateFormat(item.created_at, null);
@@ -82,11 +88,10 @@ export default function HistoryTable({ history, adaptive, header, type }) {
               />
             </div>
             <div
-              className={utils.classNames({
-                Wallets__history__status: true,
-                [item.status]: true,
-                [item.category]: true
-              })}
+              className={utils.classNames(
+                "Wallets__history__status",
+                item.type
+              )}
             >
               {status}
             </div>
@@ -119,7 +124,7 @@ export default function HistoryTable({ history, adaptive, header, type }) {
         <UI.TableColumn>
           <div className="Wallets__history__address">
             <UI.WalletAddress
-              isUser={item.type === "transfer"}
+              isUser={item.type.includes("transfer")}
               address={address}
             />
           </div>
@@ -130,11 +135,7 @@ export default function HistoryTable({ history, adaptive, header, type }) {
         <UI.TableColumn>{item.currency.toUpperCase()}</UI.TableColumn>
         <UI.TableColumn>
           <div
-            className={utils.classNames({
-              Wallets__history__status: true,
-              [item.status]: true,
-              [item.category]: true
-            })}
+            className={utils.classNames("Wallets__history__status", item.type)}
           >
             {status}
           </div>

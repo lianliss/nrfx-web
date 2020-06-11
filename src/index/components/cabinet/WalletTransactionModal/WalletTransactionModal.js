@@ -44,11 +44,14 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
 
     const currencyInfo = actions.getCurrencyInfo(this.state.info.currency);
 
-    return this.state.info.category === "send" ? (
-      utils.getLang("cabinet_walletTransactionModal_sent")
+    return this.state.info.type.includes("send") ? (
+      <span>
+        {utils.getLang("cabinet_wallets_historyTable_sent")}{" "}
+        {utils.ucfirst(currencyInfo.name)}
+      </span>
     ) : (
       <span>
-        {utils.getLang("cabinet_walletTransactionModal_receive")}{" "}
+        {utils.getLang("cabinet_wallets_historyTable_received")}{" "}
         {utils.ucfirst(currencyInfo.name)}
       </span>
     );
@@ -61,9 +64,8 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
       const data = this.state.info;
       const currencyInfo = actions.getCurrencyInfo(data.currency);
       const currency = data.currency.toUpperCase();
-
       let address = data.address;
-      if (address && this.props.type === "transfer") {
+      if (address && this.props.type.includes("transfer")) {
         address = address.toUpperCase();
       }
 
@@ -81,33 +83,35 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
           />
           <InfoRowGroup align="left">
             <InfoRow label={utils.getLang("global_from")}>
-              {data.type !== "transaction_receive" ? (
-                <>
-                  {utils.getLang("cabinet_walletTransactionModal_my")}{" "}
-                  {utils.ucfirst(currencyInfo.name)}
-                </>
-              ) : (
+              {this.state.info.type.includes("receive") ? (
                 <div className="Wallets__history__address">
                   <UI.WalletAddress
-                    isUser={data.type === "transfer"}
+                    isUser={this.state.info.type.includes("transfer")}
                     address={
                       address ||
                       utils.getLang("cabinet_wallets_historyTable_unknown")
                     }
                   />
                 </div>
+              ) : (
+                <>
+                  {utils.getLang("cabinet_walletTransactionModal_my")}{" "}
+                  {utils.ucfirst(currencyInfo.name)}{" "}
+                  {utils.getLang("global_wallet")}
+                </>
               )}
             </InfoRow>
             <InfoRow label={utils.getLang("global_to")}>
-              {data.type === "transaction_receive" ? (
+              {this.state.info.type.includes("receive") ? (
                 <>
                   {utils.getLang("cabinet_walletTransactionModal_my")}{" "}
-                  {utils.ucfirst(currencyInfo.name)}
+                  {utils.ucfirst(currencyInfo.name)}{" "}
+                  {utils.getLang("global_wallet")}
                 </>
               ) : (
                 <div className="Wallets__history__address">
                   <UI.WalletAddress
-                    isUser={data.type === "transfer"}
+                    isUser={this.state.info.type.includes("transfer")}
                     address={address}
                   />
                 </div>
@@ -116,7 +120,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
             <InfoRow label={utils.getLang("global_amount")}>
               <UI.NumberFormat number={data.amount} currency={currency} />
             </InfoRow>
-            {this.props.type !== "transfer" && (
+            {!this.props.type.includes("transfer") && (
               <InfoRow label={utils.getLang("global_fee")}>
                 <UI.NumberFormat number={data.fee} currency={currency} />
               </InfoRow>

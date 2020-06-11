@@ -42,11 +42,13 @@
   overflow: hidden;
   max-width: 100%;
 
-  &.receive {
+  &.transaction_receive,
+  &.transfer_receive {
     color: var(--green);
   }
 
-  &.send {
+  &.transaction_send,
+  &.transfer_send {
     color: var(--dark-blue);
   }
 }
