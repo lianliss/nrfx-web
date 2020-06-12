@@ -137,7 +137,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
           />
 
           <div className="WalletTransactionModal__status">
-            {data.status !== "done" && (
+            {data.required_confirmations && (
               <div className="WalletTransactionModal__status__row">
                 <div className="WalletTransactionModal__status__row__label">
                   {utils.getLang(
