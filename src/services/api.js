@@ -42,6 +42,7 @@ export function invoke(method, name, params, options = {}) {
       headers: {
         "X-Token": auth.getToken(),
         "X-Beta": 1,
+        "X-APP-ID": APP_ID,
         "Content-Type": includesFile
           ? "application/x-www-form-urlencoded"
           : "application/json",
