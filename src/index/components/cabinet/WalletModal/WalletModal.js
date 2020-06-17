@@ -66,7 +66,7 @@ export default ({ onClose, wallet }) => {
               }}
               currency={currency}
             >
-              {utils.getLang("site__contactSend")}
+              {utils.getLang("cabinet_walletTransactionModal_send")}
             </UI.Button>
             <UI.Button
               onClick={() => {
