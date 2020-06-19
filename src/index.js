@@ -5,7 +5,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router5";
-import * as Sentry from "@sentry/browser";
 // internal
 import store from "./store";
 import router from "./router";
@@ -17,12 +16,6 @@ import * as user from "./actions/user";
 import * as emitter from "./services/emitter";
 import realTimeService from "./services/realtime";
 import "./index/polyfill";
-
-if (process.env.NODE_ENV === "production") {
-  Sentry.init({
-    dsn: "https://2f062902440147cfab7ea204358fdd26@sentry.io/1816477"
-  });
-}
 
 // test
 
