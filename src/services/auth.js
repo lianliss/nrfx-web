@@ -11,13 +11,7 @@ export function isLogged() {
   return getToken() !== null;
 }
 
-export function setup(token) {
-  if (isLogged()) {
-  }
-}
-
 export function login(accessToken) {
-  setup(accessToken);
   return storage.setItem("access_token", accessToken);
 }
 

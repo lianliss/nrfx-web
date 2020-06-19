@@ -30,7 +30,6 @@ export function getAuth(login, password, token) {
         store.dispatch({ type: actionTypes.AUTH, res });
 
         if (res.access_token) {
-          auth.login(res.access_token);
           user.install().then(() => {
             resolve(res);
           });
@@ -136,7 +135,6 @@ export function getGoogleCode(login, password, code) {
         public_key: publicKey
       })
       .then(resp => {
-        auth.login(resp.access_token);
         user.install().then(() => {
           resolve(resp);
         });

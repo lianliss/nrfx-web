@@ -13,7 +13,6 @@ import initGetParamsData from "./services/initialGetParams";
 import { GetParamsContext } from "./index/contexts";
 import App from "./index/App";
 // import * as serviceWorker from './serviceWorker';
-import * as auth from "./services/auth";
 import * as user from "./actions/user";
 import * as emitter from "./services/emitter";
 import realTimeService from "./services/realtime";
@@ -28,7 +27,6 @@ if (process.env.NODE_ENV === "production") {
 // test
 
 // require('define').noConflict();
-auth.setup();
 realTimeService();
 
 emitter.addListener("userInstall", user.install);

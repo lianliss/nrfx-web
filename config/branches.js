@@ -10,4 +10,5 @@ module.exports = {
   'langs-test': 'langs',
   'fe-271': 'extrafee',
   'fe-285': 'prestage',
+  'fe-293': 'be-177',
 };

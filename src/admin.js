@@ -9,12 +9,10 @@ import store from "./store";
 import { Provider } from "react-redux";
 import router from "./router";
 import { RouterProvider } from "react-router5";
-import * as auth from "./services/auth";
 import * as emitter from "./services/emitter";
 import * as user from "./actions/user";
 
 // require('define').noConflict();
-auth.setup();
 
 emitter.addListener("userInstall", user.install);
 emitter.emit("userInstall");

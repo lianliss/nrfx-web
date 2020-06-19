@@ -13,7 +13,6 @@ import apiSchema from "../../../../services/apiSchema";
 import * as api from "../../../../services/api";
 import * as utils from "../../../../utils";
 import * as pages from "../../../constants/pages";
-import * as auth from "../../../../services/auth";
 // import SVG from 'react-inlinesvg';
 import * as toastsActions from "../../../../actions/toasts";
 import * as actions from "../../../../actions";
@@ -85,7 +84,6 @@ class CabinetRegister extends React.PureComponent {
             utils.getLang("cabinet_registerScreen_success"),
             "success"
           );
-          auth.login(access_token);
           window.location.href = "/" + pages.DASHBOARD;
         })
         .catch(err => {

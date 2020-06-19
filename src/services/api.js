@@ -3,6 +3,7 @@ import * as action from "../actions/";
 import { clearProfile } from "../actions/auth";
 import router from "../router";
 import * as PAGES from "../index/constants/pages";
+import { login } from "./auth";
 
 export const APP_ID = 8;
 const BRANCH_NAME = process.env.BRANCH_NAME;
@@ -60,6 +61,9 @@ export function invoke(method, name, params, options = {}) {
 
     fetch(url, init)
       .then(resp => {
+        const authToken = resp.headers.get("auth-token");
+        authToken && login(authToken);
+
         if (resp.status === 403) {
           clearProfile();
           reject({ message: "403 Forbidden: Invalid credentials" });
