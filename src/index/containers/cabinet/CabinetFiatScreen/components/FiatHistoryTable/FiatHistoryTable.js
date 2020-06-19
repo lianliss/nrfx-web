@@ -72,7 +72,7 @@ const FiatHistoryTable = props => {
   };
 
   const renderIncomeItem = item => {
-    const primaryCurrency = getCurrencyInfo(item.primary_currency);
+    const currency = getCurrencyInfo(item.currency);
 
     return (
       <>
@@ -90,8 +90,8 @@ const FiatHistoryTable = props => {
               <UI.NumberFormat
                 symbol
                 type="auto"
-                number={item.primary_amount}
-                currency={primaryCurrency.abbr}
+                number={item.amount}
+                currency={currency.abbr}
               />
             </div>
           </div>
@@ -101,7 +101,7 @@ const FiatHistoryTable = props => {
   };
 
   const renderWithdrawalItem = item => {
-    const primaryCurrency = getCurrencyInfo(item.primary_currency);
+    const currency = getCurrencyInfo(item.currency);
 
     return (
       <>
@@ -122,9 +122,9 @@ const FiatHistoryTable = props => {
             <div className="FiatHistoryTable__price">
               <UI.NumberFormat
                 symbol
-                number={-item.primary_amount}
+                number={-item.amount}
                 type={item.status === "failed" ? "down" : null}
-                currency={primaryCurrency.abbr}
+                currency={currency.abbr}
               />
             </div>
           </div>

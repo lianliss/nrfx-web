@@ -333,7 +333,7 @@ export function getScrollbarWidth() {
   return widthNoScroll - widthWithScroll;
 }
 
-export function isFiat(currency) {
+export function isFiat(currency = "") {
   return ["gbp", "usd", "usdt", "eur", "rub", "idr", "cny"].includes(
     currency.toLowerCase()
   );

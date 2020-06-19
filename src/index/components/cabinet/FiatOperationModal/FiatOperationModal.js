@@ -53,8 +53,7 @@ function FiatOperationModal(props) {
     utils.isFiat(operation.primary_currency) ? "slice" : "reverse"
   ]();
 
-  const balance =
-    operation.primary_amount * (operation.type === "withdrawal" ? -1 : 1);
+  const currency = getCurrencyInfo(operation.currency);
 
   return (
     <Modal className="FiatOperationModal" isOpen={true} onClose={props.onClose}>
@@ -66,9 +65,11 @@ function FiatOperationModal(props) {
         <div className="FiatOperationModal__content">
           <UI.WalletCard
             symbol={true}
-            balance={balance}
-            skipColor={balance < 0}
-            currency={primaryCurrency}
+            balance={
+              operation.amount * (operation.type === "withdrawal" ? -1 : 1)
+            }
+            skipColor={operation.type === "withdrawal"}
+            currency={currency}
           />
 
           {operation.type === "withdrawal" && (
@@ -115,7 +116,7 @@ function FiatOperationModal(props) {
                   <div className="FiatOperationModal__value">
                     <UI.NumberFormat
                       number={operation.account_number}
-                      currency={secondaryCurrency.abbr}
+                      currency={currency.abbr}
                     />
                   </div>
                 </div>
@@ -141,7 +142,7 @@ function FiatOperationModal(props) {
                 {operation.fee ? (
                   <UI.NumberFormat
                     number={operation.fee}
-                    currency={primaryCurrency.abbr}
+                    currency={currency.abbr}
                   />
                 ) : (
                   "-"
