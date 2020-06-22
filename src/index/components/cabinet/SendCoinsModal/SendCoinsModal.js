@@ -169,7 +169,7 @@ class SendCoinsModal extends React.Component {
           const { name, abbr, is_available } = actions.getCurrencyInfo(
             w.currency
           );
-          if (is_available === false) {
+          if (is_available === false || abbr === "nrfx") {
             return false;
           }
           return {
