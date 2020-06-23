@@ -68,10 +68,13 @@ class CabinetFiatScreen extends CabinetBaseScreen {
             </>
           )}
           <Paging
-            isCanMore={true}
-            onMore={() => {}}
-            moreButton={false}
-            isLoading={false}
+            isCanMore={
+              !this.props.loadingStatus.history &&
+              this.props.history.next !== null
+            }
+            onMore={this.props.getHistoryMore}
+            moreButton={this.props.history.next !== null}
+            isLoading={this.props.loadingStatus.history}
           >
             <FiatHistoryTable />
           </Paging>
@@ -113,6 +116,7 @@ export default connect(
     translator: store.settings.translator
   }),
   {
+    getHistoryMore: actions.getHistoryMore,
     getFiatWallets: actions.getFiatWallets
   }
 )(CabinetFiatScreen);

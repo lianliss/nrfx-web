@@ -6,7 +6,7 @@ import { getLang } from "../../utils";
 import { closeModal } from "../index";
 
 export function getFiatWallets() {
-  return (dispatch, getState) => {
+  return dispatch => {
     api
       .call(apiSchema.Fiat_wallet.DefaultGet)
       .then(payload => {
@@ -16,6 +16,33 @@ export function getFiatWallets() {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
           section: "default",
+          status: ""
+        });
+      });
+  };
+}
+
+export function getHistoryMore() {
+  return (dispatch, getState) => {
+    const { history } = getState().fiat;
+    dispatch({
+      type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+      section: "history",
+      status: "loading"
+    });
+    api
+      .call(apiSchema.History.DefaultGet, {
+        count: 20,
+        operations: ["withdrawal", "income", "refill", "swap"].join(","),
+        start_from: history.next
+      })
+      .then(payload => {
+        dispatch({ type: actionTypes.FIAT_HISTORY_ADD_ITEMS, payload });
+      })
+      .finally(() => {
+        dispatch({
+          type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: "history",
           status: ""
         });
       });
