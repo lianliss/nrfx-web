@@ -1,6 +1,8 @@
 @import "../../vars";
 
 .Input__wrapper {
+  --input-height: 48px;
+
   width: 100%;
   position: relative;
   border-radius: @border-radius;
@@ -14,7 +16,7 @@
 }
 
 .Input {
-  height: 48px;
+  height: var(--input-height);
   color: var(--almost-black);
   box-shadow: var(--main-shadow);
   background: var(--secondary-background);
@@ -61,7 +63,7 @@
 
 .Input__wrapper.small {
   .Input {
-    height: 24px;
+    --input-height: 24px;
     border-radius: 6px;
     font-weight: 500;
     font-size: 11px;
@@ -77,7 +79,6 @@
 
   .Input__indicator {
     padding-right: 8px;
-    height: 24px;
   }
 }
 
@@ -88,7 +89,7 @@
 }
 
 .Input__indicator {
-  height: 48px;
+  height: var(--input-height);
   position: absolute;
   top: 0;
   right: 0;
@@ -135,7 +136,6 @@
   .Input__reliability__indicator {
     flex: 1;
     height: 2px;
-    background: #f0f;
     border-radius: 1px;
     background: var(--extra-light-gray);
 

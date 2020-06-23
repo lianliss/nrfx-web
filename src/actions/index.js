@@ -12,6 +12,7 @@ import { getLang } from "../services/lang";
 import * as storage from "../services/storage";
 import * as toast from "./toasts";
 import clipboardCopy from "clipboard-copy";
+import * as pages from "../index/constants/pages";
 
 export function loadLang(code, toggleCurrentLang = true) {
   return new Promise((resolve, reject) => {
@@ -29,7 +30,7 @@ export function loadLang(code, toggleCurrentLang = true) {
         apiSchema.Lang.DefaultGet,
         { code },
         {
-          // apiEntry: "https://api.narfex.com" // TODO
+          apiEntry: "https://api.narfex.com" // TODO
         }
       )
       .then(({ translations, languages }) => {
@@ -100,6 +101,10 @@ export function openModal(name, params = {}, props = {}, done) {
     props,
     done
   );
+}
+
+export function openPage(page) {
+  window.location.href = window.location.origin + "/" + page;
 }
 
 export function openStateModal(name, params = {}) {

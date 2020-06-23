@@ -2,15 +2,16 @@ import "./Select.less";
 import React from "react";
 import Select from "react-select";
 import { getCssVar } from "../../../utils";
+import { classNames as cn } from "../../utils";
 import SVG from "react-inlinesvg";
-import hexToRgba from "hex-to-rgba";
 
-const customStyles = {
-  control: provided => ({
+export const customStyles = {
+  control: (provided, { isDisabled }) => ({
     ...provided,
     border: "none",
     borderRadius: 8,
     boxShadow: getCssVar("--main-shadow"),
+    backgroundColor: isDisabled ? "#FAFAFA" : getCssVar("--white"),
     minHeight: 48
   }),
   indicatorSeparator: () => ({
@@ -63,8 +64,8 @@ const customStyles = {
   }),
   option: (provided, state) => {
     let bg = null;
-    if (state.isFocused) bg = hexToRgba(getCssVar("--light-gray"), 0.2);
-    if (state.isSelected) bg = hexToRgba(getCssVar("--primary-orange"), 0.3);
+    if (state.isFocused) bg = getCssVar("--cloudy");
+    if (state.isSelected) bg = getCssVar("--cloudy");
 
     return {
       ...provided,
@@ -72,7 +73,13 @@ const customStyles = {
       padding: "12px 16px",
       fontSize: 14,
       backgroundColor: bg,
-      lineHeight: "16px"
+      lineHeight: "16px",
+      ":hover": {
+        backgroundColor: getCssVar("--alice-blue")
+      },
+      ":active": {
+        backgroundColor: getCssVar("--cloudy")
+      }
     };
   },
   placeholder: provider => ({
@@ -81,13 +88,29 @@ const customStyles = {
   })
 };
 
+const formatOptionLabel = ({ value, label, icon }) => (
+  <div className="Select__option" style={{ display: "flex" }}>
+    {icon && <div className="Select__option__icon">{icon}</div>}
+    <span className="Select__option__label">{label}</span>
+  </div>
+);
+
 export default props => {
   return (
     <Select
       {...props}
+      formatOptionLabel={formatOptionLabel}
       components={{ DropdownIndicator, ClearIndicator, MultiValueRemove }}
-      className="Select"
-      styles={customStyles}
+      className={cn("Select", props.className)}
+      value={
+        typeof props.value === "object"
+          ? props.value
+          : props.options.find(o => o.value === props.value)
+      }
+      styles={{
+        ...customStyles,
+        ...props.styles
+      }}
     />
   );
 };

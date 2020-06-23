@@ -1,0 +1,56 @@
+.Ticker {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  background: var(--white);
+  overflow: hidden;
+
+  .Ticker__tape {
+    will-change: transform;
+    animation: slide 30s linear infinite;
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 13px;
+    line-height: 16px;
+    margin: auto;
+    pointer-events: none;
+  }
+
+  .Ticker__market {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 500;
+    margin: 0 8px;
+
+    & > * {
+      margin: 0 8px;
+    }
+
+    .Number {
+      white-space: nowrap;
+    }
+
+    .Ticker__market__name {
+
+    }
+
+    .Ticker__market__price {
+
+    }
+
+    .Ticker__market__price {
+
+    }
+  }
+}
+
+@keyframes slide {
+  from {
+    transform: translate3d(0);
+  }
+  to {
+    transform: translate3d(-40%, 0, 0);
+  }
+}

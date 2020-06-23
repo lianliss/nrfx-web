@@ -7,13 +7,22 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { classNames } from "../../../../utils/index";
 
-export default function Chart({ series, ...props }) {
+export default function Chart({
+  series,
+  lineWidth = 2,
+  height = 56,
+  ...props
+}) {
   const [hovered, setHovered] = useState(false);
 
   const options = {
     chart: {
+      type: props.type,
       backgroundColor: null,
-      height: 56
+      height: height,
+      margin: 0,
+      padding: 0,
+      spacing: [0, 0, 0, 0]
     },
     title: {
       text: undefined
@@ -71,10 +80,10 @@ export default function Chart({ series, ...props }) {
       series: {
         animation: false,
         enableMouseTracking: false,
-        lineWidth: 3,
+        lineWidth: lineWidth,
         marker: {
           enabled: props.marker,
-          radius: 3,
+          radius: lineWidth,
           symbol: "circle",
           fillColor: "#fff",
           lineColor: null,
