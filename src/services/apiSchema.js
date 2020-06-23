@@ -152,6 +152,20 @@ export default {
     },
     path: "cron"
   },
+  Balances: {
+    "%n:idGet": {
+      method: "GET",
+      name: "%n:id",
+      params: {
+        Id: {
+          name: "id",
+          filters: ["required", "int", "positive"],
+          type: "query"
+        }
+      },
+      path: "balances/%n:id"
+    }
+  },
   PingGet: {
     method: "GET",
     name: "ping",
@@ -301,6 +315,37 @@ export default {
       },
       path: "profile/sign_up"
     },
+    VerifyMobileCodeGet: {
+      method: "GET",
+      name: "verify_mobile_code",
+      params: {
+        Code: {
+          name: "code",
+          filters: {
+            "0": "required",
+            "1": "int",
+            "2": "positive",
+            minLen: 6,
+            maxLen: 6
+          },
+          type: "body"
+        },
+        CsrfToken: {
+          name: "csrf_token",
+          filters: ["required", "string"],
+          type: "body"
+        },
+        Type: {
+          name: "type",
+          filters: {
+            "0": "required",
+            oneOf: ["sign_up", "reset_password"]
+          },
+          type: "body"
+        }
+      },
+      path: "profile/verify_mobile_code"
+    },
     FillAccountPut: {
       method: "PUT",
       name: "fill_account",
@@ -333,17 +378,7 @@ export default {
         },
         Hash: {
           name: "hash",
-          filters: [],
-          type: "body"
-        },
-        Code: {
-          name: "code",
-          filters: [],
-          type: "body"
-        },
-        RegisterToken: {
-          name: "register_token",
-          filters: [],
+          filters: ["required"],
           type: "body"
         }
       },

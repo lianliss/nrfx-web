@@ -3,7 +3,10 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   balances: [],
   wallets: [],
-  history: [],
+  history: {
+    next: 0,
+    items: []
+  },
   rates: {},
   rate: 0,
   rateType: "update",
@@ -20,7 +23,8 @@ const initialState = {
     merchants: "",
     rate: "",
     newRate: "",
-    marketForm: ""
+    marketForm: "",
+    history: ""
   }
 };
 
@@ -31,6 +35,16 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         ...action.payload,
         pending: false
+      };
+    }
+
+    case actionTypes.FIAT_HISTORY_ADD_ITEMS: {
+      return {
+        ...state,
+        history: {
+          next: action.payload.next,
+          items: [...state.history.items, ...action.payload.items]
+        }
       };
     }
 
