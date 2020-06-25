@@ -60,7 +60,8 @@ export default class ReceiveCoinsModal extends React.Component {
       options = options
         .map(item => {
           const info = actions.getCurrencyInfo(item.currency);
-          if (info.is_available === false) {
+          if (info.is_available === false || info.abbr === "nrfx") {
+            // TODO: NRFX HACK
             return false;
           }
           return {

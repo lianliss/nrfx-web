@@ -170,6 +170,7 @@ class SendCoinsModal extends React.Component {
             w.currency
           );
           if (is_available === false || abbr === "nrfx") {
+            // TODO: NRFX HACK
             return false;
           }
           return {
