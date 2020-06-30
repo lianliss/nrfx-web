@@ -2,55 +2,39 @@ import "./Advantages.less";
 
 import React from "react";
 import SVG from "react-inlinesvg";
+import Lang from "../../../../../components/Lang/Lang";
+import { classNames as cn } from "utils";
+import { Link } from "react-router5";
 
-export default () => {
+export default ({ accent, type, mode, items, titleLang }) => {
   return (
-    <div className="Advantages LandingWrapper__block">
+    <div
+      className={cn("Advantages LandingWrapper__block", type, mode, { accent })}
+    >
       <div className="LandingWrapper__content Advantages__content">
-        <h2>Преимущества</h2>
+        <h2>
+          <Lang name={titleLang} />
+        </h2>
         <ul>
-          <li>
-            <SVG src={require("./assets/safe_vault.svg")} />
-            <h4>Безопасное хранение</h4>
-            <p>
-              Мы храним подавляющее большинство цифровых активов в безопасном
-              автономном хранилище
-            </p>
-          </li>
-          <li>
-            <SVG src={require("./assets/legality.svg")} />
-            <h4>Легальность</h4>
-            <p>Полностью легальная компания с финансовой лицензией в...?</p>
-          </li>
-          <li>
-            <SVG src={require("./assets/safe_vault.svg")} />
-            <h4>Надежность</h4>
-            <p>Многоуровневая и многокластерная системная архитектура</p>
-          </li>
-          <li>
-            <SVG src={require("./assets/fee.svg")} />
-            <h4>Низкие комиссии</h4>
-            <p>
-              Благодаря оптимизации бизнес–процессов мы добились снижения
-              комиссий
-            </p>
-          </li>
-          <li>
-            <SVG src={require("./assets/safety.svg")} />
-            <h4>Безопасность</h4>
-            <p>
-              Мы уделяем особое внимание вопросу безопасности и постоянно
-              добавляем новые уровни защиты
-            </p>
-          </li>
-          <li>
-            <SVG src={require("./assets/support.svg")} />
-            <h4>Поддержка 24/7</h4>
-            <p>
-              Есть проблема? Просто свяжитесь с нами. Наша служба поддержки
-              доступна 24/7
-            </p>
-          </li>
+          {items &&
+            items.map((i, key) => (
+              <li key={key}>
+                <SVG src={i.icon} />
+                <div className="Advantages__item__text">
+                  <h4>
+                    <Lang name={i.titleLang} />
+                  </h4>
+                  <p>
+                    <Lang name={i.textLang} />
+                  </p>
+                  {i.linkLang && (
+                    <Link routeName={i.routeName}>
+                      <Lang name={i.linkLang} />
+                    </Link>
+                  )}
+                </div>
+              </li>
+            ))}
         </ul>
       </div>
     </div>

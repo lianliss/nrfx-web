@@ -10,6 +10,8 @@ import Modals from "./Modals";
 import { getLang, setLang } from "../services/lang";
 import * as actions from "../actions";
 import * as UI from "src/ui/index";
+import CookieUsage from "../index/components/site/CookieUsage/CookieUsage";
+import * as storage from "../services/storage";
 
 class App extends React.Component {
   state = {
@@ -25,11 +27,14 @@ class App extends React.Component {
       return <UI.LogoLoader />;
     }
 
+    const acceptedCookies = storage.getItem("acceptedCookies");
+
     return (
       <div>
         <Routes />
         <Modals />
         <Toasts />
+        {!acceptedCookies ? <CookieUsage /> : null}
       </div>
     );
   }

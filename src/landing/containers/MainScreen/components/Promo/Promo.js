@@ -1,37 +1,51 @@
 import React from "react";
 import "./Promo.less";
 import { Button } from "../../../../../ui";
-import AppButtons from "../../../../../wrappers/Landing/components/AppButtons/AppButtons";
+import AppButtons from "../../../../../components/AppButtons/AppButtons";
 import * as actions from "../../../../../actions";
 import * as steps from "../../../../../components/AuthModal/fixtures";
+import * as pages from "../../../../../index/constants/pages";
+import { useRouter } from "react-router5";
+import Lang from "../../../../../components/Lang/Lang";
 
-export default () => {
+export default props => {
+  const router = useRouter();
+
+  const handleClickBuyToken = e => {
+    e.stopPropagation();
+    e.preventDefault();
+    router.navigate(pages.TOKEN);
+  };
   return (
     <div className="LandingWrapper__block Promo">
       <div className="LandingWrapper__content Promo__content">
         <div className="Promo__content__text">
-          <h1>Покупайте и обменивайте криптовалюты</h1>
-          <p>
-            Narfex – самый простой способ для покупки, продажи и хранения
-            Bitcoin, Ethereum и других криптовалют
-          </p>
+          <h1>{props.title}</h1>
+          <p>{props.description}</p>
           <Button
             onClick={() => {
               actions.openModal("auth", { type: steps.REGISTRATION });
             }}
             className="extra_large"
           >
-            Попробовать
+            {props.actionButtonText}
           </Button>
           <AppButtons className="Promo__appButtons" />
-          <div className="Promo__buyNrfx">
-            <Button size="ultra_small">Narfex Token</Button>
-            <div className="Promo__buyNrfx__label">
-              NRFX По выгодной цене <a href="#">Купить ›</a>
+          {props.label && (
+            <div className="Promo__buyNrfx" onClick={handleClickBuyToken}>
+              <Button size="ultra_small">{props.label}</Button>
+              <div className="Promo__buyNrfx__label">
+                {props.labelDescription} <a href="#">{props.labelLink} ›</a>
+              </div>
             </div>
-          </div>
+          )}
         </div>
-        <div className="Promo__image" />
+        <div
+          className="Promo__image"
+          style={{
+            backgroundImage: `url(${props.image})`
+          }}
+        />
       </div>
     </div>
   );

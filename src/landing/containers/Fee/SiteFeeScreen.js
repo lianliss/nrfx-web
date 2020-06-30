@@ -2,20 +2,20 @@ import "./SiteFeeScreen.less";
 
 import React from "react";
 import { connect } from "react-redux";
-import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
+import NumberFormat from "src/ui/components/NumberFormat/NumberFormat";
 
-import BaseScreen from "../../BaseScreen";
-import * as UI from "../../../../ui";
-import * as actions from "../../../../actions";
-import { getLang } from "../../../../utils/index";
+import BaseScreen from "src/index/containers/BaseScreen";
+import * as UI from "src/ui";
+import * as actions from "src/actions";
+import { getLang } from "src/utils/index";
 
-import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
+import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingStatus";
 import CurrencyLabel from "./components/CurrencyLable/CurrencyLabel";
 import { Helmet } from "react-helmet";
-import * as utils from "../../../../utils";
-import COMPANY from "../../../constants/company";
+import * as utils from "src/utils";
+import COMPANY from "src/index/constants/company";
 
-class SiteFeeScreen extends BaseScreen {
+export default class SiteFeeScreen extends BaseScreen {
   state = {
     status: "loading"
   };
@@ -630,7 +630,12 @@ class SiteFeeScreen extends BaseScreen {
   render() {
     if (this.state.status) {
       return (
-        <LoadingStatus status={this.state.status} onRetry={() => this.load()} />
+        <div className="SiteFeeScreen Layout_spacing">
+          <LoadingStatus
+            status={this.state.status}
+            onRetry={() => this.load()}
+          />
+        </div>
       );
     }
 
@@ -653,14 +658,10 @@ class SiteFeeScreen extends BaseScreen {
             {getLang("site__fee_description2")}
           </p>
         </div>
-        {this.props.adaptive
+        {window.innerWidth < 600
           ? this.renderContentAdaptive()
           : this.renderContent()}
       </div>
     );
   }
 }
-
-export default connect(state => ({
-  adaptive: state.default.adaptive
-}))(SiteFeeScreen);

@@ -89,7 +89,7 @@ export const getCssVar = (v, fallback = "#AAA") => {
 };
 
 export const nl2br = text => {
-  if (text.includes("\\n")) {
+  if (text && text.includes("\\n")) {
     return text.split("\\n").map((item, i) => (
       <>
         {item}

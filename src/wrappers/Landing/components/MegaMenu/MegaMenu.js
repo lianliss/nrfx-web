@@ -3,13 +3,16 @@ import { useSelector } from "react-redux";
 import "./MegaMenu.less";
 import { classNames as cn } from "src/utils/index";
 import SVG from "react-inlinesvg";
-import AppButtons from "../AppButtons/AppButtons";
+import AppButtons from "../../../../components/AppButtons/AppButtons";
 import * as actions from "../../../../actions";
 import * as pages from "../../../../index/constants/pages";
 import { userSelector } from "../../../../selectors";
 import * as steps from "../../../../components/AuthModal/fixtures";
+import { useRouter } from "react-router5";
+import Lang from "../../../../components/Lang/Lang";
 
 export default ({ visible }) => {
+  const router = useRouter();
   const user = useSelector(userSelector);
   return (
     <div className={cn("MegaMenu", "LandingWrapper__block", { visible })}>
@@ -18,36 +21,43 @@ export default ({ visible }) => {
           <li
             onClick={() => {
               user
-                ? actions.openPage(pages.FIAT)
+                ? router.navigate(pages.FIAT)
                 : actions.openModal("auth", { type: steps.REGISTRATION });
             }}
           >
             <SVG src={require("src/asset/120/buy_currency.svg")} />
             <div>
-              <h4>Купить Крипту</h4>
+              <h4>
+                <Lang name="landing_megaMenu_buyCrypto_title" />
+              </h4>
               <p>
-                Простой и выгодный обменник для всех.
-                <br />
-                Ввод и вывод фиатных валют.
+                <Lang name="landing_megaMenu_buyCrypto_description" />
               </p>
             </div>
           </li>
-          <li>
+          <li
+            onClick={() => {
+              router.navigate(pages.EXCHANGE);
+            }}
+          >
             <SVG src={require("src/asset/120/exchange.svg")} />
             <div>
-              <h4>Торговать</h4>
+              <h4>
+                <Lang name="landing_megaMenu_trade_title" />
+              </h4>
               <p>
-                Профессиональная биржа для трейдеров. Только проверенные монеты.
+                <Lang name="landing_megaMenu_trade_description" />
               </p>
             </div>
           </li>
         </ul>
         <div className="MegaMenu__image" />
         <div className="MegaMenu__description">
-          <h3>Мобильное приложение</h3>
+          <h3>
+            <Lang name="landing_megaMenu_mobileApplication_title" />
+          </h3>
           <p>
-            Скачайте наше приложение и управляйте криптовалютами, где бы вы ни
-            находились.
+            <Lang name="landing_megaMenu_mobileApplication_description" />
           </p>
           <AppButtons />
         </div>

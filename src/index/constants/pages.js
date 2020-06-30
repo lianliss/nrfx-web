@@ -1,5 +1,6 @@
 export const MODAL = "modal";
 export const MAIN = "main";
+export const BUY_BITCOIN = "buy_bitcoin";
 export const TEST = "test";
 export const MENU = "menu";
 export const NOTIFICATIONS = "notifications";

@@ -7,8 +7,16 @@ import "./Header.less";
 import SVG from "react-inlinesvg";
 import * as actions from "src/actions/index";
 import * as steps from "../../../../components/AuthModal/fixtures";
+import { useRouter } from "react-router5";
+import * as pages from "../../../../index/constants/pages";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../../../selectors";
+import Lang from "../../../../components/Lang/Lang";
+import * as utils from "../../../../utils";
 
 export default () => {
+  const router = useRouter();
+  const user = useSelector(userSelector);
   const [openedMegaMenu, setOpenedMegaMenu] = useState(false);
   const [openedMobileMenu, setOpenedMobileMenu] = useState(false);
 
@@ -41,37 +49,62 @@ export default () => {
     <div className={cn("Header__wrapper", { openedMobileMenu })}>
       <div className="LandingWrapper__block">
         <header className="Header LandingWrapper__content">
-          <Logo className="Header__logo" size="extra-large" />
+          <Logo
+            onClick={() => {
+              router.navigate(pages.MAIN);
+            }}
+            className="Header__logo"
+            size="extra-large"
+          />
           <ul className="Header__nav">
             <li
               onClick={handleClickProducts}
               className={cn({ active: openedMegaMenu })}
             >
-              Продукты
+              <Lang name="site__headerProducts" />
               <SVG src={require("src/asset/24px/angle-down-small.svg")} />
             </li>
-            <li>Компания</li>
-            <li>Комиссии</li>
-            <li>Помощь</li>
+            <li onClick={() => router.navigate(pages.ABOUT)}>
+              <Lang name="site__headerCompany" />
+            </li>
+            <li onClick={() => router.navigate(pages.FEE)}>
+              <Lang name="global_fee" />
+            </li>
+            <li onClick={() => router.navigate(pages.CONTACT)}>
+              <Lang name="site__headerContactUs" />
+            </li>
           </ul>
 
           <div className="Header__authButtons">
-            <Button
-              type="lite"
-              onClick={() => {
-                actions.openModal("auth", { type: steps.LOGIN });
-              }}
-            >
-              Войти
-            </Button>
-            <Button
-              type="outline"
-              onClick={() => {
-                actions.openModal("auth", { type: steps.REGISTRATION });
-              }}
-            >
-              Регистрация
-            </Button>
+            {user ? (
+              <Button
+                type="outline"
+                onClick={() => {
+                  router.navigate(pages.DASHBOARD);
+                }}
+              >
+                <Lang name="cabinet_header_cabinet" />
+              </Button>
+            ) : (
+              <>
+                <Button
+                  type="lite"
+                  onClick={() => {
+                    actions.openModal("auth", { type: steps.LOGIN });
+                  }}
+                >
+                  {utils.getLang("site__authModalLogInBtn")}
+                </Button>
+                <Button
+                  type="outline"
+                  onClick={() => {
+                    actions.openModal("auth", { type: steps.REGISTRATION });
+                  }}
+                >
+                  <Lang name="site__authModalSignUpBtn" />
+                </Button>
+              </>
+            )}
           </div>
 
           <div

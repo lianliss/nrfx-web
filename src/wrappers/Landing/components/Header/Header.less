@@ -18,16 +18,18 @@
       top: 0;
       position: sticky;
       z-index: 10;
-    }
 
-    &.openedMobileMenu {
-      max-height: 100vh;
-      overflow-y: auto;
+      &.openedMobileMenu {
+        box-shadow: 0 10000px 0 10000px rgba(0,0,0,.1);
+        max-height: 100vh;
+        overflow-y: auto;
+      }
     }
   }
 
   .Header__logo {
     margin-right: 40px;
+    cursor: pointer;
 
     @media (max-width: @mobile-width) {
       width: 120px;

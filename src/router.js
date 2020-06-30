@@ -33,6 +33,10 @@ export const routes =
           path: "/"
         },
         {
+          name: pages.BUY_BITCOIN,
+          path: "/buy_bitcoin"
+        },
+        {
           name: pages.MENU,
           path: "/menu"
         },

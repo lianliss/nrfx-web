@@ -8,6 +8,7 @@ import { currenciesSelector } from "../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../actions";
 import SVG from "react-inlinesvg";
 import { getRate } from "src/actions/landing/swap";
+import Lang from "src/components/Lang/Lang";
 import { classNames as cn } from "src/utils/index";
 import * as actions from "../../../../../actions";
 import * as steps from "../../../../../components/AuthModal/fixtures";
@@ -103,15 +104,18 @@ export default () => {
   return (
     <div className="Swap LandingWrapper__block">
       <div className="Swap__content LandingWrapper__content">
-        <h2>Купить криптовалюту</h2>
+        <h2>
+          <Lang name="landing_swap_title" />
+        </h2>
         <p>
-          Банковским переводом или кредитной картой, с минимальными комиссиями
-          в несколько кликов
+          <Lang name="landing_swap_description" />
         </p>
 
         <div className="Swap__form">
           <div className="Swap__form__card">
-            <div className="Swap__form__card__label">Отдать</div>
+            <div className="Swap__form__card__label">
+              <Lang name="global_give" />
+            </div>
             <Select
               isDisabled={pendingRate}
               options={fromFiat ? fiatCurrencies : cryptoCurrencies}
@@ -146,7 +150,9 @@ export default () => {
             <SVG src={require("src/asset/24px/switch.svg")} />
           </div>
           <div className="Swap__form__card">
-            <div className="Swap__form__card__label">Получить</div>
+            <div className="Swap__form__card__label">
+              <Lang name="global_buy" />
+            </div>
             <Select
               isDisabled={pendingRate}
               options={fromFiat ? cryptoCurrencies : fiatCurrencies}
@@ -181,7 +187,7 @@ export default () => {
             disabled={pendingRate}
             size="extra_large"
           >
-            Купить
+            <Lang name="global_buy" />
           </Button>
         </div>
       </div>

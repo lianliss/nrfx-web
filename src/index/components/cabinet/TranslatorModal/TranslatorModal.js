@@ -7,6 +7,7 @@ import { getLang } from "src/utils";
 
 import "./TranslatorModal.less";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
+import Clipboard from "../Clipboard/Clipboard";
 
 class TranslatorModal extends React.Component {
   state = {
@@ -88,7 +89,11 @@ class TranslatorModal extends React.Component {
 
     return (
       <>
-        <div className="Translation__title">En Key</div>
+        <div className="Translation__title">Key</div>
+        <div className="Translation__key">
+          <Clipboard skipIcon text={props.langKey} />
+        </div>
+        <div className="Translation__title">English</div>
         <div className="Translation__key">{enLang}</div>
         <div
           className="Translation__title Translation__lang"

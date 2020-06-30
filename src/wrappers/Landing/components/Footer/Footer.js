@@ -3,13 +3,18 @@ import { useSelector } from "react-redux";
 import "./Footer.less";
 import { Logo } from "../../../../ui";
 import SVG from "react-inlinesvg";
-import AppButtons from "../AppButtons/AppButtons";
+import AppButtons from "../../../../components/AppButtons/AppButtons";
 import Copyright from "../Copyright/Copyright";
 import { Select } from "src/ui/index";
 import { getCssVar } from "../../../../utils";
 import { customStyles } from "../../../../ui/components/Select/Select";
 import { currentLangSelector, langListSelector } from "../../../../selectors";
 import { setLang } from "../../../../services/lang";
+import { Link } from "react-router5";
+import * as pages from "../../../../index/constants/pages";
+import * as actions from "../../../../actions";
+import COMPANY from "../../../../index/constants/company";
+import Lang from "../../../../components/Lang/Lang";
 
 const getLanguageFlag = langCode => {
   return (
@@ -54,21 +59,41 @@ export default () => {
               }))}
           />
           <div className="Footer__social">
-            <div className="Footer__social__link facebook">
+            <a
+              href={"//" + COMPANY.social.facebook}
+              target="__blank"
+              className="Footer__social__link facebook"
+            >
               <SVG src={require("src/asset/social/facebook.svg")} />
-            </div>
-            <div className="Footer__social__link twitter">
+            </a>
+            <a
+              href={"//" + COMPANY.social.twitter}
+              target="__blank"
+              className="Footer__social__link twitter"
+            >
               <SVG src={require("src/asset/social/twitter.svg")} />
-            </div>
-            <div className="Footer__social__link instagram">
+            </a>
+            <a
+              href={"//" + COMPANY.social.instagram}
+              target="__blank"
+              className="Footer__social__link instagram"
+            >
               <SVG src={require("src/asset/social/instagram.svg")} />
-            </div>
-            <div className="Footer__social__link medium">
+            </a>
+            <a
+              href={"//" + COMPANY.social.medium}
+              target="__blank"
+              className="Footer__social__link medium"
+            >
               <SVG src={require("src/asset/social/medium.svg")} />
-            </div>
-            <div className="Footer__social__link linkedin">
+            </a>
+            <a
+              href={"//" + COMPANY.social.linkedin}
+              target="__blank"
+              className="Footer__social__link linkedin"
+            >
               <SVG src={require("src/asset/social/linkedin.svg")} />
-            </div>
+            </a>
           </div>
           <div className="desktopBlock">
             <AppButtons className="Footer__appButtons" />
@@ -78,53 +103,91 @@ export default () => {
         <nav className="Footer__nav">
           <ul>
             <li>
-              <h4>Продукты</h4>
+              <h4>
+                <Lang name="landing_footer_products" />
+              </h4>
             </li>
             <li>
-              <span>Купить Bitcoin</span>
+              <Link routeName={pages.BUY_BITCOIN}>
+                <Lang name="landing_footer_buyBitcoin" />
+              </Link>
+            </li>
+            {/*<li>*/}
+            {/*  <span><Lang name="landing_footer_buyEthereum" /></span>*/}
+            {/*</li>*/}
+            <li>
+              <span>
+                <Lang name="landing_footer_swap" />
+              </span>
             </li>
             <li>
-              <span>Купить Ethereum</span>
-            </li>
-            <li>
-              <span>Обмен валют</span>
-            </li>
-            <li>
-              <span>Биржа</span>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <h4>Компания</h4>
-            </li>
-            <li>
-              <span>О компании</span>
-            </li>
-            <li>
-              <span>Комиссии</span>
-            </li>
-            <li>
-              <span>Narfex Token</span>
-            </li>
-            <li>
-              <span>Безопасность</span>
+              <Link routeName={pages.SITE_EXCHANGE}>
+                <Lang name="landing_footer_exchange" />
+              </Link>
             </li>
           </ul>
           <ul>
             <li>
-              <h4>Компания</h4>
+              <h4>
+                <Lang name="landing_footer_company" />
+              </h4>
             </li>
             <li>
-              <span>FAQ – Частые вопросы</span>
+              <Link routeName={pages.ABOUT}>
+                <Lang name="landing_footer_about" />
+              </Link>
             </li>
             <li>
-              <span>Центр поддержки</span>
+              <Link routeName={pages.FEE}>
+                <Lang name="landing_footer_fee" />
+              </Link>
             </li>
             <li>
-              <span>Пользовательское соглашение</span>
+              <Link routeName={pages.TOKEN}>Narfex Token</Link>
             </li>
             <li>
-              <span>Политика конфиденциальности</span>
+              <Link routeName={pages.SAFETY}>
+                <Lang name="landing_footer_security" />
+              </Link>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <h4>
+                <Lang name="landing_footer_help" />
+              </h4>
+            </li>
+            <li>
+              <a
+                href={COMPANY.faqUrl}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <Lang name="landing_footer_faq" />
+              </a>
+            </li>
+            <li>
+              <Link routeName={pages.CONTACT}>
+                <Lang name="landing_footer_support" />
+              </Link>
+            </li>
+            <li>
+              <span
+                onClick={() =>
+                  actions.openModal("static_content", { type: "privacy" })
+                }
+              >
+                <Lang name="landing_footer_privacy" />
+              </span>
+            </li>
+            <li>
+              <span
+                onClick={() =>
+                  actions.openModal("static_content", { type: "terms" })
+                }
+              >
+                <Lang name="landing_footer_terms" />
+              </span>
             </li>
           </ul>
         </nav>

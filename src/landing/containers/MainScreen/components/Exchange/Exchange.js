@@ -8,6 +8,7 @@ import Chart from "../Chart/Chart";
 import { formatDouble, joinComponents } from "../../../../../utils";
 import * as actions from "../../../../../actions";
 import * as pages from "../../../../../index/constants/pages";
+import Lang from "../../../../../components/Lang/Lang";
 
 export default () => {
   const { markets } = useSelector(landingSelector);
@@ -15,23 +16,36 @@ export default () => {
   return (
     <div className="Exchange LandingWrapper__block">
       <div className="LandingWrapper__content Exchange__content">
-        <h2>Биржа для профессиональной торговли</h2>
+        <h2>
+          <Lang name="landing_exchange_title" />
+        </h2>
         <p>
-          Безопасная торговля криптовалютами  для начинающих и профессионалов
+          <Lang name="landing_exchange_description" />
         </p>
-
         <table>
           <tr>
-            <th>Название</th>
             <th>
-              <span className="Exchange__desktopOnly">Последняя цена</span>
-              <span className="Exchange__mobileOnly">Цена</span>
+              <Lang name="landing_exchange_table_name" />
             </th>
             <th>
-              <span className="Exchange__desktopOnly">Изменение за 24ч</span>
-              <span className="Exchange__mobileOnly">24ч</span>
+              <span className="Exchange__desktopOnly">
+                <Lang name="lending_exchange_table_lastPrice" />
+              </span>
+              <span className="Exchange__mobileOnly">
+                <Lang name="lending_exchange_table_lastPrice_mobile" />
+              </span>
             </th>
-            <th className="Exchange__chartColumn">Рынок</th>
+            <th>
+              <span className="Exchange__desktopOnly">
+                <Lang name="landing_exchange_table_24h" />
+              </span>
+              <span className="Exchange__mobileOnly">
+                <Lang name="landing_exchange_table_24h_mobile" />
+              </span>
+            </th>
+            <th className="Exchange__chartColumn">
+              <Lang name="landing_exchange_table_market" />
+            </th>
           </tr>
           {markets
             .filter(
@@ -71,7 +85,7 @@ export default () => {
                   <td>
                     <NumberFormat
                       symbol
-                      color={ticker.percent > 0}
+                      color={ticker.percent !== 0}
                       percent
                       indicator
                       number={ticker.percent}
@@ -92,7 +106,7 @@ export default () => {
           type="outline"
           size="extra_large"
         >
-          Посмотреть больше ›
+          <Lang name="landing_exchange_viewMoreMarkets" /> ›
         </Button>
       </div>
     </div>

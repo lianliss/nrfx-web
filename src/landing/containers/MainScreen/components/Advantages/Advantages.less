@@ -1,7 +1,6 @@
 @import "../../../../../vars";
 
 .Advantages {
-  background: var(--primary-background);
   padding: 160px 0;
   text-align: center;
 
@@ -67,15 +66,45 @@
       font-weight: 600;
       font-size: 24px;
       line-height: 32px;
-      margin-bottom: 16px;
     }
 
     p {
+      margin: 16px 0;
       font-weight: normal;
       font-size: 16px;
       line-height: 24px;
     }
+
+    a {
+      font-size: 14px;
+      line-height: 20px;
+    }
   }
 
+  @media (min-width: @mobile-width) {
+    &.alternative {
+      li {
+        display: flex;
+        flex-direction: row;
+        width: 544px;
 
+        h4 {
+          margin-bottom: 8px;
+        }
+
+        .isvg {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+
+  &.center {
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
 }

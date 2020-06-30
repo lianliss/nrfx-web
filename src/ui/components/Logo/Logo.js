@@ -23,6 +23,7 @@ const Logo = props => {
 
   return (
     <div
+      onClick={props.onClick}
       className={cn("Logo", props.size, props.className, {
         currentColor: props.currentColor
       })}

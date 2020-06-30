@@ -1,6 +1,6 @@
 @import '../../../../vars';
 
-.Footer {
+.LandingWrapper .Footer {
   background: var(--alice-blue);
   padding: 120px 0 80px;
 
@@ -125,9 +125,12 @@
       li {
         margin-bottom: 20px;
 
-        span {
+        span, a {
           cursor: pointer;
+          color: inherit;
+
           &:hover {
+            text-decoration: none;
             opacity: .7;
           }
         }
