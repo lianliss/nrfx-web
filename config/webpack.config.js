@@ -538,7 +538,12 @@ module.exports = function(webpackEnv) {
       new webpack.DefinePlugin({
         ...env.stringified,
         'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
-        'process.env.BRANCH_NAME': JSON.stringify((branches[process.env.BRANCH_NAME] || (process.env.BRANCH_NAME && !!~process.env.BRANCH_NAME.indexOf('fe-') && 'stage') || process.env.BRANCH_NAME))
+        'process.env.BRANCH_NAME': JSON.stringify(
+          (branches[process.env.BRANCH_NAME] || (
+            process.env.BRANCH_NAME &&
+            !!~process.env.BRANCH_NAME.indexOf('fe') &&
+            'stage'
+          ) || process.env.BRANCH_NAME))
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       //new webpack.DefinePlugin({'define': define}),
