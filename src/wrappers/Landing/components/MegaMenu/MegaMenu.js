@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import "./MegaMenu.less";
 import { classNames as cn } from "src/utils/index";
 import SVG from "react-inlinesvg";
 import AppButtons from "../../../../components/AppButtons/AppButtons";
 import * as pages from "../../../../index/constants/pages";
-import { userSelector } from "../../../../selectors";
 import { useRouter } from "react-router5";
 import Lang from "../../../../components/Lang/Lang";
 

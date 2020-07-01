@@ -2,7 +2,6 @@ import "./Footer.less";
 import React from "react";
 import { Logo } from "src/ui";
 import COMPANY from "../../../../index/constants/company";
-import SVG from "react-inlinesvg";
 import Socials from "../../../Landing/components/Socials/Socials";
 
 export default props => {

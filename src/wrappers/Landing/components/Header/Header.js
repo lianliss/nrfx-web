@@ -12,7 +12,6 @@ import * as pages from "../../../../index/constants/pages";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../../../selectors";
 import Lang from "../../../../components/Lang/Lang";
-import * as utils from "../../../../utils";
 
 export default () => {
   const router = useRouter();
@@ -26,18 +25,21 @@ export default () => {
     setOpenedMegaMenu(!openedMegaMenu);
   }, [openedMegaMenu]);
 
+  const escFunction = useCallback(
+    event => {
+      if (event.keyCode === 27) {
+        setOpenedMegaMenu(false);
+      }
+    },
+    [setOpenedMegaMenu]
+  );
+
   const handleClickMobileMenu = useCallback(() => {
     setOpenedMobileMenu(!openedMobileMenu);
     if (openedMobileMenu) {
       document.removeEventListener("keydown", escFunction, false);
     }
-  }, [openedMobileMenu]);
-
-  const escFunction = useCallback(event => {
-    if (event.keyCode === 27) {
-      setOpenedMegaMenu(false);
-    }
-  }, []);
+  }, [escFunction, openedMobileMenu, setOpenedMobileMenu]);
 
   useEffect(() => {
     setOpenedMegaMenu(false);
@@ -68,7 +70,7 @@ export default () => {
     return () => {
       document.removeEventListener("keydown", escFunction, false);
     };
-  }, []);
+  }, [escFunction]);
 
   return (
     <div

@@ -1,41 +1,18 @@
 import "./SiteFeeScreen.less";
 
 import React from "react";
-import { connect } from "react-redux";
 import NumberFormat from "src/ui/components/NumberFormat/NumberFormat";
 
 import BaseScreen from "src/index/containers/BaseScreen";
 import * as UI from "src/ui";
-import * as actions from "src/actions";
-import { getLang } from "src/utils/index";
+import { getLang } from "src/utils";
 
-import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingStatus";
 import CurrencyLabel from "./components/CurrencyLable/CurrencyLabel";
 import { Helmet } from "react-helmet";
 import * as utils from "src/utils";
 import COMPANY from "src/index/constants/company";
 
 export default class SiteFeeScreen extends BaseScreen {
-  // state = {
-  //   status: "loading"
-  // };
-  //
-  // componentDidMount() {
-  //   super.componentDidMount();
-  //   this.load();
-  // }
-
-  // load() {
-  //   actions
-  //     .loadCurrencies()
-  //     .then(() => {
-  //       this.setState({ status: "" });
-  //     })
-  //     .catch(() => {
-  //       this.setState({ status: "failed" });
-  //     });
-  // }
-
   renderContent() {
     return (
       <>

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import SiteMainScreen from "src/landing/containers/MainScreen/MainScreen";
 import BuyBitcoinScreen from "src/landing/containers/BuyBitcoin/BuyBitcoin";
 import SiteAboutScreen from "../landing/containers/Company/Company";
-import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
+// import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
 // import SiteTechnologyScreen from "./containers/site/SiteTechnologyScreen/SiteTechnologyScreen";

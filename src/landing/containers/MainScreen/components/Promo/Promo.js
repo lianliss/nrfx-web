@@ -5,8 +5,7 @@ import AppButtons from "../../../../../components/AppButtons/AppButtons";
 import * as actions from "../../../../../actions";
 import * as steps from "../../../../../components/AuthModal/fixtures";
 import * as pages from "../../../../../index/constants/pages";
-import { useRouter } from "react-router5";
-import Lang from "../../../../../components/Lang/Lang";
+import { useRouter, Link } from "react-router5";
 
 export default props => {
   const router = useRouter();
@@ -35,7 +34,8 @@ export default props => {
             <div className="Promo__buyNrfx" onClick={handleClickBuyToken}>
               <div className="Promo__buyNrfx__button">{props.label}</div>
               <div className="Promo__buyNrfx__label">
-                {props.labelDescription} <a href="#">{props.labelLink} ›</a>
+                {props.labelDescription}{" "}
+                <Link routeName={pages.TOKEN}>{props.labelLink} ›</Link>
               </div>
             </div>
           )}

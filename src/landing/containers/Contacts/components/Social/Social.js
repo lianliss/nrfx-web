@@ -4,7 +4,6 @@ import SVG from "react-inlinesvg";
 import Lang from "../../../../../components/Lang/Lang";
 import COMPANY from "../../../../../index/constants/company";
 import { classNames as cn } from "../../../../../utils";
-import * as utils from "../../../../../utils";
 
 const SnLink = ({ icon, name, type }) => (
   <a

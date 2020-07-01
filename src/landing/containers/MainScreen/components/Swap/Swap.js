@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Swap.less";
 import { CircleIcon, Input, Button, NumberFormat } from "../../../../../ui";
 import { formatDouble } from "src/utils/index";
@@ -24,7 +24,7 @@ export default () => {
   const [fromAmount, setFromAmount] = useState(1000);
   const [toAmount, setToAmount] = useState(0);
 
-  const getCurrencyRate = () => {
+  const getCurrencyRate = useCallback(() => {
     setPendingRate(true);
     getRate({
       base: from,
@@ -33,19 +33,7 @@ export default () => {
       setRate(r.rate);
       setPendingRate(false);
     });
-  };
-
-  useEffect(() => {
-    getCurrencyRate();
-  }, [from, to]);
-
-  useEffect(() => {
-    if (main === "from") {
-      handleChangeFromAmount(fromAmount);
-    } else {
-      handleChangeToAmount(toAmount);
-    }
-  }, [rate]);
+  }, [from, to, setPendingRate, setRate]);
 
   const currencies = useSelector(currenciesSelector);
   const currenciesCanExchange = currencies.filter(c => c.can_exchange);
@@ -69,27 +57,33 @@ export default () => {
     .filter(c => c.type === "crypto")
     .map(createOptions);
 
-  const handleChangeFromAmount = value => {
-    setMain("from");
-    setFromAmount(value);
-    setToAmount(
-      formatDouble(
-        fromFiat ? value / rate : value * rate,
-        getCurrencyInfo(to).maximum_fraction_digits
-      )
-    );
-  };
+  const handleChangeFromAmount = useCallback(
+    value => {
+      setMain("from");
+      setFromAmount(value);
+      setToAmount(
+        formatDouble(
+          fromFiat ? value / rate : value * rate,
+          getCurrencyInfo(to).maximum_fraction_digits
+        )
+      );
+    },
+    [setMain, setFromAmount, setToAmount, rate, fromFiat, to]
+  );
 
-  const handleChangeToAmount = value => {
-    setMain("to");
-    setToAmount(value);
-    setFromAmount(
-      formatDouble(
-        !fromFiat ? value / rate : value * rate,
-        getCurrencyInfo(from).maximum_fraction_digits
-      )
-    );
-  };
+  const handleChangeToAmount = useEffect(
+    value => {
+      setMain("to");
+      setToAmount(value);
+      setFromAmount(
+        formatDouble(
+          !fromFiat ? value / rate : value * rate,
+          getCurrencyInfo(from).maximum_fraction_digits
+        )
+      );
+    },
+    [setMain, setFromAmount, setToAmount, rate, fromFiat, from]
+  );
 
   const handleSwitch = () => {
     setFrom(to);
@@ -100,6 +94,25 @@ export default () => {
     setToAmount(fromAmount);
     getCurrencyRate();
   };
+
+  useEffect(() => {
+    getCurrencyRate();
+  }, [from, to, getCurrencyRate]);
+
+  useEffect(() => {
+    if (main === "from") {
+      handleChangeFromAmount(fromAmount);
+    } else {
+      handleChangeToAmount(toAmount);
+    }
+  }, [
+    rate,
+    main,
+    fromAmount,
+    toAmount,
+    handleChangeToAmount,
+    handleChangeFromAmount
+  ]);
 
   return (
     <div className="Swap LandingWrapper__block">

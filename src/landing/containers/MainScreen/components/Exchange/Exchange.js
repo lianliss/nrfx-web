@@ -5,7 +5,7 @@ import { landingSelector } from "../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../actions";
 import { Button, CircleIcon, NumberFormat } from "../../../../../ui";
 import Chart from "../Chart/Chart";
-import { formatDouble, joinComponents } from "../../../../../utils";
+import { joinComponents } from "../../../../../utils";
 import * as actions from "../../../../../actions";
 import * as pages from "../../../../../index/constants/pages";
 import Lang from "../../../../../components/Lang/Lang";

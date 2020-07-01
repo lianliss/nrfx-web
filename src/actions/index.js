@@ -12,7 +12,6 @@ import { getLang } from "../services/lang";
 import * as storage from "../services/storage";
 import * as toast from "./toasts";
 import clipboardCopy from "clipboard-copy";
-import * as pages from "../index/constants/pages";
 
 export function loadLang(code, toggleCurrentLang = true) {
   return new Promise((resolve, reject) => {
