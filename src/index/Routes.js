@@ -9,15 +9,15 @@ import SiteAboutScreen from "../landing/containers/Company/Company";
 import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
-import SiteTechnologyScreen from "./containers/site/SiteTechnologyScreen/SiteTechnologyScreen";
-import SiteSafetyScreen from "./containers/site/SiteSafetyScreen/SiteSafetyScreen";
+// import SiteTechnologyScreen from "./containers/site/SiteTechnologyScreen/SiteTechnologyScreen";
+// import SiteSafetyScreen from "./containers/site/SiteSafetyScreen/SiteSafetyScreen";
 import SiteExchangeScreen from "../landing/containers/Exchange/Exchange";
 // import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
 import SiteContactScreen from "../landing/containers/Contacts/Contacts";
 // import SiteFaqScreen from "./containers/site/SiteFaqScreen/SiteFaqScreen";
 import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoundScreen";
-import UIKitScreen from "./containers/UIKit/UIKitScreen";
-import SiteWrapper from "../wrappers/Site/SiteWrapper";
+// import UIKitScreen from "./containers/UIKit/UIKitScreen";
+// import SiteWrapper from "../wrappers/Site/SiteWrapper";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
 import LandingWrapper from "../wrappers/Landing/LandingWrapper";
 import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
@@ -67,34 +67,34 @@ function Routes(props) {
       Component = SiteAboutScreen;
       WrapperComponent = LandingWrapper;
       break;
-    case pages.MISSION:
-      Component = SiteAboutScreen;
-      WrapperComponent = SiteWrapper;
-      break;
-    case pages.HISTORY:
-      Component = SiteAboutScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.MISSION:
+    //   Component = SiteAboutScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
+    // case pages.HISTORY:
+    //   Component = SiteAboutScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     case pages.SITE_EXCHANGE:
       Component = SiteExchangeScreen;
       WrapperComponent = LandingWrapper;
       break;
-    case pages.WALLET:
-      Component = SiteWalletScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.WALLET:
+    //   Component = SiteWalletScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     // case pages.ROBOTS:
     //   Component = SiteRobotsScreen;
     //   WrapperComponent = SiteWrapper;
     //   break;
-    case pages.TECHNOLOGY:
-      Component = SiteTechnologyScreen;
-      WrapperComponent = SiteWrapper;
-      break;
-    case pages.SAFETY:
-      Component = SiteSafetyScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.TECHNOLOGY:
+    //   Component = SiteTechnologyScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
+    // case pages.SAFETY:
+    //   Component = SiteSafetyScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
 
     // case pages.COMMERCE:
     //   Component = SiteCommerceScreen;
@@ -120,12 +120,12 @@ function Routes(props) {
       Component = SiteTokenScreen;
       WrapperComponent = TokenWrapper;
       break;
-    case pages.UIKIT:
-      if (process.env.NODE_ENV === `development`) {
-        Component = UIKitScreen;
-      }
-      break;
-    // Cabinet
+    // case pages.UIKIT:
+    //   if (process.env.NODE_ENV === `development`) {
+    //     Component = UIKitScreen;
+    //   }
+    //   break;
+    // // Cabinet
     case pages.CABINET_WALLET:
       needAuthorization = true;
       Component = CabinetWalletScreen.default;

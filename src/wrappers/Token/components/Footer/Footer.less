@@ -2,10 +2,24 @@
   color: var(--white);
   padding: 12px 0;
 
+  .Footer__bottom {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .Footer__logo,
+  .Footer__copyright,
+  .Footer__social {
+    flex: 1;
+  }
+
   .Footer__copyright {
     color: inherit;
+    text-align: center;
   }
-  .Footer__logo {
-    color: inherit !important;
+
+  .Footer__social {
+    justify-content: flex-end;
   }
 }
