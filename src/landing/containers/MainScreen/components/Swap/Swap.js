@@ -71,7 +71,7 @@ export default () => {
     [setMain, setFromAmount, setToAmount, rate, fromFiat, to]
   );
 
-  const handleChangeToAmount = useEffect(
+  const handleChangeToAmount = useCallback(
     value => {
       setMain("to");
       setToAmount(value);

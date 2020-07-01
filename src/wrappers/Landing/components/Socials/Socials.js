@@ -35,13 +35,13 @@ export default () => {
       >
         <SVG src={require("src/asset/social/medium.svg")} />
       </a>
-      <a
-        href={"//" + COMPANY.social.linkedin}
-        target="__blank"
-        className="Footer__social__link linkedin"
-      >
-        <SVG src={require("src/asset/social/linkedin.svg")} />
-      </a>
+      {/*<a*/}
+      {/*  href={"//" + COMPANY.social.linkedin}*/}
+      {/*  target="__blank"*/}
+      {/*  className="Footer__social__link linkedin"*/}
+      {/*>*/}
+      {/*  <SVG src={require("src/asset/social/linkedin.svg")} />*/}
+      {/*</a>*/}
     </div>
   );
 };
