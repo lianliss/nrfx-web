@@ -53,7 +53,7 @@ export default () => {
               style={{ backgroundImage: `url(${require("./assets/3.svg")})` }}
             />
             <div className="Steps__step">
-              <h4 data-number={2}>
+              <h4 data-number={3}>
                 <Lang name="landingBitcoin_step_buyBitcoin_title" />
               </h4>
               <p>
