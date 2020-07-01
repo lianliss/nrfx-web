@@ -8,6 +8,7 @@ import VerificationBlock from "../VerificationBlock/VerificationBlock";
 import * as actions from "src/actions/index";
 import * as toasts from "src/actions/toasts";
 import { openModal } from "src/actions/index";
+import * as emitter from "../../../../../../services/emitter";
 
 class SettingPersonal extends React.Component {
   state = {
@@ -79,7 +80,7 @@ class SettingPersonal extends React.Component {
                   } else if (!utils.isName(this.props.user.last_name)) {
                     return this.__inputError(this, "lastNameInputError");
                   }
-                  actions.gaCode().then(code => {
+                  actions.gaCode({ dontClose: true }).then(code => {
                     settingsActions
                       .changeInfo({
                         first_name: this.props.user.first_name,
@@ -93,6 +94,9 @@ class SettingPersonal extends React.Component {
                       })
                       .catch(error => {
                         toasts.error(error.message);
+                      })
+                      .finally(() => {
+                        emitter.emit("ga_cancel");
                       });
                   });
                 }}
@@ -126,7 +130,7 @@ class SettingPersonal extends React.Component {
                     return this.__inputError(this, "loginInputError");
                   }
 
-                  actions.gaCode().then(code => {
+                  actions.gaCode({ dontClose: true }).then(code => {
                     settingsActions
                       .changeLogin({
                         login: this.props.user.login,
@@ -137,8 +141,11 @@ class SettingPersonal extends React.Component {
                           utils.getLang("cabinet_loginChangedSuccessfully")
                         );
                       })
-                      .catch(info => {
-                        toasts.error(info.message);
+                      .catch(e => {
+                        toasts.error(e.message);
+                      })
+                      .finally(() => {
+                        emitter.emit("ga_cancel");
                       });
                   });
                 }}

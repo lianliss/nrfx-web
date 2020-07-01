@@ -139,13 +139,12 @@ export function confirm(props) {
   });
 }
 
-export function gaCode() {
+export function gaCode(props) {
   return new Promise((resolve, reject) => {
     const { profile } = store.getState().default;
 
     if (profile.ga_enabled) {
-      // openModal("ga_code");
-      openStateModal("ga_code");
+      openStateModal("ga_code", props);
       const acceptListener = emitter.addListener("ga_submit", ({ code }) => {
         emitter.removeListener(acceptListener);
         resolve(code);

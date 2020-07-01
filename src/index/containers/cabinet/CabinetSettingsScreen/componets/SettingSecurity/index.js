@@ -9,6 +9,7 @@ import * as utils from "../../../../../../utils";
 import * as UI from "../../../../../../ui";
 import * as toastsActions from "../../../../../../actions/toasts";
 import { openModal } from "../../../../../../actions/index";
+import * as emitter from "../../../../../../services/emitter";
 
 function SettingSecurity(props) {
   const { user } = props;
@@ -28,7 +29,7 @@ function SettingSecurity(props) {
       return false;
     }
 
-    actions.gaCode().then(code => {
+    actions.gaCode({ dontClose: true }).then(code => {
       settingsActions
         .changeNewPassword({
           old_password: props.user.old_password,
@@ -46,6 +47,9 @@ function SettingSecurity(props) {
         })
         .catch(err => {
           props.toastPush(err.message, "error");
+        })
+        .finally(() => {
+          emitter.emit("ga_cancel");
         });
     });
   };
