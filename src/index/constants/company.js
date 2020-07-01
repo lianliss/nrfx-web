@@ -12,7 +12,7 @@ export default {
     vk: "vk.com/narfex_com",
     telegram: "t.me/narfex",
     twitter: "twitter.com/Narfex_id",
-    facebook: "facebook.com/narfex.indonesia",
+    facebook: "facebook.com/narfex.id",
     medium: "medium.com/@narfexindonesia",
     linkedin: "www.linkedin.com/company/bitcoinbot-indonesia/",
     instagram: "instagram.com/narfex.id"
