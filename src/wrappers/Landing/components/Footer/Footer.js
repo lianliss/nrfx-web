@@ -115,11 +115,11 @@ export default () => {
             {/*<li>*/}
             {/*  <span><Lang name="landing_footer_buyEthereum" /></span>*/}
             {/*</li>*/}
-            <li>
-              <span>
-                <Lang name="landing_footer_swap" />
-              </span>
-            </li>
+            {/*<li>*/}
+            {/*  <span>*/}
+            {/*    <Lang name="landing_footer_swap" />*/}
+            {/*  </span>*/}
+            {/*</li>*/}
             <li>
               <Link routeName={pages.SITE_EXCHANGE}>
                 <Lang name="landing_footer_exchange" />

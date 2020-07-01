@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Button, Logo } from "../../../../ui";
 import { classNames as cn } from "src/utils/index";
 import MegaMenu from "../MegaMenu/MegaMenu";
@@ -17,6 +17,7 @@ import * as utils from "../../../../utils";
 export default () => {
   const router = useRouter();
   const route = useRoute();
+  const headerRef = useRef(null);
   const user = useSelector(userSelector);
   const [openedMegaMenu, setOpenedMegaMenu] = useState(false);
   const [openedMobileMenu, setOpenedMobileMenu] = useState(false);
@@ -43,6 +44,24 @@ export default () => {
     setOpenedMobileMenu(false);
   }, [route.route.name]);
 
+  const handleClick = e => {
+    if (!headerRef.current.contains(e.target)) {
+      setOpenedMegaMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    if (openedMegaMenu) {
+      document.addEventListener("click", handleClick, false);
+    } else {
+      document.removeEventListener("click", handleClick, false);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClick, false);
+    };
+  }, [openedMegaMenu]);
+
   useEffect(() => {
     document.addEventListener("keydown", escFunction, false);
 
@@ -52,7 +71,10 @@ export default () => {
   }, []);
 
   return (
-    <div className={cn("Header__wrapper", { openedMobileMenu })}>
+    <div
+      ref={headerRef}
+      className={cn("Header__wrapper", { openedMobileMenu })}
+    >
       <div className="LandingWrapper__block">
         <header className="Header LandingWrapper__content">
           <Logo
@@ -99,7 +121,7 @@ export default () => {
                     actions.openModal("auth", { type: steps.LOGIN });
                   }}
                 >
-                  {utils.getLang("site__authModalLogInBtn")}
+                  <Lang name="site__authModalLogInBtn" />
                 </Button>
                 <Button
                   type="outline"
@@ -121,9 +143,15 @@ export default () => {
             <SVG src={require("./assets/menu_button_close.svg")} />
           </div>
         </header>
-        <MobileMenu visible={openedMobileMenu} />
+        <MobileMenu
+          visible={openedMobileMenu}
+          onClose={() => setOpenedMobileMenu(false)}
+        />
       </div>
-      <MegaMenu visible={openedMegaMenu} />
+      <MegaMenu
+        visible={openedMegaMenu}
+        onClose={() => setOpenedMegaMenu(false)}
+      />
     </div>
   );
 };

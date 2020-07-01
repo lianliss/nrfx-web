@@ -33,7 +33,7 @@ export default props => {
           <AppButtons className="Promo__appButtons" />
           {props.label && (
             <div className="Promo__buyNrfx" onClick={handleClickBuyToken}>
-              <Button size="ultra_small">{props.label}</Button>
+              <div className="Promo__buyNrfx__button">{props.label}</div>
               <div className="Promo__buyNrfx__label">
                 {props.labelDescription} <a href="#">{props.labelLink} ›</a>
               </div>

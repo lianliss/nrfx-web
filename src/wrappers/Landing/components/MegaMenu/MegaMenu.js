@@ -1,28 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./MegaMenu.less";
 import { classNames as cn } from "src/utils/index";
 import SVG from "react-inlinesvg";
 import AppButtons from "../../../../components/AppButtons/AppButtons";
-import * as actions from "../../../../actions";
 import * as pages from "../../../../index/constants/pages";
 import { userSelector } from "../../../../selectors";
-import * as steps from "../../../../components/AuthModal/fixtures";
 import { useRouter } from "react-router5";
 import Lang from "../../../../components/Lang/Lang";
 
-export default ({ visible }) => {
+export default ({ visible, onClose }) => {
   const router = useRouter();
-  const user = useSelector(userSelector);
+
   return (
     <div className={cn("MegaMenu", "LandingWrapper__block", { visible })}>
       <div className="MegaMenu__content LandingWrapper__content">
         <ul className="MegaMenu__productList">
           <li
             onClick={() => {
-              user
-                ? router.navigate(pages.FIAT)
-                : actions.openModal("auth", { type: steps.REGISTRATION });
+              router.navigate(pages.BUY_BITCOIN);
+              onClose();
             }}
           >
             <SVG src={require("src/asset/120/buy_currency.svg")} />
@@ -37,7 +34,8 @@ export default ({ visible }) => {
           </li>
           <li
             onClick={() => {
-              router.navigate(pages.EXCHANGE);
+              router.navigate(pages.SITE_EXCHANGE);
+              onClose();
             }}
           >
             <SVG src={require("src/asset/120/exchange.svg")} />

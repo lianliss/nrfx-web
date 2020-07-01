@@ -7,12 +7,10 @@ import { useRouter } from "react-router5";
 import * as actions from "../../../../actions";
 import * as steps from "../../../../components/AuthModal/fixtures";
 import * as pages from "../../../../index/constants/pages";
-import { useSelector } from "react-redux";
-import { userSelector } from "../../../../selectors";
+import Lang from "../../../../components/Lang/Lang";
 
-export default ({ visible }) => {
+export default ({ visible, onClose }) => {
   const router = useRouter();
-  const user = useSelector(userSelector);
 
   return (
     <div className={cn("MobileMenu", { visible })}>
@@ -21,57 +19,58 @@ export default ({ visible }) => {
           type="outline"
           onClick={() => {
             router.navigate(pages.ABOUT);
+            onClose();
           }}
         >
-          Компания
+          <Lang name="site__headerCompany" />
         </Button>
         <Button
           type="outline"
           onClick={() => {
             router.navigate(pages.FEE);
+            onClose();
           }}
         >
-          Коммисия
+          <Lang name="global_fee" />
         </Button>
         <Button
           type="outline"
           onClick={() => {
-            router.navigate(pages.CONTACT);
+            router.navigate(pages.BUY_BITCOIN);
+            onClose();
           }}
         >
-          Помощь
+          <Lang name="site__headerContactUs" />
         </Button>
       </div>
       <ul className="MobileMenu__productList">
         <li
           onClick={() => {
-            user
-              ? router.navigate(pages.FIAT)
-              : actions.openModal("auth", { type: steps.REGISTRATION });
+            router.navigate(pages.BUY_BITCOIN);
           }}
         >
           <SVG src={require("src/asset/120/buy_currency.svg")} />
           <div>
-            <h4>Купить Крипту</h4>
+            <h4>
+              <Lang name="landing_megaMenu_buyCrypto_title" />
+            </h4>
             <p>
-              Простой и выгодный обменник для всех.
-              <br />
-              Ввод и вывод фиатных валют.
+              <Lang name="landing_megaMenu_buyCrypto_description" />
             </p>
           </div>
         </li>
         <li
           onClick={() => {
-            router.navigate(pages.EXCHANGE);
+            router.navigate(pages.SITE_EXCHANGE);
           }}
         >
           <SVG src={require("src/asset/120/exchange.svg")} />
           <div>
-            <h4>Купить Крипту</h4>
+            <h4>
+              <Lang name="landing_megaMenu_trade_title" />
+            </h4>
             <p>
-              Простой и выгодный обменник для всех.
-              <br />
-              Ввод и вывод фиатных валют.
+              <Lang name="landing_megaMenu_trade_description" />
             </p>
           </div>
         </li>
@@ -82,7 +81,7 @@ export default ({ visible }) => {
             actions.openModal("auth", { type: steps.REGISTRATION });
           }}
         >
-          Регистрация
+          <Lang name="site__authModalSignUpBtn" />
         </Button>
         <Button
           onClick={() => {
@@ -90,7 +89,7 @@ export default ({ visible }) => {
           }}
           type="outline"
         >
-          Войти
+          <Lang name="site__authModalLogInBtn" />
         </Button>
       </div>
     </div>

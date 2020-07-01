@@ -32,26 +32,29 @@ export default () => {
   return (
     <div className="Ticker">
       <div className="Ticker__tape">
-        {markets.map(({ ticker, market: { config } }) => (
-          <div className="Ticker__market">
-            <strong className="Ticker__market__name">{ticker.market}</strong>
-            <span className="Ticker__market__price">
-              <NumberFormat
-                number={ticker.price}
-                currency={config.secondary_coin.name}
-              />
-            </span>
-            <span className="Ticker__market__diff">
-              <NumberFormat
-                symbol
-                indicator
-                color
-                percent
-                number={ticker.percent}
-              />
-            </span>
-          </div>
-        ))}
+        {Array(3)
+          .fill(markets)
+          .flat()
+          .map(({ ticker, market: { config } }) => (
+            <div className="Ticker__market">
+              <strong className="Ticker__market__name">{ticker.market}</strong>
+              <span className="Ticker__market__price">
+                <NumberFormat
+                  number={ticker.price}
+                  currency={config.secondary_coin.name}
+                />
+              </span>
+              <span className="Ticker__market__diff">
+                <NumberFormat
+                  symbol
+                  indicator
+                  color
+                  percent
+                  number={ticker.percent}
+                />
+              </span>
+            </div>
+          ))}
       </div>
     </div>
   );
