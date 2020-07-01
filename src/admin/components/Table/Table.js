@@ -80,10 +80,10 @@ class TableComponent extends React.Component {
           >
             {props.items
               .filter(row => row.type !== "deleted")
-              .map(row => (
-                <TableCell>
-                  {row.items.map(column => (
-                    <TableColumn sub={column.sub_value}>
+              .map((row, key) => (
+                <TableCell key={key} mode={row.mode}>
+                  {row.items.map((column, key) => (
+                    <TableColumn key={key} sub={column.sub_value}>
                       <Item item={column.items} />
                     </TableColumn>
                   ))}
