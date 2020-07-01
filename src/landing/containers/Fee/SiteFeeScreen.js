@@ -16,25 +16,25 @@ import * as utils from "src/utils";
 import COMPANY from "src/index/constants/company";
 
 export default class SiteFeeScreen extends BaseScreen {
-  state = {
-    status: "loading"
-  };
+  // state = {
+  //   status: "loading"
+  // };
+  //
+  // componentDidMount() {
+  //   super.componentDidMount();
+  //   this.load();
+  // }
 
-  componentDidMount() {
-    super.componentDidMount();
-    this.load();
-  }
-
-  load() {
-    actions
-      .loadCurrencies()
-      .then(() => {
-        this.setState({ status: "" });
-      })
-      .catch(() => {
-        this.setState({ status: "failed" });
-      });
-  }
+  // load() {
+  //   actions
+  //     .loadCurrencies()
+  //     .then(() => {
+  //       this.setState({ status: "" });
+  //     })
+  //     .catch(() => {
+  //       this.setState({ status: "failed" });
+  //     });
+  // }
 
   renderContent() {
     return (
@@ -628,17 +628,6 @@ export default class SiteFeeScreen extends BaseScreen {
   }
 
   render() {
-    if (this.state.status) {
-      return (
-        <div className="SiteFeeScreen Layout_spacing">
-          <LoadingStatus
-            status={this.state.status}
-            onRetry={() => this.load()}
-          />
-        </div>
-      );
-    }
-
     return (
       <div className="SiteFeeScreen Layout_spacing">
         <Helmet>

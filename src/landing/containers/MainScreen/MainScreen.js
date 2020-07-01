@@ -6,10 +6,24 @@ import Exchange from "./components/Exchange/Exchange";
 import Advantages from "./components/Advantages/Advantages";
 import Application from "./components/Application/Application";
 import Lang from "../../../components/Lang/Lang";
+import COMPANY from "../../../index/constants/company";
+import * as utils from "../../../utils";
+import { Helmet } from "react-helmet";
 
 export default () => {
   return (
     <div>
+      <Helmet>
+        <title>
+          {[COMPANY.name, utils.getLang("landing_promo_title", true)].join(
+            " - "
+          )}
+        </title>
+        <meta
+          name="description"
+          content={utils.getLang("landing_promo_description")}
+        />
+      </Helmet>
       <Promo
         title={<Lang name="landing_promo_title" />}
         description={<Lang name="landing_promo_description" />}

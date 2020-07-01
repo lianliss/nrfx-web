@@ -7,7 +7,7 @@ import "./Header.less";
 import SVG from "react-inlinesvg";
 import * as actions from "src/actions/index";
 import * as steps from "../../../../components/AuthModal/fixtures";
-import { useRouter } from "react-router5";
+import { useRoute, useRouter } from "react-router5";
 import * as pages from "../../../../index/constants/pages";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../../../selectors";
@@ -16,6 +16,7 @@ import * as utils from "../../../../utils";
 
 export default () => {
   const router = useRouter();
+  const route = useRoute();
   const user = useSelector(userSelector);
   const [openedMegaMenu, setOpenedMegaMenu] = useState(false);
   const [openedMobileMenu, setOpenedMobileMenu] = useState(false);
@@ -36,6 +37,11 @@ export default () => {
       setOpenedMegaMenu(false);
     }
   }, []);
+
+  useEffect(() => {
+    setOpenedMegaMenu(false);
+    setOpenedMobileMenu(false);
+  }, [route.route.name]);
 
   useEffect(() => {
     document.addEventListener("keydown", escFunction, false);

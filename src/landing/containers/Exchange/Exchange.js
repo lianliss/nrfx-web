@@ -7,11 +7,26 @@ import Exchange from "../MainScreen/components/Exchange/Exchange";
 import Lang from "../../../components/Lang/Lang";
 import * as pages from "../../../index/constants/pages";
 import { useRouter } from "react-router5";
+import COMPANY from "../../../index/constants/company";
+import * as utils from "../../../utils";
+import { Helmet } from "react-helmet";
 
 export default () => {
   const router = useRouter();
   return (
     <div>
+      <Helmet>
+        <title>
+          {[
+            COMPANY.name,
+            utils.getLang("landingExchange_promo_title", true)
+          ].join(" - ")}
+        </title>
+        <meta
+          name="description"
+          content={utils.getLang("landingExchange_promo_description")}
+        />
+      </Helmet>
       <Promo
         title={<Lang name="landingExchange_promo_title" />}
         description={<Lang name="landingExchange_promo_description" />}

@@ -1,11 +1,12 @@
 @import '../../../../vars';
 
 .MegaMenu {
-  position: relative;
+  position: absolute;
   display: none;
   margin-top: -24px;
   background: var(--alice-blue);
-  z-index: 1;
+  z-index: 70;
+  box-shadow: 0 10000px 0 10000px rgba(0,0,0,.1);
 
   @media (min-width: @mobile-width) {
     &.visible {
@@ -91,10 +92,4 @@
       margin-bottom: 8px;
     }
   }
-}
-
-.MegaMenu {
-  position: absolute;
-  z-index: 10;
-  box-shadow: 0 10000px 0 10000px rgba(0,0,0,.1);
 }

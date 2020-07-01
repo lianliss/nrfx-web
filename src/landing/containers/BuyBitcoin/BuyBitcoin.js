@@ -7,10 +7,25 @@ import Advantages from "../MainScreen/components/Advantages/Advantages";
 import Application from "../MainScreen/components/Application/Application";
 import Steps from "./components/Steps/Steps";
 import Lang from "../../../components/Lang/Lang";
+import COMPANY from "../../../index/constants/company";
+import * as utils from "../../../utils";
+import { Helmet } from "react-helmet";
 
 export default () => {
   return (
     <div>
+      <Helmet>
+        <title>
+          {[
+            COMPANY.name,
+            utils.getLang("landingBitcoin_promo_title", true)
+          ].join(" - ")}
+        </title>
+        <meta
+          name="description"
+          content={utils.getLang("lendingBitcoin_promo_description")}
+        />
+      </Helmet>
       <Promo
         title={<Lang name="landingBitcoin_promo_title" />}
         description={<Lang name="lendingBitcoin_promo_description" />}
