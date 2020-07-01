@@ -11,4 +11,5 @@ module.exports = {
   'fe-271': 'extrafee',
   'fe-285': 'prestage',
   'fe-293': 'be177',
+  'fes-248': 'bes3',
 };

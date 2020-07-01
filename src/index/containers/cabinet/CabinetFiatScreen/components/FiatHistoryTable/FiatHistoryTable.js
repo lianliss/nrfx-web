@@ -192,7 +192,7 @@ const FiatHistoryTable = props => {
 
 export default connect(
   stage => ({
-    history: stage.fiat.history,
+    history: stage.fiat.history.items,
     translator: stage.settings.translator,
     currentLang: stage.default.currentLang
   }),

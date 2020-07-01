@@ -76,7 +76,7 @@ function Table({
   );
 }
 
-export function TableCell({ children, onClick, dark, className }) {
+export function TableCell({ children, onClick, dark, mode, className }) {
   let Component = "tr";
   let params = {};
   if (onClick) {
@@ -87,7 +87,7 @@ export function TableCell({ children, onClick, dark, className }) {
   return (
     <Component
       onClick={onClick}
-      className={utils.classNames(className, {
+      className={utils.classNames(className, mode, {
         dark: !!dark
       })}
       {...params}
