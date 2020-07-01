@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import AuthModal from "../components/AuthModal/AuthModal";
 import ConfirmModal from "../index/components/cabinet/ConfirmModal/ConfirmModal";
 import { closeModal } from "../actions";
+import GAConfirmModal from "../index/components/cabinet/GAConfirmModal/GAConfirmModal";
 
 function Modals(props) {
   const routerParams = props.route.params;
@@ -24,6 +25,9 @@ function Modals(props) {
       break;
     case "confirm":
       Component = ConfirmModal;
+      break;
+    case "ga_code":
+      Component = GAConfirmModal;
       break;
     default:
       return null;

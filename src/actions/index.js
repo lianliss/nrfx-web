@@ -140,7 +140,8 @@ export function gaCode() {
     const { profile } = store.getState().default;
 
     if (profile.ga_enabled) {
-      openModal("ga_code");
+      // openModal("ga_code");
+      openStateModal("ga_code");
       const acceptListener = emitter.addListener("ga_submit", ({ code }) => {
         emitter.removeListener(acceptListener);
         resolve(code);
