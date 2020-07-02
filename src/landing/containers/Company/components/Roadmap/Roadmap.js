@@ -6,7 +6,7 @@ import SVG from "react-inlinesvg";
 import { classNames as cn } from "../../../../../utils";
 import { timeLine } from "./constants";
 import Lang from "../../../../../components/Lang/Lang";
-import Time from "../../../../../admin/components/Time/Time";
+import Time from "src/components/Time/Time";
 
 export default () => {
   useScrollBarWidth();
