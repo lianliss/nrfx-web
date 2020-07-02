@@ -50,10 +50,10 @@ class CabinetRegister extends React.PureComponent {
     const { params } = this.context;
     const { state } = this;
 
-    if (state.password && state.password.length < 6) {
-      this.props.toastPush(utils.getLang("global_passwordMustBe"), "error");
-      return false;
-    }
+    // if (state.password && state.password.length < 6) {
+    //   this.props.toastPush(utils.getLang("global_passwordMustBe"), "error");
+    //   return false;
+    // }
 
     // if (
     //   state.password &&
@@ -68,10 +68,10 @@ class CabinetRegister extends React.PureComponent {
     // }
 
     if (
-      state.firstName &&
-      state.lastName &&
-      state.login &&
-      state.password
+      utils.isLogin(state.login) &&
+      utils.isName(state.firstName) &&
+      utils.isName(state.lastName) &&
+      utils.isPassword(state.password)
       // state.phoneWithoutCode &&
       // state.smsCode
     ) {
