@@ -6,6 +6,7 @@
   overflow: hidden;
 
   .Ticker__tape {
+    width: 10000px;
     will-change: transform;
     animation: slide 60s linear infinite;
     display: flex;
@@ -44,9 +45,9 @@
 
 @keyframes slide {
   from {
-    transform: translate3d(0);
+    transform: translate(0);
   }
   to {
-    transform: translate3d(-40%, 0, 0);
+    transform: translate(-4000px, 0);
   }
 }
