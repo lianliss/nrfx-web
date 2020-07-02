@@ -113,9 +113,15 @@
       }
     }
 
-    .Input__wrapper {
+    .Input__wrapper,
+    .RegistrationInputTooltip {
       margin-bottom: 40px;
+
+      .Input__wrapper {
+        margin-bottom: 0;
+      }
     }
+
     &__submit_wrapper {
       text-align: center;
       margin-top: 80px;
@@ -128,6 +134,8 @@
     padding: 16px 0;
 
     &__content {
+      width: 100%;
+
       .ContentBox__content {
         width: 100%;
         padding: 24px 16px;
@@ -144,3 +152,4 @@
     }
   }
 }
+

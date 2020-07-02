@@ -38,12 +38,12 @@ export default class GAConfirmModal extends React.Component {
   };
 
   __handleSubmit = () => {
-    emitter.emit("ga_submit", { code: this.state.gaCode });
-    if (!this.props.dontClose) {
-      this.props.onClose();
-    } else {
-      this.setState({ pending: true });
-    }
+    // emitter.emit("ga_submit", { code: this.state.gaCode });
+    // if (!this.props.dontClose) {
+    //   this.props.onClose();
+    // } else {
+    //   this.setState({ pending: true });
+    // }
   };
 
   render() {

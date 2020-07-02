@@ -7,6 +7,13 @@
   align-items: center;
   cursor: help;
 
+  &:not(.active).disableHover {
+    .Tooltip {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  }
+
   .Tooltip {
     opacity: 0;
     position: absolute;
@@ -94,7 +101,8 @@
       }
     }
 
-    &:hover .Tooltip {
+    &:hover .Tooltip,
+    &.active .Tooltip {
       transform: translate(0, calc(100% + 12px));
     }
   }
@@ -110,7 +118,8 @@
       }
     }
 
-    &:hover .Tooltip {
+    &:hover .Tooltip,
+    &.active .Tooltip {
       transform: translate(0, calc(-100% - 12px));
     }
   }
@@ -126,7 +135,8 @@
       }
     }
 
-    &:hover .Tooltip {
+    &:hover .Tooltip,
+    &.active .Tooltip {
       transform: translate(calc(-100% - 12px), 0);
     }
   }
@@ -142,14 +152,18 @@
       }
     }
 
-    &:hover .Tooltip {
+    &:hover .Tooltip,
+    &.active .Tooltip {
       transform: translate(calc(100% + 12px), 0);
     }
   }
 
-  &:hover .Tooltip {
-    opacity: 1;
-    transition: opacity.2s ease, transform.2s ease;
-    pointer-events: all;
+  &:hover,
+  &.active {
+    .Tooltip {
+      opacity: 1;
+      transition: opacity.2s ease, transform.2s ease;
+      pointer-events: all;
+    }
   }
 }

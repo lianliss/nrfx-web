@@ -6,7 +6,12 @@ import { classNames as cn } from "../../utils/index";
 
 const Tooltip = props => {
   return (
-    <div className={cn("Tooltip__wrapper", props.place)}>
+    <div
+      className={cn("Tooltip__wrapper", props.className, props.place, {
+        active: props.active,
+        disableHover: props.disableHover
+      })}
+    >
       {props.title && (
         <div className={cn("Tooltip", props.size)}>
           <div className="Tooltip__area" />

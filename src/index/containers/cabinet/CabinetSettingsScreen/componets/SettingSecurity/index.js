@@ -1,6 +1,6 @@
 import "./SettingSecurity.less";
 
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import * as actions from "../../../../../../actions/index";
@@ -10,48 +10,46 @@ import * as UI from "../../../../../../ui";
 import * as toastsActions from "../../../../../../actions/toasts";
 import { openModal } from "../../../../../../actions/index";
 import * as emitter from "../../../../../../services/emitter";
+import InputTooltip from "../../../CabinetRegisterScreen/comonents/Input/Input";
+import PasswordInfo from "../../../CabinetRegisterScreen/comonents/PasswordInfo/PasswordInfo";
+import Lang from "../../../../../../components/Lang/Lang";
 
 function SettingSecurity(props) {
   const { user } = props;
+  const [passwordTouched, setPasswordTouched] = useState(false);
 
   const __handleChangePassword = () => {
-    if (user.new_password && user.new_password.length < 6) {
-      props.toastPush(utils.getLang("global_passwordMustBe"), "error");
-      return false;
-    }
-
     if (
-      user.new_password &&
+      user.old_password &&
       user.re_password &&
-      user.new_password !== user.re_password
+      utils.isPassword(user.new_password)
     ) {
-      props.toastPush(utils.getLang("global_passwordsMustBeSame"), "error");
-      return false;
+      actions.gaCode({ dontClose: true }).then(code => {
+        settingsActions
+          .changeNewPassword({
+            old_password: props.user.old_password,
+            password: props.user.new_password,
+            ga_code: code
+          })
+          .then(() => {
+            props.toastPush(
+              utils.getLang("cabinet_passwordUpdateSuccess"),
+              "success"
+            );
+            props.setUserFieldValue({ field: "old_password", value: "" });
+            props.setUserFieldValue({ field: "new_password", value: "" });
+            props.setUserFieldValue({ field: "re_password", value: "" });
+          })
+          .catch(err => {
+            props.toastPush(err.message, "error");
+          })
+          .finally(() => {
+            emitter.emit("ga_cancel");
+          });
+      });
+    } else {
+      setPasswordTouched(true);
     }
-
-    actions.gaCode({ dontClose: true }).then(code => {
-      settingsActions
-        .changeNewPassword({
-          old_password: props.user.old_password,
-          password: props.user.new_password,
-          ga_code: code
-        })
-        .then(() => {
-          props.toastPush(
-            utils.getLang("cabinet_passwordUpdateSuccess"),
-            "success"
-          );
-          props.setUserFieldValue({ field: "old_password", value: "" });
-          props.setUserFieldValue({ field: "new_password", value: "" });
-          props.setUserFieldValue({ field: "re_password", value: "" });
-        })
-        .catch(err => {
-          props.toastPush(err.message, "error");
-        })
-        .finally(() => {
-          emitter.emit("ga_cancel");
-        });
-    });
   };
 
   return (
@@ -65,6 +63,7 @@ function SettingSecurity(props) {
             <div className="CabinetSettingsScreen__input_field">
               <UI.Input
                 type="password"
+                error={passwordTouched && !user.old_password}
                 placeholder={utils.getLang("cabinet_oldPassword")}
                 value={user.old_password}
                 onTextChange={value =>
@@ -73,7 +72,9 @@ function SettingSecurity(props) {
               />
             </div>
             <div className="CabinetSettingsScreen__input_field">
-              <UI.Input
+              <InputTooltip
+                error={passwordTouched && !utils.isPassword(user.new_password)}
+                title={<PasswordInfo password={user.new_password} />}
                 type="password"
                 placeholder={utils.getLang("cabinet_newPassword")}
                 value={user.new_password}
@@ -83,8 +84,13 @@ function SettingSecurity(props) {
               />
             </div>
             <div className="CabinetSettingsScreen__input_field">
-              <UI.Input
+              <InputTooltip
                 type="password"
+                title={<Lang name="registration_passwordConfirmDescription" />}
+                error={
+                  passwordTouched &&
+                  (!user.re_password || user.new_password !== user.re_password)
+                }
                 placeholder={utils.getLang("cabinet_reEnterNewPassword")}
                 value={user.re_password}
                 onTextChange={value =>
@@ -94,13 +100,7 @@ function SettingSecurity(props) {
             </div>
           </div>
           <div className="CabinetSettingsScreen__form right">
-            <UI.Button
-              disabled={
-                !user.old_password || !user.new_password || !user.re_password
-              }
-              type={"outline"}
-              onClick={__handleChangePassword}
-            >
+            <UI.Button type={"outline"} onClick={__handleChangePassword}>
               {utils.getLang("cabinet_settingsSave")}
             </UI.Button>
           </div>

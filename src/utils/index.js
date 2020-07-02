@@ -9,6 +9,7 @@ import moment from "moment";
 import * as api from "src/services/api";
 import TranslatorMode from "src/index/components/cabinet/TranslatorMode/TranslatorModal";
 import { userRole } from "../actions/cabinet/profile";
+import REGEXES from "src/index/constants/regexes";
 
 export function classNames() {
   let result = [];
@@ -107,14 +108,16 @@ export function isJson(string) {
     return false;
   }
 }
-export const isEmail = email =>
-  /^[a-z0-9/.-]+@[a-z0-9/.-]+\.[a-z]+$/.test(email.toLowerCase());
+export const isEmail = email => REGEXES.email.test(email.toLowerCase());
 
-export const isName = name =>
-  /^([a-z\-]{2,20})$/i.test((name || "").toLowerCase());
+export const isName = name => REGEXES.name.test((name || "").toLowerCase());
 
-export const isLogin = name =>
-  /^[a-zA-Z0-9\_]+$/i.test((name || "").toLowerCase());
+export const isLogin = name => REGEXES.login.test((name || "").toLowerCase());
+
+export const isPassword = password =>
+  Object.values(REGEXES.createPassword).every(r => {
+    return r.test(password);
+  });
 
 export function useInterval(callback, delay) {
   const savedCallback = useRef();
