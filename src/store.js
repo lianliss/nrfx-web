@@ -22,6 +22,7 @@ import exchangeReducer from "./reducers/exchange";
 import modalReducer from "./reducers/modal";
 import adminReducer from "./reducers/admin";
 import langsReducer from "./reducers/langs";
+import landingReducer from "./reducers/landing";
 import traderReducer from "./reducers/trader";
 
 const middlewares = [];
@@ -36,33 +37,45 @@ let store;
 export function configureStore() {
   store = createStore(
     combineReducers(
-      process.env.DOMAIN === "admin"
-        ? {
-            router: router5Reducer,
-            toasts: toastsReducer,
-            default: defaultReducer,
-            admin: adminReducer,
-            langs: langsReducer,
-            modal: modalReducer
-          }
-        : {
-            router: router5Reducer,
-            documentation: documentation,
-            default: defaultReducer,
-            cabinet: cabinetReducer,
-            modal: modalReducer,
-            investments: investmentsReducer,
-            wallets: walletsReducer,
-            fiat: fiatReducer,
-            settings: settingsReducer,
-            profile: profileReducer,
-            notifications: notificationsReducer,
-            toasts: toastsReducer,
-            exchange: exchangeReducer,
-            internalNotifications: internalNotificationsReducer,
-            test: testReducer,
-            trader: traderReducer
-          }
+      {
+        admin: {
+          router: router5Reducer,
+          toasts: toastsReducer,
+          default: defaultReducer,
+          admin: adminReducer,
+          langs: langsReducer,
+          modal: modalReducer
+        },
+        landing: {
+          router: router5Reducer,
+          cabinet: cabinetReducer,
+          toasts: toastsReducer,
+          profile: profileReducer,
+          default: defaultReducer,
+          langs: langsReducer,
+          landing: landingReducer,
+          modal: modalReducer
+        },
+        index: {
+          landing: landingReducer,
+          router: router5Reducer,
+          documentation: documentation,
+          default: defaultReducer,
+          cabinet: cabinetReducer,
+          modal: modalReducer,
+          investments: investmentsReducer,
+          wallets: walletsReducer,
+          fiat: fiatReducer,
+          settings: settingsReducer,
+          profile: profileReducer,
+          notifications: notificationsReducer,
+          toasts: toastsReducer,
+          exchange: exchangeReducer,
+          internalNotifications: internalNotificationsReducer,
+          test: testReducer,
+          trader: traderReducer
+        }
+      }[process.env.DOMAIN]
     ),
     applyMiddleware(...middlewares, thunk, router5Middleware(router))
   );

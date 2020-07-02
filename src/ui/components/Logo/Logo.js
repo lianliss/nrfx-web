@@ -23,7 +23,10 @@ const Logo = props => {
 
   return (
     <div
-      className={cn("Logo", props.size, { currentColor: props.currentColor })}
+      onClick={props.onClick}
+      className={cn("Logo", props.size, props.className, {
+        currentColor: props.currentColor
+      })}
     >
       <SVG src={images[type]} />
     </div>

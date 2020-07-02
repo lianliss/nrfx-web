@@ -104,8 +104,10 @@
   "scripts": {
     "start": "DOMAIN=index cross-env HOST=127.0.0.1 PORT=3000 HTTPS=false node scripts/start.js",
     "start:admin": "DOMAIN=admin cross-env HOST=127.0.0.1 PORT=5000 HTTPS=false node scripts/start.js",
-    "build": "DOMAIN=index node scripts/build.js && npm run build:admin",
+    "start:landing": "DOMAIN=landing cross-env HOST=127.0.0.1 PORT=7000 HTTPS=false node scripts/start.js",
+    "build": "DOMAIN=index node scripts/build.js && npm run build:admin && npm run build:landing",
     "build:admin": "DOMAIN=admin node scripts/build.js",
+    "build:landing": "DOMAIN=landing node scripts/build.js",
     "ui": "npx styleguidist server",
     "eslint": "eslint ./src/ --ext .js",
     "eslint:fix": "eslint ./src/ --ext .js --fix",

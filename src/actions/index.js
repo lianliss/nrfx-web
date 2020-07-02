@@ -29,7 +29,7 @@ export function loadLang(code, toggleCurrentLang = true) {
         apiSchema.Lang.DefaultGet,
         { code },
         {
-          // apiEntry: "https://api.narfex.com" // TODO
+          apiEntry: "https://api.narfex.com" // TODO
         }
       )
       .then(({ translations, languages }) => {
@@ -102,6 +102,10 @@ export function openModal(name, params = {}, props = {}, done) {
   );
 }
 
+export function openPage(page) {
+  window.location.href = window.location.origin + "/" + page;
+}
+
 export function openStateModal(name, params = {}) {
   store.dispatch({ type: actionTypes.MODAL_OPEN, name, params });
 }
@@ -135,12 +139,12 @@ export function confirm(props) {
   });
 }
 
-export function gaCode() {
+export function gaCode(props) {
   return new Promise((resolve, reject) => {
     const { profile } = store.getState().default;
 
     if (profile.ga_enabled) {
-      openModal("ga_code");
+      openStateModal("ga_code", props);
       const acceptListener = emitter.addListener("ga_submit", ({ code }) => {
         emitter.removeListener(acceptListener);
         resolve(code);

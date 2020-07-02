@@ -1,4 +1,4 @@
 import React from "react";
 import { dateFormat } from "src/utils";
 
-export default ({ time }) => <span>{dateFormat(time)}</span>;
+export default ({ time, format }) => <span>{dateFormat(time, format)}</span>;

@@ -83,6 +83,16 @@ function __action(action) {
     });
 }
 
+function checkGaCode(action) {
+  if (action.need_ga_code) {
+    actions.gaCode().then(ga_code => {
+      __action({ ...action, params: { ...action.params, ga_code } });
+    });
+  } else {
+    __action(action);
+  }
+}
+
 export default function action(action) {
   if (action.confirm) {
     actions
@@ -91,9 +101,9 @@ export default function action(action) {
         type: action.confirm_type === "destructive" ? "negative" : "default"
       })
       .then(() => {
-        __action(action);
+        checkGaCode(action);
       });
   } else {
-    __action(action);
+    checkGaCode(action);
   }
 }

@@ -67,11 +67,16 @@ const resolveModule = (resolveFn, filePath) => {
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: (process.env.DOMAIN === 'admin' ? resolveApp('buildAdmin') : resolveApp('build')),
+  appBuild: {
+    index: resolveApp('build'),
+    admin: resolveApp('buildAdmin'),
+    landing: resolveApp('buildLanding'),
+  }[process.env.DOMAIN],
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   adminHtml: resolveApp('public/admin.html'),
-  appIndexJs: resolveModule(resolveApp, (process.env.DOMAIN === 'admin' ? 'src/admin' : 'src/index')),
+  landingHtml: resolveApp('public/index.html'),
+  appIndexJs: resolveModule(resolveApp, `src/${process.env.DOMAIN}`),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),

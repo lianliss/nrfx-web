@@ -3,21 +3,23 @@
 import React from "react";
 import { connect } from "react-redux";
 // internal
-import SiteMainScreen from "./containers/site/SiteMainScreen/SiteMainScreen";
-import SiteAboutScreen from "./containers/site/SiteAboutScreen/SiteAboutScreen";
-import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
+import SiteMainScreen from "src/landing/containers/MainScreen/MainScreen";
+import BuyBitcoinScreen from "src/landing/containers/BuyBitcoin/BuyBitcoin";
+import SiteAboutScreen from "../landing/containers/Company/Company";
+// import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
-import SiteTechnologyScreen from "./containers/site/SiteTechnologyScreen/SiteTechnologyScreen";
-import SiteSafetyScreen from "./containers/site/SiteSafetyScreen/SiteSafetyScreen";
-import SiteExchangeScreen from "./containers/site/SiteExchangeScreen/SiteExchangeScreen";
+// import SiteTechnologyScreen from "./containers/site/SiteTechnologyScreen/SiteTechnologyScreen";
+// import SiteSafetyScreen from "./containers/site/SiteSafetyScreen/SiteSafetyScreen";
+import SiteExchangeScreen from "../landing/containers/Exchange/Exchange";
 // import SiteInvestmentScreen from './containers/site/SiteInvestmentScreen/SiteInvestmentScreen';
-import SiteContactScreen from "./containers/site/SiteContactScreen/SiteContactScreen";
+import SiteContactScreen from "../landing/containers/Contacts/Contacts";
 // import SiteFaqScreen from "./containers/site/SiteFaqScreen/SiteFaqScreen";
 import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoundScreen";
-import UIKitScreen from "./containers/UIKit/UIKitScreen";
-import SiteWrapper from "../wrappers/Site/SiteWrapper";
+// import UIKitScreen from "./containers/UIKit/UIKitScreen";
+// import SiteWrapper from "../wrappers/Site/SiteWrapper";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
+import LandingWrapper from "../wrappers/Landing/LandingWrapper";
 import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
 import TokenWrapper from "../wrappers/Token/TokenWrapper";
 
@@ -34,7 +36,7 @@ import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen/MenuScreen
 import * as NotificationsScreen from "./containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen";
 import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen";
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
-import SiteFeeScreen from "./containers/site/SiteFeeScreen/SiteFeeScreen";
+import SiteFeeScreen from "../landing/containers/Fee/SiteFeeScreen";
 import SiteTokenScreen from "./containers/site/SiteTokenScreen/SiteTokenScreen";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
 import DocumentationPageScreen from "./containers/documentation/Page/Page";
@@ -55,40 +57,44 @@ function Routes(props) {
   switch (route) {
     case pages.MAIN:
       Component = SiteMainScreen;
-      WrapperComponent = SiteWrapper;
+      WrapperComponent = LandingWrapper;
+      break;
+    case pages.BUY_BITCOIN:
+      Component = BuyBitcoinScreen;
+      WrapperComponent = LandingWrapper;
       break;
     case pages.ABOUT:
       Component = SiteAboutScreen;
-      WrapperComponent = SiteWrapper;
+      WrapperComponent = LandingWrapper;
       break;
-    case pages.MISSION:
-      Component = SiteAboutScreen;
-      WrapperComponent = SiteWrapper;
-      break;
-    case pages.HISTORY:
-      Component = SiteAboutScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.MISSION:
+    //   Component = SiteAboutScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
+    // case pages.HISTORY:
+    //   Component = SiteAboutScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     case pages.SITE_EXCHANGE:
       Component = SiteExchangeScreen;
-      WrapperComponent = SiteWrapper;
+      WrapperComponent = LandingWrapper;
       break;
-    case pages.WALLET:
-      Component = SiteWalletScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.WALLET:
+    //   Component = SiteWalletScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
     // case pages.ROBOTS:
     //   Component = SiteRobotsScreen;
     //   WrapperComponent = SiteWrapper;
     //   break;
-    case pages.TECHNOLOGY:
-      Component = SiteTechnologyScreen;
-      WrapperComponent = SiteWrapper;
-      break;
-    case pages.SAFETY:
-      Component = SiteSafetyScreen;
-      WrapperComponent = SiteWrapper;
-      break;
+    // case pages.TECHNOLOGY:
+    //   Component = SiteTechnologyScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
+    // case pages.SAFETY:
+    //   Component = SiteSafetyScreen;
+    //   WrapperComponent = SiteWrapper;
+    //   break;
 
     // case pages.COMMERCE:
     //   Component = SiteCommerceScreen;
@@ -100,7 +106,7 @@ function Routes(props) {
     //   break;
     case pages.CONTACT:
       Component = SiteContactScreen;
-      WrapperComponent = SiteWrapper;
+      WrapperComponent = LandingWrapper;
       break;
     // case pages.FAQ:
     //   Component = SiteFaqScreen;
@@ -108,18 +114,18 @@ function Routes(props) {
     //   break;
     case pages.FEE:
       Component = SiteFeeScreen;
-      WrapperComponent = SiteWrapper;
+      WrapperComponent = LandingWrapper;
       break;
     case pages.TOKEN:
       Component = SiteTokenScreen;
       WrapperComponent = TokenWrapper;
       break;
-    case pages.UIKIT:
-      if (process.env.NODE_ENV === `development`) {
-        Component = UIKitScreen;
-      }
-      break;
-    // Cabinet
+    // case pages.UIKIT:
+    //   if (process.env.NODE_ENV === `development`) {
+    //     Component = UIKitScreen;
+    //   }
+    //   break;
+    // // Cabinet
     case pages.CABINET_WALLET:
       needAuthorization = true;
       Component = CabinetWalletScreen.default;

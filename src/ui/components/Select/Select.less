@@ -4,13 +4,22 @@
   font-style: normal;
   font-weight: normal;
 
+  .Select__option {
+    display: flex;
+    align-items: center;
+
+    .Select__option__icon {
+      margin-right: 8px;
+    }
+
+    .Select__option__label {
+      flex: 1;
+    }
+  }
+
   .Select__remove {
     color: var(--gray);
     margin-left: -8px;
-
-    &:hover {
-      color: red;
-    }
 
     svg {
       display: block;

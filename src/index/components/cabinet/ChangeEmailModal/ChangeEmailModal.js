@@ -113,8 +113,10 @@ class ChangeEmailModal extends React.Component {
       .catch(info => {
         this.props.toastPush(info.message, "error");
         switch (info.code) {
-          case "ga_auth_code_incorrect":
+          case "ga_auth_code_incorrect": {
+            this.setState({ gaCode: "" });
             return this.__inputError(this, "errorGaCode");
+          }
           case "email_incorrect":
             return this.__inputError(this, "errorNewEmail");
           default:

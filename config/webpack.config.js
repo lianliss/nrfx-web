@@ -47,7 +47,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 module.exports = function(webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
-  const isAdmin = process.env.DOMAIN === 'admin';
+  const { DOMAIN } = process.env;
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -490,7 +490,11 @@ module.exports = function(webpackEnv) {
           {},
           {
             inject: true,
-            template: isAdmin ? paths.adminHtml : paths.appHtml,
+            template: {
+              admin: paths.adminHtml,
+              index: paths.appHtml,
+              landing: paths.landingHtml,
+            }[DOMAIN],
             filename: 'index.html',
           },
           isEnvProduction
@@ -534,7 +538,12 @@ module.exports = function(webpackEnv) {
       new webpack.DefinePlugin({
         ...env.stringified,
         'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
-        'process.env.BRANCH_NAME': JSON.stringify((branches[process.env.BRANCH_NAME] || (process.env.BRANCH_NAME && !!~process.env.BRANCH_NAME.indexOf('fe-') && 'stage') || process.env.BRANCH_NAME))
+        'process.env.BRANCH_NAME': JSON.stringify(
+          (branches[process.env.BRANCH_NAME] || (
+            process.env.BRANCH_NAME &&
+            !!~process.env.BRANCH_NAME.indexOf('fe') &&
+            'stage'
+          ) || process.env.BRANCH_NAME))
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       //new webpack.DefinePlugin({'define': define}),

@@ -15,6 +15,10 @@ import { Code } from "../../index";
 import { classNames as cn } from "../../utils/index";
 
 export default class Editor extends React.Component {
+  componentWillMount() {
+    return true;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -189,6 +193,8 @@ export default class Editor extends React.Component {
         10}px))`
     };
 
+    console.log(5555, this.props.content);
+
     return (
       <div
         className={cn("Editor", this.props.className, {
@@ -204,7 +210,11 @@ export default class Editor extends React.Component {
             readOnly={this.props.readOnly}
             blockRendererFn={this.blockRendererFn}
             handleKeyCommand={this.handleKeyCommand}
-            editorState={this.state.editorState}
+            editorState={
+              this.props.autoUpdate
+                ? this.prepareState(this.props.content)
+                : this.state.editorState
+            }
             onChange={this.handleChange}
           />
           {!this.props.readOnly && (

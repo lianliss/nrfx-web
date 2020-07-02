@@ -132,12 +132,11 @@ export default class SiteContactScreen extends BaseScreen {
                 <SVG src={require("../../../../asset/120/email_success.svg")} />
                 <h3 className="SiteContactScreen__link_item__title">
                   {utils.getLang("site__contactEmailTitle")}
-                </h3>
-                <h2>
+                  <br />
                   <a href={`mailto:${COMPANY.email.support}`}>
                     {COMPANY.email.support}
                   </a>
-                </h2>
+                </h3>
                 <p>{utils.getLang("site__contactEmailDescription")}</p>
               </UI.ContentBox>
 

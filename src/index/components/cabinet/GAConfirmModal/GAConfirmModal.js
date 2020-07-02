@@ -10,8 +10,27 @@ import * as emitter from "../../../../services/emitter";
 export default class GAConfirmModal extends React.Component {
   state = {
     gaCode: "",
+    pending: false,
     errorGaCode: false
   };
+
+  componentDidMount() {
+    this.clearListener = emitter.addListener("ga_clear", () => {
+      this.setState({
+        gaCode: "",
+        pending: false
+      });
+    });
+
+    this.closeListener = emitter.addListener("ga_cancel", () => {
+      this.props.onClose();
+    });
+  }
+
+  componentWillUnmount() {
+    emitter.removeListener(this.clearListener);
+    emitter.removeListener(this.closeListener);
+  }
 
   __handleClose = () => {
     emitter.emit("ga_cancel");
@@ -20,7 +39,11 @@ export default class GAConfirmModal extends React.Component {
 
   __handleSubmit = () => {
     emitter.emit("ga_submit", { code: this.state.gaCode });
-    this.props.onClose();
+    if (!this.props.dontClose) {
+      this.props.onClose();
+    } else {
+      this.setState({ pending: true });
+    }
   };
 
   render() {
@@ -56,6 +79,7 @@ export default class GAConfirmModal extends React.Component {
         />
         <div className="GAConfirmModal__submit_wrapper">
           <UI.Button
+            state={this.state.pending && "loading"}
             onClick={this.__handleSubmit}
             disabled={this.state.gaCode.length < 6}
           >

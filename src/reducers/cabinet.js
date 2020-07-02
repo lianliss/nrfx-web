@@ -1,9 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
 
-const initialState = {
-  wallets: [],
-  currencies: {}
-};
+const initialState = {};
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {

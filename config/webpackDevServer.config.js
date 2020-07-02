@@ -9,7 +9,7 @@ const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
-const isAdmin = process.env.DOMAIN === 'admin';
+// const isAdmin = process.env.DOMAIN === 'admin';
 
 module.exports = function(proxy, allowedHost) {
   return {

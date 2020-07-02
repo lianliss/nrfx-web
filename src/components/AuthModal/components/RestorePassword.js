@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import * as UI from "src/ui";
 import * as utils from "utils";
@@ -9,12 +9,17 @@ import { resetPassword } from "actions/auth";
 function RestorePassword({ changeStep, currentStep, onClose }) {
   const [email, onChange] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [restorePasswordPending, setRestorePasswordPending] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
+    setRestorePasswordPending(true);
     resetPassword(email)
       .then(() => changeStep(steps.RESTORE_PASSWORD_SUCCESS))
-      .catch(err => setErrorMsg(err.message));
-  };
+      .catch(err => setErrorMsg(err.message))
+      .finally(() => {
+        setRestorePasswordPending(false);
+      });
+  }, [setRestorePasswordPending, changeStep, setErrorMsg, email]);
 
   return (
     <>
@@ -37,7 +42,11 @@ function RestorePassword({ changeStep, currentStep, onClose }) {
           </div>
 
           <div className="AuthModal__footer">
-            <UI.Button fontSize={15} onClick={handleSubmit}>
+            <UI.Button
+              state={restorePasswordPending && "loading"}
+              fontSize={15}
+              onClick={handleSubmit}
+            >
               {utils.getLang("site__contactSend")}
             </UI.Button>
           </div>
