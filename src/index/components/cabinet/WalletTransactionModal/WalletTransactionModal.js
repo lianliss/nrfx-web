@@ -122,7 +122,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
             </InfoRow>
             {data.txid && (
               <InfoRow label={utils.getLang("global_txid")}>
-                {data.txid}
+                <div className="Wallets__history__address">{data.txid}</div>
               </InfoRow>
             )}
             <InfoRow label={utils.getLang("global_fee")}>
