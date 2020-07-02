@@ -13,10 +13,14 @@ import * as actions from "../../../../actions";
 import * as toastsActions from "../../../../actions/toasts";
 import COMPANY from "../../../constants/company";
 import { Helmet } from "react-helmet";
+import PasswordInfo from "../../cabinet/CabinetRegisterScreen/comonents/PasswordInfo/PasswordInfo";
+import InputTooltip from "../../cabinet/CabinetRegisterScreen/comonents/Input/Input";
+import Lang from "../../../../components/Lang/Lang";
 
 class CabinetRegister extends React.PureComponent {
   state = {
-    success: false
+    success: false,
+    pending: false
   };
 
   componentDidMount() {
@@ -53,6 +57,7 @@ class CabinetRegister extends React.PureComponent {
     }
 
     if (state.password) {
+      this.setState({ pending: true });
       api
         .call(apiSchema.Profile.ResetPasswordPut, {
           password: state.password,
@@ -63,6 +68,9 @@ class CabinetRegister extends React.PureComponent {
         })
         .catch(err => {
           this.props.toastPush(err.message, "error");
+        })
+        .finally(() => {
+          this.setState({ pending: false });
         });
     }
   }
@@ -72,6 +80,8 @@ class CabinetRegister extends React.PureComponent {
       return false;
     }
     const { state } = this;
+    const confirmPasswordError =
+      !state.passwordConfirm || state.passwordConfirm !== state.password;
     return (
       <div className="CabinetResetPassword">
         <Helmet>
@@ -106,16 +116,23 @@ class CabinetRegister extends React.PureComponent {
               <h3 className="CabinetResetPassword__content__title">
                 {utils.getLang("cabinet_resetPassword_title")}
               </h3>
-              <UI.Input
+              <InputTooltip
                 type="password"
                 error={state.touched && !state.password}
+                title={<PasswordInfo password={state.password} />}
                 value={state.password}
                 placeholder={utils.getLang("cabinet_registerScreen_password")}
                 onTextChange={text => this.__handleChange("password", text)}
               />
-              <UI.Input
+              <InputTooltip
                 type="password"
-                error={state.touched && !state.passwordConfirm}
+                error={state.touched && confirmPasswordError}
+                title={
+                  state.touched &&
+                  confirmPasswordError && (
+                    <Lang name="global_passwordsMustBeSame" />
+                  )
+                }
                 value={state.passwordConfirm}
                 placeholder={utils.getLang(
                   "cabinet_registerScreen_reEnterPassword"
@@ -126,6 +143,7 @@ class CabinetRegister extends React.PureComponent {
               />
               <div className="CabinetResetPassword__content__submit_wrapper">
                 <UI.Button
+                  state={this.state.pending && "loading"}
                   fontSize={15}
                   onClick={this.__handleSubmit.bind(this)}
                 >
