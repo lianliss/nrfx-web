@@ -1,4 +1,7 @@
-import React from "react";
-import { dateFormat } from "src/utils";
+import React, { memo } from "react";
+import { dateFormat, ucfirst as uf } from "src/utils";
 
-export default ({ time, format }) => <span>{dateFormat(time, format)}</span>;
+export default memo(({ time, format, ucfirst }) => {
+  const t = dateFormat(time, format);
+  return <span>{ucfirst ? uf(t) : t}</span>;
+});

@@ -81,6 +81,7 @@ export default () => {
                     </p>
                     <small>
                       <Time
+                        ucfirst
                         time={event.time}
                         format={future ? "MMMM YYYY" : "D MMMM YYYY"}
                       />

@@ -7,10 +7,15 @@
   background: var(--alice-blue);
   z-index: 70;
   box-shadow: 0 10000px 0 10000px rgba(0,0,0,.1);
+  //height: 0;
+  overflow: hidden;
+  transition: height.3s ease, box-shadow.4s ease;
 
   @media (min-width: @mobile-width) {
     &.visible {
       display: block;
+      //box-shadow: 0 10000px 0 10000px rgba(0,0,0,.1);
+      //height: 320px;
     }
   }
 
