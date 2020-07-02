@@ -86,7 +86,11 @@ function SettingSecurity(props) {
             <div className="CabinetSettingsScreen__input_field">
               <InputTooltip
                 type="password"
-                title={<Lang name="registration_passwordConfirmDescription" />}
+                title={
+                  passwordTouched && (
+                    <Lang name="registration_passwordConfirmDescription" />
+                  )
+                }
                 error={
                   passwordTouched &&
                   (!user.re_password || user.new_password !== user.re_password)

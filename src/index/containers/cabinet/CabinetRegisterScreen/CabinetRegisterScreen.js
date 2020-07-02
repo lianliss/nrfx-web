@@ -179,6 +179,7 @@ class CabinetRegister extends React.PureComponent {
                 state.passwordConfirm !== state.password)
             }
             title={
+              state.touched &&
               state.passwordConfirm !== state.password &&
               (!adaptive || validPassword) && (
                 <Lang name="global_passwordsMustBeSame" />
