@@ -7,12 +7,15 @@ import PropTypes from "prop-types";
 // internal
 import { classNames } from "../../utils";
 import SVG from "react-inlinesvg";
+import useAdaptive from "src/hooks/adaptive";
 
 function Modal(props) {
   const node = useRef();
-  const adaptive = document.body.classList.contains("adaptive");
+  // const adaptive = useAdaptive();
+  const adaptive = true;
 
   const className = classNames(props.className, {
+    adaptive,
     Modal: true,
     Modal__noSpacing: props.noSpacing,
     Modal__grayBackground: props.grayBackground
