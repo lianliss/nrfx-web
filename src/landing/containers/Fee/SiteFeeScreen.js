@@ -3,7 +3,6 @@ import "./SiteFeeScreen.less";
 import React from "react";
 import NumberFormat from "src/ui/components/NumberFormat/NumberFormat";
 
-import BaseScreen from "src/index/containers/BaseScreen";
 import * as UI from "src/ui";
 import { getLang } from "src/utils";
 

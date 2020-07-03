@@ -3,7 +3,6 @@ import "./Promo.less";
 import { Button } from "../../../../../ui";
 import AppButtons from "../../../../../components/AppButtons/AppButtons";
 import * as actions from "../../../../../actions/landing/buttons";
-import * as steps from "../../../../../components/AuthModal/fixtures";
 import * as pages from "../../../../../index/constants/pages";
 import { useRouter, Link } from "react-router5";
 
