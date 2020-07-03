@@ -36,14 +36,14 @@ class SettingPersonal extends React.Component {
 
   render() {
     const buttonType = this.props.adaptive ? undefined : "outline";
-
+    const { profile } = this.props;
     return (
       <>
         {!utils.isProduction() && <VerificationBlock />}
-        {this.props.profile.user.applicant_id && (
+        {profile.user.applicant_id && (
           <UI.ContentBox className="CabinetSettingsScreen__main">
             <div className="CabinetSettingsScreen__header">applicant_id</div>
-            <pre>{this.props.profile.user.applicant_id}</pre>
+            <pre>{profile.user.applicant_id}</pre>
           </UI.ContentBox>
         )}
         <UI.ContentBox className="CabinetSettingsScreen__main">
@@ -102,11 +102,13 @@ class SettingPersonal extends React.Component {
                           toasts.error(error.message);
                         })
                         .finally(() => {
+                          this.setState({ pendingChangeInfo: false });
                           emitter.emit("ga_cancel");
                         });
                     })
                     .finally(() => {
-                      this.setState({ pendingChangeInfo: false });
+                      profile.ga_enabled &&
+                        this.setState({ pendingChangeInfo: false });
                     });
                 }}
               >
@@ -157,11 +159,13 @@ class SettingPersonal extends React.Component {
                           toasts.error(e.message);
                         })
                         .finally(() => {
+                          this.setState({ pendingChangeLogin: false });
                           emitter.emit("ga_cancel");
                         });
                     })
                     .finally(() => {
-                      this.setState({ pendingChangeLogin: false });
+                      profile.ga_enabled &&
+                        this.setState({ pendingChangeLogin: false });
                     });
                 }}
               >

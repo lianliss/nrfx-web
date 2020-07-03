@@ -48,11 +48,12 @@ function SettingSecurity(props) {
               props.toastPush(err.message, "error");
             })
             .finally(() => {
+              setPendingChangePassword(false);
               emitter.emit("ga_cancel");
             });
         })
         .finally(() => {
-          setPendingChangePassword(false);
+          props.profile.ga_enabled && setPendingChangePassword(false);
         });
     } else {
       setPasswordTouched(true);
