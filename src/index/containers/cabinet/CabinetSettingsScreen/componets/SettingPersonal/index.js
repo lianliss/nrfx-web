@@ -14,7 +14,9 @@ class SettingPersonal extends React.Component {
   state = {
     firstNameInputError: false,
     lastNameInputError: false,
-    loginInputError: false
+    loginInputError: false,
+    pendingChangeInfo: false,
+    pendingChangeLogin: false
   };
 
   __inputError = (node, stateField) => {
@@ -73,6 +75,7 @@ class SettingPersonal extends React.Component {
             </div>
             <div className="CabinetSettingsScreen__form right">
               <UI.Button
+                state={this.state.pendingChangeInfo && "loading"}
                 type={buttonType}
                 onClick={() => {
                   if (!utils.isName(this.props.user.first_name)) {
@@ -80,32 +83,38 @@ class SettingPersonal extends React.Component {
                   } else if (!utils.isName(this.props.user.last_name)) {
                     return this.__inputError(this, "lastNameInputError");
                   }
-                  actions.gaCode({ dontClose: true }).then(code => {
-                    settingsActions
-                      .changeInfo({
-                        first_name: this.props.user.first_name,
-                        last_name: this.props.user.last_name,
-                        ga_code: code
-                      })
-                      .then(data => {
-                        toasts.success(
-                          utils.getLang("cabinet_nameChangedSuccessfully")
-                        );
-                      })
-                      .catch(error => {
-                        toasts.error(error.message);
-                      })
-                      .finally(() => {
-                        emitter.emit("ga_cancel");
-                      });
-                  });
+                  this.setState({ pendingChangeInfo: true });
+                  actions
+                    .gaCode({ dontClose: true })
+                    .then(code => {
+                      settingsActions
+                        .changeInfo({
+                          first_name: this.props.user.first_name,
+                          last_name: this.props.user.last_name,
+                          ga_code: code
+                        })
+                        .then(data => {
+                          toasts.success(
+                            utils.getLang("cabinet_nameChangedSuccessfully")
+                          );
+                        })
+                        .catch(error => {
+                          toasts.error(error.message);
+                        })
+                        .finally(() => {
+                          emitter.emit("ga_cancel");
+                        });
+                    })
+                    .finally(() => {
+                      this.setState({ pendingChangeInfo: false });
+                    });
                 }}
               >
                 {utils.getLang("cabinet_settingsSave")}
               </UI.Button>
             </div>
           </div>
-          <div className="CabinetSettingsScreen__space"></div>
+          <div className="CabinetSettingsScreen__space" />
           <div className="CabinetSettingsScreen__header">
             {utils.getLang("site__contactLogin")}
           </div>
@@ -124,30 +133,36 @@ class SettingPersonal extends React.Component {
             </div>
             <div className="CabinetSettingsScreen__form right">
               <UI.Button
+                state={this.state.pendingChangeLogin && "loading"}
                 type={buttonType}
                 onClick={() => {
                   if (!utils.isLogin(this.props.user.login)) {
                     return this.__inputError(this, "loginInputError");
                   }
-
-                  actions.gaCode({ dontClose: true }).then(code => {
-                    settingsActions
-                      .changeLogin({
-                        login: this.props.user.login,
-                        ga_code: code
-                      })
-                      .then(() => {
-                        toasts.success(
-                          utils.getLang("cabinet_loginChangedSuccessfully")
-                        );
-                      })
-                      .catch(e => {
-                        toasts.error(e.message);
-                      })
-                      .finally(() => {
-                        emitter.emit("ga_cancel");
-                      });
-                  });
+                  this.setState({ pendingChangeLogin: true });
+                  actions
+                    .gaCode({ dontClose: true })
+                    .then(code => {
+                      settingsActions
+                        .changeLogin({
+                          login: this.props.user.login,
+                          ga_code: code
+                        })
+                        .then(() => {
+                          toasts.success(
+                            utils.getLang("cabinet_loginChangedSuccessfully")
+                          );
+                        })
+                        .catch(e => {
+                          toasts.error(e.message);
+                        })
+                        .finally(() => {
+                          emitter.emit("ga_cancel");
+                        });
+                    })
+                    .finally(() => {
+                      this.setState({ pendingChangeLogin: false });
+                    });
                 }}
               >
                 {utils.getLang("cabinet_settingsChange")}

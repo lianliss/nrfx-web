@@ -215,22 +215,15 @@
 
 .Button__loader {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   width: 16px;
   height: 16px;
   z-index: 5;
-
-  &::before {
-    content: "";
-    height: inherit;
-    width: inherit;
-    display: block;
-    filter: invert(1);
-    background: url("../../asset/spinner.svg");
-    animation: Button__loader_anim 1s infinite linear;
-  }
+  animation: Button__loader_anim 1s infinite linear;
 }
 
 @keyframes Button__loader_anim {

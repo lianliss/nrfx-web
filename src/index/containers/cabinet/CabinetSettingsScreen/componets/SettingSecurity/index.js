@@ -17,6 +17,7 @@ import Lang from "../../../../../../components/Lang/Lang";
 function SettingSecurity(props) {
   const { user } = props;
   const [passwordTouched, setPasswordTouched] = useState(false);
+  const [pendingChangePassword, setPendingChangePassword] = useState(false);
 
   const __handleChangePassword = () => {
     if (
@@ -24,29 +25,35 @@ function SettingSecurity(props) {
       user.re_password &&
       utils.isPassword(user.new_password)
     ) {
-      actions.gaCode({ dontClose: true }).then(code => {
-        settingsActions
-          .changeNewPassword({
-            old_password: props.user.old_password,
-            password: props.user.new_password,
-            ga_code: code
-          })
-          .then(() => {
-            props.toastPush(
-              utils.getLang("cabinet_passwordUpdateSuccess"),
-              "success"
-            );
-            props.setUserFieldValue({ field: "old_password", value: "" });
-            props.setUserFieldValue({ field: "new_password", value: "" });
-            props.setUserFieldValue({ field: "re_password", value: "" });
-          })
-          .catch(err => {
-            props.toastPush(err.message, "error");
-          })
-          .finally(() => {
-            emitter.emit("ga_cancel");
-          });
-      });
+      setPendingChangePassword(true);
+      actions
+        .gaCode({ dontClose: true })
+        .then(code => {
+          settingsActions
+            .changeNewPassword({
+              old_password: props.user.old_password,
+              password: props.user.new_password,
+              ga_code: code
+            })
+            .then(() => {
+              props.toastPush(
+                utils.getLang("cabinet_passwordUpdateSuccess"),
+                "success"
+              );
+              props.setUserFieldValue({ field: "old_password", value: "" });
+              props.setUserFieldValue({ field: "new_password", value: "" });
+              props.setUserFieldValue({ field: "re_password", value: "" });
+            })
+            .catch(err => {
+              props.toastPush(err.message, "error");
+            })
+            .finally(() => {
+              emitter.emit("ga_cancel");
+            });
+        })
+        .finally(() => {
+          setPendingChangePassword(false);
+        });
     } else {
       setPasswordTouched(true);
     }
@@ -104,7 +111,11 @@ function SettingSecurity(props) {
             </div>
           </div>
           <div className="CabinetSettingsScreen__form right">
-            <UI.Button type={"outline"} onClick={__handleChangePassword}>
+            <UI.Button
+              state={pendingChangePassword && "loading"}
+              type={"outline"}
+              onClick={__handleChangePassword}
+            >
               {utils.getLang("cabinet_settingsSave")}
             </UI.Button>
           </div>

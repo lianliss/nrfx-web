@@ -5,6 +5,7 @@ import React from "react";
 import PropTypes from "prop-types";
 // internal
 import { classNames } from "../../utils";
+import SVG from "react-inlinesvg";
 
 const ButtonWrapper = props => (
   <div className={classNames("ButtonWrapper", props.className, props.align)}>
@@ -58,7 +59,11 @@ function Button(props) {
       type={props.btnType}
       title={props.title}
     >
-      {props.state === "loading" && <div className="Button__loader"></div>}
+      {props.state === "loading" && (
+        <div className="Button__loader">
+          <SVG src={require(`../../asset/spinner.svg`)} />
+        </div>
+      )}
       <div className="Button__cont">
         {props.beforeContent}
         <div
