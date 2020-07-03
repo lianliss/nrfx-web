@@ -20,7 +20,10 @@ export default props => {
         <div className="Promo__content__text">
           <h1>{props.title}</h1>
           <p>{props.description}</p>
-          <Button onClick={() => actions.singUp()} className="extra_large">
+          <Button
+            onClick={() => (props.onClick ? props.onClick() : actions.singUp())}
+            className="extra_large"
+          >
             {props.actionButtonText}
           </Button>
           <AppButtons className="Promo__appButtons" />
