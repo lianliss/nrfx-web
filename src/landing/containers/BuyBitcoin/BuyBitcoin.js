@@ -8,6 +8,7 @@ import Lang from "../../../components/Lang/Lang";
 import COMPANY from "../../../index/constants/company";
 import * as utils from "../../../utils";
 import { Helmet } from "react-helmet";
+import ADVANTAGES_ITEMS from "../../constants/advantages";
 
 export default () => {
   return (
@@ -34,39 +35,8 @@ export default () => {
       {/*<Swap />*/}
       {/*<Exchange />*/}
       <Advantages
-        titleLang="landing_advantages_title"
-        items={[
-          {
-            icon: require("../MainScreen/components/Advantages/assets/fast.svg"),
-            titleLang: "landing_advantages_performance_title",
-            textLang: "landing_advantages_performance_description"
-          },
-          {
-            icon: require("../MainScreen/components/Advantages/assets/wallet.svg"),
-            titleLang: "landing_advantages_multiCurrency_title",
-            textLang: "landing_advantages_multiCurrency_description"
-          },
-          {
-            icon: require("../MainScreen/components/Advantages/assets/liquidity.svg"),
-            titleLang: "landing_advantages_liquidity_title",
-            textLang: "landing_advantages_liquidity_description"
-          },
-          {
-            icon: require("../MainScreen/components/Advantages/assets/fee.svg"),
-            titleLang: "landing_advantages_fee_title",
-            textLang: "landing_advantages_fee_description"
-          },
-          {
-            icon: require("../MainScreen/components/Advantages/assets/ui.svg"),
-            titleLang: "landing_advantages_ui_title",
-            textLang: "landing_advantages_ui_description"
-          },
-          {
-            icon: require("../MainScreen/components/Advantages/assets/support.svg"),
-            titleLang: "landing_advantages_support_title",
-            textLang: "landing_advantages_support_description"
-          }
-        ]}
+        titleLang="landingBitcoin_advantages_title"
+        items={ADVANTAGES_ITEMS}
       />
       <Application accent />
       <Advantages
