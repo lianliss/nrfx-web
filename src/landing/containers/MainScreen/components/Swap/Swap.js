@@ -10,8 +10,7 @@ import SVG from "react-inlinesvg";
 import { getRate } from "src/actions/landing/swap";
 import Lang from "src/components/Lang/Lang";
 import { classNames as cn } from "src/utils/index";
-import * as actions from "../../../../../actions";
-import * as steps from "../../../../../components/AuthModal/fixtures";
+import * as actions from "../../../../../actions/landing/buttons";
 
 export default () => {
   const [fromFiat, setFromFiat] = useState(true);
@@ -194,9 +193,7 @@ export default () => {
             </div>
           </div>
           <Button
-            onClick={() => {
-              actions.openModal("auth", { type: steps.REGISTRATION });
-            }}
+            onClick={() => actions.swap()}
             disabled={pendingRate}
             size="extra_large"
           >

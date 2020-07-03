@@ -2,7 +2,7 @@ import React from "react";
 import "./Promo.less";
 import { Button } from "../../../../../ui";
 import AppButtons from "../../../../../components/AppButtons/AppButtons";
-import * as actions from "../../../../../actions";
+import * as actions from "../../../../../actions/landing/buttons";
 import * as steps from "../../../../../components/AuthModal/fixtures";
 import * as pages from "../../../../../index/constants/pages";
 import { useRouter, Link } from "react-router5";
@@ -21,12 +21,7 @@ export default props => {
         <div className="Promo__content__text">
           <h1>{props.title}</h1>
           <p>{props.description}</p>
-          <Button
-            onClick={() => {
-              actions.openModal("auth", { type: steps.REGISTRATION });
-            }}
-            className="extra_large"
-          >
+          <Button onClick={() => actions.singUp()} className="extra_large">
             {props.actionButtonText}
           </Button>
           <AppButtons className="Promo__appButtons" />
