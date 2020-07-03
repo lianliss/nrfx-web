@@ -2,7 +2,6 @@ import React from "react";
 import Select, {
   customStyles
 } from "../../../../../ui/components/Select/Select";
-import { getCssVar } from "../../../../../utils";
 
 export default props => {
   return (
