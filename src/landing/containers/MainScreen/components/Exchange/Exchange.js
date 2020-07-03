@@ -9,6 +9,7 @@ import { joinComponents } from "../../../../../utils";
 import * as actions from "../../../../../actions";
 import * as pages from "../../../../../index/constants/pages";
 import Lang from "../../../../../components/Lang/Lang";
+import Skeleton from "../../../../../ui/components/Skeleton/Skeleton";
 
 export default () => {
   const { markets } = useSelector(landingSelector);
@@ -47,56 +48,78 @@ export default () => {
               <Lang name="landing_exchange_table_market" />
             </th>
           </tr>
-          {markets
-            .filter(
-              m =>
-                m.market.config.secondary_coin.name === "usdt" &&
-                m.market.config.primary_coin.name !== "nrfx" // TODO: NRFX HACK
-            )
-            .map(({ market: { config }, chart, ticker }) => {
-              const currency = getCurrencyInfo(config.primary_coin.name);
+          {markets.length
+            ? markets
+                .filter(
+                  m =>
+                    m.market.config.secondary_coin.name === "usdt" &&
+                    m.market.config.primary_coin.name !== "nrfx" // TODO: NRFX HACK
+                )
+                .map(({ market: { config }, chart, ticker }, key) => {
+                  const currency = getCurrencyInfo(config.primary_coin.name);
 
-              return (
-                <tr>
-                  <td>
-                    <div className="Exchange__currency">
-                      <CircleIcon shadow={false} currency={currency} />
-                      <div className="Exchange__currency__name">
-                        <strong>{currency.abbr.toUpperCase()}</strong>
-                        <span>{currency.name}</span>
+                  return (
+                    <tr key={key}>
+                      <td>
+                        <div className="Exchange__currency">
+                          <CircleIcon shadow={false} currency={currency} />
+                          <div className="Exchange__currency__name">
+                            <strong>{currency.abbr.toUpperCase()}</strong>
+                            <span>{currency.name}</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="Exchange__price">
+                          {ticker.usd_price
+                            .toFixed(2)
+                            .toString()
+                            .split(".")
+                            .map((n, i) => (
+                              <span>
+                                {i === 1 ? "." : "$"}
+                                {n}
+                              </span>
+                            ))
+                            .reduce(joinComponents(""), null)}
+                        </div>
+                      </td>
+                      <td>
+                        <NumberFormat
+                          symbol
+                          color={ticker.percent !== 0}
+                          percent
+                          indicator
+                          number={ticker.percent}
+                        />
+                      </td>
+                      <td className="Exchange__chartColumn">
+                        <Chart currency={currency} chart={chart} />
+                      </td>
+                    </tr>
+                  );
+                })
+            : Array(6)
+                .fill(true)
+                .map((i, key) => (
+                  <tr key={`s${key}`}>
+                    <td>
+                      <div className="Exchange__currency">
+                        <CircleIcon skeleton />
+                        <Skeleton />
                       </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="Exchange__price">
-                      {ticker.usd_price
-                        .toFixed(2)
-                        .toString()
-                        .split(".")
-                        .map((n, i) => (
-                          <span>
-                            {i === 1 ? "." : "$"}
-                            {n}
-                          </span>
-                        ))
-                        .reduce(joinComponents(""), null)}
-                    </div>
-                  </td>
-                  <td>
-                    <NumberFormat
-                      symbol
-                      color={ticker.percent !== 0}
-                      percent
-                      indicator
-                      number={ticker.percent}
-                    />
-                  </td>
-                  <td className="Exchange__chartColumn">
-                    <Chart currency={currency} chart={chart} />
-                  </td>
-                </tr>
-              );
-            })}
+                    </td>
+                    <td>
+                      <Skeleton />
+                    </td>
+                    <td>
+                      <Skeleton />
+                    </td>
+                    <td className="Exchange__chartColumn">
+                      <Skeleton className="Chart" />
+                    </td>
+                  </tr>
+                ))}
         </table>
 
         <Button

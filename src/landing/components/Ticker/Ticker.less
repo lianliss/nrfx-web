@@ -40,6 +40,24 @@
     .Ticker__market__price {
 
     }
+
+    &.skeleton {
+      .Ticker__market__name,
+      .Ticker__market__price,
+      .Ticker__market__diff {
+        background: var(--cloudy);
+        height: 1em;
+        width: 7em;
+      }
+      .Ticker__market__name {
+        background: var(--light-gray);
+      }
+      .Ticker__market__diff {
+        width: 3em;
+        background: rgba(55, 180, 150, .30);
+        opacity: .3;
+      }
+    }
   }
 }
 
