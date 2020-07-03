@@ -8,7 +8,7 @@ import Toasts from "../index/components/cabinet/Toasts/Toasts";
 import Routes from "./Routes";
 import Modals from "./Modals";
 import DynamcModals from "./DynamcModals";
-import { getLang, setLang } from "../services/lang";
+import { choseLang, getLang } from "../services/lang";
 import * as actions from "../actions";
 import * as UI from "src/ui/index";
 
@@ -38,7 +38,7 @@ class App extends React.Component {
 
   _loadAssets = () => {
     const lang = getLang();
-    setLang(lang);
+    choseLang(lang);
     Promise.all([actions.loadLang(lang)]).then(() => {
       this.setState({ isLoading: false });
     });

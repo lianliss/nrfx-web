@@ -2,7 +2,7 @@ import * as storage from "./storage";
 import moment from "moment";
 import { loadLang } from "../actions";
 
-export function setLang(lang, callback) {
+export function choseLang(lang) {
   const momentLang = lang === "ru" ? "ru" : "en-au";
   require("moment/locale/" + momentLang);
   moment.locale(momentLang);
@@ -10,6 +10,13 @@ export function setLang(lang, callback) {
   if (lang) {
     storage.setItem("lang", lang);
     moment.locale(lang);
+  }
+}
+
+export function setLang(lang, callback) {
+  choseLang(lang);
+
+  if (lang) {
     loadLang(lang).then(e => {
       if (callback) callback();
     });
