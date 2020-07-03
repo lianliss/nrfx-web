@@ -28,6 +28,11 @@
 
   .Select__arrow {
     color: var(--gray);
+    transition: transform.3s ease;
+
+    &.open {
+      transform: rotate(180deg);
+    }
 
     svg {
       display: block;

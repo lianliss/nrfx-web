@@ -6,13 +6,18 @@ import { classNames as cn } from "../../utils";
 import SVG from "react-inlinesvg";
 
 export const customStyles = {
-  control: (provided, { isDisabled }) => ({
+  control: (provided, state) => ({
     ...provided,
-    border: "none",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: state.isFocused ? `var(--primary-blue)` : "var(--cloudy)",
     borderRadius: 8,
     boxShadow: getCssVar("--main-shadow"),
-    backgroundColor: isDisabled ? "#FAFAFA" : getCssVar("--white"),
-    minHeight: 48
+    backgroundColor: state.isDisabled ? "#FAFAFA" : getCssVar("--white"),
+    minHeight: 48,
+    cursor: "pointer",
+    background: console.log(666, state) && null,
+    "&:hover": null
   }),
   indicatorSeparator: () => ({
     display: "none",
@@ -64,18 +69,19 @@ export const customStyles = {
   }),
   option: (provided, state) => {
     let bg = null;
+    if (state.isSelected) bg = getCssVar("--alice-blue");
     if (state.isFocused) bg = getCssVar("--cloudy");
-    if (state.isSelected) bg = getCssVar("--cloudy");
 
     return {
       ...provided,
+      cursor: "pointer",
       color: getCssVar("--black"),
       padding: "12px 16px",
       fontSize: 14,
       backgroundColor: bg,
       lineHeight: "16px",
       ":hover": {
-        backgroundColor: getCssVar("--alice-blue")
+        backgroundColor: getCssVar("--cloudy")
       },
       ":active": {
         backgroundColor: getCssVar("--cloudy")
@@ -133,7 +139,9 @@ const ClearIndicator = props => {
 
 const DropdownIndicator = props => {
   return (
-    <div className="Select__arrow">
+    <div
+      className={cn("Select__arrow", { open: props.selectProps.menuIsOpen })}
+    >
       <SVG src={require("src/asset/24px/angle-down-small.svg")} />
     </div>
   );
