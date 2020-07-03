@@ -11,8 +11,7 @@ import useAdaptive from "src/hooks/adaptive";
 
 function Modal(props) {
   const node = useRef();
-  // const adaptive = useAdaptive();
-  const adaptive = true;
+  const adaptive = useAdaptive();
 
   const className = classNames(props.className, {
     adaptive,

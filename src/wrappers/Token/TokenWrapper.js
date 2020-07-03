@@ -5,7 +5,7 @@ import Footer from "./components/Footer/Footer";
 import useAdaptive from "src/hooks/adaptive";
 
 export default props => {
-  useAdaptive();
+  // useAdaptive();
 
   useEffect(() => {
     window.scrollTo(0, 0);
