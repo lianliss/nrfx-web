@@ -4,6 +4,7 @@ import { getStaticPageContent } from "src/actions";
 import { Editor } from "../../../../../ui";
 import "./About.less";
 import { currentLangSelector } from "../../../../../selectors";
+import LoadingStatus from "../../../../../index/components/cabinet/LoadingStatus/LoadingStatus";
 
 export default () => {
   const [content, setContent] = useState(null);
@@ -24,7 +25,7 @@ export default () => {
             <Editor autoUpdate content={content.content} readOnly />
           </div>
         ) : (
-          "loading..."
+          <LoadingStatus inline status="loading" />
         )}
       </div>
     </div>

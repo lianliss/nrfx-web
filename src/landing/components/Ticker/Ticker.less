@@ -6,6 +6,7 @@
   overflow: hidden;
 
   .Ticker__tape {
+    width: 10000px;
     will-change: transform;
     animation: slide 60s linear infinite;
     display: flex;
@@ -39,14 +40,32 @@
     .Ticker__market__price {
 
     }
+
+    &.skeleton {
+      .Ticker__market__name,
+      .Ticker__market__price,
+      .Ticker__market__diff {
+        background: var(--cloudy);
+        height: 1em;
+        width: 7em;
+      }
+      .Ticker__market__name {
+        background: var(--light-gray);
+      }
+      .Ticker__market__diff {
+        width: 3em;
+        background: rgba(55, 180, 150, .30);
+        opacity: .3;
+      }
+    }
   }
 }
 
 @keyframes slide {
   from {
-    transform: translate3d(0);
+    transform: translate(0);
   }
   to {
-    transform: translate3d(-40%, 0, 0);
+    transform: translate(-4000px, 0);
   }
 }

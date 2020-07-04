@@ -15,7 +15,7 @@ export default ({ accent }) => {
           <div className="Application__image" />
           <div className="Application__description">
             <h3>
-              <Lang name="landing_application_title" />
+              <Lang name="landing_application_subtitle" />
             </h3>
             <p>
               <Lang name="landing_application_description" />

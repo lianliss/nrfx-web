@@ -1,4 +1,5 @@
 import "./CircleIcon.less";
+import "../Skeleton/Skeleton.less";
 
 import React from "react";
 import hexToRgba from "hex-to-rgba";
@@ -6,7 +7,17 @@ import SVG from "react-inlinesvg";
 import { classNames as cn } from "../../utils";
 
 export default props => {
-  const { currency, icon, className, size, shadow = true } = props;
+  const {
+    currency,
+    icon,
+    className,
+    size,
+    skeleton = false,
+    shadow = true
+  } = props;
+  if (skeleton) {
+    return <div className={cn("CircleIcon", size, className, { skeleton })} />;
+  }
   return (
     <div
       className={cn("CircleIcon", size, className)}

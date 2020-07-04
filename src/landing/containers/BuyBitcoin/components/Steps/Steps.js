@@ -1,14 +1,9 @@
 import React from "react";
 import "./Steps.less";
 import Lang from "../../../../../components/Lang/Lang";
-import * as actions from "../../../../../actions";
-import * as steps from "../../../../../components/AuthModal/fixtures";
+import * as actions from "../../../../../actions/landing/buttons";
 
 export default () => {
-  const handleCreateAccount = () => {
-    actions.openModal("auth", { type: steps.REGISTRATION });
-  };
-
   return (
     <div className="LandingWrapper__block Steps">
       <div className="LandingWrapper__content Steps__content">
@@ -28,7 +23,10 @@ export default () => {
               <p>
                 <Lang name="landingBitcoin_step_createAccount_description" />
               </p>
-              <div onClick={handleCreateAccount} className="Steps__step__link">
+              <div
+                onClick={() => actions.singUp()}
+                className="Steps__step__link"
+              >
                 <Lang name="landingBitcoin_step_actionButton_createAccount" /> ›
               </div>
             </div>

@@ -92,6 +92,7 @@ class Input extends React.Component {
     let params = {
       className,
       type,
+      name: this.props.name,
       placeholder: placeholder,
       autoComplete: this.props.autoComplete,
       autoFocus: this.props.autoFocus,

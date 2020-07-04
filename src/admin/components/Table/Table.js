@@ -81,7 +81,7 @@ class TableComponent extends React.Component {
             {props.items
               .filter(row => row.type !== "deleted")
               .map((row, key) => (
-                <TableCell key={key} mode={row.mode}>
+                <TableCell key={key} mode={row.style}>
                   {row.items.map((column, key) => (
                     <TableColumn key={key} sub={column.sub_value}>
                       <Item item={column.items} />

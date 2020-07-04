@@ -120,11 +120,14 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
             <InfoRow label={utils.getLang("global_amount")}>
               <UI.NumberFormat number={data.amount} currency={currency} />
             </InfoRow>
-            {!this.props.type.includes("transfer") && (
-              <InfoRow label={utils.getLang("global_fee")}>
-                <UI.NumberFormat number={data.fee} currency={currency} />
+            {data.txid && (
+              <InfoRow label={utils.getLang("global_txid")}>
+                <div className="Wallets__history__address">{data.txid}</div>
               </InfoRow>
             )}
+            <InfoRow label={utils.getLang("global_fee")}>
+              <UI.NumberFormat number={data.fee} currency={currency} />
+            </InfoRow>
             <InfoRow label={utils.getLang("global_date")}>
               {utils.dateFormat(data.created_at)}
             </InfoRow>

@@ -30,8 +30,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: calc(100% - 32px);
-      margin: 0 16px;
+      width: calc(100% - 32px - 256px);
+      margin: 0 256px 0 16px;
       content: '';
       display: block;
       border-top: 1px solid var(--light-gray);
@@ -39,7 +39,7 @@
 
     li {
       position: relative;
-      max-width: 256px;
+      width: 256px;
       margin: 16px;
 
       &:before {
@@ -111,7 +111,7 @@
     }
 
     &.left {
-      background: linear-gradient(90deg, var(--alice-blue) 0%, transparent 100%);
+      background: linear-gradient(90deg, var(--alice-blue) 0%, rgba(247, 249, 252, 0) 100%);
       left: 0;
 
       .Roadmap__timelineWrapper__button__icon {
@@ -121,7 +121,7 @@
 
     &.right {
       right: 0;
-      background: linear-gradient(90deg, transparent 0%, var(--alice-blue) 100%);
+      background: linear-gradient(90deg, rgba(247, 249, 252, 0) 0%, var(--alice-blue) 100%);
 
       .Roadmap__timelineWrapper__button__icon {
         right: 38px;

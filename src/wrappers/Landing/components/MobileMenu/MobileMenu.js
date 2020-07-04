@@ -8,9 +8,12 @@ import * as actions from "../../../../actions";
 import * as steps from "../../../../components/AuthModal/fixtures";
 import * as pages from "../../../../index/constants/pages";
 import Lang from "../../../../components/Lang/Lang";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../../../selectors";
 
 export default ({ visible, onClose }) => {
   const router = useRouter();
+  const user = useSelector(userSelector);
 
   return (
     <div className={cn("MobileMenu", { visible })}>
@@ -76,21 +79,33 @@ export default ({ visible, onClose }) => {
         </li>
       </ul>
       <div className="MobileMenu__authButtons">
-        <Button
-          onClick={() => {
-            actions.openModal("auth", { type: steps.REGISTRATION });
-          }}
-        >
-          <Lang name="site__authModalSignUpBtn" />
-        </Button>
-        <Button
-          onClick={() => {
-            actions.openModal("auth", { type: steps.LOGIN });
-          }}
-          type="outline"
-        >
-          <Lang name="site__authModalLogInBtn" />
-        </Button>
+        {user ? (
+          <Button
+            onClick={() => {
+              router.navigate(pages.DASHBOARD);
+            }}
+          >
+            <Lang name="cabinet_header_cabinet" />
+          </Button>
+        ) : (
+          <>
+            <Button
+              onClick={() => {
+                actions.openModal("auth", { type: steps.REGISTRATION });
+              }}
+            >
+              <Lang name="site__authModalSignUpBtn" />
+            </Button>
+            <Button
+              onClick={() => {
+                actions.openModal("auth", { type: steps.LOGIN });
+              }}
+              type="outline"
+            >
+              <Lang name="site__authModalLogInBtn" />
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

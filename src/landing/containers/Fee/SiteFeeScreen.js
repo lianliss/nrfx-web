@@ -3,7 +3,6 @@ import "./SiteFeeScreen.less";
 import React from "react";
 import NumberFormat from "src/ui/components/NumberFormat/NumberFormat";
 
-import BaseScreen from "src/index/containers/BaseScreen";
 import * as UI from "src/ui";
 import { getLang } from "src/utils";
 
@@ -11,9 +10,12 @@ import CurrencyLabel from "./components/CurrencyLable/CurrencyLabel";
 import { Helmet } from "react-helmet";
 import * as utils from "src/utils";
 import COMPANY from "src/index/constants/company";
+import Welcome from "../MainScreen/components/Welcome/Welcome";
+import useAdaptive from "src/hooks/adaptive";
 
-export default class SiteFeeScreen extends BaseScreen {
-  renderContent() {
+export default () => {
+  const adaptive = useAdaptive();
+  const renderContent = () => {
     return (
       <>
         <h2>{getLang("site__fee_depositAndWithdraw")}</h2>
@@ -211,9 +213,9 @@ export default class SiteFeeScreen extends BaseScreen {
         </UI.ContentBox>
       </>
     );
-  }
+  };
 
-  renderContentAdaptive() {
+  const renderContentAdaptive = () => {
     return (
       <>
         <div className="SiteFeeScreen__list">
@@ -602,32 +604,35 @@ export default class SiteFeeScreen extends BaseScreen {
         </div>
       </>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div className="SiteFeeScreen Layout_spacing">
-        <Helmet>
-          <title>
-            {[COMPANY.name, utils.getLang("site__fee_title", true)].join(" - ")}
-          </title>
-          <meta
-            name="description"
-            content={utils.getLang("site__fee_description")}
-          />
-        </Helmet>
-        <div className="SiteContactScreen__heading">
-          <h1>{getLang("site__fee_title")}</h1>
-          <p>
-            {getLang("site__fee_description")}
-            <br />
-            {getLang("site__fee_description2")}
-          </p>
+  return (
+    <>
+      <div className="SiteFeeScreen LandingWrapper__block">
+        <div className="LandingWrapper__content">
+          <Helmet>
+            <title>
+              {[COMPANY.name, utils.getLang("site__fee_title", true)].join(
+                " - "
+              )}
+            </title>
+            <meta
+              name="description"
+              content={utils.getLang("site__fee_description")}
+            />
+          </Helmet>
+          <div className="SiteContactScreen__heading">
+            <h1>{getLang("site__fee_title")}</h1>
+            <p>
+              {getLang("site__fee_description")}
+              <br />
+              {getLang("site__fee_description2")}
+            </p>
+          </div>
+          {adaptive ? renderContentAdaptive() : renderContent()}
         </div>
-        {window.innerWidth < 600
-          ? this.renderContentAdaptive()
-          : this.renderContent()}
       </div>
-    );
-  }
-}
+      <Welcome />
+    </>
+  );
+};

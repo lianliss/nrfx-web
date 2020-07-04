@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import Toasts from "../index/components/cabinet/Toasts/Toasts";
 import Routes from "./Routes";
 import Modals from "./Modals";
-import { getLang, setLang } from "../services/lang";
+import { choseLang, getLang } from "../services/lang";
 import * as actions from "../actions";
 import * as UI from "src/ui/index";
 import CookieUsage from "../index/components/site/CookieUsage/CookieUsage";
@@ -41,7 +41,7 @@ class App extends React.Component {
 
   _loadAssets = () => {
     const lang = getLang();
-    setLang(lang);
+    choseLang(lang);
     Promise.all([actions.loadLang(lang), actions.loadCurrencies()]).then(() => {
       this.setState({ isLoading: false });
     });

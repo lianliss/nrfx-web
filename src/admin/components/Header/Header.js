@@ -14,7 +14,7 @@ export default props => {
       <BaseLink router={router} routeName={PAGES.PANEL}>
         <Logo />
       </BaseLink>
-      <div className="Header__title">Admin Panel</div>
+      <div className="Header__title">Control Panel</div>
       <div className="Header__menu">
         <div className="Header__menu_item" onClick={auth.logout}>
           Logout

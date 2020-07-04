@@ -35,9 +35,6 @@ export default class Editor extends React.Component {
       }
     };
 
-    // console.log(prepareState(this.props.content));
-    // debugger;
-
     this.onChange = editorState => this.setState({ editorState });
     this.update = this.update.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
@@ -192,8 +189,6 @@ export default class Editor extends React.Component {
         this.state.rect.width / 2}px), calc(-100% + ${this.state.rect.top -
         10}px))`
     };
-
-    console.log(5555, this.props.content);
 
     return (
       <div
