@@ -55,6 +55,7 @@ class Balances extends React.Component {
           <UI.TableColumn>{balance.currency.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={balance.amount}
               currency={balance.currency}
               hiddenCurrency

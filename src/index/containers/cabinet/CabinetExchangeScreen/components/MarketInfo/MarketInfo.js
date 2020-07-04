@@ -65,6 +65,7 @@ class MarketInfo extends React.Component {
           <div className="MarketInfo__info_row__value">
             <div className="MarketInfo__info_row__value__primary">
               <UI.NumberFormat
+                market
                 type={type}
                 indicator
                 symbol
@@ -75,6 +76,7 @@ class MarketInfo extends React.Component {
             </div>
             $
             <UI.NumberFormat
+              market
               number={ticker.usd_price}
               currency={"usd"}
               hiddenCurrency
@@ -88,6 +90,7 @@ class MarketInfo extends React.Component {
           <div className="MarketInfo__info_row__value">
             <div className="MarketInfo__info_row__value__primary">
               <UI.NumberFormat
+                market
                 number={ticker.percent}
                 symbol
                 type="auto"
@@ -97,6 +100,7 @@ class MarketInfo extends React.Component {
               />
             </div>
             <UI.NumberFormat
+              market
               number={ticker.diff}
               currency={secondary}
               hiddenCurrency
@@ -150,6 +154,7 @@ class MarketInfo extends React.Component {
             </div>
             <div className="MarketInfo__info_row__value">
               <UI.NumberFormat
+                market
                 number={ticker.usd_volume}
                 currency={"usd"}
                 hiddenCurrency
@@ -162,6 +167,7 @@ class MarketInfo extends React.Component {
             </div>
             <div className="MarketInfo__info_row__value">
               <UI.NumberFormat
+                market
                 number={ticker.max}
                 currency={secondary}
                 hiddenCurrency
@@ -174,6 +180,7 @@ class MarketInfo extends React.Component {
             </div>
             <div className="MarketInfo__info_row__value">
               <UI.NumberFormat
+                market
                 number={ticker.min}
                 currency={secondary}
                 hiddenCurrency
@@ -186,6 +193,7 @@ class MarketInfo extends React.Component {
             </div>
             <div className="MarketInfo__info_row__value">
               <UI.NumberFormat
+                market
                 number={bestAsk ? bestAsk : 0}
                 currency={secondary}
                 hiddenCurrency
@@ -198,6 +206,7 @@ class MarketInfo extends React.Component {
             </div>
             <div className="MarketInfo__info_row__value">
               <UI.NumberFormat
+                market
                 number={bestBid ? bestBid : 0}
                 currency={secondary}
                 hiddenCurrency

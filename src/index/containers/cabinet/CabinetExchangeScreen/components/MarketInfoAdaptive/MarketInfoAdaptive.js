@@ -42,18 +42,31 @@ export default ({ market, price, percent, diff }) => {
             </div>
           </div>
           <div className="MarketInfoAdaptive__day_percent">
-            <UI.NumberFormat number={percent} percent symbol type={"auto"} />
+            <UI.NumberFormat
+              market
+              number={percent}
+              percent
+              symbol
+              type={"auto"}
+            />
           </div>
         </div>
         <div className="MarketInfoAdaptive__row">
           <div className="MarketInfoAdaptive__price">
             <UI.NumberFormat
+              merket
               number={price}
               type={percent >= 0 ? "up" : "down"}
             />
           </div>
           <div className="MarketInfoAdaptive__day_price">
-            $<UI.NumberFormat number={diff} currency={"usd"} hiddenCurrency />
+            $
+            <UI.NumberFormat
+              market
+              number={diff}
+              currency={"usd"}
+              hiddenCurrency
+            />
           </div>
         </div>
       </div>

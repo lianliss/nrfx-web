@@ -8,6 +8,7 @@ const initialState = {
     default: "loading",
     orderBook: "loading"
   },
+  marketConfig: {},
   balances: [],
   trades: [],
   openOrders: {},
