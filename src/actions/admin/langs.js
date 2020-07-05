@@ -79,6 +79,7 @@ export function save() {
         }))
       })
       .then(() => {
+        dispatch({ type: actionTypes.LANGS_SAVE });
         toast.success("Saved");
       })
       .catch(e => {
