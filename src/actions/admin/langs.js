@@ -106,7 +106,7 @@ export function keyDelete(key) {
         dontClose: true
       })
       .then(() => {
-        if (keys.find(k => (k.name = key)).local) {
+        if (keys.find(k => k.name === key).local) {
           dispatch({ type: actionTypes.LANGS_KEY_DELETE, key });
           actions.closeModal();
           return false;
