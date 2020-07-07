@@ -9,3 +9,4 @@ export const marketCurrencySelector = currency => state =>
   Object.values(state.exchange.marketConfig).find(c => c.name === currency);
 export const currenciesSelector = state =>
   Object.values(state.cabinet.currencies);
+export const fiatSelector = state => state.fiat;

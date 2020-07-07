@@ -1,15 +1,16 @@
 .ConfirmModal {
-  max-width: 300px;
+  max-width: 316px;
 
   .ConfirmModal__buttons {
     display: flex;
-    margin: 24px -8px 0;
+    flex-wrap: wrap;
+    margin: 24px -8px -16px;
   }
 
   .Button {
     flex: 1;
-    min-width: 144px;
-    margin: 0 8px;
+    min-width: max-content;
+    margin: 0 8px 16px;
   }
 
   .ConfirmModal__content {
@@ -19,4 +20,8 @@
     margin: 16px 0 32px;
     text-align: center;
   }
+}
+
+.adaptive .ConfirmModal {
+  max-width: 100%;
 }

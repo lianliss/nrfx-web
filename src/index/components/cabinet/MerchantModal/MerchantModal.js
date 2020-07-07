@@ -1,7 +1,7 @@
 import "./MerchantModal.less";
 
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 import * as UI from "../../../../ui/";
 import { getLang, classNames as cn } from "../../../../utils";
@@ -14,6 +14,8 @@ import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import { Status } from "../../../containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import EmptyContentBlock from "../EmptyContentBlock/EmptyContentBlock";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
+import { fiatSelector } from "../../../../selectors";
+import { closeModal } from "../../../../actions";
 
 const MerchantModal = props => {
   const { adaptive } = props;
@@ -25,6 +27,7 @@ const MerchantModal = props => {
   const [amount, setAmount] = useState(null);
   const [touched, setTouched] = useState(null);
   const [invoice, setInvoice] = useState(null);
+  const fiatState = useSelector(fiatSelector);
 
   const merchantList = {
     advcash: {
@@ -49,13 +52,29 @@ const MerchantModal = props => {
       title: "Indonesian Rupiah",
       // payments: ['mastercard', 'visa', 'bank']
       payments: ["bank"]
+    },
+    cards: {
+      icon: require("../../../../asset/merchants/xendit.svg"),
+      title: "By Card",
+      payments: ["bank"]
     }
   };
 
   useEffect(() => {
     props.getMerchant(props.type);
+
+    if (
+      props.type === "refill" &&
+      currency === "rub" &&
+      merchant &&
+      fiatState.reservedCard
+    ) {
+      closeModal();
+      actions.openModal("fiat_refill_card");
+    }
+
     // eslint-disable-next-line
-  }, []);
+  }, [merchant]);
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[
@@ -95,12 +114,18 @@ const MerchantModal = props => {
     const { min_fee: minFee, percent_fee: percentFee } = props.merchants[
       merchant
     ].currencies[currency].fees;
-    actions.openModal("fiat_refill", null, {
-      amount,
-      balance,
-      minFee,
-      percentFee
-    });
+
+    actions.openModal(
+      merchant === "cards" ? "fiat_refill_card" : "fiat_refill",
+      null,
+      {
+        amount,
+        balance,
+        minFee,
+        percentFee,
+        currency
+      }
+    );
   };
 
   const handleFiatWithdrawal = () => {

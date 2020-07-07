@@ -22,28 +22,6 @@ export default function LoadingStatus({
         </div>
       );
       break;
-    default:
-      cont = (
-        <div className="LoadingStatus__failed">
-          <SVG
-            src={icon || require("src/asset/cabinet/loading_failed_120.svg")}
-          />
-          <div className="LoadingStatus__failed__message">
-            {status || utils.getLang("cabinet_loadingStatus_unknownError")}
-          </div>
-          {description && (
-            <div className="LoadingStatus__failed__description">
-              {description}
-            </div>
-          )}
-          {!!onRetry && (
-            <UI.Button onClick={onRetry}>
-              {utils.getLang("cabinet_loadingStatus_tryAgain")}
-            </UI.Button>
-          )}
-        </div>
-      );
-      break;
     case "failed_connection":
       cont = (
         <div className="LoadingStatus__failed">
@@ -83,6 +61,28 @@ export default function LoadingStatus({
           <div className="LoadingStatus__failed__message">
             {utils.getLang("global_pageNotFound")}
           </div>
+        </div>
+      );
+      break;
+    default:
+      cont = (
+        <div className="LoadingStatus__failed">
+          <SVG
+            src={icon || require("src/asset/cabinet/loading_failed_120.svg")}
+          />
+          <div className="LoadingStatus__failed__message">
+            {status || utils.getLang("cabinet_loadingStatus_unknownError")}
+          </div>
+          {description && (
+            <div className="LoadingStatus__failed__description">
+              {description}
+            </div>
+          )}
+          {!!onRetry && (
+            <UI.Button onClick={onRetry}>
+              {utils.getLang("cabinet_loadingStatus_tryAgain")}
+            </UI.Button>
+          )}
         </div>
       );
       break;
