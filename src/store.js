@@ -40,6 +40,7 @@ export function configureStore() {
       {
         admin: {
           router: router5Reducer,
+          cabinet: cabinetReducer,
           toasts: toastsReducer,
           default: defaultReducer,
           admin: adminReducer,

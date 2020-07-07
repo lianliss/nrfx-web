@@ -6,6 +6,7 @@ export const adaptiveSelector = state => state.default.adaptive;
 export const currencySelector = currency => state =>
   state.cabinet.currencies[currency];
 export const marketCurrencySelector = currency => state =>
+  state.exchange &&
   Object.values(state.exchange.marketConfig).find(c => c.name === currency);
 export const currenciesSelector = state =>
   Object.values(state.cabinet.currencies);
