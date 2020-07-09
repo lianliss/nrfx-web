@@ -1,7 +1,8 @@
 import "./RoadMap.less";
 import React from "react";
 import { getLang, dateFormat, classNames as cn } from "src/utils";
-import { OnScroll } from "src/ui";
+import { NumberFormat, OnScroll } from "src/ui";
+import { formatDouble } from "src/utils/index";
 
 export default props => {
   const currentTime = Date.now();
@@ -22,6 +23,9 @@ export default props => {
             <div>
               <small>{dateFormat(item.time, "DD MMM YYYY")}</small>
               <strong>{item.title}</strong>
+              <span className="price">
+                $<NumberFormat accurate number={item.price} currency="usd" />
+              </span>
             </div>
           </div>
         ))}
