@@ -18,6 +18,37 @@ import { fiatSelector } from "../../../../selectors";
 import { closeModal } from "../../../../actions";
 import Lang from "src/components/Lang/Lang";
 
+const merchantList = {
+  advcash: {
+    icon: require("../../../../asset/merchants/adv_cash.svg"),
+    title: "AdvCash",
+    payments: ["mastercard", "visa"]
+  },
+  invoice: {
+    icon: require("../../../../asset/merchants/swift.svg"),
+    title: "S.W.I.F.T",
+    payments: ["bank"]
+  },
+  payoneer: {
+    icon: require("../../../../asset/merchants/payoneer.svg"),
+    title: "Payoneer",
+    payments: ["mastercard", "visa", "bank"]
+  },
+  xendit: {
+    // icon: require('../../../../asset/merchants/xendit.svg'),
+    icon: require("../../../../asset/merchants/rp.svg"),
+    // title: "Xendit",
+    title: "Indonesian Rupiah",
+    // payments: ['mastercard', 'visa', 'bank']
+    payments: ["bank"]
+  },
+  cards: {
+    icon: require("../../../../asset/merchants/xendit.svg"),
+    title: "By Card",
+    payments: ["bank"]
+  }
+};
+
 const MerchantModal = props => {
   const { adaptive } = props;
   const { params } = router.getState();
@@ -28,38 +59,8 @@ const MerchantModal = props => {
   const [amount, setAmount] = useState(null);
   const [touched, setTouched] = useState(null);
   const [invoice, setInvoice] = useState(null);
+  const [availableMerchants, setAvailableMerchants] = useState([]);
   const fiatState = useSelector(fiatSelector);
-
-  const merchantList = {
-    advcash: {
-      icon: require("../../../../asset/merchants/adv_cash.svg"),
-      title: "AdvCash",
-      payments: ["mastercard", "visa"]
-    },
-    invoice: {
-      icon: require("../../../../asset/merchants/swift.svg"),
-      title: "S.W.I.F.T",
-      payments: ["bank"]
-    },
-    payoneer: {
-      icon: require("../../../../asset/merchants/payoneer.svg"),
-      title: "Payoneer",
-      payments: ["mastercard", "visa", "bank"]
-    },
-    xendit: {
-      // icon: require('../../../../asset/merchants/xendit.svg'),
-      icon: require("../../../../asset/merchants/rp.svg"),
-      // title: "Xendit",
-      title: "Indonesian Rupiah",
-      // payments: ['mastercard', 'visa', 'bank']
-      payments: ["bank"]
-    },
-    cards: {
-      icon: require("../../../../asset/merchants/xendit.svg"),
-      title: "By Card",
-      payments: ["bank"]
-    }
-  };
 
   useEffect(() => {
     props.getMerchant(props.type);
@@ -78,13 +79,13 @@ const MerchantModal = props => {
   useEffect(() => {
     // HACK for one merchant
     if (!props.loadingStatus.merchants && props.merchantType === props.type) {
-      const merchantsArray = getAvailableMerchants(currency);
-      if (merchantsArray.length === 1) {
-        setMerchant(merchantsArray[0].name);
+      if (availableMerchants.length === 1) {
+        setMerchant(availableMerchants[0].name);
       }
     }
   }, [
-    props.merchants,
+    availableMerchants,
+    props.type,
     props.merchantType,
     currency,
     props.loadingStatus.merchants
@@ -205,23 +206,23 @@ const MerchantModal = props => {
 
   // window.handleSubmit = handleSubmit;
 
-  const getAvailableMerchants = currency => {
-    return Object.keys(props.merchants)
-      .map(name => ({
-        ...props.merchants[name],
-        ...merchantList[name],
-        name
-      }))
-      .filter(m => Object.keys(m.currencies).includes(currency));
-  };
+  useEffect(() => {
+    setAvailableMerchants(
+      Object.keys(props.merchants)
+        .map(name => ({
+          ...props.merchants[name],
+          ...merchantList[name],
+          name
+        }))
+        .filter(m => Object.keys(m.currencies).includes(currency))
+    );
+  }, [props.merchants, currency]);
 
   const renderMerchantsList = () => {
-    const merchants = getAvailableMerchants(currency);
-
     return (
       <div className="MerchantModal__list">
-        {merchants.length ? (
-          merchants.map(m => (
+        {availableMerchants.length ? (
+          availableMerchants.map(m => (
             <div
               className="MerchantModal__item"
               onClick={() => setMerchant(m.name)}
@@ -300,8 +301,7 @@ const MerchantModal = props => {
   };
 
   const handleGoToMerchantList = () => {
-    const merchantsArray = getAvailableMerchants(currency);
-    if (merchantsArray.length === 1) {
+    if (availableMerchants.length === 1) {
       props.onBack();
     } else {
       setMerchant(null);

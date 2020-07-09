@@ -32,9 +32,6 @@ const WithdrawalRefillModal = props => {
     return null;
   }
 
-  const total = amount + fee;
-  const amountUsd = total * balance.to_usd;
-
   return (
     <Modal noSpacing isOpen={true} onClose={props.onClose}>
       {adaptive && (

@@ -1,13 +1,11 @@
 import "../FiatRefillModal/FiatRefillModal.less";
 
 import React, { useState, useEffect } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
 import BankList from "../FiatRefillModal/components/BankList/BankList";
-import MethodsList from "../FiatRefillModal/components/MethodsList/MethodsList";
-import { refillBanksGet } from "../../../../actions/cabinet/fiat";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import BankLogo from "../../../../ui/components/BankLogo/BankLogo";
 import Clipboard from "src/index/components/cabinet/Clipboard/Clipboard";
@@ -107,7 +105,7 @@ export default props => {
         type: actionTypes.FIAT_WALLETS_CLEAR_LOADING_STATUSES
       });
     };
-  }, []);
+  }, [dispatch, props.amount, fiatState.reservedCard]);
 
   const handleChoiceBank = bankCode => {
     dispatch({

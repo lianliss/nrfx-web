@@ -59,9 +59,6 @@ const FiatWithdrawalModal = props => {
     });
   };
 
-  const total = amount + fee;
-  const amountUsd = total * balance.to_usd;
-
   const headerText = !bank ? (
     getLang("cabinet_fiatWithdrawalModal_chooseBank")
   ) : !filled ? (
