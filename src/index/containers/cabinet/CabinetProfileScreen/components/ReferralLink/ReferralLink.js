@@ -5,9 +5,8 @@ import * as UI from "../../../../../../ui/index";
 
 import * as utils from "../../../../../../utils";
 
-import { ReactComponent as VkIcon } from "../../../../../../asset/social/vk.svg";
-import { ReactComponent as TwitterIcon } from "../../../../../../asset/social/twitter.svg";
-import { ReactComponent as FbIcon } from "../../../../../../asset/social/facebook.svg";
+import { ReactComponent as TwitterIcon } from "./assets/twitter.svg";
+import { ReactComponent as FbIcon } from "./assets/facebook.svg";
 
 class ReferralLink extends React.Component {
   render() {
@@ -23,14 +22,6 @@ class ReferralLink extends React.Component {
         </div>
         <div className="ReferralLink__right">
           <div className="ReferralLink__right__social_buttons">
-            <a
-              href={this.__buildVKUrl()}
-              className="ReferralLink__right__social_button"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <VkIcon />
-            </a>
             <a
               href={this.__buildTwitterUrl()}
               className="ReferralLink__right__social_button"
@@ -63,10 +54,6 @@ class ReferralLink extends React.Component {
       </div>
     );
   }
-
-  __buildVKUrl = () => {
-    return `https://vk.com/share.php?url=${this.props.inviteLink}`;
-  };
 
   __buildFbUrl = () => {
     return `https://www.facebook.com/sharer/sharer.php?u=${this.props.inviteLink}`;

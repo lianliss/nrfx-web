@@ -1,11 +1,13 @@
 import "./NumberFormat.less";
 
 import React from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { classNames } from "../../utils";
 
-import { isFiat, noExponents } from "../../utils/index";
+import { noExponents } from "../../utils/index";
 import bn from "big.js";
+import { currencySelector, marketCurrencySelector } from "../../../selectors";
 
 const NumberFormat = ({
   number,
@@ -21,18 +23,23 @@ const NumberFormat = ({
   percent,
   indicator,
   brackets,
-  onClick
+  onClick,
+  market = false
 }) => {
+  const currencyInfo = useSelector(currencySelector(currency));
+  const marketCurrencyInfo = useSelector(marketCurrencySelector(currency));
   if (isNaN(parseFloat(number)) || Math.abs(number) === Infinity) return null;
 
   if (!fractionDigits) {
     if (percent) {
       fractionDigits = 2;
     } else {
-      fractionDigits =
-        isFiat(currency) || currency.toLowerCase() === "usdt" ? 2 : 8;
+      fractionDigits = currencyInfo ? currencyInfo.maximum_fraction_digits : 2;
+
+      if (market && marketCurrencyInfo) {
+        fractionDigits = marketCurrencyInfo.decimals;
+      }
     }
-    // TODO: Вынести количество символов после точки в объект валют
   }
 
   const coefficient = parseInt(1 + "0".repeat(fractionDigits));

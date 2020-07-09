@@ -23,6 +23,7 @@ export function load(market) {
         dispatch({
           type: actionTypes.EXCHANGE_SET,
           ...resp,
+          marketConfig: resp.market.config,
           market
         });
         dispatch({

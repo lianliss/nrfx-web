@@ -94,6 +94,7 @@ const OrderBook = props => {
             >
               <div className="OrderBook__order__price">
                 <UI.NumberFormat
+                  market
                   accurate
                   number={order.price}
                   currency={order.secondary_coin}
@@ -102,6 +103,7 @@ const OrderBook = props => {
               </div>
               <div className="OrderBook__order__amount">
                 <UI.NumberFormat
+                  market
                   accurate
                   number={order.amount}
                   currency={order.primary_coin}
@@ -110,6 +112,7 @@ const OrderBook = props => {
               </div>
               <div className="OrderBook__order__total">
                 <UI.NumberFormat
+                  market
                   accurate
                   number={order.price * order.amount}
                   currency={order.secondary_coin}
@@ -133,6 +136,7 @@ const OrderBook = props => {
       <div className="OrderBook__ticker">
         <div className="OrderBook__ticker__price">
           <UI.NumberFormat
+            market
             number={ticker.price}
             type={ticker.price > ticker.prevPrice ? "up" : "down"}
             currency={secondaryCurrency}
@@ -141,7 +145,7 @@ const OrderBook = props => {
           />
         </div>
         <div className="OrderBook__ticker__priceUsd">
-          $<UI.NumberFormat number={ticker.usd_price} hiddenCurrency />
+          $<UI.NumberFormat market number={ticker.usd_price} hiddenCurrency />
         </div>
         <div />
       </div>

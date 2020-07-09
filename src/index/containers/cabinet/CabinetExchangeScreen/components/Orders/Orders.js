@@ -150,24 +150,28 @@ class Orders extends React.Component {
           <UI.TableColumn>{utils.ucfirst(order.type)}</UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={order.price}
               currency={order.secondary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={order.amount}
               currency={order.primary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={order.price * order.amount}
               currency={order.secondary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={Math.floor((order.filled / order.amount) * 100)}
               percent
             />
@@ -180,12 +184,14 @@ class Orders extends React.Component {
         <UI.TableCell className={sideClassName} key={order.id}>
           <UI.TableColumn>
             <UI.NumberFormat
+              market
               number={order.price}
               currency={order.secondary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn>
             <UI.NumberFormat
+              market
               number={order.amount}
               currency={order.primary_coin}
             />
@@ -294,24 +300,28 @@ class Orders extends React.Component {
           <UI.TableColumn>{utils.ucfirst(order.type)}</UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={order.price}
               currency={order.secondary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={order.amount}
               currency={order.primary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={order.avg_price}
               currency={order.secondary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn align="right">
             <UI.NumberFormat
+              market
               number={order.price * order.amount}
               currency={order.secondary_coin}
             />
@@ -329,18 +339,21 @@ class Orders extends React.Component {
           <UI.TableColumn
             sub={
               <UI.NumberFormat
+                market
                 number={order.avg_price}
                 currency={order.secondary_coin}
               />
             }
           >
             <UI.NumberFormat
+              market
               number={order.price}
               currency={order.secondary_coin}
             />
           </UI.TableColumn>
           <UI.TableColumn sub={<UI.NumberFormat number={filled} percent />}>
             <UI.NumberFormat
+              market
               number={order.amount}
               currency={order.secondary_coin}
             />

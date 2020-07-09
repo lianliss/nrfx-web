@@ -54,6 +54,7 @@ class Trades extends React.Component {
           >
             <UI.TableColumn>
               <UI.NumberFormat
+                market
                 type={type}
                 currency={currency}
                 number={trade.price}
@@ -61,7 +62,7 @@ class Trades extends React.Component {
               />
             </UI.TableColumn>
             <UI.TableColumn>
-              <UI.NumberFormat number={trade.amount} />
+              <UI.NumberFormat market number={trade.amount} />
             </UI.TableColumn>
             <UI.TableColumn align="right">
               {utils.dateFormat(trade.date, "HH:mm:ss")}

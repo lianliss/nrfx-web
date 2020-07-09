@@ -9,9 +9,11 @@ import * as utils from "../../../../../../utils";
 import * as steps from "../../../../../../components/AuthModal/fixtures";
 
 class TradeForm extends React.Component {
-  numberFormat = number => {
-    const [, secondaryCurrency] = this.props.market.toUpperCase().split("/");
-    return utils.formatDouble(number, utils.isFiat(secondaryCurrency) ? 2 : 8);
+  numberFormat = (number, type) => {
+    const { decimals } = this.props.marketConfig[
+      type === "primary" ? "primary_coin" : "secondary_coin"
+    ];
+    return utils.formatDouble(number, decimals);
   };
 
   componentWillUnmount() {
@@ -56,7 +58,7 @@ class TradeForm extends React.Component {
     } else {
       this.props.tradeFormSetProperties(type, {
         price: value,
-        total: this.numberFormat(value * form.amount) || form.total
+        total: this.numberFormat(value * form.amount, "secondary") || form.total
       });
     }
   };
@@ -65,7 +67,7 @@ class TradeForm extends React.Component {
     const form = this.props.form[type];
     this.props.tradeFormSetProperties(type, {
       amount: value,
-      total: this.numberFormat(value * form.price) || ""
+      total: this.numberFormat(value * form.price, "secondary") || ""
     });
   };
 
@@ -76,10 +78,11 @@ class TradeForm extends React.Component {
       price:
         value && !price
           ? amount
-            ? this.numberFormat(value / amount)
+            ? this.numberFormat(value / amount, "secondary")
             : ""
           : price,
-      amount: value && price ? utils.formatDouble(value / price) : amount
+      amount:
+        value && price ? this.numberFormat(value / price, "primary") : amount
     });
   };
 
@@ -126,6 +129,7 @@ class TradeForm extends React.Component {
               {utils.getLang("global_balance")}:
             </span>
             <UI.NumberFormat
+              market
               number={balance.amount}
               currency={balance.currency}
             />
@@ -198,7 +202,7 @@ class TradeForm extends React.Component {
                     : ""
                   : form.total
               }
-              onTextChange={console.log}
+              onTextChange={this.handleChangeTotal(type)}
               size="small"
               disabled={isMarket}
               placeholder={
@@ -214,7 +218,7 @@ class TradeForm extends React.Component {
           <div className="TradeForm__form__coll fee">
             <div className="TradeForm__form__fee">
               {utils.getLang("global_fee")}:{" "}
-              <UI.NumberFormat number={this.props.fee} percent />
+              <UI.NumberFormat market number={this.props.fee} percent />
             </div>
           </div>
           <div className="TradeForm__form__coll">
@@ -290,6 +294,7 @@ export default connect(
     form: state.exchange.form,
     ticker: state.exchange.ticker,
     market: state.exchange.market,
+    marketConfig: state.exchange.marketConfig,
     balances: state.exchange.balances,
     loadingStatus: state.exchange.loadingStatus,
     fee: state.exchange.fee,

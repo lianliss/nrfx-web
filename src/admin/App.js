@@ -39,7 +39,7 @@ class App extends React.Component {
   _loadAssets = () => {
     const lang = getLang();
     choseLang(lang);
-    Promise.all([actions.loadLang(lang)]).then(() => {
+    Promise.all([actions.loadLang(lang), actions.loadCurrencies()]).then(() => {
       this.setState({ isLoading: false });
     });
   };
