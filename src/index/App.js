@@ -16,6 +16,7 @@ import * as storage from "../services/storage";
 import { getLang, choseLang } from "../services/lang";
 import * as utils from "../utils";
 import { Helmet } from "react-helmet";
+import { classNames as cn } from "../utils";
 
 class App extends React.Component {
   state = {
@@ -74,7 +75,7 @@ class App extends React.Component {
     }
 
     return (
-      <div>
+      <div className={cn({ adaptive: this.props.adaptive })}>
         <Helmet>
           <title>{utils.getLang("global_meta_title", true)}</title>
         </Helmet>
@@ -99,6 +100,7 @@ class App extends React.Component {
 
 export default connect(
   state => ({
+    adaptive: state.default.adaptive,
     route: state.router.route,
     theme: state.default.cabinet ? state.default.theme : "light"
   }),

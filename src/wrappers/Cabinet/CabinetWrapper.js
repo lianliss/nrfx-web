@@ -28,15 +28,6 @@ class CabinetWrapper extends Component {
     }
   }
 
-  componentDidMount() {
-    window.addEventListener("resize", this.__handleOnResize);
-    this.__handleResize(document.body.offsetWidth);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.__handleOnResize);
-  }
-
   componentDidCatch(error, info) {
     this.setState({
       error: {
@@ -123,25 +114,6 @@ class CabinetWrapper extends Component {
       </div>
     );
   }
-
-  __handleResize = w => {
-    const { adaptive } = this.props;
-    if (w <= 650) {
-      if (!adaptive) {
-        document.body.classList.add("adaptive");
-        this.props.setAdaptive(true);
-      }
-    } else {
-      if (adaptive) {
-        document.body.classList.remove("adaptive");
-        this.props.setAdaptive(false);
-      }
-    }
-  };
-
-  __handleOnResize = e => {
-    this.__handleResize(document.body.offsetWidth);
-  };
 }
 
 export default connect(
