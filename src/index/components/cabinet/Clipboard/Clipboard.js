@@ -9,5 +9,6 @@ export default props => (
     className={props.className}
     onClick={() => copyText(props.title || props.text)}
     text={props.text}
+    displayText={props.displayText}
   />
 );

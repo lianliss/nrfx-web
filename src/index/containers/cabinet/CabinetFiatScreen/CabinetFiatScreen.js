@@ -17,6 +17,7 @@ import { openModal } from "../../../../actions";
 import * as actions from "src/actions/cabinet/fiat";
 import { Helmet } from "react-helmet";
 import COMPANY from "../../../constants/company";
+import RefillBlock from "./components/RefillBlock/RefillBlock";
 
 class CabinetFiatScreen extends CabinetBaseScreen {
   load = () => {
@@ -93,6 +94,13 @@ class CabinetFiatScreen extends CabinetBaseScreen {
           isFiat
           wallets={this.props.balances}
         />
+        {this.props.reservedCard &&
+          this.props.reservedCard.card.expire_in * 1000 > Date.now() && (
+            <>
+              <div className="CabinetProfileScreen__height24" />
+              <RefillBlock />
+            </>
+          )}
 
         {!this.props.adaptive && (
           <>

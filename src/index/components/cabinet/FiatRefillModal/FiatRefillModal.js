@@ -32,9 +32,6 @@ const WithdrawalRefillModal = props => {
     return null;
   }
 
-  const total = amount + fee;
-  const amountUsd = total * balance.to_usd;
-
   return (
     <Modal noSpacing isOpen={true} onClose={props.onClose}>
       {adaptive && (
@@ -48,25 +45,47 @@ const WithdrawalRefillModal = props => {
             {getLang("cabinet_balanceDeposit")}
           </div>
           <div className="FiatRefillModal__sideBar__content">
-            <div className="FiatRefillModal__sideBar__fee">
-              <small>
+            <div className="FiatRefillModal__sideBar__amount">
+              <small>{getLang("global_amount")}</small>
+              <strong>
                 <NumberFormat number={amount} currency={balance.currency} />
-              </small>
-              <small>
-                {getLang("global_fee")}:{" "}
+              </strong>
+            </div>
+            <div className="FiatRefillModal__sideBar__fee">
+              <small>{getLang("global_fee")}</small>
+              <strong>
                 <NumberFormat number={fee} currency={balance.currency} />
-              </small>
+              </strong>
             </div>
-            <div className="FiatRefillModal__sideBar__total">
-              <h2>{getLang("global_total")}</h2>
-              <h2>
-                <NumberFormat number={total} currency={balance.currency} />
-              </h2>
-              <small>
-                {getLang("cabinet_fiatWithdrawalModal_estimatedAt")}{" "}
-                <NumberFormat number={amountUsd} currency="usd" />
-              </small>
+            <hr />
+            <div className="FiatRefillModal__sideBar__amount">
+              <small>{getLang("cabinet_fiatRefillModal_total")}</small>
+              <strong>
+                <NumberFormat
+                  number={amount - fee}
+                  currency={balance.currency}
+                />
+              </strong>
             </div>
+            {/*<div className="FiatRefillModal__sideBar__fee">*/}
+            {/*  <small>*/}
+            {/*    <NumberFormat number={amount} currency={balance.currency} />*/}
+            {/*  </small>*/}
+            {/*  <small>*/}
+            {/*    {getLang("global_fee")}:{" "}*/}
+            {/*    <NumberFormat number={fee} currency={balance.currency} />*/}
+            {/*  </small>*/}
+            {/*</div>*/}
+            {/*<div className="FiatRefillModal__sideBar__total">*/}
+            {/*  <h2>{getLang("global_total")}</h2>*/}
+            {/*  <h2>*/}
+            {/*    <NumberFormat number={total} currency={balance.currency} />*/}
+            {/*  </h2>*/}
+            {/*  <small>*/}
+            {/*    {getLang("cabinet_fiatWithdrawalModal_estimatedAt")}{" "}*/}
+            {/*    <NumberFormat number={amountUsd} currency="usd" />*/}
+            {/*  </small>*/}
+            {/*</div>*/}
           </div>
         </div>
         <div className="FiatRefillModal__body">

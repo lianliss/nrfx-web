@@ -25,6 +25,7 @@ const FiatHistoryTable = props => {
   const icons = {
     swap: require("src/asset/24px/loop.svg"),
     refill: require("src/asset/24px/fiat-plus.svg"),
+    bank_card_refill_reject: require("src/asset/24px/fiat-plus.svg"),
     withdrawal: require("src/asset/24px/withdraw.svg"),
     buy_token: require("src/asset/24px/shopping-cart.svg")
   };
@@ -83,13 +84,17 @@ const FiatHistoryTable = props => {
               {utils.getLang("cabinet__historyItemTitle_refill")}
             </div>
             <div className="FiatHistoryTable__label">{item.type_label}</div>
-            <div className="FiatHistoryTable__description" />
+            <div className="FiatHistoryTable__description">
+              {item.type === "bank_card_refill_reject" && (
+                <Status status="cancelled" label={item.status_label} />
+              )}
+            </div>
           </div>
           <div className="FiatHistoryTable__group__item__right">
             <div className="FiatHistoryTable__price">
               <UI.NumberFormat
                 symbol
-                type="auto"
+                type={item.type === "bank_card_refill_reject" ? "down" : "auto"}
                 number={item.amount}
                 currency={currency.abbr}
               />
@@ -161,6 +166,7 @@ const FiatHistoryTable = props => {
                   return renderWithdrawalItem(item);
                 case "income":
                 case "refill":
+                case "bank_card_refill_reject":
                   return renderIncomeItem(item);
                 // case 'crypto_exchange':
                 case "swap":

@@ -1,7 +1,7 @@
 import "./MerchantModal.less";
 
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 import * as UI from "../../../../ui/";
 import { getLang, classNames as cn } from "../../../../utils";
@@ -14,6 +14,40 @@ import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import { Status } from "../../../containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import EmptyContentBlock from "../EmptyContentBlock/EmptyContentBlock";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
+import { fiatSelector } from "../../../../selectors";
+import { closeModal } from "../../../../actions";
+import Lang from "src/components/Lang/Lang";
+
+const merchantList = {
+  advcash: {
+    icon: require("../../../../asset/merchants/adv_cash.svg"),
+    title: "AdvCash",
+    payments: ["mastercard", "visa"]
+  },
+  invoice: {
+    icon: require("../../../../asset/merchants/swift.svg"),
+    title: "S.W.I.F.T",
+    payments: ["bank"]
+  },
+  payoneer: {
+    icon: require("../../../../asset/merchants/payoneer.svg"),
+    title: "Payoneer",
+    payments: ["mastercard", "visa", "bank"]
+  },
+  xendit: {
+    // icon: require('../../../../asset/merchants/xendit.svg'),
+    icon: require("../../../../asset/merchants/rp.svg"),
+    // title: "Xendit",
+    title: "Indonesian Rupiah",
+    // payments: ['mastercard', 'visa', 'bank']
+    payments: ["bank"]
+  },
+  cards: {
+    icon: require("../../../../asset/merchants/xendit.svg"),
+    title: "By Card",
+    payments: ["bank"]
+  }
+};
 
 const MerchantModal = props => {
   const { adaptive } = props;
@@ -25,37 +59,37 @@ const MerchantModal = props => {
   const [amount, setAmount] = useState(null);
   const [touched, setTouched] = useState(null);
   const [invoice, setInvoice] = useState(null);
-
-  const merchantList = {
-    advcash: {
-      icon: require("../../../../asset/merchants/adv_cash.svg"),
-      title: "AdvCash",
-      payments: ["mastercard", "visa"]
-    },
-    invoice: {
-      icon: require("../../../../asset/merchants/swift.svg"),
-      title: "S.W.I.F.T",
-      payments: ["bank"]
-    },
-    payoneer: {
-      icon: require("../../../../asset/merchants/payoneer.svg"),
-      title: "Payoneer",
-      payments: ["mastercard", "visa", "bank"]
-    },
-    xendit: {
-      // icon: require('../../../../asset/merchants/xendit.svg'),
-      icon: require("../../../../asset/merchants/rp.svg"),
-      // title: "Xendit",
-      title: "Indonesian Rupiah",
-      // payments: ['mastercard', 'visa', 'bank']
-      payments: ["bank"]
-    }
-  };
+  const [availableMerchants, setAvailableMerchants] = useState([]);
+  const fiatState = useSelector(fiatSelector);
 
   useEffect(() => {
     props.getMerchant(props.type);
+    if (
+      props.type !== "withdrawal" &&
+      currency === "rub" &&
+      merchant &&
+      fiatState.reservedCard
+    ) {
+      closeModal();
+      actions.openModal("fiat_refill_card");
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [merchant]);
+
+  useEffect(() => {
+    // HACK for one merchant
+    if (!props.loadingStatus.merchants && props.merchantType === props.type) {
+      if (availableMerchants.length === 1) {
+        setMerchant(availableMerchants[0].name);
+      }
+    }
+  }, [
+    availableMerchants,
+    props.type,
+    props.merchantType,
+    currency,
+    props.loadingStatus.merchants
+  ]);
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[
@@ -95,12 +129,18 @@ const MerchantModal = props => {
     const { min_fee: minFee, percent_fee: percentFee } = props.merchants[
       merchant
     ].currencies[currency].fees;
-    actions.openModal("fiat_refill", null, {
-      amount,
-      balance,
-      minFee,
-      percentFee
-    });
+
+    actions.openModal(
+      merchant === "cards" ? "fiat_refill_card" : "fiat_refill",
+      null,
+      {
+        amount,
+        balance,
+        minFee,
+        percentFee,
+        currency
+      }
+    );
   };
 
   const handleFiatWithdrawal = () => {
@@ -166,23 +206,23 @@ const MerchantModal = props => {
 
   // window.handleSubmit = handleSubmit;
 
-  const getAvailableMerchants = currency => {
-    return Object.keys(props.merchants)
-      .map(name => ({
-        ...props.merchants[name],
-        ...merchantList[name],
-        name
-      }))
-      .filter(m => Object.keys(m.currencies).includes(currency));
-  };
+  useEffect(() => {
+    setAvailableMerchants(
+      Object.keys(props.merchants)
+        .map(name => ({
+          ...props.merchants[name],
+          ...merchantList[name],
+          name
+        }))
+        .filter(m => Object.keys(m.currencies).includes(currency))
+    );
+  }, [props.merchants, currency]);
 
   const renderMerchantsList = () => {
-    const merchants = getAvailableMerchants(currency);
-
     return (
       <div className="MerchantModal__list">
-        {merchants.length ? (
-          merchants.map(m => (
+        {availableMerchants.length ? (
+          availableMerchants.map(m => (
             <div
               className="MerchantModal__item"
               onClick={() => setMerchant(m.name)}
@@ -250,20 +290,18 @@ const MerchantModal = props => {
   };
 
   const getFee = () => {
-    const m = props.merchants[merchant];
-    if (m.fee_conf) {
-      const fee = m.fee_conf[currency];
+    const fees = props.merchants[merchant]?.currencies[currency]?.fees;
+    if (fees) {
       return {
-        ...fee,
-        fee: Math.max(fee.min, (amount / 100) * fee.percent)
+        ...fees,
+        fee: Math.max(fees.min_fee, (amount / 100) * fees.percent_fee)
       };
     }
-    return 0;
+    return {};
   };
 
   const handleGoToMerchantList = () => {
-    const merchantsArray = getAvailableMerchants(currency);
-    if (merchantsArray.length === 1) {
+    if (availableMerchants.length === 1) {
       props.onBack();
     } else {
       setMerchant(null);
@@ -272,7 +310,7 @@ const MerchantModal = props => {
 
   const renderForm = () => {
     const currencyInfo = actions.getCurrencyInfo(currency);
-    const { fee, percent } = getFee();
+    const { fee, percent_fee, min_fee } = getFee();
 
     const currentMerchantCurrency =
       props.merchants[merchant].currencies[currency];
@@ -333,17 +371,49 @@ const MerchantModal = props => {
           {/*</div>*/}
         </div>
 
-        <div className="MerchantModal__form__description">
-          {getLang("cabinet_merchantModalDescription_" + merchant)}
-        </div>
-
-        {fee > 0 && (
-          <div className="MerchantModal__form__fee">
-            {getLang("global_fee")}: <NumberFormat number={percent} percent />,{" "}
-            <NumberFormat number={fee} currency={currency} />{" "}
-            {getLang("global_min")}.
+        {amount - fee > 0 ? (
+          <div className="MerchantModal__form__description">
+            <div className="MerchantModal__form__description__fee">
+              <Lang name="global_fee" />:{" "}
+              <NumberFormat number={fee} currency={currency} />
+            </div>
+            <div className="MerchantModal__form__description__total">
+              {props.type === "withdrawal" ? (
+                <Lang name="cabinet_fiatWithdrawalModal_total" />
+              ) : (
+                <Lang name="cabinet_fiatRefillModal_total" />
+              )}
+              {": "}
+              <NumberFormat number={amount - fee} currency={currency} />
+            </div>
+            {/*{getLang("cabinet_merchantModalDescription_" + merchant)}*/}
+          </div>
+        ) : (
+          <div className="MerchantModal__form__description">
+            <div className="MerchantModal__form__description__fee">
+              <Lang name="global_fee" />:{" "}
+              <NumberFormat percent number={percent_fee} />
+              {min_fee > 0 && (
+                <>
+                  , <NumberFormat number={min_fee} currency={currency} />{" "}
+                  <Lang name="global_min" />.
+                </>
+              )}
+            </div>
+            <div className="MerchantModal__form__description__total">
+              &nbsp;
+            </div>
+            {/*{getLang("cabinet_merchantModalDescription_" + merchant)}*/}
           </div>
         )}
+
+        {/*{fee > 0 && (*/}
+        {/*  <div className="MerchantModal__form__fee">*/}
+        {/*    {getLang("global_fee")}: <NumberFormat number={percent_fee} percent />,{" "}*/}
+        {/*    <NumberFormat number={fee} currency={currency} />{" "}*/}
+        {/*    {getLang("global_min")}.*/}
+        {/*  </div>*/}
+        {/*)}*/}
 
         <div className="MerchantModal__buttons">
           <UI.Button
@@ -456,11 +526,6 @@ const MerchantModal = props => {
     }
 
     if (!merchant) {
-      // HACK for one merchant
-      const merchantsArray = getAvailableMerchants(currency);
-      if (merchantsArray.length === 1) {
-        setMerchant(merchantsArray[0].name);
-      }
       return renderMerchantsList();
     } else if (invoice) {
       return renderInvoice();
@@ -493,9 +558,11 @@ export default connect(
     loadingStatus: state.fiat.loadingStatus,
     adaptive: state.default.adaptive,
     profile: state.default.profile,
-    merchants: state.fiat.merchants
+    merchants: state.fiat.merchants,
+    merchantType: state.fiat.merchantType
   }),
   {
-    getMerchant: fiatActions.getMerchant
+    getMerchant: fiatActions.getMerchant,
+    clearMerchants: fiatActions.clearMerchants
   }
 )(MerchantModal);

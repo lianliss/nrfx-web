@@ -1,6 +1,6 @@
 import "./WalletCard.less";
 import React from "react";
-
+import { classNames as cn } from "../../utils";
 import NumberFormat from "../NumberFormat/NumberFormat";
 import PropTypes from "prop-types";
 
@@ -8,7 +8,7 @@ const WalletCard = props => {
   const { currency } = props;
   return (
     <div
-      className="WalletCard"
+      className={cn("WalletCard", { reject: props.reject })}
       style={
         !props.skipColor
           ? { background: currency.background, color: currency.color }

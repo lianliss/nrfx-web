@@ -19,28 +19,43 @@
       box-sizing: border-box;
       width: 100%;
       margin-top: 96px;
-      text-align: center;
 
-      .FiatWithdrawalModal__sideBar__fee {
-        margin-bottom: 32px;
+      .FiatWithdrawalModal__sideBar__amount {
+        margin-bottom: 24px;
 
         small {
-          margin: 8px 0;
+          font-weight: 600;
+          font-size: 11px;
+          line-height: 16px;
           display: block;
         }
-      }
 
-      .FiatWithdrawalModal__sideBar__total {
-        h3 {
+        strong {
           font-weight: 600;
           font-size: 16px;
           line-height: 24px;
         }
+      }
 
+      .FiatWithdrawalModal__sideBar__fee {
         small {
+          font-weight: 500;
+          font-size: 11px;
+          line-height: 16px;
           display: block;
-          margin-top: 8px;
         }
+
+        strong {
+          font-weight: 500;
+          font-size: 11px;
+          line-height: 16px;
+        }
+      }
+
+      hr {
+        border: 0;
+        border-bottom: 1px solid var(--white);
+        margin: 24px 0;
       }
     }
   }
@@ -119,10 +134,13 @@
     flex-direction: column;
 
     .FiatWithdrawalModal__header {
-      display: none;
+      text-align: center;
+      margin-bottom: 24px;
     }
 
     .FiatWithdrawalModal__sideBar {
+      text-align: center;
+      flex-direction: column;
       padding: 40px 16px !important;
       background-image: var(--blue-gradient);
       display: flex;
