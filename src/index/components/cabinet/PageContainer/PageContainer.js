@@ -4,9 +4,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as UI from "../../../../ui";
 import ProfileSidebar from "../../cabinet/ProfileSidebar/ProfileSidebar";
+import useAdaptive from "src/hooks/adaptive";
 
 function PageContainer({ children, leftContent, sidebarOptions }) {
-  const adaptive = document.body.classList.contains("adaptive");
+  const adaptive = useAdaptive();
+
   return (
     <div className="PageContainer">
       {!adaptive && <ProfileSidebar sidebarOptions={sidebarOptions} />}
