@@ -8,6 +8,11 @@
   }
 
   .isvg {
+    display: block;
+
+    svg {
+      display: block;
+    }
     //color: var(--text-black);
   }
 
@@ -44,7 +49,11 @@
     color: var(--text-black);
 
     &.destructive .ActionsSheet__item__title {
-      color: var(--red);
+      color: var(--text-red);
+    }
+
+    &.primary  .ActionsSheet__item__title {
+      color: var(--dark-blue);
     }
 
     &:not(.destructive):hover .ActionsSheet__item__title {
