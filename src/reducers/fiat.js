@@ -12,6 +12,7 @@ const initialState = {
   rateType: "update",
   rateUpdateTime: 0,
   merchants: [],
+  merchantType: null,
   exchange_fee: 0,
   withdrawalBankList: null,
   refillBankList: [],
@@ -25,7 +26,7 @@ const initialState = {
     refillBankList: "",
     reservation: "",
     default: "loading",
-    merchants: "",
+    merchants: "loading",
     rate: "",
     newRate: "",
     marketForm: "",
@@ -122,6 +123,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.FIAT_WALLETS_SET_MERCHANTS: {
       return {
         ...state,
+        merchantType: action.merchantType,
         merchants: action.methods
       };
     }

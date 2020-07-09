@@ -64,26 +64,11 @@ export function getMerchant(type) {
     api
       .call(apiMethod)
       .then(({ methods }) => {
-        dispatch({ type: actionTypes.FIAT_WALLETS_SET_MERCHANTS, methods });
-        // // TODO CARDS
-        // dispatch({
-        //   type: actionTypes.FIAT_WALLETS_SET_MERCHANTS,
-        //   methods: {
-        //     ...methods,
-        //     cards: {
-        //       currencies: {
-        //         rub: {
-        //           min_amount: 1000,
-        //           max_amount: 150000,
-        //           fees: {
-        //             min_fee: 0,
-        //             percent_fee: 4
-        //           }
-        //         }
-        //       }
-        //     }
-        //   }
-        // });
+        dispatch({
+          type: actionTypes.FIAT_WALLETS_SET_MERCHANTS,
+          merchantType: type,
+          methods
+        });
       })
       .finally(() => {
         dispatch({
@@ -92,6 +77,12 @@ export function getMerchant(type) {
           status: ""
         });
       });
+  };
+}
+
+export function clearMerchants() {
+  return dispatch => {
+    dispatch({ type: actionTypes.FIAT_WALLETS_SET_MERCHANTS, methods: [] });
   };
 }
 

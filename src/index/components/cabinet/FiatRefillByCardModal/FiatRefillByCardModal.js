@@ -306,7 +306,9 @@ export default props => {
             </div>
             <div className="FiatRefillModal__infoBlock">
               <div className="FiatRefillModal__infoBlock__item primary">
-                <span>Номер карты для перевода</span>
+                <span>
+                  <Lang name="fiatRefillCard_cardNumberForRefill" />
+                </span>
                 <strong>
                   <Clipboard
                     displayText={fiatState.reservedCard.card.number
@@ -340,123 +342,6 @@ export default props => {
         </>
       );
     }
-
-    // {!fiatState.reservedCard && (
-    //   <>
-    //     <div className="FiatRefillModal__header">
-    //       {getLang("cabinet_fiatWithdrawalModal_chooseBank")}
-    //     </div>
-    //     {!fiatState.loadingStatus.refillBankList && fiatState.refillBankList ? (
-    //       <BankList
-    //         onChange={b => handleChoiceBank(b.code)}
-    //         items={fiatState.refillBankList}
-    //       />
-    //     ) : (
-    //       <CustomLoadingStatus
-    //         status={fiatState.loadingStatus.refillBankList}
-    //       />
-    //     )}
-    //     <ButtonWrapper
-    //       align="right"
-    //       className="FiatRefillModal__body__footer"
-    //     >
-    //       <Button onClick={props.onBack} type="secondary">
-    //         {getLang("global_back")}
-    //       </Button>
-    //     </ButtonWrapper>
-    //   </>
-    // ) : (
-    //   !fiatState.loadingStatus.reservedCard && fiatState.reservedCard.reservation.status !== "wait_for_review" ? (
-    //     <>
-    //       <div className="FiatRefillModal__body__content">
-    //         <div className="FiatRefillModal__header">
-    //           { fiatState.reservedCard.card.bank.name }
-    //         </div>
-    //         <p>
-    //           <BankLogo name={fiatState.reservedCard.card.bank.code} />
-    //         </p>
-    //         <Message
-    //           title={<Lang name="global_attention" />}
-    //           type="warning"
-    //         >
-    //           <Lang name="fiatRefillCard_attention_text_sendExactly" />{" "}
-    //           <strong>
-    //             <NumberFormat number={amount} currency={currency} />{" "}
-    //             <Lang name="fiatRefillCard_attention_text_oneTransaction" />
-    //           </strong>{" "}
-    //           <Lang name="fiatRefillCard_attention_text" />
-    //         </Message>
-    //         <div className="FiatRefillModal__infoBlock">
-    //           <div className="FiatRefillModal__infoBlock__item">
-    //                 <span>
-    //                   <Lang name="fiatRefillCard_cardReservation" />{" "}
-    //                   {utils.dateFormat(fiatState.reservedCard.card.expire_in)}
-    //                 </span>
-    //             <strong>
-    //               {timer.hours} <Lang name="global_H" /> {timer.minutes} <Lang name="global_M" />
-    //             </strong>
-    //           </div>
-    //           <div className="FiatRefillModal__infoBlock__item">
-    //                 <span>
-    //                   <Lang name="fiatRefillCard_paymentAmount" />
-    //                 </span>
-    //             <strong>
-    //               <NumberFormat number={amount} currency={currency} />
-    //             </strong>
-    //           </div>
-    //         </div>
-    //         <div className="FiatRefillModal__infoBlock">
-    //           <div className="FiatRefillModal__infoBlock__item primary">
-    //             <span>Номер карты для перевода</span>
-    //             <strong>
-    //               <Clipboard
-    //                 displayText={fiatState.reservedCard.card.number.match(/.{1,4}/g).join(" ")}
-    //                 text={fiatState.reservedCard.card.number}
-    //               />
-    //             </strong>
-    //           </div>
-    //         </div>
-    //       </div>
-    //
-    //       <ButtonWrapper
-    //         align="justify"
-    //         className="FiatRefillModal__body__footer"
-    //       >
-    //         <Button
-    //           stete={fiatState.loadingStatus.cancelReservation}
-    //           onClick={handleCancel}
-    //           type="secondary"
-    //         >
-    //           <Lang name="fiatRefillCard_cancelReservation" />
-    //         </Button>
-    //         <Button
-    //           stete={fiatState.loadingStatus.confirmPayment}
-    //           onClick={handleConfirmPayment}
-    //         >
-    //           <Lang name="fiatRefillCard_confirmPayment" />
-    //         </Button>
-    //       </ButtonWrapper>
-    //     </>
-    //   ) : (
-    //     <>
-    //       <CustomLoadingStatus
-    //         status={fiatState.reservedCard.reservation.status}
-    //       />
-    //       <ButtonWrapper
-    //         align="right"
-    //         className="FiatRefillModal__body__footer"
-    //       >
-    //         <Button
-    //           stete={fiatState.loadingStatus.cancelReservation}
-    //           onClick={handleBack}
-    //           type="secondary"
-    //         >
-    //           <Lang name="global_back" />
-    //         </Button>
-    //       </ButtonWrapper>
-    //     </>
-    //   )
-    // )}
   };
 
   return (

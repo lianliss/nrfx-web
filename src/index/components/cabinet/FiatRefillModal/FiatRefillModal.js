@@ -62,7 +62,7 @@ const WithdrawalRefillModal = props => {
             </div>
             <hr />
             <div className="FiatRefillModal__sideBar__amount">
-              <small>{getLang("cabinet_fiatWithdrawalModal_total")}</small>
+              <small>{getLang("cabinet_fiatRefillModal_total")}</small>
               <strong>
                 <NumberFormat
                   number={amount - fee}

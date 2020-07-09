@@ -100,7 +100,7 @@ const FiatWithdrawalModal = props => {
             <hr />
             <div className="FiatWithdrawalModal__sideBar__amount">
               <small>
-                <Lang name="cabinet_fiatWithdrawalModal__total" />
+                <Lang name="cabinet_fiatWithdrawalModal_total" />
               </small>
               <strong>
                 <NumberFormat

@@ -16,6 +16,7 @@ import EmptyContentBlock from "../EmptyContentBlock/EmptyContentBlock";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
 import { fiatSelector } from "../../../../selectors";
 import { closeModal } from "../../../../actions";
+import Lang from "src/components/Lang/Lang";
 
 const MerchantModal = props => {
   const { adaptive } = props;
@@ -62,9 +63,8 @@ const MerchantModal = props => {
 
   useEffect(() => {
     props.getMerchant(props.type);
-
     if (
-      props.type === "refill" &&
+      props.type !== "withdrawal" &&
       currency === "rub" &&
       merchant &&
       fiatState.reservedCard
@@ -72,9 +72,23 @@ const MerchantModal = props => {
       closeModal();
       actions.openModal("fiat_refill_card");
     }
-
     // eslint-disable-next-line
   }, [merchant]);
+
+  useEffect(() => {
+    // HACK for one merchant
+    if (!props.loadingStatus.merchants && props.merchantType === props.type) {
+      const merchantsArray = getAvailableMerchants(currency);
+      if (merchantsArray.length === 1) {
+        setMerchant(merchantsArray[0].name);
+      }
+    }
+  }, [
+    props.merchants,
+    props.merchantType,
+    currency,
+    props.loadingStatus.merchants
+  ]);
 
   const checkAmount = (value = amount) => {
     const { min_amount, max_amount } = props.merchants[merchant].currencies[
@@ -275,15 +289,14 @@ const MerchantModal = props => {
   };
 
   const getFee = () => {
-    const m = props.merchants[merchant];
-    if (m.fee_conf) {
-      const fee = m.fee_conf[currency];
+    const fees = props.merchants[merchant]?.currencies[currency]?.fees;
+    if (fees) {
       return {
-        ...fee,
-        fee: Math.max(fee.min, (amount / 100) * fee.percent)
+        ...fees,
+        fee: Math.max(fees.min_fee, (amount / 100) * fees.percent_fee)
       };
     }
-    return 0;
+    return {};
   };
 
   const handleGoToMerchantList = () => {
@@ -297,7 +310,7 @@ const MerchantModal = props => {
 
   const renderForm = () => {
     const currencyInfo = actions.getCurrencyInfo(currency);
-    const { fee, percent } = getFee();
+    const { fee, percent_fee, min_fee } = getFee();
 
     const currentMerchantCurrency =
       props.merchants[merchant].currencies[currency];
@@ -358,17 +371,49 @@ const MerchantModal = props => {
           {/*</div>*/}
         </div>
 
-        <div className="MerchantModal__form__description">
-          {getLang("cabinet_merchantModalDescription_" + merchant)}
-        </div>
-
-        {fee > 0 && (
-          <div className="MerchantModal__form__fee">
-            {getLang("global_fee")}: <NumberFormat number={percent} percent />,{" "}
-            <NumberFormat number={fee} currency={currency} />{" "}
-            {getLang("global_min")}.
+        {amount - fee > 0 ? (
+          <div className="MerchantModal__form__description">
+            <div className="MerchantModal__form__description__fee">
+              <Lang name="global_fee" />:{" "}
+              <NumberFormat number={fee} currency={currency} />
+            </div>
+            <div className="MerchantModal__form__description__total">
+              {props.type === "withdrawal" ? (
+                <Lang name="cabinet_fiatWithdrawalModal_total" />
+              ) : (
+                <Lang name="cabinet_fiatRefillModal_total" />
+              )}
+              {": "}
+              <NumberFormat number={amount - fee} currency={currency} />
+            </div>
+            {/*{getLang("cabinet_merchantModalDescription_" + merchant)}*/}
+          </div>
+        ) : (
+          <div className="MerchantModal__form__description">
+            <div className="MerchantModal__form__description__fee">
+              <Lang name="global_fee" />:{" "}
+              <NumberFormat percent number={percent_fee} />
+              {min_fee > 0 && (
+                <>
+                  , <NumberFormat number={min_fee} currency={currency} />{" "}
+                  <Lang name="global_min" />.
+                </>
+              )}
+            </div>
+            <div className="MerchantModal__form__description__total">
+              &nbsp;
+            </div>
+            {/*{getLang("cabinet_merchantModalDescription_" + merchant)}*/}
           </div>
         )}
+
+        {/*{fee > 0 && (*/}
+        {/*  <div className="MerchantModal__form__fee">*/}
+        {/*    {getLang("global_fee")}: <NumberFormat number={percent_fee} percent />,{" "}*/}
+        {/*    <NumberFormat number={fee} currency={currency} />{" "}*/}
+        {/*    {getLang("global_min")}.*/}
+        {/*  </div>*/}
+        {/*)}*/}
 
         <div className="MerchantModal__buttons">
           <UI.Button
@@ -481,11 +526,6 @@ const MerchantModal = props => {
     }
 
     if (!merchant) {
-      // HACK for one merchant
-      const merchantsArray = getAvailableMerchants(currency);
-      if (merchantsArray.length === 1) {
-        setMerchant(merchantsArray[0].name);
-      }
       return renderMerchantsList();
     } else if (invoice) {
       return renderInvoice();
@@ -518,9 +558,11 @@ export default connect(
     loadingStatus: state.fiat.loadingStatus,
     adaptive: state.default.adaptive,
     profile: state.default.profile,
-    merchants: state.fiat.merchants
+    merchants: state.fiat.merchants,
+    merchantType: state.fiat.merchantType
   }),
   {
-    getMerchant: fiatActions.getMerchant
+    getMerchant: fiatActions.getMerchant,
+    clearMerchants: fiatActions.clearMerchants
   }
 )(MerchantModal);
