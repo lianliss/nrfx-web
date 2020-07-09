@@ -2,7 +2,6 @@ import "./RoadMap.less";
 import React from "react";
 import { getLang, dateFormat, classNames as cn } from "src/utils";
 import { NumberFormat, OnScroll } from "src/ui";
-import { formatDouble } from "src/utils/index";
 
 export default props => {
   const currentTime = Date.now();
