@@ -16,7 +16,7 @@ export const customStyles = {
     backgroundColor: state.isDisabled ? "#FAFAFA" : getCssVar("--white"),
     minHeight: 48,
     cursor: "pointer",
-    background: console.log(666, state) && null,
+    background: null,
     "&:hover": null
   }),
   indicatorSeparator: () => ({
