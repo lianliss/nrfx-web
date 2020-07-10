@@ -16,6 +16,7 @@ import { BaseLink } from "react-router5";
 import * as actions from "../../actions";
 import * as steps from "../../components/AuthModal/fixtures";
 import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingStatus";
+import LogoLoader from "../../ui/components/LogoLoader/LogoLoader";
 
 class CabinetWrapper extends Component {
   state = {
@@ -78,7 +79,11 @@ class CabinetWrapper extends Component {
 
     const content = utils.switchMatch(route.name, contentRules);
 
-    const { className, adaptive, user } = this.props;
+    const { className, adaptive, user, profile } = this.props;
+
+    if (profile.pending) {
+      return <LogoLoader className="AppLoading" />;
+    }
 
     const mainClassName = classNames({
       CabinetWrapper: true,
@@ -120,7 +125,8 @@ export default connect(
   state => ({
     ...state.default,
     router: state.router,
-    user: state.default.profile.user
+    user: state.default.profile.user,
+    profile: state.default.profile
   }),
   {
     setAdaptive: actions.setAdaptive

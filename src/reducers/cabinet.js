@@ -1,6 +1,9 @@
 import * as actionTypes from "../actions/actionTypes";
+import currencies from "src/currencies.json";
 
-const initialState = {};
+const initialState = {
+  currencies
+};
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
