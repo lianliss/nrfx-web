@@ -311,6 +311,7 @@ const MerchantModal = props => {
   const renderForm = () => {
     const currencyInfo = actions.getCurrencyInfo(currency);
     const { fee, percent_fee, min_fee } = getFee();
+    const total = props.type === "withdrawal" ? amount + fee : amount - fee;
 
     const currentMerchantCurrency =
       props.merchants[merchant].currencies[currency];
@@ -371,7 +372,11 @@ const MerchantModal = props => {
           {/*</div>*/}
         </div>
 
-        {amount - fee > 0 ? (
+        {(props.type === "withdrawal" ? (
+          amount > fee
+        ) : (
+          total > 0
+        )) ? (
           <div className="MerchantModal__form__description">
             <div className="MerchantModal__form__description__fee">
               <Lang name="global_fee" />:{" "}
@@ -384,7 +389,7 @@ const MerchantModal = props => {
                 <Lang name="cabinet_fiatRefillModal_total" />
               )}
               {": "}
-              <NumberFormat number={amount - fee} currency={currency} />
+              <NumberFormat number={total} currency={currency} />
             </div>
             {/*{getLang("cabinet_merchantModalDescription_" + merchant)}*/}
           </div>

@@ -94,13 +94,12 @@ class CabinetFiatScreen extends CabinetBaseScreen {
           isFiat
           wallets={this.props.balances}
         />
-        {this.props.reservedCard &&
-          this.props.reservedCard.card.expire_in * 1000 > Date.now() && (
-            <>
-              <div className="CabinetProfileScreen__height24" />
-              <RefillBlock />
-            </>
-          )}
+        {this.props.reservedCard && (
+          <>
+            <div className="CabinetProfileScreen__height24" />
+            <RefillBlock />
+          </>
+        )}
 
         {!this.props.adaptive && (
           <>
