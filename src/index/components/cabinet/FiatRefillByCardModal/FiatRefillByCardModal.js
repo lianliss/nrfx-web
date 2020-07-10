@@ -1,6 +1,6 @@
 import "../FiatRefillModal/FiatRefillModal.less";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
@@ -14,13 +14,12 @@ import { getLang } from "../../../../utils";
 import * as actionTypes from "../../../../actions/actionTypes";
 import { fiatSelector } from "src/selectors";
 import useAdaptive from "src/hooks/adaptive";
-import { Message } from "../../../../ui";
+import { Message, Timer } from "../../../../ui";
 import Lang from "../../../../components/Lang/Lang";
 import { confirm, closeModal } from "src/actions/index";
 import * as api from "../../../../services/api";
 import apiSchema from "../../../../services/apiSchema";
 import * as utils from "../../../../utils";
-import { calculateTimeLeft } from "../../../containers/site/SiteTokenScreen/components/Promo/timer";
 import * as toast from "../../../../actions/toasts";
 
 const CustomLoadingStatus = ({ status }) => {
@@ -44,7 +43,6 @@ const CustomLoadingStatus = ({ status }) => {
 export default props => {
   const dispatch = useDispatch();
   const fiatState = useSelector(fiatSelector);
-  const [dateNow, setDateNow] = useState(Date.now());
   const adaptive = useAdaptive();
 
   const { minFee, percentFee, currency } = props;
@@ -53,20 +51,9 @@ export default props => {
     ? fiatState.reservedCard.reservation.amount
     : props.amount;
 
-  useEffect(() => {
-    setTimeout(() => {
-      setDateNow(Date.now());
-    }, 1000 * 60);
-  }, [dateNow]);
-
-  const expireIn =
-    fiatState.reservedCard && fiatState.reservedCard.card.expire_in;
-  const difference = expireIn * 1000 - dateNow;
-
   const fee = fiatState.reservedCard
     ? fiatState.reservedCard.reservation.fee
     : Math.max((amount / 100) * percentFee, minFee);
-  const timer = calculateTimeLeft(difference);
 
   useEffect(() => {
     if (!fiatState.reservedCard) {
@@ -241,12 +228,13 @@ export default props => {
             />
           </div>
           <ButtonWrapper
-            align="center"
+            align="justify"
             className="FiatRefillModal__body__footer"
           >
             <Button onClick={handleCancel} type="secondary">
               {getLang("global_cancel")}
             </Button>
+            <Button onClick={props.onClose}>{getLang("global_ok")}</Button>
           </ButtonWrapper>
         </>
       );
@@ -297,8 +285,7 @@ export default props => {
                   {utils.dateFormat(fiatState.reservedCard.card.expire_in)}
                 </span>
                 <strong>
-                  {timer.hours} <Lang name="global_H" /> {timer.minutes}{" "}
-                  <Lang name="global_M" />
+                  <Timer time={fiatState.reservedCard.card.expire_in * 1000} />
                 </strong>
               </div>
               <div className="FiatRefillModal__infoBlock__item">

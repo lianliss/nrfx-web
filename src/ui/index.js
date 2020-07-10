@@ -54,3 +54,4 @@ export { default as BankLogo } from "./components/BankLogo/BankLogo";
 export { default as Clipboard } from "./components/Clipboard/Clipboard";
 export { default as Spoiler } from "./components/Spoiler/Spoiler";
 export { default as Select } from "./components/Select/Select";
+export { default as Timer } from "./components/Timer/Timer";

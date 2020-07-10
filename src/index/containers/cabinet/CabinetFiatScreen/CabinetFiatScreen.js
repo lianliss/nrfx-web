@@ -24,6 +24,10 @@ class CabinetFiatScreen extends CabinetBaseScreen {
     this.props.getFiatWallets();
   };
 
+  state = {
+    displayRefillBlock: true
+  };
+
   componentDidMount() {
     setTitle(utils.getLang("cabinet_header_fiatWallets"));
     this.load();
@@ -94,10 +98,12 @@ class CabinetFiatScreen extends CabinetBaseScreen {
           isFiat
           wallets={this.props.balances}
         />
-        {this.props.reservedCard && (
+        {this.props.reservedCard && this.state.displayRefillBlock && (
           <>
             <div className="CabinetProfileScreen__height24" />
-            <RefillBlock />
+            <RefillBlock
+              onHidden={() => this.setState({ displayRefillBlock: false })}
+            />
           </>
         )}
 
