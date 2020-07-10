@@ -36,19 +36,15 @@ export default () => {
     <div className="Ticker">
       <div className="Ticker__tape">
         {pending
-          ? Array(20)
-              .fill(true)
-              .map(() => (
-                <div className="Ticker__market skeleton">
-                  <Skeleton className="Ticker__market__name" />
-                  <Skeleton className="Ticker__market__price" />
-                  <Skeleton className="Ticker__market__diff" />
-                </div>
-              ))
-          : Array(3)
-              .fill(markets)
-              .flat()
-              .map(({ ticker, market: { config } }) => (
+          ? [...Array(20)].map(() => (
+              <div className="Ticker__market skeleton">
+                <Skeleton className="Ticker__market__name" />
+                <Skeleton className="Ticker__market__price" />
+                <Skeleton className="Ticker__market__diff" />
+              </div>
+            ))
+          : [...markets, ...markets, ...markets].map(
+              ({ ticker, market: { config } }) => (
                 <div className="Ticker__market">
                   <strong className="Ticker__market__name">
                     {ticker.market}
@@ -69,7 +65,8 @@ export default () => {
                     />
                   </span>
                 </div>
-              ))}
+              )
+            )}
       </div>
     </div>
   );
