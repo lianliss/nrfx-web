@@ -13,8 +13,9 @@ const calculateTimeLeft = difference => ({
 const fixedNumber = number =>
   ((number * 0.01).toFixed(2) + "").split(".").pop();
 
-export default ({ time, onFinish }) => {
+export default ({ time, onFinish, hiddenAfterFinish }) => {
   const [dateNow, setDateNow] = useState(Date.now());
+  const [canFinish] = useState(time > Date.now());
   useEffect(() => {
     setTimeout(() => {
       setDateNow(Date.now());
@@ -22,8 +23,8 @@ export default ({ time, onFinish }) => {
   }, [dateNow]);
 
   if (time <= dateNow) {
-    onFinish && onFinish();
-    return <span className="Timer">00:00:00</span>;
+    onFinish && canFinish && onFinish();
+    return !hiddenAfterFinish ? <span className="Timer">00:00:00</span> : <></>;
   }
 
   const timer = calculateTimeLeft(time - dateNow);

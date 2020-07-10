@@ -34,6 +34,7 @@ export default ({ onHidden }) => {
         </span>
         <strong>
           <Timer
+            hiddenAfterFinish
             onFinish={handleFinish}
             time={reservedCard.card.expire_in * 1000}
           />
