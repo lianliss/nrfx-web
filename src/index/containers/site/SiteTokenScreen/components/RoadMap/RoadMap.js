@@ -22,9 +22,11 @@ export default props => {
             <div>
               <small>{dateFormat(item.time, "DD MMM YYYY")}</small>
               <strong>{item.title}</strong>
-              <span className="price">
-                $<NumberFormat accurate number={item.price} currency="usd" />
-              </span>
+              {item.price && (
+                <span className="price">
+                  $<NumberFormat accurate number={item.price} currency="usd" />
+                </span>
+              )}
             </div>
           </div>
         ))}
