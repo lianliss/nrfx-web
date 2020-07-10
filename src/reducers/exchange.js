@@ -168,16 +168,23 @@ export default function reduce(state = initialState, action = {}) {
             ...order
           };
         }
-
-        if (order.type !== "limit") {
-          continue;
-        }
       }
+
+      const orderBook = [...state.orderBook];
+
+      action.orders.forEach(order => {
+        const index = orderBook.findIndex(o => o.id === order.id);
+        if (!!~index) {
+          orderBook[index] = order;
+        } else {
+          orderBook.push(order);
+        }
+      });
 
       return {
         ...state,
         openOrders,
-        orderBook: [...state.orderBook, ...action.orders]
+        orderBook
       };
     }
 
