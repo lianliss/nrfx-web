@@ -30,7 +30,12 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.LANGS_SAVE:
       return {
         ...state,
-        keys: state.keys.map(k => ({ ...k, local: false })),
+        keys: state.keys.map(k => ({
+          ...k,
+          local: false,
+          value: k.value || state.update[k.name],
+          en_value: k.en_value || state.update[k.name]
+        })),
         update: initialState.update
       };
     case actionTypes.LANGS_SET_STATUS:
