@@ -21,6 +21,7 @@ import * as api from "../../../../services/api";
 import apiSchema from "../../../../services/apiSchema";
 import * as utils from "../../../../utils";
 import { calculateTimeLeft } from "../../../containers/site/SiteTokenScreen/components/Promo/timer";
+import * as toast from "../../../../actions/toasts";
 
 const CustomLoadingStatus = ({ status }) => {
   const props = {};
@@ -92,6 +93,9 @@ export default props => {
             });
           }
         })
+        .catch(err => {
+          toast.error(err.message);
+        })
         .finally(() => {
           dispatch({
             type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
@@ -131,6 +135,7 @@ export default props => {
         });
       })
       .catch(err => {
+        toast.error(err.message);
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
           section: "reservedCard",
@@ -204,6 +209,9 @@ export default props => {
           section: "confirmPayment",
           status: "loading"
         });
+      })
+      .catch(err => {
+        toast.error(err.message);
       });
   };
 
