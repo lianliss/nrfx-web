@@ -9,6 +9,8 @@ import * as actions from "src/actions/index";
 import * as toasts from "src/actions/toasts";
 import { openModal } from "src/actions/index";
 import * as emitter from "../../../../../../services/emitter";
+import { Switch } from "../../../../../../ui";
+import { toggleFloodControl } from "src/actions/index";
 
 class SettingPersonal extends React.Component {
   state = {
@@ -40,12 +42,6 @@ class SettingPersonal extends React.Component {
     return (
       <>
         {!utils.isProduction() && <VerificationBlock />}
-        {profile.user.applicant_id && (
-          <UI.ContentBox className="CabinetSettingsScreen__main">
-            <div className="CabinetSettingsScreen__header">applicant_id</div>
-            <pre>{profile.user.applicant_id}</pre>
-          </UI.ContentBox>
-        )}
         <UI.ContentBox className="CabinetSettingsScreen__main">
           <div className="CabinetSettingsScreen__header">
             {utils.getLang("cabinet_settingsPersonalInformation")}
@@ -218,11 +214,35 @@ class SettingPersonal extends React.Component {
             </div>
           </div>
         </UI.ContentBox>
+
+        {profile.user.applicant_id && (
+          <UI.ContentBox className="CabinetSettingsScreen__main">
+            <div className="CabinetSettingsScreen__header">applicant_id</div>
+            <pre>{profile.user.applicant_id}</pre>
+          </UI.ContentBox>
+        )}
+        {process.env.NODE_ENV === `development` && (
+          <UI.ContentBox className="CabinetSettingsScreen__main">
+            <div className="CabinetSettingsScreen__header">
+              Flood control (only dev mode)
+            </div>
+            <Switch
+              on={this.props.floodControl}
+              onChange={this.props.toggleFloodControl}
+            />
+          </UI.ContentBox>
+        )}
       </>
     );
   }
 }
 
-export default connect(state => ({
-  profile: state.default.profile
-}))(SettingPersonal);
+export default connect(
+  state => ({
+    profile: state.default.profile,
+    floodControl: state.settings.floodControl
+  }),
+  {
+    toggleFloodControl
+  }
+)(SettingPersonal);

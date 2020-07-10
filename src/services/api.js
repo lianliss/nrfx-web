@@ -5,6 +5,7 @@ import router from "../router";
 import * as PAGES from "../index/constants/pages";
 import { login } from "./auth";
 import * as emitter from "./emitter";
+import store from "../store";
 
 export const APP_ID = process.env.DOMAIN === "admin" ? 10 : 8;
 const BRANCH_NAME = process.env.BRANCH_NAME;
@@ -58,6 +59,13 @@ export function invoke(method, name, params, options = {}) {
       url += `?${params_arr.join("&")}`;
     } else {
       init.body = includesFile ? formData : JSON.stringify(params);
+    }
+
+    if (store.getState()?.settings?.floodControl && !options.apiEntry) {
+      init.headers = {
+        ...init.headers,
+        "X-Flood-Control-Enabled": 1
+      };
     }
 
     fetch(url, init)
