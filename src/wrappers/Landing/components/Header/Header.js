@@ -10,14 +10,14 @@ import * as steps from "../../../../components/AuthModal/fixtures";
 import { useRoute, useRouter } from "react-router5";
 import * as pages from "../../../../index/constants/pages";
 import { useSelector } from "react-redux";
-import { userSelector } from "../../../../selectors";
+import { profileSelector } from "../../../../selectors";
 import Lang from "../../../../components/Lang/Lang";
 
 export default () => {
   const router = useRouter();
   const route = useRoute();
   const headerRef = useRef(null);
-  const user = useSelector(userSelector);
+  const { user, pending } = useSelector(profileSelector);
   const [openedMegaMenu, setOpenedMegaMenu] = useState(false);
   const [openedMobileMenu, setOpenedMobileMenu] = useState(false);
 
@@ -106,7 +106,7 @@ export default () => {
           </ul>
 
           <div className="Header__authButtons">
-            {user ? (
+            {user || pending ? (
               <Button
                 type="outline"
                 onClick={() => {

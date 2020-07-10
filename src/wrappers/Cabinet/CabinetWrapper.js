@@ -81,7 +81,7 @@ class CabinetWrapper extends Component {
 
     const { className, adaptive, user, profile } = this.props;
 
-    if (profile.pending) {
+    if (profile.pending && !profile.user) {
       return <LogoLoader className="AppLoading" />;
     }
 
