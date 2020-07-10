@@ -1,33 +1,24 @@
 import "./RefillBlock.less";
 
-import React, { useCallback, useState, useEffect } from "react";
-import { BankLogo, Button, ContentBox } from "../../../../../../ui";
+import React, { useCallback } from "react";
+import { BankLogo, Button, ContentBox, Timer } from "../../../../../../ui";
 import Lang from "../../../../../../components/Lang/Lang";
 import { useSelector } from "react-redux";
 import { fiatSelector } from "../../../../../../selectors";
 import * as actions from "../../../../../../actions";
-import { calculateTimeLeft } from "../../../../site/SiteTokenScreen/components/Promo/timer";
 
-export default () => {
+export default ({ onHidden }) => {
   const { reservedCard } = useSelector(fiatSelector);
-
-  const [dateNow, setDateNow] = useState();
 
   const handleClickOpen = useCallback(() => {
     actions.openModal("fiat_refill_card");
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setDateNow(Date.now());
-    }, 1000);
-  }, [dateNow]);
-
   const { status } = reservedCard.reservation;
 
-  const timer = calculateTimeLeft(
-    reservedCard.card.expire_in * 1000 - Date.now()
-  );
+  const handleFinish = () => {
+    status !== "wait_for_review" && onHidden();
+  };
 
   return (
     <ContentBox className="RefillBlock">
@@ -41,11 +32,12 @@ export default () => {
             }
           />
         </span>
-        {status !== "wait_for_review" && (
-          <strong>
-            {timer.hours}:{timer.minutes}:{timer.seconds}
-          </strong>
-        )}
+        <strong>
+          <Timer
+            onFinish={handleFinish}
+            time={reservedCard.card.expire_in * 1000}
+          />
+        </strong>
       </h3>
       <div className="RefillBlock__row">
         <BankLogo name={reservedCard.card.bank.code} />
