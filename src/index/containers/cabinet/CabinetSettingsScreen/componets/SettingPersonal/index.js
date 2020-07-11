@@ -215,13 +215,14 @@ class SettingPersonal extends React.Component {
           </div>
         </UI.ContentBox>
 
-        {profile.user.applicant_id && (
+        {!utils.isProduction() && profile.user.applicant_id && (
           <UI.ContentBox className="CabinetSettingsScreen__main">
             <div className="CabinetSettingsScreen__header">applicant_id</div>
             <pre>{profile.user.applicant_id}</pre>
           </UI.ContentBox>
         )}
-        {process.env.NODE_ENV === `development` && (
+
+        {!utils.isProduction() === `development` && (
           <UI.ContentBox className="CabinetSettingsScreen__main">
             <div className="CabinetSettingsScreen__header">
               Flood control (only dev mode)
