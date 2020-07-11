@@ -12,15 +12,21 @@ const initialState = {
   rateType: "update",
   rateUpdateTime: 0,
   merchants: [],
+  merchantType: null,
   exchange_fee: 0,
   withdrawalBankList: null,
-  refillBankList: null,
+  refillBankList: [],
   market: "",
+  reservedCard: null,
   loadingStatus: {
-    withdrawalBankList: "loading",
-    refillBankList: "loading",
+    confirmPayment: "",
+    cancelReservation: "",
+    reservedCard: "",
+    withdrawalBankList: "",
+    refillBankList: "",
+    reservation: "",
     default: "loading",
-    merchants: "",
+    merchants: "loading",
     rate: "",
     newRate: "",
     marketForm: "",
@@ -34,6 +40,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         ...action.payload,
+        reservedCard: action.payload.card_reservation,
         pending: false
       };
     }
@@ -45,6 +52,13 @@ export default function reduce(state = initialState, action = {}) {
           next: action.payload.next,
           items: [...state.history.items, ...action.payload.items]
         }
+      };
+    }
+
+    case actionTypes.FIAT_SET_RESERVED_CARD: {
+      return {
+        ...state,
+        reservedCard: action.payload
       };
     }
 
@@ -88,6 +102,16 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
 
+    case actionTypes.FIAT_WALLETS_CLEAR_LOADING_STATUSES: {
+      return {
+        ...state,
+        loadingStatus: {
+          ...initialState.loadingStatus,
+          default: state.loadingStatus.default
+        }
+      };
+    }
+
     case actionTypes.FIAT_WALLETS_SET_RATE: {
       return {
         ...state,
@@ -99,6 +123,7 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.FIAT_WALLETS_SET_MERCHANTS: {
       return {
         ...state,
+        merchantType: action.merchantType,
         merchants: action.methods
       };
     }

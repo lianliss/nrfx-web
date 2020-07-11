@@ -6,7 +6,7 @@ import * as PAGES from "../index/constants/pages";
 import { login } from "./auth";
 import * as emitter from "./emitter";
 
-export const APP_ID = 8;
+export const APP_ID = process.env.DOMAIN === "admin" ? 10 : 8;
 const BRANCH_NAME = process.env.BRANCH_NAME;
 const LOCAL_API_ENDPOINT = process.env.REACT_APP_LOCAL_API_ENDPOINT;
 

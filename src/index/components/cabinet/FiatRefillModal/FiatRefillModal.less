@@ -1,6 +1,11 @@
+@import '../../../../vars';
 .FiatRefillModal {
   display: flex;
   min-height: 700px;
+
+  .LoadingStatus__failed__message {
+    max-width: 320px;
+  }
 
   .FiatRefillModal__sideBar {
     width: 304px;
@@ -19,29 +24,43 @@
       box-sizing: border-box;
       width: 100%;
       margin-top: 96px;
-      text-align: center;
 
-
-      .FiatRefillModal__sideBar__fee {
-        margin-bottom: 32px;
+      .FiatRefillModal__sideBar__amount {
+        margin-bottom: 24px;
 
         small {
-          margin: 8px 0;
+          font-weight: 600;
+          font-size: 11px;
+          line-height: 16px;
           display: block;
         }
-      }
 
-      .FiatRefillModal__sideBar__total {
-        h3 {
+        strong {
           font-weight: 600;
           font-size: 16px;
           line-height: 24px;
         }
+      }
 
+      .FiatRefillModal__sideBar__fee {
         small {
+          font-weight: 500;
+          font-size: 11px;
+          line-height: 16px;
           display: block;
-          margin-top: 8px;
         }
+
+        strong {
+          font-weight: 500;
+          font-size: 11px;
+          line-height: 16px;
+        }
+      }
+
+      hr {
+        border: 0;
+        border-bottom: 1px solid var(--white);
+        margin: 24px 0;
       }
     }
   }
@@ -133,15 +152,89 @@
   }
 }
 
+.FiatRefillModal__infoBlock {
+  display: flex;
+  margin: 16px -8px 16px;
+
+  @media (max-width: @mobile-width) {
+    flex-direction: column;
+
+    .FiatRefillModal__infoBlock__item {
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.FiatRefillModal__infoBlock__item {
+  border-radius: 8px;
+  flex: 1;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--alice-blue);
+  padding: 16px;
+  border: 1px solid var(--cloudy);
+  margin: 0 8px;
+
+  & > span {
+    display: block;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 8px;
+  }
+
+  strong {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--primary-blue);
+  }
+
+  .Clipboard .isvg {
+    align-self: center;
+  }
+
+
+  @media (min-width: @mobile-width) {
+    &.primary {
+      padding: 32px 40px;
+
+      & > span {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 16px;
+      }
+
+      strong {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+      }
+    }
+  }
+}
+
 .adaptive {
   .FiatRefillModal {
     flex-direction: column;
 
     .FiatRefillModal__header {
-      display: none;
+      text-align: center;
+      margin-bottom: 24px;
     }
 
     .FiatRefillModal__sideBar {
+      text-align: center;
+      flex-direction: column;
       padding: 40px 16px !important;
       background-image: var(--blue-gradient);
       display: flex;
@@ -169,6 +262,15 @@
 
     .BankList {
       margin: 24px -16px;
+    }
+  }
+
+  .ButtonWrapper {
+    flex-direction: column;
+
+    .Button {
+      margin: 8px 0;
+      flex: auto;
     }
   }
 }

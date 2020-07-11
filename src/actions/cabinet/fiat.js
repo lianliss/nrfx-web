@@ -64,7 +64,11 @@ export function getMerchant(type) {
     api
       .call(apiMethod)
       .then(({ methods }) => {
-        dispatch({ type: actionTypes.FIAT_WALLETS_SET_MERCHANTS, methods });
+        dispatch({
+          type: actionTypes.FIAT_WALLETS_SET_MERCHANTS,
+          merchantType: type,
+          methods
+        });
       })
       .finally(() => {
         dispatch({
@@ -73,6 +77,12 @@ export function getMerchant(type) {
           status: ""
         });
       });
+  };
+}
+
+export function clearMerchants() {
+  return dispatch => {
+    dispatch({ type: actionTypes.FIAT_WALLETS_SET_MERCHANTS, methods: [] });
   };
 }
 

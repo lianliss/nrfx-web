@@ -16,6 +16,7 @@ import Input from "../../../../ui/components/Input/Input";
 import Button, { ButtonWrapper } from "../../../../ui/components/Button/Button";
 import Form from "../../../../ui/components/Form/Form";
 import { getLang, isEmail } from "../../../../utils";
+import Lang from "../../../../components/Lang/Lang";
 
 const FiatWithdrawalModal = props => {
   const { amount, balance, adaptive, bankList, minFee, percentFee } = props;
@@ -58,9 +59,6 @@ const FiatWithdrawalModal = props => {
     });
   };
 
-  const total = amount + fee;
-  const amountUsd = total * balance.to_usd;
-
   const headerText = !bank ? (
     getLang("cabinet_fiatWithdrawalModal_chooseBank")
   ) : !filled ? (
@@ -80,24 +78,33 @@ const FiatWithdrawalModal = props => {
             {getLang("cabinet_fiatWithdrawalModal_title")}
           </div>
           <div className="FiatWithdrawalModal__sideBar__content">
+            <div className="FiatWithdrawalModal__sideBar__amount">
+              <small>
+                <Lang name="global_amount" />
+              </small>
+              <strong>
+                <NumberFormat number={amount} currency={balance.currency} />
+              </strong>
+            </div>
             <div className="FiatWithdrawalModal__sideBar__fee">
               <small>
-                <NumberFormat number={amount} currency={balance.currency} />
+                <Lang name="global_fee" />
               </small>
-              <small>
-                {getLang("global_fee")}:{" "}
+              <strong>
                 <NumberFormat number={fee} currency={balance.currency} />
-              </small>
+              </strong>
             </div>
-            <div className="FiatWithdrawalModal__sideBar__total">
-              <h2>{getLang("global_total")}</h2>
-              <h2>
-                <NumberFormat number={total} currency={balance.currency} />
-              </h2>
+            <hr />
+            <div className="FiatWithdrawalModal__sideBar__amount">
               <small>
-                {getLang("cabinet_fiatWithdrawalModal_estimatedAt")}{" "}
-                <NumberFormat number={amountUsd} currency="usd" />
+                <Lang name="cabinet_fiatWithdrawalModal_total" />
               </small>
+              <strong>
+                <NumberFormat
+                  number={amount + fee}
+                  currency={balance.currency}
+                />
+              </strong>
             </div>
           </div>
         </div>

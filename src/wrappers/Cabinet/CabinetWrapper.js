@@ -16,6 +16,7 @@ import { BaseLink } from "react-router5";
 import * as actions from "../../actions";
 import * as steps from "../../components/AuthModal/fixtures";
 import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingStatus";
+import LogoLoader from "../../ui/components/LogoLoader/LogoLoader";
 
 class CabinetWrapper extends Component {
   state = {
@@ -26,15 +27,6 @@ class CabinetWrapper extends Component {
     if (prevProps.children !== this.props.children) {
       this.setState({ error: null });
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener("resize", this.__handleOnResize);
-    this.__handleResize(document.body.offsetWidth);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.__handleOnResize);
   }
 
   componentDidCatch(error, info) {
@@ -87,7 +79,11 @@ class CabinetWrapper extends Component {
 
     const content = utils.switchMatch(route.name, contentRules);
 
-    const { className, adaptive, user } = this.props;
+    const { className, adaptive, user, profile } = this.props;
+
+    if (profile.pending && !profile.user) {
+      return <LogoLoader className="AppLoading" />;
+    }
 
     const mainClassName = classNames({
       CabinetWrapper: true,
@@ -123,32 +119,14 @@ class CabinetWrapper extends Component {
       </div>
     );
   }
-
-  __handleResize = w => {
-    const { adaptive } = this.props;
-    if (w <= 650) {
-      if (!adaptive) {
-        document.body.classList.add("adaptive");
-        this.props.setAdaptive(true);
-      }
-    } else {
-      if (adaptive) {
-        document.body.classList.remove("adaptive");
-        this.props.setAdaptive(false);
-      }
-    }
-  };
-
-  __handleOnResize = e => {
-    this.__handleResize(document.body.offsetWidth);
-  };
 }
 
 export default connect(
   state => ({
     ...state.default,
     router: state.router,
-    user: state.default.profile.user
+    user: state.default.profile.user,
+    profile: state.default.profile
   }),
   {
     setAdaptive: actions.setAdaptive

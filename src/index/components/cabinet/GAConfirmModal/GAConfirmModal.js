@@ -78,6 +78,7 @@ export default class GAConfirmModal extends React.Component {
           error={this.state.errorGaCode}
           indicator={<SVG src={require("../../../../asset/google_auth.svg")} />}
         />
+        <input className="GAConfirmModal__autoCompleteHack" type="text" />
         <div className="GAConfirmModal__submit_wrapper">
           <UI.Button
             state={this.state.pending && "loading"}

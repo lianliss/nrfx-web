@@ -17,10 +17,15 @@ import { openModal } from "../../../../actions";
 import * as actions from "src/actions/cabinet/fiat";
 import { Helmet } from "react-helmet";
 import COMPANY from "../../../constants/company";
+import RefillBlock from "./components/RefillBlock/RefillBlock";
 
 class CabinetFiatScreen extends CabinetBaseScreen {
   load = () => {
     this.props.getFiatWallets();
+  };
+
+  state = {
+    displayRefillBlock: true
   };
 
   componentDidMount() {
@@ -93,6 +98,14 @@ class CabinetFiatScreen extends CabinetBaseScreen {
           isFiat
           wallets={this.props.balances}
         />
+        {this.props.reservedCard && this.state.displayRefillBlock && (
+          <>
+            <div className="CabinetProfileScreen__height24" />
+            <RefillBlock
+              onHidden={() => this.setState({ displayRefillBlock: false })}
+            />
+          </>
+        )}
 
         {!this.props.adaptive && (
           <>

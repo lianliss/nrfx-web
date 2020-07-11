@@ -1922,6 +1922,64 @@ export default {
     }
   },
   Fiat_wallet: {
+    Cards: {
+      RefillBanksGet: {
+        method: "GET",
+        name: "refill_banks",
+        params: {
+          Amount: {
+            name: "amount",
+            filters: ["required", "positive"],
+            type: "body"
+          }
+        },
+        path: "fiat_wallet/cards/refill_banks"
+      },
+      ReservationPost: {
+        method: "POST",
+        name: "reservation",
+        params: {
+          Amount: {
+            name: "amount",
+            filters: ["required", "positive"],
+            type: "body"
+          },
+          BankCode: {
+            name: "bank_code",
+            filters: {
+              "0": "required",
+              oneOf: ["tinkoff"]
+            },
+            type: "body"
+          }
+        },
+        path: "fiat_wallet/cards/reservation"
+      },
+      ReservationDelete: {
+        method: "DELETE",
+        name: "reservation",
+        params: {
+          ReservationId: {
+            name: "reservation_id",
+            filters: ["required", "positive"],
+            type: "body"
+          }
+        },
+        path: "fiat_wallet/cards/reservation"
+      },
+      "Reservation/confirmPaymentPost": {
+        method: "POST",
+        name: "reservation/confirm_payment",
+        params: {
+          ReservationId: {
+            name: "reservation_id",
+            filters: ["required", "positive"],
+            type: "body"
+          }
+        },
+        path: "fiat_wallet/cards/reservation/confirm_payment"
+      }
+    },
     Xendit: {
       "Disbursements/webhookPost": {
         method: "POST",

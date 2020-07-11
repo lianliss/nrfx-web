@@ -1,3 +1,5 @@
+@import '../../../../vars';
+
 .MerchantModal {
   .LoadingStatus__wrap {
     height: 150px;
@@ -143,9 +145,23 @@
     padding: 8px 16px;
   }
 
+  .MerchantModal__form__description__fee {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 8px;
+  }
+
+  .MerchantModal__form__description__total {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--primary-blue);
+  }
+
   .MerchantModal__form__description {
     text-align: center;
-    margin: 40px 0;
+    margin: 24px 0 40px;
     font-size: 13px;
     line-height: 24px;
   }
@@ -226,17 +242,19 @@
   }
 }
 
-body:not(.adaptive) .MerchantModal {
-  .Modal__header {
-    font-size: 16px;
-    line-height: 24px;
-    margin: -32px -40px 0;
-    padding: 42px 0 22px;
-    width: calc(100% + 80px);
+@media (min-width: @mobile-width) {
+  .MerchantModal {
+    .Modal__header {
+      font-size: 16px;
+      line-height: 24px;
+      margin: -32px -40px 0;
+      padding: 42px 0 22px;
+      width: calc(100% + 80px);
+    }
   }
 }
 
-.adaptive {
+@media (max-width: @mobile-width) {
   .MerchantModal {
     .MerchantModal__form {
       width: 100%;

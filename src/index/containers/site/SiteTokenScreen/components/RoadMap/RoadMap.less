@@ -52,24 +52,25 @@
       width: 50%;
       display: flex;
       text-align: left;
-      margin: 60px 0;
+      margin: 80px 0;
 
-      &:nth-child(1) { small, strong { transition-delay: 1s } }
-      &:nth-child(2) { small, strong { transition-delay: 1.7s } }
-      &:nth-child(3) { small, strong { transition-delay: 2.4s } }
-      &:nth-child(4) { small, strong { transition-delay: 3.1s } }
+      &:nth-child(1) { small, strong, .price { transition-delay: 1s } }
+      &:nth-child(2) { small, strong, .price { transition-delay: 1.7s } }
+      &:nth-child(3) { small, strong, .price { transition-delay: 2.4s } }
+      &:nth-child(4) { small, strong, .price { transition-delay: 3.1s } }
+      &:nth-child(5) { small, strong, .price { transition-delay: 3.8s } }
 
       @media (min-width: 800px) {
         &:nth-child(2n) {
           text-align: right;
           flex-direction: row-reverse;
           margin-left: 41px;
-          small, strong {
+          small, strong, .price {
             transform: translate(-70px);
           }
         }
         &:nth-child(2n-1) {
-          small, strong {
+          small, strong, .price {
             transform: translate(70px);
           }
           margin-left: calc(50% - 41px);
@@ -111,13 +112,22 @@
         opacity: 0;
         transition: opacity 1s ease, transform 1.3s ease;
       }
+
+      .price {
+        display: block;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 32px;
+        opacity: 0;
+        transition: opacity 1s ease, transform 1.6s ease;
+      }
     }
   }
 }
 
 .SiteTokenScreen__RoadMap.isVisible {
   .SiteTokenScreen__RoadMap__list__item {
-    small, strong {
+    small, strong, .price {
       opacity: 1;
       transform: translate(0) !important;
     }
@@ -134,7 +144,7 @@
       }
       .SiteTokenScreen__RoadMap__list__item {
         width: 100%;
-        margin: 42px 0;
+        margin: 54px 0;
 
         &:before {
           margin-left: 0;
