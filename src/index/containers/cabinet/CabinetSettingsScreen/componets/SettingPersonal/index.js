@@ -222,7 +222,7 @@ class SettingPersonal extends React.Component {
           </UI.ContentBox>
         )}
 
-        {!utils.isProduction() === `development` && (
+        {!utils.isProduction() && (
           <UI.ContentBox className="CabinetSettingsScreen__main">
             <div className="CabinetSettingsScreen__header">
               Flood control (only dev mode)
