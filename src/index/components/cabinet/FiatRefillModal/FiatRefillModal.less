@@ -1,3 +1,4 @@
+@import '../../../../vars';
 .FiatRefillModal {
   display: flex;
   min-height: 700px;
@@ -153,7 +154,19 @@
 
 .FiatRefillModal__infoBlock {
   display: flex;
-  margin: 16px -8px 0;
+  margin: 16px -8px 16px;
+
+  @media (max-width: @mobile-width) {
+    flex-direction: column;
+
+    .FiatRefillModal__infoBlock__item {
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 
 .FiatRefillModal__infoBlock__item {
@@ -189,20 +202,23 @@
     align-self: center;
   }
 
-  &.primary {
-    padding: 32px 40px;
 
-    & > span {
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 24px;
-      margin-bottom: 16px;
-    }
+  @media (min-width: @mobile-width) {
+    &.primary {
+      padding: 32px 40px;
 
-    strong {
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 32px;
+      & > span {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 16px;
+      }
+
+      strong {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+      }
     }
   }
 }
@@ -246,6 +262,15 @@
 
     .BankList {
       margin: 24px -16px;
+    }
+  }
+
+  .ButtonWrapper {
+    flex-direction: column;
+
+    .Button {
+      margin: 8px 0;
+      flex: auto;
     }
   }
 }

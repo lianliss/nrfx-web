@@ -1,6 +1,6 @@
 import "../FiatRefillModal/FiatRefillModal.less";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
@@ -21,6 +21,7 @@ import * as api from "../../../../services/api";
 import apiSchema from "../../../../services/apiSchema";
 import * as utils from "../../../../utils";
 import * as toast from "../../../../actions/toasts";
+import * as actions from "../../../../actions";
 
 const CustomLoadingStatus = ({ status }) => {
   const props = {};
@@ -44,6 +45,7 @@ export default props => {
   const dispatch = useDispatch();
   const fiatState = useSelector(fiatSelector);
   const adaptive = useAdaptive();
+  const [timeIsOver, setTimeIsOver] = useState(false);
 
   const { minFee, percentFee, currency } = props;
 
@@ -55,7 +57,30 @@ export default props => {
     ? fiatState.reservedCard.reservation.fee
     : Math.max((amount / 100) * percentFee, minFee);
 
+  const handleTimerFinish = useCallback(() => {
+    setTimeIsOver(true);
+  }, [setTimeIsOver]);
+
   useEffect(() => {
+    if (!fiatState.reservedCard && !props.amount) {
+      props.onClose();
+    }
+
+    if (
+      fiatState.reservedCard?.card?.expire_in * 1000 <= Date.now() &&
+      fiatState.reservedCard.reservation.status === "wait_for_pay"
+    ) {
+      // time is over hack
+      dispatch({
+        type: actionTypes.FIAT_SET_RESERVED_CARD,
+        payload: null
+      });
+      actions.closeModal();
+      actions.openModal("merchant", {
+        currency: "rub"
+      });
+    }
+
     if (!fiatState.reservedCard) {
       dispatch({
         type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
@@ -96,7 +121,7 @@ export default props => {
         type: actionTypes.FIAT_WALLETS_CLEAR_LOADING_STATUSES
       });
     };
-  }, [dispatch, props.amount, fiatState.reservedCard]);
+  }, [dispatch, props, fiatState.reservedCard]);
 
   const handleChoiceBank = bankCode => {
     dispatch({
@@ -205,6 +230,28 @@ export default props => {
   const renderBody = () => {
     const { loadingStatus } = fiatState;
 
+    if (timeIsOver) {
+      return (
+        <>
+          <div>
+            <LoadingStatus
+              icon={require("src/asset/120/error.svg")}
+              status={<Lang name="fiatRefillCard_timeIsOver_title" />}
+              description={
+                <Lang name="fiatRefillCard_timeIsOver_description" />
+              }
+            />
+          </div>
+          <ButtonWrapper
+            align="center"
+            className="FiatRefillModal__body__footer"
+          >
+            <Button onClick={props.onClose}>{getLang("global_close")}</Button>
+          </ButtonWrapper>
+        </>
+      );
+    }
+
     if (
       [loadingStatus.refillBankList, loadingStatus.reservedCard].some(Boolean)
     ) {
@@ -285,7 +332,10 @@ export default props => {
                   {utils.dateFormat(fiatState.reservedCard.card.expire_in)}
                 </span>
                 <strong>
-                  <Timer time={fiatState.reservedCard.card.expire_in * 1000} />
+                  <Timer
+                    onFinish={handleTimerFinish}
+                    time={fiatState.reservedCard.card.expire_in * 1000}
+                  />
                 </strong>
               </div>
               <div className="FiatRefillModal__infoBlock__item">

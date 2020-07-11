@@ -17,7 +17,9 @@ export default ({ onHidden }) => {
   const { status } = reservedCard.reservation;
 
   const handleFinish = () => {
-    status !== "wait_for_review" && onHidden();
+    if (status !== "wait_for_review") {
+      onHidden();
+    }
   };
 
   return (
@@ -32,13 +34,15 @@ export default ({ onHidden }) => {
             }
           />
         </span>
-        <strong>
-          <Timer
-            hiddenAfterFinish
-            onFinish={handleFinish}
-            time={reservedCard.card.expire_in * 1000}
-          />
-        </strong>
+        {status !== "wait_for_review" && (
+          <strong>
+            <Timer
+              hiddenAfterFinish
+              onFinish={() => handleFinish(true)}
+              time={reservedCard.card.expire_in * 1000}
+            />
+          </strong>
+        )}
       </h3>
       <div className="RefillBlock__row">
         <BankLogo name={reservedCard.card.bank.code} />
