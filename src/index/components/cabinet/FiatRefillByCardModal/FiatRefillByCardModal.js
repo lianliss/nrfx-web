@@ -25,13 +25,7 @@ import * as actions from "../../../../actions";
 
 const CustomLoadingStatus = ({ status }) => {
   const props = {};
-  if (status === "not_available_cards") {
-    props.icon = require("src/asset/120/info.svg");
-    props.description = getLang(
-      "fiatRefillCard_status_description_not_available_cards"
-    );
-    props.status = getLang("fiatRefillCard_status_not_available_cards");
-  } else if (status === "wait_for_review") {
+  if (status === "wait_for_review") {
     props.icon = require("src/asset/120/info.svg");
     props.description = getLang(
       "fiatRefillCard_status_description_not_available_cards"
@@ -147,7 +141,6 @@ export default props => {
         });
       })
       .catch(err => {
-        toast.error(err.message);
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
           section: "reservedCard",
@@ -192,6 +185,19 @@ export default props => {
         .finally(() => {
           closeModal();
         });
+    });
+  };
+
+  const handleClickBack = () => {
+    dispatch({
+      type: actionTypes.FIAT_SET_RESERVED_CARD,
+      payload: null
+    });
+
+    dispatch({
+      type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+      section: "reservedCard",
+      status: ""
     });
   };
 
@@ -247,6 +253,29 @@ export default props => {
             className="FiatRefillModal__body__footer"
           >
             <Button onClick={props.onClose}>{getLang("global_close")}</Button>
+          </ButtonWrapper>
+        </>
+      );
+    }
+
+    if (loadingStatus.reservedCard === "not_available_cards") {
+      return (
+        <>
+          <div style={{ flex: 1, display: "flex" }}>
+            <LoadingStatus
+              inline
+              icon={require("src/asset/120/info.svg")}
+              status={<Lang name="fiatRefillCard_status_not_available_cards" />}
+              description={
+                <Lang name="fiatRefillCard_status_description_not_available_cards" />
+              }
+            />
+          </div>
+          <ButtonWrapper
+            align="center"
+            className="FiatRefillModal__body__footer"
+          >
+            <Button onClick={handleClickBack}>{getLang("global_back")}</Button>
           </ButtonWrapper>
         </>
       );
