@@ -5,7 +5,7 @@ export const userSelector = state => state.default.profile.user;
 export const profileSelector = state => state.default.profile;
 export const adaptiveSelector = state => state.default.adaptive;
 export const currencySelector = currency => state =>
-  state.cabinet.currencies[currency];
+  state.cabinet.currencies[currency?.toLowerCase()];
 export const marketCurrencySelector = currency => state =>
   state.exchange &&
   Object.values(state.exchange.marketConfig).find(

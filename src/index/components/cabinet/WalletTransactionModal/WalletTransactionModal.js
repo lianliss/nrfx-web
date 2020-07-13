@@ -126,7 +126,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
               </InfoRow>
             )}
             <InfoRow label={utils.getLang("global_fee")}>
-              <UI.NumberFormat number={data.fee} currency={currency} />
+              <UI.NumberFormat number={data.fee || 0} currency={currency} />
             </InfoRow>
             <InfoRow label={utils.getLang("global_date")}>
               {utils.dateFormat(data.created_at)}
