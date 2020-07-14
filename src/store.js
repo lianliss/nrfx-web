@@ -1,6 +1,8 @@
 // styles
 // external
 import { createStore, applyMiddleware, combineReducers } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+
 import thunk from "redux-thunk";
 import { router5Middleware, router5Reducer } from "redux-router5";
 import { reduxPlugin } from "redux-router5";
@@ -24,13 +26,6 @@ import adminReducer from "./reducers/admin";
 import langsReducer from "./reducers/langs";
 import landingReducer from "./reducers/landing";
 import traderReducer from "./reducers/trader";
-
-const middlewares = [];
-
-if (process.env.NODE_ENV === `development`) {
-  const { logger } = require(`redux-logger`);
-  middlewares.push(logger);
-}
 
 let store;
 
@@ -78,7 +73,7 @@ export function configureStore() {
         }
       }[process.env.DOMAIN]
     ),
-    applyMiddleware(...middlewares, thunk, router5Middleware(router))
+    composeWithDevTools(applyMiddleware(thunk, router5Middleware(router)))
   );
   router.usePlugin(reduxPlugin(store.dispatch));
 }

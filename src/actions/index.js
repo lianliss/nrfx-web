@@ -195,6 +195,13 @@ export function toggleTranslator(value) {
   };
 }
 
+export function toggleFloodControl(value) {
+  return dispatch => {
+    storage.setItem("floodControl", value);
+    return dispatch({ type: actionTypes.TRANSLATOR_FLOOD_CONTROL, value });
+  };
+}
+
 export function translatorSetLangCode(code) {
   return dispatch => {
     storage.setItem("translatorLangCode", code);

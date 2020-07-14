@@ -24,7 +24,6 @@ const InputWrapper = props => {
         options={Object.values(props.options)}
         isMulti={props.multiple}
         onChange={value => {
-          console.log(value);
           if (props.multiple) {
             valueChange(props.id, value ? value.map(v => v.value) : []);
           } else {

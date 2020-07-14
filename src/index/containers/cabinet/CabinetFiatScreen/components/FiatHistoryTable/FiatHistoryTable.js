@@ -153,7 +153,7 @@ const FiatHistoryTable = props => {
         <span>{utils.getLang("global_operations")}</span>
       </div>
       {Object.keys(transactions).map(key => (
-        <div className="FiatHistoryTable__group">
+        <div key={key} className="FiatHistoryTable__group">
           <div className="FiatHistoryTable__group__title">
             {utils.ucfirst(key)}
           </div>

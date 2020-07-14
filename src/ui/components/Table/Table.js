@@ -129,7 +129,7 @@ TableColumn.propTypes = {
   highlighted: PropTypes.bool,
   align: PropTypes.oneOf(["center", "right", "left"]),
   style: PropTypes.object,
-  sub: PropTypes.string,
+  sub: PropTypes.node,
   compact: PropTypes.bool,
   skipContentBox: PropTypes.bool,
   inline: PropTypes.bool

@@ -6,7 +6,9 @@ import { classNames, getLang } from "utils";
 import * as actions from "src/actions/index";
 import { userRole } from "src/actions/cabinet/profile";
 import COMPANY from "../../../constants/company";
+import Lang from "src/components/Lang/Lang";
 import * as UI from "src/ui";
+import * as pages from "../../../constants/pages";
 
 const Footer = props => {
   const handleChangeLanguage = e => {
@@ -31,6 +33,15 @@ const Footer = props => {
       <li className="CabinetFooter__item">
         <a href={COMPANY.faqUrl} target="_blank" rel="noopener noreferrer">
           FAQ
+        </a>
+      </li>
+      <li className="CabinetFooter__item">
+        <a
+          href={COMPANY.url + pages.FEE}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Lang name="global_fee" />
         </a>
       </li>
       {/*<li className="CabinetFooter__item"><BaseLink router={router} routeName={pages.FAQ}>{utils.getLang("site__footerFAQ")}</BaseLink></li>*/}

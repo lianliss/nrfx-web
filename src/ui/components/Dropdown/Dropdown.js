@@ -124,7 +124,7 @@ const optionType = PropTypes.shape({
 });
 
 Dropdown.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.bool, optionType]),
+  value: PropTypes.oneOfType([PropTypes.string, optionType]),
   disabled: PropTypes.bool,
   options: PropTypes.arrayOf(optionType).isRequired,
   onChange: PropTypes.func,

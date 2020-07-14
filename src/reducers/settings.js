@@ -7,6 +7,7 @@ const initialState = {
     new_password: "",
     re_password: ""
   },
+  floodControl: storage.getItem("floodControl") || false,
   loadingStatus: {},
   translator: storage.getItem("translatorMode") || false,
   translatorLangCode: storage.getItem("translatorLangCode") || "en"
@@ -44,6 +45,13 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         translator: action.value
+      };
+    }
+
+    case actionTypes.TRANSLATOR_FLOOD_CONTROL: {
+      return {
+        ...state,
+        floodControl: action.value
       };
     }
 

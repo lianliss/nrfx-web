@@ -16,8 +16,6 @@ const DocumentationMethod = props => {
     props.getMethod(props.routerParams.key);
   }, [props.routerParams.key]); // eslint-disable-line
 
-  console.log("METHOD RENDER");
-
   if (props.loadingStatus || !props.loaded) {
     return <LoadingStatus status="loading" />;
   }

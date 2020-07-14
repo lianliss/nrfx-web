@@ -52,7 +52,6 @@ function Login({
             ) {
               router.navigate(pages.DASHBOARD);
             } else {
-              console.log(currentRoute);
               router.navigate(currentRoute.name, {
                 ...currentRoute.params,
                 modal: undefined
