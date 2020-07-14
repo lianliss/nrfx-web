@@ -15,4 +15,5 @@ module.exports = {
   'fes-249': 'bes138',
   'fes-263': 'bes170',
   'fes-266': 'rubles-pay',
+  'fes-287': 'bes189',
 };
