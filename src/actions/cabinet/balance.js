@@ -32,7 +32,10 @@ export function withdraw({ from, amount }) {
       amount
     })
     .then(res => {
-      store.dispatch({ type: actionTypes.EXCHANGE_UPDATE_BALANCE, ...res });
+      store.dispatch({
+        type: actionTypes.EXCHANGE_UPDATE_BALANCE,
+        ...res.balance
+      });
       toast.success(utils.getLang("cabinet_manageBalance_withdraw_success"));
     })
     .catch(err => {
