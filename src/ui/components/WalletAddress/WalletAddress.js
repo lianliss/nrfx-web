@@ -12,7 +12,7 @@ const WalletAddress = props => (
 );
 
 WalletAddress.propTypes = {
-  address: PropTypes.string,
+  address: PropTypes.node,
   user: PropTypes.bool
 };
 

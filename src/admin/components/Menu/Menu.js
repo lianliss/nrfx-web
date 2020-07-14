@@ -23,8 +23,6 @@ const Menu = props => {
     });
   };
 
-  console.log(props.menu);
-
   return (
     <ul className="Menu">
       {props.menu.map((item, key) => (

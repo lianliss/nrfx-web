@@ -134,7 +134,6 @@ export function loadMoreProfitHistory() {
         });
       })
       .catch(err => {
-        console.log(err);
         toastsActions.toastPush("Error load profit history", "error")(
           dispatch,
           getState
@@ -170,7 +169,6 @@ export function loadWithdrawalHistory() {
         });
       })
       .catch(err => {
-        console.log(err);
         toastsActions.toastPush("Error load withdrawal history", "error")(
           dispatch,
           getState

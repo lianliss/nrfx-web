@@ -233,11 +233,12 @@ class FiatMarketForm extends React.Component {
     const disabled = !this.props.rate;
     const Wrapper = this.props.adaptive ? UI.Collapse : UI.ContentBox;
     const { typeActive } = this.state;
+    const props = this.props.adaptive ? { isOpenDefault: true } : {};
 
     return (
       <Wrapper
         title={getLang("cabinet_fiatMarketExchangeTitle")}
-        isOpenDefault={true}
+        {...props}
         className="FiatMarketForm"
       >
         {this.props.loadingStatus && (
@@ -263,7 +264,7 @@ class FiatMarketForm extends React.Component {
                 typeActive === "from" &&
                 indicatorIcon
               }
-              disabled={disabled || this.props.newRateStatus}
+              disabled={disabled || !!this.props.newRateStatus}
               value={
                 (typeActive !== "to" ? "~ " : "") + (this.state.toAmount || "")
               }
@@ -282,7 +283,7 @@ class FiatMarketForm extends React.Component {
             <UI.Dropdown
               placeholder="Placeholder"
               value={this.state.to}
-              disabled={this.props.newRateStatus}
+              disabled={!!this.props.newRateStatus}
               onChange={this.handleCurrencyChange("to")}
               options={this.getCurrenciesOptions(
                 getLang("cabinet_fiatWalletBuy")
@@ -306,7 +307,7 @@ class FiatMarketForm extends React.Component {
               indicator={
                 this.props.newRateStatus && typeActive === "to" && indicatorIcon
               }
-              disabled={disabled || this.props.newRateStatus}
+              disabled={disabled || !!this.props.newRateStatus}
               value={
                 (typeActive !== "from" ? "~ " : "") +
                 (this.state.fromAmount || "")
@@ -326,7 +327,7 @@ class FiatMarketForm extends React.Component {
             <UI.Dropdown
               placeholder="Placeholder"
               value={this.state.from}
-              disabled={this.props.newRateStatus}
+              disabled={!!this.props.newRateStatus}
               onChange={this.handleCurrencyChange("from")}
               options={this.getCurrenciesOptions(
                 getLang("cabinet_fiatWalletWith")
@@ -345,7 +346,7 @@ class FiatMarketForm extends React.Component {
           {/*<p className="FiatMarketForm__fee">{this.renderFee()}</p>*/}
           <UI.Button
             disabled={
-              disabled || !(this.state.amount > 0) || this.props.newRateStatus
+              disabled || !(this.state.amount > 0) || !this.props.newRateStatus
             }
             onClick={this.handleBuy}
             state={this.props.loadingStatus}

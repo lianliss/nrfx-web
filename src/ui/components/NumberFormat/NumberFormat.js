@@ -101,7 +101,7 @@ const NumberFormat = ({
       className={classNames("Number", {
         [type]: type
       })}
-      title={!skipTitle && noExponents(number)}
+      title={!skipTitle ? noExponents(number) : undefined}
     >
       {displayNumber}
     </span>

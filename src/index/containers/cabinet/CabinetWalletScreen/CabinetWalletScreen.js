@@ -298,6 +298,7 @@ export default connect(
     ...state.wallets,
     adaptive: state.default.adaptive,
     translator: state.settings.translator,
+    currencies: state.cabinet.currencies,
     currentLang: state.default.currentLang
   }),
   {

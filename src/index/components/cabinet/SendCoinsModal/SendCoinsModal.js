@@ -42,7 +42,6 @@ class SendCoinsModal extends React.Component {
   }
 
   get currentFee() {
-    console.log(this.props.limits, this.currentWallet.currency);
     return this.props.limits[this.currentWallet.currency].fee;
   }
 
