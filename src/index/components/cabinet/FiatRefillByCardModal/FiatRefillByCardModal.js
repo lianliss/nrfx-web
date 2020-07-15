@@ -389,6 +389,9 @@ export default props => {
                     text={fiatState.reservedCard.card.number}
                   />
                 </strong>
+                <strong className="holderName">
+                  {fiatState.reservedCard.card.bank.holder_name}
+                </strong>
               </div>
             </div>
           </div>
