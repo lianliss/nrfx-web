@@ -346,7 +346,7 @@ class FiatMarketForm extends React.Component {
           {/*<p className="FiatMarketForm__fee">{this.renderFee()}</p>*/}
           <UI.Button
             disabled={
-              disabled || !(this.state.amount > 0) || !this.props.newRateStatus
+              disabled || !(this.state.amount > 0) || !!this.props.newRateStatus
             }
             onClick={this.handleBuy}
             state={this.props.loadingStatus}
