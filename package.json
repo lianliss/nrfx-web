@@ -79,8 +79,6 @@
     "react-router5": "^7.1.0",
     "react-select": "^3.1.0",
     "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8",
-    "redux-logger": "^3.0.6",
     "redux-router5": "^7.0.2",
     "redux-throttle": "^0.1.1",
     "redux-thunk": "^2.3.0",
@@ -139,7 +137,8 @@
     "react-styleguidist": "^10.6.2",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.2",
-    "uglifyjs-webpack-plugin": "^2.2.0"
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "redux-devtools-extension": "^2.13.8"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
