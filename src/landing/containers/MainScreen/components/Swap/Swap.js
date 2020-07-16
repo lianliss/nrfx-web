@@ -91,12 +91,11 @@ export default () => {
     setFromFiat(!fromFiat);
     setFromAmount(toAmount);
     setToAmount(fromAmount);
-    getCurrencyRate();
   };
 
   useEffect(() => {
     getCurrencyRate();
-  }, [from, to, getCurrencyRate]);
+  }, [from, to]);
 
   useEffect(() => {
     if (main === "from") {
