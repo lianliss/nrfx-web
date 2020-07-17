@@ -6,6 +6,7 @@ import apiSchema from "../../services/apiSchema";
 import * as actionTypes from "../actionTypes";
 import * as api from "../../services/api";
 import * as toastsActions from "../toasts";
+import { PAGE_COUNT } from "../../index/constants/cabinet";
 
 export function loadInvestments() {
   return (dispatch, getState) => {
@@ -54,7 +55,7 @@ export function loadProfitHistory() {
     });
     api
       .call(apiSchema.Investment.ProfitGet, {
-        count: 5
+        count: PAGE_COUNT
       })
       .then(({ profits, total_count }) => {
         dispatch({
@@ -118,7 +119,7 @@ export function loadMoreProfitHistory() {
     api
       .call(apiSchema.Investment.ProfitGet, {
         start_from: store.getState().investments.profits.next,
-        count: 5
+        count: PAGE_COUNT
       })
       .then(({ profits, total_count, next }) => {
         dispatch({
@@ -191,7 +192,7 @@ export function loadMoreWithdrawalHistory() {
     api
       .call(apiSchema.Investment.WithdrawalGet, {
         start_from: store.getState().investments.withdrawals.next,
-        count: 20
+        count: PAGE_COUNT
       })
       .then(data => {
         const {
