@@ -95,7 +95,7 @@ export default () => {
 
   useEffect(() => {
     getCurrencyRate();
-  }, [from, to]);
+  }, [from, to, getCurrencyRate]);
 
   useEffect(() => {
     if (main === "from") {
