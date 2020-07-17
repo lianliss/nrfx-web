@@ -4,6 +4,7 @@ import * as actionTypes from "../actionTypes";
 import * as toast from "../toasts";
 import { getLang } from "../../utils";
 import { closeModal } from "../index";
+import { PAGE_COUNT } from "../../index/constants/cabinet";
 
 export function getFiatWallets() {
   return dispatch => {
@@ -32,7 +33,7 @@ export function getHistoryMore() {
     });
     api
       .call(apiSchema.History.DefaultGet, {
-        count: 20,
+        count: PAGE_COUNT,
         operations: ["withdrawal", "income", "refill", "swap"].join(","),
         start_from: history.next
       })

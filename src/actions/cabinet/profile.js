@@ -8,6 +8,7 @@ import * as toastsActions from "../toasts";
 import { closeModal } from "../index";
 import * as utils from "../../utils";
 import store from "../../store";
+import { PAGE_COUNT } from "../../index/constants/cabinet";
 
 export function loadDashboard() {
   return (dispatch, getState) => {
@@ -152,7 +153,7 @@ export function getPartnerMore() {
     api
       .call(apiSchema.Partner.ClientsGet, {
         start_from: store.getState().profile.partner.clients.next,
-        count: 20
+        count: PAGE_COUNT
       })
       .then(({ clients: { items, next } }) => {
         dispatch({

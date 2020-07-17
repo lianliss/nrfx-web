@@ -8,6 +8,7 @@ import * as api from "../../services/api";
 import * as toastsActions from "../toasts";
 import * as utils from "../../utils";
 import router from "../../router";
+import { PAGE_COUNT } from "../../index/constants/cabinet";
 
 export function loadWallets() {
   return (dispatch, getState) => {
@@ -20,7 +21,7 @@ export function loadWallets() {
         status: "loading"
       });
       api
-        .call(apiSchema.Wallet.DefaultGet, { count: 10 })
+        .call(apiSchema.Wallet.DefaultGet, { count: PAGE_COUNT })
         .then(({ balances, transactions, transfers }) => {
           dispatch({
             type: actionTypes.WALLETS_SET,
@@ -87,7 +88,7 @@ export function loadMoreTransactions() {
     api
       .call(apiSchema.Wallet.TransactionsGet, {
         start_from: store.getState().wallets.transactions.next,
-        count: 20
+        count: PAGE_COUNT
       })
       .then(data => {
         let items = data.items;
@@ -124,7 +125,7 @@ export function loadMoreTransfers() {
     api
       .call(apiSchema.Wallet.TransfersGet, {
         start_from: store.getState().wallets.transfers.next,
-        count: 20
+        count: PAGE_COUNT
       })
       .then(data => {
         let items = data.items;
