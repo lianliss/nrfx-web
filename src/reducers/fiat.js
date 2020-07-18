@@ -145,7 +145,10 @@ export default function reduce(state = initialState, action = {}) {
     case actionTypes.FIAT_WALLETS_APPEND_TRANSACTION: {
       return {
         ...state,
-        history: [action.transaction, ...state.history]
+        history: {
+          ...state.history,
+          items: [action.transaction, ...state.history.items]
+        }
       };
     }
 

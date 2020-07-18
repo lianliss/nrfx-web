@@ -265,6 +265,7 @@ export function fiatWithdrawal(params) {
           transaction
         });
         dispatch({ type: actionTypes.FIAT_WALLETS_UPDATE, payload });
+        console.log(1111);
       })
       .finally(() => {
         dispatch({
@@ -274,6 +275,7 @@ export function fiatWithdrawal(params) {
         });
       })
       .catch(err => {
+        console.log(2222);
         toast.error(err.message);
       });
   };
