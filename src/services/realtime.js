@@ -22,6 +22,7 @@ class RealTime {
     this.connected = false;
     this.connection = null;
     this.subscribtions = {};
+    this.reconnectTimeout = 0;
 
     this.__connect();
   }
@@ -37,6 +38,7 @@ class RealTime {
     this.connection.onopen = () => {
       this.connected = true;
       console.log("[WS] Connected");
+      this.reconnectTimeout = 0;
 
       // resolve queue
       for (let event of this.sendQueue) {
@@ -56,7 +58,12 @@ class RealTime {
       console.log("[WS] Close");
       // this.connected = false;
       this.triggerListeners("close_connection");
-      setTimeout(this.__connect, 1000);
+      setTimeout(this.__connect, this.reconnectTimeout);
+
+      this.reconnectTimeout =
+        this.reconnectTimeout < 6000
+          ? (this.reconnectTimeout || 1000) * 1.62
+          : this.reconnectTimeout;
     };
 
     this.connection.onmessage = this.__messageDidReceive;
