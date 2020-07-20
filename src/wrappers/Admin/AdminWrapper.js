@@ -1,17 +1,24 @@
 import "./AdminWrapper.less";
 
-import React from "react";
-import { connect } from "react-redux";
+import React, { memo, useEffect } from "react";
+import { connect, useSelector } from "react-redux";
 
 import { classNames as cn } from "../../utils/index";
 import Header from "../../admin/components/Header/Header";
 import Menu from "../../admin/components/Menu/Menu";
 import ContentBox from "../../ui/components/ContentBox/ContentBox";
 import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingStatus";
+import { adminPendingSelector } from "../../selectors";
 
-const AdminWrapper = props => {
+export default memo(props => {
+  const pending = useSelector(adminPendingSelector);
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [props.children.props.routerParams]);
+
   return (
-    <div className={cn("Admin_wrapper", { pending: props.pending })}>
+    <div className={cn("Admin_wrapper", { pending })}>
       <div className="Admin_wrapper__header">
         <Header />
       </div>
@@ -28,8 +35,4 @@ const AdminWrapper = props => {
       </div>
     </div>
   );
-};
-
-export default connect(state => ({
-  pending: state.admin.pending
-}))(AdminWrapper);
+});
