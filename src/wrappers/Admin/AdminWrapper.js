@@ -1,7 +1,7 @@
 import "./AdminWrapper.less";
 
 import React, { memo, useEffect } from "react";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { classNames as cn } from "../../utils/index";
 import Header from "../../admin/components/Header/Header";
