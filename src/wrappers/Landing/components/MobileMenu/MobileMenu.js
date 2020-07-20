@@ -52,7 +52,7 @@ export default ({ visible, onClose }) => {
             router.navigate(pages.BUY_BITCOIN);
           }}
         >
-          <SVG src={require("src/asset/120/buy_currency.svg")} />
+          <SVG src={require("src/asset/120/exchange.svg")} />
           <div>
             <h4>
               <Lang name="landing_megaMenu_buyCrypto_title" />

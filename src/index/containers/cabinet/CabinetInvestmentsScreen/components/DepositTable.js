@@ -15,7 +15,7 @@ export default function WithdrawalTable({
     return (
       <EmptyContentBlock
         adaptive={adaptive}
-        icon={require("../../../../../asset/120/no_deposits.svg")}
+        icon={require("../../../../../asset/120/invest.svg")}
         message={utils.getLang("cabinet_noOpenDeposits")}
         // button={{
         //   text: utils.getLang("global_startInvest"),
