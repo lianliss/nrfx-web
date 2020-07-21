@@ -44,13 +44,30 @@ const OrderBook = props => {
     buy: (sum.buy / total) * 100
   };
 
-  const maxTotal = Math.max(
-    ...props.orders.map(order => order.amount * order.price)
-  );
   const diff = Math.round(fillPercent.sell) - Math.round(fillPercent.buy);
 
   const renderList = (type, limit) => {
     const range = type === "sell" ? [-limit] : [0, limit];
+
+    const orders = Object.values(
+      props.orders
+        .filter(o => o.action === type)
+        .reduce((r, o) => {
+          if (r[o.price]) {
+            r[o.price].amount += o.amount;
+            r[o.price].filled += o.filled;
+          } else {
+            r[o.price] = { ...o };
+          }
+          return r;
+        }, {})
+    )
+      .sort((a, b) => b.price - a.price)
+      .slice(...range);
+
+    const maxTotal = Math.max(
+      ...orders.map(o => (o.amount - o.filled) * o.price)
+    );
 
     const handleOrderClick = order => {
       const primaryFractionDigits = utils.isFiat(order.primary_coin) ? 2 : 8;
@@ -71,20 +88,11 @@ const OrderBook = props => {
 
     return (
       <div className="OrderBook__list" ref={scrollBlock}>
-        {Object.values(
-          props.orders
-            .filter(o => o.action === type)
-            .sort((a, b) => b.price - a.price)
-            .slice(...range)
-            .reduce((r, o) => {
-              r[o.price]
-                ? (r[o.price].amount += o.amount)
-                : (r[o.price] = { ...o });
-              return r;
-            }, {})
-        ).map((order, i) => {
-          const total = order.amount * order.price;
-          const filled = (total / maxTotal) * 100;
+        {orders.map((order, i) => {
+          const amount = order.amount - order.filled;
+          const total = amount * order.price;
+          const filled = Math.min((total / maxTotal) * 100, 100);
+
           return (
             // TODO: Если прописать order.id в key это приводит к дублированию ордеров и к переполнению ордербука
             <div
