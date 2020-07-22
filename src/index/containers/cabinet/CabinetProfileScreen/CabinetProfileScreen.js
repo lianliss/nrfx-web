@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import * as UI from "../../../../ui";
 
 import * as utils from "../../../../utils";
-import PageContainer from "../../../components/cabinet/PageContainer/PageContainer";
+import PageContainer from "../../../components/cabinet/PageContainerOld/PageContainerOld";
 import { ProfileSidebarItem } from "../../../components/cabinet/ProfileSidebar/ProfileSidebar";
 import CabinetBaseScreen from "../CabinetBaseScreen/CabinetBaseScreen";
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";

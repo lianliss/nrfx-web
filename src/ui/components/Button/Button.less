@@ -33,7 +33,7 @@
     color: var(--primary-background);
   }
 
-  &:not(.outline):not(.lite):not(.negative_outline):not(.secondary) {
+  &:not(.lite):not(.secondary) {
     color: var(--primary-background);
   }
 
@@ -44,10 +44,6 @@
 
   &.smallPadding {
     padding: 0 16px;
-  }
-
-  &.rounded {
-    border-radius: calc(var(--button-height) / 2) !important;
   }
 
   &.forCabinet {
@@ -68,43 +64,13 @@
     transition: opacity 150ms ease-in-out;
   }
 
-  &.outline,
-  &.negative_outline {
-    &::before {
-      content: "";
-      background: var(--primary-background);
-      position: absolute;
-      background-clip: padding-box;
-      border: 1px solid transparent;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      border-radius: inherit;
-    }
-
-    &:hover,
-    &:active {
-      &::before {
-        opacity: 0;
-      }
-
-      .Button__label {
-        color: var(--white);
-      }
-    }
-  }
-
-  &:hover {
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
-
-    &.ultra_small {
-      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.15),
-        0px 2px 4px rgba(0, 0, 0, 0.08);
-    }
+  &.default:hover {
+    opacity: .92;
+    box-shadow: 0 4px 8px rgba(64, 112, 255, 0.32);
   }
 
   &:active {
+    opacity: 1;
     box-shadow: none;
 
     &:after {
@@ -129,7 +95,6 @@
   }
 
   &.large {
-    //min-width: 160px;
     text-align: center;
 
     .Button__cont {
@@ -150,11 +115,24 @@
   }
 
   &.secondary {
-    background: var(--cloudy);
-    color: var(--text-black);
+    background: transparent;
+    color: var(--dark-blue);
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(64, 112, 255, 0.12);
+    }
 
     &:after {
-      //background: #f0f;
+      background: var(--primary-blue);
+      opacity: .12;
+    }
+
+    &:hover:after {
+      opacity: .16;
+    }
+
+    &:active:after {
+      opacity: .24;
     }
   }
 
@@ -162,53 +140,45 @@
     background: transparent;
     box-shadow: none;
 
+    //background: rgba(64, 112, 255, 0.24);
+
     &:after {
-      display: none;
+      background: var(--primary-blue);
+      opacity: 0;
+    }
+
+    &:hover:after {
+      opacity: .12;
+    }
+
+    &:active:after {
+      opacity: .24;
     }
   }
 
   &.negative {
-    background: var(--text-red);
+    background: var(--red);
 
-    &:after {
+    &:hover {
+      opacity: .95;
+      box-shadow: 0 4px 8px rgba(255, 68, 51, 0.32);
+    }
+
+    &:active {
       background: var(--text-red);
     }
   }
 
-  &.negative_outline {
-    color: var(--text-red);
-    background: var(--text-red);
+  &.green {
+    background: var(--green);
 
-    &:after {
-      background: var(--text-red);
-    }
-
-    &:hover,
-    &:active {
-      opacity: 0.8;
-      color: var(--primary-background);
-    }
-  }
-
-  &.outline_white {
-    background: transparent;
-    border: 2px solid var(--primary-background);
-    transition: background 150ms ease-in-out;
-
-    &:after {
-      display: none;
+    &:hover {
+      opacity: .95;
+      box-shadow: 0 4px 8px rgba(0, 178, 119, 0.32);
     }
 
     &:active {
-      background: var(--primary-background);
-
-      .Button__label {
-        color: var(--primary-orange);
-      }
-    }
-
-    .Button__label {
-      transition: color 150ms ease-in-out;
+      background: var(--text-green);
     }
   }
 }

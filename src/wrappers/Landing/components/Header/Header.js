@@ -108,7 +108,7 @@ export default () => {
           <div className="Header__authButtons">
             {user || pending ? (
               <Button
-                type="outline"
+                type="secondary"
                 onClick={() => {
                   router.navigate(pages.DASHBOARD);
                 }}
@@ -126,7 +126,7 @@ export default () => {
                   <Lang name="site__authModalLogInBtn" />
                 </Button>
                 <Button
-                  type="outline"
+                  type="secondary"
                   onClick={() => {
                     actions.openModal("auth", { type: steps.REGISTRATION });
                   }}

@@ -87,7 +87,7 @@ class DashboardItem extends React.Component {
             </ol>
             <div className="DashboardItem__buttonAction">
               <UI.Button
-                type="outline"
+                type="secondary"
                 onClick={() => router.navigate(pages.FIAT)}
                 size="middle"
               >
@@ -137,7 +137,7 @@ class DashboardItem extends React.Component {
               {this.content.emptyDescription}
             </div>
             <div className="DashboardItem__buttonAction">
-              <UI.Button type="outline" size="middle" {...this.button} />
+              <UI.Button type="secondary" size="middle" {...this.button} />
             </div>
           </div>
         </UI.ContentBox>
@@ -192,7 +192,7 @@ class DashboardItem extends React.Component {
           </div>
           <div className="DashboardItem__buttonAction">
             <UI.Button
-              type={this.button.type || "outline"}
+              type={this.button.type || "secondary"}
               size="middle"
               {...this.button}
             />

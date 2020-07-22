@@ -9,7 +9,7 @@ import MarkDown from "../MarkDown/MarkDown";
 import ScrollBox from "../ScrollBox/ScrollBox";
 import { classNames } from "../../utils";
 import LoadingStatus from "../../../index/components/cabinet/LoadingStatus/LoadingStatus";
-import InlineSVG from "react-inlinesvg";
+import SVG from "react-inlinesvg";
 
 export function Notification(props) {
   return (
@@ -25,7 +25,11 @@ export function Notification(props) {
           color: props.iconFill
         }}
       >
-        <InlineSVG src={props.icon} />
+        {typeof props.icon === "string" ? (
+          <img alt="" src={props.icon} />
+        ) : (
+          <SVG src={props.icon} />
+        )}
       </div>
       <div className="Notification__body">
         <div className="Notification__message">{props.message}</div>

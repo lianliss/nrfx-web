@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import Notification from "../Notification/Notification";
 import InternalNotification from "../InternalNotification/InternalNotification";
 import * as notificationsActions from "../../../../actions/cabinet/notifications";
+import Lang from "../../../../components/Lang/Lang";
 
 class Header extends React.Component {
   state = {
@@ -71,7 +72,7 @@ class Header extends React.Component {
                   }}
                 >
                   <SVG src={require("../../../../asset/24px/layout.svg")} />
-                  {utils.getLang("cabinet_header_profile")}
+                  <Lang name="cabinet_header_profile" />
                 </BaseLink>
 
                 <BaseLink
@@ -84,7 +85,7 @@ class Header extends React.Component {
                   }}
                 >
                   <SVG src={require("src/asset/24px/fiat.svg")} />
-                  {utils.getLang("cabinet_header_fiat")}
+                  <Lang name="cabinet_header_fiat" />
                 </BaseLink>
 
                 <BaseLink
@@ -99,7 +100,22 @@ class Header extends React.Component {
                   <SVG
                     src={require("../../../../asset/cabinet/wallet_icon.svg")}
                   />
-                  {utils.getLang("cabinet_header_wallets")}
+                  <Lang name="cabinet_header_wallets" />
+                </BaseLink>
+
+                <BaseLink
+                  router={router}
+                  routeName={pages.WALLET}
+                  className="CabinetHeader__link"
+                  activeClassName="active"
+                  onClick={() => {
+                    this.setState({ activePage: pages.WALLET });
+                  }}
+                >
+                  <SVG
+                    src={require("../../../../asset/cabinet/wallet_icon.svg")}
+                  />
+                  <Lang name="cabinet_header_wallet" />
                 </BaseLink>
 
                 {this.props.profile.has_deposits && (
@@ -115,7 +131,7 @@ class Header extends React.Component {
                     <SVG
                       src={require("../../../../asset/cabinet/investment_icon.svg")}
                     />
-                    {utils.getLang("cabinet_header_investments")}
+                    <Lang name="cabinet_header_investments" />
                   </BaseLink>
                 )}
 
@@ -126,7 +142,7 @@ class Header extends React.Component {
                   <SVG
                     src={require("../../../../asset/cabinet/bots_icon.svg")}
                   />
-                  {utils.getLang("cabinet_header_bots")}
+                  <Lang name="cabinet_header_bots" />
                 </div>
 
                 <BaseLink
@@ -141,7 +157,7 @@ class Header extends React.Component {
                   <SVG
                     src={require("../../../../asset/cabinet/exchange_icon.svg")}
                   />
-                  {utils.getLang("cabinet_header_exchange")}
+                  <Lang name="cabinet_header_exchange" />
                 </BaseLink>
 
                 <div
@@ -151,7 +167,7 @@ class Header extends React.Component {
                   <SVG
                     src={require("../../../../asset/cabinet/commerce_icon.svg")}
                   />
-                  {utils.getLang("cabinet_header_commerce")}
+                  <Lang name="cabinet_header_commerce" />
                 </div>
               </div>
             )}
@@ -160,7 +176,7 @@ class Header extends React.Component {
                 <div className="CabinetHeader__icon">
                   {this.state.visibleNotifications && (
                     <UI.Notifications
-                      emptyText={utils.getLang("no_update")}
+                      emptyText={<Lang name="no_update" />}
                       visible={true}
                       pending={this.props.notifications.pending}
                       onClose={this.toggleNotifications.bind(this)}
@@ -172,7 +188,7 @@ class Header extends React.Component {
                           i > 0 && n.unread !== notifications[i - 1].unread && (
                             <UI.NotificationSeparator
                               key={Math.random()}
-                              title={utils.getLang("cabinet_header_viewed")}
+                              title={<Lang name="cabinet_header_viewed" />}
                             />
                           ),
                           <Notification {...n} />
@@ -248,7 +264,7 @@ class Header extends React.Component {
                   size="middle"
                   type="lite"
                 >
-                  {utils.getLang("site__authModalLogInBtn")}
+                  <Lang name="site__authModalLogInBtn" />
                 </UI.Button>
                 <UI.Button
                   onClick={() =>
@@ -257,9 +273,9 @@ class Header extends React.Component {
                     })
                   }
                   size="middle"
-                  type="outline"
+                  type="secondary"
                 >
-                  {utils.getLang("site__authModalSignUpBtn")}
+                  <Lang name="site__authModalSignUpBtn" />
                 </UI.Button>
               </div>
             )}

@@ -126,7 +126,7 @@ export default () => {
           onClick={() => {
             actions.openPage(pages.EXCHANGE);
           }}
-          type="outline"
+          type="secondary"
           size="extra_large"
         >
           <Lang name="landing_exchange_viewMoreMarkets" /> ›

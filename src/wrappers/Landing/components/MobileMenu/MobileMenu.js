@@ -19,7 +19,7 @@ export default ({ visible, onClose }) => {
     <div className={cn("MobileMenu", { visible })}>
       <div className="MobileMenu__buttons">
         <Button
-          type="outline"
+          type="secondary"
           onClick={() => {
             router.navigate(pages.ABOUT);
             onClose();
@@ -28,7 +28,7 @@ export default ({ visible, onClose }) => {
           <Lang name="site__headerCompany" />
         </Button>
         <Button
-          type="outline"
+          type="secondary"
           onClick={() => {
             router.navigate(pages.FEE);
             onClose();
@@ -37,7 +37,7 @@ export default ({ visible, onClose }) => {
           <Lang name="global_fee" />
         </Button>
         <Button
-          type="outline"
+          type="secondary"
           onClick={() => {
             router.navigate(pages.BUY_BITCOIN);
             onClose();
@@ -100,7 +100,7 @@ export default ({ visible, onClose }) => {
               onClick={() => {
                 actions.openModal("auth", { type: steps.LOGIN });
               }}
-              type="outline"
+              type="secondary"
             >
               <Lang name="site__authModalLogInBtn" />
             </Button>

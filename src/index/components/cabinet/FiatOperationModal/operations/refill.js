@@ -8,11 +8,7 @@ export default ({ operation }) => {
   const currency = useSelector(currencySelector(operation.currency));
   return (
     <div className="FiatOperationModal__content">
-      <UI.WalletCard
-        symbol={true}
-        balance={operation.amount}
-        currency={currency}
-      />
+      <UI.WalletCard symbol={true} balance={operation.amount} />
 
       <div className="FiatOperationModal__row">
         <div className="FiatOperationModal__row__left">

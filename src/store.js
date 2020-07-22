@@ -15,6 +15,7 @@ import profileReducer from "./reducers/profile";
 import settingsReducer from "./reducers/settings";
 import documentation from "./reducers/documentation";
 import walletsReducer from "./reducers/wallets";
+import walletReducer from "./reducers/wallet";
 import fiatReducer from "./reducers/fiat";
 import notificationsReducer from "./reducers/notifications";
 import toastsReducer from "./reducers/toasts";
@@ -61,6 +62,7 @@ export function configureStore() {
           modal: modalReducer,
           investments: investmentsReducer,
           wallets: walletsReducer,
+          wallet: walletReducer,
           fiat: fiatReducer,
           settings: settingsReducer,
           profile: profileReducer,
@@ -71,7 +73,7 @@ export function configureStore() {
           test: testReducer,
           trader: traderReducer
         }
-      }[process.env.DOMAIN]
+      }[process.env.DOMAIN || "index"]
     ),
     composeWithDevTools(applyMiddleware(thunk, router5Middleware(router)))
   );

@@ -251,7 +251,7 @@ class SendCoinsModal extends React.Component {
             </UI.Tooltip>
             <UI.Button
               smallPadding
-              type="outline"
+              type="secondary"
               currency={currencyInfo}
               onClick={this.__maxDidPress}
             >

@@ -14,41 +14,24 @@ const ButtonWrapper = props => (
 );
 
 function Button(props) {
-  const className = classNames(props.className, {
-    Button: true,
-    [props.size]: !!props.size,
-    disabled: props.disabled || props.state === "disabled",
-    [props.type]: !!props.type,
-    [props.newClass]: !!props.newClass,
-    rounded: props.rounded,
-    forCabinet: !!props.forCabinet,
-    smallPadding: props.smallPadding,
-    [props.state]: !!props.state
-  });
-
-  const getBackground = () => {
-    const { gradient } = props.currency;
-    if (gradient) {
-      return `linear-gradient(45deg, ${gradient[0]} 0%, ${gradient[1]} 100%)`;
-    } else {
-      return props.currency.color;
+  const className = classNames(
+    "Button",
+    props.className,
+    props.type,
+    props.size,
+    props.newClass,
+    props.state,
+    {
+      disabled: props.disabled || props.state === "disabled",
+      forCabinet: props.forCabinet,
+      smallPadding: props.smallPadding
     }
-  };
+  );
 
   const fillStyle = {};
 
   if (props.type === "normal") {
-    fillStyle.background = getBackground();
     fillStyle.color = "white";
-  }
-
-  if (props.type === "outline") {
-    fillStyle.background = getBackground();
-    fillStyle.color = props.currency.color;
-  }
-
-  if (props.type === "lite") {
-    fillStyle.color = props.currency.color;
   }
 
   return (
@@ -79,7 +62,7 @@ function Button(props) {
 }
 
 Button.defaultProps = {
-  type: "normal",
+  type: "default",
   size: "large",
   btnType: "button",
   currency: {}
@@ -96,10 +79,7 @@ Button.propTypes = {
   type: PropTypes.oneOf([
     "normal",
     "secondary",
-    "outline",
     "negative",
-    "negative_outline",
-    "outline_white",
     "sell",
     "buy",
     "danger",
@@ -110,7 +90,6 @@ Button.propTypes = {
   className: PropTypes.string,
   btnType: PropTypes.string,
   disabled: PropTypes.bool,
-  rounded: PropTypes.bool,
   onClick: PropTypes.func,
   style: PropTypes.object,
   beforeContent: PropTypes.node,

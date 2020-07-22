@@ -13,7 +13,6 @@ export default ({ operation }) => {
         symbol={true}
         balance={operation.amount * -1}
         skipColor={true}
-        currency={currency}
       />
 
       <div className="FiatOperationModal__row">

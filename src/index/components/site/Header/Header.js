@@ -140,7 +140,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
             {!isLogin ? (
               <>
                 <UI.Button
-                  type="outline"
+                  type="secondary"
                   fontSize={15}
                   onClick={() =>
                     actions.openModal("auth", { type: steps.LOGIN })
@@ -163,7 +163,7 @@ function Header({ showLightLogo, langList, routerState, profile }) {
                 <UI.Button
                   onClick={() => router.navigate(pages.DASHBOARD)}
                   fontSize={15}
-                  type="outline"
+                  type="secondary"
                 >
                   {getLang("cabinet_header_cabinet")}
                 </UI.Button>

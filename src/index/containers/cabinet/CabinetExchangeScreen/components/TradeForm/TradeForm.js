@@ -223,7 +223,7 @@ class TradeForm extends React.Component {
           </div>
           <div className="TradeForm__form__coll">
             <UI.Button
-              type={type}
+              type={type === "sell" ? "negative" : "green"}
               onClick={this.handleOrderCreate(type)}
               state={this.props.loadingStatus[type]}
               children={

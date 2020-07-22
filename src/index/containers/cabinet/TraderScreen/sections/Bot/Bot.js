@@ -4,7 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import CabinetBaseScreen from "../../../CabinetBaseScreen/CabinetBaseScreen";
-import PageContainer from "../../../../../components/cabinet/PageContainer/PageContainer";
+import PageContainer from "../../../../../components/cabinet/PageContainerOld/PageContainerOld";
 import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
 
 import * as traderActions from "../../../../../../actions/cabinet/trader";

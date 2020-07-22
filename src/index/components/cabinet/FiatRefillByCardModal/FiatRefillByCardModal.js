@@ -448,7 +448,7 @@ export default props => {
                 <Lang name="global_fee" />
               </small>
               <strong>
-                <NumberFormat number={fee} currency={currency} />
+                <NumberFormat number={fee} />
               </strong>
             </div>
             <hr />
@@ -457,7 +457,7 @@ export default props => {
                 <Lang name="fiatRefillCard_totalAmount" />
               </small>
               <strong>
-                <NumberFormat number={amount - fee} currency={currency} />
+                <NumberFormat number={amount - fee} />
               </strong>
             </div>
           </div>

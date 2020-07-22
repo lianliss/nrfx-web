@@ -5,24 +5,12 @@ import NumberFormat from "../NumberFormat/NumberFormat";
 import PropTypes from "prop-types";
 
 const WalletCard = props => {
-  const { currency } = props;
   return (
-    <div
-      className={cn("WalletCard", { reject: props.reject })}
-      style={
-        !props.skipColor
-          ? { background: currency.background, color: currency.color }
-          : null
-      }
-    >
+    <div className={cn("WalletCard", { reject: props.reject })}>
       {props.title && <div className="WalletCard__title">{props.title}</div>}
       {!isNaN(props.balance) && (
         <div className="WalletCard__balance">
-          <NumberFormat
-            symbol={props.symbol}
-            number={props.balance}
-            currency={props.currency.abbr}
-          />
+          <NumberFormat symbol={props.symbol} number={props.balance} />
         </div>
       )}
       {props.balanceUsd > 0 && (

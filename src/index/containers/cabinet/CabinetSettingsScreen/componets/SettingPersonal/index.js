@@ -37,7 +37,7 @@ class SettingPersonal extends React.Component {
   };
 
   render() {
-    const buttonType = this.props.adaptive ? undefined : "outline";
+    const buttonType = this.props.adaptive ? undefined : "secondary";
     const { profile } = this.props;
     return (
       <>

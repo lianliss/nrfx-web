@@ -79,6 +79,11 @@ export function loadCurrencies() {
   });
 }
 
+export const currencyPresenter = currency => ({
+  ...currency,
+  background: `linear-gradient(45deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`
+});
+
 export function getCurrencyInfo(name) {
   if (!name) return {};
 
@@ -86,11 +91,7 @@ export function getCurrencyInfo(name) {
   name = name.toLowerCase();
   let currency = state.currencies[name];
   if (!currency) return { abbr: name };
-  return {
-    ...currency,
-    name: utils.ucfirst(currency.name), // HACK, TODO: Форматировать имена валют на бэке
-    background: `linear-gradient(45deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`
-  };
+  return currencyPresenter(currency);
 }
 
 export function openModal(name, params = {}, props = {}, done) {

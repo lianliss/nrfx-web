@@ -117,7 +117,7 @@ const LangsScreen = ({
             >
               Save
             </Button>
-            <Button size="middle" type="outline" onClick={addNewKey}>
+            <Button size="middle" type="secondary" onClick={addNewKey}>
               Add new key
             </Button>
           </div>

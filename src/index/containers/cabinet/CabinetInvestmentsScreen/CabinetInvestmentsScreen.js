@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 //
 import * as UI from "../../../../ui";
 import router from "../../../../router";
-import PageContainer from "../../../components/cabinet/PageContainer/PageContainer";
+import PageContainer from "../../../components/cabinet/PageContainerOld/PageContainerOld";
 import Balances from "./components/Balances";
 import WithdrawaHistorylTable from "./components/WithdrawaHistorylTable";
 import ProfitHistorylTable from "./components/ProfitHistorylTable";

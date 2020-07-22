@@ -16,7 +16,7 @@ function Banner({ title, caption, btnText }) {
         onClick={() => actions.openModal("auth", { type: steps.REGISTRATION })}
         fontSize={15}
         rounded
-        type="outline"
+        type="secondary"
         style={{ width: 240 }}
       >
         {btnText}
