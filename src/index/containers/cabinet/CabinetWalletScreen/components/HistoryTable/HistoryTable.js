@@ -137,10 +137,10 @@ const HistoryTable = props => {
     );
   };
 
-  if (props.loading) {
+  if (props.status) {
     return (
       <UI.ContentBox className="HistoryTable">
-        <LoadingStatus status="loading" />
+        <LoadingStatus status={props.status} />
       </UI.ContentBox>
     );
   }
@@ -182,7 +182,7 @@ const HistoryTable = props => {
 
             return (
               <div
-                key={item.id}
+                key={item.type + item.id}
                 onClick={() =>
                   openModal("fiat_operation", null, {
                     operation: item,
@@ -203,7 +203,7 @@ const HistoryTable = props => {
 
 export default connect(
   stage => ({
-    history: stage.fiat.history.items,
+    history: stage.wallet.history.items,
     translator: stage.settings.translator,
     currentLang: stage.default.currentLang
   }),

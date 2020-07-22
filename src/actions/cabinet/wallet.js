@@ -31,3 +31,33 @@ export function loadWalletPage() {
       });
   };
 }
+
+export function loadHistory(options) {
+  return dispatch => {
+    dispatch({
+      type: actionTypes.WALLET_SET_STATUS,
+      section: "history",
+      status: "loading"
+    });
+    api
+      .call(apiSchema.History.DefaultGet, options)
+      .then(payload => {
+        dispatch({
+          type: actionTypes.WALLET_HISTORY_SET,
+          payload
+        });
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
+          section: "history",
+          status: ""
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
+          section: "history",
+          status: "failed"
+        });
+      });
+  };
+}

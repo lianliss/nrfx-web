@@ -1,16 +1,17 @@
 import "./WalletList.less";
 import * as PAGES from "src/index/constants/pages";
-import React from "react";
+import React, { useCallback } from "react";
 import { useRouter } from "react-router5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Wallet from "../Wallet/Wallet";
 import Lang from "../../../../../../components/Lang/Lang";
 import { walletSelector } from "../../../../../../selectors";
+import { loadHistory } from "../../../../../../actions/cabinet/wallet";
 
-export default () => {
+export default ({ currency }) => {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const { wallets, balances } = useSelector(walletSelector);
 
   return (
@@ -28,11 +29,11 @@ export default () => {
       <hr />
       {wallets.map(wallet => (
         <Wallet
-          onClick={() =>
-            router.navigate(PAGES.WALLET_CRYPTO, { currency: wallet.currency })
-          }
+          onClick={() => {
+            router.navigate(PAGES.WALLET_CRYPTO, { currency: wallet.currency });
+          }}
           key={wallet.id}
-          active={false}
+          active={wallet.currency === currency}
           amount={wallet.amount}
           currency={wallet.currency}
         />
@@ -40,11 +41,11 @@ export default () => {
       <hr />
       {balances.map(balance => (
         <Wallet
-          onClick={() =>
-            router.navigate(PAGES.WALLET_FIAT, { currency: balance.currency })
-          }
+          onClick={() => {
+            router.navigate(PAGES.WALLET_FIAT, { currency: balance.currency });
+          }}
           key={balance.id}
-          active={false}
+          active={balance.currency === currency}
           amount={balance.amount}
           currency={balance.currency}
         />

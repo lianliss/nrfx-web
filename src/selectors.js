@@ -7,6 +7,10 @@ export const adminPendingSelector = state => state.admin.pending;
 export const adaptiveSelector = state => state.default.adaptive;
 export const walletStatusSelector = state => state.wallet.status;
 export const walletSelector = state => state.wallet;
+export const walletBalanceSelector = currency => state =>
+  [...state.wallet.wallets, ...state.wallet.balances].find(
+    w => w.currency === currency
+  );
 export const currencySelector = currency => state =>
   state.cabinet.currencies[currency?.toLowerCase()];
 export const marketCurrencySelector = currency => state =>

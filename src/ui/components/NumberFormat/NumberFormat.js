@@ -24,6 +24,7 @@ const NumberFormat = ({
   indicator,
   brackets,
   onClick,
+  roughly,
   market = false
 }) => {
   const currencyInfo = useSelector(currencySelector(currency));
@@ -95,6 +96,10 @@ const NumberFormat = ({
     displayNumber = prefix + displayNumber;
   }
 
+  if (roughly) {
+    displayNumber = "≈ " + displayNumber;
+  }
+
   return (
     <span
       onClick={onClick}
@@ -110,6 +115,7 @@ const NumberFormat = ({
 
 NumberFormat.defaultProps = {
   fractionDigits: null,
+  roughly: false,
   percent: false,
   indicator: false,
   brackets: false,
@@ -132,6 +138,7 @@ NumberFormat.propTypes = {
   accurate: PropTypes.bool,
   hiddenCurrency: PropTypes.bool,
   symbol: PropTypes.bool,
+  roughly: PropTypes.bool,
   type: PropTypes.oneOf([null, "auto", "sell", "buy", "down", "up"]),
   currency: PropTypes.string
 };

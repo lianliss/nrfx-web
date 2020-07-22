@@ -7,7 +7,10 @@ const initialState = {
   wallets: [],
   balances: [],
   can_exchange: [],
-  history: []
+  history: {
+    next: null,
+    items: []
+  }
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -18,12 +21,30 @@ export default function reduce(state = initialState, action = {}) {
         ...action.payload
       };
     }
+
     case actionTypes.WALLET_SET_STATUS: {
       return {
         ...state,
         status: {
-          ...state,
+          ...state.status,
           [action.section]: action.status
+        }
+      };
+    }
+
+    case actionTypes.WALLET_HISTORY_SET: {
+      return {
+        ...state,
+        history: action.payload
+      };
+    }
+
+    case actionTypes.WALLET_HISTORY_ADD_MORE: {
+      return {
+        ...state,
+        history: {
+          next: action.payload.next,
+          items: [...state.history.items, ...action.payload.items]
         }
       };
     }
