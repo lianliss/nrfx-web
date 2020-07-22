@@ -113,7 +113,7 @@ const OrderBook = props => {
                 <UI.NumberFormat
                   market
                   accurate
-                  number={order.amount}
+                  number={amount}
                   currency={order.primary_coin}
                   hiddenCurrency
                 />
