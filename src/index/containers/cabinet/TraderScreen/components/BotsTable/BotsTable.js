@@ -11,7 +11,7 @@ export default function BotsTable({ bots }) {
   if (!bots.length) {
     return (
       <EmptyContentBlock
-        icon={require("../../../../../../asset/120/no_deposits.svg")}
+        icon={require("../../../../../../asset/120/invest.svg")}
         message="Ботов еще нет :-("
       />
     );

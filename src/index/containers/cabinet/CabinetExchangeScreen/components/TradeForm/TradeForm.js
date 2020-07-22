@@ -154,7 +154,7 @@ class TradeForm extends React.Component {
           </div>
           <div className="TradeForm__form__coll">
             <UI.Input
-              type={isMarket ? "text" : "number"}
+              type="number"
               error={form.touched && !form.amount}
               value={form.amount}
               onTextChange={this.handleChangeAmount(type)}

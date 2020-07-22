@@ -36,17 +36,17 @@ export default () => {
         mode={"center"}
         items={[
           {
-            icon: require("../MainScreen/components/Advantages/assets/fee.svg"),
+            icon: require("../../../asset/120/fee.svg"),
             titleLang: "landingExchange_advantages_fee_title",
             textLang: "landingExchange_advantages_fee_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/legality.svg"),
+            icon: require("../../../asset/120/legality.svg"),
             titleLang: "landingExchange_advantages_legality_title",
             textLang: "landingExchange_advantages_legality_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/reliability.svg"),
+            icon: require("../../../asset/120/reliability.svg"),
             titleLang: "landingExchange_advantages_api_title",
             textLang: "landingExchange_advantages_api_description",
             linkLang: "landingExchange_advantages_api_link",
@@ -60,32 +60,32 @@ export default () => {
         titleLang="landing_advantages_title"
         items={[
           {
-            icon: require("../MainScreen/components/Advantages/assets/fast.svg"),
+            icon: require("../../../asset/120/fast.svg"),
             titleLang: "landing_advantages_performance_title",
             textLang: "landing_advantages_performance_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/wallet.svg"),
+            icon: require("../../../asset/120/wallet.svg"),
             titleLang: "landing_advantages_multiCurrency_title",
             textLang: "landing_advantages_multiCurrency_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/liquidity.svg"),
+            icon: require("../../../asset/120/trade.svg"),
             titleLang: "landing_advantages_liquidity_title",
             textLang: "landing_advantages_liquidity_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/fee.svg"),
+            icon: require("../../../asset/120/fee.svg"),
             titleLang: "landing_advantages_fee_title",
             textLang: "landing_advantages_fee_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/ui.svg"),
+            icon: require("../../../asset/120/product.svg"),
             titleLang: "landing_advantages_ui_title",
             textLang: "landing_advantages_ui_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/support.svg"),
+            icon: require("../../../asset/120/support.svg"),
             titleLang: "landing_advantages_support_title",
             textLang: "landing_advantages_support_description"
           }

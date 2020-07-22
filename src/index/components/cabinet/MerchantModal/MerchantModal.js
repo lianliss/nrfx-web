@@ -277,7 +277,7 @@ const MerchantModal = props => {
         ) : (
           <EmptyContentBlock
             skipContentClass
-            icon={require("../../../../asset/120/buy_currency.svg")}
+            icon={require("../../../../asset/120/exchange.svg")}
             message={
               props.type === "withdrawal"
                 ? getLang("cabinet_merchantWithdrawalEmptyList")

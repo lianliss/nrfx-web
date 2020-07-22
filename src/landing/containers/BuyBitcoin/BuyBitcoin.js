@@ -44,32 +44,32 @@ export default () => {
         titleLang="landingBitcoin_use_title"
         items={[
           {
-            icon: require("../MainScreen/components/Advantages/assets/keep.svg"),
+            icon: require("../../../asset/120/keep.svg"),
             titleLang: "landingBitcoin_use_keepId_title",
             textLang: "landingBitcoin_use_keepId_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/liquidity.svg"),
+            icon: require("../../../asset/120/trade.svg"),
             titleLang: "landingBitcoin_use_SellIt_title",
             textLang: "landingBitcoin_use_SellIt_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/exchange.svg"),
+            icon: require("../../../asset/120/exchange.svg"),
             titleLang: "landingBitcoin_use_exchangeIt_title",
             textLang: "landingBitcoin_use_exchangeIt_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/pay.svg"),
+            icon: require("../../../asset/120/pay.svg"),
             titleLang: "landingBitcoin_use_payWithIt_title",
             textLang: "landingBitcoin_use_payWithIt_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/send.svg"),
+            icon: require("../../../asset/120/send.svg"),
             titleLang: "landingBitcoin_use_SendIt_title",
             textLang: "landingBitcoin_use_SendIt_description"
           },
           {
-            icon: require("../MainScreen/components/Advantages/assets/donate.svg"),
+            icon: require("../../../asset/120/donate.svg"),
             titleLang: "landingBitcoin_use_donateIt_title",
             textLang: "landingBitcoin_use_donateIt_description"
           }

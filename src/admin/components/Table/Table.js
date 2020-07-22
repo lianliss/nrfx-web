@@ -7,12 +7,21 @@ import Table, {
   TableColumn
 } from "../../../ui/components/Table/Table";
 import Item from "../Item/Item";
-import { connect } from "react-redux";
 import EmptyContentBlock from "../../../index/components/cabinet/EmptyContentBlock/EmptyContentBlock";
 import action from "../../../actions/admin";
 import Button from "../../../ui/components/Button/Button";
+import { valueChange } from "../../../actions/admin/";
 
-class TableComponent extends React.Component {
+export default class TableComponent extends React.Component {
+  componentWillUpdate(nextProps) {
+    if (nextProps.id !== this.props.id) {
+      this.props.search &&
+        this.props.search.fields.forEach(field => {
+          valueChange(this.props.id + "_value_" + field.id, "");
+        });
+    }
+  }
+
   renderSearch = () => {
     const getKey = fieldId => {
       return this.props.id + "_value_" + fieldId;
@@ -101,7 +110,3 @@ class TableComponent extends React.Component {
     );
   }
 }
-
-export default connect(state => ({
-  // state: state.admin.layout
-}))(TableComponent);

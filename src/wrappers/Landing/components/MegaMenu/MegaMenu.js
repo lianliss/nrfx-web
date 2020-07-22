@@ -20,7 +20,7 @@ export default ({ visible, onClose }) => {
               onClose();
             }}
           >
-            <SVG src={require("src/asset/120/buy_currency.svg")} />
+            <SVG src={require("src/asset/120/exchange.svg")} />
             <div>
               <h4>
                 <Lang name="landing_megaMenu_buyCrypto_title" />

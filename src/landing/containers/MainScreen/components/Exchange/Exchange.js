@@ -99,7 +99,7 @@ export default () => {
                     </tr>
                   );
                 })
-            : Array(6)
+            : Array(5)
                 .fill(true)
                 .map((i, key) => (
                   <tr key={`s${key}`}>

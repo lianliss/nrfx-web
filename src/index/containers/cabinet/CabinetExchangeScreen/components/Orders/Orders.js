@@ -72,7 +72,7 @@ class Orders extends React.Component {
     if (!Object.keys(this.props.openOrders).length) {
       return (
         <EmptyContentBlock
-          icon={require("../../../../../../asset/120/no_orders.svg")}
+          icon={require("../../../../../../asset/120/exchange.svg")}
           message={utils.getLang("exchange_openOrdersEmpty")}
           skipContentClass
           height={280}
@@ -220,7 +220,7 @@ class Orders extends React.Component {
     if (!this.props.last_orders.items.length) {
       return (
         <EmptyContentBlock
-          icon={require("../../../../../../asset/120/no_orders.svg")}
+          icon={require("../../../../../../asset/120/exchange.svg")}
           message={utils.getLang("exchange_noTradeHistory")}
           skipContentClass
           height={280}

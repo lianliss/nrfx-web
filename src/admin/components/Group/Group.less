@@ -1,10 +1,14 @@
 .Group {
   display: flex;
-  margin: 0 5px;
+  margin: 0;
 
   & > * {
-    margin-right: 8px;
-    align-self: center;
+    margin-right: 16px;
+    //align-self: center;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   & > .Button {
