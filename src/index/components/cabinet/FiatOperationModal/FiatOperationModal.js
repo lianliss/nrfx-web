@@ -27,7 +27,7 @@ function FiatOperationModal(props) {
       return <WithdrawalOperation operation={operation} />;
     } else if (operation.type === "bank_card_refill_reject") {
       return <BankCardRefillRejectOperation operation={operation} />;
-    } else if (operation.type === "swap") {
+    } else if (operation.type === "swap" || operation.type === "buy_token") {
       return <SwapOperation operation={operation} />;
     } else if (operation.type === "transfer_receive") {
       return <TransferReceiveOperation operation={operation} />;

@@ -20,6 +20,7 @@ import {
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import Paging from "../../../components/cabinet/Paging/Paging";
 import CommonHeader from "./components/CommonHeader/CommonHeader";
+import SwapForm from "./components/SwapForm/SwapForm";
 
 export default () => {
   const {
@@ -67,6 +68,7 @@ export default () => {
   return (
     <PageContainer sideBar={<WalletList currency={params.currency} />}>
       {isCommon && <CommonHeader />}
+      {isSwap && <SwapForm />}
       {balance && <WalletHeader isCrypto={isCrypto} balance={balance} />}
 
       <Paging

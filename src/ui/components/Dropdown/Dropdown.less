@@ -62,9 +62,12 @@
   .Dropdown__option {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
     color: var(--black);
+
+    .Dropdown__option__prefix {
+      margin-right: 8px;
+    }
 
     .Dropdown__option__title {
       white-space: nowrap;
@@ -81,7 +84,8 @@
       line-height: 16px;
       letter-spacing: 0.444444px;
       color: var(--text-black);
-      padding-left: 10px;
+      padding-left: 8px;
+      margin-left: auto;
     }
   }
 

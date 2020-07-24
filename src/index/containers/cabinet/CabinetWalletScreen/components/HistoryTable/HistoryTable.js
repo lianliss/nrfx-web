@@ -242,6 +242,7 @@ const HistoryTable = props => {
                   return renderIncomeItem(item);
                 // case 'crypto_exchange':
                 case "swap":
+                case "buy_token":
                   return renderSwapItem(item);
                 case "transfer_receive":
                   return renderTransferReceiveItem(item);

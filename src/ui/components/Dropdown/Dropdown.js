@@ -69,6 +69,7 @@ class Dropdown extends React.Component {
           onClick={() => this.toggle(!state.isOpen)}
         >
           <div className="Dropdown__option">
+            <div className="Dropdown__option__prefix">{headerText.prefix}</div>
             <div className="Dropdown__option__title">
               {headerText.title || props.placeholder}
             </div>
@@ -80,10 +81,10 @@ class Dropdown extends React.Component {
 
         {state.isOpen ? (
           <div className="Dropdown__options">
-            {props.options.map((opt, i) => {
+            {props.options.map(opt => {
               return (
                 <div
-                  key={Math.random()}
+                  key={opt.value}
                   className={classNames("Dropdown__option", {
                     disabled: opt.disabled
                   })}
@@ -93,6 +94,7 @@ class Dropdown extends React.Component {
                     this.toggle(false);
                   }}
                 >
+                  <div className="Dropdown__option__prefix">{opt.prefix}</div>
                   <div className="Dropdown__option__title">{opt.title}</div>
                   <div className="Dropdown__option__note">{opt.note}</div>
                 </div>
