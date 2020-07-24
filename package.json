@@ -135,10 +135,10 @@
     "cross-env": "^5.2.1",
     "husky": "^4.2.3",
     "react-styleguidist": "^10.6.2",
+    "redux-devtools-extension": "^2.13.8",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.2",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "redux-devtools-extension": "^2.13.8"
+    "uglifyjs-webpack-plugin": "^2.2.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
