@@ -24,7 +24,7 @@ class PanelScreen extends React.Component {
         </div>
       );
     }
-    if (this.props.route.params.page === "AdminTranslationModule") {
+    if (this.props.route.params.page === "Translations") {
       return <LangsScreen />;
     }
     return (

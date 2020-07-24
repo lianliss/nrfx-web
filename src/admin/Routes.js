@@ -13,7 +13,7 @@ import router from "../router";
 
 router.addListener((state, prevState) => {
   const page = router.getState().params.page;
-  const ignorePages = ["AdminTranslationModule"];
+  const ignorePages = ["Translations"];
   if (
     state.name === pages.PANEL_PAGE &&
     !state.params.modal &&
