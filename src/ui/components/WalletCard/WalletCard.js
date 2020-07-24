@@ -5,12 +5,17 @@ import NumberFormat from "../NumberFormat/NumberFormat";
 import PropTypes from "prop-types";
 
 const WalletCard = props => {
+  const { currency } = props;
   return (
     <div className={cn("WalletCard", { reject: props.reject })}>
       {props.title && <div className="WalletCard__title">{props.title}</div>}
       {!isNaN(props.balance) && (
         <div className="WalletCard__balance">
-          <NumberFormat symbol={props.symbol} number={props.balance} />
+          <NumberFormat
+            symbol={props.symbol}
+            currency={currency}
+            number={props.balance}
+          />
         </div>
       )}
       {props.balanceUsd > 0 && (
@@ -25,7 +30,7 @@ const WalletCard = props => {
 WalletCard.propTypes = {
   balance: PropTypes.number,
   balanceUsd: PropTypes.number,
-  currency: PropTypes.object
+  currency: PropTypes.string
 };
 
 export default WalletCard;

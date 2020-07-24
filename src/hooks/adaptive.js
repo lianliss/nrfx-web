@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-// import { setAdaptive as setAdaptiveStore } from "src/actions";
+import { setAdaptive as setAdaptiveStore } from "src/actions";
 
 export default () => {
   const [adaptive, setAdaptive] = useState();
   const handleResize = () => {
     if (document.body.offsetWidth <= 650) {
       setAdaptive(true);
-      // setAdaptiveStore(true);
+      setAdaptiveStore(true);
     } else {
       setAdaptive(false);
-      // setAdaptiveStore(false);
+      setAdaptiveStore(false);
     }
   };
 

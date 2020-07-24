@@ -1,14 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import * as UI from "../../../../../ui";
 import * as utils from "../../../../../utils";
-import { currencySelector } from "../../../../../selectors";
 
 export default ({ operation }) => {
-  const currency = useSelector(currencySelector(operation.currency));
   return (
     <div className="FiatOperationModal__content">
-      <UI.WalletCard symbol={true} balance={operation.amount} />
+      <UI.WalletCard
+        symbol={true}
+        balance={operation.amount}
+        currency={operation.currency}
+      />
 
       <div className="FiatOperationModal__row">
         <div className="FiatOperationModal__row__left">
@@ -28,7 +29,7 @@ export default ({ operation }) => {
             {operation.fee ? (
               <UI.NumberFormat
                 number={operation.fee}
-                currency={currency.abbr}
+                currency={operation.currency}
               />
             ) : (
               "-"

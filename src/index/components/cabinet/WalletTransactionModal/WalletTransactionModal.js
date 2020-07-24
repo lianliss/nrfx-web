@@ -136,7 +136,7 @@ export default class VerificationModalWalletTransactionModal extends React.Compo
           <UI.WalletCard
             title={utils.getLang("cabinet_walletTransactionModal_total")}
             balance={data.amount + (data.fee || 0)}
-            currency={currencyInfo}
+            currency={currencyInfo.abbr}
           />
 
           <div className="WalletTransactionModal__status">

@@ -88,14 +88,24 @@ export default class ReceiveCoinsModal extends React.Component {
         placeholder = this.state.dropDownCurrentItem;
       } else {
         let preset = null;
-        if (this.props.hasOwnProperty("preset")) {
-          preset = options.filter(opt => opt.title === this.props.preset)[0];
-          setTimeout(() => {
-            this.setState({
-              currency: preset.value,
-              dropDownCurrentItem: preset
-            });
-          }, 0);
+        if (
+          this.props.hasOwnProperty("preset") ||
+          this.props.hasOwnProperty("currency")
+        ) {
+          preset = options.find(
+            opt =>
+              opt.title === this.props.preset ||
+              opt.value === this.props.currency
+          );
+
+          if (preset) {
+            setTimeout(() => {
+              this.setState({
+                currency: preset.value,
+                dropDownCurrentItem: preset
+              });
+            }, 0);
+          }
         }
       }
 

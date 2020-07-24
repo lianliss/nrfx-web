@@ -544,7 +544,9 @@ const MerchantModal = props => {
 
 export default connect(
   state => ({
-    balances: state.fiat.balances,
+    balances: state.fiat.balances?.length
+      ? state.fiat.balances
+      : state.wallet.balances,
     loadingStatus: state.fiat.loadingStatus,
     adaptive: state.default.adaptive,
     profile: state.default.profile,

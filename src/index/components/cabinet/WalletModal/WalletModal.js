@@ -24,7 +24,7 @@ export default ({ onClose, wallet }) => {
       <UI.WalletCard
         balance={wallet.amount}
         balanceUsd={wallet.amount * wallet.to_usd}
-        currency={currency}
+        currency={currency.abbr}
       />
       <UI.ButtonWrapper align="fill">
         {utils.isFiat(wallet.currency) ? (

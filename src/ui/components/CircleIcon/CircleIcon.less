@@ -1,10 +1,28 @@
 .CircleIcon {
+  position: relative;
   background: var(--cloudy);
   border-radius: 50%;
   height: 40px;
   width: 40px;
   display: flex;
   color: var(--text-black);
+  overflow: hidden;
+
+  &.color {
+    background: none;
+
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: currentColor;
+      content: '';
+      display: block;
+      width: inherit;
+      height: inherit;
+      opacity: .12;
+    }
+  }
 
   &.skeleton {
     animation: skeleton 1s linear infinite;

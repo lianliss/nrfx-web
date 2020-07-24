@@ -6,13 +6,15 @@
 
   .HistoryTable__header {
     width: 100%;
-    display: flex;
+    padding: 40px;
+    padding-bottom: 0;
+    box-sizing: border-box;
 
     span {
-      margin: 16px auto 0;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 16px;
       line-height: 24px;
+      text-transform: uppercase;
     }
   }
 
@@ -59,7 +61,6 @@
       font-weight: 500;
       font-size: 13px;
       line-height: 16px;
-      margin-bottom: 8px;
     }
 
     .HistoryTable__description {
@@ -74,6 +75,17 @@
       font-size: 16px;
       line-height: 24px;
     }
+
+    .HistoryTable__label,
+    .HistoryTable__description,
+    .HistoryTable__price {
+      margin-bottom: 4px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
   }
 }
 

@@ -5,6 +5,7 @@ import React from "react";
 import hexToRgba from "hex-to-rgba";
 import SVG from "react-inlinesvg";
 import { classNames as cn } from "../../utils";
+import { getCssVar } from "../../../utils";
 
 export default props => {
   const {
@@ -12,6 +13,7 @@ export default props => {
     icon,
     className,
     size,
+    color,
     skeleton = false,
     shadow = true
   } = props;
@@ -20,7 +22,7 @@ export default props => {
   }
   return (
     <div
-      className={cn("CircleIcon", size, className)}
+      className={cn("CircleIcon", size, className, { color: !!color })}
       style={
         currency
           ? {
@@ -30,7 +32,9 @@ export default props => {
                 `0px 4px 8px ${hexToRgba(currency.color || "#AAA", 0.3)}`,
               color: "white"
             }
-          : null
+          : {
+              color: color ? getCssVar("--" + color) : null
+            }
       }
     >
       {icon ? (

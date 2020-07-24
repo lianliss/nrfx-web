@@ -31,11 +31,14 @@ const FiatWithdrawalModal = props => {
   useEffect(() => {
     props.withdrawalBanksGet();
 
+    console.log(amount, balance);
+    debugger;
+
     if (!amount || !balance) {
-      props.onClose();
+      // props.onClose();
     }
     // eslint-disable-next-line
-  }, []);
+  }, [amount, balance]);
 
   if (!amount || !balance) {
     return null;

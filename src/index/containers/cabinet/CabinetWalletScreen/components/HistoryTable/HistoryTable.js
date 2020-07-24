@@ -24,6 +24,8 @@ const HistoryTable = props => {
     }, {});
 
   const icons = {
+    transfer_receive: require("src/asset/24px/receive.svg"),
+    transfer_send: require("src/asset/24px/send.svg"),
     swap: require("src/asset/24px/loop.svg"),
     refill: require("src/asset/24px/fiat-plus.svg"),
     bank_card_refill_reject: require("src/asset/24px/fiat-plus.svg"),
@@ -41,7 +43,7 @@ const HistoryTable = props => {
         <UI.CircleIcon icon={item.icon} />
         <div className="HistoryTable__group__item__body">
           <div className="HistoryTable__group__item__left">
-            <div className="HistoryTable__label">
+            <div className="HistoryTable__description">
               {utils.getLang("cabinet__historyItemTitle_swap")}
             </div>
             <div className="HistoryTable__price">
@@ -137,6 +139,71 @@ const HistoryTable = props => {
     );
   };
 
+  const renderTransferReceiveItem = item => {
+    const currency = getCurrencyInfo(item.currency);
+
+    return (
+      <>
+        <UI.CircleIcon color="primary-blue" icon={item.icon} />
+        <div className="HistoryTable__group__item__body">
+          <div className="HistoryTable__group__item__left">
+            <div className="HistoryTable__description">
+              {utils.getLang("cabinet__historyItemTitle_transfer_receive")}
+            </div>
+            <div className="HistoryTable__label">
+              <UI.WalletAddress address={item.address} />
+            </div>
+          </div>
+          <div className="HistoryTable__group__item__right">
+            <div className="HistoryTable__price">
+              <UI.NumberFormat
+                symbol
+                number={item.amount}
+                color
+                currency={currency.abbr}
+              />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
+  const renderTransferSendItem = item => {
+    const currency = getCurrencyInfo(item.currency);
+
+    return (
+      <>
+        <UI.CircleIcon color="green" icon={item.icon} />
+        <div className="HistoryTable__group__item__body">
+          <div className="HistoryTable__group__item__left">
+            <div className="HistoryTable__description">
+              {utils.getLang("cabinet__historyItemTitle_transfer_send")}
+            </div>
+            <div className="HistoryTable__label">
+              <UI.WalletAddress address={item.address} />
+            </div>
+          </div>
+          <div className="HistoryTable__group__item__right">
+            <div className="HistoryTable__price">
+              <UI.NumberFormat
+                symbol
+                number={-item.amount}
+                currency={currency.abbr}
+              />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
+  const renderOtherItem = item => {
+    return (
+      <UI.Message type="error">type "{item.type}" is not supported</UI.Message>
+    );
+  };
+
   if (props.status) {
     return (
       <UI.ContentBox className="HistoryTable">
@@ -175,8 +242,13 @@ const HistoryTable = props => {
                   return renderIncomeItem(item);
                 // case 'crypto_exchange':
                 case "swap":
-                default:
                   return renderSwapItem(item);
+                case "transfer_receive":
+                  return renderTransferReceiveItem(item);
+                case "transfer_send":
+                  return renderTransferSendItem(item);
+                default:
+                  return renderOtherItem(item);
               }
             };
 

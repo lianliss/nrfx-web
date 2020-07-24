@@ -2,7 +2,9 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   status: {
-    main: ""
+    main: "",
+    history: "",
+    historyMore: ""
   },
   wallets: [],
   balances: [],
@@ -15,10 +17,11 @@ const initialState = {
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
-    case actionTypes.WALLET_INIT: {
+    case actionTypes.WALLET_SET_INIT_STATE: {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
+        history: initialState.history
       };
     }
 
