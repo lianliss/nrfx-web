@@ -5,7 +5,7 @@ import { ContentBox, NumberFormat } from "../../../../../../ui";
 import PieChart from "react-minimal-pie-chart";
 import { useSelector } from "react-redux";
 import { walletBalancesSelector } from "../../../../../../selectors";
-import { currencyPresenter, getCurrencyInfo } from "../../../../../../actions";
+import { getCurrencyInfo } from "../../../../../../actions";
 
 export default () => {
   const balances = useSelector(walletBalancesSelector);

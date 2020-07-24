@@ -1,10 +1,5 @@
 import * as actionTypes from "../actionTypes";
 
-import * as api from "../../services/api";
-import apiSchema from "../../services/apiSchema";
-import { PAGE_COUNT } from "../../index/constants/cabinet";
-import * as toastsActions from "../toasts";
-
 export function fetchWalletPage() {
   return { type: actionTypes.WALLET_FETCH_PAGE };
 }
