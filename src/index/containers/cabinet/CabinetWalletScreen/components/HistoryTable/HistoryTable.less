@@ -1,3 +1,5 @@
+@import '../../../../../../vars';
+
 .HistoryTable {
   .ContentBox__content {
     padding: 0 0 24px;
@@ -89,7 +91,7 @@
   }
 }
 
-.adaptive {
+@media (max-width: @mobile-width) {
   .HistoryTable {
     .HistoryTable__group__item {
       padding: 16px;

@@ -10,7 +10,9 @@ import * as toasts from "src/actions/toasts";
 import { openModal } from "src/actions/index";
 import * as emitter from "../../../../../../services/emitter";
 import { Switch } from "../../../../../../ui";
-import { toggleFloodControl } from "src/actions/index";
+import { toggleFloodControl, toggleTranslator } from "src/actions/index";
+import { userRole } from "../../../../../../actions/cabinet/profile";
+import Lang from "../../../../../../components/Lang/Lang";
 
 class SettingPersonal extends React.Component {
   state = {
@@ -34,6 +36,10 @@ class SettingPersonal extends React.Component {
         }, 1000);
       }
     );
+  };
+
+  handleToggleTranslator = () => {
+    this.props.toggleTranslator(!this.props.translator);
   };
 
   render() {
@@ -215,6 +221,18 @@ class SettingPersonal extends React.Component {
           </div>
         </UI.ContentBox>
 
+        {userRole("translator") && (
+          <UI.ContentBox className="CabinetSettingsScreen__main">
+            <div className="CabinetSettingsScreen__header">
+              <Lang name="cabinet__translation_mode" />
+            </div>
+            <UI.Switch
+              on={this.props.translator}
+              onChange={this.handleToggleTranslator}
+            />
+          </UI.ContentBox>
+        )}
+
         {!utils.isProduction() && profile.user.applicant_id && (
           <UI.ContentBox className="CabinetSettingsScreen__main">
             <div className="CabinetSettingsScreen__header">applicant_id</div>
@@ -241,9 +259,11 @@ class SettingPersonal extends React.Component {
 export default connect(
   state => ({
     profile: state.default.profile,
+    translator: state.settings.translator,
     floodControl: state.settings.floodControl
   }),
   {
+    toggleTranslator,
     toggleFloodControl
   }
 )(SettingPersonal);

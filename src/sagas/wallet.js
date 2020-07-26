@@ -1,16 +1,35 @@
-import { put, takeLatest, call, select } from "redux-saga/effects";
+import {
+  put,
+  takeLatest,
+  takeEvery,
+  take,
+  race,
+  call,
+  select,
+  delay
+} from "redux-saga/effects";
 import {
   walletHistoryAddMore,
   walletHistorySet,
   walletSetInitState,
-  walletSetStatus
+  walletSetStatus,
+  walletSwapSetRate,
+  walletSwapStartRatePooling,
+  walletSwapStopRatePooling,
+  walletSwapSuccess,
+  walletSwapUpdateAmount
 } from "../actions/cabinet/wallet";
 import { call as api } from "src/services/api";
 import apiSchema from "../services/apiSchema";
 import * as toast from "../actions/toasts";
 import * as actionTypes from "../actions/actionTypes";
 import { PAGE_COUNT } from "../index/constants/cabinet";
-import { walletHistoryNextSelector } from "../selectors";
+import {
+  currencySelector,
+  walletHistoryNextSelector,
+  walletSwapSelector
+} from "../selectors";
+import { formatDouble, getLang, isFiat } from "../utils";
 
 function* getHistoryWorker(action) {
   yield put(walletSetStatus("history", "loading"));
@@ -57,8 +76,112 @@ function* getWalletPageWorker() {
   }
 }
 
+function* getRate() {
+  try {
+    const { fromCurrency: base, toCurrency: currency } = yield select(
+      walletSwapSelector
+    );
+    // yield put(walletSetStatus("rate", "loading"));
+    const { rate } = yield call(api, apiSchema.Fiat_wallet.RateGet, {
+      base,
+      currency
+    });
+    yield put(walletSwapSetRate(rate));
+    yield swapUpdateAmountWorker();
+  } catch (e) {
+  } finally {
+    yield put(walletSetStatus("rate", ""));
+  }
+}
+
+function* watchPollRate() {
+  while (true) {
+    yield take(actionTypes.WALLET_SWAP_START_RATE_POOLING);
+    yield race([
+      call(poolRate),
+      take(actionTypes.WALLET_SWAP_STOP_RATE_POOLING)
+    ]);
+  }
+}
+
+function* poolRate() {
+  while (true) {
+    yield getRate();
+    yield delay(5000);
+  }
+}
+
+function* updateRateWorker() {
+  yield put(walletSwapStopRatePooling());
+  yield put(walletSwapStartRatePooling());
+  yield put(walletSetStatus("rate", "loading"));
+}
+
+function* swapUpdateAmountWorker() {
+  const {
+    focus,
+    fromCurrency,
+    toCurrency,
+    fromAmount,
+    toAmount,
+    rate
+  } = yield select(walletSwapSelector);
+
+  const notFocus = focus === "from" ? "to" : "from";
+  const amount = focus === "from" ? fromAmount : toAmount;
+  const currency = focus === "from" ? toCurrency : fromCurrency;
+
+  const { maximum_fraction_digits: fractionDigits } = yield select(
+    currencySelector(currency)
+  );
+
+  const realRate = isFiat(currency) ? rate : 1 / rate;
+  const secondaryAmount = realRate * amount;
+
+  yield put(
+    walletSwapUpdateAmount(
+      notFocus,
+      formatDouble(secondaryAmount, fractionDigits)
+    )
+  );
+}
+
+function* swapSubmitWorker() {
+  const {
+    focus,
+    fromCurrency,
+    toCurrency,
+    fromAmount,
+    toAmount
+  } = yield select(walletSwapSelector);
+  const currency = focus === "from" ? fromCurrency : toCurrency;
+  const amount = focus === "from" ? fromAmount : toAmount;
+
+  yield put(walletSetStatus("swap", "loading"));
+  try {
+    const payload = yield call(api, apiSchema.Fiat_wallet.ExchangePost, {
+      from_currency: fromCurrency,
+      to_currency: toCurrency,
+      amount_type: isFiat(currency) ? "fiat" : "crypto",
+      amount
+    });
+
+    yield put(walletSwapSuccess(payload));
+    yield call(toast.success, getLang("cabinet_fiatWalletExchangeSuccessText"));
+  } catch (e) {
+    yield call(toast.error, e.message);
+  } finally {
+    yield put(walletSetStatus("swap", ""));
+  }
+}
+
 export function* rootWalletSaga() {
   yield takeLatest(actionTypes.WALLET_FETCH_HISTORY, getHistoryWorker);
+  yield takeEvery(actionTypes.WALLET_SWAP_SET_CURRENCY, updateRateWorker);
   yield takeLatest(actionTypes.WALLET_FETCH_HISTORY_MORE, getHistoryMoreWorker);
   yield takeLatest(actionTypes.WALLET_FETCH_PAGE, getWalletPageWorker);
+  yield takeLatest(actionTypes.WALLET_SWAP_SWITCH, updateRateWorker);
+  yield takeLatest(actionTypes.WALLET_SWAP_SET_AMOUNT, swapUpdateAmountWorker);
+  yield takeLatest(actionTypes.WALLET_SWAP_SUBMIT, swapSubmitWorker);
+  yield watchPollRate();
 }

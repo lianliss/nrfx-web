@@ -135,16 +135,6 @@ class Header extends React.Component {
                   </BaseLink>
                 )}
 
-                <div
-                  className="CabinetHeader__link"
-                  style={{ display: "none" }}
-                >
-                  <SVG
-                    src={require("../../../../asset/cabinet/bots_icon.svg")}
-                  />
-                  <Lang name="cabinet_header_bots" />
-                </div>
-
                 <BaseLink
                   router={router}
                   routeName={pages.EXCHANGE}

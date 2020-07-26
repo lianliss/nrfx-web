@@ -7,26 +7,32 @@ import { useSelector } from "react-redux";
 import Wallet from "../Wallet/Wallet";
 import Lang from "../../../../../../components/Lang/Lang";
 import { walletSelector } from "../../../../../../selectors";
+import useAdaptive from "src/hooks/adaptive";
 
 export default ({ currency }) => {
+  const adaptive = useAdaptive();
   const { route, router } = useRoute();
   const { wallets, balances } = useSelector(walletSelector);
 
   return (
     <div className="WalletList">
-      <Wallet
-        active={route.name === PAGES.WALLET}
-        onClick={() => router.navigate(PAGES.WALLET)}
-        title={<Lang name={"cabinet_header_wallet"} />}
-        icon={require("src/asset/24px/wallet.svg")}
-      />
-      <Wallet
-        active={route.name === PAGES.WALLET_SWAP}
-        onClick={() => router.navigate(PAGES.WALLET_SWAP)}
-        title={<Lang name={"cabinet_fiatMarketExchangeTitle"} />}
-        icon={require("src/asset/24px/loop.svg")}
-      />
-      <hr />
+      {!adaptive && (
+        <>
+          <Wallet
+            active={route.name === PAGES.WALLET}
+            onClick={() => router.navigate(PAGES.WALLET)}
+            title={<Lang name={"cabinet_header_wallet"} />}
+            icon={require("src/asset/24px/wallet.svg")}
+          />
+          <Wallet
+            active={route.name === PAGES.WALLET_SWAP}
+            onClick={() => router.navigate(PAGES.WALLET_SWAP)}
+            title={<Lang name={"cabinet_fiatMarketExchangeTitle"} />}
+            icon={require("src/asset/24px/loop.svg")}
+          />
+          <hr />
+        </>
+      )}
       {wallets.map(wallet => (
         <Wallet
           onClick={() => {

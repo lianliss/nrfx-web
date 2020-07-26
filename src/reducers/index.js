@@ -15,7 +15,7 @@ const initialState = {
   currentLang: null,
   langList: [],
   adaptive: false,
-  title: "Bitcoinbot",
+  title: "Narfex",
   static: {
     status: "loading"
   },

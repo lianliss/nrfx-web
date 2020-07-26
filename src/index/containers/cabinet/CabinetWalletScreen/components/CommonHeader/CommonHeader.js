@@ -4,15 +4,58 @@ import React from "react";
 import { ContentBox, NumberFormat } from "../../../../../../ui";
 import PieChart from "react-minimal-pie-chart";
 import { useSelector } from "react-redux";
-import { walletBalancesSelector } from "../../../../../../selectors";
+import { walletAllBalancesSelector } from "../../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../../actions";
+import useAdaptive from "src/hooks/adaptive";
 
 export default () => {
-  const balances = useSelector(walletBalancesSelector);
+  const adaptive = useAdaptive();
+  const balances = useSelector(walletAllBalancesSelector);
 
   const total = balances
     .map(b => b.to_usd * b.amount)
     .reduce((a, b) => a + b, 0);
+
+  const List = () => (
+    <ul className="CommonHeader__currencyList">
+      {balances.map(b => (
+        <li key={b.id}>
+          <div
+            className="CommonHeader__currencyList__coin"
+            style={{
+              background: getCurrencyInfo(b.currency).background
+            }}
+          />
+          <div className="CommonHeader__currencyList__percent">
+            <NumberFormat
+              number={((b.amount * b.to_usd) / total) * 100}
+              percent
+            />
+          </div>
+          <div className="CommonHeader__currencyList__currency">
+            {b.currency}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+
+  const Chart = () => (
+    <div className="CommonHeader__pie">
+      <PieChart
+        lineWidth={50}
+        paddingAngle={1}
+        data={balances.map(b => {
+          const currency = getCurrencyInfo(b.currency);
+          return {
+            color: currency.color,
+            currency: currency.abbr,
+            value: b.to_usd * b.amount
+          };
+        })}
+      />
+    </div>
+  );
 
   return (
     <ContentBox className="CommonHeader">
@@ -21,42 +64,17 @@ export default () => {
         <div className="CommonHeader__amount">
           <NumberFormat roughly number={total} currency="usd" />
         </div>
-        <ul className="CommonHeader__currencyList">
-          {balances.map(b => (
-            <li key={b.id}>
-              <div
-                className="CommonHeader__currencyList__coin"
-                style={{
-                  background: getCurrencyInfo(b.currency).background
-                }}
-              />
-              <div className="CommonHeader__currencyList__percent">
-                <NumberFormat
-                  number={((b.amount * b.to_usd) / total) * 100}
-                  percent
-                />
-              </div>
-              <div className="CommonHeader__currencyList__currency">
-                {b.currency}
-              </div>
-            </li>
-          ))}
-        </ul>
+        {!adaptive && <List />}
       </div>
-      <div className="CommonHeader__pie">
-        <PieChart
-          lineWidth={50}
-          paddingAngle={1}
-          data={balances.map(b => {
-            const currency = getCurrencyInfo(b.currency);
-            return {
-              color: currency.color,
-              currency: currency.abbr,
-              value: b.to_usd * b.amount
-            };
-          })}
-        />
-      </div>
+
+      {adaptive ? (
+        <div className="CommonHeader__adaptiveBlock">
+          <Chart />
+          <List />
+        </div>
+      ) : (
+        <Chart />
+      )}
     </ContentBox>
   );
 };

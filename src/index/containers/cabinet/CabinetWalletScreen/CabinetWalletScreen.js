@@ -1,3 +1,5 @@
+import "./CabinetWalletScreen.less";
+
 import React, { useEffect, useState, useCallback } from "react";
 import { useRoute } from "react-router5";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,11 +23,18 @@ import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStat
 import Paging from "../../../components/cabinet/Paging/Paging";
 import CommonHeader from "./components/CommonHeader/CommonHeader";
 import SwapForm from "./components/SwapForm/SwapForm";
+import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
+
+import useAdaptive from "src/hooks/adaptive";
+import { ContentBox } from "../../../../ui";
+import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 
 export default () => {
   const {
     route: { name, params }
   } = useRoute();
+
+  const adaptive = useAdaptive();
 
   const isCommon = name === PAGES.WALLET;
   const isCrypto = name === PAGES.WALLET_CRYPTO;
@@ -66,10 +75,27 @@ export default () => {
   }
 
   return (
-    <PageContainer sideBar={<WalletList currency={params.currency} />}>
+    <PageContainer
+      className="CabinetWalletScreen"
+      sideBar={!adaptive && <WalletList currency={params.currency} />}
+    >
       {isCommon && <CommonHeader />}
-      {isSwap && <SwapForm />}
+      {isSwap &&
+        (adaptive ? (
+          <SwapFormAdaptive />
+        ) : (
+          <>
+            <SwapForm />
+            <SwapTutorial />
+          </>
+        ))}
       {balance && <WalletHeader isCrypto={isCrypto} balance={balance} />}
+
+      {adaptive && !balance && !isSwap && (
+        <ContentBox className="CabinetWalletScreen__adaptiveWalletList">
+          <WalletList currency={params.currency} />
+        </ContentBox>
+      )}
 
       <Paging
         isCanMore={!!next && status.historyMore !== "loading"}

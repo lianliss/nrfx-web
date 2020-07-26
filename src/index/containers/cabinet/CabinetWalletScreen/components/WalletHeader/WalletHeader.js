@@ -10,7 +10,7 @@ import * as actions from "../../../../../../actions";
 export default ({ balance, isCrypto }) => {
   const currency = useSelector(currencySelector(balance?.currency));
 
-  const renderButtons = () => {
+  const Buttons = () => {
     if (currency.abbr === "nrfx") {
       return (
         <Button
@@ -82,7 +82,9 @@ export default ({ balance, isCrypto }) => {
           <NumberFormat number={balance.amount} currency={balance.currency} />
         </div>
       </div>
-      <div className="WalletHeader__buttons">{renderButtons()}</div>
+      <div className="WalletHeader__buttons">
+        <Buttons />
+      </div>
     </ContentBox>
   );
 };

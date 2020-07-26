@@ -14,4 +14,5 @@
 <p><NumberFormat number={0.000000001} /></p>
 <p><NumberFormat number={0} /></p>
 <p><NumberFormat symbol number={1000} /></p>
+<p><NumberFormat roughly number={1000} /></p>
 ```

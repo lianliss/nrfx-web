@@ -25,6 +25,7 @@ const NumberFormat = ({
   brackets,
   onClick,
   roughly,
+  skipRoughly,
   market = false
 }) => {
   const currencyInfo = useSelector(currencySelector(currency));
@@ -80,7 +81,7 @@ const NumberFormat = ({
     displayNumber = `(${displayNumber})`;
   }
 
-  if (number > 0 && number < 1e-8) {
+  if (!skipRoughly && number > 0 && number < 1e-8) {
     displayNumber = `~${displayNumber}`;
   }
 
@@ -119,6 +120,7 @@ NumberFormat.defaultProps = {
   percent: false,
   indicator: false,
   brackets: false,
+  skipRoughly: false,
   color: false,
   currency: "",
   prefix: "",
@@ -139,6 +141,7 @@ NumberFormat.propTypes = {
   hiddenCurrency: PropTypes.bool,
   symbol: PropTypes.bool,
   roughly: PropTypes.bool,
+  skipRoughly: PropTypes.bool,
   type: PropTypes.oneOf([null, "auto", "sell", "buy", "down", "up"]),
   currency: PropTypes.string
 };

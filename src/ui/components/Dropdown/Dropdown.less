@@ -1,13 +1,16 @@
 .Dropdown {
   background: var(--secondary-background);
   box-shadow: var(--main-shadow);
+  color: var(--black);
   border-radius: 8px;
   position: relative;
   user-select: none;
+  cursor: pointer;
 
   &.disabled {
-    opacity: 0.5;
     pointer-events: none;
+    background: #FAFAFA;
+    color: var(--dark-gray);
   }
 
   .Dropdown__header {
@@ -16,19 +19,39 @@
     position: relative;
     z-index: 13;
     padding: 14px 16px;
+    padding-right: 12px;
     display: flex;
     align-items: center;
     justify-content: stretch;
 
     .Dropdown__option {
-      width: calc(100% - 30px);
+      //width: calc(100% - 30px);
+      width: 100%;
     }
 
-    .isvg {
-      display: block;
-      margin: 0 3px 0 11px;
-      height: 16px;
-      width: 16px;
+    .Dropdown__option__arrow {
+      transition: transform.3s ease;
+      width: 24px;
+      height: 24px;
+      margin: -4px 0;
+      color: var(--gray);
+
+      .isvg {
+        position: absolute;
+        display: block;
+        width: inherit;
+        height: inherit;
+
+        svg {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &.Dropdown_open {
+    .Dropdown__option__arrow {
+      transform: rotate(180deg);
     }
   }
 
@@ -63,7 +86,6 @@
     display: flex;
     align-items: center;
     width: 100%;
-    color: var(--black);
 
     .Dropdown__option__prefix {
       margin-right: 8px;

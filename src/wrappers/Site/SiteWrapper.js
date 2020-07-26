@@ -34,7 +34,7 @@ class SiteWrapper extends React.Component {
             <div className="SiteWrapper__orange__bg">
               <img
                 src={require("../../asset/site/header_bg.svg")}
-                alt="Bitcoinbot orange background"
+                alt="Narfex orange background"
               />
             </div>
           ) : (

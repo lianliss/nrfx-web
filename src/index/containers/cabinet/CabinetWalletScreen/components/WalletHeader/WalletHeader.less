@@ -1,3 +1,5 @@
+@import '../../../../../../vars';
+
 .WalletHeader {
   margin-bottom: var(--gap-size);
 
@@ -12,6 +14,7 @@
   flex-direction: column;
   display: flex;
   justify-content: center;
+  min-height: 96px;
 }
 
 .WalletHeader__buttons {
@@ -45,4 +48,39 @@
 .WalletHeader__label__usd {
   margin-left: 24px;
   color: var(--dark-gray);
+}
+
+
+@media (max-width: @mobile-width) {
+  .WalletHeader {
+    .ContentBox__content {
+      flex-direction: column;
+      padding: 24px 16px;
+      text-align: center;
+    }
+  }
+
+  .WalletHeader__content {
+    min-height: 0;
+    margin-bottom: 16px;
+  }
+
+  .WalletHeader__amount {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .WalletHeader__label__usd {
+    margin-left: .5em;
+  }
+
+  .WalletHeader__buttons {
+    display: flex;
+    margin: 0 -8px;
+
+    .Button {
+      flex: 1;
+      margin: 0 8px;
+    }
+  }
 }

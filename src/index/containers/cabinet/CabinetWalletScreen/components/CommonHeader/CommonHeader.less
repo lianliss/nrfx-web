@@ -1,3 +1,5 @@
+@import '../../../../../../vars';
+
 .CommonHeader {
   margin-bottom: var(--gap-size);
 
@@ -29,6 +31,7 @@
 }
 
 .CommonHeader__pie {
+  flex: 0 0 auto;
   width: 120px;
   height: 120px;
 }
@@ -67,4 +70,42 @@
 .CommonHeader__currencyList__currency {
   font-weight: 600;
   text-transform: uppercase;
+}
+
+.CommonHeader__adaptiveBlock {
+  display: flex;
+  margin-top: 24px;
+}
+
+@media (max-width: @mobile-width) {
+  .CommonHeader__label {
+    text-align: center;
+  }
+
+  .CommonHeader__amount {
+    text-align: center;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .CommonHeader {
+    .ContentBox__content {
+      flex-direction: column;
+      padding: 24px 16px;
+    }
+  }
+
+  .CommonHeader__currencyList {
+    flex: 1;
+    margin: 0;
+    flex-direction: column;
+
+    li {
+      margin-right: 0;
+    }
+  }
+
+  .CommonHeader__pie {
+    margin-right: 16px;
+  }
 }

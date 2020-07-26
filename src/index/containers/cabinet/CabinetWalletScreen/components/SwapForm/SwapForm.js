@@ -1,38 +1,191 @@
 import "./SwapForm.less";
-import React from "react";
-import { useSelector } from "react-redux";
-import { ContentBox, Dropdown, CircleIcon } from "../../../../../../ui";
-import Lang from "../../../../../../components/Lang/Lang";
-import { currencySelector } from "../../../../../../selectors";
-import { currencyPresenter } from "../../../../../../actions";
+import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  ContentBox,
+  Dropdown,
+  CircleIcon,
+  Input,
+  Button,
+  NumberFormat
+} from "src/ui";
+import Lang from "src/components/Lang/Lang";
+import { classNames as cn } from "../../../../../../utils";
+import {
+  walletBalanceSelector,
+  walletBalancesSelector,
+  walletStatusSelector,
+  walletSwapSelector,
+  walletWalletsSelector
+} from "src/selectors";
+import { getCurrencyInfo } from "src/actions";
+import SVG from "react-inlinesvg";
+import {
+  walletSwapSetAmount,
+  walletSwapSetCurrency,
+  walletSwapSetFocus,
+  walletSwapStartRatePooling,
+  walletSwapStopRatePooling,
+  walletSwapSubmit,
+  walletSwapSwitch
+} from "src/actions/cabinet/wallet";
+import { isFiat } from "../../../../../../utils";
+
+const Form = ({
+  onChangeAmount,
+  currency,
+  secondaryCurrency,
+  amount,
+  options,
+  rate,
+  autoFocus,
+  onFocus,
+  onCurrencyChange,
+  disabled,
+  currentBalance,
+  title
+}) => {
+  const realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
+  const inputRef = useRef(null);
+
+  return (
+    <div className="SwapForm__form">
+      <div className="SwapForm__form__label">{title}</div>
+      <div className="SwapForm__form__control">
+        <Dropdown
+          disabled={disabled}
+          value={currency}
+          options={options
+            .map(b => {
+              const currency = getCurrencyInfo(b.currency);
+              return currency.can_exchange
+                ? {
+                    prefix: (
+                      <CircleIcon
+                        size="ultra_small"
+                        shadow={false}
+                        currency={currency}
+                      />
+                    ),
+                    value: b.currency,
+                    title: currency.name
+                  }
+                : false;
+            })
+            .filter(Boolean)}
+          onChange={({ value }) => onCurrencyChange(value)}
+        />
+        <div className="SwapForm__form__control__meta">
+          <NumberFormat number={1} currency={currency} />
+          {" ≈ "}
+          <NumberFormat
+            skipRoughly
+            number={realRate}
+            currency={secondaryCurrency}
+          />
+        </div>
+      </div>
+      <div className="SwapForm__form__control">
+        <Input
+          ref={inputRef}
+          disabled={disabled}
+          onFocus={onFocus}
+          autoFocus={autoFocus}
+          value={amount}
+          onTextChange={onChangeAmount}
+        />
+        {currentBalance && (
+          <div
+            onClick={() => onChangeAmount(currentBalance)}
+            className="SwapForm__form__control__meta active"
+          >
+            <NumberFormat number={currentBalance} currency={currency} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default () => {
-  const currency = useSelector(currencySelector("btc"));
+  const status = useSelector(walletStatusSelector);
+  const swap = useSelector(walletSwapSelector);
+  const wallets = useSelector(walletWalletsSelector);
+  const balances = useSelector(walletBalancesSelector);
+  const currentBalance = useSelector(walletBalanceSelector(swap.fromCurrency));
+  const dispatch = useDispatch();
+  const toCrypto = isFiat(swap.fromCurrency);
+  const disabled = status.rate === "loading";
+
+  useEffect(() => {
+    dispatch(walletSwapStartRatePooling());
+
+    return () => {
+      dispatch(walletSwapStopRatePooling());
+    };
+  }, [dispatch]);
 
   return (
     <ContentBox className="SwapForm">
-      <div className="SwapForm__form">
-        <div className="SwapForm__form__label">
-          <Lang name="cabinet_fiatWalletGive" />
+      <div className="SwapForm__formWrapper">
+        <Form
+          title={<Lang name="cabinet_fiatWalletGet" />}
+          disabled={disabled}
+          options={toCrypto ? balances : wallets}
+          amount={swap.fromAmount}
+          autoFocus={swap.focus === "from"}
+          onFocus={() => {
+            dispatch(walletSwapSetFocus("from"));
+          }}
+          currentBalance={currentBalance?.amount}
+          currency={swap.fromCurrency}
+          secondaryCurrency={swap.toCurrency}
+          rate={swap.rate}
+          onCurrencyChange={currency =>
+            dispatch(walletSwapSetCurrency("from", currency))
+          }
+          onChangeAmount={amount =>
+            dispatch(walletSwapSetAmount("from", amount))
+          }
+        />
+        <div className="SwapForm__separator">
+          <div
+            className={cn("SwapForm__switchButton", status.rate)}
+            onClick={() => {
+              dispatch(walletSwapSwitch());
+            }}
+          >
+            <SVG src={require("src/asset/24px/switch.svg")} />
+          </div>
         </div>
-        <Dropdown
-          value="1"
-          options={[
-            {
-              prefix: (
-                <CircleIcon
-                  size="ultra_small"
-                  shadow={false}
-                  currency={currencyPresenter(currency)}
-                />
-              ),
-              value: "1",
-              title: "1"
-            }
-          ]}
+        <Form
+          title={<Lang name="cabinet_fiatWalletGive" />}
+          disabled={disabled}
+          options={toCrypto ? wallets : balances}
+          amount={swap.toAmount}
+          autoFocus={swap.focus === "to"}
+          onFocus={() => {
+            dispatch(walletSwapSetFocus("to"));
+          }}
+          currency={swap.toCurrency}
+          secondaryCurrency={swap.fromCurrency}
+          rate={swap.rate}
+          onCurrencyChange={currency =>
+            dispatch(walletSwapSetCurrency("to", currency))
+          }
+          onChangeAmount={amount => dispatch(walletSwapSetAmount("to", amount))}
         />
       </div>
-      <div className="SwapForm__form"></div>
+      <div className="SwapForm__submitWrapper">
+        <Button
+          state={status.swap}
+          onClick={() => {
+            dispatch(walletSwapSubmit());
+          }}
+        >
+          <Lang name="cabinet_fiatMarketExchangeActionButton" />
+        </Button>
+      </div>
     </ContentBox>
   );
 };

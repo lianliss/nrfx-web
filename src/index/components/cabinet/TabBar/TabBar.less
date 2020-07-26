@@ -12,28 +12,49 @@
   &__item {
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: var(--text-black);
     flex: 1;
 
+    &:hover {
+      text-decoration: none;
+    }
+
     &.active {
       color: var(--black);
-
-      &:after {
-        position: absolute;
-        bottom: 0;
-        content: "";
-        display: block;
-        height: 2px;
-        width: 50%;
-        background: var(--orange-gradient);
-        border-radius: 1px;
-      }
     }
 
     .isvg {
+      display: block;
       line-height: 0;
+
+      svg {
+        display: block;
+      }
     }
+
+    &__text {
+      font-weight: 600;
+      font-size: 7px;
+      line-height: 12px;
+      color: var(--dark-gray);
+    }
+  }
+}
+
+.TabBar__item__primaryButton {
+  position: relative;
+  top: -8px;
+  display: flex;
+  background: var(--blue-gradient);
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
+  color: var(--white);
+
+  .isvg {
+    margin: auto;
   }
 }

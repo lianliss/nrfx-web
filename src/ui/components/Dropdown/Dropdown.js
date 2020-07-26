@@ -7,8 +7,7 @@ import SVG from "react-inlinesvg";
 // internal
 import { classNames } from "../../utils";
 
-const arrowUp = require("../../asset/arrow_outline_up.svg");
-const arrowDown = require("../../asset/arrow_outline_down.svg");
+const arrow = require("src/asset/24px/angle-down-small.svg");
 
 class Dropdown extends React.Component {
   constructor(props) {
@@ -48,7 +47,6 @@ class Dropdown extends React.Component {
 
   render() {
     const { props, state } = this;
-    const dropdownIcon = state.isOpen ? arrowUp : arrowDown;
 
     const headerText =
       typeof props.value !== "object"
@@ -76,7 +74,9 @@ class Dropdown extends React.Component {
             <div className="Dropdown__option__note">{headerText.note}</div>
           </div>
 
-          <SVG src={dropdownIcon} />
+          <div className="Dropdown__option__arrow">
+            <SVG src={arrow} />
+          </div>
         </div>
 
         {state.isOpen ? (

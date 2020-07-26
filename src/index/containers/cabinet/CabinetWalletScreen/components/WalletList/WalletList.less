@@ -1,3 +1,5 @@
+@import '../../../../../../vars';
+
 .WalletList {
 
   hr {
@@ -41,17 +43,22 @@
     }
   }
 
-  &.active:after {
+  &:after {
     position: absolute;
     content: '';
     display: block;
     width: 4px;
-    height: calc(100% - 12px);
+    transform: scale(1, 0);
     border-radius: 2px;
     right: 6px;
     top: 6px;
     bottom: 6px;
     background: var(--blue-gradient);
+    transition: transform.3s ease;
+  }
+
+  &.active:after {
+    transform: scale(1, 1);
   }
 }
 
@@ -82,4 +89,10 @@
 
 .WalletList__item__icon {
   margin-right: 16px;
+}
+
+@media (max-width: @mobile-width) {
+  .WalletList__item::after {
+    display: none;
+  }
 }

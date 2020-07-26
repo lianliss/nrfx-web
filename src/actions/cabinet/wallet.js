@@ -37,3 +37,49 @@ export function walletFetchHistory(payload) {
 export function walletFetchHistoryMore(payload) {
   return { type: actionTypes.WALLET_FETCH_HISTORY_MORE, payload };
 }
+
+export function walletSwapSetRate(payload) {
+  return { type: actionTypes.WALLET_SWAP_SET_RATE, payload };
+}
+
+export function walletSwapSetAmount(type, value) {
+  return { type: actionTypes.WALLET_SWAP_SET_AMOUNT, payload: { type, value } };
+}
+
+export function walletSwapUpdateAmount(type, value) {
+  return {
+    type: actionTypes.WALLET_SWAP_UPDATE_AMOUNT,
+    payload: { type, value }
+  };
+}
+
+export function walletSwapSetCurrency(type, value) {
+  return {
+    type: actionTypes.WALLET_SWAP_SET_CURRENCY,
+    payload: { type, value }
+  };
+}
+
+export function walletSwapSwitch() {
+  return { type: actionTypes.WALLET_SWAP_SWITCH };
+}
+
+export function walletSwapStartRatePooling() {
+  return { type: actionTypes.WALLET_SWAP_START_RATE_POOLING };
+}
+
+export function walletSwapStopRatePooling() {
+  return { type: actionTypes.WALLET_SWAP_STOP_RATE_POOLING };
+}
+
+export function walletSwapSetFocus(payload) {
+  return { type: actionTypes.WALLET_SWAP_SET_FOCUS, payload };
+}
+
+export function walletSwapSubmit(payload) {
+  return { type: actionTypes.WALLET_SWAP_SUBMIT, payload };
+}
+
+export function walletSwapSuccess(payload) {
+  return { type: actionTypes.WALLET_SWAP_SUCCESS, payload };
+}
