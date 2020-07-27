@@ -243,7 +243,7 @@ class FiatMarketForm extends React.Component {
       >
         {this.props.loadingStatus && (
           <div className="FiatMarketForm__loader">
-            <SVG src={require("src/asset/120/exchange.svg")} />
+            <SVG src={require("src/asset/120/swap.svg")} />
             <h2>{getLang("cabinet_fiatMarketExchangeWeMakeAnExchange")}</h2>
             <p>{getLang("cabinet_fiatMarketExchangeLoaderDescription")}</p>
           </div>

@@ -52,7 +52,7 @@ export default ({ visible, onClose }) => {
             router.navigate(pages.BUY_BITCOIN);
           }}
         >
-          <SVG src={require("src/asset/120/exchange.svg")} />
+          <SVG src={require("src/asset/120/currencies.svg")} />
           <div>
             <h4>
               <Lang name="landing_megaMenu_buyCrypto_title" />
@@ -67,7 +67,7 @@ export default ({ visible, onClose }) => {
             router.navigate(pages.SITE_EXCHANGE);
           }}
         >
-          <SVG src={require("src/asset/120/exchange.svg")} />
+          <SVG src={require("src/asset/120/swap.svg")} />
           <div>
             <h4>
               <Lang name="landing_megaMenu_trade_title" />
