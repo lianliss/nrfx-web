@@ -28,6 +28,8 @@ import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
 import useAdaptive from "src/hooks/adaptive";
 import { ContentBox } from "../../../../ui";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
+import { setTitle } from "../../../../actions";
+import { getLang } from "../../../../utils";
 
 export default () => {
   const {
@@ -63,6 +65,7 @@ export default () => {
   }, [balance, isCrypto, isSwap]);
 
   useEffect(() => {
+    setTitle(getLang("cabinet_header_wallet", true));
     dispatch(walletFetchHistory(historyOptions));
   }, [historyOptions, dispatch]);
 

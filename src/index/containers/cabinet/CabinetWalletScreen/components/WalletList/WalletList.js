@@ -8,6 +8,7 @@ import Wallet from "../Wallet/Wallet";
 import Lang from "../../../../../../components/Lang/Lang";
 import { walletSelector } from "../../../../../../selectors";
 import useAdaptive from "src/hooks/adaptive";
+import { Separator } from "../../../../../../ui";
 
 export default ({ currency }) => {
   const adaptive = useAdaptive();
@@ -30,7 +31,7 @@ export default ({ currency }) => {
             title={<Lang name={"cabinet_fiatMarketExchangeTitle"} />}
             icon={require("src/asset/24px/loop.svg")}
           />
-          <hr />
+          <Separator />
         </>
       )}
       {wallets.map(wallet => (
@@ -44,7 +45,7 @@ export default ({ currency }) => {
           currency={wallet.currency}
         />
       ))}
-      <hr />
+      <Separator />
       {balances.map(balance => (
         <Wallet
           onClick={() => {

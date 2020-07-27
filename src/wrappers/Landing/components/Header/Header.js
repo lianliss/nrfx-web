@@ -110,7 +110,7 @@ export default () => {
               <Button
                 type="secondary"
                 onClick={() => {
-                  router.navigate(pages.DASHBOARD);
+                  router.navigate(pages.PARTNERS);
                 }}
               >
                 <Lang name="cabinet_header_cabinet" />

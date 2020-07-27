@@ -49,9 +49,7 @@ class CabinetChangeEmail extends React.PureComponent {
             />
           )}
           <p>{this.state.message}</p>
-          <UI.Button
-            onClick={() => this.props.router.navigate(pages.DASHBOARD)}
-          >
+          <UI.Button onClick={() => this.props.router.navigate(pages.PARTNERS)}>
             {utils.getLang("global_understand")}
           </UI.Button>
         </UI.ContentBox>

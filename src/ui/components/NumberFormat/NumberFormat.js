@@ -101,6 +101,8 @@ const NumberFormat = ({
     displayNumber = "≈ " + displayNumber;
   }
 
+  displayNumber = displayNumber.replace(",", ".");
+
   return (
     <span
       onClick={onClick}

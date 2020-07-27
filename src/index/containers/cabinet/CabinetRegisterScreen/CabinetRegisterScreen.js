@@ -92,7 +92,7 @@ class CabinetRegister extends React.PureComponent {
             utils.getLang("cabinet_registerScreen_success"),
             "success"
           );
-          window.location.href = "/" + pages.DASHBOARD;
+          window.location.href = "/" + pages.PARTNERS;
         })
         .catch(err => {
           this.props.toastPush(err.message, "error");

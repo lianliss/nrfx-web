@@ -19,6 +19,7 @@ import Notification from "../Notification/Notification";
 import InternalNotification from "../InternalNotification/InternalNotification";
 import * as notificationsActions from "../../../../actions/cabinet/notifications";
 import Lang from "../../../../components/Lang/Lang";
+import { userRole } from "../../../../actions/cabinet/profile";
 
 class Header extends React.Component {
   state = {
@@ -56,52 +57,54 @@ class Header extends React.Component {
           <div className="CabinetHeader__content">
             <BaseLink
               router={router}
-              routeName={isLogged ? pages.DASHBOARD : pages.MAIN}
+              routeName={isLogged ? pages.PARTNERS : pages.MAIN}
             >
               <UI.Logo />
             </BaseLink>
             {isLogged && (
               <div className="CabinetHeader__links">
-                <BaseLink
-                  router={router}
-                  routeName={pages.DASHBOARD}
-                  className="CabinetHeader__link"
-                  activeClassName="active"
-                  onClick={() => {
-                    this.setState({ activePage: pages.DASHBOARD });
-                  }}
-                >
-                  <SVG src={require("../../../../asset/24px/layout.svg")} />
-                  <Lang name="cabinet_header_profile" />
-                </BaseLink>
+                {(this.props.profile.has_deposits || userRole("agent")) && (
+                  <BaseLink
+                    router={router}
+                    routeName={pages.PARTNERS}
+                    className="CabinetHeader__link"
+                    activeClassName="active"
+                    onClick={() => {
+                      this.setState({ activePage: pages.PARTNERS });
+                    }}
+                  >
+                    <SVG src={require("src/asset/24px/users.svg")} />
+                    <Lang name="cabinet_header_partners" />
+                  </BaseLink>
+                )}
 
-                <BaseLink
-                  router={router}
-                  routeName={pages.FIAT}
-                  className="CabinetHeader__link"
-                  activeClassName="active"
-                  onClick={() => {
-                    this.setState({ activePage: pages.FIAT });
-                  }}
-                >
-                  <SVG src={require("src/asset/24px/fiat.svg")} />
-                  <Lang name="cabinet_header_fiat" />
-                </BaseLink>
+                {/*<BaseLink*/}
+                {/*  router={router}*/}
+                {/*  routeName={pages.FIAT}*/}
+                {/*  className="CabinetHeader__link"*/}
+                {/*  activeClassName="active"*/}
+                {/*  onClick={() => {*/}
+                {/*    this.setState({ activePage: pages.FIAT });*/}
+                {/*  }}*/}
+                {/*>*/}
+                {/*  <SVG src={require("src/asset/24px/fiat.svg")} />*/}
+                {/*  <Lang name="cabinet_header_fiat" />*/}
+                {/*</BaseLink>*/}
 
-                <BaseLink
-                  router={router}
-                  routeName={pages.CABINET_WALLET}
-                  className="CabinetHeader__link"
-                  activeClassName="active"
-                  onClick={() => {
-                    this.setState({ activePage: pages.CABINET_WALLET });
-                  }}
-                >
-                  <SVG
-                    src={require("../../../../asset/cabinet/wallet_icon.svg")}
-                  />
-                  <Lang name="cabinet_header_wallets" />
-                </BaseLink>
+                {/*<BaseLink*/}
+                {/*  router={router}*/}
+                {/*  routeName={pages.CABINET_WALLET}*/}
+                {/*  className="CabinetHeader__link"*/}
+                {/*  activeClassName="active"*/}
+                {/*  onClick={() => {*/}
+                {/*    this.setState({ activePage: pages.CABINET_WALLET });*/}
+                {/*  }}*/}
+                {/*>*/}
+                {/*  <SVG*/}
+                {/*    src={require("../../../../asset/cabinet/wallet_icon.svg")}*/}
+                {/*  />*/}
+                {/*  <Lang name="cabinet_header_wallets" />*/}
+                {/*</BaseLink>*/}
 
                 <BaseLink
                   router={router}
@@ -182,19 +185,6 @@ class Header extends React.Component {
                             />
                           ),
                           <Notification {...n} />
-                          // <UI.Notification
-                          //   key={i}
-                          //   icon={n.icon}
-                          //   unread={n.unread}
-                          //   actions={n.actions}
-                          //   onAction={action =>
-                          //     this.props.notificationAction(n.id, action)
-                          //   }
-                          //   message={n.message}
-                          //   date={utils
-                          //     .dateFormat(n.created_at, false)
-                          //     .fromNow()}
-                          // />
                         ])}
                     </UI.Notifications>
                   )}

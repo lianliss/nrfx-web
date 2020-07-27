@@ -49,19 +49,20 @@
       padding: 16px 8px 16px 3px;
       justify-content: center;
       font-weight: 600;
-      margin-right: 16px;
+      margin-right: 32px;
       font-size: 13px;
       line-height: 16px;
       text-decoration: none !important;
+      transition: color.3s ease;
 
       &:before {
         content: "";
         position: absolute;
         right: 0;
-        bottom: 0;
+        top: 0;
         left: 0;
-        border-radius: 3px 3px 0 0;
-        background: var(--orange-gradient);
+        border-radius: 0 0 2px 2px;
+        background: var(--primary-blue);
         height: 0;
         width: 0;
         margin: 0 auto;
@@ -73,10 +74,10 @@
       }
 
       &.active {
-        color: var(--black);
+        color: var(--primary-blue);
 
         &:before {
-          height: 3px;
+          height: 2px;
           width: 90%;
         }
       }

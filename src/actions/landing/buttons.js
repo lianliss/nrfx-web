@@ -7,7 +7,7 @@ import * as pages from "../../index/constants/pages";
 export const singUp = () => {
   const user = store.getState().default.profile.user;
   if (user) {
-    router.navigate(pages.DASHBOARD);
+    router.navigate(pages.PARTNERS);
   } else {
     actions.openModal("auth", { type: steps.REGISTRATION });
   }

@@ -130,8 +130,8 @@ export const routes =
           path: "/settings"
         },
         {
-          name: pages.DASHBOARD,
-          path: "/dashboard",
+          name: pages.PARTNERS,
+          path: "/partners",
           params: { section: "test" }
         },
         {
@@ -219,7 +219,7 @@ router.usePlugin(listenersPlugin());
 
 router.addListener((state, prevState) => {
   if (state.params.path === "/profile") {
-    router.navigate(pages.DASHBOARD);
+    router.navigate(pages.PARTNERS);
   }
 });
 

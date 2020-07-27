@@ -142,7 +142,7 @@ function Routes(props) {
       needAuthorization = true;
       Component = CabinetFiatScreen.default;
       break;
-    case pages.DASHBOARD:
+    case pages.PARTNERS:
       needAuthorization = true;
       Component = CabinetProfileScreen.default;
       break;

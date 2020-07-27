@@ -12,6 +12,8 @@ import * as utils from "../../../../../utils";
 import * as auth from "../../../../../actions/auth";
 import * as actions from "../../../../../actions";
 import ContentBox from "src/ui/components/ContentBox/ContentBox";
+import Lang from "../../../../../components/Lang/Lang";
+import { userRole } from "../../../../../actions/cabinet/profile";
 
 class MenuScreen extends CabinetBaseScreen {
   componentDidMount() {
@@ -61,6 +63,35 @@ class MenuScreen extends CabinetBaseScreen {
             <span>{utils.getLang("cabinet_apiKey")}</span>
           </BaseLink>
         </ContentBox>
+
+        <ContentBox className="Menu__section">
+          <BaseLink
+            router={router}
+            routeName={PAGES.INVESTMENTS}
+            className="Menu__section__item"
+            activeClassName="active"
+          >
+            <SVG src={require("../../../../../asset/24px/invest.svg")} />
+            <span>
+              <Lang name="cabinet_header_investments" />
+            </span>
+          </BaseLink>
+
+          {(this.props.profile.has_deposits || userRole("agent")) && (
+            <BaseLink
+              router={router}
+              routeName={PAGES.PARTNERS}
+              className="Menu__section__item"
+              activeClassName="active"
+            >
+              <SVG src={require("../../../../../asset/24px/users.svg")} />
+              <span>
+                <Lang name="cabinet_header_partners" />
+              </span>
+            </BaseLink>
+          )}
+        </ContentBox>
+
         <ContentBox className="Menu__section Menu__section__noSpacing">
           <div
             onClick={this.__handleChangeLanguage}
@@ -112,7 +143,8 @@ export default connect(
   state => ({
     adaptive: state.default.adaptive,
     langList: state.default.langList,
-    theme: state.default.theme
+    theme: state.default.theme,
+    profile: state.profile
   }),
   {
     setTitle: actions.setTitle

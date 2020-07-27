@@ -27,24 +27,21 @@ const Tabs = props => {
           <Lang name="cabinet_header_wallet" />
         </span>
       </Tab>
-      {props.profile.has_deposits && (
-        <Tab route={PAGES.INVESTMENTS}>
-          <SVG src={require("../../../../asset/24px/invest.svg")} />
-
-          <span className="TabBar__item__text">
-            <Lang name="cabinet_header_investments" />
-          </span>
-        </Tab>
-      )}
+      <Tab route={PAGES.EXCHANGE}>
+        <SVG src={require("../../../../asset/24px/candles.svg")} />
+        <span className="TabBar__item__text">
+          <Lang name="cabinet_header_exchange" />
+        </span>
+      </Tab>
       <Tab route={PAGES.WALLET_SWAP}>
         <div className="TabBar__item__primaryButton">
           <SVG src={require("../../../../asset/24px/loop.svg")} />
         </div>
       </Tab>
-      <Tab route={PAGES.EXCHANGE}>
-        <SVG src={require("../../../../asset/24px/candles.svg")} />
+      <Tab route={PAGES.NOTIFICATIONS}>
+        <SVG src={require("../../../../asset/24px/bell.svg")} />
         <span className="TabBar__item__text">
-          <Lang name="cabinet_header_exchange" />
+          <Lang name="global_notifications" />
         </span>
       </Tab>
       <Tab route={PAGES.MENU}>

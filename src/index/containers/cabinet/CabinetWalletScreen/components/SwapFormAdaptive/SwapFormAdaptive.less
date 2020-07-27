@@ -53,6 +53,15 @@
     width: calc(100% - 32px);
     margin: 0 16px;
     background: var(--extra-light-gray);
+    transform-origin: center top;
+
+    @media (min-resolution: 2dppx) {
+      transform: scaleY(.5);
+    }
+
+    @media (min-resolution: 3dppx) {
+      transform: scaleY(.32);
+    }
   }
 }
 

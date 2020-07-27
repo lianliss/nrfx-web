@@ -56,3 +56,4 @@ export { default as Spoiler } from "./components/Spoiler/Spoiler";
 export { default as Select } from "./components/Select/Select";
 export { default as Timer } from "./components/Timer/Timer";
 export { default as Status } from "./components/Status/Status";
+export { default as Separator } from "./components/Separator/Separator";

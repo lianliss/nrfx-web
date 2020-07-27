@@ -8,6 +8,9 @@ import CabinetBaseScreen from "../../CabinetBaseScreen/CabinetBaseScreen";
 import * as utils from "../../../../../utils";
 import * as actions from "../../../../../actions";
 import * as notificationsActions from "../../../../../actions/cabinet/notifications";
+import Lang from "../../../../../components/Lang/Lang";
+import Notification from "../../../../components/cabinet/Notification/Notification";
+import LoadingStatus from "../../../../components/cabinet/LoadingStatus/LoadingStatus";
 
 class Notifications extends CabinetBaseScreen {
   componentDidMount() {
@@ -19,7 +22,7 @@ class Notifications extends CabinetBaseScreen {
     const { notifications, pending } = this.props.notifications;
 
     if (pending) {
-      return null;
+      return <LoadingStatus inline status="loading" />;
     }
 
     if (!notifications.length) {
@@ -39,20 +42,16 @@ class Notifications extends CabinetBaseScreen {
     return (
       <div className="NotificationsList Content_box">
         {notifications
+          .filter(item => !item.deleted)
           .sort(n => (n.unread ? -1 : 1))
           .map((n, i) => [
             i > 0 && n.unread !== notifications[i - 1].unread && (
               <UI.NotificationSeparator
-                title={utils.getLang("cabinet_header_viewed")}
+                key={Math.random()}
+                title={<Lang name="cabinet_header_viewed" />}
               />
             ),
-            <UI.Notification
-              key={i}
-              icon={n.icon}
-              unread={n.unread}
-              message={n.message}
-              date={n.created_at}
-            />
+            <Notification {...n} />
           ])}
       </div>
     );

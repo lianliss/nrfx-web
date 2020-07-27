@@ -4,7 +4,7 @@
   bottom: 0;
   width: 100vw;
   background: var(--primary-background);
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 8px 8px 0 0;
   box-shadow: var(--main-shadow);
   height: 48px;
   z-index: 100;
@@ -15,7 +15,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: var(--text-black);
+    color: var(--dark-gray);
     flex: 1;
 
     &:hover {
@@ -23,7 +23,11 @@
     }
 
     &.active {
-      color: var(--black);
+      color: var(--primary-blue);
+
+      .TabBar__item__text {
+        font-weight: 600;
+      }
     }
 
     .isvg {
@@ -36,10 +40,8 @@
     }
 
     &__text {
-      font-weight: 600;
       font-size: 7px;
       line-height: 12px;
-      color: var(--dark-gray);
     }
   }
 }

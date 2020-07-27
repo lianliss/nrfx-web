@@ -59,8 +59,17 @@
     right: 0;
     margin: auto;
     background: var(--black);
+    transform-origin: left center;
     opacity: .2;
     z-index: -1;
+
+    @media (min-resolution: 2dppx) {
+      transform: scaleX(.5);
+    }
+
+    @media (min-resolution: 3dppx) {
+      transform: scaleX(.32);
+    }
   }
 }
 

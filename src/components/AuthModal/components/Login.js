@@ -50,7 +50,7 @@ function Login({
                 pages.DOCUMENTATION_API_METHOD
               ].includes(currentRoute.name)
             ) {
-              router.navigate(pages.DASHBOARD);
+              router.navigate(pages.PARTNERS);
             } else {
               router.navigate(currentRoute.name, {
                 ...currentRoute.params,
