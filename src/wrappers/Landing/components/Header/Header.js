@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { Button, Logo } from "../../../../ui";
+import { Button, ButtonWrapper, Logo } from "../../../../ui";
 import { classNames as cn } from "src/utils/index";
 import MegaMenu from "../MegaMenu/MegaMenu";
 import MobileMenu from "../MobileMenu/MobileMenu";
@@ -110,13 +110,13 @@ export default () => {
               <Button
                 type="secondary"
                 onClick={() => {
-                  router.navigate(pages.PARTNERS);
+                  router.navigate(pages.WALLET);
                 }}
               >
                 <Lang name="cabinet_header_cabinet" />
               </Button>
             ) : (
-              <>
+              <ButtonWrapper>
                 <Button
                   type="lite"
                   onClick={() => {
@@ -133,7 +133,7 @@ export default () => {
                 >
                   <Lang name="site__authModalSignUpBtn" />
                 </Button>
-              </>
+              </ButtonWrapper>
             )}
           </div>
 
