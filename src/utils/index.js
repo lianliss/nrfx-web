@@ -281,6 +281,8 @@ export function __doubleInputOnKeyPressHandler(e, value = "") {
 }
 
 export function clipTextMiddle(text = "", length = 10) {
+  if (typeof text !== "string") return "";
+
   if (text.length <= length + length / 2) {
     return text;
   }
