@@ -272,7 +272,6 @@ export function fiatWithdrawal(params) {
         account_holder_name: params.accountHolderName,
         account_number: params.accountNumber,
         amount: params.amount,
-        email_to: params.email,
         balance_id: params.balance.id
       })
       .then(payload => {
