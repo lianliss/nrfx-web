@@ -50,7 +50,7 @@ export default () => {
   const cardReservation = useSelector(walletCardReservationSelector);
   const balance = useSelector(walletBalanceSelector(params.currency));
   const [historyOptions, setHistoryOptions] = useState(null);
-  const balanceId = balance?.id;
+  const balanceId = !isSwap && balance?.id;
 
   useEffect(() => {
     dispatch(fetchWalletPage());
@@ -84,7 +84,9 @@ export default () => {
   return (
     <PageContainer
       className="CabinetWalletScreen"
-      sideBar={!adaptive && <WalletList currency={params.currency} />}
+      sideBar={
+        !adaptive && <WalletList currency={balanceId && params.currency} />
+      }
     >
       {isCommon && <CommonHeader />}
       {isSwap &&
@@ -96,7 +98,10 @@ export default () => {
             <SwapTutorial />
           </>
         ))}
-      {balance && <WalletHeader isCrypto={isCrypto} balance={balance} />}
+
+      {balance && !isSwap && (
+        <WalletHeader isCrypto={isCrypto} balance={balance} />
+      )}
 
       {adaptive && !balance && !isSwap && (
         <ContentBox className="CabinetWalletScreen__adaptiveWalletList">

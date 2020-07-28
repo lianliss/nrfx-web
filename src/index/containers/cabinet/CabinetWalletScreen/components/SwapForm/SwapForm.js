@@ -21,6 +21,7 @@ import {
 import { getCurrencyInfo } from "src/actions";
 import SVG from "react-inlinesvg";
 import {
+  walletSetStatus,
   walletSwapSetAmount,
   walletSwapSetCurrency,
   walletSwapSetFocus,
@@ -118,6 +119,7 @@ export default () => {
   const disabled = status.rate === "loading";
 
   useEffect(() => {
+    dispatch(walletSetStatus("rate", "loading"));
     dispatch(walletSwapStartRatePooling());
 
     return () => {
@@ -179,6 +181,7 @@ export default () => {
       <div className="SwapForm__submitWrapper">
         <Button
           state={status.swap}
+          disabled={disabled}
           onClick={() => {
             dispatch(walletSwapSubmit());
           }}

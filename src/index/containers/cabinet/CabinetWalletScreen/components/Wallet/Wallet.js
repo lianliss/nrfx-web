@@ -22,7 +22,7 @@ export default ({ currency, onClick, title, icon, amount, active }) => {
             currency={currencyPresenter(currencyInfo)}
           />
         ) : (
-          <CircleIcon icon={icon} />
+          <CircleIcon size="small" icon={icon} />
         )}
       </div>
       <div className="WalletList__item__content">

@@ -76,7 +76,7 @@ body.theme-dark {
 body {
   --gap-size: 20px;
 
-  &.adaptive {
+  @media (max-width: @mobile-width) {
     --gap-size: 16px;
   }
 }

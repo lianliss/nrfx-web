@@ -75,7 +75,10 @@ export default ({ balance, isCrypto }) => {
         <div className="WalletHeader__label">
           <span className="WalletHeader__label__currency">{currency.name}</span>
           <span className="WalletHeader__label__usd">
-            <NumberFormat roughly number={balance.to_usd} currency="usd" />
+            <NumberFormat
+              number={balance.to_usd * balance.amount}
+              currency="usd"
+            />
           </span>
         </div>
         <div className="WalletHeader__amount">

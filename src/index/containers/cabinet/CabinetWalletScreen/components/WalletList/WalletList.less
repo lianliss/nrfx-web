@@ -12,6 +12,10 @@
   cursor: pointer;
   margin-bottom: 2px;
 
+  @media (max-width: @mobile-width) {
+    border-radius: 0;
+  }
+
   .CircleIcon {
     transition: .3s ease;
   }
@@ -27,7 +31,7 @@
 
   &.primary {
     .CircleIcon {
-      transform: scale(1.25);
+      //transform: scale(1.25);
       background: var(--white);
       color: var(--primary-blue);
     }
