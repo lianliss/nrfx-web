@@ -11,6 +11,8 @@ import SwapOperation from "./operations/swap";
 import BankCardRefillRejectOperation from "./operations/bankCardRefillReject";
 import TransferReceiveOperation from "./operations/transferReceive";
 import TransferSendOperation from "./operations/transferSend";
+import TransactionReceiveOperation from "./operations/transactionrReceive";
+import TransactionSendOperation from "./operations/transactionSend";
 
 function FiatOperationModal(props) {
   const { operation } = props;
@@ -31,8 +33,12 @@ function FiatOperationModal(props) {
       return <SwapOperation operation={operation} />;
     } else if (operation.type === "transfer_receive") {
       return <TransferReceiveOperation operation={operation} />;
+    } else if (operation.type === "transaction_receive") {
+      return <TransactionReceiveOperation operation={operation} />;
     } else if (operation.type === "transfer_send") {
       return <TransferSendOperation operation={operation} />;
+    } else if (operation.type === "transaction_send") {
+      return <TransactionSendOperation operation={operation} />;
     } else {
       return (
         <div>

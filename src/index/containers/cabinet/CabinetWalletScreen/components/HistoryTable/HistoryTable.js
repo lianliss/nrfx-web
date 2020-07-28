@@ -25,6 +25,8 @@ const HistoryTable = props => {
 
   const icons = {
     transfer_receive: require("src/asset/24px/receive.svg"),
+    transaction_receive: require("src/asset/24px/receive.svg"),
+    transaction_send: require("src/asset/24px/send.svg"),
     transfer_send: require("src/asset/24px/send.svg"),
     swap: require("src/asset/24px/loop.svg"),
     refill: require("src/asset/24px/fiat-plus.svg"),
@@ -245,8 +247,10 @@ const HistoryTable = props => {
                 case "buy_token":
                   return renderSwapItem(item);
                 case "transfer_receive":
+                case "transaction_receive": // TODO TEMP
                   return renderTransferReceiveItem(item);
                 case "transfer_send":
+                case "transaction_send": // TODO TEMP
                   return renderTransferSendItem(item);
                 default:
                   return renderOtherItem(item);
