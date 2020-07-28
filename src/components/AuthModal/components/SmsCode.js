@@ -15,7 +15,7 @@ function SmsCode({ changeStep, params }) {
     checkSmsCode(countryCode, number, code)
       .then(() => {
         setErrorMsg("");
-        setTimeout(() => (window.location = "/" + PAGES.PARTNERS), 100);
+        setTimeout(() => (window.location = "/" + PAGES.WALLET), 100);
       })
       .catch(err => setErrorMsg(err.message));
   };

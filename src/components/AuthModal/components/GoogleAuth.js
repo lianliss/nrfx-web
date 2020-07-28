@@ -33,7 +33,7 @@ function GoogleAuth({ changeStep, email, password }) {
           router.navigate(
             router.getState().name === pages.EXCHANGE
               ? pages.EXCHANGE
-              : pages.PARTNERS
+              : pages.WALLET
           );
         }
       })

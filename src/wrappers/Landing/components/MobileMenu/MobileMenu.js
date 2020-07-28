@@ -82,7 +82,7 @@ export default ({ visible, onClose }) => {
         {user ? (
           <Button
             onClick={() => {
-              router.navigate(pages.PARTNERS);
+              router.navigate(pages.WALLET);
             }}
           >
             <Lang name="cabinet_header_cabinet" />

@@ -31,7 +31,7 @@ class SiteNotFoundScreen extends BaseScreen {
             {getLang("global_pageNotFoundDescription")}
           </p>
           {this.props.isLogin ? (
-            <UI.Button onClick={() => router.navigate(pages.PARTNERS)}>
+            <UI.Button onClick={() => router.navigate(pages.WALLET)}>
               {getLang("global_pageNotFoundGoToProfile")}
             </UI.Button>
           ) : (
