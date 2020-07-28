@@ -194,7 +194,8 @@ export function sendCoins(params) {
     });
     api
       .call(method, params)
-      .then(({ wallet, transaction, transfer }) => {
+      .then(payload => {
+        const { wallet, transaction, transfer } = payload;
         toastsActions.success(utils.getLang("cabinet_sendCoinsModal_success"));
         transaction &&
           dispatch({ type: actionTypes.WALLETS_NEW_TRANSACTION, transaction });
@@ -212,7 +213,8 @@ export function sendCoins(params) {
           status: null
         });
         dispatch({ type: actionTypes.WALLETS_SEND_COIN_MODAL_CLEAR });
-        dispatch({ type: actionTypes.WALLETS_WALLET_UPDATE, wallet });
+        dispatch({ type: actionTypes.WALLETS_WALLET_UPDATE, wallet }); // TODO LEGACY
+        dispatch({ type: actionTypes.WALLET_UPDATE, payload: payload });
       })
       .catch(err => {
         toastsActions.error(err.message);

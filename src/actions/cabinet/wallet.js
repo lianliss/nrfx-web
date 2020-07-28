@@ -80,6 +80,6 @@ export function walletSwapSubmit(payload) {
   return { type: actionTypes.WALLET_SWAP_SUBMIT, payload };
 }
 
-export function walletSwapSuccess(payload) {
-  return { type: actionTypes.WALLET_SWAP_SUCCESS, payload };
+export function walletUpdate(payload) {
+  return { type: actionTypes.WALLET_UPDATE, payload };
 }

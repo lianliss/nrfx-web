@@ -265,6 +265,7 @@ export function fiatWithdrawal(params) {
           transaction
         });
         dispatch({ type: actionTypes.FIAT_WALLETS_UPDATE, payload });
+        dispatch({ type: actionTypes.WALLET_UPDATE, payload });
       })
       .finally(() => {
         dispatch({

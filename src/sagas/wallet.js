@@ -16,7 +16,7 @@ import {
   walletSwapSetRate,
   walletSwapStartRatePooling,
   walletSwapStopRatePooling,
-  walletSwapSuccess,
+  walletUpdate,
   walletSwapUpdateAmount
 } from "../actions/cabinet/wallet";
 import { call as api } from "src/services/api";
@@ -166,7 +166,7 @@ function* swapSubmitWorker() {
       amount
     });
 
-    yield put(walletSwapSuccess(payload));
+    yield put(walletUpdate(payload));
     yield call(toast.success, getLang("cabinet_fiatWalletExchangeSuccessText"));
   } catch (e) {
     yield call(toast.error, e.message);

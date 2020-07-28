@@ -129,7 +129,7 @@ export default () => {
     <ContentBox className="SwapForm">
       <div className="SwapForm__formWrapper">
         <Form
-          title={<Lang name="cabinet_fiatWalletGet" />}
+          title={<Lang name="cabinet_fiatWalletGive" />}
           disabled={disabled}
           options={toCrypto ? balances : wallets}
           amount={swap.fromAmount}
@@ -159,7 +159,7 @@ export default () => {
           </div>
         </div>
         <Form
-          title={<Lang name="cabinet_fiatWalletGive" />}
+          title={<Lang name="cabinet_fiatWalletGet" />}
           disabled={disabled}
           options={toCrypto ? wallets : balances}
           amount={swap.toAmount}

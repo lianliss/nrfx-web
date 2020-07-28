@@ -3,7 +3,7 @@ import "./Header.less";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { BaseLink } from "react-router5";
-
+import { classNames as cn } from "../../../../utils";
 import Badge from "../../../../ui/components/Badge/Badge";
 import router from "../../../../router";
 import * as pages from "../../../constants/pages";
@@ -44,6 +44,7 @@ class Header extends React.Component {
   render() {
     const isLogged = !!this.props.profile.user;
     const { notifications } = this.props.notifications;
+    const currentPage = router.getState().name;
 
     const currentLang = getLang();
     const lang =
@@ -109,7 +110,14 @@ class Header extends React.Component {
                 <BaseLink
                   router={router}
                   routeName={pages.WALLET}
-                  className="CabinetHeader__link"
+                  className={cn("CabinetHeader__link", {
+                    // HACK
+                    active: [
+                      pages.WALLET_SWAP,
+                      pages.WALLET_FIAT,
+                      pages.WALLET_CRYPTO
+                    ].includes(currentPage)
+                  })}
                   activeClassName="active"
                   onClick={() => {
                     this.setState({ activePage: pages.WALLET });

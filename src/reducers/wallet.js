@@ -117,14 +117,23 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
 
-    case actionTypes.WALLET_SWAP_SUCCESS: {
-      const { balance, wallet } = action.payload;
+    case actionTypes.WALLET_UPDATE: {
+      const {
+        balance = {},
+        wallet = {},
+        history,
+        transaction,
+        transfer
+      } = action.payload;
+
+      const newHistoryItem = history || transaction || transfer;
+
       return {
         ...state,
         history: {
           ...state.history,
-          items: action.payload.history
-            ? [action.payload.history, ...state.history.items]
+          items: newHistoryItem
+            ? [newHistoryItem, ...state.history.items]
             : state.history.items
         },
         balances: balance

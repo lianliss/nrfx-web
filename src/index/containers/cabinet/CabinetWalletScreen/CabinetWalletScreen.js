@@ -47,6 +47,7 @@ export default () => {
   const next = useSelector(walletHistoryNextSelector);
   const balance = useSelector(walletBalanceSelector(params.currency));
   const [historyOptions, setHistoryOptions] = useState(null);
+  const balanceId = balance?.id;
 
   useEffect(() => {
     dispatch(fetchWalletPage());
@@ -58,11 +59,11 @@ export default () => {
     setHistoryOptions(
       isSwap
         ? { operations: "swap" }
-        : balance && {
-            [isCrypto ? "wallet_id" : "balance_id"]: balance.id
+        : balanceId && {
+            [isCrypto ? "wallet_id" : "balance_id"]: balanceId
           }
     );
-  }, [balance, isCrypto, isSwap]);
+  }, [balanceId, isCrypto, isSwap]);
 
   useEffect(() => {
     setTitle(getLang("cabinet_header_wallet", true));
