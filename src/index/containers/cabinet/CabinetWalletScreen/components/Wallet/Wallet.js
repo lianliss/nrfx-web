@@ -31,7 +31,9 @@ export default ({ currency, onClick, title, icon, amount, active }) => {
         )}
         {title && <div className="WalletList__item__title">{title}</div>}
         <div className="WalletList__item__amount">
-          {amount && <NumberFormat number={amount} currency={currency} />}
+          {!isNaN(amount) && (
+            <NumberFormat number={amount} currency={currency} />
+          )}
         </div>
       </div>
     </div>
