@@ -12,7 +12,11 @@ import Clipboard from "src/index/components/cabinet/Clipboard/Clipboard";
 import Button, { ButtonWrapper } from "../../../../ui/components/Button/Button";
 import { getLang } from "../../../../utils";
 import * as actionTypes from "../../../../actions/actionTypes";
-import { fiatSelector } from "src/selectors";
+import {
+  walletCardReservationSelector,
+  walletSelector,
+  walletStatusSelector
+} from "src/selectors";
 import useAdaptive from "src/hooks/adaptive";
 import { Message, Timer } from "../../../../ui";
 import Lang from "../../../../components/Lang/Lang";
@@ -37,18 +41,20 @@ const CustomLoadingStatus = ({ status }) => {
 
 export default props => {
   const dispatch = useDispatch();
-  const fiatState = useSelector(fiatSelector);
+  const { refillBankList } = useSelector(walletSelector);
+  const status = useSelector(walletStatusSelector);
+  const cardReservation = useSelector(walletCardReservationSelector);
   const adaptive = useAdaptive();
   const [timeIsOver, setTimeIsOver] = useState(false);
 
   const { minFee, percentFee, currency } = props;
 
-  const amount = fiatState.reservedCard
-    ? fiatState.reservedCard.reservation.amount
+  const amount = cardReservation
+    ? cardReservation.reservation.amount
     : props.amount;
 
-  const fee = fiatState.reservedCard
-    ? fiatState.reservedCard.reservation.fee
+  const fee = cardReservation
+    ? cardReservation.reservation.fee
     : Math.max((amount / 100) * percentFee, minFee);
 
   const handleTimerFinish = useCallback(() => {
@@ -56,13 +62,13 @@ export default props => {
   }, [setTimeIsOver]);
 
   useEffect(() => {
-    if (!fiatState.reservedCard && !props.amount) {
+    if (!cardReservation && !props.amount) {
       props.onClose();
     }
 
     if (
-      fiatState.reservedCard?.card?.expire_in * 1000 <= Date.now() &&
-      fiatState.reservedCard.reservation.status === "wait_for_pay"
+      cardReservation?.card?.expire_in * 1000 <= Date.now() &&
+      cardReservation.reservation.status === "wait_for_pay"
     ) {
       // time is over hack
       dispatch({
@@ -75,9 +81,9 @@ export default props => {
       });
     }
 
-    if (!fiatState.reservedCard) {
+    if (!cardReservation) {
       dispatch({
-        type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+        type: actionTypes.WALLET_SET_STATUS,
         section: "refillBankList",
         status: "loading"
       });
@@ -89,12 +95,12 @@ export default props => {
         .then(r => {
           if (r.status === "already_booked") {
             dispatch({
-              type: actionTypes.FIAT_SET_RESERVED_CARD,
+              type: actionTypes.WALLET_SET_CARD_RESERVATION,
               payload: r
             });
           } else {
             dispatch({
-              type: actionTypes.FIAT_WALLETS_SET_REFILL_BANK_LIST,
+              type: actionTypes.WALLET_SET_REFILL_BANK_LIST,
               banks: r
             });
           }
@@ -104,22 +110,22 @@ export default props => {
         })
         .finally(() => {
           dispatch({
-            type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+            type: actionTypes.WALLET_SET_STATUS,
             section: "refillBankList",
             status: ""
           });
         });
     }
     return () => {
-      dispatch({
-        type: actionTypes.FIAT_WALLETS_CLEAR_LOADING_STATUSES
-      });
+      // dispatch({
+      //   type: actionTypes.FIAT_WALLETS_CLEAR_LOADING_STATUSES
+      // });
     };
-  }, [dispatch, props, fiatState.reservedCard]);
+  }, [dispatch, props, cardReservation]);
 
   const handleChoiceBank = bankCode => {
     dispatch({
-      type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+      type: actionTypes.WALLET_SET_STATUS,
       section: "reservedCard",
       status: "loading"
     });
@@ -131,18 +137,18 @@ export default props => {
       })
       .then(response => {
         dispatch({
-          type: actionTypes.FIAT_SET_RESERVED_CARD,
+          type: actionTypes.WALLET_SET_CARD_RESERVATION,
           payload: response
         });
         dispatch({
-          type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          type: actionTypes.WALLET_SET_STATUS,
           section: "reservedCard",
           status: ""
         });
       })
       .catch(err => {
         dispatch({
-          type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          type: actionTypes.WALLET_SET_STATUS,
           section: "reservedCard",
           status: err.status
         });
@@ -151,7 +157,7 @@ export default props => {
 
   const handleCancel = () => {
     dispatch({
-      type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+      type: actionTypes.WALLET_SET_STATUS,
       section: "cancelReservation",
       status: "loading"
     });
@@ -169,15 +175,15 @@ export default props => {
       api
         .call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
           amount,
-          reservation_id: fiatState.reservedCard.reservation.id
+          reservation_id: cardReservation.reservation.id
         })
         .then(() => {
           dispatch({
-            type: actionTypes.FIAT_SET_RESERVED_CARD,
+            type: actionTypes.WALLET_SET_CARD_RESERVATION,
             payload: null
           });
           dispatch({
-            type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+            type: actionTypes.WALLET_SET_STATUS,
             section: "cancelReservation",
             status: ""
           });
@@ -190,12 +196,12 @@ export default props => {
 
   const handleClickBack = () => {
     dispatch({
-      type: actionTypes.FIAT_SET_RESERVED_CARD,
+      type: actionTypes.WALLET_SET_CARD_RESERVATION,
       payload: null
     });
 
     dispatch({
-      type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+      type: actionTypes.WALLET_SET_STATUS,
       section: "reservedCard",
       status: ""
     });
@@ -203,39 +209,39 @@ export default props => {
 
   const handleConfirmPayment = () => {
     dispatch({
-      type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+      type: actionTypes.WALLET_SET_STATUS,
       section: "confirmPayment",
       status: "loading"
     });
     api
       .call(apiSchema.Fiat_wallet.Cards["Reservation/confirmPaymentPost"], {
-        reservation_id: fiatState.reservedCard.reservation.id
+        reservation_id: cardReservation.reservation.id
       })
       .then(({ status }) => {
         dispatch({
-          type: actionTypes.FIAT_SET_RESERVED_CARD,
+          type: actionTypes.WALLET_SET_CARD_RESERVATION,
           payload: {
-            ...fiatState.reservedCard,
+            ...cardReservation,
             reservation: {
-              ...fiatState.reservedCard.reservation,
+              ...cardReservation.reservation,
               status
             }
           }
         });
-        dispatch({
-          type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
-          section: "confirmPayment",
-          status: "loading"
-        });
       })
       .catch(err => {
         toast.error(err.message);
+      })
+      .finally(() => {
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
+          section: "confirmPayment",
+          status: ""
+        });
       });
   };
 
   const renderBody = () => {
-    const { loadingStatus } = fiatState;
-
     if (timeIsOver) {
       return (
         <>
@@ -258,7 +264,7 @@ export default props => {
       );
     }
 
-    if (loadingStatus.reservedCard === "not_available_cards") {
+    if (status.reservedCard === "not_available_cards") {
       return (
         <>
           <div style={{ flex: 1, display: "flex" }}>
@@ -281,21 +287,20 @@ export default props => {
       );
     }
 
-    if (
-      [loadingStatus.refillBankList, loadingStatus.reservedCard].some(Boolean)
-    ) {
+    if ([status.refillBankList, status.reservedCard].some(Boolean)) {
       return (
         <CustomLoadingStatus
-          status={loadingStatus.refillBankList || loadingStatus.reservedCard}
+          status={status.refillBankList || status.reservedCard}
         />
       );
     }
 
-    if (fiatState.reservedCard?.reservation.status === "wait_for_review") {
+    if (cardReservation?.reservation.status === "wait_for_review") {
       return (
         <>
-          <div>
+          <div style={{ margin: "auto" }}>
             <LoadingStatus
+              inline
               icon={require("src/asset/120/clock.svg")}
               status={getLang("fiatRefillCard_status_wait_for_review")}
               description={getLang(
@@ -316,7 +321,7 @@ export default props => {
       );
     }
 
-    if (!fiatState.reservedCard) {
+    if (!cardReservation) {
       return (
         <>
           <div className="FiatRefillModal__header">
@@ -324,7 +329,7 @@ export default props => {
           </div>
           <BankList
             onChange={b => handleChoiceBank(b.code)}
-            items={fiatState.refillBankList}
+            items={refillBankList}
           />
           <ButtonWrapper
             align="right"
@@ -341,10 +346,10 @@ export default props => {
         <>
           <div className="FiatRefillModal__body__content">
             <div className="FiatRefillModal__header">
-              {fiatState.reservedCard.card.bank.name}
+              {cardReservation.card.bank.name}
             </div>
             <p>
-              <BankLogo name={fiatState.reservedCard.card.bank.code} />
+              <BankLogo name={cardReservation.card.bank.code} />
             </p>
             <Message title={<Lang name="global_attention" />} type="warning">
               <Lang name="fiatRefillCard_attention_text_sendExactly" />{" "}
@@ -358,12 +363,12 @@ export default props => {
               <div className="FiatRefillModal__infoBlock__item">
                 <span>
                   <Lang name="fiatRefillCard_cardReservation" />{" "}
-                  {utils.dateFormat(fiatState.reservedCard.card.expire_in)}
+                  {utils.dateFormat(cardReservation.card.expire_in)}
                 </span>
                 <strong>
                   <Timer
                     onFinish={handleTimerFinish}
-                    time={fiatState.reservedCard.card.expire_in * 1000}
+                    time={cardReservation.card.expire_in * 1000}
                   />
                 </strong>
               </div>
@@ -383,17 +388,17 @@ export default props => {
                 </span>
                 <strong>
                   <Clipboard
-                    displayText={fiatState.reservedCard.card.number
+                    displayText={cardReservation.card.number
                       .match(/.{1,4}/g)
                       .join(" ")}
-                    text={fiatState.reservedCard.card.number}
+                    text={cardReservation.card.number}
                   />
                 </strong>
                 <span>
                   <Lang name="fiatRefillCard_cardHolderName" />
                 </span>
                 <strong className="holderName">
-                  {fiatState.reservedCard.card.bank.holder_name}
+                  {cardReservation.card.bank.holder_name}
                 </strong>
               </div>
             </div>
@@ -404,14 +409,14 @@ export default props => {
             className="FiatRefillModal__body__footer"
           >
             <Button
-              stete={fiatState.loadingStatus.cancelReservation}
+              stete={status.cancelReservation}
               onClick={handleCancel}
               type="secondary"
             >
               <Lang name="fiatRefillCard_cancelReservation" />
             </Button>
             <Button
-              state={fiatState.loadingStatus.confirmPayment}
+              state={status.confirmPayment}
               onClick={handleConfirmPayment}
             >
               <Lang name="fiatRefillCard_confirmPayment" />

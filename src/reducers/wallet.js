@@ -11,7 +11,11 @@ const initialState = {
   wallets: [],
   balances: [],
   can_exchange: [],
+  refillBankList: [],
+  cardReservation: null,
   swap: {
+    confirmPayment: "",
+    refillBankList: "",
     focus: "from",
     fromCurrency: "idr",
     toCurrency: "btc",
@@ -31,7 +35,8 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         ...action.payload,
-        history: initialState.history
+        history: initialState.history,
+        cardReservation: action.payload.card_reservation || null
       };
     }
 
@@ -42,6 +47,20 @@ export default function reduce(state = initialState, action = {}) {
           ...state.status,
           [action.section]: action.status
         }
+      };
+    }
+
+    case actionTypes.WALLET_SET_REFILL_BANK_LIST: {
+      return {
+        ...state,
+        refillBankList: action.banks
+      };
+    }
+
+    case actionTypes.WALLET_SET_CARD_RESERVATION: {
+      return {
+        ...state,
+        cardReservation: action.payload
       };
     }
 

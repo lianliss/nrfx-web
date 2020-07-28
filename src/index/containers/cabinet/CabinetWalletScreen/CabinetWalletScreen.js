@@ -16,6 +16,7 @@ import {
 } from "../../../../actions/cabinet/wallet";
 import {
   walletBalanceSelector,
+  walletCardReservationSelector,
   walletHistoryNextSelector,
   walletStatusSelector
 } from "../../../../selectors";
@@ -23,6 +24,7 @@ import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStat
 import Paging from "../../../components/cabinet/Paging/Paging";
 import CommonHeader from "./components/CommonHeader/CommonHeader";
 import SwapForm from "./components/SwapForm/SwapForm";
+import RefillBlock from "./components/RefillBlock/RefillBlock";
 import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
 
 import useAdaptive from "src/hooks/adaptive";
@@ -45,6 +47,7 @@ export default () => {
   const dispatch = useDispatch();
   const status = useSelector(walletStatusSelector);
   const next = useSelector(walletHistoryNextSelector);
+  const cardReservation = useSelector(walletCardReservationSelector);
   const balance = useSelector(walletBalanceSelector(params.currency));
   const [historyOptions, setHistoryOptions] = useState(null);
   const balanceId = balance?.id;
@@ -100,6 +103,8 @@ export default () => {
           <WalletList currency={params.currency} />
         </ContentBox>
       )}
+
+      {cardReservation && <RefillBlock />}
 
       <Paging
         isCanMore={!!next && status.historyMore !== "loading"}

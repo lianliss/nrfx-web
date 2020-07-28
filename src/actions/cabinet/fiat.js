@@ -216,6 +216,11 @@ export function refillBanksGet() {
       type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
       section: "refillBankList",
       status: "loading"
+    }); // TODO LEGACY
+    dispatch({
+      type: actionTypes.WALLET_SET_STATUS,
+      section: "refillBankList",
+      status: "loading"
     });
     api
       .call(apiSchema.Fiat_wallet.Xendit.RefillBanksGet)
@@ -223,9 +228,18 @@ export function refillBanksGet() {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_REFILL_BANK_LIST,
           banks
+        }); // TODO LEGACY
+        dispatch({
+          type: actionTypes.WALLET_SET_REFILL_BANK_LIST,
+          banks
         });
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: "refillBankList",
+          status: ""
+        }); // TODO LEGACY
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
           section: "refillBankList",
           status: ""
         });
@@ -233,6 +247,11 @@ export function refillBanksGet() {
       .catch(() => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: "refillBankList",
+          status: "failed"
+        }); // TODO LEGACY
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
           section: "refillBankList",
           status: "failed"
         });

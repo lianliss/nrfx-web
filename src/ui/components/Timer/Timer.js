@@ -16,6 +16,7 @@ const fixedNumber = number =>
 export default ({ time, onFinish, hiddenAfterFinish }) => {
   const [dateNow, setDateNow] = useState(Date.now());
   const [canFinish] = useState(time > Date.now());
+
   useEffect(() => {
     setTimeout(() => {
       setDateNow(Date.now());
@@ -29,8 +30,8 @@ export default ({ time, onFinish, hiddenAfterFinish }) => {
 
   const timer = calculateTimeLeft(time - dateNow);
   return (
-    <span title={dateFormat(time)} className="Timer">
+    <time title={dateFormat(time)} className="Timer">
       {[timer.hours, timer.minutes, timer.seconds].map(fixedNumber).join(":")}
-    </span>
+    </time>
   );
 };
