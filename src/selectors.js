@@ -1,6 +1,8 @@
 export const landingSelector = state => state.landing;
 export const langListSelector = state => state.default.langList;
 export const currentLangSelector = state => state.default.currentLang;
+export const langSelector = (lang, key) => state =>
+  state.default.translations[lang][key];
 export const userSelector = state => state.default.profile.user;
 export const profileSelector = state => state.default.profile;
 export const adminPendingSelector = state => state.admin.pending;
