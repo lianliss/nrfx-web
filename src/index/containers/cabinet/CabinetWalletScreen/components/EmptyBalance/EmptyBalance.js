@@ -18,14 +18,15 @@ import {
   walletSwapSwitch
 } from "../../../../../../actions/cabinet/wallet";
 import { walletSwapSelector } from "../../../../../../selectors";
+import SVG from "react-inlinesvg";
 
 export default ({ currency }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const currencyInfo = getCurrencyInfo(currency);
-  const abbr = currencyInfo.abbr.toUpperCase();
+  const currencyInfo = currency ? getCurrencyInfo(currency) : null;
+  const abbr = currencyInfo?.abbr?.toUpperCase();
   const isFiat = utils.isFiat(currency);
-  const canExchange = currencyInfo.can_exchange;
+  const canExchange = currencyInfo?.can_exchange;
 
   const walletSwap = useSelector(walletSwapSelector);
 
@@ -36,6 +37,31 @@ export default ({ currency }) => {
     dispatch(walletSwapSetCurrency("to", currency));
     router.navigate(pages.WALLET_SWAP);
   }, [walletSwap.toCurrency, dispatch, router, currency]);
+
+  if (!currency) {
+    return (
+      <ContentBox className="WalletEmptyBalance">
+        <div className="WalletEmptyBalance__content">
+          <div className="WalletEmptyBalance__icon">
+            <SVG src={require("src/asset/illustrations/savings.svg")} />
+          </div>
+          <h2>
+            <Lang name="cabinet__EmptyBalanceCommonTitle" />
+          </h2>
+          <p>
+            <Lang name="cabinet__EmptyBalanceCommonText" />
+          </p>
+          <Button
+            onClick={() => {
+              router.navigate(pages.WALLET_SWAP);
+            }}
+          >
+            <Lang name="global_buy" />
+          </Button>
+        </div>
+      </ContentBox>
+    );
+  }
 
   return (
     <ContentBox className="WalletEmptyBalance">

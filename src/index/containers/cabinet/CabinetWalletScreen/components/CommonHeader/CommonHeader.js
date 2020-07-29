@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { walletAllBalancesSelector } from "../../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../../actions";
 import useAdaptive from "src/hooks/adaptive";
+import EmptyBalance from "../EmptyBalance/EmptyBalance";
 
 export default () => {
   const adaptive = useAdaptive();
@@ -15,6 +16,10 @@ export default () => {
   const total = balances
     .map(b => b.to_usd * b.amount)
     .reduce((a, b) => a + b, 0);
+
+  if (!total) {
+    return <EmptyBalance />;
+  }
 
   const List = () => (
     <ul className="CommonHeader__currencyList">

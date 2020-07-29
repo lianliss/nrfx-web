@@ -10,7 +10,7 @@ export default () => {
   return (
     <ContentBox className="SwapTutorial">
       <div className="SwapTutorial__image">
-        <SVG src={require("./assets/credit-card.svg")} />
+        <SVG src={require("src/asset/illustrations/credit_card.svg")} />
       </div>
       <ul className="SwapTutorial__list">
         <li>
