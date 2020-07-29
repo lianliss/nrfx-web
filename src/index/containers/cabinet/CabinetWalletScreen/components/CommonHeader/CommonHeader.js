@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { walletAllBalancesSelector } from "../../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../../actions";
 import useAdaptive from "src/hooks/adaptive";
-import Lang from "../../../../../../components/Lang/Lang";
 
 export default () => {
   const adaptive = useAdaptive();

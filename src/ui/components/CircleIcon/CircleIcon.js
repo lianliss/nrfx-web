@@ -15,7 +15,7 @@ export default props => {
     size,
     color,
     skeleton = false,
-    shadow = true
+    shadow = false
   } = props;
   if (skeleton) {
     return <div className={cn("CircleIcon", size, className, { skeleton })} />;

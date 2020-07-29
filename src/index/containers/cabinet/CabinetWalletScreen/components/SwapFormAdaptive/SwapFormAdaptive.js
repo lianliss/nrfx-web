@@ -33,11 +33,7 @@ import SVG from "react-inlinesvg";
 
 const Select = ({ value, options, onChange, title, disabled }) => (
   <div className={cn("SwapFormAdaptive__controlPanel__select", { disabled })}>
-    <CircleIcon
-      shadow={false}
-      size="extra_small"
-      currency={getCurrencyInfo(value)}
-    />
+    <CircleIcon size="extra_small" currency={getCurrencyInfo(value)} />
     <div className="SwapFormAdaptive__controlPanel__select__label">{title}</div>
     <select onChange={e => onChange(e.target.value)} value={value}>
       {options

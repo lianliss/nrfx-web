@@ -26,6 +26,7 @@ import CommonHeader from "./components/CommonHeader/CommonHeader";
 import SwapForm from "./components/SwapForm/SwapForm";
 import RefillBlock from "./components/RefillBlock/RefillBlock";
 import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
+import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
 
 import useAdaptive from "src/hooks/adaptive";
 import { ContentBox } from "../../../../ui";
@@ -99,9 +100,13 @@ export default () => {
           </>
         ))}
 
-      {balance && !isSwap && (
-        <WalletHeader isCrypto={isCrypto} balance={balance} />
-      )}
+      {balance &&
+        !isSwap &&
+        (balance.amount ? (
+          <WalletHeader isCrypto={isCrypto} balance={balance} />
+        ) : (
+          <EmptyBalance currency={params.currency} />
+        ))}
 
       {adaptive && !balance && !isSwap && (
         <ContentBox className="CabinetWalletScreen__adaptiveWalletList">

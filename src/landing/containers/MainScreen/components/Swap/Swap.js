@@ -40,13 +40,7 @@ export default () => {
   const createOptions = c => ({
     value: c.abbr,
     label: c.name,
-    icon: (
-      <CircleIcon
-        shadow={false}
-        size="small"
-        currency={getCurrencyInfo(c.abbr)}
-      />
-    )
+    icon: <CircleIcon size="small" currency={getCurrencyInfo(c.abbr)} />
   });
 
   const fiatCurrencies = currenciesCanExchange

@@ -62,11 +62,7 @@ const Form = ({
               return currency.can_exchange
                 ? {
                     prefix: (
-                      <CircleIcon
-                        size="ultra_small"
-                        shadow={false}
-                        currency={currency}
-                      />
+                      <CircleIcon size="ultra_small" currency={currency} />
                     ),
                     value: b.currency,
                     title: currency.name
