@@ -155,9 +155,7 @@ class Header extends React.Component {
                     this.setState({ activePage: pages.CABINET_WALLET });
                   }}
                 >
-                  <SVG
-                    src={require("../../../../asset/cabinet/exchange_icon.svg")}
-                  />
+                  <SVG src={require("../../../../asset/24px/candles.svg")} />
                   <Lang name="cabinet_header_exchange" />
                 </BaseLink>
 
