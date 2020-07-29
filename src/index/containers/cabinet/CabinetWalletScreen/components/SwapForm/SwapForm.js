@@ -112,7 +112,7 @@ export default () => {
   const currentBalance = useSelector(walletBalanceSelector(swap.fromCurrency));
   const dispatch = useDispatch();
   const toCrypto = isFiat(swap.fromCurrency);
-  const disabled = status.rate === "loading";
+  const disabled = status.rate === "loading" || status.swap === "loading";
 
   useEffect(() => {
     dispatch(walletSetStatus("rate", "loading"));
@@ -127,7 +127,7 @@ export default () => {
   const currentBalanceAmount = useRef(currentBalance?.amount);
 
   useEffect(() => {
-    if (!swapFromAmount.current) {
+    if (!swapFromAmount.current && !isNaN(currentBalanceAmount.current)) {
       dispatch(
         walletSwapSetAmount("from", currentBalanceAmount.current || 1000000)
       );
@@ -188,7 +188,7 @@ export default () => {
       <div className="SwapForm__submitWrapper">
         <Button
           state={status.swap}
-          disabled={disabled}
+          disabled={status.rate === "loading"}
           onClick={() => {
             dispatch(walletSwapSubmit());
           }}
