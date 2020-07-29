@@ -21,8 +21,7 @@ export default {
     en: "https://storage.googleapis.com/narfex/files/narfex-white-paper-en.pdf"
   },
   apps: {
-    android:
-      "https://play.google.com/store/apps/details?id=com.bitcoinbot&hl=en"
+    android: "https://play.google.com/store/apps/details?id=com.narfex"
     // ios: '#'
   },
   reCaptchaSiteKey: "6LdRL9QUAAAAAE45WnoX0AM_MSiYgS2aJsbiNI0a"
