@@ -12,7 +12,7 @@ export default props => {
     currency,
     icon,
     className,
-    size,
+    size = "medium",
     color,
     skeleton = false,
     shadow = false
