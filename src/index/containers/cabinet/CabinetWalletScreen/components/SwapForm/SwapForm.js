@@ -91,7 +91,7 @@ const Form = ({
           value={amount}
           onTextChange={onChangeAmount}
         />
-        {currentBalance && (
+        {!!currentBalance && (
           <div
             onClick={() => onChangeAmount(currentBalance)}
             className="SwapForm__form__control__meta active"
@@ -122,6 +122,17 @@ export default () => {
       dispatch(walletSwapStopRatePooling());
     };
   }, [dispatch]);
+
+  const swapFromAmount = useRef(swap.fromAmount);
+  const currentBalanceAmount = useRef(currentBalance?.amount);
+
+  useEffect(() => {
+    if (!swapFromAmount.current) {
+      dispatch(
+        walletSwapSetAmount("from", currentBalanceAmount.current || 1000000)
+      );
+    }
+  }, [dispatch, swapFromAmount, currentBalanceAmount]);
 
   return (
     <ContentBox className="SwapForm">

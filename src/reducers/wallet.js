@@ -19,7 +19,7 @@ const initialState = {
     focus: "from",
     fromCurrency: "idr",
     toCurrency: "btc",
-    fromAmount: "100000",
+    fromAmount: "",
     toAmount: "",
     rate: 0
   },
