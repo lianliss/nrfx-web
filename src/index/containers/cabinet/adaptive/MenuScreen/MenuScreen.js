@@ -64,33 +64,37 @@ class MenuScreen extends CabinetBaseScreen {
           </BaseLink>
         </ContentBox>
 
-        <ContentBox className="Menu__section">
-          <BaseLink
-            router={router}
-            routeName={PAGES.INVESTMENTS}
-            className="Menu__section__item"
-            activeClassName="active"
-          >
-            <SVG src={require("../../../../../asset/24px/invest.svg")} />
-            <span>
-              <Lang name="cabinet_header_investments" />
-            </span>
-          </BaseLink>
+        {(this.props.profile.has_deposits || userRole("agent")) && (
+          <ContentBox className="Menu__section">
+            {this.props.profile.has_deposits && (
+              <BaseLink
+                router={router}
+                routeName={PAGES.INVESTMENTS}
+                className="Menu__section__item"
+                activeClassName="active"
+              >
+                <SVG src={require("../../../../../asset/24px/invest.svg")} />
+                <span>
+                  <Lang name="cabinet_header_investments" />
+                </span>
+              </BaseLink>
+            )}
 
-          {(this.props.profile.has_deposits || userRole("agent")) && (
-            <BaseLink
-              router={router}
-              routeName={PAGES.PARTNERS}
-              className="Menu__section__item"
-              activeClassName="active"
-            >
-              <SVG src={require("../../../../../asset/24px/users.svg")} />
-              <span>
-                <Lang name="cabinet_header_partners" />
-              </span>
-            </BaseLink>
-          )}
-        </ContentBox>
+            {(this.props.profile.has_deposits || userRole("agent")) && (
+              <BaseLink
+                router={router}
+                routeName={PAGES.PARTNERS}
+                className="Menu__section__item"
+                activeClassName="active"
+              >
+                <SVG src={require("../../../../../asset/24px/users.svg")} />
+                <span>
+                  <Lang name="cabinet_header_partners" />
+                </span>
+              </BaseLink>
+            )}
+          </ContentBox>
+        )}
 
         <ContentBox className="Menu__section Menu__section__noSpacing">
           <div
