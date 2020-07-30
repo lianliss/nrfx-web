@@ -14,6 +14,7 @@ import * as actions from "../../../../../actions";
 import ContentBox from "src/ui/components/ContentBox/ContentBox";
 import Lang from "../../../../../components/Lang/Lang";
 import { userRole } from "../../../../../actions/cabinet/profile";
+import { Code } from "../../../../../ui";
 
 class MenuScreen extends CabinetBaseScreen {
   componentDidMount() {
@@ -148,7 +149,7 @@ export default connect(
     adaptive: state.default.adaptive,
     langList: state.default.langList,
     theme: state.default.theme,
-    profile: state.profile
+    profile: state.default.profile
   }),
   {
     setTitle: actions.setTitle
