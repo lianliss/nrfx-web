@@ -16,13 +16,11 @@ export default class TableComponent extends React.Component {
   clearFields() {
     this.props.search &&
       this.props.search.fields.forEach(field => {
-        console.log(111, this.props.id + "_value_" + field.id, "");
         valueChange(this.props.id + "_value_" + field.id, "");
       });
   }
 
   componentWillUpdate(nextProps) {
-    console.log(111, "componentWillUpdate", this.props.id, nextProps.id);
     if (nextProps.id !== this.props.id) {
       this.clearFields();
     }

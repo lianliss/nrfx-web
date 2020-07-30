@@ -14,7 +14,6 @@ import * as actions from "../../../../../actions";
 import ContentBox from "src/ui/components/ContentBox/ContentBox";
 import Lang from "../../../../../components/Lang/Lang";
 import { userRole } from "../../../../../actions/cabinet/profile";
-import { Code } from "../../../../../ui";
 
 class MenuScreen extends CabinetBaseScreen {
   componentDidMount() {
