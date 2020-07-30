@@ -52,7 +52,7 @@ const NumberFormat = ({
         .toExponential()
     ) / coefficient;
 
-  displayNumber = displayNumber.toLocaleString(undefined, {
+  displayNumber = displayNumber.toLocaleString("ru", {
     maximumFractionDigits: fractionDigits,
     minimumFractionDigits: accurate ? fractionDigits : undefined
   });
