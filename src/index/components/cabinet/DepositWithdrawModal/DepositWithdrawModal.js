@@ -204,11 +204,7 @@ const DepositWithdrawModal = props => {
               indicator="ETH"
               placeholder="Сумма Вывода"
             />
-            <Button
-              onClick={handleClickMax}
-              currency={currencyInfo}
-              type="outline"
-            >
+            <Button onClick={handleClickMax} type="secondary">
               {getLang("cabinet_withdrawalModal_max")}
             </Button>
           </div>
@@ -240,7 +236,6 @@ const DepositWithdrawModal = props => {
               }
               state={submitPending && "loading"}
               onClick={handleSubmit}
-              currency={currencyInfo}
             >
               {getLang("global_confirm")}
             </Button>

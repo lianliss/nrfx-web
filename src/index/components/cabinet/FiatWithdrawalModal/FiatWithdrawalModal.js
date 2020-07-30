@@ -15,7 +15,7 @@ import BankLogo from "../../../../ui/components/BankLogo/BankLogo";
 import Input from "../../../../ui/components/Input/Input";
 import Button, { ButtonWrapper } from "../../../../ui/components/Button/Button";
 import Form from "../../../../ui/components/Form/Form";
-import { getLang, isEmail } from "../../../../utils";
+import { getLang } from "../../../../utils";
 import Lang from "../../../../components/Lang/Lang";
 
 const FiatWithdrawalModal = props => {
@@ -23,7 +23,6 @@ const FiatWithdrawalModal = props => {
   const [bank, changeBank] = useState(null);
   const [accountHolderName, setAccountHolderName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
-  const [email, setEmail] = useState("");
   const [touched, touch] = useState(false);
   const [filled, fill] = useState(false);
   const fee = Math.max((amount / 100) * percentFee, minFee);
@@ -32,10 +31,10 @@ const FiatWithdrawalModal = props => {
     props.withdrawalBanksGet();
 
     if (!amount || !balance) {
-      props.onClose();
+      // props.onClose();
     }
     // eslint-disable-next-line
-  }, []);
+  }, [amount, balance]);
 
   if (!amount || !balance) {
     return null;
@@ -43,7 +42,7 @@ const FiatWithdrawalModal = props => {
 
   const handleNext = () => {
     touch(true);
-    if (isEmail(email) && accountHolderName) {
+    if (accountHolderName) {
       fill(true);
     }
   };
@@ -53,7 +52,6 @@ const FiatWithdrawalModal = props => {
       bank,
       accountHolderName,
       accountNumber,
-      email,
       amount,
       balance
     });
@@ -167,15 +165,6 @@ const FiatWithdrawalModal = props => {
                     )}
                     type="number"
                   />
-                  <Input
-                    error={touched && !isEmail(email)}
-                    value={email}
-                    onTextChange={setEmail}
-                    placeholder={getLang("global_emailAddress")}
-                    description={getLang(
-                      "cabinet_fiatWithdrawalModal__emailInfo"
-                    )}
-                  />
                 </Form>
               </div>
 
@@ -220,10 +209,6 @@ const FiatWithdrawalModal = props => {
                   <li>
                     {getLang("cabinet_fiatWithdrawalModal__accountNumber")}:{" "}
                     <span className="value">{accountNumber}</span>
-                  </li>
-                  <li>
-                    {getLang("global_emailAddress")}:{" "}
-                    <span className="value">{email}</span>
                   </li>
                 </ul>
               </div>

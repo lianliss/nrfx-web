@@ -19,7 +19,7 @@ export default ({ visible, onClose }) => {
     <div className={cn("MobileMenu", { visible })}>
       <div className="MobileMenu__buttons">
         <Button
-          type="outline"
+          type="secondary"
           onClick={() => {
             router.navigate(pages.ABOUT);
             onClose();
@@ -28,7 +28,7 @@ export default ({ visible, onClose }) => {
           <Lang name="site__headerCompany" />
         </Button>
         <Button
-          type="outline"
+          type="secondary"
           onClick={() => {
             router.navigate(pages.FEE);
             onClose();
@@ -37,7 +37,7 @@ export default ({ visible, onClose }) => {
           <Lang name="global_fee" />
         </Button>
         <Button
-          type="outline"
+          type="secondary"
           onClick={() => {
             router.navigate(pages.BUY_BITCOIN);
             onClose();
@@ -52,7 +52,7 @@ export default ({ visible, onClose }) => {
             router.navigate(pages.BUY_BITCOIN);
           }}
         >
-          <SVG src={require("src/asset/120/exchange.svg")} />
+          <SVG src={require("src/asset/120/currencies.svg")} />
           <div>
             <h4>
               <Lang name="landing_megaMenu_buyCrypto_title" />
@@ -67,7 +67,7 @@ export default ({ visible, onClose }) => {
             router.navigate(pages.SITE_EXCHANGE);
           }}
         >
-          <SVG src={require("src/asset/120/exchange.svg")} />
+          <SVG src={require("src/asset/120/swap.svg")} />
           <div>
             <h4>
               <Lang name="landing_megaMenu_trade_title" />
@@ -82,7 +82,7 @@ export default ({ visible, onClose }) => {
         {user ? (
           <Button
             onClick={() => {
-              router.navigate(pages.DASHBOARD);
+              router.navigate(pages.WALLET);
             }}
           >
             <Lang name="cabinet_header_cabinet" />
@@ -100,7 +100,7 @@ export default ({ visible, onClose }) => {
               onClick={() => {
                 actions.openModal("auth", { type: steps.LOGIN });
               }}
-              type="outline"
+              type="secondary"
             >
               <Lang name="site__authModalLogInBtn" />
             </Button>

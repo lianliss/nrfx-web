@@ -216,6 +216,11 @@ export function refillBanksGet() {
       type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
       section: "refillBankList",
       status: "loading"
+    }); // TODO LEGACY
+    dispatch({
+      type: actionTypes.WALLET_SET_STATUS,
+      section: "refillBankList",
+      status: "loading"
     });
     api
       .call(apiSchema.Fiat_wallet.Xendit.RefillBanksGet)
@@ -223,9 +228,18 @@ export function refillBanksGet() {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_REFILL_BANK_LIST,
           banks
+        }); // TODO LEGACY
+        dispatch({
+          type: actionTypes.WALLET_SET_REFILL_BANK_LIST,
+          banks
         });
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: "refillBankList",
+          status: ""
+        }); // TODO LEGACY
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
           section: "refillBankList",
           status: ""
         });
@@ -233,6 +247,11 @@ export function refillBanksGet() {
       .catch(() => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
+          section: "refillBankList",
+          status: "failed"
+        }); // TODO LEGACY
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
           section: "refillBankList",
           status: "failed"
         });
@@ -253,7 +272,6 @@ export function fiatWithdrawal(params) {
         account_holder_name: params.accountHolderName,
         account_number: params.accountNumber,
         amount: params.amount,
-        email_to: params.email,
         balance_id: params.balance.id
       })
       .then(payload => {
@@ -265,7 +283,7 @@ export function fiatWithdrawal(params) {
           transaction
         });
         dispatch({ type: actionTypes.FIAT_WALLETS_UPDATE, payload });
-        console.log(1111);
+        dispatch({ type: actionTypes.WALLET_UPDATE, payload });
       })
       .finally(() => {
         dispatch({
@@ -275,7 +293,6 @@ export function fiatWithdrawal(params) {
         });
       })
       .catch(err => {
-        console.log(2222);
         toast.error(err.message);
       });
   };

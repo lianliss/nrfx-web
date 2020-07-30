@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { Button, Logo } from "../../../../ui";
+import { Button, ButtonWrapper, Logo } from "../../../../ui";
 import { classNames as cn } from "src/utils/index";
 import MegaMenu from "../MegaMenu/MegaMenu";
 import MobileMenu from "../MobileMenu/MobileMenu";
@@ -108,15 +108,15 @@ export default () => {
           <div className="Header__authButtons">
             {user || pending ? (
               <Button
-                type="outline"
+                type="secondary"
                 onClick={() => {
-                  router.navigate(pages.DASHBOARD);
+                  router.navigate(pages.WALLET);
                 }}
               >
                 <Lang name="cabinet_header_cabinet" />
               </Button>
             ) : (
-              <>
+              <ButtonWrapper>
                 <Button
                   type="lite"
                   onClick={() => {
@@ -126,14 +126,14 @@ export default () => {
                   <Lang name="site__authModalLogInBtn" />
                 </Button>
                 <Button
-                  type="outline"
+                  type="secondary"
                   onClick={() => {
                     actions.openModal("auth", { type: steps.REGISTRATION });
                   }}
                 >
                   <Lang name="site__authModalSignUpBtn" />
                 </Button>
-              </>
+              </ButtonWrapper>
             )}
           </div>
 

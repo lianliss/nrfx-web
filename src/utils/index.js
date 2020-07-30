@@ -281,6 +281,8 @@ export function __doubleInputOnKeyPressHandler(e, value = "") {
 }
 
 export function clipTextMiddle(text = "", length = 10) {
+  if (typeof text !== "string") return "";
+
   if (text.length <= length + length / 2) {
     return text;
   }
@@ -340,7 +342,7 @@ export function isFiat(currency = "") {
   return ["gbp", "usd", "usdt", "eur", "rub", "idr", "cny"].includes(
     currency.toLowerCase()
   );
-  // TODO: Бруть из state.default.currency
+  // TODO: Брать из state.default.currency
 }
 
 export function dateFormat(date, format = "DD MMM YYYY HH:mm") {

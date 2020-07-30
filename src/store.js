@@ -2,6 +2,7 @@
 // external
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
 
 import thunk from "redux-thunk";
 import { router5Middleware, router5Reducer } from "redux-router5";
@@ -15,6 +16,7 @@ import profileReducer from "./reducers/profile";
 import settingsReducer from "./reducers/settings";
 import documentation from "./reducers/documentation";
 import walletsReducer from "./reducers/wallets";
+import walletReducer from "./reducers/wallet";
 import fiatReducer from "./reducers/fiat";
 import notificationsReducer from "./reducers/notifications";
 import toastsReducer from "./reducers/toasts";
@@ -26,8 +28,11 @@ import adminReducer from "./reducers/admin";
 import langsReducer from "./reducers/langs";
 import landingReducer from "./reducers/landing";
 import traderReducer from "./reducers/trader";
+import rootSaga from "./sagas";
 
 let store;
+
+const sagaMiddleware = createSagaMiddleware();
 
 export function configureStore() {
   store = createStore(
@@ -61,6 +66,7 @@ export function configureStore() {
           modal: modalReducer,
           investments: investmentsReducer,
           wallets: walletsReducer,
+          wallet: walletReducer,
           fiat: fiatReducer,
           settings: settingsReducer,
           profile: profileReducer,
@@ -71,12 +77,16 @@ export function configureStore() {
           test: testReducer,
           trader: traderReducer
         }
-      }[process.env.DOMAIN]
+      }[process.env.DOMAIN || "index"]
     ),
-    composeWithDevTools(applyMiddleware(thunk, router5Middleware(router)))
+    composeWithDevTools(
+      applyMiddleware(thunk, sagaMiddleware, router5Middleware(router))
+    )
   );
   router.usePlugin(reduxPlugin(store.dispatch));
 }
+
 configureStore();
+sagaMiddleware.run(rootSaga);
 
 export default store;

@@ -301,7 +301,7 @@ const CalcDepositModal = class extends React.Component {
                       />
                       <UI.Button
                         currency={this.state.currency}
-                        type="outline"
+                        type="secondary"
                         disabled={!this.state.daysResult[dayId] || disabled}
                         onClick={() => {
                           this.__handleChangeDay(dayId, {

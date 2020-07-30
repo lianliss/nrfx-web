@@ -3,7 +3,7 @@ import "./Header.less";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { BaseLink } from "react-router5";
-
+import { classNames as cn } from "../../../../utils";
 import Badge from "../../../../ui/components/Badge/Badge";
 import router from "../../../../router";
 import * as pages from "../../../constants/pages";
@@ -18,6 +18,8 @@ import { connect } from "react-redux";
 import Notification from "../Notification/Notification";
 import InternalNotification from "../InternalNotification/InternalNotification";
 import * as notificationsActions from "../../../../actions/cabinet/notifications";
+import Lang from "../../../../components/Lang/Lang";
+import { userRole } from "../../../../actions/cabinet/profile";
 
 class Header extends React.Component {
   state = {
@@ -42,6 +44,7 @@ class Header extends React.Component {
   render() {
     const isLogged = !!this.props.profile.user;
     const { notifications } = this.props.notifications;
+    const currentPage = router.getState().name;
 
     const currentLang = getLang();
     const lang =
@@ -55,51 +58,75 @@ class Header extends React.Component {
           <div className="CabinetHeader__content">
             <BaseLink
               router={router}
-              routeName={isLogged ? pages.DASHBOARD : pages.MAIN}
+              routeName={isLogged ? pages.WALLET : pages.MAIN}
             >
               <UI.Logo />
             </BaseLink>
             {isLogged && (
               <div className="CabinetHeader__links">
-                <BaseLink
-                  router={router}
-                  routeName={pages.DASHBOARD}
-                  className="CabinetHeader__link"
-                  activeClassName="active"
-                  onClick={() => {
-                    this.setState({ activePage: pages.DASHBOARD });
-                  }}
-                >
-                  <SVG src={require("../../../../asset/24px/layout.svg")} />
-                  {utils.getLang("cabinet_header_profile")}
-                </BaseLink>
+                {(this.props.profile.has_deposits || userRole("agent")) && (
+                  <BaseLink
+                    router={router}
+                    routeName={pages.PARTNERS}
+                    className="CabinetHeader__link"
+                    activeClassName="active"
+                    onClick={() => {
+                      this.setState({ activePage: pages.PARTNERS });
+                    }}
+                  >
+                    <SVG src={require("src/asset/24px/users.svg")} />
+                    <Lang name="cabinet_header_partners" />
+                  </BaseLink>
+                )}
+
+                {/*<BaseLink*/}
+                {/*  router={router}*/}
+                {/*  routeName={pages.FIAT}*/}
+                {/*  className="CabinetHeader__link"*/}
+                {/*  activeClassName="active"*/}
+                {/*  onClick={() => {*/}
+                {/*    this.setState({ activePage: pages.FIAT });*/}
+                {/*  }}*/}
+                {/*>*/}
+                {/*  <SVG src={require("src/asset/24px/fiat.svg")} />*/}
+                {/*  <Lang name="cabinet_header_fiat" />*/}
+                {/*</BaseLink>*/}
+
+                {/*<BaseLink*/}
+                {/*  router={router}*/}
+                {/*  routeName={pages.CABINET_WALLET}*/}
+                {/*  className="CabinetHeader__link"*/}
+                {/*  activeClassName="active"*/}
+                {/*  onClick={() => {*/}
+                {/*    this.setState({ activePage: pages.CABINET_WALLET });*/}
+                {/*  }}*/}
+                {/*>*/}
+                {/*  <SVG*/}
+                {/*    src={require("../../../../asset/cabinet/wallet_icon.svg")}*/}
+                {/*  />*/}
+                {/*  <Lang name="cabinet_header_wallets" />*/}
+                {/*</BaseLink>*/}
 
                 <BaseLink
                   router={router}
-                  routeName={pages.FIAT}
-                  className="CabinetHeader__link"
+                  routeName={pages.WALLET}
+                  className={cn("CabinetHeader__link", {
+                    // HACK
+                    active: [
+                      pages.WALLET_SWAP,
+                      pages.WALLET_FIAT,
+                      pages.WALLET_CRYPTO
+                    ].includes(currentPage)
+                  })}
                   activeClassName="active"
                   onClick={() => {
-                    this.setState({ activePage: pages.FIAT });
-                  }}
-                >
-                  <SVG src={require("src/asset/24px/fiat.svg")} />
-                  {utils.getLang("cabinet_header_fiat")}
-                </BaseLink>
-
-                <BaseLink
-                  router={router}
-                  routeName={pages.CABINET_WALLET}
-                  className="CabinetHeader__link"
-                  activeClassName="active"
-                  onClick={() => {
-                    this.setState({ activePage: pages.CABINET_WALLET });
+                    this.setState({ activePage: pages.WALLET });
                   }}
                 >
                   <SVG
                     src={require("../../../../asset/cabinet/wallet_icon.svg")}
                   />
-                  {utils.getLang("cabinet_header_wallets")}
+                  <Lang name="cabinet_header_wallet" />
                 </BaseLink>
 
                 {this.props.profile.has_deposits && (
@@ -115,19 +142,9 @@ class Header extends React.Component {
                     <SVG
                       src={require("../../../../asset/cabinet/investment_icon.svg")}
                     />
-                    {utils.getLang("cabinet_header_investments")}
+                    <Lang name="cabinet_header_investments" />
                   </BaseLink>
                 )}
-
-                <div
-                  className="CabinetHeader__link"
-                  style={{ display: "none" }}
-                >
-                  <SVG
-                    src={require("../../../../asset/cabinet/bots_icon.svg")}
-                  />
-                  {utils.getLang("cabinet_header_bots")}
-                </div>
 
                 <BaseLink
                   router={router}
@@ -138,10 +155,8 @@ class Header extends React.Component {
                     this.setState({ activePage: pages.CABINET_WALLET });
                   }}
                 >
-                  <SVG
-                    src={require("../../../../asset/cabinet/exchange_icon.svg")}
-                  />
-                  {utils.getLang("cabinet_header_exchange")}
+                  <SVG src={require("../../../../asset/24px/candles.svg")} />
+                  <Lang name="cabinet_header_exchange" />
                 </BaseLink>
 
                 <div
@@ -151,7 +166,7 @@ class Header extends React.Component {
                   <SVG
                     src={require("../../../../asset/cabinet/commerce_icon.svg")}
                   />
-                  {utils.getLang("cabinet_header_commerce")}
+                  <Lang name="cabinet_header_commerce" />
                 </div>
               </div>
             )}
@@ -160,7 +175,7 @@ class Header extends React.Component {
                 <div className="CabinetHeader__icon">
                   {this.state.visibleNotifications && (
                     <UI.Notifications
-                      emptyText={utils.getLang("no_update")}
+                      emptyText={<Lang name="no_update" />}
                       visible={true}
                       pending={this.props.notifications.pending}
                       onClose={this.toggleNotifications.bind(this)}
@@ -172,23 +187,10 @@ class Header extends React.Component {
                           i > 0 && n.unread !== notifications[i - 1].unread && (
                             <UI.NotificationSeparator
                               key={Math.random()}
-                              title={utils.getLang("cabinet_header_viewed")}
+                              title={<Lang name="cabinet_header_viewed" />}
                             />
                           ),
                           <Notification {...n} />
-                          // <UI.Notification
-                          //   key={i}
-                          //   icon={n.icon}
-                          //   unread={n.unread}
-                          //   actions={n.actions}
-                          //   onAction={action =>
-                          //     this.props.notificationAction(n.id, action)
-                          //   }
-                          //   message={n.message}
-                          //   date={utils
-                          //     .dateFormat(n.created_at, false)
-                          //     .fromNow()}
-                          // />
                         ])}
                     </UI.Notifications>
                   )}
@@ -248,7 +250,7 @@ class Header extends React.Component {
                   size="middle"
                   type="lite"
                 >
-                  {utils.getLang("site__authModalLogInBtn")}
+                  <Lang name="site__authModalLogInBtn" />
                 </UI.Button>
                 <UI.Button
                   onClick={() =>
@@ -257,9 +259,9 @@ class Header extends React.Component {
                     })
                   }
                   size="middle"
-                  type="outline"
+                  type="secondary"
                 >
-                  {utils.getLang("site__authModalSignUpBtn")}
+                  <Lang name="site__authModalSignUpBtn" />
                 </UI.Button>
               </div>
             )}

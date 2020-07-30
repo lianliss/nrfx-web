@@ -3,7 +3,7 @@ import "./CabinetSettingsScreen.less";
 import React from "react";
 import { connect } from "react-redux";
 
-import PageContainer from "../../../components/cabinet/PageContainer/PageContainer";
+import PageContainer from "../../../components/cabinet/PageContainerOld/PageContainerOld";
 import { ProfileSidebarItem } from "../../../components/cabinet/ProfileSidebar/ProfileSidebar";
 import CabinetBaseScreen from "../CabinetBaseScreen/CabinetBaseScreen";
 import SettingSecurity from "./componets/SettingSecurity";

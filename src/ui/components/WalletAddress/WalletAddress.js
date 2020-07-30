@@ -3,11 +3,12 @@ import "./WalletAddress.less";
 import React from "react";
 import PropTypes from "prop-types";
 import SVG from "react-inlinesvg";
+import { clipTextMiddle } from "../../../utils";
 
 const WalletAddress = props => (
   <span className="WalletAddress">
     {props.isUser && <SVG src={require("src/asset/16px/user.svg")} />}
-    {props.address}
+    {clipTextMiddle(props.address)}
   </span>
 );
 

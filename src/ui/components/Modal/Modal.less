@@ -19,7 +19,6 @@
 
   .Modal__box {
     background: var(--primary-background);
-    box-shadow: var(--main-shadow);
     border-radius: 8px;
     padding: 32px 40px;
     margin: auto;
@@ -98,8 +97,9 @@
     width: 100% !important;
     max-height: none;
     overflow: initial;
-    border-radius: 8px;
+    border-radius: 0;
     padding: 24px 16px;
+    box-shadow: 0 0 0 1px var(--extra-light-gray);
     margin-top: 0;
 
     &__close {
@@ -117,7 +117,7 @@
 
   .Modal__header {
     background: var(--primary-background);
-    box-shadow: var(--main-shadow);
+    box-shadow: 0 0 0 1px var(--extra-light-gray);
     border-radius: 0 0 8px 8px;
     overflow: initial;
     position: fixed;

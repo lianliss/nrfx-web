@@ -1,6 +1,13 @@
 import BaseScreen from "../../BaseScreen";
+import { setAdaptive } from "../../../../actions";
+import { PHONE } from "../../../constants/breakpoints";
 
 export default class CabinetBaseScreen extends BaseScreen {
+  constructor() {
+    super();
+    this.handleResize();
+  }
+
   get section() {
     return this.props.routerParams.section || "default";
   }
@@ -15,6 +22,22 @@ export default class CabinetBaseScreen extends BaseScreen {
 
   componentDidMount() {
     this.load();
+    this.handleResize(); // TODO LEGACY
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    // TODO LEGACY
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  handleResize() {
+    // TODO LEGACY
+    if (document.body.offsetWidth <= PHONE) {
+      setAdaptive(true);
+    } else {
+      setAdaptive(false);
+    }
   }
 
   componentWillUpdate(nextProps) {

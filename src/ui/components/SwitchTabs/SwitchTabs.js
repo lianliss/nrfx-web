@@ -11,7 +11,6 @@ export default function SwitchTabs({
   tabs,
   selected,
   onChange,
-  currency,
   size,
   type,
   disabled
@@ -39,20 +38,9 @@ export default function SwitchTabs({
     }
   }, [selected]);
 
-  const { gradient, color } = currency;
-
-  const fillIndicatorStyle = {
-    background: gradient
-      ? `linear-gradient(45deg, ${gradient[0]} 0%, ${gradient[1]} 100%)`
-      : null
-  };
-
   const indicatorWidth = 100 / tabs.length;
   return (
-    <div
-      className={classNames("SwitchTabs", size, type, { disabled })}
-      style={{ color, borderColor: color }}
-    >
+    <div className={classNames("SwitchTabs", size, type, { disabled })}>
       {tabs.map(tab => {
         return (
           <div
@@ -75,7 +63,7 @@ export default function SwitchTabs({
             transform: `translateX(calc((100% - 2px) * ${getSelectedIndex()}))`
           }}
         >
-          <span style={fillIndicatorStyle} />
+          <span />
         </div>
       )}
     </div>

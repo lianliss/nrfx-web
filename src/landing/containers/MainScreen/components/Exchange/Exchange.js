@@ -62,7 +62,7 @@ export default () => {
                     <tr key={key}>
                       <td>
                         <div className="Exchange__currency">
-                          <CircleIcon shadow={false} currency={currency} />
+                          <CircleIcon currency={currency} />
                           <div className="Exchange__currency__name">
                             <strong>{currency.abbr.toUpperCase()}</strong>
                             <span>{currency.name}</span>
@@ -126,7 +126,7 @@ export default () => {
           onClick={() => {
             actions.openPage(pages.EXCHANGE);
           }}
-          type="outline"
+          type="secondary"
           size="extra_large"
         >
           <Lang name="landing_exchange_viewMoreMarkets" /> ›

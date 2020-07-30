@@ -33,7 +33,7 @@ export default function reduce(state = initialState, action = {}) {
         keys: state.keys.map(k => ({
           ...k,
           local: false,
-          value: k.value || state.update[k.name],
+          value: state.update[k.name] || k.value,
           en_value: k.en_value || state.update[k.name]
         })),
         update: initialState.update

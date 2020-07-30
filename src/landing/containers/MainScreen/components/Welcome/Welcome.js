@@ -14,7 +14,7 @@ export default ({ titleLang, actionButtonLang }) => {
         <Button
           onClick={() => actions.singUp()}
           size="extra_large"
-          type="outline"
+          type="secondary"
         >
           <Lang name={actionButtonLang || "landing_welcome_actionButton"} />
         </Button>

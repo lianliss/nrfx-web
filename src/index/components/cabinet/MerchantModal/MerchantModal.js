@@ -421,34 +421,19 @@ const MerchantModal = props => {
         {/*)}*/}
 
         <div className="MerchantModal__buttons">
-          <UI.Button
-            currency={currencyInfo}
-            onClick={handleGoToMerchantList}
-            type="outline"
-          >
+          <UI.Button onClick={handleGoToMerchantList} type="secondary">
             {getLang("global_back")}
           </UI.Button>
           {merchant === "invoice" ? (
-            <UI.Button
-              disabled={!amount}
-              currency={currencyInfo}
-              onClick={handleSubmitInvoice}
-            >
+            <UI.Button disabled={!amount} onClick={handleSubmitInvoice}>
               {getLang("global_next")}
             </UI.Button>
           ) : props.type === "withdrawal" ? (
-            <UI.Button
-              disabled={!amount}
-              currency={currencyInfo}
-              onClick={handleFiatWithdrawal}
-            >
+            <UI.Button disabled={!amount} onClick={handleFiatWithdrawal}>
               {getLang("global_withdrawal")}
             </UI.Button>
           ) : (
-            <UI.Button
-              currency={currencyInfo}
-              /* state={urlStatus} */ onClick={handleFiatRefill}
-            >
+            <UI.Button /* state={urlStatus} */ onClick={handleFiatRefill}>
               {getLang("global_next")}
             </UI.Button>
           )}
@@ -504,7 +489,7 @@ const MerchantModal = props => {
         </div>
 
         <div className="MerchantModal__buttons">
-          <UI.Button onClick={() => setInvoice(null)} type="outline">
+          <UI.Button onClick={() => setInvoice(null)} type="secondary">
             {getLang("global_back")}
           </UI.Button>
           <UI.Button onClick={props.onBack}>
@@ -559,7 +544,9 @@ const MerchantModal = props => {
 
 export default connect(
   state => ({
-    balances: state.fiat.balances,
+    balances: state.fiat.balances?.length
+      ? state.fiat.balances
+      : state.wallet.balances,
     loadingStatus: state.fiat.loadingStatus,
     adaptive: state.default.adaptive,
     profile: state.default.profile,

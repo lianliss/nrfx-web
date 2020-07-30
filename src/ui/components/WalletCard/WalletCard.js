@@ -7,21 +7,14 @@ import PropTypes from "prop-types";
 const WalletCard = props => {
   const { currency } = props;
   return (
-    <div
-      className={cn("WalletCard", { reject: props.reject })}
-      style={
-        !props.skipColor
-          ? { background: currency.background, color: currency.color }
-          : null
-      }
-    >
+    <div className={cn("WalletCard", { reject: props.reject })}>
       {props.title && <div className="WalletCard__title">{props.title}</div>}
       {!isNaN(props.balance) && (
         <div className="WalletCard__balance">
           <NumberFormat
             symbol={props.symbol}
+            currency={currency}
             number={props.balance}
-            currency={props.currency.abbr}
           />
         </div>
       )}
@@ -37,7 +30,7 @@ const WalletCard = props => {
 WalletCard.propTypes = {
   balance: PropTypes.number,
   balanceUsd: PropTypes.number,
-  currency: PropTypes.object
+  currency: PropTypes.string
 };
 
 export default WalletCard;

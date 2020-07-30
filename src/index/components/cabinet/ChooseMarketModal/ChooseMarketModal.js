@@ -170,7 +170,6 @@ class ChooseMarketModal extends React.Component {
                         <UI.NumberFormat
                           number={ticker.price}
                           type={currencyType}
-                          currency={secondary.abbr}
                           hiddenCurrency
                         />
                       )}
@@ -178,10 +177,7 @@ class ChooseMarketModal extends React.Component {
                     {!this.props.adaptive && (
                       <UI.TableColumn>
                         {ticker && (
-                          <UI.NumberFormat
-                            number={ticker.usd_price}
-                            currency={"usd"}
-                          />
+                          <UI.NumberFormat number={ticker.usd_price} />
                         )}
                       </UI.TableColumn>
                     )}

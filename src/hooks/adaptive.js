@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { setAdaptive as setAdaptiveStore } from "src/actions";
+import { PHONE } from "../index/constants/breakpoints";
 
 export default () => {
   const [adaptive, setAdaptive] = useState();
   const handleResize = () => {
-    if (document.body.offsetWidth <= 650) {
+    if (document.body.offsetWidth <= PHONE) {
       setAdaptive(true);
       setAdaptiveStore(true);
     } else {

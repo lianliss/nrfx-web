@@ -1,0 +1,107 @@
+@import '../../../../../../vars';
+
+.HistoryTable {
+  .ContentBox__content {
+    padding: 0 0 24px;
+    min-height: 500px;
+  }
+
+  .HistoryTable__header {
+    width: 100%;
+    padding: 40px 40px 0;
+    box-sizing: border-box;
+
+    span {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      text-transform: uppercase;
+    }
+  }
+
+  .HistoryTable__group__title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    padding: 0 40px;
+  }
+
+  .HistoryTable__group__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 16px 40px;
+
+    &:after {
+      content: "";
+      display: block;
+    }
+
+    &:hover {
+      background: var(--alice-blue);
+    }
+
+    .HistoryTable__group__item__body {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .HistoryTable__group__item__right {
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .CircleIcon {
+      margin-right: 16px;
+    }
+
+    .HistoryTable__label {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    .HistoryTable__description {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 16px;
+      color: var(--gray);
+    }
+
+    .HistoryTable__price {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .HistoryTable__label,
+    .HistoryTable__description,
+    .HistoryTable__price {
+      margin-bottom: 4px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+  }
+}
+
+@media (max-width: @mobile-width) {
+  .HistoryTable {
+    .HistoryTable__group__item {
+      padding: 16px;
+    }
+
+    .HistoryTable__group__title {
+      padding: 0 16px;
+    }
+
+    .HistoryTable__header {
+      padding: 40px 16px 0;
+    }
+  }
+}

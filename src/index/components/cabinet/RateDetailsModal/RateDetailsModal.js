@@ -74,7 +74,7 @@ export default class RateDetailsModal extends React.Component {
             </div>
           </div>
           <div className="RateDetailsModal__button_wrapper">
-            <UI.Button currency={currency} onClick={this.props.onBack}>
+            <UI.Button onClick={this.props.onBack}>
               {utils.getLang("site__goBack")}
             </UI.Button>
           </div>

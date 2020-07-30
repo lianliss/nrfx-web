@@ -72,8 +72,8 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button rounded>Button</UI.Button>
             <UI.Button disabled>Button</UI.Button>
             <UI.Button type="secondary">Button</UI.Button>
-            <UI.Button type="outline">Button</UI.Button>
-            <UI.Button rounded type="outline">
+            <UI.Button type="secondary">Button</UI.Button>
+            <UI.Button rounded type="secondary">
               Button
             </UI.Button>
             <UI.Button type="negative">Button</UI.Button>
@@ -91,10 +91,10 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="secondary">
               Button
             </UI.Button>
-            <UI.Button size="small" type="outline">
+            <UI.Button size="small" type="secondary">
               Button
             </UI.Button>
-            <UI.Button size="small" rounded type="outline">
+            <UI.Button size="small" rounded type="secondary">
               Button
             </UI.Button>
             <UI.Button size="small" type="negative">
@@ -120,10 +120,10 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="secondary" currency="btc">
               Button
             </UI.Button>
-            <UI.Button size="small" type="outline" currency="btc">
+            <UI.Button size="small" type="secondary" currency="btc">
               Button
             </UI.Button>
-            <UI.Button size="small" rounded type="outline" currency="btc">
+            <UI.Button size="small" rounded type="secondary" currency="btc">
               Button
             </UI.Button>
             <UI.Button size="small" type="negative" currency="btc">
@@ -149,10 +149,10 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="secondary" currency="eth">
               Button
             </UI.Button>
-            <UI.Button size="small" type="outline" currency="eth">
+            <UI.Button size="small" type="secondary" currency="eth">
               Button
             </UI.Button>
-            <UI.Button size="small" rounded type="outline" currency="eth">
+            <UI.Button size="small" rounded type="secondary" currency="eth">
               Button
             </UI.Button>
             <UI.Button size="small" type="negative" currency="eth">
@@ -178,10 +178,10 @@ export default class UIKitScreen extends BaseScreen {
             <UI.Button size="small" type="secondary" currency="ltc">
               Button
             </UI.Button>
-            <UI.Button size="small" type="outline" currency="ltc">
+            <UI.Button size="small" type="secondary" currency="ltc">
               Button
             </UI.Button>
-            <UI.Button size="small" rounded type="outline" currency="ltc">
+            <UI.Button size="small" rounded type="secondary" currency="ltc">
               Button
             </UI.Button>
             <UI.Button size="small" type="negative" currency="ltc">

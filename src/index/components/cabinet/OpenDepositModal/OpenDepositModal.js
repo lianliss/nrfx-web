@@ -298,7 +298,7 @@ class OpenDepositModal extends React.Component {
             />
             <UI.Button
               onClick={this.__handleClickMax}
-              type="outline"
+              type="secondary"
               currency={currencyInfo}
             >
               {utils.getLang("cabinet_sendCoinsModal_max")}

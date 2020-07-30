@@ -109,7 +109,7 @@ class WithdrawalModal extends React.Component {
               </div>
               <UI.Button
                 currency={this.state.currency}
-                type="outline"
+                type="secondary"
                 smallPadding
                 onClick={() => this.__maxDidPress(this.state.available)}
               >

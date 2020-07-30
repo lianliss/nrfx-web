@@ -140,7 +140,7 @@ export default class InviteLinks extends React.Component {
       <div className="InviteLinks__item__mobile_links">
         {link.id > 0 && (
           <UI.Button
-            type="outline"
+            type="secondary"
             onClick={() => this.props.linkDidDelete(link.id)}
           >
             {utils.getLang("global_delete")}

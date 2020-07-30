@@ -24,8 +24,8 @@ import {
   Button
 } from "src/ui/index";
 import Block from "../../components/Block/Block";
-import SVG from "react-inlinesvg";
 import LoadingStatus from "../../../index/components/cabinet/LoadingStatus/LoadingStatus";
+import { ReactComponent as TrashIcon } from "src/asset/24px/trash.svg";
 
 const LangsScreen = ({
   setType,
@@ -102,7 +102,7 @@ const LangsScreen = ({
                   </TableColumn>
                   <TableColumn>
                     <Button onClick={() => keyDelete(item.name)} size="middle">
-                      <SVG src={require("../../../asset/24px/trash.svg")} />
+                      <TrashIcon />
                     </Button>
                   </TableColumn>
                 </TableCell>
@@ -117,7 +117,7 @@ const LangsScreen = ({
             >
               Save
             </Button>
-            <Button size="middle" type="outline" onClick={addNewKey}>
+            <Button size="middle" type="secondary" onClick={addNewKey}>
               Add new key
             </Button>
           </div>

@@ -3,23 +3,15 @@ import "./PageContainer.less";
 import React from "react";
 import PropTypes from "prop-types";
 import * as UI from "../../../../ui";
-import ProfileSidebar from "../../cabinet/ProfileSidebar/ProfileSidebar";
 import useAdaptive from "src/hooks/adaptive";
 
-function PageContainer({ children, leftContent, sidebarOptions }) {
+function PageContainer({ children, sideBar, sidebarOptions }) {
   const adaptive = useAdaptive();
 
   return (
     <div className="PageContainer">
-      {!adaptive && <ProfileSidebar sidebarOptions={sidebarOptions} />}
-
-      <div className="PageContainer__content">
-        <div className="PageContainer__content__primary">{children}</div>
-
-        {leftContent && (
-          <div className="PageContainer__content__secondary">{leftContent}</div>
-        )}
-      </div>
+      <div className="PageContainer__sideBar">{sideBar}</div>
+      <div className="PageContainer__content">{children}</div>
       {adaptive && sidebarOptions && sidebarOptions.length && (
         <UI.FloatingButton
           wrapper
@@ -33,7 +25,7 @@ function PageContainer({ children, leftContent, sidebarOptions }) {
 }
 
 PageContainer.propTypes = {
-  leftContent: PropTypes.node,
+  sideBar: PropTypes.node,
   sidebarOptions: PropTypes.array
 };
 

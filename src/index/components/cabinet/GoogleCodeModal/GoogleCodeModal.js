@@ -68,7 +68,7 @@ const GoogleCodeModal = props => {
                   );
                 });
               }}
-              type="outline"
+              type="secondary"
             >
               {utils.getLang("cabinet_CopyKey")}
             </UI.Button>

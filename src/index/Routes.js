@@ -24,6 +24,7 @@ import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper
 import TokenWrapper from "../wrappers/Token/TokenWrapper";
 
 import * as pages from "./constants/pages";
+import * as CabinetWalletScreenOld from "./containers/cabinet/CabinetWalletScreenOld/CabinetWalletScreen";
 import * as CabinetWalletScreen from "./containers/cabinet/CabinetWalletScreen/CabinetWalletScreen";
 import * as CabinetFiatScreen from "./containers/cabinet/CabinetFiatScreen/CabinetFiatScreen";
 import * as CabinetProfileScreen from "./containers/cabinet/CabinetProfileScreen/CabinetProfileScreen";
@@ -128,13 +129,20 @@ function Routes(props) {
     // // Cabinet
     case pages.CABINET_WALLET:
       needAuthorization = true;
+      Component = CabinetWalletScreenOld.default;
+      break;
+    case pages.WALLET:
+    case pages.WALLET_SWAP:
+    case pages.WALLET_CRYPTO:
+    case pages.WALLET_FIAT:
+      needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
     case pages.FIAT:
       needAuthorization = true;
       Component = CabinetFiatScreen.default;
       break;
-    case pages.DASHBOARD:
+    case pages.PARTNERS:
       needAuthorization = true;
       Component = CabinetProfileScreen.default;
       break;

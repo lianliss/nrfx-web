@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import CabinetBaseScreen from "../../../CabinetBaseScreen/CabinetBaseScreen";
 
 import * as UI from "../../../../../../ui";
-import PageContainer from "../../../../../components/cabinet/PageContainer/PageContainer";
+import PageContainer from "../../../../../components/cabinet/PageContainerOld/PageContainerOld";
 import { ProfileSidebarItem } from "../../../../../components/cabinet/ProfileSidebar/ProfileSidebar";
 
 import { ReactComponent as PlusCircleSvg } from "../../../../../../asset/24px/plus-circle.svg";

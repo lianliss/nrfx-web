@@ -24,6 +24,8 @@ const NumberFormat = ({
   indicator,
   brackets,
   onClick,
+  roughly,
+  skipRoughly,
   market = false
 }) => {
   const currencyInfo = useSelector(currencySelector(currency));
@@ -50,7 +52,7 @@ const NumberFormat = ({
         .toExponential()
     ) / coefficient;
 
-  displayNumber = displayNumber.toLocaleString(undefined, {
+  displayNumber = displayNumber.toLocaleString("ru", {
     maximumFractionDigits: fractionDigits,
     minimumFractionDigits: accurate ? fractionDigits : undefined
   });
@@ -79,7 +81,7 @@ const NumberFormat = ({
     displayNumber = `(${displayNumber})`;
   }
 
-  if (number > 0 && number < 1e-8) {
+  if (!skipRoughly && number > 0 && number < 1e-8) {
     displayNumber = `~${displayNumber}`;
   }
 
@@ -94,6 +96,12 @@ const NumberFormat = ({
   if (prefix) {
     displayNumber = prefix + displayNumber;
   }
+
+  if (roughly) {
+    displayNumber = "≈ " + displayNumber;
+  }
+
+  displayNumber = displayNumber.replace(",", ".");
 
   return (
     <span
@@ -110,9 +118,11 @@ const NumberFormat = ({
 
 NumberFormat.defaultProps = {
   fractionDigits: null,
+  roughly: false,
   percent: false,
   indicator: false,
   brackets: false,
+  skipRoughly: false,
   color: false,
   currency: "",
   prefix: "",
@@ -132,6 +142,8 @@ NumberFormat.propTypes = {
   accurate: PropTypes.bool,
   hiddenCurrency: PropTypes.bool,
   symbol: PropTypes.bool,
+  roughly: PropTypes.bool,
+  skipRoughly: PropTypes.bool,
   type: PropTypes.oneOf([null, "auto", "sell", "buy", "down", "up"]),
   currency: PropTypes.string
 };

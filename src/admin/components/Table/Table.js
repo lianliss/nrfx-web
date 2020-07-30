@@ -13,13 +13,21 @@ import Button from "../../../ui/components/Button/Button";
 import { valueChange } from "../../../actions/admin/";
 
 export default class TableComponent extends React.Component {
+  clearFields() {
+    this.props.search &&
+      this.props.search.fields.forEach(field => {
+        valueChange(this.props.id + "_value_" + field.id, "");
+      });
+  }
+
   componentWillUpdate(nextProps) {
     if (nextProps.id !== this.props.id) {
-      this.props.search &&
-        this.props.search.fields.forEach(field => {
-          valueChange(this.props.id + "_value_" + field.id, "");
-        });
+      this.clearFields();
     }
+  }
+
+  componentWillUnmount() {
+    this.clearFields();
   }
 
   renderSearch = () => {

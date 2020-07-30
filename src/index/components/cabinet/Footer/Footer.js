@@ -2,12 +2,10 @@ import "./Footer.less";
 
 import React from "react";
 import { connect } from "react-redux";
-import { classNames, getLang } from "utils";
+import { classNames } from "utils";
 import * as actions from "src/actions/index";
-import { userRole } from "src/actions/cabinet/profile";
 import COMPANY from "../../../constants/company";
 import Lang from "src/components/Lang/Lang";
-import * as UI from "src/ui";
 import * as pages from "../../../constants/pages";
 
 const Footer = props => {
@@ -16,20 +14,10 @@ const Footer = props => {
     actions.openModal("language");
   };
 
-  const toggleTranslator = () => {
-    props.toggleTranslator(!props.translator);
-  };
-
   const lang = actions.getCurrentLang();
 
   return (
     <ul className={classNames("CabinetFooter", props.className)}>
-      {userRole("translator") && (
-        <div className="CabinetFooter__translator">
-          {getLang("cabinet__translation_mode", true)}
-          <UI.Switch on={props.translator} onChange={toggleTranslator} />
-        </div>
-      )}
       <li className="CabinetFooter__item">
         <a href={COMPANY.faqUrl} target="_blank" rel="noopener noreferrer">
           FAQ
@@ -54,13 +42,8 @@ const Footer = props => {
   );
 };
 
-export default connect(
-  state => ({
-    currentLang: state.default.currentLang,
-    langList: state.default.langList,
-    translator: state.settings.translator
-  }),
-  {
-    toggleTranslator: actions.toggleTranslator
-  }
-)(Footer);
+export default connect(state => ({
+  currentLang: state.default.currentLang,
+  langList: state.default.langList,
+  translator: state.settings.translator
+}))(Footer);

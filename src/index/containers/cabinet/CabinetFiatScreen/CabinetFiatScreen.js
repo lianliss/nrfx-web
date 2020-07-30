@@ -3,7 +3,7 @@ import "./CabinetFiatScreen.less";
 import React from "react";
 import { connect } from "react-redux";
 //
-import PageContainer from "../../../components/cabinet/PageContainer/PageContainer";
+import PageContainer from "../../../components/cabinet/PageContainerOld/PageContainerOld";
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import WalletBox from "../../../components/cabinet/WalletBox/WalletBox";
 import CabinetBaseScreen from "../CabinetBaseScreen/CabinetBaseScreen";
