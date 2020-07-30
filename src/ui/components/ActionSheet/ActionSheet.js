@@ -47,7 +47,11 @@ export default class ActionSheet extends React.Component {
           onClick={() => this.toggle(true)}
           onMouseOver={props.mouseOver ? () => this.toggle(true) : () => {}}
         >
-          {props.children || <MenuMoreIcon />}
+          {props.children || (
+            <div className="ActionsSheet__list__icon">
+              <MenuMoreIcon />
+            </div>
+          )}
         </div>
         <ContentBox className="ActionsSheet__list">
           {props.items.map((item, key) => (
