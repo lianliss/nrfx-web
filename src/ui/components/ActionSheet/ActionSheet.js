@@ -1,7 +1,7 @@
 import "./ActionSheet.less";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import MenuMoreIcon from "src/asset/24px/menu-more.svg";
 
 import { classNames as cn } from "../../utils/index";
 import ContentBox from "../ContentBox/ContentBox";
@@ -47,9 +47,9 @@ export default class ActionSheet extends React.Component {
           onClick={() => this.toggle(true)}
           onMouseOver={props.mouseOver ? () => this.toggle(true) : () => {}}
         >
-          {props.children || (
-            <SVG src={require("../../../asset/24px/menu-more.svg")} />
-          )}
+          {/*{props.children || (*/}
+          {/*  <MenuMoreIcon />*/}
+          {/*)}*/}
         </div>
         <ContentBox className="ActionsSheet__list">
           {props.items.map((item, key) => (

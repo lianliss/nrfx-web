@@ -1,7 +1,7 @@
 // styles
 import "./Button.less";
 // external
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 // internal
 import { classNames } from "../../utils";
@@ -13,7 +13,7 @@ const ButtonWrapper = props => (
   </div>
 );
 
-function Button(props) {
+const Button = memo(props => {
   const className = classNames(
     "Button",
     props.className,
@@ -59,7 +59,7 @@ function Button(props) {
       </div>
     </button>
   );
-}
+});
 
 Button.defaultProps = {
   type: "default",
