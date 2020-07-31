@@ -12,9 +12,11 @@ export default ({ accent, type, mode, items, titleLang }) => {
       className={cn("Advantages LandingWrapper__block", type, mode, { accent })}
     >
       <div className="LandingWrapper__content Advantages__content">
-        <h2>
-          <Lang name={titleLang} />
-        </h2>
+        {titleLang && (
+          <h2>
+            <Lang name={titleLang} />
+          </h2>
+        )}
         <ul>
           {items &&
             items.map((i, key) => (
