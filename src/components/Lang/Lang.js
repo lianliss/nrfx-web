@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import { getLang } from "../../utils";
 import { useSelector } from "react-redux";
 import { currentLangSelector, langSelector } from "../../selectors";
+import { joinComponents } from "../../utils";
 
 const Lang = ({ name, params }) => {
   const currentLang = useSelector(currentLangSelector);
   const lang = useSelector(langSelector(currentLang, name));
 
-  let displayLang = lang || name;
+  let displayLang = lang || name || "";
 
   if (params) {
     Object.keys(params).forEach(param => {
@@ -16,7 +16,15 @@ const Lang = ({ name, params }) => {
     });
   }
 
-  return <>{displayLang.replace(/{.*?}/g, "")}</>;
+  if (displayLang.includes("{")) {
+    displayLang = displayLang.replace(/{.*?}/g, "");
+  }
+
+  if (displayLang.includes("\\n")) {
+    displayLang = displayLang.split("\\n").reduce(joinComponents(<br />), null);
+  }
+
+  return <>{displayLang}</>;
 };
 
 Lang.propTypes = {
