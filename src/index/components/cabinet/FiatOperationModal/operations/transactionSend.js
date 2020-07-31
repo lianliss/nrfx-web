@@ -2,12 +2,11 @@ import React from "react";
 import * as UI from "../../../../../ui";
 import * as utils from "../../../../../utils";
 import Lang from "../../../../../components/Lang/Lang";
-import { Code, NumberFormat } from "../../../../../ui";
+import { NumberFormat } from "../../../../../ui";
 
 export default ({ operation }) => {
   return (
     <div className="FiatOperationModal__content">
-      <Code>{JSON.stringify(operation, null, 2)}</Code>
       <UI.WalletCard
         symbol={true}
         balance={-operation.amount}
