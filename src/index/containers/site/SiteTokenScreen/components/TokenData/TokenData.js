@@ -14,7 +14,10 @@ export default props => {
     });
   }, []);
 
-  const amountPercent = Math.min((amount / 60000000) * 100, 100) + "%";
+  const hardCap = 5000000;
+  const softCap = 800000;
+
+  const amountPercent = Math.min((amount / hardCap) * 100, 100) + "%";
 
   return (
     <OnScroll className="SiteTokenScreen__TokenDataWrapper">
@@ -38,13 +41,13 @@ export default props => {
               <div className="SiteTokenScreen__TokenData__scaleLabel">
                 <small>{getLang("token_narfexTokenDataSoftCap")}</small>
                 <strong>
-                  <NumberFormat number={7000000} currency="usd" />
+                  <NumberFormat number={softCap} currency="usd" />
                 </strong>
               </div>
               <div className="SiteTokenScreen__TokenData__scaleLabel">
                 <small>{getLang("token_narfexTokenDataHardCap")}</small>
                 <strong>
-                  <NumberFormat number={60000000} currency="usd" />
+                  <NumberFormat number={hardCap} currency="usd" />
                 </strong>
               </div>
             </div>
