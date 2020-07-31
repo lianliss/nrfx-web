@@ -10,17 +10,20 @@ import * as PAGES from "src/index/constants/pages";
 import WalletList from "./components/WalletList/WalletList";
 import WalletHeader from "./components/WalletHeader/WalletHeader";
 import HistoryTable from "./components/HistoryTable/HistoryTable";
+
 import {
   fetchWalletPage,
   walletFetchHistory,
   walletFetchHistoryMore
 } from "../../../../actions/cabinet/wallet";
+
 import {
   walletBalanceSelector,
   walletCardReservationSelector,
-  walletHistoryNextSelector,
+  walletHistorySelector,
   walletStatusSelector
 } from "../../../../selectors";
+
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import Paging from "../../../components/cabinet/Paging/Paging";
 import CommonHeader from "./components/CommonHeader/CommonHeader";
@@ -34,6 +37,7 @@ import { ContentBox } from "../../../../ui";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 import { setTitle } from "../../../../actions";
 import { getLang } from "../../../../utils";
+import Lang from "../../../../components/Lang/Lang";
 
 export default () => {
   const {
@@ -48,7 +52,7 @@ export default () => {
 
   const dispatch = useDispatch();
   const status = useSelector(walletStatusSelector);
-  const next = useSelector(walletHistoryNextSelector);
+  const history = useSelector(walletHistorySelector);
   const cardReservation = useSelector(walletCardReservationSelector);
   const balance = useSelector(walletBalanceSelector(params.currency));
   const [historyOptions, setHistoryOptions] = useState(null);
@@ -122,12 +126,16 @@ export default () => {
       {cardReservation && <RefillBlock />}
 
       <Paging
-        isCanMore={!!next && status.historyMore !== "loading"}
+        isCanMore={!!history.next && status.historyMore !== "loading"}
         onMore={handleLoadMore}
-        moreButton={!!next && !status.history}
+        moreButton={!!history.next && !status.history}
         isLoading={status.historyMore === "loading"}
       >
-        <HistoryTable status={status.history} />
+        <HistoryTable
+          header={<Lang name="global_operations" />}
+          history={history.items}
+          status={status.history}
+        />
       </Paging>
     </PageContainer>
   );

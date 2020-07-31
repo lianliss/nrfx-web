@@ -71,14 +71,5 @@ export default props => {
       break;
   }
 
-  return (
-    <UI.Notification
-      icon={n.icon}
-      unread={n.unread}
-      iconFill={n.iconFill}
-      message={utils.getLang(n.title, true)}
-      markText={utils.getLang(n.message, true)}
-      date={utils.dateFormat(props.created_at, false).fromNow()}
-    />
-  );
+  return null;
 };

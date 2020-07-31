@@ -5,8 +5,10 @@
   display: flex;
   color: var(--text-black);
   overflow: hidden;
+  justify-content: center;
+  align-items: center;
 
-  &.color {
+  &.type {
     background: none;
 
     &:after {
@@ -19,6 +21,34 @@
       width: inherit;
       height: inherit;
       opacity: .12;
+    }
+
+    &.fail,
+    &.failed,
+    &.error,
+    &.canceled {
+      color: var(--red);
+    }
+
+    &.success {
+      color: var(--green);
+    }
+
+    &.primary {
+      color: var(--primary-blue);
+    }
+
+    &.secondary,
+    &.pending {
+      color: var(--gray);
+    }
+
+    &.default {
+      color: var(--text-black);
+
+      &:after {
+        color: var(--gray);
+      }
     }
   }
 

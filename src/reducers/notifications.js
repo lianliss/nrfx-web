@@ -1,45 +1,30 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  notifications: [],
-  unreadCount: 0,
-  pending: true
+  history: {
+    next: "0",
+    items: [],
+    unread_notification_id: []
+  },
+  loading: false
 };
 
 export default function reduce(state = initialState, action = {}) {
   switch (action.type) {
-    case actionTypes.NOTIFICATIONS_SET:
+    case actionTypes.NOTIFICATIONS_ADD_ITEMS:
       return {
         ...state,
-        notifications: action.notifications,
-        unreadCount: action.notifications.filter(n => n.unread).length,
-        pending: false
+        history: {
+          ...state.history,
+          items: [...state.history.items, ...action.payload.items],
+          next: action.payload.next
+        }
       };
-
-    case actionTypes.NOTIFICATIONS_DELETE: {
-      let notifications = Object.assign([], state.notifications);
-      for (let i = 0; i < notifications.length; i++) {
-        if (notifications[i].id === action.id) {
-          notifications[i].deleted = true;
-          break;
-        }
-      }
-
-      return Object.assign({}, state, { notifications });
-    }
-
-    case actionTypes.NOTIFICATIONS_RESTORE: {
-      let notifications = Object.assign([], state.notifications);
-      for (let i = 0; i < notifications.length; i++) {
-        if (notifications[i].id === action.id) {
-          delete notifications[i].deleted;
-          break;
-        }
-      }
-
-      return Object.assign({}, state, { notifications });
-    }
-
+    case actionTypes.NOTIFICATIONS_SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload
+      };
     default:
       return state;
   }

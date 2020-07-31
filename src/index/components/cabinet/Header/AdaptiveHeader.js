@@ -50,7 +50,6 @@ export default connect(
     title: state.default.title
   }),
   {
-    loadNotifications: notificationsActions.loadNotifications,
-    notificationAction: notificationsActions.submitAction
+    // loadNotifications: notificationsActions.loadNotifications,
   }
 )(AdaptiveHeader);
