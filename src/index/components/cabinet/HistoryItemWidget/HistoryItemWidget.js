@@ -6,7 +6,7 @@ import {
   WalletAddress
 } from "../../../../ui";
 import Lang from "../../../../components/Lang/Lang";
-import { getCurrencyInfo } from "../../../../actions";
+import { getCurrencyInfo, openModal } from "../../../../actions";
 import { getLang, ucfirst } from "src/utils/index";
 
 import { ReactComponent as SwitchIcon } from "src/asset/24px/loop.svg";
@@ -15,7 +15,7 @@ import { ReactComponent as ClockIcon } from "src/asset/24px/clock.svg";
 import { ReactComponent as ReceiveIcon } from "src/asset/24px/receive.svg";
 import { ReactComponent as AttentionIcon } from "src/asset/24px/attention.svg";
 
-export default memo(({ item, onClick }) => {
+export default memo(({ item }) => {
   console.log(item.type, item);
 
   const {
@@ -30,6 +30,12 @@ export default memo(({ item, onClick }) => {
     data
   } = item;
 
+  const handleClick = () => {
+    openModal("operation", null, {
+      operation: item
+    });
+  };
+
   const primaryCurrency = getCurrencyInfo(
     item?.primary_currency || item?.currency
   );
@@ -40,7 +46,7 @@ export default memo(({ item, onClick }) => {
       return (
         <HistoryItem
           unread={unread}
-          onClick={onClick}
+          onClick={handleClick}
           type={status}
           icon={status === "pending" ? <ClockIcon /> : <SendIcon />}
           label={<Lang name="cabinet_fiatWithdrawalModal_title" />}
@@ -59,7 +65,7 @@ export default memo(({ item, onClick }) => {
       return (
         <HistoryItem
           unread={unread}
-          onClick={onClick}
+          onClick={handleClick}
           type={status}
           icon={status === "pending" ? <ClockIcon /> : <SendIcon />}
           label={<Lang name="cabinet__historyItemTitle_transfer_send" />}
@@ -74,7 +80,7 @@ export default memo(({ item, onClick }) => {
       return (
         <HistoryItem
           unread={unread}
-          onClick={onClick}
+          onClick={handleClick}
           icon={<SendIcon />}
           label={<Lang name="cabinet__historyItemTitle_transfer_send" />}
           header={<WalletAddress isUser address={address} />}
@@ -88,7 +94,7 @@ export default memo(({ item, onClick }) => {
         <HistoryItem
           unread={unread}
           type="success"
-          onClick={onClick}
+          onClick={handleClick}
           icon={<ReceiveIcon />}
           label={<Lang name="cabinet__historyItemTitle_transfer_receive" />}
           header={<WalletAddress isUser address={address} />}
@@ -106,7 +112,7 @@ export default memo(({ item, onClick }) => {
         <HistoryItem
           unread={unread}
           type="success"
-          onClick={onClick}
+          onClick={handleClick}
           icon={status === "pending" ? <ClockIcon /> : <ReceiveIcon />}
           label={<Lang name="cabinet__historyItemTitle_refill" />}
           header={ucfirst(bankCode)}
@@ -123,7 +129,7 @@ export default memo(({ item, onClick }) => {
       return (
         <HistoryItem
           unread={unread}
-          onClick={onClick}
+          onClick={handleClick}
           type={status}
           icon={status === "pending" ? <ClockIcon /> : <ReceiveIcon />}
           label={<Lang name="cabinet__historyItemTitle_transfer_receive" />}
@@ -142,7 +148,7 @@ export default memo(({ item, onClick }) => {
       return (
         <HistoryItem
           unread={unread}
-          onClick={onClick}
+          onClick={handleClick}
           type="primary"
           icon={<SwitchIcon />}
           label={<Lang name="cabinet__historyItemTitle_swap" />}
@@ -179,13 +185,13 @@ export default memo(({ item, onClick }) => {
       return (
         <HistoryItem
           unread={unread}
-          onClick={onClick}
+          onClick={handleClick}
           type="failed"
           icon={<ReceiveIcon />}
           label={
             <Lang name="cabinet__historyItemTitle_bank_card_refill_reject" />
           }
-          status="failed"
+          status="rejected"
           header={
             <NumberFormat
               symbol
@@ -207,18 +213,10 @@ export default memo(({ item, onClick }) => {
       return (
         <HistoryItem
           unread={unread}
-          onClick={onClick}
+          onClick={handleClick}
           type="primary"
           icon={<AttentionIcon />}
           header={<Lang name="cabinet__historyItemTitle_user_authorize" />}
-          // browser_name: "Chrome"
-          // browser_version: "83.0.4103.116"
-          // ip_address: "175.158.49.148"
-          // is_mobile: false
-          // is_mobile_application: false
-          // platform_name: "OS X"
-          // platform_version: "10.15.2"
-
           smallText={
             <Lang
               name="cabinet__historyItemTitle_user_authorize_text"

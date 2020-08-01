@@ -62,16 +62,7 @@ export default ({ history, status, header }) => {
             {utils.ucfirst(key)}
           </div>
           {transactions[key].map(item => (
-            <HistoryItemWidget
-              onClick={() =>
-                openModal("fiat_operation", null, {
-                  operation: item,
-                  icon: item.icon
-                })
-              }
-              key={item.type + item.id}
-              item={item}
-            />
+            <HistoryItemWidget key={item.type + item.id} item={item} />
           ))}
         </div>
       ))}

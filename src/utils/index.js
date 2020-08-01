@@ -345,7 +345,7 @@ export function isFiat(currency = "") {
   // TODO: Брать из state.default.currency
 }
 
-export function dateFormat(date, format = "DD MMM YYYY HH:mm") {
+export function dateFormat(date, format = "DD MMMM YYYY, HH:mm") {
   let dateObject;
 
   if (typeof date === "number" && date.toString().length === 10) {

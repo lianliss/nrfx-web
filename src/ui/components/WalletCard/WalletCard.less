@@ -1,7 +1,7 @@
 .WalletCard {
   position: relative;
   border-radius: 8px;
-  height: 80px;
+  height: 92px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,12 +10,35 @@
   font-weight: 600;
   padding: 0 64px;
   box-sizing: border-box;
-  color: var(--primary-blue);
-  background: var(--blue-gradient);
+  background: currentColor;
 
-  &.reject {
+  &.fail,
+  &.failed,
+  &.error,
+  &.reject,
+  &.rejected,
+  &.canceled {
     background: var(--text-red) !important;
     color: var(--text-red) !important;
+  }
+
+  &.success,
+  &.completed,
+  &.confirmed,
+  &.done {
+    background: var(--green) !important;
+    color: var(--text-green) !important;
+  }
+
+  &.primary {
+    color: var(--primary-blue);
+    background: var(--blue-gradient);
+  }
+
+  &.secondary,
+  &.pending {
+    background: var(--gray) !important;
+    color: var(--gray) !important;
   }
 
   & > * {
@@ -37,8 +60,10 @@
   }
 
   .WalletCard__title {
-    font-size: 16px;
-    line-height: 24px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 4px;
   }
 
   .WalletCard__balance {

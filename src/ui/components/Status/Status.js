@@ -1,12 +1,15 @@
 import "./Status.less";
 
-import React from "react";
+import React, { memo } from "react";
 import { classNames as cn } from "../../utils";
-import { ucfirst } from "../../../utils";
+import Lang from "../../../components/Lang/Lang";
 
-export default props => (
-  <span className={cn("Status", props.status)}>
-    {props.indicator && <div className="Status__indicator" />}
-    {props.label || ucfirst(props.status)}
+import { ReactComponent as ClockIcon } from "src/asset/24px/clock.svg";
+
+export default memo(({ status, label, indicator }) => (
+  <span className={cn("Status", status)}>
+    {status === "pending" && <ClockIcon />}
+    {/*{indicator && ( status === "pending" ? <ClockIcon /> : <div className="Status__indicator" />)}*/}
+    {label || <Lang name={"status_" + status} />}
   </span>
-);
+));
