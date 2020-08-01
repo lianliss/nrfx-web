@@ -27,7 +27,7 @@ export default memo(
               }
             : null
         }
-        className={cn("CircleIcon", size, type, className, { type: !!type })}
+        className={cn("CircleIcon", size, type, className, { type, currency })}
       >
         {icon ||
           (currency && currency.icon && (

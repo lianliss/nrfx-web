@@ -7,7 +7,7 @@ import {
 } from "../../../../ui";
 import Lang from "../../../../components/Lang/Lang";
 import { getCurrencyInfo } from "../../../../actions";
-import { ucfirst } from "src/utils/index";
+import { getLang, ucfirst } from "src/utils/index";
 
 import { ReactComponent as SwitchIcon } from "src/asset/24px/loop.svg";
 import { ReactComponent as SendIcon } from "src/asset/24px/send.svg";
@@ -23,9 +23,11 @@ export default memo(({ item, onClick }) => {
     status,
     amount,
     address,
+    unread,
     bank_code: bankCode,
     primary_amount: primaryAmount,
-    secondary_amount: secondaryAmount
+    secondary_amount: secondaryAmount,
+    data
   } = item;
 
   const primaryCurrency = getCurrencyInfo(
@@ -37,6 +39,7 @@ export default memo(({ item, onClick }) => {
     case "withdrawal":
       return (
         <HistoryItem
+          unread={unread}
           onClick={onClick}
           type={status}
           icon={status === "pending" ? <ClockIcon /> : <SendIcon />}
@@ -55,6 +58,7 @@ export default memo(({ item, onClick }) => {
     case "transaction_send":
       return (
         <HistoryItem
+          unread={unread}
           onClick={onClick}
           type={status}
           icon={status === "pending" ? <ClockIcon /> : <SendIcon />}
@@ -69,6 +73,7 @@ export default memo(({ item, onClick }) => {
     case "transfer_send":
       return (
         <HistoryItem
+          unread={unread}
           onClick={onClick}
           icon={<SendIcon />}
           label={<Lang name="cabinet__historyItemTitle_transfer_send" />}
@@ -81,6 +86,7 @@ export default memo(({ item, onClick }) => {
     case "transfer_receive":
       return (
         <HistoryItem
+          unread={unread}
           type="success"
           onClick={onClick}
           icon={<ReceiveIcon />}
@@ -98,6 +104,7 @@ export default memo(({ item, onClick }) => {
     case "refill":
       return (
         <HistoryItem
+          unread={unread}
           type="success"
           onClick={onClick}
           icon={status === "pending" ? <ClockIcon /> : <ReceiveIcon />}
@@ -115,6 +122,7 @@ export default memo(({ item, onClick }) => {
     case "transaction_receive":
       return (
         <HistoryItem
+          unread={unread}
           onClick={onClick}
           type={status}
           icon={status === "pending" ? <ClockIcon /> : <ReceiveIcon />}
@@ -133,6 +141,7 @@ export default memo(({ item, onClick }) => {
     case "buy_token":
       return (
         <HistoryItem
+          unread={unread}
           onClick={onClick}
           type="primary"
           icon={<SwitchIcon />}
@@ -169,6 +178,7 @@ export default memo(({ item, onClick }) => {
     case "bank_card_refill_reject":
       return (
         <HistoryItem
+          unread={unread}
           onClick={onClick}
           type="failed"
           icon={<ReceiveIcon />}
@@ -196,13 +206,41 @@ export default memo(({ item, onClick }) => {
     case "user_authorize":
       return (
         <HistoryItem
+          unread={unread}
           onClick={onClick}
           type="primary"
           icon={<AttentionIcon />}
-          label={<Lang name="cabinet__historyItemTitle_user_authorize" />}
-          status="failed"
+          header={<Lang name="cabinet__historyItemTitle_user_authorize" />}
+          // browser_name: "Chrome"
+          // browser_version: "83.0.4103.116"
+          // ip_address: "175.158.49.148"
+          // is_mobile: false
+          // is_mobile_application: false
+          // platform_name: "OS X"
+          // platform_version: "10.15.2"
+
           smallText={
-            <Lang name="cabinet__historyItemTitle_user_authorize_text" />
+            <Lang
+              name="cabinet__historyItemTitle_user_authorize_text"
+              params={{
+                device: data.is_mobile_application
+                  ? [
+                      [
+                        getLang("global_applicationFor", true),
+                        data.platform_name
+                      ].join(", "),
+                      getLang("global_ipAddress", true) + ": " + data.ip_address
+                    ].join(", ")
+                  : [
+                      [
+                        getLang("global_webSite", true),
+                        data.browser_name,
+                        data.browser_version
+                      ].join(" "),
+                      getLang("global_ipAddress", true) + ": " + data.ip_address
+                    ].join(", ")
+              }}
+            />
           }
           headerSecondary={
             <NumberFormat

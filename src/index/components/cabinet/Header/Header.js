@@ -133,7 +133,13 @@ class Header extends React.Component {
             )}
             {isLogged && (
               <div className="CabinetHeader__icons">
-                {this.state.visibleNotifications && <Notifications />}
+                {this.state.visibleNotifications && (
+                  <Notifications
+                    onClose={() => {
+                      this.setState({ visibleNotifications: false });
+                    }}
+                  />
+                )}
                 <div className="CabinetHeader__icon">
                   <Badge
                     onClick={this.toggleNotifications}

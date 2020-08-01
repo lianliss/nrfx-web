@@ -5,6 +5,7 @@ import moment from "moment";
 
 import * as UI from "../../../../../../ui";
 import * as utils from "../../../../../../utils";
+import { classNames as cn } from "../../../../../../utils";
 import { openModal } from "../../../../../../actions";
 import EmptyContentBlock from "../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock";
 import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
@@ -53,7 +54,13 @@ export default ({ history, status, header }) => {
       {header && <div className="HistoryTable__header">{header}</div>}
       {Object.keys(transactions).map(key => (
         <div key={key} className="HistoryTable__group">
-          <div className="HistoryTable__group__title">{utils.ucfirst(key)}</div>
+          <div
+            className={cn("HistoryTable__group__title", {
+              unread: transactions[key][0].unread
+            })}
+          >
+            {utils.ucfirst(key)}
+          </div>
           {transactions[key].map(item => (
             <HistoryItemWidget
               onClick={() =>

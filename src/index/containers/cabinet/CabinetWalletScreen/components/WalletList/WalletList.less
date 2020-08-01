@@ -33,6 +33,10 @@
     .CircleIcon {
       background: var(--white);
       color: var(--primary-blue);
+
+      &::after {
+        display: none;
+      }
     }
 
     &:hover,
@@ -43,7 +47,7 @@
     }
   }
 
-  &:after {
+  &::after {
     position: absolute;
     content: '';
     display: block;
@@ -57,7 +61,7 @@
     transition: transform.3s ease;
   }
 
-  &.active:after {
+  &.active::after {
     transform: scale(1, 1);
   }
 }

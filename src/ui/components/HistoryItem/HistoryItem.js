@@ -14,11 +14,12 @@ const HistoryItem = memo(
     smallText,
     smallTextSecondary,
     status,
+    unread,
     type = "default",
     onClick
   }) => {
     return (
-      <div onClick={onClick} className={cn("HistoryItem", type)}>
+      <div onClick={onClick} className={cn("HistoryItem", type, { unread })}>
         <div className="HistoryItem__left">
           <CircleIcon icon={icon} type={type} />
         </div>
@@ -66,6 +67,7 @@ const HistoryItem = memo(
 );
 
 HistoryItem.propTypes = {
+  unread: PropTypes.bool,
   icon: PropTypes.node,
   label: PropTypes.node,
   header: PropTypes.node,
