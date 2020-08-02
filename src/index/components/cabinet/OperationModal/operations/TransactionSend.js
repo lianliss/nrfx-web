@@ -2,7 +2,6 @@ import React from "react";
 import { List, NumberFormat, WalletCard } from "src/ui";
 import Lang from "src/components/Lang/Lang";
 import Footer from "../components/Footer/Footer";
-import { getCurrencyInfo } from "../../../../../actions";
 
 export default ({ operation }) => {
   return (

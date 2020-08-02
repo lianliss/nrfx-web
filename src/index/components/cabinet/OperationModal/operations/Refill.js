@@ -1,5 +1,5 @@
 import React from "react";
-import { List, NumberFormat, WalletAddress, WalletCard } from "src/ui";
+import { List, NumberFormat, WalletCard } from "src/ui";
 import Lang from "src/components/Lang/Lang";
 import Footer from "../components/Footer/Footer";
 

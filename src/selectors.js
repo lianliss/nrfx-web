@@ -11,6 +11,7 @@ export const profileSelector = state => state.default.profile;
 export const adminPendingSelector = state => state.admin.pending;
 export const adaptiveSelector = state => state.default.adaptive;
 export const walletStatusSelector = state => state.wallet.status;
+export const walletStatusHistorySelector = state => state.wallet.status.history;
 export const walletSwapSelector = state => state.wallet.swap;
 export const walletSelector = state => state.wallet;
 export const walletCardReservationSelector = state =>

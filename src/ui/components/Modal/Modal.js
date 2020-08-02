@@ -34,10 +34,15 @@ function Modal(props) {
     };
   }, []);
 
+  const handleClose = e => {
+    e.preventDefault();
+    props.onClose && props.onClose(e);
+  };
+
   if (props.isOpen) {
     return (
       <div className={className}>
-        <div className="Modal__back" onClick={props.onClose} />
+        <div className="Modal__back" onClick={handleClose} />
         <div
           className="Modal__box"
           onClick={e => e.stopPropagation()}

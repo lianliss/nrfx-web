@@ -16,7 +16,6 @@ import { getLang } from "../../../../services/lang";
 import COMPANY from "../../../constants/company";
 import { connect } from "react-redux";
 import InternalNotification from "../InternalNotification/InternalNotification";
-import * as notificationsActions from "../../../../actions/cabinet/notifications";
 import Lang from "../../../../components/Lang/Lang";
 import { userRole } from "../../../../actions/cabinet/profile";
 import Notifications from "../Notifications/Notifications";

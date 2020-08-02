@@ -1,15 +1,15 @@
 import "./HistoryTable.less";
 
-import React from "react";
+import React, { memo } from "react";
 import moment from "moment";
 
-import * as UI from "../../../../../../ui";
-import * as utils from "../../../../../../utils";
-import { classNames as cn } from "../../../../../../utils";
-import { openModal } from "../../../../../../actions";
-import EmptyContentBlock from "../../../../../components/cabinet/EmptyContentBlock/EmptyContentBlock";
-import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
-import HistoryItemWidget from "../../../../../components/cabinet/HistoryItemWidget/HistoryItemWidget";
+import * as UI from "src/ui";
+import * as utils from "src/utils";
+import { classNames as cn } from "src/utils";
+import EmptyContentBlock from "src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock";
+import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingStatus";
+import HistoryItemWidget from "src/index/components/cabinet/HistoryItemWidget/HistoryItemWidget";
+import Lang from "../../../../components/Lang/Lang";
 
 const formatDate = time => {
   if (time > Date.now() - 2 * 24 * 60 * 60 * 1000) {
@@ -21,7 +21,9 @@ const formatDate = time => {
   }
 };
 
-export default ({ history, status, header }) => {
+export default memo(({ history, status, header }) => {
+  console.log(111, "historyTable");
+
   const transactions = history
     .map(t => ({
       ...t,
@@ -51,7 +53,11 @@ export default ({ history, status, header }) => {
 
   return (
     <UI.ContentBox className="HistoryTable">
-      {header && <div className="HistoryTable__header">{header}</div>}
+      {header && (
+        <div className="HistoryTable__header">
+          <Lang name="global_operations" />
+        </div>
+      )}
       {Object.keys(transactions).map(key => (
         <div key={key} className="HistoryTable__group">
           <div
@@ -68,4 +74,4 @@ export default ({ history, status, header }) => {
       ))}
     </UI.ContentBox>
   );
-};
+});

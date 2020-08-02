@@ -94,6 +94,13 @@ export function getCurrencyInfo(name) {
   return currencyPresenter(currency);
 }
 
+export function profileSetHasNotifications(value) {
+  return {
+    type: actionTypes.PROFILE_SET_HAS_NOTIFICATIONS,
+    payload: value
+  };
+}
+
 export function openModal(name, params = {}, props = {}, done) {
   router.navigate(
     router.getState().name,

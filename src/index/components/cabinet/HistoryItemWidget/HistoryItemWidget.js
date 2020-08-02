@@ -1,4 +1,5 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import {
   HistoryItem,
   Message,
@@ -14,9 +15,11 @@ import { ReactComponent as SendIcon } from "src/asset/24px/send.svg";
 import { ReactComponent as ClockIcon } from "src/asset/24px/clock.svg";
 import { ReactComponent as ReceiveIcon } from "src/asset/24px/receive.svg";
 import { ReactComponent as AttentionIcon } from "src/asset/24px/attention.svg";
+import { notificationMarkAsRead } from "../../../../actions/cabinet/notifications";
 
 export default memo(({ item }) => {
   console.log(item.type, item);
+  const dispatch = useDispatch();
 
   const {
     type,
@@ -30,11 +33,14 @@ export default memo(({ item }) => {
     data
   } = item;
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
+    if (item.unread) {
+      dispatch(notificationMarkAsRead(item.id));
+    }
     openModal("operation", null, {
       operation: item
     });
-  };
+  }, [dispatch, item]);
 
   const primaryCurrency = getCurrencyInfo(
     item?.primary_currency || item?.currency

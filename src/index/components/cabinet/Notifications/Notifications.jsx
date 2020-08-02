@@ -1,13 +1,14 @@
 import "./Notifications.less";
 
-import React, { useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, ContentBox } from "../../../../ui";
-import HistoryTable from "../../../containers/cabinet/CabinetWalletScreen/components/HistoryTable/HistoryTable";
+import HistoryTable from "../HistoryTable/HistoryTable";
 import { notificationsSelector } from "../../../../selectors";
 import { loadNotifications } from "../../../../actions/cabinet/notifications";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import Lang from "../../../../components/Lang/Lang";
+import { profileSetHasNotifications } from "../../../../actions";
 
 export default ({ onClose }) => {
   const scrollRef = useRef(null);
@@ -17,20 +18,27 @@ export default ({ onClose }) => {
   const historyLength = useRef(history.items.length);
 
   useEffect(() => {
+    dispatch(profileSetHasNotifications(false));
     !historyLength.current && dispatch(loadNotifications());
   }, [historyLength, dispatch]);
 
-  const handlePressEsc = e => {
-    if (e.keyCode === 27) {
-      onClose && onClose(e);
-    }
-  };
+  const handlePressEsc = useCallback(
+    e => {
+      if (e.keyCode === 27) {
+        onClose && onClose(e);
+      }
+    },
+    [onClose]
+  );
 
-  const handleClick = e => {
-    if (scrollRef?.current && !scrollRef.current.contains(e.target)) {
-      onClose && onClose(e);
-    }
-  };
+  const handleClick = useCallback(
+    e => {
+      if (scrollRef?.current && !scrollRef.current.contains(e.target)) {
+        onClose && onClose(e);
+      }
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", handlePressEsc, false);
@@ -40,7 +48,7 @@ export default ({ onClose }) => {
       document.removeEventListener("keydown", handlePressEsc, false);
       document.removeEventListener("click", handleClick, false);
     };
-  }, [handlePressEsc]);
+  }, [handlePressEsc, handleClick]);
 
   return (
     <ContentBox className="Notifications">

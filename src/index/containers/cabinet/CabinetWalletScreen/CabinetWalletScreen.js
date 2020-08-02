@@ -1,6 +1,6 @@
 import "./CabinetWalletScreen.less";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { memo, useEffect, useState, useCallback } from "react";
 import { useRoute } from "react-router5";
 import { useDispatch, useSelector } from "react-redux";
 import * as firebase from "firebase";
@@ -9,7 +9,7 @@ import PageContainer from "../../../components/cabinet/PageContainer/PageContain
 import * as PAGES from "src/index/constants/pages";
 import WalletList from "./components/WalletList/WalletList";
 import WalletHeader from "./components/WalletHeader/WalletHeader";
-import HistoryTable from "./components/HistoryTable/HistoryTable";
+import History from "./components/History/History";
 
 import {
   fetchWalletPage,
@@ -37,9 +37,10 @@ import { ContentBox } from "../../../../ui";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 import { setTitle } from "../../../../actions";
 import { getLang } from "../../../../utils";
-import Lang from "../../../../components/Lang/Lang";
 
-export default () => {
+export default memo(() => {
+  console.log(111, "walletScreen");
+
   const {
     route: { name, params }
   } = useRoute();
@@ -131,12 +132,8 @@ export default () => {
         moreButton={!!history.next && !status.history}
         isLoading={status.historyMore === "loading"}
       >
-        <HistoryTable
-          header={<Lang name="global_operations" />}
-          history={history.items}
-          status={status.history}
-        />
+        <History />
       </Paging>
     </PageContainer>
   );
-};
+});

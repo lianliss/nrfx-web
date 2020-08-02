@@ -25,6 +25,21 @@ export default function reduce(state = initialState, action = {}) {
         ...state,
         loading: action.payload
       };
+    case actionTypes.NOTIFICATION_MARK_AS_READ:
+      return {
+        ...state,
+        history: {
+          ...state.history,
+          items: state.history.items.map(item =>
+            action.payload === item.id
+              ? {
+                  ...item,
+                  unread: false
+                }
+              : item
+          )
+        }
+      };
     default:
       return state;
   }

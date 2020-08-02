@@ -9,6 +9,7 @@ const initialState = {
   cabinet: true, // HACK
   auth: {},
   profile: {
+    has_notifications: false,
     has_deposits: false,
     pending: false
   },
@@ -50,6 +51,16 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         currentLang: action.currentLang
+      };
+    }
+
+    case actionTypes.PROFILE_SET_HAS_NOTIFICATIONS: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          has_notifications: action.payload
+        }
       };
     }
 

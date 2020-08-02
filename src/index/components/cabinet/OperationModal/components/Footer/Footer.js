@@ -5,7 +5,7 @@ import { Status } from "../../../../../../ui";
 import { dateFormat } from "src/utils/index";
 import Lang from "../../../../../../components/Lang/Lang";
 
-export default ({ status, date }) => {
+export default memo(({ status, date }) => {
   return (
     <div className="OperationModal__footer">
       {status && (
@@ -30,4 +30,4 @@ export default ({ status, date }) => {
       )}
     </div>
   );
-};
+});

@@ -2,11 +2,12 @@ import "./NotificationsScreen.less";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import PageContainer from "../../../../components/cabinet/PageContainer/PageContainer";
-import HistoryTable from "../../CabinetWalletScreen/components/HistoryTable/HistoryTable";
+import HistoryTable from "../../../../components/cabinet/HistoryTable/HistoryTable";
 import Paging from "../../../../components/cabinet/Paging/Paging";
 import { useSelector } from "react-redux";
 import { notificationsSelector } from "../../../../../selectors";
 import { loadNotifications } from "../../../../../actions/cabinet/notifications";
+import { profileSetHasNotifications } from "../../../../../actions";
 
 export default () => {
   const { history, loading } = useSelector(notificationsSelector);
@@ -14,6 +15,7 @@ export default () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(profileSetHasNotifications(false));
     !historyLength.current && dispatch(loadNotifications());
   }, [historyLength, dispatch]);
 
