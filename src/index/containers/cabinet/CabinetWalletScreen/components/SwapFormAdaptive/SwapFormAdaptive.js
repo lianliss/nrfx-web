@@ -123,7 +123,7 @@ export default () => {
 
       <div className="SwapFormAdaptive__controlPanel">
         <Select
-          title={<Lang name="cabinet_fiatWalletGet" />}
+          title={<Lang name="cabinet_fiatWalletGive" />}
           disabled={!!status.rate}
           value={swap.fromCurrency}
           onChange={currency => {
@@ -133,7 +133,7 @@ export default () => {
           options={toCrypto ? balances : wallets}
         />
         <Select
-          title={<Lang name="cabinet_fiatWalletGive" />}
+          title={<Lang name="cabinet_fiatWalletGet" />}
           disabled={!!status.rate}
           value={swap.toCurrency}
           onChange={currency => {
