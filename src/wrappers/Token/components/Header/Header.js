@@ -27,7 +27,7 @@ const Header = props => {
     { title: getLang("token_Benefits"), href: "#Benefits" },
     { title: getLang("token_TokenData"), href: "#TokenData" },
     { title: getLang("token_Roadmap"), href: "#RoadMap" },
-    { title: getLang("token_Burning"), href: "#TokenBurning" }
+    { title: getLang("token_usability"), href: "#Usability" }
     // { title: getLang("token_SmartContract"), link: "Address" },
   ];
 
