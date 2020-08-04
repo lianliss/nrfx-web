@@ -1,6 +1,7 @@
 import "./SiteTokenScreen.less";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import * as firebase from "firebase";
 
 import Promo from "./components/Promo/Promo";
 import Benefits from "./components/Benefits/Benefits";
@@ -15,6 +16,10 @@ import { Helmet } from "react-helmet";
 import * as utils from "../../../../utils";
 
 const SiteTokenScreen = props => {
+  useEffect(() => {
+    firebase.analytics().logEvent("open_site_token_screen");
+  });
+
   const handleBuy = () => {
     if (props.isLogin) {
       actions.openModal("nrfx_presale");

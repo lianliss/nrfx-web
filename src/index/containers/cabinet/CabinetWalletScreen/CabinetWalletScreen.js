@@ -3,8 +3,9 @@ import "./CabinetWalletScreen.less";
 import React, { useEffect, useState, useCallback } from "react";
 import { useRoute } from "react-router5";
 import { useDispatch, useSelector } from "react-redux";
-import PageContainer from "../../../components/cabinet/PageContainer/PageContainer";
+import * as firebase from "firebase";
 
+import PageContainer from "../../../components/cabinet/PageContainer/PageContainer";
 import * as PAGES from "src/index/constants/pages";
 import WalletList from "./components/WalletList/WalletList";
 import WalletHeader from "./components/WalletHeader/WalletHeader";
@@ -67,6 +68,10 @@ export default () => {
             [isCrypto ? "wallet_id" : "balance_id"]: balanceId
           }
     );
+
+    if (isSwap) {
+      firebase.analytics().logEvent("open_swap_page");
+    }
   }, [balanceId, isCrypto, isSwap]);
 
   useEffect(() => {

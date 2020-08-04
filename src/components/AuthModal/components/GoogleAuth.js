@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import * as firebase from "firebase";
 
 import * as UI from "../../../ui";
 import * as steps from "../fixtures";
@@ -35,6 +36,8 @@ function GoogleAuth({ changeStep, email, password }) {
               ? pages.EXCHANGE
               : pages.WALLET
           );
+
+          firebase.analytics().logEvent("auth");
         }
       })
       .catch(err => setErrorMsg(err.message))

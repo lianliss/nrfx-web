@@ -1,7 +1,10 @@
 import "./NrfxPresaleModal.less";
 
 import React, { useState, useEffect } from "react";
+import * as firebase from "firebase";
 import { connect } from "react-redux";
+import SVG from "react-inlinesvg";
+
 import {
   Input,
   Modal,
@@ -14,7 +17,6 @@ import NrfxSwitch from "./components/NrfxSwitch/NrfxSwitch";
 import { getLang, classNames as cn } from "../../../../utils";
 import { tokenRateGet, buyToken } from "src/actions/cabinet/wallets";
 import * as toast from "src/actions/toasts";
-import SVG from "react-inlinesvg";
 import ModalState from "../ModalState/ModalState";
 import COMPANY from "src/index/constants/company";
 
@@ -44,6 +46,8 @@ const NrfxPresaleModal = props => {
 
   useEffect(() => {
     setPending(false);
+
+    firebase.analytics().logEvent("open_nrfx_presale_modal");
   }, [rate]);
 
   const handleBuy = () => {
@@ -55,6 +59,8 @@ const NrfxPresaleModal = props => {
       buyToken(currency, amount)
         .then(() => {
           props.onClose();
+
+          firebase.analytics().logEvent("nrfx_presale_modal_buy");
         })
         .finally(() => {
           setState(null);

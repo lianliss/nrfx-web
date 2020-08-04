@@ -1,6 +1,7 @@
 import "./AuthModal.less";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import * as firebase from "firebase";
 
 import * as UI from "../../../src/ui";
 import * as steps from "./fixtures";
@@ -18,6 +19,10 @@ function AuthModal({ type, className, onClose, defaultEmail, onBack }) {
   const [email, changeEmail] = useState(defaultEmail);
   const [token, changeToken] = useState(null);
   const [password, changePassword] = useState("");
+
+  useEffect(() => {
+    firebase.analytics().logEvent("open_login_modal");
+  });
 
   const changeStepWithParams = (step, params) => {
     changeParams(params);

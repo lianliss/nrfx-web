@@ -2,6 +2,7 @@ import "./CabinetRegisterScreen.less";
 //
 import React from "react";
 import { connect } from "react-redux";
+import * as firebase from "firebase";
 
 // import ReactPhoneInput from 'react-phone-input-2';
 // import moment from 'moment';
@@ -41,6 +42,8 @@ class CabinetRegister extends React.PureComponent {
     this.props.setTitle(utils.getLang("cabinet_registerScreen_complete"));
     if (!this.context.params.hash) {
       this.props.router.navigate(pages.MAIN);
+    } else {
+      firebase.analytics().logEvent("open_registration_2step");
     }
   }
 
@@ -88,6 +91,7 @@ class CabinetRegister extends React.PureComponent {
           hash: params.hash
         })
         .then(({ access_token }) => {
+          firebase.analytics().logEvent("registration_2step");
           this.props.toastPush(
             utils.getLang("cabinet_registerScreen_success"),
             "success"

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import * as firebase from "firebase";
+
 import Welcome from "../MainScreen/components/Welcome/Welcome";
 import Promo from "../MainScreen/components/Promo/Promo";
 import Advantages from "../MainScreen/components/Advantages/Advantages";
@@ -11,6 +13,10 @@ import { Helmet } from "react-helmet";
 import ADVANTAGES_ITEMS from "../../constants/advantages";
 
 export default () => {
+  useEffect(() => {
+    firebase.analytics().logEvent("open_site_buy_bitcoin_screen");
+  });
+
   return (
     <div>
       <Helmet>
