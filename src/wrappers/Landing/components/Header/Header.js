@@ -10,7 +10,7 @@ import * as steps from "../../../../components/AuthModal/fixtures";
 import { useRoute, useRouter } from "react-router5";
 import * as pages from "../../../../index/constants/pages";
 import { useSelector } from "react-redux";
-import { profileSelector } from "../../../../selectors";
+import { currentLangSelector, profileSelector } from "../../../../selectors";
 import Lang from "../../../../components/Lang/Lang";
 
 export default () => {
@@ -18,6 +18,7 @@ export default () => {
   const route = useRoute();
   const headerRef = useRef(null);
   const { user, pending } = useSelector(profileSelector);
+  const currentLang = useSelector(currentLangSelector);
   const [openedMegaMenu, setOpenedMegaMenu] = useState(false);
   const [openedMobileMenu, setOpenedMobileMenu] = useState(false);
 
@@ -78,7 +79,7 @@ export default () => {
       className={cn("Header__wrapper", { openedMobileMenu })}
     >
       <div className="LandingWrapper__block">
-        <header className="Header LandingWrapper__content">
+        <header className="Header">
           <Logo
             onClick={() => {
               router.navigate(pages.MAIN);
@@ -103,6 +104,7 @@ export default () => {
             <li onClick={() => router.navigate(pages.CONTACT)}>
               <Lang name="site__headerContactUs" />
             </li>
+            <li onClick={() => router.navigate(pages.TOKEN)}>Narfex Token</li>
           </ul>
 
           <div className="Header__authButtons">
@@ -132,6 +134,14 @@ export default () => {
                   }}
                 >
                   <Lang name="site__authModalSignUpBtn" />
+                </Button>
+                <Button
+                  type="lite"
+                  onClick={() => {
+                    actions.openModal("language");
+                  }}
+                >
+                  {currentLang.toUpperCase()}
                 </Button>
               </ButtonWrapper>
             )}
