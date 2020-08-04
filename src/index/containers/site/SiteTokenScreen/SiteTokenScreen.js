@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Promo from "./components/Promo/Promo";
 import Benefits from "./components/Benefits/Benefits";
 import TokenData from "./components/TokenData/TokenData";
-import TokenBurning from "./components/TokenBurning/TokenBurning";
+// import TokenBurning from "./components/TokenBurning/TokenBurning";
 // import Address from "./components/Address/Address";
 import RoadMap from "./components/RoadMap/RoadMap";
 import JoinUs from "./components/JounUs/JoinUs";
