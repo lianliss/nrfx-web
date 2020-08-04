@@ -2,14 +2,12 @@
 
 .Header {
   display: flex;
-  padding-top: 24px;
-  padding-bottom: 24px;
+  padding: 24px 40px;
 
   @media (max-width: @mobile-width) {
     position: relative;
     z-index: 70;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding: 16px;
   }
 
 
@@ -132,6 +130,10 @@
 
     .Button {
       --button-height: 56px;
+
+      &.lite {
+        padding: 0 16px;
+      }
     }
 
     @media (max-width: @mobile-width) {
