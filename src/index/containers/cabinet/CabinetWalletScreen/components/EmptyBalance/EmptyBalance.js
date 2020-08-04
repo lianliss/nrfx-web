@@ -75,14 +75,20 @@ export default ({ currency }) => {
             }}
           />
         </h2>
-        <p>
-          <Lang
-            name="cabinet__EmptyBalanceText"
-            params={{
-              currency: abbr
-            }}
-          />
-        </p>
+        {currency !== "nrfx" && canExchange && (
+          <p>
+            <Lang
+              name={
+                isFiat
+                  ? "cabinet__EmptyFiatBalanceText"
+                  : "cabinet__EmptyBalanceText"
+              }
+              params={{
+                currency: abbr
+              }}
+            />
+          </p>
+        )}
         {isFiat ? (
           <ButtonWrapper align="center">
             <Button
