@@ -47,9 +47,9 @@ export default props => {
         <a
           className="TokenWrapper__menu__link"
           onClick={props.onClose}
-          href="#TokenBurning"
+          href="#Usability"
         >
-          {getLang("token_Burning")}
+          {getLang("token_usability")}
         </a>
         {/*<a className="TokenWrapper__menu__link" onClick={props.onClose} href="#Address">*/}
         {/*  {getLang("token_SmartContract")}*/}
