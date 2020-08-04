@@ -9,6 +9,7 @@ import Lang from "../../../../../../components/Lang/Lang";
 export default () => {
   return (
     <OnScroll className="SiteTokenScreen__UsabilityWrapper">
+      <div className="anchor" id="Usability" />
       <div className="SiteTokenScreen__Usability">
         <h2>
           <Lang name="landing_usability_title" />

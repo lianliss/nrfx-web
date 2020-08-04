@@ -27,7 +27,7 @@ export default props => {
   useEffect(__load, [type]);
 
   return status ? (
-    <ModalState status={status} onRetry={__load} />
+    <ModalState onClose={props.onClose} status={status} onRetry={__load} />
   ) : (
     <UI.Modal
       isOpen={true}

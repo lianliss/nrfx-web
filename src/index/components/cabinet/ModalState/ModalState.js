@@ -11,14 +11,15 @@ export default function ModalState({
   className,
   icon,
   description,
-  onRetry
+  onRetry,
+  onClose
 }) {
   return (
     <UI.Modal
       isOpen
       className={className}
       skipClose={status === "loading"}
-      onClose={() => window.history.back()}
+      onClose={() => (onClose ? onClose() : window.history.back())}
     >
       <div
         className={utils.classNames({
