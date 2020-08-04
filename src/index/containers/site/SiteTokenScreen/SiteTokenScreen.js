@@ -9,6 +9,7 @@ import TokenBurning from "./components/TokenBurning/TokenBurning";
 // import Address from "./components/Address/Address";
 import RoadMap from "./components/RoadMap/RoadMap";
 import JoinUs from "./components/JounUs/JoinUs";
+import Usability from "./components/Usability/Usability";
 import * as actions from "../../../../actions";
 import { getLang } from "src/utils";
 import { Helmet } from "react-helmet";
@@ -44,7 +45,8 @@ const SiteTokenScreen = props => {
       <Benefits />
       <TokenData onBuy={handleBuy} />
       <RoadMap items={roadMap} />
-      <TokenBurning onBuy={handleBuy} />
+      {/*<TokenBurning onBuy={handleBuy} />*/}
+      <Usability />
       {/*<Address />*/}
       <JoinUs onBuy={handleBuy} />
     </div>
