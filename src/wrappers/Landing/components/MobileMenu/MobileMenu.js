@@ -45,6 +45,14 @@ export default ({ visible, onClose }) => {
         >
           <Lang name="site__headerContactUs" />
         </Button>
+        <Button
+          type="secondary"
+          onClick={() => {
+            router.navigate(pages.TOKEN);
+          }}
+        >
+          Narfex Token
+        </Button>
       </div>
       <ul className="MobileMenu__productList">
         <li

@@ -138,7 +138,7 @@ export default () => {
                 <Button
                   type="lite"
                   onClick={() => {
-                    actions.openModal("language");
+                    actions.openStateModal("language");
                   }}
                 >
                   {currentLang.toUpperCase()}
