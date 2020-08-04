@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
+import * as firebase from "firebase";
 
 import * as UI from "src/ui";
 import * as steps from "../fixtures";
@@ -30,6 +31,10 @@ function Registration({
   const isProduction = utils.isProduction();
   const disabled = utils.isProduction() ? !token || !email : !email;
 
+  useEffect(() => {
+    firebase.analytics().logEvent("open_registration_modal");
+  });
+
   const handleSubmit = token => {
     if (!email) {
       setErrorMsg(utils.getLang("site__authModalEmailRequired"));
@@ -48,6 +53,8 @@ function Registration({
           } else {
             changeStep(steps.REGISTRATION_SUCCESS);
           }
+
+          firebase.analytics().logEvent("registration");
         })
         .catch(err => {
           if (isProduction) {
