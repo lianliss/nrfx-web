@@ -26,10 +26,10 @@ const WithdrawalRefillModal = props => {
     if (!amount || !balance) {
       props.onClose();
     }
-    // eslint-disable-next-line
 
     firebase.analytics().logEvent("open_fiat_refill_modal");
-  }, []);
+    // eslint-disable-next-line
+  }, [firebase]);
 
   if (!amount || !balance) {
     return null;
