@@ -16,7 +16,7 @@ import App from "./index/App";
 import * as user from "./actions/user";
 import * as emitter from "./services/emitter";
 import realTimeService from "./services/realtime";
-import { FIREBASE_CONFIG } from "index/constants/firebase";
+import { FIREBASE_CONFIG } from "./index/constants/firebase";
 import "./index/polyfill";
 
 // require('define').noConflict();

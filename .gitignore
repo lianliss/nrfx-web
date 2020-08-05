@@ -11,6 +11,7 @@
 # production
 /build
 /buildAdmin
+/buildLanding
 
 # misc
 .DS_Store
