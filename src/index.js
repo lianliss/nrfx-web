@@ -16,6 +16,7 @@ import App from "./index/App";
 import * as user from "./actions/user";
 import * as emitter from "./services/emitter";
 import realTimeService from "./services/realtime";
+import { FIREBASE_CONFIG } from "index/constants/firebase";
 import "./index/polyfill";
 
 // require('define').noConflict();
@@ -38,16 +39,7 @@ router.start((err, state) => {
   ReactDOM.render(wrappedApp, document.getElementById("root"));
 });
 
-firebase.initializeApp({
-  apiKey: "AIzaSyD--i-HdRJeH5nk1c_D_LTPwkrhBU5cz4Y",
-  authDomain: "narfex-com.firebaseapp.com",
-  databaseURL: "https://narfex-com.firebaseio.com",
-  projectId: "narfex-com",
-  storageBucket: "narfex-com.appspot.com",
-  messagingSenderId: "487369773798",
-  appId: "1:487369773798:web:353afafd236b5ac22ee127",
-  measurementId: "G-WMDH695XP3"
-});
+firebase.initializeApp(FIREBASE_CONFIG);
 firebase.analytics();
 
 // serviceWorker.register();

@@ -11,6 +11,8 @@ import router from "./router";
 import { RouterProvider } from "react-router5";
 import * as emitter from "./services/emitter";
 import * as user from "./actions/user";
+import * as firebase from "firebase";
+import { FIREBASE_CONFIG } from "./index/constants/firebase";
 
 // require('define').noConflict();
 
@@ -27,3 +29,6 @@ router.start((err, state) => {
     document.getElementById("root")
   );
 });
+
+firebase.initializeApp(FIREBASE_CONFIG);
+firebase.analytics();
