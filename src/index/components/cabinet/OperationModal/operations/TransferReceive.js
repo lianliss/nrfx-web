@@ -11,6 +11,7 @@ export default ({ operation }) => {
         balance={operation.amount}
         currency={operation.currency}
         status={operation.status}
+        symbol
       />
       <List
         items={[

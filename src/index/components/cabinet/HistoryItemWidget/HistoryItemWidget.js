@@ -106,6 +106,7 @@ export default memo(({ item }) => {
           header={<WalletAddress isUser address={address} />}
           headerSecondary={
             <NumberFormat
+              symbol
               color
               number={amount}
               currency={primaryCurrency.abbr}
@@ -125,6 +126,7 @@ export default memo(({ item }) => {
           headerSecondary={
             <NumberFormat
               color
+              symbol
               number={amount}
               currency={primaryCurrency.abbr}
             />
@@ -142,6 +144,7 @@ export default memo(({ item }) => {
           header={address}
           headerSecondary={
             <NumberFormat
+              symbol
               color
               number={amount}
               currency={primaryCurrency.abbr}

@@ -36,8 +36,6 @@ export default props => {
       return <TransactionSendOperation operation={operation} />;
     } else if (operation.type === "transfer_send") {
       return <TransferSendOperation operation={operation} />;
-    } else if (operation.type === "transfer_send") {
-      return <TransferSendOperation operation={operation} />;
     } else if (operation.type === "transfer_receive") {
       return <TransferReceiveOperation operation={operation} />;
     } else if (operation.type === "refill") {

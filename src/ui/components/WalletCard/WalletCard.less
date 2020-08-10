@@ -12,15 +12,6 @@
   box-sizing: border-box;
   background: currentColor;
 
-  &.fail,
-  &.failed,
-  &.error,
-  &.reject,
-  &.rejected,
-  &.canceled {
-    background: var(--text-red) !important;
-    color: var(--text-red) !important;
-  }
 
   &.success,
   &.completed,
@@ -39,6 +30,21 @@
   &.pending {
     background: var(--gray) !important;
     color: var(--gray) !important;
+  }
+
+  &.minus {
+    background: var(--text-black) !important;
+    color: var(--text-black) !important;
+  }
+
+  &.fail,
+  &.failed,
+  &.error,
+  &.reject,
+  &.rejected,
+  &.canceled {
+    background: var(--text-red) !important;
+    color: var(--text-red) !important;
   }
 
   & > * {

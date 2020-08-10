@@ -7,6 +7,7 @@ export default ({ operation }) => {
   return (
     <div>
       <WalletCard
+        collor={false}
         title={<Lang name="global_amount" />}
         balance={-operation.amount}
         currency={operation.currency}

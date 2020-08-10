@@ -7,7 +7,12 @@ import PropTypes from "prop-types";
 const WalletCard = memo(
   ({ currency, title, symbol, balance, reject, balanceUsd, status }) => {
     return (
-      <div className={cn("WalletCard", status, { reject })}>
+      <div
+        className={cn("WalletCard", status, {
+          minus: balance <= 0,
+          reject
+        })}
+      >
         {title && <div className="WalletCard__title">{title}</div>}
         {!isNaN(balance) && (
           <div className="WalletCard__balance">
