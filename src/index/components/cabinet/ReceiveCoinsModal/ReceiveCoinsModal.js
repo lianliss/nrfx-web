@@ -1,162 +1,95 @@
 import "./ReceiveCoinsModal.less";
 
-import React from "react";
-import * as UI from "../../../../ui";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRoute, useRouter } from "react-router5";
+import { Message, Button, Modal, ModalHeader } from "../../../../ui";
+import Lang from "../../../../components/Lang/Lang";
+import {
+  currencySelector,
+  walletBalanceSelector,
+  walletSelector
+} from "../../../../selectors";
 import QRCode from "qrcode.react";
-
-import * as actions from "../../../../actions";
-import * as walletsActions from "../../../../actions/cabinet/wallets";
-import LoadingStatus from "../../cabinet/LoadingStatus/LoadingStatus";
-import * as utils from "../../../../utils";
+import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import Clipboard from "../Clipboard/Clipboard";
+import { ReactComponent as CardIcon } from "src/asset/illustrations/credit_card.svg";
+import { walletSwapSetCurrency } from "../../../../actions/cabinet/wallet";
+import * as pages from "../../../constants/pages";
 
-export default class ReceiveCoinsModal extends React.Component {
-  constructor(props) {
-    super(props);
+export default ({ onClose }) => {
+  const dispatch = useDispatch();
+  const {
+    route: { params }
+  } = useRoute();
+  const router = useRouter();
+  const currency = useSelector(currencySelector(params.currency));
+  const wallet = useSelector(walletBalanceSelector(params.currency));
 
-    this.state = {
-      currency: "btc",
-      loadingStatus: "loading",
-      wallets: [],
-      dropDownCurrentItem: {}
-    };
-  }
+  const handleBuy = useCallback(() => {
+    dispatch(walletSwapSetCurrency("to", currency.abbr));
+    router.navigate(pages.WALLET_SWAP);
+    onClose();
+  }, [router, dispatch, currency, onClose]);
 
-  componentDidMount() {
-    this.__load();
-  }
-
-  get wallet() {
-    let wallet = null;
-    for (let i = 0; i < this.state.wallets.length; i++) {
-      if (this.state.wallets[i].currency === this.state.currency) {
-        wallet = this.state.wallets[i];
-      }
-    }
-    return wallet;
-  }
-
-  render() {
-    const currencyInfo = this.state.currency
-      ? actions.getCurrencyInfo(this.state.currency)
-      : {};
-    return (
-      <UI.Modal isOpen={true} onClose={this.props.onClose}>
-        <UI.ModalHeader>
-          {utils.getLang("cabinet_receiveCoinsModal_name")}{" "}
-          {utils.ucfirst(currencyInfo.name)}
-        </UI.ModalHeader>
-        {this.__renderContent()}
-      </UI.Modal>
-    );
-  }
-
-  __renderContent() {
-    if (this.state.loadingStatus) {
-      return <LoadingStatus inline status={this.state.loadingStatus} />;
-    } else {
-      const currencyInfo = actions.getCurrencyInfo(this.state.currency);
-      let options = this.state.wallets.filter(w => w.status !== "pending");
-      options = options
-        .map(item => {
-          const info = actions.getCurrencyInfo(item.currency);
-          if (info.is_available === false || info.abbr === "nrfx") {
-            // TODO: NRFX HACK
-            return false;
-          }
-          return {
-            title: utils.ucfirst(info.name),
-            note: `${utils.formatDouble(
-              item.amount
-            )} ${item.currency.toUpperCase()}`,
-            value: item.currency
-          };
-        })
-        .filter(Boolean);
-
-      if (!(options.length > 0)) {
-        return (
-          <div style={{ textAlign: "center" }}>
-            {utils.getLang("cabinet_sendCoinsModal_available")}
-          </div>
-        );
-      }
-
-      let wallet = this.wallet;
-      let placeholder = options[0];
-      if (Object.keys(this.state.dropDownCurrentItem).length > 0) {
-        placeholder = this.state.dropDownCurrentItem;
-      } else {
-        let preset = null;
-        if (
-          this.props.hasOwnProperty("preset") ||
-          this.props.hasOwnProperty("currency")
-        ) {
-          preset = options.find(
-            opt =>
-              opt.title === this.props.preset ||
-              opt.value === this.props.currency
-          );
-
-          if (preset) {
-            setTimeout(() => {
-              this.setState({
-                currency: preset.value,
-                dropDownCurrentItem: preset
-              });
-            }, 0);
-          }
-        }
-      }
-
-      return (
-        <div className="ReceiveCoinsModal">
-          <div className="SendCoinsModal__wallet">
-            <UI.CircleIcon currency={currencyInfo} />
-            {options.length > 0 && (
-              <UI.Dropdown
-                value={placeholder}
-                options={options}
-                onChange={item => {
-                  this.setState({
-                    currency: item.value,
-                    dropDownCurrentItem: item
-                  });
-                }}
-              />
-            )}
-          </div>
-          <div className="ReceiveCoinsModal__body">
-            <div className="SendCoinsModal__row ReceiveCoinsModal__qrcode">
-              <QRCode value={wallet.address} size={192} />
+  return (
+    <Modal className="ReceiveCoinsModal" onClose={onClose}>
+      <ModalHeader>
+        <Lang name="cabinet_receiveCoinsModal_name" /> {currency.name}
+      </ModalHeader>
+      {wallet ? (
+        <>
+          <div className="ReceiveCoinsModal__layout">
+            <div className="ReceiveCoinsModal__qrCode">
+              <QRCode value={wallet.address} size={192 || 168} />
             </div>
             <div className="ReceiveCoinsModal__content">
-              <Clipboard text={wallet.address} />
-              <UI.Message
-                title={utils.getLang("global_attention")}
-                type="error"
-              >
-                {utils.getLang("cabinet_receiveCoinsModal_onlySend")}{" "}
-                {utils.ucfirst(currencyInfo.name)}{" "}
-                {this.state.currency.toUpperCase()}
-                {utils.getLang("cabinet_receiveCoinsModal_toThisAddress")}
-              </UI.Message>
+              <Clipboard
+                className="ReceiveCoinsModal__clipboard"
+                text={wallet.address}
+              />
+              <Message type="warning" title={<Lang name="global_attention" />}>
+                <Lang
+                  name="cabinet_receiveCoinModal_attentionText"
+                  params={{
+                    currency: currency.name
+                  }}
+                />
+              </Message>
             </div>
           </div>
-        </div>
-      );
-    }
-  }
-
-  __load = () => {
-    this.setState({ loadingStatus: "loading" });
-    walletsActions
-      .getWallets()
-      .then(wallets => {
-        this.setState({ loadingStatus: "", wallets });
-      })
-      .catch(() => {
-        this.setState({ loadingStatus: "failed" });
-      });
-  };
-}
+          {currency.can_exchange && (
+            <div className="ReceiveCoinsModal__banner">
+              <div className="ReceiveCoinsModal__banner__icon">
+                <CardIcon />
+              </div>
+              <div className="ReceiveCoinsModal__banner__text">
+                <h4>
+                  <Lang
+                    name="cabinet_receiveCoinModal_banner_title"
+                    params={{
+                      currency: currency.name
+                    }}
+                  />
+                </h4>
+                <p>
+                  <Lang
+                    name="cabinet_receiveCoinModal_banner_text"
+                    params={{
+                      currency: currency.name
+                    }}
+                  />
+                </p>
+              </div>
+              <Button onClick={handleBuy}>
+                <Lang name="global_buy" />
+              </Button>
+            </div>
+          )}
+        </>
+      ) : (
+        <LoadingStatus inline status="loading" />
+      )}
+    </Modal>
+  );
+};

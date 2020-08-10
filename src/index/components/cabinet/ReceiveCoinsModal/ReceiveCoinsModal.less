@@ -1,97 +1,119 @@
-.ReceiveCoinsModal__warning.ReceiveCoinsModal__copy_btn {
-  width: 24px;
-  height: 24px;
-  color: var(--text-black);
-  cursor: pointer;
-}
+@import '../../../../vars';
 
 .ReceiveCoinsModal {
-  margin-top: 20px;
+  --padding: 40px;
 
-  .SendCoinsModal__wallet {
-    .CircleIcon {
-      margin-right: 16px;
-    }
+  .Modal__box {
+    max-width: 648px;
+    padding: var(--padding) !important;
+    overflow: hidden;
   }
 }
 
-.ReceiveCoinsModal__button {
-  display: inline-block;
-  position: relative;
-  margin: 0 auto;
-
-  .Button {
-    min-width: 208px;
-  }
-}
-
-.ReceiveCoinsModal__copied_icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 16px;
-  width: 16px;
-  height: 16px;
-  color: var(--primary-background);
-  z-index: 2;
-}
-
-.ReceiveCoinsModal__body {
-  margin-top: 40px;
+.ReceiveCoinsModal__layout {
   display: flex;
+  margin: 16px 0;
+  align-items: center;
+}
 
-  .ReceiveCoinsModal__qrcode {
-    text-align: center;
-    margin-top: auto;
-    margin-right: 24px;
+.ReceiveCoinsModal__qrCode {
+  align-self: self-start;
+  display: flex;
+  width: 192px;
+  height: 192px;
+  background: white;
+  flex: 0 0 auto;
+  margin-right: 24px;
 
-    canvas {
-      display: block;
-      border: 7px solid white;
-    }
+  canvas {
+    margin: auto;
+    display: block;
   }
+}
 
-  .Clipboard {
+.ReceiveCoinsModal__clipboard {
+  color: var(--primary-blue);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.ReceiveCoinsModal__content {
+
+}
+
+.ReceiveCoinsModal__banner {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--extra-light-gray);
+  background: var(--alice-blue);
+  margin: calc(var(--padding) * -1);
+  padding: 24px;
+  margin-top: var(--padding);
+}
+
+.ReceiveCoinsModal__banner__icon {
+  width: 160px;
+  height: 160px;
+  flex: 0 0 auto;
+
+  svg {
+    display: block;
+  }
+}
+
+
+.ReceiveCoinsModal__banner__text {
+  margin: 0 24px;
+
+  h4 {
     font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
-
-    margin-bottom: auto;
+    font-size: 13px;
+    line-height: 16px;
+    margin-bottom: 8px;
   }
 
-  .ReceiveCoinsModal__content {
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    margin: 7px 0;
+  p {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
   }
 }
 
-.ReceiveCoinsModal__warning {
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  color: var(--red);
-  text-align: center;
-  width: 100%;
-  margin: 10px auto 0;
+.ReceiveCoinsModal__banner .Button {
+  min-width: 104px;
+  margin-right: 16px;
 }
 
-.adaptive {
-  .ReceiveCoinsModal__body {
+@media (max-width: @mobile-width) {
+  .ReceiveCoinsModal {
+    --padding: 16px;
+  }
+
+  .ReceiveCoinsModal__qrCode {
+    margin: 0 auto;
+  }
+
+  .ReceiveCoinsModal__layout {
     flex-direction: column;
-
-    .Clipboard {
-      margin-bottom: 32px;
-    }
+    margin: 0;
   }
 
-  .ReceiveCoinsModal__qrcode {
-    align-self: center;
-    margin-right: 0;
-    margin-bottom: 16px;
-  }
   .ReceiveCoinsModal__content {
-    width: 100%;
+    margin-top: 24px;
+  }
+
+  .ReceiveCoinsModal__banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .ReceiveCoinsModal__banner__text {
+    margin: 24px 0;
+  }
+
+  .ReceiveCoinsModal__banner .Button {
+    margin: 0;
   }
 }
