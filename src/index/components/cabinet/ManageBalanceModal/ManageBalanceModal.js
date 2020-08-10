@@ -136,8 +136,6 @@ export default class extends React.Component {
       );
     }
 
-    const currencyInfo = actions.getCurrencyInfo(this.currency);
-
     return (
       <UI.Modal isOpen={true} onClose={this.props.onClose}>
         <UI.ModalHeader>
@@ -163,10 +161,6 @@ export default class extends React.Component {
             )}
           </div>
           <div className="ManageBalanceModal__row">
-            <UI.CircleIcon
-              className="ManageBalanceModal__icon"
-              currency={currencyInfo}
-            />
             <UI.Dropdown
               value={this.currentOption}
               placeholder=""

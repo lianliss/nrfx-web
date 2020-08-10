@@ -25,6 +25,7 @@ export {
   TableColumn
 } from "./components/Table/Table";
 export { default as SwitchTabs } from "./components/SwitchTabs/SwitchTabs";
+export { default as SwitchTabs2 } from "./components/SwitchTabs2/SwitchTabs2";
 export { default as SwitchButtons } from "./components/SwitchButtons/SwitchButtons";
 export { default as RadioGroup } from "./components/Radio/RadioGroup";
 export { default as Toast } from "./components/Toast/Toast";

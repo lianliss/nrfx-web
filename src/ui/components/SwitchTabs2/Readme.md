@@ -3,7 +3,7 @@ Classic
 ```js
 import { useState } from "react";
 const [value, onChange] = useState("static");
-<SwitchTabs
+<SwitchTabs2
   selected={value}
   onChange={onChange}
   tabs={[
@@ -18,7 +18,7 @@ More items
 ```js
 import { useState } from "react";
 const [value, onChange] = useState("2");
-<SwitchTabs
+<SwitchTabs2
   selected={value}
   onChange={onChange}
   tabs={[
@@ -33,42 +33,10 @@ const [value, onChange] = useState("2");
 />;
 ```
 
-Currencies color
-
-```js
-import { useState } from "react";
-const [value, onChange] = useState("eth");
-const currencies = {
-  btc: {
-    color: "#F8AC4D",
-    gradient: ["#F8A15D", "#F7B73B"]
-  },
-  eth: {
-    color: "#908EE8",
-    gradient: ["#896ADF", "#98B1F1"]
-  },
-  ltc: {
-    color: "#75BBE7",
-    gradient: ["#619ABE", "#7AC4F2"]
-  }
-};
-
-<SwitchTabs
-  selected={value}
-  onChange={onChange}
-  currency={currencies[value]}
-  tabs={[
-    { value: "btc", label: "BTH" },
-    { value: "eth", label: "ETH" },
-    { value: "ltc", label: "LTC" }
-  ]}
-/>;
-```
-
 Disabled
 
 ```js
-<SwitchTabs
+<SwitchTabs2
   disabled
   selected="static"
   onChange={console.log}
@@ -83,7 +51,7 @@ ultra_small
 
 ```js
 <div style={{ maxWidth: 300 }}>
-  <SwitchTabs
+  <SwitchTabs2
     selected={50}
     onChange={console.log}
     size="ultra_small"
@@ -101,7 +69,7 @@ ultra_small & secondary
 
 ```js
 <div style={{ maxWidth: 300 }}>
-  <SwitchTabs
+  <SwitchTabs2
     selected={50}
     onChange={console.log}
     size="ultra_small"
