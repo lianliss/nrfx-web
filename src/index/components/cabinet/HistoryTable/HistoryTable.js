@@ -22,8 +22,6 @@ const formatDate = time => {
 };
 
 export default memo(({ history, status, header }) => {
-  console.log(111, "historyTable");
-
   const transactions = history
     .map(t => ({
       ...t,

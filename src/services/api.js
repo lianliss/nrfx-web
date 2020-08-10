@@ -79,7 +79,6 @@ export function invoke(method, name, params, options = {}) {
         if (resp.status === 403) {
           clearProfile();
           reject({ message: "403 Forbidden: Invalid credentials" });
-          console.log(1, options.redirect, true);
           if (options.redirect !== false) {
             router.navigate(PAGES.MAIN);
           }

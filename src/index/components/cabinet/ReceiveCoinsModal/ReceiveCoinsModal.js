@@ -5,11 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRoute, useRouter } from "react-router5";
 import { Message, Button, Modal, ModalHeader } from "../../../../ui";
 import Lang from "../../../../components/Lang/Lang";
-import {
-  currencySelector,
-  walletBalanceSelector,
-  walletSelector
-} from "../../../../selectors";
+import { currencySelector, walletBalanceSelector } from "../../../../selectors";
 import QRCode from "qrcode.react";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import Clipboard from "../Clipboard/Clipboard";

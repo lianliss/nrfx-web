@@ -39,8 +39,6 @@ import { setTitle } from "../../../../actions";
 import { getLang } from "../../../../utils";
 
 export default memo(() => {
-  console.log(111, "walletScreen");
-
   const {
     route: { name, params }
   } = useRoute();

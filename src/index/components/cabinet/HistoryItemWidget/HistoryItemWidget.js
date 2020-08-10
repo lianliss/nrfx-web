@@ -18,7 +18,6 @@ import { ReactComponent as AttentionIcon } from "src/asset/24px/attention.svg";
 import { notificationMarkAsRead } from "../../../../actions/cabinet/notifications";
 
 export default memo(({ item }) => {
-  console.log(item.type, item);
   const dispatch = useDispatch();
 
   const {
