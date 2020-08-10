@@ -2,12 +2,13 @@
 
 .Message {
   border-radius: @border-radius;
-  background: var(--alice-blue);
-  padding: 18px 16px;
+  background: var(--primary-blue-opacity);
+  padding: 16px;
   font-family: @font-family;
   color: var(--black);
   font-size: 15px;
   line-height: 20px;
+  margin: 16px 0;
 
   .Message__content {
     display: flex;
@@ -15,15 +16,15 @@
   }
 
   &.error {
-    background: var(--light-red);
+    background: var(--red-opacity);
   }
 
   &.warning {
-    background: var(--light-yellow);
+    background: var(--yellow-opacity);
   }
 
   &.success {
-    background: var(--light-green);
+    background: var(--green-opacity);
   }
 
   &.alert {

@@ -11,6 +11,8 @@ import * as toast from "../../../../actions/toasts";
 import * as walletsActions from "../../../../actions/cabinet/wallets";
 import LoadingStatus from "../../cabinet/LoadingStatus/LoadingStatus";
 import * as utils from "../../../../utils";
+import Lang from "../../../../components/Lang/Lang";
+import { Message } from "../../../../ui";
 
 class SendCoinsModal extends React.Component {
   state = {
@@ -38,7 +40,9 @@ class SendCoinsModal extends React.Component {
   }
 
   get currentWallet() {
-    return this.props.wallets.find(w => w.id === this.props.walletId);
+    return this.props.wallets.find(
+      w => w.id === this.props.walletId || w.currency === this.props.currency
+    );
   }
 
   get currentFee() {
@@ -156,46 +160,21 @@ class SendCoinsModal extends React.Component {
       }
     };
 
-    const { wallets, walletId } = this.props;
+    if (this.props.loadingStatus) {
+      return <LoadingStatus inline status="loading" />;
+    }
+
+    // const { wallets, walletId } = this.props;
+
+    const currency = this.currentWallet.currency;
 
     if (this.props.loadingStatus || !this.props.limits) {
       return <LoadingStatus inline status={this.props.loadingStatus} />;
     } else {
-      const currencyInfo = actions.getCurrencyInfo(this.currentWallet.currency);
-
-      const options = wallets
-        .map(w => {
-          const { name, abbr, is_available } = actions.getCurrencyInfo(
-            w.currency
-          );
-          if (is_available === false || abbr === "nrfx") {
-            // TODO: NRFX HACK
-            return false;
-          }
-          return {
-            title: name,
-            note: utils.formatDouble(w.amount) + " " + abbr.toUpperCase(),
-            value: w.id
-          };
-        })
-        .filter(Boolean);
-
       return (
         <div className="SendCoinsModal">
-          <div className="SendCoinsModal__wallet">
-            <UI.CircleIcon currency={currencyInfo} />
-            {wallets.length > 0 && (
-              <UI.Dropdown
-                placeholder={""}
-                value={walletId}
-                options={options}
-                onChangeValue={this.__handleChange("walletId")}
-              />
-            )}
-          </div>
           <div className="SendCoinsModal__row">
             <UI.SwitchTabs
-              currency={currencyInfo}
               selected={this.props.type}
               onChange={this.__handleChange("type")}
               tabs={Object.keys(types).map(type => ({
@@ -204,6 +183,13 @@ class SendCoinsModal extends React.Component {
               }))}
             />
           </div>
+          <Message>
+            {this.props.type === "address" ? (
+              <Lang name="cabinet_sendModal_InfoText_address" />
+            ) : (
+              <Lang name="cabinet_sendModal_InfoText_login" />
+            )}
+          </Message>
           <div className="SendCoinsModal__row">
             <UI.Input
               value={this.props[this.props.type]}
@@ -215,7 +201,7 @@ class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__row SendCoinsModal__amount">
             <UI.Input
               placeholder="0"
-              indicator={currencyInfo.abbr.toUpperCase()}
+              indicator={this.currentWallet.currency.toUpperCase()}
               onTextChange={this.__handleChange("amount")}
               type="number"
               error={
@@ -226,15 +212,18 @@ class SendCoinsModal extends React.Component {
               value={this.props.amount}
               description={
                 this.props.type === "address" ? (
-                  <span style={{ color: currencyInfo.color }}>
-                    {utils.getLang("global_fee")}:{" "}
+                  <span>
+                    <Lang name="global_fee" />
+                    {": "}
                     <UI.NumberFormat
                       number={utils.formatDouble(this.currentFee)}
-                      currency={currencyInfo.abbr}
+                      currency={currency}
                     />
                   </span>
                 ) : (
-                  <span style={{ opacity: 0 }}>-</span>
+                  <span className="cabinet_sendCoinsModal__noFee">
+                    <Lang name="global_noFee" />
+                  </span>
                 )
               }
             />
@@ -252,7 +241,7 @@ class SendCoinsModal extends React.Component {
             <UI.Button
               smallPadding
               type="secondary"
-              currency={currencyInfo}
+              currency={currency}
               onClick={this.__maxDidPress}
             >
               {utils.getLang("cabinet_sendCoinsModal_max")}
@@ -261,7 +250,7 @@ class SendCoinsModal extends React.Component {
           <div className="SendCoinsModal__submit_wrap">
             <UI.Button
               state={this.state.status}
-              currency={currencyInfo}
+              currency={currency}
               onClick={this.__handleSubmit}
               disabled={
                 !(
