@@ -57,7 +57,14 @@ export default ({ onClose }) => {
           <LoadingStatus status="loading" />
         ) : (
           <div>
-            <HistoryTable history={history.items} />
+            <HistoryTable
+              history={history.items.map(item => ({
+                ...item.data,
+                created_at: item.created_at,
+                type: item.type,
+                unread: item.unread
+              }))}
+            />
 
             {history.next && (
               <div className="Notifications__buttonWrapper">
