@@ -1,6 +1,6 @@
 import "./CabinetWalletScreen.less";
 
-import React, { memo, useEffect, useState, useCallback } from "react";
+import React, { memo, useEffect, useCallback } from "react";
 import { useRoute } from "react-router5";
 import { useDispatch, useSelector } from "react-redux";
 import * as firebase from "firebase";
