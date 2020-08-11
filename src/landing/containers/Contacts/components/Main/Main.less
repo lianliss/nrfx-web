@@ -63,6 +63,11 @@
       transition: box-shadow.3s ease;
       cursor: pointer;
 
+      &.disabled {
+        pointer-events: none;
+        opacity: .5;
+      }
+
       @media (max-width: @mobile-width) {
         width: 100%;
         margin-bottom: 16px;

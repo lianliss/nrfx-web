@@ -17,7 +17,7 @@ export default () => {
           <Lang name="site__contactDescription" />
         </p>
         <ul>
-          <li onClick={() => window.open(COMPANY.faqUrl)}>
+          <li className="disabled" onClick={() => window.open(COMPANY.faqUrl)}>
             <SVG src={require("../../assets/info.svg")} />
             <h4>
               <Lang name="site__contactFaqTitle" />
