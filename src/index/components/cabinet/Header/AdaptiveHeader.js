@@ -2,7 +2,6 @@ import "./Header.less";
 
 import React from "react";
 import { connect } from "react-redux";
-import * as notificationsActions from "../../../../actions/cabinet/notifications";
 import InternalNotification from "../InternalNotification/InternalNotification";
 
 class AdaptiveHeader extends React.Component {
@@ -50,7 +49,6 @@ export default connect(
     title: state.default.title
   }),
   {
-    loadNotifications: notificationsActions.loadNotifications,
-    notificationAction: notificationsActions.submitAction
+    // loadNotifications: notificationsActions.loadNotifications,
   }
 )(AdaptiveHeader);

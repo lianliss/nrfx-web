@@ -15,11 +15,10 @@ import * as actions from "../../../../actions";
 import { getLang } from "../../../../services/lang";
 import COMPANY from "../../../constants/company";
 import { connect } from "react-redux";
-import Notification from "../Notification/Notification";
 import InternalNotification from "../InternalNotification/InternalNotification";
-import * as notificationsActions from "../../../../actions/cabinet/notifications";
 import Lang from "../../../../components/Lang/Lang";
 import { userRole } from "../../../../actions/cabinet/profile";
+import Notifications from "../Notifications/Notifications";
 
 class Header extends React.Component {
   state = {
@@ -27,23 +26,12 @@ class Header extends React.Component {
     visibleNotifications: false
   };
 
-  handleNavigate = route => {
-    router.navigate(route);
-  };
-
   toggleNotifications = () => {
-    if (
-      !this.props.notifications.notifications.length &&
-      !this.state.visibleNotifications
-    ) {
-      this.props.loadNotifications();
-    }
     this.setState({ visibleNotifications: !this.state.visibleNotifications });
   };
 
   render() {
     const isLogged = !!this.props.profile.user;
-    const { notifications } = this.props.notifications;
     const currentPage = router.getState().name;
 
     const currentLang = getLang();
@@ -78,34 +66,6 @@ class Header extends React.Component {
                     <Lang name="cabinet_header_partners" />
                   </BaseLink>
                 )}
-
-                {/*<BaseLink*/}
-                {/*  router={router}*/}
-                {/*  routeName={pages.FIAT}*/}
-                {/*  className="CabinetHeader__link"*/}
-                {/*  activeClassName="active"*/}
-                {/*  onClick={() => {*/}
-                {/*    this.setState({ activePage: pages.FIAT });*/}
-                {/*  }}*/}
-                {/*>*/}
-                {/*  <SVG src={require("src/asset/24px/fiat.svg")} />*/}
-                {/*  <Lang name="cabinet_header_fiat" />*/}
-                {/*</BaseLink>*/}
-
-                {/*<BaseLink*/}
-                {/*  router={router}*/}
-                {/*  routeName={pages.CABINET_WALLET}*/}
-                {/*  className="CabinetHeader__link"*/}
-                {/*  activeClassName="active"*/}
-                {/*  onClick={() => {*/}
-                {/*    this.setState({ activePage: pages.CABINET_WALLET });*/}
-                {/*  }}*/}
-                {/*>*/}
-                {/*  <SVG*/}
-                {/*    src={require("../../../../asset/cabinet/wallet_icon.svg")}*/}
-                {/*  />*/}
-                {/*  <Lang name="cabinet_header_wallets" />*/}
-                {/*</BaseLink>*/}
 
                 <BaseLink
                   router={router}
@@ -172,30 +132,16 @@ class Header extends React.Component {
             )}
             {isLogged && (
               <div className="CabinetHeader__icons">
+                {this.state.visibleNotifications && (
+                  <Notifications
+                    onClose={() => {
+                      this.setState({ visibleNotifications: false });
+                    }}
+                  />
+                )}
                 <div className="CabinetHeader__icon">
-                  {this.state.visibleNotifications && (
-                    <UI.Notifications
-                      emptyText={<Lang name="no_update" />}
-                      visible={true}
-                      pending={this.props.notifications.pending}
-                      onClose={this.toggleNotifications.bind(this)}
-                    >
-                      {notifications
-                        .filter(item => !item.deleted)
-                        .sort(n => (n.unread ? -1 : 1))
-                        .map((n, i) => [
-                          i > 0 && n.unread !== notifications[i - 1].unread && (
-                            <UI.NotificationSeparator
-                              key={Math.random()}
-                              title={<Lang name="cabinet_header_viewed" />}
-                            />
-                          ),
-                          <Notification {...n} />
-                        ])}
-                    </UI.Notifications>
-                  )}
                   <Badge
-                    onClick={this.toggleNotifications.bind(this)}
+                    onClick={this.toggleNotifications}
                     count={!!this.props.profile.has_notifications ? 1 : null}
                   >
                     <SVG
@@ -285,7 +231,6 @@ export default connect(
     translator: state.settings.translator
   }),
   {
-    loadNotifications: notificationsActions.loadNotifications,
-    notificationAction: notificationsActions.submitAction
+    // loadNotifications: notificationsActions.loadNotifications,
   }
 )(Header);

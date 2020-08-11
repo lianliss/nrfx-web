@@ -89,8 +89,16 @@
     }
 
     .CabinetHeader__icons {
+      position: relative;
       display: flex;
       margin-right: 18px;
+
+      .Notifications {
+        width: 648px;
+        position: absolute;
+        top: 48px;
+        right: 0;
+      }
 
       .CabinetHeader__icon__svg {
         display: block;
@@ -114,16 +122,6 @@
       .isvg {
         width: 24px;
         height: 24px;
-      }
-
-      .Notifications {
-        position: absolute;
-        right: -70px;
-        top: 49px;
-
-        &.empty {
-          right: -25px;
-        }
       }
 
       .ActionsSheet__list {

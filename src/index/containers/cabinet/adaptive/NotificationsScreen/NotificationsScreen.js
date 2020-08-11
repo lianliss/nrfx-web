@@ -1,69 +1,39 @@
 import "./NotificationsScreen.less";
-//
-import React from "react";
-import { connect } from "react-redux";
-//
-import * as UI from "../../../../../ui";
-import CabinetBaseScreen from "../../CabinetBaseScreen/CabinetBaseScreen";
-import * as utils from "../../../../../utils";
-import * as actions from "../../../../../actions";
-import * as notificationsActions from "../../../../../actions/cabinet/notifications";
-import Lang from "../../../../../components/Lang/Lang";
-import Notification from "../../../../components/cabinet/Notification/Notification";
-import LoadingStatus from "../../../../components/cabinet/LoadingStatus/LoadingStatus";
+import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import PageContainer from "../../../../components/cabinet/PageContainer/PageContainer";
+import HistoryTable from "../../../../components/cabinet/HistoryTable/HistoryTable";
+import Paging from "../../../../components/cabinet/Paging/Paging";
+import { useSelector } from "react-redux";
+import { notificationsSelector } from "../../../../../selectors";
+import { loadNotifications } from "../../../../../actions/cabinet/notifications";
+import { profileSetHasNotifications } from "../../../../../actions";
 
-class Notifications extends CabinetBaseScreen {
-  componentDidMount() {
-    this.props.setTitle(utils.getLang("global_notifications"));
-    this.props.loadNotifications(); // TODO
-  }
+export default () => {
+  const { history, loading } = useSelector(notificationsSelector);
+  const historyLength = useRef(history.items.length);
+  const dispatch = useDispatch();
 
-  render() {
-    const { notifications, pending } = this.props.notifications;
+  useEffect(() => {
+    dispatch(profileSetHasNotifications(false));
+    !historyLength.current && dispatch(loadNotifications());
+  }, [historyLength, dispatch]);
 
-    if (pending) {
-      return <LoadingStatus inline status="loading" />;
-    }
-
-    if (!notifications.length) {
-      return (
-        <div className="NotificationsList__empty">
-          <div
-            style={{
-              backgroundImage: `url(${require("../../../../../asset/120/info.svg")})`
-            }}
-            className="NotificationsList__empty__icon"
-          ></div>
-          <div className="">{utils.getLang("no_update")}</div>
-        </div>
-      );
-    }
-
-    return (
-      <div className="NotificationsList Content_box">
-        {notifications
-          .filter(item => !item.deleted)
-          .sort(n => (n.unread ? -1 : 1))
-          .map((n, i) => [
-            i > 0 && n.unread !== notifications[i - 1].unread && (
-              <UI.NotificationSeparator
-                key={Math.random()}
-                title={<Lang name="cabinet_header_viewed" />}
-              />
-            ),
-            <Notification {...n} />
-          ])}
-      </div>
-    );
-  }
-}
-
-export default connect(
-  state => ({
-    notifications: state.notifications
-  }),
-  {
-    setTitle: actions.setTitle,
-    loadNotifications: notificationsActions.loadNotifications
-  }
-)(Notifications);
+  return (
+    <PageContainer className="CabinetNotificationScreen">
+      <Paging
+        isCanMore={!!history.next && !loading}
+        onMore={() => {
+          dispatch(loadNotifications());
+        }}
+        moreButton={!!history.next}
+        isLoading={loading}
+      >
+        <HistoryTable
+          history={history.items}
+          status={!history.items.length && loading && "loading"}
+        />
+      </Paging>
+    </PageContainer>
+  );
+};

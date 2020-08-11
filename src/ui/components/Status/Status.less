@@ -2,8 +2,16 @@
   display: inline-flex;
   align-items: center;
 
-  &.confirmation,
-  &.pending {
+  svg {
+    align-self: center;
+    display: block;
+    margin-right: 8px;
+    height: 24px;
+    width: 24px;
+    margin-top: -2px;
+  }
+
+  &.confirmation {
     color: var(--dark-blue);
   }
 
@@ -13,13 +21,16 @@
 
   &.online,
   &.done,
-  &.completed {
+  &.completed,
+  &.confirmed {
     color: var(--text-green);
   }
 
   &.failed,
   &.offline,
-  &.cancelled {
+  &.cancelled,
+  &.rejected,
+  &.canceled {
     color: var(--text-red);
   }
 

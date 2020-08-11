@@ -29,5 +29,6 @@ export default function Message(props) {
 Message.propTypes = {
   type: PropTypes.oneOf(["error", "warning", "success"]),
   alert: PropTypes.bool,
+  title: PropTypes.node,
   onHide: PropTypes.func
 };

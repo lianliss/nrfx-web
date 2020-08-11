@@ -8,6 +8,7 @@ import { walletAllBalancesSelector } from "../../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../../actions";
 import useAdaptive from "src/hooks/adaptive";
 import EmptyBalance from "../EmptyBalance/EmptyBalance";
+import Lang from "../../../../../../components/Lang/Lang";
 
 export default () => {
   const adaptive = useAdaptive();
@@ -65,7 +66,9 @@ export default () => {
   return (
     <ContentBox className="CommonHeader">
       <div className="CommonHeader__content">
-        <div className="CommonHeader__label">Баланс Кошелька</div>
+        <div className="CommonHeader__label">
+          <Lang name="cabinet_walletBalance_name" />
+        </div>
         <div className="CommonHeader__amount">
           <NumberFormat roughly number={total} currency="usd" />
         </div>

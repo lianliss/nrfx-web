@@ -10,6 +10,9 @@ import { walletSelector } from "../../../../../../selectors";
 import useAdaptive from "src/hooks/adaptive";
 import { Separator } from "../../../../../../ui";
 
+import { ReactComponent as WalletIcon } from "src/asset/24px/wallet.svg";
+import { ReactComponent as LoopIcon } from "src/asset/24px/loop.svg";
+
 export default ({ currency }) => {
   const adaptive = useAdaptive();
   const { route, router } = useRoute();
@@ -23,13 +26,13 @@ export default ({ currency }) => {
             active={route.name === PAGES.WALLET}
             onClick={() => router.navigate(PAGES.WALLET)}
             title={<Lang name={"cabinet_header_wallet"} />}
-            icon={require("src/asset/24px/wallet.svg")}
+            icon={<WalletIcon />}
           />
           <Wallet
             active={route.name === PAGES.WALLET_SWAP}
             onClick={() => router.navigate(PAGES.WALLET_SWAP)}
             title={<Lang name={"cabinet_fiatMarketExchangeTitle"} />}
-            icon={require("src/asset/24px/loop.svg")}
+            icon={<LoopIcon />}
           />
           <Separator />
         </>

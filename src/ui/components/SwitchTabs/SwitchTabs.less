@@ -4,9 +4,12 @@
 @animTime: 400ms;
 
 .SwitchTabs {
+  --indicator-width: 0;
+  --padding: 4px;
+
   position: relative;
-  border: 1px solid;
   color: var(--primary-blue);
+  background: var(--primary-blue-opacity);
   box-sizing: border-box;
   border-radius: @border-radius;
   height: 48px;
@@ -48,57 +51,71 @@
 }
 
 .SwitchTabs__item {
+  position: relative;
   flex: 1;
-  font-weight: 500;
-  font-size: 13px;
+  font-weight: 600;
+  font-size: 14px;
   line-height: 24px;
   color: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   cursor: pointer;
-  border-left: 1px solid;
-  border-color: inherit;
+  box-shadow: inset 0 0 0 -1px #f00;
+
+  &::before {
+    position: absolute;
+    content: '';
+    left: 0;
+    width: 1px;
+    height: calc(100% - 16px);
+    top: 8px;
+    background: var(--primary-blue);
+    opacity: .5;
+    transition: opacity @animTime @animType;
+  }
 
   & > span {
-    transition: color @animTime @animType;
     position: relative;
     z-index: 3;
   }
 
-  &:first-child {
-    border-left: none;
+  &:first-child::before {
+    display: none;
   }
 
   &.active {
-    & > span {
-      color: var(--primary-background);
-    }
-    transition: border-color @animTime @animType;
-    border-color: transparent !important;
+    color: var(--dark-blue);
+  }
 
-    & + * {
-      border-left-color: transparent !important;
-    }
+  &.active::before,
+  &.active + *::before {
+    opacity: 0;
   }
 }
 
 .SwitchTabs__indicator {
   position: absolute;
-  top: -1px;
-  bottom: -1px;
-  left: -1px;
+  top: 0;
+  bottom: 0;
+  left: 0;
   z-index: 2;
   transition: transform @animTime @animType;
+  width: calc(1% * var(--indicator-width));
+  transform: translateX(calc(100% * var(--indicator-offset)));
 
   span {
-    width: 100%;
-    height: 100%;
+    --scale-indicator: 1;
     display: block;
-    border-radius: @border-radius;
-    background: var(--blue-gradient);
-    transition: background 3s ease;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 0 2px rgba(64, 112, 255, 0.15), 0 2px 4px rgba(64, 112, 255, 0.1);
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    bottom: 4px;
+    right: 4px;
+    will-change: transform;
   }
 
   &.animation span {
@@ -109,9 +126,9 @@
 @keyframes SwitchTabsAnimation {
   0%,
   100% {
-    transform: scale(1, 1);
+    transform: scaleX(1);
   }
   50% {
-    transform: scale(1.3, 1);
+    transform: scaleX(1.3);
   }
 }

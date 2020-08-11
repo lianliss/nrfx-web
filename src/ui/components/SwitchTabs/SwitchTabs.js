@@ -59,8 +59,8 @@ export default function SwitchTabs({
         <div
           className={cn("SwitchTabs__indicator", { animation })}
           style={{
-            width: `calc(${indicatorWidth}% + 2px)`,
-            transform: `translateX(calc((100% - 2px) * ${getSelectedIndex()}))`
+            "--indicator-width": indicatorWidth,
+            "--indicator-offset": getSelectedIndex()
           }}
         >
           <span />

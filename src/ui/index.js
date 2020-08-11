@@ -12,11 +12,11 @@ export { default as Label } from "./components/Label/Label";
 export { default as Filter } from "./components/Filter/Filter";
 export { default as OnScroll } from "./components/OnScroll/OnScroll";
 export { default as HamburgerButton } from "./components/HamburgerButton/HamburgerButton";
-export {
-  default as Notifications,
-  Notification,
-  NotificationSeparator
-} from "./components/Notifications/Notifications";
+// export {
+//   default as Notifications,
+//   Notification,
+//   NotificationSeparator
+// } from "./components/Notifications/Notifications";
 export { default as Message } from "./components/Message/Message";
 export { default as Hover } from "./components/Hover/Hover";
 export {
@@ -57,3 +57,4 @@ export { default as Select } from "./components/Select/Select";
 export { default as Timer } from "./components/Timer/Timer";
 export { default as Status } from "./components/Status/Status";
 export { default as Separator } from "./components/Separator/Separator";
+export { default as HistoryItem } from "./components/HistoryItem/HistoryItem";

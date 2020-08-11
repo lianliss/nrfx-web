@@ -6,6 +6,7 @@ import router from "../../../../router";
 import SVG from "react-inlinesvg";
 import * as PAGES from "../../../constants/pages";
 import Lang from "../../../../components/Lang/Lang";
+import Badge from "../../../../ui/components/Badge/Badge";
 
 const Tab = props => (
   <BaseLink
@@ -39,7 +40,9 @@ const Tabs = props => {
         </div>
       </Tab>
       <Tab route={PAGES.NOTIFICATIONS}>
-        <SVG src={require("../../../../asset/24px/bell.svg")} />
+        <Badge count={!!props.profile.has_notifications ? 1 : null}>
+          <SVG src={require("../../../../asset/24px/bell.svg")} />
+        </Badge>
         <span className="TabBar__item__text">
           <Lang name="global_notifications" />
         </span>

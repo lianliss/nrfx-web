@@ -1,6 +1,6 @@
 import "./CabinetWalletScreen.less";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { memo, useEffect, useCallback } from "react";
 import { useRoute } from "react-router5";
 import { useDispatch, useSelector } from "react-redux";
 import * as firebase from "firebase";
@@ -9,18 +9,21 @@ import PageContainer from "../../../components/cabinet/PageContainer/PageContain
 import * as PAGES from "src/index/constants/pages";
 import WalletList from "./components/WalletList/WalletList";
 import WalletHeader from "./components/WalletHeader/WalletHeader";
-import HistoryTable from "./components/HistoryTable/HistoryTable";
+import History from "./components/History/History";
+
 import {
   fetchWalletPage,
   walletFetchHistory,
   walletFetchHistoryMore
 } from "../../../../actions/cabinet/wallet";
+
 import {
   walletBalanceSelector,
   walletCardReservationSelector,
-  walletHistoryNextSelector,
+  walletHistorySelector,
   walletStatusSelector
 } from "../../../../selectors";
+
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import Paging from "../../../components/cabinet/Paging/Paging";
 import CommonHeader from "./components/CommonHeader/CommonHeader";
@@ -35,7 +38,15 @@ import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 import { setTitle } from "../../../../actions";
 import { getLang } from "../../../../utils";
 
-export default () => {
+const buildOptions = (balanceId, isCrypto, isSwap) => {
+  return isSwap
+    ? { operations: "swap" }
+    : balanceId && {
+        [isCrypto ? "wallet_id" : "balance_id"]: balanceId
+      };
+};
+
+export default memo(() => {
   const {
     route: { name, params }
   } = useRoute();
@@ -48,10 +59,9 @@ export default () => {
 
   const dispatch = useDispatch();
   const status = useSelector(walletStatusSelector);
-  const next = useSelector(walletHistoryNextSelector);
+  const history = useSelector(walletHistorySelector);
   const cardReservation = useSelector(walletCardReservationSelector);
   const balance = useSelector(walletBalanceSelector(params.currency));
-  const [historyOptions, setHistoryOptions] = useState(null);
   const balanceId = !isSwap && balance?.id;
 
   useEffect(() => {
@@ -61,27 +71,19 @@ export default () => {
   useEffect(() => {
     window.scroll(0, 0);
 
-    setHistoryOptions(
-      isSwap
-        ? { operations: "swap" }
-        : balanceId && {
-            [isCrypto ? "wallet_id" : "balance_id"]: balanceId
-          }
-    );
-
     if (isSwap) {
       firebase.analytics().logEvent("open_swap_page");
     }
-  }, [balanceId, isCrypto, isSwap]);
+  }, [isSwap]);
 
   useEffect(() => {
     setTitle(getLang("cabinet_header_wallet", true));
-    dispatch(walletFetchHistory(historyOptions));
-  }, [historyOptions, dispatch]);
+    dispatch(walletFetchHistory(buildOptions(balanceId, isCrypto, isSwap)));
+  }, [balanceId, isCrypto, isSwap, dispatch]);
 
   const handleLoadMore = useCallback(() => {
-    dispatch(walletFetchHistoryMore(historyOptions));
-  }, [historyOptions, dispatch]);
+    dispatch(walletFetchHistoryMore(buildOptions(balanceId, isCrypto, isSwap)));
+  }, [balanceId, isCrypto, isSwap, dispatch]);
 
   if (status.main) {
     return <LoadingStatus status={status.main} />;
@@ -122,13 +124,13 @@ export default () => {
       {cardReservation && <RefillBlock />}
 
       <Paging
-        isCanMore={!!next && status.historyMore !== "loading"}
+        isCanMore={!!history.next && status.historyMore !== "loading"}
         onMore={handleLoadMore}
-        moreButton={!!next && !status.history}
+        moreButton={!!history.next && !status.history}
         isLoading={status.historyMore === "loading"}
       >
-        <HistoryTable status={status.history} />
+        <History />
       </Paging>
     </PageContainer>
   );
-};
+});

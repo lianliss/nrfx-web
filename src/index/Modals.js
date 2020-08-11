@@ -31,7 +31,8 @@ import MerchantModal from "../index/components/cabinet/MerchantModal/MerchantMod
 import FiatWithdrawalModal from "../index/components/cabinet/FiatWithdrawalModal/FiatWithdrawalModal";
 import FiatRefillModal from "../index/components/cabinet/FiatRefillModal/FiatRefillModal";
 import FiatRefillByCardModal from "../index/components/cabinet/FiatRefillByCardModal/FiatRefillByCardModal";
-import FiatOperationModal from "../index/components/cabinet/FiatOperationModal/FiatOperationModal";
+// import FiatOperationModal from "../index/components/cabinet/FiatOperationModal/FiatOperationModal";
+import OperationModal from "../index/components/cabinet/OperationModal/OperationModal";
 import DepositPoolSuccessModal from "../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal";
 import StaticContentModal from "./components/site/StaticContentModal/StaticContentModal";
 import UserBlockModal from "../index/components/cabinet/UserBlockModal/UserBlockModal";
@@ -121,8 +122,8 @@ function Modals(props) {
     case "choose_market":
       Component = ChooseMarketModal;
       break;
-    case "fiat_operation":
-      Component = FiatOperationModal;
+    case "operation":
+      Component = OperationModal;
       break;
     case "deposit_pool_success":
       Component = DepositPoolSuccessModal;

@@ -25,9 +25,7 @@ export default function LoadingStatus({
     case "failed_connection":
       cont = (
         <div className="LoadingStatus__failed">
-          <SVG
-            src={require("src/asset/cabinet/loading_failed_connetion_120.svg")}
-          />
+          <SVG src={require("src/asset/120/failed.svg")} />
           <div className="LoadingStatus__failed__message">
             {utils.getLang("cabinet_loadingStatus_connectionError")}
           </div>
@@ -42,7 +40,7 @@ export default function LoadingStatus({
     case "failed":
       cont = (
         <div className="LoadingStatus__failed">
-          <SVG src={require("src/asset/cabinet/loading_failed_120.svg")} />
+          <SVG src={require("src/asset/120/failed.svg")} />
           <div className="LoadingStatus__failed__message">
             {utils.getLang("cabinet_loadingStatus_isSeemsText")}
           </div>
@@ -67,9 +65,7 @@ export default function LoadingStatus({
     default:
       cont = (
         <div className="LoadingStatus__failed">
-          <SVG
-            src={icon || require("src/asset/cabinet/loading_failed_120.svg")}
-          />
+          <SVG src={icon || require("src/asset/120/failed.svg")} />
           <div className="LoadingStatus__failed__message">
             {status || utils.getLang("cabinet_loadingStatus_unknownError")}
           </div>

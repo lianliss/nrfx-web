@@ -1,14 +1,16 @@
 Classic
 
 ```js
+import { useState } from "react";
+const [value, onChange] = useState("static");
 <SwitchTabs
-  selected="static"
-  onChange={console.log}
+  selected={value}
+  onChange={onChange}
   tabs={[
     { value: "static", label: "Static" },
     { value: "dynamic", label: "Dynamic" }
   ]}
-/>
+/>;
 ```
 
 More items

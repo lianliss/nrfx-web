@@ -8,7 +8,7 @@ export default props => (
     {props.items &&
       props.items.map(item => (
         <div className={cn("List__item", { margin: item.margin })}>
-          <div className="List__item__label">{item.label}:</div>
+          <div className="List__item__label">{item.label}</div>
           <div className="List__item__value">{item.value}</div>
         </div>
       ))}

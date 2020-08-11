@@ -1,53 +1,44 @@
 import "./CircleIcon.less";
 import "../Skeleton/Skeleton.less";
 
-import React from "react";
-import hexToRgba from "hex-to-rgba";
-import SVG from "react-inlinesvg";
+import React, { memo } from "react";
 import { classNames as cn } from "../../utils";
-import { getCssVar } from "../../../utils";
 
-export default props => {
-  const {
+export default memo(
+  ({
     currency,
     icon,
     className,
     size = "medium",
-    color,
     skeleton = false,
-    shadow = false
-  } = props;
-  if (skeleton) {
-    return <div className={cn("CircleIcon", size, className, { skeleton })} />;
+    type = "default"
+  }) => {
+    if (skeleton) {
+      return (
+        <div className={cn("CircleIcon", size, className, { skeleton })} />
+      );
+    }
+    return (
+      <div
+        style={
+          currency
+            ? {
+                background: currency.background
+              }
+            : null
+        }
+        className={cn("CircleIcon", size, type, className, { type, currency })}
+      >
+        {icon ||
+          (currency && currency.icon && (
+            <div
+              className="CircleIcon__icon"
+              style={{
+                backgroundImage: `url(${currency.icon}`
+              }}
+            />
+          ))}
+      </div>
+    );
   }
-  return (
-    <div
-      className={cn("CircleIcon", size, className, { color: !!color })}
-      style={
-        currency
-          ? {
-              background: currency.background,
-              boxShadow:
-                shadow &&
-                `0px 4px 8px ${hexToRgba(currency.color || "#AAA", 0.3)}`,
-              color: "white"
-            }
-          : {
-              color: color ? getCssVar("--" + color) : null
-            }
-      }
-    >
-      {icon ? (
-        <SVG src={icon} />
-      ) : (
-        currency &&
-        currency.icon && (
-          <div
-            className="CircleIcon__icon"
-            style={{ backgroundImage: `url(${currency.icon}` }}
-          />
-        )
-      )}
-    </div>
-  );
-};
+);

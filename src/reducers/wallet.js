@@ -35,7 +35,7 @@ export default function reduce(state = initialState, action = {}) {
       return {
         ...state,
         ...action.payload,
-        history: initialState.history,
+        // history: initialState.history,
         cardReservation: action.payload.card_reservation || null
       };
     }
