@@ -2,7 +2,8 @@
 // styles
 import "./Modal.less";
 // external
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
+import { useRoute } from "react-router5";
 import PropTypes from "prop-types";
 // internal
 import { classNames } from "../../utils";
@@ -11,8 +12,10 @@ import useAdaptive from "src/hooks/adaptive";
 
 function Modal(props) {
   const node = useRef();
+  const {
+    route: { params: modal }
+  } = useRoute();
   const adaptive = useAdaptive();
-
   const className = classNames(props.className, {
     adaptive,
     Modal: true,
@@ -34,10 +37,17 @@ function Modal(props) {
     };
   }, []);
 
-  const handleClose = e => {
-    e.preventDefault();
-    props.onClose && props.onClose(e);
-  };
+  const handleClose = useCallback(
+    e => {
+      e.preventDefault();
+      if (adaptive && modal) {
+        window.history.back();
+      } else if (props.onClose) {
+        props.onClose(e);
+      }
+    },
+    [adaptive, modal, props]
+  );
 
   if (props.isOpen) {
     return (
@@ -50,12 +60,12 @@ function Modal(props) {
           style={{ width: props.width }}
         >
           {!props.skipClose && (
-            <div className="Modal__box__close" onClick={props.onClose}>
+            <div className="Modal__box__close" onClick={handleClose}>
               <SVG
                 src={
                   adaptive
-                    ? require("src/asset/cabinet/angle_left.svg")
-                    : require("src/asset/site/close.svg")
+                    ? require("src/asset/24px/angle-left.svg")
+                    : require("src/asset/24px/close-large.svg")
                 }
               />
             </div>
