@@ -17,15 +17,6 @@ export default () => {
           <Lang name="site__contactDescription" />
         </p>
         <ul>
-          <li className="disabled" onClick={() => window.open(COMPANY.faqUrl)}>
-            <SVG src={require("../../assets/info.svg")} />
-            <h4>
-              <Lang name="site__contactFaqTitle" />
-            </h4>
-            <p>
-              <Lang name="site__contactFaqDescription" />
-            </p>
-          </li>
           <li
             onClick={() => {
               window.jivo_api && window.jivo_api.open();
@@ -59,6 +50,15 @@ export default () => {
             </h4>
             <p>
               <Lang name="site__contactApiDescription" />
+            </p>
+          </li>
+          <li className="disabled" onClick={() => window.open(COMPANY.faqUrl)}>
+            <SVG src={require("../../assets/info.svg")} />
+            <h4>
+              <Lang name="site__contactFaqTitle" />
+            </h4>
+            <p>
+              <Lang name="site__contactFaqDescription" />
             </p>
           </li>
         </ul>
