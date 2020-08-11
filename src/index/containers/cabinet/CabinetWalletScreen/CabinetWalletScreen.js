@@ -38,6 +38,14 @@ import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 import { setTitle } from "../../../../actions";
 import { getLang } from "../../../../utils";
 
+const buildOptions = (balanceId, isCrypto, isSwap) => {
+  return isSwap
+    ? { operations: "swap" }
+    : balanceId && {
+        [isCrypto ? "wallet_id" : "balance_id"]: balanceId
+      };
+};
+
 export default memo(() => {
   const {
     route: { name, params }
@@ -54,7 +62,6 @@ export default memo(() => {
   const history = useSelector(walletHistorySelector);
   const cardReservation = useSelector(walletCardReservationSelector);
   const balance = useSelector(walletBalanceSelector(params.currency));
-  const [historyOptions, setHistoryOptions] = useState(null);
   const balanceId = !isSwap && balance?.id;
 
   useEffect(() => {
@@ -64,27 +71,19 @@ export default memo(() => {
   useEffect(() => {
     window.scroll(0, 0);
 
-    setHistoryOptions(
-      isSwap
-        ? { operations: "swap" }
-        : balanceId && {
-            [isCrypto ? "wallet_id" : "balance_id"]: balanceId
-          }
-    );
-
     if (isSwap) {
       firebase.analytics().logEvent("open_swap_page");
     }
-  }, [balanceId, isCrypto, isSwap]);
+  }, [isSwap]);
 
   useEffect(() => {
     setTitle(getLang("cabinet_header_wallet", true));
-    dispatch(walletFetchHistory(historyOptions));
-  }, [historyOptions, dispatch]);
+    dispatch(walletFetchHistory(buildOptions(balanceId, isCrypto, isSwap)));
+  }, [balanceId, isCrypto, isSwap, dispatch]);
 
   const handleLoadMore = useCallback(() => {
-    dispatch(walletFetchHistoryMore(historyOptions));
-  }, [historyOptions, dispatch]);
+    dispatch(walletFetchHistoryMore(buildOptions(balanceId, isCrypto, isSwap)));
+  }, [balanceId, isCrypto, isSwap, dispatch]);
 
   if (status.main) {
     return <LoadingStatus status={status.main} />;
