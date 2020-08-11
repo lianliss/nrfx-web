@@ -29,7 +29,13 @@ export default memo(({ item }) => {
     bank_code: bankCode,
     primary_amount: primaryAmount,
     secondary_amount: secondaryAmount,
-    data
+    browser_name: browserName,
+    browser_version: browserVersion,
+    ip_address: ipAddress,
+    // is_mobile: isMobile,
+    is_mobile_application: isMobileApplication,
+    platform_name: platformName
+    // platform_version: platformVersion
   } = item;
 
   const handleClick = useCallback(() => {
@@ -229,21 +235,21 @@ export default memo(({ item }) => {
             <Lang
               name="cabinet__historyItemTitle_user_authorize_text"
               params={{
-                device: data.is_mobile_application
+                device: isMobileApplication
                   ? [
                       [
                         getLang("global_applicationFor", true),
-                        data.platform_name
+                        platformName
                       ].join(", "),
-                      getLang("global_ipAddress", true) + ": " + data.ip_address
+                      getLang("global_ipAddress", true) + ": " + ipAddress
                     ].join(", ")
                   : [
                       [
                         getLang("global_webSite", true),
-                        data.browser_name,
-                        data.browser_version
+                        browserName,
+                        browserVersion
                       ].join(" "),
-                      getLang("global_ipAddress", true) + ": " + data.ip_address
+                      getLang("global_ipAddress", true) + ": " + ipAddress
                     ].join(", ")
               }}
             />
