@@ -29,7 +29,7 @@ export function loadLang(code, toggleCurrentLang = true) {
         apiSchema.Lang.DefaultGet,
         { code },
         {
-          apiEntry: "https://api.narfex.com" // TODO
+          apiEntry: "https://newapi.narfex.com" // TODO
         }
       )
       .then(({ translations, languages }) => {
