@@ -23,6 +23,9 @@ handlers:
   - url: /(.*\.(json|png))$
     static_files: build/\1
     upload: build/.*\.(json|png)$
+  - url: /.well-known/(.*)
+    static_files: .well-known/\1
+    upload: .well-known/(.*)
   - url: /
     static_files: build/index.html
     upload: build/index.html

@@ -17,7 +17,7 @@ function getApiEntry() {
   } else {
     return BRANCH_NAME && BRANCH_NAME !== "gcloud"
       ? `https://api-${BRANCH_NAME}.narfex.dev`
-      : "https://api.narfex.com";
+      : "https://newapi.narfex.com";
   }
 }
 
