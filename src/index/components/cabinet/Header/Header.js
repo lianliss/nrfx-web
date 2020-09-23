@@ -52,20 +52,20 @@ class Header extends React.Component {
             </BaseLink>
             {isLogged && (
               <div className="CabinetHeader__links">
-                {(this.props.profile.has_deposits || userRole("agent")) && (
-                  <BaseLink
-                    router={router}
-                    routeName={pages.PARTNERS}
-                    className="CabinetHeader__link"
-                    activeClassName="active"
-                    onClick={() => {
-                      this.setState({ activePage: pages.PARTNERS });
-                    }}
-                  >
-                    <SVG src={require("src/asset/24px/users.svg")} />
-                    <Lang name="cabinet_header_partners" />
-                  </BaseLink>
-                )}
+                {/*{(this.props.profile.has_deposits || userRole("agent")) && (*/}
+                {/*  <BaseLink*/}
+                {/*    router={router}*/}
+                {/*    routeName={pages.PARTNERS}*/}
+                {/*    className="CabinetHeader__link"*/}
+                {/*    activeClassName="active"*/}
+                {/*    onClick={() => {*/}
+                {/*      this.setState({ activePage: pages.PARTNERS });*/}
+                {/*    }}*/}
+                {/*  >*/}
+                {/*    <SVG src={require("src/asset/24px/users.svg")} />*/}
+                {/*    <Lang name="cabinet_header_partners" />*/}
+                {/*  </BaseLink>*/}
+                {/*)}*/}
 
                 <BaseLink
                   router={router}
