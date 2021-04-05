@@ -17,7 +17,6 @@ import COMPANY from "../../../constants/company";
 import { connect } from "react-redux";
 import InternalNotification from "../InternalNotification/InternalNotification";
 import Lang from "../../../../components/Lang/Lang";
-import { userRole } from "../../../../actions/cabinet/profile";
 import Notifications from "../Notifications/Notifications";
 
 class Header extends React.Component {
