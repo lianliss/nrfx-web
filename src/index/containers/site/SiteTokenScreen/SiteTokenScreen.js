@@ -33,7 +33,7 @@ const SiteTokenScreen = props => {
     { title: getLang("token_roadMapStep1"), time: 1585843200000 },
     { title: getLang("token_roadMapStep2"), time: 1618099200000, price: 0.15 },
     { title: getLang("token_roadMapStep3"), time: 1621209600000, price: 0.5 },
-    { title: getLang("token_roadMapStep5"), time: 1631404800000, price: 1.0 }
+    { title: getLang("token_roadMapStep5"), time: 1625529600000, price: 1.0 }
   ];
 
   return (
