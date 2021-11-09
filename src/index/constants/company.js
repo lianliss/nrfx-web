@@ -16,9 +16,12 @@ export default {
     medium: "medium.com/@narfexindonesia",
     linkedin: "www.linkedin.com/company/bitcoinbot-indonesia/",
     instagram: "instagram.com/narfex.id"
-  }, 
+  },
   whitePaper: {
     en: "https://narfex-1.gitbook.io/narfex-white-paper/"
+  },
+  BuyInstruction: {
+      en: "https://drive.google.com/file/d/1PcmO04n1Yp0eUKQMQLvjvoP4Nlj4mJl3/view?usp=drivesdk"
   },
   apps: {
     android: "https://play.google.com/store/apps/details?id=com.narfex"
