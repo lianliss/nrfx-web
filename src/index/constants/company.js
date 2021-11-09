@@ -18,7 +18,7 @@ export default {
     instagram: "instagram.com/narfex.id"
   },
   whitePaper: {
-    en: "https://storage.googleapis.com/narfex/files/narfex-white-paper-en.pdf"
+    en: "https://app.gitbook.com/s/2v82Gj5cxU4s6HwLVpq4"
   },
   apps: {
     android: "https://play.google.com/store/apps/details?id=com.narfex"
