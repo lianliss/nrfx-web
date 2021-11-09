@@ -30,7 +30,11 @@ export default props => {
           <Timer roadMap={props.roadMap} />
         </div>
         <div className="SiteTokenScreen__Promo__buttons">
-          <Button onClick={COMPANY.BuyInstruction.en}>{getLang("token_buyToken")}</Button>
+          <Button onClick={() => {
+              window.open(COMPANY.BuyInstruction.en);
+            }}
+            >
+              {getLang("token_buyToken")}</Button>
           <Button
             type="lite"
             onClick={() => {
