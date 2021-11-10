@@ -20,7 +20,7 @@ export default props => {
             })}
           >
             <div>
-              <small>{dateFormat(item.time, "DD MMM YYYY")}</small>
+              <small>{item.phase}</small>
               <strong>{item.title}</strong>
               {item.price && (
                 <span className="price">
