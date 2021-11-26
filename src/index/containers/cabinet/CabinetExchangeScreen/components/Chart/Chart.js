@@ -15,11 +15,11 @@ import * as utils from "../../../../../../utils";
 
 let endpoint;
 if (utils.isProduction()) {
-  endpoint = "https://ex.narfex.dev";
+  endpoint = "https://ex.narfex.com";
 } else {
   endpoint =
     process.env.REACT_APP_LOCAL_EXCHANGE_ENDPOINT ??
-    "https://api-stage.narfex.dev";
+    "https://api-stage.narfex.com";
 }
 
 class Chart extends React.PureComponent {

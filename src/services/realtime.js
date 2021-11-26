@@ -11,9 +11,9 @@ class RealTime {
       this.endpoint = LOCAL_EXCHANGE_ENDPOINT;
     } else {
       if (utils.isProduction()) {
-        this.endpoint = "wss://ex.narfex.dev";
+        this.endpoint = "wss://ex.narfex.com";
       } else {
-        this.endpoint = "wss://api-stage.narfex.dev/echo";
+        this.endpoint = "wss://api-stage.narfex.com/echo";
       }
     }
     this.endpoint += token ? `?access_token=${token}` : "";
