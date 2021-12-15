@@ -10,11 +10,11 @@ import Lang from "../../../../components/Lang/Lang";
 import { getCurrencyInfo, openModal } from "../../../../actions";
 import { getLang, ucfirst } from "src/utils/index";
 
-import { ReactComponent as SwitchIcon } from "src/asset/24px/loop.svg";
-import { ReactComponent as SendIcon } from "src/asset/24px/send.svg";
-import { ReactComponent as ClockIcon } from "src/asset/24px/clock.svg";
-import { ReactComponent as ReceiveIcon } from "src/asset/24px/receive.svg";
-import { ReactComponent as AttentionIcon } from "src/asset/24px/attention.svg";
+import SwitchIcon from "src/asset/24px/loop.svg";
+import SendIcon from "src/asset/24px/send.svg";
+import ClockIcon from "src/asset/24px/clock.svg";
+import ReceiveIcon from "src/asset/24px/receive.svg";
+import AttentionIcon from "src/asset/24px/attention.svg";
 import { notificationMarkAsRead } from "../../../../actions/cabinet/notifications";
 
 export default memo(({ item }) => {

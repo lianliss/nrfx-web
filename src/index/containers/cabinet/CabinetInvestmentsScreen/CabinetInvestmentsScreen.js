@@ -16,9 +16,9 @@ import { ProfileSidebarItem } from "../../../components/cabinet/ProfileSidebar/P
 import ChartProfit from "../../../components/cabinet/ChartProfit/ChartProfit";
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import Paging from "../../../components/cabinet/Paging/Paging";
-import { ReactComponent as InvestSvg } from "../../../../asset/24px/invest.svg";
-import { ReactComponent as SendSvg } from "../../../../asset/24px/send.svg";
-import { ReactComponent as CalcSvg } from "../../../../asset/24px/calc.svg";
+import InvestSvg from "../../../../asset/24px/invest.svg";
+import SendSvg from "../../../../asset/24px/send.svg";
+import CalcSvg from "../../../../asset/24px/calc.svg";
 import * as PAGES from "../../../constants/pages";
 import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";

@@ -7,7 +7,7 @@ import * as UI from "../../../../../../ui";
 import PageContainer from "../../../../../components/cabinet/PageContainerOld/PageContainerOld";
 import { ProfileSidebarItem } from "../../../../../components/cabinet/ProfileSidebar/ProfileSidebar";
 
-import { ReactComponent as PlusCircleSvg } from "../../../../../../asset/24px/plus-circle.svg";
+import PlusCircleSvg from "../../../../../../asset/24px/plus-circle.svg";
 import * as actions from "../../../../../../actions";
 import * as traderActions from "../../../../../../actions/cabinet/trader";
 import BotsTable from "../../components/BotsTable/BotsTable";

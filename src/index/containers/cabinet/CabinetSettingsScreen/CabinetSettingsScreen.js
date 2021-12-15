@@ -14,9 +14,9 @@ import ProfileUser from "../../../components/cabinet/ProfileUser/ProfileUser";
 import * as UI from "../../../../ui";
 import * as utils from "../../../../utils";
 
-import { ReactComponent as IdBadgeSvg } from "../../../../asset/24px/id-badge.svg";
-import { ReactComponent as ShieldSvg } from "../../../../asset/24px/shield.svg";
-import { ReactComponent as KeySvg } from "../../../../asset/24px/key.svg";
+import IdBadgeSvg from "../../../../asset/24px/id-badge.svg";
+import ShieldSvg from "../../../../asset/24px/shield.svg";
+import KeySvg from "../../../../asset/24px/key.svg";
 import * as actions from "../../../../actions";
 import * as settingsActions from "../../../../actions/cabinet/settings";
 import * as toastsActions from "../../../../actions/toasts";

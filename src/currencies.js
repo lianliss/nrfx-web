@@ -1,4 +1,4 @@
-{
+export default {
   "btc": {
     "abbr": "btc",
     "name": "Bitcoin",

@@ -4,7 +4,7 @@ import Lottie from "react-lottie";
 import PropTypes from "prop-types";
 
 import { classNames as cn } from "../../utils/index";
-import animation from "./animation.json";
+import animation from "./animation";
 
 const LogoLoader = props => {
   const sizes = {

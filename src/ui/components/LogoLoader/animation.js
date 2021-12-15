@@ -1,4 +1,4 @@
-{
+export default {
   "v": "5.5.10",
   "fr": 24,
   "ip": 0,

@@ -1,4 +1,4 @@
-[
+export default [
   { "name": "Israel", "dial_code": "+972", "code": "IL" },
   { "name": "Afghanistan", "dial_code": "+93", "code": "AF" },
   { "name": "Albania", "dial_code": "+355", "code": "AL" },

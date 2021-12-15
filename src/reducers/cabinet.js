@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import currencies from "src/currencies.json";
+import currencies from "src/currencies";
 
 const initialState = {
   currencies

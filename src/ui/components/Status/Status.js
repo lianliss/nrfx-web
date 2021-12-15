@@ -4,7 +4,7 @@ import React, { memo } from "react";
 import { classNames as cn } from "../../utils";
 import Lang from "../../../components/Lang/Lang";
 
-import { ReactComponent as ClockIcon } from "src/asset/24px/clock.svg";
+import ClockIcon from "src/asset/24px/clock.svg";
 
 export default memo(({ status, label, indicator }) => (
   <span className={cn("Status", status)}>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import * as UI from "src/ui";
 import * as utils from "utils";
 import * as steps from "../fixtures";
-import countries from "../../../index/constants/countries.json";
+import countries from "../../../index/constants/countries";
 import { sendSmsCode } from "actions/auth";
 
 const codes = countries.map(country => ({

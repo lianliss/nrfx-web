@@ -9,7 +9,7 @@ import { currencySelector, walletBalanceSelector } from "../../../../selectors";
 import QRCode from "qrcode.react";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import Clipboard from "../Clipboard/Clipboard";
-import { ReactComponent as CardIcon } from "src/asset/illustrations/credit_card.svg";
+import CardIcon from "src/asset/illustrations/credit_card.svg";
 import { walletSwapSetCurrency } from "../../../../actions/cabinet/wallet";
 import * as pages from "../../../constants/pages";
 
