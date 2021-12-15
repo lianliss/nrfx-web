@@ -1,7 +1,7 @@
 import "./NrfxPresaleModal.less";
 
 import React, { useState, useEffect } from "react";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { connect } from "react-redux";
 import SVG from "react-inlinesvg";
 
@@ -47,7 +47,7 @@ const NrfxPresaleModal = props => {
   useEffect(() => {
     setPending(false);
 
-    firebase.analytics().logEvent("open_nrfx_presale_modal");
+    logEvent(getAnalytics(), "open_nrfx_presale_modal");
   }, [rate]);
 
   const handleBuy = () => {
@@ -60,7 +60,7 @@ const NrfxPresaleModal = props => {
         .then(() => {
           props.onClose();
 
-          firebase.analytics().logEvent("nrfx_presale_modal_buy");
+          logEvent(getAnalytics(), "nrfx_presale_modal_buy");
         })
         .finally(() => {
           setState(null);

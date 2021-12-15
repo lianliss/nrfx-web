@@ -8,7 +8,7 @@ import {
   select,
   delay
 } from "redux-saga/effects";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import {
   walletHistoryAddMore,
@@ -170,7 +170,7 @@ function* swapSubmitWorker() {
 
     yield put(walletUpdate(payload));
     yield call(toast.success, getLang("cabinet_fiatWalletExchangeSuccessText"));
-    firebase.analytics().logEvent("swap");
+    logEvent(getAnalytics(), "swap");
   } catch (e) {
     yield call(toast.error, e.message);
   } finally {

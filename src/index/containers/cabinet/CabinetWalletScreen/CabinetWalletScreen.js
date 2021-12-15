@@ -3,7 +3,7 @@ import "./CabinetWalletScreen.less";
 import React, { memo, useEffect, useCallback } from "react";
 import { useRoute } from "react-router5";
 import { useDispatch, useSelector } from "react-redux";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import PageContainer from "../../../components/cabinet/PageContainer/PageContainer";
 import * as PAGES from "src/index/constants/pages";
@@ -72,7 +72,7 @@ export default memo(() => {
     window.scroll(0, 0);
 
     if (isSwap) {
-      firebase.analytics().logEvent("open_swap_page");
+      logEvent(getAnalytics(), "open_swap_page");
     }
   }, [isSwap]);
 

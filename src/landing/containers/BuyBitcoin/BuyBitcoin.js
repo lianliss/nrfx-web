@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import Welcome from "../MainScreen/components/Welcome/Welcome";
 import Promo from "../MainScreen/components/Promo/Promo";
@@ -14,7 +14,7 @@ import ADVANTAGES_ITEMS from "../../constants/advantages";
 
 export default () => {
   useEffect(() => {
-    firebase.analytics().logEvent("open_site_buy_bitcoin_screen");
+    logEvent(getAnalytics(), "open_site_buy_bitcoin_screen");
   });
 
   return (

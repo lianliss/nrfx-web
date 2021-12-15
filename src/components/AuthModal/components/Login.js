@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import * as UI from "src/ui";
 import { getAuth } from "src/actions/auth";
@@ -59,7 +59,7 @@ function Login({
               });
             }
 
-            firebase.analytics().logEvent("auth");
+            logEvent(getAnalytics(), "auth");
           }
         })
         .catch(err => {

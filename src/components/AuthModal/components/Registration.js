@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import * as UI from "src/ui";
 import * as steps from "../fixtures";
@@ -32,7 +32,7 @@ function Registration({
   const disabled = utils.isProduction() ? !token || !email : !email;
 
   useEffect(() => {
-    firebase.analytics().logEvent("open_registration_modal");
+    logEvent(getAnalytics(), "open_registration_modal");
   });
 
   const handleSubmit = token => {
@@ -54,7 +54,7 @@ function Registration({
             changeStep(steps.REGISTRATION_SUCCESS);
           }
 
-          firebase.analytics().logEvent("registration");
+          logEvent(getAnalytics(), "registration");
         })
         .catch(err => {
           if (isProduction) {

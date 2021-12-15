@@ -1,7 +1,7 @@
 import "./SiteMainScreen.less";
 
 import React from "react";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import BaseScreen from "../../BaseScreen";
 import SitePageInfoBlock from "../../../components/site/SitePageInfoBlock/SitePageInfoBlock";
@@ -24,7 +24,7 @@ export default class SiteMainScreen extends BaseScreen {
       actions.sendInviteLinkView(initGetParams.params.i);
     }
 
-    firebase.analytics().logEvent("open_site_main_screen");
+    logEvent(getAnalytics(), "open_site_main_screen");
   }
 
   getAnimatedTitle = () => {

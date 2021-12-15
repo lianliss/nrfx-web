@@ -2,7 +2,7 @@ import "./FiatRefillModal.less";
 
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
@@ -27,9 +27,9 @@ const WithdrawalRefillModal = props => {
       props.onClose();
     }
 
-    firebase.analytics().logEvent("open_fiat_refill_modal");
+    logEvent(getAnalytics(), "open_fiat_refill_modal");
     // eslint-disable-next-line
-  }, [firebase]);
+  });
 
   if (!amount || !balance) {
     return null;

@@ -2,7 +2,7 @@ import "../FiatRefillModal/FiatRefillModal.less";
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as firebase from "firebase";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
@@ -67,7 +67,7 @@ export default props => {
       props.onClose();
     }
 
-    firebase.analytics().logEvent("open_rub_fiat_refill_modal");
+    logEvent(getAnalytics(), "open_rub_fiat_refill_modal");
 
     if (
       cardReservation?.card?.expire_in * 1000 <= Date.now() &&
