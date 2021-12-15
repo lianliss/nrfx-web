@@ -5,7 +5,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router5";
-import { getAnalytics, logEvent } from "firebase/analytics";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 import store from "./store";
 import router from "./router";
@@ -39,7 +40,7 @@ router.start((err, state) => {
   ReactDOM.render(wrappedApp, document.getElementById("root"));
 });
 
-firebase.initializeApp(FIREBASE_CONFIG);
-firebase.analytics();
+initializeApp(FIREBASE_CONFIG);
+getAnalytics();
 
 // serviceWorker.register();
