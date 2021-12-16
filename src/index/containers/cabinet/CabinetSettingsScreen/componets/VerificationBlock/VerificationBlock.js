@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as utils from "../../../../../../utils";
 import * as UI from "../../../../../../ui";
 import * as actions from "../../../../../../actions";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { ButtonWrapper } from "../../../../../../ui/components/Button/Button";
 
 const VerificationBlock = props => {

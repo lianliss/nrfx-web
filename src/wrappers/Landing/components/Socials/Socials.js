@@ -2,7 +2,7 @@ import "./Socials.less";
 
 import React from "react";
 import COMPANY from "../../../../index/constants/company";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export default () => {
   return (

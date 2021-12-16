@@ -4,7 +4,7 @@ import { classNames as cn } from "src/utils/index";
 import MegaMenu from "../MegaMenu/MegaMenu";
 import MobileMenu from "../MobileMenu/MobileMenu";
 import "./Header.less";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as actions from "src/actions/index";
 import * as steps from "../../../../components/AuthModal/fixtures";
 import { useRoute, useRouter } from "react-router5";

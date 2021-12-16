@@ -2,7 +2,7 @@
 import "./Toast.less";
 // external
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import PropTypes from "prop-types";
 // internal
 import { classNames } from "../../utils";

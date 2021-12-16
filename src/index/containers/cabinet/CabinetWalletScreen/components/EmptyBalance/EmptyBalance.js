@@ -18,7 +18,7 @@ import {
   walletSwapSwitch
 } from "../../../../../../actions/cabinet/wallet";
 import { walletSwapSelector } from "../../../../../../selectors";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export default ({ currency }) => {
   const router = useRouter();

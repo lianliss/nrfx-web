@@ -1,5 +1,5 @@
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as UI from "../../../../../ui";
 
 import * as utils from "../../../../../utils";

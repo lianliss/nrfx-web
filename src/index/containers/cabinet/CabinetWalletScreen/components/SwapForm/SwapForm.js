@@ -19,7 +19,7 @@ import {
   walletWalletsSelector
 } from "src/selectors";
 import { getCurrencyInfo } from "src/actions";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import {
   walletSetStatus,
   walletSwapSetAmount,

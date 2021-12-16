@@ -6,7 +6,7 @@ import Select from "../Select/Select";
 import { useSelector } from "react-redux";
 import { currenciesSelector } from "../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../actions";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { getRate } from "src/actions/landing/swap";
 import Lang from "src/components/Lang/Lang";
 import { classNames as cn } from "src/utils/index";

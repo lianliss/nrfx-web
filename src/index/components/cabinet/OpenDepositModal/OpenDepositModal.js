@@ -3,7 +3,7 @@ import "./OpenDepositModal.less";
 import React from "react";
 import { connect } from "react-redux";
 import * as UI from "../../../../ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import apiSchema from "../../../../services/apiSchema";
 import * as api from "../../../../services/api";
 import * as walletsActions from "../../../../actions/cabinet/wallets";

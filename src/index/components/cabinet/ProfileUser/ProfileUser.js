@@ -4,7 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { openModal } from "../../../../actions";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as utils from "../../../../utils";
 
 const ProfileSidebarUser = ({ profile }) => {

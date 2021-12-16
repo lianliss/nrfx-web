@@ -8,7 +8,7 @@ import { getGoogleCode } from "../../../actions/auth";
 import router from "../../../router";
 import * as pages from "../../../index/constants/pages";
 import * as adminPages from "../../../admin/constants/pages";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 function GoogleAuth({ changeStep, email, password }) {
   const [gaCode, changeGaCode] = useState("");

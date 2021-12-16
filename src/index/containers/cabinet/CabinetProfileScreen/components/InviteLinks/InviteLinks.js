@@ -2,7 +2,7 @@ import "./InviteLinks.less";
 
 import React from "react";
 import * as UI from "../../../../../../ui/index";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 import * as actions from "../../../../../../actions";
 import * as utils from "../../../../../../utils";

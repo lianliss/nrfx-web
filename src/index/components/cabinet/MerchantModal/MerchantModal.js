@@ -5,7 +5,7 @@ import { connect, useSelector } from "react-redux";
 
 import * as UI from "../../../../ui/";
 import { getLang, classNames as cn } from "../../../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import router from "../../../../router";
 import * as actions from "../../../../actions";
 import * as toasts from "../../../../actions/toasts";

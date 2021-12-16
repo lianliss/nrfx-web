@@ -1,7 +1,7 @@
 import "./Collapse.less";
 
 import React, { useState } from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import PropTypes from "prop-types";
 
 import ContentBox from "../ContentBox/ContentBox";

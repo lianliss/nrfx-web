@@ -1,7 +1,7 @@
 import "./Advantages.less";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import Lang from "../../../../../components/Lang/Lang";
 import { classNames as cn } from "utils";
 import { Link } from "react-router5";

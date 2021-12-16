@@ -2,7 +2,7 @@ import "./Promo.less";
 import React, { useEffect, useState } from "react";
 import { NumberFormat, Button, OnScroll } from "src/ui";
 import { getLang } from "src/utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { tokenRateGet } from "src/actions/cabinet/wallets";
 import Timer from "./timer";
 import COMPANY from "src/index/constants/company";

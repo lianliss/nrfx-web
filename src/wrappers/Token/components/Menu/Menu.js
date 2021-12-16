@@ -1,6 +1,6 @@
 import "./Menu.less";
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { Button } from "src/ui";
 import { getLang } from "../../../../utils";
 import router from "../../../../router";

@@ -2,7 +2,7 @@ import "./Benefits.less";
 import React from "react";
 import { getLang } from "src/utils";
 import { OnScroll } from "src/ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export default props => {
   return (

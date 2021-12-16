@@ -11,7 +11,7 @@ import * as UI from "../../../../ui";
 import * as actions from "../../../../actions";
 import * as steps from "../../../../components/AuthModal/fixtures";
 import * as utils from "../../../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as pages from "../../../constants/pages";
 import COMPANY from "../../../constants/company";
 import * as auth from "../../../../actions/auth";

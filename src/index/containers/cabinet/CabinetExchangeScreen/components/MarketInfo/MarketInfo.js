@@ -2,7 +2,7 @@ import "./MarketInfo.less";
 
 import React, { memo } from "react";
 import { connect } from "react-redux";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { Helmet } from "react-helmet";
 // import moment from 'moment/min/moment-with-locales';
 

@@ -1,7 +1,7 @@
 import "./MenuScreen.less";
 //
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { BaseLink } from "react-router5";
 import { connect } from "react-redux";
 //

@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { getLang } from "src/utils";
 import { ButtonWrapper, Button } from "src/ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as actions from "../../../../actions";
 import router from "../../../../router";
 import * as pages from "../../../../index/constants/pages";

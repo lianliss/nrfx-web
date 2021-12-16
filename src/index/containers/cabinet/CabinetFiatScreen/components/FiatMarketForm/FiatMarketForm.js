@@ -13,7 +13,7 @@ import * as UI from "../../../../../../ui/index";
 
 import * as actions from "../../../../../../actions/cabinet/fiat";
 import NumberFormat from "../../../../../../ui/components/NumberFormat/NumberFormat";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { classNames as cn } from "src/utils";
 
 const indicatorIcon = (

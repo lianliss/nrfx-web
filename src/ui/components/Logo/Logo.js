@@ -1,7 +1,7 @@
 import "./Logo.less";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import PropTypes from "prop-types";
 import { classNames as cn } from "../../utils/";
 

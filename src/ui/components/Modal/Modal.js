@@ -7,7 +7,7 @@ import { useRoute } from "react-router5";
 import PropTypes from "prop-types";
 // internal
 import { classNames } from "../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import useAdaptive from "src/hooks/adaptive";
 
 function Modal(props) {

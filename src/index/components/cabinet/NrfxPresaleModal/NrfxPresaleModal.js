@@ -3,7 +3,7 @@ import "./NrfxPresaleModal.less";
 import React, { useState, useEffect } from "react";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { connect } from "react-redux";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 import {
   Input,

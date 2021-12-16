@@ -2,7 +2,7 @@ import React from "react";
 import "./MobileMenu.less";
 import { classNames as cn } from "../../../../utils";
 import { Button } from "../../../../ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { useRouter } from "react-router5";
 import * as actions from "../../../../actions";
 import * as steps from "../../../../components/AuthModal/fixtures";

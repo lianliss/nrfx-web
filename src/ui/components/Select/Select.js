@@ -3,7 +3,7 @@ import React from "react";
 import Select from "react-select";
 import { getCssVar } from "../../../utils";
 import { classNames as cn } from "../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export const customStyles = {
   control: (provided, state) => ({

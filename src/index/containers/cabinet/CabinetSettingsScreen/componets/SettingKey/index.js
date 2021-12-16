@@ -1,7 +1,7 @@
 import "./SettingKey.less";
 import React from "react";
 import { connect } from "react-redux";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import copyText from "clipboard-copy";
 
 import * as settingsActions from "src/actions/cabinet/settings";

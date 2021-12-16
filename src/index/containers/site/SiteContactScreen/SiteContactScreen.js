@@ -8,7 +8,7 @@ import * as PAGES from "src/index/constants/pages";
 import * as utils from "../../../../utils";
 import * as UI from "../../../../ui";
 import TitleWithBg from "../../../components/site/TitleWithBg/TitleWithBg";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import router from "../../../../router";
 import { Helmet } from "react-helmet";
 // import MobileAppBanner from '../../../components/site//MobileAppBanner';

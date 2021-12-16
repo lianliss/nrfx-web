@@ -3,7 +3,7 @@ import "./RateDetailsModal.less";
 import React from "react";
 import * as UI from "../../../../ui";
 import * as utils from "../../../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as actions from "../../../../actions";
 import ModalState from "../../cabinet/ModalState/ModalState";
 

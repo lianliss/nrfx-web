@@ -1,7 +1,7 @@
 import React from "react";
 import { Dropdown, Input, File } from "src/ui";
 import * as utils from "../../../../../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export default props => {
   const { param, value, onChange } = props;

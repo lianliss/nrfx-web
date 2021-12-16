@@ -12,7 +12,7 @@ import "react-phone-input-2/dist/style.css";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import * as settingsActions from "../../../../actions/cabinet/settings";
 
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as toastsActions from "../../../../actions/toasts";
 
 class ChangeNumberModal extends React.Component {

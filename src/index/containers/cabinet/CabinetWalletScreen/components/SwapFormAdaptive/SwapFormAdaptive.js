@@ -29,7 +29,7 @@ import {
 } from "../../../../../../actions/cabinet/wallet";
 import { isFiat } from "../../../../../../utils";
 import { getCurrencyInfo } from "../../../../../../actions";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 const Select = ({ value, options, onChange, title, disabled }) => (
   <div className={cn("SwapFormAdaptive__controlPanel__select", { disabled })}>

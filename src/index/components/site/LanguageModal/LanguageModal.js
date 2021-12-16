@@ -2,7 +2,7 @@ import "./LanguageModal.less";
 
 import React, { memo } from "react";
 import { connect } from "react-redux";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as utils from "../../../../utils";
 import * as UI from "../../../../ui";
 import { openModal, translatorSetLangCode } from "src/actions/index";

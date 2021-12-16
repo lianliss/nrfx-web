@@ -1,7 +1,7 @@
 import "./Clipboard.less";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { classNames as cn } from "../../utils";
 
 export default props => {

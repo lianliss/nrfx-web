@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import * as UI from "src/ui/index";
 import { getLang, ucfirst, classNames as cn } from "src/utils/index";
 import Block from "../Block/Block";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as utils from "../../../../../../utils";
 import LoadingStatus from "../../../../../components/cabinet/LoadingStatus/LoadingStatus";
 

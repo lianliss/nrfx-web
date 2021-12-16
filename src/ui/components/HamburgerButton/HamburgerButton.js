@@ -2,7 +2,7 @@ import "./HamburgerButton.less";
 
 import React from "react";
 import { classNames as cn } from "src/utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export default props => {
   return (

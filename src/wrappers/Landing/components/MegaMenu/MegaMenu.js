@@ -1,7 +1,7 @@
 import React from "react";
 import "./MegaMenu.less";
 import { classNames as cn } from "src/utils/index";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import AppButtons from "../../../../components/AppButtons/AppButtons";
 import * as pages from "../../../../index/constants/pages";
 import { useRouter } from "react-router5";

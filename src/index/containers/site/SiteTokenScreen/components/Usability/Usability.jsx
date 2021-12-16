@@ -2,7 +2,7 @@ import "./Usability.less";
 
 import React from "react";
 import { OnScroll } from "../../../../../../ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as actions from "../../../../../../actions";
 import Lang from "../../../../../../components/Lang/Lang";
 

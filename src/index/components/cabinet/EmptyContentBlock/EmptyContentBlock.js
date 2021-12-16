@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import * as UI from "../../../../ui";
 
 import * as utils from "../../../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export default function EmptyContentBlock({
   icon,

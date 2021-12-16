@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "./Footer.less";
 import { Logo } from "../../../../ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import AppButtons from "../../../../components/AppButtons/AppButtons";
 import Copyright from "../Copyright/Copyright";
 import { Select } from "src/ui/index";

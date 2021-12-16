@@ -2,7 +2,7 @@ import "./BankList.less";
 import BankLogo from "../../../../../../ui/components/BankLogo/BankLogo";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export default props => {
   const handleSelect = name => () => {

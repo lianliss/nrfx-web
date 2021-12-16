@@ -11,7 +11,7 @@ import Button from "../Button/Button";
 Icon
 
 ```js
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 <Badge count={3}>
   <SVG src={require("src/asset/24px/bell.svg")} />
 </Badge>;
@@ -20,6 +20,6 @@ import SVG from "react-inlinesvg";
 Text
 
 ```js
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 <Badge count="new">Text</Badge>;
 ```

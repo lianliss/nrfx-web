@@ -1,7 +1,7 @@
 import "./WalletBox.less";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 import * as utils from "../../../../utils";
 import * as actions from "../../../../actions";

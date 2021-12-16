@@ -2,7 +2,7 @@ import "./DepositWithdrawModal.less";
 
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 import { getLang, throttle } from "src/utils";
 import Modal, { ModalHeader } from "src/ui/components/Modal/Modal";

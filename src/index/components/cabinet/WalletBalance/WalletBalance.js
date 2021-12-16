@@ -1,7 +1,7 @@
 import "./WalletBalance.less";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import PieChart from "react-minimal-pie-chart";
 
 import { formatNumber, classNames } from "../../../../utils/index";

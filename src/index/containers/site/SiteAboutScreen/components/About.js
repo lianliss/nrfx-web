@@ -1,5 +1,5 @@
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { connect } from "react-redux";
 
 import TitleWithBg from "../../../../components/site/TitleWithBg/TitleWithBg";

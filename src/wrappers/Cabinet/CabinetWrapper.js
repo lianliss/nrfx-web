@@ -3,7 +3,7 @@ import "./CabinetWrapper.less";
 // external
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 // internal
 import { classNames } from "../../../src/utils";
 import router from "../../../src/router";

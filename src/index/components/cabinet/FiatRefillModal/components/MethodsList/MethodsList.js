@@ -1,7 +1,7 @@
 import "./MethodsList.less";
 
 import React, { useState } from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import Clipboard from "../../../Clipboard/Clipboard";
 import { classNames as cn } from "src/utils/index";
 

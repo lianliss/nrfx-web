@@ -9,7 +9,7 @@ import MarkDown from "../MarkDown/MarkDown";
 import ScrollBox from "../ScrollBox/ScrollBox";
 import { classNames } from "../../utils";
 import LoadingStatus from "../../../index/components/cabinet/LoadingStatus/LoadingStatus";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 export function Notification(props) {
   return (

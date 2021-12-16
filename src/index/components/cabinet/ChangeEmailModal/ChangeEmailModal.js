@@ -6,7 +6,7 @@ import * as UI from "../../../../ui";
 
 import * as utils from "../../../../utils";
 import * as settingsActions from "../../../../actions/cabinet/settings";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as toastsActions from "../../../../actions/toasts";
 import { openModal } from "../../../../actions";
 

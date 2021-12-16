@@ -5,7 +5,7 @@ import React, { memo } from "react";
 import PropTypes from "prop-types";
 // internal
 import { classNames } from "../../utils";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 const ButtonWrapper = props => (
   <div className={classNames("ButtonWrapper", props.className, props.align)}>

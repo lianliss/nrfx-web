@@ -3,7 +3,7 @@ import "./Dropdown.less";
 // external
 import React from "react";
 import PropTypes from "prop-types";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 // internal
 import { classNames } from "../../utils";
 

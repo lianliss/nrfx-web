@@ -3,7 +3,7 @@ import "./Header.less";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { ActionSheet, Button, HamburgerButton } from "../../../../ui";
 import { getCurrentLang } from "src/actions/index";
 import { setLang } from "../../../../services/lang";

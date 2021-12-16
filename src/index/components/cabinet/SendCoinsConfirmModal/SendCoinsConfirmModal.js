@@ -3,7 +3,7 @@ import "./SendCoinsConfirmModal.less";
 import React from "react";
 import { connect } from "react-redux";
 import * as UI from "../../../../ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 import * as actions from "../../../../actions";
 import * as utils from "../../../../utils";

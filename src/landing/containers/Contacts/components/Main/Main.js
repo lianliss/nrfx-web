@@ -1,6 +1,6 @@
 import React from "react";
 import "./Main.less";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import Lang from "../../../../../components/Lang/Lang";
 import COMPANY from "../../../../../index/constants/company";
 import router from "../../../../../router";

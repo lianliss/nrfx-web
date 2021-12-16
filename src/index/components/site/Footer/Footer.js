@@ -1,7 +1,7 @@
 import "./Footer.less";
 
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 
 import * as pages from "../../../constants/pages";
 import * as utils from "../../../../utils/index";

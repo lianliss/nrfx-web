@@ -2,7 +2,7 @@
 import "./SiteWrapper.less";
 // external
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as actions from "actions";
 import { connect } from "react-redux";
 // internal

@@ -1,5 +1,5 @@
 import React from "react";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import company from "src/index/constants/company";
 import { classNames as cn } from "../../utils";
 import "./AppButton.less";

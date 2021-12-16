@@ -2,7 +2,7 @@ import "./SwapTutorial.less";
 
 import React from "react";
 import { ContentBox } from "../../../../../../ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import Lang from "../../../../../../components/Lang/Lang";
 import { openModal } from "../../../../../../actions";
 

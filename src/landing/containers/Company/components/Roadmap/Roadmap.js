@@ -2,7 +2,7 @@ import React, { useCallback, useState, useRef } from "react";
 import "./Roadmap.less";
 
 import useScrollBarWidth from "src/hooks/useScrollBarWidth";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import { classNames as cn } from "../../../../../utils";
 import { timeLine } from "./constants";
 import Lang from "../../../../../components/Lang/Lang";

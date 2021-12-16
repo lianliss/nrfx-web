@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { BaseLink } from "react-router5";
 import router from "../../../../router";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as PAGES from "../../../constants/pages";
 import Lang from "../../../../components/Lang/Lang";
 import Badge from "../../../../ui/components/Badge/Badge";

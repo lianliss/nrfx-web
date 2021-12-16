@@ -3,7 +3,7 @@ import "./UserBlockModal.less";
 import React from "react";
 import { connect } from "react-redux";
 import * as UI from "../../../../ui";
-import SVG from "react-inlinesvg";
+import SVG from "utils/svg-wrap";
 import * as utils from "../../../../utils";
 import company from "../../../constants/company";
 import Button from "../../../../ui/components/Button/Button";
