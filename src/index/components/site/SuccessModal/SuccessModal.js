@@ -23,7 +23,7 @@ function SuccessModal({ title, subtitle, onClose, onResend }) {
     <div className="SuccessModal">
       <div className="SuccessModal__content">
         <img
-          src={require("../../../../asset/site/success_tick.svg")}
+          src={require("../../../../asset/site/success_tick.svg").default}
           alt="Success"
           className="SuccessModal__tick"
         />

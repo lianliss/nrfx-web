@@ -12,7 +12,7 @@ export default function WithdrawalTable({
   if (!withdrawals.items || !withdrawals.items.length) {
     return (
       <EmptyContentBlock
-        icon={require("../../../../../asset/120/invest.svg")}
+        icon={require("../../../../../asset/120/invest.svg").default}
         message={utils.getLang("cabinet_noWithdrawalHistory")}
       />
     );

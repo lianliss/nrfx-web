@@ -110,7 +110,7 @@ export default class TableComponent extends React.Component {
         ) : (
           <EmptyContentBlock
             skipContentClass
-            icon={require("../../../asset/120/info.svg")}
+            icon={require("../../../asset/120/info.svg").default}
             message="Empty table"
           />
         )}

@@ -27,7 +27,7 @@ export default () => {
         title={<Lang name="landingCompany_promo_title" />}
         description={<Lang name="landingCompany_promo_description" />}
         actionButtonText={<Lang name="landingCompany_promo_actionButton" />}
-        image={require("../MainScreen/components/Promo/assets/company.svg")}
+        image={require("../MainScreen/components/Promo/assets/company.svg").default}
       />
       <About />
       <Roadmap />

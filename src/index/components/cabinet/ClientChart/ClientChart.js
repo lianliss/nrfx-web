@@ -9,7 +9,7 @@ class ClientChart extends React.Component {
     if (!this.props.chart.data.length) {
       return (
         <EmptyContentBlock
-          icon={require("../../../../asset/120/trade.svg")}
+          icon={require("../../../../asset/120/trade.svg").default}
           message={utils.getLang("cabinet_placeholder_investmentsProfitCharts")}
         />
       );

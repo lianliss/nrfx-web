@@ -43,7 +43,7 @@ export default memo(({ history, status, header }) => {
   if (!history.length) {
     return (
       <EmptyContentBlock
-        icon={require("src/asset/120/clock.svg")}
+        icon={require("src/asset/120/clock.svg").default}
         message={utils.getLang("cabinet_noFiatHistory")}
       />
     );

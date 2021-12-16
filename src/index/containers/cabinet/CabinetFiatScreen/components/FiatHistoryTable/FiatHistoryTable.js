@@ -23,11 +23,11 @@ const FiatHistoryTable = props => {
     }, {});
 
   const icons = {
-    swap: require("src/asset/24px/loop.svg"),
-    refill: require("src/asset/24px/fiat-plus.svg"),
-    bank_card_refill_reject: require("src/asset/24px/fiat-plus.svg"),
-    withdrawal: require("src/asset/24px/withdraw.svg"),
-    buy_token: require("src/asset/24px/shopping-cart.svg")
+    swap: require("src/asset/24px/loop.svg").default,
+    refill: require("src/asset/24px/fiat-plus.svg").default,
+    bank_card_refill_reject: require("src/asset/24px/fiat-plus.svg").default,
+    withdrawal: require("src/asset/24px/withdraw.svg").default,
+    buy_token: require("src/asset/24px/shopping-cart.svg").default,
   };
 
   const renderSwapItem = item => {
@@ -141,7 +141,7 @@ const FiatHistoryTable = props => {
   if (!props.history.length) {
     return (
       <EmptyContentBlock
-        icon={require("src/asset/120/clock.svg")}
+        icon={require("src/asset/120/clock.svg").default}
         message={utils.getLang("cabinet_noFiatHistory")}
       />
     );

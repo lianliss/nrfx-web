@@ -29,24 +29,24 @@ export default () => {
         title={<Lang name="landingExchange_promo_title" />}
         description={<Lang name="landingExchange_promo_description" />}
         actionButtonText={<Lang name="landingExchange_promo_actionButton" />}
-        image={require("../MainScreen/components/Promo/assets/exchange.jpg")}
+        image={require("../MainScreen/components/Promo/assets/exchange.jpg").default}
       />
       <Advantages
         accent
         mode={"center"}
         items={[
           {
-            icon: require("../../../asset/120/fee.svg"),
+            icon: require("../../../asset/120/fee.svg").default,
             titleLang: "landingExchange_advantages_fee_title",
             textLang: "landingExchange_advantages_fee_description"
           },
           {
-            icon: require("../../../asset/120/legality.svg"),
+            icon: require("../../../asset/120/legality.svg").default,
             titleLang: "landingExchange_advantages_legality_title",
             textLang: "landingExchange_advantages_legality_description"
           },
           {
-            icon: require("../../../asset/120/reliability.svg"),
+            icon: require("../../../asset/120/reliability.svg").default,
             titleLang: "landingExchange_advantages_api_title",
             textLang: "landingExchange_advantages_api_description",
             linkLang: "landingExchange_advantages_api_link",
@@ -60,32 +60,32 @@ export default () => {
         titleLang="landing_advantages_title"
         items={[
           {
-            icon: require("../../../asset/120/fast.svg"),
+            icon: require("../../../asset/120/fast.svg").default,
             titleLang: "landing_advantages_performance_title",
             textLang: "landing_advantages_performance_description"
           },
           {
-            icon: require("../../../asset/120/wallet.svg"),
+            icon: require("../../../asset/120/wallet.svg").default,
             titleLang: "landing_advantages_multiCurrency_title",
             textLang: "landing_advantages_multiCurrency_description"
           },
           {
-            icon: require("../../../asset/120/trade.svg"),
+            icon: require("../../../asset/120/trade.svg").default,
             titleLang: "landing_advantages_liquidity_title",
             textLang: "landing_advantages_liquidity_description"
           },
           {
-            icon: require("../../../asset/120/fee.svg"),
+            icon: require("../../../asset/120/fee.svg").default,
             titleLang: "landing_advantages_fee_title",
             textLang: "landing_advantages_fee_description"
           },
           {
-            icon: require("../../../asset/120/product.svg"),
+            icon: require("../../../asset/120/product.svg").default,
             titleLang: "landing_advantages_ui_title",
             textLang: "landing_advantages_ui_description"
           },
           {
-            icon: require("../../../asset/120/support.svg"),
+            icon: require("../../../asset/120/support.svg").default,
             titleLang: "landing_advantages_support_title",
             textLang: "landing_advantages_support_description"
           }

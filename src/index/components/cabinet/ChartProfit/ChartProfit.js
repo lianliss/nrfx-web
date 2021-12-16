@@ -10,7 +10,7 @@ class ChartProfit extends React.Component {
     if (!(Object.keys(this.props.chart.data).length > 0)) {
       return (
         <EmptyContentBlock
-          icon={require("../../../../asset/120/trade.svg")}
+          icon={require("../../../../asset/120/trade.svg").default}
           message={utils.getLang("cabinet_placeholder_investmentsProfitCharts")}
         />
       );

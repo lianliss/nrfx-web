@@ -29,7 +29,7 @@ export default () => {
         title={<Lang name="landing_promo_title" />}
         description={<Lang name="landing_promo_description" />}
         actionButtonText={<Lang name="landing_promo_actionButton" />}
-        image={require("./components/Promo/assets/promo.svg")}
+        image={require("./components/Promo/assets/promo.svg").default}
         label={<Lang name="landing_promo_nrfx_label" />}
         labelDescription={<Lang name="landing_promo_nrfx_description" />}
         labelLink={<Lang name="global_buy" />}

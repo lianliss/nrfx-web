@@ -33,7 +33,7 @@ const NewWalletModal = props => {
     } else {
       return (
         <EmptyContentBlock
-          icon={require("../../../../asset/120/invest.svg")}
+          icon={require("../../../../asset/120/invest.svg").default}
           message={utils.getLang("cabinet_noWalletsAvailable")}
           skipContentClass
         />

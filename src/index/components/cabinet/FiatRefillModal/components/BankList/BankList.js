@@ -25,7 +25,7 @@ export default props => {
         ))
       ) : (
         <LoadingStatus
-          icon={require("src/asset/120/error.svg")}
+          icon={require("src/asset/120/error.svg").default}
           status={<Lang name="cabinet_fiatWallet_noBanksAvailable" />}
         />
       )}

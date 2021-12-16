@@ -35,7 +35,7 @@ export default () => {
         title={<Lang name="landingBitcoin_promo_title" />}
         description={<Lang name="lendingBitcoin_promo_description" />}
         actionButtonText={<Lang name="landingBitcoin_promo_actionButton" />}
-        image={require("../MainScreen/components/Promo/assets/bitcoin.svg")}
+        image={require("../MainScreen/components/Promo/assets/bitcoin.svg").default}
       />
       <Steps />
       {/*<Swap />*/}
@@ -50,32 +50,32 @@ export default () => {
         titleLang="landingBitcoin_use_title"
         items={[
           {
-            icon: require("../../../asset/120/keep.svg"),
+            icon: require("../../../asset/120/keep.svg").default,
             titleLang: "landingBitcoin_use_keepId_title",
             textLang: "landingBitcoin_use_keepId_description"
           },
           {
-            icon: require("../../../asset/120/trade.svg"),
+            icon: require("../../../asset/120/trade.svg").default,
             titleLang: "landingBitcoin_use_SellIt_title",
             textLang: "landingBitcoin_use_SellIt_description"
           },
           {
-            icon: require("../../../asset/120/exchange.svg"),
+            icon: require("../../../asset/120/exchange.svg").default,
             titleLang: "landingBitcoin_use_exchangeIt_title",
             textLang: "landingBitcoin_use_exchangeIt_description"
           },
           {
-            icon: require("../../../asset/120/pay.svg"),
+            icon: require("../../../asset/120/pay.svg").default,
             titleLang: "landingBitcoin_use_payWithIt_title",
             textLang: "landingBitcoin_use_payWithIt_description"
           },
           {
-            icon: require("../../../asset/120/send.svg"),
+            icon: require("../../../asset/120/send.svg").default,
             titleLang: "landingBitcoin_use_SendIt_title",
             textLang: "landingBitcoin_use_SendIt_description"
           },
           {
-            icon: require("../../../asset/120/donate.svg"),
+            icon: require("../../../asset/120/donate.svg").default,
             titleLang: "landingBitcoin_use_donateIt_title",
             textLang: "landingBitcoin_use_donateIt_description"
           }

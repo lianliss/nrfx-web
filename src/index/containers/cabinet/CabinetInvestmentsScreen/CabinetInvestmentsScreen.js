@@ -84,7 +84,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
               this.props.adaptive
                 ? [
                     <UI.FloatingButtonItem
-                      icon={require("../../../../asset/24px/invest.svg")}
+                      icon={require("../../../../asset/24px/invest.svg").default}
                       onClick={() => {
                         router.navigate(PAGES.INVESTMENTS, {
                           section: "profits"
@@ -99,7 +99,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
                           section: "withdrawals"
                         });
                       }}
-                      icon={require("../../../../asset/24px/send.svg")}
+                      icon={require("../../../../asset/24px/send.svg").default}
                     >
                       {utils.getLang("cabinet_investmentsScreen_withdrawals")}
                     </UI.FloatingButtonItem>,
@@ -107,7 +107,7 @@ class CabinetInvestmentsScreen extends React.PureComponent {
                       onClick={() => {
                         actions.openModal("calc_deposit");
                       }}
-                      icon={require("../../../../asset/24px/calc.svg")}
+                      icon={require("../../../../asset/24px/calc.svg").default}
                     >
                       {utils.getLang("cabinet_calculate")}
                     </UI.FloatingButtonItem>

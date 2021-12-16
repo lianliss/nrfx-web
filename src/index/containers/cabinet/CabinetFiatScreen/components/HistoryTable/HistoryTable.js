@@ -9,7 +9,7 @@ export default function HistoryTable({ history, adaptive, header }) {
   if (!history.length) {
     return (
       <EmptyContentBlock
-        icon={require("../../../../../../asset/120/invest.svg")}
+        icon={require("../../../../../../asset/120/invest.svg").default}
         message={utils.getLang("no_transfers_history")}
       />
     );

@@ -20,30 +20,30 @@ import Lang from "src/components/Lang/Lang";
 
 const merchantList = {
   advcash: {
-    icon: require("../../../../asset/merchants/adv_cash.svg"),
+    icon: require("../../../../asset/merchants/adv_cash.svg").default,
     title: "AdvCash",
     payments: ["mastercard", "visa"]
   },
   invoice: {
-    icon: require("../../../../asset/merchants/swift.svg"),
+    icon: require("../../../../asset/merchants/swift.svg").default,
     title: "S.W.I.F.T",
     payments: ["bank"]
   },
   payoneer: {
-    icon: require("../../../../asset/merchants/payoneer.svg"),
+    icon: require("../../../../asset/merchants/payoneer.svg").default,
     title: "Payoneer",
     payments: ["mastercard", "visa", "bank"]
   },
   xendit: {
-    // icon: require('../../../../asset/merchants/xendit.svg'),
-    icon: require("../../../../asset/merchants/rp.svg"),
+    // icon: require('../../../../asset/merchants/xendit.svg').default,
+    icon: require("../../../../asset/merchants/rp.svg").default,
     // title: "Xendit",
     title: "Indonesian Rupiah",
     // payments: ['mastercard', 'visa', 'bank']
     payments: ["bank"]
   },
   cards: {
-    icon: require("../../../../asset/merchants/xendit.svg"),
+    icon: require("../../../../asset/merchants/xendit.svg").default,
     title: "By Card",
     payments: ["bank"]
   }
@@ -277,7 +277,7 @@ const MerchantModal = props => {
         ) : (
           <EmptyContentBlock
             skipContentClass
-            icon={require("../../../../asset/120/exchange.svg")}
+            icon={require("../../../../asset/120/exchange.svg").default}
             message={
               props.type === "withdrawal"
                 ? getLang("cabinet_merchantWithdrawalEmptyList")
