@@ -26,7 +26,7 @@
     "babel-jest": "27.3.1",
     "babel-loader": "8.2.3",
     "babel-plugin-named-asset-import": "0.3.8",
-    "babel-preset-react-app": "^9.1.1",
+    "babel-preset-react-app": "10.0.1",
     "big.js": "5.2.2",
     "camelcase": "5.2.0",
     "caniuse-lite": "1.0.30001028",
@@ -138,7 +138,7 @@
     "redux-devtools-extension": "2.13.8",
     "ts-loader": "6.2.1",
     "typescript": "3.8.2",
-    "uglifyjs-webpack-plugin": "1.1.2",
+    "uglifyjs-webpack-plugin": "2.2.0",
     "write-file-webpack-plugin": "^4.5.1"
   },
   "lint-staged": {

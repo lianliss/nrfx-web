@@ -113,7 +113,7 @@ checkBrowsers(paths.appPath, isInteractive)
   )
   .catch(err => {
     if (err && err.message) {
-      console.log(err.message);
+      console.error(err);
     }
     process.exit(1);
   });
@@ -134,7 +134,13 @@ function build(previousFileSizes) {
 
   console.log('Creating an optimized production build...');
 
-  const compiler = webpack(config);
+  let compiler;
+  try {
+     compiler = webpack(config);
+  } catch (error) {
+    console.error('[webpack]', error);
+    throw error;
+  }
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       let messages;
