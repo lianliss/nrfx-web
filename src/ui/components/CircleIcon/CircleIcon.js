@@ -18,7 +18,6 @@ export default memo(
         <div className={cn("CircleIcon", size, className, { skeleton })} />
       );
     }
-    console.log('[CircleIcon]', icon);
     return (
       <div
         style={
