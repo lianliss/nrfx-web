@@ -68,13 +68,15 @@ class Chart extends React.PureComponent {
     const lang = actions.getCurrentLang();
     const locale = langCodes[lang.value] || lang.value;
 
+    const dataFeeds = window.Datafeeds;
+
     const widgetOptions = {
       symbol: this.props.symbol,
       // symbol: 'AA',
       // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new window.Datafeeds.UDFCompatibleDatafeed(
+      datafeed: !!dataFeeds && (new dataFeeds.UDFCompatibleDatafeed(
         this.props.datafeedUrl
-      ),
+      )),
       interval: this.props.interval,
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
