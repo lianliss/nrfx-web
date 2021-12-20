@@ -22,7 +22,6 @@ const paths = require('./paths');
 const modules = require('./modules');
 const branches = require('./branches');
 const getClientEnvironment = require('./env');
-const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 // const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -79,7 +78,9 @@ module.exports = function(webpackEnv) {
       },
       {
         loader: require.resolve('css-loader'),
-        options: cssOptions,
+        options: {
+          ...cssOptions,
+        },
       },
       {
         loader: require.resolve('less-loader'),
@@ -426,7 +427,6 @@ module.exports = function(webpackEnv) {
         shouldInlineRuntimeChunk &&
         new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime~.+[.]js/]),
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-      //new ModuleNotFoundPlugin(paths.appPath),
       new webpack.DefinePlugin({
         ...env.stringified,
         'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
@@ -442,20 +442,15 @@ module.exports = function(webpackEnv) {
         resourceRegExp: /^\.\/locale$/,
         contextRegExp: /moment$/,
       }),
-      // new webpack.ProvidePlugin({
-      //   'define': 'global.define'
-      // }),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       isEnvDevelopment && new CaseSensitivePathsPlugin(),
-      // isEnvDevelopment &&
-      //   new WatchMissingNodeModulesPlugin(paths.appNodeModules),
       isEnvProduction &&
         new MiniCssExtractPlugin({
           filename: 'static/css/[name].[contenthash:8].css',
           chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
         }),
       new WebpackManifestPlugin({
-        fileName: 'manifest.json',
+        fileName: 'asset-manifest.json',
         publicPath: publicPath,
         generate: (seed, files) => {
           const manifestFiles = files.reduce(function(manifest, file) {
