@@ -1,11 +1,11 @@
 {
   "name": "narfex_web",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "private": true,
   "scripts": {
     "start": "DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
-    "start:admin": "DOMAIN=admin cross-env HOST=127.0.0.1 PORT=5000 HTTPS=false node scripts/start.js",
-    "start:landing": "DOMAIN=landing cross-env HOST=127.0.0.1 PORT=7000 HTTPS=false node scripts/start.js",
+    "start:admin": "DOMAIN=admin cross-env PORT=80 HTTPS=false node scripts/start.js",
+    "start:landing": "DOMAIN=landing cross-env PORT=80 HTTPS=false node scripts/start.js",
     "build": "DOMAIN=index node scripts/build.js && npm run build:admin",
     "build:admin": "DOMAIN=admin node scripts/build.js",
     "build:landing": "DOMAIN=landing node scripts/build.js",

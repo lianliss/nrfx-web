@@ -1,9 +1,20 @@
 # Narfex web app
 
-#### Запуск приложения
+#### Installation
+
+`npm i`
+
+#### Local run
+
 `npm start`
 
-#### Запуск UI кита в watch режиме
-`npx run ui`
+#### Update dependencies
 
+If the dependencies have changed, you need to reinstall them.
+This will clear node_modules folder and reinstall modules.
 
+`npm run update`
+
+#### Build
+
+`npm run build`
