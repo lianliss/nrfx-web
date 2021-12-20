@@ -195,6 +195,7 @@ function Modals(props) {
 class ModalsWrapper extends React.Component {
   state = {};
   componentDidCatch(error, errorInfo) {
+    console.error('[ModalsWrapper]', error, errorInfo);
     this.setState({
       error: {
         name: error.name,

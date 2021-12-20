@@ -4,12 +4,12 @@ import * as utils from "../../../../../../utils";
 import * as UI from "../../../../../../ui";
 import router from "../../../../../../router";
 
-import InvestSvg from "../../../../../../asset/24px/invest.svg";
-import FiatPlusSvg from "../../../../../../asset/24px/fiat-plus.svg";
-import ShoppingCartSvg from "../../../../../../asset/24px/shopping-cart.svg";
+import {ReactComponent as InvestSvg} from "../../../../../../asset/24px/invest.svg";
+import {ReactComponent as FiatPlusSvg} from "../../../../../../asset/24px/fiat-plus.svg";
+import {ReactComponent as ShoppingCartSvg} from "../../../../../../asset/24px/shopping-cart.svg";
 
-import TradeSvg from "../../../../../../asset/120/trade.svg";
-import InviteSvg from "../../../../../../asset/120/invite.svg";
+import {ReactComponent as TradeSvg} from "../../../../../../asset/120/trade.svg";
+import {ReactComponent as InviteSvg} from "../../../../../../asset/120/invite.svg";
 import { classNames as cn } from "../../../../../../utils";
 import * as pages from "../../../../../constants/pages";
 import InlineSVG from "react-inlinesvg";

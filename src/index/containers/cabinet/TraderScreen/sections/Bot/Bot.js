@@ -15,7 +15,7 @@ import History from "../../components/History/History";
 import Indicators from "../../components/Indicators/Indicators";
 import { ProfileSidebarItem } from "../../../../../components/cabinet/ProfileSidebar/ProfileSidebar";
 import * as pages from "../../../../../constants/pages";
-import PlusCircleSvg from "../../../../../../asset/24px/angle-left.svg";
+import {ReactComponent as PlusCircleSvg} from "../../../../../../asset/24px/angle-left.svg";
 import router from "../../../../../../router";
 
 class Index extends CabinetBaseScreen {

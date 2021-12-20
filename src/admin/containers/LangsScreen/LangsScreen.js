@@ -25,7 +25,7 @@ import {
 } from "src/ui/index";
 import Block from "../../components/Block/Block";
 import LoadingStatus from "../../../index/components/cabinet/LoadingStatus/LoadingStatus";
-import TrashIcon from "src/asset/24px/trash.svg";
+import {ReactComponent as TrashIcon} from "src/asset/24px/trash.svg";
 
 const LangsScreen = ({
   setType,

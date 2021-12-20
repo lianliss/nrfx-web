@@ -3,7 +3,7 @@ import * as UI from "../../../../../ui";
 
 import * as utils from "../../../../../utils";
 import * as actions from "../../../../../actions";
-import WithdrawSvg from "../../../../../asset/24px/withdraw.svg";
+import {ReactComponent as WithdrawSvg} from "../../../../../asset/24px/withdraw.svg";
 
 export default function CurrentPayments({ payments, adaptive }) {
   if (!payments.length) {

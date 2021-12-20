@@ -10,8 +10,8 @@ import { walletSelector } from "../../../../../../selectors";
 import useAdaptive from "src/hooks/adaptive";
 import { Separator } from "../../../../../../ui";
 
-import WalletIcon from "src/asset/24px/wallet.svg";
-import LoopIcon from "src/asset/24px/loop.svg";
+import { ReactComponent as WalletIcon } from "src/asset/24px/wallet.svg";
+import { ReactComponent as LoopIcon } from "src/asset/24px/loop.svg";
 
 export default ({ currency }) => {
   const adaptive = useAdaptive();

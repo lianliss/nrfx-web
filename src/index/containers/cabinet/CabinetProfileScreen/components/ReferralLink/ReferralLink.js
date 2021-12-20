@@ -5,8 +5,8 @@ import * as UI from "../../../../../../ui/index";
 
 import * as utils from "../../../../../../utils";
 
-import TwitterIcon from "./assets/twitter.svg";
-import FbIcon from "./assets/facebook.svg";
+import {ReactComponent as TwitterIcon} from "./assets/twitter.svg";
+import {ReactComponent as FbIcon} from "./assets/facebook.svg";
 
 class ReferralLink extends React.Component {
   render() {

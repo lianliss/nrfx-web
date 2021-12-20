@@ -30,6 +30,7 @@ class CabinetWrapper extends Component {
   }
 
   componentDidCatch(error, info) {
+    console.error('[CabinetWrapper]', error, info);
     this.setState({
       error: {
         name: error.name,

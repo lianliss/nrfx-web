@@ -1,7 +1,7 @@
 import "./ActionSheet.less";
 
 import React from "react";
-import MenuMoreIcon from "src/asset/24px/menu-more.svg";
+import {ReactComponent as MenuMoreIcon} from "src/asset/24px/menu-more.svg";
 
 import { classNames as cn } from "../../utils/index";
 import ContentBox from "../ContentBox/ContentBox";
