@@ -42,7 +42,8 @@ class Chart extends React.PureComponent {
   };
 
   state = {
-    status: "loading"
+    status: "loading",
+    isError: false,
   };
 
   tvWidget = null;
@@ -51,6 +52,11 @@ class Chart extends React.PureComponent {
     if (!document.webkitIsFullScreen && !document.fullscreen) {
       exchangeActions.setFullscreen(false);
     }
+  }
+
+  componentDidCatch(error, info) {
+    console.error('[Chart]', error, info);
+    this.setState({isError: true});
   }
 
   componentDidMount() {
@@ -138,13 +144,18 @@ class Chart extends React.PureComponent {
       time_frames: []
     };
 
-    const tvWidget = new widget(widgetOptions);
-    this.tvWidget = tvWidget;
+    try {
+      const tvWidget = new widget(widgetOptions);
+      this.tvWidget = tvWidget;
 
-    tvWidget.onChartReady(() => {
-      this.activeChart = this.tvWidget.activeChart();
-      this.setState({ status: "" });
-    });
+      tvWidget.onChartReady(() => {
+        this.activeChart = this.tvWidget.activeChart();
+        this.setState({ status: "" });
+      });
+    } catch (error) {
+      console.error('[Chart]', error);
+      this.setState({isError: true});
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -224,13 +235,13 @@ class Chart extends React.PureComponent {
     return (
       <div className={cn("ExchangeChart", this.state.status)}>
         {this.state.status && <LoadingStatus status={this.state.status} />}
-        <div
+        {!this.state.isError && <div
           id={this.props.containerId}
           ref="tradingView"
           className={cn("ExchangeChart__tradingView", {
             fullscreen: this.props.fullscreen
           })}
-        />
+        />}
       </div>
     );
   }
