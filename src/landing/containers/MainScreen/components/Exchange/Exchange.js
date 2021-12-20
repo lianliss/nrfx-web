@@ -24,30 +24,33 @@ export default () => {
           <Lang name="landing_exchange_description" />
         </p>
         <table>
-          <tr>
-            <th>
-              <Lang name="landing_exchange_table_name" />
-            </th>
-            <th>
-              <span className="Exchange__desktopOnly">
-                <Lang name="lending_exchange_table_lastPrice" />
-              </span>
-              <span className="Exchange__mobileOnly">
-                <Lang name="lending_exchange_table_lastPrice_mobile" />
-              </span>
-            </th>
-            <th>
-              <span className="Exchange__desktopOnly">
-                <Lang name="landing_exchange_table_24h" />
-              </span>
-              <span className="Exchange__mobileOnly">
-                <Lang name="landing_exchange_table_24h_mobile" />
-              </span>
-            </th>
-            <th className="Exchange__chartColumn">
-              <Lang name="landing_exchange_table_market" />
-            </th>
-          </tr>
+          <thead>
+            <tr>
+              <th>
+                <Lang name="landing_exchange_table_name" />
+              </th>
+              <th>
+                <span className="Exchange__desktopOnly">
+                  <Lang name="lending_exchange_table_lastPrice" />
+                </span>
+                <span className="Exchange__mobileOnly">
+                  <Lang name="lending_exchange_table_lastPrice_mobile" />
+                </span>
+              </th>
+              <th>
+                <span className="Exchange__desktopOnly">
+                  <Lang name="landing_exchange_table_24h" />
+                </span>
+                <span className="Exchange__mobileOnly">
+                  <Lang name="landing_exchange_table_24h_mobile" />
+                </span>
+              </th>
+              <th className="Exchange__chartColumn">
+                <Lang name="landing_exchange_table_market" />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
           {markets.length
             ? markets
                 .filter(
@@ -120,6 +123,7 @@ export default () => {
                     </td>
                   </tr>
                 ))}
+          </tbody>
         </table>
 
         <Button
