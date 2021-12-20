@@ -52,7 +52,10 @@ export default function EmptyContentBlock({
 }
 
 EmptyContentBlock.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
   message: PropTypes.string,
   button: PropTypes.shape({
     text: PropTypes.string.isRequired,

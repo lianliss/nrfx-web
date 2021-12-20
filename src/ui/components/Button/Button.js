@@ -86,6 +86,7 @@ Button.propTypes = {
     "danger",
     "success",
     "primary",
+    "green",
   ]),
   currency: PropTypes.object,
   className: PropTypes.string,
