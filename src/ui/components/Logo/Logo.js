@@ -39,7 +39,7 @@ Logo.defaultProps = {
 };
 
 Logo.propTypes = {
-  size: PropTypes.oneOf(["middle", "large"])
+  size: PropTypes.oneOf(["middle", "large", "extra-large"])
 };
 
 export default React.memo(Logo);

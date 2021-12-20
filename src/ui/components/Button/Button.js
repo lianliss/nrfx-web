@@ -77,6 +77,7 @@ Button.propTypes = {
     "ultra_small"
   ]),
   type: PropTypes.oneOf([
+    "default",
     "normal",
     "secondary",
     "negative",
@@ -84,7 +85,7 @@ Button.propTypes = {
     "buy",
     "danger",
     "success",
-    "primary"
+    "primary",
   ]),
   currency: PropTypes.object,
   className: PropTypes.string,

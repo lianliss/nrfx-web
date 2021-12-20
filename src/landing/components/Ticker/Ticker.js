@@ -36,16 +36,16 @@ export default () => {
     <div className="Ticker">
       <div className="Ticker__tape">
         {pending
-          ? [...Array(20)].map(() => (
-              <div className="Ticker__market skeleton">
+          ? [...Array(20)].map((item, index) => (
+              <div className="Ticker__market skeleton" key={index}>
                 <Skeleton className="Ticker__market__name" />
                 <Skeleton className="Ticker__market__price" />
                 <Skeleton className="Ticker__market__diff" />
               </div>
             ))
           : [...markets, ...markets, ...markets].map(
-              ({ ticker, market: { config } }) => (
-                <div className="Ticker__market">
+              ({ ticker, market: { config } }, index) => (
+                <div className="Ticker__market" key={index}>
                   <strong className="Ticker__market__name">
                     {ticker.market}
                   </strong>
