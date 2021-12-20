@@ -65,7 +65,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       <UI.Modal
         skipClose
         className="Exchange__disconnectModal"
-        isOpen={true}
+        isOpen={false} // TODO: turn back this modal
         onClose={this.props.onClose}
       >
         <div className="Exchange__disconnectModal__content">
