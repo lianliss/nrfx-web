@@ -69,7 +69,7 @@ export default () => {
             className="Roadmap__scrollWrapper"
           >
             <ul className="Roadmap__timeline">
-              {timeLine.map(event => {
+              {timeLine.map((event, index) => {
                 const future = event.time * 1000 > Date.now();
                 return (
                   <li className={cn("item", { future })}>

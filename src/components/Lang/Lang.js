@@ -8,7 +8,7 @@ const Lang = ({ name, params }) => {
   const currentLang = useSelector(currentLangSelector);
   const lang = useSelector(langSelector(currentLang, name));
 
-  let displayLang = lang || name || "";
+  let displayLang = lang || "";
 
   if (params) {
     Object.keys(params).forEach(param => {
