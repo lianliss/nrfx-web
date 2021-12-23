@@ -5,6 +5,7 @@ import Swap from "./components/Swap/Swap";
 import Exchange from "./components/Exchange/Exchange";
 import Advantages from "./components/Advantages/Advantages";
 import Application from "./components/Application/Application";
+import Roadmap from 'src/landing/containers/Company/components/Roadmap/Roadmap';
 import Lang from "../../../components/Lang/Lang";
 import COMPANY from "../../../index/constants/company";
 import * as utils from "../../../utils";
@@ -42,6 +43,7 @@ export default () => {
         items={ADVANTAGES_ITEMS}
       />
       <Application />
+      <Roadmap />
       <Welcome />
     </div>
   );
