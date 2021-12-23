@@ -80,11 +80,11 @@ export default () => {
                       <Lang name={event.textLang} />
                     </p>
                     <small>
-                      <Time
-                        ucfirst
-                        time={event.time}
-                        format={future ? "MMMM YYYY" : "D MMMM YYYY"}
-                      />
+                      {/*<Time*/}
+                        {/*ucfirst*/}
+                        {/*time={event.time}*/}
+                        {/*format={future ? "MMMM YYYY" : "D MMMM YYYY"}*/}
+                      {/*/>*/}
                     </small>
                   </li>
                 );
