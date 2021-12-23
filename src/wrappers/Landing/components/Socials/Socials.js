@@ -35,6 +35,13 @@ export default () => {
       >
         <SVG src={require("src/asset/social/medium.svg")} />
       </a>
+      <a
+        href={"//" + COMPANY.social.telegram}
+        target="__blank"
+        className="Footer__social__link telegram"
+      >
+        <SVG src={require("src/asset/social/telegram.svg")} />
+      </a>
       {/*<a*/}
       {/*  href={"//" + COMPANY.social.linkedin}*/}
       {/*  target="__blank"*/}

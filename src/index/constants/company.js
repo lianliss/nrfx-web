@@ -15,7 +15,7 @@ export default {
     facebook: "facebook.com/narfex.id",
     medium: "medium.com/@narfexindonesia",
     linkedin: "www.linkedin.com/company/bitcoinbot-indonesia/",
-    instagram: "instagram.com/narfex.id"
+    instagram: "instagram.com/narfex.russia"
   },
   whitePaper: {
     en: "https://narfex-1.gitbook.io/narfex-white-paper/"
