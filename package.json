@@ -103,6 +103,7 @@
     "redux-throttle": "0.1.1",
     "redux-thunk": "2.3.0",
     "resolve": "1.10.0",
+    "resolve-url-loader": "^4.0.0",
     "router5": "7.0.2",
     "router5-plugin-browser": "7.0.2",
     "router5-plugin-listeners": "7.0.2",

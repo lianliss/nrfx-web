@@ -108,7 +108,7 @@ module.exports = function(webpackEnv) {
         },
       },
     ].filter(Boolean);
-    if (preProcessor) {
+    if (false && preProcessor) {
       loaders.push({
         loader: require.resolve(preProcessor),
         options: {
@@ -284,15 +284,22 @@ module.exports = function(webpackEnv) {
         //   include: paths.appSrc,
         // },
         {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.base64.css$/],
+          type: 'asset/resource',
+          generator: {
+            filename: 'static/media/[name].[hash:8].raw[ext]',
+          }
+        },
+        {
           oneOf: [
-            {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.base64.css$/,],
-              loader: require.resolve('url-loader'),
-              options: {
-                limit: 10000,
-                name: 'static/media/[name].[hash:8].[ext]',
-              },
-            },
+            // {
+            //   test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.base64.css$/,],
+            //   loader: require.resolve('file-loader'),
+            //   options: {
+            //     limit: false,
+            //     name: 'static/media/[name].second.[hash:8].[ext]',
+            //   },
+            // },
             {
               test: /\.(js|mjs|jsx|ts|tsx)$/,
               include: paths.appSrc,
@@ -383,7 +390,12 @@ module.exports = function(webpackEnv) {
             },
             {
               loader: require.resolve('file-loader'),
-              exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [
+                /\.(js|mjs|jsx|ts|tsx)$/,
+                /\.html$/,
+                /\.json$/,
+                /\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.base64.css$/,
+              ],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
@@ -452,7 +464,7 @@ module.exports = function(webpackEnv) {
       new WebpackManifestPlugin({
         fileName: 'asset-manifest.json',
         publicPath: publicPath,
-        generate: (seed, files) => {
+        generate: (seed, files, entries) => {
           const manifestFiles = files.reduce(function(manifest, file) {
             manifest[file.name] = file.path;
             return manifest;
@@ -460,6 +472,7 @@ module.exports = function(webpackEnv) {
 
           return {
             files: manifestFiles,
+            entries,
           };
         },
       }),
