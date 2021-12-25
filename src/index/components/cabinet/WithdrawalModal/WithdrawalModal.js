@@ -10,6 +10,7 @@ import ModalState from "../ModalState/ModalState";
 import * as actions from "../../../../actions";
 import * as toasts from "../../../../actions/toasts";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
+import SVG from "utils/svg-wrap";
 
 class WithdrawalModal extends React.Component {
   state = {
@@ -131,7 +132,7 @@ class WithdrawalModal extends React.Component {
                 <UI.Input
                   type="code"
                   autoComplete="off"
-                  indicator={<div className="OpenDepositModal__ga_icon" />}
+                  indicator={<SVG src={require("../../../../asset/24px/google-authenticator.svg")} />}
                   value={this.state.gaCode}
                   onChange={this.__handleGAChange}
                   placeholder={utils.getLang("site__authModalGAPlaceholder")}
