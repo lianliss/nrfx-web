@@ -108,7 +108,7 @@ module.exports = function(webpackEnv) {
         },
       },
     ].filter(Boolean);
-    if (false && preProcessor) {
+    if (preProcessor) {
       loaders.push({
         loader: require.resolve(preProcessor),
         options: {
@@ -284,7 +284,9 @@ module.exports = function(webpackEnv) {
         //   include: paths.appSrc,
         // },
         {
-          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.base64.css$/],
+          test: [
+            /\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.base64.css$/
+          ],
           type: 'asset/resource',
           generator: {
             filename: 'static/media/[name].[hash:8].raw[ext]',

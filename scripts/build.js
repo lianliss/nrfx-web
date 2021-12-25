@@ -106,7 +106,7 @@ checkBrowsers(paths.appPath, isInteractive)
       );
     },
     err => {
-      console.log(chalk.red('Failed to compile.\n'));
+      console.log(chalk.red('Failed to compile.\n'), err);
       printBuildError(err);
       process.exit(1);
     }
@@ -148,6 +148,7 @@ function build(previousFileSizes) {
         if (!err.message) {
           return reject(err);
         }
+        console.error('[compiler run]', err);
         messages = formatWebpackMessages({
           errors: [err.message],
           warnings: [],
@@ -163,7 +164,7 @@ function build(previousFileSizes) {
         if (messages.errors.length > 1) {
           messages.errors.length = 1;
         }
-        return reject(new Error(messages.errors.join('\n\n')));
+        return reject(new Error(messages.errors.join("\n\n")));
       }
       if (
         process.env.CI &&

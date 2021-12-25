@@ -1,5 +1,5 @@
 import "./VerificationModal.less";
-import sumsubStyle from "./sumsub.base64.css";
+//import sumsubStyle from "./sumsub.base64.css";
 
 import React from "react";
 import { connect } from "react-redux";
@@ -36,7 +36,7 @@ class VerificationModal extends React.Component {
                 externalUserId: sumsub.user_id,
                 accessToken: sumsub.access_token,
                 uiConf: {
-                  customCss: sumsubStyle,
+                  //customCss: sumsubStyle, // TODO fix build with that creepy file
                   lang: getCurrentLang().value
                 }
               },
