@@ -14,7 +14,7 @@ export default () => {
           <li>
             <div
               className="Steps__image"
-              style={{ backgroundImage: `url(${require("./assets/1.svg")})` }}
+              style={{ backgroundImage: `url(${require("./assets/1.svg").default})` }}
             />
             <div className="Steps__step">
               <h4 data-number={1}>
@@ -34,7 +34,7 @@ export default () => {
           <li>
             <div
               className="Steps__image"
-              style={{ backgroundImage: `url(${require("./assets/2.svg")})` }}
+              style={{ backgroundImage: `url(${require("./assets/2.svg").default})` }}
             />
             <div className="Steps__step">
               <h4 data-number={2}>
@@ -48,7 +48,7 @@ export default () => {
           <li>
             <div
               className="Steps__image"
-              style={{ backgroundImage: `url(${require("./assets/3.svg")})` }}
+              style={{ backgroundImage: `url(${require("./assets/3.svg").default})` }}
             />
             <div className="Steps__step">
               <h4 data-number={3}>
