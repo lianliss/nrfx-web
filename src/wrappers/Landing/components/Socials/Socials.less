@@ -8,8 +8,13 @@
     margin-right: 8px;
     color: inherit;
     cursor: pointer;
-    transition: color.3s ease;
+    transition: all .3s ease;
 
+    &.telegram {
+      transform-origin: top left;
+      transform: scale(0.57) translate(-6px, -6px);
+      filter: grayscale(1) contrast(0.4) brightness(1.55);
+    }
     &:hover {
       &.facebook {
         color: #0084FF;
@@ -25,6 +30,9 @@
       }
       &.linkedin {
         color: #0077B5;
+      }
+      &.telegram {
+        filter: initial;
       }
     }
   }
