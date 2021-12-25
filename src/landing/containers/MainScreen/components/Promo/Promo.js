@@ -5,6 +5,7 @@ import AppButtons from "../../../../../components/AppButtons/AppButtons";
 import * as actions from "../../../../../actions/landing/buttons";
 import * as pages from "../../../../../index/constants/pages";
 import { useRouter, Link } from "react-router5";
+import SVG from "utils/svg-wrap";
 
 export default props => {
   const router = useRouter();

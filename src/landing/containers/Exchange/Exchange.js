@@ -29,7 +29,7 @@ export default () => {
         title={<Lang name="landingExchange_promo_title" />}
         description={<Lang name="landingExchange_promo_description" />}
         actionButtonText={<Lang name="landingExchange_promo_actionButton" />}
-        image={require("../MainScreen/components/Promo/assets/exchange.jpg").default}
+        image={require("../MainScreen/components/Promo/assets/exchange.jpg")}
       />
       <Advantages
         accent
