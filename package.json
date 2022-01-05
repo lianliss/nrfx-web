@@ -1,6 +1,6 @@
 {
   "name": "narfex_web",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "private": true,
   "scripts": {
     "start": "DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
