@@ -170,7 +170,7 @@ class Header extends React.Component {
                           />
                         )
                       },
-                      // { title: utils.getLang('global_darkMode'), onClick: actions.toggleTheme, subContent: <UI.Switch on={this.props.theme === 'dark'} /> },
+                      { title: utils.getLang('global_darkMode'), onClick: actions.toggleTheme, subContent: <UI.Switch on={this.props.theme === 'dark'} /> },
                       {
                         title: utils.getLang("cabinet_header_exit"),
                         onClick: auth.logout

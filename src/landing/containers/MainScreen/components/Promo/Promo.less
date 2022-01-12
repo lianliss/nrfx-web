@@ -1,7 +1,6 @@
 @import '../../../../../vars';
 
 .Promo {
-  height: 684px;
   overflow: hidden;
 
   @media (max-width: @mobile-width) {
@@ -10,7 +9,7 @@
 
   .Promo__content {
     display: flex;
-    height: 100%;
+    padding: var(--padding-section) 0;
     align-items: center;
 
     @media (max-width: @mobile-width) {
@@ -28,8 +27,8 @@
     h1 {
       width: 544px;
       font-weight: bold;
-      font-size: 48px;
-      line-height: 56px;
+      font-size: var(--font-size-title);
+      line-height: 1.4em;
       margin-bottom: 32px;
 
       @media (max-width: @mobile-width) {
@@ -43,9 +42,10 @@
     p {
       width: 446px;
       font-weight: normal;
-      font-size: 22px;
-      line-height: 32px;
+      font-size: var(--font-size-landing);
+      line-height: 1.5em;
       padding-bottom: 32px;
+      color: var(--text-secondary);
 
       @media (max-width: @mobile-width) {
         width: 100%;
@@ -112,6 +112,10 @@
   .Promo__image {
     width: 880px;
     height: 640px;
+    position: absolute;
+    top: calc(50% + var(--padding-section));
+    margin-top: -320px;
+    right: 0;
     flex: 0 0 auto;
     margin-right: -176px;
     background-size: contain;

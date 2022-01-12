@@ -181,6 +181,7 @@ export function toggleTheme() {
   const themes = ["light", "dark"];
 
   const theme = currentTheme === themes[0] ? themes[1] : themes[0];
+    console.log('toggleTheme', currentTheme, themes);
   storage.setItem("theme", theme);
   return store.dispatch({ type: actionTypes.SET_THEME, theme });
 }

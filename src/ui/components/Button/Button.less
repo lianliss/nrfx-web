@@ -8,7 +8,7 @@
   padding: 0 32px;
   background: var(--blue-gradient);
   color: var(--primary-blue);
-  border-radius: @border-radius;
+  border-radius: var(--radius-button);
   display: inline-flex;
   height: var(--button-height);
   align-items: center;
@@ -103,7 +103,8 @@
   }
 
   &.extra_large {
-    --button-height: 64px;
+    --button-height: 52px;
+
     .Button__label {
       font-size: 15px;
     }

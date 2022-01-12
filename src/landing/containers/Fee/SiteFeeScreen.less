@@ -3,7 +3,7 @@
 .SiteFeeScreen {
   position: relative;
   min-height: 400px;
-  padding-top: 108px;
+  padding-top: var(--padding-section);
 
   @media (max-width: @mobile-width) {
     padding-top: 24px;
@@ -14,8 +14,8 @@
 
      h1 {
        font-weight: bold;
-       font-size: 48px;
-       line-height: 56px;
+       font-size: var(--font-size-title);
+       line-height: 1.4em;
        margin-bottom: 32px;
 
        @media (max-width: @mobile-width) {
@@ -27,8 +27,9 @@
 
     p {
       font-weight: normal;
-      font-size: 22px;
-      line-height: 175%;
+      font-size: var(--font-size-landing);
+      line-height: 1.5em;
+      color: var(--text-secondary);
 
       @media (max-width: @mobile-width) {
         font-size: 16px;
@@ -40,9 +41,9 @@
   h2 {
     color: var(--text-black);
     text-align: center;
-    font-weight: 600;
-    font-size: 34px;
-    line-height: 40px;
+    font-weight: bold;
+    font-size: var(--font-size-title);
+    line-height: 1.4em;
     margin: 80px 0 56px;
   }
 
@@ -69,18 +70,18 @@
 
     th,
     td {
-      padding: 32px 40px;
+      padding: 16px 32px;
 
       @media (max-width: 1000px) {
         padding: 16px 20px;
       }
-      border: 1px solid #cccccc;
+      border: 1px solid var(--primary-blue-opacity);
       text-align: center;
 
       &:first-child {
         width: 27%;
         text-align: left;
-        border-right-color: #658bf5;
+        border-right-color: var(--primary-blue-opacity);
       }
     }
 
@@ -93,8 +94,12 @@
     }
 
     th {
-      vertical-align: top;
-      border-bottom-color: #658bf5;
+      vertical-align: middle;
+      border-bottom-color: var(--primary-blue-opacity);
+
+      .CurrencyLabel {
+        margin-top: 5px;
+      }
     }
 
     th,
@@ -106,7 +111,7 @@
   .SiteFeeScreen__list {
     font-size: 15px;
     line-height: 24px;
-    border-bottom: 1px solid #658bf5;
+    border-bottom: 1px solid var(--primary-blue-opacity);
     margin-bottom: 56px;
 
     .SiteFeeScreen__list__title {

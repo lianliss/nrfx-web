@@ -245,11 +245,13 @@ module.exports = function(webpackEnv) {
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
         'react-native': 'react-native-web',
-        ui: path.resolve(__dirname, "../src/ui/components"),
+        ui: path.resolve(__dirname, "../src/ui"),
         utils: path.resolve(__dirname, "../src/utils"),
         actions: path.resolve(__dirname, "../src/actions"),
         src: path.resolve(__dirname, "../src"),
         asset: path.resolve(__dirname, "../src/asset"),
+        services: path.resolve(__dirname, "../src/services"),
+        components: path.resolve(__dirname, "../src/components"),
       },
       plugins: [
         PnpWebpackPlugin,

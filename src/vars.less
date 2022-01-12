@@ -1,13 +1,20 @@
 body,
 .SiteWrapper {
+  //Font
+  --font-size-landing: 16px;
+  --font-size-title: 32px;
+
+  //Paddings and sizes
+  --padding-section: 80px;
+
   ////Primary colors
   --primary-orange: #FF9326;
   --primary-orange-opacity: rgba(255, 147, 38, .1);
   --dark-orange: #F28D00;
 
-  --primary-blue: #4070FF;
+  --primary-blue: #1949d7;
   --primary-blue-opacity: rgba(58, 101, 230, .1);
-  --dark-blue: #365FD9;
+  --dark-blue: #1949d7;
 
   //Primary Gradients
   --orange-gradient-color-start: #FFA526;
@@ -18,8 +25,8 @@ body,
     var(--orange-gradient-color-start) 100%
   );
 
-  --blue-gradient-color-start: #4070FF;
-  --blue-gradient-color-end: #365FD9;
+  --blue-gradient-color-start: #4d72df;
+  --blue-gradient-color-end: #274cbd;
   --blue-gradient: linear-gradient(
     0deg,
     var(--blue-gradient-color-end) 0%,
@@ -37,11 +44,14 @@ body,
   --gray: #9EA2AD;
   --light-gray: #C9CCD4;
   --extra-light-gray: #E4E6ED;
+  --sidebar-icon: #C9CCD4;
 
   --cloudy: #EDF0F5;
   --alice-blue: #F7F9FC;
 
   --white: #fff;
+
+  --text-secondary: #4e5c85;
 
   --text-green: #008060;
   --green: #00B277;
@@ -68,6 +78,9 @@ body,
   --primary-background: var(--white);
   --secondary-background: var(--white);
 
+  // Sizes
+  --radius-panel: 3px;
+  --radius-button: 4px;
 }
 
 body.theme-dark {

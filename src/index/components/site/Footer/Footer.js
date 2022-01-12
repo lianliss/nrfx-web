@@ -6,7 +6,7 @@ import SVG from "utils/svg-wrap";
 import * as pages from "../../../constants/pages";
 import * as utils from "../../../../utils/index";
 import * as actions from "actions";
-import MarkDown from "ui/MarkDown/MarkDown";
+import {MarkDown} from "ui";
 import { isIndonesia } from "src/services/locations";
 import * as UI from "src/ui";
 import COMPANY from "src/index/constants/company";

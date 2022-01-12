@@ -1,7 +1,7 @@
 @import '../../../../../vars';
 
 .Application {
-  padding: 160px 0;
+  padding: var(--padding-section) 0;
   text-align: center;
 
   @media (max-width: @mobile-width) {
@@ -10,8 +10,8 @@
 
   h2 {
     font-weight: bold;
-    font-size: 36px;
-    line-height: 48px;
+    font-size: var(--font-size-title);
+    line-height: 1.4em;
     margin-top: 40px;
 
     @media (max-width: @mobile-width) {
@@ -50,8 +50,9 @@
     }
 
     p {
-      font-size: 16px;
-      line-height: 24px;
+      font-size: var(--font-size-landing);
+      line-height: 1.5em;
+      color: var(--text-secondary);
       margin-bottom: 16px;
     }
   }

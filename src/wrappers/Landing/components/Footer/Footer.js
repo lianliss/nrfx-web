@@ -41,7 +41,7 @@ export default () => {
                 ...customStyles.control(provided, state),
                 boxShadow: null,
                 border: `1px solid ${getCssVar("--cloudy")}`,
-                borderRadius: 16,
+                borderRadius: 3,
                 minHeight: 40
               }),
               option: (provided, state) => ({

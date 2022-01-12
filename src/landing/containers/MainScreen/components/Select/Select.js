@@ -1,7 +1,7 @@
 import React from "react";
 import Select, {
   customStyles
-} from "../../../../../ui/components/Select/Select";
+} from "ui/components/Select/Select";
 
 export default props => {
   return (
@@ -14,7 +14,7 @@ export default props => {
           ...customStyles.control(provided, state),
           boxShadow: null,
           // border: `1px solid ${getCssVar("--cloudy")}`,
-          borderRadius: 16,
+          borderRadius: 3,
           minHeight: 64,
           ":hover": null
         }),
@@ -23,7 +23,7 @@ export default props => {
           // border: '4px solid #f0f',
           margin: "4px",
           width: "calc(100% - 8px)",
-          borderRadius: "14px"
+          borderRadius: "3px"
           // fontWeight: 600,
           // padding: "11px 16px",
           // fontSize: '22px',
@@ -31,7 +31,7 @@ export default props => {
         }),
         menu: (provided, state) => ({
           ...customStyles.menu(provided, state),
-          borderRadius: "16px",
+          borderRadius: "3px",
           padding: 0
         }),
         menuList: (provided, state) => ({

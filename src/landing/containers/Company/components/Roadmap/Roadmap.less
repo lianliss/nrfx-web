@@ -1,7 +1,7 @@
 @import '../../../../../vars';
 
 .Roadmap {
-  padding: 160px 0;
+  padding: var(--padding-section) 0;
 
   @media (max-width: @mobile-width) {
     padding: 80px 0;
@@ -12,8 +12,8 @@
   h3 {
     text-align: center;
     font-weight: bold;
-    font-size: 36px;
-    line-height: 48px;
+    font-size: var(--font-size-title);
+    line-height: 1.4em;
     margin-bottom: 82px;
   }
 
@@ -67,8 +67,9 @@
 
     p {
       font-weight: normal;
-      font-size: 16px;
-      line-height: 175%;
+      font-size: var(--font-size-landing);
+      line-height: 1.5em;
+      color: var(--text-secondary);
       margin: 16px 0;
     }
 

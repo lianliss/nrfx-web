@@ -5,10 +5,10 @@
 
 .WalletList__item {
   position: relative;
-  padding: 16px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
-  border-radius: 8px;
+  border-radius: var(--radius-button);
   cursor: pointer;
   margin-bottom: 2px;
 
@@ -16,6 +16,9 @@
     border-radius: 0;
   }
 
+  .WalletList__item__icon {
+    opacity: 0.5;
+  }
   .CircleIcon {
     transition: .3s ease;
   }
@@ -24,6 +27,9 @@
   &.active {
     background-color: var(--cloudy);
 
+    .WalletList__item__icon {
+      opacity: 1;
+    }
     .CircleIcon {
       transform: scale(1.25);
     }
@@ -31,7 +37,7 @@
 
   &.primary {
     .CircleIcon {
-      background: var(--white);
+      //background: var(--white);
       color: var(--primary-blue);
 
       &::after {
@@ -43,6 +49,11 @@
     &.active {
       .CircleIcon {
         transform: scale(1);
+      }
+    }
+    &:not(.currency) {
+      svg {
+        color: var(--sidebar-icon);
       }
     }
   }
