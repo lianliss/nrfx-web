@@ -10,8 +10,12 @@
 
   &.disabled {
     pointer-events: none;
-    background: #FAFAFA;
+    background: var(--primary-background);
     color: var(--dark-gray);
+
+    .Dropdown__option__prefix {
+      opacity: 0.3;
+    }
   }
 
   .Dropdown__header {
