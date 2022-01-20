@@ -31,6 +31,7 @@ import SwapForm from "./components/SwapForm/SwapForm";
 import RefillBlock from "./components/RefillBlock/RefillBlock";
 import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
 import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
+import Addresses from "./components/Addresses/Addresses";
 
 import useAdaptive from "src/hooks/adaptive";
 import { ContentBox } from "../../../../ui";
@@ -96,6 +97,7 @@ export default memo(() => {
         !adaptive && <WalletList currency={balanceId && params.currency} />
       }
     >
+      {isCommon && <Addresses />}
       {isCommon && <CommonHeader />}
       {isSwap &&
         (adaptive ? (

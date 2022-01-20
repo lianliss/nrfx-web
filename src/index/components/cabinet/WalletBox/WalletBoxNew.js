@@ -2,8 +2,8 @@ import "./WalletBox.less";
 
 import React from "react";
 
-import * as actions from "../../../../actions";
-import * as utils from "../../../../utils";
+import * as actions from "actions";
+import * as utils from "utils";
 
 export default function WalletBoxNew() {
   return (

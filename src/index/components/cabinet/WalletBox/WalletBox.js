@@ -3,9 +3,9 @@ import "./WalletBox.less";
 import React from "react";
 import SVG from "utils/svg-wrap";
 
-import * as utils from "../../../../utils";
-import * as actions from "../../../../actions";
-import * as UI from "../../../../ui/";
+import * as utils from "utils";
+import * as actions from "actions";
+import * as UI from "ui";
 
 class WalletBox extends React.Component {
   constructor(props) {
