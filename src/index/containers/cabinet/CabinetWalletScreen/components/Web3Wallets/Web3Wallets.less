@@ -1,0 +1,101 @@
+@keyframes spin {
+    100% {
+        transform:rotate(360deg);
+    }
+}
+
+.Web3Wallets {
+    margin-bottom: var(--gap-size);
+
+    .ContentBox__content {
+        padding: var(--padding-panel);
+    }
+    &-addresses {
+
+        &-item {
+            &:not(:first-child) {
+                margin-top: 20px;
+            }
+
+            &-body {
+                display: flex;
+                justify-content: space-between;
+            }
+            &-left {
+                h2 {
+                    font-weight: 600;
+                    font-size: 16px;
+                    margin-bottom: 6px;
+                    display: flex;
+                    align-items: center;
+
+                    small {
+                        background: var(--primary-blue-opacity);
+                        color: var(--text-black);
+                        display: inline-block;
+                        padding: 0 8px;
+                        border-radius: var(--radius-button);
+                        margin-left: 8px;
+                    }
+                }
+            }
+            &-right {
+                padding-top: 20px;
+            }
+            &-address {
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+        &-balances {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 4px -11px;
+
+            &-loading {
+                display: flex;
+                align-items: center;
+                margin: 4px -3px;
+
+                .isvg {
+                    transform: scale(0.5) translateY(3px);
+
+                    svg {
+                        animation:spin 1s linear infinite;
+
+                        path {
+                            fill: rgb(250, 190, 76);
+                        }
+                    }
+                }
+                &-text {
+                    font-size: 13px;
+                    font-weight: 600;
+                    margin-left: 6px;
+                }
+            }
+        }
+    }
+    &-balance {
+        display: flex;
+        align-items: center;
+        margin: 4px 12px;
+
+        &-circle {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        &-amount {
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        &-currency {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 6px;
+        }
+    }
+}

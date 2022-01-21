@@ -41,7 +41,7 @@ import SwapForm from "./components/SwapForm/SwapForm";
 import RefillBlock from "./components/RefillBlock/RefillBlock";
 import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
 import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
-import Addresses from "./components/Addresses/Addresses";
+import Web3Wallets from "./components/Web3Wallets/Web3Wallets";
 
 import useAdaptive from "src/hooks/adaptive";
 import { ContentBox } from "ui";
@@ -138,7 +138,7 @@ export default memo(() => {
         !adaptive && <WalletList currency={balanceId && params.currency} />
       }
     >
-      {isCommon && <Addresses />}
+      {isCommon && <Web3Wallets />}
       {isCommon && <CommonHeader />}
       {isSwap &&
         (adaptive ? (
