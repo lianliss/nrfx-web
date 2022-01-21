@@ -18,9 +18,9 @@ export default () => {
     .map(b => b.to_usd * b.amount)
     .reduce((a, b) => a + b, 0);
 
-  // if (!total) {
-  //   return <EmptyBalance />;
-  // }
+  if (!total) {
+    return <EmptyBalance />;
+  }
 
   const List = () => (
     <ul className="CommonHeader__currencyList">

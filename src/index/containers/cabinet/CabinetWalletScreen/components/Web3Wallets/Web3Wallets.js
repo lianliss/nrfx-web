@@ -9,6 +9,7 @@ import {ContentBox, NumberFormat} from "ui";
 import web3Backend from "services/web3-backend";
 import {
   web3Update,
+  web3SetData,
 } from 'actions/cabinet/web3';
 import {
   getCurrencyInfo,
@@ -21,8 +22,19 @@ import {
   WEI_ETHER,
 } from 'src/index/constants/cabinet';
 import SVG from "utils/svg-wrap";
+import CreateWalletModal from "../CreateWalletModal/CreateWalletModal";
+import ImportWalletModal from "../ImportWalletModal/ImportWalletModal";
+import {
+  getLang,
+} from 'utils';
 
 class Web3Wallets extends React.PureComponent {
+
+  state = {
+    isCreateModal: false,
+    isImportModal: false,
+    isPrivateKeyModal: false,
+  };
 
   componentDidMount() {
     this._mounted = true;
@@ -61,12 +73,14 @@ class Web3Wallets extends React.PureComponent {
 
   renderBalanceLoading = () => <div className="Web3Wallets-balances-loading">
     <SVG src={require(`asset/16px/spinner.svg`)} />
-    <div className="Web3Wallets-balances-loading-text">Получаем баланс</div>
+    <div className="Web3Wallets-balances-loading-text">
+      {getLang("cabinetWallet_getting_balance")}
+    </div>
   </div>;
 
-  renderUnknownBalance = () => <div className="Web3Wallets-balances-loading">
-    <div className="Web3Wallets-balances-loading-text">Баланс неизвестен</div>
-  </div>
+  renderUnknownBalance = () => <div className="Web3Wallets-balances-unknown">
+    {getLang("cabinetWallet_balance_unknown")}
+  </div>;
 
   render() {
     const {
@@ -74,8 +88,16 @@ class Web3Wallets extends React.PureComponent {
       isWalletsLoaded,
       isBalancesLoaded,
     } = this.props;
+    const {
+      isCreateModal,
+      isPrivateKeyModal,
+      isImportModal,
+    } = this.state;
 
     return <ContentBox className="Web3Wallets">
+      <h2>
+        {getLang("cabinetWallet_header")}
+      </h2>
       <div className="Web3Wallets-addresses">
         {wallets.map(wallet => {
           const {address, isGenerated, network} = wallet;
@@ -83,13 +105,10 @@ class Web3Wallets extends React.PureComponent {
           return <div className="Web3Wallets-addresses-item" key={address}>
             <div className="Web3Wallets-addresses-item-body">
               <div className="Web3Wallets-addresses-item-left">
-                <h2>
-                  {network} {!isGenerated && <small>Imported</small>}
-                </h2>
                 <div className="Web3Wallets-addresses-item-address">
-                  {address}
+                  {address} <b>{network}</b>
                 </div>
-                <div className="Web3Wallets-addresses-balances">
+                <div className="Web3Wallets-balances">
                   {isBalancesLoaded
                     ? !!balance
                       ? this.renderBalance(balance)
@@ -98,12 +117,29 @@ class Web3Wallets extends React.PureComponent {
                 </div>
               </div>
               <div className="Web3Wallets-addresses-item-right">
-                {isGenerated && <Button size="small">Ключ</Button>}
+                {isGenerated
+                  ? <Button disabled size="small">{getLang("cabinetWallet_key")}</Button>
+                  : <small>{getLang("cabinetWallet_imported")}</small>}
               </div>
             </div>
           </div>
         })}
       </div>
+      <div className="Web3Wallets-controls">
+        <Button
+          type="secondary"
+          onClick={() => this.setState({isImportModal: true})}
+          size="middle">
+          {getLang("cabinetWallet_import")}
+        </Button>
+        <Button
+          onClick={() => this.setState({isCreateModal: true})}
+          size="middle">
+          {getLang("cabinetWallet_create")}
+        </Button>
+      </div>
+      {isCreateModal && <CreateWalletModal onClose={() => this.setState({isCreateModal: false})} />}
+      {isImportModal && <ImportWalletModal onClose={() => this.setState({isImportModal: false})} />}
     </ContentBox>
   }
 }
@@ -116,4 +152,5 @@ export default connect(state => ({
   currencies: state.cabinet.currencies,
 }), dispatch => bindActionCreators({
   web3Update,
+  web3SetData,
 }, dispatch), null, {pure: true})(Web3Wallets);
