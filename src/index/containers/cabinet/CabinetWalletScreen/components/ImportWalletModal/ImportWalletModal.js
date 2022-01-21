@@ -50,7 +50,7 @@ class ImportWalletModal extends React.PureComponent {
       </h3>
       <UI.Input
         value={address}
-        onChange={address => this.setState({address})}
+        onChange={event => this.setState({address: event.currentTarget.value})}
       />
       <center>
         <UI.Button onClick={this.importWallet.bind(this)}>
