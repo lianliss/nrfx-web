@@ -28,6 +28,7 @@ import adminReducer from "./reducers/admin";
 import langsReducer from "./reducers/langs";
 import landingReducer from "./reducers/landing";
 import traderReducer from "./reducers/trader";
+import web3Reducer from "./reducers/web3";
 import rootSaga from "./sagas";
 
 let store;
@@ -75,7 +76,8 @@ export function configureStore() {
           exchange: exchangeReducer,
           internalNotifications: internalNotificationsReducer,
           test: testReducer,
-          trader: traderReducer
+          trader: traderReducer,
+          web3: web3Reducer,
         }
       }[process.env.DOMAIN || "index"]
     ),

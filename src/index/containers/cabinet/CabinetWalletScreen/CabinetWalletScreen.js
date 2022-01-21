@@ -14,15 +14,25 @@ import History from "./components/History/History";
 import {
   fetchWalletPage,
   walletFetchHistory,
-  walletFetchHistoryMore
-} from "../../../../actions/cabinet/wallet";
+  walletFetchHistoryMore,
+  walletUpdate,
+  walletSetStatus,
+} from "actions/cabinet/wallet";
 
 import {
   walletBalanceSelector,
   walletCardReservationSelector,
   walletHistorySelector,
-  walletStatusSelector
-} from "../../../../selectors";
+  walletStatusSelector,
+  web3StatusSelector,
+} from "src/selectors";
+
+import {
+  web3SetStatus,
+  web3SetData,
+} from "actions/cabinet/web3";
+
+
 
 import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStatus";
 import Paging from "../../../components/cabinet/Paging/Paging";
@@ -34,10 +44,12 @@ import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
 import Addresses from "./components/Addresses/Addresses";
 
 import useAdaptive from "src/hooks/adaptive";
-import { ContentBox } from "../../../../ui";
+import { ContentBox } from "ui";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
-import { setTitle } from "../../../../actions";
-import { getLang } from "../../../../utils";
+import { setTitle } from "actions";
+import { getLang } from "utils";
+
+import web3Backend from "services/web3-backend";
 
 const buildOptions = (balanceId, isCrypto, isSwap) => {
   return isSwap
@@ -60,6 +72,7 @@ export default memo(() => {
 
   const dispatch = useDispatch();
   const status = useSelector(walletStatusSelector);
+  const web3Status = useSelector(web3StatusSelector);
   const history = useSelector(walletHistorySelector);
   const cardReservation = useSelector(walletCardReservationSelector);
   const balance = useSelector(walletBalanceSelector(params.currency));
@@ -81,6 +94,34 @@ export default memo(() => {
     setTitle(getLang("cabinet_header_wallet", true));
     dispatch(walletFetchHistory(buildOptions(balanceId, isCrypto, isSwap)));
   }, [balanceId, isCrypto, isSwap, dispatch]);
+
+  if (!web3Status.isRequested) {
+    // Request for wallets
+    dispatch(web3SetStatus('isRequested', true));
+    web3Backend.getWallets().then(wallets => {
+      dispatch(web3SetData({wallets}));
+      dispatch(web3SetStatus('isWalletsLoaded', true));
+
+      // Request for balances
+      Promise.allSettled(
+        wallets.map(wallet => web3Backend.getBalances(wallet.address))
+      ).then(data => {
+        const balances = [];
+        data.map((balance, index) => {
+          const address = wallets[index].address;
+          if (balance.status !== 'fulfilled') {
+            return;
+          }
+          balances.push({address, items: balance.value});
+        });
+        dispatch(web3SetData({balances}));
+        dispatch(web3SetStatus('isBalancesLoaded', true));
+      });
+    }).catch(error => {
+      console.error('[CabinetWalletScreen] getWallets', error);
+      dispatch(web3SetStatus('isRequested', false));
+    });
+  }
 
   const handleLoadMore = useCallback(() => {
     dispatch(walletFetchHistoryMore(buildOptions(balanceId, isCrypto, isSwap)));
