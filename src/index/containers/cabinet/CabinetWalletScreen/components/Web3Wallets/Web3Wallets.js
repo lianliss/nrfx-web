@@ -99,10 +99,10 @@ class Web3Wallets extends React.PureComponent {
         {getLang("cabinetWallet_header")}
       </h2>
       <div className="Web3Wallets-addresses">
-        {wallets.map(wallet => {
+        {wallets.map((wallet, index) => {
           const {address, isGenerated, network} = wallet;
           const balance = balances.find(balance => balance.address === address);
-          return <div className="Web3Wallets-addresses-item" key={address}>
+          return <div className="Web3Wallets-addresses-item" key={index}>
             <div className="Web3Wallets-addresses-item-body">
               <div className="Web3Wallets-addresses-item-left">
                 <div className="Web3Wallets-addresses-item-address">

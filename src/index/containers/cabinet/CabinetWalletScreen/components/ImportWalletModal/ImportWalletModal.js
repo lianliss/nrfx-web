@@ -48,10 +48,12 @@ class ImportWalletModal extends React.PureComponent {
       <h3>
         {getLang("cabinetWalletCreate_address")}
       </h3>
-      <UI.Input
-        value={address}
-        onChange={event => this.setState({address: event.currentTarget.value})}
-      />
+      <form onSubmit={this.importWallet.bind(this)}>
+        <UI.Input
+          value={address}
+          onChange={event => this.setState({address: event.currentTarget.value})}
+        />
+      </form>
       <center>
         <UI.Button onClick={this.importWallet.bind(this)}>
           Import
