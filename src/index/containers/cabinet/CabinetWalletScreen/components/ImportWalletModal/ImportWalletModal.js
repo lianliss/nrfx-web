@@ -56,7 +56,7 @@ class ImportWalletModal extends React.PureComponent {
       </form>
       <center>
         <UI.Button onClick={this.importWallet.bind(this)}>
-          Import
+          {getLang("cabinetWallet_import")}
         </UI.Button>
       </center>
     </div>

@@ -1,0 +1,60 @@
+@keyframes spin {
+    100% {
+        transform:rotate(360deg);
+    }
+}
+
+.DeleteWalletModal {
+    .Modal__header {
+
+    }
+    &-content {
+
+    }
+    &-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 40px 40px;
+
+        .isvg {
+            svg {
+                margin-bottom: 16px;
+                animation:spin 1s linear infinite;
+
+                path {
+                    fill: rgb(250, 190, 76);
+                }
+            }
+        }
+        &-text {
+
+        }
+    }
+    &-form {
+        margin-top: 40px;
+
+        h3 {
+            font-size: 13px;
+        }
+        p {
+            max-width: 640px;
+            margin: 0 0 40px 0;
+            font-size: 12px;
+            line-height: 1.5em;
+        }
+        .Input__wrapper {
+            margin-bottom: 20px;
+
+            .Input {
+                min-width: 640px;
+            }
+            .Input__description {
+                margin: 16px 0 0;
+            }
+        }
+        .Button {
+            margin: 8px auto 20px;
+        }
+    }
+}

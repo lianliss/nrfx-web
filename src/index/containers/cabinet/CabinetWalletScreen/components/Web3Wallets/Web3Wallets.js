@@ -24,6 +24,8 @@ import {
 import SVG from "utils/svg-wrap";
 import CreateWalletModal from "../CreateWalletModal/CreateWalletModal";
 import ImportWalletModal from "../ImportWalletModal/ImportWalletModal";
+import DeleteWalletModal from "../DeleteWalletModal/DeleteWalletModal";
+import PrivateKeyModal from "../PrivateKeyModal/PrivateKeyModal";
 import {
   getLang,
 } from 'utils';
@@ -33,6 +35,7 @@ class Web3Wallets extends React.PureComponent {
   state = {
     isCreateModal: false,
     isImportModal: false,
+    isDeleteModal: false,
     isPrivateKeyModal: false,
   };
 
@@ -92,11 +95,15 @@ class Web3Wallets extends React.PureComponent {
       isCreateModal,
       isPrivateKeyModal,
       isImportModal,
+      isDeleteModal,
     } = this.state;
+    const isGenerated = _.get(wallets, `[${wallets.length - 1}].isGenerated`, false);
 
     return <ContentBox className="Web3Wallets">
       <h2>
-        {getLang("cabinetWallet_header")}
+        {isGenerated
+          ? getLang("cabinetWallet_header")
+          : getLang("cabinetWallet_header_imported")}
       </h2>
       <div className="Web3Wallets-addresses">
         {wallets.map((wallet, index) => {
@@ -106,7 +113,7 @@ class Web3Wallets extends React.PureComponent {
             <div className="Web3Wallets-addresses-item-body">
               <div className="Web3Wallets-addresses-item-left">
                 <div className="Web3Wallets-addresses-item-address">
-                  {address} <b>{network}</b>
+                  {address}
                 </div>
                 <div className="Web3Wallets-balances">
                   {isBalancesLoaded
@@ -117,29 +124,43 @@ class Web3Wallets extends React.PureComponent {
                 </div>
               </div>
               <div className="Web3Wallets-addresses-item-right">
-                {isGenerated
-                  ? <Button disabled size="small">{getLang("cabinetWallet_key")}</Button>
-                  : <small>{getLang("cabinetWallet_imported")}</small>}
+                {network}
               </div>
             </div>
           </div>
         })}
       </div>
-      <div className="Web3Wallets-controls">
-        <Button
-          type="secondary"
-          onClick={() => this.setState({isImportModal: true})}
-          size="middle">
-          {getLang("cabinetWallet_import")}
-        </Button>
-        <Button
-          onClick={() => this.setState({isCreateModal: true})}
-          size="middle">
-          {getLang("cabinetWallet_create")}
-        </Button>
-      </div>
+      {wallets.length
+        ? <div className="Web3Wallets-controls">
+          <Button
+            type="secondary"
+            onClick={() => this.setState({isDeleteModal: true})}
+            size="middle">
+            {getLang("cabinetWallet_delete")}
+          </Button>
+          {isGenerated && <Button
+            onClick={() => this.setState({isPrivateKeyModal: true})}
+            size="middle">
+            {getLang("cabinetWallet_key")}
+          </Button>}
+        </div>
+        : <div className="Web3Wallets-controls">
+          <Button
+            type="secondary"
+            onClick={() => this.setState({isImportModal: true})}
+            size="middle">
+            {getLang("cabinetWallet_import")}
+          </Button>
+          <Button
+            onClick={() => this.setState({isCreateModal: true})}
+            size="middle">
+            {getLang("cabinetWallet_create")}
+          </Button>
+        </div>}
       {isCreateModal && <CreateWalletModal onClose={() => this.setState({isCreateModal: false})} />}
       {isImportModal && <ImportWalletModal onClose={() => this.setState({isImportModal: false})} />}
+      {isDeleteModal && <DeleteWalletModal onClose={() => this.setState({isDeleteModal: false})} />}
+      {isPrivateKeyModal && <PrivateKeyModal onClose={() => this.setState({isPrivateKeyModal: false})} />}
     </ContentBox>
   }
 }

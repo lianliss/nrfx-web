@@ -34,6 +34,9 @@
             &-right {
                 display: flex;
                 align-items: flex-start;
+                font-weight: 800;
+                font-size: 24px;
+                text-transform: uppercase;
 
                 small {
                     background: var(--primary-blue-opacity);
@@ -121,6 +124,9 @@
         display: flex;
         justify-content: center;
 
+        &.delete {
+            justify-content: flex-end;
+        }
         .Button {
             &:not(:first-child) {
                 margin-left: 16px;
