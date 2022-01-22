@@ -171,6 +171,7 @@ export default connect(state => ({
   isWalletsLoaded: state.web3.status.isWalletsLoaded,
   isBalancesLoaded: state.web3.status.isBalancesLoaded,
   currencies: state.cabinet.currencies,
+  language: state.default.currentLang,
 }), dispatch => bindActionCreators({
   web3Update,
   web3SetData,
