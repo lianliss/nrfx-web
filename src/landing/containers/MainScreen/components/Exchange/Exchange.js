@@ -13,6 +13,7 @@ import Skeleton from "../../../../../ui/components/Skeleton/Skeleton";
 
 export default () => {
   const { markets } = useSelector(landingSelector);
+  console.log('markets', markets);
 
   return (
     <div className="Exchange LandingWrapper__block">
@@ -60,6 +61,16 @@ export default () => {
                 )
                 .map(({ market: { config }, chart, ticker }, key) => {
                   const currency = getCurrencyInfo(config.primary_coin.name);
+
+                  if (!ticker) {
+                    console.error('[Exchange] No ticker', markets, config);
+
+                    return <tr key={key}>
+                      <td>
+                        No ticker
+                      </td>
+                    </tr>
+                  }
 
                   return (
                     <tr key={key}>

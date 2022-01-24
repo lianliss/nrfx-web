@@ -44,8 +44,15 @@ export default () => {
               </div>
             ))
           : [...markets, ...markets, ...markets].map(
-              ({ ticker, market: { config } }, index) => (
-                <div className="Ticker__market" key={index}>
+              ({ ticker, market: { config } }, index) => {
+                if (!ticker) {
+                  console.error('[Ticker] No ticker', markets, config);
+                  return <div className="Ticker__market" key={index}>
+                    Ticker error
+                  </div>
+                }
+
+                return <div className="Ticker__market" key={index}>
                   <strong className="Ticker__market__name">
                     {ticker.market}
                   </strong>
@@ -65,7 +72,7 @@ export default () => {
                     />
                   </span>
                 </div>
-              )
+              }
             )}
       </div>
     </div>
