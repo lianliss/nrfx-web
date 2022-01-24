@@ -14,7 +14,10 @@ export default function reduce(state = initialState, action = {}) {
       return Object.assign({}, state, { history: action.payload });
 
     case actionTypes.SET_CURRENCIES: {
-      return Object.assign({}, state, { currencies: action.currencies });
+      return Object.assign({}, state, { currencies: {
+        ...state.currencies,
+        ...action.currencies,
+      } });
     }
 
     default:

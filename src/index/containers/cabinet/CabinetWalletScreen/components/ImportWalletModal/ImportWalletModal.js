@@ -63,14 +63,17 @@ class ImportWalletModal extends React.PureComponent {
   }
 
   importWallet() {
-    const {wallets, balances, onClose} = this.props;
+    const {
+      wallets, balances, onClose,
+      web3SetData,
+    } = this.props;
     const {address} = this.state;
     this.setState({isLoading: true});
     (async () => {
       try {
-        // Create a wallet
+        // Import wallet
         const network = 'BEP20';
-        const wallet = await web3Backend.importWallet(address, network);
+        await web3Backend.importWallet(address, network);
         wallets.push({
           address,
           network,

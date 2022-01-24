@@ -21,6 +21,7 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.WEB3_SET_STATUS: {
+      console.log('WEB3_SET_STATUS', action);
       return {
         ...state,
         status: {

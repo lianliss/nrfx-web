@@ -41,4 +41,6 @@ export const fiatSelector = state => state.fiat;
 
 export const web3StatusSelector = state => state.web3.status;
 export const web3WalletsSelector = state => state.web3.wallets;
+export const web3WalletsCountSelector = state => state.web3.wallets.length;
 export const web3BalancesSelector = state => state.web3.balances;
+export const web3BalancesCountSelector = state => state.web3.balances.length;

@@ -146,5 +146,17 @@ export default {
     "is_available": true,
     "can_exchange": false,
     "to_usd": 0.5
-  }
+  },
+  "bnb": {
+    "abbr": "bnb",
+    "name": "Binance Coin",
+    "icon": "https://static.narfex.com/img/currencies/bnb-white.svg",
+    "type": "crypto",
+    "maximum_fraction_digits": 8,
+    "color": "#FFA041",
+    "gradient": ["#FABE4C", "#FA9751"],
+    "is_available": true,
+    "can_exchange": false,
+    "to_usd": 0.5
+  },
 }
