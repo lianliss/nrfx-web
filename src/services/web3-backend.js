@@ -112,6 +112,29 @@ export class Web3Backend {
       address,
     }
   });
+  swapFiatToToken = (fiat, token, fiatAmount) => this.post('swap/fiatToToken', {
+    params: {
+      fiat,
+      token,
+      fiatAmount,
+    }
+  });
+  getFiatToTokenRate = (fiat, token) => this.get('swap/rate', {
+    params: {
+      fiat,
+      token,
+    }
+  });
+  getFiatRate = currency => this.get('rates/fiat', {
+    params: {
+      currency,
+    }
+  });
+  getTokenRate = currency => this.get('rates/token', {
+    params: {
+      currency,
+    }
+  });
 }
 
 const web3Backend = new Web3Backend();

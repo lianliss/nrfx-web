@@ -180,7 +180,7 @@ function* swapSubmitWorker() {
 
 export function* rootWalletSaga() {
   yield takeLatest(actionTypes.WALLET_FETCH_HISTORY, getHistoryWorker);
-  yield takeEvery(actionTypes.WALLET_SWAP_SET_CURRENCY, updateRateWorker);
+  //yield takeEvery(actionTypes.WALLET_SWAP_SET_CURRENCY, updateRateWorker);
   yield takeLatest(actionTypes.WALLET_FETCH_HISTORY_MORE, getHistoryMoreWorker);
   yield takeLatest(actionTypes.WALLET_FETCH_PAGE, getWalletPageWorker);
   yield takeLatest(actionTypes.WALLET_SWAP_SWITCH, updateRateWorker);

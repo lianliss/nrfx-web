@@ -195,7 +195,6 @@ class CabinetWalletScreen extends React.PureComponent {
       // Request for wallets
       web3SetStatus('isRequested', true);
       web3Backend.getWallets().then(wallets => {
-        console.log('wallets again блять', wallets);
         web3SetData({wallets});
         web3SetStatus('isWalletsLoaded', true);
 

@@ -17,8 +17,8 @@ const initialState = {
     confirmPayment: "",
     refillBankList: "",
     focus: "from",
-    fromCurrency: "idr",
-    toCurrency: "btc",
+    fromCurrency: "rub",
+    toCurrency: "nrfx",
     fromAmount: "",
     toAmount: "",
     rate: 0

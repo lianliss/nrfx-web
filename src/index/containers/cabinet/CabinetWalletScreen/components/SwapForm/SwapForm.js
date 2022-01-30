@@ -1,6 +1,7 @@
 import "./SwapForm.less";
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import _ from 'lodash';
 import {
   ContentBox,
   Dropdown,
@@ -16,7 +17,9 @@ import {
   walletBalancesSelector,
   walletStatusSelector,
   walletSwapSelector,
-  walletWalletsSelector
+  walletWalletsSelector,
+  web3WalletsSelector,
+  web3BalancesSelector,
 } from "src/selectors";
 import { getCurrencyInfo } from "src/actions";
 import SVG from "utils/svg-wrap";
@@ -28,9 +31,16 @@ import {
   walletSwapStartRatePooling,
   walletSwapStopRatePooling,
   walletSwapSubmit,
-  walletSwapSwitch
+  walletSwapSwitch,
+  walletSwapSetRate,
+  walletUpdate,
 } from "src/actions/cabinet/wallet";
-import { isFiat } from "../../../../../../utils";
+import {
+  web3SetData,
+} from 'actions/cabinet/web3';
+import { isFiat, getLang } from "utils";
+import web3Backend from "services/web3-backend";
+import * as toast from 'actions/toasts';
 
 const Form = ({
   onChangeAmount,
@@ -104,6 +114,16 @@ const Form = ({
   );
 };
 
+const updateRates = async (from, to, dispatch) => {
+  try {
+    const swapRate = await web3Backend.getFiatToTokenRate(from, to);
+    dispatch(walletSwapSetRate(swapRate.rate));
+    dispatch(walletSetStatus("rate", ""));
+  } catch (error) {
+    console.error('[SwapForm] getFiatToTokenRate', error);
+  }
+};
+
 export default () => {
   const status = useSelector(walletStatusSelector);
   const swap = useSelector(walletSwapSelector);
@@ -113,23 +133,24 @@ export default () => {
   const dispatch = useDispatch();
   const toCrypto = isFiat(swap.fromCurrency);
   const disabled = status.rate === "loading" || status.swap === "loading";
+  const web3Balances = useSelector(web3BalancesSelector);
 
   useEffect(() => {
     dispatch(walletSetStatus("rate", "loading"));
-    dispatch(walletSwapStartRatePooling());
+    updateRates(swap.fromCurrency, swap.toCurrency, dispatch);
 
     return () => {
-      dispatch(walletSwapStopRatePooling());
+      updateRates(swap.fromCurrency, swap.toCurrency, dispatch);
     };
   }, [dispatch]);
 
   const swapFromAmount = useRef(swap.fromAmount);
-  const currentBalanceAmount = useRef(currentBalance?.amount);
+  const currentBalanceAmount = useRef(currentBalance && currentBalance.amount);
 
   useEffect(() => {
     if (!swapFromAmount.current && !isNaN(currentBalanceAmount.current)) {
       dispatch(
-        walletSwapSetAmount("from", currentBalanceAmount.current || 1000000)
+        walletSwapSetAmount("from", currentBalanceAmount.current || 1000)
       );
     }
   }, [dispatch, swapFromAmount, currentBalanceAmount]);
@@ -150,9 +171,10 @@ export default () => {
           currency={swap.fromCurrency}
           secondaryCurrency={swap.toCurrency}
           rate={swap.rate}
-          onCurrencyChange={currency =>
-            dispatch(walletSwapSetCurrency("from", currency))
-          }
+          onCurrencyChange={currency => {
+            dispatch(walletSwapSetCurrency("from", currency));
+            updateRates(currency, swap.toCurrency, dispatch);
+          }}
           onChangeAmount={amount =>
             dispatch(walletSwapSetAmount("from", amount))
           }
@@ -161,6 +183,7 @@ export default () => {
           <div
             className={cn("SwapForm__switchButton", status.rate)}
             onClick={() => {
+              return; // TODO unlick swap switch buttun
               dispatch(walletSwapSwitch());
             }}
           >
@@ -179,9 +202,10 @@ export default () => {
           currency={swap.toCurrency}
           secondaryCurrency={swap.fromCurrency}
           rate={swap.rate}
-          onCurrencyChange={currency =>
-            dispatch(walletSwapSetCurrency("to", currency))
-          }
+          onCurrencyChange={currency => {
+            dispatch(walletSwapSetCurrency("to", currency));
+            updateRates(swap.fromCurrency, currency, dispatch);
+          }}
           onChangeAmount={amount => dispatch(walletSwapSetAmount("to", amount))}
         />
       </div>
@@ -190,7 +214,43 @@ export default () => {
           state={status.swap}
           disabled={status.rate === "loading"}
           onClick={() => {
-            dispatch(walletSwapSubmit());
+            //dispatch(walletSwapSubmit());
+            dispatch(walletSetStatus('swap', 'loading'));
+            (async () => {
+              try {
+                await web3Backend
+                  .swapFiatToToken(swap.fromCurrency, swap.toCurrency, swap.fromAmount);
+                dispatch(walletSetStatus('swap', ''));
+                toast.success(getLang('status_success'));
+
+                // Get new balances
+                web3Balances.map(balance => {
+                  web3Backend.getBalances(balance.address).then(data => {
+                    Object.keys(data).map(token => data[token] = Number(data[token]));
+                    const balances = web3Balances.map(b => ({
+                      ...b,
+                      items: b.address === balance.address
+                        ? data
+                        : b.items
+                    }));
+                    dispatch(web3SetData({balances}));
+                  }).catch(error => {
+                    console.error('[SwapForm][getBalances]', error);
+                  })
+                });
+
+                // Update fiat balance
+                balances.map(b => {
+                  if (b.currency === swap.fromCurrency) b.amount -= swap.fromAmount;
+                });
+                dispatch(walletUpdate({balances}));
+              } catch (error) {
+                const message = _.get(error, 'data.name', _.get(error, 'data.message', error.message));
+                console.error('[SwapForm] submit', error);
+                dispatch(walletSetStatus('swap', ''));
+                toast.warning(getLang(message));
+              }
+            })();
           }}
         >
           <Lang name="cabinet_fiatMarketExchangeActionButton" />

@@ -1,4 +1,16 @@
 export default {
+  "nrfx": {
+    "abbr": "nrfx",
+    "name": "Narfex Token",
+    "icon": "https://static.narfex.com/img/currencies/nrfx.svg",
+    "type": "crypto",
+    "maximum_fraction_digits": 8,
+    "color": "#FFA041",
+    "gradient": ["#FABE4C", "#FA9751"],
+    "is_available": true,
+    "can_exchange": true,
+    "to_usd": 0.5
+  },
   "btc": {
     "abbr": "btc",
     "name": "Bitcoin",
@@ -8,7 +20,7 @@ export default {
     "color": "#ff9900",
     "gradient": ["#ff9900", "#ff9900"],
     "is_available": true,
-    "can_exchange": true,
+    "can_exchange": false,
     "to_usd": 9589.923
   },
   "eth": {
@@ -20,7 +32,7 @@ export default {
     "color": "#908EE8",
     "gradient": ["#896ADF", "#98B1F1"],
     "is_available": true,
-    "can_exchange": true,
+    "can_exchange": false,
     "to_usd": 251.54745000000003
   },
   "ltc": {
@@ -134,18 +146,6 @@ export default {
     "gradient": ["#62B27D", "#77D9A8"],
     "can_exchange": false,
     "to_usd": 0.7929764399568171
-  },
-  "nrfx": {
-    "abbr": "nrfx",
-    "name": "Narfex Token",
-    "icon": "https://static.narfex.com/img/currencies/nrfx.svg",
-    "type": "crypto",
-    "maximum_fraction_digits": 8,
-    "color": "#FFA041",
-    "gradient": ["#FABE4C", "#FA9751"],
-    "is_available": true,
-    "can_exchange": false,
-    "to_usd": 0.5
   },
   "bnb": {
     "abbr": "bnb",
