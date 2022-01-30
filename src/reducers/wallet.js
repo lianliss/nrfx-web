@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import _ from "lodash";
 
 const initialState = {
   status: {
@@ -58,9 +59,15 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.WALLET_SET_CARD_RESERVATION: {
+      const isReservationExpired = _.get(action.payload, 'card.expire_in', 0) * 1000 < Date.now();
+      const reservation = _.get(action.payload, 'reservation');
       return {
         ...state,
-        cardReservation: action.payload
+        cardReservation: reservation
+        && isReservationExpired
+        && reservation.status === 'wait_for_pay'
+          ? null
+          : action.payload,
       };
     }
 

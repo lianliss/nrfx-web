@@ -20,16 +20,17 @@ const WithdrawalRefillModal = props => {
   const [bank, changeBank] = useState(null);
   const fee = Math.max((amount / 100) * percentFee, minFee);
 
-  useEffect(() => {
-    props.refillBanksGet();
-
-    if (!amount || !balance) {
-      props.onClose();
-    }
-
-    logEvent(getAnalytics(), "open_fiat_refill_modal");
-    // eslint-disable-next-line
-  });
+  console.log('WithdrawalRefillModal', props);
+  // useEffect(() => {
+  //   props.refillBanksGet();
+  //
+  //   if (!amount || !balance) {
+  //     props.onClose();
+  //   }
+  //
+  //   logEvent(getAnalytics(), "open_fiat_refill_modal");
+  //   // eslint-disable-next-line
+  // });
 
   if (!amount || !balance) {
     return null;

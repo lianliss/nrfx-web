@@ -31,6 +31,6 @@ export default function LoadingMore({ status, onClick }) {
 }
 
 LoadingMore.propTypes = {
-  status: PropTypes.oneOf(["loading", "failed", ""]),
+  status: PropTypes.oneOf(["loading", "failed", "", false]),
   onClick: PropTypes.func
 };

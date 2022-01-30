@@ -222,7 +222,6 @@ class CabinetWalletScreen extends React.PureComponent {
 
   componentWillUnmount() {
     this._mounted = false;
-    console.log('componentWillUnmount');
   }
 
   isChanged = (prevProps, propsList) => {
@@ -312,6 +311,10 @@ class CabinetWalletScreen extends React.PureComponent {
     const {fiatBalance} = balance;
     const balanceId = balance.id;
 
+    //Check card reservation expired
+    const cardExpireDate = _.get(cardReservation, 'card.expire_in', 0) * 1000;
+    const isReservationExpire = Date.now() > cardExpireDate;
+
     return (
       <PageContainer
         className="CabinetWalletScreen"
@@ -345,7 +348,7 @@ class CabinetWalletScreen extends React.PureComponent {
           </ContentBox>
         )}
 
-        {cardReservation && <RefillBlock />}
+        {!isReservationExpire && <RefillBlock />}
 
         <Paging
           isCanMore={!!history.next && status.historyMore !== "loading"}

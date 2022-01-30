@@ -3,6 +3,7 @@ import "../FiatRefillModal/FiatRefillModal.less";
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import _ from "lodash";
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
@@ -69,22 +70,32 @@ export default props => {
 
     logEvent(getAnalytics(), "open_rub_fiat_refill_modal");
 
+    const isReservationExpired = _.get(cardReservation, 'card.expire_in', 0) * 1000 < Date.now();
     if (
-      cardReservation?.card?.expire_in * 1000 <= Date.now() &&
-      cardReservation.reservation.status === "wait_for_pay"
+      isReservationExpired &&
+      _.get(cardReservation, 'reservation.status') === "wait_for_pay"
     ) {
       // time is over hack
       dispatch({
         type: actionTypes.FIAT_SET_RESERVED_CARD,
         payload: null
       });
+      dispatch({
+        type: actionTypes.WALLET_SET_CARD_RESERVATION,
+        payload: null
+      });
+      // Delete expired reservation
+      api.call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
+          reservation_id: _.get(cardReservation, 'reservation.id'),
+        });
+
       actions.closeModal();
       actions.openModal("merchant", {
         currency: "rub"
       });
     }
 
-    if (!cardReservation) {
+    if (!cardReservation || isReservationExpired) {
       dispatch({
         type: actionTypes.WALLET_SET_STATUS,
         section: "refillBankList",
@@ -96,7 +107,8 @@ export default props => {
           amount: props.amount
         })
         .then(r => {
-          if (r.status === "already_booked") {
+          const isReservationExpired = _.get(r, 'card.expire_in', 0) * 1000 < Date.now();
+          if (r.status === "already_booked" && !isReservationExpired) {
             dispatch({
               type: actionTypes.WALLET_SET_CARD_RESERVATION,
               payload: r

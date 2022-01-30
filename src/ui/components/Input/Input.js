@@ -130,7 +130,7 @@ class Input extends React.Component {
         <input
           ref="input"
           {...params}
-          value={value}
+          value={value === null ? "" : value}
           onKeyPress={this.__onKeyPress}
           onChange={this.__onChange}
           onBlur={this.props.onBlur || (() => {})}

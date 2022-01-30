@@ -222,8 +222,9 @@ const MerchantModal = props => {
     return (
       <div className="MerchantModal__list">
         {availableMerchants.length ? (
-          availableMerchants.map(m => (
+          availableMerchants.map((m, index) => (
             <div
+              key={index}
               className="MerchantModal__item"
               onClick={() => setMerchant(m.name)}
             >

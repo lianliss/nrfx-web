@@ -131,7 +131,7 @@ NumberFormat.defaultProps = {
 };
 
 NumberFormat.propTypes = {
-  number: PropTypes.number,
+  number: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   fractionDigits: PropTypes.number,
   skipTitle: PropTypes.bool,
   color: PropTypes.bool,
