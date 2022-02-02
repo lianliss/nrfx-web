@@ -123,6 +123,7 @@ export default () => {
       <Input
         disabled={!!status.rate}
         value={amount}
+        type="number"
         onTextChange={handleChangeAmount}
         indicator={
           <Button onClick={handleToggleFocus} size="small" type="secondary">
