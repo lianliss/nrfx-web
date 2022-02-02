@@ -82,6 +82,7 @@
     outline: none;
     padding: 34px 14px 14px 40px;
     appearance: none;
+    -webkit-appearance:none;
     font-weight: 500;
     font-size: 11px;
     line-height: 16px;
@@ -116,6 +117,11 @@
 .SwapFormAdaptive__controlPanel__swapButton {
   width: 56px;
   display: flex;
+
+  // TODO unlock swap switch button
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
 }
 
 .SwapFormAdaptive__controlPanel__swapButton__circle {

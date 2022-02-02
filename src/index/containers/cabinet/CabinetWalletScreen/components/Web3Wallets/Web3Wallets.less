@@ -9,6 +9,10 @@
 
     .ContentBox__content {
         padding: var(--padding-panel);
+
+        .adaptive & {
+            padding: 24px 16px 24px;
+        }
     }
     h2 {
         font-weight: 600;
@@ -44,6 +48,9 @@
                     display: block;
                     padding: 0 8px;
                     border-radius: var(--radius-button);
+                }
+                .adaptive & {
+                    display: none;
                 }
             }
             &-address {

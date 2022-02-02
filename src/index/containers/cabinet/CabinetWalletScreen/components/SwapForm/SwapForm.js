@@ -11,7 +11,7 @@ import {
   NumberFormat
 } from "src/ui";
 import Lang from "src/components/Lang/Lang";
-import { classNames as cn } from "../../../../../../utils";
+import { classNames as cn } from "utils";
 import {
   walletBalanceSelector,
   walletBalancesSelector,
@@ -167,7 +167,7 @@ export default () => {
           onFocus={() => {
             dispatch(walletSwapSetFocus("from"));
           }}
-          currentBalance={currentBalance?.amount}
+          currentBalance={_.get(currentBalance, 'amount')}
           currency={swap.fromCurrency}
           secondaryCurrency={swap.toCurrency}
           rate={swap.rate}

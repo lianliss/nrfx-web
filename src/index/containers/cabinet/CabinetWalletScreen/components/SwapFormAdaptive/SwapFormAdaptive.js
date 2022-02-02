@@ -1,14 +1,15 @@
 import "./SwapFormAdaptive.less";
 
-import { classNames as cn } from "../../../../../../utils";
+import { classNames as cn } from "utils";
 import React, { useCallback, useEffect } from "react";
+import _ from 'lodash';
 import {
   Button,
   CircleIcon,
   ContentBox,
   Input,
   NumberFormat
-} from "../../../../../../ui";
+} from "ui";
 import Lang from "../../../../../../components/Lang/Lang";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,20 +17,26 @@ import {
   walletBalancesSelector,
   walletStatusSelector,
   walletSwapSelector,
-  walletWalletsSelector
-} from "../../../../../../selectors";
+  walletWalletsSelector,
+  web3BalancesSelector,
+} from "src/selectors";
 import {
+  walletSetStatus,
   walletSwapSetAmount,
   walletSwapSetCurrency,
   walletSwapSetFocus,
   walletSwapStartRatePooling,
   walletSwapStopRatePooling,
   walletSwapSubmit,
-  walletSwapSwitch
-} from "../../../../../../actions/cabinet/wallet";
-import { isFiat } from "../../../../../../utils";
+  walletSwapSwitch,
+  walletSwapSetRate,
+  walletUpdate,
+} from "actions/cabinet/wallet";
+import { isFiat, getLang } from "utils";
 import { getCurrencyInfo } from "../../../../../../actions";
 import SVG from "utils/svg-wrap";
+import web3Backend from "services/web3-backend";
+import * as toast from 'actions/toasts';
 
 const Select = ({ value, options, onChange, title, disabled }) => (
   <div className={cn("SwapFormAdaptive__controlPanel__select", { disabled })}>
@@ -50,6 +57,16 @@ const Select = ({ value, options, onChange, title, disabled }) => (
   </div>
 );
 
+const updateRates = async (from, to, dispatch) => {
+  try {
+    const swapRate = await web3Backend.getFiatToTokenRate(from, to);
+    dispatch(walletSwapSetRate(swapRate.rate));
+    dispatch(walletSetStatus("rate", ""));
+  } catch (error) {
+    console.error('[SwapForm] getFiatToTokenRate', error);
+  }
+};
+
 export default () => {
   const status = useSelector(walletStatusSelector);
   const swap = useSelector(walletSwapSelector);
@@ -59,8 +76,18 @@ export default () => {
   const toCrypto = isFiat(swap.fromCurrency);
   const wallets = useSelector(walletWalletsSelector);
   const balances = useSelector(walletBalancesSelector);
+  const web3Balances = useSelector(web3BalancesSelector);
 
   const fromBalance = useSelector(walletBalanceSelector(swap.fromCurrency));
+
+  useEffect(() => {
+    dispatch(walletSetStatus("rate", "loading"));
+    updateRates(swap.fromCurrency, swap.toCurrency, dispatch);
+
+    return () => {
+      updateRates(swap.fromCurrency, swap.toCurrency, dispatch);
+    };
+  }, [dispatch]);
 
   const handleChangeAmount = useCallback(
     amount => {
@@ -76,20 +103,12 @@ export default () => {
     [dispatch, swap.focus]
   );
 
-  useEffect(() => {
-    dispatch(walletSwapStartRatePooling());
-
-    return () => {
-      dispatch(walletSwapStopRatePooling());
-    };
-  }, [dispatch]);
-
   const realRate = isFiat(currency) ? swap.rate : 1 / swap.rate;
 
   const availableAmount =
-    fromBalance?.currency === currency
-      ? fromBalance?.amount || 0
-      : realRate * (fromBalance?.amount || 0);
+    _.get(fromBalance, 'currency') === currency
+      ? _.get(fromBalance, 'amount', 0)
+      : realRate * _.get(fromBalance, 'amount', 0);
 
   const handleClickMaxAmount = useCallback(() => {
     dispatch(walletSwapSetAmount(swap.focus, availableAmount));
@@ -129,6 +148,7 @@ export default () => {
           onChange={currency => {
             dispatch(walletSwapSetFocus("from"));
             dispatch(walletSwapSetCurrency("from", currency));
+            updateRates(currency, swap.toCurrency, dispatch);
           }}
           options={toCrypto ? balances : wallets}
         />
@@ -139,11 +159,13 @@ export default () => {
           onChange={currency => {
             dispatch(walletSwapSetFocus("to"));
             dispatch(walletSwapSetCurrency("to", currency));
+            updateRates(swap.fromCurrency, currency, dispatch);
           }}
           options={toCrypto ? wallets : balances}
         />
         <div
           onClick={() => {
+            return; // TODO unlick swap switch buttun
             !status.rate && dispatch(walletSwapSwitch());
           }}
           className="SwapFormAdaptive__controlPanel__swapButton"
@@ -163,7 +185,43 @@ export default () => {
         disabled={!!status.rate}
         className="SwapFormAdaptive__submitButton"
         onClick={() => {
-          dispatch(walletSwapSubmit());
+          // dispatch(walletSwapSubmit());
+          dispatch(walletSetStatus('swap', 'loading'));
+          (async () => {
+            try {
+              await web3Backend
+                .swapFiatToToken(swap.fromCurrency, swap.toCurrency, swap.fromAmount);
+              dispatch(walletSetStatus('swap', ''));
+              toast.success(getLang('status_success'));
+
+              // Get new balances
+              web3Balances.map(balance => {
+                web3Backend.getBalances(balance.address).then(data => {
+                  Object.keys(data).map(token => data[token] = Number(data[token]));
+                  const balances = web3Balances.map(b => ({
+                    ...b,
+                    items: b.address === balance.address
+                      ? data
+                      : b.items
+                  }));
+                  dispatch(web3SetData({balances}));
+                }).catch(error => {
+                  console.error('[SwapForm][getBalances]', error);
+                })
+              });
+
+              // Update fiat balance
+              balances.map(b => {
+                if (b.currency === swap.fromCurrency) b.amount -= swap.fromAmount;
+              });
+              dispatch(walletUpdate({balances}));
+            } catch (error) {
+              const message = _.get(error, 'data.name', _.get(error, 'data.message', error.message));
+              console.error('[SwapForm] submit', error);
+              dispatch(walletSetStatus('swap', ''));
+              toast.warning(getLang(message));
+            }
+          })();
         }}
       >
         <Lang name="cabinet_fiatMarketExchangeActionButton" />
