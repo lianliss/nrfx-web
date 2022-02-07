@@ -45,7 +45,7 @@ class Header extends React.Component {
           <div className="CabinetHeader__content">
             <BaseLink
               router={router}
-              routeName={isLogged ? pages.WALLET : pages.MAIN}
+              routeName={pages.MAIN}
             >
               <UI.Logo />
             </BaseLink>
