@@ -23,7 +23,7 @@ export default memo(
         style={
           currency
             ? {
-                background: currency.background
+                background: currency.background || currency.color
               }
             : null
         }

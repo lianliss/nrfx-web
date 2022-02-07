@@ -119,6 +119,12 @@ export class Web3Backend {
       fiatAmount,
     }
   });
+  estimateTransferToUserGas = (token, amount) => this.get('swap/fiatToToken', {
+    params: {
+      token,
+      amount,
+    }
+  });
   getFiatToTokenRate = (fiat, token) => this.get('swap/rate', {
     params: {
       fiat,
