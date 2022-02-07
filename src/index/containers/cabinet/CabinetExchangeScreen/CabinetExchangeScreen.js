@@ -65,13 +65,13 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       <UI.Modal
         skipClose
         className="Exchange__disconnectModal"
-        isOpen={false} // TODO: turn back this modal
+        isOpen={true}
         onClose={this.props.onClose}
       >
         <div className="Exchange__disconnectModal__content">
           <p>{utils.getLang("exchange_failedConnect")}</p>
           <LoadingStatus inline status={"loading"} />
-          <p>{utils.getLang("exchange_reconnect")}</p>
+          {/*<p>{utils.getLang("exchange_reconnect")}</p>*/}
         </div>
       </UI.Modal>
     );
