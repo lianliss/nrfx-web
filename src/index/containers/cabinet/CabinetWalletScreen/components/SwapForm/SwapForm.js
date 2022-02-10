@@ -55,10 +55,18 @@ const Form = ({
   onCurrencyChange,
   disabled,
   currentBalance,
-  title
+  title,
+  commission,
+  gasPrice,
 }) => {
   const realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (autoFocus) {
+      document.getElementById(`swap-form-input-${currency}`).focus();
+    }
+  }, [disabled]);
 
   return (
     <div className="SwapForm__form">
@@ -90,11 +98,13 @@ const Form = ({
       </div>
       <div className="SwapForm__form__control">
         <Input
+          id={`swap-form-input-${currency}`}
           ref={inputRef}
           disabled={disabled}
           onFocus={onFocus}
           autoFocus={autoFocus}
           value={amount}
+          type={'number'}
           onTextChange={onChangeAmount}
         />
         {!!currentBalance && (
@@ -105,18 +115,27 @@ const Form = ({
             <NumberFormat number={currentBalance} currency={currency} />
           </div>
         )}
+        {!!gasPrice && <div className="SwapForm__form__control__meta right">
+          {getLang('swap_gas')} <NumberFormat number={gasPrice} skipRoughly currency={currency} />
+        </div>}
+        {!!commission && <div className="SwapForm__form__control__meta right">
+          {getLang('swap_commission')} <NumberFormat number={commission * 100} currency={'%'} />
+        </div>}
       </div>
     </div>
   );
 };
 
-const updateRates = async (from, to, fromAmount, toAmount, dispatch) => {
+const updateRates = async (from, to, fromAmount, toAmount, dispatch, setAmounts, commission, gasPrice) => {
   try {
     const swapRate = await web3Backend.getFiatToTokenRate(from, to);
     dispatch(walletSwapSetRate(swapRate.rate));
     dispatch(walletSetStatus("rate", ""));
+    setAmounts({
+      from: fromAmount,
+      to: calculateToAmount(fromAmount, swapRate.rate, commission, gasPrice),
+    });
 
-    console.log('updateRates', fromAmount, toAmount, swapRate);
     if (fromAmount && !toAmount) {
       dispatch(walletSwapSetAmount('to', fromAmount / swapRate));
     }
@@ -125,23 +144,35 @@ const updateRates = async (from, to, fromAmount, toAmount, dispatch) => {
   }
 };
 
+let gasTimeout = null;
+const calculateToAmount = (from = 0, rate = 1, commission = 0, gasPrice = 0) => from / rate * (1 - commission) - (gasPrice || 0);
+const calculateFromAmount = (to = 0, rate = 1, commission = 0, gasPrice = 0) => to * rate / (1 - commission) + (gasPrice || 0);
+
 const updateGas = ({
-  gasTimeout, setGasTimeout,
-  gasPrice, setGasPrice,
+  setGasPrice,
   toCurrency, toAmount,
+  callback,
+  dispatch,
 }) => {
   if (!!gasTimeout) clearTimeout(gasTimeout);
-  const newTimeout = setTimeout(async () => {
-    setGasTimeout(null);
-    const estimate = await web3Backend.estimateTransferToUserGas(toCurrency, toAmount);
-    console.log('ESTIMATE', estimate);
+  gasTimeout = setTimeout(async () => {
+    try {
+      dispatch(walletSetStatus("rate", "loading"));
+      const estimate = await web3Backend.estimateTransferToUserGas(toCurrency, toAmount);
+      dispatch(walletSetStatus("rate", ""));
+      setGasPrice(estimate.gasInTokens);
+      callback(estimate.gasInTokens);
+    } catch (error) {
+      console.error('[SwapForm] updateGas', error);
+      dispatch(walletSetStatus("rate", ""));
+    }
   }, 1000);
-  setGasTimeout(newTimeout);
 };
 
 export default () => {
-  const [gasTimeout, setGasTimeout] = useState(null);
   const [gasPrice, setGasPrice] = useState(0);
+  const [amounts, setAmounts] = useState({from: 0, to: 0});
+  const {from: fromAmount, to: toAmount} = amounts;
   const status = useSelector(walletStatusSelector);
   const swap = useSelector(walletSwapSelector);
   const wallets = useSelector(walletWalletsSelector);
@@ -152,34 +183,32 @@ export default () => {
   const disabled = status.rate === "loading" || status.swap === "loading";
   const web3Balances = useSelector(web3BalancesSelector);
 
-  useEffect(() => {
-    dispatch(walletSetStatus("rate", "loading"));
-    updateRates(swap.fromCurrency, swap.toCurrency, swap.fromAmount, swap.toAmount, dispatch);
-
-    return () => {
-      updateRates(swap.fromCurrency, swap.toCurrency, swap.fromAmount, swap.toAmount, dispatch);
-    };
-  }, [dispatch]);
-
-  const swapFromAmount = useRef(swap.fromAmount);
-  const currentBalanceAmount = useRef(currentBalance && currentBalance.amount);
-
-  useEffect(() => {
-    if (!swapFromAmount.current && !isNaN(currentBalanceAmount.current)) {
-      dispatch(
-        walletSwapSetAmount("from", currentBalanceAmount.current || 1000)
-      );
-    }
-    //console.log('useEffect', swap.toCurrency, swap.toAmount);
-  }, [dispatch, swapFromAmount, currentBalanceAmount]);
-
   const currencies = Object.keys(currenciesObject)
     .map(key => currenciesObject[key])
     .filter(c => c.can_exchange);
   const fiats = currencies.filter(c => c.type === 'fiat');
   const crypto = currencies.filter(c => c.type === 'crypto');
+  const commission = _.get(currenciesObject[swap.toCurrency], 'commission', 0);
 
-  //console.log('render', swap.fromAmount, swap.toAmount);
+  useEffect(() => {
+    dispatch(walletSetStatus("rate", "loading"));
+    updateRates(swap.fromCurrency, swap.toCurrency, fromAmount, toAmount, dispatch, setAmounts, commission, gasPrice);
+  }, [swap.fromCurrency, swap.toCurrency]);
+
+  // useEffect(() => {
+  //   if (swap.fromAmount && swap.rate) {
+  //     updateGas({
+  //       dispatch,
+  //       gasPrice, setGasPrice,
+  //       toCurrency: swap.toCurrency,
+  //       toAmount: calculateToAmount(swap.fromAmount, swap.rate, commission, gasPrice),
+  //     })
+  //   }
+  // }, [swap.fromAmount, swap.rate]);
+
+  // useEffect(() => {
+  //   dispatch(walletSwapSetAmount("to", calculateToAmount(swap.fromAmount, swap.rate, commission, gasPrice)));
+  // }, [gasPrice]);
 
   return (
     <ContentBox className="SwapForm">
@@ -188,7 +217,7 @@ export default () => {
           title={<Lang name="cabinet_fiatWalletGive" />}
           disabled={disabled}
           options={toCrypto ? fiats : crypto}
-          amount={swap.fromAmount}
+          amount={fromAmount}
           autoFocus={swap.focus === "from"}
           onFocus={() => {
             dispatch(walletSwapSetFocus("from"));
@@ -199,10 +228,24 @@ export default () => {
           rate={swap.rate}
           onCurrencyChange={currency => {
             dispatch(walletSwapSetCurrency("from", currency));
-            updateRates(currency, swap.toCurrency, dispatch);
+            //updateRates(currency, swap.toCurrency, dispatch, setAmounts);
           }}
           onChangeAmount={amount => {
-            dispatch(walletSwapSetAmount("from", amount));
+            const toAmount = calculateToAmount(Number(amount), swap.rate, commission, gasPrice);
+            setAmounts({
+              from: Number(amount),
+              to: toAmount,
+            });
+            updateGas({
+              setGasPrice,
+              toCurrency: swap.toCurrency,
+              toAmount,
+              callback: gasPrice => setAmounts({
+                from: Number(amount),
+                to: calculateToAmount(Number(amount), swap.rate, commission, gasPrice),
+              }),
+              dispatch,
+            })
           }}
         />
         <div className="SwapForm__separator">
@@ -220,7 +263,7 @@ export default () => {
           title={<Lang name="cabinet_fiatWalletGet" />}
           disabled={disabled}
           options={toCrypto ? crypto : fiats}
-          amount={swap.toAmount}
+          amount={toAmount}
           autoFocus={swap.focus === "to"}
           onFocus={() => {
             dispatch(walletSwapSetFocus("to"));
@@ -229,26 +272,40 @@ export default () => {
           secondaryCurrency={swap.fromCurrency}
           rate={swap.rate}
           onCurrencyChange={currency => {
-            console.log('onCurrencyChange', currency);
             dispatch(walletSwapSetCurrency("to", currency));
-            updateRates(swap.fromCurrency, currency, dispatch);
+            //updateRates(swap.fromCurrency, currency, dispatch, setAmounts);
           }}
           onChangeAmount={amount => {
-            dispatch(walletSwapSetAmount("to", amount));
+            const fromAmount = calculateFromAmount(Number(amount), swap.rate, commission, gasPrice);
+            setAmounts({
+              from: fromAmount,
+              to: Number(amount),
+            });
+            updateGas({
+              setGasPrice,
+              toCurrency: swap.toCurrency,
+              toAmount: Number(amount),
+              callback: gasPrice => setAmounts({
+                from: calculateFromAmount(Number(amount), swap.rate, commission, gasPrice),
+                to: Number(amount),
+              }),
+              dispatch,
+            })
           }}
+          {...{gasPrice, commission}}
         />
       </div>
       <div className="SwapForm__submitWrapper">
         <Button
           state={status.swap}
-          disabled={status.rate === "loading"}
+          disabled={status.rate === "loading" || toAmount <= 0}
           onClick={() => {
             //dispatch(walletSwapSubmit());
             dispatch(walletSetStatus('swap', 'loading'));
             (async () => {
               try {
                 await web3Backend
-                  .swapFiatToToken(swap.fromCurrency, swap.toCurrency, swap.fromAmount);
+                  .swapFiatToToken(swap.fromCurrency, swap.toCurrency, fromAmount);
                 dispatch(walletSetStatus('swap', ''));
                 toast.success(getLang('status_success'));
 
@@ -270,7 +327,7 @@ export default () => {
 
                 // Update fiat balance
                 balances.map(b => {
-                  if (b.currency === swap.fromCurrency) b.amount -= swap.fromAmount;
+                  if (b.currency === swap.fromCurrency) b.amount -= fromAmount;
                 });
                 dispatch(walletUpdate({balances}));
               } catch (error) {

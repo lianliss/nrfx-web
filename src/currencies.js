@@ -9,7 +9,8 @@ export default {
     "gradient": ["#FABE4C", "#FA9751"],
     "is_available": true,
     "can_exchange": true,
-    "to_usd": 0.5
+    "to_usd": 0.5,
+    "commission": 0.02,
   },
   "btc": {
     "abbr": "btc",

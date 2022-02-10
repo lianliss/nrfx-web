@@ -100,6 +100,7 @@ class Input extends React.Component {
       readOnly: this.props.readOnly,
       onFocus: this.props.onFocus,
       required: this.props.required,
+      id: this.props.id,
       style: {
         paddingRight: 16 + this.state.indicatorWidth
       }
@@ -266,7 +267,8 @@ Input.propTypes = {
   size: PropTypes.oneOf(["small"]),
   type: PropTypes.oneOf(["text", "number", "password", "code"]),
   positive: PropTypes.bool,
-  cell: PropTypes.bool
+  cell: PropTypes.bool,
+  id: PropTypes.string,
 };
 
 export default React.memo(Input);
