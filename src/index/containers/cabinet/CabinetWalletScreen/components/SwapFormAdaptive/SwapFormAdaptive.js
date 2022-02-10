@@ -37,6 +37,7 @@ import { getCurrencyInfo } from "../../../../../../actions";
 import SVG from "utils/svg-wrap";
 import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
+import currenciesObject from 'src/currencies';
 
 const Select = ({ value, options, onChange, title, disabled }) => (
   <div className={cn("SwapFormAdaptive__controlPanel__select", { disabled })}>
@@ -44,15 +45,8 @@ const Select = ({ value, options, onChange, title, disabled }) => (
     <div className="SwapFormAdaptive__controlPanel__select__label">{title}</div>
     <select onChange={e => onChange(e.target.value)} value={value}>
       {options
-        .map(o => {
-          const currency = getCurrencyInfo(o.currency);
-          return currency.can_exchange ? (
-            <option value={currency.abbr}>{currency.name}</option>
-          ) : (
-            false
-          );
-        })
-        .filter(Boolean)}
+        .map(currency => <option value={currency.abbr}>{currency.name}</option>)
+      }
     </select>
   </div>
 );
@@ -78,15 +72,17 @@ export default () => {
   const balances = useSelector(walletBalancesSelector);
   const web3Balances = useSelector(web3BalancesSelector);
 
+  const currencies = Object.keys(currenciesObject)
+    .map(key => currenciesObject[key])
+    .filter(c => c.can_exchange);
+  const fiats = currencies.filter(c => c.type === 'fiat');
+  const crypto = currencies.filter(c => c.type === 'crypto');
+
   const fromBalance = useSelector(walletBalanceSelector(swap.fromCurrency));
 
   useEffect(() => {
     dispatch(walletSetStatus("rate", "loading"));
     updateRates(swap.fromCurrency, swap.toCurrency, dispatch);
-
-    return () => {
-      updateRates(swap.fromCurrency, swap.toCurrency, dispatch);
-    };
   }, [dispatch]);
 
   const handleChangeAmount = useCallback(
@@ -151,7 +147,7 @@ export default () => {
             dispatch(walletSwapSetCurrency("from", currency));
             updateRates(currency, swap.toCurrency, dispatch);
           }}
-          options={toCrypto ? balances : wallets}
+          options={toCrypto ? fiats : crypto}
         />
         <Select
           title={<Lang name="cabinet_fiatWalletGet" />}
@@ -162,7 +158,7 @@ export default () => {
             dispatch(walletSwapSetCurrency("to", currency));
             updateRates(swap.fromCurrency, currency, dispatch);
           }}
-          options={toCrypto ? wallets : balances}
+          options={toCrypto ? crypto : fiats}
         />
         <div
           onClick={() => {

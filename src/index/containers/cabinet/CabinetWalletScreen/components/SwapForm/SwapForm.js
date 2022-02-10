@@ -82,8 +82,7 @@ const Form = ({
               ),
               value: currency.abbr,
               title: currency.name
-            }))
-            .filter(Boolean)}
+            }))}
           onChange={({ value }) => onCurrencyChange(value)}
         />
         <div className="SwapForm__form__control__meta">
@@ -166,7 +165,7 @@ const updateGas = ({
       console.error('[SwapForm] updateGas', error);
       dispatch(walletSetStatus("rate", ""));
     }
-  }, 1000);
+  }, 1500);
 };
 
 export default () => {
