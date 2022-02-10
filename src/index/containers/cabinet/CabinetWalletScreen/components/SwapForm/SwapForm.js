@@ -138,6 +138,7 @@ const updateRates = async (from, to, fromAmount, toAmount, dispatch, setAmounts,
     if (fromAmount && !toAmount) {
       dispatch(walletSwapSetAmount('to', fromAmount / swapRate));
     }
+    return swapRate.rate;
   } catch (error) {
     console.error('[SwapForm] getFiatToTokenRate', error);
   }
@@ -152,6 +153,7 @@ const updateGas = ({
   toCurrency, toAmount,
   callback,
   dispatch,
+  timeout = 1500,
 }) => {
   if (!!gasTimeout) clearTimeout(gasTimeout);
   gasTimeout = setTimeout(async () => {
@@ -165,7 +167,7 @@ const updateGas = ({
       console.error('[SwapForm] updateGas', error);
       dispatch(walletSetStatus("rate", ""));
     }
-  }, 1500);
+  }, timeout);
 };
 
 export default () => {
@@ -191,7 +193,20 @@ export default () => {
 
   useEffect(() => {
     dispatch(walletSetStatus("rate", "loading"));
-    updateRates(swap.fromCurrency, swap.toCurrency, fromAmount, toAmount, dispatch, setAmounts, commission, gasPrice);
+    updateRates(swap.fromCurrency, swap.toCurrency, fromAmount, toAmount, dispatch, setAmounts, commission, gasPrice)
+      .then(rate => {
+        updateGas({
+          setGasPrice,
+          toCurrency: swap.toCurrency,
+          toAmount,
+          callback: gasPrice => setAmounts({
+            from: fromAmount,
+            to: calculateToAmount(fromAmount, rate, commission, gasPrice),
+          }),
+          dispatch,
+          timeout: 0,
+        })
+      });
   }, [swap.fromCurrency, swap.toCurrency]);
 
   // useEffect(() => {
@@ -230,7 +245,7 @@ export default () => {
             //updateRates(currency, swap.toCurrency, dispatch, setAmounts);
           }}
           onChangeAmount={amount => {
-            const toAmount = calculateToAmount(Number(amount), swap.rate, commission, gasPrice);
+            const toAmount = calculateToAmount(Number(amount), swap.rate, commission);
             setAmounts({
               from: Number(amount),
               to: toAmount,
@@ -275,7 +290,7 @@ export default () => {
             //updateRates(swap.fromCurrency, currency, dispatch, setAmounts);
           }}
           onChangeAmount={amount => {
-            const fromAmount = calculateFromAmount(Number(amount), swap.rate, commission, gasPrice);
+            const fromAmount = calculateFromAmount(Number(amount), swap.rate, commission);
             setAmounts({
               from: fromAmount,
               to: Number(amount),
