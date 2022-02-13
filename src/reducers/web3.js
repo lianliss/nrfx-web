@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import _ from 'lodash';
 
 const initialState = {
   status: {
@@ -8,6 +9,7 @@ const initialState = {
   },
   wallets: [],
   balances: [],
+  rates: {},
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -34,6 +36,7 @@ export default function reduce(state = initialState, action = {}) {
       const {
         balances,
         wallets,
+        rates,
       } = action.payload;
 
       return {
@@ -44,6 +47,9 @@ export default function reduce(state = initialState, action = {}) {
         wallets: wallets
           ? wallets
           : state.wallets,
+        rates: rates
+          ? rates
+          : state.rates,
       };
     }
 
@@ -66,6 +72,19 @@ export default function reduce(state = initialState, action = {}) {
           )
           : state.wallets
       };
+    }
+
+    case actionTypes.WEB3_SET_RATE: {
+      const {
+        token, rate,
+      } = action.payload;
+
+      const rates = _.cloneDeep(state.rates);
+      rates[token] = rate;
+      return {
+        ...state,
+        rates,
+      }
     }
 
     default:

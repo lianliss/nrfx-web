@@ -358,3 +358,7 @@ export function dateFormat(date, format = "DD MMMM YYYY, HH:mm") {
 
   return !!format ? dateObject.format(format) : dateObject;
 }
+
+export const timeout = miliseconds => {
+  return new Promise(resolve => setTimeout(resolve, miliseconds));
+};

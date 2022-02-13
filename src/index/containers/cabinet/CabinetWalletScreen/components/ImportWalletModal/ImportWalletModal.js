@@ -87,14 +87,14 @@ class ImportWalletModal extends React.PureComponent {
         wallets.push({
           address: data.address,
           network,
-          isGenerated: isKeyImport,
+          isGenerated: false,
         });
         web3SetData({wallets});
 
         // Get the balance
-        const balance = await web3Backend.getBalances(data.address);
+        const balance = await web3Backend.getBalances(address);
         balances.push({
-          address: data.address,
+          address,
           items: balance,
         });
         web3SetData({balances});

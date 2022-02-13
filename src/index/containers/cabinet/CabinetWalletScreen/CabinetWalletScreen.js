@@ -43,6 +43,7 @@ import RefillBlock from "./components/RefillBlock/RefillBlock";
 import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
 import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
 import Web3Wallets from "./components/Web3Wallets/Web3Wallets";
+import CryptoWallet from './components/CryptoWallet/CryptoWallet';
 
 import { ContentBox } from "ui";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
@@ -323,6 +324,7 @@ class CabinetWalletScreen extends React.PureComponent {
         }
       >
         {isCommon && <Web3Wallets />}
+        {isCrypto && <CryptoWallet/>}
         {isCommon && <CommonHeader />}
         {isSwap &&
         (isAdaptive ? (

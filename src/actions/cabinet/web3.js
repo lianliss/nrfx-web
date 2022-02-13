@@ -19,3 +19,12 @@ export function web3SetData(payload) {
 export function web3Update(payload) {
   return { type: actionTypes.WEB3_UPDATE, payload };
 }
+
+export function web3SetRate(token, rate) {
+  return {
+    type: actionTypes.WEB3_SET_RATE,
+    payload: {
+      token, rate,
+    },
+  };
+}

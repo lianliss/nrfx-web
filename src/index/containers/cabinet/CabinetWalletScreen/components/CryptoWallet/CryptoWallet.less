@@ -1,0 +1,41 @@
+.CryptoWallet {
+    margin-bottom: var(--gap-size);
+
+    .ContentBox__content {
+        padding: var(--padding-panel);
+
+        .adaptive & {
+            padding: 24px 16px 24px;
+        }
+    }
+    h2 {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+    }
+    &-balance {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 40px;
+        display: flex;
+        justify-content: space-between;
+
+        &-token {
+            display: flex;
+
+            .CircleIcon {
+                margin-right: 16px;
+            }
+            span {
+                text-transform: uppercase;
+            }
+        }
+        &-usd {
+
+        }
+    }
+}
