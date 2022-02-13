@@ -21,6 +21,7 @@ class ImportWalletModal extends React.PureComponent {
   state = {
     isLoading: false,
     isError: false,
+    isKeyImport: false,
     address: '',
   };
 
@@ -43,10 +44,17 @@ class ImportWalletModal extends React.PureComponent {
 
   renderForm() {
     const {onClose} = this.props;
-    const {address} = this.state;
+    const {address, isKeyImport} = this.state;
     return <div className="ImportWalletModal-form">
       <h3>
-        {getLang("cabinetWalletCreate_address")}
+        <span className={isKeyImport && 'active'}
+              onClick={() => this.setState({isKeyImport: false})}>
+          {getLang("cabinetWalletCreate_address")}
+          </span>
+        <span className={!isKeyImport && 'active'}
+              onClick={() => this.setState({isKeyImport: true})}>
+          {getLang("cabinetWalletCreate_private_key")}
+        </span>
       </h3>
       <form onSubmit={this.importWallet.bind(this)}>
         <UI.Input
@@ -56,7 +64,7 @@ class ImportWalletModal extends React.PureComponent {
       </form>
       <center>
         <UI.Button onClick={this.importWallet.bind(this)}>
-          {getLang("cabinetWallet_import")}
+          {isKeyImport ? getLang("cabinetWallet_import_key") : getLang("cabinetWallet_import")}
         </UI.Button>
       </center>
     </div>
@@ -67,24 +75,26 @@ class ImportWalletModal extends React.PureComponent {
       wallets, balances, onClose,
       web3SetData,
     } = this.props;
-    const {address} = this.state;
+    const {address, isKeyImport} = this.state;
     this.setState({isLoading: true});
     (async () => {
       try {
         // Import wallet
         const network = 'BEP20';
-        await web3Backend.importWallet(address, network);
+        const data = isKeyImport
+          ? await web3Backend.importPrivateKey(address, network)
+          : await web3Backend.importWallet(address, network);
         wallets.push({
-          address,
+          address: data.address,
           network,
-          isGenerated: false,
+          isGenerated: isKeyImport,
         });
         web3SetData({wallets});
 
         // Get the balance
-        const balance = await web3Backend.getBalances(address);
+        const balance = await web3Backend.getBalances(data.address);
         balances.push({
-          address,
+          address: data.address,
           items: balance,
         });
         web3SetData({balances});

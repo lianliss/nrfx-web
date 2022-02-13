@@ -141,6 +141,16 @@ export class Web3Backend {
       currency,
     }
   });
+  importPrivateKey = key => this.post('wallet/privateKey', {
+    params: {
+      key,
+    }
+  });
+  transfer = (address, token, amount) => this.post('wallet/transfer', {
+    params: {
+      address, token, amount
+    }
+  });
 }
 
 const web3Backend = new Web3Backend();
