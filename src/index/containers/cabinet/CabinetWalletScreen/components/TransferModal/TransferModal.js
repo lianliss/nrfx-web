@@ -91,7 +91,6 @@ class TransferModal extends React.PureComponent {
       try {
         // Transfer tokens
         const data = await web3Backend.transfer(address, currency, Number(amount));
-        console.log('data', data);
 
         onClose();
 
@@ -104,7 +103,6 @@ class TransferModal extends React.PureComponent {
           address: walletAddress,
           items: balance,
         }];
-        console.log('balances', balances, wallets);
         web3SetData({balances});
       } catch (error) {
         console.error('[TransferModal]', error);
