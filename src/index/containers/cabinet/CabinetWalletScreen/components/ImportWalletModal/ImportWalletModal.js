@@ -47,11 +47,11 @@ class ImportWalletModal extends React.PureComponent {
     const {address, isKeyImport} = this.state;
     return <div className="ImportWalletModal-form">
       <h3>
-        <span className={isKeyImport && 'active'}
+        <span className={isKeyImport ? 'active' : ''}
               onClick={() => this.setState({isKeyImport: false})}>
           {getLang("cabinetWalletCreate_address")}
           </span>
-        <span className={!isKeyImport && 'active'}
+        <span className={isKeyImport ? '' : 'active'}
               onClick={() => this.setState({isKeyImport: true})}>
           {getLang("cabinetWalletCreate_private_key")}
         </span>
@@ -92,9 +92,9 @@ class ImportWalletModal extends React.PureComponent {
         web3SetData({wallets});
 
         // Get the balance
-        const balance = await web3Backend.getBalances(address);
+        const balance = await web3Backend.getBalances(data.address);
         balances.push({
-          address,
+          address: data.address,
           items: balance,
         });
         web3SetData({balances});
