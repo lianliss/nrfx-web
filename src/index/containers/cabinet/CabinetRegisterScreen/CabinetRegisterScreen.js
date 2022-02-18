@@ -23,6 +23,7 @@ import InputTooltip from "./comonents/Input/Input";
 import Lang from "../../../../components/Lang/Lang";
 import REGEXES from "src/index/constants/regexes";
 import PasswordInfo from "./comonents/PasswordInfo/PasswordInfo";
+import { PHONE } from "../../../constants/breakpoints";
 
 class CabinetRegister extends React.PureComponent {
   state = {
@@ -44,6 +45,23 @@ class CabinetRegister extends React.PureComponent {
       this.props.router.navigate(pages.MAIN);
     } else {
       logEvent(getAnalytics(), "open_registration_2step");
+    }
+    this.handleResize();
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    // TODO LEGACY
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  handleResize() {
+    const {setAdaptive} = this.props;
+    // TODO LEGACY
+    if (document.body.offsetWidth <= PHONE) {
+      setAdaptive(true);
+    } else {
+      setAdaptive(false);
     }
   }
 
@@ -219,6 +237,7 @@ export default connect(
   }),
   {
     toastPush: toastsActions.toastPush,
-    setTitle: actions.setTitle
+    setTitle: actions.setTitle,
+    setAdaptive: actions.setAdaptive,
   }
 )(withRouter(CabinetRegister));
