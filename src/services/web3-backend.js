@@ -151,6 +151,7 @@ export class Web3Backend {
       address, token, amount
     }
   });
+  receiveBonus = () => this.post('wallet/receiveBonus');
 }
 
 const web3Backend = new Web3Backend();

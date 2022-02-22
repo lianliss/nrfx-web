@@ -32,11 +32,12 @@ class CreateWalletModal extends React.PureComponent {
       try {
         // Create a wallet
         const wallet = await web3Backend.createWallet();
-        const {privateKey, address, network} = wallet;
+        const {privateKey, address, network, bonus} = wallet;
         wallets.push({
           address,
           network,
           isGenerated: true,
+          bonus,
         });
         web3SetData({wallets});
 

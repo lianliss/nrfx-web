@@ -88,6 +88,7 @@ class ImportWalletModal extends React.PureComponent {
           address: data.address,
           network,
           isGenerated: false,
+          bonus: data.bonus,
         });
         web3SetData({wallets});
 

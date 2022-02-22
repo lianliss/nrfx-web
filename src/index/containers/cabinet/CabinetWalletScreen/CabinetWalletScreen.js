@@ -44,6 +44,7 @@ import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
 import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
 import Web3Wallets from "./components/Web3Wallets/Web3Wallets";
 import CryptoWallet from './components/CryptoWallet/CryptoWallet';
+import Bonus from './components/Bonus/Bonus';
 
 import { ContentBox } from "ui";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
@@ -295,6 +296,7 @@ class CabinetWalletScreen extends React.PureComponent {
       route,
       cardReservation,
       isAdaptive,
+      bonusValue,
     } = this.props;
 
     if (status.main.length) {
@@ -323,6 +325,7 @@ class CabinetWalletScreen extends React.PureComponent {
           !isAdaptive && <WalletList currency={balanceId && currency} />
         }
       >
+        {!!bonusValue && <Bonus />}
         {isCommon && <Web3Wallets />}
         {isCrypto && <CryptoWallet/>}
         {isCommon && <CommonHeader />}
@@ -375,6 +378,7 @@ export default connect(state => ({
   oldWallets: state.wallet,
   balances: state.web3.balances,
   walletsAvailable: state.web3.wallets.length,
+  bonusValue: _.get(state, 'web3.wallets[0].bonus', 0),
   isAdaptive: state.default.adaptive,
   route: state.router.route,
 }), dispatch => bindActionCreators({
