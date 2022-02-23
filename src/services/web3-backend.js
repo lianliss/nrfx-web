@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 export const APP_ID = process.env.DOMAIN === "admin" ? 10 : 8;
 export const getWeb3Entry = () => process.env.WEB3 || "https://web3.narfex.com";
-export const getWebSocketEntry = () => process.env.WEBSOCKET || "wss://web3.narfex.com:9000";
+export const getWebSocketEntry = () => process.env.WEBSOCKET || "wss://web3.narfex.com:3009";
 
 const TIMEOUT_CODE = 'ETIMEDOUT';
 const RESET_CODE = 'ECONNRESET';
