@@ -340,10 +340,10 @@ export default () => {
                 });
 
                 // Update fiat balance
-                balances.map(b => {
-                  if (b.currency === swap.fromCurrency) b.amount -= fromAmount;
-                });
-                dispatch(walletUpdate({balances}));
+                // balances.map(b => {
+                //   if (b.currency === swap.fromCurrency) b.amount -= fromAmount;
+                // });
+                // dispatch(walletUpdate({balances}));
               } catch (error) {
                 const message = _.get(error, 'data.name', _.get(error, 'data.message', error.message));
                 console.error('[SwapForm] submit', error);

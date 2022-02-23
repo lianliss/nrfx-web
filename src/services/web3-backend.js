@@ -3,7 +3,8 @@ import axios from 'axios';
 import _ from 'lodash';
 
 export const APP_ID = process.env.DOMAIN === "admin" ? 10 : 8;
-export const getWeb3Entry = () => "https://web3.narfex.com";
+export const getWeb3Entry = () => process.env.WEB3 || "https://web3.narfex.com";
+export const getWebSocketEntry = () => process.env.WEBSOCKET || "wss://web3.narfex.com:9000";
 
 const TIMEOUT_CODE = 'ETIMEDOUT';
 const RESET_CODE = 'ECONNRESET';
@@ -74,6 +75,25 @@ export class Web3Backend {
       }
     })()
   });
+
+  stream(onMessage = e => {console.log('[Web3Backend][stream] Message', e)}, onError = e => {}) {
+    const streamAddress = `${getWebSocketEntry()}?token=${auth.getToken()}&app=${APP_ID}`;
+    const stream = new WebSocket(streamAddress, 'echo-protocol');
+    stream.onerror = e => {
+      console.error(`[Web3Backend][stream]`, e);
+      stream.close();
+      onError(e);
+    };
+    stream.onmessage = e => {
+      onMessage(e.data);
+    };
+
+    return new Promise((fulfill, reject) => {
+      stream.onopen = e => {
+        fulfill(stream);
+      };
+    })
+  }
 
   get = (url, options = {}) => this.request(url, {
     ...options,

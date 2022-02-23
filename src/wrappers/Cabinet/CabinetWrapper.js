@@ -17,10 +17,41 @@ import * as actions from "../../actions";
 import * as steps from "../../components/AuthModal/fixtures";
 import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingStatus";
 import LogoLoader from "../../ui/components/LogoLoader/LogoLoader";
+import Web3Backend from 'services/web3-backend';
+import streamMessage from './steam-message';
+
+import {
+  walletBalancesSelector,
+  web3WalletsSelector,
+  web3BalancesSelector,
+} from "src/selectors";
+import {
+  walletUpdate,
+} from "src/actions/cabinet/wallet";
+import { getCurrencyInfo } from "src/actions";
+
+import {
+  web3Update,
+  web3SetData,
+} from 'actions/cabinet/web3';
+
+const STREAM_RECONNECT_TIMEOUT = 2000;
 
 class CabinetWrapper extends Component {
   state = {
     error: null
+  };
+  stream = null;
+
+  componentDidMount() {
+    this.runStream();
+  }
+
+  runStream = async () => {
+    this.stream = await Web3Backend.stream(
+      message => streamMessage(message, this.props),
+      error => setTimeout(this.runStream, STREAM_RECONNECT_TIMEOUT),
+    );
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -127,9 +158,14 @@ export default connect(
     ...state.default,
     router: state.router,
     user: state.default.profile.user,
-    profile: state.default.profile
+    profile: state.default.profile,
+    fiats: walletBalancesSelector,
+    wallets: web3WalletsSelector,
+    balances: web3BalancesSelector,
   }),
   {
-    setAdaptive: actions.setAdaptive
+    setAdaptive: actions.setAdaptive,
+    web3SetData,
+    walletUpdate,
   }
 )(CabinetWrapper);
