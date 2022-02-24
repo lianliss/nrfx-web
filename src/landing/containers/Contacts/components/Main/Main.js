@@ -17,9 +17,18 @@ export default () => {
           <Lang name="site__contactDescription" />
         </p>
         <ul>
+          <li onClick={() => window.open(COMPANY.faqUrl)}>
+            <SVG src={require("../../assets/info.svg")} />
+            <h4>
+              <Lang name="site__contactFaqTitle" />
+            </h4>
+            <p>
+              <Lang name="site__contactFaqDescription" />
+            </p>
+          </li>
           <li
             onClick={() => {
-              window.jivo_api && window.jivo_api.open();
+              window.open(`https://${COMPANY.social.telegram}`);
             }}
           >
             <SVG src={require("../../assets/messages.svg")} />
@@ -50,15 +59,6 @@ export default () => {
             </h4>
             <p>
               <Lang name="site__contactApiDescription" />
-            </p>
-          </li>
-          <li onClick={() => window.open(COMPANY.faqUrl)}>
-            <SVG src={require("../../assets/info.svg")} />
-            <h4>
-              <Lang name="site__contactFaqTitle" />
-            </h4>
-            <p>
-              <Lang name="site__contactFaqDescription" />
             </p>
           </li>
         </ul>

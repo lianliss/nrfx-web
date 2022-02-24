@@ -98,9 +98,9 @@ export default () => {
             <li onClick={() => router.navigate(pages.ABOUT)}>
               <Lang name="site__headerCompany" />
             </li>
-            <li onClick={() => router.navigate(pages.FEE)}>
-              <Lang name="global_fee" />
-            </li>
+            {/*<li onClick={() => router.navigate(pages.FEE)}>*/}
+              {/*<Lang name="global_fee" />*/}
+            {/*</li>*/}
             <li onClick={() => router.navigate(pages.CONTACT)}>
               <Lang name="site__headerContactUs" />
             </li>

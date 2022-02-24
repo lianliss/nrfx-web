@@ -90,6 +90,11 @@ export default () => {
                 <Lang name="landing_footer_exchange" />
               </Link>
             </li>
+            <li>
+              <a href="https://bscscan.com/address/0x3764be118a1e09257851a3bd636d48dfeab5cafe" target="_blank">
+                Smart contract
+              </a>
+            </li>
           </ul>
           <ul>
             <li>
@@ -102,11 +107,11 @@ export default () => {
                 <Lang name="landing_footer_about" />
               </Link>
             </li>
-            <li>
-              <Link routeName={pages.FEE}>
-                <Lang name="landing_footer_fee" />
-              </Link>
-            </li>
+            {/*<li>*/}
+              {/*<Link routeName={pages.FEE}>*/}
+                {/*<Lang name="landing_footer_fee" />*/}
+              {/*</Link>*/}
+            {/*</li>*/}
             <li>
               <Link routeName={pages.TOKEN}>Narfex Token</Link>
             </li>
@@ -153,11 +158,6 @@ export default () => {
               >
                 <Lang name="landing_footer_terms" />
               </span>
-            </li>
-            <li>
-              <a href="https://bscscan.com/address/0x3764be118a1e09257851a3bd636d48dfeab5cafe" target="_blank">
-                Smart contract
-              </a>
             </li>
           </ul>
         </nav>

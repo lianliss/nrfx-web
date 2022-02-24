@@ -31,25 +31,25 @@ export default ({ accent }) => {
         </h2>
         <div className="Contacts__Social__list">
           <SnLink
-            type={"facebook"}
-            icon={require("src/asset/social/facebook.svg").default}
-            name={<Lang name="global_social_facebook" />}
+            type={"telegram"}
+            icon={require("src/asset/social/telegram.svg").default}
+            name={<Lang name="global_social_telegram" />}
           />
           <SnLink
             type={"instagram"}
             icon={require("src/asset/social/instagram.svg").default}
             name={<Lang name="global_social_instagram" />}
           />
-          <SnLink
-            type={"twitter"}
-            icon={require("src/asset/social/twitter.svg").default}
-            name={<Lang name="global_social_twitter" />}
-          />
-          <SnLink
-            type={"medium"}
-            icon={require("src/asset/social/medium.svg").default}
-            name={<Lang name="global_social_medium" />}
-          />
+          {/*<SnLink*/}
+            {/*type={"twitter"}*/}
+            {/*icon={require("src/asset/social/twitter.svg").default}*/}
+            {/*name={<Lang name="global_social_twitter" />}*/}
+          {/*/>*/}
+          {/*<SnLink*/}
+            {/*type={"medium"}*/}
+            {/*icon={require("src/asset/social/medium.svg").default}*/}
+            {/*name={<Lang name="global_social_medium" />}*/}
+          {/*/>*/}
           {/*<SnLink*/}
           {/*  icon={require('src/asset/social/linkedin.svg').default}*/}
           {/*  link={COMPANY.social.linkedin}*/}
