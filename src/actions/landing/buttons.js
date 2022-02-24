@@ -17,7 +17,7 @@ export const swap = () => {
   // TODO Set swap state
   const user = store.getState().default.profile.user;
   if (user) {
-    router.navigate(pages.FIAT);
+    router.navigate(pages.WALLET_SWAP);
   } else {
     actions.openModal("auth", { type: steps.REGISTRATION });
   }

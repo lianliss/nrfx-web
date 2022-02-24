@@ -46,9 +46,8 @@ export default () => {
           : [...markets, ...markets, ...markets].map(
               ({ ticker, market: { config } }, index) => {
                 if (!ticker) {
-                  console.error('[Ticker] No ticker', markets, config);
                   return <div className="Ticker__market" key={index}>
-                    Ticker error
+
                   </div>
                 }
 

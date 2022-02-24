@@ -6,13 +6,14 @@ import SVG from "utils/svg-wrap";
 import { tokenRateGet } from "src/actions/cabinet/wallets";
 import Timer from "./timer";
 import COMPANY from "src/index/constants/company";
+import web3Backend from 'services/web3-backend';
 
 export default props => {
   const [price, setPrice] = useState(null);
   useEffect(() => {
-    tokenRateGet("usd").then(({ rate }) => {
-      setPrice(rate);
-    });
+    web3Backend.getTokenRate('nrfx').then(data => {
+      setPrice(data.price);
+    })
   }, []);
 
   return (

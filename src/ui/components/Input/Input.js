@@ -163,7 +163,6 @@ class Input extends React.Component {
             onClick={this.__toggleDisplayPassword.bind(this)}
           >
             <SVG
-              onClick={alert}
               src={this.state.displayPassword ? closeEyeSvg : openEyeSvg}
             />
           </div>

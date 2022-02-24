@@ -3,7 +3,7 @@ export default {
   host: "narfex.com",
   url: "https://narfex.com/",
   wikiUrl: "https://narfex.info/",
-  faqUrl: "https://narfex.zendesk.com/",
+  faqUrl: "https://narfex.gitbook.io/wiki/",
   email: {
     support: "support@narfex.com",
     info: "info@narfex.com"

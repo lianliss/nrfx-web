@@ -43,7 +43,7 @@ export default () => {
               <Lang name="site__contactEmailDescription" />
             </p>
           </li>
-          <li onClick={() => router.navigate(PAGES.DOCUMENTATION)}>
+          <li className="disabled" onClick={() => router.navigate(PAGES.DOCUMENTATION)}>
             <SVG src={require("../../assets/code.svg")} />
             <h4>
               <Lang name="site__contactApiTitle" />
@@ -52,7 +52,7 @@ export default () => {
               <Lang name="site__contactApiDescription" />
             </p>
           </li>
-          <li className="disabled" onClick={() => window.open(COMPANY.faqUrl)}>
+          <li onClick={() => window.open(COMPANY.faqUrl)}>
             <SVG src={require("../../assets/info.svg")} />
             <h4>
               <Lang name="site__contactFaqTitle" />

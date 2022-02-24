@@ -154,6 +154,11 @@ export default () => {
                 <Lang name="landing_footer_terms" />
               </span>
             </li>
+            <li>
+              <a href="https://bscscan.com/address/0x3764be118a1e09257851a3bd636d48dfeab5cafe" target="_blank">
+                Smart contract
+              </a>
+            </li>
           </ul>
         </nav>
         <div className="mobileBlock">
