@@ -52,6 +52,8 @@ class CabinetWrapper extends Component {
       message => streamMessage(message, this.props),
       error => setTimeout(this.runStream, STREAM_RECONNECT_TIMEOUT),
     );
+
+    window.pingWeb3Backend = () => this.stream.send('ping');
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -159,9 +161,9 @@ export default connect(
     router: state.router,
     user: state.default.profile.user,
     profile: state.default.profile,
-    fiats: walletBalancesSelector,
-    wallets: web3WalletsSelector,
-    balances: web3BalancesSelector,
+    fiats: walletBalancesSelector(state),
+    wallets: web3WalletsSelector(state),
+    balances: web3BalancesSelector(state),
   }),
   {
     setAdaptive: actions.setAdaptive,

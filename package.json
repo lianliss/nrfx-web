@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
-    "startLocal": "WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:9000 DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
+    "startLocal": "WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
     "start:admin": "DOMAIN=admin cross-env PORT=80 HTTPS=false node scripts/start.js",
     "start:landing": "DOMAIN=landing cross-env PORT=80 HTTPS=false node scripts/start.js",
     "build": "DOMAIN=index node scripts/build.js && npm run build:admin",

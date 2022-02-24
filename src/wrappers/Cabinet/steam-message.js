@@ -1,5 +1,6 @@
 import * as toast from 'actions/toasts';
 import _ from 'lodash';
+import getFinePrice from 'utils/get-fine-price';
 
 import {
   getLang,
@@ -12,7 +13,7 @@ const processBalances = (data, props) => {
     console.error('[processBalances]', 'No wallets');
   }
 
-  console.log('[processBalances]', data);
+  console.log('[processBalances]', data, address, wallets);
   web3SetData({
     balances: [{
       address,
@@ -35,7 +36,7 @@ const processBonus = (data, props) => {
 
 const processFiats = (data, props) => {
   const {walletUpdate, fiats} = props;
-  console.log('[processFiats]', data, walletUpdate);
+  console.log('[processFiats]', data);
   if (data.map) {
     data.map(balance => walletUpdate({
       balance,
@@ -47,6 +48,12 @@ const processFiats = (data, props) => {
   }
 };
 
+const processReferBonus = (data, props) => {
+  const {walletUpdate, fiats} = props;
+  console.log('[processReferBonus]', data);
+  toast.success(`${getLang('message_referBonus')} ${getFinePrice(data.amount)} ${data.currency.toUpperCase()}`);
+};
+
 const streamMessage = (message, props = {}) => {
   try {
     const object = JSON.parse(message);
@@ -54,6 +61,9 @@ const streamMessage = (message, props = {}) => {
     console.log('[streamMessage]', object);
 
     switch (type) {
+      case 'referBonus':
+        processReferBonus(data, props);
+        break;
       case 'fiats':
       case 'fiat':
         processFiats(data, props);
