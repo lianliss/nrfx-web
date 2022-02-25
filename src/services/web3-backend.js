@@ -127,6 +127,7 @@ export class Web3Backend {
       address,
     }
   });
+  getDefaultAccountBalances = () => this.get('wallet/balances/default');
   deleteWallet = address => this.post('wallet/delete', {
     params: {
       address,

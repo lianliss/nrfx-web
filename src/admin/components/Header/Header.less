@@ -20,6 +20,9 @@
 
   .Header__menu {
     margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
     .Header__menu_item {
       cursor: pointer;
@@ -28,6 +31,33 @@
       font-weight: 600;
       font-size: 13px;
       line-height: 16px;
+    }
+  }
+
+  &-balances {
+    display: flex;
+  }
+  &-balance {
+    display: flex;
+    align-items: center;
+    margin: 4px 12px;
+
+    &-circle {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    &-amount {
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+    &-currency {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-left: 6px;
+      opacity: 0.5;
     }
   }
 }
