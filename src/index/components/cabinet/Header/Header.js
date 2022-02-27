@@ -158,6 +158,10 @@ class Header extends React.Component {
                         onClick: () => router.navigate(pages.SETTINGS)
                       },
                       {
+                        title: utils.getLang("cabinet_header_partners"),
+                        onClick: () => router.navigate(pages.PARTNERS)
+                      },
+                      {
                         title: "FAQ",
                         onClick: () => window.open(COMPANY.faqUrl)
                       },
