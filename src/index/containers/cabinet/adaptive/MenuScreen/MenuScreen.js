@@ -64,7 +64,7 @@ class MenuScreen extends CabinetBaseScreen {
           </BaseLink>
         </ContentBox>
 
-        {(this.props.profile.has_deposits || userRole("agent")) && (
+        {(true || this.props.profile.has_deposits || userRole("agent")) && (
           <ContentBox className="Menu__section">
             {this.props.profile.has_deposits && (
               <BaseLink
@@ -80,19 +80,17 @@ class MenuScreen extends CabinetBaseScreen {
               </BaseLink>
             )}
 
-            {(this.props.profile.has_deposits || userRole("agent")) && (
-              <BaseLink
-                router={router}
-                routeName={PAGES.PARTNERS}
-                className="Menu__section__item"
-                activeClassName="active"
-              >
-                <SVG src={require("../../../../../asset/24px/users.svg")} />
-                <span>
+            <BaseLink
+              router={router}
+              routeName={PAGES.PARTNERS}
+              className="Menu__section__item"
+              activeClassName="active"
+            >
+              <SVG src={require("../../../../../asset/24px/users.svg")} />
+              <span>
                   <Lang name="cabinet_header_partners" />
                 </span>
-              </BaseLink>
-            )}
+            </BaseLink>
           </ContentBox>
         )}
 
