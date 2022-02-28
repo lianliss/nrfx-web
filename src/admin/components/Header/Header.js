@@ -54,9 +54,9 @@ export default props => {
       </BaseLink>
       <div className="Header__title">Control Panel</div>
       <div className="Header__menu">
-        {!!balance && <div className="Header-balances">
-          {renderBalance(balance)}
-        </div>}
+        <div className="Header-balances">
+          {!!balance && renderBalance(balance)}
+        </div>
         <div className="Header__menu_item" onClick={auth.logout}>
           Logout
         </div>
