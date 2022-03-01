@@ -77,7 +77,7 @@ export default {
     "icon": "https://static.narfex.com/img/currencies/tether.svg",
     "type": "crypto",
     "maximum_fraction_digits": 8,
-    "color": "#fff",
+    "color": "#5AA58C",
     "gradient": ["#5AA58C", "#5AA58C"],
     "can_exchange": true,
     "to_usd": 0
