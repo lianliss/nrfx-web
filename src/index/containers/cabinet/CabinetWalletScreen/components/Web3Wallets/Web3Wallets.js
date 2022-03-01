@@ -52,6 +52,7 @@ class Web3Wallets extends React.PureComponent {
     const {currencies} = this.props;
     const {items} = balance;
     return Object.keys(items).map(token => {
+      if (token === 'wbnb') return;
       const wei = items[token];
       const amount = Number(wei) / WEI_ETHER;
       const currency = currencies[token];

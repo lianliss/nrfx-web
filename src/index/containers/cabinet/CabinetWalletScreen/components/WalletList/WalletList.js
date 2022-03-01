@@ -52,7 +52,7 @@ export default ({ currency }) => {
         <Separator />
         </>
       )}
-      {tokens.map(token => {
+      {tokens.filter(token => token !== 'wbnb').map(token => {
         const amount = Number(balances[token]) / WEI_ETHER;
         return <Wallet
           onClick={() => {

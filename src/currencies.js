@@ -74,12 +74,12 @@ export default {
   "usdt": {
     "abbr": "usdt",
     "name": "Tether",
-    "icon": "https://static.narfex.com/img/currencies/dollar.svg",
+    "icon": "https://static.narfex.com/img/currencies/tether.svg",
     "type": "crypto",
     "maximum_fraction_digits": 8,
     "color": "#fff",
     "gradient": ["#5AA58C", "#5AA58C"],
-    "can_exchange": false,
+    "can_exchange": true,
     "to_usd": 0
   },
   "usd": {
@@ -160,5 +160,16 @@ export default {
     "can_exchange": true,
     "to_usd": 0.5,
     "commission": 0.03,
+  },
+  "busd": {
+    "abbr": "busd",
+    "name": "Binance USD",
+    "icon": "https://static.narfex.com/img/currencies/busd.svg",
+    "type": "crypto",
+    "maximum_fraction_digits": 8,
+    "color": "#FFA041",
+    "gradient": ["#FABE4C", "#FA9751"],
+    "can_exchange": true,
+    "to_usd": 0
   },
 }

@@ -81,7 +81,7 @@ const Form = ({
                 <CircleIcon size="ultra_small" currency={currency} />
               ),
               value: currency.abbr,
-              title: currency.name
+              title: `${currency.abbr.toUpperCase()}`
             }))}
           onChange={({ value }) => onCurrencyChange(value)}
         />
