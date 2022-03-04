@@ -43,7 +43,7 @@ class ProfileSidebar extends React.Component {
               })}
           </div>
         </div>
-        <Footer className="ProfileSidebar__footer" />
+        {/*<Footer className="ProfileSidebar__footer" />*/}
       </div>
     );
   }

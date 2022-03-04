@@ -29,6 +29,9 @@ import {
   walletUpdate,
 } from "src/actions/cabinet/wallet";
 import { getCurrencyInfo } from "src/actions";
+import {
+  updateProfile,
+} from 'src/actions/cabinet/profile';
 
 import {
   web3Update,
@@ -44,7 +47,14 @@ class CabinetWrapper extends Component {
   stream = null;
 
   componentDidMount() {
+    const {updateProfile} = this.props;
     this.runStream();
+
+    Web3Backend.getUserData().then(data => {
+      updateProfile(data);
+    }).catch(error => {
+      console.error("[CabinetWrapper] Can't get user data");
+    });
   }
 
   runStream = async () => {
@@ -169,5 +179,6 @@ export default connect(
     setAdaptive: actions.setAdaptive,
     web3SetData,
     walletUpdate,
+    updateProfile,
   }
 )(CabinetWrapper);

@@ -16,6 +16,7 @@ import InviteLinks from "./InviteLinks/InviteLinks";
 import InviteAgent from "./InviteAgent/InviteAgent";
 import COMPANY from "../../../../constants/company";
 import Paging from "../../../../components/cabinet/Paging/Paging";
+import ReferPercent from './ReferPercent/ReferPercent';
 
 class PartnersSection extends React.Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class PartnersSection extends React.Component {
               linkDidCopy={this.__linkDidCopy}
               inviteLink={this.inviteLink}
             />
+            <ReferPercent updateProfile={this.props.updateProfile} referPercent={this.props.referPercent} />
             <Paging
               isCanMore={
                 !!this.props.clients.next && !this.props.partnersTableStatus
@@ -140,7 +142,8 @@ export default connect(
     ...state.profile.partner,
     ...state.default,
     translator: state.settings.translator,
-    partnersTableStatus: state.profile.loadingStatus.partnersTable
+    partnersTableStatus: state.profile.loadingStatus.partnersTable,
+    referPercent: state.profile.referPercent,
   }),
   {
     setTitle: actions.setTitle,
@@ -149,6 +152,7 @@ export default connect(
     getPartnerMore: profileActions.getPartnerMore,
     saveInviteLink: profileActions.saveInviteLink,
     deleteInviteLink: profileActions.deleteInviteLink,
-    restoreInviteLink: profileActions.restoreInviteLink
+    restoreInviteLink: profileActions.restoreInviteLink,
+    updateProfile: profileActions.updateProfile,
   }
 )(memo(PartnersSection));

@@ -277,3 +277,7 @@ export function inviteAgent(login) {
       .catch(err => reject(err));
   });
 }
+
+export function updateProfile(payload) {
+  return {type: actionTypes.PROFILE_SET, payload};
+}

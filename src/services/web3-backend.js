@@ -173,6 +173,12 @@ export class Web3Backend {
     }
   });
   receiveBonus = () => this.post('wallet/receiveBonus');
+  getUserData = () => this.get('user');
+  setReferPercent = percent => this.post('user/referPercent', {
+    params: {
+      percent,
+    }
+  });
 }
 
 const web3Backend = new Web3Backend();

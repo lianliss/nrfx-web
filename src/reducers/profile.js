@@ -12,7 +12,8 @@ const initialState = {
     clients: [],
     level: "",
     profit_chart: false
-  }
+  },
+  referPercent: null,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -106,7 +107,7 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.PROFILE_SET: {
-      return Object.assign({}, state, {}); //...
+      return {...state, ...action.payload};
     }
 
     default:
