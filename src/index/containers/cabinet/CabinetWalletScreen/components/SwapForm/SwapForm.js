@@ -59,7 +59,9 @@ const Form = ({
   commission,
   gasPrice,
 }) => {
-  const realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
+  //const commission = _.get(currenciesObject[secondaryCurrency], 'commission', 0);
+  let realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
+  realRate += realRate * commission;
   const inputRef = useRef(null);
 
   useEffect(() => {
