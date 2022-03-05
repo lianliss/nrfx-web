@@ -80,7 +80,8 @@ export default {
     "color": "#5AA58C",
     "gradient": ["#5AA58C", "#5AA58C"],
     "can_exchange": true,
-    "to_usd": 0
+    "to_usd": 0,
+    "commission": 0.03,
   },
   "usd": {
     "abbr": "usd",
@@ -170,6 +171,7 @@ export default {
     "color": "#FFA041",
     "gradient": ["#FABE4C", "#FA9751"],
     "can_exchange": true,
-    "to_usd": 0
+    "to_usd": 0,
+    "commission": 0.03,
   },
 }
