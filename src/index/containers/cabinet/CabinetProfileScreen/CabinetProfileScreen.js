@@ -72,6 +72,7 @@ class CabinetProfileScreen extends CabinetBaseScreen {
         {...this.props.partner}
         adaptive={this.props.adaptive}
         wallets={this.props.partner.balances}
+        rates={this.props.rates}
       />
     );
   };
@@ -101,7 +102,8 @@ export default connect(
     ...state.default,
     adaptive: state.default.adaptive,
     translator: state.settings.translator,
-    currentLang: state.default.currentLang
+    currentLang: state.default.currentLang,
+    rates: state.web3.rates,
   }),
   {
     setTitle: actions.setTitle,

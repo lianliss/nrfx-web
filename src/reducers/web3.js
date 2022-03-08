@@ -57,6 +57,7 @@ export default function reduce(state = initialState, action = {}) {
       const {
         balance = {},
         wallet = {},
+        rates = {},
       } = action.payload;
 
       return {
@@ -70,7 +71,8 @@ export default function reduce(state = initialState, action = {}) {
           ? state.wallets.map(w =>
             w.address === wallet.address ? { ...w, ...wallet } : w
           )
-          : state.wallets
+          : state.wallets,
+        rates: {...state.rates, ...rates},
       };
     }
 

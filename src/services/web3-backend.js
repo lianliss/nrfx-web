@@ -179,6 +179,7 @@ export class Web3Backend {
       percent,
     }
   });
+  getAllRates = () => this.get('rates');
 }
 
 const web3Backend = new Web3Backend();

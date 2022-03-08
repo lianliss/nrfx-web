@@ -144,6 +144,7 @@ export default connect(
     translator: state.settings.translator,
     partnersTableStatus: state.profile.loadingStatus.partnersTable,
     referPercent: state.profile.referPercent,
+    rates: state.web3.rates,
   }),
   {
     setTitle: actions.setTitle,

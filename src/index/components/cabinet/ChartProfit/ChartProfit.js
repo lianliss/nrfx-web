@@ -4,6 +4,7 @@ import EmptyContentBlock from "../EmptyContentBlock/EmptyContentBlock";
 import * as utils from "../../../../utils";
 import "./ChartProfit.less";
 import { getCurrencyInfo } from "../../../../actions";
+import _ from 'lodash';
 
 class ChartProfit extends React.Component {
   render() {
@@ -16,7 +17,10 @@ class ChartProfit extends React.Component {
       );
     }
 
+    const {rates} = this.props;
     const chartCurrencies = {};
+    let usdTotal = 0;
+
     Object.keys(this.props.chart.data).forEach(currency => {
       if (!chartCurrencies.hasOwnProperty(currency)) {
         const currencyColor = getCurrencyInfo(currency).color;
@@ -34,13 +38,15 @@ class ChartProfit extends React.Component {
           }
         };
       }
-      this.props.chart.data[currency].forEach(item =>
+      this.props.chart.data[currency].forEach(item => {
+        const usdAmount = item.amount * (rates[currency] || 0);
+        usdTotal += usdAmount;
         chartCurrencies[currency]["data"].push({
           x: item.created_at * 1000,
-          y: item.usd_amount,
+          y: usdAmount,
           title: item.amount.toFixed(8) + " " + item.currency.toUpperCase()
         })
-      );
+      });
     });
 
     let marker = false;
@@ -62,7 +68,7 @@ class ChartProfit extends React.Component {
             </div>
           </div>
           <div className="Chart__profit__header__fiat">
-            {this.props.chart.usd_profit.toFixed(2) + " $"}
+            $ {usdTotal.toFixed(2)}
           </div>
         </div>
         <div className="Chart__profit__chart">

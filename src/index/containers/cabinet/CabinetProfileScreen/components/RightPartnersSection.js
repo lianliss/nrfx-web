@@ -9,12 +9,13 @@ class RightPartnersSection extends React.Component {
   render() {
     return (
       <div>
-        {this.__renderBalance()}
+        {/*{this.__renderBalance()}*/}
         {this.props.profit_chart &&
           Object.keys(this.props.profit_chart.data).length > 0 && (
             <ChartProfit
               chart={this.props.profit_chart}
               adaptive={this.props.adaptive}
+              rates={this.props.rates}
             />
           )}
         {!this.props.adaptive &&

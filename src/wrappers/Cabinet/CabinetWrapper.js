@@ -47,7 +47,7 @@ class CabinetWrapper extends Component {
   stream = null;
 
   componentDidMount() {
-    const {updateProfile} = this.props;
+    const {updateProfile, web3Update} = this.props;
     this.runStream();
 
     Web3Backend.getUserData().then(data => {
@@ -55,6 +55,11 @@ class CabinetWrapper extends Component {
     }).catch(error => {
       console.error("[CabinetWrapper] Can't get user data");
     });
+    Web3Backend.getAllRates().then(rates => {
+      web3Update({rates});
+    }).catch(error => {
+      console.error("[CabinetWrapper] Can't get rates");
+    })
   }
 
   runStream = async () => {
@@ -178,6 +183,7 @@ export default connect(
   {
     setAdaptive: actions.setAdaptive,
     web3SetData,
+    web3Update,
     walletUpdate,
     updateProfile,
   }

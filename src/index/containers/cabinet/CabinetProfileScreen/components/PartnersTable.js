@@ -53,7 +53,9 @@ export default function PartnersTable({ partners, adaptive, skipContentBox }) {
             align="right"
             sub={utils.dateFormat(item.user.created_at, "DD MMM YYYY")}
           >
-            ~{utils.formatDouble(item.profit, 2)} USD
+            {item.profits.map(profit => <span>
+              ~{utils.formatDouble(profit.amount, 2)} {profit.currency.toUpperCase()}
+            </span>)}
           </UI.TableColumn>
         </UI.TableCell>
       );
@@ -69,7 +71,9 @@ export default function PartnersTable({ partners, adaptive, skipContentBox }) {
         >
           <UI.TableColumn>{item.user.login.toUpperCase()}</UI.TableColumn>
           <UI.TableColumn align="right">
-            ~{utils.formatDouble(item.profit, 2)} USD
+            {item.profits.map(profit => <span>
+              ~{utils.formatDouble(profit.amount, 2)} {profit.currency.toUpperCase()}
+            </span>)}
           </UI.TableColumn>
           <UI.TableColumn align="right" style={{ width: 100 }}>
             {utils.dateFormat(item.user.created_at, "DD MMM YYYY")}
