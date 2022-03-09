@@ -61,7 +61,7 @@ const updateRates = async (from, to, dispatch) => {
   }
 };
 
-export default () => {
+export default ({rates}) => {
   const status = useSelector(walletStatusSelector);
   const swap = useSelector(walletSwapSelector);
   const dispatch = useDispatch();
@@ -99,12 +99,21 @@ export default () => {
     [dispatch, swap.focus]
   );
 
-  const realRate = isFiat(currency) ? swap.rate : 1 / swap.rate;
+  // Calculate rate
+  const fromRate = _.get(rates, swap.fromCurrency, 0);
+  const toRate = _.get(rates, swap.toCurrency, 0);
+  let realRate = fromRate && toRate
+    ? toRate / fromRate
+    : 0;
+
+  // Calculate rate with commission
+  const commission = _.get(currenciesObject, `${swap.toCurrency}.commission`, 0);
+  realRate += realRate * commission;
 
   const availableAmount =
     _.get(fromBalance, 'currency') === currency
       ? _.get(fromBalance, 'amount', 0)
-      : realRate * _.get(fromBalance, 'amount', 0);
+      : _.get(fromBalance, 'amount', 0) / realRate;
 
   const handleClickMaxAmount = useCallback(() => {
     dispatch(walletSwapSetAmount(swap.focus, availableAmount));
@@ -115,7 +124,15 @@ export default () => {
       <div className="SwapFormAdaptive__amountLabel">
         <Lang name="global_amount" />
       </div>
-
+      <div className="SwapFormAdaptive__commission">
+        <NumberFormat number={1} currency={swap.toCurrency} />
+        {" ≈ "}
+        <NumberFormat
+          skipRoughly
+          number={realRate}
+          currency={swap.fromCurrency}
+        />
+      </div>
       <Input
         disabled={!!status.rate}
         value={amount}

@@ -297,6 +297,7 @@ class CabinetWalletScreen extends React.PureComponent {
       cardReservation,
       isAdaptive,
       bonusValue,
+      rates,
     } = this.props;
 
     if (status.main.length) {
@@ -331,10 +332,10 @@ class CabinetWalletScreen extends React.PureComponent {
         {isCommon && <CommonHeader />}
         {isSwap &&
         (isAdaptive ? (
-          <SwapFormAdaptive />
+          <SwapFormAdaptive rates={rates} />
         ) : (
           <>
-          <SwapForm />
+          <SwapForm rates={rates} />
           <SwapTutorial />
           </>
         ))}
@@ -381,6 +382,7 @@ export default connect(state => ({
   bonusValue: _.get(state, 'web3.wallets[0].bonus', 0),
   isAdaptive: state.default.adaptive,
   route: state.router.route,
+  rates: state.web3.rates,
 }), dispatch => bindActionCreators({
   fetchWalletPage,
   walletFetchHistory,
