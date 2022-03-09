@@ -73,6 +73,9 @@ export default () => {
               </h4>
             </li>
             <li>
+              <Link routeName={pages.TOKEN}>Narfex Token</Link>
+            </li>
+            <li>
               <Link routeName={pages.BUY_BITCOIN}>
                 <Lang name="landing_footer_buyBitcoin" />
               </Link>
@@ -112,9 +115,6 @@ export default () => {
                 {/*<Lang name="landing_footer_fee" />*/}
               {/*</Link>*/}
             {/*</li>*/}
-            <li>
-              <Link routeName={pages.TOKEN}>Narfex Token</Link>
-            </li>
             {/*<li>*/}
             {/*  <Link routeName={pages.SAFETY}>*/}
             {/*    <Lang name="landing_footer_security" />*/}

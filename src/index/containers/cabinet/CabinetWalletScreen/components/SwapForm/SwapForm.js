@@ -88,6 +88,7 @@ const Form = ({
           onChange={({ value }) => onCurrencyChange(value)}
         />
         <div className="SwapForm__form__control__meta">
+          {!!realRate ? <>
           <NumberFormat number={1} currency={currency} />
           {" ≈ "}
           <NumberFormat
@@ -95,6 +96,8 @@ const Form = ({
             number={realRate}
             currency={secondaryCurrency}
           />
+          </>
+          : <>&nbsp;</>}
         </div>
       </div>
       <div className="SwapForm__form__control">
@@ -119,9 +122,9 @@ const Form = ({
         {!!gasPrice && <div className="SwapForm__form__control__meta right">
           {getLang('swap_gas')} <NumberFormat number={gasPrice} skipRoughly currency={currency} />
         </div>}
-        {!!commission && <div className="SwapForm__form__control__meta right">
-          {getLang('swap_commission')} <NumberFormat number={commission * 100} currency={'%'} />
-        </div>}
+        {/*{!!commission && <div className="SwapForm__form__control__meta right">*/}
+          {/*{getLang('swap_commission')} <NumberFormat number={commission * 100} currency={'%'} />*/}
+        {/*</div>}*/}
       </div>
     </div>
   );

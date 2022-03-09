@@ -10,7 +10,7 @@ export default {
   },
   social: {
     vk: "vk.com/narfex_com",
-    telegram: "t.me/narfex",
+    telegram: "t.me/narfex_ru",
     twitter: "twitter.com/Narfex_id",
     facebook: "facebook.com/narfex.id",
     medium: "medium.com/@narfexindonesia",
