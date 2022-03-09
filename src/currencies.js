@@ -91,7 +91,7 @@ export default {
     "maximum_fraction_digits": 2,
     "color": "#6CC592",
     "gradient": ["#62B27D", "#77D9A8"],
-    "can_exchange": true,
+    "can_exchange": false,
     "to_usd": 1
   },
   "eur": {
@@ -124,7 +124,7 @@ export default {
     "maximum_fraction_digits": 2,
     "color": "#6CC592",
     "gradient": ["#62B27D", "#77D9A8"],
-    "can_exchange": true,
+    "can_exchange": false,
     "to_usd": 14422.522032768144
   },
   "cny": {

@@ -19,14 +19,16 @@ import {
 } from "../../../../../../actions/cabinet/wallet";
 import { walletSwapSelector } from "../../../../../../selectors";
 import SVG from "utils/svg-wrap";
+import _ from 'lodash';
+import currencies from 'src/currencies';
 
 export default ({ currency }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const currencyInfo = currency ? getCurrencyInfo(currency) : null;
-  const abbr = currencyInfo?.abbr?.toUpperCase();
+  const abbr = _.get(currencyInfo, 'abbr', '').toUpperCase();
   const isFiat = utils.isFiat(currency);
-  const canExchange = currencyInfo?.can_exchange;
+  const canExchange = _.get(currencies[currency], 'can_exchange');
 
   const walletSwap = useSelector(walletSwapSelector);
 
@@ -68,12 +70,12 @@ export default ({ currency }) => {
       <div className="WalletEmptyBalance__content">
         <CircleIcon currency={currencyInfo} />
         <h2>
-          <Lang
+          {canExchange ? <Lang
             name="cabinet__EmptyBalanceTitle"
             params={{
               currency: abbr
             }}
-          />
+          /> : 'Coming soon'}
         </h2>
         {currency !== "nrfx" && canExchange && (
           <p>
@@ -89,43 +91,15 @@ export default ({ currency }) => {
             />
           </p>
         )}
-        {isFiat ? (
-          <ButtonWrapper align="center">
-            <Button
-              onClick={() => {
-                openModal("merchant");
-              }}
-            >
-              <Lang name="cabinet_fiatBalance_add" />
-            </Button>
-          </ButtonWrapper>
-        ) : (
-          <ButtonWrapper align="center">
-            {canExchange && (
-              <Button onClick={handleSwap}>
-                <Lang name="global_buy" />
-              </Button>
-            )}
-            {currency === "nrfx" ? (
-              <Button
-                onClick={() => {
-                  openModal("nrfx_presale");
-                }}
-              >
-                <Lang name="global_buy" />
-              </Button>
-            ) : (
-              <Button
-                onClick={() => {
-                  openModal("receive");
-                }}
-                type={canExchange ? "secondary" : "default"}
-              >
-                <Lang name="global_receive" />
-              </Button>
-            )}
-          </ButtonWrapper>
-        )}
+        {canExchange && <ButtonWrapper align="center">
+          <Button
+            onClick={() => {
+              openModal("merchant");
+            }}
+          >
+            <Lang name="cabinet_fiatBalance_add" />
+          </Button>
+        </ButtonWrapper>}
       </div>
     </ContentBox>
   );
