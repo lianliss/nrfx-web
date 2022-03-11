@@ -81,7 +81,7 @@ export default {
     "gradient": ["#5AA58C", "#5AA58C"],
     "can_exchange": true,
     "to_usd": 0,
-    "commission": 0.07,
+    "commission": 0.11,
   },
   "usd": {
     "abbr": "usd",
@@ -172,6 +172,6 @@ export default {
     "gradient": ["#FABE4C", "#FA9751"],
     "can_exchange": true,
     "to_usd": 0,
-    "commission": 0.07,
+    "commission": 0.11,
   },
 }
