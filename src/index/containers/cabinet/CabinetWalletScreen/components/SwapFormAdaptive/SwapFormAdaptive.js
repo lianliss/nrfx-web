@@ -38,6 +38,7 @@ import SVG from "utils/svg-wrap";
 import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
 import currenciesObject from 'src/currencies';
+import getCommission from 'utils/get-commission';
 
 const Select = ({ value, options, onChange, title, disabled }) => (
   <div className={cn("SwapFormAdaptive__controlPanel__select", { disabled })}>
@@ -107,7 +108,7 @@ export default ({rates}) => {
     : 0;
 
   // Calculate rate with commission
-  const commission = _.get(currenciesObject, `${swap.toCurrency}.commission`, 0);
+  const commission = getCommission(useSelector(state => state.web3.commissions), swap.toCurrency);
   realRate += realRate * commission;
 
   const availableAmount =

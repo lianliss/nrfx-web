@@ -42,6 +42,7 @@ import { isFiat, getLang } from "utils";
 import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
 import currenciesObject from 'src/currencies';
+import getCommission from 'utils/get-commission';
 
 const Form = ({
   onChangeAmount,
@@ -194,9 +195,10 @@ export default () => {
     .filter(c => c.can_exchange);
   const fiats = currencies.filter(c => c.type === 'fiat');
   const crypto = currencies.filter(c => c.type === 'crypto');
-  const commission = _.get(currenciesObject[swap.toCurrency], 'commission', 0);
+  const commission = getCommission(useSelector(state => state.web3.commissions), swap.toCurrency);
 
-  useEffect(() => {
+
+    useEffect(() => {
     dispatch(walletSetStatus("rate", "loading"));
     updateRates(swap.fromCurrency, swap.toCurrency, fromAmount, toAmount, dispatch, setAmounts, commission, gasPrice)
       .then(rate => {
@@ -213,21 +215,6 @@ export default () => {
         })
       });
   }, [swap.fromCurrency, swap.toCurrency]);
-
-  // useEffect(() => {
-  //   if (swap.fromAmount && swap.rate) {
-  //     updateGas({
-  //       dispatch,
-  //       gasPrice, setGasPrice,
-  //       toCurrency: swap.toCurrency,
-  //       toAmount: calculateToAmount(swap.fromAmount, swap.rate, commission, gasPrice),
-  //     })
-  //   }
-  // }, [swap.fromAmount, swap.rate]);
-
-  // useEffect(() => {
-  //   dispatch(walletSwapSetAmount("to", calculateToAmount(swap.fromAmount, swap.rate, commission, gasPrice)));
-  // }, [gasPrice]);
 
   return (
     <ContentBox className="SwapForm">
@@ -247,7 +234,6 @@ export default () => {
           rate={swap.rate}
           onCurrencyChange={currency => {
             dispatch(walletSwapSetCurrency("from", currency));
-            //updateRates(currency, swap.toCurrency, dispatch, setAmounts);
           }}
           onChangeAmount={amount => {
             const toAmount = calculateToAmount(Number(amount), swap.rate, commission);
@@ -271,7 +257,7 @@ export default () => {
           <div
             className={cn("SwapForm__switchButton", status.rate)}
             onClick={() => {
-              return; // TODO unlick swap switch buttun
+              return; // TODO unlock swap switch buttun
               dispatch(walletSwapSwitch());
             }}
           >

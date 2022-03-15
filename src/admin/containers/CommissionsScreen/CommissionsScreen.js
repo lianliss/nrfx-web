@@ -43,7 +43,6 @@ class CommissionsScreen extends React.PureComponent {
         items[token] = commissions.default;
       }
     });
-    console.log('render', commissions);
 
     return <UI.ContentBox className="CommissionsScreen">
       <div className="Block__header">

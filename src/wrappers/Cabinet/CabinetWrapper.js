@@ -47,7 +47,7 @@ class CabinetWrapper extends Component {
   stream = null;
 
   componentDidMount() {
-    const {updateProfile, web3Update} = this.props;
+    const {updateProfile, web3SetData} = this.props;
     this.runStream();
 
     Web3Backend.getUserData().then(data => {
@@ -55,11 +55,17 @@ class CabinetWrapper extends Component {
     }).catch(error => {
       console.error("[CabinetWrapper] Can't get user data");
     });
-    Web3Backend.getAllRates().then(rates => {
-      web3Update({rates});
+    Promise.all([
+      Web3Backend.getAllRates(),
+      Web3Backend.getCommissions(),
+    ]).then(data => {
+      web3SetData({
+        rates: data[0],
+        commissions: data[1],
+      });
     }).catch(error => {
       console.error("[CabinetWrapper] Can't get rates");
-    })
+    });
   }
 
   runStream = async () => {
