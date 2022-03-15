@@ -4,6 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import LangsScreen from "../LangsScreen/LangsScreen";
+import CommissionsScreen from '../CommissionsScreen/CommissionsScreen';
 
 import Item from "../../components/Item/Item";
 import * as pages from "../../constants/pages";
@@ -26,6 +27,9 @@ class PanelScreen extends React.Component {
     }
     if (this.props.route.params.page === "Translations") {
       return <LangsScreen />;
+    }
+    if (this.props.route.params.page === "Commissions") {
+      return <CommissionsScreen />;
     }
     return (
       <div className="PanelScreen">

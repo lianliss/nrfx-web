@@ -46,7 +46,8 @@ export function configureStore() {
           default: defaultReducer,
           admin: adminReducer,
           langs: langsReducer,
-          modal: modalReducer
+          modal: modalReducer,
+          web3: web3Reducer,
         },
         landing: {
           router: router5Reducer,

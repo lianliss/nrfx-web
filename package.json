@@ -5,6 +5,7 @@
   "scripts": {
     "start": "DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
     "startLocal": "WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
+    "startLocalAdmin": "DOMAIN=admin WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 cross-env PORT=80 HTTPS=false node scripts/start.js",
     "start:admin": "DOMAIN=admin cross-env PORT=80 HTTPS=false node scripts/start.js",
     "start:landing": "DOMAIN=landing cross-env PORT=80 HTTPS=false node scripts/start.js",
     "build": "DOMAIN=index node scripts/build.js && npm run build:admin",
@@ -68,6 +69,7 @@
     "less-loader": "10.2.0",
     "lint-staged": "10.0.8",
     "lodash": "^4.17.21",
+    "mathjs": "^10.4.0",
     "mini-css-extract-plugin": "2.4.4",
     "moment": "2.24.0",
     "nodemon": "2.0.14",

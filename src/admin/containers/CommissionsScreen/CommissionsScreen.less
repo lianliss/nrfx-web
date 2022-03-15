@@ -1,0 +1,68 @@
+.CommissionsScreen {
+    margin: 16px;
+
+    .Block__header {
+        display: flex;
+        justify-content: space-between;
+    }
+    table {
+        margin: 40px 0;
+
+
+        td, th {
+            text-align: left;
+            padding: 6px 24px;
+
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+            &:nth-child(2) {
+                text-align: right;
+                width: 96px;
+            }
+            &:nth-child(4) {
+                text-align: right;
+                width: 96px;
+            }
+            &:nth-child(5) {
+                text-align: right;
+                width: 96px;
+            }
+        }
+        th {
+            padding-bottom: 20px;
+        }
+        td {
+            &:nth-child(3) {
+                display: flex;
+                align-items: center;
+
+                .Input__wrapper {
+                    --input-height: 24px;
+                    max-width: 96px;
+
+                    input {
+                        text-align: right;
+                    }
+                    .Input__indicator {
+                        top: 4px;
+                    }
+                }
+                button.Button {
+                    --button-height: 28px;
+                    margin-left: 6px;
+
+                    .Button__cont {
+                        .Button__label {
+                            font-size: 12px;
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -180,6 +180,12 @@ export class Web3Backend {
     }
   });
   getAllRates = () => this.get('rates');
+  getCommissions = () => this.get('rates/commissions');
+  updateCommissions = data => this.post('rates/commissions', {
+    params: {
+      data: JSON.stringify(data),
+    }
+  })
 }
 
 const web3Backend = new Web3Backend();

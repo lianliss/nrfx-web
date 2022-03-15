@@ -1,5 +1,6 @@
 import "./Header.less";
 import React, {useEffect, useState,} from "react";
+import { useDispatch } from "react-redux";
 
 import Logo from "../../../ui/components/Logo/Logo";
 import * as auth from "../../../actions/auth";
@@ -11,6 +12,9 @@ import web3Backend from 'services/web3-backend';
 import {WEI_ETHER} from 'src/index/constants/cabinet';
 import currencies from 'src/currencies';
 import getFinePrice from 'utils/get-fine-price';
+import {
+  web3SetData,
+} from 'actions/cabinet/web3';
 
 const renderBalance = balance => {
   return Object.keys(balance).map(token => {
@@ -38,14 +42,25 @@ const renderBalance = balance => {
 
 export default props => {
 
+  const dispatch = useDispatch();
   const [balance, setBalance] = useState(null);
   useEffect(() => {
-    web3Backend.getDefaultAccountBalances().then(data => {
-      setBalance(data);
+    Promise.all([
+      web3Backend.getDefaultAccountBalances(),
+      web3Backend.getAllRates(),
+      web3Backend.getCommissions(),
+    ]).then(data => {
+      setBalance(data[0]);
+      Object.keys(data[0]).map(token => {
+        data[0][token] = Number(data[0][token]) / WEI_ETHER;
+      });
+      dispatch(web3SetData({
+        balances: [{items: data[0]}],
+        rates: data[1],
+        commissions: data[2],
+      }));
     });
   }, []);
-
-  console.log('balance', balance);
 
   return (
     <ContentBox className="Header">

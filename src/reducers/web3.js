@@ -10,6 +10,7 @@ const initialState = {
   wallets: [],
   balances: [],
   rates: {},
+  commissions: {},
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -37,6 +38,7 @@ export default function reduce(state = initialState, action = {}) {
         balances,
         wallets,
         rates,
+        commissions,
       } = action.payload;
 
       return {
@@ -50,6 +52,9 @@ export default function reduce(state = initialState, action = {}) {
         rates: rates
           ? rates
           : state.rates,
+        commissions: commissions
+          ? commissions
+          : state.commissions,
       };
     }
 
