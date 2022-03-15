@@ -60,7 +60,6 @@ const Form = ({
   commission,
   gasPrice,
 }) => {
-  //const commission = _.get(currenciesObject[secondaryCurrency], 'commission', 0);
   let realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
   realRate += realRate * commission;
   const inputRef = useRef(null);
@@ -121,7 +120,7 @@ const Form = ({
           </div>
         )}
         {!!gasPrice && <div className="SwapForm__form__control__meta right">
-          {getLang('swap_gas')} <NumberFormat number={gasPrice} skipRoughly currency={currency} />
+          {getLang('swap_gas')} ≈<NumberFormat number={gasPrice} skipRoughly currency={currency} />
         </div>}
         {/*{!!commission && <div className="SwapForm__form__control__meta right">*/}
           {/*{getLang('swap_commission')} <NumberFormat number={commission * 100} currency={'%'} />*/}
