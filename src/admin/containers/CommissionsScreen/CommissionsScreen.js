@@ -63,7 +63,7 @@ class CommissionsScreen extends React.PureComponent {
           <th>Result</th>
         </thead>
         <tbody>
-        {Object.keys(items).map(token => {
+        {Object.keys(items).filter(token => token !== 'wbnb').map(token => {
           const isDefault = typeof commissions[token] === 'undefined';
 
           const value = items[token];
