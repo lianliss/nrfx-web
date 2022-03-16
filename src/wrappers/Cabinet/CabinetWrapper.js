@@ -19,6 +19,7 @@ import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingS
 import LogoLoader from "../../ui/components/LogoLoader/LogoLoader";
 import Web3Backend from 'services/web3-backend';
 import streamMessage from './steam-message';
+import TagManager from 'react-gtm-module';
 
 import {
   walletBalancesSelector,
@@ -65,6 +66,10 @@ class CabinetWrapper extends Component {
       });
     }).catch(error => {
       console.error("[CabinetWrapper] Can't get rates");
+    });
+
+    TagManager.initialize({
+      gtmId: 'GTM-NSSCKZG',
     });
   }
 

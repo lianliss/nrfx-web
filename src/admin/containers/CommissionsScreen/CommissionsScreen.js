@@ -36,6 +36,7 @@ class CommissionsScreen extends React.PureComponent {
 
     const balances = _.get(this.props, 'balances[0].items', {});
     const rates = _.get(this.props, 'rates', {});
+    const rubRate = rates.rub || 1;
 
     const items = {default: 0, ...commissions};
     Object.keys(balances).map(token => {
@@ -73,7 +74,7 @@ class CommissionsScreen extends React.PureComponent {
             console.warn(`Can't evaluate ${value}`);
           }
 
-          const rate = rates[token] || 1;
+          const rate = (rates[token] || 1) / rubRate;
           let comm = numValue / 100;
           if (CONTRACTS_COMMISSIONS[token]) {
             comm += CONTRACTS_COMMISSIONS[token];
@@ -83,7 +84,7 @@ class CommissionsScreen extends React.PureComponent {
           return <tr key={token}>
             <td>{token === 'default' ? token : token.toUpperCase()}</td>
             <td>
-              ${getFinePrice(rate)}
+              {getFinePrice(rate)} RUB
               </td>
             <td>
               <UI.Input value={value}
@@ -114,7 +115,7 @@ class CommissionsScreen extends React.PureComponent {
               {(CONTRACTS_COMMISSIONS[token] || 0) * 100}%
             </td>
             <td>
-              ${getFinePrice(result)}
+              {getFinePrice(result)} RUB
             </td>
           </tr>
         })}
