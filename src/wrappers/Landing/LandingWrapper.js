@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Notice from "./components/Notice/Notice";
 import TagManager from 'react-gtm-module';
+import ReactPixel from 'react-facebook-pixel';
 
 import { useRoute } from "react-router5";
 
@@ -13,6 +14,8 @@ export default props => {
   TagManager.initialize({
     gtmId: 'GTM-NSSCKZG',
   });
+  ReactPixel.init('503624104685148');
+  ReactPixel.pageView();
 
   useEffect(() => {
     window.scroll(0, 0);
