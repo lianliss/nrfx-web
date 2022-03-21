@@ -250,7 +250,7 @@ class Input extends React.Component {
   };
 
   __onChange = e => {
-    if (this.props.type === "number") { 
+    if (this.props.type === "number") {
       if (this.props.positive && Number(e.target.value) < 0) {
         e.target.value = 0;
       }
