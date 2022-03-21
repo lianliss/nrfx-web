@@ -16,7 +16,8 @@ class Input extends React.Component {
     this.state = {
       indicatorWidth:
         this.props.indicatorWidth || (this.props.indicator ? 34 : 0),
-      displayPassword: false
+      displayPassword: false,
+      value: this.props.value,
     };
   }
 
@@ -47,6 +48,22 @@ class Input extends React.Component {
       });
     }
   };
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.type === "number") {
+      if (Number(state.value) === props.value) {
+        return null; // If props number not been changed.
+      } else {
+        return {
+          value: props.value, // Else set new value.
+        };
+      }
+    } else {
+      return {
+        value: props.value,
+      };
+    }
+  }
 
   render() {
     let { placeholder } = this.props;
@@ -91,7 +108,7 @@ class Input extends React.Component {
 
     let params = {
       className,
-      type,
+      type: this.props.type === "number" ? "text" : type,
       name: this.props.name,
       placeholder: placeholder,
       autoComplete: this.props.autoComplete,
@@ -111,8 +128,8 @@ class Input extends React.Component {
     }
 
     const value = this.props.pattern
-      ? ((this.props.value || "").match(this.props.pattern) || []).join("")
-      : this.props.value;
+      ? ((this.state.value || "").match(this.props.pattern) || []).join("")
+      : this.state.value;
 
     let cont;
     if (this.props.multiLine) {
@@ -123,7 +140,7 @@ class Input extends React.Component {
           onContextMenu={this.__handleContextMenu}
           onChange={this.__onChange}
         >
-          {this.props.value}
+          {this.state.value}
         </textarea>
       );
     } else {
@@ -213,6 +230,18 @@ class Input extends React.Component {
           e.preventDefault();
         }
       }
+
+      if (e.target.value === "0") {
+        e.target.value = "";
+      }
+
+      if(e.key === "." || e.key === ",") {
+        if (e.target.value.indexOf(".") !== -1) {
+          e.preventDefault(); // If "." exists, we can't write more.
+        }
+      } else if (isNaN(e.key)) {
+        e.preventDefault();
+      }
     }
 
     if (this.props.maxLength && e.target.value.length >= this.props.maxLength) {
@@ -221,18 +250,32 @@ class Input extends React.Component {
   };
 
   __onChange = e => {
-    if (this.props.type === "number") {
-      if (this.props.positive && e.target.value < 0) {
+    if (this.props.type === "number") { 
+      if (this.props.positive && Number(e.target.value) < 0) {
         e.target.value = 0;
       }
+
+      const value = e.target.value;
+      const replacedValue = value.replace(",", ".");
+      const result = replacedValue === "." ? "0." : replacedValue;
+      e.target.value = result;
+
+      if (isNaN(e.target.value)) {
+        e.preventDefault();
+      }
+
+      this.props.onChange && this.props.onChange(e);
+      this.setState({ value: e.target.value });
+      this.props.onTextChange && this.props.onTextChange(Number(e.target.value));
 
       // if (this.props.cell && e.target.value) {
       //   e.target.value = parseInt(e.target.value);
       // }
+    }else{
+      this.props.onChange && this.props.onChange(e);
+      this.setState({ value: e.target.value });
+      this.props.onTextChange && this.props.onTextChange(e.target.value);
     }
-
-    this.props.onChange && this.props.onChange(e);
-    this.props.onTextChange && this.props.onTextChange(e.target.value);
   };
 }
 

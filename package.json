@@ -3,7 +3,7 @@
   "version": "3.2.2",
   "private": true,
   "scripts": {
-    "start": "DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
+    "start": "cross-env DOMAIN=index PORT=80 HTTPS=false node scripts/start.js",
     "startLocal": "WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 DOMAIN=index cross-env PORT=80 HTTPS=false node scripts/start.js",
     "startLocalAdmin": "DOMAIN=admin WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 cross-env PORT=80 HTTPS=false node scripts/start.js",
     "start:admin": "DOMAIN=admin cross-env PORT=80 HTTPS=false node scripts/start.js",
