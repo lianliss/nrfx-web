@@ -43,7 +43,7 @@ export default () => {
         items={ADVANTAGES_ITEMS}
       />
       <Application />
-      <Roadmap />
+      <Roadmap current={5} />
       <Welcome />
     </div>
   );

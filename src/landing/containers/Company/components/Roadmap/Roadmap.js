@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useRef } from "react";
+import PropTypes from 'prop-types';
 import "./Roadmap.less";
 
 import useScrollBarWidth from "src/hooks/useScrollBarWidth";
@@ -8,7 +9,7 @@ import { timeLine } from "./constants";
 import Lang from "../../../../../components/Lang/Lang";
 import Time from "src/components/Time/Time";
 
-export default () => {
+const Roadmap = (props) => {
   useScrollBarWidth();
 
   const [position, setPosition] = useState(0);
@@ -71,8 +72,14 @@ export default () => {
             <ul className="Roadmap__timeline">
               {timeLine.map((event, index) => {
                 const future = event.time * 1000 > Date.now();
+                
+                // Active item. current - 1, for change index type to default numbers.
+                const activeItem = props.current && index > props.current
+                  ? "future"
+                  : false;
+
                 return (
-                  <li className={cn("item", { future })}>
+                  <li className={cn("item", activeItem , { future })}>
                     <h4>
                       <Lang name={event.titleLang} />
                     </h4>
@@ -96,3 +103,9 @@ export default () => {
     </div>
   );
 };
+
+Roadmap.propTypes = {
+  current: PropTypes.number,
+}
+
+export default Roadmap;
