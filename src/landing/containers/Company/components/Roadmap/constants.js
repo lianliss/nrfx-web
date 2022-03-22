@@ -31,7 +31,7 @@
 //   }
 // ];
 export const timeLine = [];
-for (let i = 1; i <= 16; i++) {
+for (let i = 1; i <= 24; i++) {
   timeLine.push({
     titleLang: `landingCompany_timeline_phase${i}`,
     textLang: `landingCompany_timeline_phase${i}_subtitle`,
