@@ -106,12 +106,14 @@ class TransferModal extends React.PureComponent {
         }];
         web3SetData({balances});
       } catch (error) {
-        switch(error.data.name){
-          case "error_noGas": 
+        switch (error.data.name) {
+          case "error_noGas": {
             this.props.toastPush(getLang("error_noGas"), "warning");
             break;
-          default:
+          }
+          default: {
             break;
+          }
         }
         
         console.error('[TransferModal]', error);
