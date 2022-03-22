@@ -79,7 +79,7 @@ const Roadmap = (props) => {
                   : false;
 
                 return (
-                  <li className={cn("item", activeItem , { future })}>
+                  <li className={cn("item", activeItem, { future })}>
                     <h4>
                       <Lang name={event.titleLang} />
                     </h4>
