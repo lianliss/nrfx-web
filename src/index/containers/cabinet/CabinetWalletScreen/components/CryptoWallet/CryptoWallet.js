@@ -3,6 +3,7 @@ import "./CryptoWallet.less";
 import React from "react";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { Link } from "react-router5";
 import _ from 'lodash';
 
 import getFinePrice from 'utils/get-fine-price';
@@ -33,6 +34,9 @@ import currenciesObject from 'src/currencies';
 
 import TransferModal from '../TransferModal/TransferModal';
 import {web3WalletsSelector} from "../../../../../../selectors";
+
+import * as pages from "src/index/constants/pages";
+import { walletSwapSetCurrency } from "src/actions/cabinet/wallet";
 
 class CryptoWallet extends React.PureComponent {
 
@@ -88,11 +92,25 @@ class CryptoWallet extends React.PureComponent {
         <span>
           {_.get(currencyInfo, 'name', currency)}
         </span>
-        {isGenerated && <UI.Button
-          onClick={() => this.setState({isTransferModal: true})}
-          size="middle">
-          {getLang("cabinetWallet_transfer")}
-        </UI.Button>}
+        {isGenerated && 
+          <>
+            <Link routeName={pages.WALLET_SWAP} className="ButtonToWalletBuy">
+              <UI.Button
+                size="middle"
+                onClick={() => {
+                  this.props.walletSwapSetCurrency("to", currency);
+                }}
+              >
+                {getLang("buy")}
+              </UI.Button>
+            </Link>
+            <UI.Button
+              onClick={() => this.setState({isTransferModal: true})}
+              size="middle">
+              {getLang("cabinetWallet_transfer")}
+            </UI.Button>
+          </>
+        }
       </h2>
       <div className="CryptoWallet-balance">
         <div className="CryptoWallet-balance-token">
@@ -123,4 +141,7 @@ export default connect(state => ({
   web3Update,
   web3SetData,
   web3SetRate,
+  walletSwapSetCurrency: (type, currency) => {
+    return walletSwapSetCurrency(type, currency)
+  }
 }, dispatch), null, {pure: true})(CryptoWallet);
