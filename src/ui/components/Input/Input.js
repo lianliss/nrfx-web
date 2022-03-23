@@ -30,6 +30,13 @@ class Input extends React.Component {
         },
         false
       );
+    
+    if(this.props.type === "number"){
+      if(Number(this.state.value) === 0){
+        // First render clear value if value is 0.
+        this.setState({ value: "" });
+      }
+    }
   }
 
   __toggleDisplayPassword() {
