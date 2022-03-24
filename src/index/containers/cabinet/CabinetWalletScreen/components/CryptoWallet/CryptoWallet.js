@@ -98,7 +98,25 @@ class CryptoWallet extends React.PureComponent {
               <UI.Button
                 size="middle"
                 onClick={() => {
+                  // Set Currency crypto in "Swap Form" for buy this.
+                  const swapCurrencies = this.props.swapCurrencies;
+                  let fiat = "";
+                  
+                  for ( let key in  swapCurrencies ) {
+                    const swapCurrency = currenciesObject[swapCurrencies[key]];
+
+                    // Search fiat from swapCurrencies
+                    if(swapCurrency.type === "fiat") {
+                      fiat = swapCurrency.abbr;
+                      break;
+                    }else{
+                      continue;
+                    }
+                  }
+
+                  // Set new Currencies for crypto buy
                   this.props.walletSwapSetCurrency("to", currency);
+                  this.props.walletSwapSetCurrency("from", fiat);
                 }}
               >
                 {getLang("buy")}
@@ -137,6 +155,10 @@ export default connect(state => ({
   web3Balances: web3BalancesSelector(state),
   web3Rates: web3RatesSelector(state),
   route: state.router.route,
+  swapCurrencies: {
+    from: state.wallet.swap.fromCurrency,
+    to: state.wallet.swap.toCurrency
+  }
 }), dispatch => bindActionCreators({
   web3Update,
   web3SetData,
