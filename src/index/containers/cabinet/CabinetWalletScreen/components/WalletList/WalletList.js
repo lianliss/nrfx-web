@@ -16,7 +16,7 @@ import useAdaptive from "src/hooks/adaptive";
 import { Separator } from "ui";
 
 import {
-  WEI_ETHER,
+  WEI_ETHER, NANO,
 } from 'src/index/constants/cabinet';
 
 import { ReactComponent as WalletIcon } from "src/asset/24px/wallet.svg";
@@ -30,7 +30,13 @@ export default ({ currency }) => {
   // const wallets = useSelector(web3WalletsSelector);
   const web3Balances = useSelector(web3BalancesSelector);
   const web3BalancesCount = useSelector(web3BalancesCountSelector);
-  const balances = _.get(web3Balances, '[0].items', {});
+  const balances = {};
+  web3Balances.map(walletBalance => {
+    Object.keys(walletBalance.items).map(token => {
+      if (!balances[token]) balances[token] = 0;
+      balances[token] += Number(walletBalance.items[token]);
+    })
+  });
   const tokens = Object.keys(balances);
 
   return (
@@ -53,7 +59,8 @@ export default ({ currency }) => {
         </>
       )}
       {tokens.filter(token => token !== 'wbnb').map(token => {
-        const amount = Number(balances[token]) / WEI_ETHER;
+        const devider = token === 'ton' ? NANO : WEI_ETHER;
+        const amount = Number(balances[token]) / devider;
         return <Wallet
           onClick={() => {
             router.navigate(PAGES.WALLET_CRYPTO, { currency: token });

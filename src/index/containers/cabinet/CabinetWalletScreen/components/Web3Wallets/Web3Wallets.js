@@ -19,7 +19,7 @@ import {
   Button,
 } from 'ui';
 import {
-  WEI_ETHER,
+  WEI_ETHER, NANO,
 } from 'src/index/constants/cabinet';
 import SVG from "utils/svg-wrap";
 import CreateWalletModal from "../CreateWalletModal/CreateWalletModal";
@@ -48,13 +48,14 @@ class Web3Wallets extends React.PureComponent {
     this._mounted = false;
   }
 
-  renderBalance(balance) {
+  renderBalance(balance, network) {
     const {currencies} = this.props;
     const {items} = balance;
     return Object.keys(items).map(token => {
-      if (token === 'wbnb') return;
+      if (network === 'BEP20' && (token === 'wbnb' || token === 'ton')) return;
       const wei = items[token];
-      const amount = Number(wei) / WEI_ETHER;
+      const devider = network === 'BEP20' ? WEI_ETHER : NANO;
+      const amount = Number(wei) / devider;
       const currency = currencies[token];
       let color = currency && currency.gradient
         ? `linear-gradient(0deg, ${currency.gradient[0]} 0%, ${currency.gradient[1]} 100%)`
@@ -98,71 +99,75 @@ class Web3Wallets extends React.PureComponent {
       isImportModal,
       isDeleteModal,
     } = this.state;
-    const isGenerated = _.get(wallets, `[${wallets.length - 1}].isGenerated`, false);
+    const networks = ['BEP20', 'TON'];
 
-    return <ContentBox className="Web3Wallets">
-      <h2>
-        {isGenerated
-          ? getLang("cabinetWallet_header")
-          : getLang("cabinetWallet_header_imported")}
-      </h2>
-      <div className="Web3Wallets-addresses">
-        {wallets.map((wallet, index) => {
-          const {address, isGenerated, network} = wallet;
-          const balance = balances.find(balance => balance.address === address);
-          return <div className="Web3Wallets-addresses-item" key={index}>
-            <div className="Web3Wallets-addresses-item-body">
-              <div className="Web3Wallets-addresses-item-left">
-                <div className="Web3Wallets-addresses-item-address">
-                  {address}
+    return <>
+    {networks.map(network => {
+      const networkWallets = wallets.filter(w => w.network === network);
+      const isGenerated = _.get(networkWallets, `[${networkWallets.length - 1}].isGenerated`, false);
+      return <ContentBox className="Web3Wallets" key={network}>
+        <h2>
+          {getLang("cabinetWallet_header")} {network}
+        </h2>
+        <div className="Web3Wallets-addresses">
+          {networkWallets.map(wallet => {
+            const {address, isGenerated, network} = wallet;
+            const balance = balances.find(balance => balance.address === address);
+            return <div className="Web3Wallets-addresses-item" key={address}>
+              <div className="Web3Wallets-addresses-item-body">
+                <div className="Web3Wallets-addresses-item-left">
+                  <div className="Web3Wallets-addresses-item-address">
+                    {address}
+                  </div>
+                  <div className="Web3Wallets-balances">
+                    {isBalancesLoaded
+                      ? !!balance
+                        ? this.renderBalance(balance, network)
+                        : this.renderUnknownBalance()
+                      : this.renderBalanceLoading()}
+                  </div>
                 </div>
-                <div className="Web3Wallets-balances">
-                  {isBalancesLoaded
-                    ? !!balance
-                      ? this.renderBalance(balance)
-                      : this.renderUnknownBalance()
-                    : this.renderBalanceLoading()}
+                <div className="Web3Wallets-addresses-item-right">
+                  {network}
                 </div>
-              </div>
-              <div className="Web3Wallets-addresses-item-right">
-                {network}
               </div>
             </div>
-          </div>
-        })}
-      </div>
-      {wallets.length
-        ? <div className="Web3Wallets-controls">
-          <Button
-            type="secondary"
-            onClick={() => this.setState({isDeleteModal: true})}
-            size="middle">
-            {getLang("cabinetWallet_delete")}
-          </Button>
-          {isGenerated && <Button
-            onClick={() => this.setState({isPrivateKeyModal: true})}
-            size="middle">
-            {getLang("cabinetWallet_key")}
-          </Button>}
+          })}
         </div>
-        : <div className="Web3Wallets-controls">
-          <Button
-            type="secondary"
-            onClick={() => this.setState({isImportModal: true})}
-            size="middle">
-            {getLang("cabinetWallet_import")}
-          </Button>
-          <Button
-            onClick={() => this.setState({isCreateModal: true})}
-            size="middle">
-            {getLang("cabinetWallet_create")}
-          </Button>
-        </div>}
-      {isCreateModal && <CreateWalletModal onClose={() => this.setState({isCreateModal: false})} />}
-      {isImportModal && <ImportWalletModal onClose={() => this.setState({isImportModal: false})} />}
-      {isDeleteModal && <DeleteWalletModal onClose={() => this.setState({isDeleteModal: false})} />}
-      {isPrivateKeyModal && <PrivateKeyModal onClose={() => this.setState({isPrivateKeyModal: false})} />}
-    </ContentBox>
+        {networkWallets.length
+          ? <div className="Web3Wallets-controls">
+            <Button
+              type="secondary"
+              onClick={() => this.setState({isDeleteModal: true, network})}
+              size="middle">
+              {getLang("cabinetWallet_delete")}
+            </Button>
+            {isGenerated && <Button
+              onClick={() => this.setState({isPrivateKeyModal: true, network})}
+              size="middle">
+              {getLang("cabinetWallet_key")}
+            </Button>}
+          </div>
+          : <div className="Web3Wallets-controls">
+            <Button
+              type="secondary"
+              onClick={() => this.setState({isImportModal: true, network})}
+              size="middle">
+              {getLang("cabinetWallet_import")}
+            </Button>
+            <Button
+              onClick={() => this.setState({isCreateModal: true, network})}
+              size="middle">
+              {getLang("cabinetWallet_create")}
+            </Button>
+          </div>}
+      </ContentBox>
+    })}
+    {isCreateModal && <CreateWalletModal network={this.state.network} onClose={() => this.setState({isCreateModal: false})} />}
+    {isImportModal && <ImportWalletModal network={this.state.network} onClose={() => this.setState({isImportModal: false})} />}
+    {isDeleteModal && <DeleteWalletModal network={this.state.network} onClose={() => this.setState({isDeleteModal: false})} />}
+    {isPrivateKeyModal && <PrivateKeyModal network={this.state.network} onClose={() => this.setState({isPrivateKeyModal: false})} />}
+    </>
   }
 }
 

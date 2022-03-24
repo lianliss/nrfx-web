@@ -53,13 +53,11 @@ class PrivateKeyModal extends React.PureComponent {
     const {privateKey} = this.state;
     return <div className="PrivateKeyModal-done">
       <h3>
-        {getLang("cabinetWalletCreate_private_key")}
+        {getLang("cabinetWalletCreate_use_private_key")}
       </h3>
-      <UI.Input
-        description={getLang("cabinetWalletCreate_use_private_key")}
-        value={privateKey}
-        disabled
-      />
+      <p>
+        {privateKey}
+      </p>
       <center>
         <UI.Button onClick={onClose}>
           {getLang("cabinetWalletPrivate_close")}

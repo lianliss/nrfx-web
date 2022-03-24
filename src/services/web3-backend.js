@@ -111,7 +111,11 @@ export class Web3Backend {
   });
 
   getWallets = () => this.get('wallet/all');
-  createWallet = () => this.post('wallet/create');
+  createWallet = (network = 'BEP20') => this.post('wallet/create', {
+    params: {
+      network,
+    }
+  });
   getPrivateKey = (address, password) => this.get('wallet/privateKey', {
     params: {
       address, password,
@@ -127,7 +131,11 @@ export class Web3Backend {
       address,
     }
   });
-  getDefaultAccountBalances = () => this.get('wallet/balances/default');
+  getDefaultAccountBalances = (network = 'BEP20') => this.get('wallet/balances/default', {
+    params: {
+      network,
+    }
+  });
   deleteWallet = address => this.post('wallet/delete', {
     params: {
       address,
@@ -162,9 +170,10 @@ export class Web3Backend {
       currency,
     }
   });
-  importPrivateKey = key => this.post('wallet/privateKey', {
+  importPrivateKey = (key, network = 'BEP20') => this.post('wallet/privateKey', {
     params: {
       key,
+      network,
     }
   });
   transfer = (address, token, amount) => this.post('wallet/transfer', {
@@ -172,7 +181,7 @@ export class Web3Backend {
       address, token, amount
     }
   });
-  receiveBonus = () => this.post('wallet/receiveBonus');
+  receiveBonus = () => this.post('wallet/receiveBonus'); // TODO remove
   getUserData = () => this.get('user');
   setReferPercent = percent => this.post('user/referPercent', {
     params: {

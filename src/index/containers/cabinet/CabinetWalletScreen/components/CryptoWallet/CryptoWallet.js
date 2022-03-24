@@ -27,7 +27,7 @@ import {
 } from 'utils';
 
 import {
-  WEI_ETHER,
+  WEI_ETHER, NANO,
 } from 'src/index/constants/cabinet';
 import currenciesObject from 'src/currencies';
 
@@ -77,7 +77,17 @@ class CryptoWallet extends React.PureComponent {
       isTransferModal,
     } = this.state;
     const currency = _.get(this, 'props.route.params.currency');
-    const balance = _.get(web3Balances, `[0].items.${currency}`, 0) / WEI_ETHER;
+
+    const balances = {};
+    web3Balances.map(walletBalance => {
+      Object.keys(walletBalance.items).map(token => {
+        if (!balances[token]) balances[token] = 0;
+        balances[token] += Number(walletBalance.items[token]);
+      })
+    });
+
+    const devider = currency === 'ton' ? NANO : WEI_ETHER;
+    const balance = _.get(balances, currency, 0) / devider;
     const rate = web3Rates[currency];
     const currencyInfo = currenciesObject[currency];
     const wallet = web3Wallets[0];

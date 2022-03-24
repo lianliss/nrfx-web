@@ -27,17 +27,17 @@ class CreateWalletModal extends React.PureComponent {
 
   componentDidMount() {
     this._mounted = true;
-    const {web3SetData, wallets, balances} = this.props;
+    const {web3SetData, wallets, balances,} = this.props;
     (async () => {
       try {
         // Create a wallet
-        const wallet = await web3Backend.createWallet();
-        const {privateKey, address, network, bonus} = wallet;
+        const network = _.get(this.props, 'network', 'BEP20');
+        const wallet = await web3Backend.createWallet(network);
+        const {privateKey, address} = wallet;
         wallets.push({
           address,
           network,
           isGenerated: true,
-          bonus,
         });
         web3SetData({wallets});
 
@@ -82,22 +82,22 @@ class CreateWalletModal extends React.PureComponent {
   renderPrivateKey() {
     const {onClose} = this.props;
     const {privateKey, address} = this.state;
+    const network = _.get(this.props, 'network', 'BEP20');
     return <div className="CreateWalletModal-done">
       <h3>
         {getLang("cabinetWalletCreate_address")}
       </h3>
-      <UI.Input
-        value={address}
-        disabled
-      />
+      <p>
+        {address}
+      </p>
+      {network !== 'TON' && <>
       <h3>
-        {getLang("cabinetWalletCreate_private_key")}
+        {getLang("cabinetWalletCreate_use_private_key")}
       </h3>
-      <UI.Input
-        description={getLang("cabinetWalletCreate_use_private_key")}
-        value={privateKey}
-        disabled
-      />
+      <p>
+        {privateKey}
+      </p>
+      </>}
       <center>
         <UI.Button onClick={onClose}>
           Ok

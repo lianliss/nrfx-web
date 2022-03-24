@@ -174,4 +174,16 @@ export default {
     "to_usd": 0,
     "commission": 0.12,
   },
+  "ton": {
+    "abbr": "ton",
+    "name": "Telegram Open Network",
+    "icon": "https://static.narfex.com/img/currencies/ton.svg",
+    "is_exists": true,
+    "type": "crypto",
+    "maximum_fraction_digits": 8,
+    "color": "#3697E1",
+    "gradient": ["#3FBEFC", "#2C74C7"],
+    "can_exchange": false,
+    "to_usd": 0.203
+  },
 }
