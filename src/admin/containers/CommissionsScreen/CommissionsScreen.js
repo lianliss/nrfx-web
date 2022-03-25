@@ -26,11 +26,19 @@ class CommissionsScreen extends React.PureComponent {
 
   render() {
     const component = this;
-    const {commissions, web3SetData} = this.props;
-    if (typeof commissions.default === 'undefined') {
+    let {commissions, web3SetData} = this.props;
+
+    let processed = commissions;
+    try {
+      processed = JSON.parse(commissions);
+    } catch (error) {
+      processed = commissions;
+    }
+
+    if (typeof processed.default === 'undefined') {
       web3SetData({commissions: {
         default: 2,
-        ...commissions,
+        ...processed,
       }})
     }
 
@@ -38,10 +46,10 @@ class CommissionsScreen extends React.PureComponent {
     const rates = _.get(this.props, 'rates', {});
     const rubRate = rates.rub || 1;
 
-    const items = {default: 0, ...commissions};
+    const items = {default: 0, ...processed};
     Object.keys(balances).map(token => {
       if (typeof items[token] === 'undefined') {
-        items[token] = commissions.default;
+        items[token] = processed.default;
       }
     });
 
@@ -51,7 +59,7 @@ class CommissionsScreen extends React.PureComponent {
           Crypto Commissions
         </div>
         <UI.Button onClick={() => {
-          web3Backend.updateCommissions(commissions);
+          web3Backend.updateCommissions(processed);
         }}>Save</UI.Button>
       </div>
       <table>
@@ -64,7 +72,7 @@ class CommissionsScreen extends React.PureComponent {
         </thead>
         <tbody>
         {Object.keys(items).filter(token => token !== 'wbnb').map(token => {
-          const isDefault = typeof commissions[token] === 'undefined';
+          const isDefault = typeof processed[token] === 'undefined';
 
           const value = items[token];
           let numValue = 0;
@@ -93,7 +101,7 @@ class CommissionsScreen extends React.PureComponent {
                           const newComms = {};
                           newComms[token] = event.target.value;
                           web3SetData({commissions: {
-                            ...commissions,
+                            ...processed,
                             ...newComms,
                           }});
                         }}
@@ -101,8 +109,8 @@ class CommissionsScreen extends React.PureComponent {
               {(!isDefault && token !== 'default') && <UI.Button type="small"
                 onClick={() => {
                 const newComms = {};
-                Object.keys(commissions).map(t => {
-                  if (t !== token) newComms[t] = commissions[t];
+                Object.keys(processed).map(t => {
+                  if (t !== token) newComms[t] = processed[t];
                 });
                 web3SetData({
                   commissions: newComms,
@@ -122,7 +130,7 @@ class CommissionsScreen extends React.PureComponent {
         </tbody>
       </table>
       <UI.Button onClick={() => {
-        web3Backend.updateCommissions(commissions);
+        web3Backend.updateCommissions(processed);
       }}>Save</UI.Button>
     </UI.ContentBox>
   }
