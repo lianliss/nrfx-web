@@ -183,7 +183,7 @@ export default {
     "maximum_fraction_digits": 8,
     "color": "#3697E1",
     "gradient": ["#3FBEFC", "#2C74C7"],
-    "can_exchange": false,
+    "can_exchange": true,
     "to_usd": 0.203
   },
 }
