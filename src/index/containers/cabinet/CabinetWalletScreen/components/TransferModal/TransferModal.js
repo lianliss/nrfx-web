@@ -19,6 +19,7 @@ import {
   WEI_ETHER,
 } from 'src/index/constants/cabinet';
 import {timeout} from 'utils';
+import * as toastsActions from "src/actions/toasts";
 
 class TransferModal extends React.PureComponent {
 
@@ -106,6 +107,16 @@ class TransferModal extends React.PureComponent {
         }];
         web3SetData({balances});
       } catch (error) {
+        switch (error.data.name) {
+          case "error_noGas": {
+            this.props.toastPush(getLang("error_noGas"), "warning");
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+        
         console.error('[TransferModal]', error);
         this.setState({
           isLoading: false,
@@ -140,4 +151,5 @@ export default connect(state => ({
 }), dispatch => bindActionCreators({
   web3Update,
   web3SetData,
+  toastPush: toastsActions.toastPush
 }, dispatch), null, {pure: true})(TransferModal);

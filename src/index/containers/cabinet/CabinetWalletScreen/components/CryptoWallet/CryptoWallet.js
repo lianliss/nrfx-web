@@ -3,6 +3,7 @@ import "./CryptoWallet.less";
 import React from "react";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { Link } from "react-router5";
 import _ from 'lodash';
 
 import getFinePrice from 'utils/get-fine-price';
@@ -33,6 +34,9 @@ import currenciesObject from 'src/currencies';
 
 import TransferModal from '../TransferModal/TransferModal';
 import {web3WalletsSelector} from "../../../../../../selectors";
+
+import * as pages from "src/index/constants/pages";
+import { walletSwapSetCurrency } from "src/actions/cabinet/wallet";
 
 class CryptoWallet extends React.PureComponent {
 
@@ -98,11 +102,47 @@ class CryptoWallet extends React.PureComponent {
         <span>
           {_.get(currencyInfo, 'name', currency)}
         </span>
-        {isGenerated && <UI.Button
-          onClick={() => this.setState({isTransferModal: true})}
-          size="middle">
-          {getLang("cabinetWallet_transfer")}
-        </UI.Button>}
+        {isGenerated && 
+          <>
+            <Link routeName={pages.WALLET_SWAP} className="ButtonToWalletBuy">
+              <UI.Button
+                size="middle"
+                onClick={() => {
+                  const currencyObj = currenciesObject[currency];
+                  
+                  if (currencyObj && currencyObj.can_exchange) {
+                    // Set Currency crypto in "Swap Form" for buy this.
+                    const swapCurrencies = this.props.swapCurrencies;
+                    let fiat = "";
+                    
+                    for ( let key in  swapCurrencies ) {
+                      const swapCurrency = currenciesObject[swapCurrencies[key]];
+
+                      // Search fiat from swapCurrencies
+                      if (swapCurrency.type === "fiat") {
+                        fiat = swapCurrency.abbr;
+                        break;
+                      } else {
+                        continue;
+                      }
+                    }
+                    
+                    // Set new Currencies for crypto buy
+                    this.props.walletSwapSetCurrency("to", currency);
+                    this.props.walletSwapSetCurrency("from", fiat);
+                  }
+                }}
+              >
+                {getLang("buy")}
+              </UI.Button>
+            </Link>
+            <UI.Button
+              onClick={() => this.setState({isTransferModal: true})}
+              size="middle">
+              {getLang("cabinetWallet_transfer")}
+            </UI.Button>
+          </>
+        }
       </h2>
       <div className="CryptoWallet-balance">
         <div className="CryptoWallet-balance-token">
@@ -129,8 +169,15 @@ export default connect(state => ({
   web3Balances: web3BalancesSelector(state),
   web3Rates: web3RatesSelector(state),
   route: state.router.route,
+  swapCurrencies: {
+    from: state.wallet.swap.fromCurrency,
+    to: state.wallet.swap.toCurrency
+  }
 }), dispatch => bindActionCreators({
   web3Update,
   web3SetData,
   web3SetRate,
+  walletSwapSetCurrency: (type, currency) => {
+    return walletSwapSetCurrency(type, currency)
+  }
 }, dispatch), null, {pure: true})(CryptoWallet);
