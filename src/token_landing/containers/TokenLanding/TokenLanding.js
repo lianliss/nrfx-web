@@ -7,6 +7,7 @@ import COMPANY from '../../../index/constants/company';
 // Blocks
 import Statistics from '../../components/Statistics/Statistics';
 import AboutUs from '../AboutUs/AboutUs';
+import Services from '../Services/Services';
 
 // Constants
 import { statisticsData } from '../../constants/statistics';
@@ -31,6 +32,7 @@ function TokenLanding({ adaptive }) {
       </Helmet>
       <Statistics data={statisticsData} />
       <AboutUs />
+      <Services />
     </div>
   );
 }
