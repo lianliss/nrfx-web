@@ -15,6 +15,7 @@ import { statisticsData } from '../../constants/statistics';
 // Styles
 import './TokenLanding.less';
 import '../../constants/vars.less';
+import Roadmap from '../Roadmap/Roadmap';
 
 function TokenLanding({ adaptive }) {
   return (
@@ -33,6 +34,7 @@ function TokenLanding({ adaptive }) {
       <Statistics data={statisticsData} />
       <AboutUs />
       <Services />
+      <Roadmap />
     </div>
   );
 }
