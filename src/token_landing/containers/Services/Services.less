@@ -1,0 +1,45 @@
+@import '../../../vars';
+
+.Services {
+  background: #edf1f8;
+  padding: 178px 0 119px;
+  text-align: center;
+
+  &__container {
+    max-width: @landing-container-width;
+    padding: 0 @landing-container-padding;
+    margin: 0 auto;
+  }
+
+  &__items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1033px;
+    margin: 86px auto;
+  }
+}
+
+.gradient-text {
+  background: var(--blue-light-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Services {
+    padding: 72px 0 27px;
+
+    &__container {
+      padding: 0 calc(@landing-container-padding + 13px);
+    }
+
+    &__items {
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      margin: 63px auto;
+    }
+  }
+}
