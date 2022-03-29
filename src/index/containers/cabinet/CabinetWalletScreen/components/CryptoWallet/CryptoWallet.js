@@ -123,7 +123,7 @@ class CryptoWallet extends React.PureComponent {
                   }
                 }}
               >
-                {getLang("buy")}
+                {getLang("to_buy_crypto_wallet")}
               </UI.Button>
             </Link>
             <UI.Button
