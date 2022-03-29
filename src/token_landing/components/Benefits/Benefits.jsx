@@ -7,11 +7,11 @@ import { benefits } from '../../constants/benefits';
 
 function Benefits() {
   return (
-    <section className="Benefits">
+    <div className="Benefits">
       {benefits.map((item, key) => (
         <Benefit {...item} key={key} />
       ))}
-    </section>
+    </div>
   );
 }
 
