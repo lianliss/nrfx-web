@@ -1,0 +1,29 @@
+.RoadmapModal {
+  position: absolute;
+  width: 207px;
+  height: 223px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 31px 24px 28px;
+  box-sizing: border-box;
+
+  svg {
+    margin-right: 15px;
+  }
+
+  &__tasks {
+    margin-top: 13px;
+  }
+
+  &__task {
+    font-size: var(--landing-text-size);
+    font-weight: var(--landing-text-weight);
+    font-weight: 500;
+    line-height: 210%;
+    color: var(--landing-color-gray);
+
+    &:not(:last-child) {
+      margin-bottom: 3px;
+    }
+  }
+}
