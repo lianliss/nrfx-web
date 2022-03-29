@@ -1,10 +1,17 @@
+@import '../../../vars';
+
 .TokenLanding {
   font-size: 16px;
   font-weight: 500;
- 
+
   h2 {
     font-size: var(--landing-title-size);
     font-weight: var(--landing-title-weight);
     line-height: var(--landing-title-line-height);
+
+    @media screen and (max-width: @mobile-width) {
+      font-size: var(--landing-title-size-mobile);
+      line-height: var(--landing-title-line-height-mobile);
+    }
   }
 }
