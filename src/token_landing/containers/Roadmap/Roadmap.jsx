@@ -17,10 +17,11 @@ function Roadmap() {
 
   const openModal = (tasks, number, position) => {
     // Set Modal State.
-    if (number === currentModalNumber) {
-      setShowModal(!showModal);
-    } else {
+    if (number !== currentModalNumber) {
       setShowModal(true);
+    } else {
+      // Clear Modal Number, for next visible.
+      return setCurrentModalNumber(null);
     }
 
     setModalTasks(tasks);
@@ -42,6 +43,7 @@ function Roadmap() {
                 onClick={(e) => {
                   const x = e.pageX;
                   const y = e.pageY;
+
                   // key + 1, for display "0" index step number to 1.
                   openModal(item.tasks, key + 1, { x, y });
                 }}
@@ -58,6 +60,7 @@ function Roadmap() {
             number={currentModalNumber}
             tasks={modalTasks}
             position={modalPosition}
+            setShowModal={setShowModal}
           />
         )}
       </div>
