@@ -58,7 +58,7 @@
 
 @media screen and (max-width: @mobile-width) {
   .Information {
-    padding: 59px 0 0;
+    padding: 59px 0 75px;
 
     &__title,
     &__description {
@@ -67,19 +67,35 @@
       margin-left: auto;
     }
 
+    &__description {
+      margin-bottom: 38px;
+    }
+
     &__container {
       flex-direction: column;
       padding: 0 14px;
     }
 
     &__column {
+      max-width: 100% !important;
       &:last-child {
+        margin-top: 38px;
         flex-direction: column;
       }
     }
 
     .Card:first-child {
       margin: 0 0 20px;
+    }
+
+    &__action {
+      flex-direction: column;
+      margin-top: 33px;
+
+      .light-btn {
+        width: 100%;
+        margin-top: 15px;
+      }
     }
   }
 }

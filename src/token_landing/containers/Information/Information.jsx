@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Information.less';
 import TokenButton from '../../components/TokenButton/TokenButton';
@@ -8,8 +9,10 @@ import Card from './components/Card/Card';
 // Card Images
 import laptopImage from './assets/101.svg';
 import tabletImage from './assets/100.svg';
+import laptopImageMobile from './assets/101m.svg';
+import tabletImageMobile from './assets/100m.svg';
 
-function Information({ code }) {
+function Information({ code, adaptive }) {
   return (
     <section className="Information">
       <div className="Information__container">
@@ -20,28 +23,46 @@ function Information({ code }) {
             to show you how to buy NRFX from start to finish. You can buy Narfex
             Token on both Narfex and PancakeSwap.
           </p>
-          <div className="Information__action">
-            <CopyText text="0x86c86ffdc0482d8d" />
-            <TokenButton className="light-btn">Narfex Exchange</TokenButton>
-          </div>
+          {!adaptive && (
+            <div className="Information__action">
+              <CopyText text="0x86c86ffdc0482d8d" />
+              <TokenButton className="light-btn">Narfex Exchange</TokenButton>
+            </div>
+          )}
         </div>
         <div className="Information__column">
           <Card
             title="Video /n Instruction"
             actionText="Watch video"
-            src={tabletImage}
+            src={adaptive ? tabletImageMobile : tabletImage}
             position={{ left: -33, top: 28.12 }}
           />
           <Card
             title="Text /n Instruction"
             actionText="Read More"
-            src={laptopImage}
+            src={adaptive ? laptopImageMobile : laptopImage}
             position={{ left: 7.83, top: -19.81 }}
           />
         </div>
+        {adaptive && (
+          <div className="Information__action">
+            <CopyText text="0x86c86ffdc0482d8d" />
+            <TokenButton className="light-btn">Narfex Exchange</TokenButton>
+          </div>
+        )}
       </div>
     </section>
   );
 }
+
+Information.defaultProps = {
+  code: '',
+  adaptive: false,
+};
+
+Information.propTypes = {
+  code: PropTypes.string,
+  adaptive: PropTypes.bool,
+};
 
 export default Information;

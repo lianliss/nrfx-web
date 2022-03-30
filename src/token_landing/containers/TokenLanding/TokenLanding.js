@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import * as utils from '../../../utils';
 import COMPANY from '../../../index/constants/company';
+
+// Adaptive
+import { setAdaptive } from '../../../actions';
+import { PHONE } from '../../../index/constants/breakpoints';
 
 // Blocks
 import Statistics from '../../components/Statistics/Statistics';
@@ -17,8 +22,28 @@ import { statisticsData } from '../../constants/statistics';
 import './TokenLanding.less';
 import '../../constants/vars.less';
 import Roadmap from '../Roadmap/Roadmap';
+import Contacts from '../Contacts/Contacts';
 
-function TokenLanding({ adaptive }) {
+function TokenLanding({ adaptive, setAdaptive }) {
+  React.useEffect(() => {
+    // Landing adaptive Setter.
+    window.addEventListener('resize', screenResize);
+    screenResize();
+
+    return function removeEvents() {
+      window.removeEventListener('resize', screenResize);
+    };
+  }, []);
+
+  // Check and set adaptive
+  const screenResize = () => {
+    if (document.body.offsetWidth <= PHONE) {
+      setAdaptive(true);
+    } else {
+      setAdaptive(false);
+    }
+  };
+
   return (
     <div className="TokenLanding">
       <Helmet>
@@ -36,9 +61,12 @@ function TokenLanding({ adaptive }) {
       <AboutUs />
       <Services />
       <Roadmap />
-      <Information />
+      <Information adaptive={adaptive} />
+      <Contacts />
     </div>
   );
 }
 
-export default TokenLanding;
+export default connect((state) => ({ adaptive: state.default.adaptive }), {
+  setAdaptive,
+})(TokenLanding);
