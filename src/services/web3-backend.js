@@ -194,7 +194,8 @@ export class Web3Backend {
     params: {
       data: JSON.stringify(data),
     }
-  })
+  });
+  getStats = () => this.get('stats');
 }
 
 const web3Backend = new Web3Backend();

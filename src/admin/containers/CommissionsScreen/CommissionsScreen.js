@@ -58,9 +58,14 @@ class CommissionsScreen extends React.PureComponent {
         <div className="Block__title">
           Crypto Commissions
         </div>
-        <UI.Button onClick={() => {
-          web3Backend.updateCommissions(processed);
-        }}>Save</UI.Button>
+        <div className="CommissionsScreen__buttons">
+          <UI.Button type="secondary" onClick={() => {
+            web3Backend.getStats();
+          }}>Stats</UI.Button>
+          <UI.Button onClick={() => {
+            web3Backend.updateCommissions(processed);
+          }}>Save</UI.Button>
+        </div>
       </div>
       <table>
         <thead>
