@@ -1,6 +1,7 @@
 import * as auth from "./auth";
 import axios from 'axios';
 import _ from 'lodash';
+import FileDownload from 'js-file-download';
 
 export const APP_ID = process.env.DOMAIN === "admin" ? 10 : 8;
 export const getWeb3Entry = () => process.env.WEB3 || "https://web3.narfex.com";
@@ -38,15 +39,19 @@ export class Web3Backend {
         const url = `${getWeb3Entry()}/api/v1/${apiPath}`;
         const params = _.get(options, 'params', {});
         const headers = _.get(options, 'headers', {});
+        const {responseType} = options;
 
         const requestHeaders = {
           "X-Token": auth.getToken(),
           "X-Beta": 1,
           "X-APP-ID": APP_ID,
-          "Content-Type": "application/json",
           "Accept-Language": window.localStorage.lang || "en",
           ...headers,
         };
+
+        if (responseType !== 'blob' &&  responseType !== 'arraybuffer') {
+          requestHeaders["Content-Type"] = "application/json";
+        }
 
         try {
           response = await instance({
@@ -195,7 +200,12 @@ export class Web3Backend {
       data: JSON.stringify(data),
     }
   });
-  getStats = () => this.get('stats');
+  getStats = () => this.get('stats', {
+    responseType: 'arraybuffer',
+  }).then(response => {
+    const array = new Uint8Array(response);
+    FileDownload(array.buffer, 'report.xlsx');
+  });
 }
 
 const web3Backend = new Web3Backend();
