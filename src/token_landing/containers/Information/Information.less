@@ -4,18 +4,20 @@
   padding: 129px 0 0;
 
   &__container {
+    display: flex;
+    justify-content: space-between;
     max-width: @landing-container-width;
     padding: 0 @landing-container-padding;
     margin: 0 auto;
   }
 
-
   &__title {
     max-width: 339px;
     margin-bottom: 40px;
-    line-height: 118% !important;
+    line-height: 68px !important;
+    letter-spacing: -0.01em;
   }
-  
+
   &__description {
     max-width: 413px;
     margin-bottom: 67px;
@@ -26,16 +28,58 @@
   }
 
   &__action {
+    display: flex;
+    justify-content: space-between;
     height: 70px;
   }
 
   &__column {
+    width: 100%;
+
     &:first-child {
       max-width: 465px;
     }
 
     &:last-child {
+      display: flex;
+      justify-content: end;
       max-width: 617px;
+    }
+  }
+
+  .light-btn {
+    width: 219px;
+  }
+
+  .Card:first-child {
+    margin-right: 17px;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Information {
+    padding: 59px 0 0;
+
+    &__title,
+    &__description {
+      text-align: center;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    &__container {
+      flex-direction: column;
+      padding: 0 14px;
+    }
+
+    &__column {
+      &:last-child {
+        flex-direction: column;
+      }
+    }
+
+    .Card:first-child {
+      margin: 0 0 20px;
     }
   }
 }

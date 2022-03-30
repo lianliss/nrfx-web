@@ -2,8 +2,14 @@ import React from 'react';
 
 import './Information.less';
 import TokenButton from '../../components/TokenButton/TokenButton';
+import CopyText from './components/CopyText/CopyText';
+import Card from './components/Card/Card';
 
-function Information() {
+// Card Images
+import laptopImage from './assets/101.svg';
+import tabletImage from './assets/100.svg';
+
+function Information({ code }) {
   return (
     <section className="Information">
       <div className="Information__container">
@@ -15,10 +21,24 @@ function Information() {
             Token on both Narfex and PancakeSwap.
           </p>
           <div className="Information__action">
+            <CopyText text="0x86c86ffdc0482d8d" />
             <TokenButton className="light-btn">Narfex Exchange</TokenButton>
           </div>
         </div>
-        <div className="Information__column"></div>
+        <div className="Information__column">
+          <Card
+            title="Video /n Instruction"
+            actionText="Watch video"
+            src={tabletImage}
+            position={{ left: -33, top: 28.12 }}
+          />
+          <Card
+            title="Text /n Instruction"
+            actionText="Read More"
+            src={laptopImage}
+            position={{ left: 7.83, top: -19.81 }}
+          />
+        </div>
       </div>
     </section>
   );

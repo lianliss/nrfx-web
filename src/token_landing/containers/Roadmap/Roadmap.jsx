@@ -3,7 +3,7 @@ import React from 'react';
 import './Roadmap.less';
 
 import SVG from 'utils/svg-wrap';
-import playIcon from './assets/play.svg';
+import playIcon from '../../assets/play.svg';
 
 import { roadmapItems } from '../../constants/roadmap';
 import RoadmapModal from '../../components/Roadmap/Modal/RoadmapModal';
