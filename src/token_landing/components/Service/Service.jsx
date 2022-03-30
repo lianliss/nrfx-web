@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SVG from 'utils/svg-wrap';
 import './Service.less';
@@ -13,5 +14,15 @@ function Service({ icon, title }) {
     </div>
   );
 }
+
+Service.propTypes = {
+  icon: PropTypes.string,
+  title: PropTypes.string,
+};
+
+Service.defaultProps = {
+  icon: '/',
+  title: '',
+};
 
 export default Service;

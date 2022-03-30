@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './RoadmapModal.less';
 
@@ -48,5 +49,21 @@ function RoadmapModal({ svg, number, tasks, position, setShowModal }) {
     </div>
   );
 }
+
+RoadmapModal.propTypes = {
+  svg: PropTypes.element,
+  number: PropTypes.number,
+  tasks: PropTypes.arrayOf(PropTypes.string),
+  position: PropTypes.objectOf(PropTypes.number),
+  setShowModal: PropTypes.func,
+};
+
+RoadmapModal.defaultProps = {
+  svg: <img />,
+  number: 0,
+  tasks: [],
+  position: { x: 0, y: 0 },
+  setShowModal: () => {},
+};
 
 export default RoadmapModal;

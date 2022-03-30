@@ -3,7 +3,7 @@ import Benefits from '../../components/Benefits/Benefits';
 
 import './AboutUs.less';
 
-function AboutUs(props) {
+function AboutUs() {
   return (
     <section className="AboutUs">
       <h2 className="AboutUs__title">What is Narfex Token</h2>

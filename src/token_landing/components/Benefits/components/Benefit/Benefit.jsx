@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SVG from 'utils/svg-wrap';
 import './Benefit.less';
@@ -14,5 +15,17 @@ function Benefit({ icon, title, description }) {
     </article>
   );
 }
+
+Benefit.propTypes = {
+  icon: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+};
+
+Benefit.defaultProps = {
+  icon: '/',
+  title: '',
+  description: '',
+};
 
 export default Benefit;

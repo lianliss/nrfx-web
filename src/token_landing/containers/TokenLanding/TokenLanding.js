@@ -8,6 +8,7 @@ import COMPANY from '../../../index/constants/company';
 import Statistics from '../../components/Statistics/Statistics';
 import AboutUs from '../AboutUs/AboutUs';
 import Services from '../Services/Services';
+import Information from '../Information/Information';
 
 // Constants
 import { statisticsData } from '../../constants/statistics';
@@ -35,6 +36,7 @@ function TokenLanding({ adaptive }) {
       <AboutUs />
       <Services />
       <Roadmap />
+      <Information />
     </div>
   );
 }

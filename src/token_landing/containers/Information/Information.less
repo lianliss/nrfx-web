@@ -1,0 +1,41 @@
+@import '../../../vars';
+
+.Information {
+  padding: 129px 0 0;
+
+  &__container {
+    max-width: @landing-container-width;
+    padding: 0 @landing-container-padding;
+    margin: 0 auto;
+  }
+
+
+  &__title {
+    max-width: 339px;
+    margin-bottom: 40px;
+    line-height: 118% !important;
+  }
+  
+  &__description {
+    max-width: 413px;
+    margin-bottom: 67px;
+    font-size: var(--landing-text-size);
+    font-weight: var(--landing-text-weight);
+    color: var(--landing-color-gray);
+    line-height: 210%;
+  }
+
+  &__action {
+    height: 70px;
+  }
+
+  &__column {
+    &:first-child {
+      max-width: 465px;
+    }
+
+    &:last-child {
+      max-width: 617px;
+    }
+  }
+}
