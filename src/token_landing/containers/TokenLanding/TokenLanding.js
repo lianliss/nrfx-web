@@ -24,6 +24,7 @@ import '../../constants/vars.less';
 import Roadmap from '../Roadmap/Roadmap';
 import Contacts from '../Contacts/Contacts';
 import Functional from '../Functional/Functional';
+import Tokenomics from '../Tokenomics/Tokenomics';
 
 function TokenLanding({ adaptive, setAdaptive }) {
   React.useEffect(() => {
@@ -62,6 +63,7 @@ function TokenLanding({ adaptive, setAdaptive }) {
       <AboutUs />
       <Services />
       <Functional />
+      <Tokenomics adaptive={adaptive} />
       <Roadmap />
       <Information adaptive={adaptive} code="0x86c86ffdc0482d8d" />
       <Contacts />
