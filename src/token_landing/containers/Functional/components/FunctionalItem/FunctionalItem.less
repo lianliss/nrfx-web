@@ -1,0 +1,56 @@
+@import '../../../../../vars';
+
+.FunctionalItem {
+  display: flex;
+  align-items: flex-start;
+  max-width: 405px;
+  height: 120.69px;
+  padding: 30px 29.63px;
+  border: 1px solid #dadfe7;
+  box-sizing: border-box;
+  border-radius: 21px;
+
+  &__number {
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 30.36px;
+    text-align: center;
+    letter-spacing: -0.01em;
+    color: #dadfe7;
+  }
+
+  &__title {
+    margin-left: 34.2px;
+    max-width: 173px;
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  &__answer-icon {
+    svg {
+      transform: translateY(5px);
+      margin-left: 6px;
+    }
+  }
+
+  &__icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    margin-top: 6px; // For line height
+    margin-left: auto;
+    background: #e9effb;
+    border-radius: 18px;
+
+    svg {
+      width: 13px;
+      height: 14px;
+    }
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    max-width: 100%;
+  }
+}

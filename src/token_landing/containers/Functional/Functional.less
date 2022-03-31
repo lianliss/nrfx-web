@@ -1,0 +1,66 @@
+@import '../../../vars';
+
+.Functional {
+  padding: 206px 0 223px;
+  max-width: 1440px;
+
+  margin: 0 auto;
+  position: relative;
+  background: var(--landing-bg-white);
+
+  &__container {
+    max-width: @landing-container-width;
+    padding: 0 @landing-container-padding;
+    margin: 0 auto;
+  }
+
+  &__title {
+    margin-bottom: 61px;
+  }
+
+  &Item {
+    &:not(:last-child) {
+      margin-bottom: 15.09px;
+    }
+  }
+
+  &__background {
+    position: absolute;
+    right: -194px;
+    bottom: 0;
+
+    @media screen and (max-width: 1200px) and (min-width: calc(@mobile-width + 1px)) {
+      right: auto;
+      left: 50vw;
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Functional {
+    padding: 66px 0 475px;
+    overflow: hidden;
+
+    &__title {
+      margin: 0 auto 55px;
+      text-align: center;
+    }
+
+    &__background {
+      left: -22.93vw;
+      bottom: 0;
+
+      svg {
+        width: 509px;
+        height: 423.73px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: @mobile-width) {
+  .Functional__background {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

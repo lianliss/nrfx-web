@@ -25,7 +25,7 @@ function Information({ code, adaptive }) {
           </p>
           {!adaptive && (
             <div className="Information__action">
-              <CopyText text="0x86c86ffdc0482d8d" />
+              <CopyText text={code} />
               <TokenButton className="light-btn">Narfex Exchange</TokenButton>
             </div>
           )}
@@ -46,7 +46,7 @@ function Information({ code, adaptive }) {
         </div>
         {adaptive && (
           <div className="Information__action">
-            <CopyText text="0x86c86ffdc0482d8d" />
+            <CopyText text={code} />
             <TokenButton className="light-btn">Narfex Exchange</TokenButton>
           </div>
         )}
