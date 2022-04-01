@@ -12,7 +12,7 @@ function Contacts() {
       <div className="Contacts__container">
         <h2 className="Contacts__title">Subscribe our Telegram</h2>
         <TokenButton className="Contacts__button white-btn">
-          {getLang('token_landing_join_telegram')}
+          {getLang('token_landin_join_telegram')}
         </TokenButton>
         <img src={phonesImage} className="Contacts__image" />
       </div>
