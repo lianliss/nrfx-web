@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './CopyText.less';
 import SVG from 'utils/svg-wrap';
@@ -12,5 +13,13 @@ function CopyText({ text }) {
     </div>
   );
 }
+
+CopyText.propTypes = {
+  text: PropTypes.string,
+};
+
+CopyText.defaultProps = {
+  text: '',
+};
 
 export default CopyText;

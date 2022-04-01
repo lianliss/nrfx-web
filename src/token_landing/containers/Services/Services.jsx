@@ -5,7 +5,7 @@ import Service from '../../components/Service/Service';
 
 import { services } from '../../constants/services';
 
-function Services(props) {
+function Services() {
   return (
     <section className="Services">
       <div className="Services__container">

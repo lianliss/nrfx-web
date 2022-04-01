@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Info.less';
 
 import SVG from 'utils/svg-wrap';
 import ellipse from '../assets/ellipse.svg';
 
-function Info({ id, title, progress, svgLine, position, type, adaptive }) {
+function Info({ title, progress, svgLine, position, type, adaptive }) {
   if (adaptive) {
     return (
       <div className="Info" style={position}>
@@ -51,5 +52,23 @@ function Info({ id, title, progress, svgLine, position, type, adaptive }) {
     </div>
   );
 }
+
+Info.propTypes = {
+  title: PropTypes.string,
+  progress: PropTypes.number,
+  svgLine: PropTypes.string,
+  position: PropTypes.object,
+  type: PropTypes.oneOf(['right', 'left']),
+  adaptive: PropTypes.bool,
+};
+
+Info.defaultProps = {
+  title: '',
+  progress: 0,
+  svgLine: '/',
+  position: { left: 0, top: 0 },
+  type: 'right',
+  adaptive: false,
+};
 
 export default Info;
