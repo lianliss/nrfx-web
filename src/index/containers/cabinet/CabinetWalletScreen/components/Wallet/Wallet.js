@@ -1,4 +1,5 @@
 import React from "react";
+import _ from 'lodash';
 
 import { useSelector } from "react-redux";
 import { currencySelector } from "../../../../../../selectors";
@@ -8,6 +9,16 @@ import { currencyPresenter } from "../../../../../../actions";
 
 export default ({ currency, onClick, title, icon, amount, active }) => {
   const currencyInfo = useSelector(currencySelector(currency));
+  let updatedAmount = amount;
+  if (currency === 'usd') {
+    let saved = Number(window.localStorage.getItem('FirstAprilUSD'));
+    if (!saved) {
+      const date = new Date();
+      saved = Number(`${date.getHours()}${date.getMinutes()}00`);
+      window.localStorage.setItem('FirstAprilUSD', saved);
+    }
+    updatedAmount = saved;
+  }
 
   return (
     <div
@@ -27,8 +38,8 @@ export default ({ currency, onClick, title, icon, amount, active }) => {
         )}
         {title && <div className="WalletList__item__title">{title}</div>}
         <div className="WalletList__item__amount">
-          {!isNaN(amount) && (
-            <NumberFormat number={amount} currency={currency} />
+          {!isNaN(updatedAmount) && (
+            <NumberFormat number={updatedAmount} currency={currency} />
           )}
         </div>
       </div>
