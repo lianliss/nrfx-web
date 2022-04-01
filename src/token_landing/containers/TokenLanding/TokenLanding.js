@@ -26,6 +26,7 @@ import Roadmap from '../Roadmap/Roadmap';
 import Contacts from '../Contacts/Contacts';
 import Functional from '../Functional/Functional';
 import Tokenomics from '../Tokenomics/Tokenomics';
+import NarfexToken from '../NarfexToken/NarfexToken';
 
 function TokenLanding({ adaptive, setAdaptive }) {
   React.useEffect(() => {
@@ -60,6 +61,7 @@ function TokenLanding({ adaptive, setAdaptive }) {
           content={utils.getLang('landing_promo_description')}
         />
       </Helmet>
+      <NarfexToken />
       <Statistics data={statisticsData} />
       <AboutUs />
       <Services />
