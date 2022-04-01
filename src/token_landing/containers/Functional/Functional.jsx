@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Functional.less';
 
+import Lang from "src/components/Lang/Lang";
 import FunctionalItem from './components/FunctionalItem/FunctionalItem';
 import SVG from 'utils/svg-wrap';
 import backgroundImage from './components/assets/bg.svg';
@@ -11,7 +12,7 @@ import { functionalItems } from '../../constants/functionalItems';
 
 function Functional() {
   return (
-    <div className="Functional">
+    <section className="Functional">
       <div className="Functional__container">
         <div className="Functional__content">
           <h2 className="Functional__title">Functional</h2>
@@ -26,7 +27,7 @@ function Functional() {
       <div className="Functional__background">
         <SVG src={backgroundImage} />
       </div>
-    </div>
+    </section>
   );
 }
 

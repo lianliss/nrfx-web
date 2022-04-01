@@ -1,38 +1,22 @@
 export const roadmapItems = [
   {
-    title: 'Start Token',
+    title: '25 000 clients',
     tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
   },
   {
-    title: 'Community expansion',
+    title: '25 000 clients',
     tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
   },
   {
-    title: 'Worldwide Marketing',
+    title: '25 000 clients',
     tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
   },
   {
-    title: 'Start Token',
+    title: '25 000 clients',
     tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
   },
   {
-    title: 'Community expansion',
-    tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
-  },
-  {
-    title: 'Worldwide Marketing',
-    tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
-  },
-  {
-    title: 'Start Token',
-    tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
-  },
-  {
-    title: 'Community expansion',
-    tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
-  },
-  {
-    title: 'Worldwide Marketing',
-    tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients'],
+    title: "25 000 clients",
+    tasks: ['25 000 clients', 'Start DEX', 'Staking', '1000 000 clients', "Maximum Experiments", "Last day"],
   },
 ];

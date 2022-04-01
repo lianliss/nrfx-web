@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import Lang from "src/components/Lang/Lang";
 
 import './FunctionalItem.less';
 import SVG from 'utils/svg-wrap';
@@ -30,5 +33,15 @@ function FunctionalItem({ number, title }) {
     </div>
   );
 }
+
+FunctionalItem.propTypes = {
+  number: PropTypes.number,
+  title: PropTypes.string,
+};
+
+FunctionalItem.defaultProps = {
+  number: 0,
+  title: '',
+};
 
 export default FunctionalItem;

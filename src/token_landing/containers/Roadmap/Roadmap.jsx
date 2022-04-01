@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Roadmap.less';
 
+import Lang from "src/components/Lang/Lang";
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../assets/play.svg';
 
@@ -30,7 +31,7 @@ function Roadmap() {
   };
 
   return (
-    <div className="Roadmap">
+    <section className="Roadmap">
       <div className="Roadmap__container">
         <h2 className="Roadmap__title">RoadMap</h2>
         <div className="Roadmap__items">
@@ -64,7 +65,7 @@ function Roadmap() {
           />
         )}
       </div>
-    </div>
+    </section>
   );
 }
 

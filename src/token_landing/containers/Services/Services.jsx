@@ -1,11 +1,13 @@
 import React from 'react';
 
+import Lang from "src/components/Lang/Lang";
+
 import './Services.less';
 import Service from '../../components/Service/Service';
 
 import { services } from '../../constants/services';
 
-function Services(props) {
+function Services() {
   return (
     <section className="Services">
       <div className="Services__container">

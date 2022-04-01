@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Tokenomics.less';
+
+import Lang from "src/components/Lang/Lang";
 import SVG from 'utils/svg-wrap';
 import tokenomicsCircle from './components/assets/tokenomics.svg';
 import { tokenomics } from '../../constants/tokenomics';
@@ -11,7 +14,7 @@ function Tokenomics({ adaptive }) {
   // Last tokenomics item to First.
   const lastTokenomicsItem = tokenomics.slice(-1);
   const adaptiveTokenomics = [...lastTokenomicsItem, ...tokenomics].slice(0, 7);
-  
+
   return (
     <section className="Tokenomics">
       {!adaptive && (
@@ -45,5 +48,13 @@ function Tokenomics({ adaptive }) {
     </section>
   );
 }
+
+Tokenomics.propTypes = {
+  adaptive: PropTypes.bool,
+};
+
+Tokenomics.defaultProps = {
+  adaptive: false,
+};
 
 export default Tokenomics;

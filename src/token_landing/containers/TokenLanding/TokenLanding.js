@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
@@ -72,6 +73,16 @@ function TokenLanding({ adaptive, setAdaptive }) {
     </div>
   );
 }
+
+TokenLanding.propTypes = {
+  adaptive: PropTypes.bool,
+  setAdaptive: PropTypes.func,
+};
+
+TokenLanding.defaultProps = {
+  adaptive: false,
+  setAdaptive: () => {},
+};
 
 export default connect((state) => ({ adaptive: state.default.adaptive }), {
   setAdaptive,

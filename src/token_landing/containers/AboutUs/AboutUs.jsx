@@ -1,6 +1,7 @@
 import React from 'react';
 import Benefits from '../../components/Benefits/Benefits';
 
+import Lang from 'src/components/Lang/Lang';
 import './AboutUs.less';
 
 function AboutUs() {
