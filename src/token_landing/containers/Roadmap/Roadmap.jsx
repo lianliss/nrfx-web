@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Roadmap.less';
 
+import Lang from "src/components/Lang/Lang";
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../assets/play.svg';
 

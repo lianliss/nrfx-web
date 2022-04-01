@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Lang from "src/components/Lang/Lang";
+
 import './FunctionalItem.less';
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../../../assets/play.svg';

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Lang from "src/components/Lang/Lang";
+
 import './Services.less';
 import Service from '../../components/Service/Service';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Lang from "src/components/Lang/Lang";
 import SVG from 'utils/svg-wrap';
 import './Service.less';
 

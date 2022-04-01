@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './CopyText.less';
+
+import Lang from "src/components/Lang/Lang";
 import SVG from 'utils/svg-wrap';
 import maximizeIcon from './assets/maximize.svg';
 

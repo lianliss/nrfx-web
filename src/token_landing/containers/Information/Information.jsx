@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Information.less';
+import Lang from "src/components/Lang/Lang";
 import TokenButton from '../../components/TokenButton/TokenButton';
 import CopyText from './components/CopyText/CopyText';
 import Card from './components/Card/Card';

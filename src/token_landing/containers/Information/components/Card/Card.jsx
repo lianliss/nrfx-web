@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Card.less';
 
+import Lang from "src/components/Lang/Lang";
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../../../assets/play.svg';
 
