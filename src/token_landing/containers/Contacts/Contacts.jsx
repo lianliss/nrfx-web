@@ -3,7 +3,7 @@ import React from 'react';
 import './Contacts.less';
 import phonesImage from './assets/phones.png';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import TokenButton from '../../components/TokenButton/TokenButton';
 
 function Contacts() {
@@ -12,7 +12,7 @@ function Contacts() {
       <div className="Contacts__container">
         <h2 className="Contacts__title">Subscribe our Telegram</h2>
         <TokenButton className="Contacts__button white-btn">
-          Join Telegram
+          {getLang('token_landing_join_telegram')}
         </TokenButton>
         <img src={phonesImage} className="Contacts__image" />
       </div>

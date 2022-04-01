@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Functional.less';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import FunctionalItem from './components/FunctionalItem/FunctionalItem';
 import SVG from 'utils/svg-wrap';
 import backgroundImage from './components/assets/bg.svg';

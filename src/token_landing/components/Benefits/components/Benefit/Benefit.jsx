@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import SVG from 'utils/svg-wrap';
 import './Benefit.less';
 

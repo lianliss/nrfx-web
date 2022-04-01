@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Tokenomics.less';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import SVG from 'utils/svg-wrap';
 import tokenomicsCircle from './components/assets/tokenomics.svg';
 import { tokenomics } from '../../constants/tokenomics';

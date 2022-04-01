@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes, { object, objectOf } from 'prop-types';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import './Statistics.less';
 
 function Statistics({ data }) {
