@@ -30,7 +30,7 @@ function Roadmap() {
   };
 
   return (
-    <div className="Roadmap">
+    <section className="Roadmap">
       <div className="Roadmap__container">
         <h2 className="Roadmap__title">RoadMap</h2>
         <div className="Roadmap__items">
@@ -64,7 +64,7 @@ function Roadmap() {
           />
         )}
       </div>
-    </div>
+    </section>
   );
 }
 

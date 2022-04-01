@@ -11,7 +11,7 @@ import { functionalItems } from '../../constants/functionalItems';
 
 function Functional() {
   return (
-    <div className="Functional">
+    <section className="Functional">
       <div className="Functional__container">
         <div className="Functional__content">
           <h2 className="Functional__title">Functional</h2>
@@ -26,7 +26,7 @@ function Functional() {
       <div className="Functional__background">
         <SVG src={backgroundImage} />
       </div>
-    </div>
+    </section>
   );
 }
 

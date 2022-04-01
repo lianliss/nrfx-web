@@ -8,7 +8,7 @@ import TokenButton from '../../components/TokenButton/TokenButton';
 
 function Contacts() {
   return (
-    <div className="Contacts">
+    <section className="Contacts">
       <div className="Contacts__container">
         <h2 className="Contacts__title">Subscribe our Telegram</h2>
         <TokenButton className="Contacts__button white-btn">
@@ -16,7 +16,7 @@ function Contacts() {
         </TokenButton>
         <SVG src={phonesImage} className="Contacts__image" />
       </div>
-    </div>
+    </section>
   );
 }
 
