@@ -1,0 +1,29 @@
+@import '../../../../../vars';
+
+.CopyText {
+  position: relative;
+  width: 229px;
+  height: 70px;
+  padding: 26px 19px;
+  background: #edf1f8;
+  color: rgba(45, 49, 63, .7);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 119%;
+  border: none;
+  border-radius: 13px;
+  box-sizing: border-box;
+
+  svg {
+    position: absolute;
+    top: 19px;
+    right: 12px;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    width: 100%;
+  }
+
+}

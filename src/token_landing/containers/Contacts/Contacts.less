@@ -1,0 +1,82 @@
+@import '../../../vars';
+
+.Contacts {
+  max-width: @landing-container-width;
+  padding: 86px @landing-container-padding 116px;
+  margin: 0 auto;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    height: 409px;
+    padding: 70px 60px;
+    background: linear-gradient(294.55deg, #78a0ff 37.64%, #5078e6 77.51%),
+      #edf1f8;
+    border-radius: 35px;
+    color: #fff;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  &__title {
+    max-width: 360px;
+    font-weight: 600;
+    line-height: 118% !important;
+    letter-spacing: -0.01em;
+  }
+
+  &__button {
+    margin-top: auto;
+  }
+
+  &__image {
+    position: absolute;
+    bottom: 0px;
+    right: 6%;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Contacts {
+    &__container {
+      height: 550px;
+      padding: 42px 60px;
+      overflow: hidden;
+    }
+
+    &__title {
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    &__button {
+      margin: 35px auto 0;
+    }
+    
+    &__image {
+      bottom: -2px;
+      left: 50%;
+      transform: translate(-50%);
+      width: 86.32%;
+      height: 265px;
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Contacts {
+    &__image {
+      width: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .Contacts {
+    &__image {
+      height: 226px;
+    }
+  }
+}

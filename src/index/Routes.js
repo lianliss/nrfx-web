@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import SiteMainScreen from "src/landing/containers/MainScreen/MainScreen";
 import BuyBitcoinScreen from "src/landing/containers/BuyBitcoin/BuyBitcoin";
 import SiteAboutScreen from "../landing/containers/Company/Company";
+import TokenLanding from "../token_landing/containers/TokenLanding/TokenLanding";
 // import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
@@ -198,6 +199,10 @@ function Routes(props) {
     case pages.DOCUMENTATION_API_METHOD:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationMethodScreen;
+      break;
+    case pages.TOKEN_LANDING:
+      Component = TokenLanding;
+      WrapperComponent = LandingWrapper;
       break;
     default:
       Component = SiteNotFoundScreen;

@@ -1,0 +1,22 @@
+@import '../../../vars';
+
+.AboutUs {
+  max-width: @landing-container-width;
+  padding: 104.35px @landing-container-padding 91px;
+  margin: 0 auto;
+
+  &__description {
+    margin: 23px 0;
+    max-width: 750px;
+    line-height: 210%;
+  }
+
+  p {
+    color: var(--landing-color-gray);
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    padding-top: 17px;
+    padding-bottom: 22px;
+  }
+}

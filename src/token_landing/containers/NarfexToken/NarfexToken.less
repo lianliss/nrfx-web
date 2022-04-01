@@ -1,0 +1,138 @@
+@import '../../../vars';
+
+.NarfexToken {
+    &__blocks {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: @landing-container-width;
+        padding: 0 @landing-container-padding;
+        margin: 0 auto;
+    }
+    &__block {
+        display: flex;
+        flex-direction: column;
+
+        &:first-child {
+            max-width: 480px;
+            margin-right: 20px;
+        }
+        &:last-child {
+            flex-grow: 1;
+        }
+        img {
+            width: 100%;
+        }
+        h1 {
+            background: var(--blue-light-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 89px;
+            font-weight: 600;
+            line-height: 1em;
+            margin: 64px 0 32px;
+        }
+        p {
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--landing-color-gray);
+            line-height: 1.8em;
+            max-width: 360px;
+        }
+    }
+    &__buttons {
+        margin-top: 100px;
+        display: flex;
+        align-items: center;
+
+        .Button {
+            min-width: 200px;
+        }
+        a {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            margin-left: 32px;
+
+            span {
+                &.isvg {
+                    svg {
+
+                    }
+                }
+                &:last-child {
+                    color: #5c84ed;
+                    margin-left: 16px;
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+            }
+
+            &:hover {
+                text-decoration: none;
+
+                span {
+                    &.isvg {
+                        svg {
+                            path {
+                                fill: var(--orange-gradient-color-end);
+                            }
+                        }
+                    }
+                    &:last-child {
+                        color: var(--orange-gradient-color-end);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.adaptive {
+    .NarfexToken {
+        &__blocks {
+            flex-direction: column;
+            margin-top: 40px;
+            position: relative;
+            align-items: flex-start;
+        }
+        &__block {
+            margin: 0 auto;
+            width: 100%;
+
+            h1 {
+                font-size: 62px;
+                text-align: center;
+            }
+            p {
+                text-align: center;
+            }
+            img {
+                position: absolute;
+                bottom: 20px;
+                left: -20px;
+                right: -20px;
+                width: calc(100vw + 40px);
+                z-index: -1;
+                opacity: 0.75;
+            }
+        }
+        &__buttons {
+            flex-direction: column;
+            align-items: center;
+            margin-top: 300px;
+            width: 100vw;
+            margin-left: -9px;
+            background: linear-gradient(
+                    0deg,
+                    var(--alice-blue) 70%,
+                    transparent 100%
+            );
+
+            a {
+                margin: 20px 0 0;
+            }
+        }
+    }
+}

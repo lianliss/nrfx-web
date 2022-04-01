@@ -189,6 +189,10 @@ export const routes =
         {
           name: pages.DOCUMENTATION_API_METHOD,
           path: "/documentation/api/method/:key"
+        },
+        {
+          name: pages.TOKEN_LANDING,
+          path: "/token_landing"
         }
       ];
 
