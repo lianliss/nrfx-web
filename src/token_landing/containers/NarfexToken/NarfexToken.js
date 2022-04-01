@@ -4,6 +4,7 @@ import './NarfexToken.less';
 import TokenButton from '../../components/TokenButton/TokenButton';
 import SVG from 'utils/svg-wrap';
 import * as actions from "actions/landing/buttons";
+import {getLang} from 'utils';
 
 const NarfexToken = props => {
   return (
@@ -11,17 +12,19 @@ const NarfexToken = props => {
       <div className="NarfexToken__blocks">
         <div className="NarfexToken__block">
           <h1>
-            Narfex Token
+            {getLang('token_landing_narfex_token')}
           </h1>
           <p>
-            The Narfex token facilitates multiple tokenomics, serving as a utility token and governance token.
+            {getLang('token_landing_narfex_token_text')}
           </p>
           <div className="NarfexToken__buttons">
-            <TokenButton onClick={() => actions.swap()} className="light-btn">Buy on Narfex</TokenButton>
+            <TokenButton onClick={() => actions.swap()} className="light-btn">
+              {getLang('token_landing_buy_on_narfex')}
+            </TokenButton>
             <a href="https://pancakeswap.finance/swap" target="_blank">
               <SVG src={require('asset/token/wallet.svg')} />
               <span>
-                Buy on<br/>Pancakeswap
+                {getLang('token_landing_buy_on_pancake')}
               </span>
             </a>
           </div>
