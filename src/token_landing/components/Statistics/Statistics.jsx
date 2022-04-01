@@ -11,8 +11,8 @@ function Statistics({ data }) {
         {data.map((item, key) => (
           <div className="Statistics__item Statistic" key={key}>
             <div className="Statistic__content">
-              <span className="Statistic__value">{item.value}</span>
-              <span className="Statistic__name">{item.name}</span>
+              <span className="Statistic__value">{getLang(item.value)}</span>
+              <span className="Statistic__name">{getLang(item.name)}</span>
             </div>
           </div>
         ))}

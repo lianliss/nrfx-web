@@ -7,16 +7,17 @@ import { getLang } from 'utils';
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../../../assets/play.svg';
 
+
 function Card({ actionText, src, title, position, onClick }) {
   // Line break for title.
-  const titleArray = title.split('/n');
-  const result = (
+  const titleArray = getLang(title).split('/n');
+  const result = titleArray.length > 1 ? (
     <>
       {titleArray[0]}
       <br />
       {titleArray[1]}
     </>
-  );
+  ) : titleArray[0];
 
   return (
     <div className="Card">
@@ -26,7 +27,7 @@ function Card({ actionText, src, title, position, onClick }) {
       <span className="Card__title">{result}</span>
       <div className="Card__action" onClick={onClick}>
         <SVG src={playIcon} className="Roadmap__icon" />
-        <span>{actionText}</span>
+        <span>{getLang(actionText)}</span>
       </div>
     </div>
   );

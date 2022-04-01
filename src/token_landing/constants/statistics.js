@@ -1,6 +1,18 @@
 export const statisticsData = [
-  { name: 'Current price', value: '$1.45' },
-  { name: 'Circulation supply', value: '413M' },
-  { name: 'Total supply', value: '1.5B' },
-  { name: 'Holders', value: '137K+' },
+  {
+    name: 'token_landing_statistics_1_name',
+    value: 'token_landing_statistics_1_value',
+  },
+  {
+    name: 'token_landing_statistics_2_name',
+    value: 'token_landing_statistics_2_value',
+  },
+  {
+    name: 'token_landing_statistics_3_name',
+    value: 'token_landing_statistics_3_value',
+  },
+  {
+    name: 'token_landing_statistics_4_name',
+    value: 'token_landing_statistics_4_value',
+  },
 ];

@@ -10,7 +10,9 @@ function Contacts() {
   return (
     <section className="Contacts">
       <div className="Contacts__container">
-        <h2 className="Contacts__title">Subscribe our Telegram</h2>
+        <h2 className="Contacts__title">
+          {getLang('token_landing_contacts_title')}
+        </h2>
         <TokenButton className="Contacts__button white-btn">
           {getLang('token_landing_join_telegram')}
         </TokenButton>

@@ -18,29 +18,31 @@ function Information({ code, adaptive }) {
     <section className="Information">
       <div className="Information__container">
         <div className="Information__column">
-          <h2 className="Information__title">How buy token?</h2>
+          <h2 className="Information__title">
+            {getLang('token_landing_information_title')}
+          </h2>
           <p className="Information__description">
-            Buying NRFX is easy with Narfex Exchanger. We've created tutorials
-            to show you how to buy NRFX from start to finish. You can buy Narfex
-            Token on both Narfex and PancakeSwap.
+            {getLang('token_landing_information_description')}
           </p>
           {!adaptive && (
             <div className="Information__action">
               <CopyText text={code} />
-              <TokenButton className="light-btn">Narfex Exchange</TokenButton>
+              <TokenButton className="light-btn">
+                {getLang('token_landing_narfex_exchange')}
+              </TokenButton>
             </div>
           )}
         </div>
         <div className="Information__column">
           <Card
-            title="Video /n Instruction"
-            actionText="Watch video"
+            title="token_landing_information_card_title_1"
+            actionText="token_landing_information_card_action_1"
             src={adaptive ? tabletImageMobile : tabletImage}
             position={{ left: -33, top: 28.12 }}
           />
           <Card
-            title="Text /n Instruction"
-            actionText="Read More"
+            title="token_landing_information_card_title_2"
+            actionText="token_landing_information_card_action_2"
             src={adaptive ? laptopImageMobile : laptopImage}
             position={{ left: 7.83, top: -19.81 }}
           />
@@ -48,7 +50,9 @@ function Information({ code, adaptive }) {
         {adaptive && (
           <div className="Information__action">
             <CopyText text={code} />
-            <TokenButton className="light-btn">Narfex Exchange</TokenButton>
+            <TokenButton className="light-btn">
+              {getLang('token_landing_narfex_exchange')}
+            </TokenButton>
           </div>
         )}
       </div>

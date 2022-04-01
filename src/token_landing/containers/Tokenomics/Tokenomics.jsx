@@ -21,7 +21,9 @@ function Tokenomics({ adaptive }) {
         <div className="Tokenomics__container">
           <div className="Tokenomics__circle">
             <SVG src={tokenomicsCircle} />
-            <h3 className="Tokenomics__title">Tokenomics</h3>
+            <h3 className="Tokenomics__title">
+              {getLang('token_landing_tokenomics_title')}
+            </h3>
             <div className="Tokenomics__items">
               {tokenomics &&
                 tokenomics.map((item, key) => {
@@ -34,7 +36,9 @@ function Tokenomics({ adaptive }) {
       {adaptive && (
         <div className="Tokenomics__container">
           <div className="Tokenomics__circle">
-            <h3 className="Tokenomics__title">Tokenomics</h3>
+            <h3 className="Tokenomics__title">
+              {getLang('token_landing_tokenomics_title')}
+            </h3>
             <SVG src={tokenomicsCircle} className="Tokenomics__circle-image" />
             <div className="Tokenomics__items">
               {adaptiveTokenomics &&

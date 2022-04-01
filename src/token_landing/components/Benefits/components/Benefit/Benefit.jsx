@@ -11,8 +11,8 @@ function Benefit({ icon, title, description }) {
       <div className="Benefit__icon-container">
         <SVG src={icon} />
       </div>
-      <h3 className="Benefit__title">{title}</h3>
-      <p className="Benefit__description">{description}</p>
+      <h3 className="Benefit__title">{getLang(title)}</h3>
+      <p className="Benefit__description">{getLang(description)}</p>
     </article>
   );
 }

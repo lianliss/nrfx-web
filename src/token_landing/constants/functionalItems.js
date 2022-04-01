@@ -1,5 +1,5 @@
 export const functionalItems = [
-  { id: 1, title: 'Community driven (DAO)' },
-  { id: 2, title: '2% fee: 1% burning, 1% auto-staking' },
-  { id: 3, title: '100% Transparency' },
+  { id: 1, title: 'token_landing_functional_item_1' },
+  { id: 2, title: 'token_landing_functional_item_2' },
+  { id: 3, title: 'token_landing_functional_item_3' },
 ];

@@ -43,7 +43,7 @@ function RoadmapModal({ svg, number, tasks, position, setShowModal }) {
         {tasks.map((task, key) => (
           <div key={key} className="RoadmapModal__task">
             {svg}
-            <span>{task}</span>
+            <span>{getLang(task)}</span>
           </div>
         ))}
       </div>

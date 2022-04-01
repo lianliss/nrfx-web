@@ -11,7 +11,7 @@ function Service({ icon, title }) {
       <div className="Service__icon icon-container">
         <SVG src={icon} />
       </div>
-      <span className="Service__title gradient-text">{title}</span>
+      <span className="Service__title gradient-text">{getLang(title)}</span>
     </div>
   );
 }
