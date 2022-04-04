@@ -13,7 +13,7 @@ import tabletImage from './assets/100.svg';
 import laptopImageMobile from './assets/101m.svg';
 import tabletImageMobile from './assets/100m.svg';
 
-function Information({ code, adaptive }) {
+function Information({ code, adaptive, currentLang }) {
   return (
     <section className="Information">
       <div className="Information__container">
@@ -35,16 +35,18 @@ function Information({ code, adaptive }) {
         </div>
         <div className="Information__column">
           <Card
-            title="token_landing_information_card_title_1"
-            actionText="token_landing_information_card_action_1"
+            title="token_landing_information_card_video_instruction_title"
+            actionText="token_landing_information_card_video_instruction_button"
             src={adaptive ? tabletImageMobile : tabletImage}
             position={{ left: -33, top: 28.12 }}
           />
           <Card
-            title="token_landing_information_card_title_2"
-            actionText="token_landing_information_card_action_2"
+            title="token_landing_information_card_text_instruction_button"
+            actionText="token_landing_information_card_text_instruction_button"
+            link={currentLang === "ru" ? "https://narfex.gitbook.io/wiki/" : "https://narfex.gitbook.io/narfex-wiki-en/"}
             src={adaptive ? laptopImageMobile : laptopImage}
             position={{ left: 7.83, top: -19.81 }}
+
           />
         </div>
         {adaptive && (
@@ -63,11 +65,13 @@ function Information({ code, adaptive }) {
 Information.defaultProps = {
   code: '',
   adaptive: false,
+  currentLang: 'ru',
 };
 
 Information.propTypes = {
   code: PropTypes.string,
   adaptive: PropTypes.bool,
+  currentLang: PropTypes.string,
 };
 
 export default Information;
