@@ -28,7 +28,7 @@ import Functional from '../Functional/Functional';
 import Tokenomics from '../Tokenomics/Tokenomics';
 import NarfexToken from '../NarfexToken/NarfexToken';
 
-function TokenLanding({ adaptive, setAdaptive, currentLang }) {
+function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
   React.useEffect(() => {
     // Landing adaptive Setter.
     window.addEventListener('resize', screenResize);
@@ -72,6 +72,7 @@ function TokenLanding({ adaptive, setAdaptive, currentLang }) {
         adaptive={adaptive}
         code="0x86c86ffdc0482d8d"
         currentLang={currentLang}
+        routePath={routePath}
       />
       <Contacts currentLang={currentLang} />
     </div>
@@ -82,18 +83,21 @@ TokenLanding.propTypes = {
   adaptive: PropTypes.bool,
   setAdaptive: PropTypes.func,
   currentLang: PropTypes.string,
+  routePath: PropTypes.string,
 };
 
 TokenLanding.defaultProps = {
   adaptive: false,
   setAdaptive: () => {},
   currentLang: 'ru',
+  routePath: '/',
 };
 
 export default connect(
   (state) => ({
     adaptive: state.default.adaptive,
     currentLang: state.default.currentLang,
+    routePath: state.router.route.path,
   }),
   {
     setAdaptive,
