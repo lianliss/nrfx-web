@@ -83,6 +83,7 @@ function Information({ code, adaptive, currentLang, routePath }) {
         </div>
         {adaptive && (
           <div className="Information__action">
+            <h3>{getLang("token_landing_information_action_title")}</h3>
             <CopyText text={code} />
             <TokenButton className="light-btn">
               {getLang('token_landing_narfex_exchange')}
@@ -105,14 +106,14 @@ Information.defaultProps = {
   code: '',
   adaptive: false,
   currentLang: 'ru',
-  routePath: PropTypes.string,
+  routePath: '/',
 };
 
 Information.propTypes = {
   code: PropTypes.string,
   adaptive: PropTypes.bool,
   currentLang: PropTypes.string,
-  routePath: '/',
+  routePath: PropTypes.string,
 };
 
 export default Information;

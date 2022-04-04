@@ -10,7 +10,7 @@ function Statistics({ price }) {
   const data = [
     {
       name: getLang('token_landing_statistics_1_name'),
-      value: price ? <NumberFormat number={price} currency="usd" /> : "-"
+      value: price ? <>$<NumberFormat number={price} currency="" /></> : "-"
     },
     {
       name: getLang('token_landing_statistics_2_name'),

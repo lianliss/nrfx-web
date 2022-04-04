@@ -23,9 +23,9 @@ function FunctionalItem({ number, title }) {
       <span className="FunctionalItem__number">{numberFilter(number)}</span>
       <div className="FunctionalItem__title">
         <span>{getLang(title)}</span>
-        <span className="FunctionalItem__answer-icon">
-          <SVG src={answerIcon} />
-        </span>
+        {/*<span className="FunctionalItem__answer-icon">*/}
+          {/*<SVG src={answerIcon} />*/}
+        {/*</span>*/}
       </div>
       <div className="FunctionalItem__icon-container">
         <SVG src={playIcon} />
