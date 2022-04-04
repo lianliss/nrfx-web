@@ -11,7 +11,7 @@
     margin: 0 auto;
 
     @media screen and (min-width: calc(@mobile-width + 1px)) {
-      height: 447px;      
+      height: 447px;
     }
   }
 
@@ -34,8 +34,8 @@
   &__action {
     display: flex;
     justify-content: space-between;
-    
-    @media screen and (min-width: @mobile-width){
+
+    @media screen and (min-width: @mobile-width) {
       margin-top: auto;
     }
   }
@@ -67,7 +67,7 @@
 
 @media screen and (max-width: @mobile-width) {
   .Information {
-    padding: 59px 0 75px;
+    padding: 59px 0 41px;
 
     &__title,
     &__description {
@@ -99,7 +99,17 @@
 
     &__action {
       flex-direction: column;
-      margin-top: 33px;
+      margin-top: 57px;
+
+      h3 {
+        margin: 0 auto 29px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 125%;
+        /* identical to box height, or 30px */
+        color: var(--landing-color-black);
+      }
 
       .light-btn {
         width: 100%;
