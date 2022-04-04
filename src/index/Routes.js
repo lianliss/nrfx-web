@@ -118,8 +118,8 @@ function Routes(props) {
       WrapperComponent = LandingWrapper;
       break;
     case pages.TOKEN:
-      Component = SiteTokenScreen;
-      WrapperComponent = TokenWrapper;
+      Component = TokenLanding;
+      WrapperComponent = LandingWrapper;
       break;
     // case pages.UIKIT:
     //   if (process.env.NODE_ENV === `development`) {
