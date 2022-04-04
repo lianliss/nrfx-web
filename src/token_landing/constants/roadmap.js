@@ -5,7 +5,6 @@ export const roadmapItems = [
       'token_landing_roadmap_1_1',
       'token_landing_roadmap_1_2',
       'token_landing_roadmap_1_3',
-      'token_landing_roadmap_1_4',
     ],
   },
   {
@@ -15,6 +14,7 @@ export const roadmapItems = [
       'token_landing_roadmap_2_2',
       'token_landing_roadmap_2_3',
       'token_landing_roadmap_2_4',
+      'token_landing_roadmap_2_5',
     ],
   },
   {
@@ -24,6 +24,9 @@ export const roadmapItems = [
       'token_landing_roadmap_3_2',
       'token_landing_roadmap_3_3',
       'token_landing_roadmap_3_4',
+      'token_landing_roadmap_3_5',
+      'token_landing_roadmap_3_6',
+      'token_landing_roadmap_3_7',
     ],
   },
   {
@@ -42,8 +45,6 @@ export const roadmapItems = [
       'token_landing_roadmap_5_2',
       'token_landing_roadmap_5_3',
       'token_landing_roadmap_5_4',
-      'token_landing_roadmap_5_5',
-      'token_landing_roadmap_5_6',
     ],
   },
 ];

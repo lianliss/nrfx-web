@@ -21,7 +21,7 @@ const NarfexToken = props => {
             <TokenButton onClick={() => actions.swap()} className="light-btn">
               {getLang('token_landing_buy_on_narfex')}
             </TokenButton>
-            <a href="https://pancakeswap.finance/swap" target="_blank">
+            <a href="https://pancakeswap.finance/swap?outputCurrency=0x3764Be118a1e09257851A3BD636D48DFeab5CAFE" target="_blank">
               <SVG src={require('asset/token/wallet.svg')} />
               <span>
                 {getLang('token_landing_buy_on_pancake')}

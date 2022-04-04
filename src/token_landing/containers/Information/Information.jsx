@@ -12,6 +12,7 @@ import laptopImage from './assets/101.svg';
 import tabletImage from './assets/100.svg';
 import laptopImageMobile from './assets/101m.svg';
 import tabletImageMobile from './assets/100m.svg';
+import * as actions from "actions/landing/buttons";
 
 function Information({ code, adaptive, currentLang }) {
   return (
@@ -27,7 +28,7 @@ function Information({ code, adaptive, currentLang }) {
           {!adaptive && (
             <div className="Information__action">
               <CopyText text={code} />
-              <TokenButton className="light-btn">
+              <TokenButton className="light-btn" onClick={() => actions.swap()}>
                 {getLang('token_landing_narfex_exchange')}
               </TokenButton>
             </div>
