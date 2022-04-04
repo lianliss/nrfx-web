@@ -61,7 +61,7 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
           content={utils.getLang('landing_promo_description')}
         />
       </Helmet>
-      <NarfexToken />
+      {/* <NarfexToken /> */}
       <Statistics data={statisticsData} />
       <AboutUs />
       <Services />

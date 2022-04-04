@@ -104,14 +104,14 @@ Information.defaultProps = {
   code: '',
   adaptive: false,
   currentLang: 'ru',
-  routePath: PropTypes.string,
+  routePath: '/',
 };
 
 Information.propTypes = {
   code: PropTypes.string,
   adaptive: PropTypes.bool,
   currentLang: PropTypes.string,
-  routePath: '/',
+  routePath: PropTypes.string,
 };
 
 export default Information;

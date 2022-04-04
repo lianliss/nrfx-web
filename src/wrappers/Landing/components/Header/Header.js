@@ -12,6 +12,7 @@ import * as pages from "../../../../index/constants/pages";
 import { useSelector } from "react-redux";
 import { currentLangSelector, profileSelector } from "../../../../selectors";
 import Lang from "../../../../components/Lang/Lang";
+import LanguageChanger from "../../../../ui/components/LanguageChanger/LanguageChanger";
 
 export default () => {
   const router = useRouter();
@@ -135,25 +136,28 @@ export default () => {
                 >
                   <Lang name="site__authModalSignUpBtn" />
                 </Button>
-                <Button
+                
+                <LanguageChanger />
+                {/* <Button
                   type="lite"
                   onClick={() => {
                     actions.openStateModal("language");
                   }}
                 >
                   {currentLang.toUpperCase()}
-                </Button>
+                </Button> */}
               </ButtonWrapper>
             )}
           </div>
 
-          <div
+          <Button
             onClick={handleClickMobileMenu}
+            type="secondary"
             className={cn("Header__menuButton", { active: openedMobileMenu })}
           >
             <SVG src={require("./assets/menu_button.svg")} />
             <SVG src={require("./assets/menu_button_close.svg")} />
-          </div>
+          </Button>
         </header>
         <MobileMenu
           visible={openedMobileMenu}

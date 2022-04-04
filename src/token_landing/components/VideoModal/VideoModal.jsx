@@ -24,7 +24,7 @@ function VideoModal({ type, link, handleClose }) {
 }
 
 VideoModal.propTypes = {
-  type: PropTypes.oneOf('video', 'shorts'),
+  type: PropTypes.oneOf(['video', 'shorts']),
   link: PropTypes.string,
   handleClose: PropTypes.func,
 };
