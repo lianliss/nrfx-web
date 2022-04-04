@@ -26,7 +26,7 @@ import Functional from '../Functional/Functional';
 import Tokenomics from '../Tokenomics/Tokenomics';
 import NarfexToken from '../NarfexToken/NarfexToken';
 
-function TokenLanding({ adaptive, setAdaptive, currentLang }) {
+function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
   const [price, setPrice] = React.useState(null);
   React.useEffect(() => {
     web3Backend.getTokenRate('nrfx').then(data => {
@@ -76,6 +76,7 @@ function TokenLanding({ adaptive, setAdaptive, currentLang }) {
         adaptive={adaptive}
         code="0x3764Be118a1e09257851A3BD636D48DFeab5CAFE"
         currentLang={currentLang}
+        routePath={routePath}
       />
       <Contacts currentLang={currentLang} />
     </div>
@@ -86,18 +87,21 @@ TokenLanding.propTypes = {
   adaptive: PropTypes.bool,
   setAdaptive: PropTypes.func,
   currentLang: PropTypes.string,
+  routePath: PropTypes.string,
 };
 
 TokenLanding.defaultProps = {
   adaptive: false,
   setAdaptive: () => {},
   currentLang: 'ru',
+  routePath: '/',
 };
 
 export default connect(
   (state) => ({
     adaptive: state.default.adaptive,
     currentLang: state.default.currentLang,
+    routePath: state.router.route.path,
   }),
   {
     setAdaptive,
