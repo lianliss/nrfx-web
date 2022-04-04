@@ -14,6 +14,7 @@ import tabletImage from './assets/100.svg';
 import laptopImageMobile from './assets/101m.svg';
 import tabletImageMobile from './assets/100m.svg';
 import VideoModal from '../../components/VideoModal/VideoModal';
+import * as landingActions from "actions/landing/buttons";
 
 function Information({ code, adaptive, currentLang, routePath }) {
   const [videoModal, setVideoModal] = React.useState(false);
@@ -54,7 +55,7 @@ function Information({ code, adaptive, currentLang, routePath }) {
           {!adaptive && (
             <div className="Information__action">
               <CopyText text={code} />
-              <TokenButton className="light-btn">
+              <TokenButton className="light-btn" onClick={() => landingActions.swap()}>
                 {getLang('token_landing_narfex_exchange')}
               </TokenButton>
             </div>

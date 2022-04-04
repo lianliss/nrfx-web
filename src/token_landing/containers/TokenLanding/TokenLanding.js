@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import * as utils from '../../../utils';
+import {getLang} from 'utils';
 import COMPANY from '../../../index/constants/company';
+import web3Backend from 'services/web3-backend';
 
 // Adaptive
 import { setAdaptive } from '../../../actions';
@@ -16,9 +17,6 @@ import AboutUs from '../AboutUs/AboutUs';
 import Services from '../Services/Services';
 import Information from '../Information/Information';
 
-// Constants
-import { statisticsData } from '../../constants/statistics';
-
 // Styles
 import './TokenLanding.less';
 import '../../constants/vars.less';
@@ -29,6 +27,12 @@ import Tokenomics from '../Tokenomics/Tokenomics';
 import NarfexToken from '../NarfexToken/NarfexToken';
 
 function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
+  const [price, setPrice] = React.useState(null);
+  React.useEffect(() => {
+    web3Backend.getTokenRate('nrfx').then(data => {
+      setPrice(data.price);
+    })
+  }, []);
   React.useEffect(() => {
     // Landing adaptive Setter.
     window.addEventListener('resize', screenResize);
@@ -52,17 +56,17 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
     <div className="TokenLanding">
       <Helmet>
         <title>
-          {[COMPANY.name, utils.getLang('landing_promo_title', true)].join(
+          {[COMPANY.name, getLang('landing_promo_title', true)].join(
             ' - '
           )}
         </title>
         <meta
           name="description"
-          content={utils.getLang('landing_promo_description')}
+          content={getLang('landing_promo_description')}
         />
       </Helmet>
-      {/* <NarfexToken /> */}
-      <Statistics data={statisticsData} />
+      <NarfexToken />
+      <Statistics price={price} />
       <AboutUs />
       <Services />
       <Functional />
@@ -70,7 +74,7 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
       <Roadmap />
       <Information
         adaptive={adaptive}
-        code="0x86c86ffdc0482d8d"
+        code="0x3764Be118a1e09257851A3BD636D48DFeab5CAFE"
         currentLang={currentLang}
         routePath={routePath}
       />
