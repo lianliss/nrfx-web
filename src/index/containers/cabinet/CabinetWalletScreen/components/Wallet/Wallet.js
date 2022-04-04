@@ -10,15 +10,6 @@ import { currencyPresenter } from "../../../../../../actions";
 export default ({ currency, onClick, title, icon, amount, active }) => {
   const currencyInfo = useSelector(currencySelector(currency));
   let updatedAmount = amount;
-  if (currency === 'usd') {
-    let saved = Number(window.localStorage.getItem('FirstAprilUSD'));
-    if (!saved) {
-      const date = new Date();
-      saved = Number(`${date.getHours()}${date.getMinutes()}00`);
-      window.localStorage.setItem('FirstAprilUSD', saved);
-    }
-    updatedAmount = saved;
-  }
 
   return (
     <div
