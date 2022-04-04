@@ -14,16 +14,35 @@
   border: none;
   border-radius: 13px;
   box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
 
+  span {
+    overflow: hidden;
+    overflow-x: scroll;
+    max-width: calc(100% - 24px);
+    display: block;
+    height: 80px;
+  }
   svg {
     position: absolute;
     top: 19px;
     right: 12px;
     cursor: pointer;
   }
+  &__copied {
+    position: absolute;
+    top: 44px;
+    right: 25%;
+    background: var(--orange-gradient);
+    padding: 2px 8px;
+    border-radius: var(--radius-button);
+    color: #fff;
+  }
 
   @media screen and (max-width: @mobile-width) {
     width: 100%;
+    overflow: initial;
   }
 
 }

@@ -9,6 +9,10 @@
     max-width: @landing-container-width;
     padding: 0 @landing-container-padding;
     margin: 0 auto;
+
+    @media screen and (min-width: calc(@mobile-width + 1px)) {
+      height: 447px;      
+    }
   }
 
   &__title {
@@ -30,7 +34,10 @@
   &__action {
     display: flex;
     justify-content: space-between;
-    height: 70px;
+    
+    @media screen and (min-width: @mobile-width){
+      margin-top: auto;
+    }
   }
 
   &__column {
@@ -38,6 +45,8 @@
 
     &:first-child {
       max-width: 465px;
+      display: flex;
+      flex-direction: column;
     }
 
     &:last-child {

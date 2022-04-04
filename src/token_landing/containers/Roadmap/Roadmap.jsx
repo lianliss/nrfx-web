@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Roadmap.less';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../assets/play.svg';
 
@@ -33,12 +33,16 @@ function Roadmap() {
   return (
     <section className="Roadmap">
       <div className="Roadmap__container">
-        <h2 className="Roadmap__title">RoadMap</h2>
+        <h2 className="Roadmap__title">
+          {getLang('token_landing_roadmap_title')}
+        </h2>
         <div className="Roadmap__items">
           {roadmapItems.map((item, key) => (
             <div className="Roadmap__item step" key={key}>
-              <span className="step__number">STEP {key + 1}</span>
-              <span className="step__title">{item.title}</span>
+              <span className="step__number">
+                {getLang('token_landing_step')} {key + 1}
+              </span>
+              <span className="step__title">{getLang(item.title)}</span>
               <div
                 className="step__modal-open"
                 onClick={(e) => {
@@ -50,7 +54,7 @@ function Roadmap() {
                 }}
               >
                 <SVG src={playIcon} className="Roadmap__icon" />
-                <span>See all</span>
+                <span>{getLang('tokne_landing_see_all')}</span>
               </div>
             </div>
           ))}

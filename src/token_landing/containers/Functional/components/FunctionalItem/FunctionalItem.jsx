@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Lang from "src/components/Lang/Lang";
+import {getLang} from "utils";
 
 import './FunctionalItem.less';
 import SVG from 'utils/svg-wrap';
@@ -22,7 +22,7 @@ function FunctionalItem({ number, title }) {
     <div className="FunctionalItem">
       <span className="FunctionalItem__number">{numberFilter(number)}</span>
       <div className="FunctionalItem__title">
-        <span>{title}</span>
+        <span>{getLang(title)}</span>
         <span className="FunctionalItem__answer-icon">
           <SVG src={answerIcon} />
         </span>

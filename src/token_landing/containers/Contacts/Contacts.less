@@ -27,14 +27,22 @@
     letter-spacing: -0.01em;
   }
 
-  &__button {
-    margin-top: auto;
-  }
-
   &__image {
     position: absolute;
     bottom: 0px;
     right: 6%;
+
+    @media screen and (min-width: @mobile-width) and (max-width: 1024px) {
+      width: 40%;
+    }
+  }
+
+  &__link {
+    text-decoration: none !important;
+    
+    &-telegram {
+      margin-top: auto;
+    }
   }
 }
 

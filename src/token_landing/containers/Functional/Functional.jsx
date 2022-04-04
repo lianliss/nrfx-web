@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Functional.less';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import FunctionalItem from './components/FunctionalItem/FunctionalItem';
 import SVG from 'utils/svg-wrap';
 import backgroundImage from './components/assets/bg.svg';
@@ -15,7 +15,9 @@ function Functional() {
     <section className="Functional">
       <div className="Functional__container">
         <div className="Functional__content">
-          <h2 className="Functional__title">Functional</h2>
+          <h2 className="Functional__title">
+            {getLang('token_landing_functional_title')}
+          </h2>
           <div className="Functional__items">
             {functionalItems &&
               functionalItems.map((item, key) => (

@@ -1,10 +1,31 @@
 import React from 'react';
 import PropTypes, { object, objectOf } from 'prop-types';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
+import { NumberFormat, } from "src/ui";
 import './Statistics.less';
 
-function Statistics({ data }) {
+function Statistics({ price }) {
+
+  const data = [
+    {
+      name: getLang('token_landing_statistics_1_name'),
+      value: price ? <NumberFormat number={price} currency="usd" /> : "-"
+    },
+    {
+      name: getLang('token_landing_statistics_2_name'),
+      value: getLang('token_landing_statistics_2_value'),
+    },
+    {
+      name: getLang('token_landing_statistics_3_name'),
+      value: getLang('token_landing_statistics_3_value'),
+    },
+    {
+      name: getLang('token_landing_statistics_4_name'),
+      value: getLang('token_landing_statistics_4_value'),
+    }
+  ];
+
   return (
     <div className="StatisticsContainer">
       <div className="Statistics">

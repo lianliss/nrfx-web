@@ -5,20 +5,17 @@ import unlimited from '../components/Benefits/assets/unlimited.svg';
 export const benefits = [
   {
     icon: card,
-    title: 'Utility',
-    description:
-      'The Narfex token facilitates multiple tokenomics, serving as a utility token and governance token.',
+    title: 'token_landing_benefits_title_1',
+    description: 'token_landing_benefits_description_1',
   },
   {
     icon: hierarchy,
-    title: 'Governance',
-    description:
-      'The Narfex token facilitates multiple tokenomics, serving as a utility token and governance token.',
+    title: 'token_landing_benefits_title_2',
+    description: 'token_landing_benefits_description_2',
   },
   {
     icon: unlimited,
-    title: 'Multi-Chain',
-    description:
-      'The Narfex token facilitates multiple tokenomics, serving as a utility token and governance token.',
+    title: 'token_landing_benefits_title_3',
+    description: 'token_landing_benefits_description_3',
   },
 ];

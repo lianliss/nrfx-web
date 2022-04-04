@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import './RoadmapModal.less';
 
 function RoadmapModal({ svg, number, tasks, position, setShowModal }) {
@@ -43,7 +43,7 @@ function RoadmapModal({ svg, number, tasks, position, setShowModal }) {
         {tasks.map((task, key) => (
           <div key={key} className="RoadmapModal__task">
             {svg}
-            <span>{task}</span>
+            <span>{getLang(task)}</span>
           </div>
         ))}
       </div>

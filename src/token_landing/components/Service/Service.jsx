@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Lang from "src/components/Lang/Lang";
+import { getLang } from 'utils';
 import SVG from 'utils/svg-wrap';
 import './Service.less';
 
@@ -11,7 +11,7 @@ function Service({ icon, title }) {
       <div className="Service__icon icon-container">
         <SVG src={icon} />
       </div>
-      <span className="Service__title gradient-text">{title}</span>
+      <span className="Service__title gradient-text">{getLang(title)}</span>
     </div>
   );
 }
