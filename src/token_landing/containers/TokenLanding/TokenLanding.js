@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import {getLang} from 'utils';
-import COMPANY from '../../../index/constants/company';
+import NRFX_logo from "src/asset/NRFX_logo.svg";
+
+import { getLang } from 'utils';
 import web3Backend from 'services/web3-backend';
 
 // Adaptive
@@ -29,9 +30,9 @@ import NarfexToken from '../NarfexToken/NarfexToken';
 function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
   const [price, setPrice] = React.useState(null);
   React.useEffect(() => {
-    web3Backend.getTokenRate('nrfx').then(data => {
+    web3Backend.getTokenRate('nrfx').then((data) => {
       setPrice(data.price);
-    })
+    });
   }, []);
   React.useEffect(() => {
     // Landing adaptive Setter.
@@ -55,15 +56,9 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
   return (
     <div className="TokenLanding">
       <Helmet>
-        <title>
-          {[COMPANY.name, getLang('landing_promo_title', true)].join(
-            ' - '
-          )}
-        </title>
-        <meta
-          name="description"
-          content={getLang('landing_promo_description')}
-        />
+        <title>{getLang('token_landing_title', true)}</title>
+        <meta name="description" content={getLang('token_landing_description')} />
+        <link rel="icon" type="image/svg" href={NRFX_logo} sizes="16x16" />
       </Helmet>
       <NarfexToken />
       <Statistics price={price} />

@@ -25,7 +25,7 @@ const getLanguageFlag = langCode => {
   );
 };
 
-export default () => {
+export default ({logoType = "default"}) => {
   const langList = useSelector(langListSelector);
   const currentLang = useSelector(currentLangSelector);
 
@@ -33,7 +33,7 @@ export default () => {
     <div className="Footer LandingWrapper__block">
       <div className="Footer__content LandingWrapper__content">
         <div className="Footer__main">
-          <Logo className="Footer__logo" size="extra-large" />
+          <Logo className="Footer__logo" size="extra-large" type={logoType} />
           <Select
             className="Footer__lang"
             styles={{

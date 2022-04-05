@@ -77,18 +77,19 @@ export default () => {
   return (
     <div
       ref={headerRef}
-      className={cn("Header__wrapper", { openedMobileMenu })}
+      className={cn("TokenHeader__wrapper", { openedMobileMenu })}
     >
       <div className="LandingWrapper__block">
-        <header className="Header">
+        <header className="TokenHeader">
           <Logo
             onClick={() => {
               router.navigate(pages.MAIN);
             }}
-            className="Header__logo"
+            className="TokenHeader__logo"
             size="extra-large"
+            type="NRFX"
           />
-          <ul className="Header__nav">
+          <ul className="TokenHeader__nav">
             <li
               onClick={handleClickProducts}
               className={cn({ active: openedMegaMenu })}
@@ -108,7 +109,7 @@ export default () => {
             <li onClick={() => router.navigate(pages.TOKEN)}>Narfex Token</li>
           </ul>
 
-          <div className="Header__authButtons">
+          <div className="TokenHeader__authButtons">
             {user || pending ? (
               <Button
                 type="secondary"
@@ -153,7 +154,7 @@ export default () => {
           <Button
             onClick={handleClickMobileMenu}
             type="secondary"
-            className={cn("Header__menuButton", { active: openedMobileMenu })}
+            className={cn("TokenHeader__menuButton", { active: openedMobileMenu })}
           >
             <SVG src={require("./assets/menu_button.svg")} />
             <SVG src={require("./assets/menu_button_close.svg")} />

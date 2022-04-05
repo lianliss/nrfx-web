@@ -7,7 +7,7 @@ import Footer from './components/Footer/Footer';
 import Notice from './components/Notice/Notice';
 import TagManager from 'react-gtm-module';
 import ReactPixel from 'react-facebook-pixel';
-import { TOKEN_LANDING } from '../../index/constants/pages';
+import { TOKEN } from '../../index/constants/pages';
 
 import { useRoute } from 'react-router5';
 
@@ -23,9 +23,11 @@ export default (props) => {
     window.scroll(0, 0);
   }, [route.route.name]);
 
+  const isToken = route.route.name === TOKEN;
+  
   return (
     <div className="LandingWrapper">
-      {route.route.name === TOKEN_LANDING ? (
+      {isToken ? (
         <TokenHeader />
       ) : (
         <>
@@ -36,7 +38,7 @@ export default (props) => {
         </>
       )}
       <div className="LandingWrapper__main">{props.children}</div>
-      <Footer />
+      <Footer logoType={isToken ? "NRFX" : "default"} />
       <Notice />
     </div>
   );

@@ -12,7 +12,8 @@ const Logo = props => {
     default: require("../../../asset/logo/default.svg"),
     flat: require("../../../asset/logo/flat.svg"),
     monochrome: require("../../../asset/logo/monochrome.svg"),
-    christmas: require("../../../asset/logo/christmas.svg")
+    christmas: require("../../../asset/logo/christmas.svg"),
+    NRFX: require("../../../asset/logo/NRFX.svg"),
   };
 
   let type = props.type;
