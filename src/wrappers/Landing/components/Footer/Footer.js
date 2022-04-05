@@ -25,7 +25,7 @@ const getLanguageFlag = langCode => {
   );
 };
 
-export default ({logoType = "default"}) => {
+export default ({ logoType = "default" }) => {
   const langList = useSelector(langListSelector);
   const currentLang = useSelector(currentLangSelector);
 

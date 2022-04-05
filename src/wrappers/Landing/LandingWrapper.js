@@ -24,7 +24,7 @@ export default (props) => {
   }, [route.route.name]);
 
   const isToken = route.route.name === TOKEN;
-  
+
   return (
     <div className="LandingWrapper">
       {isToken ? (
@@ -38,7 +38,7 @@ export default (props) => {
         </>
       )}
       <div className="LandingWrapper__main">{props.children}</div>
-      <Footer logoType={isToken ? "NRFX" : "default"} />
+      <Footer logoType={isToken ? 'NRFX' : 'default'} />
       <Notice />
     </div>
   );
