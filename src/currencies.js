@@ -124,7 +124,7 @@ export default {
     "maximum_fraction_digits": 2,
     "color": "#6CC592",
     "gradient": ["#62B27D", "#77D9A8"],
-    "can_exchange": false,
+    "can_exchange": true,
     "to_usd": 14422.522032768144
   },
   "cny": {
@@ -173,5 +173,17 @@ export default {
     "can_exchange": true,
     "to_usd": 0,
     "commission": 0.12,
+  },
+  "ton": {
+    "abbr": "ton",
+    "name": "Telegram Open Network",
+    "icon": "https://static.narfex.com/img/currencies/ton.svg",
+    "is_exists": true,
+    "type": "crypto",
+    "maximum_fraction_digits": 8,
+    "color": "#3697E1",
+    "gradient": ["#3FBEFC", "#2C74C7"],
+    "can_exchange": true,
+    "to_usd": 0.203
   },
 }

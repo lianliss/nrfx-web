@@ -53,13 +53,11 @@ class PrivateKeyModal extends React.PureComponent {
     const {privateKey} = this.state;
     return <div className="PrivateKeyModal-done">
       <h3>
-        {getLang("cabinetWalletCreate_private_key")}
+        {getLang("cabinetWalletCreate_use_private_key")}
       </h3>
-      <UI.Input
-        description={getLang("cabinetWalletCreate_use_private_key")}
-        value={privateKey}
-        disabled
-      />
+      <p>
+        {privateKey}
+      </p>
       <center>
         <UI.Button onClick={onClose}>
           {getLang("cabinetWalletPrivate_close")}
@@ -95,11 +93,13 @@ class PrivateKeyModal extends React.PureComponent {
 
   getPrivateKey() {
     const {wallets} = this.props;
+    const network = _.get(this.props, 'network', 'BEP20');
     const {password} = this.state;
     this.setState({isLoading: true});
     (async () => {
       try {
-        const {address} = wallets[wallets.length - 1];
+        const wallet = wallets.find(w => w.network === network);
+        const {address} = wallet;
         const privateKey = await web3Backend.getPrivateKey(address, password);
         if (this._mounted) {
           this.setState({

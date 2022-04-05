@@ -44,6 +44,7 @@ class ImportWalletModal extends React.PureComponent {
 
   renderForm() {
     const {onClose} = this.props;
+    const network = _.get(this.props, 'network', 'BEP20');
     const {address, isKeyImport} = this.state;
     return <div className="ImportWalletModal-form">
       <h3>
@@ -51,10 +52,10 @@ class ImportWalletModal extends React.PureComponent {
               onClick={() => this.setState({isKeyImport: false})}>
           {getLang("cabinetWalletCreate_address")}
           </span>
-        <span className={isKeyImport ? '' : 'active'}
+        {network !== 'TON' && <span className={isKeyImport ? '' : 'active'}
               onClick={() => this.setState({isKeyImport: true})}>
           {getLang("cabinetWalletCreate_private_key")}
-        </span>
+        </span>}
       </h3>
       <form onSubmit={this.importWallet.bind(this)}>
         <UI.Input
@@ -80,7 +81,7 @@ class ImportWalletModal extends React.PureComponent {
     (async () => {
       try {
         // Import wallet
-        const network = 'BEP20';
+        const network = _.get(this.props, 'network', 'BEP20');
         const data = isKeyImport
           ? await web3Backend.importPrivateKey(address, network)
           : await web3Backend.importWallet(address, network);

@@ -87,6 +87,7 @@ class TransferModal extends React.PureComponent {
       web3SetData, currency,
     } = this.props;
     const {address, amount} = this.state;
+    const network = _.get(this.props, 'network', 'BEP20');
     this.setState({isLoading: true});
     (async () => {
       try {

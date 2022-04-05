@@ -60,9 +60,15 @@ class CabinetWrapper extends Component {
       Web3Backend.getAllRates(),
       Web3Backend.getCommissions(),
     ]).then(data => {
+      let commissions = data[1];
+      try {
+        commissions = JSON.parse(commissions);
+      } catch (error) {
+        console.warn('Commissions in not JSON format', data[1]);
+      }
       web3SetData({
         rates: data[0],
-        commissions: data[1],
+        commissions: commissions,
       });
     }).catch(error => {
       console.error("[CabinetWrapper] Can't get rates");

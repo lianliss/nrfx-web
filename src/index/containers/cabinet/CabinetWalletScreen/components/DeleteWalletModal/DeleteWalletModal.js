@@ -42,11 +42,13 @@ class DeleteWalletModal extends React.PureComponent {
 
   renderForm() {
     const {wallets} = this.props;
+    const wallet = wallets[wallets.length - 1] || {};
     return <div className="DeleteWalletModal-form">
       <p>
         {wallets[wallets.length - 1].isGenerated
           ? getLang("cabinetWalletDelete_generated_notice")
           : getLang("cabinetWalletDelete_imported_notice")}
+        {this.props.network}
       </p>
       <center>
         <UI.Button onClick={this.deleteWallets.bind(this)}>
@@ -57,13 +59,18 @@ class DeleteWalletModal extends React.PureComponent {
   }
 
   deleteWallets() {
-    const {wallets, onClose, web3SetData} = this.props;
+    const {wallets, onClose, web3SetData, balances} = this.props;
+    const network = _.get(this.props, 'network', 'BEP20');
     this.setState({isLoading: true});
-    Promise.all(wallets.map(wallet => web3Backend.deleteWallet(wallet.address)))
+
+    const currentWallets = wallets.filter(w => w.network === network);
+    const addresses = currentWallets.map(w => w.address);
+
+    Promise.all(currentWallets.map(wallet => web3Backend.deleteWallet(wallet.address)))
       .then(() => {
         web3SetData({
-          wallets: [],
-          balances: [],
+          wallets: wallets.filter(w => w.network !== network),
+          balances: balances.filter(b => !_.includes(addresses, b.address)),
         });
         onClose();
       }).catch(error => {
