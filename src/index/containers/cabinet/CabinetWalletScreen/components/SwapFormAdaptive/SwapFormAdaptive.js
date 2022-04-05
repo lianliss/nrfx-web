@@ -46,7 +46,7 @@ const Select = ({ value, options, onChange, title, disabled }) => (
     <div className="SwapFormAdaptive__controlPanel__select__label">{title}</div>
     <select onChange={e => onChange(e.target.value)} value={value}>
       {options
-        .map(currency => <option value={currency.abbr}>{currency.abbr.toUpperCase()}</option>)
+        .map(currency => <option value={currency.abbr}>{`${currency.name}(${currency.abbr.toUpperCase()})`}</option>)
       }
     </select>
   </div>
