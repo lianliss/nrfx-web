@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './LandingWrapper.less';
 import Ticker from '../../landing/components/Ticker/Ticker';
 import Header from './components/Header/Header';
+import TokenHeader from './components/TokenHeader/TokenHeader';
 import Footer from './components/Footer/Footer';
 import Notice from './components/Notice/Notice';
 import TagManager from 'react-gtm-module';
@@ -24,12 +25,16 @@ export default (props) => {
 
   return (
     <div className="LandingWrapper">
-      {route.route.name !== TOKEN_LANDING && (
-        <div className="LandingWrapper__block">
-          <Ticker />
-        </div>
+      {route.route.name === TOKEN_LANDING ? (
+        <TokenHeader />
+      ) : (
+        <>
+          <div className="LandingWrapper__block">
+            <Ticker />
+          </div>
+          <Header />
+        </>
       )}
-      <Header />
       <div className="LandingWrapper__main">{props.children}</div>
       <Footer />
       <Notice />
