@@ -39,6 +39,7 @@ import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
 import currenciesObject from 'src/currencies';
 import getCommission from 'utils/get-commission';
+import { customToFixed } from 'utils/customToFixed';
 
 const Select = ({ value, options, onChange, title, disabled }) => (
   <div className={cn("SwapFormAdaptive__controlPanel__select", { disabled })}>
@@ -136,7 +137,7 @@ export default ({rates}) => {
       </div>
       <Input
         disabled={!!status.rate}
-        value={amount}
+        value={customToFixed(Number(amount), 5)}
         type="number"
         onTextChange={handleChangeAmount}
         indicator={
@@ -152,7 +153,7 @@ export default ({rates}) => {
       >
         <Lang name="global_available" />
         {": "}
-        <NumberFormat number={availableAmount} currency={currency} />
+        <NumberFormat number={customToFixed(availableAmount, 5)} currency={currency} />
       </div>
 
       <div className="SwapFormAdaptive__controlPanel">

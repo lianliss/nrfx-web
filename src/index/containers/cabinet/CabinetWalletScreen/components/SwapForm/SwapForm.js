@@ -43,6 +43,7 @@ import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
 import currenciesObject from 'src/currencies';
 import getCommission from 'utils/get-commission';
+import { customToFixed } from "utils/customToFixed";
 
 const Form = ({
   onChangeAmount,
@@ -195,9 +196,8 @@ export default () => {
   const fiats = currencies.filter(c => c.type === 'fiat');
   const crypto = currencies.filter(c => c.type === 'crypto');
   const commission = getCommission(useSelector(state => state.web3.commissions), swap.toCurrency);
-
-
-    useEffect(() => {
+  
+  useEffect(() => {
     dispatch(walletSetStatus("rate", "loading"));
     updateRates(swap.fromCurrency, swap.toCurrency, fromAmount, toAmount, dispatch, setAmounts, commission, gasPrice)
       .then(rate => {
@@ -222,7 +222,7 @@ export default () => {
           title={<Lang name="cabinet_fiatWalletGive" />}
           disabled={disabled}
           options={toCrypto ? fiats : crypto}
-          amount={fromAmount}
+          amount={customToFixed(fromAmount, 5)}
           autoFocus={swap.focus === "from"}
           onFocus={() => {
             dispatch(walletSwapSetFocus("from"));
@@ -267,7 +267,7 @@ export default () => {
           title={<Lang name="cabinet_fiatWalletGet" />}
           disabled={disabled}
           options={toCrypto ? crypto : fiats}
-          amount={toAmount}
+          amount={customToFixed(toAmount, 5)}
           autoFocus={swap.focus === "to"}
           onFocus={() => {
             dispatch(walletSwapSetFocus("to"));
