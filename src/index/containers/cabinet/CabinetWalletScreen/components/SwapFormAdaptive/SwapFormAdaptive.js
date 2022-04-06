@@ -153,7 +153,7 @@ export default ({rates}) => {
       >
         <Lang name="global_available" />
         {": "}
-        <NumberFormat number={customToFixed(availableAmount, 5)} currency={currency} />
+        <NumberFormat number={availableAmount} currency={currency} />
       </div>
 
       <div className="SwapFormAdaptive__controlPanel">
