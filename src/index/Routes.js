@@ -2,6 +2,13 @@
 // external
 import React from "react";
 import { connect } from "react-redux";
+
+// Favicons
+import faviconSmallDefault from "src/asset/favicon.png";
+import faviconLargeDefault from "src/asset/favicon-32x32.png";
+import faviconSmallNRFX_token from "src/asset/NRFX_logo.svg";
+import faviconLargeNRFX_token from "src/asset/NRFX_logo-large.svg";
+
 // internal
 import SiteMainScreen from "src/landing/containers/MainScreen/MainScreen";
 import BuyBitcoinScreen from "src/landing/containers/BuyBitcoin/BuyBitcoin";
@@ -22,7 +29,6 @@ import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoun
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
 import LandingWrapper from "../wrappers/Landing/LandingWrapper";
 import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
-import TokenWrapper from "../wrappers/Token/TokenWrapper";
 
 import * as pages from "./constants/pages";
 import * as CabinetWalletScreen from "./containers/cabinet/CabinetWalletScreen/CabinetWalletScreen";
@@ -55,7 +61,32 @@ function Routes(props) {
   let WrapperComponent = CabinetWrapper;
   let needAuthorization = false;
 
-  switch (route) {
+  // Favicon
+  const favicon16 = document.getElementById('favicon-16');
+  const favicon32 = document.getElementById('favicon-32');
+  
+  // Have to set to props array of prev pages, then
+  // set default favicon.
+  const setDefaultFavicon = (routeNames = []) => {
+    const {previousRoute} = props.router;
+    if (previousRoute) {
+      // Each all routes.
+      routeNames.map((routeName) => {
+        if (previousRoute.name === routeName) {
+          favicon16.href = faviconSmallDefault;
+          favicon32.href = faviconLargeDefault;
+          return true;
+        }
+      });
+    }
+  }
+
+  React.useEffect(() => {
+    setDefaultFavicon([pages.TOKEN]);
+  }, [route]);
+
+
+  switch (route) {    
     case pages.MAIN:
       Component = SiteMainScreen;
       WrapperComponent = LandingWrapper;
@@ -120,6 +151,9 @@ function Routes(props) {
     case pages.TOKEN:
       Component = TokenLanding;
       WrapperComponent = LandingWrapper;
+
+      favicon16.href = faviconSmallNRFX_token;
+      favicon32.href = faviconLargeNRFX_token;
       break;
     // case pages.UIKIT:
     //   if (process.env.NODE_ENV === `development`) {
@@ -203,6 +237,8 @@ function Routes(props) {
     case pages.TOKEN_LANDING:
       Component = TokenLanding;
       WrapperComponent = LandingWrapper;
+      favicon16.href = faviconSmallNRFX_token;
+      favicon32.href = faviconLargeNRFX_token;
       break;
     default:
       Component = SiteNotFoundScreen;
@@ -245,5 +281,6 @@ function Routes(props) {
 export default connect(state => ({
   currentLang: state.default.currentLang,
   profile: state.default.profile,
-  route: state.router.route
+  route: state.router.route,
+  router: state.router
 }))(Routes);
