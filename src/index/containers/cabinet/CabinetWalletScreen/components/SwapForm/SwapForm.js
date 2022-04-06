@@ -43,6 +43,8 @@ import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
 import currenciesObject from 'src/currencies';
 import getCommission from 'utils/get-commission';
+
+// number to fixed custom function
 import { customToFixed } from "utils/customToFixed";
 
 const Form = ({
