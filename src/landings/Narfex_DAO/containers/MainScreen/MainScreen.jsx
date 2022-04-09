@@ -17,7 +17,9 @@ function MainScreen() {
             A decentralized organization that governs the network, enabling NRFX
             holders to vote for key protocol parameters.
           </p>
-          <TokenButton className="light-btn">Launch Narfex</TokenButton>
+          <a href="/">
+            <TokenButton className="light-btn">Launch Narfex</TokenButton>
+          </a>
         </div>
         <SVG src={mainScreenBg} className="MainScreen__bg" />
       </LandingContainer>

@@ -17,7 +17,9 @@ function Contacts() {
           <p>
             and all are welcome to come join us in shaping the future of DeFi.
           </p>
-          <TokenButton className="white-btn">Join Telegram</TokenButton>
+          <a href="/">
+            <TokenButton className="white-btn">Join Telegram</TokenButton>
+          </a>
           <SVG src={contactsImage} />
         </ContactsContainer>
       </LandingContainer>
