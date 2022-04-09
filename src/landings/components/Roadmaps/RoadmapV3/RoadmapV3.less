@@ -1,0 +1,23 @@
+.RoadmapV3 {
+  position: relative;
+  left: 0;
+
+  &__items {
+    display: flex;
+    overflow-x: scroll;
+    padding-top: 20px;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__line {
+    position: absolute;
+    top: 20px;
+    left: 14px;
+    width: 100vw;
+    border-top: 3px dashed #d5e4fe;
+  }
+}

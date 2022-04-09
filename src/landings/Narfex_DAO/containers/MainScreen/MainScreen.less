@@ -1,0 +1,53 @@
+.MainScreen {
+  position: relative;
+
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .LandingContainer {
+    position: relative;
+    padding: 137px 24px 352px;
+  }
+  
+  h1 {
+    max-width: 482px;
+    margin-bottom: 25px;
+    background: var(--blue-light-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    font-weight: 600;
+    font-size: 89px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    max-width: 411px;
+    margin-bottom: 78px;
+
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 180%;
+    color: #939393;
+  }
+
+  .Button {
+    width: 232px;
+    height: 77px;
+
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+  }
+
+  .MainScreen__bg {
+    position: absolute;
+    bottom: -62px;
+    left: 353px;
+    z-index: 1;
+  }
+}

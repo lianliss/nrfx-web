@@ -14,6 +14,7 @@ import SiteMainScreen from "src/landing/containers/MainScreen/MainScreen";
 import BuyBitcoinScreen from "src/landing/containers/BuyBitcoin/BuyBitcoin";
 import SiteAboutScreen from "../landing/containers/Company/Company";
 import TokenLanding from "../token_landing/containers/TokenLanding/TokenLanding";
+import NarfexDAO from "../landings/Narfex_DAO/NarfexDAO";
 // import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
@@ -239,6 +240,10 @@ function Routes(props) {
       WrapperComponent = LandingWrapper;
       favicon16.href = faviconSmallNRFX_token;
       favicon32.href = faviconLargeNRFX_token;
+      break;
+    case pages.NARFEX_DAO:
+      Component = NarfexDAO;
+      WrapperComponent = LandingWrapper;
       break;
     default:
       Component = SiteNotFoundScreen;
