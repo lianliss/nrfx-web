@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import '../constants/vars.less';
 
 import { useAdaptive } from '../hooks/useAdaptive';

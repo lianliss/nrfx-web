@@ -7,6 +7,7 @@ import SVG from 'utils/svg-wrap';
 import contactsImage from '../../assets/contacts.svg';
 import { TOKEN } from 'src/index/constants/pages';
 import { useRouter } from 'react-router5';
+import { getLang } from 'utils';
 
 import './Contacts.less';
 
@@ -17,18 +18,15 @@ function Contacts() {
     <div className="Contacts">
       <LandingContainer>
         <ContactsContainer>
-          <h2>Become a Narfex Token holder</h2>
-          <p>
-            Anyone can be an Narfex Token holder and all are welcome to come
-            join us in shaping the future of DeFi.
-          </p>
+          <h2>{getLang('narfex_dao_contacts_title')}</h2>
+          <p>{getLang('narfex_dao_contacts_description')}</p>
           <TokenButton
             className="white-btn"
             onClick={() => {
               router.navigate(TOKEN);
             }}
           >
-            Buy Token
+            {getLang('narfex_dao_buy_token_button')}
           </TokenButton>
           <SVG src={contactsImage} />
         </ContactsContainer>
