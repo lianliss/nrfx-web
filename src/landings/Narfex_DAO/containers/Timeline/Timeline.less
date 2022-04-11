@@ -1,3 +1,5 @@
+@import '../../../../vars.less';
+
 .NarfexDAO .Timeline {
   padding: 314px 0 194px;
   background: var(--landing-bg-gray);
@@ -18,5 +20,17 @@
     width: 100%;
     max-width: 1000px;
     padding: 0 20px;
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    padding: 269px 0 103px;
+
+    h2 {
+      margin-bottom: 90px;
+    }
+    
+    .QuoteWindow {
+      transform: translate(-50%, -92px);
+    }
   }
 }

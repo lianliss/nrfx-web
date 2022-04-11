@@ -1,3 +1,5 @@
+@import '../../../../vars.less';
+
 .NarfexDAO .Membership {
   position: relative;
   padding: 233px 0 183px;
@@ -29,5 +31,37 @@
     position: absolute;
     left: -268px;
     bottom: 0;
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    padding: 0;
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 0;
+    }
+    
+    .LandingContainer {
+      padding: 88px 26px 252px;
+    }
+
+    h2 {
+      max-width: 100%;
+      width: 100%;
+      margin-bottom: 26px;
+    }
+
+    p {
+      text-align: center;
+    }
+    
+    &__bg {
+      left: 50%;
+      width: 563px;
+      height: 294.36px;
+      transform: translateX(-50%);
+    }
   }
 }

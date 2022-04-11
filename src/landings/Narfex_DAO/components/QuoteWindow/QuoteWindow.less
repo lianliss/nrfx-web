@@ -1,3 +1,5 @@
+@import '../../../../vars.less';
+
 .QuoteWindow {
   box-sizing: border-box;
 
@@ -23,5 +25,29 @@
     font-size: 30px;
     line-height: 152%;
     color: var(--landing-color-black);
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 26px 39px;
+    }
+
+    &__icon {
+      padding: 26.23px 21.46px;
+      margin-bottom: 34px;
+
+      width: 35.77px;
+      height: 27.02px;
+    }
+
+    p {
+      margin-left: 0;
+      font-size: 20px;
+      line-height: 152%;
+      text-align: center;
+    }
   }
 }

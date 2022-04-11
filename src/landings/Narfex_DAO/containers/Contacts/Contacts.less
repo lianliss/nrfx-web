@@ -16,7 +16,33 @@
     }
   }
 
+
   a {
     text-decoration: none;
+  }
+
+  .Button {
+    padding: 38.5px 61.3px;
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    padding: 87px 0 151px;
+
+    .LandingContainer {
+      padding: 0 11px;
+    }
+
+    .ContactsContainer {
+      padding: 56px 22px 327px;
+
+      svg,
+      img {
+        left: 53.5%;
+        bottom: -195px;
+        width: 389px;
+        height: 501px;
+        transform: translateX(-50%);
+      }
+    }
   }
 }

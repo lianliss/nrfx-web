@@ -13,12 +13,13 @@ function Contacts() {
     <div className="Contacts">
       <LandingContainer>
         <ContactsContainer>
-          <h2>Anyone can be an Narfex Token holder</h2>
+          <h2>Become a Narfex Token holder</h2>
           <p>
-            and all are welcome to come join us in shaping the future of DeFi.
+            Anyone can be an Narfex Token holder and all are welcome to come
+            join us in shaping the future of DeFi.
           </p>
           <a href="/">
-            <TokenButton className="white-btn">Join Telegram</TokenButton>
+            <TokenButton className="white-btn">Buy Token</TokenButton>
           </a>
           <SVG src={contactsImage} />
         </ContactsContainer>
