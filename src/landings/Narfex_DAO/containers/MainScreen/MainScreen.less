@@ -1,9 +1,12 @@
+@import '../../../../vars.less';
+
 .NarfexDAO .MainScreen {
   position: relative;
 
   &__content {
-    position: relative;
-    z-index: 2;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
   }
 
   .LandingContainer {
@@ -36,15 +39,16 @@
   }
 
   .Button {
-    width: 232px;
+    min-width: 232px;
     height: 77px;
 
     font-weight: 600;
     font-size: 18px;
     line-height: 100%;
+    padding: 0 50px;
   }
 
-  .MainScreen__bg {
+  &__bg {
     position: absolute;
     bottom: -62px;
     left: 353px;
@@ -53,5 +57,62 @@
 
   a {
     text-decoration: none;
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    .LandingContainer {
+      position: relative;
+      padding: 77px 26px 162px;
+    }
+
+    &__content {
+      align-items: normal;
+    }
+    
+    h1 {
+      font-size: 52px;
+      line-height: 100%;
+      text-align: center;
+      -webkit-order: 0;
+      -ms-flex-order: 0;
+      order: 0;
+    }
+
+    p {
+      max-width: 100%;
+      margin-bottom: 31px;
+      font-size: 16px;
+      line-height: 180%;
+      text-align: center;
+      -webkit-order: 1;
+      -ms-flex-order: 1;
+      order: 1;
+    }
+
+    .Button {
+      margin: -16px auto 0;
+      -webkit-order: 3;
+      -ms-flex-order: 3;
+      order: 3;
+    }
+
+    .isvg {
+      height: 543px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      order: 2;
+      -webkit-order: 2;
+      -ms-flex-order: 2;
+    }
+
+    &__bg {
+      width: 543px;
+      height: 543px;
+      position: absolute;
+      left: auto;
+      top: 0;
+      bottom: auto;
+    }
   }
 }

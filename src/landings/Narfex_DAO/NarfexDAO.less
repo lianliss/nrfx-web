@@ -1,5 +1,8 @@
+@import '../../vars.less';
+
 .NarfexDAO {
   color: var(--landing-color-black);
+  overflow: hidden;
 
   h2 {
     font-weight: 600;
@@ -8,11 +11,19 @@
     line-height: 110%;
   }
 
-  .gradient-text{
+  .gradient-text {
     display: inline-flex;
     background: var(--blue-light-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    h2 {
+      font-size: 35px;
+      text-align: center;
+    }
   }
 }

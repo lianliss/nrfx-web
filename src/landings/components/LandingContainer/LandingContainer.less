@@ -1,9 +1,16 @@
+@import '../../../vars.less';
+
 .LandingContainer {
   display: flex;
   flex-direction: column;
-  
+
   width: 100%;
   max-width: 1160px;
   padding: 0 24px;
   margin: 0 auto;
+
+  @media screen and (max-width: @mobile-width) {
+    padding: 0 26px;
+    box-sizing: border-box;
+  }
 }

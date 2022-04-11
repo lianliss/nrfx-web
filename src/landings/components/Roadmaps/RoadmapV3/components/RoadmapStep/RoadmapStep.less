@@ -1,3 +1,5 @@
+@import '../../../../../../vars.less';
+
 .RoadmapStep {
   min-width: 450px;
   padding-top: 74px;
@@ -47,5 +49,34 @@
     top: 0;
     left: 0;
     transform: translateY(-50%);
+  }
+
+  @media screen and (min-width: calc(@mobile-width + 1px)) and (max-width: 1100px) {
+    &:not(:last-child) {
+      margin-right: 80px;
+    }
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    // Container width.
+    min-width: 85vw;
+    width: 85vw;
+    
+    &:not(:last-child) {
+      margin-right: 20vw;
+    }
+
+    h3 {
+      margin: 20px 0;
+      max-width: 100%;
+      font-size: 30px;
+      line-height: 131%;
+    }
+
+    p {
+      max-width: 100%;
+      font-size: 16px;
+      line-height: 191%;
+    }
   }
 }
