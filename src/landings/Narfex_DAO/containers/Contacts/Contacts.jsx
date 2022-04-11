@@ -5,10 +5,14 @@ import ContactsContainer from '../../../components/ContactsContainer/ContactsCon
 import TokenButton from '../../../components/TokenButton/TokenButton';
 import SVG from 'utils/svg-wrap';
 import contactsImage from '../../assets/contacts.svg';
+import { TOKEN } from 'src/index/constants/pages';
+import { useRouter } from 'react-router5';
 
 import './Contacts.less';
 
 function Contacts() {
+  const router = useRouter();
+
   return (
     <div className="Contacts">
       <LandingContainer>
@@ -18,9 +22,14 @@ function Contacts() {
             Anyone can be an Narfex Token holder and all are welcome to come
             join us in shaping the future of DeFi.
           </p>
-          <a href="/">
-            <TokenButton className="white-btn">Buy Token</TokenButton>
-          </a>
+          <TokenButton
+            className="white-btn"
+            onClick={() => {
+              router.navigate(TOKEN);
+            }}
+          >
+            Buy Token
+          </TokenButton>
           <SVG src={contactsImage} />
         </ContactsContainer>
       </LandingContainer>

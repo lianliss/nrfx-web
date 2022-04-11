@@ -5,6 +5,7 @@
 
   &__content {
     display: flex;
+    align-items: start;
     flex-direction: column;
   }
 
@@ -63,6 +64,10 @@
       position: relative;
       padding: 77px 26px 162px;
     }
+
+    &__content {
+      align-items: normal;
+    }
     
     h1 {
       font-size: 52px;
@@ -84,7 +89,7 @@
       order: 1;
     }
 
-    a {
+    .Button {
       margin: -16px auto 0;
       -webkit-order: 3;
       -ms-flex-order: 3;

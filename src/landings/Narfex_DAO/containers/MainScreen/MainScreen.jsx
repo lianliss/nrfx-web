@@ -5,6 +5,7 @@ import TokenButton from '../../../components/TokenButton/TokenButton';
 import SVG from 'utils/svg-wrap';
 import mainScreenBg from '../../assets/main_screen_bg.svg';
 import mainScreenBgMobile from '../../assets/main_screen_bg-mobile.svg';
+import * as landingActions from "actions/landing/buttons";
 
 import './MainScreen.less';
 
@@ -18,11 +19,11 @@ function MainScreen({ adaptive }) {
             A decentralized organization that governs the network, enabling NRFX
             holders to vote for key protocol parameters.
           </p>
-          <a href="/">
-            <TokenButton className="light-btn">Launch Narfex</TokenButton>
-          </a>
+          <TokenButton className="light-btn" onClick={() => {landingActions.swap()}}>Launch Narfex</TokenButton>
           {!adaptive && <SVG src={mainScreenBg} className="MainScreen__bg" />}
-          {adaptive && <SVG src={mainScreenBgMobile} className="MainScreen__bg" />}
+          {adaptive && (
+            <SVG src={mainScreenBgMobile} className="MainScreen__bg" />
+          )}
         </div>
       </LandingContainer>
     </div>
