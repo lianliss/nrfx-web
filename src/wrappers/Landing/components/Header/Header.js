@@ -95,7 +95,7 @@ export default () => {
               <Lang name="site__headerProducts" />
               <SVG src={require("src/asset/24px/angle-down-small.svg")} />
             </li>
-            <li onClick={() => router.navigate(pages.ABOUT)}>
+            <li onClick={() => router.navigate(pages.NARFEX_DAO)}>
               <Lang name="site__headerCompany" />
             </li>
             {/*<li onClick={() => router.navigate(pages.FEE)}>*/}
