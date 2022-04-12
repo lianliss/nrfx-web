@@ -20,6 +20,7 @@ import LogoLoader from "../../ui/components/LogoLoader/LogoLoader";
 import Web3Backend from 'services/web3-backend';
 import streamMessage from './steam-message';
 import TagManager from 'react-gtm-module';
+import { PHONE } from "../../index/constants/breakpoints";
 
 import {
   walletBalancesSelector,
@@ -77,6 +78,23 @@ class CabinetWrapper extends Component {
     TagManager.initialize({
       gtmId: 'GTM-NSSCKZG',
     });
+
+    // Set adaptive.
+    this.handleResize();
+    
+    // Set adaptive.
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    // Unset adaptive.
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  handleResize = () => {
+    const { setAdaptive } = this.props;
+    // If phone - true, else - false.
+    setAdaptive(document.body.offsetWidth <= PHONE);
   }
 
   runStream = async () => {
@@ -185,6 +203,10 @@ class CabinetWrapper extends Component {
       </div>
     );
   }
+}
+
+CabinetWrapper.defaultProps = {
+  adaptive: false,
 }
 
 export default connect(
