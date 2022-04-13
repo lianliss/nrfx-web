@@ -1,0 +1,27 @@
+.CopyTextComponent__container {
+  position: relative;
+  max-width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    span {
+      opacity: 0.95;
+    }
+  }
+
+  span {
+    max-width: 100%;
+    word-break: break-word;
+  }
+}
+
+.CopyTextComponent__copied {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 110%);
+  padding: 3px 8px;
+  background: var(--orange-gradient);
+  border-radius: 15px;
+  color: #fff;
+}

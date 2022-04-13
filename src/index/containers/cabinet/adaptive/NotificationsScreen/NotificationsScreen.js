@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { notificationsSelector } from "../../../../../selectors";
 import { loadNotifications } from "../../../../../actions/cabinet/notifications";
 import { profileSetHasNotifications } from "../../../../../actions";
+import { setTitle } from "src/actions";
+import { getLang } from "utils";
 
 export default () => {
   const { history, loading } = useSelector(notificationsSelector);
@@ -15,6 +17,9 @@ export default () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Set current title
+    setTitle(getLang("global_notifications"));
+
     dispatch(profileSetHasNotifications(false));
     !historyLength.current && dispatch(loadNotifications());
   }, [historyLength, dispatch]);

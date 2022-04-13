@@ -21,6 +21,7 @@ import Web3Backend from 'services/web3-backend';
 import streamMessage from './steam-message';
 import TagManager from 'react-gtm-module';
 import { PHONE } from "../../index/constants/breakpoints";
+import { Logo } from "../../ui";
 
 import {
   walletBalancesSelector,
@@ -178,21 +179,33 @@ class CabinetWrapper extends Component {
       <div className={mainClassName}>
         {adaptive ? (
           <AdaptiveHeader
-            leftContent={<span>{content.left}</span>}
+            leftContent={
+              content.left ? (
+                <span>{content.left}</span>
+              ) : (
+                <Logo
+                  onClick={() => {
+                    router.navigate(PAGES.MAIN);
+                  }}
+                  className="AdaptiveHeader__logo"
+                  size="middle"
+                />
+              )
+            }
             rightContent={
               !user && (
                 <div
                   onClick={() =>
-                    actions.openModal("auth", { type: steps.REGISTRATION })
+                    actions.openModal('auth', { type: steps.REGISTRATION })
                   }
                 >
-                  <SVG src={require("../../asset/24px/login.svg")} />
+                  <SVG src={require('../../asset/24px/login.svg')} />
                 </div>
               )
             }
             mainContent={{
-              type: "text",
-              content: this.props.title
+              type: 'text',
+              content: this.props.title,
             }}
           />
         ) : (

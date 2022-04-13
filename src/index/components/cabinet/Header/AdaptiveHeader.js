@@ -13,7 +13,7 @@ class AdaptiveHeader extends React.Component {
         <div className="CabinetHeader">
           <div className="CabinetHeader__leftContent">
             <div className="CabinetHeader__leftContent_icon">
-              {this.props.leftContent}
+              {this.props.leftContent && this.props.leftContent}
             </div>
           </div>
           <div className="CabinetHeader__mainContent">

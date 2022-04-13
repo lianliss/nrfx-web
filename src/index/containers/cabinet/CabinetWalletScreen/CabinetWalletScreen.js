@@ -183,6 +183,9 @@ const old = memo(() => {
 class CabinetWalletScreen extends React.PureComponent {
 
   componentDidMount() {
+    // Set current title
+    setTitle(getLang("cabinet_header_wallet", true));
+    
     this._mounted = true;
     const {
       web3SetStatus,
