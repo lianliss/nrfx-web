@@ -102,13 +102,23 @@ export default ({ logoType = "default" }) => {
           <ul>
             <li>
               <h4>
-                <Lang name="landing_footer_company" />
+                <Lang name="landing_footer_about" />
               </h4>
             </li>
             <li>
-              <Link routeName={pages.ABOUT}>
-                <Lang name="landing_footer_about" />
+              <Link routeName={pages.NARFEX_DAO}>
+                <Lang name="landing_footer_company" />
               </Link>
+            </li>
+            <li>
+              <a href="https://www.crunchbase.com/organization/narfex" target="_blank">
+                <Lang name="landing_footer_crunchbase" />
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/narfex/DEX" target="_blank">
+                GitHub
+              </a>
             </li>
             {/*<li>*/}
               {/*<Link routeName={pages.FEE}>*/}
