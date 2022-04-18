@@ -124,7 +124,7 @@ function Registration({
               />
               <span
                 onClick={() =>
-                  actions.openStateModal("static_content", { type: "terms" })
+                  actions.openModal("static_content", { type: "terms" })
                 }
                 className="AuthModal__content__terms__link"
               >

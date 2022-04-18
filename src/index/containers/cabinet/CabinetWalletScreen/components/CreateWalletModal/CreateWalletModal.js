@@ -15,6 +15,7 @@ import SVG from "utils/svg-wrap";
 import {
   getLang,
 } from 'utils';
+import CopyText from "../../../../../../ui/components/CopyText/CopyText";
 
 class CreateWalletModal extends React.PureComponent {
 
@@ -87,16 +88,12 @@ class CreateWalletModal extends React.PureComponent {
       <h3>
         {getLang("cabinetWalletCreate_address")}
       </h3>
-      <p>
-        {address}
-      </p>
+      <CopyText text={address} />
       {network !== 'TON' && <>
       <h3>
         {getLang("cabinetWalletCreate_use_private_key")}
       </h3>
-      <p>
-        {privateKey}
-      </p>
+      <CopyText text={privateKey} />
       </>}
       <center>
         <UI.Button onClick={onClose}>
