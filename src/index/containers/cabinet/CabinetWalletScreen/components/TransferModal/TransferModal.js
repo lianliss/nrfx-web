@@ -1,33 +1,27 @@
-import "./TransferModal.less";
+import './TransferModal.less';
 
-import React from "react";
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import getFinePrice from 'utils/get-fine-price';
-import Lang from "components/Lang/Lang";
-import web3Backend from "services/web3-backend";
-import {
-  web3Update,
-  web3SetData,
-} from 'actions/cabinet/web3';
-import * as UI from "ui";
-import SVG from "utils/svg-wrap";
-import {
-  getLang,
-} from 'utils';
-import {
-  WEI_ETHER,
-} from 'src/index/constants/cabinet';
-import {timeout} from 'utils';
-import * as toastsActions from "src/actions/toasts";
+import Lang from 'components/Lang/Lang';
+import web3Backend from 'services/web3-backend';
+import { web3Update, web3SetData } from 'actions/cabinet/web3';
+import * as UI from 'ui';
+import SVG from 'utils/svg-wrap';
+import { getLang } from 'utils';
+import { WEI_ETHER } from 'src/index/constants/cabinet';
+import { timeout } from 'utils';
+import * as toastsActions from 'src/actions/toasts';
+import QRScannerModal from '../../../../../components/cabinet/QRScannerModal/QRScannerModal';
 
 class TransferModal extends React.PureComponent {
-
   state = {
     isLoading: false,
     isError: false,
     address: '',
     amount: null,
+    isQRModal: false,
   };
 
   componentDidMount() {
@@ -39,60 +33,94 @@ class TransferModal extends React.PureComponent {
   }
 
   renderLoading() {
-    return <div className="TransferModal-loading">
-      <SVG src={require(`src/asset/cabinet/loading_34.svg`)} />
-      <div className="TransferModal-loading-text">
-        {getLang("cabinetWalletTransfer_loading")}
+    return (
+      <div className="TransferModal-loading">
+        <SVG src={require(`src/asset/cabinet/loading_34.svg`)} />
+        <div className="TransferModal-loading-text">
+          {getLang('cabinetWalletTransfer_loading')}
+        </div>
       </div>
-    </div>
+    );
   }
 
   renderForm() {
-    const {onClose, balance, currency} = this.props;
-    const {address, amount} = this.state;
-    return <div className="TransferModal-form">
-      <form onSubmit={this.transfer.bind(this)}>
-        <h3>
-          {getLang("cabinetWalletTransfer_address")}
-        </h3>
-        <UI.Input
-          value={address}
-          onChange={event => this.setState({address: event.currentTarget.value})}
-        />
-        <h3>
-          <span>
-            {getLang("cabinetWalletTransfer_amount")}
-          </span>
-          <span className="active" onClick={() => this.setState({amount: balance})}>
-            <UI.NumberFormat number={balance} currency={currency} />
-          </span>
-        </h3>
-        <UI.Input
-          value={amount}
-          type="number"
-          onChange={event => this.setState({amount: Number(event.currentTarget.value)})}
-        />
-      </form>
-      <center>
-        <UI.Button onClick={this.transfer.bind(this)}>
-          {getLang('cabinetWalletTransfer_submit')}
-        </UI.Button>
-      </center>
-    </div>
+    const { onClose, balance, currency } = this.props;
+    const { address, amount } = this.state;
+    return (
+      <div className="TransferModal-form">
+        <form onSubmit={this.transfer.bind(this)}>
+          <h3>{getLang('cabinetWalletTransfer_address')}</h3>
+          <UI.Input
+            value={address}
+            onChange={(event) =>
+              this.setState({ address: event.currentTarget.value })
+            }
+          />
+          <h3>
+            <span>{getLang('cabinetWalletTransfer_amount')}</span>
+            <span
+              className="active"
+              onClick={() => this.setState({ amount: balance })}
+            >
+              <UI.NumberFormat number={balance} currency={currency} />
+            </span>
+          </h3>
+          <UI.Input
+            value={amount}
+            type="number"
+            onChange={(event) =>
+              this.setState({ amount: Number(event.currentTarget.value) })
+            }
+          />
+        </form>
+        <center>
+          <UI.Button onClick={this.transfer.bind(this)}>
+            {getLang('cabinetWalletTransfer_submit')}
+          </UI.Button>
+          <UI.Button onClick={() => {
+            if (navigator.getUserMedia) {
+              navigator.getUserMedia(
+                { video: { width: 1000, height: 1000 } },
+                () => {
+                  this.setState({ isQRModal: true });
+                },
+                () => {
+                  this.props.toastPush(getLang('пожалуйста включите камеру'), 'warning');
+                }
+              );
+            } else {
+              console.log('no support video');
+            }
+          }}>
+            {getLang('but')}
+          </UI.Button>
+        </center>
+        {this.state.isQRModal && (
+          <QRScannerModal
+            adaptive={this.props.adaptive}
+            onResult={(result) => this.setState({ address: result })}
+            onClose={() => {
+              this.setState({isQRModal: false})
+            }}
+          />
+        )}
+      </div>
+    );
   }
 
   transfer() {
-    const {
-      wallets, onClose,
-      web3SetData, currency,
-    } = this.props;
-    const {address, amount} = this.state;
+    const { wallets, onClose, web3SetData, currency } = this.props;
+    const { address, amount } = this.state;
     const network = _.get(this.props, 'network', 'BEP20');
-    this.setState({isLoading: true});
+    this.setState({ isLoading: true });
     (async () => {
       try {
         // Transfer tokens
-        const data = await web3Backend.transfer(address, currency, Number(amount));
+        const data = await web3Backend.transfer(
+          address,
+          currency,
+          Number(amount)
+        );
 
         onClose();
 
@@ -101,22 +129,24 @@ class TransferModal extends React.PureComponent {
         // Get the balance
         const walletAddress = _.get(wallets, '[0].address');
         const balance = await web3Backend.getBalances(walletAddress);
-        const balances = [{
-          address: walletAddress,
-          items: balance,
-        }];
-        web3SetData({balances});
+        const balances = [
+          {
+            address: walletAddress,
+            items: balance,
+          },
+        ];
+        web3SetData({ balances });
       } catch (error) {
         switch (error.data.name) {
-          case "error_noGas": {
-            this.props.toastPush(getLang("error_noGas"), "warning");
+          case 'error_noGas': {
+            this.props.toastPush(getLang('error_noGas'), 'warning');
             break;
           }
           default: {
             break;
           }
         }
-        
+
         console.error('[TransferModal]', error);
         this.setState({
           isLoading: false,
@@ -127,29 +157,37 @@ class TransferModal extends React.PureComponent {
   }
 
   render() {
-    const {onClose, currency} = this.props;
-    const {isLoading} = this.state;
+    const { onClose, currency } = this.props;
+    const { isLoading } = this.state;
 
-    return <UI.Modal isOpen={true} onClose={onClose} className="TransferModal">
-      <UI.ModalHeader>
-        {getLang("cabinetWalletTransfer_header")} {currency.toUpperCase()}
-      </UI.ModalHeader>
-      <div className="TransferModal-content">
-        {isLoading
-          ? this.renderLoading()
-          : this.renderForm()
-        }
-      </div>
-    </UI.Modal>
+    return (
+      <UI.Modal isOpen={true} onClose={onClose} className="TransferModal">
+        <UI.ModalHeader>
+          {getLang('cabinetWalletTransfer_header')} {currency.toUpperCase()}
+        </UI.ModalHeader>
+        <div className="TransferModal-content">
+          {isLoading ? this.renderLoading() : this.renderForm()}
+        </div>
+      </UI.Modal>
+    );
   }
 }
 
-export default connect(state => ({
-  wallets: state.web3.wallets,
-  balances: state.web3.balances,
-  currencies: state.cabinet.currencies,
-}), dispatch => bindActionCreators({
-  web3Update,
-  web3SetData,
-  toastPush: toastsActions.toastPush
-}, dispatch), null, {pure: true})(TransferModal);
+export default connect(
+  (state) => ({
+    wallets: state.web3.wallets,
+    balances: state.web3.balances,
+    currencies: state.cabinet.currencies,
+  }),
+  (dispatch) =>
+    bindActionCreators(
+      {
+        web3Update,
+        web3SetData,
+        toastPush: toastsActions.toastPush,
+      },
+      dispatch
+    ),
+  null,
+  { pure: true }
+)(TransferModal);

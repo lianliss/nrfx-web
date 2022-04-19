@@ -13,8 +13,8 @@ function CopyText({ text }) {
   };
 
   return (
-    <p onClick={handleCopy} className="CopyTextComponent__container">
-      <span>{text}</span>
+    <p onClick={handleCopy} className="CopyTextComponent CopyTextComponent__container">
+      <span className='CopyTextComponent__content'>{text}</span>
       {isCopied && (
         <span className="CopyTextComponent__copied">
           <span>{getLang('copied')}</span>
