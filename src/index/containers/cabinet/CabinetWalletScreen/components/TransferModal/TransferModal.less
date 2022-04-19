@@ -5,6 +5,27 @@
 }
 
 .TransferModal {
+    &__address {
+        position: relative;
+
+        input {
+            padding-right: 36px !important;
+        }
+        
+        &-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            fill: var(--light-gray);
+            cursor: pointer;
+
+            path {
+                fill: var(--light-gray);
+            }
+        }
+    }
+    
     .Modal__header {
 
     }

@@ -9,6 +9,7 @@ import web3Backend from 'services/web3-backend';
 import { web3Update, web3SetData } from 'actions/cabinet/web3';
 import * as UI from 'ui';
 import SVG from 'utils/svg-wrap';
+import qrIcon from "./assets/Icon.svg";
 import { getLang } from 'utils';
 import { WEI_ETHER } from 'src/index/constants/cabinet';
 import { timeout } from 'utils';
@@ -50,12 +51,20 @@ class TransferModal extends React.PureComponent {
       <div className="TransferModal-form">
         <form onSubmit={this.transfer.bind(this)}>
           <h3>{getLang('cabinetWalletTransfer_address')}</h3>
-          <UI.Input
-            value={address}
-            onChange={(event) =>
-              this.setState({ address: event.currentTarget.value })
-            }
-          />
+          <div className='TransferModal__address'>
+            <UI.Input
+              value={address}
+              onChange={(event) =>
+                this.setState({ address: event.currentTarget.value })
+              }
+            />
+            <SVG 
+              src={qrIcon}
+              className="TransferModal__address-icon"
+              onClick={() => {
+                this.setState({ isQRModal: true });
+            }}/>
+          </div>
           <h3>
             <span>{getLang('cabinetWalletTransfer_amount')}</span>
             <span
@@ -77,33 +86,15 @@ class TransferModal extends React.PureComponent {
           <UI.Button onClick={this.transfer.bind(this)}>
             {getLang('cabinetWalletTransfer_submit')}
           </UI.Button>
-          <UI.Button onClick={() => {
-            if (navigator.getUserMedia) {
-              navigator.getUserMedia(
-                {video: {}},
-                () => {
-                  // If camera rights is exists
-                  this.setState({ isQRModal: true });
-                },
-                () => {
-                  // If camera rights is'nt exists
-                  this.props.toastPush(getLang('пожалуйста включите камеру'), 'warning');
-                }
-              );
-            } else {
-              console.log('not support video');
-            }
-          }}>
-            {getLang('but')}
-          </UI.Button>
         </center>
         {this.state.isQRModal && (
           <QRScannerModal
             adaptive={this.props.adaptive}
             onResult={(result) => this.setState({ address: result })}
             onClose={() => {
-              this.setState({isQRModal: false})
+              this.setState({ isQRModal: false });
             }}
+            toastPush={this.props.toastPush}
           />
         )}
       </div>

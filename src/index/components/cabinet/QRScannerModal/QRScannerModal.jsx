@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { QrReader } from 'react-qr-reader';
 import Modal from 'src/ui/components/Modal/Modal';
@@ -6,7 +6,7 @@ import BottomSheetModal from 'src/ui/components/BottomSheetModal/BottomSheetModa
 
 import './QRScannerModal.less';
 
-function QRScannerModal({ onClose, adaptive, onResult }) {
+function QRScannerModal({ onClose, adaptive, onResult, toastPush }) {
   const [value, setValue] = React.useState('');
   const [isDone, setIsDone] = React.useState(false);
 
@@ -31,6 +31,7 @@ function QRScannerModal({ onClose, adaptive, onResult }) {
             <h3>Scan your code</h3>
             {!isDone && (
               <QrReader
+                constraints={{facingMode: "environment"}}
                 className="QRScannerModal__reader"
                 scanDelay={400}
                 onResult={(result) => resultHandler(result || '')}
@@ -42,11 +43,13 @@ function QRScannerModal({ onClose, adaptive, onResult }) {
         <Modal onClose={onClose}>
           <div className="QRScannerModal">
             <h3>Scan your code</h3>
-            <QrReader
-              className="QRScannerModal__reader"
-              scanDelay={400}
-              onResult={(result) => resultHandler(result || '')}
-            />
+            {!isDone && (
+              <QrReader
+                className="QRScannerModal__reader"
+                scanDelay={400}
+                onResult={(result) => resultHandler(result || '')}
+              />
+            )}
           </div>
         </Modal>
       )}
