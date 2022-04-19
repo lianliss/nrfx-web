@@ -37,7 +37,6 @@ import {web3WalletsSelector} from "../../../../../../selectors";
 
 import * as pages from "src/index/constants/pages";
 import { walletSwapSetCurrency } from "src/actions/cabinet/wallet";
-import { openModal } from "src/actions";
 import { setBuyCurrencyWallet } from "src/actions/cabinet/setBuyCurrencyWallet";
 import ReceiveQRModal from "../../../../../components/cabinet/ReceiveQRModal/ReceiveQRModal";
 

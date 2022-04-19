@@ -80,16 +80,18 @@ class TransferModal extends React.PureComponent {
           <UI.Button onClick={() => {
             if (navigator.getUserMedia) {
               navigator.getUserMedia(
-                { video: { width: 1000, height: 1000 } },
+                {video: {}},
                 () => {
+                  // If camera rights is exists
                   this.setState({ isQRModal: true });
                 },
                 () => {
+                  // If camera rights is'nt exists
                   this.props.toastPush(getLang('пожалуйста включите камеру'), 'warning');
                 }
               );
             } else {
-              console.log('no support video');
+              console.log('not support video');
             }
           }}>
             {getLang('but')}
