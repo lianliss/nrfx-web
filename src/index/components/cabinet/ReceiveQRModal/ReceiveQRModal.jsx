@@ -14,38 +14,22 @@ function ReceiveQRModal({ web3Wallets, onClose, adaptive }) {
   const wallet = web3Wallets[0];
   const { address } = wallet;
 
+  const ParentComponent = adaptive ? BottomSheetModal : Modal;
+
   return (
-    <>
-      {adaptive ? (
-        <BottomSheetModal onClose={onClose}>
-          <div className="ReceiveQRModal">
-            <h3 className="ReceiveQRModal__title">Receive</h3>
-            <QRCode value={address} size={250} />
-            <p className="ReceiveQRModal__subtitle">
-              Scan address to receive payment
-            </p>
-            <div className="ReceiveQRModal__CopyText-container">
-              <CopyText text={address} className="ReceiveQRModal__CopyText" />
-              <SVG src={maximizeIcon} />
-            </div>
-          </div>
-        </BottomSheetModal>
-      ) : (
-        <Modal onClose={onClose} className="ReceiveQRModal-container">
-          <div className="ReceiveQRModal">
-            <h3 className="ReceiveQRModal__title">Receive</h3>
-            <QRCode value={address} size={250} />
-            <p className="ReceiveQRModal__subtitle">
-              Scan address to receive payment
-            </p>
-            <div className="ReceiveQRModal__CopyText-container">
-              <CopyText text={address} className="ReceiveQRModal__CopyText" />
-              <SVG src={maximizeIcon} />
-            </div>
-          </div>
-        </Modal>
-      )}
-    </>
+    <ParentComponent onClose={onClose}>
+      <div className="ReceiveQRModal">
+        <h3 className="ReceiveQRModal__title">Receive</h3>
+        <QRCode value={address} size={250} />
+        <p className="ReceiveQRModal__subtitle">
+          Scan address to receive payment
+        </p>
+        <div className="ReceiveQRModal__CopyText-container">
+          <CopyText text={address} className="ReceiveQRModal__CopyText" />
+          <SVG src={maximizeIcon} />
+        </div>
+      </div>
+    </ParentComponent>
   );
 }
 

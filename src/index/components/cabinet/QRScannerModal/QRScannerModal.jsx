@@ -15,33 +15,20 @@ function QRScannerModal({ onClose, adaptive, onResult, toastPush }) {
     }
   };
 
+  const ParentComponent = adaptive ? BottomSheetModal : Modal;
+
   return (
-    <>
-      {adaptive ? (
-        <BottomSheetModal onClose={onClose}>
-          <div className="QRScannerModal">
-            <h3>Scan your code</h3>
-            <QrReader
-              constraints={{ facingMode: 'environment' }}
-              className="QRScannerModal__reader"
-              scanDelay={400}
-              onResult={handleScan}
-            />
-          </div>
-        </BottomSheetModal>
-      ) : (
-        <Modal onClose={onClose}>
-          <div className="QRScannerModal">
-            <h3>Scan your code</h3>
-            <QrReader
-              className="QRScannerModal__reader"
-              scanDelay={400}
-              onResult={handleScan}
-            />
-          </div>
-        </Modal>
-      )}
-    </>
+    <ParentComponent onClose={onClose}>
+      <div className="QRScannerModal">
+        <h3>Scan your code</h3>
+        <QrReader
+          constraints={{ facingMode: 'environment' }}
+          className="QRScannerModal__reader"
+          scanDelay={400}
+          onResult={handleScan}
+        />
+      </div>
+    </ParentComponent>
   );
 }
 
