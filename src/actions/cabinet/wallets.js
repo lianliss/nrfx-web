@@ -9,6 +9,8 @@ import * as toastsActions from "../toasts";
 import * as utils from "../../utils";
 import router from "../../router";
 import { PAGE_COUNT } from "../../index/constants/cabinet";
+import currenciesObject from "src/currencies";
+import web3Backend from "services/web3-backend";
 
 export function loadWallets() {
   return (dispatch, getState) => {
@@ -305,4 +307,47 @@ export function buyToken(currency, amount) {
       toastsActions.error(err.message);
       throw err;
     });
+}
+
+export function getLocalSwapCurrencies(fromCurrency = null, toCurrency = null) {
+  // Default response values.
+  const responseCurrencies = {
+    fromCurrency: fromCurrency,
+    toCurrency: toCurrency,
+  };
+
+  if (!window) {
+    return responseCurrencies;
+  }
+
+  const swapCurrencies = JSON.parse(
+    // Get items of sessionStorage and parse to Object.
+    window.sessionStorage.getItem('swapCurrencies')
+  );
+
+  if (swapCurrencies) {
+    // If items from sessionStorage is exists.
+    for (let key in swapCurrencies) {
+      // Get abbr from current item.
+      const abbr = swapCurrencies[key];
+
+      // Get current item object.
+      const currency = currenciesObject[abbr];
+
+      if (currency.can_exchange) {
+        // If current item can exchange, add to response.
+        responseCurrencies[key] = abbr;
+      }
+    }
+  }
+
+  return responseCurrencies;
+}
+
+export function getCanExchangeWallets() {
+  const currencies = Object.keys(currenciesObject)
+    .map((currency) => currenciesObject[currency]) // Keys to objects.
+    .filter((currency) => currency.can_exchange); // Return can exchange objects.
+
+  return currencies;
 }

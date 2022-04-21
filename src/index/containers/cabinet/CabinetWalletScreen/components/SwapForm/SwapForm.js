@@ -41,7 +41,7 @@ import {
 import { isFiat, getLang } from "utils";
 import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
-import currenciesObject from 'src/currencies';
+import { getCanExchangeWallets } from "src/actions/cabinet/wallets";
 import getCommission from 'utils/get-commission';
 
 // number to fixed custom function
@@ -192,9 +192,7 @@ export default () => {
   const disabled = status.rate === "loading" || status.swap === "loading";
   const web3Balances = useSelector(web3BalancesSelector);
 
-  const currencies = Object.keys(currenciesObject)
-    .map(key => currenciesObject[key])
-    .filter(c => c.can_exchange);
+  const currencies = getCanExchangeWallets();
   const fiats = currencies.filter(c => c.type === 'fiat');
   const crypto = currencies.filter(c => c.type === 'crypto');
   const commission = getCommission(useSelector(state => state.web3.commissions), swap.toCurrency);

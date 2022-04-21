@@ -13,7 +13,6 @@ import Skeleton from "../../../../../ui/components/Skeleton/Skeleton";
 
 export default () => {
   const { markets } = useSelector(landingSelector);
-  console.log('markets', markets);
 
   return (
     <div className="Exchange LandingWrapper__block">
@@ -88,7 +87,7 @@ export default () => {
                             .toString()
                             .split(".")
                             .map((n, i) => (
-                              <span>
+                              <span key={i}>
                                 {i === 1 ? "." : "$"}
                                 {n}
                               </span>
