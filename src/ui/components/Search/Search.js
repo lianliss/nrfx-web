@@ -1,20 +1,25 @@
 // styles
-import "./Search.less";
+import './Search.less';
 // external
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 // internal
-import { classNames } from "../../utils";
+import { classNames } from '../../utils';
+import SVG from 'utils/svg-wrap';
+import searchIcon from './assets/search.svg';
 
 function Search(props) {
   const className = classNames({
     Search: true,
-    lite: props.lite
+    lite: props.lite,
+    simple: props.simple,
+    disabled: props.disabled,
   });
 
   return (
     <div className={className}>
       {props.lite && <div className="Search__icon" />}
+      {props.icon && <SVG className="Search__icon" src={searchIcon} />}
       <input
         type="text"
         className="Search__input"
@@ -36,7 +41,9 @@ Search.propTypes = {
   onChange: PropTypes.func,
   value: PropTypes.string,
   onSearch: PropTypes.func,
-  lite: PropTypes.bool
+  lite: PropTypes.bool,
+  simple: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default React.memo(Search);
