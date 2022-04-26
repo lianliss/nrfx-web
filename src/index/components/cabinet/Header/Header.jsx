@@ -4,14 +4,28 @@ import Select from 'react-select';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
+import { openModal, toggleTheme } from 'src/actions';
+import { logout } from 'src/actions/auth';
+import router from 'src/router';
+import { SETTINGS, PARTNERS, MAIN } from '../../../constants/pages';
+import COMPANY from '../../../constants/company';
 
 import './Header.less';
 import { Button } from 'src/ui';
 import { options } from './constants/header_crypto';
+import Notifications from '../Notifications/Notifications';
+import { connect } from 'react-redux';
+import { Badge, ActionSheet, Switch } from 'src/ui';
 
 function Header(props) {
   // Current crypto in select.
   const [currentCrypto, setCurrentCrypto] = React.useState('solana');
+  const [visibleNotifications, setVisibleNotifications] = React.useState(false);
+  const currentLang = getLang();
+  const lang =
+    props.langList.find((l) => l.value === currentLang) ||
+    props.langList[0] ||
+    {}; // hack.
 
   // Get value object of current crypto str.
   const getValue = () => {
@@ -26,7 +40,7 @@ function Header(props) {
   return (
     <div className="CabinetHeader">
       <div className="CabinetHeader__container">
-        <div className="CabinetHeader__logo">
+        <div className="CabinetHeader__logo" onClick={() => router.navigate(MAIN)}>
           <SVG src={require('src/asset/logo/narfex-blue.svg')} />
         </div>
         <div className="CabinetHeader__menu">
@@ -50,15 +64,55 @@ function Header(props) {
             </Button>
           </div>
           <div className="CabinetHeader__notifications">
-            <SVG src={require('src/asset/icons/cabinet/notification.svg')} />
-            <div className="CabinetHeader__notifications-counter">
-              <div>
-                <span>13</span>
-              </div>
-            </div>
+            <Badge
+              count={props.profile.has_notifications && 1}
+              type="blue"
+              onClick={setVisibleNotifications}
+            >
+              <SVG src={require('src/asset/icons/cabinet/notification.svg')} />
+            </Badge>
+            {visibleNotifications && (
+              <Notifications onClose={() => setVisibleNotifications(false)} />
+            )}
           </div>
           <div className="CabinetHeader__settings">
-            <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
+            <ActionSheet
+              position="left"
+              items={[
+                {
+                  title: getLang('cabinet_header_settings'),
+                  onClick: () => router.navigate(SETTINGS),
+                },
+                {
+                  title: getLang('cabinet_header_partners'),
+                  onClick: () => router.navigate(PARTNERS),
+                },
+                {
+                  title: 'FAQ',
+                  onClick: () => window.open(COMPANY.faqUrl),
+                },
+                {
+                  title: lang.title,
+                  onClick: () => openModal('language'),
+                  subContent: (
+                    <SVG
+                      src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)}
+                    />
+                  ),
+                },
+                {
+                  title: getLang('global_darkMode'),
+                  onClick: toggleTheme,
+                  subContent: <Switch on={props.theme === 'dark'} />,
+                },
+                {
+                  title: getLang('cabinet_header_exit'),
+                  onClick: logout,
+                },
+              ]}
+            >
+              <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
+            </ActionSheet>
           </div>
         </div>
       </div>
@@ -78,4 +132,17 @@ const DropdownIndicator = (props) => {
   );
 };
 
-export default Header;
+export default connect(
+  (state) => ({
+    profile: state.default.profile,
+    notifications: state.notifications,
+    router: state.router,
+    langList: state.default.langList,
+    title: state.default.title,
+    theme: state.default.theme,
+    translator: state.settings.translator,
+  }),
+  {
+    // loadNotifications: notificationsActions.loadNotifications,
+  }
+)(Header);
