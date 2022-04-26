@@ -1,220 +1,128 @@
-@header-height: 56px;
-@adaptive-header-height: 48px;
-
-.CabinetHeaderContainer {
-  position: sticky;
-  z-index: 100;
-  top: 0;
-}
+@import '../../../../vars.less';
 
 .CabinetHeader {
-  background: var(--primary-background);
-  border-bottom: 1px solid var(--extra-light-gray);
-  width: 100%;
+  padding: 17px 0 2px;
 
-  .CabinetHeader__content {
-    height: @header-height;
-    max-width: 1340px;
+  &__container {
+    display: flex;
     margin: 0 auto;
+    max-width: 1400px;
+    padding: 0 18px;
+    box-sizing: border-box;
+  }
+
+  &__menu {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    margin-left: auto;
 
-    .logo {
-      display: block;
-    }
-
-    .CabinetHeader__links {
+    .dynamic-shadow {
       display: flex;
-
-      .isvg {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
-    .CabinetHeader__controls {
-      display: flex;
+      position: relative;
+      margin-left: 10px;
+      z-index: 1;
 
       .Button {
-        margin-left: 8px;
-      }
-    }
+        position: relative;
+        height: 39px;
 
-    .CabinetHeader__link {
-      position: relative;
-      color: var(--text-black);
-      display: flex;
-      align-items: center;
-      padding: 16px 8px 16px 3px;
-      justify-content: center;
-      font-weight: 600;
-      margin-right: 32px;
-      font-size: 13px;
-      line-height: 16px;
-      text-decoration: none !important;
-      transition: color.3s ease;
-
-      &:before {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: 0;
-        border-radius: 0 0 2px 2px;
-        background: var(--primary-blue);
-        height: 0;
-        width: 0;
-        margin: 0 auto;
-        transition: width.3s ease, height.3s ease;
-      }
-
-      &:hover {
-        color: var(--almost-black);
-      }
-
-      &.active {
-        color: var(--primary-blue);
-
-        &:before {
-          height: 2px;
-          width: 90%;
+        .Button__label {
+          display: flex;
+          align-items: center;
         }
-      }
-
-      .isvg {
-        margin-right: 16px;
-        height: 24px;
-      }
-    }
-
-    .CabinetHeader__icons {
-      position: relative;
-      display: flex;
-      margin-right: 18px;
-
-      .Notifications {
-        width: 648px;
-        position: absolute;
-        top: 48px;
-        right: 0;
-      }
-
-      .CabinetHeader__icon__svg {
-        display: block;
-      }
-    }
-
-    .CabinetHeader__icon {
-      color: var(--text-black);
-      position: relative;
-      width: 16px * 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: @header-height;
-      cursor: pointer;
-
-      &:hover {
-        color: var(--almost-black);
-      }
-
-      .isvg {
-        width: 24px;
-        height: 24px;
-      }
-
-      .ActionsSheet__list {
-        overflow: visible;
-        margin-top: 32px;
-        margin-right: -8px;
 
         .isvg {
-          font-size: 0;
-          display: block;
-          width: 18px;
-          height: 13.5px;
-          border: 1px solid;
+          height: 23px;
+          width: 23px;
+          margin-right: 5px;
         }
+      }
 
-        &::before {
-          position: absolute;
-          content: "";
-          display: block;
-          height: 12px;
-          width: 100%;
-          top: -12px;
-        }
+      &::after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90.3%;
+        height: 35px;
+        z-index: -1;
+
+        background: var(--blue-light-gradient);
+        opacity: 0.5;
+        filter: blur(45px);
+        border-radius: 10px;
+      }
+    }
+
+    .notifications {
+      margin-left: 69px;
+      position: relative;
+
+      &__counter {
+        position: absolute;
       }
     }
   }
 }
 
-.adaptive {
-  .CabinetHeaderContainer {
-    //height: @adaptive-header-height;
-    .CabinetHeader {
-      //height: @adaptive-header-height;
-      -webkit-border-radius: 0 0 8px 8px;
-      -moz-border-radius: 0 0 8px 8px;
-      border-radius: 0 0 8px 8px;
-      display: flex;
+.CabinetSelect {
+  &__control {
+    height: 39px;
+    min-width: 150px !important;
+    border: 1px solid #dfe3f0 !important;
+    border-radius: 10px !important;
+    padding: 0 11px !important;
+  }
+
+  &__value {
+    &-container {
+      padding: 0 !important;
     }
   }
 
-  .CabinetHeader__leftContent,
-  .CabinetHeader__rightContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &__single {
+    &-value {
+    }
   }
 
-  @adaptive-header-side-width: 60px;
-  .CabinetHeader__leftContent {
-    width: @adaptive-header-side-width;
-    height: @adaptive-header-height;
-    .CabinetHeader__leftContent_icon {
-      width: 100%;
-      height: @adaptive-header-height;
-      display: flex;
-      span {
-        display: flex;
-        margin: auto;
-      }
-      svg {
-        margin: auto;
-        //color: var(--text-black)
-      }
+  &__option,
+  &__single-value {
+    display: flex !important;
+    align-items: center !important;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    color: #0a1539;
+
+    .isvg {
+      width: 20px;
+      height: 20px;
+      margin-right: 7px;
     }
   }
-  .CabinetHeader__mainContent {
-    width: auto;
-    height: @adaptive-header-height;
-    margin: auto;
-    display: flex;
-    font-size: 16px;
-    div,
-    span {
-      margin: auto;
-      font-weight: 500;
-    }
-    .CabinetHeader__mainContent_logo {
-      //color: var(--primary-orange);
-      svg {
-        width: 150px;
-      }
+
+  &__menu {
+    &-list {
+      padding: 0 !important;
     }
   }
-  .CabinetHeader__rightContent {
-    width: @adaptive-header-side-width;
-    height: @adaptive-header-height;
-    display: flex;
+
+  &__option {
+    font-weight: 500;
+
+    &:hover {
+      background: #e4eafa !important;
+    }
+
+    &--is-selected {
+      background: transparent !important;
+      color: #0a1539 !important;
+    }
+
     span {
-      display: flex;
-      margin: auto;
-      svg {
-        margin: auto;
-        color: var(--text-black);
+      &:last-child {
+        transform: translateY(1px);
       }
     }
   }
