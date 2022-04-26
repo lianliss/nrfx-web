@@ -49,9 +49,16 @@ function Header(props) {
               <span>{getLang('cabinet_manage')}</span>
             </Button>
           </div>
-          <div className="notifications">
+          <div className="CabinetHeader__notifications">
             <SVG src={require('src/asset/icons/cabinet/notification.svg')} />
-            <div className="notifications__counter">3</div>
+            <div className="CabinetHeader__notifications-counter">
+              <div>
+                <span>13</span>
+              </div>
+            </div>
+          </div>
+          <div className="CabinetHeader__settings">
+            <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
           </div>
         </div>
       </div>
