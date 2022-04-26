@@ -4,19 +4,66 @@
   &__content {
     display: flex;
     align-items: center;
-    color: var(--dark-black);
     font-weight: 600;
     font-size: 14px;
     line-height: 150%;
+    color: var(--dark-black);
     cursor: pointer;
+
+    .SidebarItem.active & {
+      color: #5078e6;
+    }
+  }
+
+  &__children {
+    margin-left: 11px;
+    margin-top: 7.42px;
+    padding-top: 7.08px;
+    padding-left: 25px;
+    border-left: 1px solid #e9eaed;
+    position: relative;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.023em;
+    color: #9095a5;
+
+    &::after,
+    &::before {
+      content: '';
+      display: inline;
+      position: absolute;
+      left: -1px;
+      width: 3px;
+      height: 3px;
+      background: #e9eaed;
+      transform: translateX(-50%);
+      border-radius: 50%;
+    }
+
+    &::after {
+      bottom: 0;
+    }
+
+    &::before {
+      top: 0;
+    }
+
+    li {
+      cursor: pointer;
+
+      &:hover {
+        opacity: .9;
+      }
+      
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+    }
   }
 
   &:not(:last-child) {
     margin-bottom: 32px;
-  }
-
-  &.active {
-    color: #5078e6;
   }
 
   &__icon {
@@ -29,6 +76,14 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+
+    .isvg {
+      transition: transform .3s;
+    }
+
+    &.active .isvg {
+      transform: rotate(90deg);
+    }
   }
 
   .isvg {

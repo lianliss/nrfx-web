@@ -18,7 +18,10 @@ function CabinetWalletSidebar(props) {
         <ul>
           <SidebarItem title="Trade" icon="trade">
             <ul>
-              <li>asd</li>
+              <li>Pro Dex</li>
+              <li>Pro Dex</li>
+              <li>Pro Dex</li>
+              <li>Swap</li>
             </ul>
           </SidebarItem>
           <SidebarItem title="Liquidity" icon="liquidity" />

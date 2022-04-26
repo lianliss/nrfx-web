@@ -7,11 +7,20 @@ import './SidebarItem.less';
 
 function SidebarItem({ title, icon, children, onClick, active }) {
   const className = cn({ SidebarItem: true, active, haveChild: children });
+  const [childIsVisible, setChildIsVisible] = React.useState(false);
+
+  const handleClick = () => {
+    onClick();
+
+    if (children) {
+      setChildIsVisible((prev) => !prev);
+    }
+  };
 
   return (
     <>
-      <li onClick={onClick} className={className}>
-        <div className="SidebarItem__content">
+      <li className={className}>
+        <div className="SidebarItem__content" onClick={handleClick}>
           {icon && (
             <div className="SidebarItem__icon">
               <SVG
@@ -20,18 +29,27 @@ function SidebarItem({ title, icon, children, onClick, active }) {
             </div>
           )}
           <span>{title}</span>
-          {active && (
-            <div className="SidebarItem__arrow">
+          {(active || children) && (
+            <div className={cn({SidebarItem__arrow: true, active: childIsVisible})}>
               <SVG
                 src={require(`src/asset/icons/cabinet/sidebar/list-arrow-right.svg`)}
               />
             </div>
           )}
         </div>
-        <div>{children && children}</div>
+        {children && childIsVisible && (
+          <div className="SidebarItem__children">{children}</div>
+        )}
       </li>
     </>
   );
 }
+
+SidebarItem.defaultProps = {
+  onClick: () => {},
+  title: '',
+  icon: null,
+  active: false,
+};
 
 export default SidebarItem;
