@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from "prop-types"
+import { connect, useSelector } from 'react-redux';
 
 import Select from 'react-select';
 import SVG from 'utils/svg-wrap';
@@ -14,14 +16,14 @@ import './Header.less';
 import { Button } from 'src/ui';
 import { options } from './constants/header_crypto';
 import Notifications from '../Notifications/Notifications';
-import { connect } from 'react-redux';
 import { Badge, ActionSheet, Switch } from 'src/ui';
+import { currentLangSelector } from 'src/selectors';
 
 function Header(props) {
   // Current crypto in select.
   const [currentCrypto, setCurrentCrypto] = React.useState('solana');
   const [visibleNotifications, setVisibleNotifications] = React.useState(false);
-  const currentLang = getLang();
+  const currentLang = useSelector(currentLangSelector);
   const lang =
     props.langList.find((l) => l.value === currentLang) ||
     props.langList[0] ||
@@ -40,7 +42,10 @@ function Header(props) {
   return (
     <div className="CabinetHeader">
       <div className="CabinetHeader__container">
-        <div className="CabinetHeader__logo" onClick={() => router.navigate(MAIN)}>
+        <div
+          className="CabinetHeader__logo"
+          onClick={() => router.navigate(MAIN)}
+        >
           <SVG src={require('src/asset/logo/narfex-blue.svg')} />
         </div>
         <div className="CabinetHeader__menu">
@@ -131,6 +136,16 @@ const DropdownIndicator = (props) => {
     />
   );
 };
+
+Header.propTypes = {
+  profile: PropTypes.object,
+  notifications: PropTypes.object,
+  router: PropTypes.object,
+  langList: PropTypes.array,
+  title: PropTypes.string,
+  theme: PropTypes.string,
+  translator: PropTypes.bool,
+}
 
 export default connect(
   (state) => ({
