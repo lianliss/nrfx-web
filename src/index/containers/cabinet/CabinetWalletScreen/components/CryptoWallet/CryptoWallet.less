@@ -22,7 +22,7 @@
 
     @media screen and (min-width: calc(@mobile-width + 1px)) {
       & > .Button,
-      & > a {        
+      & > a {
         &:not(:last-child) {
           margin-right: 10px;
         }
@@ -33,11 +33,17 @@
       .FirstButton {
         margin-left: 0;
       }
+
+      & > a {
+        &:not(:last-child) {
+          margin: 0 10px;
+        }
+      }
     }
 
     @media screen and (min-width: 320px) and (max-width: @mobile-width) {
-    .Button {
-        min-width: 100px !important;
+      .Button {
+        min-width: 70px !important;
       }
     }
   }
@@ -64,7 +70,7 @@
     &-usd {
     }
   }
-  
+
   .FirstButton {
     margin-left: auto;
   }

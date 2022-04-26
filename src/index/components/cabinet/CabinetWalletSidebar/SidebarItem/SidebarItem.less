@@ -1,0 +1,38 @@
+.SidebarItem {
+  list-style-type: none;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    color: var(--dark-black);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    cursor: pointer;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 32px;
+  }
+
+  &.active {
+    color: #5078e6;
+  }
+
+  &__icon {
+    margin-right: 13px;
+    height: 23px;
+    width: 23px;
+  }
+
+  &__arrow {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .isvg {
+    display: flex;
+    align-items: center;
+  }
+}
