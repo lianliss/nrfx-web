@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import QRCode from 'react-qr-code';
+import { getLang } from 'src/utils';
 
 import { Modal, CopyText } from 'src/ui';
 import SVG from 'utils/svg-wrap';
@@ -19,10 +20,12 @@ function ReceiveQRModal({ web3Wallets, onClose, adaptive }) {
   return (
     <ParentComponent onClose={onClose}>
       <div className="ReceiveQRModal">
-        <h3 className="ReceiveQRModal__title">Receive</h3>
+        <h3 className="ReceiveQRModal__title">
+          {getLang('receive_qr_global')}
+        </h3>
         <QRCode value={address} size={250} />
         <p className="ReceiveQRModal__subtitle">
-          Scan address to receive payment
+          {getLang('receive_qr_modal_subtitle')}
         </p>
         <div className="ReceiveQRModal__CopyText-container">
           <CopyText text={address} className="ReceiveQRModal__CopyText" />
