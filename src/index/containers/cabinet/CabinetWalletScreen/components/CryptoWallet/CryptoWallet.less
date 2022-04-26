@@ -33,11 +33,17 @@
       .FirstButton {
         margin-left: 0;
       }
+
+      & > a {        
+        &:not(:last-child) {
+          margin: 0 10px;
+        }
+      }
     }
 
     @media screen and (min-width: 320px) and (max-width: @mobile-width) {
     .Button {
-        min-width: 100px !important;
+        min-width: 70px !important;
       }
     }
   }
