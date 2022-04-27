@@ -45,6 +45,7 @@ import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
 import Web3Wallets from "./components/Web3Wallets/Web3Wallets";
 import CryptoWallet from './components/CryptoWallet/CryptoWallet';
 import CabinetWalletSidebar from "../../../components/cabinet/CabinetWalletSidebar/CabinetWalletSidebar";
+import CabinetWallets from "../../../components/cabinet/CabinetWallets/CabinetWallets";
 
 import { ContentBox } from "ui";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
@@ -328,9 +329,10 @@ class CabinetWalletScreen extends React.PureComponent {
           !isAdaptive && <CabinetWalletSidebar />
         }
       >
-        {isCommon && <Web3Wallets />}
+        {isCommon && <CabinetWallets />}
+        {/* {isCommon && <Web3Wallets />} */}
         {isCrypto && <CryptoWallet/>}
-        {isCommon && <CommonHeader />}
+        {/* {isCommon && <CommonHeader />} */}
         {isSwap &&
         (isAdaptive ? (
           <SwapFormAdaptive rates={rates} />
@@ -357,14 +359,14 @@ class CabinetWalletScreen extends React.PureComponent {
 
         {!isReservationExpire && <RefillBlock />}
 
-        <Paging
+        {/* <Paging
           isCanMore={!!history.next && status.historyMore !== "loading"}
           onMore={() => handleLoadMore(balanceId, isCrypto, isSwap)}
           moreButton={!!history.next && !status.history}
           isLoading={status.historyMore === "loading"}
         >
           <History />
-        </Paging>
+        </Paging> */}
       </PageContainer>
     );
   }
