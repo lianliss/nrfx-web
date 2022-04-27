@@ -98,7 +98,7 @@ const Balance = React.memo(({ balances, setActiveBalance }) => {
                     icon={
                       <img src={icon} style={{ background: iconGradient }} />
                     }
-                    startTexts={[name, item.currency]}
+                    startTexts={[name, item.currency.toUpperCase()]}
                     endTexts={['$' + item.price, item.amount]}
                     key={item.id}
                   />

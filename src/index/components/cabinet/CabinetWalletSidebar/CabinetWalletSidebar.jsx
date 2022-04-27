@@ -6,9 +6,10 @@ import SidebarItem from './components/SidebarItem/SidebarItem';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import WalletsListItem from '../../../containers/cabinet/CabinetExchangeScreen/components/WalletsList/components/WalletsListItem/WalletsListItem';
 import WalletsList from '../../../containers/cabinet/CabinetExchangeScreen/components/WalletsList/WalletsList';
+import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import './CabinetWalletSidebar.less';
 
-function CabinetWalletSidebar(props) {
+function CabinetWalletSidebar() {
   const { route, router } = useRoute();
 
   return (
@@ -60,9 +61,13 @@ function CabinetWalletSidebar(props) {
             />
           }
           startTexts={['Narfex', 'NRFX']}
-          endTexts={['$455.00', 0.54]}
-          type="up"
-          total={14}
+          endTexts={[
+            '$455.00',
+            <>
+              <RateIndicator number={12} type="up" procent />
+              0.54
+            </>,
+          ]}
           border
         />
       </WalletsList>

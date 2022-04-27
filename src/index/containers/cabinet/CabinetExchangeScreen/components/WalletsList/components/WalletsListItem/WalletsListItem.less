@@ -72,7 +72,11 @@
     &-container {
       display: inline-flex;
       align-items: center;
-      opacity: .57;
+      opacity: 0.57;
+
+      .down & {
+        opacity: 1;
+      }
     }
 
     .isvg {
@@ -84,7 +88,7 @@
     }
 
     &.down {
-      background: #fe6666;
+      background: #f07f4f;
 
       .isvg {
         transform: rotate(180deg);
