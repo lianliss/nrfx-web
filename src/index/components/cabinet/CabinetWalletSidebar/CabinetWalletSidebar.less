@@ -1,19 +1,23 @@
 @import '../../../../vars.less';
 
 .CabinetWalletSidebar {
+  position: relative;
   max-width: 208px;
+  height: 100%;
 
   .CabinetBlock {
     margin-bottom: 10px;
-
-    &:last-of-type {
-      margin-bottom: 71px;
-    }
   }
 
   ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
+  }
+
+  .WalletsList {
+    position: sticky;
+    width: 100%;
+    top: calc(100vh - 82px);
   }
 }

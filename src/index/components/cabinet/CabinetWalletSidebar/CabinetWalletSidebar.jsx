@@ -13,38 +13,40 @@ function CabinetWalletSidebar(props) {
 
   return (
     <div className="CabinetWalletSidebar">
-      <CabinetBlock>
-        <ul>
-          <SidebarItem title="Dashboard" icon="dashboard" />
-          <SidebarItem
-            title="Wallet"
-            icon="wallet"
-            active={route.name === PAGES.WALLET}
-            onClick={() => router.navigate(PAGES.WALLET)}
-          />
-          <SidebarItem
-            title="Exchanger"
-            icon="exchange"
-            active={route.name === PAGES.WALLET_SWAP}
-            onClick={() => router.navigate(PAGES.WALLET_SWAP)}
-          />
-        </ul>
-      </CabinetBlock>
-      <CabinetBlock>
-        <ul>
-          <SidebarItem title="Trade" icon="trade">
-            <ul>
-              <li>Pro Dex</li>
-              <li>Pro Dex</li>
-              <li>Pro Dex</li>
-              <li>Swap</li>
-            </ul>
-          </SidebarItem>
-          <SidebarItem title="Liquidity" icon="liquidity" />
-          <SidebarItem title="Farm" icon="farm" />
-          <SidebarItem title="Validator" icon="validator" />
-        </ul>
-      </CabinetBlock>
+      <div className="CabinetWalletSidebar__container">
+        <CabinetBlock>
+          <ul>
+            <SidebarItem title="Dashboard" icon="dashboard" />
+            <SidebarItem
+              title="Wallet"
+              icon="wallet"
+              active={route.name === PAGES.WALLET}
+              onClick={() => router.navigate(PAGES.WALLET)}
+            />
+            <SidebarItem
+              title="Exchanger"
+              icon="exchange"
+              active={route.name === PAGES.WALLET_SWAP}
+              onClick={() => router.navigate(PAGES.WALLET_SWAP)}
+            />
+          </ul>
+        </CabinetBlock>
+        <CabinetBlock>
+          <ul>
+            <SidebarItem title="Trade" icon="trade">
+              <ul>
+                <li>Pro Dex</li>
+                <li>Pro Dex</li>
+                <li>Pro Dex</li>
+                <li>Swap</li>
+              </ul>
+            </SidebarItem>
+            <SidebarItem title="Liquidity" icon="liquidity" />
+            <SidebarItem title="Farm" icon="farm" />
+            <SidebarItem title="Validator" icon="validator" />
+          </ul>
+        </CabinetBlock>
+      </div>
       <WalletsList>
         <WalletsListItem
           icon={
@@ -61,23 +63,6 @@ function CabinetWalletSidebar(props) {
           endTexts={['$455.00', 0.54]}
           type="up"
           total={14}
-          border
-        />{' '}
-        <WalletsListItem
-          icon={
-            <img
-              src="https://static.narfex.com/img/currencies/nrfx.svg"
-              style={{
-                background:
-                  'linear-gradient(to bottom, #FABE4C 0%, #FA9751 100%)',
-                border: '1px solid #fff',
-              }}
-            />
-          }
-          startTexts={['Narfex', 'NRFX']}
-          endTexts={['$455.00', 100.54]}
-          type="down"
-          total={4}
           border
         />
       </WalletsList>
