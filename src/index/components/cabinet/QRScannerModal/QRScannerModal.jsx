@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { QrReader } from 'react-qr-reader';
 import Modal from 'src/ui/components/Modal/Modal';
+import { getLang } from 'src/utils';
 import BottomSheetModal from 'src/ui/components/BottomSheetModal/BottomSheetModal';
 
 import './QRScannerModal.less';
@@ -20,7 +21,7 @@ function QRScannerModal({ onClose, adaptive, onResult, toastPush }) {
   return (
     <ParentComponent onClose={onClose}>
       <div className="QRScannerModal">
-        <h3>Scan your code</h3>
+        <h3>{getLang('qr_scanner_modal_title')}</h3>
         <QrReader
           constraints={{ facingMode: 'environment' }}
           className="QRScannerModal__reader"
