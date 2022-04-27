@@ -88,7 +88,8 @@ Button.propTypes = {
     "primary",
     "lite",
     "green",
-    "lightBlue"
+    "lightBlue",
+    "gray"
   ]),
   currency: PropTypes.object,
   className: PropTypes.string,

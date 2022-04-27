@@ -1,12 +1,12 @@
 import React from 'react';
-import { classNames } from 'src/ui/utils';
+import { classNames as cn } from 'src/ui/utils';
 
 import './CabinetBlock.less';
 
-function CabinetBlock({ children, border }) {
-  const className = classNames({ CabinetBlock: true, border });
+function CabinetBlock({ children, border, className = '' }) {
+  const classNames = cn({ CabinetBlock: true, border, [className]: true });
 
-  return <div className={className}>{children}</div>;
+  return <div className={classNames}>{children}</div>;
 }
 
 export default CabinetBlock;
