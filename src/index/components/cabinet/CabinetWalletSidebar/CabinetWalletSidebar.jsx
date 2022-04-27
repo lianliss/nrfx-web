@@ -1,9 +1,11 @@
 import React from 'react';
-import { useRoute } from "react-router5";
+import { useRoute } from 'react-router5';
 
 import * as PAGES from 'src/index/constants/pages';
-import SidebarItem from './SidebarItem/SidebarItem';
+import SidebarItem from './components/SidebarItem/SidebarItem';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
+import WalletsListItem from '../../../containers/cabinet/CabinetExchangeScreen/components/WalletsList/components/WalletsListItem/WalletsListItem';
+import WalletsList from '../../../containers/cabinet/CabinetExchangeScreen/components/WalletsList/WalletsList';
 import './CabinetWalletSidebar.less';
 
 function CabinetWalletSidebar(props) {
@@ -43,6 +45,42 @@ function CabinetWalletSidebar(props) {
           <SidebarItem title="Validator" icon="validator" />
         </ul>
       </CabinetBlock>
+      <WalletsList>
+        <WalletsListItem
+          icon={
+            <img
+              src="https://static.narfex.com/img/currencies/nrfx.svg"
+              style={{
+                background:
+                  'linear-gradient(to bottom, #FABE4C 0%, #FA9751 100%)',
+                border: '1px solid #fff',
+              }}
+            />
+          }
+          startTexts={['Narfex', 'NRFX']}
+          endTexts={['$455.00', 0.54]}
+          type="up"
+          total={14}
+          border
+        />{' '}
+        <WalletsListItem
+          icon={
+            <img
+              src="https://static.narfex.com/img/currencies/nrfx.svg"
+              style={{
+                background:
+                  'linear-gradient(to bottom, #FABE4C 0%, #FA9751 100%)',
+                border: '1px solid #fff',
+              }}
+            />
+          }
+          startTexts={['Narfex', 'NRFX']}
+          endTexts={['$455.00', 100.54]}
+          type="down"
+          total={4}
+          border
+        />
+      </WalletsList>
     </div>
   );
 }

@@ -1,7 +1,16 @@
+@import '../../../../../../../../vars.less';
+
 .WalletsListItem {
   display: flex;
+
   &:not(:last-child) {
     margin-bottom: 15px;
+  }
+
+  &.border {
+    padding: 14px 14px 14px 11px;
+    border: 1px solid #dfe3f0;
+    border-radius: var(--radius-panel);
   }
 
   &__column {
@@ -33,6 +42,8 @@
       font-size: 14px;
       line-height: 110%;
       letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
     }
   }
 
@@ -42,5 +53,47 @@
     border-radius: 50%;
     background: linear-gradient(to bottom, #896adf 0%, #98b1f1 100%);
     pointer-events: none;
+  }
+
+  &__total {
+    display: inline-flex;
+    height: 13px;
+    margin-right: 7px;
+    padding: 3px;
+    background: #5ec47a;
+    font-weight: 600;
+    font-size: 9px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: #fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+
+    &-container {
+      display: inline-flex;
+      align-items: center;
+      opacity: .57;
+    }
+
+    .isvg {
+      display: inline-flex;
+      align-items: center;
+      height: 8px;
+      width: 8px;
+      margin-right: 2px;
+    }
+
+    &.down {
+      background: #fe6666;
+
+      .isvg {
+        transform: rotate(180deg);
+      }
+    }
+
+    svg,
+    svg path {
+      fill: #fff !important;
+    }
   }
 }
