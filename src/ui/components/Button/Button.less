@@ -188,7 +188,18 @@
   }
 
   &.gray {
-    background: #dfe3f0;
+    background: rgba(223, 227, 240, 0.25);
+    
+    .Button__label {
+      color: var(--cool-gray);
+    }
+
+    .Button__icon {
+      svg,
+      svg path {
+        fill: var(--cool-gray);
+      }
+    }
   }
 }
 
