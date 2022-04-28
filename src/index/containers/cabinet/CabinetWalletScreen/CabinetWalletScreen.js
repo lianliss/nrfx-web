@@ -329,7 +329,7 @@ class CabinetWalletScreen extends React.PureComponent {
           !isAdaptive && <CabinetWalletSidebar />
         }
       >
-        {isCommon && <CabinetWallets />}
+        {isCommon && (isAdaptive ? <Web3Wallets /> : <CabinetWallets />)}
         {/* {isCommon && <Web3Wallets />} */}
         {isCrypto && <CryptoWallet/>}
         {/* {isCommon && <CommonHeader />} */}
