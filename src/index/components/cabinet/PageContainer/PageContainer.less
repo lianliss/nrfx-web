@@ -1,12 +1,16 @@
 @import '../../../../vars';
+@container-padding: 18px;
 
 .PageContainer {
   --site-bar-width: 208px;
   --content-width: 1139px;
 
   display: flex;
-  width: calc(var(--content-width) + var(--site-bar-width) + var(--gap-size));
-  margin: var(--gap-size) auto;
+  max-width: calc(var(--content-width) + var(--site-bar-width) + var(--gap-size) + (@container-padding * 2));
+  width: 100%;
+  margin: var(--gap-size) auto @container-padding;
+  padding: 0 @container-padding;
+  box-sizing: border-box;
 }
 
 .PageContainer__content {
