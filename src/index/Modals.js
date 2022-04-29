@@ -43,6 +43,7 @@ import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailM
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
+import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
@@ -172,6 +173,9 @@ function Modals(props) {
       break;
     case "wallet":
       Component = WalletModal;
+      break;
+    case "receive_qr":
+      Component = ReceiveQRModal;
       break;
     default:
       return null;

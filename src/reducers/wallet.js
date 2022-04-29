@@ -1,5 +1,8 @@
 import * as actionTypes from "../actions/actionTypes";
+import { getLocalSwapCurrencies } from "../actions/cabinet/wallets";
 import _ from "lodash";
+
+const swapCurrencies = getLocalSwapCurrencies("rub", "nrfx");
 
 const initialState = {
   status: {
@@ -15,11 +18,10 @@ const initialState = {
   refillBankList: [],
   cardReservation: null,
   swap: {
+    ...swapCurrencies,
     confirmPayment: "",
     refillBankList: "",
     focus: "from",
-    fromCurrency: "rub",
-    toCurrency: "nrfx",
     fromAmount: "",
     toAmount: "",
     rate: 0
@@ -110,12 +112,25 @@ export default function reduce(state = initialState, action = {}) {
     }
 
     case actionTypes.WALLET_SWAP_SET_CURRENCY: {
+      const swap = {
+        ...state.swap,
+        [action.payload.type + "Currency"]: action.payload.value
+      }
+
+      if(window) {
+        // Get [to&from]Currency from "state.swap".
+        const swapCurrencies = {
+          toCurrency: swap.toCurrency,
+          fromCurrency: swap.fromCurrency,
+        }
+
+        // Set to Local storage.
+        window.sessionStorage.setItem('swapCurrencies', JSON.stringify(swapCurrencies));
+      }
+
       return {
         ...state,
-        swap: {
-          ...state.swap,
-          [action.payload.type + "Currency"]: action.payload.value
-        }
+        swap
       };
     }
 

@@ -1,58 +1,65 @@
-import React, { useState, useEffect, useCallback } from "react";
-import "./Swap.less";
-import { CircleIcon, Input, Button, NumberFormat } from "../../../../../ui";
-import { formatDouble } from "src/utils/index";
-import Select from "../Select/Select";
-import { useSelector } from "react-redux";
-import { currenciesSelector } from "../../../../../selectors";
-import { getCurrencyInfo } from "../../../../../actions";
-import SVG from "utils/svg-wrap";
-import { getRate } from "src/actions/landing/swap";
-import Lang from "src/components/Lang/Lang";
-import { classNames as cn } from "src/utils/index";
-import * as actions from "../../../../../actions/landing/buttons";
+import React, { useState, useEffect, useCallback } from 'react';
+import './Swap.less';
+import { CircleIcon, Input, Button, NumberFormat } from '../../../../../ui';
+import { formatDouble } from 'src/utils/index';
+import Select from '../Select/Select';
+import { useDispatch, useSelector } from 'react-redux';
+import { walletSwapSelector } from 'src/selectors';
+import { getCurrencyInfo } from 'src/actions';
+import SVG from 'utils/svg-wrap';
+import Lang from 'src/components/Lang/Lang';
+import { classNames as cn } from 'src/utils/index';
+import * as actions from 'src/actions/landing/buttons';
+import { getCanExchangeWallets } from 'src/actions/cabinet/wallets';
+import { walletSwapSetCurrency } from 'src/actions/cabinet/wallet';
+import web3Backend from 'services/web3-backend';
 
 export default () => {
-  const [fromFiat, setFromFiat] = useState(true);
+  const dispatch = useDispatch();
+  const swap = useSelector(walletSwapSelector);
+  const fromType = getCurrencyInfo(swap.fromCurrency).type;
+  const [fromFiat, setFromFiat] = useState(fromType === 'fiat');
   const [rate, setRate] = useState(0);
   const [pendingRate, setPendingRate] = useState(false);
-  const [from, setFrom] = useState("usd");
-  const [to, setTo] = useState("btc");
-  const [main, setMain] = useState("from");
-
+  const to = swap.toCurrency;
+  const from = swap.fromCurrency;
+  const [main, setMain] = useState(fromFiat ? 'from' : 'to');
   const [fromAmount, setFromAmount] = useState(1000);
   const [toAmount, setToAmount] = useState(0);
 
   const getCurrencyRate = useCallback(() => {
     setPendingRate(true);
-    getRate({
-      base: from,
-      currency: to
-    }).then(r => {
-      setRate(r.rate);
+    (async () => {
+      const swapRates = await web3Backend.getAllRates();
+
+      if (fromFiat) {
+        setRate(swapRates[to] / swapRates[from]);
+      } else {
+        setRate(swapRates[from] / swapRates[to]);
+      }
+
       setPendingRate(false);
-    });
+    })();
   }, [from, to, setPendingRate, setRate]);
 
-  const currencies = useSelector(currenciesSelector);
-  const currenciesCanExchange = currencies.filter(c => c.can_exchange);
+  const currencies = getCanExchangeWallets();
 
-  const createOptions = c => ({
+  const createOptions = (c) => ({
     value: c.abbr,
     label: c.name,
-    icon: <CircleIcon size="small" currency={getCurrencyInfo(c.abbr)} />
+    icon: <CircleIcon size="small" currency={getCurrencyInfo(c.abbr)} />,
   });
 
-  const fiatCurrencies = currenciesCanExchange
-    .filter(c => c.type === "fiat")
+  const fiats = currencies
+    .filter((currency) => currency.type === 'fiat')
     .map(createOptions);
-  const cryptoCurrencies = currenciesCanExchange
-    .filter(c => c.type === "crypto")
+  const crypto = currencies
+    .filter((currency) => currency.type === 'crypto')
     .map(createOptions);
 
   const handleChangeFromAmount = useCallback(
-    value => {
-      setMain("from");
+    (value) => {
+      setMain('from');
       setFromAmount(value);
       setToAmount(
         formatDouble(
@@ -65,8 +72,8 @@ export default () => {
   );
 
   const handleChangeToAmount = useCallback(
-    value => {
-      setMain("to");
+    (value) => {
+      setMain('to');
       setToAmount(value);
       setFromAmount(
         formatDouble(
@@ -79,9 +86,9 @@ export default () => {
   );
 
   const handleSwitch = () => {
-    setFrom(to);
-    setTo(from);
-    setMain(main === "from" ? "to" : "from");
+    dispatch(walletSwapSetCurrency('from', to));
+    dispatch(walletSwapSetCurrency('to', from));
+    setMain(main === 'from' ? 'to' : 'from');
     setFromFiat(!fromFiat);
     setFromAmount(toAmount);
     setToAmount(fromAmount);
@@ -92,7 +99,7 @@ export default () => {
   }, [from, to, getCurrencyRate]);
 
   useEffect(() => {
-    if (main === "from") {
+    if (main === 'from') {
       handleChangeFromAmount(fromAmount);
     } else {
       handleChangeToAmount(toAmount);
@@ -103,7 +110,7 @@ export default () => {
     fromAmount,
     toAmount,
     handleChangeToAmount,
-    handleChangeFromAmount
+    handleChangeFromAmount,
   ]);
 
   return (
@@ -123,9 +130,11 @@ export default () => {
             </div>
             <Select
               isDisabled={pendingRate}
-              options={fromFiat ? fiatCurrencies : cryptoCurrencies}
+              options={fromFiat ? fiats : crypto}
               value={from}
-              onChange={o => setFrom(o.value)}
+              onChange={(currency) =>
+                dispatch(walletSwapSetCurrency('from', currency.value))
+              }
             />
             <Input
               disabled={pendingRate}
@@ -137,22 +146,26 @@ export default () => {
               {!pendingRate ? (
                 <span>
                   <NumberFormat number={1} currency={from} />
-                  {" ≈ "}
+                  {' ≈ '}
                   <NumberFormat
-                    number={fromFiat ? 1 / rate : rate}
+                    number={fromFiat ? (1 / rate).toFixed(5) : rate.toFixed(5)}
                     currency={to}
                   />
                 </span>
               ) : (
-                "..."
+                '...'
               )}
             </div>
           </div>
           <div
-            className={cn("Swap__switchButton", { loading: pendingRate })}
-            onClick={handleSwitch}
+            className={cn(
+              'Swap__switchButton',
+              { loading: pendingRate },
+              'loading'
+            )}
+            // onClick={handleSwitch}
           >
-            <SVG src={require("src/asset/24px/switch.svg")} />
+            <SVG src={require('src/asset/24px/switch.svg')} />
           </div>
           <div className="Swap__form__card">
             <div className="Swap__form__card__label">
@@ -160,9 +173,11 @@ export default () => {
             </div>
             <Select
               isDisabled={pendingRate}
-              options={fromFiat ? cryptoCurrencies : fiatCurrencies}
+              options={fromFiat ? crypto : fiats}
               value={to}
-              onChange={o => setTo(o.value)}
+              onChange={(currency) =>
+                dispatch(walletSwapSetCurrency('to', currency.value))
+              }
             />
             <Input
               disabled={pendingRate}
@@ -174,14 +189,14 @@ export default () => {
               {!pendingRate ? (
                 <span>
                   <NumberFormat number={1} currency={to} />
-                  {" ≈ "}
+                  {' ≈ '}
                   <NumberFormat
-                    number={!fromFiat ? 1 / rate : rate}
+                    number={!fromFiat ? (1 / rate).toFixed(5) : rate.toFixed(5)}
                     currency={from}
                   />
                 </span>
               ) : (
-                "..."
+                '...'
               )}
             </div>
           </div>

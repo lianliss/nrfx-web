@@ -7,7 +7,7 @@ import LoadingStatus from "../../../components/cabinet/LoadingStatus/LoadingStat
 import CabinetBaseScreen from "../CabinetBaseScreen/CabinetBaseScreen";
 import SwitchBlock from "./components/SwitchBlock/SwitchBlock";
 import Trades from "./components/Trades/Trades";
-import Balances from "./components/Balances/Balances";
+import Balance from "./components/Balance/Balance";
 
 import * as utils from "../../../../utils";
 import OrderBook from "./components/OrderBook/OrderBook";
@@ -110,7 +110,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
         </UI.ContentBox>
         <TradeForm />
         <OrderBook />
-        <Balances />
+        <Balance />
         <SwitchBlock
           type="buttons"
           contents={[
@@ -139,7 +139,7 @@ class CabinetExchangeScreen extends CabinetBaseScreen {
       <div className="Exchange__wrapper">
         {this.renderDisconnectedModal()}
         <div className="Exchange__left_content">
-          {this.props.user && <Balances />}
+          {this.props.user && <Balance />}
           <Trades />
         </div>
         <div className="Exchange__right_content">

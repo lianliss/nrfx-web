@@ -37,11 +37,14 @@ import {web3WalletsSelector} from "../../../../../../selectors";
 
 import * as pages from "src/index/constants/pages";
 import { walletSwapSetCurrency } from "src/actions/cabinet/wallet";
+import { setBuyCurrencyWallet } from "src/actions/cabinet/setBuyCurrencyWallet";
+import ReceiveQRModal from "../../../../../components/cabinet/ReceiveQRModal/ReceiveQRModal";
 
 class CryptoWallet extends React.PureComponent {
 
   state = {
     isTransferModal: false,
+    isReceiveModal: false,
   };
 
   componentDidMount() {
@@ -79,6 +82,7 @@ class CryptoWallet extends React.PureComponent {
     } = this.props;
     const {
       isTransferModal,
+      isReceiveModal,
     } = this.state;
     const currency = _.get(this, 'props.route.params.currency');
 
@@ -99,38 +103,25 @@ class CryptoWallet extends React.PureComponent {
 
     return <UI.ContentBox className="CryptoWallet">
       <h2>
-        <span>
-          {_.get(currencyInfo, 'name', currency)}
-        </span>
+        {!this.props.adaptive && (
+          <span className="CryptoWallet__title">
+            {_.get(currencyInfo, 'name', currency)}
+          </span>)
+        }
         {isGenerated && 
           <>
-            <Link routeName={pages.WALLET_SWAP} className="ButtonToWalletBuy">
+            <UI.Button
+              onClick={() => this.setState({isReceiveModal: true})}
+              size="middle"
+              className="FirstButton"
+            >
+              {getLang('receive_qr_global')}
+            </UI.Button>
+            <Link routeName={pages.WALLET_SWAP}>
               <UI.Button
                 size="middle"
                 onClick={() => {
-                  const currencyObj = currenciesObject[currency];
-                  
-                  if (currencyObj && currencyObj.can_exchange) {
-                    // Set Currency crypto in "Swap Form" for buy this.
-                    const swapCurrencies = this.props.swapCurrencies;
-                    let fiat = "";
-                    
-                    for ( let key in  swapCurrencies ) {
-                      const swapCurrency = currenciesObject[swapCurrencies[key]];
-
-                      // Search fiat from swapCurrencies
-                      if (swapCurrency.type === "fiat") {
-                        fiat = swapCurrency.abbr;
-                        break;
-                      } else {
-                        continue;
-                      }
-                    }
-                    
-                    // Set new Currencies for crypto buy
-                    this.props.walletSwapSetCurrency("to", currency);
-                    this.props.walletSwapSetCurrency("from", fiat);
-                  }
+                  setBuyCurrencyWallet(currency, this.props.swapCurrencies)
                 }}
               >
                 {getLang("to_buy_crypto_wallet")}
@@ -158,7 +149,13 @@ class CryptoWallet extends React.PureComponent {
       {isTransferModal && <TransferModal
         currency={currency}
         balance={balance}
+        adaptive={this.props.adaptive}
         onClose={() => this.setState({isTransferModal: false})} />}
+      {isReceiveModal && <ReceiveQRModal
+          onClose={() => this.setState({isReceiveModal: false})}
+          adaptive={this.props.adaptive}
+        />
+      }
     </UI.ContentBox>
   }
 }
@@ -172,7 +169,8 @@ export default connect(state => ({
   swapCurrencies: {
     from: state.wallet.swap.fromCurrency,
     to: state.wallet.swap.toCurrency
-  }
+  },
+  adaptive: state.default.adaptive,
 }), dispatch => bindActionCreators({
   web3Update,
   web3SetData,

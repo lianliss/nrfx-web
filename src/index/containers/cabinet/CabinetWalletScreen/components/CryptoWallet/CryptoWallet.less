@@ -1,55 +1,77 @@
-@import "../../../../../../vars.less";
+@import '../../../../../../vars.less';
 
 .CryptoWallet {
-    margin-bottom: var(--gap-size);
+  margin-bottom: var(--gap-size);
 
-    .ContentBox__content {
-        padding: var(--padding-panel);
+  .ContentBox__content {
+    padding: var(--padding-panel);
 
-        .adaptive & {
-            padding: 24px 16px 24px;
-        }
+    .adaptive & {
+      padding: 24px 16px 24px;
     }
-    h2 {
-        font-weight: 600;
-        font-size: 16px;
-        margin-bottom: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        text-transform: capitalize;
-    }
-    &-balance {
-        font-size: 28px;
-        font-weight: 600;
-        line-height: 40px;
-        display: flex;
-        justify-content: space-between;
+  }
 
-        .adaptive & {
-            font-size: 16px;
-        }
-        &-token {
-            display: flex;
+  h2 {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: capitalize;
 
-            .CircleIcon {
-                margin-right: 16px;
-            }
-            span {
-                text-transform: uppercase;
-            }
+    @media screen and (min-width: calc(@mobile-width + 1px)) {
+      & > .Button,
+      & > a {        
+        &:not(:last-child) {
+          margin-right: 10px;
         }
-        &-usd {
-
-        }
+      }
     }
 
-    .ButtonToWalletBuy {
-        margin-left: auto;
-        margin-right: 5px;
+    @media screen and (max-width: @mobile-width) {
+      .FirstButton {
+        margin-left: 0;
+      }
 
-        @media screen and (max-width: @mobile-width) {
-            display: none;
+      & > a {        
+        &:not(:last-child) {
+          margin: 0 10px;
         }
+      }
     }
+
+    @media screen and (min-width: 320px) and (max-width: @mobile-width) {
+    .Button {
+        min-width: 70px !important;
+      }
+    }
+  }
+  &-balance {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    .adaptive & {
+      font-size: 16px;
+    }
+    &-token {
+      display: flex;
+
+      .CircleIcon {
+        margin-right: 16px;
+      }
+      span {
+        text-transform: uppercase;
+      }
+    }
+    &-usd {
+    }
+  }
+  
+  .FirstButton {
+    margin-left: auto;
+  }
 }
