@@ -53,7 +53,9 @@ function Roadmap() {
                   openModal(item.tasks, key + 1, { x, y });
                 }}
               >
-                <SVG src={playIcon} className="Roadmap__icon" />
+                <span className="Roadmap__icon">
+                  <SVG src={playIcon} />
+                </span>
                 <span>{getLang('tokne_landing_see_all')}</span>
               </div>
             </div>
