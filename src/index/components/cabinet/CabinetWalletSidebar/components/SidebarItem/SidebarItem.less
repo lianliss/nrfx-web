@@ -1,6 +1,12 @@
 .SidebarItem {
   list-style-type: none;
 
+  &:hover {
+    .SidebarItem__content {
+      color: var(--royal-blue);
+    }
+  }
+
   &__content {
     display: flex;
     align-items: center;
@@ -10,10 +16,10 @@
     color: var(--dark-black);
     cursor: pointer;
     user-select: none;
-
+    transition: color 0.1s;
 
     .SidebarItem.active & {
-      color: #5078e6;
+      color: var(--royal-blue);
     }
   }
 
@@ -51,13 +57,21 @@
       top: 0;
     }
 
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+    }
+
     li {
       cursor: pointer;
+      transition: color 0.1s;
 
       &:hover {
-        opacity: .9;
+        color: var(--dark-black);
       }
-      
+
       &:not(:last-child) {
         margin-bottom: 4px;
       }
@@ -80,7 +94,7 @@
     margin-left: auto;
 
     .isvg {
-      transition: transform .3s;
+      transition: transform 0.3s;
     }
 
     &.active .isvg {
