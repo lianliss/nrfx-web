@@ -18,7 +18,7 @@ function WalletsIsEmpty(props) {
   );
 
   return (
-    <CabinetBlock className="WalletsIsEmpty">
+    <div className="WalletsIsEmpty">
       <div className="WalletsIsEmpty__container">
         <div className="WalletsIsEmpty__content">
           <div>
@@ -71,7 +71,7 @@ function WalletsIsEmpty(props) {
           <img src={require('src/asset/backgrounds/cabinet-wallets-bg.png')} />
         </div>
       </div>
-    </CabinetBlock>
+    </div>
   );
 }
 
