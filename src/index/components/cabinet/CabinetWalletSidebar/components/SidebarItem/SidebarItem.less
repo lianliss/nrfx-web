@@ -1,0 +1,109 @@
+.SidebarItem {
+  list-style-type: none;
+
+  &:hover {
+    .SidebarItem__content {
+      color: var(--royal-blue);
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--dark-black);
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.1s;
+
+    .SidebarItem.active & {
+      color: var(--royal-blue);
+    }
+  }
+
+  &__children {
+    margin-left: 11px;
+    margin-top: 7.42px;
+    padding-top: 7.08px;
+    padding-left: 25px;
+    border-left: 1px solid #e9eaed;
+    position: relative;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.023em;
+    color: #9095a5;
+
+    &::after,
+    &::before {
+      content: '';
+      display: inline;
+      position: absolute;
+      left: -1px;
+      width: 3px;
+      height: 3px;
+      background: #e9eaed;
+      transform: translateX(-50%);
+      border-radius: 50%;
+    }
+
+    &::after {
+      bottom: 0;
+    }
+
+    &::before {
+      top: 0;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+    }
+
+    li {
+      cursor: pointer;
+      transition: color 0.1s;
+
+      &:hover {
+        color: var(--dark-black);
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 32px;
+  }
+
+  &__icon {
+    margin-right: 13px;
+    height: 23px;
+    width: 23px;
+  }
+
+  &__arrow {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    .isvg {
+      transition: transform 0.3s;
+    }
+
+    &.active .isvg {
+      transform: rotate(90deg);
+    }
+  }
+
+  .isvg {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -1,22 +1,28 @@
 @import '../../../../vars';
 
 .PageContainer {
-  --site-bar-width: 280px;
-  --content-width: 648px;
+  --site-bar-width: 208px;
+  --content-width: 1300px;
+  --container-padding: 18px;
+  --header-height: 62px;
 
   display: flex;
-  width: calc(var(--content-width) + var(--site-bar-width) + var(--gap-size));
-  margin: var(--gap-size) auto;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px var(--container-padding) var(--container-padding);
+  box-sizing: border-box;
+  min-height: calc(100vh - var(--header-height));
 }
 
 .PageContainer__content {
-  width: var(--content-width);
+  max-width: calc(100vw - var(--site-bar-width) - var(--container-padding));
+  width: 100%;
 }
 
 .PageContainer__sideBar {
-  margin-right: 24px;
-  width: var(--site-bar-width);
-  flex: 0 0 auto;
+  margin-right: 25px;
+  max-width: var(--site-bar-width);
+  width: 100%;
 }
 
 @media (max-width: @mobile-width) {
@@ -27,5 +33,9 @@
     width: 100%;
 
     flex-direction: column;
+
+    &__content {
+      max-width: 100%;
+    }
   }
 }

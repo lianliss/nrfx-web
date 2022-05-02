@@ -185,6 +185,32 @@
 
   &.lightBlue {
     background: var(--blue-light-gradient);
+
+    &:hover {
+      opacity: .92;
+      box-shadow: 0 4px 8px rgba(64, 112, 255, 0.32);
+    }
+  }
+
+  &.gray {
+    background: rgba(223, 227, 240, 0.25);
+    transition: all .2s;
+    
+    &:hover {
+      background: rgba(223, 227, 240, 0.4);
+      box-shadow: 0 4px 8px rgba(223, 227, 240, 0.35);
+    }
+    
+    .Button__label {
+      color: var(--cool-gray);
+    }
+
+    .Button__icon {
+      svg,
+      svg path {
+        fill: var(--cool-gray);
+      }
+    }
   }
 }
 

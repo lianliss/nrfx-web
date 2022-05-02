@@ -1,0 +1,27 @@
+.DynamicShadow {
+  position: relative;
+  z-index: 1;
+
+  &__children {
+    position: relative;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 18px;
+  }
+
+  &__shadow {
+    height: 82.1%;
+    width: 75.44%;
+    position: absolute;
+    top: 30.43%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: linear-gradient(135deg, #78a0ff 0%, #5078e6 100%);
+    opacity: 0.5;
+    filter: blur(55px);
+    border-radius: 12px;
+    z-index: -1;
+  }
+}
