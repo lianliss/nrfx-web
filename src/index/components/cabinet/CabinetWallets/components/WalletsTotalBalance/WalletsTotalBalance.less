@@ -1,0 +1,101 @@
+.WalletsTotalBalance {
+  display: flex;
+  justify-content: start;
+
+  &__icon {
+    width: 63px;
+    height: 63px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 10px;
+    margin-right: 27px;
+
+    &-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: var(--royal-blue);
+      border-radius: 21px;
+      opacity: 0.1;
+    }
+
+    .isvg {
+      margin-top: -3px;
+      margin-left: 2px;
+    }
+
+    .isvg,
+    .isvg svg {
+      position: relative;
+      width: 32.8px;
+      height: 31.8px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: start;
+
+    .RateIndicator {
+      height: 20px;
+      padding: 3px 11px 3px 4px;
+      margin-left: 16px;
+      margin-right: 10px;
+      border-radius: 5px;
+
+      span {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 110%;
+      }
+
+      .isvg,
+      .isvg svg {
+        width: 10px;
+        height: 8px;
+      }
+    }
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+
+    &:first-child {
+      height: calc(100% - 10px);
+    }
+
+    &:last-child {
+      margin-top: 10px;
+      div {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  &__text {
+    &-medium {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 180%;
+      letter-spacing: 0.12em;
+      color: var(--cool-gray);
+      margin-bottom: 2px;
+    }
+
+    &-large {
+      font-weight: 600;
+      font-size: 35px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      color: var(--dark-black);
+    }
+  }
+}
