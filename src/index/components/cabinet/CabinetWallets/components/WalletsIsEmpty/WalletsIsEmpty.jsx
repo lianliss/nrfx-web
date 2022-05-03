@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Button } from 'src/ui';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
+import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import SVG from 'utils/svg-wrap';
 
 import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
@@ -53,10 +54,7 @@ function WalletsIsEmpty(props) {
             </DynamicShadow>
           </div>
           <div className="WalletsIsEmpty__links">
-            <a href="/" className="WalletsIsEmpty__link" target="_blank">
-              learn about wallet
-              <SVG src={require('src/asset/icons/export.svg')} />
-            </a>
+            <OpenPopupLink title="learn about wallet" />
             <div className="WalletsIsEmpty-social">
               <span className="WalletsIsEmpty-social__title">our social</span>
               <div className="WalletsIsEmpty-social__items">

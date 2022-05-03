@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { Switch, SwitchTabs, Search } from 'src/ui';
 import { getLang } from 'utils';
-import WalletsListItem from '../../../WalletsList/components/WalletsListItem/WalletsListItem';
-import WalletsList from '../../../WalletsList/WalletsList';
+import WalletsListItem from 'src/index/components/cabinet/WalletsList/components/WalletsListItem/WalletsListItem';
+import WalletsList from 'src/index/components/cabinet/WalletsList/WalletsList';
 import currencies from 'src/currencies';
 
 import './BalancesManage.less';

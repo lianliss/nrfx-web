@@ -104,6 +104,7 @@
     "react-recaptcha-google": "1.1.1",
     "react-redux": "7.2.0",
     "react-router5": "7.1.0",
+    "react-scrollbars-custom": "^4.0.27",
     "react-select": "3.1.0",
     "react-svg": "^14.1.4",
     "react-swipeable": "^6.2.1",

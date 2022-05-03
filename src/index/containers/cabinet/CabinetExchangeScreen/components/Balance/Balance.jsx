@@ -8,9 +8,9 @@ import { openModal } from 'src/actions';
 import currencies from 'src/currencies';
 
 import Block from '../Block/Block';
-import WalletsList from '../WalletsList/WalletsList';
+import WalletsList from 'src/index/components/cabinet/WalletsList/WalletsList';
 import BalancesManage from './components/BalancesManage/BalancesManage';
-import WalletsListItem from '../WalletsList/components/WalletsListItem/WalletsListItem';
+import WalletsListItem from 'src/index/components/cabinet/WalletsList/components/WalletsListItem/WalletsListItem';
 import './Balance.less';
 import { connect } from 'react-redux';
 

@@ -61,3 +61,4 @@ export { default as HistoryItem } from "./components/HistoryItem/HistoryItem";
 export { default as CopyText} from "./components/CopyText/CopyText";
 export { default as RateIndicator } from "./components/RateIndicator/RateIndicator";
 export { default as DynamicShadow } from "./components/DynamicShadow/DynamicShadow";
+export { default as ScrollBox } from "./components/ScrollBox/ScrollBox";

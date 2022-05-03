@@ -4,8 +4,8 @@ import { useRoute } from 'react-router5';
 import * as PAGES from 'src/index/constants/pages';
 import SidebarItem from './components/SidebarItem/SidebarItem';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
-import WalletsListItem from '../../../containers/cabinet/CabinetExchangeScreen/components/WalletsList/components/WalletsListItem/WalletsListItem';
-import WalletsList from '../../../containers/cabinet/CabinetExchangeScreen/components/WalletsList/WalletsList';
+import WalletsListItem from '../WalletsList/components/WalletsListItem/WalletsListItem';
+import WalletsList from '../WalletsList/WalletsList';
 import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import './CabinetWalletSidebar.less';
 

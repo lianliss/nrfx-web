@@ -8,7 +8,7 @@ import WalletsIsEmpty from './components/WalletsIsEmpty/WalletsIsEmpty';
 function CabinetWallets() {
   return (
     <CabinetBlock className="CabinetWallets">
-      {/* <WalletsIsEmpty /> */}
+      {/*<WalletsIsEmpty /> */}
       <WalletsExists />
     </CabinetBlock>
   );
