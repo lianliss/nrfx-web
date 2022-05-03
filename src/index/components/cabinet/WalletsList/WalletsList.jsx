@@ -3,7 +3,7 @@ import React from 'react';
 import './WalletsList.less';
 
 function WalletsList({ children }) {
-  return <ul className="WalletsList">{children}</ul>;
+  return <div className="WalletsList">{children}</div>;
 }
 
 export default WalletsList;

@@ -11,27 +11,48 @@ function WalletsListItem({
   controls,
   border,
   onClick,
+  type,
 }) {
   const className = cn({ WalletsListItem: true, border });
 
   return (
-    <li className={className} onClick={onClick}>
+    <div className={className} onClick={onClick}>
       {icon && <div className="WalletsListItem__column">{icon}</div>}
       <div className="WalletsListItem__column">
-        <p className="WalletsListItem__text-medium">{startTexts[0]}</p>
-        <p className="WalletsListItem__text-large">{startTexts[1]}</p>
+        {type === 'default' && (
+          <>
+            <p className="WalletsListItem__text-medium">{startTexts[0]}</p>
+            <p className="WalletsListItem__text-large">{startTexts[1]}</p>
+          </>
+        )}
+        {type === 'reverse' && (
+          <>
+            <p className="WalletsListItem__text-large">{startTexts[0]}</p>
+            <p className="WalletsListItem__text-medium">{startTexts[1]}</p>
+          </>
+        )}
       </div>
       <div className="WalletsListItem__column">
         {controls ? (
           controls
         ) : (
           <>
-            <p className="WalletsListItem__text-medium">{endTexts[0]}</p>
-            <p className="WalletsListItem__text-large">{endTexts[1]}</p>
+            {type === 'default' && (
+              <>
+                <p className="WalletsListItem__text-medium">{endTexts[0]}</p>
+                <p className="WalletsListItem__text-large">{endTexts[1]}</p>
+              </>
+            )}
+            {type === 'reverse' && (
+              <>
+                <p className="WalletsListItem__text-large">{endTexts[0]}</p>
+                <p className="WalletsListItem__text-medium">{endTexts[1]}</p>
+              </>
+            )}
           </>
         )}
       </div>
-    </li>
+    </div>
   );
 }
 
@@ -40,6 +61,7 @@ WalletsListItem.propTypes = {
   endTexts: PropTypes.array,
   onClick: PropTypes.func,
   border: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 WalletsListItem.defaultProps = {
@@ -49,6 +71,7 @@ WalletsListItem.defaultProps = {
   startTexts: ['', ''],
   endTexts: ['', ''],
   onClick: () => {},
+  type: 'default',
 };
 
 export default WalletsListItem;

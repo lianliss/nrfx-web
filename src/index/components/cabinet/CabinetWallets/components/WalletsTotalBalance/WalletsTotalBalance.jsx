@@ -11,29 +11,21 @@ function WalletsTotalBalance({ amount, total, totalType }) {
     <div className="WalletsTotalBalance">
       <div className="WalletsTotalBalance__icon">
         <div className="WalletsTotalBalance__icon-bg" />
-        <SVG
-          src={require('src/asset/icons/cabinet/sidebar/wallet.svg')}
-        />
+        <SVG src={require('src/asset/icons/cabinet/sidebar/wallet.svg')} />
       </div>
       <div className="WalletsTotalBalance__content">
-        <div className="WalletsTotalBalance__col">
-          <span className="WalletsTotalBalance__text-medium">
-            total balance
-          </span>
+        <span className="WalletsTotalBalance__text-medium">total balance</span>
+        <div className="WalletsTotalBalance__row">
           <span className="WalletsTotalBalance__text-large">${amount}</span>
-        </div>
-        <div className="WalletsTotalBalance__col">
-          <div>
-            <RateIndicator
-              number={total}
-              procent
-              type={totalType}
-              icon={largeTotalArrow}
-            />
-            <SVG
-              src={require('src/asset/icons/cabinet/large-arrow-bottom.svg')}
-            />
-          </div>
+          <RateIndicator
+            number={total}
+            procent
+            type={totalType}
+            icon={largeTotalArrow}
+          />
+          <SVG
+            src={require('src/asset/icons/cabinet/large-arrow-bottom.svg')}
+          />
         </div>
       </div>
     </div>

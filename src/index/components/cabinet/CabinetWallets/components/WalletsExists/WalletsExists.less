@@ -9,7 +9,7 @@
   }
 
   &__container {
-    padding: 31px 27px 31px 36px;
+    padding: 31px 27px 30px 36px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -44,7 +44,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 25px;
+    padding: 0 38px 0 24px;
 
     & > span {
       &:first-child {
@@ -55,5 +55,68 @@
         color: var(--cool-gray);
       }
     }
+  }
+
+  .WalletsList {
+    // Horizontal paddings to scroll fix at right.
+    padding: 0 38px 0 24px;
+    box-sizing: border-box;
+    img {
+      width: 39px;
+      height: 39px;
+    }
+
+    .WalletsListItem {
+      &:not(:last-child) {
+        margin-bottom: 30px;
+      }
+
+      &__column {
+        justify-content: center;
+      }
+
+      .RateIndicator {
+        margin-left: 17px;
+      }
+    }
+  }
+
+  .WalletsListItem__text {
+    &-medium {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      margin-bottom: 0;
+    }
+
+    &-large {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+      color: var(--dark-black);
+    }
+  }
+
+  .ScrollbarBox-container {
+    margin-top: 23px;
+    width: 100%;
+    height: calc(100% - 46px);
+  }
+}
+
+.CabinetWallets__tokens {
+  &-controls {
+    div:last-child {
+      margin-left: 23px;
+    }
+  }
+
+  &-controls,
+  &-content {
+    display: flex;
+    align-items: center;
   }
 }

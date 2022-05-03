@@ -38,7 +38,10 @@
 
   &__content {
     display: flex;
-    justify-content: start;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-top: 10px;
 
     .RateIndicator {
       height: 20px;
@@ -61,23 +64,9 @@
     }
   }
 
-  &__col {
+  &__row {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-
-    &:first-child {
-      height: calc(100% - 10px);
-    }
-
-    &:last-child {
-      margin-top: 10px;
-      div {
-        display: flex;
-        align-items: center;
-      }
-    }
+    align-items: center;
   }
 
   &__text {

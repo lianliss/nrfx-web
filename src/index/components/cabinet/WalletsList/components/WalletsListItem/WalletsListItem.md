@@ -14,5 +14,3 @@
   // endTexts vs controls, Controls have a priority.
   controls={<div>your elements</div>} // Instead endTexts
 />
-
-WalletListItem is <li> element. And this need <ul> container.
