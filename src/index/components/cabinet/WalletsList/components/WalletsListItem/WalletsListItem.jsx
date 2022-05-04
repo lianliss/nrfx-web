@@ -17,7 +17,11 @@ function WalletsListItem({
 
   return (
     <div className={className} onClick={onClick}>
-      {icon && <div className="WalletsListItem__column">{icon}</div>}
+      {icon && (
+        <div className="WalletsListItem__column">
+          <div className="WalletsListItem__icon">{icon}</div>
+        </div>
+      )}
       <div className="WalletsListItem__column">
         {type === 'default' && (
           <>

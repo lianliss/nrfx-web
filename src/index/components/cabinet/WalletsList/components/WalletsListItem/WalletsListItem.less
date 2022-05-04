@@ -55,11 +55,25 @@
     }
   }
 
-  img {
-    width: 31px;
-    height: 31px;
-    border-radius: 50%;
-    background: linear-gradient(to bottom, #896adf 0%, #98b1f1 100%);
-    pointer-events: none;
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .isvg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 31px;
+      height: 31px;
+      position: relative;
+      border-radius: 50%;
+      pointer-events: none;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 }

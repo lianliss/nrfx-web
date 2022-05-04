@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRoute } from 'react-router5';
 
+import SVG from "utils/svg-wrap";
 import * as PAGES from 'src/index/constants/pages';
 import SidebarItem from './components/SidebarItem/SidebarItem';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
@@ -53,16 +54,7 @@ function CabinetWalletSidebar() {
       </div>
       <WalletsList>
         <WalletsListItem
-          icon={
-            <img
-              src="https://static.narfex.com/img/currencies/nrfx.svg"
-              style={{
-                background:
-                  'linear-gradient(to bottom, #FABE4C 0%, #FA9751 100%)',
-                border: '1px solid #fff',
-              }}
-            />
-          }
+          icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
           startTexts={['Narfex', 'NRFX']}
           endTexts={[
             '$455.00',

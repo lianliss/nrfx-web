@@ -90,14 +90,18 @@ const Balance = React.memo(({ balances, setActiveBalance }) => {
                   return;
                 }
 
-                const { name, icon, gradient } = currencies[item.currency];
-                const iconGradient = `linear-gradient(to bottom, ${gradient[0]} 0%, ${gradient[1]} 100%)`;
+                const { name } = currencies[item.currency];
+                let icon = '';
+
+                try {
+                  icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
+                } catch {
+                  console.log('Icon is not defined');
+                }
 
                 return (
                   <WalletsListItem
-                    icon={
-                      <img src={icon} style={{ background: iconGradient }} />
-                    }
+                    icon={<SVG src={icon} />}
                     startTexts={[name, item.currency.toUpperCase()]}
                     endTexts={['$' + item.price, item.amount]}
                     key={item.id}

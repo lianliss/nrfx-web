@@ -46,14 +46,19 @@ function WalletsExists() {
               <WalletsList type="default">
                 {testItems.map((item, key) => {
                   // Testing values. Don't know what object maybe here.
-                  const { name, icon, gradient } = currencies[item.currency];
-                  const iconGradient = `linear-gradient(to bottom, ${gradient[0]} 0%, ${gradient[1]} 100%)`;
+                  const { name } = currencies[item.currency];
+                  let icon = '';
+
+                  // Set icon
+                  try {
+                    icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
+                  } catch {
+                    console.log('Icon is not defined');
+                  }
 
                   return (
                     <WalletsListItem
-                      icon={
-                        <img src={icon} style={{ background: iconGradient }} />
-                      }
+                      icon={<SVG src={icon} />}
                       startTexts={[
                         name,
                         <span className="CabinetWallets__tokens-content">

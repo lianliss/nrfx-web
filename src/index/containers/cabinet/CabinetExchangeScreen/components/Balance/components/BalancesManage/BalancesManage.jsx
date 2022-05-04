@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Switch, SwitchTabs, Search } from 'src/ui';
 import { getLang } from 'utils';
+import SVG from 'utils/svg-wrap';
 import WalletsListItem from 'src/index/components/cabinet/WalletsList/components/WalletsListItem/WalletsListItem';
 import WalletsList from 'src/index/components/cabinet/WalletsList/WalletsList';
 import currencies from 'src/currencies';
@@ -46,14 +47,18 @@ function BalancesManage({ balances, balancesHandler }) {
                   return;
                 }
 
-                const { name, icon, gradient } = currencies[item.currency];
-                const iconGradient = `linear-gradient(to bottom, ${gradient[0]} 0%, ${gradient[1]} 100%)`;
+                const { name } = currencies[item.currency];
+                let icon = '';
+
+                try {
+                  icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
+                } catch {
+                  console.log('Icon is not defined');
+                }
 
                 return (
                   <WalletsListItem
-                    icon={
-                      <img src={icon} style={{ background: iconGradient }} />
-                    }
+                    icon={<SVG src={icon} />}
                     startTexts={[name, item.currency]}
                     controls={
                       <Switch
