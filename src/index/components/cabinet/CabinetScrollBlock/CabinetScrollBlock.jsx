@@ -3,7 +3,7 @@ import { Scrollbar } from 'react-scrollbars-custom';
 
 import './CabinetScrollBlock.less';
 
-function CabinetScrollBlock({ children }) {
+function CabinetScrollBlock({ children, ...props }) {
   return (
     <div className="ScrollbarBox-container">
       <Scrollbar
@@ -34,6 +34,7 @@ function CabinetScrollBlock({ children }) {
             );
           },
         }}
+        {...props}
       >
         {children}
       </Scrollbar>

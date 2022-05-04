@@ -6,6 +6,7 @@ import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import CabinetScrollBlock from '../../../CabinetScrollBlock/CabinetScrollBlock';
 import WalletsList from '../../../WalletsList/WalletsList';
 import WalletsListItem from '../../../WalletsList/components/WalletsListItem/WalletsListItem';
+import WalletsNFTCard from '../WalletsNFTCard/WalletsNFTCard';
 import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import { RateIndicator } from 'src/ui';
 import { testItems } from './testItems.js';
@@ -44,6 +45,7 @@ function WalletsExists() {
             <CabinetScrollBlock>
               <WalletsList type="default">
                 {testItems.map((item, key) => {
+                  // Testing values. Don't know what object maybe here.
                   const { name, icon, gradient } = currencies[item.currency];
                   const iconGradient = `linear-gradient(to bottom, ${gradient[0]} 0%, ${gradient[1]} 100%)`;
 
@@ -81,7 +83,23 @@ function WalletsExists() {
                 <OpenPopupLink title="history" />
               </div>
             </div>
-            <CabinetScrollBlock></CabinetScrollBlock>
+            <CabinetScrollBlock disableTrackXMousewheelScrolling>
+              <div className="WalletsNFT__cards">
+                <WalletsNFTCard title="Monkey" src={1} />
+                <WalletsNFTCard title="Hello Kitty 1445" src={2} />
+                <WalletsNFTCard title="Degen Ape 6" src={4} />
+                <WalletsNFTCard title="Degen Ape 6" src={5} />
+                <WalletsNFTCard title="Brod 45" src={3} />
+                <WalletsNFTCard title="Monkey" src={1} />
+                <WalletsNFTCard title="Hello Kitty 1445" src={2} />
+                <WalletsNFTCard title="Degen Ape 6" src={4} />
+                <WalletsNFTCard title="Degen Ape 6" src={5} />
+                <WalletsNFTCard title="Brod 45" src={3} />
+                <WalletsNFTCard title="Hello Kitty 1445" src={2} />
+                <WalletsNFTCard title="Degen Ape 6" src={5} />
+                <WalletsNFTCard title="Brod 45" src={3} />
+              </div>
+            </CabinetScrollBlock>
           </CabinetBlock>
         </div>
       </div>
