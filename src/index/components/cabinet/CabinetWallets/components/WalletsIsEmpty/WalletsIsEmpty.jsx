@@ -42,7 +42,13 @@ function WalletsIsEmpty(props) {
               </div>
             </Button>
             <DynamicShadow>
-              <Button type="lightBlue" size="extra_large">
+              <Button
+                type="lightBlue"
+                size="extra_large"
+                // [testStart]
+                onClick={() => props.onClick(true)}
+                // [testEnd]
+              >
                 <div className="Button__icon">
                   <SVG src={require('src/asset/token/wallet.svg')} />
                 </div>

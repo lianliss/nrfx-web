@@ -1,11 +1,9 @@
 import React from 'react';
-
-import SVG from 'utils/svg-wrap';
+import PropTypes from 'prop-types';
 
 import './WalletsNFTCard.less';
 
 function WalletsNFTCard({ title, src }) {
-  console.log(require(`./assets/${src}.svg`));
   return (
     <div className="WalletsNFTCard">
       <img src={require(`./assets/${src}.svg`).default} />
@@ -13,5 +11,10 @@ function WalletsNFTCard({ title, src }) {
     </div>
   );
 }
+
+WalletsNFTCard.propTypes = {
+  title: PropTypes.string,
+  src: PropTypes.string,
+};
 
 export default WalletsNFTCard;
