@@ -149,8 +149,8 @@ const old = memo(() => {
         <SwapFormAdaptive />
       ) : (
         <>
-        <SwapForm />
-        <SwapTutorial />
+          <SwapForm />
+          <SwapTutorial />
         </>
       ))}
 
@@ -339,7 +339,7 @@ class CabinetWalletScreen extends React.PureComponent {
         ) : (
           <>
           <SwapForm rates={rates} />
-          <SwapTutorial />
+          {/*<SwapTutorial />*/}
           </>
         ))}
 

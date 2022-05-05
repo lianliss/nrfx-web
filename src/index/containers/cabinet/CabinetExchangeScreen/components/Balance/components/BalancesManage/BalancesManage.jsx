@@ -36,6 +36,7 @@ function BalancesManage({ balances, balancesHandler }) {
           { value: 'list', label: getLang('exchange_balance_list_label') },
           { value: 'tokens', label: getLang('exchange_balance_tokens_label') },
         ]}
+        type="light-blue"
       />
       {currentPage === 'list' && (
         <>
@@ -59,11 +60,12 @@ function BalancesManage({ balances, balancesHandler }) {
                 return (
                   <WalletsListItem
                     icon={<SVG src={icon} />}
-                    startTexts={[name, item.currency]}
+                    startTexts={[name, item.currency.toUpperCase()]}
                     controls={
                       <Switch
                         on={item.selected}
                         onChange={() => balanceChecked(item.id)}
+                        type="light-blue"
                       />
                     }
                     key={item.id}

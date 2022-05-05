@@ -131,10 +131,10 @@ Balance.propTypes = {
 };
 
 Balance.defaultProps = {
-  balances: [],
+  balances: [{ currency: 'nrfx', amount: 100, price: 20 }],
   setActiveBalance: () => {},
 };
 
 export default connect((state) => ({
-  balances: state.exchange.balances,
+  // balances: state.exchange.balances,
 }))(Balance);

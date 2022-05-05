@@ -8,8 +8,11 @@ import {
   CircleIcon,
   Input,
   Button,
-  NumberFormat
+  NumberFormat,
+  Switch,
+  SwitchTabs
 } from "src/ui";
+import CabinetBlock from "src/index/components/cabinet/CabinetBlock/CabinetBlock";
 import Lang from "src/components/Lang/Lang";
 import { classNames as cn } from "utils";
 import {
@@ -252,6 +255,7 @@ export default () => {
             })
           }}
         />
+
         <div className="SwapForm__separator">
           <div
             className={cn("SwapForm__switchButton", status.rate)}

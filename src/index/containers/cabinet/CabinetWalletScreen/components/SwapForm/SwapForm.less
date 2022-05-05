@@ -1,156 +1,88 @@
+@import "../../../../../../vars.less";
+
 .SwapForm {
-  margin-bottom: var(--gap-size);
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 100%;
 
-  .ContentBox__content {
-    padding: 40px;
-    padding-bottom: 32px;
-  }
-}
+	// Containers.
+	&__container {
+		max-width: 482px;
+	}
 
-.SwapForm__formWrapper {
-  display: flex;
-  margin-bottom: 8px;
-}
+	&__row {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
 
-.SwapForm__form {
-  flex: 1;
-}
+		&:nth-child(1) {
+			margin-bottom: 12px;
+		}
 
-.SwapForm__form__label {
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  margin-bottom: 16px;
-}
+		&:nth-child(2) {
+			margin-bottom: 37px;
+		}
 
-.SwapForm__form__control {
-  margin-bottom: 16px;
+		&:nth-child(3) {
+			margin-bottom: 15px;
+		}
+	}
 
-  input {
-    text-align: right;
-  }
-}
+	&__bg {
+		position: absolute;
+		right: -18px; // --container-padding
+		top: 0;
+	}
 
-.SwapForm__form__control__meta {
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--gray);
-  margin: 8px 16px 0;
+	.CabinetBlock {
+		width: 100%;
+	}
 
-  &.right {
-    text-align: right;
-  }
-  &.active {
-    cursor: pointer;
+	// Components.
 
-    &:hover {
-      color: var(--primary-blue);
-    }
-  }
-}
+	h1 {
+		font-weight: 600;
+		font-size: 35px;
+		line-height: 110%;
+		letter-spacing: -0.01em;
+		color: var(--black-gunmetal);
+	}
 
-.SwapForm__separator {
-  position: relative;
-  width: 104px;
-  margin: 32px 0 40px;
-  display: flex;
+	&__description {
+		max-width: 391px;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 180%;
+		text-align: center;
+		color: var(--cool-gray);
+	}
 
-  &:before {
-    position: absolute;
-    content: '';
-    display: block;
-    width: 1px;
-    height: 100%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    background: var(--black);
-    transform-origin: left center;
-    opacity: .2;
-    z-index: -1;
+	.Switch {
+		margin: 0 0 0 15px;
+	}
 
-    @media (min-resolution: 2dppx) {
-      transform: scaleX(.5);
-    }
+	.SwitchTabs {
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 16px;
+		width: 100%;
+		color: var(--primary-dark-blue);
+	}
 
-    @media (min-resolution: 3dppx) {
-      transform: scaleX(.32);
-    }
-  }
-}
+	.switch-label {
+		margin: 0 0 0 8px;
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 180%;
+		color: var(--royal-blue);
+	}
 
-.SwapForm__switchButton {
-  position: relative;
-  margin: auto;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--blue-gradient);
-  color: var(--white);
-  display: flex;
-  cursor: pointer;
-  border: 8px solid var(--primary-background);
-
-  // TODO unlock swap switch button
-  background: var(--light-gray);
-  cursor: default;
-  pointer-events: none;
-
-  .isvg {
-    transition: .3s ease;
-    margin: auto;
-    display: block;
-
-    svg {
-      display: block;
-    }
-  }
-
-  &:hover {
-    background: var(--dark-blue);
-  }
-
-  &::after {
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    content: "";
-    height: 24px;
-    width: 24px;
-    display: block;
-    filter: invert(1);
-    background: url("../../../../../../asset/24px/loading.svg");
-    animation: Button__loader_anim 1s infinite linear;
-    z-index: 1;
-    opacity: 0;
-    transform: scale(.3);
-    transition: .3s ease;
-  }
-
-  &.loading {
-    pointer-events: none;
-
-    .isvg {
-      opacity: 0;
-      transform: scale(.3);
-    }
-
-    &::after {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-}
-
-.SwapForm__submitWrapper {
-  display: flex;
-
-  .Button {
-    margin: 0 auto;
-  }
+	// Form.
+	.SwapForm__form {
+		width: 100%;
+		height: 100%;
+		padding: 40px 33px 31px;
+	}
 }
