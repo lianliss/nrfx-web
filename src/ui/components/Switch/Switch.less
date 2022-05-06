@@ -25,6 +25,23 @@
       }
     }
   }
+
+  &.light-blue {
+    .Switch__control {
+      border-radius: 8px;
+      box-shadow: none;
+      background: rgba(64, 112, 255, 0.1);
+
+      &::after {
+        background: var(--blue-light-gradient);
+      }
+    }
+
+    .Switch__indicator {
+      background: var(--blue-light-gradient);
+      border-radius: 7px;
+    }
+  }
 }
 
 .Switch__control {

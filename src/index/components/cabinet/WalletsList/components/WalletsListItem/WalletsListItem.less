@@ -1,0 +1,79 @@
+@import '../../../../../../vars.less';
+
+.WalletsListItem {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
+  &.border {
+    padding: 14px 14px 14px 11px;
+    border: 1px solid #dfe3f0;
+    border-radius: var(--radius-panel);
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &:first-child {
+      margin-right: 10px;
+      p {
+        text-align: left;
+      }
+    }
+
+    &:last-child {
+      margin-left: auto;
+      align-items: end;
+
+      text-align: right;
+    }
+  }
+
+  &__text {
+    &-medium {
+      margin-bottom: 2px;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      color: #cdcfd7;
+    }
+
+    &-large {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .isvg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 31px;
+      height: 31px;
+      position: relative;
+      border-radius: 50%;
+      pointer-events: none;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}

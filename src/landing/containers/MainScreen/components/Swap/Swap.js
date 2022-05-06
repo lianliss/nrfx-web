@@ -13,10 +13,14 @@ import * as actions from 'src/actions/landing/buttons';
 import { getCanExchangeWallets } from 'src/actions/cabinet/wallets';
 import { walletSwapSetCurrency } from 'src/actions/cabinet/wallet';
 import web3Backend from 'services/web3-backend';
+import { web3SetData } from 'src/actions/cabinet/web3';
+import getCommission from 'utils/get-commission';
 
 export default () => {
   const dispatch = useDispatch();
   const swap = useSelector(walletSwapSelector);
+  const commissions = useSelector((state) => state.web3.commissions);
+  const rates = useSelector((state) => state.web3.rates);
   const fromType = getCurrencyInfo(swap.fromCurrency).type;
   const [fromFiat, setFromFiat] = useState(fromType === 'fiat');
   const [rate, setRate] = useState(0);
@@ -30,17 +34,22 @@ export default () => {
   const getCurrencyRate = useCallback(() => {
     setPendingRate(true);
     (async () => {
-      const swapRates = await web3Backend.getAllRates();
+      const commission = getCommission(commissions, to);
 
       if (fromFiat) {
-        setRate(swapRates[to] / swapRates[from]);
+        const rate = rates[to] / rates[from];
+        const rateCommission = rate * commission;
+
+        setRate(rate + rateCommission);
       } else {
-        setRate(swapRates[from] / swapRates[to]);
+        const rate = rates[from] / rates[to];
+
+        setRate(rate);
       }
 
       setPendingRate(false);
     })();
-  }, [from, to, setPendingRate, setRate]);
+  }, [from, to, setPendingRate, setRate, commissions, rates]);
 
   const currencies = getCanExchangeWallets();
 
@@ -93,6 +102,15 @@ export default () => {
     setFromAmount(toAmount);
     setToAmount(fromAmount);
   };
+
+  useEffect(() => {
+    (async () => {
+      const rates = await web3Backend.getAllRates();
+      const commissions = await web3Backend.getCommissions();
+
+      dispatch(web3SetData({ rates, commissions: JSON.parse(commissions) }));
+    })();
+  }, []);
 
   useEffect(() => {
     getCurrencyRate();
@@ -148,7 +166,7 @@ export default () => {
                   <NumberFormat number={1} currency={from} />
                   {' ≈ '}
                   <NumberFormat
-                    number={fromFiat ? (1 / rate).toFixed(5) : rate.toFixed(5)}
+                    number={fromFiat ? (1 / rate).toFixed(2) : rate.toFixed(2)}
                     currency={to}
                   />
                 </span>
@@ -191,7 +209,7 @@ export default () => {
                   <NumberFormat number={1} currency={to} />
                   {' ≈ '}
                   <NumberFormat
-                    number={!fromFiat ? (1 / rate).toFixed(5) : rate.toFixed(5)}
+                    number={!fromFiat ? (1 / rate).toFixed(2) : rate.toFixed(2)}
                     currency={from}
                   />
                 </span>

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Switch, SwitchTabs, Search } from 'src/ui';
 import { getLang } from 'utils';
-import WalletsListItem from '../../../WalletsList/components/WalletsListItem/WalletsListItem';
-import WalletsList from '../../../WalletsList/WalletsList';
+import SVG from 'utils/svg-wrap';
+import WalletsListItem from 'src/index/components/cabinet/WalletsList/components/WalletsListItem/WalletsListItem';
+import WalletsList from 'src/index/components/cabinet/WalletsList/WalletsList';
 import currencies from 'src/currencies';
 
 import './BalancesManage.less';
@@ -35,6 +36,7 @@ function BalancesManage({ balances, balancesHandler }) {
           { value: 'list', label: getLang('exchange_balance_list_label') },
           { value: 'tokens', label: getLang('exchange_balance_tokens_label') },
         ]}
+        type="light-blue"
       />
       {currentPage === 'list' && (
         <>
@@ -46,19 +48,24 @@ function BalancesManage({ balances, balancesHandler }) {
                   return;
                 }
 
-                const { name, icon, gradient } = currencies[item.currency];
-                const iconGradient = `linear-gradient(to bottom, ${gradient[0]} 0%, ${gradient[1]} 100%)`;
+                const { name } = currencies[item.currency];
+                let icon = '';
+
+                try {
+                  icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
+                } catch {
+                  console.log('Icon is not defined');
+                }
 
                 return (
                   <WalletsListItem
-                    icon={
-                      <img src={icon} style={{ background: iconGradient }} />
-                    }
-                    startTexts={[name, item.currency]}
+                    icon={<SVG src={icon} />}
+                    startTexts={[name, item.currency.toUpperCase()]}
                     controls={
                       <Switch
                         on={item.selected}
                         onChange={() => balanceChecked(item.id)}
+                        type="light-blue"
                       />
                     }
                     key={item.id}

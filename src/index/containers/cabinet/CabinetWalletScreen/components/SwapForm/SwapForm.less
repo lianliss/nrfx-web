@@ -1,156 +1,174 @@
+@import '../../../../../../vars.less';
+
 .SwapForm {
-  margin-bottom: var(--gap-size);
-
-  .ContentBox__content {
-    padding: 40px;
-    padding-bottom: 32px;
-  }
-}
-
-.SwapForm__formWrapper {
   display: flex;
-  margin-bottom: 8px;
-}
+  justify-content: center;
+  align-items: start;
+  position: relative;
+  padding-top: 15px;
+  padding-right: 65px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  z-index: 0;
 
-.SwapForm__form {
-  flex: 1;
-}
-
-.SwapForm__form__label {
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  margin-bottom: 16px;
-}
-
-.SwapForm__form__control {
-  margin-bottom: 16px;
-
-  input {
-    text-align: right;
+  // Containers
+  &__container {
+    width: 100%;
+    max-width: 482px;
+    position: relative;
   }
-}
 
-.SwapForm__form__control__meta {
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--gray);
-  margin: 8px 16px 0;
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 
-  &.right {
-    text-align: right;
-  }
-  &.active {
-    cursor: pointer;
+    &:nth-child(1) {
+      margin-bottom: 12px;
+    }
 
-    &:hover {
-      color: var(--primary-blue);
+    &:nth-child(2) {
+      margin-bottom: 30px;
+    }
+
+    &:nth-child(3) {
+      margin-bottom: 15px;
     }
   }
-}
 
-.SwapForm__separator {
-  position: relative;
-  width: 104px;
-  margin: 32px 0 40px;
-  display: flex;
-
-  &:before {
+  &__bg {
     position: absolute;
-    content: '';
-    display: block;
-    width: 1px;
-    height: 100%;
+    right: -18px; // var(--container-padding)
+    top: 0;
+  }
+
+  &__bg-center {
+    height: 81.15%;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
     left: 0;
-    right: 0;
-    margin: auto;
-    background: var(--black);
-    transform-origin: left center;
-    opacity: .2;
+    transform: translateX(-24.7%);
     z-index: -1;
 
-    @media (min-resolution: 2dppx) {
-      transform: scaleX(.5);
-    }
-
-    @media (min-resolution: 3dppx) {
-      transform: scaleX(.32);
-    }
-  }
-}
-
-.SwapForm__switchButton {
-  position: relative;
-  margin: auto;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--blue-gradient);
-  color: var(--white);
-  display: flex;
-  cursor: pointer;
-  border: 8px solid var(--primary-background);
-
-  // TODO unlock swap switch button
-  background: var(--light-gray);
-  cursor: default;
-  pointer-events: none;
-
-  .isvg {
-    transition: .3s ease;
-    margin: auto;
-    display: block;
-
-    svg {
-      display: block;
-    }
-  }
-
-  &:hover {
-    background: var(--dark-blue);
-  }
-
-  &::after {
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    content: "";
-    height: 24px;
-    width: 24px;
-    display: block;
-    filter: invert(1);
-    background: url("../../../../../../asset/24px/loading.svg");
-    animation: Button__loader_anim 1s infinite linear;
-    z-index: 1;
-    opacity: 0;
-    transform: scale(.3);
-    transition: .3s ease;
-  }
-
-  &.loading {
-    pointer-events: none;
-
     .isvg {
-      opacity: 0;
-      transform: scale(.3);
-    }
+      height: 100%;
+      position: relative;
+      bottom: -13.64%;
 
-    &::after {
-      opacity: 1;
-      transform: scale(1);
+      svg {
+        height: 100%;
+        width: auto;
+      }
     }
   }
-}
 
-.SwapForm__submitWrapper {
-  display: flex;
+  .CabinetBlock {
+    width: 100%;
+  }
 
-  .Button {
-    margin: 0 auto;
+  // Components
+  h1 {
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: var(--black-gunmetal);
+  }
+
+  &__description {
+    max-width: 391px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 180%;
+    text-align: center;
+    color: var(--cool-gray);
+  }
+
+  // <Switch />
+  .Switch {
+    margin: 0 0 0 15px;
+  }
+
+  // <SwitchTabs />
+  .SwitchTabs {
+    width: 100%;
+    height: 66px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--primary-dark-blue);
+  }
+
+  .switch-label {
+    margin: 0 0 0 8px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 180%;
+    color: var(--royal-blue);
+  }
+
+  // <CabinetBlock />
+  .CabinetBlock {
+    padding: 0;
+    border-radius: 25px;
+  }
+
+  // --Form
+  .SwapForm__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 40px 33px 31px;
+    box-sizing: border-box;
+
+    & > .isvg {
+      margin: 21px 0;
+      cursor: pointer;
+    }
+
+    // <Button />
+    & > .Button {
+      width: 100%;
+      height: 72px;
+      margin-top: 31px;
+      border-radius: 15px;
+
+      .Button__label {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 100%;
+        text-align: center;
+        letter-spacing: -0.01em;
+      }
+
+      .isvg {
+        width: 29px;
+        height: 29px;
+        margin-right: 11px;
+
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+
+        svg,
+        path {
+          fill: #fff;
+        }
+      }
+    }
+  }
+
+  // All icons for this
+  .isvg {
+    display: flex;
+    align-items: center;
   }
 }

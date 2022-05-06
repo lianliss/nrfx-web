@@ -48,6 +48,29 @@
     opacity: 0.8;
     pointer-events: none;
   }
+
+  &.light-blue {
+    .SwitchTabs__item {
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
+
+      &::before {
+        opacity: 0;
+      }
+
+      &.active {
+        font-weight: 600;
+        color: #fff;
+      }
+    }
+
+    .SwitchTabs__indicator {
+      span {
+        background: var(--blue-light-gradient);
+      }
+    }
+  }
 }
 
 .SwitchTabs__item {

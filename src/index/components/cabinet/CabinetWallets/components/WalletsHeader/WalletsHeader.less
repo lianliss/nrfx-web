@@ -1,0 +1,35 @@
+.WalletsHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  &__col {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &:last-child {
+      justify-content: end;
+
+      & > * {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+
+        &:last-child {
+          margin-left: 5px;
+        }
+      }
+
+      .Button {
+        min-width: 153px;
+        height: 50px;
+
+        .isvg {
+          margin-right: 9px;
+        }
+      }
+    }
+  }
+}

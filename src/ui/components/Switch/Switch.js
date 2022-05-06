@@ -10,7 +10,8 @@ function Switch(props) {
   const className = classNames({
     Switch: true,
     on: props.on,
-    disabled: props.disabled
+    disabled: props.disabled,
+    [props.type]: props.type
   });
 
   const handleChange = e => {
@@ -32,7 +33,12 @@ function Switch(props) {
 Switch.propTypes = {
   on: PropTypes.bool,
   onChange: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  type: PropTypes.oneOf(["default", "light-blue"]),
 };
+
+Switch.defaultProps = {
+  type: "default",
+}
 
 export default React.memo(Switch);

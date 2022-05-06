@@ -9,7 +9,7 @@ import SVG from 'utils/svg-wrap';
 import maximizeIcon from 'src/ui/components/CopyText/assets/maximize.svg';
 import './ReceiveQRModal.less';
 import { web3WalletsSelector } from 'src/selectors';
-import BottomSheetModal from '../../../../ui/components/BottomSheetModal/BottomSheetModal';
+import BottomSheetModal from 'src/ui/components/BottomSheetModal/BottomSheetModal';
 
 function ReceiveQRModal({ web3Wallets, onClose, adaptive }) {
   const wallet = web3Wallets[0];

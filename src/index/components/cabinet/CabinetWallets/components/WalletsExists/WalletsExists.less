@@ -1,0 +1,177 @@
+@import '../../../../../../vars.less';
+@nft-margin: 8px;
+
+.WalletsExists {
+  display: flex;
+  height: 100%;
+
+  .WalletsHeader {
+    margin-bottom: 39px;
+  }
+
+  &__container {
+    padding: 31px 27px 30px 36px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    box-sizing: border-box;
+
+    .CabinetBlock {
+      background: var(--alice-blue) !important;
+      padding: 17px 0px 25px;
+      width: 100%;
+      position: relative;
+
+      &:first-child {
+        margin-right: 10px;
+      }
+
+      &:last-child {
+        max-width: 474px;
+
+        .WalletsExists__items_header {
+          padding: 0 38px 0 31px;
+        }
+      }
+    }
+  }
+
+  &__items_header {
+    // Tokens/NFT box title.
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 38px 0 24px;
+
+    & > span {
+      &:first-child {
+        // Title
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 180%;
+        color: var(--cool-gray);
+      }
+    }
+  }
+
+  .WalletsList {
+    // Horizontal paddings to scroll fix at right.
+    padding: 0 38px 0 24px;
+    box-sizing: border-box;
+
+    .WalletsListItem__icon {
+      width: 39px;
+      height: 39px;
+
+      .isvg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .WalletsListItem {
+      &:not(:last-child) {
+        margin-bottom: 30px;
+      }
+
+      &__column {
+        justify-content: center;
+      }
+
+      .RateIndicator {
+        margin-left: 17px;
+      }
+    }
+  }
+
+  // Wallet item texts.
+  .WalletsListItem__text {
+    &-medium {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      margin-bottom: 0;
+    }
+
+    &-large {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      margin-bottom: 5px;
+      color: var(--dark-black);
+    }
+  }
+
+  // Scrollbar tokens/nft container.
+  .ScrollbarBox-container {
+    margin-top: 23px;
+    width: 100%;
+    height: calc(100% - 46px);
+  }
+
+  // NFT Card.
+  .WalletsNFT__cards {
+    padding: 0 calc(38px - @nft-margin) 0 calc(31px - @nft-margin);
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+
+    .WalletsNFTCard {
+      margin: 0 8px;
+      margin-bottom: 13px;
+      width: calc((100% / 3) - @nft-margin * 2);
+    }
+  }
+}
+
+// Cabinet token items.
+.CabinetWallets__tokens {
+  &-controls {
+    div:last-child {
+      margin-left: 23px;
+    }
+  }
+
+  &-controls,
+  &-content {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: @mobile-width) and (max-width: 1300px) {
+  .WalletsExists {
+    .WalletsNFT__cards {
+      .WalletsNFTCard {
+        width: calc((100% / 2) - @nft-margin * 2);
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .WalletsExists {
+    .CabinetBlock {
+      &:last-child {
+        max-width: 600px;
+      }
+    }
+
+    .WalletsNFT__cards {
+      .WalletsNFTCard {
+        width: calc((100% / 4) - @nft-margin * 2);
+      }
+    }
+  }
+}
