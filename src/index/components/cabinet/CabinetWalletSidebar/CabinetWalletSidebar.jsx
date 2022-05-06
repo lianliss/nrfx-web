@@ -47,7 +47,12 @@ function CabinetWalletSidebar() {
                 </ul>
               </SidebarItem>
               <SidebarItem title="Liquidity" icon="liquidity" />
-              <SidebarItem title="Farm" icon="farm" />
+              <SidebarItem
+                title="Farm"
+                icon="farm"
+                active={route.name === PAGES.FARMING}
+                onClick={() => router.navigate(PAGES.FARMING)}
+              />
               <SidebarItem title="Validator" icon="validator" />
             </ul>
           </CabinetBlock>

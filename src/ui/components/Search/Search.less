@@ -59,6 +59,11 @@
     }
   }
 
+  // For move search icon to right.
+  .Search.simple.right & {
+    padding: 0 29px 0 12px;
+  }
+
   .Search.disabled & {
     pointer-events: none;
   }
@@ -120,5 +125,11 @@
 
   .Search.simple & {
     left: 9px;
+  }
+
+  .Search.simple.right & {
+    left: auto;
+    right: 12px;
+    margin-right: 0;
   }
 }
