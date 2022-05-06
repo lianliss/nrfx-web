@@ -12,6 +12,8 @@ import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import { RateIndicator } from 'src/ui';
 import { testItems } from './testItems.js';
 import SVG from 'utils/svg-wrap';
+
+// Constants
 import currencies from 'src/currencies';
 
 function WalletsExists() {
