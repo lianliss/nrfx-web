@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Components
 import './WalletsExists.less';
 import WalletsHeader from '../WalletsHeader/WalletsHeader';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
