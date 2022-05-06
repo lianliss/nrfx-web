@@ -6,9 +6,9 @@ import SVG from 'utils/svg-wrap';
 import * as UI from 'src/ui';
 
 // Styles.
-import './SwapFormInput.less';
+import './DexSwapInput.less';
 
-function SwapFormInput({ title, rate, manage, label }) {
+function DexSwapInput({ title, rate, manage, label }) {
   // States
   const [value, setValue] = React.useState('0');
   const [currency, setCurrency] = React.useState('usd');
@@ -84,18 +84,18 @@ function SwapFormInput({ title, rate, manage, label }) {
   );
 }
 
-SwapFormInput.propTypes = {
+DexSwapInput.propTypes = {
   title: PropTypes.string,
   rate: PropTypes.number,
   manage: PropTypes.bool,
   label: PropTypes.bool,
 };
 
-SwapFormInput.defaultProps = {
+DexSwapInput.defaultProps = {
   title: '',
   rate: 0,
   manage: false,
   label: false,
 };
 
-export default SwapFormInput;
+export default DexSwapInput;
