@@ -30,8 +30,6 @@ function CabinetWalletSidebar() {
               <SidebarItem
                 title="Exchanger"
                 icon="exchange"
-                active={route.name === PAGES.WALLET_SWAP}
-                onClick={() => router.navigate(PAGES.WALLET_SWAP)}
               />
             </ul>
           </CabinetBlock>
@@ -40,9 +38,12 @@ function CabinetWalletSidebar() {
               <SidebarItem title="Trade" icon="trade">
                 <ul>
                   <li>Pro Dex</li>
-                  <li>Pro Dex</li>
-                  <li>Pro Dex</li>
-                  <li>Swap</li>
+                  <li
+                    active={route.name === PAGES.WALLET_SWAP}
+                    onClick={() => router.navigate(PAGES.WALLET_SWAP)}
+                  >
+                    Swap
+                  </li>
                 </ul>
               </SidebarItem>
               <SidebarItem title="Liquidity" icon="liquidity" />

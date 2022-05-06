@@ -19,12 +19,16 @@
   flex-direction: column;
   max-width: calc(100vw - var(--site-bar-width) - var(--container-padding));
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .PageContainer__sideBar {
   margin-right: 25px;
   max-width: var(--site-bar-width);
   width: 100%;
+  position: relative;
+  z-index: 2;
 }
 
 @media (max-width: @mobile-width) {
