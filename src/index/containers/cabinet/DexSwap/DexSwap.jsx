@@ -88,6 +88,11 @@ class DexSwap extends React.PureComponent {
   }
 
   render() {
+    const {
+      getPair,
+      getTokensRelativePrice,
+      getTokenUSDPrice,
+    } = this.context;
     const {isPro, selectToken, pair} = this.state;
     const switchTabs = [
       { value: 'swap', label: 'Swap' },
