@@ -13,12 +13,20 @@ class Web3Provider extends React.PureComponent {
     accountAddress: null,
     tokens: [
       {
+        name: "Tether",
+        symbol: "USDT",
+        address: "0x55d398326f99059fF775485246999027B3197955",
+        chainId: 56,
+        decimals: 18,
+        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+      },
+      {
         name: "Narfex",
         symbol: "NRFX",
         address: "0x3764Be118a1e09257851A3BD636D48DFeab5CAFE",
         chainId: 56,
         decimals: 18,
-        logoURI: "https://static.narfex.com/img/currencies/nrfx_coin.svg"
+        logoURI: "https://static.narfex.com/img/currencies/nrfx_pancake.svg"
       },
     ],
   };
@@ -128,12 +136,14 @@ class Web3Provider extends React.PureComponent {
       const {tokens} = request.data;
 
       if (!this._mounted) return;
+      const result = [
+        ...this.state.tokens,
+        ...tokens,
+      ];
       this.setState({
-        tokens: {
-          ...this.state.tokens,
-          ...tokens,
-        },
-      })
+        tokens: result,
+      });
+      return result;
     } catch (error) {
       console.log(`Can't get tokens list`, error);
     }

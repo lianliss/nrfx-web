@@ -1,4 +1,4 @@
-.SwapFormInput {
+.DexSwapInput {
   // Containers
   &__container {
     display: flex;
@@ -63,15 +63,29 @@
   }
 
   &__icon {
+    cursor: pointer;
+    border-radius: 50%;
+    background: var(--secondary-background);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    width: 41px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
     .isvg,
-    svg {
-      width: 41px;
-      height: 41px;
+    svg, img {
+      width: 100%;
     }
   }
 
   &__select {
     cursor: pointer;
+    margin-left: 41px + 12px;
 
     // Medium text in select (subtitle)
     & > span {

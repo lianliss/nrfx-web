@@ -1,0 +1,52 @@
+.TokenSelect {
+    padding: 40px 33px 31px;
+    box-sizing: border-box;
+    min-height: 400px;
+
+    &__wrap {
+        position: absolute;
+        top: 0;
+        left: 20px;
+        right: 10px;
+
+        .CabinetBlock {
+            box-shadow: 0 0 40px 0 var(--secondary-background);
+        }
+    }
+
+    h2 {
+        font-weight: 600;
+        font-size: 24px;
+    }
+    &__close {
+        position: absolute;
+        display: flex;
+        cursor: pointer;
+        right: 32px;
+        top: 32px;
+        background-size: 14px;
+        width: 14px + 12 * 2;
+        height: 14px + 12 * 2;
+        color: var(--text-black);
+        z-index: 2;
+
+        .isvg {
+            display: block;
+            margin: auto;
+
+            svg {
+                display: block;
+
+                path {
+                    fill: var(--text-black);
+                }
+            }
+        }
+
+        &:hover {
+            .isvg svg path {
+                fill: var(--primary-orange);
+            }
+        }
+    }
+}

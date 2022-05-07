@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 // Components.
 import SVG from 'utils/svg-wrap';
@@ -8,7 +9,14 @@ import * as UI from 'src/ui';
 // Styles.
 import './DexSwapInput.less';
 
-function DexSwapInput({ title, rate, manage, label }) {
+function DexSwapInput({
+                        title,
+                        rate,
+                        manage,
+                        label,
+                        token,
+                        onSelectToken = () => {},
+                      }) {
   // States
   const [value, setValue] = React.useState('0');
   const [currency, setCurrency] = React.useState('usd');
@@ -42,36 +50,36 @@ function DexSwapInput({ title, rate, manage, label }) {
 
   // Render
   return (
-    <div className="SwapFormInput" onClick={handleContainerClick}>
+    <div className="DexSwapInput" onClick={handleContainerClick}>
       {label && (
-        <div className="SwapFormInput__label">
+        <div className="DexSwapInput__label">
           <div>
-            <span className="SwapFormInput__title">{title}</span>
+            <span className="DexSwapInput__title">{title}</span>
             {manage && (
-              <div className="SwapFormInput__manage">
+              <div className="DexSwapInput__manage">
                 <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
               </div>
             )}
           </div>
           <div>
-            <span className="SwapFormInput__rate">≈ ${displayRate}</span>
+            <span className="DexSwapInput__rate">≈ ${displayRate}</span>
           </div>
         </div>
       )}
-      <div className="SwapFormInput__container">
-        <div className="SwapFormInput__icon">
-          <SVG src={require(`src/asset/icons/wallets/${currency}.svg`)} />
-        </div>
-        <div className="SwapFormInput__select" ref={selectRef}>
-          <span>Ethereum</span>
-          <div className="SwapFormInput__currency">
-            <span>{currency.toUpperCase()}</span>
+      <div className="DexSwapInput__container">
+        <div className="DexSwapInput__icon" style={{
+          backgroundImage: `url('${_.get(token, 'logoURI', '')}')`
+        }} onClick={onSelectToken} />
+        <div className="DexSwapInput__select" onClick={onSelectToken} ref={selectRef}>
+          <span>{_.get(token, 'name', 'Unknown')}</span>
+          <div className="DexSwapInput__currency">
+            <span>{_.get(token, 'symbol', 'Unknown')}</span>
             <SVG
               src={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
             />
           </div>
         </div>
-        <div className="SwapFormInput__input">
+        <div className="DexSwapInput__input">
           <UI.Input
             ref={inputRef}
             type="number"
@@ -89,6 +97,8 @@ DexSwapInput.propTypes = {
   rate: PropTypes.number,
   manage: PropTypes.bool,
   label: PropTypes.bool,
+  onSelectToken: PropTypes.func,
+  token: PropTypes.object,
 };
 
 DexSwapInput.defaultProps = {
