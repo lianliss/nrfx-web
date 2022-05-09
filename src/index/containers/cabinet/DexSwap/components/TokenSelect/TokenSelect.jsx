@@ -39,7 +39,8 @@ class TokenSelect extends React.PureComponent {
     } = this.props;
     const {search} = this.state;
 
-    const filtered = tokens.filter(token => token.symbol.indexOf(search.toUpperCase()) >= 0)
+    const filtered = tokens.filter(token => token.symbol.toUpperCase().indexOf(search.toUpperCase()) >= 0
+      || token.name.toUpperCase().indexOf(search.toUpperCase()) >= 0)
       .map(token => {
       const {symbol, name, logoURI, rate} = token;
       const key = getTokenStateKey(token, accountAddress);
