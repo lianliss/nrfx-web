@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -6,14 +7,46 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './DoubleWallets.less';
 
-function DoubleWallets() {
+function DoubleWallets({ first, second }) {
+  // Constants
+  const [firstIcon, setFirstIcon] = React.useState(null);
+  const [secondIcon, setSecondIcon] = React.useState(null);
+
+  // Check first wallet svg exists;
+  React.useEffect(() => {
+    try {
+      setFirstIcon(require(`src/asset/icons/wallets/${first}.svg`));
+    } catch {
+      console.warn(`${first}.svg is not defined`);
+    }
+
+    // Check second wallet svg exists;
+    try {
+      setSecondIcon(require(`src/asset/icons/wallets/${second}.svg`));
+    } catch {
+      console.warn(`${second}.svg is not defined`);
+    }
+  }, []);
+
   return (
     <div className="DoubleWallets">
-      <SVG src={require('src/asset/icons/wallets/bnb.svg')} />
-      <SVG src={require('src/asset/icons/wallets/btc.svg')} />
-      BNB-BTC
+      {firstIcon && <SVG src={firstIcon} />}
+      {secondIcon && <SVG src={secondIcon} />}
+      {first && first.toUpperCase()}
+      {first && second && '-'}
+      {second && second.toUpperCase()}
     </div>
   );
 }
+
+DoubleWallets.propTypes = {
+  first: PropTypes.string,
+  second: PropTypes.string,
+};
+
+DoubleWallets.defaultProps = {
+  first: '',
+  second: '',
+};
 
 export default DoubleWallets;

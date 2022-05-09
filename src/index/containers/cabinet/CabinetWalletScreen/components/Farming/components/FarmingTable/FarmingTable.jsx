@@ -10,7 +10,7 @@ import {
   Button,
 } from 'src/ui';
 import Select from 'src/index/components/cabinet/Select/Select';
-import DoubleWallets from 'src/index/components/cabinet/DoubleWallets/DoubleWallets';
+import FarmingTableItem from '../FarmingTableItem/FarmingTableItem';
 
 // Styles
 import './FarmingTable.less';
@@ -30,6 +30,7 @@ function FarmingTable() {
     headerTabs[0].value
   );
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
+  const numbers = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     <div className="FarmingTable">
@@ -55,31 +56,15 @@ function FarmingTable() {
           ]}
           className="FarmingTable__table"
         >
-          <TableCell>
-            <TableColumn>
-              <span>
-                <Indicator type="green" text="Latest" />
-              </span>
-            </TableColumn>
-            <TableColumn>
-              <DoubleWallets />
-            </TableColumn>
-            <TableColumn>125,5%</TableColumn>
-            <TableColumn>75,5%</TableColumn>
-            <TableColumn>$7 100 650</TableColumn>
-            <TableColumn>—</TableColumn>
-            <TableColumn>Pair info</TableColumn>
-            <TableColumn>details</TableColumn>
-          </TableCell>
+          {numbers.map((el, index) => {
+            return (
+              <FarmingTableItem key={index} dark={index % 2} indicator="hot" />
+            );
+          })}
         </Table>
       </div>
     </div>
   );
 }
-
-// FarmingTable components
-const Indicator = ({ type, text }) => (
-  <div className={`FarmingTable__indicator ${type}`}>{text}</div>
-);
 
 export default FarmingTable;
