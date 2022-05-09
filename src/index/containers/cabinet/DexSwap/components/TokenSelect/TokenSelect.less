@@ -79,12 +79,109 @@
         }
     }
     &__list {
+        margin: 0 -12px;
+
+        h3 {
+            margin: 12px 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
         .react-scrollable-list {
             height: 400px;
             overflow-y: scroll;
+            --scroll-size: 6px;
+
+            &::-webkit-scrollbar {
+                width: var(--scroll-size);
+                height: var(--scroll-size);
+            }
+            &::-webkit-scrollbar-button {
+                width: 0;
+                height: 0;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: var(--primary-blue-opacity);
+                border: 0 none #ffffff;
+                border-radius: 2px;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: var(--secondary-background);
+            }
+            &::-webkit-scrollbar-thumb:active {
+                //background: #000000;
+            }
+            &::-webkit-scrollbar-track {
+                background: var(--secondary-background);
+                border: 0 none #ffffff;
+                border-radius: 50px;
+            }
+            &::-webkit-scrollbar-track:hover {
+            }
+            &::-webkit-scrollbar-track:active {
+            }
+            &::-webkit-scrollbar-corner {
+                background: transparent;
+            }
         }
     }
     &__token {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 11px 12px 11px 12px;
+        cursor: pointer;
 
+        &:hover {
+            background: var(--secondary-background);
+        }
+        &-left {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        &-icon {
+            border-radius: 50%;
+            background: var(--secondary-background);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+        }
+        &-name {
+            margin-left: 42px;
+            display: flex;
+            flex-direction: column;
+
+            span {
+                &:first-child {
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+                &:last-child {
+                    font-size: 12px;
+                }
+            }
+        }
+        &-right {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+        &-price {
+            font-size: 10px;
+            font-weight: 500;
+            color: #CDCFD7;
+        }
+        &-balance {
+            font-size: 14px;
+            font-weight: 600;
+        }
     }
 }
