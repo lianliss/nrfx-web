@@ -13,6 +13,8 @@ import {Web3Context} from 'services/web3Provider';
 // Styles
 import './DexSwap.less';
 
+const BALANCE_UPDATE_INTERVAL = 2000;
+
 class DexSwap extends React.PureComponent {
   static contextType = Web3Context;
 
@@ -20,7 +22,10 @@ class DexSwap extends React.PureComponent {
     isPro: false,
     selectToken: 0,
     pair: [],
+    address: null,
   };
+
+  balanceUpdateInterval = null;
 
   togglePro = () => {
     this.setState({
@@ -31,14 +36,19 @@ class DexSwap extends React.PureComponent {
   componentDidMount() {
     this._mount = true;
     this.fillDefaultPair();
+    this.updateAccountAddress();
+
+    this.balanceUpdateInterval = setInterval(this.updateExchangeTokenBalance.bind(this), BALANCE_UPDATE_INTERVAL);
   }
 
   componentDidUpdate() {
     this.fillDefaultPair();
+    this.updateAccountAddress();
   }
 
   componentWillUnmount() {
     this._mount = false;
+    clearInterval(this.balanceUpdateInterval);
   }
 
   /**
@@ -73,11 +83,22 @@ class DexSwap extends React.PureComponent {
     })
   }
 
+  updateAccountAddress() {
+    const {address} = this.state;
+    const {accountAddress} = this.context;
+
+    if (address !== accountAddress) {
+      this.setState({
+        address: accountAddress,
+      })
+    }
+  }
+
   /**
    * Swap the pair
    */
   swapPair() {
-    if (this.state.pair.length) return;
+    if (!this.state.pair.length) return;
 
     this.setState({
       pair: [
@@ -85,6 +106,36 @@ class DexSwap extends React.PureComponent {
         this.state.pair[0],
       ]
     })
+  }
+
+  async updateExchangeTokenBalance() {
+    try {
+      const {isConnected, getTokenBalance} = this.context;
+      const {pair} = this.state;
+      if (!isConnected) return;
+      if (!pair.length) return;
+
+      const symbol = _.get(this.state, 'pair[0].symbol');
+      const balance = await getTokenBalance(pair[0].address);
+
+      this.setState(state => {
+        if (symbol === _.get(state, 'pair[0].symbol')
+          && balance !== _.get(state, 'pair[0].balance')) {
+          return {
+            ...state,
+            pair: [
+              {
+                ...pair[0],
+                balance,
+              },
+              pair[1]
+            ]
+          }
+        }
+      });
+    } catch (error) {
+      console.error('[updateExchangeTokenBalance]', error);
+    }
   }
 
   render() {
@@ -101,6 +152,7 @@ class DexSwap extends React.PureComponent {
     ];
 
     console.log('pair', pair);
+    console.log('balalnce', _.get(pair, '[0].balance'));
 
     return (
       <div className="DexSwap">
@@ -131,13 +183,15 @@ class DexSwap extends React.PureComponent {
               <div className="DexSwap__form">
                 <DexSwapInput onSelectToken={() => this.setState({selectToken: 0})}
                               token={this.state.pair[0]}
-                               label manage title="Exchange" rate={1454.5583} />
+                              showBalance
+                              label manage
+                              title="Exchange" />
                 <SVG onClick={() => this.swapPair()}
                   src={require('src/asset/icons/cabinet/swap/swap-icon.svg')}
                 />
                 <DexSwapInput onSelectToken={() => this.setState({selectToken: 1})}
                               token={this.state.pair[1]}
-                               label title="You Pay" rate={1454.55} />
+                               label title="You Pay" />
 
                 <Button type="lightBlue">
                   <SVG src={require('src/asset/token/wallet.svg')} />

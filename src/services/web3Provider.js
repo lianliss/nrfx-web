@@ -28,6 +28,14 @@ class Web3Provider extends React.PureComponent {
         decimals: 18,
         logoURI: "https://static.narfex.com/img/currencies/nrfx_pancake.svg"
       },
+      {
+        name: "Binance Coin",
+        symbol: "BNB",
+        address: null,
+        chainId: 56,
+        decimals: 18,
+        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
+      },
     ],
   };
 
@@ -43,7 +51,6 @@ class Web3Provider extends React.PureComponent {
     const provider = new Web3.providers.HttpProvider(
       this.providerAddress
     );
-    this.web3 = new Web3(this.ethereum);
     this.web3Host = new Web3(provider);
 
     // Check web3 wallet plugin
@@ -71,6 +78,7 @@ class Web3Provider extends React.PureComponent {
         throw new Error('No wallet plugins detected');
       }
       this.ethereum = window.ethereum;
+      this.web3 = new Web3(this.ethereum);
 
       // Set account address
       const accountAddress = (await this.ethereum.request({ method: 'eth_requestAccounts' }))[0];
@@ -246,6 +254,32 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  /**
+   * Returns tokens balance on the current account
+   * @param token {address} - token contract address. Can be undefined. In that case the method will return BNB balance
+   * @returns {Promise.<*>}
+   */
+  async getTokenBalance(token = null) {
+    try {
+      if (!this.state.isConnected) return "0";
+      const {accountAddress} = this.state;
+
+      if (token) {
+        // Return token balance
+        const contract = new this.web3Host.eth.Contract(
+          require('src/index/constants/ABI/NarfexToken'),
+          token,
+        );
+        return await contract.methods.balanceOf(accountAddress).call();
+      } else {
+        // Return default balance
+        return await this.web3Host.eth.getBalance(accountAddress);
+      }
+    } catch (error) {
+      console.error('[getTokenBalance]', error);
+    }
+  }
+
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
@@ -254,6 +288,7 @@ class Web3Provider extends React.PureComponent {
       getPair: this.getPair.bind(this),
       getTokensRelativePrice: this.getTokensRelativePrice.bind(this),
       getTokenUSDPrice: this.getTokenUSDPrice.bind(this),
+      getTokenBalance: this.getTokenBalance.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

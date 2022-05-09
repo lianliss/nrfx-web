@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import Web3 from 'web3/dist/web3.min.js';
+import getFinePrice from 'utils/get-fine-price';
 
 // Components.
 import SVG from 'utils/svg-wrap';
@@ -11,10 +13,10 @@ import './DexSwapInput.less';
 
 function DexSwapInput({
                         title,
-                        rate,
                         manage,
                         label,
                         token,
+                        showBalance,
                         onSelectToken = () => {},
                       }) {
   // States
@@ -26,19 +28,13 @@ function DexSwapInput({
   const selectRef = React.useRef(null);
 
   // Logic
-  // -- filter rate to text.
-  let displayRate = String(rate.toFixed(2)); // To string and fixed
-  displayRate = displayRate
-    .split('') // 1000.22 to 1 000.22
-    .reverse()
-    .join('')
-    .replace(/\d\d\d/g, '$& ')
-    .split('')
-    .reverse()
-    .join('');
+  const web3 = new Web3();
+  const balance = web3.utils.toBN(_.get(token, 'balance', "0"));
+  //const decimals = 10**_.get(token, 'decimals', 18); // TODO use decimals parameter if token have not 18 decimals
+  const balanceNumber = Number(web3.utils.fromWei(balance));
 
   // Handlers
-  const handleInput = (newValue) => {
+  const handleInput = newValue => {
     setValue(newValue);
   };
 
@@ -46,6 +42,10 @@ function DexSwapInput({
     if (!selectRef.current.contains(e.target)) {
       inputRef.current.focus();
     }
+  };
+
+  const handleBalanceClick = () => {
+    handleInput(balanceNumber);
   };
 
   // Render
@@ -61,9 +61,14 @@ function DexSwapInput({
               </div>
             )}
           </div>
-          <div>
-            <span className="DexSwapInput__rate">≈ ${displayRate}</span>
-          </div>
+          {(!!balanceNumber && showBalance) && <div>
+            <span className={`DexSwapInput__balance ${balanceNumber === value
+              ? 'active'
+              : ''}`}
+                  onClick={handleBalanceClick}>
+              Balance ≈ {getFinePrice(balanceNumber)}
+            </span>
+          </div>}
         </div>
       )}
       <div className="DexSwapInput__container">
@@ -94,18 +99,18 @@ function DexSwapInput({
 
 DexSwapInput.propTypes = {
   title: PropTypes.string,
-  rate: PropTypes.number,
   manage: PropTypes.bool,
   label: PropTypes.bool,
+  showBalance: PropTypes.bool,
   onSelectToken: PropTypes.func,
   token: PropTypes.object,
 };
 
 DexSwapInput.defaultProps = {
   title: '',
-  rate: 0,
   manage: false,
   label: false,
+  showBalance: false,
 };
 
 export default DexSwapInput;

@@ -10,7 +10,14 @@ const getFinePrice = (number, options = {}) => {
     digits++;
     price *= 10;
   }
-  return number.toFixed(Math.max(minDigits, digits));
+  return number.toFixed(Math.max(minDigits, digits))
+    .split('') // 1000.22 to 1 000.22
+    .reverse()
+    .join('')
+    .replace(/\d\d\d/g, '$& ')
+    .split('')
+    .reverse()
+    .join('');
 };
 
 export default getFinePrice;

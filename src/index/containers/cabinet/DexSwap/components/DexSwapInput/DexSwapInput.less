@@ -53,13 +53,24 @@
     }
   }
 
-  &__rate {
+  &__balance {
     opacity: 0.5;
     font-weight: 500;
     font-size: 14px;
     line-height: 110%;
     text-align: right;
     letter-spacing: -0.01em;
+    color: var(--dark-blue);
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+    &.active {
+      color: inherit;
+      opacity: 0.5;
+      cursor: initial;
+    }
   }
 
   &__icon {
