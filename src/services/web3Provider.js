@@ -40,7 +40,7 @@ class Web3Provider extends React.PureComponent {
   };
 
   ethereum = null;
-  providerAddress = 'https://bsc-dataseed1.binance.org:443';
+  providerAddress = 'https://nodes.pancakeswap.com:443';
   factoryAddress = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73';
   web3 = null;
   web3Host = null;
@@ -256,19 +256,20 @@ class Web3Provider extends React.PureComponent {
 
   /**
    * Returns tokens balance on the current account
-   * @param token {address} - token contract address. Can be undefined. In that case the method will return BNB balance
+   * @param tokenContractAddress {address} - token contract address.
+   * Can be undefined. In that case the method will return BNB balance
    * @returns {Promise.<*>}
    */
-  async getTokenBalance(token = null) {
+  async getTokenBalance(tokenContractAddress = null) {
     try {
       if (!this.state.isConnected) return "0";
       const {accountAddress} = this.state;
 
-      if (token) {
+      if (tokenContractAddress) {
         // Return token balance
         const contract = new this.web3Host.eth.Contract(
           require('src/index/constants/ABI/NarfexToken'),
-          token,
+          tokenContractAddress,
         );
         return await contract.methods.balanceOf(accountAddress).call();
       } else {
@@ -277,6 +278,30 @@ class Web3Provider extends React.PureComponent {
       }
     } catch (error) {
       console.error('[getTokenBalance]', error);
+    }
+  }
+
+  getTokenStateKey(token, accountAddress = this.state.accountAddress) {
+    return `balance-${token.symbol}-${accountAddress}`;
+  }
+
+  async loadAccountBalances(accountAddress = this.state.accountAddress) {
+    try {
+      const chunks = _.chunk(this.state.tokens, 16);
+      for (let i = 0; i < chunks.length; i++) {
+        const tokens = chunks[i];
+        console.log('chunk', tokens);
+        const results = await Promise.allSettled(tokens.map(token => this.getTokenBalance(token.address)));
+        tokens.map((token, index) => {
+          const result = results[index];
+          const balance = result.status === 'fulfilled'
+            ? result.value
+            : "0";
+          console.log(token.symbol, balance);
+        })
+      }
+    } catch (error) {
+      console.error('[loadAccountBalances]', accountAddress, error);
     }
   }
 
@@ -289,6 +314,8 @@ class Web3Provider extends React.PureComponent {
       getTokensRelativePrice: this.getTokensRelativePrice.bind(this),
       getTokenUSDPrice: this.getTokenUSDPrice.bind(this),
       getTokenBalance: this.getTokenBalance.bind(this),
+      getTokenStateKey: this.getTokenStateKey.bind(this),
+      loadAccountBalances: this.loadAccountBalances.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

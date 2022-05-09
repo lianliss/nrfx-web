@@ -140,9 +140,12 @@ class DexSwap extends React.PureComponent {
 
   render() {
     const {
+      tokens,
+      accountAddress,
       getPair,
       getTokensRelativePrice,
       getTokenUSDPrice,
+      getTokenBalance,
     } = this.context;
     const {isPro, selectToken, pair} = this.state;
     const switchTabs = [
@@ -150,9 +153,6 @@ class DexSwap extends React.PureComponent {
       { value: 'liquidity', label: 'Liquidity' },
       { value: 'transactions', label: 'Transactions' },
     ];
-
-    console.log('pair', pair);
-    console.log('balalnce', _.get(pair, '[0].balance'));
 
     return (
       <div className="DexSwap">
@@ -197,11 +197,15 @@ class DexSwap extends React.PureComponent {
                   <SVG src={require('src/asset/token/wallet.svg')} />
                   Buy on Narfex
                 </Button>
-                {!_.isNull(selectToken) && <TokenSelect onChange={value => {
+
+
+                {!_.isNull(selectToken)
+                && <TokenSelect onChange={value => {
                   this.setState(state => {
                     state.pair[selectToken] = value;
                   })
-                }} onClose={() => this.setState({selectToken: null})} />}
+                }}              onClose={() => this.setState({selectToken: null})}
+                                {...this.context} />}
               </div>
             </CabinetBlock>
           </div>

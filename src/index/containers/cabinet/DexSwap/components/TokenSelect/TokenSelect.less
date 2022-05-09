@@ -49,4 +49,42 @@
             }
         }
     }
+    &__search {
+        border: 1px solid #DFE3F0;
+        border-radius: var(--radius-panel);
+        height: 46px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 16px 0 12px;
+        padding: 0 14px;
+
+        input {
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            outline: none;
+            flex-grow: 1;
+        }
+        span.isvg {
+            margin-left: 6px;
+
+            svg {
+                transform: scale(0.8);
+
+                path {
+                    fill: #DFE3F0;
+                }
+            }
+        }
+    }
+    &__list {
+        .react-scrollable-list {
+            height: 400px;
+            overflow-y: scroll;
+        }
+    }
+    &__token {
+
+    }
 }
