@@ -78,7 +78,7 @@ const Table = memo(
 );
 
 export const TableCell = memo(
-  ({ children, onClick, dark, mode, className }) => {
+  ({ children, onClick, dark, mode, className, style }) => {
     let Component = "tr";
     let params = {};
     if (onClick) {
@@ -92,6 +92,7 @@ export const TableCell = memo(
         className={utils.classNames(className, mode, {
           dark: !!dark
         })}
+        style={style}
         {...params}
       >
         {children}

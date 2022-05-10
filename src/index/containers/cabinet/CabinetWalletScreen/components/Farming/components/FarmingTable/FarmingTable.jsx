@@ -30,7 +30,32 @@ function FarmingTable() {
     headerTabs[0].value
   );
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
-  const numbers = [1, 2, 3, 4, 5, 6, 7];
+
+  // Test array
+  const farmingItems = [
+    {
+      id: 1,
+      currencies: ['usdt', 'btc'],
+      apy: 121.2,
+      arp: 75.5,
+      liquidity: 7000000,
+      aviable: [0.005, 15],
+      staked: [0.0, 0.0],
+      earned: [0.0, 0.0],
+      indicator: 'latest',
+    },
+    {
+      id: 2,
+      currencies: ['rub', 'nrfx'],
+      apy: 70.2,
+      arp: 40.5,
+      liquidity: 4000000,
+      aviable: [0.025, 65],
+      staked: [7.0, 4.0],
+      earned: [1.0, 4.0],
+      indicator: 'hot',
+    },
+  ];
 
   return (
     <div className="FarmingTable">
@@ -56,9 +81,20 @@ function FarmingTable() {
           ]}
           className="FarmingTable__table"
         >
-          {numbers.map((el, index) => {
+          {farmingItems.map((item, index) => {
             return (
-              <FarmingTableItem key={index} dark={index % 2} indicator="hot" />
+              <FarmingTableItem
+                key={item.id}
+                dark={index % 2}
+                indicator={item.indicator}
+                currencies={item.currencies}
+                apy={item.apy}
+                arp={item.arp}
+                liquidity={item.liquidity}
+                aviable={item.aviable}
+                staked={item.staked}
+                earned={item.earned}
+              />
             );
           })}
         </Table>
