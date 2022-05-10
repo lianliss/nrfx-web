@@ -13,6 +13,7 @@ class Web3Provider extends React.PureComponent {
   state = {
     isConnected: false,
     accountAddress: null,
+    balancesRequested: null,
     tokens: [
       {
         name: "Tether",
@@ -78,6 +79,8 @@ class Web3Provider extends React.PureComponent {
   componentWillUnmount() {
     this._mounted = false;
   }
+
+  getBSCScanLink = address => `https://bscscan.com/address/${address}#readContract`;
 
   /**
    * Connect to web3 wallet plugin
@@ -183,7 +186,7 @@ class Web3Provider extends React.PureComponent {
         );
       return await contract.methods.getPair(token0, token1).call();
     } catch (error) {
-      console.log('[getPair]', error);
+      console.log('[getPair]', this.getBSCScanLink(this.factoryAddress), token0, token1, error);
     }
   }
 
@@ -200,7 +203,7 @@ class Web3Provider extends React.PureComponent {
       );
       return await contract.methods.getReserves().call();
     } catch (error) {
-      console.log('[getReserves]', error);
+      console.error('[getReserves]', this.getBSCScanLink(pairAddress), error);
     }
   }
 
@@ -215,10 +218,11 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<number>}
    */
   async getTokensRelativePrice(_token0, _token1, pair = null) {
+    const token0 = _token0 || this.wrapBNB;
+    const token1 = _token1 || this.wrapBNB;
+
     try {
       const {toBN} = this;
-      const token0 = _token0 || this.wrapBNB;
-      const token1 = _token1 || this.wrapBNB;
       const pairAddress = pair || await this.getPair(token0, token1);
 
       // Get token0 address and decimals value from the pair
@@ -267,7 +271,7 @@ class Web3Provider extends React.PureComponent {
 
       return Number(wei.from(relation));
     } catch (error) {
-      console.error('[getTokensRelativePrice]', error);
+      console.error('[getTokensRelativePrice]', this.getBSCScanLink(token0), this.getBSCScanLink(token1), error);
     }
   }
 
@@ -310,7 +314,7 @@ class Web3Provider extends React.PureComponent {
         return await this.web3Host.eth.getBalance(accountAddress);
       }
     } catch (error) {
-      console.error('[getTokenBalance]', tokenContractAddress, error);
+      console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
     }
   }
 
@@ -325,6 +329,12 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
     try {
+      // Stop additional loads
+      if (this.state.balancesRequested === accountAddress) return;
+      this.setState({
+        balancesRequested: accountAddress,
+      });
+
       // Separate tokens to small chunks
       const chunks = _.chunk(this.state.tokens, 64);
       for (let i = 0; i < chunks.length; i++) {
