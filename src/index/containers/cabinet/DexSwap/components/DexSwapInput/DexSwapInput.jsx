@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import Web3 from 'web3/dist/web3.min.js';
+import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 
 // Components.
@@ -28,10 +28,7 @@ function DexSwapInput({
   const selectRef = React.useRef(null);
 
   // Logic
-  const web3 = new Web3();
-  const balance = web3.utils.toBN(_.get(token, 'balance', "0"));
-  //const decimals = 10**_.get(token, 'decimals', 18); // TODO use decimals parameter if token have not 18 decimals
-  const balanceNumber = Number(web3.utils.fromWei(balance));
+  const balanceNumber = Number(wei.from(_.get(token, 'balance', "0"), _.get(token, 'decimals', 18)));
 
   // Handlers
   const handleInput = newValue => {
@@ -47,6 +44,11 @@ function DexSwapInput({
   const handleBalanceClick = () => {
     handleInput(balanceNumber);
   };
+
+  const tokenAddress = _.get(token, 'address');
+  React.useEffect(() => {
+    setValue('0');
+  }, [tokenAddress]);
 
   // Render
   return (
