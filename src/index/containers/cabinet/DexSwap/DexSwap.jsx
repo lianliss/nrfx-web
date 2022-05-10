@@ -20,7 +20,7 @@ class DexSwap extends React.PureComponent {
 
   state = {
     isPro: false,
-    selectToken: 0,
+    selectToken: null,
     pair: [],
     address: null,
   };

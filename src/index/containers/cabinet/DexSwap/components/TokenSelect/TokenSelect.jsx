@@ -6,6 +6,11 @@ import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock
 import useAdaptive from "src/hooks/adaptive";
 import SVG from 'utils/svg-wrap';
 import ReactScrollableList from 'react-scrollable-list';
+import Web3 from 'web3/dist/web3.min.js';
+import wei from 'utils/wei';
+import getFinePrice from 'utils/get-fine-price';
+
+const web3 = new Web3();
 
 class TokenSelect extends React.PureComponent {
 
@@ -24,7 +29,7 @@ class TokenSelect extends React.PureComponent {
     this.props.loadAccountBalances();
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this._mounted = false;
   }
 
@@ -34,16 +39,23 @@ class TokenSelect extends React.PureComponent {
       accountAddress,
       getTokenBalance,
       getTokenUSDPrice,
-      getTokenStateKey,
+      getTokenBalanceKey,
       updateTokenBalance,
     } = this.props;
     const {search} = this.state;
 
-    const filtered = tokens.filter(token => token.symbol.toUpperCase().indexOf(search.toUpperCase()) >= 0
-      || token.name.toUpperCase().indexOf(search.toUpperCase()) >= 0)
+    const filtered = tokens
+      .filter(token => token.symbol.toUpperCase().indexOf(search.toUpperCase()) >= 0
+        || token.name.toUpperCase().indexOf(search.toUpperCase()) >= 0)
+      .sort((a, b) => (b.balance && b.balance !== '0') - (a.balance && a.balance !== '0'))
       .map(token => {
-      const {symbol, name, logoURI, rate} = token;
-      const key = getTokenStateKey(token, accountAddress);
+
+      const {symbol, name, logoURI, price, balance} = token;
+      const key = getTokenBalanceKey(token, accountAddress);
+      //const balance = _.get(this.props, key);
+      const balanceNumber = balance
+        ? Number(wei.from(balance, token.decimals))
+        : null;
 
       return {
         id: key,
@@ -63,10 +75,10 @@ class TokenSelect extends React.PureComponent {
           </div>
           <div className="TokenSelect__token-right">
             <div className="TokenSelect__token-price">
-              0
+              {!!price && `$${getFinePrice(price * balanceNumber)}`}
             </div>
             <div className="TokenSelect__token-balance">
-              0
+              {!!balanceNumber && getFinePrice(balanceNumber)}
             </div>
           </div>
         </div>
@@ -102,7 +114,7 @@ class TokenSelect extends React.PureComponent {
             <h3>Tokens list</h3>
             <ReactScrollableList
               listItems={filtered}
-              heightOfItem={30}
+              heightOfItem={54}
               maxItemsToRender={10}
             />
           </div>
