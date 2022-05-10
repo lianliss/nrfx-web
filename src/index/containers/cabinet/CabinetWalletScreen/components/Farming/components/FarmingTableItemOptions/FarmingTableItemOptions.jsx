@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
@@ -127,5 +128,23 @@ function FarmingTableItemOptions({
     </>
   );
 }
+
+FarmingTableItemOptions.defaultProps = {
+  currency: '',
+  type: 'connect',
+  aviable: [0, 0],
+  staked: [0, 0],
+  earned: [0, 0],
+  handleTypeChange: () => {},
+};
+
+FarmingTableItemOptions.propTypes = {
+  currency: PropTypes.string,
+  type: PropTypes.string,
+  aviable: PropTypes.arrayOf(PropTypes.number),
+  staked: PropTypes.arrayOf(PropTypes.number),
+  earned: PropTypes.arrayOf(PropTypes.number),
+  handleTypeChange: PropTypes.func,
+};
 
 export default FarmingTableItemOptions;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
@@ -101,5 +102,29 @@ function FarmingTableItem({
     </>
   );
 }
+
+FarmingTableItem.defaultProps = {
+  dark: false,
+  indicator: 'latest',
+  currencies: ['', ''],
+  apy: 0,
+  arp: 0,
+  liquidity: 0,
+  aviable: [0, 0],
+  staked: [0, 0],
+  earned: [0, 0],
+};
+
+FarmingTableItem.propTypes = {
+  dark: PropTypes.bool,
+  indicator: PropTypes.string,
+  currencies: PropTypes.arrayOf(PropTypes.string),
+  apy: PropTypes.number,
+  arp: PropTypes.number,
+  liquidity: PropTypes.number,
+  aviable: PropTypes.arrayOf(PropTypes.number),
+  staked: PropTypes.arrayOf(PropTypes.number),
+  earned: PropTypes.arrayOf(PropTypes.number),
+};
 
 export default FarmingTableItem;

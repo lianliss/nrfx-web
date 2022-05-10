@@ -85,7 +85,7 @@ function FarmingTable() {
             return (
               <FarmingTableItem
                 key={item.id}
-                dark={index % 2}
+                dark={index % 2 ? true : false}
                 indicator={item.indicator}
                 currencies={item.currencies}
                 apy={item.apy}
