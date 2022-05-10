@@ -201,8 +201,16 @@ class DexSwap extends React.PureComponent {
 
                 {!_.isNull(selectToken)
                 && <TokenSelect onChange={value => {
+                  const secondToken = selectToken === 1 ? 0 : 1;
                   this.setState(state => {
+                    if (state.pair[secondToken].address === value.address) {
+                      state.pair[secondToken] = state.pair[selectToken];
+                    }
                     state.pair[selectToken] = value;
+                    return {
+                      ...state,
+                      selectToken: null,
+                    }
                   })
                 }}              onClose={() => this.setState({selectToken: null})}
                                 {...this.context} />}

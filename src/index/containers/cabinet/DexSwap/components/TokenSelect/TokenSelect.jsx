@@ -59,7 +59,7 @@ class TokenSelect extends React.PureComponent {
 
       return {
         id: key,
-        content: <div className="TokenSelect__token" key={key}>
+        content: <div className="TokenSelect__token" key={key} onClick={() => onChange(token)}>
           <div className="TokenSelect__token-left">
             <div className="TokenSelect__token-icon" style={{
               backgroundImage: `url('${logoURI}')`

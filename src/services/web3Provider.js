@@ -310,7 +310,7 @@ class Web3Provider extends React.PureComponent {
         return await this.web3Host.eth.getBalance(accountAddress);
       }
     } catch (error) {
-      console.error('[getTokenBalance]', error);
+      console.error('[getTokenBalance]', tokenContractAddress, error);
     }
   }
 
