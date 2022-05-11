@@ -11,6 +11,11 @@ import {
 } from 'src/ui';
 import Select from 'src/index/components/cabinet/Select/Select';
 import FarmingTableItem from '../FarmingTableItem/FarmingTableItem';
+import {
+  FarmingPopupStaked,
+  FarmingPopupUnstaked,
+} from '../FarmingPopup/FarmingPopup';
+import { openModal } from 'src/actions';
 
 // Styles
 import './FarmingTable.less';
@@ -57,6 +62,17 @@ function FarmingTable() {
     },
   ];
 
+  // Actions
+  React.useEffect(() => {
+    openModal('farming-roi');
+  }, []);
+
+  // Handlers
+  const onStake = (id, currency) => {
+    // Open Modal FarmingPopupStake from FarmingPopup.
+    openModal('stake', {}, { id, currency });
+  };
+
   return (
     <div className="FarmingTable">
       <div className="FarmingTable__header">
@@ -85,6 +101,7 @@ function FarmingTable() {
             return (
               <FarmingTableItem
                 key={item.id}
+                id={item.id}
                 dark={index % 2 ? true : false}
                 indicator={item.indicator}
                 currencies={item.currencies}
@@ -94,11 +111,14 @@ function FarmingTable() {
                 aviable={item.aviable}
                 staked={item.staked}
                 earned={item.earned}
+                onStake={onStake}
               />
             );
           })}
         </Table>
       </div>
+      {/*<FarmingPopupStaked currency={'bnb'} number={0.15} />*/}
+      {/*<FarmingPopupUnstaked currency={'bnb'} number={0.15} />*/}
     </div>
   );
 }

@@ -10,12 +10,14 @@ import SVG from 'utils/svg-wrap';
 import './FarmingTableItemOptions.less';
 
 function FarmingTableItemOptions({
+  id,
   type,
   handleTypeChange,
   currency,
   aviable,
   staked,
   earned,
+  onStake,
 }) {
   // States
   const [isVisible, setIsVisible] = React.useState(false);
@@ -44,6 +46,12 @@ function FarmingTableItemOptions({
       </p>
     </div>
   );
+
+  // Handlers
+  const handleOnStake = () => {
+    // onStake from FarmingTable whitch open modal.
+    onStake(id, currency);
+  };
 
   return (
     <>
@@ -78,7 +86,7 @@ function FarmingTableItemOptions({
             <>
               <Button
                 type="lightBlue"
-                onClick={() => handleTypeChange('staked')}
+                onClick={handleOnStake}
                 style={{ width: '100%' }}
               >
                 Stake

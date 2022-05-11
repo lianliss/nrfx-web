@@ -45,6 +45,7 @@ import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvat
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
 import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
+import { FarmingPopupStake, FarmingPopupROI } from "./containers/cabinet/CabinetWalletScreen/components/Farming/components/FarmingPopup/FarmingPopup";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
 
@@ -176,6 +177,12 @@ function Modals(props) {
       break;
     case "receive_qr":
       Component = ReceiveQRModal;
+      break;
+    case "stake":
+      Component = FarmingPopupStake;
+      break;
+    case "farming-roi":
+      Component = FarmingPopupROI;
       break;
     default:
       return null;

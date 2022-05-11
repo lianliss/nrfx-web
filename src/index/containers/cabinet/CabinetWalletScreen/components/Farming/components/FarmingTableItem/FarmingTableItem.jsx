@@ -12,6 +12,7 @@ import './FarmingTableItem.less';
 
 function FarmingTableItem({
   dark,
+  id,
   indicator,
   currencies,
   apy,
@@ -20,6 +21,7 @@ function FarmingTableItem({
   aviable,
   staked,
   earned,
+  onStake,
 }) {
   // States
   const [isActive, setIsActive] = React.useState(false);
@@ -91,12 +93,14 @@ function FarmingTableItem({
       </TableCell>
       {isActive && (
         <FarmingTableItemOptions
+          id={id}
           aviable={aviable}
           staked={staked}
           earned={earned}
           type={type}
           currency={currencies[1] ? currencies[1] : currencies[0]}
           handleTypeChange={handleTypeChange}
+          onStake={onStake}
         />
       )}
     </>
@@ -117,6 +121,7 @@ FarmingTableItem.defaultProps = {
 
 FarmingTableItem.propTypes = {
   dark: PropTypes.bool,
+  id: PropTypes.number,
   indicator: PropTypes.string,
   currencies: PropTypes.arrayOf(PropTypes.string),
   apy: PropTypes.number,
