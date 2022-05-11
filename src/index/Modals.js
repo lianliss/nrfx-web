@@ -181,7 +181,7 @@ function Modals(props) {
     case "stake":
       Component = FarmingPopupStake;
       break;
-    case "farming-roi":
+    case "farming_roi":
       Component = FarmingPopupROI;
       break;
     default:

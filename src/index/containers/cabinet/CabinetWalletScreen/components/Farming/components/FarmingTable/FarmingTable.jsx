@@ -62,16 +62,16 @@ function FarmingTable() {
     },
   ];
 
-  // Actions
-  React.useEffect(() => {
-    openModal('farming-roi');
-  }, []);
-
   // Handlers
   const onStake = (id, currency) => {
     // Open Modal FarmingPopupStake from FarmingPopup.
     openModal('stake', {}, { id, currency });
   };
+
+  // Actions
+  React.useEffect(() => {
+    openModal('farming_roi');
+  }, []);
 
   return (
     <div className="FarmingTable">
@@ -117,6 +117,7 @@ function FarmingTable() {
           })}
         </Table>
       </div>
+      {/*Popups Staked & Unstaked*/}
       {/*<FarmingPopupStaked currency={'bnb'} number={0.15} />*/}
       {/*<FarmingPopupUnstaked currency={'bnb'} number={0.15} />*/}
     </div>

@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
+import {
+  TableCell,
+  TableColumn,
+  Button,
+  NumberFormat,
+  HoverPopup,
+} from 'src/ui';
 import DoubleWallets from 'src/index/components/cabinet/DoubleWallets/DoubleWallets';
 import FarmingTableItemOptions from '../FarmingTableItemOptions/FarmingTableItemOptions';
 import SVG from 'utils/svg-wrap';
@@ -30,6 +36,15 @@ function FarmingTableItem({
   // Components
   const Indicator = ({ type, text }) => (
     <div className={`FarmingTableItem__indicator ${type}`}>{text}</div>
+  );
+
+  const QuestionAPY = () => (
+    <p>
+      Налог — обязательный, индивидуально безвозмездный платёж, взимаемый с
+      организаций и физических лиц в форме отчуждения принадлежащих им на праве
+      собственности средств, в целях финансового обеспечения деятельности
+      государства и муниципальных образований.
+    </p>
   );
 
   // Handlers
@@ -64,9 +79,9 @@ function FarmingTableItem({
         </TableColumn>
         <TableColumn>
           <NumberFormat number={apy} percent />
-          <span>
+          <HoverPopup content={<QuestionAPY />}>
             <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
-          </span>
+          </HoverPopup>
         </TableColumn>
         <TableColumn>
           <NumberFormat number={arp} percent />
