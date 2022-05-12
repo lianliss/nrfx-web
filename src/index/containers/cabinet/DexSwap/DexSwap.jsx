@@ -230,12 +230,12 @@ class DexSwap extends React.PureComponent {
               {/*<Switch type="light-blue" on={isPro} onChange={togglePro} />*/}
               {/*<span className="switch-label">Pro Version</span>*/}
             </div>
-            <div className="DexSwap__row">
-              <p className="DexSwap__description">
-                The Narfex token facilitates multiple tokenomics, serving as a
-                utility token and governance token.
-              </p>
-            </div>
+            {/*<div className="DexSwap__row">*/}
+              {/*<p className="DexSwap__description">*/}
+                {/*The Narfex token facilitates multiple tokenomics, serving as a*/}
+                {/*utility token and governance token.*/}
+              {/*</p>*/}
+            {/*</div>*/}
             {/*<div className="DexSwap__row">*/}
             {/*<SwitchTabs*/}
             {/*selected={switchTabs[0].value}*/}
