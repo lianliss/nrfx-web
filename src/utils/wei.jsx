@@ -9,8 +9,7 @@ const wei = {
     return value * (10**(DEFAULT_DECIMALS - decimals));
   },
   to: (value, decimals = DEFAULT_DECIMALS) => {
-    return web3.utils.toBN(web3.utils.toWei(value))
-      .div(10**(DEFAULT_DECIMALS - decimals));
+    return web3.utils.toWei(Number(value / 10**(DEFAULT_DECIMALS - decimals)).toFixed(18));
   },
 };
 

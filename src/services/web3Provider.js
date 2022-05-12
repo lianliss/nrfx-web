@@ -53,7 +53,15 @@ class Web3Provider extends React.PureComponent {
   ethereum = null;
   providerAddress = 'https://nodes.pancakeswap.com:443';
   factoryAddress = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73';
-  wrapBNB = '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c';
+  routerAddress = '0x10ED43C718714eb63d5aA57B78B54704E256024E';
+  wrapBNB = {
+    name: "Wrapped BNB",
+    symbol: "WBNB",
+    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    chainId: 56,
+    decimals: 18,
+    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
+  };
   web3 = null;
   web3Host = null;
 
@@ -212,64 +220,35 @@ class Web3Provider extends React.PureComponent {
 
   /**
    * Returns relation between tokens reserves, which means that for 1 token0 you will get n number of token1
-   * @param _token0 {address}
-   * @param _token1 {address}
+   * @param _token0 {object}
+   * @param _token1 {object}
    * @param pair {address} - pair of this tokens for more optimization (optional)
    * @returns {Promise.<number>}
    */
-  async getTokensRelativePrice(_token0, _token1, pair = null) {
-    const token0 = _token0 || this.wrapBNB;
-    const token1 = _token1 || this.wrapBNB;
+  async getTokensRelativePrice(_token0, _token1, amount = 1, isAmountIn = false) {
+    const token0 = _token0.address ? _token0 : this.wrapBNB;
+    const token1 = _token1.address ? _token1 : this.wrapBNB;
 
     try {
       const {toBN} = this;
-      const pairAddress = pair || await this.getPair(token0, token1);
+      const decimals = Number(_.get(token0, 'decimals', 18));
+      const amountWei = wei.to(amount, decimals);
+      const amountHex = this.web3Host.utils.toHex(amountWei);
 
       // Get token0 address and decimals value from the pair
-      const pairContract = new this.web3Host.eth.Contract(
-        require('src/index/constants/ABI/PancakePair'),
-        pairAddress,
+      const routerContract = new this.web3Host.eth.Contract(
+        require('src/index/constants/ABI/PancakeRouter'),
+        this.routerAddress,
       );
-      const token0Contract = new this.web3Host.eth.Contract(
-        require('src/index/constants/ABI/NarfexToken'),
-        token0,
-      );
-      const token1Contract = new this.web3Host.eth.Contract(
-        require('src/index/constants/ABI/NarfexToken'),
-        token1,
-      );
-      const data = await Promise.all([
-        pairContract.methods.token0().call(), // Pair token0 position contract
-        pairContract.methods.decimals().call(), // Pair decimals
-        token0Contract.methods.decimals().call(), // Token 0 decimals
-        token1Contract.methods.decimals().call(), // Token 1 decimals
-        this.getReserves(pairAddress), // Reserves
-      ]);
 
-      // Check if tokens reversed in this pair
-      const isReverse = token0 !== data[0];
-
-      // Pair decimals in BigNumber format
-      const decimals = toBN(Number(10**Number(data[1])).toFixed(0));
-
-      // Get pair reserves
-      const reserve0 = toBN(data[4]._reserve0)
-        .mul(toBN(
-          Number(10 ** (DEFAULT_DECIMALS - (isReverse ? data[3] : data[2])))
-            .toFixed(0)
-        ));
-      const reserve1 = toBN(data[4]._reserve1)
-        .mul(toBN(
-          Number(10 ** (DEFAULT_DECIMALS - (isReverse ? data[2] : data[3])))
-            .toFixed(0)
-        ));
-
-      // Divide the second token by the first token if token0 is the first in this pair
-      const relation = !isReverse
-        ? reserve1.mul(decimals).div(reserve0)
-        : reserve0.mul(decimals).div(reserve1);
-
-      return Number(wei.from(relation));
+      const getMethod = isAmountIn
+        ? routerContract.methods.getAmountsIn
+        : routerContract.methods.getAmountsOut;
+      const data = await getMethod(
+        amountHex,
+        [token0.address, token1.address],
+      ).call();
+      return wei.from(data[1], Number(_.get(token1, 'decimals', 18)));
     } catch (error) {
       console.error('[getTokensRelativePrice]', this.getBSCScanLink(token0), this.getBSCScanLink(token1), error);
     }
@@ -277,13 +256,13 @@ class Web3Provider extends React.PureComponent {
 
   /**
    * Returns token price in USDT
-   * @param token {address}
+   * @param token {object}
    * @returns {Promise.<number>}
    */
   async getTokenUSDPrice(token) {
     try {
-      const USDT = this.state.tokens.find(t => t.symbol === 'USDT').address;
-      return token === USDT
+      const USDT = this.state.tokens.find(t => t.symbol === 'USDT');
+      return token.address === USDT.address
         ? 1
         : await this.getTokensRelativePrice(token, USDT);
     } catch (error) {
@@ -360,7 +339,8 @@ class Web3Provider extends React.PureComponent {
 
             // Get token price for non-zero balance
             if (balance !== "0") {
-              this.getTokenUSDPrice(token.address).then(price => {
+              console.log('[loadAccountBalances]', token.symbol, balance);
+              this.getTokenUSDPrice(token).then(price => {
 
                 // Save to the state
                 this.setState(state => {
