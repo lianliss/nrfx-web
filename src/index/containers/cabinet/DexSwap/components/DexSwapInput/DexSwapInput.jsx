@@ -17,10 +17,12 @@ function DexSwapInput({
                         label,
                         token,
                         showBalance,
-                        onSelectToken = () => {},
+                        value,
+                        onChange,
+                        onSelectToken,
+                        setExact,
                       }) {
   // States
-  const [value, setValue] = React.useState('0');
   const [currency, setCurrency] = React.useState('usd');
 
   // Refs
@@ -32,12 +34,13 @@ function DexSwapInput({
 
   // Handlers
   const handleInput = newValue => {
-    setValue(newValue);
+    onChange(newValue);
   };
 
   const handleContainerClick = (e) => {
     if (!selectRef.current.contains(e.target)) {
       inputRef.current.focus();
+      setExact();
     }
   };
 
@@ -47,7 +50,7 @@ function DexSwapInput({
 
   const tokenAddress = _.get(token, 'address');
   React.useEffect(() => {
-    setValue('0');
+    onChange('0');
   }, [tokenAddress]);
 
   // Render
@@ -105,6 +108,9 @@ DexSwapInput.propTypes = {
   label: PropTypes.bool,
   showBalance: PropTypes.bool,
   onSelectToken: PropTypes.func,
+  onChange: PropTypes.func,
+  setExact: PropTypes.func,
+  value: PropTypes.any,
   token: PropTypes.object,
 };
 
@@ -112,7 +118,10 @@ DexSwapInput.defaultProps = {
   title: '',
   manage: false,
   label: false,
+  value: 0,
   showBalance: false,
+  onSelectToken: () => {},
+  setExact: () => {},
 };
 
 export default DexSwapInput;

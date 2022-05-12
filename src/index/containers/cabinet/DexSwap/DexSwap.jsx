@@ -13,7 +13,8 @@ import {Web3Context} from 'services/web3Provider';
 // Styles
 import './DexSwap.less';
 
-const BALANCE_UPDATE_INTERVAL = 2000;
+const BALANCE_UPDATE_INTERVAL = 5000;
+const RELATION_UPDATE_INTERVAL = 3000;
 
 class DexSwap extends React.PureComponent {
   static contextType = Web3Context;
@@ -23,9 +24,14 @@ class DexSwap extends React.PureComponent {
     selectToken: null,
     pair: [],
     address: null,
+    amount0: 0,
+    amount1: 0,
+    exactIndex: 0,
+    relation: 1,
   };
 
   balanceUpdateInterval = null;
+  relationUpdateInterval = null;
 
   togglePro = () => {
     this.setState({
@@ -39,9 +45,10 @@ class DexSwap extends React.PureComponent {
     this.updateAccountAddress();
 
     this.balanceUpdateInterval = setInterval(this.updateExchangeTokenBalance.bind(this), BALANCE_UPDATE_INTERVAL);
+    this.relationUpdateInterval = setInterval(this.updateRelation.bind(this), RELATION_UPDATE_INTERVAL);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     this.fillDefaultPair();
     this.updateAccountAddress();
   }
@@ -104,7 +111,10 @@ class DexSwap extends React.PureComponent {
       pair: [
         this.state.pair[1],
         this.state.pair[0],
-      ]
+      ],
+      amount0: 0,
+      amount1: 0,
+      relation: 1 / this.state.relation,
     })
   }
 
@@ -138,6 +148,58 @@ class DexSwap extends React.PureComponent {
     }
   }
 
+  onAmountChange(value, index) {
+    this.setState(state => {
+      const newState = {};
+      newState[`amount${index}`] = value;
+      newState.exactIndex = Number(index);
+      const second = Number(!index);
+      const secondAmount = !index
+        ? value * state.relation
+        : value / state.relation;
+
+      newState[`amount${second}`] = `${secondAmount}`;
+      return newState;
+    })
+  }
+
+  async updateRelation() {
+    const {getTokensRelativePrice} = this.context;
+    const {amount0, amount1, exactIndex, pair} = this.state;
+    if (!pair || !pair.length) return;
+
+    const token0 = pair[0];
+    const token1 = pair[1];
+    const relation = await getTokensRelativePrice(
+      token0,
+      token1,
+    );
+
+    if (!relation) return;
+    if (token0.address !== _.get(this.state, 'pair[0].address')) return;
+    if (token1.address !== _.get(this.state, 'pair[1].address')) return;
+
+    this.setState(state => {
+      if (!exactIndex) {
+        return {
+          relation,
+          amount1: amount0 * relation,
+        }
+      } else {
+        return {
+          relation,
+          amount0: amount1 / relation,
+        }
+      }
+    });
+  }
+
+  setExact(index) {
+    this.setState({
+      exactIndex: index,
+    })
+  }
+
   render() {
     const {
       tokens,
@@ -147,7 +209,12 @@ class DexSwap extends React.PureComponent {
       getTokenUSDPrice,
       getTokenBalance,
     } = this.context;
-    const {isPro, selectToken, pair} = this.state;
+    const {
+      isPro,
+      selectToken, pair,
+      amount0, amount1,
+      exactIndex,
+    } = this.state;
     const switchTabs = [
       { value: 'swap', label: 'Swap' },
       { value: 'liquidity', label: 'Liquidity' },
@@ -182,16 +249,22 @@ class DexSwap extends React.PureComponent {
             <CabinetBlock>
               <div className="DexSwap__form">
                 <DexSwapInput onSelectToken={() => this.setState({selectToken: 0})}
+                              onChange={value => this.onAmountChange(value, 0)}
+                              value={amount0}
                               token={this.state.pair[0]}
+                              setExact={() => this.setExact(0)}
                               showBalance
-                              label manage
-                              title="Exchange" />
+                              label
+                              title={`You will pay ${!exactIndex ? 'exact' : 'around'}`} />
                 <SVG onClick={() => this.swapPair()}
                   src={require('src/asset/icons/cabinet/swap/swap-icon.svg')}
                 />
                 <DexSwapInput onSelectToken={() => this.setState({selectToken: 1})}
+                              onChange={value => this.onAmountChange(value, 1)}
+                              value={amount1}
                               token={this.state.pair[1]}
-                               label title="You Pay" />
+                              setExact={() => this.setExact(1)}
+                              label title={`You will receive ${exactIndex ? 'exact' : 'around'}`} />
 
                 <Button type="lightBlue">
                   <SVG src={require('src/asset/token/wallet.svg')} />
