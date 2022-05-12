@@ -48,10 +48,14 @@ function FarmingTableItem({
   );
 
   // Handlers
+  // Open/Close current item options.
   const handleActive = () => {
     setIsActive((prevState) => !prevState);
   };
 
+  // Set current options way
+  // const types = ["connect", "stake", "staked"]
+  // @param oneOf(types) nextType - Options Type
   const handleTypeChange = (nextType) => {
     setType(nextType);
   };

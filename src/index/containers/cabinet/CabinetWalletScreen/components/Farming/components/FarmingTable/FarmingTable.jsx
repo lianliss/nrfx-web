@@ -29,6 +29,7 @@ const headerTabs = [
 
 const sortOptions = [{ value: 'hot', label: 'Sort by Hot' }];
 
+// Main
 function FarmingTable() {
   // States
   const [headerTabsValue, setHeaderTabsValue] = React.useState(
@@ -37,6 +38,7 @@ function FarmingTable() {
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
 
   // Test array
+  // When integrating, transfer to props items.
   const farmingItems = [
     {
       id: 1,
@@ -64,7 +66,7 @@ function FarmingTable() {
 
   // Handlers
   const onStake = (id, currency) => {
-    // Open Modal FarmingPopupStake from FarmingPopup.
+    // Open stake modal
     openModal('stake', {}, { id, currency });
   };
 
@@ -83,7 +85,7 @@ function FarmingTable() {
           type="light-blue"
         />
         <Select value={sortBy} onChange={setSortBy} options={sortOptions} />
-        <Search placeholder="Search..." lite simple icon right />
+        <Search placeholder="Search" lite simple icon right />
       </div>
       <div className="FarmingTable__body">
         <Table

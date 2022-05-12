@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // All popups for Farming
 // is here.
 
-// Components
+// Import Components
 import Popup from 'src/index/components/cabinet/Popup/Popup';
 import {
   NumberFormat,
@@ -20,6 +20,8 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './FarmingPopup.less';
 
+// Main Components
+// Staked Popup
 export function FarmingPopupStaked({ currency, number, onClose }) {
   const text =
     'Share your earnings on Twitter and win|a part of $1060 in BSW Prize Pool|for 202 winners every week!';
@@ -64,7 +66,9 @@ FarmingPopupStaked.propTypes = {
 FarmingPopupStaked.defaultProps = {
   onClose: () => {},
 };
+// Staked end.
 
+// Unstaked Popup
 export function FarmingPopupUnstaked({ currency, number, onClose }) {
   return (
     <Popup className="FarmingPopup" onClose={onClose}>
@@ -89,11 +93,14 @@ FarmingPopupUnstaked.propTypes = {
 FarmingPopupUnstaked.defaultProps = {
   onClose: () => {},
 };
+// Unstaked end.
 
+// Stake Modal
 export function FarmingPopupStake({ id, currency, ...props }) {
   const [value, setValue] = React.useState(15);
 
   // Handlers
+  // Just input handler
   const handleChange = (newValue) => {
     setValue(newValue);
   };
@@ -146,7 +153,9 @@ FarmingPopupStake.defaultProps = {
   id: null,
   currency: '',
 };
+// Stake end.
 
+// ROI Modal.
 export function FarmingPopupROI(props) {
   return (
     <Modal
@@ -225,6 +234,7 @@ export function FarmingPopupROI(props) {
     </Modal>
   );
 }
+// ROI end.
 
 // PopupLink
 function PopupLink({ text, onClick }) {
