@@ -1,0 +1,138 @@
+.DexSwapInput {
+  // Containers
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    padding: 14.5px 15px 16.5px;
+    border: 1px solid #dfe3f0;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  &__select {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+  }
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 9px;
+    padding: 0 15px 0 7px;
+    color: var(--black-gunmetal);
+
+    & > div {
+      display: flex;
+    }
+  }
+
+  // Components
+  &__title {
+    margin-right: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+  }
+
+  &__manage {
+    cursor: pointer;
+
+    .isvg,
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    svg,
+    path {
+      fill: #5078e6;
+    }
+  }
+
+  &__balance {
+    opacity: 0.5;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 110%;
+    text-align: right;
+    letter-spacing: -0.01em;
+    color: var(--dark-blue);
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+    &.active {
+      color: inherit;
+      opacity: 0.5;
+      cursor: initial;
+    }
+  }
+
+  &__icon {
+    cursor: pointer;
+    border-radius: 50%;
+    background: var(--secondary-background);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    width: 41px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+
+    .isvg,
+    svg, img {
+      width: 100%;
+    }
+  }
+
+  &__select {
+    cursor: pointer;
+    margin-left: 41px + 12px;
+
+    // Medium text in select (subtitle)
+    & > span {
+      color: #cdcfd7;
+      margin-bottom: 4px;
+    }
+  }
+
+  &__currency {
+    display: flex;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+
+    // Select icon
+    .isvg {
+      margin-left: 8px;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    // <Input />
+    .Input {
+      border: none;
+      background: none;
+      font-weight: 500;
+      font-size: 26px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+    }
+
+    input {
+      text-align: right;
+      padding: 0 0 0 10px;
+    }
+  }
+}

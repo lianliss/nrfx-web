@@ -1,0 +1,187 @@
+.TokenSelect {
+    padding: 40px 33px 31px;
+    box-sizing: border-box;
+    min-height: 400px;
+
+    &__wrap {
+        position: absolute;
+        top: 0;
+        left: 20px;
+        right: 10px;
+
+        .CabinetBlock {
+            box-shadow: 0 0 40px 0 var(--secondary-background);
+        }
+    }
+
+    h2 {
+        font-weight: 600;
+        font-size: 24px;
+    }
+    &__close {
+        position: absolute;
+        display: flex;
+        cursor: pointer;
+        right: 32px;
+        top: 32px;
+        background-size: 14px;
+        width: 14px + 12 * 2;
+        height: 14px + 12 * 2;
+        color: var(--text-black);
+        z-index: 2;
+
+        .isvg {
+            display: block;
+            margin: auto;
+
+            svg {
+                display: block;
+
+                path {
+                    fill: var(--text-black);
+                }
+            }
+        }
+
+        &:hover {
+            .isvg svg path {
+                fill: var(--primary-orange);
+            }
+        }
+    }
+    &__search {
+        border: 1px solid #DFE3F0;
+        border-radius: var(--radius-panel);
+        height: 46px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 16px 0 12px;
+        padding: 0 14px;
+
+        input {
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            outline: none;
+            flex-grow: 1;
+        }
+        span.isvg {
+            margin-left: 6px;
+
+            svg {
+                transform: scale(0.8);
+
+                path {
+                    fill: #DFE3F0;
+                }
+            }
+        }
+    }
+    &__list {
+        margin: 0 -12px;
+
+        h3 {
+            margin: 12px 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .react-scrollable-list {
+            height: 400px;
+            overflow-y: scroll;
+            --scroll-size: 6px;
+
+            &::-webkit-scrollbar {
+                width: var(--scroll-size);
+                height: var(--scroll-size);
+            }
+            &::-webkit-scrollbar-button {
+                width: 0;
+                height: 0;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: var(--primary-blue-opacity);
+                border: 0 none #ffffff;
+                border-radius: 2px;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: var(--secondary-background);
+            }
+            &::-webkit-scrollbar-thumb:active {
+                //background: #000000;
+            }
+            &::-webkit-scrollbar-track {
+                background: var(--secondary-background);
+                border: 0 none #ffffff;
+                border-radius: 50px;
+            }
+            &::-webkit-scrollbar-track:hover {
+            }
+            &::-webkit-scrollbar-track:active {
+            }
+            &::-webkit-scrollbar-corner {
+                background: transparent;
+            }
+        }
+    }
+    &__token {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 11px 12px 11px 12px;
+        cursor: pointer;
+
+        &:hover {
+            background: var(--secondary-background);
+        }
+        &-left {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+        }
+        &-icon {
+            border-radius: 50%;
+            background: var(--secondary-background);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+        }
+        &-name {
+            margin-left: 42px;
+            display: flex;
+            flex-direction: column;
+
+            span {
+                &:first-child {
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+                &:last-child {
+                    font-size: 12px;
+                }
+            }
+        }
+        &-right {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+        }
+        &-price {
+            font-size: 10px;
+            font-weight: 500;
+            color: #CDCFD7;
+        }
+        &-balance {
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+}
