@@ -47,7 +47,7 @@ import CabinetWallets from "../../../components/cabinet/CabinetWallets/CabinetWa
 
 // Page components
 import Farming from "./components/Farming/Farming";
-import SwapForm from "./components/SwapForm/SwapForm";
+import SwitchPage from "./components/SwitchPage/SwitchPage";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 import CryptoWallet from './components/CryptoWallet/CryptoWallet';
 
@@ -197,6 +197,8 @@ class CabinetWalletScreen extends React.PureComponent {
     const isCommon = name === PAGES.WALLET;
     const isCrypto = name === PAGES.WALLET_CRYPTO;
     const isSwap = name === PAGES.WALLET_SWAP;
+    const isLiquidity = name === PAGES.LIQUIDITY;
+    const isSwitchPage = isSwap || isLiquidity;
     const isFarming = name === PAGES.FARMING;
     const balance = this.getBalanceId();
     const {fiatBalance} = balance;
@@ -217,15 +219,7 @@ class CabinetWalletScreen extends React.PureComponent {
         {/* {isCommon && <CommonHeader />} */}
         {isCommon && (isAdaptive ? <Web3Wallets /> : <CabinetWallets />)}
         {isCrypto && <CryptoWallet/>}
-        {isSwap &&
-        (isAdaptive ? (
-          <SwapFormAdaptive rates={rates} />
-        ) : (
-          <>
-          <SwapForm rates={rates} />
-          {/*<SwapTutorial />*/}
-          </>
-        ))}
+        {isSwitchPage && <SwitchPage route={name} />}
         {isFarming && <Farming />}
 
         {fiatBalance &&

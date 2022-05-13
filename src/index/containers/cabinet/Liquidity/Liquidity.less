@@ -1,0 +1,67 @@
+@import '../../../../vars.less';
+
+.Liquidity {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  padding: 32px !important;
+
+  // Containers
+  &__header {
+    width: 100%;
+    margin-bottom: 48px;
+  }
+
+  &__body {
+    width: 100%;
+  }
+
+  &__footer {
+    margin-top: 85px;
+    text-align: center;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  // Components
+  &__title {
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: #222330;
+  }
+
+  .default-text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--cool-dark-gray);
+    margin-bottom: 16px;
+  }
+
+  &__subtitle {
+    display: inline-flex;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #222330;
+
+    .isvg {
+      margin-left: 8px;
+    }
+  }
+
+  // <Button />
+  .Button {
+    width: 100%;
+
+    span {
+      margin-left: 8px;
+    }
+  }
+}

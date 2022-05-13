@@ -69,6 +69,10 @@ export const routes =
           path: "/wallet/swap"
         },
         {
+          name: pages.LIQUIDITY,
+          path: "/wallet/liquidity"
+        },
+        {
           name: pages.FARMING,
           path: "/wallet/farming"
         },

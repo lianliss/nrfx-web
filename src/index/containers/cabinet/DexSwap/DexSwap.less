@@ -1,22 +1,4 @@
 .DexSwap {
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  position: relative;
-  padding-top: 15px;
-  padding-right: 65px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  z-index: 0;
-
-  // Containers
-  &__container {
-    width: 100%;
-    max-width: 482px;
-    position: relative;
-  }
-
   &__row {
     display: flex;
     align-items: center;
@@ -36,76 +18,8 @@
     }
   }
 
-  &__bg {
-    position: absolute;
-    right: -18px; // var(--container-padding)
-    top: 0;
-  }
-
-  &__bg-center {
-    height: 81.15%;
-    overflow: hidden;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transform: translateX(-24.7%);
-    z-index: -1;
-
-    .isvg {
-      height: 100%;
-      position: relative;
-      bottom: -13.64%;
-
-      svg {
-        height: 100%;
-        width: auto;
-      }
-    }
-  }
-
   .CabinetBlock {
     width: 100%;
-  }
-
-  // Components
-  h1 {
-    font-weight: 600;
-    font-size: 35px;
-    line-height: 110%;
-    letter-spacing: -0.01em;
-    color: var(--black-gunmetal);
-  }
-
-  &__description {
-    max-width: 391px;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 180%;
-    text-align: center;
-    color: var(--cool-gray);
-  }
-
-  // <Switch />
-  .Switch {
-    margin: 0 0 0 15px;
-  }
-
-  // <SwitchTabs />
-  .SwitchTabs {
-    width: 100%;
-    height: 66px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    color: var(--primary-dark-blue);
-  }
-
-  .switch-label {
-    margin: 0 0 0 8px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 180%;
-    color: var(--royal-blue);
   }
 
   // <CabinetBlock />
@@ -162,11 +76,5 @@
         }
       }
     }
-  }
-
-  // All icons for this
-  .isvg {
-    display: flex;
-    align-items: center;
   }
 }

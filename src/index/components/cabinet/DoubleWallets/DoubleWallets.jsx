@@ -30,8 +30,10 @@ function DoubleWallets({ first, second }) {
 
   return (
     <div className="DoubleWallets">
-      {firstIcon && <SVG src={firstIcon} />}
-      {secondIcon && <SVG src={secondIcon} />}
+      <div className="DoubleWallets__icons">
+        {firstIcon && <SVG src={firstIcon} />}
+        {secondIcon && <SVG src={secondIcon} />}
+      </div>
       {first && first.toUpperCase()}
       {first && second && '-'}
       {second && second.toUpperCase()}
