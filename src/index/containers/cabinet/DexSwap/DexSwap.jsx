@@ -9,6 +9,7 @@ import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock
 import DexSwapInput from './components/DexSwapInput/DexSwapInput';
 import TokenSelect from './components/TokenSelect/TokenSelect';
 import {Web3Context} from 'services/web3Provider';
+import wei from 'utils/wei';
 
 // Styles
 import './DexSwap.less';
@@ -28,6 +29,9 @@ class DexSwap extends React.PureComponent {
     amount1: 0,
     exactIndex: 0,
     relation: 1,
+    pairAddress: null,
+    reserves0: 0,
+    reserves1: 0,
   };
 
   balanceUpdateInterval = null;
@@ -45,7 +49,7 @@ class DexSwap extends React.PureComponent {
     this.updateAccountAddress();
 
     this.balanceUpdateInterval = setInterval(this.updateExchangeTokenBalance.bind(this), BALANCE_UPDATE_INTERVAL);
-    this.relationUpdateInterval = setInterval(this.updateRelation.bind(this), RELATION_UPDATE_INTERVAL);
+    this.relationUpdateInterval = setInterval(this.updateReserves.bind(this), RELATION_UPDATE_INTERVAL);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -98,6 +102,94 @@ class DexSwap extends React.PureComponent {
       this.setState({
         address: accountAddress,
       })
+    }
+  }
+
+  async updatePairAddress() {
+    const {pair} = this.state;
+    if (!pair || !pair.length) return;
+
+    const {getPair} = this.context;
+    const pairAddress = await getPair(pair[0], pair[1]);
+    this.setState({
+      pairAddress
+    });
+    this.updateReserves(pairAddress);
+  }
+
+  async updateReserves(pairAddress = this.state.pairAddress) {
+    const {pair} = this.state;
+    if (!pair || !pair.length) return;
+
+    const {getReserves} = this.context;
+    const reserves = await getReserves(pair[0], pair[1], pairAddress);
+    this.setState({
+      reserves0: reserves[0],
+      reserves1: reserves[1],
+    })
+  }
+
+  getLastToken = () => _.last(this.state.pair);
+
+  getAmountOut(amount, reserves0, reserves1) {
+    const decimals = _.get(this.state, 'pair[0].decimals', 18);
+    const outDecimals = _.get(this.getLastToken(), 'decimals', 18);
+    const amountIn = wei.to(amount, decimals);
+    const amountWithFee = wei.bn(amountIn).mul(wei.bn('9975'));
+    const denominator = wei.bn(reserves0)
+      .mul(wei.bn('10000'))
+      .add(amountWithFee);
+    const numenator = amountWithFee.mul(wei.bn(reserves1));
+    return wei.from(
+      numenator.div(denominator).toString(),
+      outDecimals,
+      );
+  }
+
+  getAmountIn(amount, reserves0, reserves1) {
+    const decimals = _.get(this.getLastToken(), 'decimals', 18);
+    const inDecimals = _.get(this.state, 'pair[0].decimals', 18);
+    const amountOut = wei.bn(wei.to(amount, decimals));
+    const numenator = wei.bn(reserves0)
+      .mul(amountOut)
+      .mul(wei.bn('10000'));
+    const denominator = wei.bn(reserves1)
+      .sub(amountOut)
+      .mul(wei.bn('9975'));
+    return wei.from(
+      numenator.div(denominator).add(wei.bn('1')),
+      inDecimals,
+    )
+  }
+
+  calculate() {
+    const {reserves0, reserves1, amount0, amount1, exactIndex} = this.state;
+    if (!reserves0 || !reserves1) return {};
+
+    if (!exactIndex) {
+      if (!amount0 || amount0 === '0') {
+        return {
+          amount0: 0,
+          amount1: 0,
+        }
+      } else {
+        return {
+          amount0,
+          amount1: this.getAmountOut(amount0, reserves0, reserves1),
+        }
+      }
+    } else {
+      if (!amount1 || amount1 === '0') {
+        return {
+          amount0: 0,
+          amount1: 0,
+        }
+      } else {
+        return {
+          amount0: this.getAmountIn(amount1, reserves0, reserves1),
+          amount1,
+        }
+      }
     }
   }
 
@@ -221,6 +313,9 @@ class DexSwap extends React.PureComponent {
       { value: 'transactions', label: 'Transactions' },
     ];
 
+    const amounts = this.calculate();
+    console.log('reserves', exactIndex, amounts);
+
     return (
       <div className="DexSwap">
         <div className="DexSwap__container">
@@ -250,7 +345,7 @@ class DexSwap extends React.PureComponent {
               <div className="DexSwap__form">
                 <DexSwapInput onSelectToken={() => this.setState({selectToken: 0})}
                               onChange={value => this.onAmountChange(value, 0)}
-                              value={amount0}
+                              value={(!exactIndex ? amount0 : amounts.amount0) || '0'}
                               token={this.state.pair[0]}
                               setExact={() => this.setExact(0)}
                               showBalance
@@ -261,7 +356,7 @@ class DexSwap extends React.PureComponent {
                 />
                 <DexSwapInput onSelectToken={() => this.setState({selectToken: 1})}
                               onChange={value => this.onAmountChange(value, 1)}
-                              value={amount1}
+                              value={(exactIndex ? amount1 : amounts.amount1) || '0'}
                               token={this.state.pair[1]}
                               setExact={() => this.setExact(1)}
                               label title={`You will receive ${exactIndex ? 'exact' : 'around'}`} />
@@ -280,6 +375,7 @@ class DexSwap extends React.PureComponent {
                       state.pair[secondToken] = state.pair[selectToken];
                     }
                     state.pair[selectToken] = value;
+                    this.updatePairAddress();
                     return {
                       ...state,
                       selectToken: null,

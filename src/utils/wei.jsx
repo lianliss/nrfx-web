@@ -11,6 +11,7 @@ const wei = {
   to: (value, decimals = DEFAULT_DECIMALS) => {
     return web3.utils.toWei(Number(value / 10**(DEFAULT_DECIMALS - decimals)).toFixed(18));
   },
+  bn: web3.utils.toBN,
 };
 
 module.exports = wei;

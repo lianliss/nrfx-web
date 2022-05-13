@@ -182,17 +182,20 @@ class Web3Provider extends React.PureComponent {
 
   /**
    * Returns address of PancakePair for current pair of tokens
-   * @param token0 {address}
-   * @param token1 {address}
+   * @param token0 {object}
+   * @param token1 {object}
    * @returns {Promise.<*>}
    */
-  async getPair(token0, token1) {
+  async getPair(_token0, _token1) {
+    const token0 = _token0.address ? _token0 : this.wrapBNB;
+    const token1 = _token1.address ? _token1 : this.wrapBNB;
+
     try {
       const contract = new this.web3Host.eth.Contract(
         require('src/index/constants/ABI/PancakeFactory'),
         this.factoryAddress,
         );
-      return await contract.methods.getPair(token0, token1).call();
+      return await contract.methods.getPair(token0.address, token1.address).call();
     } catch (error) {
       console.log('[getPair]', this.getBSCScanLink(this.factoryAddress), token0, token1, error);
     }
@@ -203,13 +206,33 @@ class Web3Provider extends React.PureComponent {
    * @param pairAddress {address}
    * @returns {Promise.<*>}
    */
-  async getReserves(pairAddress) {
+  async getReserves(_token0, _token1, _pairAddress = null) {
+    const token0 = _token0.address ? _token0 : this.wrapBNB;
+    const token1 = _token1.address ? _token1 : this.wrapBNB;
+
     try {
+      const pairAddress = _pairAddress || await this.getPair(token0, token1);
       const contract = new this.web3Host.eth.Contract(
         require('src/index/constants/ABI/PancakePair'),
         pairAddress,
       );
-      return await contract.methods.getReserves().call();
+
+      const data = await Promise.all([
+        contract.methods.getReserves().call(),
+        contract.methods.token0().call(),
+      ]);
+
+      if (data[1] === token0.address) {
+        return [
+          data[0][0],
+          data[0][1],
+        ]
+      } else {
+        return [
+          data[0][1],
+          data[0][0],
+        ]
+      }
     } catch (error) {
       console.error('[getReserves]', this.getBSCScanLink(pairAddress), error);
     }
@@ -370,6 +393,7 @@ class Web3Provider extends React.PureComponent {
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
       getPair: this.getPair.bind(this),
+      getReserves: this.getReserves.bind(this),
       getTokensRelativePrice: this.getTokensRelativePrice.bind(this),
       getTokenUSDPrice: this.getTokenUSDPrice.bind(this),
       getTokenBalance: this.getTokenBalance.bind(this),
