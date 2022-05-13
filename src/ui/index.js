@@ -63,3 +63,4 @@ export { default as RateIndicator } from "./components/RateIndicator/RateIndicat
 export { default as DynamicShadow } from "./components/DynamicShadow/DynamicShadow";
 export { default as ScrollBox } from "./components/ScrollBox/ScrollBox";
 export { default as HoverPopup } from "./components/HoverPopup/HoverPopup";
+export { default as DropdownElement } from "./components/DropdownElement/DropdownElement";

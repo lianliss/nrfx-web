@@ -11,21 +11,25 @@ import './Liquidity.less';
 
 const items = [
   {
+    id: 0,
     currencies: ['bnb', 'bsw'],
     amounts: [2.005, 15.005],
     pool: { tokens: 2, share: 55 },
   },
   {
+    id: 1,
     currencies: ['usdt', 'nrfx'],
     amounts: [2.005, 15.005],
     pool: { tokens: 2, share: 55 },
   },
   {
+    id: 2,
     currencies: ['bnb', 'usd'],
     amounts: [2.005, 15.005],
     pool: { tokens: 2, share: 55 },
   },
   {
+    id: 3,
     currencies: ['rub', 'idr'],
     amounts: [2.005, 15.005],
     pool: { tokens: 2, share: 55 },
@@ -55,7 +59,8 @@ function Liquidity() {
           Don't see a pool you joined? <a href="/">Import it.</a>
         </p>
         <p className="default-text">
-          Or, if you staked your LP tokens in a farm, unstake them to see them{' '}
+          Or, if you staked your LP tokens in a farm, unstake them to see
+          them&nbsp;
           <a href="/">here.</a>
         </p>
       </div>
