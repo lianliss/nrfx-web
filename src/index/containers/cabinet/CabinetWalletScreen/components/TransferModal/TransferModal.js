@@ -9,7 +9,7 @@ import web3Backend from 'services/web3-backend';
 import { web3Update, web3SetData } from 'actions/cabinet/web3';
 import * as UI from 'ui';
 import SVG from 'utils/svg-wrap';
-import qrIcon from "./assets/Icon.svg";
+import qrIcon from './assets/Icon.svg';
 import { getLang } from 'utils';
 import { WEI_ETHER } from 'src/index/constants/cabinet';
 import { timeout } from 'utils';
@@ -51,19 +51,20 @@ class TransferModal extends React.PureComponent {
       <div className="TransferModal-form">
         <form onSubmit={this.transfer.bind(this)}>
           <h3>{getLang('cabinetWalletTransfer_address')}</h3>
-          <div className='TransferModal__address'>
+          <div className="TransferModal__address">
             <UI.Input
               value={address}
               onChange={(event) =>
                 this.setState({ address: event.currentTarget.value })
               }
             />
-            <SVG 
+            <SVG
               src={qrIcon}
               className="TransferModal__address-icon"
               onClick={() => {
                 this.setState({ isQRModal: true });
-            }}/>
+              }}
+            />
           </div>
           <h3>
             <span>{getLang('cabinetWalletTransfer_amount')}</span>
@@ -87,16 +88,15 @@ class TransferModal extends React.PureComponent {
             {getLang('cabinetWalletTransfer_submit')}
           </UI.Button>
         </center>
-        {this.state.isQRModal && (
-          <QRScannerModal
-            adaptive={this.props.adaptive}
-            onResult={(result) => this.setState({ address: result })}
-            onClose={() => {
-              this.setState({ isQRModal: false });
-            }}
-            toastPush={this.props.toastPush}
-          />
-        )}
+        <QRScannerModal
+          adaptive={this.props.adaptive}
+          onResult={(result) => this.setState({ address: result })}
+          onClose={() => {
+            this.setState({ isQRModal: false });
+          }}
+          toastPush={this.props.toastPush}
+          isOpen={this.state.isQRModal}
+        />
       </div>
     );
   }
