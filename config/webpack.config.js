@@ -257,6 +257,13 @@ module.exports = function(webpackEnv) {
         PnpWebpackPlugin,
         //new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       ],
+      fallback: {
+        fs: false,
+        'stream': require.resolve('stream-browserify'),
+        'buffer': require.resolve('buffer/'),
+        'util': require.resolve('util/'),
+        'assert': require.resolve('assert/'),
+      },
     },
     resolveLoader: {
       plugins: [
