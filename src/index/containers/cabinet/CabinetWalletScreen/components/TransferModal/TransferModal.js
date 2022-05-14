@@ -1,5 +1,4 @@
 import './TransferModal.less';
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,7 +14,6 @@ import { WEI_ETHER } from 'src/index/constants/cabinet';
 import { timeout } from 'utils';
 import * as toastsActions from 'src/actions/toasts';
 import QRScannerModal from '../../../../../components/cabinet/QRScannerModal/QRScannerModal';
-
 class TransferModal extends React.PureComponent {
   state = {
     isLoading: false,
@@ -24,15 +22,12 @@ class TransferModal extends React.PureComponent {
     amount: null,
     isQRModal: false,
   };
-
   componentDidMount() {
     this._mounted = true;
   }
-
   componentWillUnmount() {
     this._mounted = false;
   }
-
   renderLoading() {
     return (
       <div className="TransferModal-loading">
@@ -43,7 +38,6 @@ class TransferModal extends React.PureComponent {
       </div>
     );
   }
-
   renderForm() {
     const { onClose, balance, currency } = this.props;
     const { address, amount } = this.state;
@@ -88,19 +82,19 @@ class TransferModal extends React.PureComponent {
             {getLang('cabinetWalletTransfer_submit')}
           </UI.Button>
         </center>
-        <QRScannerModal
-          adaptive={this.props.adaptive}
-          onResult={(result) => this.setState({ address: result })}
-          onClose={() => {
-            this.setState({ isQRModal: false });
-          }}
-          toastPush={this.props.toastPush}
-          isOpen={this.state.isQRModal}
-        />
+        {this.state.isQRModal && (
+          <QRScannerModal
+            adaptive={this.props.adaptive}
+            onResult={(result) => this.setState({ address: result })}
+            onClose={() => {
+              this.setState({ isQRModal: false });
+            }}
+            toastPush={this.props.toastPush}
+          />
+        )}
       </div>
     );
   }
-
   transfer() {
     const { wallets, onClose, web3SetData, currency } = this.props;
     const { address, amount } = this.state;
@@ -114,9 +108,7 @@ class TransferModal extends React.PureComponent {
           currency,
           Number(amount)
         );
-
         onClose();
-
         // Wait 3 seconds before getting balance
         await timeout(3000);
         // Get the balance
@@ -139,7 +131,6 @@ class TransferModal extends React.PureComponent {
             break;
           }
         }
-
         console.error('[TransferModal]', error);
         this.setState({
           isLoading: false,
@@ -148,11 +139,9 @@ class TransferModal extends React.PureComponent {
       }
     })();
   }
-
   render() {
     const { onClose, currency } = this.props;
     const { isLoading } = this.state;
-
     return (
       <UI.Modal isOpen={true} onClose={onClose} className="TransferModal">
         <UI.ModalHeader>
@@ -165,7 +154,6 @@ class TransferModal extends React.PureComponent {
     );
   }
 }
-
 export default connect(
   (state) => ({
     wallets: state.web3.wallets,
