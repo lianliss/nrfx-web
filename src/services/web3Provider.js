@@ -4,9 +4,14 @@ import Web3 from 'web3/dist/web3.min.js';
 import wei from 'utils/wei';
 import _ from 'lodash';
 import axios from 'axios';
+import baseTokens from 'src/index/constants/baseTokens';
+import getAllPairsCombinations from 'utils/getPairCombinations';
+import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, } from '@pancakeswap/sdk';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
+const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
+const ONE_HUNDRED_PERCENT = new Percent('1');
 
 class Web3Provider extends React.PureComponent {
 
@@ -16,20 +21,20 @@ class Web3Provider extends React.PureComponent {
     balancesRequested: null,
     tokens: [
       {
-        name: "Tether",
-        symbol: "USDT",
-        address: "0x55d398326f99059fF775485246999027B3197955",
-        chainId: 56,
-        decimals: 18,
-        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-      },
-      {
         name: "Narfex",
         symbol: "NRFX",
         address: "0x3764Be118a1e09257851A3BD636D48DFeab5CAFE",
         chainId: 56,
         decimals: 18,
         logoURI: "https://static.narfex.com/img/currencies/nrfx_pancake.svg"
+      },
+      {
+        name: "Tether",
+        symbol: "USDT",
+        address: "0x55d398326f99059fF775485246999027B3197955",
+        chainId: 56,
+        decimals: 18,
+        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
       },
       {
         name: "Binance Coin",
@@ -39,14 +44,7 @@ class Web3Provider extends React.PureComponent {
         decimals: 18,
         logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
       },
-      {
-        name: "Minereum BSC",
-        symbol: "MNEB",
-        address: "0xD22202d23fE7dE9E3DbE11a2a88F42f4CB9507cf",
-        chainId: 56,
-        decimals: 8,
-        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/16038.png"
-      },
+      ...baseTokens,
     ],
   };
 
@@ -82,10 +80,161 @@ class Web3Provider extends React.PureComponent {
 
     // Get tokens list
     this.getTokens();
+
+    // TODO: remove test data
+    this.getTrade(this.state.tokens[0], this.state.tokens[1], 1000).then(trade => {
+      console.log('TRADE', trade);
+      console.log('TRADE price impact',
+        trade.priceImpact.toSignificant(),
+        'inputAmount',
+        trade.inputAmount.toSignificant(),
+        'outputAmount',
+        trade.outputAmount.toSignificant(),
+        'executionPrice',
+        trade.executionPrice.toSignificant(),
+        'nextMidPrice',
+        trade.nextMidPrice.toSignificant(),
+        'midPrice',
+        trade.route.midPrice.toSignificant(),
+      );
+    }).catch(error => {
+      console.error('TRADE', error);
+    });
   }
 
   componentWillUnmount() {
     this._mounted = false;
+  }
+
+  /**
+   * Returns Token type object
+   * @param _token {object} - raw token data
+   * @returns {Token}
+   */
+  getToken(_token) {
+    const token = _token.address ? _token : this.wrapBNB;
+    return new Token(
+      token.chainId,
+      token.address,
+      token.decimals,
+      token.symbol,
+      token.name,
+      token.projectLink,
+    );
+  }
+
+  /**
+   * Returns TokenAmount object
+   * @param token {object} - raw token data
+   * @param amount {number} - amount of tokens in decimals
+   * @returns {TokenAmount}
+   */
+  getTokenAmount(token, amount) {
+    const amountWei = wei.to(amount, token.decimals);
+    return new TokenAmount(this.getToken(token), amountWei);
+  }
+
+  /**
+   * Calculate the Liquidity Pair address
+   * @param _token0 {object} - raw token data
+   * @param _token1 {object} - raw token data
+   * @returns {string}
+   */
+  getPairAddress(_token0, _token1) {
+    const token0 = _token0.address ? _token0 : this.wrapBNB;
+    const token1 = _token1.address ? _token1 : this.wrapBNB;
+
+    return Pair.getAddress(this.getToken(token0), this.getToken(token1));
+  }
+
+  /**
+   * Returns all available pairs for trade between two tokens with their liquidity
+   * @param _token0 {object} - raw token data
+   * @param _token1 {object} - raw token data
+   * @returns {Promise.<void>}
+   */
+  async getPairs(_token0, _token1) {
+    const token0 = _token0.address ? _token0 : this.wrapBNB;
+    const token1 = _token1.address ? _token1 : this.wrapBNB;
+
+    // Get all possible pairs combinations
+    const combinations = getAllPairsCombinations(token0, token1);
+    const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
+
+    // Get a liquidity for each pair
+    const results = await Promise.allSettled(addresses.map(pairAddress => {
+      const pairContract = new this.web3Host.eth.Contract(
+        require('src/index/constants/ABI/PancakePair'),
+        pairAddress,
+      );
+      return pairContract.methods.getReserves().call();
+    }));
+
+    // Process pairs liquidities
+    return results.map((result, index) => {
+      if (result.status !== 'fulfilled') return null;
+
+      const pair = combinations[index];
+      const token0 = this.getToken(pair[0]);
+      const token1 = this.getToken(pair[1]);
+      const isForward = token0.sortsBefore(token1); // True if token0 is the first token of LP
+      const reserve0 = _.get(result, 'value._reserve0', 0);
+      const reserve1 = _.get(result, 'value._reserve1', 0);
+      const tokenAmount0 = new TokenAmount(token0, isForward ? reserve0 : reserve1);
+      const tokenAmount1 = new TokenAmount(token1, isForward ? reserve1 : reserve0);
+      return new Pair(tokenAmount0, tokenAmount1);
+    }).filter(r => r);
+  }
+
+  /**
+   * Returns the best trade route for a pair of tokens
+   * @param token0 {object} - raw token object
+   * @param token1 {object} - raw token object
+   * @param amount {number} - amount in decimals
+   * @param isExactIn {boolean} - set true if the amount is an exact amount of token0
+   * @param maxHops {integer} - number of trade steps between the pair (1 for no steps) (default: 3)
+   * @returns {Promise.<*>}
+   */
+  async getTrade(token0, token1, amount, isExactIn = true, maxHops = 3) {
+    const pairs = await this.getPairs(token0, token1);
+    let bestTrade;
+    for (let hops = 1; hops <= maxHops; hops++) {
+      const tradeMethod = isExactIn ? Trade.bestTradeExactIn : Trade.bestTradeExactOut;
+      const trade = _.get(tradeMethod(
+        pairs,
+        isExactIn
+          ? this.getTokenAmount(token0, amount)
+          : this.getToken(token0),
+        isExactIn
+          ? this.getToken(token1)
+          : this.getTokenAmount(token1, amount),
+        {maxNumResults: 1, maxHops: hops}
+      ), '[0]');
+      // Set the best trade
+      if (hops === 1 || this.isTradeBetter(bestTrade, trade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
+        bestTrade = trade;
+      }
+    }
+
+    return bestTrade;
+  }
+
+  /**
+   * Compares two trades by effectiveness
+   * @param tradeA {Trade}
+   * @param tradeB {Trade}
+   * @param minimumDelta {Percent}
+   * @returns {boolean} - true if tradeB is better
+   */
+  isTradeBetter(tradeA, tradeB, minimumDelta) {
+    if (tradeA && !tradeB) return false;
+    if (tradeB && !tradeA) return true;
+    if (!tradeA || !tradeB) return undefined;
+
+    return tradeA.executionPrice
+      .raw
+      .multiply(minimumDelta.add(ONE_HUNDRED_PERCENT))
+      .lessThan(tradeB.executionPrice);
   }
 
   getBSCScanLink = address => `https://bscscan.com/address/${address}#readContract`;
@@ -181,37 +330,16 @@ class Web3Provider extends React.PureComponent {
   }
 
   /**
-   * Returns address of PancakePair for current pair of tokens
-   * @param token0 {object}
-   * @param token1 {object}
-   * @returns {Promise.<*>}
-   */
-  async getPair(_token0, _token1) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
-
-    try {
-      const contract = new this.web3Host.eth.Contract(
-        require('src/index/constants/ABI/PancakeFactory'),
-        this.factoryAddress,
-        );
-      return await contract.methods.getPair(token0.address, token1.address).call();
-    } catch (error) {
-      console.log('[getPair]', this.getBSCScanLink(this.factoryAddress), token0, token1, error);
-    }
-  }
-
-  /**
    * Returns current pair reserves
    * @param pairAddress {address}
    * @returns {Promise.<*>}
    */
-  async getReserves(_token0, _token1, _pairAddress = null) {
+  async getReserves(_token0, _token1) {
     const token0 = _token0.address ? _token0 : this.wrapBNB;
     const token1 = _token1.address ? _token1 : this.wrapBNB;
 
     try {
-      const pairAddress = _pairAddress || await this.getPair(token0, token1);
+      const pairAddress = this.getPairAddress(token0, token1);
       const contract = new this.web3Host.eth.Contract(
         require('src/index/constants/ABI/PancakePair'),
         pairAddress,
@@ -392,12 +520,13 @@ class Web3Provider extends React.PureComponent {
       ...this.state,
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
-      getPair: this.getPair.bind(this),
+      getPairAddress: this.getPairAddress.bind(this),
       getReserves: this.getReserves.bind(this),
       getTokensRelativePrice: this.getTokensRelativePrice.bind(this),
       getTokenUSDPrice: this.getTokenUSDPrice.bind(this),
       getTokenBalance: this.getTokenBalance.bind(this),
       getTokenBalanceKey: this.getTokenBalanceKey.bind(this),
+      getTrade: this.getTrade.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
     }}>
       {this.props.children}

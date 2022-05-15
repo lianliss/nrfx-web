@@ -109,8 +109,8 @@ class DexSwap extends React.PureComponent {
     const {pair} = this.state;
     if (!pair || !pair.length) return;
 
-    const {getPair} = this.context;
-    const pairAddress = await getPair(pair[0], pair[1]);
+    const {getPairAddress} = this.context;
+    const pairAddress = getPairAddress(pair[0], pair[1]);
     this.setState({
       pairAddress
     });
@@ -296,7 +296,7 @@ class DexSwap extends React.PureComponent {
     const {
       tokens,
       accountAddress,
-      getPair,
+      getPairAddress,
       getTokensRelativePrice,
       getTokenUSDPrice,
       getTokenBalance,
