@@ -28,6 +28,7 @@ function FarmingTableItem({
   staked,
   earned,
   onStake,
+  openRoi
 }) {
   // States
   const [isActive, setIsActive] = React.useState(false);
@@ -60,6 +61,12 @@ function FarmingTableItem({
     setType(nextType);
   };
 
+  const handleRoiOpen = (e) => {
+    e.stopPropagation();
+
+    openRoi();
+  }
+
   return (
     <>
       <TableCell
@@ -89,7 +96,7 @@ function FarmingTableItem({
         </TableColumn>
         <TableColumn>
           <NumberFormat number={arp} percent />
-          <span>
+          <span onClick={handleRoiOpen}>
             <SVG src={require('src/asset/icons/cabinet/calculator-icon.svg')} />
           </span>
         </TableColumn>

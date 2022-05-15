@@ -70,10 +70,9 @@ function FarmingTable() {
     openModal('stake', {}, { id, currency });
   };
 
-  // Actions
-  React.useEffect(() => {
+  const openRoi = () => {
     openModal('farming_roi');
-  }, []);
+  }
 
   return (
     <div className="FarmingTable">
@@ -114,6 +113,7 @@ function FarmingTable() {
                 staked={item.staked}
                 earned={item.earned}
                 onStake={onStake}
+                openRoi={openRoi}
               />
             );
           })}
