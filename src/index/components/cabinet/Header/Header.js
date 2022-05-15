@@ -18,8 +18,12 @@ import { connect } from "react-redux";
 import InternalNotification from "../InternalNotification/InternalNotification";
 import Lang from "../../../../components/Lang/Lang";
 import Notifications from "../Notifications/Notifications";
+import {Web3Context} from 'services/web3Provider';
+import _ from 'lodash';
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
+  static contextType = Web3Context;
+
   state = {
     activePage: null,
     visibleNotifications: false
@@ -30,9 +34,9 @@ class Header extends React.Component {
   };
 
   render() {
+    const {isConnected, accountAddress} = this.context;
     const isLogged = !!this.props.profile.user;
     const currentPage = router.getState().name;
-
     const currentLang = getLang();
     const lang =
       this.props.langList.find(l => l.value === currentLang) ||
@@ -187,6 +191,20 @@ class Header extends React.Component {
                     />
                   </UI.ActionSheet>
                 </div>
+                {isConnected
+                  ? <div className="CabinetHeader__account-address">
+                    {_.truncate(accountAddress, {length: 9})}{accountAddress.slice(-4)}
+                  </div>
+                  : <UI.Button
+                    onClick={() =>
+                      this.context.connectWallet()
+                    }
+                    size="middle"
+                    type="secondary"
+                    className="CabinetHeader__connect"
+                  >
+                    Connect wallet
+                  </UI.Button>}
               </div>
             )}
             {!isLogged && (
