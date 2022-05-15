@@ -65,7 +65,10 @@ const Form = ({
   gasPrice,
 }) => {
   let realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
-  realRate /= 1 - commission;
+  console.log('realRate', realRate);
+  realRate += realRate * commission;
+  console.log('commission', commission, 1 - commission);
+  console.log('rate', realRate);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -151,10 +154,10 @@ const updateRates = async (from, to, fromAmount, toAmount, dispatch, setAmounts,
 
 let gasTimeout = null;
 const calculateToAmount = (from = 0, rate = 1, commission = 0, gasPrice = 0) => {
-  return from / rate * (1 - commission) - (gasPrice || 0);
+  return from * (1 / rate) / (1 + commission) - (gasPrice || 0);
 };
 const calculateFromAmount = (to = 0, rate = 1, commission = 0, gasPrice = 0) => {
-  return to * rate / (1 - commission) + (gasPrice || 0);
+  return to * rate * (1 + commission) + (gasPrice || 0);
 };
 
 const updateGas = ({
