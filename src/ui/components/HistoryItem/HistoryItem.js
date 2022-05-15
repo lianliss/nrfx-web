@@ -74,8 +74,8 @@ HistoryItem.propTypes = {
   headerSecondary: PropTypes.node,
   smallText: PropTypes.node,
   smallTextSecondary: PropTypes.node,
-  status: "string",
-  type: "string"
+  status: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default HistoryItem;
