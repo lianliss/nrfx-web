@@ -28,7 +28,7 @@ function FarmingTableItem({
   staked,
   earned,
   onStake,
-  openRoi
+  openRoi,
 }) {
   // States
   const [isActive, setIsActive] = React.useState(false);
@@ -65,7 +65,7 @@ function FarmingTableItem({
     e.stopPropagation();
 
     openRoi();
-  }
+  };
 
   return (
     <>
@@ -91,30 +91,39 @@ function FarmingTableItem({
         <TableColumn>
           <NumberFormat number={apy} percent />
           <HoverPopup content={<QuestionAPY />}>
-            <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
+            <SVG
+              src={require('src/asset/icons/cabinet/question-icon.svg')}
+              className="FarmingTableItem__action_icon"
+            />
           </HoverPopup>
         </TableColumn>
         <TableColumn>
           <NumberFormat number={arp} percent />
           <span onClick={handleRoiOpen}>
-            <SVG src={require('src/asset/icons/cabinet/calculator-icon.svg')} />
+            <SVG
+              src={require('src/asset/icons/cabinet/calculator-icon.svg')}
+              className="FarmingTableItem__action_icon"
+            />
           </span>
         </TableColumn>
         <TableColumn>
           $<NumberFormat number={liquidity} />
-          <span>
-            <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
-          </span>
+          <HoverPopup content={<QuestionAPY />}>
+            <SVG
+              src={require('src/asset/icons/cabinet/question-icon.svg')}
+              className="FarmingTableItem__action_icon"
+            />
+          </HoverPopup>
         </TableColumn>
         <TableColumn>—</TableColumn>
         <TableColumn>
-          Pair info
           <span>
+            Pair info
             <SVG src={require('src/asset/icons/export.svg')} />
           </span>
         </TableColumn>
         <TableColumn className="details">
-          {isActive ? 'hide' : 'details'}
+          <span>{isActive ? 'hide' : 'details'}</span>
         </TableColumn>
       </TableCell>
       {isActive && (

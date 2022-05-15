@@ -70,9 +70,10 @@ function FarmingTable() {
     openModal('stake', {}, { id, currency });
   };
 
+  // Open ROI Modal
   const openRoi = () => {
     openModal('farming_roi');
-  }
+  };
 
   return (
     <div className="FarmingTable">

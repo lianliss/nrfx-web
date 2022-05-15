@@ -57,6 +57,12 @@
     background: var(--alice-blue) !important;
   }
 
+  &__action_icon {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
   // <Button />
   .Button {
     padding: 12px 16px;
@@ -92,6 +98,8 @@
     }
 
     p {
+      max-width: 482px;
+      width: 37.7vw;
       font-weight: 400;
       font-size: 12px;
       line-height: 150%;
@@ -99,7 +107,8 @@
     }
   }
 
-  span {
+  &:not(.options) span {
+    display: inline-flex;
     cursor: pointer;
   }
 }

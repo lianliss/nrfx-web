@@ -9,6 +9,7 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './FarmingTableItemOptions.less';
 
+// Main
 function FarmingTableItemOptions({
   id,
   type,
@@ -86,7 +87,10 @@ function FarmingTableItemOptions({
             <>
               <Button
                 type="lightBlue"
-                onClick={handleOnStake}
+                onClick={() => {
+                  handleOnStake();
+                  handleTypeChange('staked');
+                }}
                 style={{ width: '100%' }}
               >
                 Stake
@@ -95,12 +99,19 @@ function FarmingTableItemOptions({
           )}
           {type === 'staked' && (
             <>
-              <Button type="lightBlue" className="stake">
+              <Button
+                type="lightBlue"
+                className="stake"
+                onClick={() => {
+                  handleOnStake();
+                  handleTypeChange('staked');
+                }}
+              >
                 Stake
               </Button>
               <Button
                 type="dark"
-                onClick={() => handleTypeChange('connect')}
+                onClick={() => handleTypeChange('stake')}
                 className="unstake"
               >
                 Unstake
