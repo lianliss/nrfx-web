@@ -55,7 +55,7 @@ export default ({ balance, isCrypto }) => {
           >
             <Lang name="cabinet_fiatBalance_add" />
           </Button>
-          <Button
+          {/* <Button
             onClick={() => {
               actions.openModal("merchant", {}, { type: "withdrawal" });
             }}
@@ -63,7 +63,7 @@ export default ({ balance, isCrypto }) => {
             type="secondary"
           >
             <Lang name="global_withdrawal" />
-          </Button>
+          </Button> */}
         </>
       );
     }

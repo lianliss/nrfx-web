@@ -1,5 +1,4 @@
 import './TransferModal.less';
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -9,13 +8,12 @@ import web3Backend from 'services/web3-backend';
 import { web3Update, web3SetData } from 'actions/cabinet/web3';
 import * as UI from 'ui';
 import SVG from 'utils/svg-wrap';
-import qrIcon from "./assets/Icon.svg";
+import qrIcon from './assets/Icon.svg';
 import { getLang } from 'utils';
 import { WEI_ETHER } from 'src/index/constants/cabinet';
 import { timeout } from 'utils';
 import * as toastsActions from 'src/actions/toasts';
 import QRScannerModal from '../../../../../components/cabinet/QRScannerModal/QRScannerModal';
-
 class TransferModal extends React.PureComponent {
   state = {
     isLoading: false,
@@ -24,15 +22,12 @@ class TransferModal extends React.PureComponent {
     amount: null,
     isQRModal: false,
   };
-
   componentDidMount() {
     this._mounted = true;
   }
-
   componentWillUnmount() {
     this._mounted = false;
   }
-
   renderLoading() {
     return (
       <div className="TransferModal-loading">
@@ -43,7 +38,6 @@ class TransferModal extends React.PureComponent {
       </div>
     );
   }
-
   renderForm() {
     const { onClose, balance, currency } = this.props;
     const { address, amount } = this.state;
@@ -51,19 +45,20 @@ class TransferModal extends React.PureComponent {
       <div className="TransferModal-form">
         <form onSubmit={this.transfer.bind(this)}>
           <h3>{getLang('cabinetWalletTransfer_address')}</h3>
-          <div className='TransferModal__address'>
+          <div className="TransferModal__address">
             <UI.Input
               value={address}
               onChange={(event) =>
                 this.setState({ address: event.currentTarget.value })
               }
             />
-            <SVG 
+            <SVG
               src={qrIcon}
               className="TransferModal__address-icon"
               onClick={() => {
                 this.setState({ isQRModal: true });
-            }}/>
+              }}
+            />
           </div>
           <h3>
             <span>{getLang('cabinetWalletTransfer_amount')}</span>
@@ -100,7 +95,6 @@ class TransferModal extends React.PureComponent {
       </div>
     );
   }
-
   transfer() {
     const { wallets, onClose, web3SetData, currency } = this.props;
     const { address, amount } = this.state;
@@ -114,9 +108,7 @@ class TransferModal extends React.PureComponent {
           currency,
           Number(amount)
         );
-
         onClose();
-
         // Wait 3 seconds before getting balance
         await timeout(3000);
         // Get the balance
@@ -139,7 +131,6 @@ class TransferModal extends React.PureComponent {
             break;
           }
         }
-
         console.error('[TransferModal]', error);
         this.setState({
           isLoading: false,
@@ -148,11 +139,9 @@ class TransferModal extends React.PureComponent {
       }
     })();
   }
-
   render() {
     const { onClose, currency } = this.props;
     const { isLoading } = this.state;
-
     return (
       <UI.Modal isOpen={true} onClose={onClose} className="TransferModal">
         <UI.ModalHeader>
@@ -165,7 +154,6 @@ class TransferModal extends React.PureComponent {
     );
   }
 }
-
 export default connect(
   (state) => ({
     wallets: state.web3.wallets,

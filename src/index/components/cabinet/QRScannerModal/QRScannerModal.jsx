@@ -32,7 +32,6 @@ function QRScannerModal({ onClose, adaptive, onResult, toastPush }) {
     </ParentComponent>
   );
 }
-
 QRScannerModal.propTypes = {
   onResult: PropTypes.func,
   onClose: PropTypes.func,
