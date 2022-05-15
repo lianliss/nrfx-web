@@ -154,10 +154,10 @@ const updateRates = async (from, to, fromAmount, toAmount, dispatch, setAmounts,
 
 let gasTimeout = null;
 const calculateToAmount = (from = 0, rate = 1, commission = 0, gasPrice = 0) => {
-  return from * (1 / rate) / (1 + commission) - (gasPrice || 0);
+  return from * (1 / rate) / (1 + commission);
 };
 const calculateFromAmount = (to = 0, rate = 1, commission = 0, gasPrice = 0) => {
-  return to * rate * (1 + commission) + (gasPrice || 0);
+  return to * rate * (1 + commission);
 };
 
 const updateGas = ({
