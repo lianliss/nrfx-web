@@ -9,6 +9,7 @@ import ReactScrollableList from 'react-scrollable-list';
 import Web3 from 'web3/dist/web3.min.js';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
+import { getLang } from "utils";
 
 const web3 = new Web3();
 
@@ -90,7 +91,7 @@ class TokenSelect extends React.PureComponent {
         <div className="TokenSelect">
           <h2>
             <span>
-              Select a token
+              {getLang('dex_select_token')}
             </span>
             <span className="TokenSelect__close" onClick={onClose}>
               <SVG
@@ -105,13 +106,13 @@ class TokenSelect extends React.PureComponent {
           <div className="TokenSelect__search">
             <input type="text"
                    value={search}
-                   placeholder="Search"
+                   placeholder={getLang('dex_tokens_search')}
                    onChange={this.onSearchInput.bind(this)}
             />
             <SVG src={require('src/asset/24px/search.svg')} />
           </div>
           <div className="TokenSelect__list">
-            <h3>Tokens list</h3>
+            <h3>{getLang('dex_tokens_list')}</h3>
             <ReactScrollableList
               listItems={filtered}
               heightOfItem={54}

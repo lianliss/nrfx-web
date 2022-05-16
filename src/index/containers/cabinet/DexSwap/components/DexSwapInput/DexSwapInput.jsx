@@ -7,6 +7,7 @@ import getFinePrice from 'utils/get-fine-price';
 // Components.
 import SVG from 'utils/svg-wrap';
 import * as UI from 'src/ui';
+import { getLang } from "utils";
 
 // Styles.
 import './DexSwapInput.less';
@@ -71,7 +72,7 @@ function DexSwapInput({
               ? 'active'
               : ''}`}
                   onClick={handleBalanceClick}>
-              Balance ≈ {getFinePrice(balanceNumber)}
+              {getLang('dex_balance')} ≈ {getFinePrice(balanceNumber)}
             </span>
           </div>}
         </div>

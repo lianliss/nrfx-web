@@ -345,23 +345,23 @@ class DexSwap extends React.PureComponent {
 
     let button = <Button type="lightBlue" onClick={connectWallet}>
       <SVG src={require('src/asset/token/wallet.svg')} />
-      Connect Wallet
+      {getLang('dex_button_connect_wallet')}
     </Button>;
     if (isConnected) {
       if (Number(amount0)) {
         if (Number(amount0) > balance) {
           button = <Button type="secondary" disabled>
-            Insufficient Balance
+            {getLang('dex_button_insufficient_balance')}
           </Button>
         } else {
           button = <Button type="lightBlue" onClick={() => this.executeTrade()}>
             <SVG src={require('src/asset/token/wallet.svg')} />
-            Buy on Narfex
+            {getLang('dex_button_buy')}
           </Button>
         }
       } else {
         button = <Button type="secondary" disabled>
-          Enter Amount
+          {getLang('dex_button_enter_amount')}
         </Button>
       }
     }
@@ -371,7 +371,7 @@ class DexSwap extends React.PureComponent {
         <div className="DexSwap__container">
           <div className="DexSwap__header">
             <div className="DexSwap__row">
-              <h1>Exchange</h1>
+              <h1>{getLang('dex_title')}</h1>
               {/*<Switch type="light-blue" on={isPro} onChange={togglePro} />*/}
               {/*<span className="switch-label">Pro Version</span>*/}
             </div>
@@ -400,7 +400,7 @@ class DexSwap extends React.PureComponent {
                               setExact={() => this.setExact(0)}
                               showBalance
                               label
-                              title={`You will pay ${!exactIndex ? 'exact' : 'around'}`} />
+                              title={getLang(!exactIndex ? 'dex_pay_exact' : 'dex_pay_around')} />
                 <SVG onClick={() => this.swapPair()}
                   src={require('src/asset/icons/cabinet/swap/swap-icon.svg')}
                 />
@@ -409,20 +409,21 @@ class DexSwap extends React.PureComponent {
                               value={amount1 || '0'}
                               token={this.state.pair[1]}
                               setExact={() => this.setExact(1)}
-                              label title={`You will receive ${exactIndex ? 'exact' : 'around'}`} />
+                              label
+                              title={getLang(exactIndex ? 'dex_receive_exact' : 'dex_receive_around')} />
                 {!!Number(executionPrice) && <div className="DexSwap__Price">
                   <span>
-                    Price
+                    {getLang('dex_price')}
                   </span>
                   <span>
                     {executionPrice}
                     &nbsp;
-                    {pair[1].symbol} per {pair[0].symbol}
+                    {pair[1].symbol} {getLang('dex_per')} {pair[0].symbol}
                   </span>
                 </div>}
                 <div className="DexSwap__Slippage">
                   <span>
-                    Slippage Tolerance
+                    {getLang('dex_slippage')}
                   </span>
                   <span>
                     {slippageTolerance.toFixed(2)}%
@@ -451,9 +452,9 @@ class DexSwap extends React.PureComponent {
             {(!!this.trade && !!Number(amount0)) && <div className="DexSwap__description">
               <div className="DexSwap__description-item">
                 <span>
-                  {isExactIn ? 'Minimum receive' : 'Maximum spend'}
+                  {isExactIn ? getLang('dex_minimum_receive') : getLang('dex_maximum_spend')}
                   <HoverPopup content={<div className="DexSwap__hint">
-                    Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.
+                    {getLang('dex_notice_price_movement')}
                   </div>}>
                     <SVG
                       src={require('src/asset/icons/cabinet/question-icon.svg')}
@@ -469,9 +470,9 @@ class DexSwap extends React.PureComponent {
               </div>
               <div className="DexSwap__description-item">
                 <span>
-                  Price Impact
+                  {getLang('dex_price_impact')}
                   <HoverPopup content={<div className="DexSwap__hint">
-                    The difference between the market price and estimated price due to trade size.
+                    {getLang('dex_price_impact_hint')}
                   </div>}>
                     <SVG
                       src={require('src/asset/icons/cabinet/question-icon.svg')}
@@ -485,9 +486,9 @@ class DexSwap extends React.PureComponent {
               </div>
               <div className="DexSwap__description-item">
                 <span>
-                  Liquidity provider fee
+                  {getLang('dex_liquidity_fee')}
                   <HoverPopup content={<div className="DexSwap__hint">
-                    For each trade a 0.25% fee is paid
+                    {getLang('dex_liquidity_fee_hint')}
                   </div>}>
                     <SVG
                       src={require('src/asset/icons/cabinet/question-icon.svg')}
@@ -501,9 +502,9 @@ class DexSwap extends React.PureComponent {
               </div>
               <div className="DexSwap__description-item">
                 <span>
-                  Route
+                  {getLang('dex_route')}
                   <HoverPopup content={<div className="DexSwap__hint">
-                    Routing through these tokens resulted in the best price for your trade.
+                    {getLang('dex_route_hint')}
                   </div>}>
                     <SVG
                       src={require('src/asset/icons/cabinet/question-icon.svg')}
@@ -518,7 +519,7 @@ class DexSwap extends React.PureComponent {
             </div>}
             {!!transactions.length && <div className="DexSwap__description">
               <h3>
-                Last transactions
+                {getLang('dex_last_transactions')}
               </h3>
               {transactions.map(item => {
                 const {txHash, token0, token1, amount0, amount1} = item;
