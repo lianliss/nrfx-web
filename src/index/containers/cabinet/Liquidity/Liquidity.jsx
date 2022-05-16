@@ -38,7 +38,7 @@ const items = [
 
 // Main
 function Liquidity() {
-  const [currentDisplay, setCurrentDisplay] = React.useState('remove');
+  const [currentDisplay, setCurrentDisplay] = React.useState('main');
 
   return (
     <CabinetBlock className="Liquidity">

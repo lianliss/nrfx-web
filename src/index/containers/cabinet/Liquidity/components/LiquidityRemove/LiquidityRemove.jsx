@@ -2,8 +2,9 @@ import React from 'react';
 
 // Components
 import SVG from 'utils/svg-wrap';
-import { Button, Range } from 'src/ui';
+import { Button, NumberFormat } from 'src/ui';
 import WalletIcon from 'src/index/components/cabinet/WalletIcon/WalletIcon';
+import LiquidityRange from '../LiquidityRange/LiquidityRange';
 
 // Styles
 import './LiquidityRemove.less';
@@ -18,25 +19,25 @@ function LiquidityRemove({ onClose }) {
         </div>
       </div>
       <div className="Liquidity__body LiquidityRemove">
-        <span className="default-text">Prices and pool share</span>
+        <LiquidityRange />
         <div className="LiquidityRemove__result">
           <div className="LiquidityRemove__item">
             <span className="default-text-light">Earned BNB:</span>
             <span className="default-text-light">
-              2,0155
+              <NumberFormat number={200.0155} />
               <WalletIcon currency="nrfx" size={16} />
             </span>
           </div>
           <div className="LiquidityRemove__item">
             <span className="default-text-light">Earned BNB:</span>
             <span className="default-text-light">
-              2,0155
+              <NumberFormat number={200.0155} />
               <WalletIcon currency="nrfx" size={16} />
             </span>
           </div>
         </div>
         <Button type="lightBlue" onClick={onClose}>
-          Supply
+          Remove
         </Button>
       </div>
     </>

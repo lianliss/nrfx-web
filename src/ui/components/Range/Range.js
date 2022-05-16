@@ -7,10 +7,17 @@ export default class Range extends React.Component {
     isDraggable: false,
     clientX: 0,
     percent: this.valueToPercent(this.props.value),
-    startPercent: 0
+    startPercent: 0,
   };
 
   componentDidMount() {}
+
+  static getDerivedStateFromProps(props, state) {
+    if(state.isDraggable) return null;
+
+    const { min, max } = props;
+    return {percent: Math.round(((props.value - min) / (max - min)) * 100)};
+  }
 
   __handleClick = e => {
     this.setState({
@@ -31,6 +38,8 @@ export default class Range extends React.Component {
 
     this.props.onChange &&
       this.props.onChange(this.percentToValue(this.state.percent));
+
+    this.setState({isDraggable: false});
   };
 
   percentToValue(value) {
@@ -56,7 +65,7 @@ export default class Range extends React.Component {
     const width = this.valueToPercent(value) + "%";
     return (
       <div
-        className={cn("Range", { disabled: this.props.disabled })}
+        className={cn("Range", { disabled: this.props.disabled }, this.props.type)}
         ref="range"
       >
         <div style={{ width: width }} className="Range__filler">
@@ -65,7 +74,9 @@ export default class Range extends React.Component {
             style={{ left: width }}
             onMouseDown={this.__handleClick}
           >
-            <div className="Range__label">{this.props.formatLabel(value)}</div>
+            {!this.props.skipLabel && (
+              <div className="Range__label">{this.props.formatLabel(value)}</div>
+            )}
           </div>
         </div>
       </div>
@@ -77,5 +88,7 @@ Range.defaultProps = {
   value: 0,
   min: 0,
   max: 100,
-  formatLabel: value => value
+  formatLabel: value => value,
+  skipLabel: false,
+  type: 'default',
 };
