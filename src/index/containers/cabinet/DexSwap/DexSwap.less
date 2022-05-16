@@ -66,6 +66,7 @@
 
   .CabinetBlock {
     width: 100%;
+    background: var(--primary-background);
   }
 
   // Components
@@ -196,14 +197,14 @@
   }
 
   &__description {
-    background: #fff;
+    background: var(--primary-background);
     border-radius: var(--radius-panel);
     width: 100%;
     margin: 24px 0 0;
     padding: 24px 24px;
     font-size: 12px;
     font-weight: 600;
-    box-sizing: border-box;
+    box-sizing: content-box;
 
     h3 {
       font-size: 14px;
@@ -287,6 +288,7 @@
     width: 100%;
     padding: 15px 15px;
     border-radius: 0;
+    box-sizing: border-box;
 
     span {
       &:first-child {
@@ -299,5 +301,11 @@
         width: 100px;
       }
     }
+  }
+}
+
+body.theme-dark .DexSwap {
+  .CabinetBlock {
+
   }
 }
