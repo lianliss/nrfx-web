@@ -80,26 +80,6 @@ class Web3Provider extends React.PureComponent {
 
     // Get tokens list
     this.getTokens();
-
-    // TODO: remove test data
-    this.getTrade(this.state.tokens[0], this.state.tokens[1], 1000).then(trade => {
-      console.log('TRADE', trade);
-      console.log('TRADE price impact',
-        trade.priceImpact.toSignificant(),
-        'inputAmount',
-        trade.inputAmount.toSignificant(),
-        'outputAmount',
-        trade.outputAmount.toSignificant(),
-        'executionPrice',
-        trade.executionPrice.toSignificant(),
-        'nextMidPrice',
-        trade.nextMidPrice.toSignificant(),
-        'midPrice',
-        trade.route.midPrice.toSignificant(),
-      );
-    }).catch(error => {
-      console.error('TRADE', error);
-    });
   }
 
   componentWillUnmount() {
@@ -188,15 +168,15 @@ class Web3Provider extends React.PureComponent {
 
   /**
    * Returns the best trade route for a pair of tokens
+   * @param _pairs {array} - array of Pair type objects
    * @param token0 {object} - raw token object
    * @param token1 {object} - raw token object
    * @param amount {number} - amount in decimals
    * @param isExactIn {boolean} - set true if the amount is an exact amount of token0
    * @param maxHops {integer} - number of trade steps between the pair (1 for no steps) (default: 3)
-   * @returns {Promise.<*>}
+   * @returns {Trade} - best trade
    */
-  async getTrade(token0, token1, amount, isExactIn = true, maxHops = 3) {
-    const pairs = await this.getPairs(token0, token1);
+  getTrade(pairs, token0, token1, amount, isExactIn = true, maxHops = 3) {
     let bestTrade;
     for (let hops = 1; hops <= maxHops; hops++) {
       const tradeMethod = isExactIn ? Trade.bestTradeExactIn : Trade.bestTradeExactOut;
@@ -526,6 +506,7 @@ class Web3Provider extends React.PureComponent {
       getTokenUSDPrice: this.getTokenUSDPrice.bind(this),
       getTokenBalance: this.getTokenBalance.bind(this),
       getTokenBalanceKey: this.getTokenBalanceKey.bind(this),
+      getPairs: this.getPairs.bind(this),
       getTrade: this.getTrade.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
     }}>

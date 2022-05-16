@@ -21,6 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
 
     &:nth-child(1) {
@@ -168,5 +169,54 @@
   .isvg {
     display: flex;
     align-items: center;
+  }
+
+  &__Price, &__Slippage {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 8px 15px;
+    margin-top: 12px;
+    box-sizing: border-box;
+    font-size: 12px;
+    font-weight: 600;
+
+    & + .DexSwap__Slippage {
+      margin-top: 0;
+    }
+    span {
+      &:first-child {
+        opacity: 0.6;
+      }
+      &:nth-child(2) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  &__description {
+    background: #fff;
+    border-radius: var(--radius-panel);
+    width: 100%;
+    margin: 24px 0 0;
+    padding: 24px 24px;
+    font-size: 12px;
+    font-weight: 600;
+
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        &:first-child {
+          opacity: 0.6;
+        }
+        &:nth-child(2) {
+          font-size: 14px;
+        }
+      }
+    }
   }
 }
