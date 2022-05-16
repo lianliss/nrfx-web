@@ -6,7 +6,8 @@ import _ from 'lodash';
 import axios from 'axios';
 import baseTokens from 'src/index/constants/baseTokens';
 import getAllPairsCombinations from 'utils/getPairCombinations';
-import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, } from '@pancakeswap/sdk';
+import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
+import significant from 'utils/significant';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -381,7 +382,10 @@ class Web3Provider extends React.PureComponent {
       ).call();
       return wei.from(data[1], Number(_.get(token1, 'decimals', 18)));
     } catch (error) {
-      console.error('[getTokensRelativePrice]', this.getBSCScanLink(token0), this.getBSCScanLink(token1), error);
+      console.error('[getTokensRelativePrice]',
+        this.getBSCScanLink(token0.address),
+        this.getBSCScanLink(token1.address),
+        error);
     }
   }
 
@@ -495,6 +499,43 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  fractionToHex = (fraction, decimals) => this.web3Host.utils.toHex(wei.to(significant(fraction), decimals));
+
+  async swap(pair, trade, slippageTolerance = 2, isExactIn = true) {
+    const routerContract = new this.web3Host.eth.Contract(
+      require('src/index/constants/ABI/PancakeRouter'),
+      this.routerAddress,
+    );
+    const isFromBNB = !_.get(pair, '[0].address');
+    const isToBNB = !_.get(pair, '[1].address');
+
+    const slippageFraction = new Fraction(JSBI.BigInt(slippageTolerance), JSBI.BigInt(100));
+    const slippageAmount = isExactIn
+      ? trade.outputAmount.asFraction.multiply(slippageFraction)
+      : trade.inputAmount.asFraction.multiply(slippageFraction);
+
+    let method = 'swap';
+    method += isExactIn ? 'Exact' : '';
+    method += isFromBNB ? 'ETH' : 'Tokens';
+    method += 'For';
+    method += !isExactIn ? 'Exact' : '';
+    method += isToBNB ? 'ETH' : 'Tokens';
+
+    const options = {};
+    if (isExactIn) {
+      const amountIn = this.fractionToHex(trade.inputAmount.asFraction, pair[0].decimals);
+      const amountOutMin = this.fractionToHex(trade.outputAmount.asFraction.subtract(slippageAmount), pair[1].decimals);
+      Object.assign(options, {amountIn, amountOutMin});
+    } else {
+      const amountOut = this.fractionToHex(trade.outputAmount.asFraction, pair[1].decimals);
+      const amountInMax = this.fractionToHex(trade.inputAmount.asFraction.add(slippageAmount), pair[0].decimals);
+      Object.assign(options, {amountOut, amountInMax});
+    }
+
+    console.log('SWAP', pair, trade, isExactIn, method, options, slippageAmount.toFixed(10));
+    //return pairContract.methods.getReserves().call();
+  }
+
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
@@ -508,6 +549,7 @@ class Web3Provider extends React.PureComponent {
       getTokenBalanceKey: this.getTokenBalanceKey.bind(this),
       getPairs: this.getPairs.bind(this),
       getTrade: this.getTrade.bind(this),
+      swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
     }}>
       {this.props.children}

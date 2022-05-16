@@ -188,10 +188,10 @@ class DexSwap extends React.PureComponent {
         this.state.pair[1],
         this.state.pair[0],
       ],
-      amount0: 0,
-      amount1: 0,
-      relation: 1 / this.state.relation,
-      executionPrice: significant(trade.executionPrice),
+      amount0: this.state.amount1,
+      amount1: this.state.amount0,
+      exactIndex: Number(!this.state.exactIndex),
+      executionPrice: significant(_.get(trade, 'executionPrice', 0)),
     })
   }
 
@@ -252,6 +252,16 @@ class DexSwap extends React.PureComponent {
     })
   }
 
+  async executeTrade() {
+    const {swap} = this.context;
+    const {trade} = this;
+    const {pair, exactIndex, slippageTolerance} = this.state;
+    const isExactIn = !exactIndex;
+
+    const result = await swap(pair, trade, slippageTolerance, isExactIn);
+    console.log('[executeTrade]', result);
+  }
+
   render() {
     const {
       isPro,
@@ -270,12 +280,15 @@ class DexSwap extends React.PureComponent {
       { value: 'transactions', label: 'Transactions' },
     ];
 
-    const isExactIn = !!exactIndex;
+    const isExactIn = !exactIndex;
     const executionPrice = !!this.trade ? significant(this.trade.executionPrice) : '0';
     const inputAmount = !!this.trade ? this.trade.inputAmount.asFraction : new Fraction(JSBI.BigInt(0));
     const outputAmount = !!this.trade ? this.trade.outputAmount.asFraction : new Fraction(JSBI.BigInt(0));
-    const slippageAmount = (new Fraction(JSBI.BigInt(slippageTolerance * 10), JSBI.BigInt(1000)))
-      .multiply(outputAmount);
+
+    const slippageFraction = new Fraction(JSBI.BigInt(slippageTolerance), JSBI.BigInt(100));
+    const slippageAmount = !this.trade ? new Fraction(JSBI.BigInt(0)) : isExactIn
+      ? outputAmount.multiply(slippageFraction)
+      : inputAmount.multiply(slippageFraction);
     const minimumReceive = outputAmount.subtract(slippageAmount);
     const maximumSpend = inputAmount.add(slippageAmount);
 
@@ -301,7 +314,7 @@ class DexSwap extends React.PureComponent {
       ? amount0 * LIQUIDITY_PROVIDER_FEE * (route.length - 1) / 100
       : 0;
 
-    let button = <Button type="lightBlue">
+    let button = <Button type="lightBlue" onClick={connectWallet}>
       <SVG src={require('src/asset/token/wallet.svg')} />
       Connect Wallet
     </Button>;
@@ -312,7 +325,7 @@ class DexSwap extends React.PureComponent {
             Insufficient Balance
           </Button>
         } else {
-          button = <Button type="lightBlue">
+          button = <Button type="lightBlue" onClick={() => this.executeTrade()}>
             <SVG src={require('src/asset/token/wallet.svg')} />
             Buy on Narfex
           </Button>
@@ -409,7 +422,7 @@ class DexSwap extends React.PureComponent {
             {(!!this.trade && !!Number(amount0)) && <div className="DexSwap__description">
               <div className="DexSwap__description-item">
                 <span>
-                  {!isExactIn ? 'Minimum receive' : 'Maximum spend'}
+                  {isExactIn ? 'Minimum receive' : 'Maximum spend'}
                   <HoverPopup content={<div className="DexSwap__hint">
                     Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.
                   </div>}>
@@ -420,7 +433,7 @@ class DexSwap extends React.PureComponent {
                   </HoverPopup>
                 </span>
                 <span>
-                  {getFinePrice(Number(significant(!isExactIn ? minimumReceive : maximumSpend)))}
+                  {getFinePrice(Number(significant(isExactIn ? minimumReceive : maximumSpend)))}
                   &nbsp;
                   {pair[Number(!exactIndex)].symbol}
                 </span>
