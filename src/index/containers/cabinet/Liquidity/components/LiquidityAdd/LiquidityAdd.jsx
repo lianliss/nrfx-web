@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import DexSwapInput from '../../../DexSwap/components/DexSwapInput/DexSwapInput';
@@ -59,5 +60,13 @@ function LiquidityAdd({ onClose }) {
     </>
   );
 }
+
+LiquidityAdd.propTypes = {
+  onClose: PropTypes.func,
+};
+
+LiquidityAdd.defaultProps = {
+  onClose: () => {},
+};
 
 export default LiquidityAdd;

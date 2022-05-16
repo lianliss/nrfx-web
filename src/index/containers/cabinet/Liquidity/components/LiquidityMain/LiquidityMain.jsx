@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Button } from 'src/ui';
@@ -43,5 +44,17 @@ function LiquidityMain({ items, onAddClick, onRemoveClick }) {
     </>
   );
 }
+
+LiquidityMain.propTypes = {
+  items: PropTypes.array,
+  onAddClick: PropTypes.func,
+  onRemoveClick: PropTypes.func,
+};
+
+LiquidityMain.defaultProps = {
+  items: [],
+  onAddClick: () => {},
+  onRemoveClick: () => {},
+};
 
 export default LiquidityMain;

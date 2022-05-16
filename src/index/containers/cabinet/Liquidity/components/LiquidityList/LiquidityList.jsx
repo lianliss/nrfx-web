@@ -14,7 +14,7 @@ import { classNames as cn } from 'src/utils';
 import './LiquidityList.less';
 
 // Main
-function LiquidityList({ items = [], onAddClick, onRemoveClick }) {
+function LiquidityList({ items, onAddClick, onRemoveClick }) {
   const ItemContent = ({ item }) => {
     return (
       <div className="ItemContent">
@@ -82,5 +82,17 @@ function LiquidityList({ items = [], onAddClick, onRemoveClick }) {
     </ul>
   );
 }
+
+LiquidityList.propTypes = {
+  items: PropTypes.array,
+  onAddClick: PropTypes.func,
+  onRemoveClick: PropTypes.func,
+};
+
+LiquidityList.defaultProps = {
+  items: [],
+  onAddClick: () => {},
+  onRemoveClick: () => {},
+};
 
 export default LiquidityList;

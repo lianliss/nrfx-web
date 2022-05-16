@@ -7,7 +7,7 @@ import { Switch, SwitchTabs, Button } from 'src/ui';
 import DexSwap from '../../../DexSwap/DexSwap';
 import Liquidity from '../../../Liquidity/Liquidity';
 import SVG from 'utils/svg-wrap';
-import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
+import CabinetBlock sfrom 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import * as PAGES from 'src/index/constants/pages';
 
 // Styles
@@ -40,6 +40,7 @@ function SwitchPage() {
     setIsPro((prev) => !prev);
   };
 
+  // Page switch navigate
   const handleSwitchTabs = (value) => {
     if (page === value) {
       return;

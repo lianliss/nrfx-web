@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -43,5 +44,13 @@ function LiquidityRemove({ onClose }) {
     </>
   );
 }
+
+LiquidityRemove.propTypes = {
+  onClose: PropTypes.func,
+};
+
+LiquidityRemove.defaultProps = {
+  onClose: () => {},
+};
 
 export default LiquidityRemove;

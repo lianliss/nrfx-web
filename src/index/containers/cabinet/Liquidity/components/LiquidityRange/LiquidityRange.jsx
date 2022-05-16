@@ -12,6 +12,7 @@ function LiquidityRange() {
   const [value, setValue] = React.useState(75);
 
   // Handlers
+  // Range change handler
   const handleChange = (newValue) => {
     setValue(newValue);
   };
