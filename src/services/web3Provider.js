@@ -64,6 +64,14 @@ class Web3Provider extends React.PureComponent {
   web3 = null;
   web3Host = null;
 
+  getWeb3() {
+    if (this.state.isConnected) {
+      return this.web3;
+    } else {
+      return this.web3Host;
+    }
+  }
+
   componentDidMount() {
     this._mounted = true;
 
@@ -144,7 +152,7 @@ class Web3Provider extends React.PureComponent {
 
     // Get a liquidity for each pair
     const results = await Promise.allSettled(addresses.map(pairAddress => {
-      const pairContract = new this.web3Host.eth.Contract(
+      const pairContract = new (this.getWeb3().eth.Contract)(
         require('src/index/constants/ABI/PancakePair'),
         pairAddress,
       );
@@ -321,7 +329,7 @@ class Web3Provider extends React.PureComponent {
 
     try {
       const pairAddress = this.getPairAddress(token0, token1);
-      const contract = new this.web3Host.eth.Contract(
+      const contract = new (this.getWeb3().eth.Contract)(
         require('src/index/constants/ABI/PancakePair'),
         pairAddress,
       );
@@ -348,7 +356,7 @@ class Web3Provider extends React.PureComponent {
   }
 
   // Shortcur to toBN method
-  toBN = data => this.web3Host.utils.toBN(data);
+  toBN = data => this.getWeb3().utils.toBN(data);
 
   /**
    * Returns relation between tokens reserves, which means that for 1 token0 you will get n number of token1
@@ -365,10 +373,10 @@ class Web3Provider extends React.PureComponent {
       const {toBN} = this;
       const decimals = Number(_.get(token0, 'decimals', 18));
       const amountWei = wei.to(amount, decimals);
-      const amountHex = this.web3Host.utils.toHex(amountWei);
+      const amountHex = this.getWeb3().utils.toHex(amountWei);
 
       // Get token0 address and decimals value from the pair
-      const routerContract = new this.web3Host.eth.Contract(
+      const routerContract = new (this.getWeb3().eth.Contract)(
         require('src/index/constants/ABI/PancakeRouter'),
         this.routerAddress,
       );
@@ -418,14 +426,14 @@ class Web3Provider extends React.PureComponent {
 
       if (tokenContractAddress) {
         // Return token balance
-        const contract = new this.web3Host.eth.Contract(
+        const contract = new (this.getWeb3().eth.Contract)(
           require('src/index/constants/ABI/NarfexToken'),
           tokenContractAddress,
         );
         return await contract.methods.balanceOf(accountAddress).call();
       } else {
         // Return default balance
-        return await this.web3Host.eth.getBalance(accountAddress);
+        return await (this.getWeb3().eth.getBalance(accountAddress));
       }
     } catch (error) {
       console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
@@ -499,12 +507,12 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  fractionToHex = (fraction, decimals) => this.web3Host.utils.toHex(wei.to(significant(fraction), decimals));
+  fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
 
   async swap(pair, trade, slippageTolerance = 2, isExactIn = true) {
     const {accountAddress} = this.state;
     const {web3} = this;
-    const routerContract = new this.web3Host.eth.Contract(
+    const routerContract = new (this.getWeb3().eth.Contract)(
       require('src/index/constants/ABI/PancakeRouter'),
       this.routerAddress,
     );
@@ -560,7 +568,7 @@ class Web3Provider extends React.PureComponent {
     options.push(path);
 
     options.push(accountAddress); // "to" field
-    options.push(this.web3Host.utils.toHex(Math.round(Date.now()/1000)+60*20)); // Deadline 20 minutes
+    options.push(this.getWeb3().utils.toHex(Math.round(Date.now()/1000)+60*20)); // Deadline 20 minutes
 
     const count = await web3.eth.getTransactionCount(accountAddress);
     const data = routerContract.methods[method](...options);
