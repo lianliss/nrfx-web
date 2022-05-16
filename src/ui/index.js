@@ -59,3 +59,4 @@ export { default as Status } from "./components/Status/Status";
 export { default as Separator } from "./components/Separator/Separator";
 export { default as HistoryItem } from "./components/HistoryItem/HistoryItem";
 export { default as CopyText} from "./components/CopyText/CopyText";
+export { default as HoverPopup} from "./components/HoverPopup/HoverPopup";
