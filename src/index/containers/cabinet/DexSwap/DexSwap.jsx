@@ -13,6 +13,8 @@ import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 import significant from 'utils/significant';
 import { Fraction, JSBI } from '@pancakeswap/sdk';
+import * as toast from 'actions/toasts';
+import { getLang } from "utils";
 
 // Styles
 import './DexSwap.less';
@@ -38,6 +40,10 @@ class DexSwap extends React.PureComponent {
     reserves1: 0,
     executionPrice: null,
     slippageTolerance: 2,
+    transactions: window.localStorage
+      .getItem('DexSwapTransactions')
+      ? JSON.parse(window.localStorage.getItem('DexSwapTransactions'))
+      : [],
   };
 
   balanceUpdateInterval = null;
@@ -258,8 +264,30 @@ class DexSwap extends React.PureComponent {
     const {pair, exactIndex, slippageTolerance} = this.state;
     const isExactIn = !exactIndex;
 
-    const result = await swap(pair, trade, slippageTolerance, isExactIn);
-    console.log('[executeTrade]', result);
+    try {
+      const txHash = await swap(pair, trade, slippageTolerance, isExactIn);
+
+      // Save transactions to localStorage
+      const record = window.localStorage.getItem('DexSwapTransactions');
+      let transactions = record ? JSON.parse(record) : [];
+      transactions = [
+        {
+          txHash,
+          token0: pair[0].symbol,
+          token1: pair[1].symbol,
+          amount0: Number(trade.inputAmount.asFraction.toFixed(10)),
+          amount1: Number(trade.outputAmount.asFraction.toFixed(10)),
+        },
+        ...transactions,
+      ];
+      window.localStorage.setItem('DexSwapTransactions', JSON.stringify(transactions));
+      this.setState({transactions});
+
+      toast.success(getLang('status_success'));
+    } catch (error) {
+      toast.warning('Transaction error');
+      console.log('[executeTrade] error', error.code, error.message, error.name);
+    }
   }
 
   render() {
@@ -269,6 +297,7 @@ class DexSwap extends React.PureComponent {
       amount0, amount1,
       exactIndex,
       slippageTolerance,
+      transactions,
     } = this.state;
     const {
       isConnected,
@@ -486,6 +515,24 @@ class DexSwap extends React.PureComponent {
                   {route.join(' > ')}
                 </span>
               </div>
+            </div>}
+            {!!transactions.length && <div className="DexSwap__description">
+              <h3>
+                Last transactions
+              </h3>
+              {transactions.map(item => {
+                const {txHash, token0, token1, amount0, amount1} = item;
+                const link = `https://bscscan.com/tx/${txHash}`;
+
+                return <div className="DexSwap__description-item" key={txHash}>
+                  <span>
+                    <a href={link} target="_blank">{txHash}</a>
+                  </span>
+                  <span>
+                    {getFinePrice(amount0)} {token0} > {getFinePrice(amount1)} {token1}
+                  </span>
+                </div>
+              })}
             </div>}
           </div>
           <div className="DexSwap__bg-center">

@@ -204,6 +204,11 @@
     font-size: 12px;
     font-weight: 600;
 
+    h3 {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
     &-item {
       display: flex;
       justify-content: space-between;
@@ -215,7 +220,7 @@
         position: relative;
 
         &:first-child {
-          opacity: 0.6;
+          color: var(--gray);
         }
         &:nth-child(2) {
           font-size: 14px;
@@ -229,6 +234,14 @@
         &.red {
           color: var(--red);
         }
+
+        a {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 160px;
+          display: inline-block;
+        }
       }
     }
   }
@@ -238,7 +251,9 @@
     z-index: 1;
 
     &__content {
-      z-index: 1;
+      z-index: 100;
+      color: var(--cool-gray);
+      font-weight: 400;
     }
   }
   &__hint {

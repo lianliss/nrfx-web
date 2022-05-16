@@ -502,6 +502,8 @@ class Web3Provider extends React.PureComponent {
   fractionToHex = (fraction, decimals) => this.web3Host.utils.toHex(wei.to(significant(fraction), decimals));
 
   async swap(pair, trade, slippageTolerance = 2, isExactIn = true) {
+    const {accountAddress} = this.state;
+    const {web3} = this;
     const routerContract = new this.web3Host.eth.Contract(
       require('src/index/constants/ABI/PancakeRouter'),
       this.routerAddress,
@@ -509,11 +511,13 @@ class Web3Provider extends React.PureComponent {
     const isFromBNB = !_.get(pair, '[0].address');
     const isToBNB = !_.get(pair, '[1].address');
 
+    // Calculate slippage tolerance tokens amount
     const slippageFraction = new Fraction(JSBI.BigInt(slippageTolerance), JSBI.BigInt(100));
     const slippageAmount = isExactIn
       ? trade.outputAmount.asFraction.multiply(slippageFraction)
       : trade.inputAmount.asFraction.multiply(slippageFraction);
 
+    // Generate swap contract method name
     let method = 'swap';
     method += isExactIn ? 'Exact' : '';
     method += isFromBNB ? 'ETH' : 'Tokens';
@@ -521,19 +525,69 @@ class Web3Provider extends React.PureComponent {
     method += !isExactIn ? 'Exact' : '';
     method += isToBNB ? 'ETH' : 'Tokens';
 
-    const options = {};
+    const options = [];
+    let value;
     if (isExactIn) {
+
+      // From exact tokens
       const amountIn = this.fractionToHex(trade.inputAmount.asFraction, pair[0].decimals);
+      if (!isFromBNB) { // Do not set amountIn if BNB first
+        options.push(amountIn);
+      } else {
+        value = amountIn;
+      }
+
       const amountOutMin = this.fractionToHex(trade.outputAmount.asFraction.subtract(slippageAmount), pair[1].decimals);
-      Object.assign(options, {amountIn, amountOutMin});
+      options.push(amountOutMin);
+
     } else {
+
+      // To exact tokens
       const amountOut = this.fractionToHex(trade.outputAmount.asFraction, pair[1].decimals);
+      options.push(amountOut);
+
       const amountInMax = this.fractionToHex(trade.inputAmount.asFraction.add(slippageAmount), pair[0].decimals);
-      Object.assign(options, {amountOut, amountInMax});
+      if (!isFromBNB) { // Do not set amountIn if BNB first
+        options.push(amountInMax);
+      } else {
+        value = amountInMax;
+      }
+
     }
 
-    console.log('SWAP', pair, trade, isExactIn, method, options, slippageAmount.toFixed(10));
-    //return pairContract.methods.getReserves().call();
+    // Swap route
+    const path = trade.route.path.map(token => token.address);
+    options.push(path);
+
+    options.push(accountAddress); // "to" field
+    options.push(this.web3Host.utils.toHex(Math.round(Date.now()/1000)+60*20)); // Deadline 20 minutes
+
+    const count = await web3.eth.getTransactionCount(accountAddress);
+    const data = routerContract.methods[method](...options);
+
+    console.log('SWAP', pair, trade, isExactIn, method, options, count);
+    const rawTransaction = {
+      from: accountAddress,
+      gasPrice: web3.utils.toHex(5000000000),
+      gasLimit: web3.utils.toHex(290000),
+      to: this.routerAddress,
+      data: data.encodeABI(),
+      nonce: web3.utils.toHex(count),
+    };
+    if (isFromBNB) {
+      rawTransaction.value = value;
+    }
+
+    try {
+      const txHash = await this.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [rawTransaction],
+      });
+      return txHash;
+    } catch (error) {
+      console.error('[swap]', error);
+      throw error;
+    }
   }
 
   render() {
