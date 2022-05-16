@@ -1,0 +1,42 @@
+.LiquidityRemove {
+  &.Liquidity__header {
+    position: relative;
+  }
+
+  &__result {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 17px 16px;
+    background: var(--alice-blue);
+    border-radius: var(--radius-panel);
+    box-sizing: border-box;
+  }
+
+  .close {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    cursor: pointer;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+
+    .WalletIcon {
+      margin-left: 4px;
+    }
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+  }
+}

@@ -2,9 +2,9 @@ import React from 'react';
 
 // Components
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
-import LiquidityList from './components/LiquidityList/LiquidityList';
-import { Button } from 'src/ui';
-import SVG from 'utils/svg-wrap';
+import LiquidityAdd from './components/LiquidityAdd/LiquidityAdd';
+import LiquidityRemove from './components/LiquidityRemove/LiquidityRemove';
+import LiquidityMain from './components/LiquidityMain/LiquidityMain';
 
 // Styles
 import './Liquidity.less';
@@ -38,32 +38,31 @@ const items = [
 
 // Main
 function Liquidity() {
+  const [currentDisplay, setCurrentDisplay] = React.useState('remove');
+
   return (
     <CabinetBlock className="Liquidity">
-      <div className="Liquidity__header">
-        <div className="Liquidity__title">Liquidity</div>
-        <p className="default-text">Add liquidity to receive LP tokens</p>
-        <Button type="lightBlue">
-          Add Liquidity <span>+</span>
-        </Button>
-      </div>
-      <div className="Liquidity__body">
-        <div className="Liquidity__subtitle">
-          <span>Your Liquidity</span>
-          <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
-        </div>
-        <LiquidityList items={items} />
-      </div>
-      <div className="Liquidity__footer">
-        <p className="default-text">
-          Don't see a pool you joined? <a href="/">Import it.</a>
-        </p>
-        <p className="default-text">
-          Or, if you staked your LP tokens in a farm, unstake them to see
-          them&nbsp;
-          <a href="/">here.</a>
-        </p>
-      </div>
+      {currentDisplay === 'main' && (
+        <LiquidityMain
+          items={items}
+          onAddClick={() => setCurrentDisplay('add')}
+          onRemoveClick={() => setCurrentDisplay('remove')}
+        />
+      )}
+      {currentDisplay === 'add' && (
+        <LiquidityAdd
+          onClose={() => {
+            setCurrentDisplay('main');
+          }}
+        />
+      )}
+      {currentDisplay === 'remove' && (
+        <LiquidityRemove
+          onClose={() => {
+            setCurrentDisplay('main');
+          }}
+        />
+      )}
     </CabinetBlock>
   );
 }

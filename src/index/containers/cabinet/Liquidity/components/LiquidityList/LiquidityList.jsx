@@ -14,7 +14,7 @@ import { classNames as cn } from 'src/utils';
 import './LiquidityList.less';
 
 // Main
-function LiquidityList({ items = [] }) {
+function LiquidityList({ items = [], onAddClick, onRemoveClick }) {
   const ItemContent = ({ item }) => {
     return (
       <div className="ItemContent">
@@ -45,10 +45,10 @@ function LiquidityList({ items = [] }) {
           </div>
         </div>
         <div className="ItemContent__footer">
-          <Button type="lightBlue" size="extra_large">
+          <Button type="lightBlue" size="extra_large" onClick={onAddClick}>
             Add
           </Button>
-          <Button type="dark" size="extra_large">
+          <Button type="dark" size="extra_large" onClick={onRemoveClick}>
             Remove
           </Button>
         </div>
