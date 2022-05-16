@@ -203,6 +203,7 @@
     padding: 24px 24px;
     font-size: 12px;
     font-weight: 600;
+    box-sizing: border-box;
 
     h3 {
       font-size: 14px;
@@ -260,5 +261,43 @@
     z-index: 100;
     text-align: left;
     min-width: 300px;
+  }
+}
+
+.adaptive .Exchange__wrapper {
+  padding-top: 20px;
+}
+
+.adaptive .DexSwap {
+  padding: 15px 0;
+
+  h1 {
+    font-size: 24px;
+  }
+  &__bg {
+    display: none;
+  }
+  .CabinetBlock {
+    border-radius: 0;
+  }
+  &__form {
+    padding: 24px 16px;
+  }
+  &__description {
+    width: 100%;
+    padding: 15px 15px;
+    border-radius: 0;
+
+    span {
+      &:first-child {
+
+      }
+      &:nth-child(2) {
+        font-size: 12px;
+      }
+      a {
+        width: 100px;
+      }
+    }
   }
 }
