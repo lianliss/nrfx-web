@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // Components
-import { Switch, SwitchTabs, Button } from 'src/ui';
+import { Switch, SwitchTabs, Button, HoverPopup, } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import DexSwapInput from './components/DexSwapInput/DexSwapInput';
@@ -19,6 +19,7 @@ import './DexSwap.less';
 
 const BALANCE_UPDATE_INTERVAL = 5000;
 const LIQUIDITY_UPDATE_INTERVAL = 5000;
+const LIQUIDITY_PROVIDER_FEE = 0.25; // Fee in percents
 
 class DexSwap extends React.PureComponent {
   static contextType = Web3Context;
@@ -259,6 +260,10 @@ class DexSwap extends React.PureComponent {
       exactIndex,
       slippageTolerance,
     } = this.state;
+    const {
+      isConnected,
+      connectWallet,
+    } = this.context;
     const switchTabs = [
       { value: 'swap', label: 'Swap' },
       { value: 'liquidity', label: 'Liquidity' },
@@ -273,15 +278,51 @@ class DexSwap extends React.PureComponent {
       .multiply(outputAmount);
     const minimumReceive = outputAmount.subtract(slippageAmount);
     const maximumSpend = inputAmount.add(slippageAmount);
+
     const priceImpact = !!this.trade ? this.trade.priceImpact.asFraction : new Fraction(JSBI.BigInt(0));
+    const priceImpactNumber = Number(significant(priceImpact)) * 100;
+    let priceImpactColor = '';
+    if (priceImpactNumber < 1) priceImpactColor = 'green';
+    if (priceImpactNumber >= 3) priceImpactColor = 'yellow';
+    if (priceImpactNumber >= 5) priceImpactColor = 'red';
+
     const path = !!this.trade ? this.trade.route.path : [];
     const route = path.map((token, index) => {
       return token.symbol === 'WBNB'
         && index
         && index !== path.length - 1
+        || (!index && !_.get(this.state.pair, '[0].address'))
+        || (index === path.length - 1 && !_.get(this.state.pair, '[1].address'))
         ? 'BNB'
         : token.symbol;
     });
+    const balance = wei.from(_.get(this.state.pair, '[0].balance', '0'));
+    const fee = Number(amount0)
+      ? amount0 * LIQUIDITY_PROVIDER_FEE * (route.length - 1) / 100
+      : 0;
+
+    let button = <Button type="lightBlue">
+      <SVG src={require('src/asset/token/wallet.svg')} />
+      Connect Wallet
+    </Button>;
+    if (isConnected) {
+      if (Number(amount0)) {
+        if (Number(amount0) > balance) {
+          button = <Button type="secondary" disabled>
+            Insufficient Balance
+          </Button>
+        } else {
+          button = <Button type="lightBlue">
+            <SVG src={require('src/asset/token/wallet.svg')} />
+            Buy on Narfex
+          </Button>
+        }
+      } else {
+        button = <Button type="secondary" disabled>
+          Enter Amount
+        </Button>
+      }
+    }
 
     return (
       <div className="DexSwap">
@@ -345,11 +386,7 @@ class DexSwap extends React.PureComponent {
                     {slippageTolerance.toFixed(2)}%
                   </span>
                 </div>
-                <Button type="lightBlue">
-                  <SVG src={require('src/asset/token/wallet.svg')} />
-                  Buy on Narfex
-                </Button>
-
+                {button}
 
                 {!_.isNull(selectToken)
                 && <TokenSelect onChange={value => {
@@ -369,10 +406,18 @@ class DexSwap extends React.PureComponent {
                                 {...this.context} />}
               </div>
             </CabinetBlock>
-            {!!this.trade && <div className="DexSwap__description">
+            {(!!this.trade && !!Number(amount0)) && <div className="DexSwap__description">
               <div className="DexSwap__description-item">
                 <span>
                   {!isExactIn ? 'Minimum receive' : 'Maximum spend'}
+                  <HoverPopup content={<div className="DexSwap__hint">
+                    Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.
+                  </div>}>
+                    <SVG
+                      src={require('src/asset/icons/cabinet/question-icon.svg')}
+                      className="FarmingTableItem__action_icon"
+                    />
+                  </HoverPopup>
                 </span>
                 <span>
                   {getFinePrice(Number(significant(!isExactIn ? minimumReceive : maximumSpend)))}
@@ -383,14 +428,46 @@ class DexSwap extends React.PureComponent {
               <div className="DexSwap__description-item">
                 <span>
                   Price Impact
+                  <HoverPopup content={<div className="DexSwap__hint">
+                    The difference between the market price and estimated price due to trade size.
+                  </div>}>
+                    <SVG
+                      src={require('src/asset/icons/cabinet/question-icon.svg')}
+                      className="FarmingTableItem__action_icon"
+                    />
+                  </HoverPopup>
+                </span>
+                <span className={priceImpactColor}>
+                  {(priceImpactNumber).toFixed(2)}%
+                </span>
+              </div>
+              <div className="DexSwap__description-item">
+                <span>
+                  Liquidity provider fee
+                  <HoverPopup content={<div className="DexSwap__hint">
+                    For each trade a 0.25% fee is paid
+                  </div>}>
+                    <SVG
+                      src={require('src/asset/icons/cabinet/question-icon.svg')}
+                      className="FarmingTableItem__action_icon"
+                    />
+                  </HoverPopup>
                 </span>
                 <span>
-                  {(Number(significant(priceImpact)) * 100).toFixed(2)}%
+                  {getFinePrice(fee)} {_.get(this.state, 'pair[0].symbol', '')}
                 </span>
               </div>
               <div className="DexSwap__description-item">
                 <span>
                   Route
+                  <HoverPopup content={<div className="DexSwap__hint">
+                    Routing through these tokens resulted in the best price for your trade.
+                  </div>}>
+                    <SVG
+                      src={require('src/asset/icons/cabinet/question-icon.svg')}
+                      className="FarmingTableItem__action_icon"
+                    />
+                  </HoverPopup>
                 </span>
                 <span>
                   {route.join(' > ')}

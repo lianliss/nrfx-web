@@ -210,13 +210,40 @@
       align-items: center;
 
       span {
+        display: flex;
+        align-items: center;
+        position: relative;
+
         &:first-child {
           opacity: 0.6;
         }
         &:nth-child(2) {
           font-size: 14px;
         }
+        &.green {
+          color: var(--green);
+        }
+        &.yellow {
+          color: var(--yellow);
+        }
+        &.red {
+          color: var(--red);
+        }
       }
     }
+  }
+  .HoverPopup {
+    position: absolute;
+    right: -18px;
+    z-index: 1;
+
+    &__content {
+      z-index: 1;
+    }
+  }
+  &__hint {
+    z-index: 100;
+    text-align: left;
+    min-width: 300px;
   }
 }
