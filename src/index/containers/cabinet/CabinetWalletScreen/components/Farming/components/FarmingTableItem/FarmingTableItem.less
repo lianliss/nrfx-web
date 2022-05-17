@@ -9,6 +9,17 @@
     cursor: default;
   }
 
+  &:not(.options) {
+    td {
+      &:nth-child(3),
+      &:nth-child(4) {
+        .Table__td__cont {
+          color: var(--primary-dark-blue);
+        }
+      }
+    }
+  }
+
   // <TableColumn />
   td {
     .Table__td__cont {
@@ -58,6 +69,16 @@
   }
 
   &__action_icon {
+    svg,
+    path {
+      fill: var(--dark-black);
+      border-color: var(--dark-black);
+    }
+
+    circle {
+      stroke: var(--dark-black);
+    }
+
     &:hover {
       opacity: 0.8;
     }
@@ -104,6 +125,36 @@
       font-size: 12px;
       line-height: 150%;
       color: #707070;
+    }
+  }
+
+  .details {
+    user-select: none;
+
+    .Table__td__cont {
+      color: var(--cool-gray) !important;
+      display: inline-flex;
+      align-items: center;
+
+      svg,
+      path {
+        fill: var(--cool-gray);
+      }
+    }
+
+    &.active {
+      .isvg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .small-popup {
+    span {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 100%;
+      color: #000;
     }
   }
 

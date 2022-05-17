@@ -5,37 +5,30 @@
   &__content {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    padding: 20px;
+    position: fixed;
     box-sizing: border-box;
-    bottom: 0;
-    left: 0;
     background: #fff;
-    transform: translate(-50%, calc(100% + 17px));
-    filter: drop-shadow(0px 15px 75px rgba(0, 0, 0, 0.1));
     border-radius: 10px;
     // Close this popup
     opacity: 0;
     visibility: hidden;
     // -------
     z-index: 99;
-    transition: all 0.3s;
+    transition: opacity 0.3s, visibility 0.3s;
+    box-shadow: 0px 15px 75px rgba(0, 0, 0, 0.1);
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 
   &__children {
     cursor: pointer;
   }
 
-  // Open popup
-  &__children:hover + &__content {
-    opacity: 1;
-    visibility: visible;
-  }
-
   &__triangle {
     position: absolute;
-    top: -11px;
-    left: 49.5%;
     display: flex;
     align-items: center;
     justify-content: center;

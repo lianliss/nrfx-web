@@ -132,7 +132,7 @@ function FarmingTableItemOptions({
             Harvest
           </Button>
         </TableColumn>
-        <TableColumn colspan={2}>
+        <TableColumn colspan={3}>
           <DoubleText
             first={earned[0]}
             second={earned[1]}

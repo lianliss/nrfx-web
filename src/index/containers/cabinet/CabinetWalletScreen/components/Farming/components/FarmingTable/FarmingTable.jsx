@@ -96,6 +96,8 @@ function FarmingTable() {
             <TableColumn sub="ARP" />,
             <TableColumn sub="Liquidity" />,
             <TableColumn sub="Earned" />,
+            <TableColumn />,
+            <TableColumn />,
           ]}
           className="FarmingTable__table"
         >

@@ -41,10 +41,8 @@ function FarmingTableItem({
 
   const QuestionAPY = () => (
     <p>
-      Налог — обязательный, индивидуально безвозмездный платёж, взимаемый с
-      организаций и физических лиц в форме отчуждения принадлежащих им на праве
-      собственности средств, в целях финансового обеспечения деятельности
-      государства и муниципальных образований.
+      APY is based on your one-year income if Harvest and Compound are made once
+      a 14 days. Provided APY calculations depend on current APR rates.
     </p>
   );
 
@@ -108,22 +106,31 @@ function FarmingTableItem({
         </TableColumn>
         <TableColumn>
           $<NumberFormat number={liquidity} />
-          <HoverPopup content={<QuestionAPY />}>
-            <SVG
-              src={require('src/asset/icons/cabinet/question-icon.svg')}
-              className="FarmingTableItem__action_icon"
-            />
-          </HoverPopup>
+          <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
         </TableColumn>
         <TableColumn>—</TableColumn>
-        <TableColumn>
-          <span>
-            Pair info
-            <SVG src={require('src/asset/icons/export.svg')} />
-          </span>
+        <TableColumn className={'details' + (isActive ? ' active' : '')}>
+          <span>Details</span>
+          <SVG src={require('src/asset/icons/cabinet/select-arrow.svg')} />
         </TableColumn>
-        <TableColumn className="details">
-          <span>{isActive ? 'hide' : 'details'}</span>
+        <TableColumn>
+          <HoverPopup
+            content={
+              <span>
+                View contract{' '}
+                <SVG
+                  src={require('src/asset/icons/export.svg')}
+                  style={{ marginLeft: 12 }}
+                />
+              </span>
+            }
+            className="small-popup"
+            type="top"
+            size="small"
+            windowRight={52}
+          >
+            <SVG src={require('src/asset/icons/warning-blue.svg')} />
+          </HoverPopup>
         </TableColumn>
       </TableCell>
       {isActive && (
