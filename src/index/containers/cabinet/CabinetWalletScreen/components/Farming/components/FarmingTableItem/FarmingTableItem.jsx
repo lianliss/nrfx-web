@@ -29,6 +29,10 @@ function FarmingTableItem({
   earned,
   onStake,
   openRoi,
+  // This props is for popups test display
+  onUnstake,
+  onHardwest,
+  // -----
 }) {
   // States
   const [isActive, setIsActive] = React.useState(false);
@@ -143,6 +147,8 @@ function FarmingTableItem({
           currency={currencies[1] ? currencies[1] : currencies[0]}
           handleTypeChange={handleTypeChange}
           onStake={onStake}
+          onUnstake={onUnstake}
+          onHardwest={onHardwest}
         />
       )}
     </>

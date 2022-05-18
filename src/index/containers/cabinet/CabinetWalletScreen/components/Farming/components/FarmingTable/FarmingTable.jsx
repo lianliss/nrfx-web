@@ -11,10 +11,7 @@ import {
 } from 'src/ui';
 import Select from 'src/index/components/cabinet/Select/Select';
 import FarmingTableItem from '../FarmingTableItem/FarmingTableItem';
-import {
-  FarmingPopupStaked,
-  FarmingPopupUnstaked,
-} from '../FarmingPopup/FarmingPopup';
+import { FarmingPopup } from '../FarmingPopup/FarmingPopup';
 import { openModal } from 'src/actions';
 
 // Styles
@@ -36,6 +33,19 @@ function FarmingTable() {
     headerTabs[0].value
   );
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
+
+  // Test popups display
+  const [unstaked, setUnstake] = React.useState({
+    visible: false,
+    currency: '',
+    amount: 0,
+  });
+
+  const [hadrwest, setHardwest] = React.useState({
+    visible: false,
+    currency: 'nrfx',
+    amount: 0,
+  });
 
   // Test array
   // When integrating, transfer to props items.
@@ -117,14 +127,44 @@ function FarmingTable() {
                 earned={item.earned}
                 onStake={onStake}
                 openRoi={openRoi}
+                onUnstake={(currency, amount) => {
+                  // Test display
+                  setUnstake({
+                    visible: true,
+                    currency,
+                    amount,
+                  });
+                }}
+                onHardwest={(currency, amount) => {
+                  // Test display
+                  setHardwest({
+                    visible: true,
+                    currency,
+                    amount,
+                  });
+                }}
               />
             );
           })}
         </Table>
       </div>
-      {/*Popups Staked & Unstaked*/}
-      {/*<FarmingPopupStaked currency={'bnb'} number={0.15} />*/}
-      {/*<FarmingPopupUnstaked currency={'bnb'} number={0.15} />*/}
+      {/*Test popups display*/}
+      {unstaked.visible && (
+        <FarmingPopup
+          title="Unstaked"
+          currency={unstaked.currency}
+          number={unstaked.amount}
+          onClose={() => setUnstake((prev) => ({ ...prev, visible: false }))}
+        />
+      )}
+      {hadrwest.visible && (
+        <FarmingPopup
+          title="Hadrwest"
+          currency={hadrwest.currency}
+          number={hadrwest.amount}
+          onClose={() => setHardwest((prev) => ({ ...prev, visible: false }))}
+        />
+      )}
     </div>
   );
 }

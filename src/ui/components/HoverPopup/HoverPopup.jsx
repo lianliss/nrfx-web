@@ -103,9 +103,7 @@ function HoverPopup({
       <div
         className="HoverPopup__children"
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={() => {
-          setIsVisible(false);
-        }}
+        onMouseLeave={() => setIsVisible(false)}
       >
         {children}
       </div>

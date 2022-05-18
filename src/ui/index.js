@@ -1,3 +1,4 @@
+export { default as Form } from "./components/Form/Form";
 export { default as Button, ButtonWrapper } from "./components/Button/Button";
 export { default as Badge } from "./components/Badge/Badge";
 export { default as WatchButton } from "./components/Button/WatchButton";

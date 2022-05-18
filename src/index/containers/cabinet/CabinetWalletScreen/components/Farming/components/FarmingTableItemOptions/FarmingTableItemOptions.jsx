@@ -19,6 +19,10 @@ function FarmingTableItemOptions({
   staked,
   earned,
   onStake,
+  // This props is for popups test display
+  onUnstake,
+  onHardwest,
+  // -----
 }) {
   // States
   const [isVisible, setIsVisible] = React.useState(false);
@@ -111,7 +115,10 @@ function FarmingTableItemOptions({
               </Button>
               <Button
                 type="dark"
-                onClick={() => handleTypeChange('stake')}
+                onClick={() => {
+                  onUnstake('usdt', 100); // Test popup display
+                  handleTypeChange('stake');
+                }}
                 className="unstake"
               >
                 Unstake
@@ -128,7 +135,11 @@ function FarmingTableItemOptions({
           />
         </TableColumn>
         <TableColumn style={{ maxWidth: 110 }}>
-          <Button type="green-light" disabled={type !== 'staked'}>
+          <Button
+            type="green-light"
+            disabled={type !== 'staked'}
+            onClick={() => onHardwest('nrfx', 1090) /* Test popup display */}
+          >
             Harvest
           </Button>
         </TableColumn>
