@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import './Info.less';
 
 import { getLang } from 'utils';
+import LineBreaker from 'src/ui/components/LineBreaker/LineBreaker';
 import SVG from 'utils/svg-wrap';
 import ellipse from '../assets/ellipse.svg';
 
@@ -33,7 +34,9 @@ function Info({ title, progress, svgLine, position, type, adaptive }) {
         {type === 'right' ? (
           <>
             <span className="Info__progress">{getLang(progress)}%</span>
-            <span className="Info__title">{getLang(title)}</span>
+            <span className="Info__title">
+              <LineBreaker text={getLang(title)} />
+            </span>
             <div className="Info__line Info__line-right">
               <SVG src={svgLine} />
             </div>

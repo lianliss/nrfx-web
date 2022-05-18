@@ -11,6 +11,12 @@
     margin: 0 auto;
   }
 
+  h3 {
+    @media screen and (min-width: calc(@mobile-width + 1px)) {
+      opacity: 0.2;
+    }
+  }
+
   &__circle {
     display: flex;
     justify-content: center;
