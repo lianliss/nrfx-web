@@ -112,10 +112,10 @@ class Header extends React.PureComponent {
                 <BaseLink
                   router={router}
                   routeName={pages.EXCHANGE}
-                  className="CabinetHeader__link"
+                  className="CabinetHeader__link disabled"
                   activeClassName="active"
                   onClick={() => {
-                    this.setState({ activePage: pages.CABINET_WALLET });
+                    //this.setState({ activePage: pages.CABINET_WALLET });
                   }}
                 >
                   <SVG src={require("../../../../asset/24px/candles.svg")} />
