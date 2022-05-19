@@ -6,16 +6,23 @@ function FarmingTableBodyAdaptive() {
   const [height, setHeight] = React.useState(345);
 
   React.useEffect(() => {
-    const farmingContainerHeight = document.querySelector('.Farming').clientHeight;
-    const farmingHeaderHeight = document.querySelector('.Farming__header').clientHeight;
-    const tableHeaderHeight = document.querySelector('.FarmingTableHeader').clientHeight;
+    const farmingContainerHeight =
+      document.querySelector('.Farming').clientHeight;
+    const farmingHeaderHeight =
+      document.querySelector('.Farming__header').clientHeight;
+    const tableHeaderHeight = document.querySelector(
+      '.FarmingTableHeader'
+    ).clientHeight;
 
-    setHeight(farmingContainerHeight - (farmingHeaderHeight + tableHeaderHeight + 24 + 23));
+    setHeight(
+      farmingContainerHeight -
+        (farmingHeaderHeight + tableHeaderHeight + 24 + 23)
+    );
   }, []);
 
   return (
     <div className="FarmingTableBodyAdaptive">
-      <CabinetScrollBlock style={{height}}>
+      <CabinetScrollBlock style={{ height }}>
         <ul>
           <li>asdasd</li>
           <li>asdasd</li>
