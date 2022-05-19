@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
@@ -7,7 +8,7 @@ import FarmingTable from './components/FarmingTable/FarmingTable';
 // Styles
 import './Farming.less';
 
-function Farming() {
+function Farming({ adaptive }) {
   return (
     <CabinetBlock className="Farming">
       <div className="Farming__header">
@@ -21,9 +22,13 @@ function Farming() {
           </p>
         </div>
       </div>
-      <FarmingTable />
+      <FarmingTable adaptive={adaptive} />
     </CabinetBlock>
   );
 }
+
+Farming.defaultProps = {
+  adaptive: false,
+};
 
 export default Farming;

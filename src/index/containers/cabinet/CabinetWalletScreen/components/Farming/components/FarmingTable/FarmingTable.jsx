@@ -13,6 +13,8 @@ import Select from 'src/index/components/cabinet/Select/Select';
 import FarmingTableItem from '../FarmingTableItem/FarmingTableItem';
 import { FarmingPopup } from '../FarmingPopup/FarmingPopup';
 import { openModal } from 'src/actions';
+import FarmingTableHeader from '../FarmingTableHeader/FarmingTableHeader';
+import FarmingTableAdaptive from '../FarmingTableAdaptive/FarmingTableAdaptive';
 
 // Styles
 import './FarmingTable.less';
@@ -27,7 +29,7 @@ const headerTabs = [
 const sortOptions = [{ value: 'hot', label: 'Sort by Hot' }];
 
 // Main
-function FarmingTable() {
+function FarmingTable({ adaptive }) {
   // States
   const [headerTabsValue, setHeaderTabsValue] = React.useState(
     headerTabs[0].value
@@ -87,67 +89,69 @@ function FarmingTable() {
 
   return (
     <div className="FarmingTable">
-      <div className="FarmingTable__header">
-        <SwitchTabs
-          selected={headerTabsValue}
-          onChange={setHeaderTabsValue}
-          tabs={headerTabs}
-          type="light-blue"
-        />
-        <Select value={sortBy} onChange={setSortBy} options={sortOptions} />
-        <Search placeholder="Search" lite simple icon right />
-      </div>
-      <div className="FarmingTable__body">
-        <Table
-          headings={[
-            <TableColumn sub="Tag" />,
-            <TableColumn sub="Pool" />,
-            <TableColumn sub="APY" />,
-            <TableColumn sub="ARP" />,
-            <TableColumn sub="Liquidity" />,
-            <TableColumn sub="Earned" />,
-            <TableColumn />,
-            <TableColumn />,
-          ]}
-          className="FarmingTable__table"
-        >
-          {farmingItems.map((item, index) => {
-            return (
-              <FarmingTableItem
-                key={item.id}
-                id={item.id}
-                dark={index % 2 ? true : false}
-                indicator={item.indicator}
-                currencies={item.currencies}
-                apy={item.apy}
-                arp={item.arp}
-                liquidity={item.liquidity}
-                aviable={item.aviable}
-                staked={item.staked}
-                earned={item.earned}
-                onStake={onStake}
-                openRoi={openRoi}
-                onUnstake={(currency, amount) => {
-                  // Test display
-                  setUnstake({
-                    visible: true,
-                    currency,
-                    amount,
-                  });
-                }}
-                onHardwest={(currency, amount) => {
-                  // Test display
-                  setHardwest({
-                    visible: true,
-                    currency,
-                    amount,
-                  });
-                }}
-              />
-            );
-          })}
-        </Table>
-      </div>
+      <FarmingTableHeader
+        headerTabs={headerTabs}
+        headerTabsValue={headerTabsValue}
+        setHeaderTabsValue={setHeaderTabsValue}
+        sortOptions={sortOptions}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
+      {adaptive ? (
+        <FarmingTableAdaptive />
+      ) : (
+        <div className="FarmingTable__body">
+          <Table
+            headings={[
+              <TableColumn sub="Tag" />,
+              <TableColumn sub="Pool" />,
+              <TableColumn sub="APY" />,
+              <TableColumn sub="ARP" />,
+              <TableColumn sub="Liquidity" />,
+              <TableColumn sub="Earned" />,
+              <TableColumn />,
+              <TableColumn />,
+            ]}
+            className="FarmingTable__table"
+          >
+            {farmingItems.map((item, index) => {
+              return (
+                <FarmingTableItem
+                  key={item.id}
+                  id={item.id}
+                  dark={index % 2 ? true : false}
+                  indicator={item.indicator}
+                  currencies={item.currencies}
+                  apy={item.apy}
+                  arp={item.arp}
+                  liquidity={item.liquidity}
+                  aviable={item.aviable}
+                  staked={item.staked}
+                  earned={item.earned}
+                  onStake={onStake}
+                  openRoi={openRoi}
+                  onUnstake={(currency, amount) => {
+                    // Test display
+                    setUnstake({
+                      visible: true,
+                      currency,
+                      amount,
+                    });
+                  }}
+                  onHardwest={(currency, amount) => {
+                    // Test display
+                    setHardwest({
+                      visible: true,
+                      currency,
+                      amount,
+                    });
+                  }}
+                />
+              );
+            })}
+          </Table>
+        </div>
+      )}
       {/*Test popups display*/}
       {unstaked.visible && (
         <FarmingPopup
