@@ -14,7 +14,7 @@ import FarmingTableItem from '../FarmingTableItem/FarmingTableItem';
 import { FarmingPopup } from '../FarmingPopup/FarmingPopup';
 import { openModal } from 'src/actions';
 import FarmingTableHeader from '../FarmingTableHeader/FarmingTableHeader';
-import FarmingTableAdaptive from '../FarmingTableAdaptive/FarmingTableAdaptive';
+import FarmingTableBodyAdaptive from '../FarmingTableBodyAdaptive/FarmingTableBodyAdaptive';
 
 // Styles
 import './FarmingTable.less';
@@ -98,7 +98,7 @@ function FarmingTable({ adaptive }) {
         setSortBy={setSortBy}
       />
       {adaptive ? (
-        <FarmingTableAdaptive />
+        <FarmingTableBodyAdaptive />
       ) : (
         <div className="FarmingTable__body">
           <Table

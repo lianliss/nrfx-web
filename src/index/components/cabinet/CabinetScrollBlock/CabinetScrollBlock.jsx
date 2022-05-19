@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Scrollbar } from 'react-scrollbars-custom';
 
 import './CabinetScrollBlock.less';
 
-function CabinetScrollBlock({ children, ...props }) {
+function CabinetScrollBlock({ children, className, ...props }) {
   return (
-    <div className="ScrollbarBox-container">
+    <div className={`ScrollbarBox-container ${className}`}>
       <Scrollbar
         maximalThumbSize={73}
         minimalThumbSize={73}
@@ -41,5 +42,13 @@ function CabinetScrollBlock({ children, ...props }) {
     </div>
   );
 }
+
+CabinetScrollBlock.propTypes = {
+  className: PropTypes.string,
+};
+
+CabinetScrollBlock.defaultProps = {
+  className: '',
+};
 
 export default CabinetScrollBlock;
