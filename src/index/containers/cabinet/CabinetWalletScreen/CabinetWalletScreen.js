@@ -230,12 +230,6 @@ class CabinetWalletScreen extends React.PureComponent {
           <EmptyBalance currency={currency} />
         ))}
 
-        {isAdaptive && !fiatBalance && !isSwap && (
-          <ContentBox className="CabinetWalletScreen__adaptiveWalletList">
-            <WalletList currency={currency} />
-          </ContentBox>
-        )}
-
         {!isReservationExpire && <RefillBlock />}
 
         {/* <Paging

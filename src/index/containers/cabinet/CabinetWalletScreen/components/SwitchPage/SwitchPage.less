@@ -128,3 +128,14 @@
     align-items: center;
   }
 }
+
+@media screen and (max-width: @mobile-width) {
+  .SwitchPage {
+    padding: 0;
+    
+    &__bg,
+    &__bg-center {
+      display: none;
+    }
+  }
+}
