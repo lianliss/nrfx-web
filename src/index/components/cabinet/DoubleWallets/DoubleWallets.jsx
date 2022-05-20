@@ -34,9 +34,11 @@ function DoubleWallets({ first, second }) {
         {firstIcon && <SVG src={firstIcon} />}
         {secondIcon && <SVG src={secondIcon} />}
       </div>
-      {first && first.toUpperCase()}
-      {first && second && '-'}
-      {second && second.toUpperCase()}
+      <span>
+        {first && first.toUpperCase()}
+        {first && second && '-'}
+        {second && second.toUpperCase()}
+      </span>
     </div>
   );
 }

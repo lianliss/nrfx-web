@@ -9,6 +9,7 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './FarmingTableItemOptions.less';
 
+// Main
 function FarmingTableItemOptions({
   id,
   type,
@@ -18,6 +19,10 @@ function FarmingTableItemOptions({
   staked,
   earned,
   onStake,
+  // This props is for popups test display
+  onUnstake,
+  onHardwest,
+  // -----
 }) {
   // States
   const [isVisible, setIsVisible] = React.useState(false);
@@ -86,7 +91,10 @@ function FarmingTableItemOptions({
             <>
               <Button
                 type="lightBlue"
-                onClick={handleOnStake}
+                onClick={() => {
+                  handleOnStake();
+                  handleTypeChange('staked');
+                }}
                 style={{ width: '100%' }}
               >
                 Stake
@@ -95,12 +103,22 @@ function FarmingTableItemOptions({
           )}
           {type === 'staked' && (
             <>
-              <Button type="lightBlue" className="stake">
+              <Button
+                type="lightBlue"
+                className="stake"
+                onClick={() => {
+                  handleOnStake();
+                  handleTypeChange('staked');
+                }}
+              >
                 Stake
               </Button>
               <Button
                 type="dark"
-                onClick={() => handleTypeChange('connect')}
+                onClick={() => {
+                  onUnstake('usdt', 100); // Test popup display
+                  handleTypeChange('stake');
+                }}
                 className="unstake"
               >
                 Unstake
@@ -117,11 +135,15 @@ function FarmingTableItemOptions({
           />
         </TableColumn>
         <TableColumn style={{ maxWidth: 110 }}>
-          <Button type="green-light" disabled={type !== 'staked'}>
+          <Button
+            type="green-light"
+            disabled={type !== 'staked'}
+            onClick={() => onHardwest('nrfx', 1090) /* Test popup display */}
+          >
             Harvest
           </Button>
         </TableColumn>
-        <TableColumn colspan={2}>
+        <TableColumn colspan={3}>
           <DoubleText
             first={earned[0]}
             second={earned[1]}

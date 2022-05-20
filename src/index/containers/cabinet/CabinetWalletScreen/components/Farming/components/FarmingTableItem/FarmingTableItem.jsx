@@ -28,6 +28,11 @@ function FarmingTableItem({
   staked,
   earned,
   onStake,
+  openRoi,
+  // This props is for popups test display
+  onUnstake,
+  onHardwest,
+  // -----
 }) {
   // States
   const [isActive, setIsActive] = React.useState(false);
@@ -40,10 +45,8 @@ function FarmingTableItem({
 
   const QuestionAPY = () => (
     <p>
-      Налог — обязательный, индивидуально безвозмездный платёж, взимаемый с
-      организаций и физических лиц в форме отчуждения принадлежащих им на праве
-      собственности средств, в целях финансового обеспечения деятельности
-      государства и муниципальных образований.
+      APY is based on your one-year income if Harvest and Compound are made once
+      a 14 days. Provided APY calculations depend on current APR rates.
     </p>
   );
 
@@ -58,6 +61,12 @@ function FarmingTableItem({
   // @param oneOf(types) nextType - Options Type
   const handleTypeChange = (nextType) => {
     setType(nextType);
+  };
+
+  const handleRoiOpen = (e) => {
+    e.stopPropagation();
+
+    openRoi();
   };
 
   return (
@@ -84,30 +93,48 @@ function FarmingTableItem({
         <TableColumn>
           <NumberFormat number={apy} percent />
           <HoverPopup content={<QuestionAPY />}>
-            <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
+            <SVG
+              src={require('src/asset/icons/cabinet/question-icon.svg')}
+              className="FarmingTableItem__action_icon"
+            />
           </HoverPopup>
         </TableColumn>
         <TableColumn>
           <NumberFormat number={arp} percent />
-          <span>
-            <SVG src={require('src/asset/icons/cabinet/calculator-icon.svg')} />
+          <span onClick={handleRoiOpen}>
+            <SVG
+              src={require('src/asset/icons/cabinet/calculator-icon.svg')}
+              className="FarmingTableItem__action_icon"
+            />
           </span>
         </TableColumn>
         <TableColumn>
           $<NumberFormat number={liquidity} />
-          <span>
-            <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
-          </span>
+          <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
         </TableColumn>
         <TableColumn>—</TableColumn>
-        <TableColumn>
-          Pair info
-          <span>
-            <SVG src={require('src/asset/icons/export.svg')} />
-          </span>
+        <TableColumn className={'details' + (isActive ? ' active' : '')}>
+          <span>Details</span>
+          <SVG src={require('src/asset/icons/cabinet/select-arrow.svg')} />
         </TableColumn>
-        <TableColumn className="details">
-          {isActive ? 'hide' : 'details'}
+        <TableColumn>
+          <HoverPopup
+            content={
+              <span>
+                View contract{' '}
+                <SVG
+                  src={require('src/asset/icons/export.svg')}
+                  style={{ marginLeft: 12 }}
+                />
+              </span>
+            }
+            className="small-popup"
+            type="top"
+            size="small"
+            windowRight={52}
+          >
+            <SVG src={require('src/asset/icons/warning-blue.svg')} />
+          </HoverPopup>
         </TableColumn>
       </TableCell>
       {isActive && (
@@ -120,6 +147,8 @@ function FarmingTableItem({
           currency={currencies[1] ? currencies[1] : currencies[0]}
           handleTypeChange={handleTypeChange}
           onStake={onStake}
+          onUnstake={onUnstake}
+          onHardwest={onHardwest}
         />
       )}
     </>

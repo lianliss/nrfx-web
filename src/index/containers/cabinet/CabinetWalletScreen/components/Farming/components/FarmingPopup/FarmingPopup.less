@@ -3,7 +3,7 @@
 .FarmingPopup {
   // Containers
   &__header {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
 
   &__body {
@@ -38,11 +38,21 @@
     align-items: center;
   }
 
+  &:not(&__fullscreen) {
+    max-width: 353px;
+    width: 100%;
+  }
+
   &__fullscreen {
     .Modal {
       &__box {
         padding: 32px 32.5px;
+        max-width: 445px;
       }
+    }
+
+    .FarmingPopup__header {
+      margin-bottom: 24px;
     }
 
     .close {
@@ -73,6 +83,13 @@
     }
   }
 
+  &__balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
   // Components
   .title {
     margin-bottom: 8px;
@@ -96,8 +113,8 @@
 
   p {
     font-weight: 500;
-    font-size: 12px;
-    line-height: 175%;
+    font-size: 14px;
+    line-height: 17px;
     color: var(--cool-gray);
   }
 
@@ -133,7 +150,7 @@
   }
 
   label {
-    margin: 12px 0 24px;
+    margin: 26px 0 24px;
     width: 100%;
   }
 
@@ -142,6 +159,10 @@
     width: 100%;
     padding: 16px 54px 13px 16px;
     border: none;
+
+    &__wrapper {
+      margin: 0;
+    }
   }
 
   .input-container {
@@ -177,10 +198,19 @@
     margin: 12px 0 20px;
   }
 
+  // <SVG />
   .isvg {
     display: inline-flex;
     align-items: center;
-    margin: 0 4px;
+    justify-content: start;
+  }
+
+  .FarmingPopup__header .isvg {
+    margin-right: 4px;
+  }
+
+  .popup-link .isvg {
+    margin-left: 4px;
   }
 
   // <Table />
@@ -191,6 +221,20 @@
 
     td:last-child .Table__td__cont {
       padding-right: 0;
+    }
+
+    .Table__td__cont {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 100%;
+      color: var(--dark-black);
+    }
+
+    .Table__sub {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 100%;
+      color: var(--cool-gray);
     }
 
     thead {

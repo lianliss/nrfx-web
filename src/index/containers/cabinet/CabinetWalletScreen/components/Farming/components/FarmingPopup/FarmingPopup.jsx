@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Popup from 'src/index/components/cabinet/Popup/Popup';
 import {
   NumberFormat,
+  Form,
   Button,
   Input,
   Modal,
@@ -17,65 +18,29 @@ import {
 } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import popupTimer from 'src/index/components/cabinet/Popup/hooks/popupTimer';
+
 // Styles
 import './FarmingPopup.less';
 
 // Main Components
-// Staked Popup
-export function FarmingPopupStaked({ currency, number, onClose }) {
-  const text =
-    'Share your earnings on Twitter and win|a part of $1060 in BSW Prize Pool|for 202 winners every week!';
-  const paragraphs = text.split('|');
+// Popup
+export function FarmingPopup({ title, currency, number, onClose }) {
+  const [isHover, setIsHover] = React.useState(false);
+  const isDisabled = popupTimer(isHover, onClose);
 
   return (
-    <Popup className="FarmingPopup" onClose={onClose}>
+    <Popup
+      className={`FarmingPopup ${isDisabled && 'disabled'}`}
+      onClose={onClose}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
       <div className="FarmingPopup__header">
         <div className="success-title">
           <SVG src={require('src/asset/icons/cabinet/success-icon.svg')} />
-          <span>Staked</span>&nbsp;
-          <NumberFormat number={number} currency={currency} />
-        </div>
-        <p>
-          {paragraphs.map((paragraph, key) => (
-            <React.Fragment key={key}>
-              <span>{paragraph}</span>
-              <br />
-            </React.Fragment>
-          ))}
-        </p>
-      </div>
-      <div className="FarmingPopup__center">
-        <PopupLink text="Wiew on scan" />
-        <Button type="lightBlue">Share</Button>
-      </div>
-      <div className="FarmingPopup__footer">
-        <span>
-          *Check <a href="/">Sharing Season</a> details
-        </span>
-      </div>
-    </Popup>
-  );
-}
-
-FarmingPopupStaked.propTypes = {
-  currency: PropTypes.string,
-  number: PropTypes.number,
-  onClose: PropTypes.func,
-};
-
-FarmingPopupStaked.defaultProps = {
-  onClose: () => {},
-};
-// Staked end.
-
-// Unstaked Popup
-export function FarmingPopupUnstaked({ currency, number, onClose }) {
-  return (
-    <Popup className="FarmingPopup" onClose={onClose}>
-      <div className="FarmingPopup__header">
-        <div className="success-title">
-          <SVG src={require('src/asset/icons/cabinet/success-icon.svg')} />
-          <span>Unstaked</span>&nbsp;
+          <span>{title}</span>&nbsp;
           <NumberFormat number={number} currency={currency} />
         </div>
       </div>
@@ -84,26 +49,50 @@ export function FarmingPopupUnstaked({ currency, number, onClose }) {
   );
 }
 
-FarmingPopupUnstaked.propTypes = {
+FarmingPopup.propTypes = {
+  title: PropTypes.string,
   currency: PropTypes.string,
   number: PropTypes.number,
   onClose: PropTypes.func,
 };
 
-FarmingPopupUnstaked.defaultProps = {
+FarmingPopup.defaultProps = {
+  title: '',
+  currency: '',
+  number: 0,
   onClose: () => {},
 };
-// Unstaked end.
+// Popup end.
 
-// Stake Modal
+// Stake Modal - Can expand.
 export function FarmingPopupStake({ id, currency, ...props }) {
+  // States
   const [value, setValue] = React.useState(15);
+  const [isStaked, setIsStaked] = React.useState(false);
 
   // Handlers
   // Just input handler
   const handleChange = (newValue) => {
     setValue(newValue);
   };
+
+  // Confirm click handler
+  const handleSubmit = () => {
+    setIsStaked(true);
+  };
+
+  // Return popup when stake.
+  // When write the functionality have to move to another place.
+  if (isStaked) {
+    return (
+      <FarmingPopup
+        title="Staked"
+        currency={currency}
+        number={value}
+        onClose={props.onClose}
+      />
+    );
+  }
 
   return (
     <Modal
@@ -118,13 +107,15 @@ export function FarmingPopupStake({ id, currency, ...props }) {
         <div className="title">
           <span>Stake {currency.toUpperCase()} Tokens</span>
         </div>
-        <p>Depositing available tokens on deposit</p>
       </div>
-      <div className="FarmingPopup__body">
-        <p>Balance</p>
-        <span className="balance">
-          <NumberFormat number={15.5} currency={currency} />
-        </span>
+      <Form className="FarmingPopup__body" onSubmit={handleSubmit}>
+        <div className="FarmingPopup__balance">
+          <p>Balance</p>
+          <span className="balance">
+            <NumberFormat number={15.5} />
+            &nbsp; BNB-NRFX
+          </span>
+        </div>
         <label>
           <p>Stake</p>
           <div className="input-container">
@@ -134,11 +125,13 @@ export function FarmingPopupStake({ id, currency, ...props }) {
             </div>
           </div>
         </label>
-        <Button type="lightBlue">Confirm</Button>
-        <div className="FarmingPopup__footer">
-          <PopupLink text="Get USDT-BSW" />{' '}
-          {/*Probably must get currencies array.*/}
-        </div>
+        <Button type="lightBlue" btnType="submit">
+          Confirm
+        </Button>
+      </Form>
+      <div className="FarmingPopup__footer">
+        <PopupLink text="Get USDT-BSW" />
+        {/*Probably must set currencies array.*/}
       </div>
     </Modal>
   );
@@ -159,7 +152,7 @@ FarmingPopupStake.defaultProps = {
 export function FarmingPopupROI(props) {
   return (
     <Modal
-      className="FarmingPopup FarmingPopup__fullscreen FarmingPopupStake"
+      className="FarmingPopup FarmingPopup__fullscreen"
       {...props}
       skipClose
     >
@@ -184,6 +177,7 @@ export function FarmingPopupROI(props) {
           ]}
           className="FarmingPopup__table"
         >
+          {/*item start*/}
           <TableCell>
             <TableColumn>1d.</TableColumn>
             <TableColumn>
@@ -199,6 +193,7 @@ export function FarmingPopupROI(props) {
               <NumberFormat number={1.85} />
             </TableColumn>
           </TableCell>
+          {/*item end*/}
           <TableCell>
             <TableColumn>1d.</TableColumn>
             <TableColumn>

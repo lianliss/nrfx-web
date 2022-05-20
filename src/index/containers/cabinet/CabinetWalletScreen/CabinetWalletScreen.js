@@ -1,8 +1,8 @@
 import "./CabinetWalletScreen.less";
 
 import React, { memo, useEffect, useCallback } from "react";
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { useRoute, withRouter } from "react-router5";
 import { useDispatch, useSelector } from "react-redux";
 import { getAnalytics, logEvent } from "firebase/analytics";
@@ -61,8 +61,8 @@ const buildOptions = (balanceId, isCrypto, isSwap) => {
   return isSwap
     ? { operations: "swap" }
     : balanceId && {
-    [isCrypto ? "wallet_id" : "balance_id"]: balanceId
-  };
+      [isCrypto ? "wallet_id" : "balance_id"]: balanceId
+    };
 };
 
 class CabinetWalletScreen extends React.PureComponent {
@@ -70,21 +70,21 @@ class CabinetWalletScreen extends React.PureComponent {
   componentDidMount() {
     // Set current title
     setTitle(getLang("cabinet_header_wallet", true));
-    
+
     this._mounted = true;
     const {
       web3SetStatus,
       web3SetData,
       web3Status,
       fetchWalletPage,
-  } = this.props;
+    } = this.props;
 
     if (!web3Status.isRequested && !web3Status.isWalletsLoaded && !web3Status.isBalancesLoaded) {
       fetchWalletPage();
       // Request for wallets
       web3SetStatus('isRequested', true);
       web3Backend.getWallets().then(wallets => {
-        web3SetData({wallets});
+        web3SetData({ wallets });
         web3SetStatus('isWalletsLoaded', true);
 
         // Request for balances
@@ -97,9 +97,9 @@ class CabinetWalletScreen extends React.PureComponent {
             if (balance.status !== 'fulfilled') {
               return;
             }
-            balances.push({address, items: balance.value});
+            balances.push({ address, items: balance.value });
           });
-          web3SetData({balances});
+          web3SetData({ balances });
           web3SetStatus('isBalancesLoaded', true);
         });
       }).catch(error => {
@@ -159,8 +159,8 @@ class CabinetWalletScreen extends React.PureComponent {
       balance,
       oldWallets,
     } = this.props;
-    const {name, params} = route;
-    const {currency} = params;
+    const { name, params } = route;
+    const { currency } = params;
 
     const isSwap = name === PAGES.WALLET_SWAP;
 
@@ -193,7 +193,7 @@ class CabinetWalletScreen extends React.PureComponent {
     const {
       name, params,
     } = route;
-    const {currency} = params;
+    const { currency } = params;
     const isCommon = name === PAGES.WALLET;
     const isCrypto = name === PAGES.WALLET_CRYPTO;
     const isSwap = name === PAGES.WALLET_SWAP;
@@ -201,7 +201,7 @@ class CabinetWalletScreen extends React.PureComponent {
     const isSwitchPage = isSwap || isLiquidity;
     const isFarming = name === PAGES.FARMING;
     const balance = this.getBalanceId();
-    const {fiatBalance} = balance;
+    const { fiatBalance } = balance;
     const balanceId = balance.id;
 
     //Check card reservation expired
@@ -218,23 +218,17 @@ class CabinetWalletScreen extends React.PureComponent {
         {/* {isCommon && <Web3Wallets />} */}
         {/* {isCommon && <CommonHeader />} */}
         {isCommon && (isAdaptive ? <Web3Wallets /> : <CabinetWallets />)}
-        {isCrypto && <CryptoWallet/>}
+        {isCrypto && <CryptoWallet />}
         {isSwitchPage && <SwitchPage route={name} />}
-        {isFarming && <Farming />}
+        {isFarming && <Farming adaptive={isAdaptive} />}
 
         {fiatBalance &&
-        !isSwap &&
-        (fiatBalance.amount ? (
-          <WalletHeader isCrypto={isCrypto} balance={fiatBalance} />
-        ) : (
-          <EmptyBalance currency={currency} />
-        ))}
-
-        {isAdaptive && !fiatBalance && !isSwap && (
-          <ContentBox className="CabinetWalletScreen__adaptiveWalletList">
-            <WalletList currency={currency} />
-          </ContentBox>
-        )}
+          !isSwap &&
+          (fiatBalance.amount ? (
+            <WalletHeader isCrypto={isCrypto} balance={fiatBalance} />
+          ) : (
+            <EmptyBalance currency={currency} />
+          ))}
 
         {!isReservationExpire && <RefillBlock />}
 
@@ -270,4 +264,4 @@ export default connect(state => ({
   walletFetchHistoryMore,
   web3SetStatus,
   web3SetData,
-}, dispatch), null, {pure: true})(CabinetWalletScreen);
+}, dispatch), null, { pure: true })(CabinetWalletScreen);

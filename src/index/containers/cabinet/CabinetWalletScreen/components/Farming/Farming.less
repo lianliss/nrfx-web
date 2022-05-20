@@ -1,3 +1,5 @@
+@import '../../../../../../vars.less';
+
 .Farming {
   padding: 32px 32px 28px;
   min-height: 100%;
@@ -36,5 +38,23 @@
     display: flex;
     justify-content: start;
     align-items: center;
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    padding: 23px 18px 0;
+
+    &__header {
+      padding-bottom: 16px;
+      
+      .row {
+        &:nth-child(1) {
+          margin-bottom: 8px;
+        }
+
+        &:nth-child(2) {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 }

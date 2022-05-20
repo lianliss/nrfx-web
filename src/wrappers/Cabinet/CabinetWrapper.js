@@ -212,7 +212,8 @@ class CabinetWrapper extends Component {
           <Header />
         )}
         <div className="CabinetWrapper__content">{this.__renderContent()}</div>
-        {adaptive && user && <TabBar />}
+        {/* Display TabBar for mobile */}
+        {/* {adaptive && user && <TabBar />} */}
       </div>
     );
   }

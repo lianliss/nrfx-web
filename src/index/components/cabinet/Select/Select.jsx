@@ -8,7 +8,7 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './Select.less';
 
-function Select({ options, value, onChange }) {
+function Select({ options, value, onChange, ...props }) {
   // Get object value of string from options.
   const getValue = () => {
     return value ? options.find((c) => c.value === value) : '';
@@ -30,7 +30,9 @@ function Select({ options, value, onChange }) {
         DropdownIndicator,
         IndicatorSeparator: null,
       }}
+      className="CabinetSelect"
       classNamePrefix="CabinetSelect"
+      {...props}
     />
   );
 }

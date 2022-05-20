@@ -6,6 +6,18 @@
     z-index: inherit;
     transform: none;
     background: auto;
+    cursor: default;
+  }
+
+  &:not(.options) {
+    td {
+      &:nth-child(3),
+      &:nth-child(4) {
+        .Table__td__cont {
+          color: var(--primary-dark-blue);
+        }
+      }
+    }
   }
 
   // <TableColumn />
@@ -56,6 +68,22 @@
     background: var(--alice-blue) !important;
   }
 
+  &__action_icon {
+    svg,
+    path {
+      fill: var(--dark-black);
+      border-color: var(--dark-black);
+    }
+
+    circle {
+      stroke: var(--dark-black);
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
   // <Button />
   .Button {
     padding: 12px 16px;
@@ -91,10 +119,47 @@
     }
 
     p {
+      max-width: 482px;
+      width: 37.7vw;
       font-weight: 400;
       font-size: 12px;
       line-height: 150%;
       color: #707070;
     }
+  }
+
+  .details {
+    user-select: none;
+
+    .Table__td__cont {
+      color: var(--cool-gray) !important;
+      display: inline-flex;
+      align-items: center;
+
+      svg,
+      path {
+        fill: var(--cool-gray);
+      }
+    }
+
+    &.active {
+      .isvg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .small-popup {
+    span {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 100%;
+      color: #000;
+    }
+  }
+
+  &:not(.options) span {
+    display: inline-flex;
+    cursor: pointer;
   }
 }
