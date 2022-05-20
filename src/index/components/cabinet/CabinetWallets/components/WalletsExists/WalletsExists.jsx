@@ -17,6 +17,8 @@ import currencies from 'src/currencies';
 function WalletsExists() {
   const adaptive = useSelector((store) => store.default.adaptive);
   const [switchTab, setSwitchTab] = React.useState('tokens');
+  const isTokens = switchTab === 'tokens' || !adaptive;
+  const isNfts = switchTab === 'nfts' || !adaptive;
 
   const TokenItemControls = (
     { price, amount, currency } // Texts
@@ -38,19 +40,21 @@ function WalletsExists() {
     <div className="WalletsExists">
       <div className="WalletsExists__container">
         <WalletsHeader />
-        <div className="WalletsExists__switch">
-          <SwitchTabs
-            selected={switchTab}
-            onChange={setSwitchTab}
-            isAnimated={false}
-            tabs={[
-              { value: 'tokens', label: 'Tokens' },
-              { value: 'nfts', label: 'NFT' },
-            ]}
-          />
-        </div>
+        {adaptive && (
+          <div className="WalletsExists__switch">
+            <SwitchTabs
+              selected={switchTab}
+              onChange={setSwitchTab}
+              isAnimated={false}
+              tabs={[
+                { value: 'tokens', label: 'Tokens' },
+                { value: 'nfts', label: 'NFT' },
+              ]}
+            />
+          </div>
+        )}
         <div className="WalletsExists__content">
-          {switchTab === 'tokens' && (
+          {isTokens && (
             <CabinetBlock className="wallets-list">
               {!adaptive && (
                 <div className="WalletsExists__items_header">
@@ -105,7 +109,7 @@ function WalletsExists() {
               )}
             </CabinetBlock>
           )}
-          {switchTab === 'nfts' && (
+          {isNfts && (
             <CabinetBlock className="nfts">
               {!adaptive && (
                 <div className="WalletsExists__items_header">
