@@ -329,7 +329,7 @@ class CabinetWalletScreen extends React.PureComponent {
           !isAdaptive && <CabinetWalletSidebar />
         }
       >
-        {isCommon && (isAdaptive ? <Web3Wallets /> : <CabinetWallets />)}
+        {isCommon && <CabinetWallets />}
         {/* {isCommon && <Web3Wallets />} */}
         {isCrypto && <CryptoWallet/>}
         {/* {isCommon && <CommonHeader />} */}
@@ -350,12 +350,6 @@ class CabinetWalletScreen extends React.PureComponent {
         ) : (
           <EmptyBalance currency={currency} />
         ))}
-
-        {isAdaptive && !fiatBalance && !isSwap && (
-          <ContentBox className="CabinetWalletScreen__adaptiveWalletList">
-            <WalletList currency={currency} />
-          </ContentBox>
-        )}
 
         {!isReservationExpire && <RefillBlock />}
 
