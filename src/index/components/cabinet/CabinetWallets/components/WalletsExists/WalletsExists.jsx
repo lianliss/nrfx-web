@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import './WalletsExists.less';
 import WalletsHeader from '../WalletsHeader/WalletsHeader';
@@ -14,6 +15,9 @@ import SVG from 'utils/svg-wrap';
 import currencies from 'src/currencies';
 
 function WalletsExists() {
+  const adaptive = useSelector(store => store.default.adaptive);
+  console.log(adaptive)
+  
   const TokenItemControls = (
     { price, amount, currency } // Texts
   ) => (

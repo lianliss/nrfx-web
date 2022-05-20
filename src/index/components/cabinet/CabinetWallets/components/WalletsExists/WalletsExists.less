@@ -175,3 +175,23 @@
     }
   }
 }
+
+@media screen and (max-width: @mobile-width) {
+  .WalletsExists {
+    &__container {
+      padding: 32px 11px 10px;
+    }
+    
+    &__content {
+      
+      .CabinetBlock {
+        width: 100%;
+        max-width: 100% !important;
+      }
+      
+      & > div:first-child {
+        display: none;
+      }
+    }
+  }
+}
