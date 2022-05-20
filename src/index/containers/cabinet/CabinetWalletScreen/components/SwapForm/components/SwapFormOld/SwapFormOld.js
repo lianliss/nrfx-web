@@ -46,6 +46,7 @@ import web3Backend from "services/web3-backend";
 import * as toast from 'actions/toasts';
 import { getCanExchangeWallets } from "src/actions/cabinet/wallets";
 import getCommission from 'utils/get-commission';
+import getFinePrice from 'utils/get-fine-price';
 
 // number to fixed custom function
 import { customToFixed } from "utils/customToFixed";
@@ -67,7 +68,10 @@ const Form = ({
   gasPrice,
 }) => {
   let realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
+  console.log('realRate', realRate);
   realRate += realRate * commission;
+  console.log('commission', commission, 1 - commission);
+  console.log('rate', realRate);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -97,11 +101,7 @@ const Form = ({
           {!!realRate ? <>
           <NumberFormat number={1} currency={currency} />
           {" ≈ "}
-          <NumberFormat
-            skipRoughly
-            number={realRate}
-            currency={secondaryCurrency}
-          />
+          {getFinePrice(realRate)} {secondaryCurrency.toUpperCase()}
           </>
           : <>&nbsp;</>}
         </div>
@@ -156,8 +156,12 @@ const updateRates = async (from, to, fromAmount, toAmount, dispatch, setAmounts,
 };
 
 let gasTimeout = null;
-const calculateToAmount = (from = 0, rate = 1, commission = 0, gasPrice = 0) => from / rate * (1 - commission) - (gasPrice || 0);
-const calculateFromAmount = (to = 0, rate = 1, commission = 0, gasPrice = 0) => to * rate / (1 - commission) + (gasPrice || 0);
+const calculateToAmount = (from = 0, rate = 1, commission = 0, gasPrice = 0) => {
+  return from * (1 / rate) / (1 + commission);
+};
+const calculateFromAmount = (to = 0, rate = 1, commission = 0, gasPrice = 0) => {
+  return to * rate * (1 + commission);
+};
 
 const updateGas = ({
   setGasPrice,
@@ -238,7 +242,7 @@ export default () => {
             dispatch(walletSwapSetCurrency("from", currency));
           }}
           onChangeAmount={amount => {
-            const toAmount = calculateToAmount(Number(amount), swap.rate, commission);
+            const toAmount = calculateToAmount(Number(amount), swap.rate, commission, gasPrice);
             setAmounts({
               from: Number(amount),
               to: toAmount,
@@ -284,7 +288,7 @@ export default () => {
             //updateRates(swap.fromCurrency, currency, dispatch, setAmounts);
           }}
           onChangeAmount={amount => {
-            const fromAmount = calculateFromAmount(Number(amount), swap.rate, commission);
+            const fromAmount = calculateFromAmount(Number(amount), swap.rate, commission, gasPrice);
             setAmounts({
               from: fromAmount,
               to: Number(amount),
