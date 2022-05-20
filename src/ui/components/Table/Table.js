@@ -78,7 +78,7 @@ const Table = memo(
 );
 
 export const TableCell = memo(
-  ({ children, onClick, dark, mode, className }) => {
+  ({ children, onClick, dark, mode, className, style }) => {
     let Component = "tr";
     let params = {};
     if (onClick) {
@@ -92,6 +92,7 @@ export const TableCell = memo(
         className={utils.classNames(className, mode, {
           dark: !!dark
         })}
+        style={style}
         {...params}
       >
         {children}
@@ -105,7 +106,7 @@ TableCell.propTypes = {
 };
 
 export const TableColumn = memo(
-  ({ children, align, style, highlighted, sub, className }) => {
+  ({ children, align, style, highlighted, sub, className, colspan }) => {
     return (
       <td
         className={utils.classNames(className, {
@@ -113,6 +114,7 @@ export const TableColumn = memo(
           highlighted: !!highlighted
         })}
         style={style}
+        colSpan={colspan ? colspan : 1}
       >
         <div className="Table__td__cont">
           {children}
@@ -130,7 +132,8 @@ TableColumn.propTypes = {
   sub: PropTypes.node,
   compact: PropTypes.bool,
   skipContentBox: PropTypes.bool,
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  colspan: PropTypes.number,
 };
 
 export default Table;

@@ -39,15 +39,25 @@ function CabinetWalletSidebar() {
                 <ul>
                   <li>Pro Dex</li>
                   <li
-                    active={route.name === PAGES.WALLET_SWAP}
+                    className={route.name === PAGES.WALLET_SWAP ? 'active' : ''}
                     onClick={() => router.navigate(PAGES.WALLET_SWAP)}
                   >
                     Swap
                   </li>
                 </ul>
               </SidebarItem>
-              <SidebarItem title="Liquidity" icon="liquidity" />
-              <SidebarItem title="Farm" icon="farm" />
+              <SidebarItem
+                title="Liquidity"
+                icon="liquidity"
+                active={route.name === PAGES.LIQUIDITY}
+                onClick={() => router.navigate(PAGES.LIQUIDITY)}
+              />
+              <SidebarItem
+                title="Farm"
+                icon="farm"
+                active={route.name === PAGES.FARMING}
+                onClick={() => router.navigate(PAGES.FARMING)}
+              />
               <SidebarItem title="Validator" icon="validator" />
             </ul>
           </CabinetBlock>

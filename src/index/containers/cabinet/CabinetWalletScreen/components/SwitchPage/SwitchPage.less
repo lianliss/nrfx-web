@@ -1,6 +1,6 @@
 @import '../../../../../../vars.less';
 
-.SwapForm {
+.SwitchPage {
   display: flex;
   justify-content: center;
   align-items: start;
@@ -15,7 +15,8 @@
   // Containers
   &__container {
     width: 100%;
-    max-width: 482px;
+    max-width: 505px;
+    height: 100%;
     position: relative;
   }
 
@@ -23,10 +24,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 482px;
     width: 100%;
+    margin: 0 auto;
+  }
 
+  &__header &__row {
     &:nth-child(1) {
       margin-bottom: 12px;
+      max-width: 100%;
     }
 
     &:nth-child(2) {
@@ -45,10 +51,9 @@
   }
 
   &__bg-center {
-    height: 81.15%;
     overflow: hidden;
     position: absolute;
-    bottom: 0;
+    top: 219px;
     left: 0;
     transform: translateX(-24.7%);
     z-index: -1;
@@ -76,6 +81,7 @@
     line-height: 110%;
     letter-spacing: -0.01em;
     color: var(--black-gunmetal);
+    text-align: center;
   }
 
   &__description {
@@ -114,56 +120,6 @@
   .CabinetBlock {
     padding: 0;
     border-radius: 25px;
-  }
-
-  // --Form
-  .SwapForm__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 40px 33px 31px;
-    box-sizing: border-box;
-
-    & > .isvg {
-      margin: 21px 0;
-      cursor: pointer;
-    }
-
-    // <Button />
-    & > .Button {
-      width: 100%;
-      height: 72px;
-      margin-top: 31px;
-      border-radius: 15px;
-
-      .Button__label {
-        display: flex;
-        align-items: center;
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 100%;
-        text-align: center;
-        letter-spacing: -0.01em;
-      }
-
-      .isvg {
-        width: 29px;
-        height: 29px;
-        margin-right: 11px;
-
-        svg {
-          width: 100%;
-          height: 100%;
-        }
-
-        svg,
-        path {
-          fill: #fff;
-        }
-      }
-    }
   }
 
   // All icons for this

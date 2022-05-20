@@ -1,0 +1,100 @@
+@import '../../../../../../../../vars.less';
+
+.FarmingTableItem {
+  &:not(.options):hover {
+    box-shadow: none !important;
+    z-index: inherit;
+    transform: none;
+    background: auto;
+  }
+
+  // <TableColumn />
+  td {
+    .Table__td__cont {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      flex-direction: row;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      color: var(--black-gunmetal);
+      background: inherit !important;
+
+      // <SVG />
+      .isvg {
+        display: flex;
+        align-items: center;
+        margin-left: 4px;
+      }
+    }
+  }
+
+  // -- <Indicator />
+  &__indicator {
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+
+    color: #fff;
+
+    &.green {
+      background: linear-gradient(90deg, #5ec47a 0%, #12cb45 100%);
+      color: #ecf8f0;
+    }
+
+    &.red {
+      background: linear-gradient(89.33deg, #f07f4f -0.62%, #ff5d17 99.42%);
+    }
+  }
+
+  &.dark {
+    background: var(--alice-blue) !important;
+  }
+
+  // <Button />
+  .Button {
+    padding: 12px 16px;
+    height: auto;
+
+    &__label {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 100%;
+      letter-spacing: -0.01em;
+    }
+
+    .isvg {
+      margin-right: 8px;
+    }
+
+    &.stake,
+    &.unstake {
+      width: calc(100% - 50% - 7.5px);
+    }
+
+    &.stake {
+      margin-right: 15px;
+    }
+  }
+
+  // <HoverPopup />
+  .HoverPopup {
+    margin-left: 4px;
+
+    .isvg {
+      margin: 0 !important;
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 150%;
+      color: #707070;
+    }
+  }
+}
