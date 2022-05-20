@@ -39,13 +39,15 @@ function WalletsExists() {
       <div className="WalletsExists__container">
         <WalletsHeader />
         <div className="WalletsExists__content">
-          <CabinetBlock>
-            <div className="WalletsExists__items_header">
-              <span>your tokens</span>
-              <div className="CabinetScrollBlock__headerTool">
-                <OpenPopupLink title="history" />
+          <CabinetBlock className="wallets-list">
+            {!adaptive && (
+              <div className="WalletsExists__items_header">
+                <span>your tokens</span>
+                <div className="CabinetScrollBlock__headerTool">
+                  <OpenPopupLink title="history" />
+                </div>
               </div>
-            </div>
+            )}
             <CabinetScrollBlock>
               <WalletsList type="default">
                 {testItems.map((item, key) => {
@@ -84,8 +86,13 @@ function WalletsExists() {
                 })}
               </WalletsList>
             </CabinetScrollBlock>
+            {adaptive && (
+              <div className="WalletsExists__items_footer">
+                <OpenPopupLink title="history" />
+              </div>
+            )}
           </CabinetBlock>
-          <CabinetBlock>
+          <CabinetBlock className="nfts">
             {!adaptive && (
               <div className="WalletsExists__items_header">
                 <span>your nft</span>
