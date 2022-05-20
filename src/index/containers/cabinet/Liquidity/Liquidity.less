@@ -7,6 +7,7 @@
   justify-content: start;
   padding: 32px !important;
   box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25);
+  box-sizing: border-box;
 
   // Containers
   &__header {
@@ -71,6 +72,18 @@
 
     span {
       margin-left: 8px;
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Liquidity {
+    &__header {
+      margin-bottom: 32px;
+    }
+
+    &__footer {
+      margin-top: 32px;
     }
   }
 }

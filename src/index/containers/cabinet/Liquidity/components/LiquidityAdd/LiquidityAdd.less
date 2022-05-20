@@ -1,3 +1,5 @@
+@import '../../../../../../vars.less';
+
 .LiquidityAdd {
   display: flex;
   flex-direction: column;
@@ -78,6 +80,16 @@
   .DexSwapInput {
     &__label {
       padding-left: 0;
+      margin-bottom: 12px;
+    }
+
+    &__select {
+      & > span {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 110%;
+        letter-spacing: -0.01em;
+      }
     }
 
     &__title {
@@ -96,5 +108,37 @@
     top: 8px;
     right: 0;
     cursor: pointer;
+  }
+
+  // <Input />
+  .Input__wrapper {
+    --input-height: 40px;
+  }
+}
+
+.LiquidityAdd {
+  &.Liquidity__header {
+    margin-bottom: 20px;
+  }
+
+  &__icon {
+    margin: 16px auto;
+  }
+
+  &__result {
+    padding: 24px 15.5px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  &__item {
+    padding: 0 10px;
+    margin-bottom: 24px;
+  }
+
+  .DexSwapInput {
+    &__container {
+      padding: 14px 15px;
+    }
   }
 }

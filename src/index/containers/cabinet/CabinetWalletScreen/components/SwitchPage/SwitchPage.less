@@ -128,3 +128,28 @@
     align-items: center;
   }
 }
+
+@media screen and (max-width: @mobile-width) {
+  .SwitchPage {
+    padding: 0;
+
+    h1 {
+      font-size: 30px;
+    }
+
+    &__header &__row {
+      &:nth-child(1) {
+        margin-bottom: 28px;
+      }
+
+      &:nth-child(2) {
+        margin-bottom: 12px;
+      }
+    }
+
+    &__bg,
+    &__bg-center {
+      display: none;
+    }
+  }
+}

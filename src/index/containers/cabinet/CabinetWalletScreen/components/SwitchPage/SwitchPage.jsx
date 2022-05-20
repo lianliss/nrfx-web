@@ -13,7 +13,7 @@ import * as PAGES from 'src/index/constants/pages';
 import './SwitchPage.less';
 
 // Main
-function SwitchPage() {
+function SwitchPage({ adaptive }) {
   // States
   const [isPro, setIsPro] = React.useState(false); // Pro version
 
@@ -25,13 +25,11 @@ function SwitchPage() {
     { value: 'transactions', label: 'Transactions' },
   ];
   // Current page is ...
-  const page = route.name;
-  const isSwap = page === PAGES.WALLET_SWAP;
-  const isLiquidity = page === PAGES.LIQUIDITY;
+  const isSwap = route.name === PAGES.WALLET_SWAP;
+  const isLiquidity = route.name === PAGES.LIQUIDITY;
 
   // Page Title.
-  const title =
-    (isSwap && 'Exchange') || (isLiquidity && 'Become a Liquidity provider');
+  const title = getSwitchedTitle(route.name, adaptive);
 
   // Handlers.
   // Pro version toggler
@@ -41,7 +39,7 @@ function SwitchPage() {
 
   // Page switch navigate
   const handleSwitchTabs = (value) => {
-    if (page === value) {
+    if (route.name === value) {
       return;
     }
 
@@ -61,7 +59,7 @@ function SwitchPage() {
               </>
             )}
           </div>
-          {isLiquidity && (
+          {isLiquidity && !adaptive && (
             <div className="SwitchPage__row">
               <p className="SwitchPage__description">
                 Earn high yields from transaction fees.
@@ -70,7 +68,7 @@ function SwitchPage() {
           )}
           <div className="SwitchPage__row">
             <SwitchTabs
-              selected={page}
+              selected={route.name}
               tabs={switchTabs}
               onChange={handleSwitchTabs}
               type="light-blue"
@@ -94,6 +92,29 @@ function SwitchPage() {
       </div>
     </div>
   );
+}
+
+// Get title for current page.
+// For adaptive maybe another title.
+// @param {string} route - Current PAGE name.
+// @param {boolean} adaptive - Screen width is adaptive.
+// return {string} - Title of route&adaptive.
+function getSwitchedTitle(route, adaptive = false) {
+  const isSwap = route.name === PAGES.WALLET_SWAP;
+  const isLiquidity = route.name === PAGES.LIQUIDITY;
+  if (route === PAGES.WALLET_SWAP) {
+    return 'Exchange';
+  }
+
+  if (route === PAGES.LIQUIDITY) {
+    if (adaptive) {
+      return 'Liquidity provider';
+    }
+
+    return 'Become a Liquidity provider';
+  }
+
+  return '';
 }
 
 export default SwitchPage;
