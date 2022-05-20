@@ -181,17 +181,42 @@
     &__container {
       padding: 32px 11px 10px;
     }
-    
+
     &__content {
-      
+      .WalletsNFT__cards {
+        padding: 0 calc(21px - @nft-margin) 0 calc(16px - @nft-margin);
+
+        .WalletsNFTCard {
+          margin: 0 8px;
+          margin-bottom: 13px;
+          width: calc((100% / 2) - @nft-margin * 2);
+        }
+      }
+
       .CabinetBlock {
+        display: flex;
+        flex-direction: column;
+        padding: 18px 0 13px;
         width: 100%;
         max-width: 100% !important;
+
+        .ScrollbarBox-container {
+          margin: 0;
+          height: 100%;
+        }
       }
-      
+
       & > div:first-child {
         display: none;
       }
+    }
+
+    &__items_footer {
+      position: relative;
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
     }
   }
 }

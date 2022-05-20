@@ -15,9 +15,9 @@ import SVG from 'utils/svg-wrap';
 import currencies from 'src/currencies';
 
 function WalletsExists() {
-  const adaptive = useSelector(store => store.default.adaptive);
-  console.log(adaptive)
-  
+  const adaptive = useSelector((store) => store.default.adaptive);
+  console.log(adaptive);
+
   const TokenItemControls = (
     { price, amount, currency } // Texts
   ) => (
@@ -86,29 +86,36 @@ function WalletsExists() {
             </CabinetScrollBlock>
           </CabinetBlock>
           <CabinetBlock>
-            <div className="WalletsExists__items_header">
-              <span>your nft</span>
-              <div className="CabinetScrollBlock__headerTool">
-                <OpenPopupLink title="history" />
+            {!adaptive && (
+              <div className="WalletsExists__items_header">
+                <span>your nft</span>
+                <div className="CabinetScrollBlock__headerTool">
+                  <OpenPopupLink title="history" />
+                </div>
               </div>
-            </div>
+            )}
             <CabinetScrollBlock disableTrackXMousewheelScrolling>
               <div className="WalletsNFT__cards">
-                <WalletsNFTCard title="Monkey" src={1} />
-                <WalletsNFTCard title="Hello Kitty 1445" src={2} />
-                <WalletsNFTCard title="Degen Ape 6" src={4} />
-                <WalletsNFTCard title="Degen Ape 6" src={5} />
-                <WalletsNFTCard title="Brod 45" src={3} />
-                <WalletsNFTCard title="Monkey" src={1} />
-                <WalletsNFTCard title="Hello Kitty 1445" src={2} />
-                <WalletsNFTCard title="Degen Ape 6" src={4} />
-                <WalletsNFTCard title="Degen Ape 6" src={5} />
-                <WalletsNFTCard title="Brod 45" src={3} />
-                <WalletsNFTCard title="Hello Kitty 1445" src={2} />
-                <WalletsNFTCard title="Degen Ape 6" src={5} />
-                <WalletsNFTCard title="Brod 45" src={3} />
+                <WalletsNFTCard title="Monkey" src={'1'} />
+                <WalletsNFTCard title="Hello Kitty 1445" src={'2'} />
+                <WalletsNFTCard title="Degen Ape 6" src={'4'} />
+                <WalletsNFTCard title="Degen Ape 6" src={'5'} />
+                <WalletsNFTCard title="Brod 45" src={'3'} />
+                <WalletsNFTCard title="Monkey" src={'1'} />
+                <WalletsNFTCard title="Hello Kitty 1445" src={'2'} />
+                <WalletsNFTCard title="Degen Ape 6" src={'4'} />
+                <WalletsNFTCard title="Degen Ape 6" src={'5'} />
+                <WalletsNFTCard title="Brod 45" src={'3'} />
+                <WalletsNFTCard title="Hello Kitty 1445" src={'2'} />
+                <WalletsNFTCard title="Degen Ape 6" src={'5'} />
+                <WalletsNFTCard title="Brod 45" src={'3'} />
               </div>
             </CabinetScrollBlock>
+            {adaptive && (
+              <div className="WalletsExists__items_footer">
+                <OpenPopupLink title="history" />
+              </div>
+            )}
           </CabinetBlock>
         </div>
       </div>
