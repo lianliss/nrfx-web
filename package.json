@@ -9,7 +9,7 @@
     "startLocalAdmin": "cross-env DOMAIN=admin WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 PORT=80 HTTPS=false node scripts/start.js",
     "start:admin": "cross-env DOMAIN=admin PORT=80 HTTPS=false node scripts/start.js",
     "start:landing": "cross-env DOMAIN=landing PORT=80 HTTPS=false node scripts/start.js",
-    "build": "DOMAIN=index node scripts/build.js && npm run build:admin",
+    "build": "cross-env DOMAIN=index node scripts/build.js && npm run build:admin",
 	"buildStage": "DOMAIN=index WEB3=https://web3.nrfxlab.world node scripts/build.js && npm run build:admin",
     "build:admin": "DOMAIN=admin node scripts/build.js",
     "build:landing": "DOMAIN=landing node scripts/build.js",
