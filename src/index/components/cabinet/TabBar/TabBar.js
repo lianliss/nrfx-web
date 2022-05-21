@@ -12,7 +12,7 @@ const Tab = props => (
   <BaseLink
     router={router}
     routeName={props.route}
-    className="TabBar__item"
+    className={`TabBar__item ${props.disabled ? 'disabled' : ''}`}
     activeClassName="active"
   >
     {props.children}
@@ -28,7 +28,7 @@ const Tabs = props => {
           <Lang name="cabinet_header_wallet" />
         </span>
       </Tab>
-      <Tab route={PAGES.EXCHANGE}>
+      <Tab route={PAGES.EXCHANGE} disabled>
         <SVG src={require("../../../../asset/24px/candles.svg")} />
         <span className="TabBar__item__text">
           <Lang name="cabinet_header_exchange" />
