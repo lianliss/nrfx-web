@@ -150,7 +150,7 @@
   }
 }
 
-@media screen and (min-width: @mobile-width) and (max-width: 1300px) {
+@media screen and (min-width: calc(@mobile-width + 1px)) and (max-width: 1300px) {
   .WalletsExists {
     .WalletsNFT__cards {
       .WalletsNFTCard {
@@ -171,6 +171,107 @@
     .WalletsNFT__cards {
       .WalletsNFTCard {
         width: calc((100% / 4) - @nft-margin * 2);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .WalletsExists {
+    &__container {
+      padding: 32px 11px 10px;
+    }
+
+    &__content {
+      .WalletsNFT__cards {
+        padding: 0 calc(21px - @nft-margin) 0 calc(16px - @nft-margin);
+      }
+
+      .WalletsList {
+        padding: 0 13px 0 18px;
+      }
+
+      .CabinetBlock {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 100% !important;
+        margin: 0 !important;
+
+        &.nfts {
+          padding: 18px 0 13px;
+        }
+
+        &.wallets-list {
+          padding: 31px 0 13px;
+
+          .WalletsListItem {
+            margin-bottom: 35px;
+          }
+        }
+
+        .ScrollbarBox-container {
+          margin: 0;
+          height: 100%;
+        }
+      }
+    }
+
+    &__items_footer {
+      position: relative;
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    &__switch {
+      padding: 0 56px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    // <SwitchTabs />
+    .SwitchTabs {
+      height: auto;
+      background: none;
+
+      &__item {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 180%;
+        color: var(--cool-gray);
+        padding-bottom: 8px;
+
+        &.active {
+          color: var(--royal-blue);
+        }
+      }
+
+      &__indicator {
+        span {
+          height: 3px;
+          width: 70%;
+          top: auto;
+          right: auto;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          background: var(--royal-blue);
+          border-radius: 10px 10px 0px 0px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .WalletsExists {
+    .WalletsNFT__cards {
+      .WalletsNFTCard {
+        margin: 0 8px;
+        margin-bottom: 13px;
+        width: calc((100% / 2) - @nft-margin * 2);
       }
     }
   }
