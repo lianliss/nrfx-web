@@ -44,6 +44,7 @@
 
     &__sideBar {
       position: fixed;
+      display: none;
       height: calc(100vh - var(--header-height) - 17px);
       width: 100vw;
       top: calc(var(--header-height) + 17px);
@@ -55,6 +56,7 @@
       z-index: 2;
 
       &.active {
+        display: block;
         background: rgba(40, 40, 40, 0.24);
       }
     }
