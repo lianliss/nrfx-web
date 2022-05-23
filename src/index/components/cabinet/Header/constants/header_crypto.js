@@ -16,6 +16,6 @@ const option = (title, value, icon) => {
 
 export const options = [
   option('Solana', 'solana', require('src/asset/icons/wallets/solana.svg')),
-  option('NRFX', 'nrfx', require('src/asset/icons/wallets/solana.svg')),
-  option('BitCoin', 'btc', require('src/asset/icons/wallets/solana.svg')),
+  option('NRFX', 'nrfx', require('src/asset/icons/wallets/nrfx.svg')),
+  option('BitCoin', 'btc', require('src/asset/icons/wallets/btc.svg')),
 ];

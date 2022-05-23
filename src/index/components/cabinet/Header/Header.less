@@ -107,6 +107,37 @@
       width: 18px;
     }
   }
+
+  // <Select />
+  .CabinetSelect {
+    &__value-container {
+      height: 25px;
+    }
+
+    &__single-value {
+      .isvg {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 23px;
+        height: 23px;
+
+        svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+
+    &__menu {
+      min-width: 150px;
+
+      svg {
+        width: 23px;
+        height: 23px;
+      }
+    }
+  }
 }
 
 .CabinetHeader__connect {
@@ -117,76 +148,30 @@
   font-size: 12px;
 }
 
-.adaptive {
-  .CabinetHeaderContainer {
-    //height: @adaptive-header-height;
-    .CabinetHeader {
-      //height: @adaptive-header-height;
-      -webkit-border-radius: 0 0 8px 8px;
-      -moz-border-radius: 0 0 8px 8px;
-      border-radius: 0 0 8px 8px;
-      display: flex;
-      padding: 0;
-      border-radius: 0 0 8px 8px;
-      background: var(--primary-background);
-      border-bottom: 1px solid var(--extra-light-gray);
-      width: 100%;
-    }
-  }
+@media screen and (max-width: @mobile-width) {
+  --header-height: 52px !important;
+  
+  .CabinetHeader {
+    padding-top: 11px;
+    // <Select />
+    .CabinetSelect {
+      &,
+      &__control {
+        min-width: 0 !important;
+        width: 63px;
+      }
 
-  .CabinetHeader__leftContent,
-  .CabinetHeader__rightContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+      &__control {
+        padding: 0 9px !important;
+      }
+    }
 
-  @adaptive-header-side-width: 60px;
-  .CabinetHeader__leftContent {
-    width: @adaptive-header-side-width;
-    height: @adaptive-header-height;
-    .CabinetHeader__leftContent_icon {
-      width: 100%;
-      height: @adaptive-header-height;
-      display: flex;
-      span {
-        display: flex;
-        margin: auto;
-      }
-      svg {
-        margin: auto;
-        //color: var(--text-black)
-      }
-    }
-  }
-  .CabinetHeader__mainContent {
-    width: auto;
-    height: @adaptive-header-height;
-    margin: auto;
-    display: flex;
-    font-size: 16px;
-    div,
-    span {
-      margin: auto;
-      font-weight: 500;
-    }
-    .CabinetHeader__mainContent_logo {
-      //color: var(--primary-orange);
-      svg {
-        width: 150px;
-      }
-    }
-  }
-  .CabinetHeader__rightContent {
-    width: @adaptive-header-side-width;
-    height: @adaptive-header-height;
-    display: flex;
-    span {
-      display: flex;
-      margin: auto;
-      svg {
-        margin: auto;
-        color: var(--text-black);
+    .wallet-connect__button {
+      width: 47px;
+      .Button__label {
+        .isvg {
+          margin-right: 0;
+        }
       }
     }
   }

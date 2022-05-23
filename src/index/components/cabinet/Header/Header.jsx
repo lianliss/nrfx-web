@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
 import Select from 'react-select';
@@ -27,7 +27,7 @@ function Header(props) {
   const lang =
     props.langList.find((l) => l.value === currentLang) ||
     props.langList[0] ||
-    {}; // hack.
+    {};
 
   // Get value object of current crypto str.
   const getValue = () => {
@@ -46,7 +46,11 @@ function Header(props) {
           className="CabinetHeader__logo"
           onClick={() => router.navigate(MAIN)}
         >
-          <SVG src={require('src/asset/logo/narfex-blue.svg')} />
+          {props.adaptive ? (
+            <SVG src={require('src/asset/logo/narfex-icon.svg')} />
+          ) : (
+            <SVG src={require('src/asset/logo/narfex-blue.svg')} />
+          )}
         </div>
         <div className="CabinetHeader__menu">
           <Select
@@ -58,27 +62,16 @@ function Header(props) {
               DropdownIndicator,
               IndicatorSeparator: null,
             }}
+            className="CabinetSelect"
             classNamePrefix="CabinetSelect"
           />
-          <div className="dynamic-shadow">
+          <div className="dynamic-shadow wallet-connect__button">
             <Button type="lightBlue" size="small">
               <SVG
                 src={require('src/asset/icons/cabinet/connect-wallet.svg')}
               />
-              <span>{getLang('cabinet_manage')}</span>
+              {!props.adaptive && <span>{getLang('cabinet_manage')}</span>}
             </Button>
-          </div>
-          <div className="CabinetHeader__notifications">
-            <Badge
-              count={props.profile.has_notifications && 1}
-              type="blue"
-              onClick={setVisibleNotifications}
-            >
-              <SVG src={require('src/asset/icons/cabinet/notification.svg')} />
-            </Badge>
-            {visibleNotifications && (
-              <Notifications onClose={() => setVisibleNotifications(false)} />
-            )}
           </div>
           <div className="CabinetHeader__settings">
             <ActionSheet
@@ -139,18 +132,17 @@ const DropdownIndicator = (props) => {
 
 Header.propTypes = {
   profile: PropTypes.object,
-  notifications: PropTypes.object,
   router: PropTypes.object,
   langList: PropTypes.array,
   title: PropTypes.string,
   theme: PropTypes.string,
   translator: PropTypes.bool,
-}
+  adaptive: PropTypes.bool,
+};
 
 export default connect(
   (state) => ({
     profile: state.default.profile,
-    notifications: state.notifications,
     router: state.router,
     langList: state.default.langList,
     title: state.default.title,

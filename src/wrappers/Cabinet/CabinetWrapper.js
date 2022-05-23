@@ -177,40 +177,7 @@ class CabinetWrapper extends Component {
 
     return (
       <div className={mainClassName}>
-        {adaptive ? (
-          <AdaptiveHeader
-            leftContent={
-              content.left ? (
-                <span>{content.left}</span>
-              ) : (
-                <Logo
-                  onClick={() => {
-                    router.navigate(PAGES.MAIN);
-                  }}
-                  className="AdaptiveHeader__logo"
-                  size="middle"
-                />
-              )
-            }
-            rightContent={
-              !user && (
-                <div
-                  onClick={() =>
-                    actions.openModal('auth', { type: steps.REGISTRATION })
-                  }
-                >
-                  <SVG src={require('../../asset/24px/login.svg')} />
-                </div>
-              )
-            }
-            mainContent={{
-              type: 'text',
-              content: this.props.title,
-            }}
-          />
-        ) : (
-          <Header />
-        )}
+        <Header adaptive={adaptive} />
         <div className="CabinetWrapper__content">{this.__renderContent()}</div>
         {/* Display TabBar for mobile */}
         {/* {adaptive && user && <TabBar />} */}
