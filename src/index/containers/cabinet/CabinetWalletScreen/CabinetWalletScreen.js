@@ -211,9 +211,7 @@ class CabinetWalletScreen extends React.PureComponent {
     return (
       <PageContainer
         className="CabinetWalletScreen"
-        sideBar={
-          !isAdaptive && <CabinetWalletSidebar />
-        }
+        sideBar={<CabinetWalletSidebar />}
       >
         {isCommon && <CabinetWallets />}
         {/* {isCommon && <Web3Wallets />} */}

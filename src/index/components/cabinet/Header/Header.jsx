@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect, useSelector } from 'react-redux';
 
-import Select from 'react-select';
+import Select from '../Select/Select';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
@@ -14,40 +14,49 @@ import COMPANY from '../../../constants/company';
 
 import './Header.less';
 import { Button } from 'src/ui';
-import { options } from './constants/header_crypto';
-import Notifications from '../Notifications/Notifications';
-import { Badge, ActionSheet, Switch } from 'src/ui';
+import { cryptoOptions, walletsOptions } from './constants/options';
+import { ActionSheet, Switch, NumberFormat } from 'src/ui';
 import { currentLangSelector } from 'src/selectors';
 
 function Header(props) {
-  // Current crypto in select.
+  // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('solana');
-  const [visibleNotifications, setVisibleNotifications] = React.useState(false);
+  const [currentWallet, setCurrentWallet] = React.useState(1);
   const currentLang = useSelector(currentLangSelector);
   const lang =
     props.langList.find((l) => l.value === currentLang) ||
     props.langList[0] ||
     {};
 
-  // Get value object of current crypto str.
-  const getValue = () => {
-    return currentCrypto ? options.find((c) => c.value === currentCrypto) : '';
+  const [isLogin, setIsLogin] = React.useState(true);
+  const narfexRate = 455.55;
+  const getFraction = (number) => {
+    const fractionIndex = String(number).indexOf('.');
+    const result = String(number).slice(fractionIndex, String(number).length);
+    return result;
   };
 
   // Set current crypto
   const handleCryptoChange = (newValue) => {
-    setCurrentCrypto(newValue.value);
+    setCurrentCrypto(newValue);
   };
 
   return (
     <div className="CabinetHeader">
       <div className="CabinetHeader__container">
+        {props.adaptive && (
+          <div className="CabinetHeader__burger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        )}
         <div
           className="CabinetHeader__logo"
           onClick={() => router.navigate(MAIN)}
         >
           {props.adaptive ? (
-            <SVG src={require('src/asset/logo/narfex-icon.svg')} />
+            !isLogin && <SVG src={require('src/asset/logo/narfex-icon.svg')} />
           ) : (
             <SVG src={require('src/asset/logo/narfex-blue.svg')} />
           )}
@@ -55,8 +64,8 @@ function Header(props) {
         <div className="CabinetHeader__menu">
           <Select
             isSearchable={false}
-            options={options}
-            value={getValue()}
+            options={cryptoOptions}
+            value={currentCrypto}
             onChange={handleCryptoChange}
             components={{
               DropdownIndicator,
@@ -65,14 +74,41 @@ function Header(props) {
             className="CabinetSelect"
             classNamePrefix="CabinetSelect"
           />
-          <div className="dynamic-shadow wallet-connect__button">
-            <Button type="lightBlue" size="small">
-              <SVG
-                src={require('src/asset/icons/cabinet/connect-wallet.svg')}
+          {isLogin ? (
+            <>
+              <div className="CabinetHeader__wallet-rate">
+                <SVG src={require('src/asset/logo/narfex-icon.svg')} />$
+                <div>
+                  <NumberFormat number={Math.floor(narfexRate)} />
+                  <span className="full-number">{getFraction(narfexRate)}</span>
+                </div>
+              </div>
+              <Select
+                isSearchable={false}
+                options={walletsOptions}
+                value={currentWallet}
+                onChange={(newValue) => setCurrentWallet(newValue)}
+                components={{
+                  DropdownIndicator,
+                  IndicatorSeparator: null,
+                }}
+                className="CabinetSelect__wallets"
               />
-              {!props.adaptive && <span>{getLang('cabinet_manage')}</span>}
-            </Button>
-          </div>
+            </>
+          ) : (
+            <div className="dynamic-shadow wallet-connect__button">
+              <Button
+                type="lightBlue"
+                size="small"
+                onClick={() => setIsLogin(true)}
+              >
+                <SVG
+                  src={require('src/asset/icons/cabinet/connect-wallet.svg')}
+                />
+                {!props.adaptive && <span>{getLang('cabinet_manage')}</span>}
+              </Button>
+            </div>
+          )}
           <div className="CabinetHeader__settings">
             <ActionSheet
               position="left"

@@ -8,7 +8,6 @@ import SVG from "utils/svg-wrap";
 import { classNames } from "../../../src/utils";
 import router from "../../../src/router";
 import Header from "../../index/components/cabinet/Header/Header";
-import AdaptiveHeader from "../../index/components/cabinet/Header/AdaptiveHeader";
 import * as PAGES from "../../index/constants/pages";
 import * as utils from "../../utils";
 import TabBar from "../../index/components/cabinet/TabBar/TabBar";
@@ -177,7 +176,7 @@ class CabinetWrapper extends Component {
 
     return (
       <div className={mainClassName}>
-        <Header adaptive={adaptive} />
+        <Header adaptive={adaptive}  />
         <div className="CabinetWrapper__content">{this.__renderContent()}</div>
         {/* Display TabBar for mobile */}
         {/* {adaptive && user && <TabBar />} */}

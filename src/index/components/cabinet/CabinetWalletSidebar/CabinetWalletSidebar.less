@@ -50,3 +50,52 @@
     }
   }
 }
+
+@media screen and (max-width: @mobile-width) {
+  .CabinetWalletSidebar {
+    padding-top: 12px;
+    padding-left: 29px;
+    margin-left: -15px;
+    max-width: 100%;
+    width: 266px;
+    background: #fff;
+    box-sizing: border-box;
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+
+    &.active {
+      transform: translateX(0%);
+    }
+
+    &__container {
+      margin-bottom: 0;
+      height: 80%;
+      margin-bottom: 5%;
+    }
+
+    .CabinetBlock {
+      padding: 23px 52px 33px 21px;
+
+      &:not(:first-child) {
+        padding-top: 0;
+      }
+    }
+
+    .WalletsList {
+      height: 15%;
+      position: static;
+      width: 100%;
+      max-width: 205px;
+      justify-content: end;
+
+      .WalletsListItem {
+        &__icon {
+          .isvg {
+            box-shadow: 0 0 0 1px #fff;
+          }
+        }
+      }
+    }
+  }
+}

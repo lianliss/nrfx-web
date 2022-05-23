@@ -43,7 +43,20 @@
     // 17px padding top, 10px padding bottom
 
     &__sideBar {
-      display: none;
+      position: fixed;
+      height: calc(100vh - var(--header-height) - 17px);
+      width: 100vw;
+      top: calc(var(--header-height) + 17px);
+      left: 0;
+      margin: 0;
+      box-sizing: border-box;
+      background: rgba(40, 40, 40, 0);
+      transition: background 0.5s;
+      z-index: 2;
+
+      &.active {
+        background: rgba(40, 40, 40, 0.24);
+      }
     }
 
     &__content {

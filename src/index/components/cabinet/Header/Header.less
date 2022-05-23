@@ -85,7 +85,6 @@
   &__settings {
     position: relative;
     display: flex;
-    margin-left: 18px;
     color: #f7f9fc;
     cursor: pointer;
 
@@ -108,6 +107,42 @@
     }
   }
 
+  // Token price
+  &__wallet-rate {
+    display: flex;
+    align-items: center;
+    height: 39px;
+    padding: 0 8px;
+    margin-left: 3px;
+    box-sizing: border-box;
+    border: 1px solid #dfe3f0;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 180%;
+    color: var(--dark-black);
+
+    & > div {
+      display: flex;
+    }
+    
+    .full-number {
+      color: #d3d5db;
+    }
+
+    span {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .isvg {
+      svg {
+        height: 22.5px;
+        width: 15px;
+      }
+    }
+  }
+
   // <Select />
   .CabinetSelect {
     &__value-container {
@@ -115,8 +150,24 @@
     }
 
     &__single-value {
+      height: 23px;
+
       .isvg {
-        display: inline-flex;
+        display: flex;
+        align-items: center;
+        width: 23px;
+        height: 23px;
+
+        svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+
+    &__option {
+      .isvg {
+        display: flex;
         align-items: center;
         justify-content: center;
         width: 23px;
@@ -138,6 +189,63 @@
       }
     }
   }
+
+  .CabinetSelect__wallets {
+    width: 172px;
+    margin-right: 13px;
+    margin-left: 3px;
+
+    .CabinetSelect {
+      &__single-value,
+      &__menu {
+        overflow: hidden !important;
+        width: 100%;
+
+        .CabinetSelect__option-title {
+          word-break: break-all;
+        }
+      }
+
+      &__option-icon {
+        svg,
+        path {
+          fill: var(--blue-light-gradient-color-start) !important;
+        }
+      }
+    }
+  }
+
+  // Burger Menu
+  &__burger-menu {
+    width: 43px;
+    min-width: 43px;
+    margin-right: 3.38%;
+    padding: 12px 11px 11px;
+    background: #fff;
+    border-radius: var(--radius-panel);
+    box-sizing: border-box;
+    cursor: pointer;
+
+    span {
+      display: block;
+      background: var(--royal-blue);
+      height: 2.72px;
+      width: 100%;
+      border-radius: 2px;
+
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+    }
+
+    span:nth-child(1) {
+    }
+    span:nth-child(2) {
+    }
+    span:nth-child(3) {
+      width: 63.63%;
+    }
+  }
 }
 
 .CabinetHeader__connect {
@@ -149,10 +257,16 @@
 }
 
 @media screen and (max-width: @mobile-width) {
-  --header-height: 52px !important;
-  
+  --header-height: 58.16px !important;
+
   .CabinetHeader {
-    padding-top: 11px;
+    position: relative;
+    padding: 11px 0 2px;
+    z-index: 50;
+
+    &__container {
+      padding: 0 10px;
+    }
     // <Select />
     .CabinetSelect {
       &,
