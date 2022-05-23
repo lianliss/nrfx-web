@@ -57,9 +57,7 @@ function Header(props) {
               className="CabinetHeader__burger-menu"
               onClick={() => setIsSidebar((prev) => !prev)}
             >
-              <span></span>
-              <span></span>
-              <span></span>
+              <SVG src={require('src/asset/icons/burger-menu.svg')} />
             </div>
           )}
           <div
@@ -169,6 +167,7 @@ function Header(props) {
       {props.adaptive && (
         <AdaptiveSidebar
           active={isSidebar}
+          route={props.router.route.name}
           onClose={() => setIsSidebar(false)}
         />
       )}

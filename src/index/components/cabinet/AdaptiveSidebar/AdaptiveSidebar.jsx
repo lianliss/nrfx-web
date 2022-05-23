@@ -6,7 +6,7 @@ import CabinetWalletSidebar from '../CabinetWalletSidebar/CabinetWalletSidebar';
 // Style
 import './AdaptiveSidebar.less';
 
-function AdaptiveSidebar({ active, onClose }) {
+function AdaptiveSidebar({ route, active, onClose }) {
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -18,7 +18,11 @@ function AdaptiveSidebar({ active, onClose }) {
     }
   }, [active]);
 
-  React.useEffect(() => {
+  React.useMemo(() => {
+    onClose();
+  }, [route]);
+
+  React.useEffect(() => {    
     return () => {
       document.body.classList.remove('noScroll');
     };

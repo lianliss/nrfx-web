@@ -217,33 +217,21 @@
 
   // Burger Menu
   &__burger-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 43px;
     min-width: 43px;
     margin-right: 3.38%;
-    padding: 12px 11px 11px;
     background: #fff;
     border-radius: var(--radius-panel);
     box-sizing: border-box;
     cursor: pointer;
 
-    span {
-      display: block;
-      background: var(--royal-blue);
-      height: 2.72px;
-      width: 100%;
-      border-radius: 2px;
-
-      &:not(:last-child) {
-        margin-bottom: 4px;
-      }
-    }
-
-    span:nth-child(1) {
-    }
-    span:nth-child(2) {
-    }
-    span:nth-child(3) {
-      width: 63.63%;
+    .isvg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
