@@ -28,7 +28,7 @@ const Tabs = props => {
           <Lang name="cabinet_header_wallet" />
         </span>
       </Tab>
-      <Tab route={PAGES.EXCHANGE} disabled>
+      <Tab route={PAGES.EXCHANGE}>
         <SVG src={require("../../../../asset/24px/candles.svg")} />
         <span className="TabBar__item__text">
           <Lang name="cabinet_header_exchange" />
