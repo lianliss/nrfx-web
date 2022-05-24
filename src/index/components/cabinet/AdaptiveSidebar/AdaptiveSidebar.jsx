@@ -12,9 +12,9 @@ function AdaptiveSidebar({ route, active, onClose }) {
 
     // Deactive scroll if sidebar is open
     if (active) {
-      document.body.classList.add('noScroll');
+      document.body.style.overflowY = 'hidden';
     } else {
-      document.body.classList.remove('noScroll');
+      document.body.style.overflowY = 'scroll';
     }
   }, [active]);
 
@@ -22,9 +22,9 @@ function AdaptiveSidebar({ route, active, onClose }) {
     onClose();
   }, [route]);
 
-  React.useEffect(() => {    
+  React.useEffect(() => {
     return () => {
-      document.body.classList.remove('noScroll');
+      document.body.style.overflowY = 'scroll';
     };
   }, []);
 

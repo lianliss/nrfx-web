@@ -1,23 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import router from 'src/router';
 
 import Select from '../Select/Select';
-import CabinetWalletSidebar from '../CabinetWalletSidebar/CabinetWalletSidebar';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
-import { openModal, toggleTheme } from 'src/actions';
-import { logout } from 'src/actions/auth';
-import { SETTINGS, PARTNERS, MAIN } from '../../../constants/pages';
-import COMPANY from '../../../constants/company';
+import { MAIN } from '../../../constants/pages';
 
 import './Header.less';
 import { Button } from 'src/ui';
 import { cryptoOptions, walletsOptions } from './constants/options';
-import { ActionSheet, Switch, NumberFormat } from 'src/ui';
-import { currentLangSelector } from 'src/selectors';
+import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 
 function Header(props) {
@@ -25,17 +20,10 @@ function Header(props) {
   const [currentCrypto, setCurrentCrypto] = React.useState('solana');
   // 1 is option value
   const [currentWallet, setCurrentWallet] = React.useState(1);
-  const [isLogin, setIsLogin] = React.useState(true);
+  const [isLogin, setIsLogin] = React.useState(false);
 
   // Adaptive sidebar is open
   const [isSidebar, setIsSidebar] = React.useState(false);
-
-  const currentLang = useSelector(currentLangSelector);
-  const lang =
-    props.langList.find((l) => l.value === currentLang) ||
-    props.langList[0] ||
-    {};
-
   const narfexRate = 455.55;
   const getFraction = (number) => {
     const fractionIndex = String(number).indexOf('.');
@@ -125,36 +113,46 @@ function Header(props) {
             <div className="CabinetHeader__settings">
               <ActionSheet
                 position="left"
+                type="drop"
                 items={[
                   {
-                    title: getLang('cabinet_header_settings'),
-                    onClick: () => router.navigate(SETTINGS),
-                  },
-                  {
-                    title: getLang('cabinet_header_partners'),
-                    onClick: () => router.navigate(PARTNERS),
-                  },
-                  {
-                    title: 'FAQ',
-                    onClick: () => window.open(COMPANY.faqUrl),
-                  },
-                  {
-                    title: lang.title,
-                    onClick: () => openModal('language'),
+                    title: 'Language',
+                    onClick: () => {},
                     subContent: (
-                      <SVG
-                        src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)}
-                      />
+                      <>
+                        <span className="CabinetHeader__language">
+                          <img
+                            src={
+                              require(`../../../../asset/site/lang-flags/id.svg`)
+                                .default
+                            }
+                          />
+                        </span>
+                        <span className="CabinetHeader__language active">
+                          <img
+                            src={
+                              require(`../../../../asset/site/lang-flags/ru.svg`)
+                                .default
+                            }
+                          />
+                        </span>
+                        <span className="CabinetHeader__language">
+                          <img
+                            src={
+                              require(`../../../../asset/site/lang-flags/en.svg`)
+                                .default
+                            }
+                          />
+                        </span>
+                      </>
                     ),
                   },
                   {
-                    title: getLang('global_darkMode'),
-                    onClick: toggleTheme,
-                    subContent: <Switch on={props.theme === 'dark'} />,
-                  },
-                  {
-                    title: getLang('cabinet_header_exit'),
-                    onClick: logout,
+                    title: 'Theme',
+                    onClick: () => {},
+                    subContent: (
+                      <span className="secondary-text">Coming soon</span>
+                    ),
                   },
                 ]}
               >

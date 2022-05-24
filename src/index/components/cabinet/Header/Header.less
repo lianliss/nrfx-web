@@ -63,28 +63,31 @@
     }
   }
 
-  &__notifications {
-    display: flex;
-    position: relative;
-    margin-left: 69px;
-
-    .Notifications {
-      position: absolute;
-      width: 648px;
-      top: 100%;
-      right: 0;
-      z-index: 20;
+  &__language {
+    img {
+      box-sizing: border-box;
+      border-radius: 50%;
+      width: 23px;
+      height: 23px;
+      border: 1px solid #ebeff4;
+      object-fit: cover;
     }
 
-    .isvg {
-      width: 25px;
-      height: 25px;
+    &.active {
+      img {
+        border-color: var(--blue-light-gradient-color-start);
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: 3px;
     }
   }
 
   &__settings {
-    position: relative;
     display: flex;
+    align-items: center;
+    height: 100%;
     color: #f7f9fc;
     cursor: pointer;
 
@@ -93,11 +96,12 @@
       height: 25px;
     }
 
-    .ContentBox {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      z-index: 20;
+    .ActionsSheet {
+      & > div:first-child {
+        display: flex;
+        align-items: center;
+        height: 39px;
+      }
     }
   }
 
@@ -190,6 +194,10 @@
     }
   }
 
+  .wallet-connect__button {
+    margin-right: 34px;
+  }
+
   .CabinetSelect__wallets {
     width: 172px;
     margin-right: 13px;
@@ -200,6 +208,7 @@
       &__menu {
         overflow: hidden !important;
         width: 100%;
+        right: 0;
 
         .CabinetSelect__option-title {
           word-break: break-all;
@@ -233,6 +242,10 @@
       justify-content: center;
       align-items: center;
     }
+  }
+
+  .secondary-text {
+    color: var(--cool-gray);
   }
 }
 
@@ -272,6 +285,8 @@
 
     .wallet-connect__button {
       width: 47px;
+      margin-right: 17px;
+
       .Button__label {
         .isvg {
           margin-right: 0;
