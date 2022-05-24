@@ -123,7 +123,7 @@ function Login({
           {utils.getLang("site__commerceRegistration")}
         </h4>
         <UI.Button
-          disabled={disabled}
+          // disabled={disabled}
           state={status}
           fontSize={15}
           onClick={handleSubmit}

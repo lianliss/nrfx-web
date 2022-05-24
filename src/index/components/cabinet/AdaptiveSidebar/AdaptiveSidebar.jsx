@@ -1,5 +1,6 @@
 import React from 'react';
 import { classNames as cn } from 'src/utils';
+
 // Components
 import CabinetWalletSidebar from '../CabinetWalletSidebar/CabinetWalletSidebar';
 
