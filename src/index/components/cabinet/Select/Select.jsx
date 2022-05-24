@@ -57,7 +57,7 @@ export const option = (title, value, icon) => {
         <span className="CabinetSelect__option-icon">
           <SVG src={icon} />
         </span>
-        <span className="CabinetSelect__option-title">{title}</span>
+        <p className="CabinetSelect__option-title">{title}</p>
       </>
     ),
     value,

@@ -206,17 +206,17 @@
     margin-left: 3px;
 
     .CabinetSelect {
+      &__option-title {
+        overflow: visible;
+      }
+
       &__single-value,
       &__menu {
         overflow: hidden !important;
         width: 100%;
         right: 0;
-
-        .CabinetSelect__option-title {
-          word-break: break-all;
-        }
+        text-overflow: ellipsis;
       }
-
       &__option-icon {
         svg,
         path {
@@ -285,6 +285,19 @@
       }
     }
 
+    .CabinetSelect__wallets {
+      .CabinetSelect__single-value {
+        .CabinetSelect__option-title {
+          overflow: hidden;
+        }
+      }
+    }
+
+    .CabinetSelect__wallets,
+    .CabinetSelect__wallets .CabinetSelect__control {
+      width: 104px;
+    }
+
     .wallet-connect__button {
       width: 47px;
       margin-right: 17px;
@@ -294,6 +307,15 @@
           margin-right: 0;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .CabinetHeader {
+    .CabinetSelect__wallets,
+    .CabinetSelect__wallets .CabinetSelect__control {
+      width: 63px;
     }
   }
 }
