@@ -8,25 +8,31 @@ import './AdaptiveSidebar.less';
 
 function AdaptiveSidebar({ route, active, onClose }) {
   React.useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
+    const html = document.querySelector('html');
+    const body = document.querySelector('body');
     // Deactive scroll if sidebar is open
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     if (active) {
-      document.body.style.overflowY = 'hidden';
+      scrollToTop();
+      html.classList.add('noScroll');
+      body.classList.add('noScroll');
     } else {
-      document.body.style.overflowY = 'scroll';
+      html.classList.remove('noScroll');
+      body.classList.remove('noScroll');
     }
+
+    return () => {
+      html.classList.remove('noScroll');
+      body.classList.remove('noScroll');
+    };
   }, [active]);
 
   React.useMemo(() => {
     onClose();
   }, [route]);
-
-  React.useEffect(() => {
-    return () => {
-      document.body.style.overflowY = 'scroll';
-    };
-  }, []);
 
   return (
     <div className={cn('AdaptiveSidebar', { active })}>
