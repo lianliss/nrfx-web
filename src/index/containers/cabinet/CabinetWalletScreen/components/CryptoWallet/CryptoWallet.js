@@ -100,6 +100,8 @@ class CryptoWallet extends React.PureComponent {
     const currencyInfo = currenciesObject[currency];
     const wallet = web3Wallets[0];
     const isGenerated = _.get(wallet, 'isGenerated', false);
+    // getFinePrice get string with symbols for display. Replace it.
+    const finePrice = getFinePrice(balance).replace(/\s+/g, '');
 
     return <UI.ContentBox className="CryptoWallet">
       <h2>
@@ -139,7 +141,7 @@ class CryptoWallet extends React.PureComponent {
         <div className="CryptoWallet-balance-token">
           <UI.CircleIcon size="medium" currency={currencyInfo} />
           <span>
-            <UI.NumberFormat number={getFinePrice(balance)} currency={currency} />
+            <UI.NumberFormat number={finePrice} currency={currency} />
           </span>
         </div>
         <div className="CryptoWallet-balance-usd">
