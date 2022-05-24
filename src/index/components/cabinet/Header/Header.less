@@ -65,15 +65,17 @@
 
   &__language {
     img {
-      box-sizing: border-box;
-      border-radius: 50%;
       width: 23px;
       height: 23px;
       border: 1px solid #ebeff4;
+      box-sizing: border-box;
+      border-radius: 50%;
       object-fit: cover;
+      transition: border-color 0.2s;
     }
 
-    &.active {
+    &.active,
+    &:hover {
       img {
         border-color: var(--blue-light-gradient-color-start);
       }
