@@ -7,7 +7,7 @@ import './SectionBlock.less';
 function SectionBlock({ className, title, children }) {
   return (
     <div className={`SectionBlock ${className}`}>
-      <span className={`SectionBlock__title ${className}__title`}>{title}</span>
+      <div className={`SectionBlock__title ${className}__title`}>{title}</div>
       <div className={`SectionBlock__content ${className}__content`}>{children}</div>
     </div>
   );

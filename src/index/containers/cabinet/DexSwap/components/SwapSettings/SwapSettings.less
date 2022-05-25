@@ -1,3 +1,104 @@
 .SwapSettings {
-  
+  padding: 23px 32px 43px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 25px;
+  box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25);
+
+  &__wrap {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    max-width: 445px;
+    width: 100%;
+  }
+
+  &__close {
+    position: absolute;
+    display: flex;
+    right: 32px;
+    top: 16px;
+    background-size: 14px;
+    width: 14px + 12 * 2;
+    height: 14px + 12 * 2;
+    color: var(--text-black);
+    cursor: pointer;
+    z-index: 2;
+
+    .isvg {
+      display: block;
+      margin: auto;
+
+      svg {
+        display: block;
+
+        path {
+          fill: var(--text-black);
+        }
+      }
+    }
+
+    &:hover {
+      .isvg svg path {
+        fill: var(--primary-orange);
+      }
+    }
+  }
+
+  h2 {
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .SectionBlock {
+    margin-bottom: 27px;
+
+    &__title {
+      display: flex;
+      align-items: center;
+
+      .isvg {
+        margin-left: 6px;
+      }
+    }
+  }
+
+  .transaction-speed {
+    .Button {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .slippage {
+    .Button {
+      margin-right: 20px;
+
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .Button {
+    transition: background 0.2s;
+
+    &__label {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      transition: color 0.2s;
+    }
+
+    &.active {
+      background: #3071ee;
+      pointer-events: none;
+
+      .Button__label {
+        color: #fff;
+      }
+    }
+  }
 }

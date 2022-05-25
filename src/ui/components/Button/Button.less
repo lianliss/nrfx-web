@@ -1,10 +1,10 @@
-@import "../../vars";
+@import '../../vars';
 
 .Button {
   --button-height: 48px;
   outline: none;
   border: none;
-  font-family: @font-family;;
+  font-family: @font-family;
   padding: 0 32px;
   background: var(--blue-gradient);
   color: var(--primary-blue);
@@ -51,7 +51,7 @@
   }
 
   &:after {
-    content: "";
+    content: '';
     background: inherit;
     opacity: 0;
     position: absolute;
@@ -65,7 +65,7 @@
   }
 
   &.default:hover {
-    opacity: .92;
+    opacity: 0.92;
     box-shadow: 0 4px 8px rgba(64, 112, 255, 0.32);
   }
 
@@ -87,6 +87,11 @@
     --button-height: 24px;
     padding: 0 8px;
     border-radius: 6px;
+  }
+
+  &.medium {
+    --button-height: 44px;
+    padding: 0 14px;
   }
 
   &.middle {
@@ -125,15 +130,15 @@
 
     &:after {
       background: var(--primary-blue);
-      opacity: .12;
+      opacity: 0.12;
     }
 
     &:hover:after {
-      opacity: .16;
+      opacity: 0.16;
     }
 
     &:active:after {
-      opacity: .24;
+      opacity: 0.24;
     }
   }
 
@@ -149,11 +154,11 @@
     }
 
     &:hover:after {
-      opacity: .12;
+      opacity: 0.12;
     }
 
     &:active:after {
-      opacity: .24;
+      opacity: 0.24;
     }
   }
 
@@ -161,7 +166,7 @@
     background: var(--red);
 
     &:hover {
-      opacity: .95;
+      opacity: 0.95;
       box-shadow: 0 4px 8px rgba(255, 68, 51, 0.32);
     }
 
@@ -174,7 +179,7 @@
     background: var(--green);
 
     &:hover {
-      opacity: .95;
+      opacity: 0.95;
       box-shadow: 0 4px 8px rgba(0, 178, 119, 0.32);
     }
 
@@ -183,8 +188,142 @@
     }
   }
 
+  &.green-light {
+    background: #5ec47a;
+    border: none;
+    transition: all 0.2s;
+
+    &.disabled {
+      opacity: 1;
+      background: #e3e9f0;
+
+      .Button__label {
+        color: var(--cool-gray);
+      }
+    }
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(94, 196, 122, 0.32);
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+
+    .Button__label {
+      color: #fff;
+    }
+  }
+
   &.lightBlue {
     background: var(--blue-light-gradient);
+
+    &:hover {
+      opacity: 0.92;
+      box-shadow: 0 4px 8px rgba(64, 112, 255, 0.32);
+    }
+  }
+
+  &.gray {
+    background: rgba(223, 227, 240, 0.25);
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(223, 227, 240, 0.4);
+      box-shadow: 0 4px 8px rgba(223, 227, 240, 0.35);
+    }
+
+    .Button__label {
+      color: var(--cool-gray);
+    }
+
+    .Button__icon {
+      svg,
+      svg path {
+        fill: var(--cool-gray);
+      }
+    }
+  }
+
+  &.secondary-blue {
+    background: rgb(229, 235, 252);
+
+    &:hover {
+      opacity: 0.92;
+      box-shadow: 0 4px 8px rgba(229, 235, 252, 0.5);
+    }
+
+    .Button__label {
+      color: var(--secondary-blue);
+    }
+  }
+
+  &.secondary-light {
+    background: #f7f8fb;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(223, 227, 240, 0.4);
+      box-shadow: 0 4px 10px rgba(223, 227, 240, 0.35);
+    }
+
+    .Button__label {
+      color: var(--dark-black);
+    }
+  }
+
+  &.light {
+    background: transparent;
+    border: 1px solid var(--dark-black);
+    transition: all 0.2s;
+
+    &:hover {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .Button__label {
+      color: var(--dark-black);
+    }
+  }
+
+  &.dark {
+    background: var(--dark-black);
+    border: none;
+    transition: all 0.2s;
+
+    &:hover {
+      opacity: 0.9;
+      box-shadow: 0 4px 10px rgba(45, 49, 63, 0.35);
+    }
+
+    &:active {
+      opacity: 0.8;
+      box-shadow: 0 4px 5px rgba(45, 49, 63, 0.35);
+    }
+
+    .Button__label {
+      color: #fff;
+    }
+  }
+
+  &.dark,
+  &.light,
+  &.secondary-light,
+  &.secondary-blue,
+  &.gray,
+  &.lightBlue,
+  &.green-light {
+    .Button__label {
+      display: flex;
+      align-items: center;
+    }
+
+    .isvg {
+      display: inline-flex;
+      align-items: center;
+    }
   }
 }
 
@@ -265,7 +404,7 @@
   position: relative;
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -274,7 +413,7 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    background: url("../../asset/watch_button_icon_28.svg") no-repeat
+    background: url('../../asset/watch_button_icon_28.svg') no-repeat
       center/contain;
   }
 }
