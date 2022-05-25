@@ -26,6 +26,22 @@
     border-radius: 25px;
   }
 
+  // Manage in input label
+  &__manage {
+    cursor: pointer;
+
+    .isvg,
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    svg,
+    path {
+      fill: #5078e6;
+    }
+  }
+
   // --Form
   .DexSwap__form {
     display: flex;
@@ -101,15 +117,18 @@
     & + .DexSwap__Slippage {
       margin-top: 0;
     }
+
     span {
       &:first-child {
         opacity: 0.5;
       }
+
       &:nth-child(2) {
         font-weight: 600;
         margin-right: 24px + 19px;
       }
     }
+
     &-swap {
       position: absolute;
       right: 16px;
@@ -154,6 +173,7 @@
       font-weight: 800;
       margin-bottom: 20px;
     }
+
     &-item {
       display: flex;
       justify-content: space-between;
@@ -197,6 +217,7 @@
       }
     }
   }
+
   .HoverPopup {
     margin-left: 6px;
     width: fit-content;
@@ -210,12 +231,14 @@
       line-height: 1.6em;
     }
   }
+
   &__hint {
     z-index: 100;
     text-align: left;
     min-width: 300px;
     max-width: 345px;
   }
+
   &__route {
     width: 100%;
     margin: 24px;

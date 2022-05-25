@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 // Components
 import { Switch, SwitchTabs, Button, HoverPopup, } from 'src/ui';
+import SwapSettings from './components/SwapSettings/SwapSettings';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import DexSwapInput from './components/DexSwapInput/DexSwapInput';
@@ -28,7 +29,7 @@ class DexSwap extends React.PureComponent {
 
   state = {
     isPro: false,
-    selectToken: 0,
+    selectToken: null,
     isSettings: false,
     pair: [],
     address: null,
@@ -298,6 +299,7 @@ class DexSwap extends React.PureComponent {
       isPro,
       selectToken, pair,
       amount0, amount1,
+      isSettings,
       exactIndex,
       slippageTolerance,
       transactions,
@@ -383,7 +385,15 @@ class DexSwap extends React.PureComponent {
                           showBalance
                           label
                           title={getLang(!exactIndex ? 'dex_pay_exact' : 'dex_pay_around')}
-                          manage />
+                          manage={(
+                            <div 
+                              className="DexSwap__manage"
+                              onClick={() => this.setState({isSettings: true})}
+                            >
+                              <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
+                            </div>
+                          )}
+                          />
             <SVG onClick={() => this.swapPair()}
               src={require('src/asset/icons/cabinet/swap/swap-icon.svg')}
             />
@@ -487,6 +497,9 @@ class DexSwap extends React.PureComponent {
               })
             }}              onClose={() => this.setState({selectToken: null})}
                             {...this.context} />}
+            {isSettings && (
+              <SwapSettings />
+            )}
           </div>
         </CabinetBlock>
         <div className="DexSwap__route">

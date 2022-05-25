@@ -61,11 +61,7 @@ function DexSwapInput({
         <div className="DexSwapInput__label">
           <div>
             <span className="DexSwapInput__title">{title}</span>
-            {manage && (
-              <div className="DexSwapInput__manage">
-                <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
-              </div>
-            )}
+            {manage}
           </div>
           {(!!balanceNumber && showBalance) && <div>
             <span className={`DexSwapInput__balance ${balanceNumber === value
@@ -105,7 +101,7 @@ function DexSwapInput({
 
 DexSwapInput.propTypes = {
   title: PropTypes.string,
-  manage: PropTypes.bool,
+  manage: PropTypes.any,
   label: PropTypes.bool,
   showBalance: PropTypes.bool,
   onSelectToken: PropTypes.func,
@@ -117,7 +113,7 @@ DexSwapInput.propTypes = {
 
 DexSwapInput.defaultProps = {
   title: '',
-  manage: false,
+  manage: null,
   label: false,
   value: 0,
   showBalance: false,
