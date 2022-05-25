@@ -92,14 +92,18 @@
     position: absolute;
 
     .isvg,
-    svg, img {
+    svg,
+    img {
       width: 100%;
     }
   }
 
   &__select {
-    cursor: pointer;
     margin-left: 41px + 12px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 110%;
+    cursor: pointer;
 
     // Medium text in select (subtitle)
     & > span {
@@ -122,9 +126,12 @@
   }
 
   &__input {
+    padding-top: 2px;
+    box-sizing: border-box;
     width: 100%;
     // <Input />
     .Input {
+      --input-height: 37px;
       border: none;
       background: none;
       font-weight: 500;
