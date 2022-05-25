@@ -28,7 +28,8 @@ class DexSwap extends React.PureComponent {
 
   state = {
     isPro: false,
-    selectToken: null,
+    selectToken: 0,
+    isSettings: false,
     pair: [],
     address: null,
     amount0: 0,
@@ -381,7 +382,8 @@ class DexSwap extends React.PureComponent {
                           setExact={() => this.setExact(0)}
                           showBalance
                           label
-                          title={getLang(!exactIndex ? 'dex_pay_exact' : 'dex_pay_around')} />
+                          title={getLang(!exactIndex ? 'dex_pay_exact' : 'dex_pay_around')}
+                          manage />
             <SVG onClick={() => this.swapPair()}
               src={require('src/asset/icons/cabinet/swap/swap-icon.svg')}
             />
