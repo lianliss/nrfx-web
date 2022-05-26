@@ -30,7 +30,7 @@ class DexSwap extends React.PureComponent {
   state = {
     isPro: false,
     selectToken: null,
-    isSettings: true,
+    isSettings: false,
     pair: [],
     address: null,
     amount0: 0,
@@ -67,6 +67,14 @@ class DexSwap extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // Modals Toggler.
+    if(!this.state.isSettings && _.isNull(this.state.selectToken)) {
+      this.props.closeModal();
+    }else {
+      this.props.openModal();
+    }
+    // -----
+    
     this.fillDefaultPair();
     this.updateAccountAddress();
 
@@ -498,7 +506,7 @@ class DexSwap extends React.PureComponent {
             }}              onClose={() => this.setState({selectToken: null})}
                             {...this.context} />}
             {isSettings && (
-              <SwapSettings />
+              <SwapSettings onClose={() => this.setState({isSettings: false})} />
             )}
           </div>
         </CabinetBlock>

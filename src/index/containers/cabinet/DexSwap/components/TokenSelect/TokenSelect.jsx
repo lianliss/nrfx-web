@@ -20,6 +20,7 @@ class TokenSelect extends React.PureComponent {
   state = {
     search: '',
     activeFiat: 0,
+    switchTabsSelected: 'tokens',
   };
 
   onSearchInput = (event) => {
@@ -31,11 +32,25 @@ class TokenSelect extends React.PureComponent {
   componentDidMount() {
     this._mounted = true;
     this.props.loadAccountBalances();
+
+    document.addEventListener('click', this.__handleOutClick);
   }
 
   componentWillUnmount() {
     this._mounted = false;
+
+    document.removeEventListener('click', this.__handleOutClick);
   }
+
+  // @param {object} Event
+  // Close modal if click was been modal out.
+  __handleOutClick = (e) => {
+    if (!this.tokenSelectRef) return;
+
+    if (!this.tokenSelectRef.contains(e.target)) {
+      this.props.onClose();
+    }
+  };
 
   render() {
     const {
@@ -49,13 +64,13 @@ class TokenSelect extends React.PureComponent {
       getTokenBalanceKey,
       updateTokenBalance,
     } = this.props;
-    const { search, activeFiat } = this.state;
+    const { search, activeFiat, switchTabsSelected } = this.state;
 
     const fiats = [
-      {id: 0, currency: 'usd'},
-      {id: 1, currency: 'rub'},
-      {id: 2, currency: 'idr'}
-    ]
+      { id: 0, currency: 'usd' },
+      { id: 1, currency: 'rub' },
+      { id: 2, currency: 'idr' },
+    ];
 
     const filtered = tokens
       .filter(
@@ -109,7 +124,10 @@ class TokenSelect extends React.PureComponent {
       });
 
     return (
-      <div className="TokenSelect__wrap">
+      <div
+        className="TokenSelect__wrap"
+        ref={(element) => (this.tokenSelectRef = element)}
+      >
         <CabinetBlock>
           <div className="TokenSelect">
             <h2>
@@ -134,8 +152,8 @@ class TokenSelect extends React.PureComponent {
               <SVG src={require('src/asset/24px/search.svg')} />
             </div>
             <SwitchTabs
-              selected={'tokens'}
-              onChange={() => {}}
+              selected={switchTabsSelected}
+              onChange={(value) => this.setState({ switchTabsSelected: value })}
               tabs={[
                 { value: 'list', label: 'List' },
                 { value: 'tokens', label: 'Tokens' },
@@ -146,9 +164,13 @@ class TokenSelect extends React.PureComponent {
             <SectionBlock className="TokenSelect__fiat" title="Fiat currencies">
               {fiats.map((fiat) => (
                 <div
-                  className={`TokenSelect__fiat__item ${activeFiat === fiat.id ? 'active' : ''}`}
+                  className={`TokenSelect__fiat__item ${
+                    activeFiat === fiat.id ? 'active' : ''
+                  }`}
                   key={fiat.id}
-                  onClick={() => {this.setState({activeFiat: fiat.id})}}
+                  onClick={() => {
+                    this.setState({ activeFiat: fiat.id });
+                  }}
                 >
                   <WalletIcon currency={fiat.currency} size={35} />
                   {fiat.currency.toUpperCase()}

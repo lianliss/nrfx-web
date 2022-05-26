@@ -11,6 +11,7 @@
     top: 0;
     max-width: 445px;
     width: 100%;
+    z-index: 2;
   }
 
   &__close {
@@ -73,12 +74,72 @@
   }
 
   .slippage {
-    .Button {
-      margin-right: 20px;
+    &__content {
+      display: flex;
+    }
 
-      &:not(:last-child) {
+    .Button {
+      &:not(:last-of-type) {
         margin-right: 5px;
       }
+    }
+
+    .Input {
+      padding-right: 22px !important;
+      padding-left: 12px;
+      box-sizing: border-box;
+
+      &__container {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .deadline {
+    &__title {
+      display: flex;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 180%;
+      color: var(--cool-gray);
+
+      .isvg {
+        margin-left: 7px;
+      }
+    }
+
+    .Input {
+      padding-right: 70px !important;
+    }
+  }
+
+  .Input {
+    height: 44px;
+    background: none;
+    border-radius: 10px;
+    border: 1px solid #dfe3f0;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+
+    &__container {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    &__icon {
+      position: absolute;
+      right: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: -0.01em;
+      color: #dfe3f0;
+      user-select: none;
     }
   }
 
@@ -98,6 +159,60 @@
 
       .Button__label {
         color: #fff;
+      }
+    }
+  }
+}
+
+.adaptive .SwapSettings {
+  padding: 23px 19px 37px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+
+  &__wrap {
+    display: flex;
+    left: 0;
+    padding: 0 16px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__close {
+    right: 18px;
+  }
+
+  .SectionBlock {
+    margin-bottom: 10px;
+  }
+
+  .transaction-speed {
+    padding-bottom: 10px;
+
+    &__content {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .Button {
+      padding: 0 10px;
+      margin-bottom: 5px;
+
+      &:not(:last-child) {
+        margin-right: 3px;
+      }
+    }
+  }
+
+  .slippage {
+    &__content {
+      flex-wrap: wrap;
+    }
+
+    .Input {
+      &__container {
+        width: 100%;
+        margin: 10px 0 0;
       }
     }
   }
