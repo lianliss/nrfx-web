@@ -68,6 +68,8 @@ class TokenSelect extends React.PureComponent {
       selected,
     } = this.props;
     const { search, switchTabsSelected } = this.state;
+    const isTokens = switchTabsSelected === 'tokens';
+    const isList = switchTabsSelected === 'list';
 
     const filtered = tokens
       .filter(
@@ -196,13 +198,19 @@ class TokenSelect extends React.PureComponent {
                 })}
             </SectionBlock>
             <div className="TokenSelect__list">
-              <h3>{getLang('dex_tokens_list')}</h3>
-              <ReactScrollableList
-                listItems={filtered}
-                heightOfItem={54}
-                maxItemsToRender={10}
-              />
+              <h3>
+                {isTokens && getLang('dex_tokens_list')}
+                {isList && 'List'}
+                </h3>
+              {isTokens && (
+                <ReactScrollableList
+                  listItems={filtered}
+                  heightOfItem={54}
+                  maxItemsToRender={10}
+                />
+              )}
             </div>
+              {isList && 'Coming soon'}
           </div>
         </CabinetBlock>
       </div>
