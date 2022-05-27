@@ -385,174 +385,215 @@ class DexSwap extends React.PureComponent {
       <div className="DexSwap">
         <CabinetBlock>
           <div className="DexSwap__form">
-            <DexSwapInput onSelectToken={() => this.setState({selectToken: 0})}
-                          onChange={value => this.onAmountChange(value, 0)}
-                          value={amount0 || '0'}
-                          token={this.state.pair[0]}
-                          setExact={() => this.setExact(0)}
-                          showBalance
-                          label
-                          title={getLang(!exactIndex ? 'dex_pay_exact' : 'dex_pay_around')}
-                          manage={(
-                            <div 
-                              className="DexSwap__manage"
-                              onClick={() => this.setState({isSettings: true})}
-                            >
-                              <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
-                            </div>
-                          )}
-                          />
-            <SVG onClick={() => this.swapPair()}
+            <DexSwapInput
+              onSelectToken={() => this.setState({ selectToken: 0 })}
+              onChange={(value) => this.onAmountChange(value, 0)}
+              value={amount0 || '0'}
+              token={this.state.pair[0]}
+              setExact={() => this.setExact(0)}
+              showBalance
+              label
+              title={getLang(!exactIndex ? 'dex_pay_exact' : 'dex_pay_around')}
+              manage={
+                <div
+                  className="DexSwap__manage"
+                  onClick={() => this.setState({ isSettings: true })}
+                >
+                  <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
+                </div>
+              }
+            />
+            <SVG
+              onClick={() => this.swapPair()}
               src={require('src/asset/icons/cabinet/swap/swap-icon.svg')}
             />
-            <DexSwapInput onSelectToken={() => this.setState({selectToken: 1})}
-                          onChange={value => this.onAmountChange(value, 1)}
-                          value={amount1 || '0'}
-                          token={this.state.pair[1]}
-                          setExact={() => this.setExact(1)}
-                          label
-                          title={getLang(exactIndex ? 'dex_receive_exact' : 'dex_receive_around')} />
-            {!!Number(executionPrice) && <div className="DexSwap__Price">
-              <span>
-                {getLang('dex_price')}
-              </span>
-              <span>
-                {getFinePrice(Number(isSwappedPrice ? 1 / executionPrice : executionPrice))}
-                &nbsp;
-                {pair[Number(!isSwappedPrice)].symbol} {getLang('dex_per')} {pair[Number(isSwappedPrice)].symbol}
-              </span>
-              <div className="DexSwap__Price-swap" onClick={() => this.setState({isSwappedPrice: !isSwappedPrice})}>
-                <SVG
-                  src={require('src/asset/icons/swap.svg')}
-                />
+            <DexSwapInput
+              onSelectToken={() => this.setState({ selectToken: 1 })}
+              onChange={(value) => this.onAmountChange(value, 1)}
+              value={amount1 || '0'}
+              token={this.state.pair[1]}
+              setExact={() => this.setExact(1)}
+              label
+              title={getLang(
+                exactIndex ? 'dex_receive_exact' : 'dex_receive_around'
+              )}
+            />
+            {!!Number(executionPrice) && (
+              <div className="DexSwap__Price">
+                <span>{getLang('dex_price')}</span>
+                <span>
+                  {getFinePrice(
+                    Number(isSwappedPrice ? 1 / executionPrice : executionPrice)
+                  )}
+                  &nbsp;
+                  {pair[Number(!isSwappedPrice)].symbol} {getLang('dex_per')}{' '}
+                  {pair[Number(isSwappedPrice)].symbol}
+                </span>
+                <div
+                  className="DexSwap__Price-swap"
+                  onClick={() =>
+                    this.setState({ isSwappedPrice: !isSwappedPrice })
+                  }
+                >
+                  <SVG src={require('src/asset/icons/swap.svg')} />
+                </div>
               </div>
-            </div>}
+            )}
             {button}
 
-            {(!!this.trade && !!Number(amount0)) && <div className="DexSwap__description">
-              <div className="DexSwap__description-item">
-                <span>
-                  {isExactIn ? getLang('dex_minimum_receive') : getLang('dex_maximum_spend')}
-                  <HoverPopup content={<div className="DexSwap__hint">
-                    {getLang('dex_notice_price_movement')}
-                  </div>}>
-                    <SVG
-                      src={require('src/asset/icons/cabinet/question-icon.svg')}
-                      className="FarmingTableItem__action_icon"
-                    />
-                  </HoverPopup>
-                </span>
-                <span>
-                  {getFinePrice(Number(significant(isExactIn ? minimumReceive : maximumSpend)))}
-                  &nbsp;
-                  {pair[Number(!exactIndex)].symbol}
-                </span>
-              </div>
-              <div className="DexSwap__description-item">
-                <span>
-                  {getLang('dex_price_impact')}
-                  <HoverPopup
-                    content={
-                      <div className="DexSwap__hint">
-                        {getLang('dex_price_impact_hint')}
-                      </div>
-                    }
-                    windowRight
-                    type="top"
-                  >
-                    <SVG
-                      src={require('src/asset/icons/cabinet/question-icon.svg')}
-                      className="FarmingTableItem__action_icon"
-                    />
-                  </HoverPopup>
-                </span>
-                <span className={priceImpactColor}>
-                  {(priceImpactNumber).toFixed(2)}%
-                </span>
-              </div>
-              <div className="DexSwap__description-item">
-                <span>
-                  {getLang('dex_liquidity_fee')}
-                  {/*<HoverPopup content={<div className="DexSwap__hint">*/}
+            {!!this.trade && !!Number(amount0) && (
+              <div className="DexSwap__description">
+                <div className="DexSwap__description-item">
+                  <span>
+                    {isExactIn
+                      ? getLang('dex_minimum_receive')
+                      : getLang('dex_maximum_spend')}
+                    <HoverPopup
+                      content={
+                        <div className="DexSwap__hint">
+                          {getLang('dex_notice_price_movement')}
+                        </div>
+                      }
+                    >
+                      <SVG
+                        src={require('src/asset/icons/cabinet/question-icon.svg')}
+                        className="FarmingTableItem__action_icon"
+                      />
+                    </HoverPopup>
+                  </span>
+                  <span>
+                    {getFinePrice(
+                      Number(
+                        significant(isExactIn ? minimumReceive : maximumSpend)
+                      )
+                    )}
+                    &nbsp;
+                    {pair[Number(!exactIndex)].symbol}
+                  </span>
+                </div>
+                <div className="DexSwap__description-item">
+                  <span>
+                    {getLang('dex_price_impact')}
+                    <HoverPopup
+                      content={
+                        <div className="DexSwap__hint">
+                          {getLang('dex_price_impact_hint')}
+                        </div>
+                      }
+                      windowRight
+                      type="top"
+                    >
+                      <SVG
+                        src={require('src/asset/icons/cabinet/question-icon.svg')}
+                        className="FarmingTableItem__action_icon"
+                      />
+                    </HoverPopup>
+                  </span>
+                  <span className={priceImpactColor}>
+                    {priceImpactNumber.toFixed(2)}%
+                  </span>
+                </div>
+                <div className="DexSwap__description-item">
+                  <span>
+                    {getLang('dex_liquidity_fee')}
+                    {/*<HoverPopup content={<div className="DexSwap__hint">*/}
                     {/*{getLang('dex_liquidity_fee_hint')}*/}
-                  {/*</div>}>*/}
+                    {/*</div>}>*/}
                     {/*<SVG*/}
-                      {/*src={require('src/asset/icons/cabinet/question-icon.svg')}*/}
-                      {/*className="FarmingTableItem__action_icon"*/}
+                    {/*src={require('src/asset/icons/cabinet/question-icon.svg')}*/}
+                    {/*className="FarmingTableItem__action_icon"*/}
                     {/*/>*/}
-                  {/*</HoverPopup>*/}
-                </span>
-                <span>
-                  {getFinePrice(fee)} {_.get(this.state, 'pair[0].symbol', '')}
-                </span>
+                    {/*</HoverPopup>*/}
+                  </span>
+                  <span>
+                    {getFinePrice(fee)}{' '}
+                    {_.get(this.state, 'pair[0].symbol', '')}
+                  </span>
+                </div>
               </div>
-            </div>}
+            )}
 
-            {!_.isNull(selectToken)
-            && <TokenSelect onChange={value => {
-              const secondToken = selectToken === 1 ? 0 : 1;
-              this.setState(state => {
-                if (state.pair[secondToken].address === value.address) {
-                  state.pair[secondToken] = state.pair[selectToken];
-                }
-                state.pair[selectToken] = value;
-                this.updateLiquidity();
-                return {
-                  ...state,
-                  selectToken: null,
-                  isSwappedPrice: false,
-                }
-              })
-            }}              onClose={() => this.setState({selectToken: null})}
-                            {...this.context} />}
+            {!_.isNull(selectToken) && (
+              <TokenSelect
+                onChange={(value) => {
+                  const secondToken = selectToken === 1 ? 0 : 1;
+                  this.setState((state) => {
+                    if (state.pair[secondToken].address === value.address) {
+                      state.pair[secondToken] = state.pair[selectToken];
+                    }
+                    state.pair[selectToken] = value;
+                    this.updateLiquidity();
+                    return {
+                      ...state,
+                      selectToken: null,
+                      isSwappedPrice: false,
+                    };
+                  });
+                }}
+                onClose={() => this.setState({ selectToken: null })}
+                selected={this.state.pair[selectToken]}
+                {...this.context}
+              />
+            )}
             {isSettings && (
-              <SwapSettings onClose={() => this.setState({isSettings: false})} />
+              <SwapSettings
+                onClose={() => this.setState({ isSettings: false })}
+              />
             )}
           </div>
         </CabinetBlock>
         <div className="DexSwap__route">
           <h3>
-            <span>
-              {getLang('dex_route')}
-            </span>
-            <HoverPopup content={<div className="DexSwap__hint">
-              {getLang('dex_route_hint')}
-            </div>}>
+            <span>{getLang('dex_route')}</span>
+            <HoverPopup
+              content={
+                <div className="DexSwap__hint">{getLang('dex_route_hint')}</div>
+              }
+            >
               ?
             </HoverPopup>
           </h3>
           <div className="DexSwap__route-container">
-            {(!!route && !!route.length) && route.map((symbol, index) => {
-              const token = tokens.find(t => t.symbol === symbol);
-              const logo = _.get(token, 'logoURI', '');
-              return <div className="DexSwap__route-symbol">
-                  {!!index && <SVG
-                    src={require('src/asset/icons/triangle-right.svg')}
-                    className="DexSwap__route-arrow"
-                  />}
-                  <div className="DexSwap__route-logo" style={{backgroundImage: `url('${logo}')`}} />
-                  <span>{symbol}</span>
-              </div>
-            })}
+            {!!route &&
+              !!route.length &&
+              route.map((symbol, index) => {
+                const token = tokens.find((t) => t.symbol === symbol);
+                const logo = _.get(token, 'logoURI', '');
+                return (
+                  <div className="DexSwap__route-symbol">
+                    {!!index && (
+                      <SVG
+                        src={require('src/asset/icons/triangle-right.svg')}
+                        className="DexSwap__route-arrow"
+                      />
+                    )}
+                    <div
+                      className="DexSwap__route-logo"
+                      style={{ backgroundImage: `url('${logo}')` }}
+                    />
+                    <span>{symbol}</span>
+                  </div>
+                );
+              })}
           </div>
         </div>
         {/*{!!transactions.length && <div className="DexSwap__description">*/}
-          {/*<h3>*/}
-            {/*{getLang('dex_last_transactions')}*/}
-          {/*</h3>*/}
-          {/*{transactions.map(item => {*/}
-            {/*const {txHash, token0, token1, amount0, amount1} = item;*/}
-            {/*const link = `https://bscscan.com/tx/${txHash}`;*/}
+        {/*<h3>*/}
+        {/*{getLang('dex_last_transactions')}*/}
+        {/*</h3>*/}
+        {/*{transactions.map(item => {*/}
+        {/*const {txHash, token0, token1, amount0, amount1} = item;*/}
+        {/*const link = `https://bscscan.com/tx/${txHash}`;*/}
 
-            {/*return <div className="DexSwap__description-item" key={txHash}>*/}
-              {/*<span>*/}
-                {/*<a href={link} target="_blank">{txHash}</a>*/}
-              {/*</span>*/}
-              {/*<span>*/}
-                {/*{getFinePrice(amount0)} {token0} > {getFinePrice(amount1)} {token1}*/}
-              {/*</span>*/}
-            {/*</div>*/}
-          {/*})}*/}
+        {/*return <div className="DexSwap__description-item" key={txHash}>*/}
+        {/*<span>*/}
+        {/*<a href={link} target="_blank">{txHash}</a>*/}
+        {/*</span>*/}
+        {/*<span>*/}
+        {/*{getFinePrice(amount0)} {token0} > {getFinePrice(amount1)} {token1}*/}
+        {/*</span>*/}
+        {/*</div>*/}
+        {/*})}*/}
         {/*</div>}*/}
       </div>
     );

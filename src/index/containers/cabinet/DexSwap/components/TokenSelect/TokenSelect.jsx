@@ -14,12 +14,14 @@ import { SwitchTabs } from 'src/ui';
 import SectionBlock from '../SectionBlock/SectionBlock';
 import WalletIcon from 'src/index/components/cabinet/WalletIcon/WalletIcon';
 
+// Constants
+import commonBases from './constants/commonBases';
+
 const web3 = new Web3();
 
 class TokenSelect extends React.PureComponent {
   state = {
     search: '',
-    activeFiat: 0,
     switchTabsSelected: 'tokens',
   };
 
@@ -63,14 +65,11 @@ class TokenSelect extends React.PureComponent {
       getTokenUSDPrice,
       getTokenBalanceKey,
       updateTokenBalance,
+      selected,
     } = this.props;
-    const { search, activeFiat, switchTabsSelected } = this.state;
-
-    const fiats = [
-      { id: 0, currency: 'usd' },
-      { id: 1, currency: 'rub' },
-      { id: 2, currency: 'idr' },
-    ];
+    const { search, switchTabsSelected } = this.state;
+    const isTokens = switchTabsSelected === 'tokens';
+    const isList = switchTabsSelected === 'list';
 
     const filtered = tokens
       .filter(
@@ -161,30 +160,57 @@ class TokenSelect extends React.PureComponent {
               type="light-blue"
               size="medium"
             />
-            <SectionBlock className="TokenSelect__fiat" title="Fiat currencies">
-              {fiats.map((fiat) => (
-                <div
-                  className={`TokenSelect__fiat__item ${
-                    activeFiat === fiat.id ? 'active' : ''
-                  }`}
-                  key={fiat.id}
-                  onClick={() => {
-                    this.setState({ activeFiat: fiat.id });
-                  }}
-                >
-                  <WalletIcon currency={fiat.currency} size={35} />
-                  {fiat.currency.toUpperCase()}
-                </div>
-              ))}
+            <SectionBlock className="TokenSelect__fiat" title="Common bases">
+              {tokens
+                .filter((token) => {
+                  const symbol = token.symbol.toUpperCase();
+
+                  for (let i = 0; i < commonBases.length; i++) {
+                    if (symbol === commonBases[i].toUpperCase()) {
+                      return true;
+                    }
+                  }
+                })
+                .map((token, key) => {
+                  const isActive = token.symbol === selected.symbol;
+                  const styles = isActive
+                    ? {
+                        borderRadius: '11px',
+                        padding: '5px 16px 5px 7px',
+                        background: 'rgba(229, 235, 252, 1)',
+                      }
+                    : {};
+
+                  return (
+                    <div
+                      key={key}
+                      onClick={() => onChange(token)}
+                      className={`TokenSelect__fiat__item`}
+                      style={styles}
+                    >
+                      <WalletIcon
+                        currency={token.symbol.toLowerCase()}
+                        size={35}
+                      />
+                      {token.symbol.toUpperCase()}
+                    </div>
+                  );
+                })}
             </SectionBlock>
             <div className="TokenSelect__list">
-              <h3>{getLang('dex_tokens_list')}</h3>
-              <ReactScrollableList
-                listItems={filtered}
-                heightOfItem={54}
-                maxItemsToRender={10}
-              />
+              <h3>
+                {isTokens && getLang('dex_tokens_list')}
+                {isList && 'List'}
+                </h3>
+              {isTokens && (
+                <ReactScrollableList
+                  listItems={filtered}
+                  heightOfItem={54}
+                  maxItemsToRender={10}
+                />
+              )}
             </div>
+              {isList && 'Coming soon'}
           </div>
         </CabinetBlock>
       </div>
