@@ -52,7 +52,17 @@ function FarmingTableAdaptive({ items, ...filters }) {
       />
       <CabinetScrollBlock style={{ height, minHeight: 200 }}>
         <div className="FarmingTableAdaptive__list">
-          <div className="FarmingTableAdaptive__item"></div>
+          <div className="FarmingTableAdaptive__item">
+            <div className="row">
+              <div className="row">
+                
+              </div>
+              <div className="row"></div>
+            </div>
+            <div className="row">
+              <div className="FarmingTableAdaptive__options"></div>
+            </div>
+          </div>
         </div>
       </CabinetScrollBlock>
     </div>
