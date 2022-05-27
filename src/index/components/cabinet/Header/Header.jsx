@@ -1,127 +1,175 @@
 import React from 'react';
-import PropTypes from "prop-types"
-import { connect, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import router from 'src/router';
 
-import Select from 'react-select';
+import Select from '../Select/Select';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
-import { openModal, toggleTheme } from 'src/actions';
-import { logout } from 'src/actions/auth';
-import router from 'src/router';
-import { SETTINGS, PARTNERS, MAIN } from '../../../constants/pages';
-import COMPANY from '../../../constants/company';
+import { MAIN } from '../../../constants/pages';
 
 import './Header.less';
 import { Button } from 'src/ui';
-import { options } from './constants/header_crypto';
-import Notifications from '../Notifications/Notifications';
-import { Badge, ActionSheet, Switch } from 'src/ui';
-import { currentLangSelector } from 'src/selectors';
+import { cryptoOptions, walletsOptions } from './constants/options';
+import { ActionSheet, NumberFormat } from 'src/ui';
+import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 
 function Header(props) {
-  // Current crypto in select.
+  // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('solana');
-  const [visibleNotifications, setVisibleNotifications] = React.useState(false);
-  const currentLang = useSelector(currentLangSelector);
-  const lang =
-    props.langList.find((l) => l.value === currentLang) ||
-    props.langList[0] ||
-    {}; // hack.
+  // 1 is option value
+  const [currentWallet, setCurrentWallet] = React.useState(1);
+  const [isLogin, setIsLogin] = React.useState(false);
 
-  // Get value object of current crypto str.
-  const getValue = () => {
-    return currentCrypto ? options.find((c) => c.value === currentCrypto) : '';
+  // Adaptive sidebar is open
+  const [isSidebar, setIsSidebar] = React.useState(false);
+  const narfexRate = 455.55;
+  const getFraction = (number) => {
+    const fractionIndex = String(number).indexOf('.');
+    const result = String(number).slice(fractionIndex, String(number).length);
+    return result;
   };
 
   // Set current crypto
   const handleCryptoChange = (newValue) => {
-    setCurrentCrypto(newValue.value);
+    setCurrentCrypto(newValue);
   };
 
   return (
-    <div className="CabinetHeader">
-      <div className="CabinetHeader__container">
-        <div
-          className="CabinetHeader__logo"
-          onClick={() => router.navigate(MAIN)}
-        >
-          <SVG src={require('src/asset/logo/narfex-blue.svg')} />
-        </div>
-        <div className="CabinetHeader__menu">
-          <Select
-            isSearchable={false}
-            options={options}
-            value={getValue()}
-            onChange={handleCryptoChange}
-            components={{
-              DropdownIndicator,
-              IndicatorSeparator: null,
-            }}
-            classNamePrefix="CabinetSelect"
-          />
-          <div className="dynamic-shadow">
-            <Button type="lightBlue" size="small">
-              <SVG
-                src={require('src/asset/icons/cabinet/connect-wallet.svg')}
-              />
-              <span>{getLang('cabinet_manage')}</span>
-            </Button>
-          </div>
-          <div className="CabinetHeader__notifications">
-            <Badge
-              count={props.profile.has_notifications && 1}
-              type="blue"
-              onClick={setVisibleNotifications}
+    <>
+      <div className="CabinetHeader">
+        <div className="CabinetHeader__container">
+          {props.adaptive && (
+            <div
+              className="CabinetHeader__burger-menu"
+              onClick={() => setIsSidebar((prev) => !prev)}
             >
-              <SVG src={require('src/asset/icons/cabinet/notification.svg')} />
-            </Badge>
-            {visibleNotifications && (
-              <Notifications onClose={() => setVisibleNotifications(false)} />
+              <SVG src={require('src/asset/icons/burger-menu.svg')} />
+            </div>
+          )}
+          <div
+            className="CabinetHeader__logo"
+            onClick={() => router.navigate(MAIN)}
+          >
+            {props.adaptive ? (
+              !isLogin && (
+                <SVG src={require('src/asset/logo/narfex-icon.svg')} />
+              )
+            ) : (
+              <SVG src={require('src/asset/logo/narfex-blue.svg')} />
             )}
           </div>
-          <div className="CabinetHeader__settings">
-            <ActionSheet
-              position="left"
-              items={[
-                {
-                  title: getLang('cabinet_header_settings'),
-                  onClick: () => router.navigate(SETTINGS),
-                },
-                {
-                  title: getLang('cabinet_header_partners'),
-                  onClick: () => router.navigate(PARTNERS),
-                },
-                {
-                  title: 'FAQ',
-                  onClick: () => window.open(COMPANY.faqUrl),
-                },
-                {
-                  title: lang.title,
-                  onClick: () => openModal('language'),
-                  subContent: (
-                    <SVG
-                      src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)}
-                    />
-                  ),
-                },
-                {
-                  title: getLang('global_darkMode'),
-                  onClick: toggleTheme,
-                  subContent: <Switch on={props.theme === 'dark'} />,
-                },
-                {
-                  title: getLang('cabinet_header_exit'),
-                  onClick: logout,
-                },
-              ]}
-            >
-              <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
-            </ActionSheet>
+          <div className="CabinetHeader__menu">
+            <Select
+              isSearchable={false}
+              options={cryptoOptions}
+              value={currentCrypto}
+              onChange={handleCryptoChange}
+              components={{
+                DropdownIndicator,
+                IndicatorSeparator: null,
+              }}
+              className="CabinetSelect"
+              classNamePrefix="CabinetSelect"
+            />
+            {isLogin ? (
+              <>
+                <div className="CabinetHeader__wallet-rate">
+                  <SVG src={require('src/asset/logo/narfex-icon.svg')} />$
+                  <div>
+                    <NumberFormat number={Math.floor(narfexRate)} />
+                    <span className="full-number">
+                      {getFraction(narfexRate)}
+                    </span>
+                  </div>
+                </div>
+                <Select
+                  isSearchable={false}
+                  options={walletsOptions}
+                  value={currentWallet}
+                  onChange={(newValue) => setCurrentWallet(newValue)}
+                  components={{
+                    DropdownIndicator,
+                    IndicatorSeparator: null,
+                  }}
+                  className="CabinetSelect__wallets"
+                />
+              </>
+            ) : (
+              <div className="dynamic-shadow wallet-connect__button">
+                <Button
+                  type="lightBlue"
+                  size="small"
+                  onClick={() => setIsLogin(true)}
+                >
+                  <SVG
+                    src={require('src/asset/icons/cabinet/connect-wallet.svg')}
+                  />
+                  {!props.adaptive && <span>{getLang('cabinet_manage')}</span>}
+                </Button>
+              </div>
+            )}
+            <div className="CabinetHeader__settings">
+              <ActionSheet
+                position="left"
+                type="drop"
+                items={[
+                  {
+                    title: 'Language',
+                    onClick: () => {},
+                    subContent: (
+                      <>
+                        <span className="CabinetHeader__language">
+                          <img
+                            src={
+                              require(`../../../../asset/site/lang-flags/id.svg`)
+                                .default
+                            }
+                          />
+                        </span>
+                        <span className="CabinetHeader__language active">
+                          <img
+                            src={
+                              require(`../../../../asset/site/lang-flags/ru.svg`)
+                                .default
+                            }
+                          />
+                        </span>
+                        <span className="CabinetHeader__language">
+                          <img
+                            src={
+                              require(`../../../../asset/site/lang-flags/en.svg`)
+                                .default
+                            }
+                          />
+                        </span>
+                      </>
+                    ),
+                  },
+                  {
+                    title: 'Theme',
+                    onClick: () => {},
+                    subContent: (
+                      <span className="secondary-text">Coming soon</span>
+                    ),
+                  },
+                ]}
+              >
+                <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
+              </ActionSheet>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {props.adaptive && (
+        <AdaptiveSidebar
+          active={isSidebar}
+          route={props.router.route.name}
+          onClose={() => setIsSidebar(false)}
+        />
+      )}
+    </>
   );
 }
 
@@ -139,18 +187,17 @@ const DropdownIndicator = (props) => {
 
 Header.propTypes = {
   profile: PropTypes.object,
-  notifications: PropTypes.object,
   router: PropTypes.object,
   langList: PropTypes.array,
   title: PropTypes.string,
   theme: PropTypes.string,
   translator: PropTypes.bool,
-}
+  adaptive: PropTypes.bool,
+};
 
 export default connect(
   (state) => ({
     profile: state.default.profile,
-    notifications: state.notifications,
     router: state.router,
     langList: state.default.langList,
     title: state.default.title,

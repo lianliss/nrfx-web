@@ -72,6 +72,7 @@ Button.propTypes = {
   size: PropTypes.oneOf([
     "middle",
     "small",
+    "medium",
     "large",
     "extra_large",
     "ultra_small"
@@ -91,6 +92,7 @@ Button.propTypes = {
     "green-light",
     "lightBlue",
     "gray",
+    "secondary-blue",
     "secondary-light",
     "light",
     "dark",

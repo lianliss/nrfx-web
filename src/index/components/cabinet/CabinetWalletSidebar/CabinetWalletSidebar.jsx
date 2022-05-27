@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRoute } from 'react-router5';
 
-import SVG from "utils/svg-wrap";
+import SVG from 'utils/svg-wrap';
 import * as PAGES from 'src/index/constants/pages';
 import SidebarItem from './components/SidebarItem/SidebarItem';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
@@ -11,11 +11,11 @@ import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
 import './CabinetWalletSidebar.less';
 
-function CabinetWalletSidebar() {
+function CabinetWalletSidebar({ className = '' }) {
   const { route, router } = useRoute();
 
   return (
-    <div className="CabinetWalletSidebar">
+    <div className={`CabinetWalletSidebar ${className}`}>
       <div className="CabinetWalletSidebar__container">
         <CabinetScrollBlock>
           <CabinetBlock>
@@ -27,10 +27,7 @@ function CabinetWalletSidebar() {
                 active={route.name === PAGES.WALLET}
                 onClick={() => router.navigate(PAGES.WALLET)}
               />
-              <SidebarItem
-                title="Exchanger"
-                icon="exchange"
-              />
+              <SidebarItem title="Exchanger" icon="exchange" />
             </ul>
           </CabinetBlock>
           <CabinetBlock>

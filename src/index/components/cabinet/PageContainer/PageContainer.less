@@ -35,7 +35,6 @@
   .PageContainer {
     --site-bar-width: 100%;
     --content-width: 100%;
-    --header-height: 49px;
 
     width: 100%;
     padding: 17px 10px 10px;
@@ -44,7 +43,22 @@
     // 17px padding top, 10px padding bottom
 
     &__sideBar {
+      position: fixed;
       display: none;
+      height: calc(100vh - var(--header-height) - 17px);
+      width: 100vw;
+      top: calc(var(--header-height) + 17px);
+      left: 0;
+      margin: 0;
+      box-sizing: border-box;
+      background: rgba(40, 40, 40, 0);
+      transition: background 0.5s;
+      z-index: 2;
+
+      &.active {
+        display: block;
+        background: rgba(40, 40, 40, 0.24);
+      }
     }
 
     &__content {

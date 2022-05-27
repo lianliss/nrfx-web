@@ -5,7 +5,7 @@ import './Tokenomics.less';
 
 import { getLang } from 'utils';
 import SVG from 'utils/svg-wrap';
-import tokenomicsCircle from './components/assets/tokenomics.svg';
+import tokenomicsCircle from './components/assets/tokenomics-modern.svg';
 import { tokenomics } from '../../constants/tokenomics';
 
 import Info from './components/Info/Info';
@@ -13,7 +13,7 @@ import Info from './components/Info/Info';
 function Tokenomics({ adaptive }) {
   // Last tokenomics item to First.
   const lastTokenomicsItem = tokenomics.slice(-1);
-  const adaptiveTokenomics = [...lastTokenomicsItem, ...tokenomics].slice(0, 7);
+  const adaptiveTokenomics = [...lastTokenomicsItem, ...tokenomics].slice(0, 6);
 
   return (
     <section className="Tokenomics">

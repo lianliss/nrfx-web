@@ -37,6 +37,68 @@
           display: flex;
           align-items: center;
         }
+      }
+
+      .isvg {
+        margin-right: 16px;
+        height: 24px;
+      }
+
+      &.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+    }
+
+    .CabinetHeader__icons {
+      position: relative;
+      display: flex;
+      margin-right: 18px;
+      align-items: center;
+
+      .Notifications {
+        width: 648px;
+        position: absolute;
+        top: 48px;
+        right: 0;
+      }
+
+      .CabinetHeader__icon__svg {
+        display: block;
+      }
+    }
+
+    .CabinetHeader__connect {
+      margin-left: 10px;
+    }
+    .CabinetHeader__account-address {
+      color: var(--blue-light-gradient-color-end);
+      font-size: 12px;
+    }
+
+    .CabinetHeader__icon {
+      color: var(--text-black);
+      position: relative;
+      width: 16px * 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: @header-height;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--almost-black);
+      }
+
+      .isvg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .ActionsSheet__list {
+        overflow: visible;
+        margin-top: 32px;
+        margin-right: -8px;
 
         .isvg {
           height: 23px;
@@ -63,29 +125,33 @@
     }
   }
 
-  &__notifications {
-    display: flex;
-    position: relative;
-    margin-left: 69px;
-
-    .Notifications {
-      position: absolute;
-      width: 648px;
-      top: 100%;
-      right: 0;
-      z-index: 20;
+  &__language {
+    img {
+      width: 23px;
+      height: 23px;
+      border: 1px solid #ebeff4;
+      box-sizing: border-box;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: border-color 0.2s;
     }
 
-    .isvg {
-      width: 25px;
-      height: 25px;
+    &.active,
+    &:hover {
+      img {
+        border-color: var(--blue-light-gradient-color-start);
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: 3px;
     }
   }
 
   &__settings {
-    position: relative;
     display: flex;
-    margin-left: 18px;
+    align-items: center;
+    height: 100%;
     color: #f7f9fc;
     cursor: pointer;
 
@@ -94,11 +160,12 @@
       height: 25px;
     }
 
-    .ContentBox {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      z-index: 20;
+    .ActionsSheet {
+      & > div:first-child {
+        display: flex;
+        align-items: center;
+        height: 39px;
+      }
     }
   }
 
@@ -106,6 +173,143 @@
     svg {
       width: 18px;
     }
+  }
+
+  // Token price
+  &__wallet-rate {
+    display: flex;
+    align-items: center;
+    height: 39px;
+    padding: 0 8px;
+    margin-left: 3px;
+    box-sizing: border-box;
+    border: 1px solid #dfe3f0;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 180%;
+    color: var(--dark-black);
+
+    & > div {
+      display: flex;
+    }
+
+    .full-number {
+      color: #d3d5db;
+    }
+
+    span {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .isvg {
+      svg {
+        height: 22.5px;
+        width: 15px;
+      }
+    }
+  }
+
+  // <Select />
+  .CabinetSelect {
+    &__value-container {
+      height: 25px;
+    }
+
+    &__single-value {
+      height: 23px;
+
+      .isvg {
+        display: flex;
+        align-items: center;
+        width: 23px;
+        height: 23px;
+
+        svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+
+    &__option {
+      .isvg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 23px;
+        height: 23px;
+
+        svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+
+    &__menu {
+      min-width: 150px;
+
+      svg {
+        width: 23px;
+        height: 23px;
+      }
+    }
+  }
+
+  .wallet-connect__button {
+    margin-right: 34px;
+  }
+
+  .CabinetSelect__wallets {
+    width: 172px;
+    margin-right: 13px;
+    margin-left: 3px;
+
+    .CabinetSelect {
+      &__option-title {
+        overflow: visible;
+      }
+
+      &__single-value,
+      &__menu {
+        overflow: hidden !important;
+        width: 100%;
+        right: 0;
+        text-overflow: ellipsis;
+      }
+      &__option-icon {
+        svg,
+        path {
+          fill: var(--blue-light-gradient-color-start) !important;
+        }
+      }
+    }
+  }
+
+  // Burger Menu
+  &__burger-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 43px;
+    min-width: 43px;
+    margin-right: 3.38%;
+    background: #fff;
+    border-radius: var(--radius-panel);
+    box-sizing: border-box;
+    cursor: pointer;
+
+    .isvg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .secondary-text {
+    color: var(--cool-gray);
   }
 }
 
@@ -117,77 +321,70 @@
   font-size: 12px;
 }
 
-.adaptive {
-  .CabinetHeaderContainer {
-    //height: @adaptive-header-height;
-    .CabinetHeader {
-      //height: @adaptive-header-height;
-      -webkit-border-radius: 0 0 8px 8px;
-      -moz-border-radius: 0 0 8px 8px;
-      border-radius: 0 0 8px 8px;
-      display: flex;
-      padding: 0;
-      border-radius: 0 0 8px 8px;
-      background: var(--primary-background);
-      border-bottom: 1px solid var(--extra-light-gray);
-      width: 100%;
-    }
+@media screen and (max-width: @mobile-width) {
+  body {
+    --header-height: 52.16px !important;
   }
 
-  .CabinetHeader__leftContent,
-  .CabinetHeader__rightContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .CabinetHeader {
+    position: relative;
+    padding: 11px 0 2px;
+    z-index: 50;
 
-  @adaptive-header-side-width: 60px;
-  .CabinetHeader__leftContent {
-    width: @adaptive-header-side-width;
-    height: @adaptive-header-height;
-    .CabinetHeader__leftContent_icon {
-      width: 100%;
-      height: @adaptive-header-height;
-      display: flex;
-      span {
-        display: flex;
-        margin: auto;
+    &__container {
+      padding: 0 10px;
+    }
+    // <Select />
+    .CabinetSelect {
+      &,
+      &__control {
+        min-width: 0 !important;
+        width: 63px;
       }
-      svg {
-        margin: auto;
-        //color: var(--text-black)
+
+      &__control {
+        padding: 0 9px !important;
       }
     }
-  }
-  .CabinetHeader__mainContent {
-    width: auto;
-    height: @adaptive-header-height;
-    margin: auto;
-    display: flex;
-    font-size: 16px;
-    div,
-    span {
-      margin: auto;
-      font-weight: 500;
-    }
-    .CabinetHeader__mainContent_logo {
-      //color: var(--primary-orange);
-      svg {
-        width: 150px;
+
+    .CabinetSelect__wallets {
+      .CabinetSelect__single-value {
+        .CabinetSelect__option-title {
+          overflow: hidden;
+        }
       }
     }
-  }
-  .CabinetHeader__rightContent {
-    width: @adaptive-header-side-width;
-    height: @adaptive-header-height;
-    display: flex;
-    span {
-      display: flex;
-      margin: auto;
-      svg {
-        margin: auto;
-        color: var(--text-black);
+
+    .CabinetSelect__wallets,
+    .CabinetSelect__wallets .CabinetSelect__control {
+      width: 104px;
+    }
+
+    .wallet-connect__button {
+      width: 47px;
+      margin-right: 17px;
+
+      .Button__label {
+        .isvg {
+          margin-right: 0;
+        }
       }
     }
   }
+}
+
+@media screen and (max-width: 350px) {
+  .CabinetHeader {
+    .CabinetSelect__wallets,
+    .CabinetSelect__wallets .CabinetSelect__control {
+      width: 63px;
+    }
+  }
+}
+
+html.noScroll,
+body.noScroll {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 }

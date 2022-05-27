@@ -7,6 +7,20 @@
     pointer-events: none;
   }
 
+  &__drop-icon {
+    position: absolute;
+    top: 0;
+    transform: translateY(-7px);
+
+    .ActionsSheet:not(.left) & {
+      left: 3px;
+    }
+
+    .ActionsSheet.left & {
+      right: 3px;
+    }
+  }
+
   .ActionsSheet__list__icon {
     svg {
       display: block;
@@ -20,15 +34,19 @@
   }
 
   .ActionsSheet__list {
-    min-width: 160px;
+    min-width: 204px;
     position: absolute !important;
     z-index: 10;
     margin: 0;
-    top: 0;
+    top: calc(100% + 17px) !important;
     left: 0;
+    background: #fff;
+    border-radius: var(--radius-panel);
+    border: none;
+    box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.1) !important;
 
     .ContentBox__content {
-      padding: 8px 0;
+      padding: 8.5px 0;
     }
   }
 
@@ -44,14 +62,17 @@
     align-items: center;
     white-space: nowrap;
     cursor: pointer;
-    padding: 12px 24px;
-    color: var(--text-black);
+    padding: 3.5px 14px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 180%;
+    color: var(--black-gunmetal);
 
     &.destructive .ActionsSheet__item__title {
       color: var(--text-red);
     }
 
-    &.primary  .ActionsSheet__item__title {
+    &.primary .ActionsSheet__item__title {
       color: var(--dark-blue);
     }
 
@@ -62,6 +83,8 @@
     .ActionsSheet__item__sub {
       margin-left: auto;
       padding-left: 24px;
+      display: inline-flex;
+      align-items: center;
     }
   }
 }

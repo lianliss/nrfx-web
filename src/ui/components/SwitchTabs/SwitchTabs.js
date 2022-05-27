@@ -27,7 +27,7 @@ export default function SwitchTabs({
 
   const [animation, setAnimation] = useState(false);
   const didMountRef = useRef(false);
-
+  
   useEffect(() => {
     if (didMountRef.current) {
       setAnimation(true);

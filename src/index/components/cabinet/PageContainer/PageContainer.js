@@ -12,14 +12,6 @@ function PageContainer({ children, sideBar, sidebarOptions }) {
     <div className="PageContainer">
       <div className="PageContainer__sideBar">{sideBar}</div>
       <div className="PageContainer__content">{children}</div>
-      {adaptive && sidebarOptions && sidebarOptions.length && (
-        <UI.FloatingButton
-          wrapper
-          icon={require("../../../../asset/24px/options.svg")}
-        >
-          {sidebarOptions}
-        </UI.FloatingButton>
-      )}
     </div>
   );
 }

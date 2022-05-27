@@ -1,5 +1,5 @@
 .TokenSelect {
-  padding: 40px 33px 31px;
+  padding: 23px 32px 31px;
   box-sizing: border-box;
   min-height: 400px;
 
@@ -19,12 +19,13 @@
     font-weight: 600;
     font-size: 24px;
   }
+  
   &__close {
     position: absolute;
     display: flex;
     cursor: pointer;
     right: 32px;
-    top: 32px;
+    top: 16px;
     background-size: 14px;
     width: 14px + 12 * 2;
     height: 14px + 12 * 2;
@@ -50,8 +51,9 @@
       }
     }
   }
+  
   &__search {
-    border: 1px solid #dfe3f0;
+    border: 1px solid var(--light-gray);
     border-radius: var(--radius-panel);
     height: 46px;
     display: flex;
@@ -66,6 +68,7 @@
       border: none;
       outline: none;
       flex-grow: 1;
+      background: transparent;
     }
     span.isvg {
       margin-left: 6px;
@@ -79,6 +82,56 @@
       }
     }
   }
+
+  .SwitchTabs {
+    &__item {
+      &,
+      &.active {
+        span {
+          font-size: 11px;
+          line-height: 16px;
+          font-weight: 500;
+        }
+      }
+
+      &.active {
+        span {
+          font-weight: 600;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  &__fiat {
+    margin: 11px 0 19px;
+
+    &__content {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      height: 45px;
+      box-sizing: border-box;
+      cursor: pointer;
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+
+      .WalletIcon {
+        margin-right: 7px;
+      }
+    }
+  }
+
   &__list {
     margin: 0 -12px;
 
@@ -188,21 +241,21 @@
 }
 
 .adaptive .TokenSelect {
-    padding: 24px 15px;
+  padding: 24px 15px;
 
-    &__wrap {
-        left: 0;
-        right: 0;
+  &__wrap {
+    left: 0;
+    right: 0;
+  }
+  h2 {
+    span {
+      &:first-child {
+        font-size: 18px;
+      }
     }
-    h2 {
-        span {
-            &:first-child {
-                font-size: 18px;
-            }
-        }
-    }
-    &__close {
-        right: 15px;
-        top: 18px;
-    }
+  }
+  &__close {
+    right: 15px;
+    top: 18px;
+  }
 }
