@@ -559,4 +559,9 @@ class DexSwap extends React.PureComponent {
   }
 }
 
+DexSwap.defaultProps = {
+  closeModal: () => {},
+  openModal: () => {},
+};
+
 export default DexSwap;
