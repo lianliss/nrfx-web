@@ -21,6 +21,7 @@ function HoverPopup({
   size,
   windowLeft,
   windowRight,
+  ...props
 }) {
   // Constants
   const isTop = type === 'top';
@@ -41,21 +42,20 @@ function HoverPopup({
 
   // Refs
   const contentRef = React.useRef(null);
+  const childrenRef = React.useRef(null);
 
-  const handleMouseEnter = (e) => {
+  const handleMouseEnter = () => {
     if (!contentRef.current) return;
+    if (!childrenRef.current) return;
 
     // Content size.
     const contentWidth = contentRef.current.clientWidth;
-    const contentHeight = contentRef.current.clientHeight;
 
     // Children size
-    const childrenHeight = e.currentTarget.clientHeight;
-    const childrenWidth = e.currentTarget.clientWidth;
+    const childrenWidth = childrenRef.current.clientWidth;
 
     // Children coordinates.
-    const childrenCoords = e.currentTarget.getBoundingClientRect();
-    const top = childrenCoords.top;
+    const childrenCoords = childrenRef.current.getBoundingClientRect();
     const left = childrenCoords.left;
 
     // Finally left position from content
@@ -67,6 +67,25 @@ function HoverPopup({
     remainder = remainder > 0 ? 0 : Math.abs(remainder);
 
     // Set X position
+    // For left position popup
+    if (props.left) {
+      setPosition((prev) => ({
+        ...prev,
+        left: left - 5,
+        marginRight: windowRight,
+      }));
+
+      setTriangleStyles((prev) => ({
+        ...prev,
+        left: `5px`,
+        transform: 'translateX(0)' + triangleRotate,
+      }));
+
+      setIsVisible(true);
+      return;
+    }
+
+    // Another
     setPosition((prev) => ({
       ...prev,
       left: finallyLeft - remainder,
@@ -78,7 +97,21 @@ function HoverPopup({
     }));
     // -----
 
-    // Set Y position
+    // Set visible
+    setIsVisible(true);
+  };
+
+  React.useEffect(() => {
+    if (!isVisible) return;
+    if (!childrenRef.current) return;
+    if (!contentRef.current) return;
+
+    const childrenCoords = childrenRef.current.getBoundingClientRect();
+
+    const top = childrenCoords.top;
+    const childrenHeight = childrenRef.current.clientHeight;
+    const contentHeight = contentRef.current.clientHeight;
+
     if (type === 'bottom') {
       setPosition((prev) => ({
         ...prev,
@@ -92,11 +125,7 @@ function HoverPopup({
         top: top - childrenHeight - contentHeight,
       }));
     }
-    // -----
-
-    // Set visible
-    setIsVisible(true);
-  };
+  }, [isVisible]);
 
   return (
     <div className="HoverPopup">
@@ -104,6 +133,7 @@ function HoverPopup({
         className="HoverPopup__children"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => setIsVisible(false)}
+        ref={childrenRef}
       >
         {children}
       </div>
@@ -136,6 +166,8 @@ HoverPopup.propTypes = {
   size: PropTypes.oneOf(['small', 'large']),
   windowLeft: PropTypes.number,
   windowRight: PropTypes.number,
+  left: PropTypes.bool,
+  right: PropTypes.bool,
 };
 
 HoverPopup.defaultProps = {
@@ -144,6 +176,8 @@ HoverPopup.defaultProps = {
   size: 'large',
   windowLeft: 0,
   windowRight: 0,
+  left: false,
+  right: true,
 };
 
 export default HoverPopup;

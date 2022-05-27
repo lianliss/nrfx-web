@@ -24,6 +24,10 @@
     }
 
     .row {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+
       &:nth-child(1) {
         margin-bottom: 8px;
       }
@@ -34,18 +38,12 @@
     }
   }
 
-  .row {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-  }
-
   @media screen and (max-width: @mobile-width) {
     padding: 23px 18px 0;
 
     &__header {
       padding-bottom: 16px;
-      
+
       .row {
         &:nth-child(1) {
           margin-bottom: 8px;

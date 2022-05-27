@@ -1,2 +1,106 @@
 .FarmingTableAdaptive {
+  width: 100%;
+
+  // Containers
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ScrollbarTrackY {
+    visibility: hidden;
+  }
+
+  &__item {
+    &:nth-child(odd) {
+      .FarmingTableAdaptive__item_default {
+        background: var(--alice-blue);
+      }
+    }
+  }
+
+  &__item_default {
+    padding: 12px;
+    width: 100%;
+    border-radius: var(--radius-panel);
+    box-sizing: border-box;
+
+    & > .row {
+      justify-content: space-between;
+      align-items: center;
+
+      &:first-child {
+        margin-bottom: 16px;
+      }
+
+      .col {
+        &:nth-child(2) {
+          width: 56px;
+          margin-left: auto;
+          margin-right: 45px;
+        }
+
+        &:nth-child(3) {
+          width: 14px;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  // Components
+  &__cell {
+    display: flex;
+    flex-direction: column;
+    color: var(--royal-blue);
+    letter-spacing: -0.01em;
+
+    & > span:first-child {
+      margin-bottom: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: 100%;
+      opacity: 0.5;
+    }
+
+    & > span:last-child {
+      display: inline-flex;
+      align-items: center;
+
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 100%;
+
+      .HoverPopup {
+        margin-left: 4px;
+
+        &__children {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  &__icon-question {
+    path {
+      fill: #5078e6;
+    }
+
+    circle {
+      stroke: #5078e6;
+    }
+  }
+  
+  // <SVG />
+  .isvg {
+    display: inline-flex;
+    align-items: center;
+  }
 }

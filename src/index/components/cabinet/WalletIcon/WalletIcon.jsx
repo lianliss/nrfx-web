@@ -16,7 +16,7 @@ function WalletIcon({ currency, size }) {
     try {
       setIcon(require(`src/asset/icons/wallets/${currency}.svg`));
     } catch {
-      console.warn(`${currency} icon is not finded`);
+      console.log(`${currency} icon is not finded`);
     }
   }, []);
 

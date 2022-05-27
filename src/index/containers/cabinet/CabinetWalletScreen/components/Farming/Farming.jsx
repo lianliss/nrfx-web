@@ -35,7 +35,7 @@ const farmingItems = [
   },
   {
     id: 3,
-    currencies: ['rub', 'nrfx'],
+    currencies: ['rub'],
     apy: 70.2,
     arp: 40.5,
     liquidity: 4000000,
