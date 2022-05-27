@@ -115,7 +115,7 @@ class Header extends React.PureComponent {
                   className="CabinetHeader__link"
                   activeClassName="active"
                   onClick={() => {
-                    this.setState({ activePage: pages.CABINET_WALLET });
+                    //this.setState({ activePage: pages.CABINET_WALLET });
                   }}
                 >
                   <SVG src={require("../../../../asset/24px/candles.svg")} />
@@ -191,20 +191,20 @@ class Header extends React.PureComponent {
                     />
                   </UI.ActionSheet>
                 </div>
-                {isConnected
-                  ? <div className="CabinetHeader__account-address">
-                    {_.truncate(accountAddress, {length: 9})}{accountAddress.slice(-4)}
-                  </div>
-                  : <UI.Button
-                    onClick={() =>
-                      this.context.connectWallet()
-                    }
-                    size="middle"
-                    type="secondary"
-                    className="CabinetHeader__connect"
-                  >
-                    Connect wallet
-                  </UI.Button>}
+                {/*{isConnected*/}
+                  {/*? <div className="CabinetHeader__account-address">*/}
+                    {/*{_.truncate(accountAddress, {length: 9})}{accountAddress.slice(-4)}*/}
+                  {/*</div>*/}
+                  {/*: <UI.Button*/}
+                    {/*onClick={() =>*/}
+                      {/*this.context.connectWallet()*/}
+                    {/*}*/}
+                    {/*size="middle"*/}
+                    {/*type="secondary"*/}
+                    {/*className="CabinetHeader__connect"*/}
+                  {/*>*/}
+                    {/*Connect wallet*/}
+                  {/*</UI.Button>}*/}
               </div>
             )}
             {!isLogged && (

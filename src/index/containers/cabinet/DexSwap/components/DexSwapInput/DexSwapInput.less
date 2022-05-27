@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: start;
     width: 100%;
-    padding: 14.5px 15px 16.5px;
+    padding: 14.5px 0 16.5px 15px;
     border: 1px solid var(--light-gray);
     border-radius: 20px;
     box-sizing: border-box;
@@ -39,21 +39,6 @@
     font-size: 16px;
     line-height: 110%;
     letter-spacing: -0.01em;
-  }
-
-  &__manage {
-    cursor: pointer;
-
-    .isvg,
-    svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    svg,
-    path {
-      fill: #5078e6;
-    }
   }
 
   &__balance {
@@ -92,14 +77,18 @@
     position: absolute;
 
     .isvg,
-    svg, img {
+    svg,
+    img {
       width: 100%;
     }
   }
 
   &__select {
-    cursor: pointer;
     margin-left: 41px + 12px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 110%;
+    cursor: pointer;
 
     // Medium text in select (subtitle)
     & > span {
@@ -122,13 +111,16 @@
   }
 
   &__input {
+    padding-top: 2px;
+    box-sizing: border-box;
     width: 100%;
     // <Input />
     .Input {
+      --input-height: 37px;
       border: none;
       background: none;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 26px;
       line-height: 110%;
       letter-spacing: -0.01em;
     }
@@ -136,6 +128,7 @@
     input {
       text-align: right;
       padding: 0 0 0 10px;
+      margin-right: -1px;
     }
   }
 }

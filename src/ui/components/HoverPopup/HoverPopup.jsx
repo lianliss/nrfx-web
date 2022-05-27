@@ -128,7 +128,6 @@ function HoverPopup({
     </div>
   );
 }
-
 HoverPopup.propTypes = {
   children: PropTypes.any,
   content: PropTypes.any,

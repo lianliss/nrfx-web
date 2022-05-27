@@ -37,6 +37,68 @@
           display: flex;
           align-items: center;
         }
+      }
+
+      .isvg {
+        margin-right: 16px;
+        height: 24px;
+      }
+
+      &.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+    }
+
+    .CabinetHeader__icons {
+      position: relative;
+      display: flex;
+      margin-right: 18px;
+      align-items: center;
+
+      .Notifications {
+        width: 648px;
+        position: absolute;
+        top: 48px;
+        right: 0;
+      }
+
+      .CabinetHeader__icon__svg {
+        display: block;
+      }
+    }
+
+    .CabinetHeader__connect {
+      margin-left: 10px;
+    }
+    .CabinetHeader__account-address {
+      color: var(--blue-light-gradient-color-end);
+      font-size: 12px;
+    }
+
+    .CabinetHeader__icon {
+      color: var(--text-black);
+      position: relative;
+      width: 16px * 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: @header-height;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--almost-black);
+      }
+
+      .isvg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .ActionsSheet__list {
+        overflow: visible;
+        margin-top: 32px;
+        margin-right: -8px;
 
         .isvg {
           height: 23px;
