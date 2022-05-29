@@ -22,7 +22,7 @@ function Header(props) {
 
   // States
   // Current selected crypto.
-  const [currentCrypto, setCurrentCrypto] = React.useState('heco');
+  const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
   const [isLogin, setIsLogin] = React.useState(false);
 
   // Adaptive sidebar is open
@@ -160,7 +160,8 @@ function Header(props) {
 }
 
 const addressCut = (address) => {
-  const finallyAddress = address.length > 13 ? address.slice(0, 8) : address.slice(0, 5);
+  const finallyAddress =
+    address.length > 13 ? address.slice(0, 8) : address.slice(0, 5);
   const lastNumbers = address.slice(-4);
 
   return `${finallyAddress}...${lastNumbers}`;

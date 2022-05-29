@@ -64,9 +64,24 @@ function WalletsIsEmpty(props) {
             <div className="WalletsIsEmpty-social">
               <span className="WalletsIsEmpty-social__title">our social</span>
               <div className="WalletsIsEmpty-social__items">
-                <LinkIcon to="https://web.telegram.org" icon="telegram-solid" />
-                <LinkIcon to="https://discord.com" icon="discord-solid" />
-                <LinkIcon to="https://instagram.com" icon="instagram-solid" />
+                <LinkIcon to="https://t.me/narfexfeed" icon="telegram-solid" />
+                <LinkIcon
+                  to="https://discord.gg/T4hFnUaPFS"
+                  icon="discord-solid"
+                />
+                <LinkIcon
+                  to="https://instagram.com/narfex.global"
+                  icon="instagram-solid"
+                />
+                <LinkIcon to="https://medium.com/@narfex" icon="M-solid" />
+                <LinkIcon
+                  to="https://www.youtube.com/channel/UCDwJ0XUJDJpQAhB9DxYYUlw"
+                  icon="youtube-solid"
+                />
+                <LinkIcon
+                  to="https://twitter.com/narfexglobal?s=21"
+                  icon="twitter-solid"
+                />
               </div>
             </div>
           </div>

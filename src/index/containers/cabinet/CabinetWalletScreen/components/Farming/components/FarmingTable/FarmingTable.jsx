@@ -26,7 +26,12 @@ const headerTabs = [
   { value: 'my_farms', label: 'My Farms' },
 ];
 
-const sortOptions = [{ value: 'hot', label: 'Sort by Hot' }];
+const sortOptions = [
+  { value: 'hot', label: 'Sort by Hot' },
+  { value: 'liquidity', label: 'Sort by Liquidity' },
+  { value: 'apr', label: 'Sort by APR' },
+  { value: 'newest', label: 'Sort by Newest' },
+];
 
 // Main
 function FarmingTable({ adaptive }) {

@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import router from 'src/router';
+
 
 // Components
 import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
 import { classNames as cn } from 'src/utils/index';
 import SVG from 'utils/svg-wrap';
+import { LIQUIDITY } from 'src/index/constants/pages';
 
 // Styles
 import './FarmingTableItemOptions.less';
@@ -62,7 +65,7 @@ function FarmingTableItemOptions({
     <>
       <TableCell className={cn('FarmingTableItem', 'options', { isVisible })}>
         <TableColumn>
-          <Button type="light">
+          <Button type="light" onClick={() => router.navigate(LIQUIDITY)}>
             <SVG src={require('src/asset/icons/cabinet/add-icon.svg')} />
             Get LP
           </Button>
