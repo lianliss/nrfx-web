@@ -32,15 +32,15 @@ function CabinetWalletSidebar({ className = '' }) {
           </CabinetBlock>
           <CabinetBlock>
             <ul>
-              <SidebarItem title="Trade" icon="trade">
+              <SidebarItem title="Trade" icon="trade" active>
                 <ul>
-                  <li>Pro Dex</li>
                   <li
                     className={route.name === PAGES.WALLET_SWAP ? 'active' : ''}
                     onClick={() => router.navigate(PAGES.WALLET_SWAP)}
                   >
                     Swap
                   </li>
+                  <li className='disabled'>Pro DEX</li>
                 </ul>
               </SidebarItem>
               <SidebarItem

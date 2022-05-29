@@ -258,33 +258,49 @@
     }
   }
 
+  .CabinetSelect__network {
+    .CabinetSelect__control {
+      p {
+        color: #0a1539;
+      }
+    }
+  }
+
   .wallet-connect__button {
     margin-right: 34px;
   }
 
-  .CabinetSelect__wallets {
+  &__wallet {
+    height: 100%;
+    display: flex;
+    align-items: center;
     width: 172px;
     margin-right: 13px;
     margin-left: 3px;
+    border: 1px solid #dfe3f0;
+    padding: 0 28px 0 12px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
 
-    .CabinetSelect {
-      &__option-title {
-        overflow: visible;
-      }
+    .isvg {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 3px;
 
-      &__single-value,
-      &__menu {
-        overflow: hidden !important;
-        width: 100%;
-        right: 0;
-        text-overflow: ellipsis;
+      svg,
+      path {
+        fill: var(--blue-light-gradient-color-start);
       }
-      &__option-icon {
-        svg,
-        path {
-          fill: var(--blue-light-gradient-color-start) !important;
-        }
-      }
+    }
+
+    p {
+      text-overflow: ellipsis;
+      overflow: hidden !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 180%;
+      color: var(--black-gunmetal);
     }
   }
 
@@ -347,16 +363,13 @@
       }
     }
 
-    .CabinetSelect__wallets {
-      .CabinetSelect__single-value {
-        .CabinetSelect__option-title {
-          overflow: hidden;
-        }
+    &__wallet {
+      p {
+        overflow: hidden;
       }
     }
 
-    .CabinetSelect__wallets,
-    .CabinetSelect__wallets .CabinetSelect__control {
+    &__wallet {
       width: 104px;
     }
 
@@ -375,8 +388,7 @@
 
 @media screen and (max-width: 350px) {
   .CabinetHeader {
-    .CabinetSelect__wallets,
-    .CabinetSelect__wallets .CabinetSelect__control {
+    &__wallet {
       width: 63px;
     }
   }

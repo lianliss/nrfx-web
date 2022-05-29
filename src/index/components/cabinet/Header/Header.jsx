@@ -7,24 +7,26 @@ import Select from '../Select/Select';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
+import { setLang } from '../../../../services/lang';
 import { MAIN } from '../../../constants/pages';
+import { Web3Context } from '../../../contexts';
 
 import './Header.less';
 import { Button } from 'src/ui';
-import { cryptoOptions, walletsOptions } from './constants/options';
+import { cryptoOptions } from './constants/options';
 import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 
 function Header(props) {
+  const narfexRate = 455.55;
+
+  // States
   // Current selected crypto.
-  const [currentCrypto, setCurrentCrypto] = React.useState('solana');
-  // 1 is option value
-  const [currentWallet, setCurrentWallet] = React.useState(1);
+  const [currentCrypto, setCurrentCrypto] = React.useState('heco');
   const [isLogin, setIsLogin] = React.useState(false);
 
   // Adaptive sidebar is open
   const [isSidebar, setIsSidebar] = React.useState(false);
-  const narfexRate = 455.55;
   const getFraction = (number) => {
     const fractionIndex = String(number).indexOf('.');
     const result = String(number).slice(fractionIndex, String(number).length);
@@ -63,6 +65,7 @@ function Header(props) {
           <div className="CabinetHeader__menu">
             <Select
               isSearchable={false}
+              isDisabled
               options={cryptoOptions}
               value={currentCrypto}
               onChange={handleCryptoChange}
@@ -70,7 +73,7 @@ function Header(props) {
                 DropdownIndicator,
                 IndicatorSeparator: null,
               }}
-              className="CabinetSelect"
+              className="CabinetSelect__network"
               classNamePrefix="CabinetSelect"
             />
             {isLogin ? (
@@ -84,17 +87,12 @@ function Header(props) {
                     </span>
                   </div>
                 </div>
-                <Select
-                  isSearchable={false}
-                  options={walletsOptions}
-                  value={currentWallet}
-                  onChange={(newValue) => setCurrentWallet(newValue)}
-                  components={{
-                    DropdownIndicator,
-                    IndicatorSeparator: null,
-                  }}
-                  className="CabinetSelect__wallets"
-                />
+                <div className="CabinetHeader__wallet">
+                  <SVG
+                    src={require('src/asset/icons/cabinet/connect-wallet.svg')}
+                  />
+                  <p>{addressCut('5812387123871238712323')}</p>
+                </div>
               </>
             ) : (
               <div className="dynamic-shadow wallet-connect__button">
@@ -116,39 +114,27 @@ function Header(props) {
                 type="drop"
                 items={[
                   {
-                    title: 'Language',
+                    title: getLang('cabinet_header_language'),
                     onClick: () => {},
-                    subContent: (
-                      <>
-                        <span className="CabinetHeader__language">
-                          <img
-                            src={
-                              require(`../../../../asset/site/lang-flags/id.svg`)
-                                .default
-                            }
-                          />
-                        </span>
-                        <span className="CabinetHeader__language active">
-                          <img
-                            src={
-                              require(`../../../../asset/site/lang-flags/ru.svg`)
-                                .default
-                            }
-                          />
-                        </span>
-                        <span className="CabinetHeader__language">
-                          <img
-                            src={
-                              require(`../../../../asset/site/lang-flags/en.svg`)
-                                .default
-                            }
-                          />
-                        </span>
-                      </>
-                    ),
+                    subContent: props.langList.map((item, index) => (
+                      <span
+                        className={`CabinetHeader__language${
+                          item.value === props.currentLang ? ' active' : ''
+                        }`}
+                        onClick={() => setLang(item.value)}
+                        key={index}
+                      >
+                        <img
+                          src={
+                            require(`../../../../asset/site/lang-flags/${item.value}.svg`)
+                              .default
+                          }
+                        />
+                      </span>
+                    )),
                   },
                   {
-                    title: 'Theme',
+                    title: getLang('cabinet_header_theme'),
                     onClick: () => {},
                     subContent: (
                       <span className="secondary-text">Coming soon</span>
@@ -173,6 +159,13 @@ function Header(props) {
   );
 }
 
+const addressCut = (address) => {
+  const finallyAddress = address.length > 13 ? address.slice(0, 8) : address.slice(0, 5);
+  const lastNumbers = address.slice(-4);
+
+  return `${finallyAddress}...${lastNumbers}`;
+};
+
 const DropdownIndicator = (props) => {
   return (
     <SVG
@@ -189,17 +182,23 @@ Header.propTypes = {
   profile: PropTypes.object,
   router: PropTypes.object,
   langList: PropTypes.array,
+  currentLang: PropTypes.string,
   title: PropTypes.string,
   theme: PropTypes.string,
   translator: PropTypes.bool,
   adaptive: PropTypes.bool,
 };
 
+Header.defaultProps = {
+  langList: [],
+};
+
 export default connect(
   (state) => ({
     profile: state.default.profile,
     router: state.router,
-    langList: state.default.langList,
+    currentLang: state.default.currentLang,
+    langList: state.default.langList.filter((item) => item.display),
     title: state.default.title,
     theme: state.default.theme,
     translator: state.settings.translator,

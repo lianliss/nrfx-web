@@ -7,7 +7,7 @@ import './SidebarItem.less';
 
 function SidebarItem({ title, icon, children, onClick, active }) {
   const className = cn({ SidebarItem: true, active, haveChild: children });
-  const [childIsVisible, setChildIsVisible] = React.useState(false);
+  const [childIsVisible, setChildIsVisible] = React.useState(active);
 
   const handleClick = () => {
     onClick();
