@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRoute } from 'react-router5';
+import { getLang } from 'utils';
 
 // Components
 import { Switch, SwitchTabs, Button } from 'src/ui';
@@ -52,13 +53,14 @@ function SwitchPage({ adaptive }) {
         <div className="SwitchPage__header">
           <div className="SwitchPage__row">
             <h1>{title}</h1>
-            {isSwap && (
+            {/* {isSwap && (
               <>
                 <Switch type="light-blue" on={isPro} onChange={togglePro} />
                 <span className="switch-label">Pro Version</span>
               </>
-            )}
+            )} */}
           </div>
+          {isSwap && <div className="SwitchPage__row" />}
           {isLiquidity && !adaptive && (
             <div className="SwitchPage__row">
               <p className="SwitchPage__description">
@@ -103,7 +105,7 @@ function getSwitchedTitle(route, adaptive = false) {
   const isSwap = route.name === PAGES.WALLET_SWAP;
   const isLiquidity = route.name === PAGES.LIQUIDITY;
   if (route === PAGES.WALLET_SWAP) {
-    return 'Exchange';
+    return getLang('cabinet_wallet_exchange_title');
   }
 
   if (route === PAGES.LIQUIDITY) {

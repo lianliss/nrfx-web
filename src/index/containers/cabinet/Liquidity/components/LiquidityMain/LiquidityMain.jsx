@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from "react-router5";
 
 // Components
 import { Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import LiquidityList from '../LiquidityList/LiquidityList';
+
+// Constants
+import { FARMING } from 'src/index/constants/pages';
 
 // Styles
 import './LiquidityMain.less';
@@ -38,7 +42,7 @@ function LiquidityMain({ items, onAddClick, onRemoveClick }) {
         <p className="default-text">
           Or, if you staked your LP tokens in a farm, unstake them to see
           them&nbsp;
-          <a href="/">here.</a>
+          <Link routeName={FARMING}>here.</Link>
         </p>
       </div>
     </>

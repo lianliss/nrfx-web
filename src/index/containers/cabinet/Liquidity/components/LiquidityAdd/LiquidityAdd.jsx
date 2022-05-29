@@ -8,6 +8,7 @@ import { Button } from 'src/ui';
 
 // Styles
 import './LiquidityAdd.less';
+import TokenSelect from '../../../DexSwap/components/TokenSelect/TokenSelect';
 
 function LiquidityAdd({ onClose }) {
   return (
@@ -57,6 +58,7 @@ function LiquidityAdd({ onClose }) {
           Supply
         </Button>
       </div>
+      {/* <TokenSelect /> */}
     </>
   );
 }
