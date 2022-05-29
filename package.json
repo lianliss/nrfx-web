@@ -11,7 +11,7 @@
     "start:landing": "cross-env DOMAIN=landing PORT=80 HTTPS=false node scripts/start.js",
     "build": "cross-env DOMAIN=index node scripts/build.js && npm run build:admin",
 	"buildStage": "DOMAIN=index WEB3=https://web3.nrfxlab.world node scripts/build.js && npm run build:admin",
-    "build:admin": "DOMAIN=admin node scripts/build.js",
+    "build:admin": "cross-env DOMAIN=admin node scripts/build.js",
     "build:landing": "DOMAIN=landing node scripts/build.js",
     "ui": "npx styleguidist server",
     "eslint": "eslint ./src/ --ext .js",
