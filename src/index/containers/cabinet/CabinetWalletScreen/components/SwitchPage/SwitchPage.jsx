@@ -12,6 +12,7 @@ import * as PAGES from 'src/index/constants/pages';
 
 // Styles
 import './SwitchPage.less';
+import Transactions from '../Transactions/Transactions';
 
 // Main
 function SwitchPage({ adaptive }) {
@@ -23,11 +24,12 @@ function SwitchPage({ adaptive }) {
   const switchTabs = [
     { value: PAGES.WALLET_SWAP, label: 'Swap' },
     { value: PAGES.LIQUIDITY, label: 'Liquidity' },
-    { value: 'transactions', label: 'Transactions' },
+    { value: PAGES.TRANSACTIONS, label: 'Transactions' },
   ];
   // Current page is ...
   const isSwap = route.name === PAGES.WALLET_SWAP;
   const isLiquidity = route.name === PAGES.LIQUIDITY;
+  const isTransactions = route.name === PAGES.TRANSACTIONS;
 
   // Page Title.
   const title = getSwitchedTitle(route.name, adaptive);
@@ -60,7 +62,7 @@ function SwitchPage({ adaptive }) {
               </>
             )} */}
           </div>
-          {isSwap && <div className="SwitchPage__row" />}
+          {!isLiquidity && <div className="SwitchPage__row" />}
           {isLiquidity && !adaptive && (
             <div className="SwitchPage__row">
               <p className="SwitchPage__description">
@@ -80,6 +82,7 @@ function SwitchPage({ adaptive }) {
         <div className="SwitchPage__row">
           {isSwap && <DexSwap />}
           {isLiquidity && <Liquidity />}
+          {isTransactions && <Transactions />}
         </div>
         <div className="SwitchPage__bg-center">
           <SVG
@@ -106,6 +109,10 @@ function getSwitchedTitle(route, adaptive = false) {
   const isLiquidity = route.name === PAGES.LIQUIDITY;
   if (route === PAGES.WALLET_SWAP) {
     return getLang('cabinet_wallet_exchange_title');
+  }
+
+  if (route === PAGES.TRANSACTIONS) {
+    return 'Transactions';
   }
 
   if (route === PAGES.LIQUIDITY) {

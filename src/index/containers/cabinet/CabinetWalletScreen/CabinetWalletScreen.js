@@ -198,7 +198,8 @@ class CabinetWalletScreen extends React.PureComponent {
     const isCrypto = name === PAGES.WALLET_CRYPTO;
     const isSwap = name === PAGES.WALLET_SWAP;
     const isLiquidity = name === PAGES.LIQUIDITY;
-    const isSwitchPage = isSwap || isLiquidity;
+    const isTransactions = name === PAGES.TRANSACTIONS;
+    const isSwitchPage = isSwap || isLiquidity || isTransactions;
     const isFarming = name === PAGES.FARMING;
     const balance = this.getBalanceId();
     const { fiatBalance } = balance;

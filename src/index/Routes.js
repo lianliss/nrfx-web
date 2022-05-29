@@ -168,6 +168,7 @@ function Routes(props) {
     case pages.WALLET_FIAT:
     case pages.FARMING:
     case pages.LIQUIDITY:
+    case pages.TRANSACTIONS:
       needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
