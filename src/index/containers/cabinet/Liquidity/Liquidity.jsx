@@ -39,7 +39,7 @@ const items = [
 // Main
 function Liquidity() {
   // Display oneOf["add", "remove", "main"] page
-  const [currentDisplay, setCurrentDisplay] = React.useState('main');
+  const [currentDisplay, setCurrentDisplay] = React.useState('import');
 
   return (
     <CabinetBlock className="Liquidity">
@@ -48,6 +48,7 @@ function Liquidity() {
           items={items}
           onAddClick={() => setCurrentDisplay('add')}
           onRemoveClick={() => setCurrentDisplay('remove')}
+          onImportClick={() => setCurrentDisplay('import')}
         />
       )}
       {currentDisplay === 'add' && (
@@ -62,6 +63,14 @@ function Liquidity() {
           onClose={() => {
             setCurrentDisplay('main');
           }}
+        />
+      )}
+      {currentDisplay === 'import' && (
+        <LiquidityAdd
+          onClose={() => {
+            setCurrentDisplay('main');
+          }}
+          type="import"
         />
       )}
     </CabinetBlock>

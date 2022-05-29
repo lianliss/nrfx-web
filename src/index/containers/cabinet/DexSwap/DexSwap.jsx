@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -605,4 +606,6 @@ DexSwap.defaultProps = {
   openModal: () => {},
 };
 
-export default DexSwap;
+export default connect((state) => ({
+  currentLang: state.default.currentLang
+}))(DexSwap);

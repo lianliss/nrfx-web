@@ -21,8 +21,6 @@ function Header(props) {
   const narfexRate = 455.55;
   const cx = React.useContext(Web3Context);
 
-  console.log(cx)
-
   // States
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');

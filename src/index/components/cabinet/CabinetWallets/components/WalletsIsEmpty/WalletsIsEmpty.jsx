@@ -1,4 +1,5 @@
 import React from 'react';
+import router from 'src/router';
 
 import { Button } from 'src/ui';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
@@ -60,7 +61,9 @@ function WalletsIsEmpty(props) {
             </DynamicShadow>
           </div>
           <div className="WalletsIsEmpty__links">
-            <OpenPopupLink title="learn about wallet" />
+            <a href="https://narfex.gitbook.io/wiki/" target="_blank">
+              <OpenPopupLink title="learn about wallet" />
+            </a>
             <div className="WalletsIsEmpty-social">
               <span className="WalletsIsEmpty-social__title">our social</span>
               <div className="WalletsIsEmpty-social__items">
