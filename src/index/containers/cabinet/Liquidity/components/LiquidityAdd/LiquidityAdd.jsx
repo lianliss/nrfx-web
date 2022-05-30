@@ -5,14 +5,37 @@ import PropTypes from 'prop-types';
 import DexSwapInput from '../../../DexSwap/components/DexSwapInput/DexSwapInput';
 import SVG from 'utils/svg-wrap';
 import { Button } from 'src/ui';
+import { Web3Context } from 'services/web3Provider';
 
 // Styles
 import './LiquidityAdd.less';
 import TokenSelect from '../../../DexSwap/components/TokenSelect/TokenSelect';
 
 function LiquidityAdd({ onClose, type }) {
-  const isImport = type === 'import';
-  const isAdd = type === 'add';
+  // Constants
+  const context = React.useContext(Web3Context);
+  const [isImport, setIsImport] = React.useState(type === 'import');
+
+  // States
+  // --Inputs
+  const [values, setValues] = React.useState(['0', '0']);
+  // --Tokens
+  const [selectedTokens, setSelectedTokens] = React.useState([{}, {}]);
+  const [selectToken, setSelectToken] = React.useState(0);
+  const [isToken, setIsToken] = React.useState(false);
+
+  // Set default selected tokens
+  React.useEffect(() => {
+    const { tokens } = context;
+    const firstToken = tokens.filter(
+      (token) => token.symbol.toUpperCase() === 'NRFX'
+    );
+    const secondToken = tokens.filter(
+      (token) => token.symbol.toUpperCase() === 'BNB'
+    );
+
+    setSelectedTokens([firstToken[0], secondToken[0]]);
+  }, []);
 
   return (
     <>
@@ -26,39 +49,57 @@ function LiquidityAdd({ onClose, type }) {
       </div>
       <div className="Liquidity__body LiquidityAdd">
         <DexSwapInput
-          onChange={() => {}}
-          value={12}
-          token={{ symbol: 'NRFX', name: 'Narfex' }}
+          onChange={(value) => {
+            setValues((state) => [value, state[1]]);
+          }}
+          onSelectToken={() => {
+            setSelectToken(0);
+            setIsToken(true);
+          }}
+          value={values[0]}
+          token={selectedTokens[0]}
           showBalance
           label
-          title={isAdd ? `Balance ≈ $1 454.55` : ''}
+          title={!isImport ? `Balance ≈ $1 454.55` : ''}
         />
         <div className="LiquidityAdd__icon">
           <span>+</span>
         </div>
         <DexSwapInput
-          onChange={() => {}}
-          value={12}
-          token={{ symbol: 'NRFX', name: 'Narfex' }}
+          onChange={(value) => {
+            setValues((state) => [state[0], value]);
+          }}
+          onSelectToken={() => {
+            setSelectToken(1);
+            setIsToken(true);
+          }}
+          value={values[1]}
+          token={selectedTokens[1]}
           showBalance
           label
-          title={isAdd ? `Balance ≈ $1 454.55` : ''}
+          title={!isImport ? `Balance ≈ $1 454.55` : ''}
         />
-        {isAdd && (
+        {!isImport && (
           <>
             <span className="default-text-light">Prices and pool share</span>
             <div className="LiquidityAdd__result">
               <div className="LiquidityAdd__item">
                 <span>250.115</span>
-                <span>BSW per BNB</span>
+                <span>
+                  {selectedTokens[0].symbol} per {selectedTokens[1].symbol}
+                </span>
               </div>
               <div className="LiquidityAdd__item">
                 <span>250.115</span>
-                <span>BSW per BNB</span>
+                <span>
+                  {selectedTokens[0].symbol} per {selectedTokens[1].symbol}
+                </span>
               </div>
               <div className="LiquidityAdd__item">
                 <span>250.115</span>
-                <span>BSW per BNB</span>
+                <span>
+                  {selectedTokens[0].symbol} per {selectedTokens[1].symbol}
+                </span>
               </div>
             </div>
             <Button type="lightBlue" onClick={onClose}>
@@ -71,11 +112,38 @@ function LiquidityAdd({ onClose, type }) {
             <p className="LiquidityAdd__import__default_text">
               Select a token to find your liquidity.
             </p>
-            <span className="LiquidityAdd__import__default_text link">Add liquidity</span>
+            <span
+              className="LiquidityAdd__import__default_text link"
+              onClick={() => {
+                setIsImport(false);
+                setValues(['0', '0']);
+              }}
+            >
+              Add liquidity
+            </span>
           </div>
         )}
       </div>
-      {/* <TokenSelect /> */}
+      {isToken && (
+        <TokenSelect
+          selected={selectedTokens[0]}
+          onClose={() => setIsToken(false)}
+          onChange={(token) => {
+            if (selectToken === 0) {
+              setSelectedTokens((state) => {
+                return [token, state[1]];
+              });
+            } else {
+              setSelectedTokens((state) => {
+                return [state[0], token];
+              });
+            }
+
+            setIsToken(false);
+          }}
+          {...context}
+        />
+      )}
     </>
   );
 }

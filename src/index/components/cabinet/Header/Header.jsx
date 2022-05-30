@@ -9,7 +9,7 @@ import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
 import { setLang } from '../../../../services/lang';
 import { MAIN } from '../../../constants/pages';
-import { Web3Context } from '../../../contexts';
+import { Web3Context } from 'services/web3Provider';
 
 import './Header.less';
 import { Button } from 'src/ui';
@@ -19,12 +19,12 @@ import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 
 function Header(props) {
   const narfexRate = 455.55;
-  const cx = React.useContext(Web3Context);
+  const context = React.useContext(Web3Context);
 
   // States
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
-  const [isLogin, setIsLogin] = React.useState(false);
+  const { isConnected, accountAddress, connectWallet } = context;
 
   // Adaptive sidebar is open
   const [isSidebar, setIsSidebar] = React.useState(false);
@@ -56,7 +56,7 @@ function Header(props) {
             onClick={() => router.navigate(MAIN)}
           >
             {props.adaptive ? (
-              !isLogin && (
+              !isConnected && (
                 <SVG src={require('src/asset/logo/narfex-icon.svg')} />
               )
             ) : (
@@ -77,7 +77,7 @@ function Header(props) {
               className="CabinetSelect__network"
               classNamePrefix="CabinetSelect"
             />
-            {isLogin ? (
+            {isConnected ? (
               <>
                 <div className="CabinetHeader__wallet-rate">
                   <SVG src={require('src/asset/logo/narfex-icon.svg')} />$
@@ -92,16 +92,12 @@ function Header(props) {
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />
-                  <p>{addressCut('5812387123871238712323')}</p>
+                  <p>{addressCut(accountAddress)}</p>
                 </div>
               </>
             ) : (
               <div className="dynamic-shadow wallet-connect__button">
-                <Button
-                  type="lightBlue"
-                  size="small"
-                  onClick={() => setIsLogin(true)}
-                >
+                <Button type="lightBlue" size="small" onClick={connectWallet}>
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />

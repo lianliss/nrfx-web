@@ -39,7 +39,7 @@ const items = [
 // Main
 function Liquidity() {
   // Display oneOf["add", "remove", "main"] page
-  const [currentDisplay, setCurrentDisplay] = React.useState('import');
+  const [currentDisplay, setCurrentDisplay] = React.useState('main');
 
   return (
     <CabinetBlock className="Liquidity">
