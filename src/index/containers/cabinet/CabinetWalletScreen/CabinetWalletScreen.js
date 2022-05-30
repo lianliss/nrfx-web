@@ -219,7 +219,7 @@ class CabinetWalletScreen extends React.PureComponent {
         {/* {isCommon && <CommonHeader />} */}
         {isCrypto && <CryptoWallet/>}
         {isSwitchPage && <SwitchPage route={name} adaptive={isAdaptive} />}
-        {isFarming && <Farming />}
+        {isFarming && <Farming adaptive={isAdaptive} />}
 
         {!isReservationExpire && <RefillBlock />}
 

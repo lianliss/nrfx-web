@@ -11,6 +11,7 @@ import {
 } from 'src/ui';
 import DoubleWallets from 'src/index/components/cabinet/DoubleWallets/DoubleWallets';
 import FarmingTableItemOptions from '../FarmingTableItemOptions/FarmingTableItemOptions';
+import FarmingIndicator from '../FarmingIndicator/FarmingIndicator';
 import SVG from 'utils/svg-wrap';
 
 // Styles
@@ -37,11 +38,6 @@ function FarmingTableItem({
   // States
   const [isActive, setIsActive] = React.useState(false);
   const [type, setType] = React.useState('connect');
-
-  // Components
-  const Indicator = ({ type, text }) => (
-    <div className={`FarmingTableItem__indicator ${type}`}>{text}</div>
-  );
 
   const QuestionAPY = () => (
     <p>
@@ -78,7 +74,7 @@ function FarmingTableItem({
       >
         <TableColumn style={{ minWidth: 122 }}>
           <span>
-            <Indicator
+            <FarmingIndicator
               type={indicator === 'hot' ? 'red' : 'green'}
               text={indicator === 'hot' ? 'Hot' : 'Latest'}
             />
@@ -87,7 +83,7 @@ function FarmingTableItem({
         <TableColumn>
           <DoubleWallets
             first={currencies[0]}
-            second={currencies.length === 2 && currencies[1]}
+            second={currencies.length === 2 ? currencies[1] : ''}
           />
         </TableColumn>
         <TableColumn>
@@ -121,7 +117,7 @@ function FarmingTableItem({
           <HoverPopup
             content={
               <span>
-                View contract{' '}
+                View contract
                 <SVG
                   src={require('src/asset/icons/export.svg')}
                   style={{ marginLeft: 12 }}

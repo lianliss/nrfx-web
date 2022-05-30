@@ -7,9 +7,9 @@ import Select from 'src/index/components/cabinet/Select/Select';
 import './FarmingTableHeader.less';
 
 function FarmingTableHeader({
-  headerTabsValue,
-  setHeaderTabsValue,
-  headerTabs,
+  farmsValue,
+  setFarmsValue,
+  farms,
   sortBy,
   setSortBy,
   sortOptions,
@@ -17,9 +17,9 @@ function FarmingTableHeader({
   return (
     <div className="FarmingTableHeader">
       <SwitchTabs
-        selected={headerTabsValue}
-        onChange={setHeaderTabsValue}
-        tabs={headerTabs}
+        selected={farmsValue}
+        onChange={setFarmsValue}
+        tabs={farms}
         type="light-blue"
       />
       <Select value={sortBy} onChange={setSortBy} options={sortOptions} />
