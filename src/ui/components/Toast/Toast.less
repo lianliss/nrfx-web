@@ -65,6 +65,17 @@
     opacity: 0;
     //margin-top: -70px;
   }
+
+  &.Farming__toast {
+    animation: none;
+    width: 0;
+    height: 0;
+    box-shadow: none;
+
+    &:before {
+      display: none !important;
+    }
+  }
 }
 
 @keyframes toast-show {

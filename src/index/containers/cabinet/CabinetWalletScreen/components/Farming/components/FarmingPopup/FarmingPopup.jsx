@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 // All popups for Farming
 // is here.
@@ -20,13 +21,14 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import popupTimer from 'src/index/components/cabinet/Popup/hooks/popupTimer';
+import { toastPush } from 'src/actions/toasts';
 
 // Styles
 import './FarmingPopup.less';
 
 // Main Components
 // Popup
-export function FarmingPopup({ title, currency, number, onClose }) {
+export function FarmingPopup({ message, onClose, ...props }) {
   const [isHover, setIsHover] = React.useState(false);
   const isDisabled = popupTimer(isHover, onClose);
 
@@ -34,14 +36,19 @@ export function FarmingPopup({ title, currency, number, onClose }) {
     <Popup
       className={`FarmingPopup ${isDisabled && 'disabled'}`}
       onClose={onClose}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onMouseOver={() => {
+        props.onMouseOver();
+        setIsHover(true);
+      }}
+      onMouseLeave={() => {
+        props.onMouseLeave();
+        setIsHover(false);
+      }}
     >
       <div className="FarmingPopup__header">
         <div className="success-title">
           <SVG src={require('src/asset/icons/cabinet/success-icon.svg')} />
-          <span>{title}</span>&nbsp;
-          <NumberFormat number={number} currency={currency} />
+          <span>{message}</span>
         </div>
       </div>
       <PopupLink text="Wiew on scan" />
@@ -50,25 +57,22 @@ export function FarmingPopup({ title, currency, number, onClose }) {
 }
 
 FarmingPopup.propTypes = {
-  title: PropTypes.string,
-  currency: PropTypes.string,
-  number: PropTypes.number,
+  message: PropTypes.string,
   onClose: PropTypes.func,
 };
 
 FarmingPopup.defaultProps = {
-  title: '',
-  currency: '',
-  number: 0,
+  message: '',
   onClose: () => {},
 };
 // Popup end.
 
 // Stake Modal - Can expand.
 export function FarmingPopupStake({ id, currency, ...props }) {
+  const dispatch = useDispatch();
+  const type = props.modal; // stake || unstake
   // States
   const [value, setValue] = React.useState(15);
-  const [isStaked, setIsStaked] = React.useState(false);
 
   // Handlers
   // Just input handler
@@ -76,23 +80,23 @@ export function FarmingPopupStake({ id, currency, ...props }) {
     setValue(newValue);
   };
 
-  // Confirm click handler
-  const handleSubmit = () => {
-    setIsStaked(true);
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  // Return popup when stake.
-  // When write the functionality have to move to another place.
-  if (isStaked) {
-    return (
-      <FarmingPopup
-        title="Staked"
-        currency={currency}
-        number={value}
-        onClose={props.onClose}
-      />
-    );
-  }
+    if (type === 'stake') {
+      dispatch(
+        toastPush(`Staked ${value} ${currency.toUpperCase()}`, 'farming')
+      );
+    }
+
+    if (type === 'unstake') {
+      dispatch(
+        toastPush(`Unstaked ${value} ${currency.toUpperCase()}`, 'farming')
+      );
+    }
+
+    props.onClose();
+  };
 
   return (
     <Modal
@@ -105,7 +109,10 @@ export function FarmingPopupStake({ id, currency, ...props }) {
       </div>
       <div className="FarmingPopup__header">
         <div className="title">
-          <span>Stake {currency.toUpperCase()} Tokens</span>
+          <span>
+            {type === 'stake' ? 'Stake' : 'Unstake'} {currency.toUpperCase()}{' '}
+            Tokens
+          </span>
         </div>
       </div>
       <Form className="FarmingPopup__body" onSubmit={handleSubmit}>
@@ -117,7 +124,7 @@ export function FarmingPopupStake({ id, currency, ...props }) {
           </span>
         </div>
         <label>
-          <p>Stake</p>
+          <p>{type === 'stake' ? 'Stake' : 'Unstake'}</p>
           <div className="input-container">
             <Input type="number" value={value} onTextChange={handleChange} />
             <div className="input-controls" onClick={() => {}}>

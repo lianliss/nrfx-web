@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import router from 'src/router';
-
+import { useDispatch } from 'react-redux';
 
 // Components
 import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
 import { classNames as cn } from 'src/utils/index';
 import SVG from 'utils/svg-wrap';
 import { LIQUIDITY } from 'src/index/constants/pages';
+
+// Utils
+import { openModal } from 'src/actions';
+import { toastPush } from 'src/actions/toasts';
 
 // Styles
 import './FarmingTableItemOptions.less';
@@ -21,12 +25,8 @@ function FarmingTableItemOptions({
   aviable,
   staked,
   earned,
-  onStake,
-  // This props is for popups test display
-  onUnstake,
-  onHardwest,
-  // -----
 }) {
+  const dispatch = useDispatch();
   // States
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -54,12 +54,6 @@ function FarmingTableItemOptions({
       </p>
     </div>
   );
-
-  // Handlers
-  const handleOnStake = () => {
-    // onStake from FarmingTable whitch open modal.
-    onStake(id, currency);
-  };
 
   return (
     <>
@@ -95,7 +89,7 @@ function FarmingTableItemOptions({
               <Button
                 type="lightBlue"
                 onClick={() => {
-                  handleOnStake();
+                  openModal('stake', {}, { id, currency });
                   handleTypeChange('staked');
                 }}
                 style={{ width: '100%' }}
@@ -110,7 +104,7 @@ function FarmingTableItemOptions({
                 type="lightBlue"
                 className="stake"
                 onClick={() => {
-                  handleOnStake();
+                  openModal('stake', {}, { id, currency });
                   handleTypeChange('staked');
                 }}
               >
@@ -119,7 +113,7 @@ function FarmingTableItemOptions({
               <Button
                 type="dark"
                 onClick={() => {
-                  onUnstake('usdt', 100); // Test popup display
+                  openModal('unstake', {}, { id, currency });
                   handleTypeChange('stake');
                 }}
                 className="unstake"
@@ -141,7 +135,7 @@ function FarmingTableItemOptions({
           <Button
             type="green-light"
             disabled={type !== 'staked'}
-            onClick={() => onHardwest('nrfx', 1090) /* Test popup display */}
+            onClick={() => dispatch(toastPush('Harwest 0,55 BNB', 'farming'))}
           >
             Harvest
           </Button>

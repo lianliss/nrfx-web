@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // Components
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
@@ -118,9 +117,14 @@ const farms = [
   { value: 'my_farms', label: 'My Farms' },
 ];
 
-const sortOptions = [{ value: 'hot', label: 'Sort by Hot' }];
+const sortOptions = [
+  { value: 'hot', label: 'Sort by Hot' },
+  { value: 'liquidity', label: 'Sort by Liquidity' },
+  { value: 'apr', label: 'Sort by APR' },
+  { value: 'newest', label: 'Sort by Newest' },
+];
 
-function Farming({ adaptive }) {
+function Farming({ adaptive, toastPush }) {
   // States
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);

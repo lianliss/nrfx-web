@@ -179,6 +179,7 @@ function Modals(props) {
       Component = ReceiveQRModal;
       break;
     case "stake":
+    case "unstake":
       Component = FarmingPopupStake;
       break;
     case "farming_roi":

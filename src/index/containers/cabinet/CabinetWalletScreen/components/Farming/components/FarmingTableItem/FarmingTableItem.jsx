@@ -14,6 +14,9 @@ import FarmingTableItemOptions from '../FarmingTableItemOptions/FarmingTableItem
 import FarmingIndicator from '../FarmingIndicator/FarmingIndicator';
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import { openModal } from 'src/actions';
+
 // Styles
 import './FarmingTableItem.less';
 
@@ -28,12 +31,6 @@ function FarmingTableItem({
   aviable,
   staked,
   earned,
-  onStake,
-  openRoi,
-  // This props is for popups test display
-  onUnstake,
-  onHardwest,
-  // -----
 }) {
   // States
   const [isActive, setIsActive] = React.useState(false);
@@ -62,7 +59,7 @@ function FarmingTableItem({
   const handleRoiOpen = (e) => {
     e.stopPropagation();
 
-    openRoi();
+    openModal('farming_roi');
   };
 
   return (
@@ -142,9 +139,6 @@ function FarmingTableItem({
           type={type}
           currency={currencies[1] ? currencies[1] : currencies[0]}
           handleTypeChange={handleTypeChange}
-          onStake={onStake}
-          onUnstake={onUnstake}
-          onHardwest={onHardwest}
         />
       )}
     </>
