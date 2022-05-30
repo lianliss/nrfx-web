@@ -127,11 +127,26 @@ function HoverPopup({
     }
   }, [isVisible]);
 
+  React.useEffect(() => {
+    const closePopup = () => {
+      setIsVisible(false);
+    };
+
+    document.addEventListener('scroll', closePopup);
+    document.addEventListener('pointerdown', closePopup);
+
+    return () => {
+      document.removeEventListener('scroll', closePopup);
+      document.removeEventListener('pointerdown', closePopup);
+    };
+  }, []);
+
   return (
     <div className="HoverPopup">
       <div
         className="HoverPopup__children"
         onMouseEnter={handleMouseEnter}
+        onClick={handleMouseEnter}
         onMouseLeave={() => setIsVisible(false)}
         ref={childrenRef}
       >
