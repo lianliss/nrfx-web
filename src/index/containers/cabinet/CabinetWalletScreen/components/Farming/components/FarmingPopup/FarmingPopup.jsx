@@ -137,7 +137,7 @@ export function FarmingPopupStake({ id, currency, ...props }) {
         </Button>
       </Form>
       <div className="FarmingPopup__footer">
-        <PopupLink text="Get USDT-BSW" />
+        {type === 'stake' && <PopupLink text="Get USDT-BSW" />}
         {/*Probably must set currencies array.*/}
       </div>
     </Modal>
