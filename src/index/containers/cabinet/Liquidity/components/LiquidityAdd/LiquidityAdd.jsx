@@ -126,7 +126,7 @@ function LiquidityAdd({ onClose, type }) {
       </div>
       {isToken && (
         <TokenSelect
-          selected={selectedTokens[0]}
+          selected={selectToken === 0 ? selectedTokens[0] : selectedTokens[1]}
           onClose={() => setIsToken(false)}
           onChange={(token) => {
             if (selectToken === 0) {
