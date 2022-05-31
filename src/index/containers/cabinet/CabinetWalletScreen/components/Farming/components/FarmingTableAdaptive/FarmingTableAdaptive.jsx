@@ -30,8 +30,8 @@ function FarmingTableAdaptive({ items, ...filters }) {
       />
       <CabinetScrollBlock style={{ height, minHeight: 200 }}>
         <div className="FarmingTableAdaptive__list">
-          {items.map((item) => (
-            <FarmingAdaptiveItem {...item} />
+          {items.map((item, key) => (
+            <FarmingAdaptiveItem key={key} {...item} />
           ))}
         </div>
       </CabinetScrollBlock>

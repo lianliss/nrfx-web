@@ -34,7 +34,7 @@ export function FarmingPopup({ message, onClose, ...props }) {
 
   return (
     <Popup
-      className={`FarmingPopup ${isDisabled && 'disabled'}`}
+      className={`FarmingPopup ${isDisabled ? 'disabled' : ''}`}
       onClose={onClose}
       onMouseOver={() => {
         props.onMouseOver();

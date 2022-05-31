@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import router from 'src/router';
 
@@ -16,7 +17,15 @@ import { LIQUIDITY } from 'src/index/constants/pages';
 // Styles
 import './FarmingAdaptiveItemOptions.less';
 
-function FarmingAdaptiveItemOptions({ id, aviable, staked, earned, type, currency }) {
+function FarmingAdaptiveItemOptions({
+  id,
+  aviable,
+  staked,
+  earned,
+  currency,
+  liquidity,
+  arp,
+}) {
   const dispatch = useDispatch();
   const { isConnected, connectWallet } = React.useContext(Web3Context);
 
@@ -28,7 +37,9 @@ function FarmingAdaptiveItemOptions({ id, aviable, staked, earned, type, currenc
             <div className="col little-title">ARP</div>
             <div className="col">
               <div className="row" onClick={() => openModal('farming_roi')}>
-                <NumberFormat number={75} percent type="link" />
+                <span className="link">
+                  <NumberFormat number={arp} percent />
+                </span>
                 <SVG
                   src={require('src/asset/icons/cabinet/calculator-icon.svg')}
                 />
@@ -40,7 +51,7 @@ function FarmingAdaptiveItemOptions({ id, aviable, staked, earned, type, currenc
             <div className="col">
               <div className="row">
                 <span className="Number">
-                  $<NumberFormat number={7100650} />
+                  $<NumberFormat number={liquidity} />
                 </span>
                 <SVG
                   src={require('src/asset/icons/cabinet/question-icon.svg')}
@@ -135,5 +146,23 @@ function FarmingAdaptiveItemOptions({ id, aviable, staked, earned, type, currenc
     </div>
   );
 }
+
+FarmingAdaptiveItemOptions.defaultProps = {
+  currency: '',
+  aviable: [0, 0],
+  arp: 0,
+  liquidity: 0,
+  staked: [0, 0],
+  earned: [0, 0],
+};
+
+FarmingAdaptiveItemOptions.propTypes = {
+  currency: PropTypes.string,
+  aviable: PropTypes.arrayOf(PropTypes.number),
+  arp: PropTypes.number,
+  liquidity: PropTypes.number,
+  staked: PropTypes.arrayOf(PropTypes.number),
+  earned: PropTypes.arrayOf(PropTypes.number),
+};
 
 export default FarmingAdaptiveItemOptions;

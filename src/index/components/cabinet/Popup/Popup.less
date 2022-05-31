@@ -1,3 +1,5 @@
+@import '../../../../vars.less';
+
 .Popup {
   position: fixed;
   bottom: 33px;
@@ -22,5 +24,19 @@
     top: 25.6px;
     right: 24px;
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Popup {
+    position: static;
+    padding: 20px 15px;
+
+    .close {
+      position: absolute;
+      top: 19.6px;
+      right: 24px;
+      cursor: pointer;
+    }
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { NumberFormat, HoverPopup } from 'src/ui';
@@ -13,15 +14,21 @@ function FarmingAdaptiveItem({
   id,
   currencies,
   indicator,
+  apy,
+  arp,
+  liquidity,
   aviable,
   staked,
   earned,
-  type,
-  apy,
 }) {
+  const [isActive, setIsActive] = React.useState(false);
+
   return (
     <div className="FarmingAdaptiveItem" key={id}>
-      <div className="FarmingAdaptiveItem_default">
+      <div
+        className="FarmingAdaptiveItem_default"
+        onClick={() => setIsActive((prev) => !prev)}
+      >
         <div className="row">
           <div className="col">
             <DoubleWallets
@@ -97,17 +104,43 @@ function FarmingAdaptiveItem({
         </div>
       </div>
       <div className="row">
-        <FarmingAdaptiveItemOptions
-          id={id}
-          aviable={aviable}
-          staked={staked}
-          earned={earned}
-          type={type}
-          currency={currencies[1] ? currencies[1] : currencies[0]}
-        />
+        {isActive && (
+          <FarmingAdaptiveItemOptions
+            id={id}
+            aviable={aviable}
+            arp={arp}
+            liquidity={liquidity}
+            staked={staked}
+            earned={earned}
+            currency={currencies[1] ? currencies[1] : currencies[0]}
+          />
+        )}
       </div>
     </div>
   );
 }
+
+FarmingAdaptiveItem.defaultProps = {
+  indicator: 'latest',
+  currencies: ['', ''],
+  apy: 0,
+  arp: 0,
+  liquidity: 0,
+  aviable: [0, 0],
+  staked: [0, 0],
+  earned: [0, 0],
+};
+
+FarmingAdaptiveItem.propTypes = {
+  id: PropTypes.number,
+  indicator: PropTypes.string,
+  currencies: PropTypes.arrayOf(PropTypes.string),
+  apy: PropTypes.number,
+  arp: PropTypes.number,
+  liquidity: PropTypes.number,
+  aviable: PropTypes.arrayOf(PropTypes.number),
+  staked: PropTypes.arrayOf(PropTypes.number),
+  earned: PropTypes.arrayOf(PropTypes.number),
+};
 
 export default FarmingAdaptiveItem;
