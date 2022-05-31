@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 // Components
 import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
+import DoubleText from '../DoubleText/DoubleText';
 import { classNames as cn } from 'src/utils/index';
 import SVG from 'utils/svg-wrap';
 import { LIQUIDITY } from 'src/index/constants/pages';
@@ -36,24 +37,6 @@ function FarmingTableItemOptions({
       setIsVisible(true);
     });
   }, []);
-
-  // Components
-  const DoubleText = ({ title, currency, first, second }) => (
-    <div className="FarmingTableItem__doubleText">
-      <span>
-        {title} {currency.toUpperCase()}
-      </span>
-      <p>
-        <span>
-          <NumberFormat number={first} currency={currency} />
-        </span>
-        &nbsp;/&nbsp;
-        <span>
-          $<NumberFormat number={second} />
-        </span>
-      </p>
-    </div>
-  );
 
   return (
     <>

@@ -124,7 +124,7 @@ const sortOptions = [
   { value: 'newest', label: 'Sort by Newest' },
 ];
 
-function Farming({ adaptive, toastPush }) {
+function Farming({ adaptive }) {
   // States
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);

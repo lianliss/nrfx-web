@@ -13,6 +13,7 @@ import useHeightSize from './hooks/useHeightSize';
 
 // Styles
 import './FarmingTableAdaptive.less';
+import AdaptiveItemOptions from './components/AdaptiveItemOptions/AdaptiveItemOptions';
 
 function FarmingTableAdaptive({ items, ...filters }) {
   // Sort filters from props
@@ -33,7 +34,7 @@ function FarmingTableAdaptive({ items, ...filters }) {
       />
       <CabinetScrollBlock style={{ height, minHeight: 200 }}>
         <div className="FarmingTableAdaptive__list">
-          {items.map((item, index) => (
+          {items.map((item) => (
             <div className="FarmingTableAdaptive__item" key={item.id}>
               <div className="FarmingTableAdaptive__item_default">
                 <div className="row">
@@ -115,7 +116,16 @@ function FarmingTableAdaptive({ items, ...filters }) {
                 </div>
               </div>
               <div className="row">
-                <div className="FarmingTableAdaptive__options"></div>
+                <AdaptiveItemOptions
+                  id={item.id}
+                  aviable={item.aviable}
+                  staked={item.staked}
+                  earned={item.earned}
+                  type={item.type}
+                  currency={
+                    item.currencies[1] ? item.currencies[1] : item.currencies[0]
+                  }
+                />
               </div>
             </div>
           ))}
