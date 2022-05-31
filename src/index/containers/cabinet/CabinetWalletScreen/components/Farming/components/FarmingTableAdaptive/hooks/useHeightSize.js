@@ -16,7 +16,7 @@ function useHeightSize() {
 
       setHeight(
         farmingContainerHeight -
-          (farmingHeaderHeight + tableHeaderHeight + 24 + 23)
+          (farmingHeaderHeight + tableHeaderHeight + 23 + 8)
       );
     };
 

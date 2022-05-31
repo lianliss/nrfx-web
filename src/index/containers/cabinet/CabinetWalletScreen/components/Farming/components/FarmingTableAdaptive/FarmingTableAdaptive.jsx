@@ -79,7 +79,7 @@ function FarmingTableAdaptive({ items, ...filters }) {
                 <div className="row">
                   <div className="col">
                     <div className="FarmingTableAdaptive__cell">
-                      <span>APY</span>
+                      <span className="little-title">APY</span>
                       <span>
                         <NumberFormat number={item.apy} percent />
                         <HoverPopup
@@ -104,7 +104,7 @@ function FarmingTableAdaptive({ items, ...filters }) {
                   </div>
                   <div className="col">
                     <div className="FarmingTableAdaptive__cell">
-                      <span>Earned</span>
+                      <span className="little-title">Earned</span>
                       <span>—</span>
                     </div>
                   </div>

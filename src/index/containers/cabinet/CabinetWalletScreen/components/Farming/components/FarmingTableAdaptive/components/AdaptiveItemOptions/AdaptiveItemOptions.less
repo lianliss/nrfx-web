@@ -1,0 +1,78 @@
+.FarmingTableAdaptive__options {
+  width: 100%;
+  margin: 12px 0;
+  padding: 10px 12px 12px;
+  border: 1px solid #e3e9f0;
+  border-radius: 12px;
+
+  .row {
+    align-items: center;
+  }
+
+  & > .row {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .col {
+    &:nth-child(2) {
+      margin-left: auto;
+    }
+  }
+
+  .statistics {
+    width: 100%;
+
+    & > .row:not(:last-child) {
+      margin-bottom: 12px;
+    }
+
+    .isvg {
+      margin-left: 8px;
+      opacity: 0.5;
+      cursor: pointer;
+
+      path {
+        fill: #5078e6;
+      }
+
+      circle {
+        stroke: #5078e6;
+      }
+    }
+  }
+
+  .Button {
+    --button-height: 36px;
+
+    &.get-lp {
+      padding: 0 16px;
+    }
+
+    &.stake,
+    &.unstake {
+      padding: 0 9px;
+      margin-left: 5px;
+    }
+
+    &.harvest {
+      padding: 0 23px;
+    }
+
+    .isvg {
+      margin-right: 6.9px;
+    }
+  }
+
+  .Number {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    color: var(--black-gunmetal);
+  }
+
+  .link {
+    color: var(--dark-blue);
+  }
+}
