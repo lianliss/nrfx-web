@@ -64,68 +64,6 @@
     }
   }
 
-  &__buttons {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-
-    & > .Button {
-      &:not(:last-child) {
-        margin-bottom: 18px;
-      }
-    }
-
-    .Button {
-      width: 334px;
-      height: 115px;
-      padding: 30px 30px;
-      text-align: left;
-      position: relative;
-
-      &__label {
-        display: flex;
-        align-items: center;
-      }
-
-      &__icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 53px;
-        height: 53px;
-        margin-right: 24px;
-        background: rgba(223, 227, 240, 0.35);
-        border-radius: 13px;
-
-        svg,
-        svg path {
-          fill: #fff;
-        }
-      }
-
-      &__content {
-        display: flex;
-        flex-direction: column;
-        max-width: 179px;
-
-        span {
-          &:first-child {
-            font-weight: 600;
-            font-size: 20px;
-            line-height: 120%;
-            letter-spacing: -0.01em;
-          }
-          &:last-child {
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 180%;
-            opacity: 0.5;
-          }
-        }
-      }
-    }
-  }
-
   &__links,
   &-social,
   &-social__items {
@@ -192,10 +130,6 @@
       justify-content: space-between;
     }
 
-    &__buttons {
-      margin-bottom: 125px;
-    }
-
     &__description {
       margin-bottom: 0;
     }
@@ -246,23 +180,6 @@
     &__description {
       font-size: 14px;
       margin-bottom: 34px;
-    }
-
-    &__buttons {
-      width: 100%;
-      margin-bottom: 22px;
-
-      .Button {
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-
-      & > .Button:not(:last-child) {
-        margin-bottom: 11px;
-      }
     }
 
     &__links {
