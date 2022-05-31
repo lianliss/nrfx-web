@@ -40,7 +40,7 @@ function CabinetWalletSidebar({ className = '' }) {
                   >
                     Swap
                   </li>
-                  <li className='disabled'>Pro DEX</li>
+                  <li className="disabled">Pro DEX</li>
                 </ul>
               </SidebarItem>
               <SidebarItem
@@ -55,7 +55,12 @@ function CabinetWalletSidebar({ className = '' }) {
                 active={route.name === PAGES.FARMING}
                 onClick={() => router.navigate(PAGES.FARMING)}
               />
-              <SidebarItem title="Validator" icon="validator" />
+              <SidebarItem
+                title="Validator"
+                icon="validator"
+                active={route.name === PAGES.VALIDATOR}
+                onClick={() => router.navigate(PAGES.VALIDATOR)}
+              />
             </ul>
           </CabinetBlock>
         </CabinetScrollBlock>
