@@ -81,6 +81,10 @@ export const routes =
           path: "/wallet/farming"
         },
         {
+          name: pages.VALIDATOR,
+          path: "/wallet/validator"
+        },
+        {
           name: pages.WALLET_CRYPTO,
           path: "/wallet/crypto/:currency"
         },

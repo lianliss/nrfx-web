@@ -50,6 +50,7 @@ import Farming from "./components/Farming/Farming";
 import SwitchPage from "./components/SwitchPage/SwitchPage";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 import CryptoWallet from './components/CryptoWallet/CryptoWallet';
+import CabinetValidator from "../../../components/cabinet/CabinetValidator/CabinetValidator";
 
 import { ContentBox } from "ui";
 import { setTitle } from "actions";
@@ -201,6 +202,7 @@ class CabinetWalletScreen extends React.PureComponent {
     const isTransactions = name === PAGES.TRANSACTIONS;
     const isSwitchPage = isSwap || isLiquidity || isTransactions;
     const isFarming = name === PAGES.FARMING;
+    const isValidator = name === PAGES.VALIDATOR;
     const balance = this.getBalanceId();
     const { fiatBalance } = balance;
     const balanceId = balance.id;
@@ -220,7 +222,7 @@ class CabinetWalletScreen extends React.PureComponent {
         {isCrypto && <CryptoWallet/>}
         {isSwitchPage && <SwitchPage route={name} adaptive={isAdaptive} />}
         {isFarming && <Farming adaptive={isAdaptive} />}
-
+        {isValidator && <CabinetValidator />}
         {!isReservationExpire && <RefillBlock />}
 
         {/* <Paging

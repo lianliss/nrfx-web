@@ -45,3 +45,4 @@ export const NARFEX_DAO = "narfex_dao";
 export const FARMING = "farming";
 export const LIQUIDITY = "liquidity";
 export const TRANSACTIONS = "transactions";
+export const VALIDATOR = "validator";
