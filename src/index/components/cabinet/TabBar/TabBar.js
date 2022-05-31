@@ -12,7 +12,7 @@ const Tab = props => (
   <BaseLink
     router={router}
     routeName={props.route}
-    className="TabBar__item"
+    className={`TabBar__item ${props.disabled ? 'disabled' : ''}`}
     activeClassName="active"
   >
     {props.children}
