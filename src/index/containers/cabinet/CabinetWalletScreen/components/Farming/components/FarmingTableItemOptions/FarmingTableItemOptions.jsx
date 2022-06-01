@@ -13,23 +13,19 @@ import { LIQUIDITY } from 'src/index/constants/pages';
 // Utils
 import { openModal } from 'src/actions';
 import { toastPush } from 'src/actions/toasts';
+import { Web3Context } from 'services/web3Provider';
 
 // Styles
 import './FarmingTableItemOptions.less';
 
 // Main
-function FarmingTableItemOptions({
-  id,
-  type,
-  handleTypeChange,
-  currency,
-  aviable,
-  staked,
-  earned,
-}) {
+function FarmingTableItemOptions({ id, currency, aviable, staked, earned }) {
   const dispatch = useDispatch();
+  const { isConnected, connectWallet } = React.useContext(Web3Context);
+
   // States
   const [isVisible, setIsVisible] = React.useState(false);
+  const [type, setType] = React.useState('stake');
 
   // Actions
   React.useEffect(() => {
@@ -56,54 +52,50 @@ function FarmingTableItemOptions({
           />
         </TableColumn>
         <TableColumn colspan={2}>
-          {type === 'connect' && (
-            <>
-              <Button
-                type="lightBlue"
-                onClick={() => handleTypeChange('stake')}
-                style={{ width: '100%' }}
-              >
-                Connect Wallet
-              </Button>
-            </>
-          )}
-          {type === 'stake' && (
-            <>
+          {isConnected ? (
+            type === 'staked' ? (
+              <>
+                <Button
+                  type="lightBlue"
+                  className="stake"
+                  onClick={() => {
+                    openModal('stake', {}, { id, currency });
+                    setType('staked');
+                  }}
+                >
+                  Stake
+                </Button>
+                <Button
+                  type="dark"
+                  onClick={() => {
+                    openModal('unstake', {}, { id, currency });
+                    setType('stake');
+                  }}
+                  className="unstake"
+                >
+                  Unstake
+                </Button>
+              </>
+            ) : (
               <Button
                 type="lightBlue"
                 onClick={() => {
                   openModal('stake', {}, { id, currency });
-                  handleTypeChange('staked');
+                  setType('staked');
                 }}
                 style={{ width: '100%' }}
               >
                 Stake
               </Button>
-            </>
-          )}
-          {type === 'staked' && (
-            <>
-              <Button
-                type="lightBlue"
-                className="stake"
-                onClick={() => {
-                  openModal('stake', {}, { id, currency });
-                  handleTypeChange('staked');
-                }}
-              >
-                Stake
-              </Button>
-              <Button
-                type="dark"
-                onClick={() => {
-                  openModal('unstake', {}, { id, currency });
-                  handleTypeChange('stake');
-                }}
-                className="unstake"
-              >
-                Unstake
-              </Button>
-            </>
+            )
+          ) : (
+            <Button
+              type="lightBlue"
+              onClick={connectWallet}
+              style={{ width: '100%' }}
+            >
+              Connect Wallet
+            </Button>
           )}
         </TableColumn>
         <TableColumn>
@@ -141,20 +133,16 @@ function FarmingTableItemOptions({
 
 FarmingTableItemOptions.defaultProps = {
   currency: '',
-  type: 'connect',
   aviable: [0, 0],
   staked: [0, 0],
   earned: [0, 0],
-  handleTypeChange: () => {},
 };
 
 FarmingTableItemOptions.propTypes = {
   currency: PropTypes.string,
-  type: PropTypes.string,
   aviable: PropTypes.arrayOf(PropTypes.number),
   staked: PropTypes.arrayOf(PropTypes.number),
   earned: PropTypes.arrayOf(PropTypes.number),
-  handleTypeChange: PropTypes.func,
 };
 
 export default FarmingTableItemOptions;

@@ -34,7 +34,6 @@ function FarmingTableItem({
 }) {
   // States
   const [isActive, setIsActive] = React.useState(false);
-  const [type, setType] = React.useState('connect');
 
   const QuestionAPY = () => (
     <p>
@@ -47,13 +46,6 @@ function FarmingTableItem({
   // Open/Close current item options.
   const handleActive = () => {
     setIsActive((prevState) => !prevState);
-  };
-
-  // Set current options way
-  // const types = ["connect", "stake", "staked"]
-  // @param oneOf(types) nextType - Options Type
-  const handleTypeChange = (nextType) => {
-    setType(nextType);
   };
 
   const handleRoiOpen = (e) => {
@@ -136,9 +128,7 @@ function FarmingTableItem({
           aviable={aviable}
           staked={staked}
           earned={earned}
-          type={type}
           currency={currencies[1] ? currencies[1] : currencies[0]}
-          handleTypeChange={handleTypeChange}
         />
       )}
     </>

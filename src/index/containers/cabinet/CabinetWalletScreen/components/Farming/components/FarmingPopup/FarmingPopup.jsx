@@ -114,7 +114,7 @@ export function FarmingPopupStake({ id, currency, ...props }) {
         <div className="title">
           <span>
             {type === 'stake' ? 'Stake' : 'Unstake'} {currency.toUpperCase()}
-            &nbsp; Tokens
+            &nbsp;Tokens
           </span>
         </div>
       </div>
