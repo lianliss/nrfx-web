@@ -83,13 +83,6 @@
     }
   }
 
-  &__balance {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
   // Components
   .title {
     margin-bottom: 8px;
@@ -111,7 +104,8 @@
     color: #5ec47a;
   }
 
-  p {
+  p,
+  .default-text {
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
@@ -130,14 +124,7 @@
     }
   }
 
-  .balance {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-  }
-
-  .basic,
-  .balance {
+  .basic {
     color: var(--dark-black);
   }
 
@@ -150,15 +137,25 @@
   }
 
   label {
-    margin: 26px 0 24px;
+    margin: 0 0 24px;
+    width: 100%;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
   }
 
   // <Input />
   .Input {
     width: 100%;
-    padding: 16px 54px 13px 16px;
+    padding: 16px 150px 13px 16px !important;
     border: none;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
 
     &__wrapper {
       margin: 0;
@@ -169,18 +166,26 @@
     display: flex;
     align-items: center;
     position: relative;
+    margin-top: 8px;
   }
 
   .input-controls {
+    display: flex;
+    align-items: center;
     position: absolute;
     right: 8px;
-    padding: 8px;
-    background: #fff;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 100%;
-    cursor: pointer;
+
+    &__button {
+      padding: 8px;
+      background: #cadfff;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 100%;
+    }
 
     span {
       background: linear-gradient(135deg, #78a0ff 0%, #5078e6 100%);
@@ -188,6 +193,12 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-fill-color: transparent;
+    }
+
+    .default-text {
+      font-weight: 600;
+      color: var(--dark-gunmetal);
+      margin: 0 10px 0 0;
     }
   }
 
@@ -218,6 +229,7 @@
     margin-top: 12px;
     border: none;
     border-radius: 0;
+    box-shadow: none;
 
     td:last-child .Table__td__cont {
       padding-right: 0;

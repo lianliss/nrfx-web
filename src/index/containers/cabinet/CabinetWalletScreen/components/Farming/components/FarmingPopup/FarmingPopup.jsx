@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // All popups for Farming
 // is here.
@@ -16,6 +16,7 @@ import {
   Table,
   TableCell,
   TableColumn,
+  BottomSheetModal,
 } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
@@ -70,7 +71,9 @@ FarmingPopup.defaultProps = {
 // Stake Modal - Can expand.
 export function FarmingPopupStake({ id, currency, ...props }) {
   const dispatch = useDispatch();
+  const adaptive = useSelector((state) => state.default.adaptive);
   const type = props.modal; // stake || unstake
+  const Wrapper = adaptive ? BottomSheetModal : Modal;
   // States
   const [value, setValue] = React.useState(15);
 
@@ -99,7 +102,7 @@ export function FarmingPopupStake({ id, currency, ...props }) {
   };
 
   return (
-    <Modal
+    <Wrapper
       className="FarmingPopup FarmingPopup__fullscreen FarmingPopupStake"
       {...props}
       skipClose
@@ -110,25 +113,32 @@ export function FarmingPopupStake({ id, currency, ...props }) {
       <div className="FarmingPopup__header">
         <div className="title">
           <span>
-            {type === 'stake' ? 'Stake' : 'Unstake'} {currency.toUpperCase()}{' '}
-            Tokens
+            {type === 'stake' ? 'Stake' : 'Unstake'} {currency.toUpperCase()}
+            &nbsp; Tokens
           </span>
         </div>
       </div>
       <Form className="FarmingPopup__body" onSubmit={handleSubmit}>
-        <div className="FarmingPopup__balance">
-          <p>Balance</p>
-          <span className="balance">
-            <NumberFormat number={15.5} />
-            &nbsp; BNB-NRFX
-          </span>
-        </div>
         <label>
-          <p>{type === 'stake' ? 'Stake' : 'Unstake'}</p>
+          <div className="FarmingPopup__label">
+            <span className="default-text">
+              {type === 'stake' ? 'Stake' : 'Unstake'}
+            </span>
+            <span className="default-text">
+              Balance: <NumberFormat number={0} />
+            </span>
+          </div>
           <div className="input-container">
             <Input type="number" value={value} onTextChange={handleChange} />
-            <div className="input-controls" onClick={() => {}}>
-              <span>Max</span>
+            <div className="input-controls">
+              <p className="default-text">BNB-NRFX</p>
+              <button
+                type="button"
+                className="input-controls__button"
+                onClick={() => {}}
+              >
+                <span>Max</span>
+              </button>
             </div>
           </div>
         </label>
@@ -140,7 +150,7 @@ export function FarmingPopupStake({ id, currency, ...props }) {
         {type === 'stake' && <PopupLink text="Get USDT-BSW" />}
         {/*Probably must set currencies array.*/}
       </div>
-    </Modal>
+    </Wrapper>
   );
 }
 
@@ -157,8 +167,11 @@ FarmingPopupStake.defaultProps = {
 
 // ROI Modal.
 export function FarmingPopupROI(props) {
+  const adaptive = useSelector((state) => state.default.adaptive);
+  const Wrapper = adaptive ? BottomSheetModal : Modal;
+
   return (
-    <Modal
+    <Wrapper
       className="FarmingPopup FarmingPopup__fullscreen"
       {...props}
       skipClose
@@ -233,7 +246,7 @@ export function FarmingPopupROI(props) {
           </TableCell>
         </Table>
       </div>
-    </Modal>
+    </Wrapper>
   );
 }
 // ROI end.

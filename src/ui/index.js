@@ -65,3 +65,4 @@ export { default as DynamicShadow } from "./components/DynamicShadow/DynamicShad
 export { default as ScrollBox } from "./components/ScrollBox/ScrollBox";
 export { default as HoverPopup } from "./components/HoverPopup/HoverPopup";
 export { default as DropdownElement } from "./components/DropdownElement/DropdownElement";
+export { default as BottomSheetModal } from "./components/BottomSheetModal/BottomSheetModal";

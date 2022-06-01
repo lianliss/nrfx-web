@@ -4,7 +4,7 @@ import { useSwipeable } from 'react-swipeable';
 
 import './BottomSheetModal.less';
 
-function BottomSheetModal({ children, onClose }) {
+function BottomSheetModal({ children, className, onClose }) {
   // setup ref for your usage
   const modalRef = React.useRef(null);
   const usingPosition = 20; // 30%
@@ -13,6 +13,8 @@ function BottomSheetModal({ children, onClose }) {
   let done = false;
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (!modalRef) {
       return;
     }
@@ -106,9 +108,13 @@ function BottomSheetModal({ children, onClose }) {
 
   return (
     <div className="BottomSheetModal-container">
+      <div className="BottomSheetModal__bg" />
       <div {...handlers} ref={refPassthrough} className="BottomSheetModal">
-        <div className="BottomSheetModal__line" />
-        {children}
+        <div
+          className={`BottomSheetModal__children ${className ? className : ''}`}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
