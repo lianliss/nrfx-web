@@ -62,7 +62,7 @@ function WalletsIsEmpty(props) {
           </div>
           <div className="WalletsIsEmpty__links">
             <a href="https://narfex.gitbook.io/wiki/" target="_blank">
-              <OpenPopupLink title="learn about wallet" />
+              <OpenPopupLink title="learn about narfex" />
             </a>
             <div className="WalletsIsEmpty-social">
               <span className="WalletsIsEmpty-social__title">our social</span>

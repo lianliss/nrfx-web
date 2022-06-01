@@ -31,7 +31,7 @@ function CabinetValidator() {
             </div>
             <div className="CabinetValidator__links">
               <a href="https://narfex.gitbook.io/wiki/" target="_blank">
-                <OpenPopupLink title="learn about wallet" />
+                <OpenPopupLink title="learn about narfex" />
               </a>
               <div className="CabinetValidator-social">
                 <span className="CabinetValidator-social__title">
