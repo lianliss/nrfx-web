@@ -21,7 +21,7 @@ function Login({
   const [status, setStatus] = useState("");
   const isProduction = utils.isProduction();
   const disabled = isProduction
-    ? !email || !password || !token
+    ? !email || !password /*|| !token */
     : !email || !password;
 
   const captchaRef = useRef();
