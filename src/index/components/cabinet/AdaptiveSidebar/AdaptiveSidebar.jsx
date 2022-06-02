@@ -2,7 +2,7 @@ import React from 'react';
 import { classNames as cn } from 'src/utils';
 
 // Components
-import CabinetWalletSidebar from '../CabinetWalletSidebar/CabinetWalletSidebar';
+import CabinetSidebar from '../CabinetSidebar/CabinetSidebar';
 
 // Style
 import './AdaptiveSidebar.less';
@@ -38,7 +38,7 @@ function AdaptiveSidebar({ route, active, onClose }) {
   return (
     <div className={cn('AdaptiveSidebar', { active })}>
       <div className="AdaptiveSidebar__bg" onClick={onClose} />
-      <CabinetWalletSidebar className={cn({ active })} />
+      <CabinetSidebar className={cn({ active })} />
     </div>
   );
 }

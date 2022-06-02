@@ -164,13 +164,14 @@ function Routes(props) {
     //   }
     //   break;
     // // Cabinet
-    case pages.WALLET:
-    case pages.WALLET_SWAP:
     case pages.WALLET_CRYPTO:
     case pages.WALLET_FIAT:
       needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
+    case pages.WALLET:
+    case pages.DAPP:
+    case pages.DAPP_SWAP:
     case pages.FARMING:
     case pages.LIQUIDITY:
     case pages.TRANSACTIONS:

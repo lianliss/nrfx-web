@@ -9,14 +9,14 @@ import WalletsListItem from '../WalletsList/components/WalletsListItem/WalletsLi
 import WalletsList from '../WalletsList/WalletsList';
 import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
-import './CabinetWalletSidebar.less';
+import './CabinetSidebar.less';
 
-function CabinetWalletSidebar({ className = '' }) {
+function CabinetSidebar({ className = '' }) {
   const { route, router } = useRoute();
 
   return (
-    <div className={`CabinetWalletSidebar ${className}`}>
-      <div className="CabinetWalletSidebar__container">
+    <div className={`CabinetSidebar ${className}`}>
+      <div className="CabinetSidebar__container">
         <CabinetScrollBlock>
           <CabinetBlock>
             <ul>
@@ -35,8 +35,8 @@ function CabinetWalletSidebar({ className = '' }) {
               <SidebarItem title="Trade" icon="trade" active>
                 <ul>
                   <li
-                    className={route.name === PAGES.WALLET_SWAP ? 'active' : ''}
-                    onClick={() => router.navigate(PAGES.WALLET_SWAP)}
+                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                   >
                     Swap
                   </li>
@@ -83,4 +83,4 @@ function CabinetWalletSidebar({ className = '' }) {
   );
 }
 
-export default CabinetWalletSidebar;
+export default CabinetSidebar;

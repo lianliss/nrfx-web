@@ -42,7 +42,7 @@ import RefillBlock from "./components/RefillBlock/RefillBlock";
 import SwapTutorial from "./components/SwapTutorial/SwapTutorial";
 import EmptyBalance from "./components/EmptyBalance/EmptyBalance";
 import Web3Wallets from "./components/Web3Wallets/Web3Wallets";
-import CabinetWalletSidebar from "../../../components/cabinet/CabinetWalletSidebar/CabinetWalletSidebar";
+import CabinetSidebar from "../../../components/cabinet/CabinetSidebar/CabinetSidebar";
 import CabinetWallets from "../../../components/cabinet/CabinetWallets/CabinetWallets";
 
 // Page components
@@ -195,14 +195,7 @@ class CabinetWalletScreen extends React.PureComponent {
       name, params,
     } = route;
     const { currency } = params;
-    const isCommon = name === PAGES.WALLET;
     const isCrypto = name === PAGES.WALLET_CRYPTO;
-    const isSwap = name === PAGES.WALLET_SWAP;
-    const isLiquidity = name === PAGES.LIQUIDITY;
-    const isTransactions = name === PAGES.TRANSACTIONS;
-    const isSwitchPage = isSwap || isLiquidity || isTransactions;
-    const isFarming = name === PAGES.FARMING;
-    const isValidator = name === PAGES.VALIDATOR;
     const balance = this.getBalanceId();
     const { fiatBalance } = balance;
     const balanceId = balance.id;
@@ -214,15 +207,12 @@ class CabinetWalletScreen extends React.PureComponent {
     return (
       <PageContainer
         className="CabinetWalletScreen"
-        sideBar={<CabinetWalletSidebar />}
+        sideBar={<CabinetSidebar />}
       >
-        {isCommon && <CabinetWallets />}
+        {/* {isCommon && <CabinetWallets />} */}
         {/* {isCommon && <Web3Wallets />} */}
         {/* {isCommon && <CommonHeader />} */}
         {isCrypto && <CryptoWallet/>}
-        {isSwitchPage && <SwitchPage route={name} adaptive={isAdaptive} />}
-        {isFarming && <Farming adaptive={isAdaptive} />}
-        {isValidator && <CabinetValidator />}
         {!isReservationExpire && <RefillBlock />}
 
         {/* <Paging

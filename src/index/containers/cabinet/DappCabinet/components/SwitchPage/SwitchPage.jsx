@@ -8,6 +8,7 @@ import { Switch, SwitchTabs, Button } from 'src/ui';
 import CabinetContent from '../CabinetContent/CabinetContent';
 import DexSwap from '../../../DexSwap/DexSwap';
 import Liquidity from '../../../Liquidity/Liquidity';
+import SwapFormOld from './components/SwapFormOld/SwapFormOld';
 import * as PAGES from 'src/index/constants/pages';
 
 // Styles
@@ -22,12 +23,12 @@ function SwitchPage({ adaptive }) {
   // Constants
   const { route, router } = useRoute();
   const switchTabs = [
-    { value: PAGES.WALLET_SWAP, label: 'Swap' },
+    { value: PAGES.DAPP_SWAP, label: 'Swap' },
     { value: PAGES.LIQUIDITY, label: 'Liquidity' },
     { value: PAGES.TRANSACTIONS, label: 'Transactions' },
   ];
   // Current page is ...
-  const isSwap = route.name === PAGES.WALLET_SWAP;
+  const isSwap = route.name === PAGES.DAPP_SWAP;
   const isLiquidity = route.name === PAGES.LIQUIDITY;
   const isTransactions = route.name === PAGES.TRANSACTIONS;
 
@@ -93,9 +94,9 @@ function SwitchPage({ adaptive }) {
 // @param {boolean} adaptive - Screen width is adaptive.
 // return {string} - Title of route&adaptive.
 function getSwitchedTitle(route, adaptive = false) {
-  const isSwap = route.name === PAGES.WALLET_SWAP;
+  const isSwap = route.name === PAGES.DAPP_SWAP;
   const isLiquidity = route.name === PAGES.LIQUIDITY;
-  if (route === PAGES.WALLET_SWAP) {
+  if (route === PAGES.DAPP_SWAP) {
     return 'Exchange';
   }
 
