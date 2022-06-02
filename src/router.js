@@ -70,19 +70,19 @@ export const routes =
         },
         {
           name: pages.LIQUIDITY,
-          path: "/wallet/liquidity"
+          path: "/dapp_cabinet/liquidity"
         },
         {
           name: pages.TRANSACTIONS,
-          path: "/wallet/transactions"
+          path: "/dapp_cabinet/transactions"
         },
         {
           name: pages.FARMING,
-          path: "/wallet/farming"
+          path: "/dapp_cabinet/farming"
         },
         {
           name: pages.VALIDATOR,
-          path: "/wallet/validator"
+          path: "/dapp_cabinet/validator"
         },
         {
           name: pages.TOKENSALE,

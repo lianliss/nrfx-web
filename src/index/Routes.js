@@ -51,6 +51,7 @@ import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
 import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
 import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
+import DappCabinet from "./containers/cabinet/DappCabinet/DappCabinet";
 import * as actions from "../actions/index";
 import router from "../router";
 
@@ -167,12 +168,15 @@ function Routes(props) {
     case pages.WALLET_SWAP:
     case pages.WALLET_CRYPTO:
     case pages.WALLET_FIAT:
+      needAuthorization = true;
+      Component = CabinetWalletScreen.default;
+      break;
     case pages.FARMING:
     case pages.LIQUIDITY:
     case pages.TRANSACTIONS:
     case pages.VALIDATOR:
-      needAuthorization = true;
-      Component = CabinetWalletScreen.default;
+      needAuthorization = false;
+      Component = DappCabinet;
       break;
     case pages.FIAT:
       needAuthorization = true;

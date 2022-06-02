@@ -10,6 +10,7 @@ import { getLang } from 'utils';
 import { setLang } from '../../../../services/lang';
 import { MAIN } from '../../../constants/pages';
 import { Web3Context } from 'services/web3Provider';
+import * as auth from "../../../../actions/auth";
 
 import './Header.less';
 import { Button } from 'src/ui';
@@ -136,6 +137,10 @@ function Header(props) {
                     subContent: (
                       <span className="secondary-text">Coming soon</span>
                     ),
+                  },
+                  {
+                    title: 'Logout',
+                    onClick: auth.logout,
                   },
                 ]}
               >

@@ -46,8 +46,8 @@ import CabinetWalletSidebar from "../../../components/cabinet/CabinetWalletSideb
 import CabinetWallets from "../../../components/cabinet/CabinetWallets/CabinetWallets";
 
 // Page components
-import Farming from "./components/Farming/Farming";
-import SwitchPage from "./components/SwitchPage/SwitchPage";
+import Farming from "../DappCabinet/components/Farming/Farming";
+import SwitchPage from "../DappCabinet/components/SwitchPage/SwitchPage";
 import SwapFormAdaptive from "./components/SwapFormAdaptive/SwapFormAdaptive";
 import CryptoWallet from './components/CryptoWallet/CryptoWallet';
 import CabinetValidator from "../../../components/cabinet/CabinetValidator/CabinetValidator";

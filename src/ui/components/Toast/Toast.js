@@ -4,7 +4,7 @@ import './Toast.less';
 import React from 'react';
 import SVG from 'utils/svg-wrap';
 import PropTypes from 'prop-types';
-import { FarmingPopup } from '../../../index/containers/cabinet/CabinetWalletScreen/components/Farming/components/FarmingPopup/FarmingPopup';
+import { FarmingPopup } from 'src/index/containers/cabinet/DappCabinet/components/Farming/components/FarmingPopup/FarmingPopup';
 // internal
 import { classNames } from '../../utils';
 
