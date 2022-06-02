@@ -5,9 +5,9 @@ import { getLang } from 'utils';
 
 // Components
 import { Switch, SwitchTabs, Button } from 'src/ui';
+import CabinetContent from '../CabinetContent/CabinetContent';
 import DexSwap from '../../../DexSwap/DexSwap';
 import Liquidity from '../../../Liquidity/Liquidity';
-import SVG from 'utils/svg-wrap';
 import * as PAGES from 'src/index/constants/pages';
 
 // Styles
@@ -50,52 +50,40 @@ function SwitchPage({ adaptive }) {
   };
 
   return (
-    <div className="SwitchPage">
-      <div className="SwitchPage__container">
-        <div className="SwitchPage__header">
-          <div className="SwitchPage__row">
-            <h1>{title}</h1>
-            {/* {isSwap && (
+    <CabinetContent className="SwitchPage">
+      <div className="SwitchPage__header">
+        <div className="SwitchPage__row">
+          <h1>{title}</h1>
+          {/* {isSwap && (
               <>
                 <Switch type="light-blue" on={isPro} onChange={togglePro} />
                 <span className="switch-label">Pro Version</span>
               </>
             )} */}
-          </div>
-          {!isLiquidity && <div className="SwitchPage__row" />}
-          {isLiquidity && !adaptive && (
-            <div className="SwitchPage__row">
-              <p className="SwitchPage__description">
-                Earn high yields from transaction fees.
-              </p>
-            </div>
-          )}
+        </div>
+        {!isLiquidity && <div className="SwitchPage__row" />}
+        {isLiquidity && !adaptive && (
           <div className="SwitchPage__row">
-            <SwitchTabs
-              selected={route.name}
-              tabs={switchTabs}
-              onChange={handleSwitchTabs}
-              type="light-blue"
-            />
+            <p className="SwitchPage__description">
+              Earn high yields from transaction fees.
+            </p>
           </div>
-        </div>
+        )}
         <div className="SwitchPage__row">
-          {isSwap && <DexSwap />}
-          {isLiquidity && <Liquidity />}
-          {isTransactions && <Transactions />}
-        </div>
-        <div className="SwitchPage__bg-center">
-          <SVG
-            src={require('src/asset/backgrounds/cabinet-swap/center-of-screen-fix.svg')}
+          <SwitchTabs
+            selected={route.name}
+            tabs={switchTabs}
+            onChange={handleSwitchTabs}
+            type="light-blue"
           />
         </div>
       </div>
-      <div className="SwitchPage__bg">
-        <SVG
-          src={require('src/asset/backgrounds/cabinet-swap/right-of-screen-fix.svg')}
-        />
+      <div className="SwitchPage__row">
+        {isSwap && <DexSwap />}
+        {isLiquidity && <Liquidity />}
+        {isTransactions && <Transactions />}
       </div>
-    </div>
+    </CabinetContent>
   );
 }
 

@@ -1,25 +1,6 @@
 @import '../../../../../../vars.less';
 
 .SwitchPage {
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  position: relative;
-  padding-top: 15px;
-  padding-right: 65px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  z-index: 0;
-
-  // Containers
-  &__container {
-    width: 100%;
-    max-width: 505px;
-    height: 100%;
-    position: relative;
-  }
-
   &__row {
     display: flex;
     align-items: center;
@@ -41,32 +22,6 @@
 
     &:nth-child(3) {
       margin-bottom: 15px;
-    }
-  }
-
-  &__bg {
-    position: absolute;
-    right: -18px; // var(--container-padding)
-    top: 0;
-  }
-
-  &__bg-center {
-    overflow: hidden;
-    position: absolute;
-    top: 219px;
-    left: 0;
-    transform: translateX(-24.7%);
-    z-index: -1;
-
-    .isvg {
-      height: 100%;
-      position: relative;
-      bottom: -13.64%;
-
-      svg {
-        height: 100%;
-        width: auto;
-      }
     }
   }
 
@@ -131,8 +86,6 @@
 
 @media screen and (max-width: @mobile-width) {
   .SwitchPage {
-    padding: 0;
-
     h1 {
       font-size: 30px;
     }
@@ -145,11 +98,6 @@
       &:nth-child(2) {
         margin-bottom: 12px;
       }
-    }
-
-    &__bg,
-    &__bg-center {
-      display: none;
     }
   }
 }
