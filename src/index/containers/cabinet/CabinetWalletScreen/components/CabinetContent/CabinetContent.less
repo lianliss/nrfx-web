@@ -1,0 +1,98 @@
+@import '../../../../../../vars.less';
+
+.CabinetContent {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  position: relative;
+  padding-top: 15px;
+  padding-right: 65px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  z-index: 0;
+
+  // Containers
+  &__container {
+    width: 100%;
+    max-width: 505px;
+    height: 100%;
+    position: relative;
+  }
+
+  &__bg {
+    position: absolute;
+    right: -18px; // var(--container-padding)
+    top: 0;
+  }
+
+  &__bg-center {
+    overflow: hidden;
+    position: absolute;
+    top: 219px;
+    left: 0;
+    transform: translateX(-24.7%);
+    z-index: -1;
+
+    .isvg {
+      height: 100%;
+      position: relative;
+      bottom: -13.64%;
+
+      svg {
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
+
+  .CabinetBlock {
+    width: 100%;
+  }
+
+  // Components
+  h1 {
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: var(--black-gunmetal);
+    text-align: center;
+  }
+
+  &__description {
+    max-width: 391px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 180%;
+    text-align: center;
+    color: var(--cool-gray);
+  }
+
+  // <CabinetBlock />
+  .CabinetBlock {
+    padding: 0;
+    border-radius: 25px;
+  }
+
+  // All icons for this
+  .isvg {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .CabinetContent {
+    padding: 0;
+
+    h1 {
+      font-size: 30px;
+    }
+
+    &__bg,
+    &__bg-center {
+      display: none;
+    }
+  }
+}
