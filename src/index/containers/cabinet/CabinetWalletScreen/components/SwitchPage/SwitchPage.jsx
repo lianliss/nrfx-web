@@ -108,7 +108,7 @@ function getSwitchedTitle(route, adaptive = false) {
   const isSwap = route.name === PAGES.WALLET_SWAP;
   const isLiquidity = route.name === PAGES.LIQUIDITY;
   if (route === PAGES.WALLET_SWAP) {
-    return getLang('cabinet_wallet_exchange_title');
+    return 'Exchange';
   }
 
   if (route === PAGES.TRANSACTIONS) {
