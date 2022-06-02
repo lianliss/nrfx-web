@@ -46,6 +46,7 @@ import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "../landing/containers/Fee/SiteFeeScreen";
 import SiteTokenScreen from "./containers/site/SiteTokenScreen/SiteTokenScreen";
+import TokenSale from "./containers/cabinet/TokenSale/TokenSale";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
 import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
@@ -248,6 +249,9 @@ function Routes(props) {
     case pages.NARFEX_DAO:
       Component = NarfexDAO;
       WrapperComponent = LandingWrapper;
+      break;
+    case pages.TOKENSALE:
+      Component = TokenSale;
       break;
     default:
       Component = SiteNotFoundScreen;
