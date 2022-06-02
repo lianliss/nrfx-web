@@ -10,7 +10,10 @@ import { getLang } from 'utils';
 import { setLang } from '../../../../services/lang';
 import { MAIN } from '../../../constants/pages';
 import { Web3Context } from 'services/web3Provider';
-import * as auth from "../../../../actions/auth";
+
+import { logout } from 'src/actions/auth';
+import { openModal } from 'src/actions';
+import * as steps from 'src/components/AuthModal/fixtures';
 
 import './Header.less';
 import { Button } from 'src/ui';
@@ -21,7 +24,7 @@ import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 function Header(props) {
   const narfexRate = 455.55;
   const context = React.useContext(Web3Context);
-
+  const isLogined = !!props.profile.user;
   // States
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
@@ -139,8 +142,10 @@ function Header(props) {
                     ),
                   },
                   {
-                    title: 'Logout',
-                    onClick: auth.logout,
+                    title: isLogined ? 'Logout' : 'Login',
+                    onClick: isLogined
+                      ? logout
+                      : () => openModal('auth', { type: steps.LOGIN }),
                   },
                 ]}
               >
