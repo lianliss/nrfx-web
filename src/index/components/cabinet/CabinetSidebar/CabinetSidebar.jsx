@@ -30,8 +30,8 @@ function CabinetSidebar({ className = '' }) {
               <SidebarItem
                 title="Exchanger"
                 icon="exchange"
-                active={route.name === PAGES.DAPP_EXCHANGE}
-                onClick={() => router.navigate(PAGES.DAPP_EXCHANGE)}
+                // active={route.name === PAGES.DAPP_EXCHANGE}
+                // onClick={() => router.navigate(PAGES.DAPP_EXCHANGE)}
               />
             </ul>
           </CabinetBlock>
