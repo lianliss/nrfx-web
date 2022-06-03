@@ -50,8 +50,8 @@ export default ({ currency }) => {
           icon={<WalletIcon />}
         />
         <Wallet
-          active={route.name === pages.DAPP_EXCHANGE}
-          onClick={() => router.navigate(pages.DAPP_EXCHANGE)}
+          active={route.name === PAGES.DAPP_EXCHANGE}
+          onClick={() => router.navigate(PAGES.DAPP_EXCHANGE)}
           title={<Lang name={"cabinet_fiatMarketExchangeTitle"} />}
           icon={<LoopIcon />}
         />

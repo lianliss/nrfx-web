@@ -15,10 +15,10 @@ export default class ActionSheet extends React.Component {
   toggle = (visible) => {
     this.setState({ visible });
     if (visible) {
-      document.addEventListener('pointerup', this.__handleClick, false);
+      document.addEventListener('click', this.__handleClick, false);
       document.addEventListener('keydown', this.__handleClickEsc, false);
     } else {
-      document.removeEventListener('pointerup', this.__handleClick, false);
+      document.removeEventListener('click', this.__handleClick, false);
       document.removeEventListener('keydown', this.__handleClickEsc, false);
     }
   };
@@ -45,7 +45,7 @@ export default class ActionSheet extends React.Component {
         })}
       >
         <div
-          onPointerUp={() => this.toggle(true)}
+          onClick={() => this.toggle(true)}
           onMouseOver={props.mouseOver ? () => this.toggle(true) : () => {}}
         >
           {props.children || (
