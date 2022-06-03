@@ -34,7 +34,7 @@ const Tabs = props => {
           <Lang name="cabinet_header_exchange" />
         </span>
       </Tab>
-      <Tab route={PAGES.WALLET_SWAP}>
+      <Tab route={pages.DAPP_EXCHANGE}>
         <div className="TabBar__item__primaryButton">
           <SVG src={require("../../../../asset/24px/loop.svg")} />
         </div>

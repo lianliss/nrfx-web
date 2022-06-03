@@ -61,7 +61,7 @@ const old = memo(() => {
 
   const isCommon = name === PAGES.WALLET;
   const isCrypto = name === PAGES.WALLET_CRYPTO;
-  const isSwap = name === PAGES.WALLET_SWAP;
+  const isSwap = name === pages.DAPP_EXCHANGE;
 
   const dispatch = useDispatch();
   const status = useSelector(walletStatusSelector);

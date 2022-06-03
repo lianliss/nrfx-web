@@ -37,7 +37,7 @@ export default ({ currency }) => {
       dispatch(walletSwapSwitch());
     }
     dispatch(walletSwapSetCurrency("to", currency));
-    router.navigate(pages.WALLET_SWAP);
+    router.navigate(pages.DAPP_EXCHANGE);
   }, [walletSwap.toCurrency, dispatch, router, currency]);
 
   if (!currency) {
@@ -55,7 +55,7 @@ export default ({ currency }) => {
           </p>
           <Button
             onClick={() => {
-              router.navigate(pages.WALLET_SWAP);
+              router.navigate(pages.DAPP_EXCHANGE);
             }}
           >
             <Lang name="global_buy" />

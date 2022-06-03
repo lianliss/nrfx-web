@@ -8,7 +8,6 @@ import { Switch, SwitchTabs, Button } from 'src/ui';
 import CabinetContent from '../CabinetContent/CabinetContent';
 import DexSwap from '../../../DexSwap/DexSwap';
 import Liquidity from '../../../Liquidity/Liquidity';
-import SwapFormOld from './components/SwapFormOld/SwapFormOld';
 import * as PAGES from 'src/index/constants/pages';
 
 // Styles

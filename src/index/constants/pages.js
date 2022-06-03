@@ -44,6 +44,7 @@ export const TOKEN_LANDING = "token_landing";
 export const NARFEX_DAO = "narfex_dao";
 export const DAPP = "dapp";
 export const DAPP_SWAP = "dapp_swap";
+export const DAPP_EXCHANGE = "dapp_exchange";
 export const FARMING = "farming";
 export const LIQUIDITY = "liquidity";
 export const TRANSACTIONS = "transactions";

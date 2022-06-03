@@ -76,7 +76,7 @@ class Header extends React.PureComponent {
                   className={cn("CabinetHeader__link", {
                     // HACK
                     active: [
-                      pages.WALLET_SWAP,
+                      pages.DAPP_EXCHANGE,
                       pages.WALLET_FIAT,
                       pages.WALLET_CRYPTO
                     ].includes(currentPage)

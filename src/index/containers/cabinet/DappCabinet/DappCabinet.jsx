@@ -8,6 +8,7 @@ import CabinetSidebar from 'src/index/components/cabinet/CabinetSidebar/CabinetS
 // Pages
 import Farming from './components/Farming/Farming';
 import SwitchPage from './components/SwitchPage/SwitchPage';
+import Exchanger from './components/Exchanger/Exchanger';
 import CabinetValidator from '../../../components/cabinet/CabinetValidator/CabinetValidator';
 import CabinetWallets from '../../../components/cabinet/CabinetWallets/CabinetWallets';
 
@@ -24,6 +25,9 @@ export class DappCabinet extends Component {
     switch (route.name) {
       case PAGES.WALLET:
         Component = CabinetWallets;
+        break;
+      case PAGES.DAPP_EXCHANGE:
+        Component = Exchanger;
         break;
       case PAGES.DAPP_SWAP:
       case PAGES.LIQUIDITY:

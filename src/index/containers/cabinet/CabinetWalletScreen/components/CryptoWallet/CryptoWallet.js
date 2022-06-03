@@ -119,7 +119,7 @@ class CryptoWallet extends React.PureComponent {
             >
               {getLang('receive_qr_global')}
             </UI.Button>
-            <Link routeName={pages.WALLET_SWAP}>
+            <Link routeName={pages.DAPP_EXCHANGE}>
               <UI.Button
                 size="middle"
                 onClick={() => {

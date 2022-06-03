@@ -69,8 +69,8 @@ export const routes =
           path: '/dapp/wallet',
         },
         {
-          name: pages.WALLET_SWAP,
-          path: '/wallet/swap',
+          name: pages.DAPP_EXCHANGE,
+          path: '/dapp/exchange',
         },
         {
           name: pages.DAPP_SWAP,

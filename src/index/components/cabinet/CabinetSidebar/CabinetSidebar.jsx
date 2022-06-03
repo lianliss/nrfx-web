@@ -27,7 +27,12 @@ function CabinetSidebar({ className = '' }) {
                 active={route.name === PAGES.WALLET}
                 onClick={() => router.navigate(PAGES.WALLET)}
               />
-              <SidebarItem title="Exchanger" icon="exchange" />
+              <SidebarItem
+                title="Exchanger"
+                icon="exchange"
+                active={route.name === PAGES.DAPP_EXCHANGE}
+                onClick={() => router.navigate(PAGES.DAPP_EXCHANGE)}
+              />
             </ul>
           </CabinetBlock>
           <CabinetBlock>
