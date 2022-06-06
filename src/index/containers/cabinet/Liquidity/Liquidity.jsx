@@ -39,10 +39,10 @@ const items = [
 // Main
 function Liquidity() {
   // Display oneOf["add", "remove", "main"] page
-  const [currentDisplay, setCurrentDisplay] = React.useState('main');
+  const [currentDisplay, setCurrentDisplay] = React.useState('add');
 
   return (
-    <CabinetBlock className="Liquidity">
+    <CabinetBlock className={`Liquidity ${currentDisplay}`}>
       {currentDisplay === 'main' && (
         <LiquidityMain
           items={items}

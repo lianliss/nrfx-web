@@ -20,7 +20,7 @@ function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick }) {
       <div className="Liquidity__header">
         <div className="Liquidity__title">Liquidity</div>
         <p className="default-text">Add liquidity to receive LP tokens</p>
-        <Button type="lightBlue" onClick={onAddClick}>
+        <Button type="lightBlue" size="extra_large" onClick={onAddClick}>
           Add Liquidity <span>+</span>
         </Button>
       </div>

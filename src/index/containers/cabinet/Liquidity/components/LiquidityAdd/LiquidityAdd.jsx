@@ -10,6 +10,7 @@ import { Web3Context } from 'services/web3Provider';
 // Styles
 import './LiquidityAdd.less';
 import TokenSelect from '../../../DexSwap/components/TokenSelect/TokenSelect';
+import { openStateModal } from '../../../../../../actions';
 
 function LiquidityAdd({ onClose, type }) {
   // Constants
@@ -102,7 +103,11 @@ function LiquidityAdd({ onClose, type }) {
                 </span>
               </div>
             </div>
-            <Button type="lightBlue" onClick={onClose}>
+            <Button
+              type="lightBlue"
+              size="extra_large"
+              onClick={() => openStateModal('liquidity_confirm_add')}
+            >
               Supply
             </Button>
           </>

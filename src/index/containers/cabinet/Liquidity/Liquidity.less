@@ -9,6 +9,10 @@
   box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25);
   box-sizing: border-box;
 
+  &.remove {
+    padding: 32px 32px 14.8px !important;
+  }
+  
   // Containers
   &__header {
     width: 100%;
@@ -47,10 +51,20 @@
   .default-text {
     color: var(--cool-dark-gray);
     margin-bottom: 16px;
+
+    &-light {
+      color: var(--cool-gray);
+    }
+
+    &-dark {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 20px;
+      color: var(--dark-gunmetal);
+    }
   }
 
-  .default-text-light {
-    color: var(--cool-gray);
+  .default-text-dark {
   }
 
   &__subtitle {
@@ -78,6 +92,10 @@
 
 @media screen and (max-width: @mobile-width) {
   .Liquidity {
+    &.remove {
+      padding: 32px !important;
+    }
+    
     &__header {
       margin-bottom: 32px;
     }
