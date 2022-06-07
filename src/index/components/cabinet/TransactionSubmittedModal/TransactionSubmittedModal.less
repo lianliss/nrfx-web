@@ -1,0 +1,72 @@
+@import '../../../../vars.less';
+
+.TransactionSubmittedModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__icon {
+    padding: 13.5px 0;
+    margin: 0 auto;
+  }
+
+  .default-text {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .text-with-icon {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-dark-blue);
+    cursor: pointer;
+
+    .isvg {
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .view_on_bac_scan {
+    margin-bottom: 35px;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .Button {
+    width: 100%;
+  }
+
+  .metaMask_button {
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .TransactionSubmittedModal {
+    &__icon {
+      padding: 24px 0 0;
+      margin-bottom: 25px;
+    }
+
+    .view_on_bac_scan {
+      margin-bottom: 30px;
+    }
+
+    .metaMask_button {
+      margin-bottom: 10px;
+    }
+
+    .Button {
+      height: 65px;
+    }
+  }
+}

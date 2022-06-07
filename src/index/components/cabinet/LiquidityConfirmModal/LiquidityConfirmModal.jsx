@@ -6,6 +6,9 @@ import { Modal, Button, BottomSheetModal, NumberFormat } from 'src/ui';
 import { WalletIcon } from 'src/index/components/cabinet';
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import { openStateModal } from 'src/actions';
+
 // Styles
 import './LiquidityConfirmModal.less';
 
@@ -83,7 +86,13 @@ function LiquidityConfirmModal(props) {
         </div>
       </div>
       <div className="LiquidityConfirmModal__row">
-        <Button size="extra_large" type="lightBlue" onClick={props.onClose}>
+        <Button
+          size="extra_large"
+          type="lightBlue"
+          onClick={() => {
+            openStateModal('transaction_submitted');
+          }}
+        >
           Confirm Suppy
         </Button>
       </div>

@@ -10,7 +10,7 @@ import { Web3Context } from 'services/web3Provider';
 // Styles
 import './LiquidityAdd.less';
 import TokenSelect from '../../../DexSwap/components/TokenSelect/TokenSelect';
-import { openStateModal } from '../../../../../../actions';
+import { openStateModal } from 'src/actions';
 
 function LiquidityAdd({ onClose, type }) {
   // Constants
