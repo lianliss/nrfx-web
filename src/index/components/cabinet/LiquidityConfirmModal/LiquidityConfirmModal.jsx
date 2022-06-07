@@ -83,7 +83,7 @@ function LiquidityConfirmModal(props) {
         </div>
       </div>
       <div className="LiquidityConfirmModal__row">
-        <Button size="extra_large" type="lightBlue">
+        <Button size="extra_large" type="lightBlue" onClick={props.onClose}>
           Confirm Suppy
         </Button>
       </div>
