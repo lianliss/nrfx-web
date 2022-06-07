@@ -14,6 +14,8 @@ import TokenSelect from '../../../DexSwap/components/TokenSelect/TokenSelect';
 function LiquidityAdd({ onClose, type }) {
   // Constants
   const context = React.useContext(Web3Context);
+  const {getPairAddress} = context;
+
   const [isImport, setIsImport] = React.useState(type === 'import');
 
   // States
@@ -23,6 +25,10 @@ function LiquidityAdd({ onClose, type }) {
   const [selectedTokens, setSelectedTokens] = React.useState([{}, {}]);
   const [selectToken, setSelectToken] = React.useState(0);
   const [isToken, setIsToken] = React.useState(false);
+
+  const pairAddress = selectedTokens[0].symbol && selectedTokens[1].symbol
+    ? getPairAddress(selectedTokens[0], selectedTokens[1])
+    : '';
 
   // Set default selected tokens
   React.useEffect(() => {
@@ -79,6 +85,7 @@ function LiquidityAdd({ onClose, type }) {
           label
           title={!isImport ? `Balance ≈ $1 454.55` : ''}
         />
+        pairAddress = {pairAddress}
         {!isImport && (
           <>
             <span className="default-text-light">Prices and pool share</span>

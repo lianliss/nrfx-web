@@ -4,7 +4,7 @@ import Web3 from 'web3/dist/web3.min.js';
 import wei from 'utils/wei';
 import _ from 'lodash';
 import axios from 'axios';
-import baseTokens from 'src/index/constants/baseTokens';
+import networks from 'src/index/constants/networks';
 import getAllPairsCombinations from 'utils/getPairCombinations';
 import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
 import significant from 'utils/significant';
@@ -20,47 +20,15 @@ class Web3Provider extends React.PureComponent {
     isConnected: false,
     accountAddress: null,
     balancesRequested: null,
-    tokens: [
-      {
-        name: "Narfex",
-        symbol: "NRFX",
-        address: "0x3764Be118a1e09257851A3BD636D48DFeab5CAFE",
-        chainId: 56,
-        decimals: 18,
-        logoURI: "https://static.narfex.com/img/currencies/nrfx_pancake.svg"
-      },
-      {
-        name: "Tether",
-        symbol: "USDT",
-        address: "0x55d398326f99059fF775485246999027B3197955",
-        chainId: 56,
-        decimals: 18,
-        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-      },
-      {
-        name: "Binance Coin",
-        symbol: "BNB",
-        address: null,
-        chainId: 56,
-        decimals: 18,
-        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
-      },
-      ...baseTokens,
-    ],
+    chainId: null,
+    tokens: networks[56].tokens,
   };
 
   ethereum = null;
   providerAddress = 'https://bsc-dataseed1.defibit.io:443';
-  factoryAddress = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73';
-  routerAddress = '0x10ED43C718714eb63d5aA57B78B54704E256024E';
-  wrapBNB = {
-    name: "Wrapped BNB",
-    symbol: "WBNB",
-    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    chainId: 56,
-    decimals: 18,
-    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
-  };
+  factoryAddress = networks[56].factoryAddress;
+  routerAddress = networks[56].providerAddress;
+  wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
 
@@ -229,6 +197,21 @@ class Web3Provider extends React.PureComponent {
   getBSCScanLink = address => `https://bscscan.com/address/${address}#readContract`;
 
   /**
+   * Switch to another chain
+   * @param id {integer} chainID
+   */
+  setChain(id) {
+    if (!networks[id]) return;
+    Object.assign(this, networks[id]);
+    this.setState({
+      tokens: networks[id].tokens,
+    });
+    if (id === 56) {
+      this.getTokens();
+    }
+  }
+
+  /**
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
    */
@@ -239,6 +222,8 @@ class Web3Provider extends React.PureComponent {
       }
       this.ethereum = window.ethereum;
       this.web3 = new Web3(this.ethereum);
+      console.log('this.ethereum', this.ethereum);
+      this.setChain(this.web3Host.utils.hexToNumber(this.ethereum.chainId));
 
       // Set account address
       const accountAddress = (await this.ethereum.request({ method: 'eth_requestAccounts' }))[0];
@@ -274,7 +259,8 @@ class Web3Provider extends React.PureComponent {
 
       // On chain change
       this.ethereum.on('chainChanged', (chainId) => {
-        window.location.reload();
+        console.log('chainChanged', chainId, this.web3Host.utils.hexToNumber(this.ethereum.chainId));
+        this.setChain(this.web3Host.utils.hexToNumber(chainId));
       });
 
       // On disconnect
@@ -301,9 +287,14 @@ class Web3Provider extends React.PureComponent {
    */
   async getTokens() {
     try {
-      const request = await axios.get('https://tokens.pancakeswap.finance/cmc.json');
-      const {tokens} = request.data;
+      let tokens = this.cmcTokens;
+      if (!tokens) {
+        const request = await axios.get('https://tokens.pancakeswap.finance/cmc.json');
+        tokens = request.data.tokens;
+        this.cmcTokens = tokens;
+      }
 
+      if (this.state.chainId !== 56) return [];
       if (!this._mounted) return;
       const result = _.uniqBy([
         ...this.state.tokens,
