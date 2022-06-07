@@ -33,11 +33,12 @@ class RealTime {
     // }, 20000);
 
     this.connected = false;
+    return; // TODO: turn back connection
     this.connection = new WebSocket(this.endpoint);
 
     this.connection.onopen = () => {
       this.connected = true;
-      console.log("[WS] Connected");
+      //console.log("[WS] Connected");
       this.reconnectTimeout = 0;
 
       // resolve queue
@@ -50,12 +51,12 @@ class RealTime {
     };
 
     this.connection.onerror = error => {
-      console.log("[WS] Error: ", error.message);
+      //console.log("[WS] Error: ", error.message);
       this.triggerListeners("error_connection");
     };
 
     this.connection.onclose = () => {
-      console.log("[WS] Close");
+      //console.log("[WS] Close");
       // this.connected = false;
       this.triggerListeners("close_connection");
       setTimeout(this.__connect, this.reconnectTimeout);
@@ -77,7 +78,7 @@ class RealTime {
       try {
         json = JSON.parse(message);
       } catch (e) {
-        console.log("[WS] Error:", e.message, message);
+        //console.log("[WS] Error:", e.message, message);
         continue;
       }
 
@@ -125,7 +126,7 @@ class RealTime {
   }
 
   triggerListeners(name, data = {}) {
-    console.log("triggerListeners", name);
+    //console.log("triggerListeners", name);
     if (!this.listeners[name]) {
       return;
     }

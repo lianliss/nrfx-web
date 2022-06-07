@@ -29,6 +29,7 @@ class Web3Provider extends React.PureComponent {
   providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   factoryAddress = networks[56].factoryAddress;
   routerAddress = networks[56].providerAddress;
+  tokenSale = networks[56].tokenSale;
   wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
@@ -599,11 +600,12 @@ class Web3Provider extends React.PureComponent {
       const accountAddress = _.get(this, 'state.accountAddress');
       const count = await this.web3.eth.getTransactionCount(accountAddress);
       const data = contract.methods[method](...params);
+      const gas = await data.estimateGas({from: accountAddress, gas: 50000000000});
       const rawTransaction = {
         from: accountAddress,
-        gasPrice: this.web3.utils.toHex(5000000000),
-        gasLimit: this.web3.utils.toHex(290000),
-        to: this.address,
+        gasPrice: this.web3.utils.toHex(gas * 10**6),
+        gasLimit: this.web3.utils.toHex(50000000000),
+        to: contract._address,
         data: data.encodeABI(),
         nonce: this.web3.utils.toHex(count),
       };
@@ -636,6 +638,8 @@ class Web3Provider extends React.PureComponent {
       getTokenContract: this.getTokenContract.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
+      tokenSale: this.tokenSale,
+      transaction: this.transaction.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

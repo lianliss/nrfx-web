@@ -43,10 +43,21 @@
 
     .Button {
       height: 50px;
+      margin-top: 10px;
+
+      .Button__label svg {
+        margin-right: 4px;
+        transform: translateY(-2px);
+
+        path {
+          fill: white;
+        }
+      }
     }
 
     label {
       text-align: left;
+      margin-bottom: -10px;
       
       p {
         padding-left: 5px;
@@ -55,7 +66,15 @@
         font-weight: 500;
         color: var(--cool-gray);
         text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     }
+  }
+  &__error {
+    font-size: 12px;
+    margin-top: 16px;
+    color: var(--text-red);
   }
 }
