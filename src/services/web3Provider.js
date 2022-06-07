@@ -8,6 +8,7 @@ import networks from 'src/index/constants/networks';
 import getAllPairsCombinations from 'utils/getPairCombinations';
 import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
 import significant from 'utils/significant';
+import TokenContract from './web3Provider/token';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -194,7 +195,9 @@ class Web3Provider extends React.PureComponent {
       .lessThan(tradeB.executionPrice);
   }
 
-  getBSCScanLink = address => `https://bscscan.com/address/${address}#readContract`;
+  getBSCScanLink = address => this.state.chainId === 56
+    ? `https://bscscan.com/address/${address}#readContract`
+    : `https://testnet.bscscan.com/address/${address}#readContract`;
 
   /**
    * Switch to another chain
@@ -500,6 +503,14 @@ class Web3Provider extends React.PureComponent {
 
   fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
 
+  /**
+   * Exchange the pair
+   * @param pair {array}
+   * @param trade {object}
+   * @param slippageTolerance {integer}
+   * @param isExactIn {bool}
+   * @returns {Promise.<*>}
+   */
   async swap(pair, trade, slippageTolerance = 2, isExactIn = true) {
     const {accountAddress} = this.state;
     const {web3} = this;
@@ -561,33 +572,53 @@ class Web3Provider extends React.PureComponent {
     options.push(accountAddress); // "to" field
     options.push(this.getWeb3().utils.toHex(Math.round(Date.now()/1000)+60*20)); // Deadline 20 minutes
 
-    const count = await web3.eth.getTransactionCount(accountAddress);
-    const data = routerContract.methods[method](...options);
-
-    console.log('SWAP', pair, trade, isExactIn, method, options, count);
-    const rawTransaction = {
-      from: accountAddress,
-      gasPrice: web3.utils.toHex(5000000000),
-      gasLimit: web3.utils.toHex(290000),
-      to: this.routerAddress,
-      data: data.encodeABI(),
-      nonce: web3.utils.toHex(count),
-    };
-    if (isFromBNB) {
-      rawTransaction.value = value;
-    }
-
     try {
-      const txHash = await this.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [rawTransaction],
-      });
-      return txHash;
+      return await this.transaction(routerContract, method, options, value);
     } catch (error) {
       console.error('[swap]', error);
       throw error;
     }
   }
+
+  /**
+   * Returns TokenContract object
+   * @param token {TokenContract}
+   */
+  getTokenContract = token => new TokenContract(token, this);
+
+  /**
+   * Send transaction to connected wallet
+   * @param contract {object}
+   * @param method {string} - method name
+   * @param params {array} - array of method params
+   * @param value {number} - amount of BNB in wei
+   * @returns {Promise.<*>}
+   */
+  transaction = async (contract, method, params, value = 0) => {
+    try {
+      const accountAddress = _.get(this, 'state.accountAddress');
+      const count = await this.web3.eth.getTransactionCount(accountAddress);
+      const data = contract.methods[method](...params);
+      const rawTransaction = {
+        from: accountAddress,
+        gasPrice: this.web3.utils.toHex(5000000000),
+        gasLimit: this.web3.utils.toHex(290000),
+        to: this.address,
+        data: data.encodeABI(),
+        nonce: this.web3.utils.toHex(count),
+      };
+      if (value) {
+        rawTransaction.value = this.web3.utils.toHex(value);
+      }
+      return await this.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [rawTransaction],
+      });
+    } catch (error) {
+      console.error('[Web3Provider][transaction]', method, error);
+      throw error;
+    }
+  };
 
   render() {
     return <Web3Context.Provider value={{
@@ -602,6 +633,7 @@ class Web3Provider extends React.PureComponent {
       getTokenBalanceKey: this.getTokenBalanceKey.bind(this),
       getPairs: this.getPairs.bind(this),
       getTrade: this.getTrade.bind(this),
+      getTokenContract: this.getTokenContract.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
     }}>
