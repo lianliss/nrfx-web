@@ -15,6 +15,7 @@ import * as toast from 'actions/toasts';
 import './TokenSale.less';
 
 const TOKEN_PRICE = 0.4;
+const CHAIN_HEX = '0x61';
 
 const processError = error => {
   const {message} = error;
@@ -36,7 +37,7 @@ function TokenSale() {
   const context = React.useContext(Web3Context);
   const {
     tokens, getTokenContract, tokenSale, transaction,
-    isConnected, connectWallet,
+    isConnected, connectWallet, chainId,
   } = context;
   const [value, setValue] = React.useState('0');
   const [allowance, setAllowance] = React.useState(0);
@@ -91,6 +92,17 @@ function TokenSale() {
     }
     setIsDeposit(false);
   };
+
+  // Change the chain
+  React.useEffect(() => {
+    if (!isConnected) return;
+    if (window.ethereum.chainId === CHAIN_HEX) return;
+
+    window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x61' }],
+    });
+  }, [isConnected, chainId]);
 
   return (
     <div className="TokenSale__wrap">

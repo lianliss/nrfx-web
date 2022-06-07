@@ -205,10 +205,15 @@ class Web3Provider extends React.PureComponent {
    * @param id {integer} chainID
    */
   setChain(id) {
-    if (!networks[id]) return;
+    if (!networks[id]) {
+      return this.setState({
+        chainId: id,
+      })
+    }
     Object.assign(this, networks[id]);
     this.setState({
       tokens: networks[id].tokens,
+      chainId: id,
     });
     if (id === 56) {
       this.getTokens();
