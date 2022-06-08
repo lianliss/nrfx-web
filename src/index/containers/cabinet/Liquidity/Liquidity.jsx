@@ -42,7 +42,7 @@ function Liquidity() {
   const [currentDisplay, setCurrentDisplay] = React.useState('main');
 
   return (
-    <CabinetBlock className="Liquidity">
+    <CabinetBlock className={`Liquidity ${currentDisplay}`}>
       {currentDisplay === 'main' && (
         <LiquidityMain
           items={items}

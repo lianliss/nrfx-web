@@ -1,0 +1,58 @@
+@import '../../../../vars.less';
+
+.TransactionModal {
+  .Modal__box {
+    max-width: 482px;
+    width: 100%;
+    padding: 32px;
+    border-radius: 25px;
+  }
+
+  &__header {
+    display: flex;
+    padding-left: 56px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+
+    h5 {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 29px;
+      color: #222330;
+    }
+
+    .isvg {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      svg {
+        width: 13px;
+        height: 13px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .TransactionModal {
+    &-Bottom {
+      padding: 32px 19.5px;
+    }
+
+    &__header {
+      padding: 0 12.5px; // 32 - 19.5px.
+      margin-bottom: 10px;
+
+      h5 {
+        font-size: 20px;
+        line-height: 24px;
+      }
+    }
+  }
+}
