@@ -10,7 +10,7 @@ import './TransactionSubmittedModal.less';
 
 function TransactionSubmittedModal({ metaMask = true, ...props }) {
   return (
-    <TransactionModal {...props}>
+    <TransactionModal title="Transaction submitted" {...props}>
       <div className="TransactionSubmittedModal">
         <div className="TransactionSubmittedModal__icon">
           <SVG src={require('src/asset/icons/transaction/submitted.svg')} />
@@ -25,7 +25,7 @@ function TransactionSubmittedModal({ metaMask = true, ...props }) {
         {metaMask && (
           <Button type="secondary-blue" className="metaMask_button">
             <div className="text-with-icon">
-              <span className="default-text">View on BacScan</span>
+              <span className="default-text">Add BUSD to Metamask</span>
               <SVG src={require('src/asset/icons/social/metaMask.svg')} />
             </div>
           </Button>

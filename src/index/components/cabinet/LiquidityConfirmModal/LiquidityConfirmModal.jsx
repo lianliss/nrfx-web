@@ -90,7 +90,7 @@ function LiquidityConfirmModal(props) {
           size="extra_large"
           type="lightBlue"
           onClick={() => {
-            openStateModal('transaction_submitted');
+            openStateModal('transaction_waiting');
           }}
         >
           Confirm Suppy
