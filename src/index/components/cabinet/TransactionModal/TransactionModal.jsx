@@ -14,7 +14,7 @@ function TransactionModal({ children, title, className, ...props }) {
   const Component = adaptive ? BottomSheetModal : Modal;
 
   return (
-    <Component {...props} className={`TransactionModal ${className}`} skipClose>
+    <Component {...props} className={`TransactionModal ${className}`} prefix="TransactionModal" skipClose>
       <div className="TransactionModal__header">
         <h5>{title}</h5>
         <SVG

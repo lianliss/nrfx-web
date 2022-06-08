@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import TransactionModal from '../TransactionModal/TransactionModal';
@@ -8,7 +9,7 @@ import { Button } from 'src/ui';
 // Styles
 import './TransactionSubmittedModal.less';
 
-function TransactionSubmittedModal({ metaMask = true, ...props }) {
+function TransactionSubmittedModal({ metaMask, ...props }) {
   return (
     <TransactionModal title="Transaction submitted" {...props}>
       <div className="TransactionSubmittedModal">
@@ -37,5 +38,13 @@ function TransactionSubmittedModal({ metaMask = true, ...props }) {
     </TransactionModal>
   );
 }
+
+TransactionSubmittedModal.propTypes = {
+  metaMask: PropTypes.bool,
+};
+
+TransactionSubmittedModal.defaultProps = {
+  metaMask: false,
+};
 
 export default TransactionSubmittedModal;
