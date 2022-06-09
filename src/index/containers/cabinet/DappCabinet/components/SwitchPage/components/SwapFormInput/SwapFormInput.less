@@ -65,10 +65,13 @@
   }
 
   &__icon {
+    width: 41px;
+    height: 41px;
+    
     .isvg,
     svg {
-      width: 41px;
-      height: 41px;
+      width: inherit;
+      height: inherit;
     }
   }
 
@@ -84,9 +87,10 @@
 
   &__currency {
     display: flex;
+    align-items: center;
     font-weight: 600;
     font-size: 18px;
-    line-height: 110%;
+    line-height: 100%;
     letter-spacing: -0.01em;
 
     // Select icon

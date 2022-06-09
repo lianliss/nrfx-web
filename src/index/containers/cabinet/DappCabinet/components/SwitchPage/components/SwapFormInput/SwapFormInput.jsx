@@ -5,14 +5,24 @@ import PropTypes from 'prop-types';
 import SVG from 'utils/svg-wrap';
 import * as UI from 'src/ui';
 
+// Utils
+import currencies from 'src/currencies.js';
+
 // Styles.
 import './SwapFormInput.less';
 
-function SwapFormInput({ title, rate, manage, label }) {
-  // States
-  const [value, setValue] = React.useState('0');
-  const [currency, setCurrency] = React.useState('usd');
-
+function SwapFormInput({
+  title,
+  prefix,
+  rate,
+  manage,
+  label,
+  iconSize,
+  value,
+  onTextChange,
+  currency,
+  onChange,
+}) {
   // Refs
   const inputRef = React.useRef(null);
   const selectRef = React.useRef(null);
@@ -31,7 +41,7 @@ function SwapFormInput({ title, rate, manage, label }) {
 
   // Handlers
   const handleInput = (newValue) => {
-    setValue(newValue);
+    onTextChange(newValue);
   };
 
   const handleContainerClick = (e) => {
@@ -59,11 +69,14 @@ function SwapFormInput({ title, rate, manage, label }) {
         </div>
       )}
       <div className="SwapFormInput__container">
-        <div className="SwapFormInput__icon">
+        <div
+          className="SwapFormInput__icon"
+          style={{ width: iconSize, height: iconSize }}
+        >
           <SVG src={require(`src/asset/icons/wallets/${currency}.svg`)} />
         </div>
         <div className="SwapFormInput__select" ref={selectRef}>
-          <span>Ethereum</span>
+          {prefix && <span>{currencies[currency].name}</span>}
           <div className="SwapFormInput__currency">
             <span>{currency.toUpperCase()}</span>
             <SVG
@@ -89,6 +102,12 @@ SwapFormInput.propTypes = {
   rate: PropTypes.number,
   manage: PropTypes.bool,
   label: PropTypes.bool,
+  prefix: PropTypes.bool,
+  iconSize: PropTypes.number,
+  value: PropTypes.number,
+  onTextChange: PropTypes.func,
+  currency: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 SwapFormInput.defaultProps = {
@@ -96,6 +115,12 @@ SwapFormInput.defaultProps = {
   rate: 0,
   manage: false,
   label: false,
+  prefix: false,
+  iconSize: 41,
+  value: 0,
+  onTextChange: () => {},
+  currency: '',
+  onChange: () => {},
 };
 
 export default SwapFormInput;

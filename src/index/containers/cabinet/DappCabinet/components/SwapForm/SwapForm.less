@@ -1,9 +1,14 @@
+@import '../../../../../../vars.less';
+
 .SwapForm {
   margin-bottom: var(--gap-size);
+  border-radius: var(--radius-panel-large);
+  border: none;
 
   .ContentBox__content {
-    padding: 40px;
-    padding-bottom: 32px;
+    width: 100%;
+    padding: 33px 43px 32px;
+    box-sizing: border-box;
   }
 }
 
@@ -14,6 +19,12 @@
 
 .SwapForm__form {
   flex: 1;
+
+  &__control {
+    &:not(:last-child) {
+      margin-bottom: 65px;
+    }
+  }
 }
 
 .SwapForm__form__label {
@@ -21,13 +32,47 @@
   font-size: 13px;
   line-height: 16px;
   margin-bottom: 16px;
+
+  &:empty {
+    display: none;
+  }
 }
 
 .SwapForm__form__control {
-  margin-bottom: 16px;
+  margin-bottom: 26px;
 
-  input {
+  .SwapForm__input {
     text-align: right;
+  }
+
+  .Dropdown {
+    border-radius: 20px;
+    border: 1px solid var(--azureish-white);
+
+    &__header {
+      padding: 16px 8px;
+    }
+
+    &__options {
+      border-radius: inherit;
+      border: 1px solid var(--azureish-white);
+    }
+
+    .Dropdown__option {
+      &__title {
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 16px;
+        color: #1c212e;
+      }
+    }
+  }
+
+  .SwapForm__input {
+    --input-height: 72px;
+
+    border-radius: 20px;
+    border: 1px solid var(--azureish-white);
   }
 }
 
@@ -36,7 +81,7 @@
   font-size: 11px;
   line-height: 16px;
   color: var(--gray);
-  margin: 8px 16px 0;
+  margin: 7px 14px 0;
 
   &.right {
     text-align: right;
@@ -86,14 +131,14 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--blue-gradient);
+  background: var(--primary-blue-gradient);
   color: var(--white);
   display: flex;
   cursor: pointer;
   border: 8px solid var(--primary-background);
 
   // TODO unlock swap switch button
-  background: var(--light-gray);
+  // background: var(--light-gray);
   cursor: default;
   pointer-events: none;
 
@@ -152,5 +197,22 @@
 
   .Button {
     margin: 0 auto;
+    padding: 0 24px;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .SwapForm {
+    &__formWrapper {
+      flex-direction: column;
+    }
+
+    &__form__control {
+      margin-bottom: 0;
+
+      &:not(:last-child) {
+        margin-bottom: 0;
+      }
+    }
   }
 }
