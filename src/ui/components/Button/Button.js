@@ -75,7 +75,8 @@ Button.propTypes = {
     "medium",
     "large",
     "extra_large",
-    "ultra_small"
+    "ultra_small",
+    "big"
   ]),
   type: PropTypes.oneOf([
     "default",

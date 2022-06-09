@@ -5,14 +5,20 @@ import PropTypes from 'prop-types';
 import TransactionModal from '../TransactionModal/TransactionModal';
 import RecentTransactions from './components/RecentTransactions/RecentTransactions';
 import SVG from 'utils/svg-wrap';
-import { Button } from 'src/ui';
+import { Button, CopyText } from 'src/ui';
 
 // Styles
 import './YourWalletModal.less';
 
-function YourWalletModal() {
+function YourWalletModal(props) {
+  const address = '0ghjddursnvk568690458ldjsdhdvu4453djkasdadasdsl';
+
   return (
-    <TransactionModal title="Your Wallet" className="YourWalletModal">
+    <TransactionModal
+      title="Your Wallet"
+      className="YourWalletModal"
+      {...props}
+    >
       <div className="row">
         <div className="col">
           <span>Connected</span>
@@ -24,16 +30,16 @@ function YourWalletModal() {
         </div>
       </div>
       <div className="row">
-        <p className="YourWalletModal__address">
-          0ghjddursnvk568690458ldjsdhdvu4453djkasdadasdsl
-        </p>
+        <p className="YourWalletModal__address">{address}</p>
       </div>
       <div className="row">
         <div className="col">
-          <div className="action-text">
-            Copy Address
-            <SVG src={require('src/asset/icons/action/copy.svg')} />
-          </div>
+          <CopyText text={address}>
+            <span className="action-text">
+              Copy Address
+              <SVG src={require('src/asset/icons/action/copy.svg')} />
+            </span>
+          </CopyText>
         </div>
         <div className="col">
           <div className="action-text">
