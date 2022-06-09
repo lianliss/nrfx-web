@@ -7,11 +7,21 @@ import RecentTransactions from './components/RecentTransactions/RecentTransactio
 import SVG from 'utils/svg-wrap';
 import { Button, CopyText } from 'src/ui';
 
+// Utils
+import { Web3Context } from 'services/web3Provider';
+
 // Styles
 import './YourWalletModal.less';
 
 function YourWalletModal(props) {
-  const address = '0ghjddursnvk568690458ldjsdhdvu4453djkasdadasdsl';
+  const context = React.useContext(Web3Context);
+  const { isConnected, accountAddress } = context;
+
+  React.useEffect(() => {
+    if (!isConnected) {
+      props.onClose();
+    }
+  }, []);
 
   return (
     <TransactionModal
@@ -30,11 +40,11 @@ function YourWalletModal(props) {
         </div>
       </div>
       <div className="row">
-        <p className="YourWalletModal__address">{address}</p>
+        <p className="YourWalletModal__address">{accountAddress}</p>
       </div>
       <div className="row">
         <div className="col">
-          <CopyText text={address}>
+          <CopyText text={accountAddress}>
             <span className="action-text">
               Copy Address
               <SVG src={require('src/asset/icons/action/copy.svg')} />
