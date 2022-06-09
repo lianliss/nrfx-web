@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import router from 'src/router';
 import { useDispatch } from 'react-redux';
+import wei from 'utils/wei';
 
 // Components
 import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
@@ -19,7 +20,7 @@ import { Web3Context } from 'services/web3Provider';
 import './FarmingTableItemOptions.less';
 
 // Main
-function FarmingTableItemOptions({ id, currency, aviable, staked, earned }) {
+function FarmingTableItemOptions({ id, currency, available, staked, earned, pool }) {
   const dispatch = useDispatch();
   const { isConnected, connectWallet } = React.useContext(Web3Context);
 
@@ -45,10 +46,10 @@ function FarmingTableItemOptions({ id, currency, aviable, staked, earned }) {
         </TableColumn>
         <TableColumn>
           <DoubleText
-            first={aviable[0]}
-            second={aviable[1]}
+            first={wei.from(available)}
+            second={0}
             currency={currency}
-            title="Aviable"
+            title="available"
           />
         </TableColumn>
         <TableColumn colspan={2}>
@@ -133,16 +134,16 @@ function FarmingTableItemOptions({ id, currency, aviable, staked, earned }) {
 
 FarmingTableItemOptions.defaultProps = {
   currency: '',
-  aviable: [0, 0],
+  available: [0, 0],
   staked: [0, 0],
   earned: [0, 0],
 };
 
 FarmingTableItemOptions.propTypes = {
   currency: PropTypes.string,
-  aviable: PropTypes.arrayOf(PropTypes.number),
-  staked: PropTypes.arrayOf(PropTypes.number),
-  earned: PropTypes.arrayOf(PropTypes.number),
+  available: PropTypes.any,
+  staked: PropTypes.any,
+  earned: PropTypes.any,
 };
 
 export default FarmingTableItemOptions;

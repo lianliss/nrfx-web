@@ -9,6 +9,7 @@ import getAllPairsCombinations from 'utils/getPairCombinations';
 import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
 import significant from 'utils/significant';
 import TokenContract from './web3Provider/token';
+import MasterChefContract from './web3Provider/MasterChefContract';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -26,7 +27,8 @@ class Web3Provider extends React.PureComponent {
   };
 
   ethereum = null;
-  providerAddress = 'https://bsc-dataseed1.defibit.io:443';
+  //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
+  providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
   factoryAddress = networks[56].factoryAddress;
   routerAddress = networks[56].providerAddress;
   tokenSale = networks[56].tokenSale;
@@ -49,6 +51,7 @@ class Web3Provider extends React.PureComponent {
       this.providerAddress
     );
     this.web3Host = new Web3(provider);
+    this.farm = new MasterChefContract(this);
 
     // Check web3 wallet plugin
     if (window.ethereum
@@ -211,6 +214,7 @@ class Web3Provider extends React.PureComponent {
       })
     }
     Object.assign(this, networks[id]);
+    this.farm = new MasterChefContract(this);
     this.setState({
       tokens: networks[id].tokens,
       chainId: id,
@@ -645,6 +649,7 @@ class Web3Provider extends React.PureComponent {
       loadAccountBalances: this.loadAccountBalances.bind(this),
       tokenSale: this.tokenSale,
       transaction: this.transaction.bind(this),
+      farm: this.farm,
     }}>
       {this.props.children}
     </Web3Context.Provider>

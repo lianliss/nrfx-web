@@ -1,4 +1,5 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
@@ -126,8 +127,11 @@ const sortOptions = [
 
 function Farming({ adaptive }) {
   // States
+  const context = React.useContext(Web3Context);
+  const {farm, chainId, isConnected} = context;
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
+  const [pools, setPools] = React.useState([]);
 
   const filters = {
     farmsValue,
@@ -137,6 +141,22 @@ function Farming({ adaptive }) {
     farms,
     sortOptions,
   };
+
+  React.useEffect(() => {
+    const updatePool = async () => {
+      const pools = await farm.getPoolsList();
+      setPools(pools);
+      const data = await Promise.all(Object.keys(pools).map(address => farm.getPoolData(pools[address])));
+      const poolsWithData = {};
+      data.map((pool, index) => {
+        poolsWithData[pool.address] = data[index];
+      });
+      setPools(poolsWithData);
+    };
+    updatePool().catch(error => {
+      console.error('[Farming][getPoolsList]', error);
+    });
+  }, [chainId, isConnected]);
 
   return (
     <CabinetBlock className="Farming">
@@ -152,9 +172,9 @@ function Farming({ adaptive }) {
         </div>
       </div>
       {adaptive ? (
-        <FarmingTableAdaptive items={farmingItems} {...filters} />
+        <FarmingTableAdaptive items={farmingItems} pools={pools} {...filters} />
       ) : (
-        <FarmingTable items={farmingItems} {...filters} />
+        <FarmingTable items={farmingItems} pools={pools} {...filters} />
       )}
     </CabinetBlock>
   );

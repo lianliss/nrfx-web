@@ -33,6 +33,11 @@ class TokenContract {
     });
   });
 
+  getSymbol = async () => {
+    if (this.address === '0x0000000000000000000000000000000000000000') return;
+    return await this.contract.methods.symbol().call();
+  };
+
   _pendingAllowance = async (spender, amount) => {
     if (!this.isAwaiting) return false;
     const allowance = await this.getAllowance(spender);

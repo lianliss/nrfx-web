@@ -4,7 +4,7 @@ const networks = {
   56: {
     factoryAddress: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
     routerAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
-    masterChef: '0x0',
+    masterChefAddress: '0x0',
     narfexToken: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
     wrapBNB: {
       name: "Wrapped BNB",
@@ -45,7 +45,7 @@ const networks = {
   97: {
     factoryAddress: '0xb7926c0430afb07aa7defde6da862ae0bde767bc',
     routerAddress: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3',
-    masterChef: '0x79f3b7770093444573D64972E67312d03E9A6f3c',
+    masterChefAddress: '0x378365EC3C70a6BF71c2f103ea4a7eC99dEC3163',
     narfexToken: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
     tokenSale: '0xA347C999f282e789F8f543c8F75cfDbf5Ed0CEf1',
     wrapBNB: {
@@ -81,6 +81,14 @@ const networks = {
         decimals: 18,
         logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
       },
+      {
+        name: "Wrapped BNB",
+        symbol: "WBNB",
+        address: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+        chainId: 97,
+        decimals: 18,
+        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
+      }
     ],
   }
 };

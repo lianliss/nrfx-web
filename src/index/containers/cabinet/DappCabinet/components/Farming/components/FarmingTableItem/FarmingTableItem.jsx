@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Web3Context } from 'services/web3Provider';
+import wei from 'utils/wei';
 
 // Components
 import {
@@ -20,6 +22,14 @@ import { openModal } from 'src/actions';
 // Styles
 import './FarmingTableItem.less';
 
+const UNKNOWN_TOKEN = {
+  name: "Unknown token",
+  symbol: null,
+  address: null,
+  chainId: 97,
+  decimals: 18,
+};
+
 function FarmingTableItem({
   dark,
   id,
@@ -27,11 +37,13 @@ function FarmingTableItem({
   currencies,
   apy,
   arp,
-  liquidity,
-  aviable,
+  available,
   staked,
   earned,
+  pool,
 }) {
+  const context = React.useContext(Web3Context);
+  const {tokens} = context;
   // States
   const [isActive, setIsActive] = React.useState(false);
 
@@ -54,6 +66,10 @@ function FarmingTableItem({
     openModal('farming_roi');
   };
 
+  const token0 = tokens.find(t => t.address && t.address === pool.token0) || {...UNKNOWN_TOKEN, address: pool.token0};
+  const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
+  const poolSize = wei.from(pool.size);
+
   return (
     <>
       <TableCell
@@ -71,8 +87,8 @@ function FarmingTableItem({
         </TableColumn>
         <TableColumn>
           <DoubleWallets
-            first={currencies[0]}
-            second={currencies.length === 2 ? currencies[1] : ''}
+            first={token0}
+            second={token1}
           />
         </TableColumn>
         <TableColumn>
@@ -94,7 +110,7 @@ function FarmingTableItem({
           </span>
         </TableColumn>
         <TableColumn>
-          $<NumberFormat number={liquidity} />
+          <NumberFormat number={poolSize} /> LP
           <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
         </TableColumn>
         <TableColumn>—</TableColumn>
@@ -125,10 +141,10 @@ function FarmingTableItem({
       {isActive && (
         <FarmingTableItemOptions
           id={id}
-          aviable={aviable}
-          staked={staked}
+          available={pool.balance}
+          staked={pool.userPool}
           earned={earned}
-          currency={currencies[1] ? currencies[1] : currencies[0]}
+          pool={pool}
         />
       )}
     </>
@@ -142,22 +158,22 @@ FarmingTableItem.defaultProps = {
   apy: 0,
   arp: 0,
   liquidity: 0,
-  aviable: [0, 0],
+  available: [0, 0],
   staked: [0, 0],
   earned: [0, 0],
 };
 
 FarmingTableItem.propTypes = {
   dark: PropTypes.bool,
-  id: PropTypes.number,
-  indicator: PropTypes.string,
-  currencies: PropTypes.arrayOf(PropTypes.string),
-  apy: PropTypes.number,
-  arp: PropTypes.number,
-  liquidity: PropTypes.number,
-  aviable: PropTypes.arrayOf(PropTypes.number),
-  staked: PropTypes.arrayOf(PropTypes.number),
-  earned: PropTypes.arrayOf(PropTypes.number),
+  id: PropTypes.any,
+  indicator: PropTypes.any,
+  currencies: PropTypes.any,
+  apy: PropTypes.any,
+  arp: PropTypes.any,
+  liquidity: PropTypes.any,
+  available: PropTypes.any,
+  staked: PropTypes.any,
+  earned: PropTypes.any,
 };
 
 export default FarmingTableItem;

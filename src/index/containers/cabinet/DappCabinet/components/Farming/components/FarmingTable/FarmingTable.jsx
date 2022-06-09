@@ -12,9 +12,10 @@ import FarmingTableHeader from '../FarmingTableHeader/FarmingTableHeader';
 import './FarmingTable.less';
 
 // Main
-function FarmingTable({ adaptive, items, ...filters }) {
+function FarmingTable({ adaptive, items, pools, ...filters }) {
   const { farmsValue, setFarmsValue, sortBy, setSortBy, farms, sortOptions } =
     filters;
+  console.log('pools', pools);
 
   return (
     <div className="FarmingTable">
@@ -40,20 +41,21 @@ function FarmingTable({ adaptive, items, ...filters }) {
           ]}
           className="FarmingTable__table"
         >
-          {items.map((item, index) => {
+          {Object.keys(pools).map((address, index) => {
+            const pool = pools[address];
             return (
               <FarmingTableItem
-                key={item.id}
-                id={item.id}
+                key={index}
+                id={index}
+                pool={pool}
                 dark={index % 2 ? true : false}
-                indicator={item.indicator}
-                currencies={item.currencies}
-                apy={item.apy}
-                arp={item.arp}
-                liquidity={item.liquidity}
-                aviable={item.aviable}
-                staked={item.staked}
-                earned={item.earned}
+                indicator={pool.indicator}
+                apy={0}
+                arp={0}
+                liquidity={0}
+                available={1}
+                staked={1}
+                earned={1}
               />
             );
           })}
