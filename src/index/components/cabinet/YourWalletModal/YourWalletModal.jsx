@@ -18,21 +18,36 @@ function YourWalletModal() {
           <span>Connected</span>
         </div>
         <div className="col">
-          <Button type="lightBlue" size="extra_large">Change</Button>
+          <Button type="lightBlue" size="extra_large">
+            Change
+          </Button>
         </div>
       </div>
       <div className="row">
-        <p>0ghjddursnvk568690458ldjsdhdvu4453djksl</p>
+        <p className="YourWalletModal__address">
+          0ghjddursnvk568690458ldjsdhdvu4453djkasdadasdsl
+        </p>
       </div>
       <div className="row">
-        <div className="col"></div>
-        <div className="col"></div>
+        <div className="col">
+          <div className="action-text">
+            Copy Address
+            <SVG src={require('src/asset/icons/action/copy.svg')} />
+          </div>
+        </div>
+        <div className="col">
+          <div className="action-text">
+            View on BacScan <SVG src={require('src/asset/icons/export.svg')} />
+          </div>
+        </div>
       </div>
       <div className="row">
-        <RecentTransactions />
+        <RecentTransactions items={[1, 2]} />
       </div>
       <div className="row">
-        <Button>Logout</Button>
+        <Button type="secondary-light" size="big">
+          Logout
+        </Button>
       </div>
     </TransactionModal>
   );
