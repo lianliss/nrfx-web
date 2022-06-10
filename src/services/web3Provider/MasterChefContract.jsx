@@ -4,8 +4,9 @@ import _ from 'lodash';
 class MasterChefContract {
 
   constructor(provider) {
+    if (!provider.state.isConnected) return;
     this.provider = provider;
-    this.web3 = provider.getWeb3();
+    this.web3 = provider.web3;
     this.ethereum = provider.ethereum;
 
     this.contract = new (this.web3.eth.Contract)(
@@ -18,7 +19,13 @@ class MasterChefContract {
     try {
       const accountAddress = _.get(this, 'provider.state.accountAddress');
       const pools = {};
-      const addresses = await this.contract.methods.getPoolsList().call();
+      const count = await this.contract.methods.poolsCount().call();
+      console.log('COUNT', count);
+      const getMethods = [];
+      for (let i = 0; i < Number(count); i++) {
+        getMethods.push(this.contract.methods.poolsList(i).call())
+      }
+      const addresses = await Promise.all(getMethods);
       const contracts = addresses.map(poolAddress => new (this.web3.eth.Contract)(
         require('src/index/constants/ABI/PancakePair'),
         poolAddress,

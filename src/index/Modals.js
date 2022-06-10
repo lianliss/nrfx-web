@@ -45,7 +45,8 @@ import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvat
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
 import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
-import { FarmingPopupStake, FarmingPopupROI } from "./containers/cabinet/DappCabinet/components/Farming/components/FarmingPopup/FarmingPopup";
+import { FarmingPopupROI } from "./containers/cabinet/DappCabinet/components/Farming/components/FarmingPopup/FarmingPopup";
+import FarmingPopupStake  from "./containers/cabinet/DappCabinet/components/Farming/components/FarmingPopupStake/FarmingPopupStake";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
 

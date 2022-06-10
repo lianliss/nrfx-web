@@ -5,6 +5,7 @@ import { Web3Context } from 'services/web3Provider';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import FarmingTable from './components/FarmingTable/FarmingTable';
 import FarmingTableAdaptive from './components/FarmingTableAdaptive/FarmingTableAdaptive';
+import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingStatus";
 
 // Styles
 import './Farming.less';
@@ -128,7 +129,7 @@ const sortOptions = [
 function Farming({ adaptive }) {
   // States
   const context = React.useContext(Web3Context);
-  const {farm, chainId, isConnected} = context;
+  const {getFarmContract, chainId, isConnected, connectWallet} = context;
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
   const [pools, setPools] = React.useState([]);
@@ -143,6 +144,8 @@ function Farming({ adaptive }) {
   };
 
   React.useEffect(() => {
+    if (!isConnected) return;
+    const farm = getFarmContract();
     const updatePool = async () => {
       const pools = await farm.getPoolsList();
       setPools(pools);
@@ -157,6 +160,12 @@ function Farming({ adaptive }) {
       console.error('[Farming][getPoolsList]', error);
     });
   }, [chainId, isConnected]);
+  
+  React.useEffect(() => {
+    if (!isConnected) {
+      connectWallet();
+    }
+  }, [isConnected]);
 
   return (
     <CabinetBlock className="Farming">
@@ -171,11 +180,11 @@ function Farming({ adaptive }) {
           </p>
         </div>
       </div>
-      {adaptive ? (
+      {isConnected ? (adaptive ? (
         <FarmingTableAdaptive items={farmingItems} pools={pools} {...filters} />
       ) : (
         <FarmingTable items={farmingItems} pools={pools} {...filters} />
-      )}
+      )) : <LoadingStatus status={'loading'}/>}
     </CabinetBlock>
   );
 }

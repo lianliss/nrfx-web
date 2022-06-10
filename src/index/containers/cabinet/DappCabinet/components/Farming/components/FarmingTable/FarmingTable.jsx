@@ -41,7 +41,7 @@ function FarmingTable({ adaptive, items, pools, ...filters }) {
           ]}
           className="FarmingTable__table"
         >
-          {Object.keys(pools).map((address, index) => {
+          {!!pools && Object.keys(pools).map((address, index) => {
             const pool = pools[address];
             return (
               <FarmingTableItem

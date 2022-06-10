@@ -28,7 +28,8 @@ class Web3Provider extends React.PureComponent {
 
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
-  providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
+  //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
+  providerAddress = 'asd';
   factoryAddress = networks[56].factoryAddress;
   routerAddress = networks[56].providerAddress;
   tokenSale = networks[56].tokenSale;
@@ -51,7 +52,6 @@ class Web3Provider extends React.PureComponent {
       this.providerAddress
     );
     this.web3Host = new Web3(provider);
-    this.farm = new MasterChefContract(this);
 
     // Check web3 wallet plugin
     if (window.ethereum
@@ -214,7 +214,6 @@ class Web3Provider extends React.PureComponent {
       })
     }
     Object.assign(this, networks[id]);
-    this.farm = new MasterChefContract(this);
     this.setState({
       tokens: networks[id].tokens,
       chainId: id,
@@ -236,7 +235,7 @@ class Web3Provider extends React.PureComponent {
       this.ethereum = window.ethereum;
       this.web3 = new Web3(this.ethereum);
       console.log('this.ethereum', this.ethereum);
-      this.setChain(this.web3Host.utils.hexToNumber(this.ethereum.chainId));
+      this.setChain(this.getWeb3().utils.hexToNumber(this.ethereum.chainId));
 
       // Set account address
       const accountAddress = (await this.ethereum.request({ method: 'eth_requestAccounts' }))[0];
@@ -597,6 +596,11 @@ class Web3Provider extends React.PureComponent {
   getTokenContract = token => new TokenContract(token, this);
 
   /**
+   * Returns MasterChefContract object
+   */
+  getFarmContract = () => new MasterChefContract(this);
+
+  /**
    * Send transaction to connected wallet
    * @param contract {object}
    * @param method {string} - method name
@@ -645,6 +649,7 @@ class Web3Provider extends React.PureComponent {
       getPairs: this.getPairs.bind(this),
       getTrade: this.getTrade.bind(this),
       getTokenContract: this.getTokenContract.bind(this),
+      getFarmContract: this.getFarmContract.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
       tokenSale: this.tokenSale,

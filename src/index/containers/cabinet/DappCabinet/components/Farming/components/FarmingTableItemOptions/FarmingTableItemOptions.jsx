@@ -20,7 +20,7 @@ import { Web3Context } from 'services/web3Provider';
 import './FarmingTableItemOptions.less';
 
 // Main
-function FarmingTableItemOptions({ id, currency, available, staked, earned, pool }) {
+function FarmingTableItemOptions({ currency, available, staked, earned, pool }) {
   const dispatch = useDispatch();
   const { isConnected, connectWallet } = React.useContext(Web3Context);
 
@@ -60,8 +60,7 @@ function FarmingTableItemOptions({ id, currency, available, staked, earned, pool
                   type="lightBlue"
                   className="stake"
                   onClick={() => {
-                    openModal('stake', {}, { id, currency });
-                    setType('staked');
+                    openModal('stake', {}, { pool: {...pool, contract: null} });
                   }}
                 >
                   Stake
@@ -69,8 +68,7 @@ function FarmingTableItemOptions({ id, currency, available, staked, earned, pool
                 <Button
                   type="dark"
                   onClick={() => {
-                    openModal('unstake', {}, { id, currency });
-                    setType('stake');
+                    openModal('unstake', {}, { pool: {...pool, contract: null} });
                   }}
                   className="unstake"
                 >
@@ -81,7 +79,7 @@ function FarmingTableItemOptions({ id, currency, available, staked, earned, pool
               <Button
                 type="lightBlue"
                 onClick={() => {
-                  openModal('stake', {}, { id, currency });
+                  openModal('stake', {}, { pool: {...pool, contract: null} });
                   setType('staked');
                 }}
                 style={{ width: '100%' }}

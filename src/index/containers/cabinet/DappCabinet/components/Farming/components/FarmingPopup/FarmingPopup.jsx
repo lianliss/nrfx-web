@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { Web3Context } from 'services/web3Provider';
+import wei from 'utils/wei';
 
 // All popups for Farming
 // is here.
@@ -29,7 +31,7 @@ import './FarmingPopup.less';
 
 // Main Components
 // Popup
-export function FarmingPopup({ message, onClose, ...props }) {
+export function FarmingPopup({ message, onClose, pool, ...props }) {
   const [isHover, setIsHover] = React.useState(false);
   const isDisabled = popupTimer(isHover, onClose);
 
@@ -67,103 +69,6 @@ FarmingPopup.defaultProps = {
   onClose: () => {},
 };
 // Popup end.
-
-// Stake Modal - Can expand.
-export function FarmingPopupStake({ id, currency, ...props }) {
-  const dispatch = useDispatch();
-  const adaptive = useSelector((state) => state.default.adaptive);
-  const type = props.modal; // stake || unstake
-  const Wrapper = adaptive ? BottomSheetModal : Modal;
-  // States
-  const [value, setValue] = React.useState(15);
-
-  // Handlers
-  // Just input handler
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (type === 'stake') {
-      dispatch(
-        toastPush(`Staked ${value} ${currency.toUpperCase()}`, 'farming')
-      );
-    }
-
-    if (type === 'unstake') {
-      dispatch(
-        toastPush(`Unstaked ${value} ${currency.toUpperCase()}`, 'farming')
-      );
-    }
-
-    props.onClose();
-  };
-
-  return (
-    <Wrapper
-      className="FarmingPopup FarmingPopup__fullscreen FarmingPopupStake"
-      {...props}
-      skipClose
-    >
-      <div className="close" onClick={props.onClose}>
-        <SVG src={require('src/asset/icons/close-popup.svg')} />
-      </div>
-      <div className="FarmingPopup__header">
-        <div className="title">
-          <span>
-            {type === 'stake' ? 'Stake' : 'Unstake'} {currency.toUpperCase()}
-            &nbsp;Tokens
-          </span>
-        </div>
-      </div>
-      <Form className="FarmingPopup__body" onSubmit={handleSubmit}>
-        <label>
-          <div className="FarmingPopup__label">
-            <span className="default-text">
-              {type === 'stake' ? 'Stake' : 'Unstake'}
-            </span>
-            <span className="default-text">
-              Balance: <NumberFormat number={0} />
-            </span>
-          </div>
-          <div className="input-container">
-            <Input type="number" value={value} onTextChange={handleChange} />
-            <div className="input-controls">
-              <p className="default-text">BNB-NRFX</p>
-              <button
-                type="button"
-                className="input-controls__button"
-                onClick={() => {}}
-              >
-                <span>Max</span>
-              </button>
-            </div>
-          </div>
-        </label>
-        <Button type="lightBlue" btnType="submit">
-          Confirm
-        </Button>
-      </Form>
-      <div className="FarmingPopup__footer">
-        {type === 'stake' && <PopupLink text="Get USDT-BSW" />}
-        {/*Probably must set currencies array.*/}
-      </div>
-    </Wrapper>
-  );
-}
-
-FarmingPopupStake.propTypes = {
-  id: PropTypes.number,
-  currency: PropTypes.string,
-};
-
-FarmingPopupStake.defaultProps = {
-  id: null,
-  currency: '',
-};
-// Stake end.
 
 // ROI Modal.
 export function FarmingPopupROI(props) {

@@ -45,7 +45,7 @@ const networks = {
   97: {
     factoryAddress: '0xb7926c0430afb07aa7defde6da862ae0bde767bc',
     routerAddress: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3',
-    masterChefAddress: '0x378365EC3C70a6BF71c2f103ea4a7eC99dEC3163',
+    masterChefAddress: '0x47660F5F726591865707042FDf58D501D63aFf58',
     narfexToken: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
     tokenSale: '0xA347C999f282e789F8f543c8F75cfDbf5Ed0CEf1',
     wrapBNB: {
