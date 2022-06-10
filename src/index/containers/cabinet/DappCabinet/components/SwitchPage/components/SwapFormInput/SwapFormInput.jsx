@@ -11,20 +11,27 @@ import currencies from 'src/currencies.js';
 // Styles.
 import './SwapFormInput.less';
 
-function SwapFormInput({
-  title,
-  prefix,
-  rate,
-  manage,
-  label,
-  iconSize,
-  value,
-  onTextChange,
-  currency,
-  onChange,
-}) {
+const SwapFormInput = React.forwardRef((props) => {
+  const {
+    title,
+    prefix,
+    rate,
+    manage,
+    label,
+    iconSize,
+    value,
+    onTextChange,
+    currency,
+    onChange,
+    inputId,
+    className,
+    onFocus,
+    autoFocus,
+    inputRef,
+    disabled,
+  } = props;
+
   // Refs
-  const inputRef = React.useRef(null);
   const selectRef = React.useRef(null);
 
   // Logic
@@ -86,28 +93,35 @@ function SwapFormInput({
         </div>
         <div className="SwapFormInput__input">
           <UI.Input
+            id={inputId}
             ref={inputRef}
             type="number"
             onTextChange={handleInput}
             value={value}
+            onFocus={onFocus}
+            autoFocus={autoFocus}
+            disabled={disabled}
           />
         </div>
       </div>
     </div>
   );
-}
+});
 
 SwapFormInput.propTypes = {
   title: PropTypes.string,
+  prefix: PropTypes.bool,
   rate: PropTypes.number,
   manage: PropTypes.bool,
   label: PropTypes.bool,
-  prefix: PropTypes.bool,
   iconSize: PropTypes.number,
   value: PropTypes.number,
   onTextChange: PropTypes.func,
   currency: PropTypes.string,
   onChange: PropTypes.func,
+  inputId: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 SwapFormInput.defaultProps = {

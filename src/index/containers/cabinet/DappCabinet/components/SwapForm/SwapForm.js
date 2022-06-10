@@ -65,12 +65,18 @@ const Form = ({
   title,
   commission,
   gasPrice,
+  adaptive,
 }) => {
-  let realRate = isFiat(secondaryCurrency) ? rate : 1 / rate;
-  console.log('realRate', realRate);
-  realRate += realRate * commission;
-  console.log('commission', commission, 1 - commission);
-  console.log('rate', realRate);
+  // console.log('realRate', realRate);
+
+  // Calculate rate for crypto or fiat currency.
+  console.log(rate, commission)
+  const realRate = !isFiat(currency)
+    ? rate + rate * commission
+    : (1 * (1 / rate)) / (1 + commission);
+
+  // console.log('commission', commission, 1 - commission);
+  // console.log('rate', realRate);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -82,67 +88,85 @@ const Form = ({
   return (
     <div className="SwapForm__form">
       <div className="SwapForm__form__label">{title}</div>
-      <div className="SwapForm__form__control">
-        <Dropdown
-          disabled={disabled}
-          value={currency}
-          options={options.map((currency) => ({
-            prefix: <CircleIcon size="medium" currency={currency} />,
-            value: currency.abbr,
-            title: `${currency.abbr.toUpperCase()}`,
-          }))}
-          onChange={({ value }) => onCurrencyChange(value)}
-        />
-        <div className="SwapForm__form__control__meta">
-          {!!realRate ? (
-            <>
-              <NumberFormat number={1} currency={currency} />
-              {' ≈ '}
-              {getFinePrice(realRate)} {secondaryCurrency.toUpperCase()}
-            </>
-          ) : (
-            <>&nbsp;</>
-          )}
-        </div>
-      </div>
-      <div className="SwapForm__form__control">
-        <SwapFormInput
-          onTextChange={onChangeAmount}
-          currency={currency}
-          value={amount}
-          iconSize={31}
-          className="SwapForm__input"
-          id={`swap-form-input-${currency}`}
-          ref={inputRef}
-        />
-      </div>
-      <div className="SwapForm__form__control">
-        <Input
-          id={`swap-form-input-${currency}`}
-          ref={inputRef}
-          disabled={disabled}
-          onFocus={onFocus}
-          autoFocus={autoFocus}
-          value={amount}
-          type={'number'}
-          onTextChange={onChangeAmount}
-          className="SwapForm__input"
-        />
-        {!!currentBalance && (
-          <div
-            onClick={() => onChangeAmount(currentBalance)}
-            className="SwapForm__form__control__meta active"
-          >
-            <NumberFormat number={currentBalance} currency={currency} />
+      {adaptive ? (
+        <div className="SwapForm__form__control">
+          <SwapFormInput
+            onTextChange={onChangeAmount}
+            currency={currency}
+            value={amount}
+            iconSize={31}
+            inputId={`swap-form-input-${currency}`}
+            inputRef={inputRef}
+            onFocus={onFocus}
+            autoFocus={autoFocus}
+            disabled={disabled}
+          />
+          <div className="SwapForm__form__control__meta">
+            {!!realRate ? (
+              <>
+                <NumberFormat number={1} currency={currency} />
+                {' ≈ '}
+                {getFinePrice(realRate)} {secondaryCurrency.toUpperCase()}
+              </>
+            ) : (
+              <>&nbsp;</>
+            )}
           </div>
-        )}
-        {/* {!!gasPrice && <div className="SwapForm__form__control__meta right">
+        </div>
+      ) : (
+        <>
+          <div className="SwapForm__form__control">
+            <Dropdown
+              disabled={disabled}
+              value={currency}
+              options={options.map((currency) => ({
+                prefix: <CircleIcon size="medium" currency={currency} />,
+                value: currency.abbr,
+                title: `${currency.abbr.toUpperCase()}`,
+              }))}
+              onChange={({ value }) => onCurrencyChange(value)}
+            />
+            <div className="SwapForm__form__control__meta">
+              {!!realRate ? (
+                <>
+                  <NumberFormat number={1} currency={currency} />
+                  {' ≈ '}
+                  {getFinePrice(realRate)} {secondaryCurrency.toUpperCase()}
+                </>
+              ) : (
+                <>&nbsp;</>
+              )}
+            </div>
+          </div>
+          <div className="SwapForm__form__control">
+            <Input
+              id={`swap-form-input-${currency}`}
+              ref={inputRef}
+              disabled={disabled}
+              onFocus={onFocus}
+              autoFocus={autoFocus}
+              value={amount}
+              type={'number'}
+              onTextChange={onChangeAmount}
+              className="SwapForm__input"
+            />
+            {!!currentBalance && (
+              <div
+                onClick={() => onChangeAmount(currentBalance)}
+                className="SwapForm__form__control__meta active"
+              >
+                <NumberFormat number={currentBalance} currency={currency} />
+              </div>
+            )}
+            {/* {!!gasPrice && <div className="SwapForm__form__control__meta right">
           {getLang('swap_gas')} ≈<NumberFormat number={gasPrice} skipRoughly currency={currency} />
         </div>} */}
-        {/*{!!commission && <div className="SwapForm__form__control__meta right">*/}
-        {/*{getLang('swap_commission')} <NumberFormat number={commission * 100} currency={'%'} />*/}
-        {/*</div>}*/}
-      </div>
+            {/*{!!commission && <div className="SwapForm__form__control__meta right">*/}
+            {/*{getLang('swap_commission')} <NumberFormat number={commission * 100} currency={'%'} />*/}
+            {/*</div>}*/}
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -232,6 +256,7 @@ export default () => {
   const toCrypto = isFiat(swap.fromCurrency);
   const disabled = status.rate === 'loading' || status.swap === 'loading';
   const web3Balances = useSelector(web3BalancesSelector);
+  const adaptive = useSelector((state) => state.default.adaptive);
 
   const currencies = getCanExchangeWallets();
   const fiats = currencies.filter((c) => c.type === 'fiat');
@@ -283,6 +308,7 @@ export default () => {
           currency={swap.fromCurrency}
           secondaryCurrency={swap.toCurrency}
           rate={swap.rate}
+          commission={commission}
           onCurrencyChange={(currency) => {
             dispatch(walletSwapSetCurrency('from', currency));
           }}
@@ -314,6 +340,7 @@ export default () => {
               dispatch,
             });
           }}
+          adaptive={adaptive}
         />
 
         <div className="SwapForm__separator">
@@ -324,7 +351,11 @@ export default () => {
               dispatch(walletSwapSwitch());
             }}
           >
-            <SVG src={require('src/asset/24px/switch.svg')} />
+            {adaptive ? (
+              <SVG src={require('src/asset/icons/swap.svg')} />
+            ) : (
+              <SVG src={require('src/asset/24px/switch.svg')} />
+            )}
           </div>
         </div>
         <Form
@@ -370,12 +401,13 @@ export default () => {
               dispatch,
             });
           }}
+          adaptive={adaptive}
           {...{ gasPrice, commission }}
         />
       </div>
       <div className="SwapForm__submitWrapper">
         <Button
-          type="primary-blue"
+          type={adaptive ? 'lightBlue' : 'primary-blue'}
           state={status.swap}
           disabled={status.rate === 'loading' || toAmount <= 0}
           onClick={() => {

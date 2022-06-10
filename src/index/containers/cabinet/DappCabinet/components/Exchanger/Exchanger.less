@@ -1,3 +1,5 @@
+@import '../../../../../../vars.less';
+
 .Exchanger {
   &__wrap {
     .CabinetContent {
@@ -41,6 +43,15 @@
       line-height: 150%;
       letter-spacing: -0.01em;
       color: var(--cool-gray);
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Exchanger {
+    h2 {
+      margin: 29px 0;
+      font-size: 30px;
     }
   }
 }
