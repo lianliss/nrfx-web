@@ -21,13 +21,20 @@ import { toastPush } from 'src/actions/toasts';
 // Styles
 import './FarmingPopupStake.less';
 
-function PopupLink({ text, onClick }) {
-  return (
-    <span className="popup-link" onClick={onClick}>
-      {text} <SVG src={require('src/asset/icons/export.svg')} />
-    </span>
-  );
-}
+const processError = error => {
+  const {message} = error;
+  try {
+    if (message.indexOf('Internal JSON-RPC error.') >= 0) {
+      const internal = JSON.parse(message.split('Internal JSON-RPC error.')[1]);
+      return internal.message;
+    } else {
+      return message;
+    }
+  } catch (err) {
+    console.log('ERRR', err);
+    return message;
+  }
+};
 
 // Stake Modal - Can expand.
 class FarmingPopupStake extends React.PureComponent {
@@ -35,9 +42,24 @@ class FarmingPopupStake extends React.PureComponent {
 
   state = {
     value: '0',
-    amount: 0,
-    token0: null,
-    token1: null,
+    allowance: 0,
+    token0Symbol: '???',
+    token1Symbol: '???',
+    isApproving: false,
+    isTransaction: false,
+    errorText: '',
+  };
+
+  onChange = event => {
+    let value = event.target.value;
+    if (this.props.adaptive) {
+      this.setState({value});
+    } else {
+      value = value.replace(',', '.');
+      if (!_.isNaN(Number(value)) || value === '.') {
+        this.setState({value});
+      }
+    }
   };
 
   handleChange = newValue => {
@@ -63,28 +85,112 @@ class FarmingPopupStake extends React.PureComponent {
 
   componentDidMount() {
     this._mount = true;
-    const {getTokenContract, tokens} = this.context;
+    const {getTokenContract, tokens, chainId} = this.context;
     const {pool} = this.props;
     if (!pool) {this.props.onClose(); return}
 
-    this.tokenContract = getTokenContract(pool);
-    this.token0Contract = getTokenContract(pool.token0);
-    this.token1Contract = getTokenContract(pool.token1);
+    this.contract = getTokenContract({
+      address: pool.address,
+      symbol: 'LP',
+      chainId: chainId,
+      decimals: 18,
+    }, true);
 
+    // Get right token symbols
+    Promise.all([
+      this.getTokenSymbol(pool.token0),
+      this.getTokenSymbol(pool.token1),
+    ]).then(symbols => {
+      this.setState({
+        token0Symbol: symbols[0],
+        token1Symbol: symbols[1],
+      })
+    });
+    this.getAllowance();
+  }
 
-    const token0 = _.get(tokens.find(t => t.address === pool.token0))
+  async getAllowance(address) {
+    const allowance = await this.contract.getAllowance(this.contract.provider.masterChefAddress);
+    this.setState({allowance});
+  }
+
+  async getTokenSymbol(address) {
+    const {getTokenContract, tokens} = this.context;
+    const knownToken = tokens.find(t => t.address === address);
+    if (knownToken) {
+      return knownToken.symbol
+    } else {
+      const contract = getTokenContract({address});
+      return await contract.getSymbol();
+    }
   }
 
   componentWillUnmount() {
     this._mount = false;
+    this.contract && this.contract.stopWaiting();
   }
+
+  onApprove = async () => {
+    const {isApproving, value} = this.state;
+    if (isApproving) return;
+    this.setState({isApproving: true});
+
+    try {
+      const amount = Number(value) || 0;
+      await this.contract.approve(this.contract.provider.masterChefAddress, amount);
+      if (!this._mount) return;
+      this.setState({allowance: amount, errorText: ''});
+    } catch (error) {
+      console.error('[onApprove]', error);
+      if (!this._mount) return;
+      this.contract.stopWaiting();
+      this.setState({errorText: processError(error)});
+    }
+    this.setState({isApproving: false});
+  };
+
+  onDeposit = async () => {
+    const {toastPush, pool, onClose} = this.props;
+    const {isTransaction, value, token1Symbol, token0Symbol} = this.state;
+    const {getFarmContract, getBSCScanLink, getTransactionReceipt} = this.context;
+    if (isTransaction) return;
+    this.setState({isTransaction: true});
+
+    try {
+      const amount = Number(value) || 0;
+      const farm = getFarmContract();
+      const tx = await farm.transaction('deposit', [
+        pool.address,
+        wei.to(amount.toFixed(18)),
+        '0x0000000000000000000000000000000000000000',
+      ]);
+      console.log('transaction hash', tx, getBSCScanLink(tx));
+      const receipt = await getTransactionReceipt(tx);
+      console.log('transaction receipt', receipt);
+      toastPush(`Staked ${amount.toFixed(2)} ${token1Symbol}-${token0Symbol}`, 'farming');
+      if (!this._mount) return;
+      onClose();
+    } catch (error) {
+      console.error('[onApprove]', error);
+      if (this._mount) this.setState({
+        errorText: processError(error),
+        isTransaction: false,
+      });
+    }
+  };
 
   render() {
     const {toastPush, adaptive, modal, pool} = this.props;
-    const {getTokenContract, farm} = this.context;
-    const {value} = this.state;
+    const {getTokenContract, addTokenToWallet} = this.context;
+    const {
+      value, token0Symbol, token1Symbol, allowance,
+      isApproving, isTransaction, errorText,
+    } = this.state;
     const Wrapper = adaptive ? BottomSheetModal : Modal;
-    // States
+    const balance = wei.from(_.get(pool, 'balance', '0'));
+    const amount = Number(value) || 0;
+
+    const isAvailable = allowance >= amount && amount && amount <= balance;
 
     return (
       <Wrapper
@@ -110,31 +216,50 @@ class FarmingPopupStake extends React.PureComponent {
               {modal === 'stake' ? 'Stake' : 'Unstake'}
             </span>
               <span className="default-text">
-              Balance: <NumberFormat number={wei.from(_.get(pool, 'balance', '0'))} />
+              Balance: <NumberFormat number={balance} />
             </span>
             </div>
             <div className="input-container">
-              <Input type="number" value={value} onTextChange={this.handleChange.bind(this)} />
+              <Input type={adaptive ? 'number' : 'text'}
+                     disabled={isTransaction || isApproving}
+                     value={value}
+                     onChange={this.onChange.bind(this)} />
               <div className="input-controls">
-                <p className="default-text">BNB-NRFX</p>
+                <p className="default-text">{token0Symbol}-{token1Symbol}</p>
                 <button
                   type="button"
                   className="input-controls__button"
-                  onClick={() => {}}
+                  onClick={() => {if (!isTransaction && !isApproving) this.setState({value: balance})}}
                 >
                   <span>Max</span>
                 </button>
               </div>
             </div>
           </label>
-          <Button type="lightBlue" btnType="submit">
-            Confirm
+          <Button type={isAvailable ? 'secondary' : 'lightBlue'}
+                  onClick={this.onApprove.bind(this)}
+                  disabled={!amount || isAvailable || amount > balance}
+                  state={isApproving ? 'loading' : ''}>
+            Approve {amount.toFixed(2)} LP
+          </Button>
+          <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
+                  onClick={this.onDeposit.bind(this)}
+                  disabled={!isAvailable || isTransaction}
+                  state={isTransaction ? 'loading' : ''}>
+            Deposit
           </Button>
         </Form>
         <div className="FarmingPopup__footer">
-          {modal === 'stake' && <PopupLink text="Get USDT-BSW" />}
+          {modal === 'stake' && <span className="popup-link" onClick={() => addTokenToWallet({
+            address: _.get(pool, 'address'),
+            symbol: `${token0Symbol}-${token1Symbol}`,
+            image: 'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
+          })}>
+            Add token to Metamask <SVG src={require('src/asset/icons/export.svg')} />
+          </span>}
           {/*Probably must set currencies array.*/}
         </div>
+        {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
       </Wrapper>
     );
   }

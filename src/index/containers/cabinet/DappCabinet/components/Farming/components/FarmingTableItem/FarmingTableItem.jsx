@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Web3Context } from 'services/web3Provider';
 import wei from 'utils/wei';
+import _ from 'lodash';
 
 // Components
 import {
@@ -15,6 +16,7 @@ import DoubleWallets from 'src/index/components/cabinet/DoubleWallets/DoubleWall
 import FarmingTableItemOptions from '../FarmingTableItemOptions/FarmingTableItemOptions';
 import FarmingIndicator from '../FarmingIndicator/FarmingIndicator';
 import SVG from 'utils/svg-wrap';
+import getFinePrice from 'utils/get-fine-price';
 
 // Utils
 import { openModal } from 'src/actions';
@@ -30,52 +32,97 @@ const UNKNOWN_TOKEN = {
   decimals: 18,
 };
 
-function FarmingTableItem({
-  dark,
-  id,
-  indicator,
-  currencies,
-  apy,
-  arp,
-  available,
-  staked,
-  earned,
-  pool,
-}) {
-  const context = React.useContext(Web3Context);
-  const {tokens} = context;
-  // States
-  const [isActive, setIsActive] = React.useState(false);
+const REWARD_UPDATE_INTERVAL = 10000;
 
-  const QuestionAPY = () => (
-    <p>
-      APY is based on your one-year income if Harvest and Compound are made once
-      a 14 days. Provided APY calculations depend on current APR rates.
-    </p>
-  );
+class FarmingTableItem extends React.PureComponent {
+  static contextType = Web3Context;
 
-  // Handlers
-  // Open/Close current item options.
-  const handleActive = () => {
-    setIsActive((prevState) => !prevState);
+  state = {
+    isActive: false,
+    reward: 0,
   };
 
-  const handleRoiOpen = (e) => {
+  constructor(props) {
+    super(props);
+
+    this.state.reward = wei.from(_.get(props, 'pool.reward', '0'));
+  }
+
+  componentDidMount() {
+    this._mount = true;
+    this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
+  }
+
+  componentDidUpdate(prevProps) {
+    const currentReward = _.get(this.props, 'pool.reward');
+    if (currentReward !== _.get(prevProps, 'pool.reward')) {
+      this.setState({
+        reward: wei.from(currentReward || '0')
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this._mount = false;
+  }
+
+  handleActive = () => {
+    this.setState({
+      isActive: !this.state.isActive,
+    })
+  };
+
+  handleRoiOpen = e => {
     e.stopPropagation();
 
     openModal('farming_roi');
   };
 
-  const token0 = tokens.find(t => t.address && t.address === pool.token0) || {...UNKNOWN_TOKEN, address: pool.token0};
-  const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
-  const poolSize = wei.from(pool.size);
+  rewardTimeout = null;
 
-  return (
-    <>
+  updateRewardAmount = async () => {
+    const {pool} = this.props;
+    const {getFarmContract, accountAddress} = this.context;
+    const farm = getFarmContract();
+    const weiReward = await farm.contract.methods.getUserReward(pool.address, accountAddress).call();
+    const reward = wei.from(weiReward);
+    pool.reward = reward;
+    console.log("NEW REWARD", reward);
+    if (this._mount) {
+      this.setState({reward});
+    }
+    this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
+  };
+
+  render() {
+    const {
+      dark,
+      id,
+      indicator,
+      apy,
+      arp,
+      pool,
+    } = this.props;
+    const {isActive, reward} = this.state;
+    const {tokens, getFarmContract, accountAddress} = this.context;
+
+    const QuestionAPY = () => (
+      <p>
+        APY is based on your one-year income if Harvest and Compound are made once
+        a 14 days. Provided APY calculations depend on current APR rates.
+      </p>
+    );
+
+    const token0 = tokens.find(t => t.address && t.address === pool.token0) || {...UNKNOWN_TOKEN, address: pool.token0};
+    const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
+    const poolSize = wei.from(pool.size);
+
+    return (
+      <>
       <TableCell
         className="FarmingTableItem"
         dark={dark}
-        onClick={handleActive}
+        onClick={this.handleActive.bind(this)}
       >
         <TableColumn style={{ minWidth: 122 }}>
           <span>
@@ -102,7 +149,7 @@ function FarmingTableItem({
         </TableColumn>
         <TableColumn>
           <NumberFormat number={arp} percent />
-          <span onClick={handleRoiOpen}>
+          <span onClick={this.handleRoiOpen.bind(this)}>
             <SVG
               src={require('src/asset/icons/cabinet/calculator-icon.svg')}
               className="FarmingTableItem__action_icon"
@@ -110,10 +157,12 @@ function FarmingTableItem({
           </span>
         </TableColumn>
         <TableColumn>
-          <NumberFormat number={poolSize} /> LP
+          {!!poolSize ? `${getFinePrice(poolSize)}` : '—'}
           <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
         </TableColumn>
-        <TableColumn>—</TableColumn>
+        <TableColumn>
+          {!!reward ? `${getFinePrice(reward)} NRFX` : '—'}
+        </TableColumn>
         <TableColumn className={'details' + (isActive ? ' active' : '')}>
           <span>Details</span>
           <SVG src={require('src/asset/icons/cabinet/select-arrow.svg')} />
@@ -143,12 +192,13 @@ function FarmingTableItem({
           id={id}
           available={pool.balance}
           staked={pool.userPool}
-          earned={earned}
+          earned={reward}
           pool={pool}
         />
       )}
-    </>
-  );
+      </>
+    );
+  }
 }
 
 FarmingTableItem.defaultProps = {

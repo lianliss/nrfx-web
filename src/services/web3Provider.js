@@ -16,6 +16,8 @@ const DEFAULT_DECIMALS = 18;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
 
+const wait = delay => new Promise(fulfill => setTimeout(fulfill, delay));
+
 class Web3Provider extends React.PureComponent {
 
   state = {
@@ -592,8 +594,9 @@ class Web3Provider extends React.PureComponent {
   /**
    * Returns TokenContract object
    * @param token {TokenContract}
+   * @param isPair {bool}
    */
-  getTokenContract = token => new TokenContract(token, this);
+  getTokenContract = (token, isPair = false) => new TokenContract(token, this, isPair);
 
   /**
    * Returns MasterChefContract object
@@ -610,18 +613,20 @@ class Web3Provider extends React.PureComponent {
    */
   transaction = async (contract, method, params, value = 0) => {
     try {
+      console.log('transaction', contract, method, params);
       const accountAddress = _.get(this, 'state.accountAddress');
       const count = await this.web3.eth.getTransactionCount(accountAddress);
       const data = contract.methods[method](...params);
       const gas = await data.estimateGas({from: accountAddress, gas: 50000000000});
       const rawTransaction = {
         from: accountAddress,
-        gasPrice: this.web3.utils.toHex(gas * 10**6),
+        gasPrice: this.web3.utils.toHex(gas * 10**5),
         gasLimit: this.web3.utils.toHex(50000000000),
         to: contract._address,
         data: data.encodeABI(),
         nonce: this.web3.utils.toHex(count),
       };
+      console.log('raw', rawTransaction);
       if (value) {
         rawTransaction.value = this.web3.utils.toHex(value);
       }
@@ -634,6 +639,47 @@ class Web3Provider extends React.PureComponent {
       throw error;
     }
   };
+
+  /**
+   * Add a token to MetaMask
+   * @param token {object}
+   * @returns {Promise.<void>}
+   */
+  async addTokenToWallet(token) {
+    try {
+      await this.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: token.address,
+            symbol: token.symbol,
+            decimals: token.decimals || 18,
+            image: token.logoURI || token.image,
+          },
+        },
+      });
+    } catch (error) {
+      console.error('[addTokenToWallet]', error);
+    }
+  }
+
+  /**
+   * Wait for transaction receipt
+   * @param txHash {string} - transaction hash
+   * @returns {Promise.<*>} will returns a result when the transaction will be finished
+   */
+  async getTransactionReceipt(txHash) {
+    try {
+      const receipt = await this.web3.eth.getTransactionReceipt(txHash);
+      if (receipt) return receipt;
+      await wait(1000);
+      return await this.getTransactionReceipt(txHash);
+    } catch (error) {
+      console.log('[getTransactionReceipt]', error);
+      return null;
+    }
+  }
 
   render() {
     return <Web3Context.Provider value={{
@@ -650,11 +696,14 @@ class Web3Provider extends React.PureComponent {
       getTrade: this.getTrade.bind(this),
       getTokenContract: this.getTokenContract.bind(this),
       getFarmContract: this.getFarmContract.bind(this),
+      addTokenToWallet: this.addTokenToWallet.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
       tokenSale: this.tokenSale,
       transaction: this.transaction.bind(this),
       farm: this.farm,
+      getBSCScanLink: this.getBSCScanLink.bind(this),
+      getTransactionReceipt: this.getTransactionReceipt.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

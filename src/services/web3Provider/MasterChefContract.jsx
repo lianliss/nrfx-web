@@ -20,7 +20,6 @@ class MasterChefContract {
       const accountAddress = _.get(this, 'provider.state.accountAddress');
       const pools = {};
       const count = await this.contract.methods.poolsCount().call();
-      console.log('COUNT', count);
       const getMethods = [];
       for (let i = 0; i < Number(count); i++) {
         getMethods.push(this.contract.methods.poolsList(i).call())
@@ -78,6 +77,10 @@ class MasterChefContract {
       return pool;
     }
   }
+
+  transaction = async (method, params, value = 0) => {
+    return await this.provider.transaction(this.contract, method, params, value);
+  };
 }
 
 export default MasterChefContract;

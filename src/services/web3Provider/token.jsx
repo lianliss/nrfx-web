@@ -8,14 +8,16 @@ class TokenContract {
   isAwaiting = false;
   pendingTimeout = 2000;
 
-  constructor(token, provider) {
+  constructor(token, provider, isPairContract = false) {
     Object.assign(this, token);
     this.provider = provider;
     this.web3 = provider.web3;
     this.ethereum = provider.ethereum;
 
     this.contract = new (this.web3.eth.Contract)(
-      require('src/index/constants/ABI/Bep20Token'),
+      isPairContract
+        ? require('src/index/constants/ABI/PancakePair')
+        : require('src/index/constants/ABI/Bep20Token'),
       this.address,
     );
   }

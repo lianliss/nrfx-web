@@ -15,6 +15,7 @@ import { LIQUIDITY } from 'src/index/constants/pages';
 import { openModal } from 'src/actions';
 import { toastPush } from 'src/actions/toasts';
 import { Web3Context } from 'services/web3Provider';
+import getFinePrice from 'utils/get-fine-price';
 
 // Styles
 import './FarmingTableItemOptions.less';
@@ -22,7 +23,9 @@ import './FarmingTableItemOptions.less';
 // Main
 function FarmingTableItemOptions({ currency, available, staked, earned, pool }) {
   const dispatch = useDispatch();
-  const { isConnected, connectWallet } = React.useContext(Web3Context);
+  const { isConnected, connectWallet, getFarmContract, getBSCScanLink } = React.useContext(Web3Context);
+  const [isHarvest, setIsHarvest] = React.useState(false);
+  const [reward, setReward] = React.useState(earned);
 
   // States
   const [isVisible, setIsVisible] = React.useState(false);
@@ -34,6 +37,24 @@ function FarmingTableItemOptions({ currency, available, staked, earned, pool }) 
       setIsVisible(true);
     });
   }, []);
+
+  React.useEffect(() => {
+    setReward(earned);
+  }, [earned]);
+
+  const harvest = async () => {
+    setIsHarvest(true);
+    try {
+      const farm = getFarmContract();
+      const tx = await farm.transaction('harvest', [pool.address]);
+      console.log('[harvest]', tx, getBSCScanLink(tx));
+      setReward(0);
+      dispatch(toastPush(`Harvested ${getFinePrice(earned)} NRFX`, 'farming'))
+    } catch (error) {
+      console.error('[harvest]', error);
+    }
+    setIsHarvest(false)
+  };
 
   return (
     <>
@@ -108,16 +129,16 @@ function FarmingTableItemOptions({ currency, available, staked, earned, pool }) 
         <TableColumn style={{ maxWidth: 110 }}>
           <Button
             type="green-light"
-            disabled={type !== 'staked'}
-            onClick={() => dispatch(toastPush('Harwest 0,55 BNB', 'farming'))}
+            disabled={reward <= 0}
+            onClick={harvest}
           >
             Harvest
           </Button>
         </TableColumn>
         <TableColumn colspan={3}>
           <DoubleText
-            first={earned[0]}
-            second={earned[1]}
+            first={getFinePrice(reward)}
+            second={0}
             currency={currency}
             title="Earned"
           />
