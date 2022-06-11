@@ -152,7 +152,7 @@ class FarmingPopupStake extends React.PureComponent {
   onDeposit = async () => {
     const {toastPush, pool, onClose} = this.props;
     const {isTransaction, value, token1Symbol, token0Symbol} = this.state;
-    const {getFarmContract, getBSCScanLink, getTransactionReceipt} = this.context;
+    const {getFarmContract, getBSCScanLink, getTransactionReceipt, updatePoolData} = this.context;
     if (isTransaction) return;
     this.setState({isTransaction: true});
 
@@ -167,6 +167,7 @@ class FarmingPopupStake extends React.PureComponent {
       console.log('transaction hash', tx, getBSCScanLink(tx));
       const receipt = await getTransactionReceipt(tx);
       console.log('transaction receipt', receipt);
+      updatePoolData(pool);
       toastPush(`Staked ${amount.toFixed(2)} ${token1Symbol}-${token0Symbol}`, 'farming');
       if (!this._mount) return;
       onClose();

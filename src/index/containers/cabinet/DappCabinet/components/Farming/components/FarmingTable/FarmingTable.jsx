@@ -1,4 +1,5 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import {
@@ -12,10 +13,16 @@ import FarmingTableHeader from '../FarmingTableHeader/FarmingTableHeader';
 import './FarmingTable.less';
 
 // Main
-function FarmingTable({ adaptive, items, pools, ...filters }) {
+function FarmingTable({
+                        adaptive, items,
+                        updatePoolsList,
+                        updatePoolsData,
+                        updatePoolData,
+                        ...filters }) {
   const { farmsValue, setFarmsValue, sortBy, setSortBy, farms, sortOptions } =
     filters;
-  console.log('pools', pools);
+  const context = React.useContext(Web3Context);
+  const {pools} = context;
 
   return (
     <div className="FarmingTable">
@@ -56,6 +63,11 @@ function FarmingTable({ adaptive, items, pools, ...filters }) {
                 available={1}
                 staked={1}
                 earned={1}
+                {...{
+                  updatePoolsList,
+                  updatePoolsData,
+                  updatePoolData,
+                }}
               />
             );
           })}

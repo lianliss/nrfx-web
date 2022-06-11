@@ -1,5 +1,6 @@
 import React from 'react';
 import { Web3Context } from 'services/web3Provider';
+import wait from 'utils/wait';
 
 // Components
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
@@ -9,6 +10,8 @@ import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingSta
 
 // Styles
 import './Farming.less';
+
+const AWAITING_DELAY = 2000;
 
 // Test array
 const farmingItems = [
@@ -129,10 +132,9 @@ const sortOptions = [
 function Farming({ adaptive }) {
   // States
   const context = React.useContext(Web3Context);
-  const {getFarmContract, chainId, isConnected, connectWallet} = context;
+  const {getFarmContract, chainId, isConnected, connectWallet, updatePoolsList, pools} = context;
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
-  const [pools, setPools] = React.useState([]);
 
   const filters = {
     farmsValue,
@@ -144,19 +146,7 @@ function Farming({ adaptive }) {
   };
 
   React.useEffect(() => {
-    if (!isConnected) return;
-    const farm = getFarmContract();
-    const updatePool = async () => {
-      const pools = await farm.getPoolsList();
-      setPools(pools);
-      const data = await Promise.all(Object.keys(pools).map(address => farm.getPoolData(pools[address])));
-      const poolsWithData = {};
-      data.map((pool, index) => {
-        poolsWithData[pool.address] = data[index];
-      });
-      setPools(poolsWithData);
-    };
-    updatePool().catch(error => {
+    updatePoolsList().catch(error => {
       console.error('[Farming][getPoolsList]', error);
     });
   }, [chainId, isConnected]);
@@ -166,6 +156,8 @@ function Farming({ adaptive }) {
       connectWallet();
     }
   }, [isConnected]);
+
+  const TableComponent = adaptive ? FarmingTableAdaptive : FarmingTable;
 
   return (
     <CabinetBlock className="Farming">
@@ -180,11 +172,9 @@ function Farming({ adaptive }) {
           </p>
         </div>
       </div>
-      {isConnected ? (adaptive ? (
-        <FarmingTableAdaptive items={farmingItems} pools={pools} {...filters} />
-      ) : (
-        <FarmingTable items={farmingItems} pools={pools} {...filters} />
-      )) : <LoadingStatus status={'loading'}/>}
+      {isConnected ? <TableComponent items={farmingItems} {...{
+        pools,
+      }} {...filters} /> : <LoadingStatus status={'loading'}/>}
     </CabinetBlock>
   );
 }

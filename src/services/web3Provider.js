@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Web3 from 'web3/dist/web3.min.js';
 import wei from 'utils/wei';
+import wait from 'utils/wait';
 import _ from 'lodash';
 import axios from 'axios';
 import networks from 'src/index/constants/networks';
@@ -15,8 +16,7 @@ export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
-
-const wait = delay => new Promise(fulfill => setTimeout(fulfill, delay));
+const AWAITING_DELAY = 2000;
 
 class Web3Provider extends React.PureComponent {
 
@@ -26,6 +26,7 @@ class Web3Provider extends React.PureComponent {
     balancesRequested: null,
     chainId: null,
     tokens: networks[56].tokens,
+    pools: {},
   };
 
   ethereum = null;
@@ -681,7 +682,72 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  /**
+   * Update single pool data
+   * @param pool {object}
+   * @returns {Promise.<*>}
+   */
+  async updatePoolData(pool) {
+    if (!this.state.isConnected) return;
+    try {
+      const farm = this.getFarmContract();
+      const addon = {};
+      const poolData = await farm.getPoolData(pool);
+      addon[poolData.address] = poolData;
+      this.setState({
+        pools: {
+          ...this.state.pools,
+          ...addon,
+        }
+      });
+      return poolData;
+    } catch (error) {
+      await wait(AWAITING_DELAY);
+      return await this.updatePoolData();
+    }
+  };
+
+  /**
+   * Update all pools data
+   * @param _pools {object}
+   * @returns {Promise.<*>}
+   */
+  async updatePoolsData() {
+    if (!this.state.isConnected) return;
+    try {
+      const {pools} = this.state;
+      const farm = this.getFarmContract();
+      const data = await Promise.all(Object.keys(pools).map(address => farm.getPoolData(pools[address])));
+      const poolsWithData = {};
+      data.map((pool, index) => {
+        poolsWithData[pool.address] = data[index];
+      });
+      this.setState({pools: poolsWithData});
+    } catch (error) {
+      await wait(AWAITING_DELAY);
+      return await this.updatePoolsData();
+    }
+  };
+
+  /**
+   * Update pools list
+   * @returns {Promise.<*>}
+   */
+  async updatePoolsList() {
+    if (!this.state.isConnected) return;
+    try {
+      const farm = this.getFarmContract();
+      const pools = await farm.getPoolsList();
+      this.setState({pools});
+      return await this.updatePoolsData();
+    } catch (error) {
+      await wait(AWAITING_DELAY);
+      return await this.updatePoolsList();
+    }
+  };
+
   render() {
+    console.log('POOLS', this.state);
     return <Web3Context.Provider value={{
       ...this.state,
       ethereum: this.ethereum,
@@ -704,6 +770,9 @@ class Web3Provider extends React.PureComponent {
       farm: this.farm,
       getBSCScanLink: this.getBSCScanLink.bind(this),
       getTransactionReceipt: this.getTransactionReceipt.bind(this),
+      updatePoolData: this.updatePoolData.bind(this),
+      updatePoolsData: this.updatePoolsData.bind(this),
+      updatePoolsList: this.updatePoolsList.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

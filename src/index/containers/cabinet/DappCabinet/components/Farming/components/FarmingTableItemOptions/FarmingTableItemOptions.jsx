@@ -21,7 +21,9 @@ import getFinePrice from 'utils/get-fine-price';
 import './FarmingTableItemOptions.less';
 
 // Main
-function FarmingTableItemOptions({ currency, available, staked, earned, pool }) {
+function FarmingTableItemOptions({
+                                   currency, available, staked, earned, pool,
+                                 }) {
   const dispatch = useDispatch();
   const { isConnected, connectWallet, getFarmContract, getBSCScanLink } = React.useContext(Web3Context);
   const [isHarvest, setIsHarvest] = React.useState(false);
@@ -56,6 +58,10 @@ function FarmingTableItemOptions({ currency, available, staked, earned, pool }) 
     setIsHarvest(false)
   };
 
+  const modalData = {
+    pool: {...pool, contract: null}
+  };
+
   return (
     <>
       <TableCell className={cn('FarmingTableItem', 'options', { isVisible })}>
@@ -81,7 +87,7 @@ function FarmingTableItemOptions({ currency, available, staked, earned, pool }) 
                   type="lightBlue"
                   className="stake"
                   onClick={() => {
-                    openModal('stake', {}, { pool: {...pool, contract: null} });
+                    openModal('stake', {}, modalData);
                   }}
                 >
                   Stake
@@ -89,7 +95,7 @@ function FarmingTableItemOptions({ currency, available, staked, earned, pool }) 
                 <Button
                   type="dark"
                   onClick={() => {
-                    openModal('unstake', {}, { pool: {...pool, contract: null} });
+                    openModal('unstake', {}, modalData);
                   }}
                   className="unstake"
                 >
@@ -100,7 +106,7 @@ function FarmingTableItemOptions({ currency, available, staked, earned, pool }) 
               <Button
                 type="lightBlue"
                 onClick={() => {
-                  openModal('stake', {}, { pool: {...pool, contract: null} });
+                  openModal('stake', {}, modalData);
                   setType('staked');
                 }}
                 style={{ width: '100%' }}

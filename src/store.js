@@ -57,7 +57,7 @@ export function configureStore() {
           default: defaultReducer,
           langs: langsReducer,
           landing: landingReducer,
-          modal: modalReducer
+          modal: modalReducer,
         },
         index: {
           landing: landingReducer,
