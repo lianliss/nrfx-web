@@ -59,6 +59,7 @@ class MasterChefContract {
         promises.push(pairContract.methods.balanceOf(accountAddress).call());
         promises.push(this.contract.methods.getUserPoolSize(address, accountAddress).call());
         promises.push(this.contract.methods.getUserReward(address, accountAddress).call());
+        promises.push(this.contract.methods.getIsUserCanHarvest(address, accountAddress).call());
       }
       const data = await Promise.all(promises);
       return {
@@ -69,6 +70,7 @@ class MasterChefContract {
         balance: data[3] || '0',
         userPool: data[4] || '0',
         reward: data[5] || '0',
+        isCanHarvest: data[6] || false,
         isDataLoaded: true,
       }
     } catch (error) {

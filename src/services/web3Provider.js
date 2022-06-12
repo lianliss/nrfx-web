@@ -754,7 +754,7 @@ class Web3Provider extends React.PureComponent {
   };
 
   render() {
-    console.log('POOLS', this.state);
+    console.log('POOLS', this.state.pools);
     return <Web3Context.Provider value={{
       ...this.state,
       ethereum: this.ethereum,

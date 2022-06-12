@@ -50,8 +50,8 @@ function FarmingTableItemOptions({
     setIsHarvest(true);
     try {
       const farm = getFarmContract();
-      const tx = await farm.transaction('harvest', [pool.address]);
-      console.log('[harvest]', tx, getBSCScanLink(tx));
+      const receipt = await farm.transaction('harvest', [pool.address]);
+      console.log('[harvest]', receipt);
       setReward(0);
       dispatch(toastPush(`Harvested ${getFinePrice(earned)} NRFX`, 'farming'))
     } catch (error) {
@@ -137,8 +137,9 @@ function FarmingTableItemOptions({
         <TableColumn style={{ maxWidth: 110 }}>
           <Button
             type="green-light"
-            disabled={reward <= 0}
+            disabled={reward <= 0 || !pool.isCanHarvest}
             onClick={harvest}
+            state={isHarvest ? 'loading' : ''}
           >
             Harvest
           </Button>

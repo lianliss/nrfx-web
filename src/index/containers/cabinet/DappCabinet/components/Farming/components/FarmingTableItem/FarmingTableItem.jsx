@@ -84,10 +84,15 @@ class FarmingTableItem extends React.PureComponent {
     const {pool} = this.props;
     const {getFarmContract, accountAddress} = this.context;
     const farm = getFarmContract();
-    const weiReward = await farm.contract.methods.getUserReward(pool.address, accountAddress).call();
+    const data = await Promise.all([
+      farm.contract.methods.getUserReward(pool.address, accountAddress).call(),
+      farm.contract.methods.getIsUserCanHarvest(pool.address, accountAddress).call(),
+    ]);
+    const weiReward = data[0];
+    const isCanHarvest = data[1];
     const reward = wei.from(weiReward);
     pool.reward = reward;
-    console.log("NEW REWARD", reward);
+    pool.isCanHarvest = isCanHarvest;
     if (this._mount) {
       this.setState({reward});
     }
