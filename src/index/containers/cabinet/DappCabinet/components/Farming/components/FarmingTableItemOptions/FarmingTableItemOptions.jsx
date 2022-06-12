@@ -24,6 +24,7 @@ import './FarmingTableItemOptions.less';
 // Main
 function FarmingTableItemOptions({
                                    currency, available, staked, earned, pool,
+                                    pairPrice,
                                  }) {
   const dispatch = useDispatch();
   const {
@@ -71,6 +72,8 @@ function FarmingTableItemOptions({
     pool: {...pool, contract: null}
   };
 
+  const lpBalance = wei.from(available);
+
   return (
     <>
       <TableCell className={cn('FarmingTableItem', 'options', { isVisible })}>
@@ -82,9 +85,9 @@ function FarmingTableItemOptions({
         </TableColumn>
         <TableColumn>
           <DoubleText
-            first={wei.from(available)}
-            second={0}
-            currency={currency}
+            first={lpBalance}
+            second={lpBalance * pairPrice}
+            currency={'LP'}
             title="available"
           />
         </TableColumn>
@@ -136,7 +139,7 @@ function FarmingTableItemOptions({
         <TableColumn>
           <DoubleText
             first={stakedAmount}
-            second={0}
+            second={stakedAmount * pairPrice}
             currency={'LP'}
             title="Staked"
           />

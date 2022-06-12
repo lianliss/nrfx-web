@@ -50,7 +50,12 @@ class FarmingTableItem extends React.PureComponent {
 
   componentDidMount() {
     this._mount = true;
+    const {pool} = this.props;
+    const {prices, getPairUSDTPrice} = this.context;
     this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
+    if (typeof prices[pool.address] === 'undefined') {
+      getPairUSDTPrice(pool.address);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -110,7 +115,7 @@ class FarmingTableItem extends React.PureComponent {
       pool,
     } = this.props;
     const {isActive, reward} = this.state;
-    const {tokens, getFarmContract, accountAddress} = this.context;
+    const {tokens, getFarmContract, accountAddress, prices, getPairUSDTPrice} = this.context;
 
     const QuestionAPY = () => (
       <p>
@@ -122,6 +127,8 @@ class FarmingTableItem extends React.PureComponent {
     const token0 = tokens.find(t => t.address && t.address === pool.token0) || {...UNKNOWN_TOKEN, address: pool.token0};
     const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
     const poolSize = wei.from(pool.size);
+
+    const pairPrice = prices[pool.address] || 0;
 
     return (
       <>
@@ -163,7 +170,7 @@ class FarmingTableItem extends React.PureComponent {
           </span>
         </TableColumn>
         <TableColumn>
-          {!!poolSize ? `${getFinePrice(poolSize)}` : '—'}
+          {!!poolSize ? `$${getFinePrice(poolSize * pairPrice)}` : '—'}
           <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
         </TableColumn>
         <TableColumn>
@@ -200,6 +207,7 @@ class FarmingTableItem extends React.PureComponent {
           staked={pool.userPool}
           earned={reward}
           pool={pool}
+          pairPrice={pairPrice}
         />
       )}
       </>

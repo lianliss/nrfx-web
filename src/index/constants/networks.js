@@ -88,7 +88,15 @@ const networks = {
         chainId: 97,
         decimals: 18,
         logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
-      }
+      },
+      {
+        name: "Tether",
+        symbol: "USDT",
+        address: "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684",
+        chainId: 97,
+        decimals: 18,
+        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+      },
     ],
   }
 };

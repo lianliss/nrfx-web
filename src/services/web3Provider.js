@@ -28,6 +28,7 @@ class Web3Provider extends React.PureComponent {
     chainId: null,
     tokens: networks[56].tokens,
     pools: {},
+    prices: {},
   };
 
   ethereum = null;
@@ -399,10 +400,7 @@ class Web3Provider extends React.PureComponent {
       ).call();
       return wei.from(data[1], Number(_.get(token1, 'decimals', 18)));
     } catch (error) {
-      console.error('[getTokensRelativePrice]',
-        this.getBSCScanLink(token0.address),
-        this.getBSCScanLink(token1.address),
-        error);
+      console.error('[getTokensRelativePrice]', error);
     }
   }
 
@@ -414,11 +412,12 @@ class Web3Provider extends React.PureComponent {
   async getTokenUSDPrice(token) {
     try {
       const USDT = this.state.tokens.find(t => t.symbol === 'USDT');
-      return token.address === USDT.address
+      return token.address.toLowerCase() === USDT.address.toLowerCase()
         ? 1
         : await this.getTokensRelativePrice(token, USDT);
     } catch (error) {
-      console.error('[getTokenUSDPrice]', error);
+      console.warn('[getTokenUSDPrice]', error);
+      return 0;
     }
   }
 
@@ -436,7 +435,7 @@ class Web3Provider extends React.PureComponent {
       if (tokenContractAddress) {
         // Return token balance
         const contract = new (this.getWeb3().eth.Contract)(
-          require('src/index/constants/ABI/NarfexToken'),
+          require('src/index/constants/ABI/Bep20Token'),
           tokenContractAddress,
         );
         return await contract.methods.balanceOf(accountAddress).call();
@@ -451,6 +450,61 @@ class Web3Provider extends React.PureComponent {
 
   getTokenBalanceKey(token, accountAddress = this.state.accountAddress) {
     return `balance-${token.address || 'bnb'}-${accountAddress}`;
+  }
+
+  /**
+   * Returns LP token price in USDT
+   * @param pairAddress {string} - address of LP token
+   * @param isForce {bool} - is force update
+   * @returns {Promise.<number>}
+   */
+  async getPairUSDTPrice(pairAddress, isForce = false) {
+    if (typeof this.state.prices[pairAddress] !== 'undefined' && !isForce) return this.state.prices[pairAddress];
+    const newPairState = {};
+    if (!isForce) {
+      newPairState[pairAddress] = 0;
+      this.setState({
+        prices: {
+          ...this.state.prices,
+          ...newPairState,
+        }
+      });
+    }
+    try {
+      const {tokens} = this.state;
+      const contract = new (this.getWeb3().eth.Contract)(
+        require('src/index/constants/ABI/PancakePair'),
+        pairAddress,
+      );
+      const data = await Promise.all([
+        contract.methods.getReserves().call(),
+        contract.methods.totalSupply().call(),
+        contract.methods.token0().call(),
+        contract.methods.token1().call(),
+      ]);
+      const token0 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[2].toLowerCase())
+        || {address: data[2], decimals: 18};
+      const token1 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[3].toLowerCase())
+        || {address: data[3], decimals: 18};
+      const reserve0 = wei.from(data[0]._reserve0, token0.decimals);
+      const reserve1 = wei.from(data[0]._reserve1, token0.decimals);
+      const totalSupply = wei.from(data[1]);
+      const prices = await Promise.all([
+        this.getTokenUSDPrice(token0),
+        this.getTokenUSDPrice(token1),
+      ]);
+      newPairState[pairAddress] = (reserve0 * prices[0] + reserve1 * prices[1]) / totalSupply;
+      this.setState({
+        prices: {
+          ...this.state.prices,
+          ...newPairState,
+        }
+      });
+      return newPairState[pairAddress];
+    } catch (error) {
+      console.error('[getPairPrice]', error);
+      return 0;
+    }
   }
 
   /**
@@ -496,7 +550,7 @@ class Web3Provider extends React.PureComponent {
 
                 // Save to the state
                 this.setState(state => {
-                  const tokenState = state.tokens.find(t => t.address === token.address);
+                  const tokenState = state.tokens.find(t => t.address.toLowerCase() === token.address.toLowerCase());
                   if (!tokenState) return;
 
                   // Update token price
@@ -789,6 +843,7 @@ class Web3Provider extends React.PureComponent {
   }
 
   render() {
+
     return <Web3Context.Provider value={{
       ...this.state,
       ethereum: this.ethereum,
@@ -815,6 +870,7 @@ class Web3Provider extends React.PureComponent {
       updatePoolsData: this.updatePoolsData.bind(this),
       updatePoolsList: this.updatePoolsList.bind(this),
       switchToChain: this.switchToChain.bind(this),
+      getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>
