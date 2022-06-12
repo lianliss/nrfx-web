@@ -14,6 +14,7 @@ import MasterChefContract from './web3Provider/MasterChefContract';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
+const GWEI_DECIMALS = 9;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
@@ -39,6 +40,7 @@ class Web3Provider extends React.PureComponent {
   wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
+  farm = null;
 
   getWeb3() {
     if (this.state.isConnected) {
@@ -217,6 +219,7 @@ class Web3Provider extends React.PureComponent {
       })
     }
     Object.assign(this, networks[id]);
+    this.farm = this.getFarmContract();
     this.setState({
       tokens: networks[id].tokens,
       chainId: id,
@@ -614,20 +617,19 @@ class Web3Provider extends React.PureComponent {
    */
   transaction = async (contract, method, params, value = 0) => {
     try {
-      console.log('transaction', contract, method, params);
       const accountAddress = _.get(this, 'state.accountAddress');
       const count = await this.web3.eth.getTransactionCount(accountAddress);
       const data = contract.methods[method](...params);
-      const gas = await data.estimateGas({from: accountAddress, gas: 50000000000});
+      const gasPrice = await this.web3.eth.getGasPrice();
+      const gasLimit = await data.estimateGas({from: accountAddress, gas: 50000000000});
       const rawTransaction = {
         from: accountAddress,
-        gasPrice: this.web3.utils.toHex(gas * 10**5),
-        gasLimit: this.web3.utils.toHex(50000000000),
+        gasPrice: this.web3.utils.toHex(gasPrice),
+        gasLimit: this.web3.utils.toHex(gasLimit),
         to: contract._address,
         data: data.encodeABI(),
         nonce: this.web3.utils.toHex(count),
       };
-      console.log('raw', rawTransaction);
       if (value) {
         rawTransaction.value = this.web3.utils.toHex(value);
       }
@@ -688,12 +690,17 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<*>}
    */
   async updatePoolData(pool) {
+    console.log('[updatePoolData]', pool);
     if (!this.state.isConnected) return;
     try {
       const farm = this.getFarmContract();
       const addon = {};
       const poolData = await farm.getPoolData(pool);
       addon[poolData.address] = poolData;
+      console.log('poolData', poolData, addon, {
+        ...this.state.pools,
+        ...addon,
+      });
       this.setState({
         pools: {
           ...this.state.pools,

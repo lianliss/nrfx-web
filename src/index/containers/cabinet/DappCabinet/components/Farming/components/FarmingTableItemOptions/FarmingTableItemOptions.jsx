@@ -33,6 +33,8 @@ function FarmingTableItemOptions({
   const [isVisible, setIsVisible] = React.useState(false);
   const [type, setType] = React.useState('stake');
 
+  const stakedAmount = wei.from(staked);
+
   // Actions
   React.useEffect(() => {
     setTimeout(() => {
@@ -81,7 +83,7 @@ function FarmingTableItemOptions({
         </TableColumn>
         <TableColumn colspan={2}>
           {isConnected ? (
-            type === 'staked' ? (
+            stakedAmount ? (
               <>
                 <Button
                   type="lightBlue"
@@ -126,9 +128,9 @@ function FarmingTableItemOptions({
         </TableColumn>
         <TableColumn>
           <DoubleText
-            first={staked[0]}
-            second={staked[1]}
-            currency={currency}
+            first={stakedAmount}
+            second={0}
+            currency={'LP'}
             title="Staked"
           />
         </TableColumn>
@@ -145,7 +147,7 @@ function FarmingTableItemOptions({
           <DoubleText
             first={getFinePrice(reward)}
             second={0}
-            currency={currency}
+            currency={'NRFX'}
             title="Earned"
           />
         </TableColumn>

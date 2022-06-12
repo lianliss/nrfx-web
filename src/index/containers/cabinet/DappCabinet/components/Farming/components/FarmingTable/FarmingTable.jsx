@@ -15,9 +15,6 @@ import './FarmingTable.less';
 // Main
 function FarmingTable({
                         adaptive, items,
-                        updatePoolsList,
-                        updatePoolsData,
-                        updatePoolData,
                         ...filters }) {
   const { farmsValue, setFarmsValue, sortBy, setSortBy, farms, sortOptions } =
     filters;
@@ -63,11 +60,6 @@ function FarmingTable({
                 available={1}
                 staked={1}
                 earned={1}
-                {...{
-                  updatePoolsList,
-                  updatePoolsData,
-                  updatePoolData,
-                }}
               />
             );
           })}

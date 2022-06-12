@@ -25,14 +25,9 @@ class MasterChefContract {
         getMethods.push(this.contract.methods.poolsList(i).call())
       }
       const addresses = await Promise.all(getMethods);
-      const contracts = addresses.map(poolAddress => new (this.web3.eth.Contract)(
-        require('src/index/constants/ABI/PancakePair'),
-        poolAddress,
-      ));
       addresses.map((address, index) => {
         pools[address] = {
           address,
-          contract: contracts[index],
           token0: null,
           token1: null,
           size: '0',
@@ -49,15 +44,19 @@ class MasterChefContract {
 
   async getPoolData(pool) {
     try {
-      const {contract, address} = pool;
+      const {address} = pool;
       const accountAddress = _.get(this, 'provider.state.accountAddress');
+      const pairContract = new (this.web3.eth.Contract)(
+        require('src/index/constants/ABI/PancakePair'),
+        address,
+      );
       const promises = [
-        contract.methods.token0().call(),
-        contract.methods.token1().call(),
+        pairContract.methods.token0().call(),
+        pairContract.methods.token1().call(),
         this.contract.methods.getPoolSize(address).call(),
       ];
       if (accountAddress) {
-        promises.push(contract.methods.balanceOf(accountAddress).call());
+        promises.push(pairContract.methods.balanceOf(accountAddress).call());
         promises.push(this.contract.methods.getUserPoolSize(address, accountAddress).call());
         promises.push(this.contract.methods.getUserReward(address, accountAddress).call());
       }

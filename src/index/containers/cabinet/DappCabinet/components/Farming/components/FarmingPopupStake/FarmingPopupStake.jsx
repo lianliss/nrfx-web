@@ -172,7 +172,37 @@ class FarmingPopupStake extends React.PureComponent {
       if (!this._mount) return;
       onClose();
     } catch (error) {
-      console.error('[onApprove]', error);
+      console.error('[onDeposit]', error);
+      if (this._mount) this.setState({
+        errorText: processError(error),
+        isTransaction: false,
+      });
+    }
+  };
+
+  onWithdraw = async () => {
+    const {toastPush, pool, onClose} = this.props;
+    const {isTransaction, value, token1Symbol, token0Symbol} = this.state;
+    const {getFarmContract, getBSCScanLink, getTransactionReceipt, updatePoolData} = this.context;
+    if (isTransaction) return;
+    this.setState({isTransaction: true});
+
+    try {
+      const amount = Number(value) || 0;
+      const farm = getFarmContract();
+      const tx = await farm.transaction('withdraw', [
+        pool.address,
+        wei.to(amount.toFixed(18)),
+      ]);
+      console.log('transaction hash', tx, getBSCScanLink(tx));
+      const receipt = await getTransactionReceipt(tx);
+      console.log('transaction receipt', receipt);
+      updatePoolData(pool);
+      toastPush(`Unstaked ${amount.toFixed(2)} ${token1Symbol}-${token0Symbol}`, 'farming');
+      if (!this._mount) return;
+      onClose();
+    } catch (error) {
+      console.error('[onWithdraw]', error);
       if (this._mount) this.setState({
         errorText: processError(error),
         isTransaction: false,
@@ -187,11 +217,15 @@ class FarmingPopupStake extends React.PureComponent {
       value, token0Symbol, token1Symbol, allowance,
       isApproving, isTransaction, errorText,
     } = this.state;
+    const isStake = modal === 'stake';
     const Wrapper = adaptive ? BottomSheetModal : Modal;
     const balance = wei.from(_.get(pool, 'balance', '0'));
     const amount = Number(value) || 0;
+    const userPool = wei.from (_.get(pool, 'userPool', '0'));
 
-    const isAvailable = allowance >= amount && amount && amount <= balance;
+    const isAvailable = isStake
+      ? allowance >= amount && amount && amount <= balance
+      : amount && amount <= userPool;
 
     return (
       <Wrapper
@@ -217,7 +251,7 @@ class FarmingPopupStake extends React.PureComponent {
               {modal === 'stake' ? 'Stake' : 'Unstake'}
             </span>
               <span className="default-text">
-              Balance: <NumberFormat number={balance} />
+              Balance: <NumberFormat number={isStake ? balance : userPool} />
             </span>
             </div>
             <div className="input-container">
@@ -230,14 +264,14 @@ class FarmingPopupStake extends React.PureComponent {
                 <button
                   type="button"
                   className="input-controls__button"
-                  onClick={() => {if (!isTransaction && !isApproving) this.setState({value: balance})}}
+                  onClick={() => {if (!isTransaction && !isApproving) this.setState({value: isStake ? balance : userPool})}}
                 >
                   <span>Max</span>
                 </button>
               </div>
             </div>
           </label>
-          <Button type={isAvailable ? 'secondary' : 'lightBlue'}
+          {isStake ? <><Button type={isAvailable ? 'secondary' : 'lightBlue'}
                   onClick={this.onApprove.bind(this)}
                   disabled={!amount || isAvailable || amount > balance}
                   state={isApproving ? 'loading' : ''}>
@@ -247,18 +281,22 @@ class FarmingPopupStake extends React.PureComponent {
                   onClick={this.onDeposit.bind(this)}
                   disabled={!isAvailable || isTransaction}
                   state={isTransaction ? 'loading' : ''}>
-            Deposit
-          </Button>
+            Stake
+          </Button></> : <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
+                                 onClick={this.onWithdraw.bind(this)}
+                                 disabled={!isAvailable || isTransaction}
+                                 state={isTransaction ? 'loading' : ''}>
+            Unstake
+          </Button>}
         </Form>
         <div className="FarmingPopup__footer">
-          {modal === 'stake' && <span className="popup-link" onClick={() => addTokenToWallet({
+          <span className="popup-link" onClick={() => addTokenToWallet({
             address: _.get(pool, 'address'),
             symbol: `${token0Symbol}-${token1Symbol}`,
             image: 'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
           })}>
             Add token to Metamask <SVG src={require('src/asset/icons/export.svg')} />
-          </span>}
-          {/*Probably must set currencies array.*/}
+          </span>
         </div>
         {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
       </Wrapper>
