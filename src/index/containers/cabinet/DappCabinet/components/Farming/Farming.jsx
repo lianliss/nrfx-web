@@ -132,7 +132,7 @@ const sortOptions = [
 function Farming({ adaptive }) {
   // States
   const context = React.useContext(Web3Context);
-  const {getFarmContract, chainId, isConnected, connectWallet, updatePoolsList, pools} = context;
+  const {getFarmContract, chainId, isConnected, connectWallet, updatePoolsList, pools, switchToChain} = context;
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
 
@@ -146,9 +146,14 @@ function Farming({ adaptive }) {
   };
 
   React.useEffect(() => {
-    updatePoolsList().catch(error => {
-      console.error('[Farming][getPoolsList]', error);
-    });
+    if (!isConnected) return;
+    if (chainId !== 97) {
+      switchToChain(97);
+    } else {
+      updatePoolsList().catch(error => {
+        console.error('[Farming][getPoolsList]', error);
+      });
+    }
   }, [chainId, isConnected]);
   
   React.useEffect(() => {

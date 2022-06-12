@@ -753,8 +753,27 @@ class Web3Provider extends React.PureComponent {
     }
   };
 
+  /**
+   * Asks user to switch a network
+   * @param chainId {number} - network chain id
+   * @param firstAttempt {bool} - is there is a first call
+   * @returns {Promise.<*>}
+   */
+  async switchToChain(chainId, firstAttempt = true) {
+    if (firstAttempt) this.requiredChain = chainId;
+    try {
+      return await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: this.web3.utils.toHex(chainId) }]
+      });
+    } catch (error) {
+      if (this.requiredChain === chainId) {
+        return await this.switchToChain(chainId, false);
+      }
+    }
+  }
+
   render() {
-    console.log('POOLS', this.state.pools);
     return <Web3Context.Provider value={{
       ...this.state,
       ethereum: this.ethereum,
@@ -780,6 +799,7 @@ class Web3Provider extends React.PureComponent {
       updatePoolData: this.updatePoolData.bind(this),
       updatePoolsData: this.updatePoolsData.bind(this),
       updatePoolsList: this.updatePoolsList.bind(this),
+      switchToChain: this.switchToChain.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>
