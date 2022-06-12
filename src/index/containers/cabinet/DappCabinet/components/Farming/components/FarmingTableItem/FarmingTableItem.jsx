@@ -45,7 +45,7 @@ class FarmingTableItem extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state.reward = wei.from(`${_.get(props, 'pool.reward', '0')}`);
+    this.state.reward = wei.from(_.get(props, 'pool.reward', '0'));
   }
 
   componentDidMount() {
@@ -88,14 +88,14 @@ class FarmingTableItem extends React.PureComponent {
       farm.contract.methods.getUserReward(pool.address, accountAddress).call(),
       farm.contract.methods.getIsUserCanHarvest(pool.address, accountAddress).call(),
     ]);
-    const weiReward = data[0];
+    const reward = data[0];
     const isCanHarvest = data[1];
-    const reward = wei.from(weiReward);
+    const rewardAmount = wei.from(reward);
     console.log('[updateRewardAmount]', data);
     pool.reward = reward;
     pool.isCanHarvest = isCanHarvest;
     if (this._mount) {
-      this.setState({reward});
+      this.setState({rewardAmount});
     }
     this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
   };
