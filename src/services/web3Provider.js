@@ -762,11 +762,26 @@ class Web3Provider extends React.PureComponent {
   async switchToChain(chainId, firstAttempt = true) {
     if (firstAttempt) this.requiredChain = chainId;
     try {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: this.web3.utils.toHex(97),
+          chainName: 'BSC web3 test',
+          nativeCurrency: {
+            name: 'BNB',
+            symbol: 'BNB',
+            decimals: 18
+          },
+          rpcUrls: ['https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3'],
+          blockExplorerUrls: ['https://testnet.bscscan.com']
+        }],
+      });
       return await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: this.web3.utils.toHex(chainId) }]
       });
     } catch (error) {
+      console.log('[switchToChain]', error);
       if (this.requiredChain === chainId) {
         return await this.switchToChain(chainId, false);
       }

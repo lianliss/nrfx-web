@@ -82,8 +82,8 @@ class FarmingTableItem extends React.PureComponent {
 
   updateRewardAmount = async () => {
     const {pool} = this.props;
-    const {getFarmContract, accountAddress} = this.context;
-    const farm = getFarmContract();
+    const {getFarmContract, accountAddress, farm} = this.context;
+    if (!farm || !farm.contract) return;
     const data = await Promise.all([
       farm.contract.methods.getUserReward(pool.address, accountAddress).call(),
       farm.contract.methods.getIsUserCanHarvest(pool.address, accountAddress).call(),
