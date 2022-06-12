@@ -92,7 +92,10 @@ function Header(props) {
                     </span>
                   </div>
                 </div>
-                <div className="CabinetHeader__wallet">
+                <div
+                  className="CabinetHeader__wallet"
+                  onClick={() => openModal('your_wallet')}
+                >
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />
@@ -101,7 +104,11 @@ function Header(props) {
               </>
             ) : (
               <div className="dynamic-shadow wallet-connect__button">
-                <Button type="lightBlue" size="small" onClick={connectWallet}>
+                <Button
+                  type="lightBlue"
+                  size="small"
+                  onClick={connectWallet}
+                >
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />

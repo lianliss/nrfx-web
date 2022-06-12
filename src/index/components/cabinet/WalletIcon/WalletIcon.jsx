@@ -9,7 +9,7 @@ import './WalletIcon.less';
 
 // Find icon, and if icon is not finded display
 // basic circle.
-function WalletIcon({ currency, size }) {
+function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
   const [icon, setIcon] = React.useState(null);
 
   React.useEffect(() => {
@@ -21,7 +21,15 @@ function WalletIcon({ currency, size }) {
   }, []);
 
   return (
-    <span className="WalletIcon" style={{ width: size, height: size }}>
+    <span
+      className={`WalletIcon ${className}`}
+      style={{
+        width: size,
+        height: size,
+        marginLeft: marginLeft ? marginLeft : null,
+        marginRight: marginRight ? marginRight : null,
+      }}
+    >
       {icon ? <SVG src={icon} /> : <span className="WalletIcon__empty" />}
     </span>
   );
@@ -30,11 +38,15 @@ function WalletIcon({ currency, size }) {
 WalletIcon.propTypes = {
   currency: PropTypes.string,
   size: PropTypes.number,
+  marginLeft: PropTypes.number,
+  marginRight: PropTypes.number,
+  className: PropTypes.string,
 };
 
 WalletIcon.defaultProps = {
   currency: '',
   size: 19,
+  className: '',
 };
 
 export default WalletIcon;

@@ -1,0 +1,58 @@
+@import '../../../../../../vars.less';
+
+.RecentTransactions {
+  width: 100%;
+  padding: 24px 29px;
+  background: #e5ebfc;
+  border-radius: var(--radius-panel);
+  box-sizing: border-box;
+
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+
+  &__header,
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__header {
+    color: var(--dark-gunmetal);
+    margin-bottom: 18px;
+  }
+
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: 18px;
+    }
+  }
+
+  .loading {
+    animation: loading 2s linear infinite;
+  }
+
+  @keyframes loading {
+    from {
+      transform: rotate(-360deg);
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .RecentTransactions {
+    &__item {
+      .action-text {
+        display: inline !important;
+        max-width: 35%;
+
+        .isvg {
+          height: 100%;
+          line-height: 100%;
+        }
+      }
+    }
+  }
+}
