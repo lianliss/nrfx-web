@@ -45,7 +45,7 @@ class FarmingTableItem extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state.reward = wei.from(_.get(props, 'pool.reward', '0'));
+    this.state.reward = wei.from(`${_.get(props, 'pool.reward', '0')}`);
   }
 
   componentDidMount() {
@@ -91,6 +91,7 @@ class FarmingTableItem extends React.PureComponent {
     const weiReward = data[0];
     const isCanHarvest = data[1];
     const reward = wei.from(weiReward);
+    console.log('[updateRewardAmount]', data);
     pool.reward = reward;
     pool.isCanHarvest = isCanHarvest;
     if (this._mount) {

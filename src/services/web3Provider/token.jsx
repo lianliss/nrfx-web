@@ -65,9 +65,10 @@ class TokenContract {
   approve = async (spender, amount) => {
     try {
       const txHash = await this.transaction('approve', [spender, wei.to(amount, this.decimals)]);
-      console.log('APPROVE DATA', this.provider.getBSCScanLink(txHash));
+      console.log('[approve]', this.provider.getBSCScanLink(txHash));
+      const receipt = await this.provider.getTransactionReceipt(txHash);
+      console.log('[approve]', receipt);
       await this.waitApprove(spender, amount);
-      console.log('APPROVED', amount);
       return amount;
     } catch (error) {
       this.stopWaiting();

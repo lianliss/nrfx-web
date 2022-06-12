@@ -205,8 +205,8 @@ class Web3Provider extends React.PureComponent {
   }
 
   getBSCScanLink = address => this.state.chainId === 56
-    ? `https://bscscan.com/address/${address}#readContract`
-    : `https://testnet.bscscan.com/address/${address}#readContract`;
+    ? `https://bscscan.com/tx/${address}`
+    : `https://testnet.bscscan.com/tx/${address}`;
 
   /**
    * Switch to another chain

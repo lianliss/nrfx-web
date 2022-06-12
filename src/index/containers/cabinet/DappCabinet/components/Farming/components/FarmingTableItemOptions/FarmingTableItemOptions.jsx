@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import router from 'src/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import wei from 'utils/wei';
+import _ from 'lodash';
 
 // Components
 import { TableCell, TableColumn, Button, NumberFormat } from 'src/ui';
@@ -25,9 +26,13 @@ function FarmingTableItemOptions({
                                    currency, available, staked, earned, pool,
                                  }) {
   const dispatch = useDispatch();
-  const { isConnected, connectWallet, getFarmContract, getBSCScanLink } = React.useContext(Web3Context);
+  const {
+    isConnected, connectWallet, getFarmContract, getBSCScanLink, getTransactionReceipt,
+    updatePoolData,
+  } = React.useContext(Web3Context);
   const [isHarvest, setIsHarvest] = React.useState(false);
   const [reward, setReward] = React.useState(earned);
+  const nrfxPrice = useSelector(state => _.get(state, 'web3.rates.nrfx', 0));
 
   // States
   const [isVisible, setIsVisible] = React.useState(false);
@@ -50,9 +55,11 @@ function FarmingTableItemOptions({
     setIsHarvest(true);
     try {
       const farm = getFarmContract();
-      const receipt = await farm.transaction('harvest', [pool.address]);
+      const tx = await farm.transaction('harvest', [pool.address]);
+      console.log('[harvest] tx', getBSCScanLink(tx));
+      const receipt = await getTransactionReceipt(tx);
       console.log('[harvest]', receipt);
-      setReward(0);
+      updatePoolData(pool);
       dispatch(toastPush(`Harvested ${getFinePrice(earned)} NRFX`, 'farming'))
     } catch (error) {
       console.error('[harvest]', error);
@@ -147,7 +154,7 @@ function FarmingTableItemOptions({
         <TableColumn colspan={3}>
           <DoubleText
             first={getFinePrice(reward)}
-            second={0}
+            second={getFinePrice(reward * nrfxPrice)}
             currency={'NRFX'}
             title="Earned"
           />
