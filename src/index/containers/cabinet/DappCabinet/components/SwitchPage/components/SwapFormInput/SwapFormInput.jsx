@@ -59,7 +59,10 @@ const SwapFormInput = React.forwardRef((props) => {
 
   // Render
   return (
-    <div className="SwapFormInput" onClick={handleContainerClick}>
+    <div
+      className={`SwapFormInput ${className}`}
+      onClick={handleContainerClick}
+    >
       {label && (
         <div className="SwapFormInput__label">
           <div>
@@ -135,6 +138,9 @@ SwapFormInput.defaultProps = {
   onTextChange: () => {},
   currency: '',
   onChange: () => {},
+  inputId: '',
+  className: '',
+  disabled: false,
 };
 
 export default SwapFormInput;

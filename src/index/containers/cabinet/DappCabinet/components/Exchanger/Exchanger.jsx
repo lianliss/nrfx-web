@@ -20,7 +20,7 @@ function Exchanger({ adaptive }) {
 
   return (
     <CabinetContent className="Exchanger__wrap">
-      {user || true ? (
+      {user ? (
         <div className="Exchanger">
           <h2>Exchanger</h2>
           <div className="Exchanger__content">
