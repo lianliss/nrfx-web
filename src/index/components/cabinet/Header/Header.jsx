@@ -10,6 +10,7 @@ import { getLang } from 'utils';
 import { setLang } from '../../../../services/lang';
 import { MAIN } from '../../../constants/pages';
 import { Web3Context } from 'services/web3Provider';
+import { WEI_ETHER } from 'src/index/constants/cabinet';
 
 import { logout } from 'src/actions/auth';
 import { openModal } from 'src/actions';
@@ -22,12 +23,12 @@ import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 
 function Header(props) {
-  const narfexRate = 455.55;
   const context = React.useContext(Web3Context);
   const isLogined = !!props.profile.user;
   // States
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
+  const [nrfxBalance, setNrfxBalance] = React.useState(0);
   const { isConnected, accountAddress, connectWallet } = context;
 
   // Adaptive sidebar is open
@@ -42,6 +43,12 @@ function Header(props) {
   const handleCryptoChange = (newValue) => {
     setCurrentCrypto(newValue);
   };
+
+  React.useEffect(() => {
+    context
+      .getTokenBalance('0x3764Be118a1e09257851A3BD636D48DFeab5CAFE')
+      .then((data) => setNrfxBalance((data / WEI_ETHER).toFixed(2)));
+  }, [accountAddress]);
 
   return (
     <>
@@ -84,11 +91,11 @@ function Header(props) {
             {isConnected ? (
               <>
                 <div className="CabinetHeader__wallet-rate">
-                  <SVG src={require('src/asset/logo/narfex-icon.svg')} />$
+                  <SVG src={require('src/asset/logo/narfex-icon.svg')} />
                   <div>
-                    <NumberFormat number={Math.floor(narfexRate)} />
+                    <NumberFormat number={Math.floor(nrfxBalance)} />
                     <span className="full-number">
-                      {getFraction(narfexRate)}
+                      {getFraction(nrfxBalance)}
                     </span>
                   </div>
                 </div>
@@ -104,11 +111,7 @@ function Header(props) {
               </>
             ) : (
               <div className="dynamic-shadow wallet-connect__button">
-                <Button
-                  type="lightBlue"
-                  size="small"
-                  onClick={connectWallet}
-                >
+                <Button type="lightBlue" size="small" onClick={connectWallet}>
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />
@@ -198,9 +201,7 @@ Header.propTypes = {
   router: PropTypes.object,
   langList: PropTypes.array,
   currentLang: PropTypes.string,
-  title: PropTypes.string,
   theme: PropTypes.string,
-  translator: PropTypes.bool,
   adaptive: PropTypes.bool,
 };
 
@@ -214,9 +215,7 @@ export default connect(
     router: state.router,
     currentLang: state.default.currentLang,
     langList: state.default.langList.filter((item) => item.display),
-    title: state.default.title,
     theme: state.default.theme,
-    translator: state.settings.translator,
   }),
   {
     // loadNotifications: notificationsActions.loadNotifications,
