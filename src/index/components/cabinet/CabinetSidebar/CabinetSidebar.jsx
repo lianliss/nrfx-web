@@ -75,10 +75,10 @@ function CabinetSidebar({ className = '' }) {
           icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
           startTexts={['Narfex', 'NRFX']}
           endTexts={[
-            '$455.00',
+            <br />,
             <>
               <RateIndicator number={12} type="up" procent />
-              0.54
+              $10.54
             </>,
           ]}
           border
