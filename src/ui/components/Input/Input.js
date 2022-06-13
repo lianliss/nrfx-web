@@ -261,9 +261,9 @@ class Input extends React.Component {
       if (this.props.positive && Number(e.target.value) < 0) {
         e.target.value = 0;
       }
-
+      
       const value = e.target.value;
-      const replacedValue = value.replace(",", ".");
+      const replacedValue = value.replace(",", ".").replace(" ", "");
       const result = replacedValue === "." ? "0." : replacedValue;
       e.target.value = result;
 

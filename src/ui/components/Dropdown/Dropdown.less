@@ -35,10 +35,13 @@
     }
 
     .Dropdown__option__arrow {
-      transition: transform.3s ease;
-      width: 24px;
-      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 10px;
+      height: 6px;
       margin: -4px 0;
+      margin-right: 12px;
       color: var(--gray);
 
       .isvg {
@@ -48,14 +51,17 @@
         height: inherit;
 
         svg {
+          transition: transform.3s ease;
           display: block;
+          width: inherit;
+          height: inherit;
         }
       }
     }
   }
 
   &.Dropdown_open {
-    .Dropdown__option__arrow {
+    .Dropdown__option__arrow svg {
       transform: rotate(180deg);
     }
   }
