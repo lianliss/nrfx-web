@@ -91,7 +91,7 @@ function Header(props) {
             {isConnected ? (
               <>
                 <div className="CabinetHeader__wallet-rate">
-                  <SVG src={require('src/asset/logo/narfex-icon.svg')} />
+                  <SVG src={require('src/asset/logo/narfex-icon.svg')} />&nbsp;
                   <div>
                     <NumberFormat number={Math.floor(nrfxBalance)} />
                     <span className="full-number">
