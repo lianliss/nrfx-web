@@ -57,6 +57,17 @@
   }
 }
 
+@media screen and (min-width: @desktop-width) {
+  .CabinetSidebar {    
+    &__container {
+      position: sticky;
+      top: 18px;
+      height: 75vh;
+      max-height: auto;
+    }
+  }
+}
+
 @media screen and (max-width: @mobile-width) {
   .CabinetSidebar {
     height: 100%;
