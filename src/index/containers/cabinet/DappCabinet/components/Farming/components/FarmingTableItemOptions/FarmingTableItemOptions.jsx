@@ -88,7 +88,7 @@ function FarmingTableItemOptions({
             first={lpBalance}
             second={lpBalance * pairPrice}
             currency={'LP'}
-            title="available"
+            title="Available"
           />
         </TableColumn>
         <TableColumn colspan={2}>

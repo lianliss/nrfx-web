@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import { Web3Context } from 'services/web3Provider';
 import wei from 'utils/wei';
 import _ from 'lodash';

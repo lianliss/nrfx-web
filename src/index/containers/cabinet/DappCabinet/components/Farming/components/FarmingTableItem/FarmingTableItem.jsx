@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Web3Context } from 'services/web3Provider';
 import wei from 'utils/wei';
 import _ from 'lodash';
+import * as roi from 'utils/roi';
 
 // Components
 import {
@@ -85,7 +88,7 @@ class FarmingTableItem extends React.PureComponent {
   handleRoiOpen = e => {
     e.stopPropagation();
 
-    openModal('farming_roi');
+    openModal('farming_roi', {}, {pool: this.props.pool});
   };
 
   rewardTimeout = null;
@@ -115,6 +118,25 @@ class FarmingTableItem extends React.PureComponent {
     this.rewardTimeout = setTimeout(this.updateRewardAmount.bind(this), REWARD_UPDATE_INTERVAL);
   };
 
+  getAPR(poolSize = wei.from(_.get(this, 'props.pool.size', '0')) || 1000) {
+    const {blocksPerSecond, prices} = this.context;
+    const {pool, nrfxPrice} = this.props;
+    // Reward per year
+    const rpy = roi.getPeriodReward(
+      60 * 60 * 24 * 365,
+      blocksPerSecond,
+      wei.from(_.get(pool, 'rewardPerBlock', '0'))
+    );
+    const rewardPrice = nrfxPrice || 0;
+    const lpPrice = prices[pool.address] || 0;
+
+    const rewardUsdt = rpy * rewardPrice;
+    const poolUsdt = poolSize * lpPrice;
+    console.log('getAPR', rewardUsdt, poolUsdt, poolSize);
+
+    return rewardUsdt / poolUsdt;
+  }
+
   render() {
     const {
       dark,
@@ -125,7 +147,10 @@ class FarmingTableItem extends React.PureComponent {
       pool,
     } = this.props;
     const {isActive, reward} = this.state;
-    const {tokens, getFarmContract, accountAddress, prices, getPairUSDTPrice} = this.context;
+    const {
+      tokens, prices,
+      blocksPerSecond,
+    } = this.context;
 
     const QuestionAPY = () => (
       <p>
@@ -139,6 +164,8 @@ class FarmingTableItem extends React.PureComponent {
     const poolSize = wei.from(pool.size);
 
     const pairPrice = prices[pool.address] || 0;
+
+    const apr = this.getAPR();
 
     return (
       <>
@@ -171,7 +198,7 @@ class FarmingTableItem extends React.PureComponent {
           </HoverPopup>
         </TableColumn>
         <TableColumn>
-          <NumberFormat number={arp} percent />
+          <NumberFormat number={apr * 100} percent />
           <span onClick={this.handleRoiOpen.bind(this)}>
             <SVG
               src={require('src/asset/icons/cabinet/calculator-icon.svg')}
@@ -250,4 +277,7 @@ FarmingTableItem.propTypes = {
   earned: PropTypes.any,
 };
 
-export default FarmingTableItem;
+export default connect(state => ({
+  nrfxPrice: state.web3.rates.nrfx,
+}), dispatch => bindActionCreators({
+}, dispatch), null, {pure: true})(FarmingTableItem);

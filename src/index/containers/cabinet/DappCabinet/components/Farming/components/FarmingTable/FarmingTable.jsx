@@ -37,7 +37,7 @@ function FarmingTable({
             <TableColumn sub="Tag" />,
             <TableColumn sub="Pool" />,
             <TableColumn sub="APY" />,
-            <TableColumn sub="ARP" />,
+            <TableColumn sub="APR" />,
             <TableColumn sub="Liquidity" />,
             <TableColumn sub="Earned" />,
             <TableColumn />,
