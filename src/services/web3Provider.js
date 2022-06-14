@@ -25,6 +25,7 @@ class Web3Provider extends React.PureComponent {
     isConnected: false,
     accountAddress: null,
     balancesRequested: null,
+    blocksPerSecond: 0,
     chainId: null,
     tokens: networks[56].tokens,
     pools: {},
@@ -225,6 +226,7 @@ class Web3Provider extends React.PureComponent {
       tokens: networks[id].tokens,
       chainId: id,
     });
+    this.getBlocksPerSecond();
     if (id === 56) {
       this.getTokens();
     }
@@ -839,6 +841,28 @@ class Web3Provider extends React.PureComponent {
       if (this.requiredChain === chainId) {
         return await this.switchToChain(chainId, false);
       }
+    }
+  }
+
+  /**
+   * Returns blocks per second value and updates it in the state
+   * @returns {Promise.<void>}
+   */
+  async getBlocksPerSecond() {
+    if (!this.web3) return;
+    try {
+      const currentBlockNumber = await this.web3.eth.getBlockNumber();
+      const data = await Promise.all([
+        this.web3.eth.getBlock(currentBlockNumber),
+        this.web3.eth.getBlock(currentBlockNumber - 10000),
+      ]);
+      const blocksPerSecond = (data[0].number - data[1].number) / (data[0].timestamp - data[1].timestamp);
+      this.setState({
+        blocksPerSecond,
+      });
+      return blocksPerSecond;
+    } catch (error) {
+      console.error('[getBlocksPerSecond]', error);
     }
   }
 

@@ -3,8 +3,11 @@ import _ from 'lodash';
 
 class MasterChefContract {
 
+  contract = null;
+
   constructor(provider) {
-    if (!provider.state.isConnected) return;
+    //if (!provider.state.isConnected) return;
+    if (!provider.web3) return;
     this.provider = provider;
     this.web3 = provider.web3;
     this.ethereum = provider.ethereum;

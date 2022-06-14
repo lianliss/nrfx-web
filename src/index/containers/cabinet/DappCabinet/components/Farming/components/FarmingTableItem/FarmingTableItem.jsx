@@ -65,10 +65,15 @@ class FarmingTableItem extends React.PureComponent {
         reward: wei.from(currentReward || '0')
       });
     }
+
+    if (!this.rewardTimeout) {
+      this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
+    }
   }
 
   componentWillUnmount() {
     this._mount = false;
+    clearTimeout(this.rewardTimeout);
   }
 
   handleActive = () => {
@@ -87,22 +92,27 @@ class FarmingTableItem extends React.PureComponent {
 
   updateRewardAmount = async () => {
     const {pool} = this.props;
-    const {getFarmContract, accountAddress, farm} = this.context;
-    if (!farm || !farm.contract) return;
-    const data = await Promise.all([
-      farm.contract.methods.getUserReward(pool.address, accountAddress).call(),
-      farm.contract.methods.getIsUserCanHarvest(pool.address, accountAddress).call(),
-    ]);
-    const reward = data[0];
-    const isCanHarvest = data[1];
-    const rewardAmount = wei.from(reward);
-    console.log('[updateRewardAmount]', data);
-    pool.reward = reward;
-    pool.isCanHarvest = isCanHarvest;
-    if (this._mount) {
-      this.setState({rewardAmount});
+    const {accountAddress, farm} = this.context;
+    try {
+      if (!farm || !farm.contract) throw new Error('No farm');
+      if (!wei.from(pool.userPool)) throw new Error('No user share');
+      const data = await Promise.all([
+        farm.contract.methods.getUserReward(pool.address, accountAddress).call(),
+        farm.contract.methods.getIsUserCanHarvest(pool.address, accountAddress).call(),
+      ]);
+      const reward = data[0];
+      const isCanHarvest = data[1];
+      const rewardAmount = wei.from(reward);
+      console.log('[updateRewardAmount]', data);
+      pool.reward = reward;
+      pool.isCanHarvest = isCanHarvest;
+      if (this._mount) {
+        this.setState({reward: rewardAmount});
+      }
+    } catch (error) {
+
     }
-    this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
+    this.rewardTimeout = setTimeout(this.updateRewardAmount.bind(this), REWARD_UPDATE_INTERVAL);
   };
 
   render() {
