@@ -197,6 +197,10 @@ export const routes =
         {
           name: pages.NARFEX_DAO,
           path: "/narfex_dao"
+        },
+        {
+          name: pages.FARMING_INSTRUCTION,
+          path: "/farming_instruction"
         }
       ];
 
