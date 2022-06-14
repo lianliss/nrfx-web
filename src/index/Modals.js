@@ -52,6 +52,7 @@ import {
   LiquidityConfirmModal,
   TransactionWaitingModal,
   YourWalletModal,
+  ConnectToWalletModal
 } from "./components/cabinet";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
@@ -203,6 +204,9 @@ function Modals(props) {
       break;
     case "your_wallet":
       Component = YourWalletModal;
+      break;
+    case "connect_to_wallet":
+      Component = ConnectToWalletModal;
       break;
     default:
       return null;
