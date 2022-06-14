@@ -9,10 +9,20 @@ import WalletsListItem from '../WalletsList/components/WalletsListItem/WalletsLi
 import WalletsList from '../WalletsList/WalletsList';
 import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
+import { NumberFormat } from 'src/ui';
+import web3Backend from 'services/web3-backend';
+
 import './CabinetSidebar.less';
 
 function CabinetSidebar({ className = '' }) {
   const { route, router } = useRoute();
+  const [nrfxRate, setNrfxRate] = React.useState(0);
+
+  React.useEffect(() => {
+    web3Backend.getTokenRate('nrfx').then((data) => {
+      setNrfxRate(data.price);
+    });
+  }, []);
 
   return (
     <div className={`CabinetSidebar ${className}`}>
@@ -75,10 +85,10 @@ function CabinetSidebar({ className = '' }) {
           icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
           startTexts={['Narfex', 'NRFX']}
           endTexts={[
-            '$455.00',
+            <br />,
             <>
               <RateIndicator number={12} type="up" procent />
-              0.54
+              $<NumberFormat number={nrfxRate} />
             </>,
           ]}
           border

@@ -19,13 +19,14 @@ function Exchanger({ adaptive }) {
   const user = useSelector(userSelector);
 
   return (
-    <CabinetContent>
+    <CabinetContent className="Exchanger__wrap">
       {user ? (
-        adaptive ? (
-          <SwapFormAdaptive />
-        ) : (
-          <SwapForm />
-        )
+        <div className="Exchanger">
+          <h2>Exchanger</h2>
+          <div className="Exchanger__content">
+            <SwapForm />
+          </div>
+        </div>
       ) : (
         <div className="Exchanger">
           <h2>Exchanger</h2>

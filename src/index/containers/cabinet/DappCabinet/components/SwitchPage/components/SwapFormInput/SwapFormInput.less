@@ -16,7 +16,7 @@
   &__select {
     display: flex;
     flex-direction: column;
-    margin-left: 12px;
+    margin-left: 8px;
   }
 
   &__label {
@@ -65,10 +65,13 @@
   }
 
   &__icon {
+    width: 41px;
+    height: 41px;
+
     .isvg,
     svg {
-      width: 41px;
-      height: 41px;
+      width: inherit;
+      height: inherit;
     }
   }
 
@@ -84,9 +87,10 @@
 
   &__currency {
     display: flex;
+    align-items: center;
     font-weight: 600;
     font-size: 18px;
-    line-height: 110%;
+    line-height: 100%;
     letter-spacing: -0.01em;
 
     // Select icon
@@ -97,6 +101,7 @@
 
   &__input {
     width: 100%;
+    margin-left: 10px;
     // <Input />
     .Input {
       border: none;
@@ -105,11 +110,29 @@
       font-size: 26px;
       line-height: 110%;
       letter-spacing: -0.01em;
+      caret-color: var(--royal-blue);
     }
 
     input {
       text-align: right;
       padding: 0 0 0 10px;
     }
+  }
+}
+
+.adaptive .SwapFormInput {
+  &__container {
+    padding: 11px 19px 11px 9px;
+  }
+
+  &__currency {
+    font-size: 16px;
+  }
+  
+  .Input {
+    --input-height: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
   }
 }

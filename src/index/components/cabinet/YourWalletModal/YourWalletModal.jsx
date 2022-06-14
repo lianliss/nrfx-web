@@ -53,7 +53,7 @@ function YourWalletModal(props) {
         </div>
         <div className="col">
           <div className="action-text">
-            View on BacScan <SVG src={require('src/asset/icons/export.svg')} />
+            View on BscScan <SVG src={require('src/asset/icons/export.svg')} />
           </div>
         </div>
       </div>

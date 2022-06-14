@@ -17,7 +17,7 @@ function TransactionSubmittedModal({ metaMask, ...props }) {
           <SVG src={require('src/asset/icons/transaction/submitted.svg')} />
         </div>
         <div className="text-with-icon view_on_bac_scan">
-          <span className="default-text">View on BacScan</span>
+          <span className="default-text">View on BscScan</span>
           <SVG
             src={require('src/asset/icons/export.svg')}
             style={{ width: 14, height: 14 }}

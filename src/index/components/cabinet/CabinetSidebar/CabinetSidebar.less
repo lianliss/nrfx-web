@@ -42,6 +42,13 @@
     top: calc(100vh - 82px);
 
     .WalletsListItem {
+      transition: box-shadow 0.3s;
+      cursor: default;
+
+      &:hover {
+        box-shadow: 0 0 20px #dfe3f0;
+      }
+
       &__icon {
         .isvg {
           box-shadow: 0 0 0 1px #fff;
@@ -54,6 +61,17 @@
     opacity: 0.7;
     user-select: none;
     pointer-events: none;
+  }
+}
+
+@media screen and (min-width: @desktop-width) {
+  .CabinetSidebar {
+    &__container {
+      position: sticky;
+      top: 18px;
+      height: 75vh;
+      max-height: auto;
+    }
   }
 }
 

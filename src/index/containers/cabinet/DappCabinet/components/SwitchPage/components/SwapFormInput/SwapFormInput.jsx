@@ -5,16 +5,33 @@ import PropTypes from 'prop-types';
 import SVG from 'utils/svg-wrap';
 import * as UI from 'src/ui';
 
+// Utils
+import currencies from 'src/currencies.js';
+
 // Styles.
 import './SwapFormInput.less';
 
-function SwapFormInput({ title, rate, manage, label }) {
-  // States
-  const [value, setValue] = React.useState('0');
-  const [currency, setCurrency] = React.useState('usd');
+const SwapFormInput = React.forwardRef((props) => {
+  const {
+    title,
+    prefix,
+    rate,
+    manage,
+    label,
+    iconSize,
+    value,
+    onTextChange,
+    currency,
+    onChange,
+    inputId,
+    className,
+    onFocus,
+    autoFocus,
+    inputRef,
+    disabled,
+  } = props;
 
   // Refs
-  const inputRef = React.useRef(null);
   const selectRef = React.useRef(null);
 
   // Logic
@@ -31,7 +48,7 @@ function SwapFormInput({ title, rate, manage, label }) {
 
   // Handlers
   const handleInput = (newValue) => {
-    setValue(newValue);
+    onTextChange(newValue);
   };
 
   const handleContainerClick = (e) => {
@@ -42,7 +59,10 @@ function SwapFormInput({ title, rate, manage, label }) {
 
   // Render
   return (
-    <div className="SwapFormInput" onClick={handleContainerClick}>
+    <div
+      className={`SwapFormInput ${className}`}
+      onClick={handleContainerClick}
+    >
       {label && (
         <div className="SwapFormInput__label">
           <div>
@@ -59,11 +79,14 @@ function SwapFormInput({ title, rate, manage, label }) {
         </div>
       )}
       <div className="SwapFormInput__container">
-        <div className="SwapFormInput__icon">
+        <div
+          className="SwapFormInput__icon"
+          style={{ width: iconSize, height: iconSize }}
+        >
           <SVG src={require(`src/asset/icons/wallets/${currency}.svg`)} />
         </div>
         <div className="SwapFormInput__select" ref={selectRef}>
-          <span>Ethereum</span>
+          {prefix && <span>{currencies[currency].name}</span>}
           <div className="SwapFormInput__currency">
             <span>{currency.toUpperCase()}</span>
             <SVG
@@ -73,22 +96,35 @@ function SwapFormInput({ title, rate, manage, label }) {
         </div>
         <div className="SwapFormInput__input">
           <UI.Input
+            id={inputId}
             ref={inputRef}
             type="number"
             onTextChange={handleInput}
             value={value}
+            onFocus={onFocus}
+            autoFocus={autoFocus}
+            disabled={disabled}
           />
         </div>
       </div>
     </div>
   );
-}
+});
 
 SwapFormInput.propTypes = {
   title: PropTypes.string,
+  prefix: PropTypes.bool,
   rate: PropTypes.number,
   manage: PropTypes.bool,
   label: PropTypes.bool,
+  iconSize: PropTypes.number,
+  value: PropTypes.number,
+  onTextChange: PropTypes.func,
+  currency: PropTypes.string,
+  onChange: PropTypes.func,
+  inputId: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 SwapFormInput.defaultProps = {
@@ -96,6 +132,15 @@ SwapFormInput.defaultProps = {
   rate: 0,
   manage: false,
   label: false,
+  prefix: false,
+  iconSize: 41,
+  value: 0,
+  onTextChange: () => {},
+  currency: '',
+  onChange: () => {},
+  inputId: '',
+  className: '',
+  disabled: false,
 };
 
 export default SwapFormInput;

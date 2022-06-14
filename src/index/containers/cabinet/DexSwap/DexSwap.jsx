@@ -481,7 +481,6 @@ class DexSwap extends React.PureComponent {
                           {getLang('dex_price_impact_hint')}
                         </div>
                       }
-                      windowRight
                       type="top"
                     >
                       <SVG
