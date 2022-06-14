@@ -29,14 +29,18 @@ function Header(props) {
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
   const [nrfxBalance, setNrfxBalance] = React.useState(0);
-  const { isConnected, accountAddress, connectWallet } = context;
+  const { isConnected, accountAddress } = context;
 
   // Adaptive sidebar is open
   const [isSidebar, setIsSidebar] = React.useState(false);
   const getFraction = (number) => {
-    const fractionIndex = String(number).indexOf('.');
-    const result = String(number).slice(fractionIndex, String(number).length);
-    return result;
+    if (number > 0) {
+      const fractionIndex = String(number).indexOf('.');
+      const result = String(number).slice(fractionIndex, String(number).length);
+      return result;
+    } else {
+      return null;
+    }
   };
 
   // Set current crypto
@@ -47,7 +51,13 @@ function Header(props) {
   React.useEffect(() => {
     context
       .getTokenBalance('0x3764Be118a1e09257851A3BD636D48DFeab5CAFE')
-      .then((data) => setNrfxBalance((data / WEI_ETHER).toFixed(2)));
+      .then((data) => {
+        if (data > 0) {
+          setNrfxBalance(100);
+        } else {
+          setNrfxBalance(100);
+        }
+      });
   }, [accountAddress]);
 
   return (
@@ -91,12 +101,13 @@ function Header(props) {
             {isConnected ? (
               <>
                 <div className="CabinetHeader__wallet-rate">
-                  <SVG src={require('src/asset/logo/narfex-icon.svg')} />&nbsp;
+                  <SVG src={require('src/asset/logo/narfex-icon.svg')} />
+                  &nbsp;
                   <div>
                     <NumberFormat number={Math.floor(nrfxBalance)} />
-                    <span className="full-number">
+                    {/* <span className="full-number">
                       {getFraction(nrfxBalance)}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
                 <div
@@ -111,7 +122,11 @@ function Header(props) {
               </>
             ) : (
               <div className="dynamic-shadow wallet-connect__button">
-                <Button type="lightBlue" size="small" onClick={connectWallet}>
+                <Button
+                  type="lightBlue"
+                  size="small"
+                  onClick={() => openModal('connect_to_wallet')}
+                >
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />
