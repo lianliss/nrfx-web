@@ -53,9 +53,9 @@ function Header(props) {
       .getTokenBalance('0x3764Be118a1e09257851A3BD636D48DFeab5CAFE')
       .then((data) => {
         if (data > 0) {
-          setNrfxBalance(100);
+          setNrfxBalance((data / WEI_ETHER).toFixed(2));
         } else {
-          setNrfxBalance(100);
+          setNrfxBalance(0);
         }
       });
   }, [accountAddress]);
