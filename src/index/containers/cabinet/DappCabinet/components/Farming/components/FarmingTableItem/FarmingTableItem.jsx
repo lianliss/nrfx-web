@@ -118,7 +118,7 @@ class FarmingTableItem extends React.PureComponent {
     this.rewardTimeout = setTimeout(this.updateRewardAmount.bind(this), REWARD_UPDATE_INTERVAL);
   };
 
-  getAPR(poolSize = wei.from(_.get(this, 'props.pool.size', '0')) || 1000) {
+  getAPR(poolSize = 1000) {
     const {blocksPerSecond, prices} = this.context;
     const {pool, nrfxPrice} = this.props;
     // Reward per year
@@ -132,9 +132,17 @@ class FarmingTableItem extends React.PureComponent {
 
     const rewardUsdt = rpy * rewardPrice;
     const poolUsdt = poolSize * lpPrice;
-    console.log('getAPR', rewardUsdt, poolUsdt, poolSize);
 
     return rewardUsdt / poolUsdt;
+  }
+
+  getAPY(apr) {
+    const {blocksPerSecond, prices} = this.context;
+    const {pool, nrfxPrice} = this.props;
+    const periodSeconds = 60 * 60 * 24 * 14; // 14 days
+    const yearSeconds = 60 * 60 * 24 * 365;
+    const periodsPerYear = yearSeconds / periodSeconds;
+    return (1 + (apr / periodsPerYear)) ** periodsPerYear - 1;
   }
 
   render() {
@@ -142,8 +150,6 @@ class FarmingTableItem extends React.PureComponent {
       dark,
       id,
       indicator,
-      apy,
-      arp,
       pool,
     } = this.props;
     const {isActive, reward} = this.state;
@@ -166,6 +172,7 @@ class FarmingTableItem extends React.PureComponent {
     const pairPrice = prices[pool.address] || 0;
 
     const apr = this.getAPR();
+    const apy = this.getAPY(apr);
 
     return (
       <>
@@ -189,7 +196,7 @@ class FarmingTableItem extends React.PureComponent {
           />
         </TableColumn>
         <TableColumn>
-          <NumberFormat number={apy} percent />
+          <NumberFormat number={apy * 100} percent />
           <HoverPopup content={<QuestionAPY />}>
             <SVG
               src={require('src/asset/icons/cabinet/question-icon.svg')}
