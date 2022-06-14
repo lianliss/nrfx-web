@@ -843,7 +843,6 @@ class Web3Provider extends React.PureComponent {
   }
 
   render() {
-
     return <Web3Context.Provider value={{
       ...this.state,
       ethereum: this.ethereum,

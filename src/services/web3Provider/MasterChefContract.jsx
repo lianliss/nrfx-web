@@ -54,6 +54,7 @@ class MasterChefContract {
         pairContract.methods.token0().call(),
         pairContract.methods.token1().call(),
         this.contract.methods.getPoolSize(address).call(),
+        this.contract.methods.getPoolRewardPerBlock(address).call(),
       ];
       if (accountAddress) {
         promises.push(pairContract.methods.balanceOf(accountAddress).call());
@@ -67,10 +68,11 @@ class MasterChefContract {
         token0: data[0],
         token1: data[1],
         size: data[2],
-        balance: data[3] || '0',
-        userPool: data[4] || '0',
-        reward: data[5] || '0',
-        isCanHarvest: data[6] || false,
+        rewardPerBlock: data[3],
+        balance: data[4] || '0',
+        userPool: data[5] || '0',
+        reward: data[6] || '0',
+        isCanHarvest: data[7] || false,
         isDataLoaded: true,
       }
     } catch (error) {
