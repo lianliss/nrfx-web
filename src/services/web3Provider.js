@@ -28,7 +28,7 @@ class Web3Provider extends React.PureComponent {
     blocksPerSecond: 0,
     chainId: null,
     tokens: networks[56].tokens,
-    pools: {},
+    pools: null,
     prices: {},
   };
 
@@ -849,6 +849,9 @@ class Web3Provider extends React.PureComponent {
    */
   async switchToChain(chainId, firstAttempt = true) {
     if (firstAttempt) this.requiredChain = chainId;
+    if (firstAttempt && this.state.chainId !== chainId) {
+      this.setState({pools: null})
+    }
     try {
       if (chainId === 97) {
         await window.ethereum.request({
@@ -870,6 +873,7 @@ class Web3Provider extends React.PureComponent {
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: this.web3.utils.toHex(chainId) }]
       });
+      return true;
     } catch (error) {
       console.log('[switchToChain]', error);
       if (this.requiredChain === chainId) {

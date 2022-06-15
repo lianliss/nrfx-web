@@ -135,6 +135,7 @@ function Farming({ adaptive }) {
   const {getFarmContract, chainId, isConnected, connectWallet, updatePoolsList, pools, switchToChain} = context;
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
+  const [requestedChain, setRequestedChain] = React.useState(null);
 
   const filters = {
     farmsValue,
@@ -147,9 +148,13 @@ function Farming({ adaptive }) {
 
   React.useEffect(() => {
     if (!isConnected) return;
-    if (chainId !== 97) {
-      switchToChain(97);
-    } else {
+    if (chainId !== 97 && requestedChain !== 97) {
+      setRequestedChain(97);
+      switchToChain(97).then(() => {
+        requestedChain(null);
+      });
+    }
+    if (chainId === 97) {
       updatePoolsList().catch(error => {
         console.error('[Farming][getPoolsList]', error);
       });
@@ -177,7 +182,7 @@ function Farming({ adaptive }) {
           </p>
         </div>
       </div>
-      {isConnected ? <TableComponent items={farmingItems} {...{
+      {(isConnected && pools) ? <TableComponent items={farmingItems} {...{
         pools,
       }} {...filters} /> : <LoadingStatus status={'loading'}/>}
     </CabinetBlock>
