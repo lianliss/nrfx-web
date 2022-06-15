@@ -48,6 +48,7 @@ class DexSwap extends React.PureComponent {
       .getItem('DexSwapTransactions')
       ? JSON.parse(window.localStorage.getItem('DexSwapTransactions'))
       : [],
+    chainRequested: false,
   };
 
   balanceUpdateInterval = null;
@@ -59,16 +60,28 @@ class DexSwap extends React.PureComponent {
     })
   };
 
-  requireChain(id = 56) {
-    const {chainId, isConnected, switchToChain} = this.context;
-    if (!isConnected) return;
-    if (chainId !== id) {
-      switchToChain(id);
+  setStateAsync = state => new Promise((fulfill, reject) => {
+    if (this._mount) {
+      this.setState(state, fulfill);
+    } else {
+      reject(false)
     }
+  });
+
+  async requireChain(id = 56) {
+    const {chainId, isConnected, switchToChain, findTokenBySymbol, tokens} = this.context;
+    if (!isConnected) return;
+    if (this.chainRequested) return;
+    this.chainRequested = true;
+    if (chainId !== id) {
+      const result = await switchToChain(id);
+    }
+    this.chainRequested = false;
   }
 
   componentDidMount() {
     this._mount = true;
+    this.setState({lastChainId: this.context.chainId});
     this.fillDefaultPair();
     this.updateAccountAddress();
 
@@ -77,7 +90,8 @@ class DexSwap extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', this.context.chainId);
+    const {findTokenBySymbol, chainId} = this.context;
+    //console.log('componentDidUpdate', chainId);
     // Modals Toggler.
     if(!this.state.isSettings && _.isNull(this.state.selectToken)) {
       this.props.closeModal();
@@ -97,6 +111,27 @@ class DexSwap extends React.PureComponent {
       this.updateLiquidity();
     }
     this.requireChain();
+    if (prevState.lastChainId !== chainId) {
+      this.setState(state => {
+        const token0Symbol = _.get(state, 'pair[0].symbol');
+        const token1Symbol = _.get(state, 'pair[1].symbol');
+        const token0 = findTokenBySymbol(token0Symbol);
+        const token1 = findTokenBySymbol(token1Symbol);
+        if (token0 && token1) {
+          return {
+            ...state,
+            lastChainId: chainId,
+            pair: [token0, token1]
+          }
+        } else {
+          return {
+            ...state,
+            lastChainId: chainId,
+            pair: [tokens[0], tokens[1]],
+          };
+        }
+      }, () => this.updateLiquidity());
+    }
   }
 
   componentWillUnmount() {
@@ -106,10 +141,12 @@ class DexSwap extends React.PureComponent {
   }
 
   async updateLiquidity() {
+    if (!this._mount) return;
     const {getPairs} = this.context;
     const token0 = _.get(this.state, 'pair[0]');
     const token1 = _.get(this.state, 'pair[1]');
     if (!token0 || !token1) return;
+    console.log('[updateLiquidity]', token0, token1);
 
     clearTimeout(this.liquidityUpdateTimeout);
     try {

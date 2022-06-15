@@ -215,20 +215,24 @@ class Web3Provider extends React.PureComponent {
    * @param id {integer} chainID
    */
   setChain(id) {
-    if (!networks[id]) {
-      return this.setState({
+    try {
+      if (!networks[id]) {
+        return this.setState({
+          chainId: id,
+        })
+      }
+      Object.assign(this, networks[id]);
+      this.farm = this.getFarmContract();
+      this.setState({
+        tokens: networks[id].tokens,
         chainId: id,
-      })
-    }
-    Object.assign(this, networks[id]);
-    this.farm = this.getFarmContract();
-    this.setState({
-      tokens: networks[id].tokens,
-      chainId: id,
-    });
-    this.getBlocksPerSecond();
-    if (id === 56) {
-      this.getTokens();
+      });
+      this.getBlocksPerSecond();
+      if (id === 56) {
+        this.getTokens();
+      }
+    } catch (error) {
+      console.error('[setChain]', id, error);
     }
   }
 
@@ -836,7 +840,7 @@ class Web3Provider extends React.PureComponent {
           }],
         });
       }
-      return await window.ethereum.request({
+      await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: this.web3.utils.toHex(chainId) }]
       });
@@ -846,6 +850,16 @@ class Web3Provider extends React.PureComponent {
         return await this.switchToChain(chainId, false);
       }
     }
+  }
+
+  /**
+   * Returns token by symbol
+   * @param _symbol {string}
+   * @return {object}
+   */
+  findTokenBySymbol(_symbol) {
+    const symbol = typeof _symbol === 'string' ? _symbol.toUpperCase() : _symbol;
+    return this.state.tokens.find(t => (t.symbol ? t.symbol.toUpperCase() : t.symbol) === symbol);
   }
 
   /**
@@ -898,6 +912,7 @@ class Web3Provider extends React.PureComponent {
       updatePoolsList: this.updatePoolsList.bind(this),
       switchToChain: this.switchToChain.bind(this),
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
+      findTokenBySymbol: this.findTokenBySymbol.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>
