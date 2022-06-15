@@ -540,6 +540,7 @@ class Web3Provider extends React.PureComponent {
             const balance = result.status === 'fulfilled' && typeof result.value !== 'undefined'
               ? result.value
               : "0";
+            const tokenAddress = token.address ? token.address.toLowerCase() : token.address;
 
             // Apply a new balance to the state
             newState[key] = balance;
@@ -552,7 +553,8 @@ class Web3Provider extends React.PureComponent {
 
                 // Save to the state
                 this.setState(state => {
-                  const tokenState = state.tokens.find(t => t.address.toLowerCase() === token.address.toLowerCase());
+                  const tokenState = state.tokens
+                    .find(t => (t.address ? t.address.toLowerCase() : t.address) === tokenAddress);
                   if (!tokenState) return;
 
                   // Update token price
@@ -818,20 +820,22 @@ class Web3Provider extends React.PureComponent {
   async switchToChain(chainId, firstAttempt = true) {
     if (firstAttempt) this.requiredChain = chainId;
     try {
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: this.web3.utils.toHex(97),
-          chainName: 'BSC web3 test',
-          nativeCurrency: {
-            name: 'BNB',
-            symbol: 'BNB',
-            decimals: 18
-          },
-          rpcUrls: ['https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3'],
-          blockExplorerUrls: ['https://testnet.bscscan.com']
-        }],
-      });
+      if (chainId === 97) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: this.web3.utils.toHex(97),
+            chainName: 'BSC web3 test',
+            nativeCurrency: {
+              name: 'BNB',
+              symbol: 'BNB',
+              decimals: 18
+            },
+            rpcUrls: ['https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3'],
+            blockExplorerUrls: ['https://testnet.bscscan.com']
+          }],
+        });
+      }
       return await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: this.web3.utils.toHex(chainId) }]

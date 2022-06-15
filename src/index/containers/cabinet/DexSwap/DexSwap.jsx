@@ -59,15 +59,25 @@ class DexSwap extends React.PureComponent {
     })
   };
 
+  requireChain(id = 56) {
+    const {chainId, isConnected, switchToChain} = this.context;
+    if (!isConnected) return;
+    if (chainId !== id) {
+      switchToChain(id);
+    }
+  }
+
   componentDidMount() {
     this._mount = true;
     this.fillDefaultPair();
     this.updateAccountAddress();
 
     this.balanceUpdateInterval = setInterval(this.updateExchangeTokenBalance.bind(this), BALANCE_UPDATE_INTERVAL);
+    this.requireChain();
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate', this.context.chainId);
     // Modals Toggler.
     if(!this.state.isSettings && _.isNull(this.state.selectToken)) {
       this.props.closeModal();
@@ -86,6 +96,7 @@ class DexSwap extends React.PureComponent {
     if (token0 !== prevToken0 || token1 !== prevToken1) {
       this.updateLiquidity();
     }
+    this.requireChain();
   }
 
   componentWillUnmount() {
@@ -560,7 +571,7 @@ class DexSwap extends React.PureComponent {
                 const token = tokens.find((t) => t.symbol === symbol);
                 const logo = _.get(token, 'logoURI', '');
                 return (
-                  <div className="DexSwap__route-symbol">
+                  <div className="DexSwap__route-symbol" key={symbol}>
                     {!!index && (
                       <SVG
                         src={require('src/asset/icons/triangle-right.svg')}
