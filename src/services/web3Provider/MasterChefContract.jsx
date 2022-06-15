@@ -54,28 +54,24 @@ class MasterChefContract {
         address,
       );
       const promises = [
-        pairContract.methods.token0().call(),
-        pairContract.methods.token1().call(),
-        this.contract.methods.getPoolSize(address).call(),
-        this.contract.methods.getPoolRewardPerBlock(address).call(),
+        this.contract.methods.getPoolData(address).call()
       ];
       if (accountAddress) {
-        promises.push(pairContract.methods.balanceOf(accountAddress).call());
-        promises.push(this.contract.methods.getUserPoolSize(address, accountAddress).call());
-        promises.push(this.contract.methods.getUserReward(address, accountAddress).call());
-        promises.push(this.contract.methods.getIsUserCanHarvest(address, accountAddress).call());
+        promises.push(this.contract.methods.getPoolUserData(address, accountAddress).call());
       }
       const data = await Promise.all(promises);
       return {
         ...pool,
-        token0: data[0],
-        token1: data[1],
-        size: data[2],
-        rewardPerBlock: data[3],
-        balance: data[4] || '0',
-        userPool: data[5] || '0',
-        reward: data[6] || '0',
-        isCanHarvest: data[7] || false,
+        token0: _.get(data[0], 'token0'),
+        token1: _.get(data[0], 'token1'),
+        token0Symbol: _.get(data[0], 'token0Symbol'),
+        token1Symbol: _.get(data[0], 'token1Symbol'),
+        size: _.get(data[0], 'size', '0'),
+        rewardPerBlock: _.get(data[0], 'rewardPerBlock', '0'),
+        balance: _.get(data[1], 'balance', '0'),
+        userPool: _.get(data[1], 'userPool', '0'),
+        reward: _.get(data[1], 'reward', '0'),
+        isCanHarvest: _.get(data[1], 'isCanHarvest', false),
         isDataLoaded: true,
       }
     } catch (error) {
