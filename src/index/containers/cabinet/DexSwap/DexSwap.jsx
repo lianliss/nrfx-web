@@ -16,6 +16,7 @@ import getFinePrice from 'utils/get-fine-price';
 import significant from 'utils/significant';
 import { Fraction, JSBI } from '@pancakeswap/sdk';
 import * as toast from 'actions/toasts';
+import { openModal } from "src/actions"
 import { getLang } from "utils";
 
 // Styles
@@ -445,7 +446,7 @@ class DexSwap extends React.PureComponent {
               manage={
                 <div
                   className="DexSwap__manage"
-                  onClick={() => this.setState({ isSettings: true })}
+                  onClick={() => openModal('swap_settings')}
                 >
                   <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
                 </div>

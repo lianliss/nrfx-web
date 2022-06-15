@@ -1,17 +1,22 @@
 .SwapSettings {
   padding: 23px 32px 43px;
+  max-width: 445px;
+  width: 100%;
   background: #fff;
   box-sizing: border-box;
   border-radius: 25px;
-  box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25);
 
   &__wrap {
-    position: absolute;
-    left: 20px;
-    top: 0;
-    max-width: 445px;
-    width: 100%;
+    .Modal__box {
+      transform: translateX(83px);
+      padding: 0;
+      background: none;
+    }
     z-index: 5;
+  }
+
+  &-Bottom {
+    padding: 0;
   }
 
   &__close {
@@ -166,6 +171,7 @@
 
 .adaptive .SwapSettings {
   padding: 23px 19px 37px;
+  max-width: 100%;
   width: 100%;
   margin: 0 auto;
   position: relative;
@@ -174,6 +180,7 @@
     display: flex;
     left: 0;
     padding: 0 16px;
+    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
   }

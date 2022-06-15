@@ -54,6 +54,7 @@ import {
   YourWalletModal,
   ConnectToWalletModal
 } from "./components/cabinet";
+import SwapSettings from "./containers/cabinet/DexSwap/components/SwapSettings/SwapSettings";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
 
@@ -207,6 +208,9 @@ function Modals(props) {
       break;
     case "connect_to_wallet":
       Component = ConnectToWalletModal;
+      break;
+    case "swap_settings":
+      Component = SwapSettings;
       break;
     default:
       return null;

@@ -1,9 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // Components
 import SVG from 'utils/svg-wrap';
 import SectionBlock from '../SectionBlock/SectionBlock';
-import { Button, Input } from 'src/ui';
+import { Button, Input, Modal, BottomSheetModal } from 'src/ui';
 
 // Styles
 import './SwapSettings.less';
@@ -14,37 +15,26 @@ const transactionSpeeds = [
   { id: 3, title: 'Istant', amount: 8 },
 ];
 
-function SwapSettings({ onClose }) {
+function SwapSettings(props) {
+  const adaptive = useSelector((store) => store.default.adaptive);
+
   const [transactionSpeed, setTransactionSpeed] = React.useState(0);
   const [slippageValue, setSlippageValue] = React.useState(0.8);
-  const [deadlineValue, setDeadlineValue] = React.useState(0.7);
+  const [deadlineValue, setDeadlineValue] = React.useState(20);
 
-  const settingsRef = React.useRef(null);
-
-  React.useEffect(() => {
-    // @param {object} Event
-    // Close modal if click was been modal out.
-    const handleClose = (e) => {
-      if (!settingsRef) return;
-
-      if (!settingsRef.current.contains(e.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('click', handleClose, false);
-
-    return () => {
-      document.removeEventListener('click', handleClose, false);
-    };
-  });
+  const Wrapper = adaptive ? BottomSheetModal : Modal;
 
   return (
-    <div className="SwapSettings__wrap" ref={settingsRef}>
+    <Wrapper
+      className="SwapSettings__wrap"
+      skipClose
+      prefix="SwapSettings"
+      {...props}
+    >
       <div className="SwapSettings">
         <h2>
           <span>Settings</span>
-          <span className="SwapSettings__close" onClick={onClose}>
+          <span className="SwapSettings__close" onClick={props.onClose}>
             <SVG src={require('src/asset/24px/close-large.svg')} />
           </span>
         </h2>
@@ -108,7 +98,7 @@ function SwapSettings({ onClose }) {
           </div>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
