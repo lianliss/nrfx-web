@@ -8,6 +8,10 @@ function FarmingInstruction() {
     <div className="FarmingInstruction__wrap">
       <div className="FarmingInstruction">
         <h1>NARFEX FARMING IS ON THE TESTNET NOW</h1>
+        <a href="https://testnet.narfex.com/dapp/farming">
+          &gt;&gt; I know how to work with it, go directly to the farming page
+          &gt;&gt;
+        </a>
         <h2>What is a Farming (liquidity mining) and why is it lucrative?</h2>
         <p>
           Narfex Farms offer multiple farming opportunities to our users. You
@@ -91,7 +95,7 @@ function FarmingInstruction() {
         </p>
         <p>Help us make this product better for the mainnet release.</p>
         <h3>What sort of feedback do we need?</h3>
-        <ul>
+        <ul className="FarmingInstruction__default-list">
           <li>
             <p>
               <strong>Acquaint yourself with the UI.</strong> Tap buttons, read
@@ -168,8 +172,7 @@ function FarmingInstruction() {
             <div className="image-container">
               <img src={require('./asset/1.png')} />
             </div>
-            <p>2.2</p>
-            <p>Fill in all required fields:</p>
+            <p>2.2 Fill in all required fields:</p>
             <ul>
               <li>
                 <p>
@@ -223,6 +226,104 @@ function FarmingInstruction() {
               <img src={require('./asset/3.png')} />
             </div>
             <p>Thank you in advance for your goodwill and help!</p>
+          </li>
+        </ol>
+        <h2>How to start farming</h2>
+        <p>
+          After you have received test bnb, you can proceed directly to farming.
+        </p>
+        <p>Follow three simple steps:</p>
+        <ol>
+          <li>
+            <strong>
+              Fill out the form to receive NRFX tokens on the testnet.
+            </strong>
+            <br />
+            <a href="https://forms.gle/y5W1yAWf4ZXXoxV18">
+              https://forms.gle/y5W1yAWf4ZXXoxV18
+            </a>
+          </li>
+          <li>
+            <p>
+              <strong>
+                Next, you need to get LP tokens, for this we go to{' '}
+                <a href="https://pancake.kiemtienonline360.com/#/pool">
+                  PancakeSwap
+                </a>
+                &nbsp; and provide NRFX liquidity with BNB.
+              </strong>
+            </p>
+            <p>2.1 Connect your wallet</p>
+            <div className="image-container">
+              <img src={require('./asset/4.png')} />
+            </div>
+            <p>2.2 Select “Liquidity” section</p>
+            <div className="image-container">
+              <img src={require('./asset/5.png')} />
+            </div>
+            <p>Select BNB & NRFX and enter the amount.</p>
+            <p>Consider 0.1 bnb gas fee</p>
+            <div className="image-container">
+              <img src={require('./asset/6.png')} />
+            </div>
+            <p>Confirm the transaction. Done.</p>
+            <div className="image-container">
+              <img src={require('./asset/7.png')} />
+            </div>
+          </li>
+          <li>
+            <p>
+              <strong>
+                Finally, we stake LP tokens on the&nbsp;
+                <a href="https://testnet.narfex.com/dapp/farming">
+                  Narfex Farming page
+                </a>
+                .
+              </strong>
+            </p>
+            <p>3.1 Choose WBNB-NRFX pool and click “Stake”.</p>
+            <div className="image-container">
+              <img src={require('./asset/8.png')} />
+            </div>
+            <p>Enter the amount, approve the transaction and stake your LPs.</p>
+            <div className="image-container">
+              <img src={require('./asset/9.png')} />
+            </div>
+            <p>
+              Done! In a few minutes you can see your rewards. Click Harvest to
+              get rewards to your wallet
+            </p>
+            <div className="image-container">
+              <img src={require('./asset/10.png')} />
+            </div>
+            <p>Thank you in advance for your goodwill and help!</p>
+            <h4>Stay on touch with Narfex</h4>
+            <p>
+              Narfex Token&nbsp;
+              <a href="https://narfex.com/token">https://narfex.com/token</a>
+            </p>
+            <p>
+              Telegram&nbsp;
+              <a href="https://t.me/Narfex_EN">https://t.me/Narfex_EN</a>
+            </p>
+            <p>
+              Instagram&nbsp;
+              <a href="https://instagram.com/narfex.global">
+                https://instagram.com/narfex.global
+              </a>
+            </p>
+            <p>
+              Twitter&nbsp;
+              <a href="https://twitter.com/narfexglobal">
+                https://twitter.com/narfexglobal
+              </a>
+            </p>
+            <p>
+              Discord&nbsp;
+              <a href="https://discord.gg/cKA5JPe2">
+                https://discord.gg/cKA5JPe2
+              </a>
+            </p>
           </li>
         </ol>
       </div>

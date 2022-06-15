@@ -32,7 +32,7 @@
   }
 
   h4 {
-    margin-bottom: 5px;
+    margin: 15px 0 10px;
   }
 
   p {
@@ -44,14 +44,20 @@
   }
 
   ul {
-    list-style-type: '–';
     margin: 0 0 10px 10px;
     padding: 0;
 
+    &:not(.FarmingInstruction__default-list) {
+      list-style-type: '–';
+    }
+
     li {
       padding-left: 10px;
-      margin-bottom: 10px;
     }
+  }
+
+  li {
+    margin-bottom: 10px;
   }
 
   .image-container {
@@ -75,7 +81,7 @@
 @media screen and (max-width: @mobile-width) {
   .FarmingInstruction {
     &__wrap {
-    padding: 10px 16px 0;
+      padding: 10px 16px 0;
 
       max-width: 100%;
     }
