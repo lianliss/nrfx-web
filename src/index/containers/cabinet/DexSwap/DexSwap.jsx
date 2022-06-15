@@ -146,7 +146,6 @@ class DexSwap extends React.PureComponent {
     const token0 = _.get(this.state, 'pair[0]');
     const token1 = _.get(this.state, 'pair[1]');
     if (!token0 || !token1) return;
-    console.log('[updateLiquidity]', token0, token1);
 
     clearTimeout(this.liquidityUpdateTimeout);
     try {
@@ -159,7 +158,7 @@ class DexSwap extends React.PureComponent {
         this.liquidityUpdateTimeout = setTimeout(() => this.updateLiquidity(), LIQUIDITY_UPDATE_INTERVAL);
       }
     } catch (error) {
-      console.error("Can't update liquidity", error);
+      console.error("[updateLiquidity] Can't update liquidity", error);
       if (!this.liquidityUpdateTimeout) {
         this.liquidityUpdateTimeout = setTimeout(() => this.updateLiquidity(), LIQUIDITY_UPDATE_INTERVAL);
       }

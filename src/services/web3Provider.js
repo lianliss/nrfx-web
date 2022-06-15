@@ -650,6 +650,15 @@ class Web3Provider extends React.PureComponent {
     options.push(this.getWeb3().utils.toHex(Math.round(Date.now()/1000)+60*20)); // Deadline 20 minutes
 
     try {
+      try {
+        // Try to estimate transaction without fee support
+        await this.estimateTransaction(routerContract, method, options);
+      } catch (error) {
+        console.log(`[swap] Estimate method "${method}" error. Try to add "SupportingFeeOnTransferTokens"`);
+        // Add fee support
+        method += 'SupportingFeeOnTransferTokens';
+      }
+      // Run transaction
       return await this.transaction(routerContract, method, options, value);
     } catch (error) {
       console.error('[swap]', error);
@@ -668,6 +677,23 @@ class Web3Provider extends React.PureComponent {
    * Returns MasterChefContract object
    */
   getFarmContract = () => new MasterChefContract(this);
+
+  /**
+   * Try to estimate contract method transaction
+   * @param contract {object}
+   * @param method {string} - method name
+   * @param params {array} - array of method params
+   * @returns {Promise.<*>}
+   */
+  estimateTransaction = async (contract, method, params) => {
+    try {
+      const accountAddress = _.get(this, 'state.accountAddress');
+      const data = contract.methods[method](...params);
+      return await data.estimateGas({from: accountAddress, gas: 50000000000});
+    } catch (error) {
+      throw error;
+    }
+  };
 
   /**
    * Send transaction to connected wallet
@@ -903,6 +929,7 @@ class Web3Provider extends React.PureComponent {
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
       tokenSale: this.tokenSale,
+      estimateTransaction: this.estimateTransaction.bind(this),
       transaction: this.transaction.bind(this),
       farm: this.farm,
       getBSCScanLink: this.getBSCScanLink.bind(this),
