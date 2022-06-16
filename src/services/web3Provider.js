@@ -588,7 +588,7 @@ class Web3Provider extends React.PureComponent {
    * @param isExactIn {bool}
    * @returns {Promise.<*>}
    */
-  async swap(pair, trade, slippageTolerance = 2, isExactIn = true) {
+  async swap(pair, trade, slippageTolerance = 2, isExactIn = true, deadline = 20) {
     const {accountAddress} = this.state;
     const {web3} = this;
     const routerContract = new (this.getWeb3().eth.Contract)(
@@ -647,7 +647,7 @@ class Web3Provider extends React.PureComponent {
     options.push(path);
 
     options.push(accountAddress); // "to" field
-    options.push(this.getWeb3().utils.toHex(Math.round(Date.now()/1000)+60*20)); // Deadline 20 minutes
+    options.push(this.getWeb3().utils.toHex(Math.round(Date.now()/1000) + 60 * deadline)); // Deadline
 
     try {
       try {

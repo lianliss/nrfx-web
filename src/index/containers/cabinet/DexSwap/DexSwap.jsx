@@ -44,6 +44,7 @@ class DexSwap extends React.PureComponent {
     reserves1: 0,
     executionPrice: null,
     slippageTolerance: 2,
+    deadline: 20,
     isSwappedPrice: false,
     transactions: window.localStorage
       .getItem('DexSwapTransactions')
@@ -446,7 +447,7 @@ class DexSwap extends React.PureComponent {
               manage={
                 <div
                   className="DexSwap__manage"
-                  onClick={() => openModal('swap_settings')}
+                  onClick={() => this.setState({isSettings: true})}
                 >
                   <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
                 </div>
@@ -585,6 +586,10 @@ class DexSwap extends React.PureComponent {
             )}
             {isSettings && (
               <SwapSettings
+                slippageTolerance={this.state.slippageTolerance}
+                deadline={this.state.deadline}
+                setSlippage={value => this.setState({slippageTolerance: value})}
+                setDeadline={value => this.setState({deadline: value})}
                 onClose={() => this.setState({ isSettings: false })}
               />
             )}

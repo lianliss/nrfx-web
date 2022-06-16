@@ -6,6 +6,9 @@ import SVG from 'utils/svg-wrap';
 import SectionBlock from '../SectionBlock/SectionBlock';
 import { Button, Input, Modal, BottomSheetModal } from 'src/ui';
 
+// Utils
+import { openCabinetModal } from '../../../../../components/cabinet/Modals/ConnectToWalletModal/hooks/openCabinetModal';
+
 // Styles
 import './SwapSettings.less';
 
@@ -15,14 +18,32 @@ const transactionSpeeds = [
   { id: 3, title: 'Istant', amount: 8 },
 ];
 
-function SwapSettings(props) {
+function SwapSettings({ setSlippage, slippageTolerance, setDeadline, deadline, ...props }) {
   const adaptive = useSelector((store) => store.default.adaptive);
 
   const [transactionSpeed, setTransactionSpeed] = React.useState(0);
-  const [slippageValue, setSlippageValue] = React.useState(0.8);
-  const [deadlineValue, setDeadlineValue] = React.useState(20);
+  const [slippageValue, setSlippageValue] = React.useState(slippageTolerance);
+  const [deadlineValue, setDeadlineValue] = React.useState(deadline);
 
   const Wrapper = adaptive ? BottomSheetModal : Modal;
+
+  const handleSlippage = _value => {
+    let value = Number(_value);
+    if (value < 0.1) value = 0.1;
+    if (value > 100) value = 100;
+    setSlippageValue(_value);
+    setSlippage(value);
+  };
+
+  const handleDeadline = _value => {
+    let value = Number(_value);
+    if (value < 1) value = 1;
+    if (value > 60) value = 60;
+    setDeadlineValue(_value);
+    setDeadline(value);
+  };
+
+  openCabinetModal();
 
   return (
     <Wrapper
@@ -65,20 +86,20 @@ function SwapSettings(props) {
           }
           className="slippage"
         >
-          <Button type="secondary-blue" size="medium">
-            0.1%
-          </Button>
-          <Button type="secondary-blue" size="medium">
+          <Button type="secondary-blue" onClick={() => handleSlippage(0.5)} size="medium">
             0.5%
           </Button>
-          <Button type="secondary-blue" size="medium">
+          <Button type="secondary-blue" onClick={() => handleSlippage(1)} size="medium">
             1%
+          </Button>
+          <Button type="secondary-blue" onClick={() => handleSlippage(2)} size="medium">
+            2%
           </Button>
           <div className="Input__container">
             <Input
               type="number"
               value={slippageValue}
-              onTextChange={(value) => setSlippageValue(value)}
+              onTextChange={(value) => handleSlippage(value)}
             />
             <div className="Input__icon">%</div>
           </div>
@@ -92,7 +113,7 @@ function SwapSettings(props) {
             <Input
               type="number"
               value={deadlineValue}
-              onTextChange={(value) => setDeadlineValue(value)}
+              onTextChange={(value) => handleDeadline(value)}
             />
             <div className="Input__icon">minutes</div>
           </div>
