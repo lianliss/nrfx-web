@@ -93,27 +93,27 @@ function TokenSale() {
     setIsDeposit(false);
   };
 
-  // Change the chain
-  React.useEffect(() => {
-    if (!isConnected) return;
-    if (window.ethereum.chainId === CHAIN_HEX) return;
-
-    window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x61' }],
-    });
-  }, [isConnected, chainId]);
+  // // Change the chain
+  // React.useEffect(() => {
+  //   if (!isConnected) return;
+  //   if (window.ethereum.chainId === CHAIN_HEX) return;
+  //
+  //   window.ethereum.request({
+  //     method: 'wallet_switchEthereumChain',
+  //     params: [{ chainId: '0x61' }],
+  //   });
+  // }, [isConnected, chainId]);
 
   return (
     <div className="TokenSale__wrap">
       <CabinetBlock className="TokenSale">
         <Form>
           <SVG src={require('src/asset/logo/narfex-icon.svg')} />
-          <h3>Token Sale</h3>
+          <h3>{chainId === 97 ? 'Testnet' : ''} Token Sale</h3>
           <label>
             <p>
               <span>Amount</span>
-              <small>1 NRFX = 0.4 BUSD</small>
+              <small>1 NRFX = {TOKEN_PRICE} BUSD</small>
             </p>
             <Input value={value} onChange={onChange} disabled={isDeposit} />
           </label>
