@@ -1,4 +1,5 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import CabinetScrollBlock from 'src/index/components/cabinet/CabinetScrollBlock/CabinetScrollBlock';
@@ -17,6 +18,8 @@ function FarmingTableAdaptive({ items, ...filters }) {
     filters;
 
   const height = useHeightSize();
+  const context = React.useContext(Web3Context);
+  const {pools} = context;
 
   return (
     <div className="FarmingTableAdaptive">
@@ -30,9 +33,10 @@ function FarmingTableAdaptive({ items, ...filters }) {
       />
       <CabinetScrollBlock style={{ height, minHeight: 200 }}>
         <div className="FarmingTableAdaptive__list">
-          {items.map((item, key) => (
-            <FarmingAdaptiveItem key={key} {...item} />
-          ))}
+          {!!pools && Object.keys(pools).map((address, index) => {
+            const pool = pools[address];
+            return <FarmingAdaptiveItem key={index} pool={pool} />;
+          })}
         </div>
       </CabinetScrollBlock>
     </div>

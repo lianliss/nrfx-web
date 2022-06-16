@@ -14,7 +14,6 @@ import './FarmingTable.less';
 
 // Main
 function FarmingTable({
-                        adaptive, items,
                         ...filters }) {
   const { farmsValue, setFarmsValue, sortBy, setSortBy, farms, sortOptions } =
     filters;
@@ -53,13 +52,6 @@ function FarmingTable({
                 id={index}
                 pool={pool}
                 dark={index % 2 ? true : false}
-                indicator={pool.indicator}
-                apy={0}
-                arp={0}
-                liquidity={0}
-                available={1}
-                staked={1}
-                earned={1}
               />
             );
           })}

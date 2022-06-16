@@ -252,6 +252,9 @@ class FarmingTableItem extends React.PureComponent {
           earned={reward}
           pool={pool}
           pairPrice={pairPrice}
+          poolSize={poolSize}
+          token0={token0}
+          token1={token1}
         />
       )}
       </>
