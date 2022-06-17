@@ -11,6 +11,7 @@ import {
   TOKEN,
   NARFEX_DAO,
   FARMING_INSTRUCTION,
+  PRIVATE_POOLS,
 } from '../../index/constants/pages';
 
 import { useRoute } from 'react-router5';
@@ -33,6 +34,7 @@ export default (props) => {
     case TOKEN:
     case NARFEX_DAO:
     case FARMING_INSTRUCTION:
+    case PRIVATE_POOLS:
       isNrfx = true;
       break;
     default:
