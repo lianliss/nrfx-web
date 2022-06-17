@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
+import { useSelector } from 'react-redux';
 
 // Components.
 import SVG from 'utils/svg-wrap';
@@ -24,7 +25,8 @@ function DexSwapInput({
                         setExact,
                       }) {
   // States
-  const [currency, setCurrency] = React.useState('usd');
+  const [textValue, setTextValue] = React.useState(value || '');
+  const adaptive = useSelector((store) => store.default.adaptive);
 
   // Refs
   const inputRef = React.useRef(null);
@@ -35,8 +37,27 @@ function DexSwapInput({
 
   // Handlers
   const handleInput = newValue => {
-    onChange(newValue);
+    if (adaptive) {
+      setTextValue(newValue);
+      onChange(Number(newValue));
+      return;
+    }
+    let value = `${newValue}`;
+    value = value.replace(',', '.');
+    if (value.length >= 2 && value[0] === '0' && value[1] !== '.') {
+      value = _.trimStart(value, '0');
+    }
+    if (!_.isNaN(Number(value)) || value === '.') {
+      setTextValue(value);
+      onChange(Number(value));
+    }
   };
+
+  React.useEffect(() => {
+    if (Number(textValue) !== value) {
+      setTextValue(`${value}`);
+    }
+  }, [value]);
 
   const handleContainerClick = (e) => {
     if (!selectRef.current.contains(e.target)) {
@@ -89,9 +110,9 @@ function DexSwapInput({
         <div className="DexSwapInput__input">
           <UI.Input
             ref={inputRef}
-            type="number"
+            type={adaptive ? 'number' : 'text'}
             onTextChange={handleInput}
-            value={value}
+            value={textValue}
           />
         </div>
       </div>

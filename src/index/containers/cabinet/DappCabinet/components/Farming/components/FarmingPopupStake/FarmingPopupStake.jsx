@@ -290,13 +290,13 @@ class FarmingPopupStake extends React.PureComponent {
           </Button>}
         </Form>
         <div className="FarmingPopup__footer">
-          <span className="popup-link" onClick={() => addTokenToWallet({
+          {isStake ? '' : <span className="popup-link" onClick={() => addTokenToWallet({
             address: _.get(pool, 'address'),
             symbol: `${token0Symbol}-${token1Symbol}`,
             image: 'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
           })}>
             Add token to Metamask <SVG src={require('src/asset/icons/export.svg')} />
-          </span>
+          </span>}
         </div>
         {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
       </Wrapper>

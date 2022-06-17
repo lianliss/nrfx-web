@@ -18,10 +18,10 @@ import * as steps from 'src/components/AuthModal/fixtures';
 
 import './Header.less';
 import { Button } from 'src/ui';
-import { cryptoOptions } from './constants/options';
 import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 import wei from 'utils/wei';
+import { option } from '../Select/Select';
 
 function Header(props) {
   const context = React.useContext(Web3Context);
@@ -31,6 +31,10 @@ function Header(props) {
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
   const [nrfxBalance, setNrfxBalance] = React.useState(0);
   const { isConnected, accountAddress, getTokenBalance, tokens, chainId } = context;
+
+  const cryptoOptions = [
+    option(chainId === 56 ? 'BSC' : 'Testnet', 'bsc', require('src/asset/icons/wallets/bsc.svg')),
+  ];
 
   // Adaptive sidebar is open
   const [isSidebar, setIsSidebar] = React.useState(false);
