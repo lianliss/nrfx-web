@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import * as UI from 'src/ui';
@@ -46,5 +47,15 @@ function JoinThePool({ setStep, setPoolAddress }) {
     </div>
   );
 }
+
+JoinThePool.propTypes = {
+  setStep: PropTypes.func,
+  setPoolAddress: PropTypes.func,
+};
+
+JoinThePool.defaultProps = {
+  setStep: () => {},
+  setPoolAddress: () => {},
+};
 
 export default JoinThePool;

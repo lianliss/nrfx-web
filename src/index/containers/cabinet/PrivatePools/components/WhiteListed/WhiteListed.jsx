@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import * as UI from 'src/ui';
@@ -29,5 +30,13 @@ function WhiteListed({ setStep }) {
     </div>
   );
 }
+
+WhiteListed.propTypes = {
+  setStep: PropTypes.func,
+};
+
+WhiteListed.defaultProps = {
+  setStep: () => {},
+};
 
 export default WhiteListed;

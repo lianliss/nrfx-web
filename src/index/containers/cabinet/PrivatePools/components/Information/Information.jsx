@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import * as UI from 'src/ui';
@@ -73,5 +74,13 @@ function Information({ setStep }) {
     </div>
   );
 }
+
+Information.propTypes = {
+  setStep: PropTypes.func,
+};
+
+Information.defaultProps = {
+  setStep: () => {},
+};
 
 export default Information;

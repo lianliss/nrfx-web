@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import * as UI from 'src/ui';
@@ -74,5 +75,17 @@ function CreatePool({ setStep, setPoolAddress, poolAddress }) {
     </div>
   );
 }
+
+CreatePool.propTypes = {
+  setStep: PropTypes.func,
+  setPoolAddress: PropTypes.func,
+  poolAddress: PropTypes.string,
+};
+
+CreatePool.defaultProps = {
+  setStep: () => {},
+  setPoolAddress: () => {},
+  poolAddress: null,
+};
 
 export default CreatePool;
