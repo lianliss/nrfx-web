@@ -53,6 +53,7 @@ import DocumentationMethodScreen from "./containers/documentation/Method/Method"
 import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
 import * as actions from "../actions/index";
 import router from "../router";
+import PrivatePools from "./containers/cabinet/PrivatePools/PrivatePools";
 
 function Routes(props) {
   const routeState = props.route;
@@ -248,6 +249,10 @@ function Routes(props) {
       break;
     case pages.FARMING_INSTRUCTION:
       Component = FarmingInstruction;
+      WrapperComponent = LandingWrapper;
+      break;
+    case pages.PRIVATE_POOLS:
+      Component = PrivatePools;
       WrapperComponent = LandingWrapper;
       break;
     default:
