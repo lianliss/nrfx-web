@@ -451,6 +451,7 @@ class Web3Provider extends React.PureComponent {
       }
     } catch (error) {
       console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
+      return '0';
     }
   }
 
@@ -520,6 +521,7 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
     try {
+      if (!this.state.isConnected) return;
       // Stop additional loads
       if (this.state.balancesRequested === accountAddress) return;
       this.setState({
@@ -527,7 +529,9 @@ class Web3Provider extends React.PureComponent {
       });
 
       // Separate tokens to small chunks
-      const chunks = _.chunk(this.state.tokens, 64);
+      const chunks = _.chunk(
+        this.state.tokens.filter(t => t.chainId === this.state.chainId),
+        64);
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
         // Get request from the blockchain

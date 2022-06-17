@@ -150,8 +150,9 @@ function Farming({ adaptive }) {
     if (!isConnected) return;
     if (chainId !== 97 && requestedChain !== 97) {
       setRequestedChain(97);
+      console.log('[Farming][switchToChain]', 97);
       switchToChain(97).then(() => {
-        requestedChain(null);
+        setRequestedChain(null);
       });
     }
     if (chainId === 97) {

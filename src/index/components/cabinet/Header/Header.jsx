@@ -21,6 +21,7 @@ import { Button } from 'src/ui';
 import { cryptoOptions } from './constants/options';
 import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
+import wei from 'utils/wei';
 
 function Header(props) {
   const context = React.useContext(Web3Context);
@@ -29,7 +30,7 @@ function Header(props) {
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
   const [nrfxBalance, setNrfxBalance] = React.useState(0);
-  const { isConnected, accountAddress } = context;
+  const { isConnected, accountAddress, getTokenBalance, tokens, chainId } = context;
 
   // Adaptive sidebar is open
   const [isSidebar, setIsSidebar] = React.useState(false);
@@ -49,16 +50,19 @@ function Header(props) {
   };
 
   React.useEffect(() => {
-    context
-      .getTokenBalance('0x3764Be118a1e09257851A3BD636D48DFeab5CAFE')
-      .then((data) => {
-        if (data > 0) {
-          setNrfxBalance((data / WEI_ETHER).toFixed(2));
-        } else {
-          setNrfxBalance(0);
-        }
+    const NRFX = tokens.find(t => t.symbol === 'NRFX');
+    if (!NRFX) return;
+    if (!isConnected) return;
+    if (NRFX.chainId !== chainId) return;
+    getTokenBalance(NRFX.address)
+      .then(data => {
+        if (!data) return setNrfxBalance(0);
+        setNrfxBalance(wei.from(data).toFixed(2));
+      }).catch(error => {
+        console.error('[Header][getTokenBalance]', error);
+        setNrfxBalance(0);
       });
-  }, [accountAddress]);
+  }, [accountAddress, isConnected, chainId]);
 
   return (
     <>

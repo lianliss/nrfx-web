@@ -76,6 +76,7 @@ class DexSwap extends React.PureComponent {
     if (this.chainRequested) return;
     this.chainRequested = true;
     if (chainId !== id) {
+      console.log('[DexSwap][switchToChain]', id);
       const result = await switchToChain(id);
     }
     this.chainRequested = false;
@@ -92,7 +93,7 @@ class DexSwap extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {findTokenBySymbol, chainId} = this.context;
+    const {findTokenBySymbol, chainId, isConnected} = this.context;
     //console.log('componentDidUpdate', chainId);
     // Modals Toggler.
     if(!this.state.isSettings && _.isNull(this.state.selectToken)) {
@@ -110,7 +111,7 @@ class DexSwap extends React.PureComponent {
     const prevToken0 = _.get(prevState, 'pair[0].address');
     const prevToken1 = _.get(prevState, 'pair[1].address');
     if (token0 !== prevToken0 || token1 !== prevToken1) {
-      this.updateLiquidity();
+      if (isConnected) this.updateLiquidity();
     }
     this.requireChain();
     if (prevState.lastChainId !== chainId) {
@@ -144,10 +145,12 @@ class DexSwap extends React.PureComponent {
 
   async updateLiquidity() {
     if (!this._mount) return;
-    const {getPairs} = this.context;
+    const {getPairs, isConnected, chainId} = this.context;
+    if (!isConnected) return;
     const token0 = _.get(this.state, 'pair[0]');
     const token1 = _.get(this.state, 'pair[1]');
     if (!token0 || !token1) return;
+    if (token0.chainId !== chainId || token1.chainId !== chainId) return;
 
     clearTimeout(this.liquidityUpdateTimeout);
     try {
@@ -160,7 +163,9 @@ class DexSwap extends React.PureComponent {
         this.liquidityUpdateTimeout = setTimeout(() => this.updateLiquidity(), LIQUIDITY_UPDATE_INTERVAL);
       }
     } catch (error) {
-      console.error("[updateLiquidity] Can't update liquidity", error);
+      if (error.message.indexOf('CHAIN_IDS') < 0) {
+        console.error("[updateLiquidity] Can't update liquidity", error);
+      }
       if (!this.liquidityUpdateTimeout) {
         this.liquidityUpdateTimeout = setTimeout(() => this.updateLiquidity(), LIQUIDITY_UPDATE_INTERVAL);
       }
