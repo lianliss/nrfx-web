@@ -201,6 +201,10 @@ export const routes =
         {
           name: pages.FARMING_INSTRUCTION,
           path: "/farming_instruction"
+        },
+        {
+          name: pages.PRIVATE_POOLS,
+          path: "/private_pools"
         }
       ];
 
