@@ -1,0 +1,231 @@
+.Investments__balances {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+  margin-bottom: var(--gap-size);
+
+  .WalletBox__content {
+    cursor: default; /* TEMP */
+  }
+}
+
+.Investments__payments {
+  margin-bottom: var(--gap-size);
+}
+
+.Investment__heightPadding {
+  width: 100%;
+  height: var(--gap-size);
+}
+
+.Investments__balances__item {
+  flex: 1;
+  margin-left: var(--gap-size);
+  position: relative;
+  margin-top: 0 !important;
+  max-width: 33.3%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  .CircleIcon {
+    position: absolute;
+    left: -16px;
+    top: 16px;
+  }
+
+  .ContentBox__content {
+    padding: 16px;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.Investments__balances__item__rows {
+  flex: 1;
+  padding-left: 24px;
+}
+
+.Investments__balances__item__actions {
+  position: relative;
+  height: 40px;
+  .Button {
+    position: absolute;
+  }
+  .Button.default {
+    width: calc(100% - 58px);
+  }
+  .secondary {
+    width: 50px;
+    right: 0;
+  }
+}
+
+.Investments__balances__item__actions.empty {
+  .Button.normal {
+    width: 100%;
+  }
+}
+
+.Investments__balances__item__info_row {
+  margin-top: 24px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.Investments__balances__item__info_row__label {
+  color: var(--text-black);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.Investments__balances__item__info_row__value {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 2px;
+
+  &.highlighted {
+    color: var(--primary-orange);
+  }
+}
+
+.Investments__deposit_indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffcc5c;
+  display: inline-block;
+}
+
+.Investment__profit {
+  padding: 40px;
+}
+
+.Investment__profit__header {
+  display: flex;
+  align-items: center;
+}
+
+.Investment__profit__header__cont {
+  flex: 1;
+}
+
+.Investment__profit__header__period {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--text-black);
+}
+
+.Investment__profit__header__fiat {
+  color: var(--green);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.Investment__profit__chart {
+  margin-top: 8px;
+  margin-bottom: -12px;
+}
+
+.Investment__profits_table {
+  margin-top: 16px;
+}
+
+.Investment__withdrawal_table {
+  &__status {
+    &.accepted {
+      color: var(--green);
+    }
+    &.deleted {
+      color: var(--color-yellow);
+    }
+  }
+}
+
+.Investments__CurrentPayments__item__icon {
+  width: 42px;
+  height: 42px;
+  left: 9px;
+  background-size: 50px;
+  background-position: center;
+  top: 7px;
+}
+
+.disable_active_button {
+  .Button:active,
+  .Button:after {
+    background: transparent;
+  }
+}
+
+.adaptive {
+  .Chart__profit {
+    padding: 16px;
+  }
+  .Investments__balances {
+    display: block;
+    width: 100%;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: var(--gap-size);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+
+    .Investments__balances__item__actions.empty {
+      margin-left: 58px;
+      width: calc(100% - 58px);
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .Investments__balances__item__actions.empty .Button.default {
+      width: 100%;
+    }
+    .Content_box {
+      background-color: rgba(0, 0, 0, 0);
+      box-shadow: none;
+      border-radius: 0;
+    }
+
+    .Investments__balances__item {
+      margin-left: 0;
+    }
+
+    .Investments__balances__item__rows {
+      padding-left: 58px;
+      padding-right: 24px;
+      box-sizing: border-box;
+      margin-bottom: 8px;
+    }
+
+    .CircleIcon {
+      transform: none;
+      left: 16px;
+    }
+
+    .Investments__balances__item {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+.adaptive {
+  .Investments__stub {
+    .ContentBox {
+      width: 70%;
+    }
+    .ContentBox__content {
+      box-sizing: border-box;
+      width: auto;
+    }
+  }
+}

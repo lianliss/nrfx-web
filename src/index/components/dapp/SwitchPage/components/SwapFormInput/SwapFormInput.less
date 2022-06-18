@@ -1,0 +1,138 @@
+@import '../../../../../../vars.less';
+
+.SwapFormInput {
+  // Containers
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    padding: 14.5px 15px 16.5px;
+    border: 1px solid #dfe3f0;
+    border-radius: 20px;
+    box-sizing: border-box;
+  }
+
+  &__select {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+  }
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 9px;
+    padding: 0 15px 0 7px;
+    color: var(--black-gunmetal);
+
+    & > div {
+      display: flex;
+    }
+  }
+
+  // Components
+  &__title {
+    margin-right: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+  }
+
+  &__manage {
+    cursor: pointer;
+
+    .isvg,
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    svg,
+    path {
+      fill: #5078e6;
+    }
+  }
+
+  &__rate {
+    opacity: 0.5;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 110%;
+    text-align: right;
+    letter-spacing: -0.01em;
+  }
+
+  &__icon {
+    width: 41px;
+    height: 41px;
+
+    .isvg,
+    svg {
+      width: inherit;
+      height: inherit;
+    }
+  }
+
+  &__select {
+    cursor: pointer;
+
+    // Medium text in select (subtitle)
+    & > span {
+      color: #cdcfd7;
+      margin-bottom: 4px;
+    }
+  }
+
+  &__currency {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+
+    // Select icon
+    .isvg {
+      margin-left: 8px;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    margin-left: 10px;
+    // <Input />
+    .Input {
+      border: none;
+      background: none;
+      font-weight: 500;
+      font-size: 26px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      caret-color: var(--royal-blue);
+    }
+
+    input {
+      text-align: right;
+      padding: 0 0 0 10px;
+    }
+  }
+}
+
+.adaptive .SwapFormInput {
+  &__container {
+    padding: 11px 19px 11px 9px;
+  }
+
+  &__currency {
+    font-size: 16px;
+  }
+  
+  .Input {
+    --input-height: 30px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+  }
+}

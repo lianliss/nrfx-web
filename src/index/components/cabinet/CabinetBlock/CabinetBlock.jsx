@@ -3,14 +3,10 @@ import { classNames as cn } from 'src/ui/utils';
 
 import './CabinetBlock.less';
 
-function CabinetBlock({ children, border, className = '', ...props }) {
+function CabinetBlock({ children, border, className = '' }) {
   const classNames = cn({ CabinetBlock: true, border, [className]: true });
 
-  return (
-    <div className={classNames} {...props}>
-      {children}
-    </div>
-  );
+  return <div className={classNames}>{children}</div>;
 }
 
 export default CabinetBlock;

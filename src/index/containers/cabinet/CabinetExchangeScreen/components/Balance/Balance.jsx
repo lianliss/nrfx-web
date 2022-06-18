@@ -8,9 +8,9 @@ import { openModal } from 'src/actions';
 import currencies from 'src/currencies';
 
 import Block from '../Block/Block';
-import WalletsList from 'src/index/components/cabinet/WalletsList/WalletsList';
+import WalletsList from '../WalletsList/WalletsList';
 import BalancesManage from './components/BalancesManage/BalancesManage';
-import WalletsListItem from 'src/index/components/cabinet/WalletsList/components/WalletsListItem/WalletsListItem';
+import WalletsListItem from '../WalletsList/components/WalletsListItem/WalletsListItem';
 import './Balance.less';
 import { connect } from 'react-redux';
 
@@ -90,19 +90,15 @@ const Balance = React.memo(({ balances, setActiveBalance }) => {
                   return;
                 }
 
-                const { name } = currencies[item.currency];
-                let icon = '';
-
-                try {
-                  icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
-                } catch {
-                  console.log('Icon is not defined');
-                }
+                const { name, icon, gradient } = currencies[item.currency];
+                const iconGradient = `linear-gradient(to bottom, ${gradient[0]} 0%, ${gradient[1]} 100%)`;
 
                 return (
                   <WalletsListItem
-                    icon={<SVG src={icon} />}
-                    startTexts={[name, item.currency.toUpperCase()]}
+                    icon={
+                      <img src={icon} style={{ background: iconGradient }} />
+                    }
+                    startTexts={[name, item.currency]}
                     endTexts={['$' + item.price, item.amount]}
                     key={item.id}
                   />
@@ -131,10 +127,10 @@ Balance.propTypes = {
 };
 
 Balance.defaultProps = {
-  balances: [{ currency: 'nrfx', amount: 100, price: 20 }],
+  balances: [],
   setActiveBalance: () => {},
 };
 
 export default connect((state) => ({
-  // balances: state.exchange.balances,
+  balances: state.exchange.balances,
 }))(Balance);

@@ -1,0 +1,103 @@
+@import '../../../../vars.less';
+
+.SwitchPage {
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 482px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__header &__row {
+    &:nth-child(1) {
+      margin-bottom: 12px;
+      max-width: 100%;
+    }
+
+    &:nth-child(2) {
+      margin-bottom: 30px;
+    }
+
+    &:nth-child(3) {
+      margin-bottom: 15px;
+    }
+  }
+
+  .CabinetBlock {
+    width: 100%;
+  }
+
+  // Components
+  h1 {
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: var(--black-gunmetal);
+    text-align: center;
+  }
+
+  &__description {
+    max-width: 391px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 180%;
+    text-align: center;
+    color: var(--cool-gray);
+  }
+
+  // <Switch />
+  .Switch {
+    margin: 0 0 0 15px;
+  }
+
+  // <SwitchTabs />
+  .SwitchTabs {
+    width: 100%;
+    height: 66px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--primary-dark-blue);
+  }
+
+  .switch-label {
+    margin: 0 0 0 8px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 180%;
+    color: var(--royal-blue);
+  }
+
+  // <CabinetBlock />
+  .CabinetBlock {
+    padding: 0;
+    border-radius: 25px;
+  }
+
+  // All icons for this
+  .isvg {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .SwitchPage {
+    h1 {
+      font-size: 30px;
+    }
+
+    &__header &__row {
+      &:nth-child(1) {
+        margin-bottom: 28px;
+      }
+
+      &:nth-child(2) {
+        margin-bottom: 12px;
+      }
+    }
+  }
+}

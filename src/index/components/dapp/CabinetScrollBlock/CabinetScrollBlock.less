@@ -1,0 +1,35 @@
+@import '../../../../vars.less';
+
+.ScrollbarBox-container {
+  display: flex;
+  position: relative;
+}
+
+.ScrollbarBox {
+  .ScrollbarsCustom-Wrapper {
+    inset: 0 !important;
+  }
+
+  .ScrollbarsCustom-Scroller {
+    padding: 0 !important;
+    margin: 0 !important;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .ScrollbarTrackY {
+    display: flex !important;
+    background: none !important;
+    width: 4px !important;
+    right: 4px !important;
+  }
+
+  .ScrollbarThumbY {
+    background: var(--royal-blue) !important;
+    border-radius: 20px !important;
+    opacity: 0.1;
+  }
+}

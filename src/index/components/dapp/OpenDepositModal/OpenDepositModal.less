@@ -1,0 +1,117 @@
+.OpenDepositModal {
+  width: 440px;
+  padding: 40px;
+  box-sizing: border-box;
+
+  &__error {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: var(--red);
+    text-align: center;
+    margin: 30px auto 0;
+  }
+}
+
+.OpenDepositModal__row {
+  margin-top: 40px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.OpenDepositModal__amount {
+  display: flex;
+
+  .Button {
+    margin-left: 16px;
+    width: auto !important;
+  }
+}
+
+.OpenDepositModal__btn_wrapper {
+  margin-top: 70px;
+  text-align: center;
+}
+
+.OpenDepositModal__type_info {
+  margin-top: 16px;
+  height: 122px;
+  align-items: flex-end;
+  display: flex;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--text-black);
+  flex-direction: column;
+}
+
+.OpenDepositModal__type_info__row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 8px;
+  width: 100%;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  .isvg {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+}
+
+.OpenDepositModal__type_info__more {
+  margin-top: 10px;
+  display: inline-block;
+  color: var(--text-black);
+}
+
+.OpenDepositModal__icon {
+  position: absolute;
+  top: 32px;
+  left: -16px;
+}
+
+.OpenDepositModal__termsConditions {
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-black);
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.adaptive {
+  .OpenDepositModal {
+    width: 100%;
+    padding: 24px 16px;
+
+    &__row {
+      margin-top: 24px;
+    }
+
+    &__btn_wrapper {
+      margin-top: 32px;
+    }
+
+    &__icon {
+      left: 0;
+      right: 0;
+      top: -16px;
+      margin: 0 auto;
+    }
+
+    &__wrapper {
+      padding-top: 80px;
+    }
+
+    &__error {
+      margin: 16px 0;
+    }
+  }
+}

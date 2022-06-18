@@ -1,0 +1,36 @@
+.QRScannerModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__reader {
+    width: 300;
+    border-radius: 15;
+  }
+
+  h3 {
+    margin-bottom: 20px;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+.QRScannerModal__reader {
+  max-width: 100%;
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  border-radius: 25px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  video {
+    height: 100%;
+    width: 100%;
+  }
+
+  & > div {
+    transform: scale(1.5);
+  }
+}

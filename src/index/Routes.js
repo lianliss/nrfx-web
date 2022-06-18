@@ -15,6 +15,7 @@ import BuyBitcoinScreen from "src/landing/containers/BuyBitcoin/BuyBitcoin";
 import SiteAboutScreen from "../landing/containers/Company/Company";
 import TokenLanding from "../token_landing/containers/TokenLanding/TokenLanding";
 import NarfexDAO from "../landings/Narfex_DAO/NarfexDAO";
+import FarmingInstruction from "../landings/FarmingInstruction/FarmingInstruction";
 // import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
@@ -46,14 +47,15 @@ import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "../landing/containers/Fee/SiteFeeScreen";
 import SiteTokenScreen from "./containers/site/SiteTokenScreen/SiteTokenScreen";
-import TokenSale from "./containers/cabinet/TokenSale/TokenSale";
+import TokenSale from "./containers/dapp/TokenSale/TokenSale";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
 import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
 import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
-import DappCabinet from "./containers/cabinet/DappCabinet/DappCabinet";
+import DappCabinet from "./containers/dapp/DappCabinet/DappCabinet";
 import * as actions from "../actions/index";
 import router from "../router";
+import PrivatePools from "./containers/cabinet/PrivatePools/PrivatePools";
 
 function Routes(props) {
   const routeState = props.route;
@@ -164,13 +166,15 @@ function Routes(props) {
     //   }
     //   break;
     // // Cabinet
+    case pages.WALLET:
+    case pages.WALLET_SWAP:
     case pages.WALLET_CRYPTO:
     case pages.WALLET_FIAT:
       needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
-    case pages.WALLET:
     case pages.DAPP:
+    case pages.DAPP_WALLET:
     case pages.DAPP_SWAP:
     case pages.DAPP_EXCHANGE:
     case pages.FARMING:
@@ -254,6 +258,14 @@ function Routes(props) {
       break;
     case pages.NARFEX_DAO:
       Component = NarfexDAO;
+      WrapperComponent = LandingWrapper;
+      break;
+    case pages.FARMING_INSTRUCTION:
+      Component = FarmingInstruction;
+      WrapperComponent = LandingWrapper;
+      break;
+    case pages.PRIVATE_POOLS:
+      Component = PrivatePools;
       WrapperComponent = LandingWrapper;
       break;
     case pages.TOKENSALE:

@@ -24,7 +24,7 @@ export default ({ onClose }) => {
 
   const handleBuy = useCallback(() => {
     dispatch(walletSwapSetCurrency("to", currency.abbr));
-    router.navigate(pages.DAPP_EXCHANGE);
+    router.navigate(pages.WALLET_SWAP);
     onClose();
   }, [router, dispatch, currency, onClose]);
 

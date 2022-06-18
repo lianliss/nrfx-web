@@ -45,16 +45,16 @@ import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvat
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
 import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
-import {FarmingPopupROI} from "./containers/cabinet/DappCabinet/components/Farming/components/FarmingPopup/FarmingPopup";
-import FarmingPopupStake  from "./containers/cabinet/DappCabinet/components/Farming/components/FarmingPopupStake/FarmingPopupStake";
+import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
+import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
 import {
   TransactionSubmittedModal,
   LiquidityConfirmModal,
   TransactionWaitingModal,
   YourWalletModal,
   ConnectToWalletModal
-} from "./components/cabinet";
-import SwapSettings from "./containers/cabinet/DexSwap/components/SwapSettings/SwapSettings";
+} from "./components/dapp";
+import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
 

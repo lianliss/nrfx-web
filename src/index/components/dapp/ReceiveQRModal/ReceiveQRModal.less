@@ -1,0 +1,79 @@
+@import 'src/vars.less';
+
+.ReceiveQRModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__title {
+    font-size: 17px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  &__subtitle {
+    margin-top: 20px;
+    font-weight: 500;
+    margin: 15px 0;
+  }
+
+  &__buttons {
+    display: flex;
+    margin-top: 15px;
+
+    & > * {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+
+    .Button {
+      border-radius: 25px;
+      padding: 10px 20px;
+      min-width: 150px;
+    }
+  }
+
+  &__CopyText-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .isvg {
+      position: absolute;
+      right: 10px;
+      pointer-events: none;
+    }
+  }
+
+  .CopyTextComponent {
+    position: relative;
+    background: #edf1f8;
+    color: rgba(45, 49, 63, 0.7);
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 13px;
+    box-sizing: border-box;
+
+    &__container {
+      max-width: 250px !important;
+      padding: 15px 38px 15px 20px;
+      border-radius: 20px;
+      box-sizing: border-box;
+    }
+
+    &__content {
+      display: flex;
+      overflow-x: scroll;
+      white-space: nowrap;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,71 +1,87 @@
 // styles
 // external
-import createRouter from 'router5';
-import browserPlugin from 'router5-plugin-browser';
-import listenersPlugin from 'router5-plugin-listeners';
+import createRouter from "router5";
+import browserPlugin from "router5-plugin-browser";
+import listenersPlugin from "router5-plugin-listeners";
 // internal
-import * as pages from './index/constants/pages';
-import * as adminPages from './admin/constants/pages';
+import * as pages from "./index/constants/pages";
+import * as adminPages from "./admin/constants/pages";
 
 export const routes =
-  process.env.DOMAIN === 'admin'
+  process.env.DOMAIN === "admin"
     ? [
         {
           name: adminPages.MAIN,
-          path: '/',
+          path: "/"
         },
         {
           name: adminPages.PANEL,
-          path: `/panel`,
+          path: `/panel`
         },
         {
           name: adminPages.PANEL_PAGE,
-          path: `/panel/:page`,
+          path: `/panel/:page`
         },
         {
           name: adminPages.NOT_FOUND,
-          path: '/not_found',
-        },
+          path: "/not_found"
+        }
       ]
     : [
         {
           name: pages.MAIN,
-          path: '/',
+          path: "/"
         },
         {
           name: pages.BUY_BITCOIN,
-          path: '/buy_bitcoin',
+          path: "/buy_bitcoin"
         },
         {
           name: pages.MENU,
-          path: '/menu',
+          path: "/menu"
         },
         {
           name: pages.NOTIFICATIONS,
-          path: '/notifications',
+          path: "/notifications"
         },
         {
           name: pages.ABOUT,
-          path: '/about',
+          path: "/about"
         },
         {
           name: pages.MISSION,
-          path: '/mission',
+          path: "/mission"
         },
         {
           name: pages.HISTORY,
-          path: '/history',
+          path: "/history"
         },
         {
           name: pages.SITE_EXCHANGE,
           path: `/${pages.SITE_EXCHANGE}`,
         },
         {
+          name: pages.WALLET,
+          path: '/wallet',
+        },
+        {
+          name: pages.WALLET_SWAP,
+          path: "/wallet/swap"
+        },
+        {
+          name: pages.WALLET_CRYPTO,
+          path: '/wallet/crypto/:currency',
+        },
+        {
+          name: pages.WALLET_FIAT,
+          path: '/wallet/fiat/:currency',
+        },
+        {
           name: pages.DAPP,
           path: '/dapp',
         },
         {
-          name: pages.WALLET,
+          name: pages.DAPP_WALLET,
           path: '/dapp/wallet',
         },
         {
@@ -95,14 +111,6 @@ export const routes =
         {
           name: pages.TOKENSALE,
           path: '/tokensale',
-        },
-        {
-          name: pages.WALLET_CRYPTO,
-          path: '/wallet/crypto/:currency',
-        },
-        {
-          name: pages.WALLET_FIAT,
-          path: '/wallet/fiat/:currency',
         },
         {
           name: pages.ROBOTS,
@@ -224,8 +232,16 @@ export const routes =
         },
         {
           name: pages.NARFEX_DAO,
-          path: '/narfex_dao',
+          path: "/narfex_dao"
         },
+        {
+          name: pages.FARMING_INSTRUCTION,
+          path: "/farming_instruction"
+        },
+        {
+          name: pages.PRIVATE_POOLS,
+          path: "/private_pools"
+        }
       ];
 
 const params = {

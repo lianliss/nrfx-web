@@ -1,0 +1,402 @@
+@import 'src/vars.less';
+@header-height: 57px;
+@adaptive-header-height: 48px;
+
+.CabinetHeader {
+  padding: 17px 0 2px;
+  z-index: 2;
+
+  &__container {
+    display: flex;
+    margin: 0 auto;
+    padding: 0 18px;
+    box-sizing: border-box;
+  }
+
+  &__logo {
+    height: 38px;
+    cursor: pointer;
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    .dynamic-shadow {
+      display: flex;
+      position: relative;
+      margin-left: 10px;
+      z-index: 1;
+
+      .Button {
+        position: relative;
+        height: 39px;
+
+        .Button__label {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .isvg {
+        margin-right: 16px;
+        height: 24px;
+      }
+
+      &.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+    }
+
+    .CabinetHeader__icons {
+      position: relative;
+      display: flex;
+      margin-right: 18px;
+      align-items: center;
+
+      .Notifications {
+        width: 648px;
+        position: absolute;
+        top: 48px;
+        right: 0;
+      }
+
+      .CabinetHeader__icon__svg {
+        display: block;
+      }
+    }
+
+    .CabinetHeader__connect {
+      margin-left: 10px;
+    }
+    .CabinetHeader__account-address {
+      color: var(--blue-light-gradient-color-end);
+      font-size: 12px;
+    }
+
+    .CabinetHeader__icon {
+      color: var(--text-black);
+      position: relative;
+      width: 16px * 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: @header-height;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--almost-black);
+      }
+
+      .isvg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .ActionsSheet__list {
+        overflow: visible;
+        margin-top: 32px;
+        margin-right: -8px;
+
+        .isvg {
+          height: 23px;
+          width: 23px;
+          margin-right: 5px;
+        }
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90.3%;
+        height: 35px;
+        z-index: -1;
+
+        background: var(--blue-light-gradient);
+        opacity: 0.5;
+        filter: blur(45px);
+        border-radius: 10px;
+      }
+    }
+  }
+
+  &__language {
+    img {
+      width: 23px;
+      height: 23px;
+      border: 1px solid #ebeff4;
+      box-sizing: border-box;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: border-color 0.2s;
+    }
+
+    &.active,
+    &:hover {
+      img {
+        border-color: var(--blue-light-gradient-color-start);
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: 3px;
+    }
+  }
+
+  &__settings {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: #f7f9fc;
+    cursor: pointer;
+
+    .isvg {
+      width: 25px;
+      height: 25px;
+    }
+
+    .ActionsSheet {
+      & > div:first-child {
+        display: flex;
+        align-items: center;
+        height: 39px;
+      }
+    }
+  }
+
+  .ActionsSheet__item__sub {
+    svg {
+      width: 18px;
+    }
+  }
+
+  // Token price
+  &__wallet-rate {
+    display: flex;
+    align-items: center;
+    height: 39px;
+    padding: 0 8px;
+    margin-left: 3px;
+    box-sizing: border-box;
+    border: 1px solid #dfe3f0;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 180%;
+    color: var(--dark-black);
+
+    & > div {
+      display: flex;
+    }
+
+    .full-number {
+      color: #d3d5db;
+    }
+
+    span {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .isvg {
+      svg {
+        height: 22.5px;
+        width: 15px;
+      }
+    }
+  }
+
+  // <Select />
+  .CabinetSelect {
+    &__value-container {
+      height: 25px;
+    }
+
+    &__single-value {
+      height: 23px;
+
+      .isvg {
+        display: flex;
+        align-items: center;
+        width: 23px;
+        height: 23px;
+
+        svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+
+    &__option {
+      .isvg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 23px;
+        height: 23px;
+
+        svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+
+    &__menu {
+      min-width: 150px;
+
+      svg {
+        width: 23px;
+        height: 23px;
+      }
+    }
+  }
+
+  .CabinetSelect__network {
+    .CabinetSelect__control {
+      p {
+        color: #0a1539;
+      }
+    }
+  }
+
+  .wallet-connect__button {
+    margin-right: 34px;
+  }
+
+  &__wallet {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 172px;
+    margin-right: 13px;
+    margin-left: 3px;
+    border: 1px solid #dfe3f0;
+    padding: 0 28px 0 12px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    .isvg {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 3px;
+
+      svg,
+      path {
+        fill: var(--blue-light-gradient-color-start);
+      }
+    }
+
+    p {
+      text-overflow: ellipsis;
+      overflow: hidden !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 180%;
+      color: var(--black-gunmetal);
+    }
+  }
+
+  // Burger Menu
+  &__burger-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 43px;
+    min-width: 43px;
+    margin-right: 3.38%;
+    background: #fff;
+    border-radius: var(--radius-panel);
+    box-sizing: border-box;
+    cursor: pointer;
+
+    .isvg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .secondary-text {
+    color: var(--cool-gray);
+  }
+}
+
+.CabinetHeader__connect {
+  margin-left: 10px;
+}
+.CabinetHeader__account-address {
+  color: var(--blue-light-gradient-color-end);
+  font-size: 12px;
+}
+
+@media screen and (max-width: @mobile-width) {
+  body {
+    --header-height: 50px !important;
+  }
+
+  .CabinetHeader {
+    position: relative;
+    padding: 11px 0 0;
+    z-index: 50;
+
+    &__container {
+      padding: 0 10px;
+    }
+    // <Select />
+    .CabinetSelect {
+      &,
+      &__control {
+        min-width: 0 !important;
+        width: 63px;
+      }
+
+      &__control {
+        padding: 0 9px !important;
+      }
+    }
+
+    &__wallet {
+      p {
+        overflow: hidden;
+      }
+    }
+
+    &__wallet {
+      width: 104px;
+    }
+
+    .wallet-connect__button {
+      width: 47px;
+      margin-right: 17px;
+
+      .Button__label {
+        .isvg {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .CabinetHeader {
+    &__wallet {
+      width: 63px;
+    }
+  }
+}
+
+html.noScroll,
+body.noScroll {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}

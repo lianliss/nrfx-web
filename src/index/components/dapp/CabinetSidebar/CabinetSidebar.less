@@ -1,0 +1,127 @@
+@import '../../../../vars.less';
+
+.CabinetSidebar {
+  position: relative;
+  max-width: 208px;
+  height: 100%;
+  max-height: 100%;
+
+  &__container {
+    position: relative;
+    height: 80%;
+    max-height: 80%;
+    width: 100%;
+    margin-bottom: 5%;
+    overflow-y: scroll;
+    border-radius: var(--radius-panel);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .ScrollbarBox-container {
+    height: 100%;
+    width: 100%;
+  }
+
+  .CabinetBlock {
+    margin-bottom: 10px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .WalletsList {
+    position: sticky;
+    width: 100%;
+    top: calc(100vh - 82px);
+
+    .WalletsListItem {
+      transition: box-shadow 0.3s;
+      cursor: default;
+
+      &:hover {
+        box-shadow: 0 0 20px #dfe3f0;
+      }
+
+      &__icon {
+        .isvg {
+          box-shadow: 0 0 0 1px #fff;
+        }
+      }
+    }
+  }
+
+  .disabled {
+    opacity: 0.7;
+    user-select: none;
+    pointer-events: none;
+  }
+}
+
+@media screen and (min-width: @desktop-width) {
+  .CabinetSidebar {
+    &__container {
+      position: sticky;
+      top: 18px;
+      height: 75vh;
+      max-height: auto;
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .CabinetSidebar {
+    height: 100%;
+    padding-top: 12px;
+    padding-left: 29px;
+    margin-left: -15px;
+    max-width: 100%;
+    width: 266px;
+    background: #fff;
+    box-sizing: border-box;
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+    z-index: 100;
+
+    &.active {
+      transform: translateX(0%);
+    }
+
+    &__container {
+      margin-bottom: 0;
+      height: 80%;
+      margin-bottom: 5%;
+    }
+
+    .CabinetBlock {
+      padding: 23px 52px 33px 21px;
+
+      &:not(:first-child) {
+        padding-top: 7px;
+      }
+    }
+
+    .WalletsList {
+      height: 15%;
+      position: static;
+      width: 100%;
+      max-width: 205px;
+      justify-content: end;
+
+      .WalletsListItem {
+        &__icon {
+          .isvg {
+            box-shadow: 0 0 0 1px #fff;
+          }
+        }
+      }
+    }
+  }
+}

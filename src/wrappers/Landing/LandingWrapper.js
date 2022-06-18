@@ -7,7 +7,12 @@ import Footer from './components/Footer/Footer';
 import Notice from './components/Notice/Notice';
 import TagManager from 'react-gtm-module';
 import ReactPixel from 'react-facebook-pixel';
-import { TOKEN, NARFEX_DAO } from '../../index/constants/pages';
+import {
+  TOKEN,
+  NARFEX_DAO,
+  FARMING_INSTRUCTION,
+  PRIVATE_POOLS,
+} from '../../index/constants/pages';
 
 import { useRoute } from 'react-router5';
 
@@ -23,7 +28,18 @@ export default (props) => {
     window.scroll(0, 0);
   }, [route.route.name]);
 
-  const isNrfx = route.route.name === TOKEN || route.route.name === NARFEX_DAO;
+  let isNrfx = false;
+
+  switch (route.route.name) {
+    case TOKEN:
+    case NARFEX_DAO:
+    case FARMING_INSTRUCTION:
+    case PRIVATE_POOLS:
+      isNrfx = true;
+      break;
+    default:
+      isNrfx = false;
+  }
 
   return (
     <div className="LandingWrapper">
