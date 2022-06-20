@@ -58,11 +58,11 @@ export const routes =
         },
         {
           name: pages.SITE_EXCHANGE,
-          path: `/${pages.SITE_EXCHANGE}`
+          path: `/${pages.SITE_EXCHANGE}`,
         },
         {
           name: pages.WALLET,
-          path: "/wallet"
+          path: '/wallet',
         },
         {
           name: pages.WALLET_SWAP,
@@ -70,27 +70,63 @@ export const routes =
         },
         {
           name: pages.WALLET_CRYPTO,
-          path: "/wallet/crypto/:currency"
+          path: '/wallet/crypto/:currency',
         },
         {
           name: pages.WALLET_FIAT,
-          path: "/wallet/fiat/:currency"
+          path: '/wallet/fiat/:currency',
+        },
+        {
+          name: pages.DAPP,
+          path: '/dapp',
+        },
+        {
+          name: pages.DAPP_WALLET,
+          path: '/dapp/wallet',
+        },
+        {
+          name: pages.DAPP_EXCHANGE,
+          path: '/dapp/exchange',
+        },
+        {
+          name: pages.DAPP_SWAP,
+          path: '/dapp/swap',
+        },
+        {
+          name: pages.LIQUIDITY,
+          path: '/dapp/liquidity',
+        },
+        {
+          name: pages.TRANSACTIONS,
+          path: '/dapp/transactions',
+        },
+        {
+          name: pages.FARMING,
+          path: '/dapp/farming',
+        },
+        {
+          name: pages.VALIDATOR,
+          path: '/dapp/validator',
+        },
+        {
+          name: pages.TOKENSALE,
+          path: '/tokensale',
         },
         {
           name: pages.ROBOTS,
-          path: "/robots"
+          path: '/robots',
         },
         {
           name: pages.TECHNOLOGY,
-          path: "/technology"
+          path: '/technology',
         },
         {
           name: pages.SAFETY,
-          path: "/safety"
+          path: '/safety',
         },
         {
           name: pages.COMMERCE,
-          path: "/commerce"
+          path: '/commerce',
         },
         // {
         //   name: pages.INVESTMENT,
@@ -98,7 +134,7 @@ export const routes =
         // },
         {
           name: pages.CONTACT,
-          path: "/contact"
+          path: '/contact',
         },
         // {
         //   name: pages.FAQ,
@@ -106,93 +142,93 @@ export const routes =
         // },
         {
           name: pages.HELLO,
-          path: "/hello"
+          path: '/hello',
         },
         {
           name: pages.UIKIT,
-          path: "/uikit"
+          path: '/uikit',
         },
         {
           name: pages.NOT_FOUND,
-          path: "/not_found"
+          path: '/not_found',
         },
         // Cabinet routes (temorarily like this)
         {
           name: pages.CABINET_WALLET,
-          path: "/cabinet_wallet"
+          path: '/cabinet_wallet',
         },
         {
           name: pages.FIAT,
-          path: "/fiat"
+          path: '/fiat',
         },
         {
           name: pages.SETTINGS,
-          path: "/settings"
+          path: '/settings',
         },
         {
           name: pages.PARTNERS,
-          path: "/partners",
-          params: { section: "test" }
+          path: '/partners',
+          params: { section: 'test' },
         },
         {
           name: pages.INVESTMENTS,
-          path: "/investments"
+          path: '/investments',
         },
         {
           name: pages.CHANGE_EMAIL,
-          path: "/change_email"
+          path: '/change_email',
         },
         {
           name: pages.REGISTER,
-          path: "/register"
+          path: '/register',
         },
         {
           name: pages.RESET_PASSWORD,
-          path: "/reset_password"
+          path: '/reset_password',
         },
         {
           name: pages.EXCHANGE,
-          path: `/${pages.EXCHANGE}`
+          path: `/${pages.EXCHANGE}`,
         },
         {
           name: pages.MERCHANT,
-          path: "/merchant/:merchant/:status"
+          path: '/merchant/:merchant/:status',
         },
         {
           name: pages.FEE,
-          path: "/fee"
+          path: '/fee',
         },
         {
           name: pages.TOKEN,
-          path: "/token"
+          path: '/token',
         },
         {
           name: pages.TRADER,
-          path: "/trader"
+          path: '/trader',
         },
         {
           name: pages.DOCUMENTATION,
-          path: "/documentation"
+          path: '/documentation',
         },
         {
           name: pages.DOCUMENTATION_PAGE,
-          path: "/documentation/page/:page"
+          path: '/documentation/page/:page',
         },
         {
           name: pages.DOCUMENTATION_API,
-          path: "/documentation/api"
+          path: '/documentation/api',
         },
         {
           name: pages.DOCUMENTATION_API_LIST,
-          path: "/documentation/api/:path"
+          path: '/documentation/api/:path',
         },
         {
           name: pages.DOCUMENTATION_API_METHOD,
-          path: "/documentation/api/method/:key"
+          path: '/documentation/api/method/:key',
         },
         {
           name: pages.TOKEN_LANDING,
-          path: "/token_landing"
+          path: '/token_landing',
         },
         {
           name: pages.NARFEX_DAO,
@@ -215,18 +251,18 @@ const params = {
   strictQueryParams: true,
   trailingSlash: true,
   useTrailingSlash: false,
-  queryParamsMode: "loose"
+  queryParamsMode: 'loose',
 };
 
 let router = createRouter(routes, params);
 
 router.usePlugin(
   browserPlugin({
-    base: "",
+    base: '',
     useHash: false,
-    hashPrefix: "",
+    hashPrefix: '',
     mergeState: true,
-    preserveHash: false
+    preserveHash: false,
     // forceDeactivate: true,
   })
 );
@@ -234,7 +270,7 @@ router.usePlugin(
 router.usePlugin(listenersPlugin());
 
 router.addListener((state, prevState) => {
-  if (state.params.path === "/profile") {
+  if (state.params.path === '/profile') {
     router.navigate(pages.PARTNERS);
   }
 });

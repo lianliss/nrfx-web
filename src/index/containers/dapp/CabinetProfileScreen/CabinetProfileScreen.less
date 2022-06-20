@@ -1,0 +1,202 @@
+.CabinetProfileScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+  margin-bottom: var(--gap-size);
+}
+
+.CabinetProfileScreen__dashboard {
+  .CabinetProfileScreen__dashboard__wrapper {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    //grid-auto-rows: 100px;
+    //grid-gap: var(--gap-size);
+    grid-gap: 24.5px;
+  }
+}
+
+.CabinetProfileScreen__height_padding {
+  height: 24px;
+  width: 100%;
+}
+
+.CabinetStartProfileScreen__wallets {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  width: calc(100% + 28px);
+}
+
+.CabinetStartProfileScreen__actionCards {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  margin-top: 24px;
+  width: calc(100% + 28px);
+}
+
+// DashboardItemAction
+
+.CabinetStartProfileScreen__right {
+  grid-template-columns: 100%;
+  margin-top: 0;
+  .DashboardItemAction {
+    margin-bottom: 24px;
+    .DashboardItemAction__description {
+      font-size: 14px;
+    }
+    .DashboardItemAction__button {
+      width: 100%;
+      display: flex;
+      margin-top: 40px;
+      .Button {
+        width: 170px;
+        margin: auto;
+      }
+    }
+  }
+}
+
+.CabinetProfileScreen__height24 {
+  height: var(--gap-size);
+  width: 100%;
+}
+
+.ReferralLinkBlock__main {
+  @leftColon: 200px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 40px 40px 40px;
+  margin-top: 24px !important;
+  .ReferralLinkBlock__left {
+    width: calc(100% - @leftColon);
+    display: flex;
+  }
+  .ReferralLinkBlock__right {
+    width: @leftColon;
+    display: flex;
+  }
+  .ReferralLinkBlock__line:first-child {
+    padding-top: 24px !important;
+  }
+  .ReferralLinkBlock__line {
+    width: 100%;
+    display: flex;
+    .ReferralLinkBlock__left,
+    .ReferralLinkBlock__right {
+      .ReferralLinkBlock__description {
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: 40px;
+        font-size: 13px;
+        line-height: 24px;
+      }
+      .ReferralLinkBlock__right_social {
+        width: 64px;
+        height: 64px;
+        margin-left: -16px;
+        cursor: pointer;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+      .ReferralLinkBlock__right_button {
+        width: 100%;
+        margin: 0 auto;
+        .Button {
+          width: 100%;
+        }
+      }
+    }
+    .ReferralLinkBlock__left {
+      .h1 {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        display: flex;
+        span {
+          margin: auto 0;
+        }
+      }
+    }
+  }
+}
+
+.adaptive {
+  .CabinetProfileScreen__wallets {
+    grid: none;
+    width: 100% !important;
+
+    .WalletBox {
+      margin-right: 0;
+      .WalletBox__icon {
+        position: absolute;
+        transform: none;
+        left: 10px;
+      }
+      .WalletBox__content {
+        box-sizing: border-box;
+        box-shadow: none;
+      }
+      .ContentBox {
+        box-shadow: none;
+        border-radius: var(--radius-panel);
+
+        .ContentBox__content {
+          padding-left: 72px;
+          padding-right: 24px;
+        }
+      }
+    }
+    .CabinetProfileScreen__walletsContentBox {
+      background-color: var(--white);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+    }
+  }
+
+  .WalletBalance {
+    padding-block-end: 0;
+  }
+
+  .WalletBalance__selected_wallet {
+    padding-inline-start: 24px !important;
+  }
+
+  .WalletBalance .WalletBalance__convert {
+    position: relative;
+    right: 0;
+    top: 0;
+    padding: 0;
+    span {
+      color: var(--almost-black);
+    }
+  }
+
+  .CabinetProfileScreen__dashboard {
+    margin: var(--gap-size) 0;
+    width: 100%;
+    height: 312px;
+    overflow: hidden;
+    overflow-x: scroll;
+    box-sizing: border-box;
+
+    .CabinetProfileScreen__dashboard__wrapper {
+      width: 100%;
+      display: flex;
+      margin: 0 calc(var(--gap-size) / 2);
+
+      & > div {
+        flex: 0 0 auto;
+        margin: 0 calc(var(--gap-size) / 2);
+        width: 192px;
+      }
+    }
+  }
+}

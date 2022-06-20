@@ -1,24 +1,25 @@
-import "./ActionSheet.less";
+import './ActionSheet.less';
 
-import React from "react";
-import {ReactComponent as MenuMoreIcon} from "src/asset/24px/menu-more.svg";
+import React from 'react';
+import { ReactComponent as MenuMoreIcon } from 'src/asset/24px/menu-more.svg';
 
-import { classNames as cn } from "../../utils/index";
-import ContentBox from "../ContentBox/ContentBox";
+import { classNames as cn } from '../../utils/index';
+import ContentBox from '../ContentBox/ContentBox';
+import SVG from 'utils/svg-wrap';
 
 export default class ActionSheet extends React.Component {
   state = {
-    visible: false
+    visible: false,
   };
 
-  toggle = visible => {
+  toggle = (visible) => {
     this.setState({ visible });
     if (visible) {
-      document.addEventListener("click", this.__handleClick, false);
-      document.addEventListener("keydown", this.__handleClickEsc, false);
+      document.addEventListener('click', this.__handleClick, false);
+      document.addEventListener('keydown', this.__handleClickEsc, false);
     } else {
-      document.removeEventListener("click", this.__handleClick, false);
-      document.removeEventListener("keydown", this.__handleClickEsc, false);
+      document.removeEventListener('click', this.__handleClick, false);
+      document.removeEventListener('keydown', this.__handleClickEsc, false);
     }
   };
 
@@ -26,7 +27,7 @@ export default class ActionSheet extends React.Component {
     this.toggle(false);
   };
 
-  __handleClickEsc = e => {
+  __handleClickEsc = (e) => {
     if (e.keyCode === 27) {
       this.toggle(false);
     }
@@ -38,9 +39,9 @@ export default class ActionSheet extends React.Component {
     return (
       <div
         onMouseLeave={props.mouseOver ? () => this.toggle(false) : () => {}}
-        className={cn("ActionsSheet", props.position, {
+        className={cn('ActionsSheet', props.position, {
           visible: state.visible,
-          disabled: !props.items.length
+          disabled: !props.items.length,
         })}
       >
         <div
@@ -54,11 +55,16 @@ export default class ActionSheet extends React.Component {
           )}
         </div>
         <ContentBox className="ActionsSheet__list">
+          {props.type === 'drop' && (
+            <div className="ActionsSheet__drop-icon">
+              <SVG src={require('../HoverPopup/assets/triangle.svg')} />
+            </div>
+          )}
           {props.items.map((item, key) => (
             <div
               key={key}
-              className={cn("ActionsSheet__item", item.type)}
-              onClick={e => {
+              className={cn('ActionsSheet__item', item.type)}
+              onClick={(e) => {
                 item.onClick();
                 this.toggle(false);
               }}

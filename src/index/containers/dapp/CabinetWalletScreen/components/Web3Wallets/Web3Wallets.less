@@ -1,0 +1,143 @@
+@keyframes spin {
+    100% {
+        transform:rotate(360deg);
+    }
+}
+
+.Web3Wallets {
+    margin-bottom: var(--gap-size);
+
+    .ContentBox__content {
+        padding: var(--padding-panel);
+
+        .adaptive & {
+            padding: 24px 16px 24px;
+        }
+    }
+    h2 {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+    }
+    &-addresses {
+
+        &-item {
+            &:not(:first-child) {
+                margin-top: 40px;
+            }
+
+            &-body {
+                display: flex;
+                justify-content: space-between;
+            }
+            &-left {
+
+            }
+            &-right {
+                display: flex;
+                align-items: flex-start;
+                font-weight: 800;
+                font-size: 24px;
+                text-transform: uppercase;
+
+                small {
+                    background: var(--primary-blue-opacity);
+                    color: var(--text-black);
+                    display: block;
+                    padding: 0 8px;
+                    border-radius: var(--radius-button);
+                }
+                .adaptive & {
+                    display: none;
+                }
+            }
+            &-address {
+                font-size: 12px;
+                font-weight: 500;
+            }
+        }
+    }
+    &-balances {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 4px -11px;
+
+        &-loading {
+            display: flex;
+            align-items: center;
+            margin: 4px 8px;
+
+            .isvg {
+                transform: scale(0.5) translateY(3px);
+
+                svg {
+                    animation:spin 1s linear infinite;
+
+                    path {
+                        fill: rgb(250, 190, 76);
+                    }
+                }
+            }
+            &-text {
+                font-size: 13px;
+                font-weight: 600;
+                margin-left: 6px;
+            }
+        }
+        &-unknown {
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin: 4px 12px;
+
+            &:before {
+                content: "";
+                display: block;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: var(--gray);
+                margin-right: 6px;
+            }
+        }
+    }
+    &-balance {
+        display: flex;
+        align-items: center;
+        margin: 4px 12px;
+
+        &-circle {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        &-amount {
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        &-currency {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 6px;
+        }
+    }
+    &-controls {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+
+        &.delete {
+            justify-content: flex-end;
+        }
+        .Button {
+            &:not(:first-child) {
+                margin-left: 16px;
+            }
+        }
+    }
+}

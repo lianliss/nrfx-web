@@ -1,0 +1,80 @@
+.TokenSale {
+  height: 100%;
+  width: 100%;
+  padding: 32px;
+  color: var(--black-gunmetal);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+
+  &__wrap {
+    display: flex;
+    height: calc(100vh - 58px);
+    padding: 17px;
+    box-sizing: border-box;
+  }
+
+  h3 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    margin-bottom: 25px;
+  }
+
+  .Form {
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px 45px;
+    margin: auto;
+    border: 1px solid var(--sidebar-icon);
+    border-radius: 24px;
+
+    .Input {
+      height: 50px;
+
+      &__wrapper {
+        margin: 0 0 15px;
+      }
+    }
+
+    .Button {
+      height: 50px;
+      margin-top: 10px;
+
+      .Button__label svg {
+        margin-right: 4px;
+        transform: translateY(-2px);
+
+        path {
+          fill: white;
+        }
+      }
+    }
+
+    label {
+      text-align: left;
+      margin-bottom: -10px;
+      
+      p {
+        padding-left: 5px;
+        margin-bottom: 5px;
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--cool-gray);
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+  &__error {
+    font-size: 12px;
+    margin-top: 16px;
+    color: var(--text-red);
+  }
+}

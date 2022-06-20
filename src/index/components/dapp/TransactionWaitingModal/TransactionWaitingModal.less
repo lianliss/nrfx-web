@@ -1,0 +1,63 @@
+@import '../../../../vars.less';
+
+.TransactionWaitingModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &__icon {
+    padding: 47px 0;
+    margin-bottom: 16px;
+
+    .isvg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .medium-text {
+    margin-bottom: 22px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--dark-gunmetal);
+  }
+
+  .small-text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--cool-gray);
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .TransactionWaitingModal {
+    &__icon {
+      padding: 64px 0 46px;
+      margin-bottom: 10px;
+
+      svg {
+        width: 90px;
+        height: 90px;
+      }
+    }
+
+    .medium-text {
+      margin-bottom: 12px;
+
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    p {
+      max-width: 272px;
+    }
+  }
+}

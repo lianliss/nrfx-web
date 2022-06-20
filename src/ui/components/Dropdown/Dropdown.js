@@ -7,7 +7,7 @@ import SVG from "utils/svg-wrap";
 // internal
 import { classNames } from "../../utils";
 
-const arrow = require("src/asset/24px/angle-down-small.svg");
+const arrow = require("src/asset/icons/arrows/form-dropdown.svg");
 
 class Dropdown extends React.Component {
   constructor(props) {

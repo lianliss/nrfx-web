@@ -1,0 +1,28 @@
+.DoubleText {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  color: var(--black-gunmetal);
+
+  & > span {
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+    color: var(--cool-gray);
+  }
+
+  p span:nth-child(2) {
+    &,
+    span {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: -0.01em;
+    }
+  }
+}

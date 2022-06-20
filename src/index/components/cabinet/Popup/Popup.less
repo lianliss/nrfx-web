@@ -1,0 +1,42 @@
+@import '../../../../vars.less';
+
+.Popup {
+  position: fixed;
+  bottom: 33px;
+  right: 33px;
+  padding: 24px;
+  box-shadow: 0px 15px 75px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-sizing: border-box;
+
+  &.active {
+    opacity: 1;
+  }
+
+  &.disabled {
+    opacity: 0;
+  }
+
+  .close {
+    position: absolute;
+    top: 25.6px;
+    right: 24px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Popup {
+    position: static;
+    padding: 20px 15px;
+
+    .close {
+      position: absolute;
+      top: 19.6px;
+      right: 24px;
+      cursor: pointer;
+    }
+  }
+}

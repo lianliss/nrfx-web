@@ -2,7 +2,7 @@ import "./CabinetExchangeScreen.less";
 
 import React from "react";
 import { connect } from "react-redux";
-import DexSwap from '../DexSwap/DexSwap';
+import DexSwap from 'src/index/containers/dapp/DexSwap/DexSwap';
 
 class CabinetExchangeScreen extends React.PureComponent {
   render() {

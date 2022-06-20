@@ -1,0 +1,151 @@
+@import '../../../../../../vars.less';
+
+.FarmingTableItem {
+  &:not(.options):hover {
+    box-shadow: none !important;
+    z-index: inherit;
+    transform: none;
+    background: auto;
+    cursor: default;
+  }
+
+  &:not(.options) {
+    td {
+      &:nth-child(3),
+      &:nth-child(4) {
+        .Table__td__cont {
+          color: var(--primary-dark-blue);
+        }
+      }
+    }
+  }
+
+  // <TableColumn />
+  td {
+    .Table__td__cont {
+      display: flex;
+      align-items: center;
+      justify-content: start;
+      flex-direction: row;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      color: var(--black-gunmetal);
+      background: inherit !important;
+
+      // <SVG />
+      .isvg {
+        display: flex;
+        align-items: center;
+        margin-left: 4px;
+      }
+
+      .Button__loader {
+        .isvg {
+          display: inline-flex;
+          align-items: center;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  &.dark {
+    background: var(--alice-blue) !important;
+  }
+
+  &__action_icon {
+    svg,
+    path {
+      fill: var(--dark-black);
+      border-color: var(--dark-black);
+    }
+
+    circle {
+      stroke: var(--dark-black);
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  // <Button />
+  .Button {
+    padding: 12px 16px;
+    height: auto;
+
+    &__label {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 100%;
+      letter-spacing: -0.01em;
+    }
+
+    .isvg {
+      margin-right: 8px;
+    }
+
+    &.stake,
+    &.unstake {
+      width: calc(100% - 50% - 7.5px);
+    }
+
+    &.stake {
+      margin-right: 15px;
+    }
+  }
+
+  // <HoverPopup />
+  .HoverPopup {
+    margin-left: 4px;
+
+    .isvg {
+      margin: 0 !important;
+    }
+
+    p {
+      max-width: 482px;
+      width: 37.7vw;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 150%;
+      color: #707070;
+    }
+  }
+
+  .details {
+    user-select: none;
+
+    .Table__td__cont {
+      color: var(--cool-gray) !important;
+      display: inline-flex;
+      align-items: center;
+
+      svg,
+      path {
+        fill: var(--cool-gray);
+      }
+    }
+
+    &.active {
+      .isvg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .small-popup {
+    span {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 100%;
+      color: #000;
+    }
+  }
+
+  &:not(.options) span {
+    display: inline-flex;
+    cursor: pointer;
+  }
+}

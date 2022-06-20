@@ -1,3 +1,4 @@
+export { default as Form } from "./components/Form/Form";
 export { default as Button, ButtonWrapper } from "./components/Button/Button";
 export { default as Badge } from "./components/Badge/Badge";
 export { default as WatchButton } from "./components/Button/WatchButton";
@@ -59,4 +60,9 @@ export { default as Status } from "./components/Status/Status";
 export { default as Separator } from "./components/Separator/Separator";
 export { default as HistoryItem } from "./components/HistoryItem/HistoryItem";
 export { default as CopyText} from "./components/CopyText/CopyText";
-export { default as HoverPopup} from "./components/HoverPopup/HoverPopup";
+export { default as RateIndicator } from "./components/RateIndicator/RateIndicator";
+export { default as DynamicShadow } from "./components/DynamicShadow/DynamicShadow";
+export { default as ScrollBox } from "./components/ScrollBox/ScrollBox";
+export { default as HoverPopup } from "./components/HoverPopup/HoverPopup";
+export { default as DropdownElement } from "./components/DropdownElement/DropdownElement";
+export { default as BottomSheetModal } from "./components/BottomSheetModal/BottomSheetModal";

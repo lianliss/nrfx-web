@@ -1,4 +1,4 @@
-@import "../../vars";
+@import '../../vars';
 
 @animType: ease-in-out;
 @animTime: 400ms;
@@ -6,7 +6,7 @@
 .SwitchTabs {
   --indicator-width: 0;
   --padding: 4px;
-
+  
   position: relative;
   color: var(--primary-blue);
   background: var(--primary-blue-opacity);
@@ -23,6 +23,10 @@
 
   &.small {
     height: 32px;
+  }
+
+  &.medium {
+    height: 46px !important;
   }
 
   &.secondary {
@@ -48,6 +52,29 @@
     opacity: 0.8;
     pointer-events: none;
   }
+
+  &.light-blue {
+    .SwitchTabs__item {
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
+
+      &::before {
+        opacity: 0;
+      }
+
+      &.active {
+        font-weight: 600;
+        color: #fff;
+      }
+    }
+
+    .SwitchTabs__indicator {
+      span {
+        background: var(--blue-light-gradient);
+      }
+    }
+  }
 }
 
 .SwitchTabs__item {
@@ -71,7 +98,7 @@
     height: calc(100% - 16px);
     top: 8px;
     background: var(--primary-blue);
-    opacity: .5;
+    opacity: 0.5;
     transition: opacity @animTime @animType;
   }
 
@@ -109,7 +136,8 @@
     display: block;
     background: var(--white);
     border-radius: 8px;
-    box-shadow: 0 0 2px rgba(64, 112, 255, 0.15), 0 2px 4px rgba(64, 112, 255, 0.1);
+    box-shadow: 0 0 2px rgba(64, 112, 255, 0.15),
+      0 2px 4px rgba(64, 112, 255, 0.1);
     position: absolute;
     top: 4px;
     left: 4px;

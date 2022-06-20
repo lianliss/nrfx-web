@@ -1,0 +1,52 @@
+.DappWrapper {
+  display: flex;
+  flex-direction: column;
+  background: var(--secondary-background);
+  min-height: 100vh;
+  width: 100%;
+}
+
+.floatingButtonPadding {
+  width: 100%;
+}
+
+.adaptive {
+  .DappWrapper {
+    .EmptyContentBlock {
+      min-height: 250px;
+    }
+    .Empty_box {
+      box-sizing: border-box;
+      padding-bottom: 24px;
+      h3 {
+        min-width: 80%;
+        font-size: 14px;
+      }
+      svg {
+        width: 90px;
+        height: 90px;
+      }
+    }
+
+    .AdaptiveHeader__logo {
+      margin: auto 0 auto 16px;
+      cursor: pointer;
+
+      svg {
+        width: 78px;
+        margin: 0 !important;
+      }
+    }
+  }
+
+  .floatingButtonPadding {
+    width: 100%;
+    height: 64px;
+  }
+}
+
+.adaptive {
+  .DappWrapper {
+    min-width: auto;
+  }
+}

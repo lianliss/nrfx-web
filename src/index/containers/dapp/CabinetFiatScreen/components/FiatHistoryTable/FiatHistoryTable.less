@@ -1,0 +1,85 @@
+.FiatHistoryTable {
+  .ContentBox__content {
+    padding: 0 0 24px;
+  }
+
+  .FiatHistoryTable__header {
+    width: 100%;
+    display: flex;
+
+    span {
+      margin: 16px auto 0;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .FiatHistoryTable__group__title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    padding: 0 40px;
+  }
+
+  .FiatHistoryTable__group__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 16px 40px;
+
+    &:after {
+      content: "";
+      display: block;
+    }
+
+    &:hover {
+      background: var(--alice-blue);
+    }
+
+    .FiatHistoryTable__group__item__body {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .FiatHistoryTable__group__item__right {
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .CircleIcon {
+      margin-right: 16px;
+    }
+
+    .FiatHistoryTable__label {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      margin-bottom: 8px;
+    }
+
+    .FiatHistoryTable__description {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 16px;
+      color: var(--gray);
+    }
+
+    .FiatHistoryTable__price {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}
+
+.adaptive {
+  .FiatHistoryTable {
+    .FiatHistoryTable__group__item {
+      padding: 16px;
+    }
+  }
+}

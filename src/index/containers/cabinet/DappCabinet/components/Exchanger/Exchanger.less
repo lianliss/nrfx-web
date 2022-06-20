@@ -1,0 +1,57 @@
+@import '../../../../../../vars.less';
+
+.Exchanger {
+  &__wrap {
+    .CabinetContent {
+      &__container {
+        max-width: 645px;
+        width: 100%;
+      }
+
+      &__bg-center {
+        top: 161px;
+        transform: translateX(-14.7%);
+      }
+    }
+  }
+
+  h2 {
+    margin-bottom: 47px;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: var(--black-gunmetal);
+    text-align: center;
+  }
+
+  &__needAuth {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 320px;
+
+    .ContentBox__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    p {
+      margin-bottom: 10px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: -0.01em;
+      color: var(--cool-gray);
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Exchanger {
+    h2 {
+      margin: 29px 0;
+      font-size: 30px;
+    }
+  }
+}

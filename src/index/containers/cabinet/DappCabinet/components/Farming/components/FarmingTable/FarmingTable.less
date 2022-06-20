@@ -1,0 +1,75 @@
+@import '../../../../../../../../vars.less';
+
+.FarmingTable {
+  // -- <Table />
+  &__table {
+    border: none;
+    width: 100%;
+    overflow: visible;
+
+    .Table {
+      overflow: visible !important;
+    }
+
+    // <TableColumn />
+    .Table__td__cont {
+      min-height: 0;
+      padding: 0 !important;
+    }
+
+    // TD Styles
+    td {
+      padding: 17px 0 14px 59px;
+      box-sizing: border-box;
+
+      &:nth-child(2) {
+        padding-left: 5px !important;
+      }
+
+      &:last-child {
+        padding-left: 14px;
+      }
+
+      @media screen and (max-width: 1350px) {
+        padding-left: 10px;
+      }
+    }
+
+    tbody td:last-child {
+      .FarmingTableItem:not(.options) & {
+        padding-left: 14px;
+        padding-right: 26px;
+      }
+    }
+
+    tr td:first-child {
+      padding-left: 16px;
+      border-radius: var(--radius-panel) 0 0 var(--radius-panel);
+    }
+
+    tr td:last-child {
+      border-radius: 0 var(--radius-panel) var(--radius-panel) 0;
+      padding-right: 16px;
+      padding-left: 0;
+
+      .Table__td__cont {
+        justify-content: end;
+      }
+    }
+
+    thead {
+      td {
+        padding-top: 0 !important;
+      }
+
+      // Current titles
+      .Table__sub {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: -0.01em;
+        color: var(--cool-gray);
+      }
+    }
+  }
+}

@@ -2,11 +2,12 @@
   display: flex;
   justify-content: center;
   background: #fff;
-  padding: 40px 20px 35px;
+  padding: 32px;
   box-sizing: border-box;
   border-radius: 25px 25px 0 0;
-  box-shadow: 0 0 20px 2px rgba(1,1,1, .2);
   position: relative;
+  box-shadow: 0px 15px 75px rgba(0, 0, 0, 0.1);
+  overflow-y: scroll;
 
   width: 100%;
   position: fixed;
@@ -21,7 +22,21 @@
     transform: translateX(-50%);
     height: 3px;
     width: 30%;
-    border-top: 1.5px solid rgba(1,1,1, .3);
+    border-top: 1.5px solid rgba(1, 1, 1, 0.3);
+  }
+
+  &__children {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.75);
+    height: calc(100% - 67px); // 67 is header height
+    width: 100%;
   }
 }
 

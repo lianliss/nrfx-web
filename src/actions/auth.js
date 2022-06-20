@@ -84,7 +84,7 @@ export function logout() {
         .then(() => {
           auth.logout();
           actions.closeModal();
-          router.navigate(pages.MAIN);
+          // router.navigate(pages.MAIN);
         })
         .catch(err => {
           toasts.error(err.message);

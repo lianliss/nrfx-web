@@ -29,6 +29,7 @@ import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoun
 // import UIKitScreen from "./containers/UIKit/UIKitScreen";
 // import SiteWrapper from "../wrappers/Site/SiteWrapper";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
+import DappWrapper from "../wrappers/Dapp/DappWrapper";
 import LandingWrapper from "../wrappers/Landing/LandingWrapper";
 import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
 
@@ -47,10 +48,12 @@ import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/Ca
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
 import SiteFeeScreen from "../landing/containers/Fee/SiteFeeScreen";
 import SiteTokenScreen from "./containers/site/SiteTokenScreen/SiteTokenScreen";
+import TokenSale from "./containers/dapp/TokenSale/TokenSale";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
 import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
 import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
+import DappCabinet from "./containers/dapp/DappCabinet/DappCabinet";
 import * as actions from "../actions/index";
 import router from "../router";
 import PrivatePools from "./containers/cabinet/PrivatePools/PrivatePools";
@@ -171,6 +174,18 @@ function Routes(props) {
       needAuthorization = true;
       Component = CabinetWalletScreen.default;
       break;
+    case pages.DAPP:
+    case pages.DAPP_WALLET:
+    case pages.DAPP_SWAP:
+    case pages.DAPP_EXCHANGE:
+    case pages.FARMING:
+    case pages.LIQUIDITY:
+    case pages.TRANSACTIONS:
+    case pages.VALIDATOR:
+      needAuthorization = false;
+      WrapperComponent = DappWrapper;
+      Component = DappCabinet;
+      break;
     case pages.FIAT:
       needAuthorization = true;
       Component = CabinetFiatScreen.default;
@@ -254,6 +269,9 @@ function Routes(props) {
     case pages.PRIVATE_POOLS:
       Component = PrivatePools;
       WrapperComponent = LandingWrapper;
+      break;
+    case pages.TOKENSALE:
+      Component = TokenSale;
       break;
     default:
       Component = SiteNotFoundScreen;

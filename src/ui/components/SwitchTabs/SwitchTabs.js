@@ -1,11 +1,11 @@
 // styles
-import "./SwitchTabs.less";
+import './SwitchTabs.less';
 // external
-import React, { useEffect, useState, useRef } from "react";
-import { classNames as cn } from "../../utils/index";
-import PropTypes from "prop-types";
+import React, { useEffect, useState, useRef } from 'react';
+import { classNames as cn } from '../../utils/index';
+import PropTypes from 'prop-types';
 // internal
-import { classNames } from "../../../utils";
+import { classNames } from '../../../utils';
 
 export default function SwitchTabs({
   tabs,
@@ -13,7 +13,8 @@ export default function SwitchTabs({
   onChange,
   size,
   type,
-  disabled
+  disabled,
+  isAnimated,
 }) {
   const getSelectedIndex = () => {
     for (let i = 0; i < tabs.length; i++) {
@@ -26,7 +27,7 @@ export default function SwitchTabs({
 
   const [animation, setAnimation] = useState(false);
   const didMountRef = useRef(false);
-
+  
   useEffect(() => {
     if (didMountRef.current) {
       setAnimation(true);
@@ -40,14 +41,14 @@ export default function SwitchTabs({
 
   const indicatorWidth = 100 / tabs.length;
   return (
-    <div className={classNames("SwitchTabs", size, type, { disabled })}>
-      {tabs.map(tab => {
+    <div className={classNames('SwitchTabs', size, type, { disabled })}>
+      {tabs.map((tab) => {
         return (
           <div
             key={tab.value}
             className={classNames({
               SwitchTabs__item: true,
-              active: tab.value === selected
+              active: tab.value === selected,
             })}
             onClick={tab.onClick || (() => onChange(tab.value))}
           >
@@ -57,10 +58,12 @@ export default function SwitchTabs({
       })}
       {selected && (
         <div
-          className={cn("SwitchTabs__indicator", { animation })}
+          className={cn('SwitchTabs__indicator', {
+            animation: animation && isAnimated,
+          })}
           style={{
-            "--indicator-width": indicatorWidth,
-            "--indicator-offset": getSelectedIndex()
+            '--indicator-width': indicatorWidth,
+            '--indicator-offset': getSelectedIndex(),
           }}
         >
           <span />
@@ -71,14 +74,15 @@ export default function SwitchTabs({
 }
 
 SwitchTabs.defaultProps = {
-  currency: {}
+  currency: {},
+  isAnimated: true,
 };
 
 SwitchTabs.propTypes = {
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.any,
-      label: PropTypes.string
+      label: PropTypes.string,
     })
   ).isRequired,
   selected: PropTypes.any,
@@ -86,5 +90,6 @@ SwitchTabs.propTypes = {
   onChange: PropTypes.func.isRequired,
   size: PropTypes.string,
   disabled: PropTypes.bool,
-  type: PropTypes.string
+  type: PropTypes.string,
+  isAnimated: PropTypes.bool,
 };

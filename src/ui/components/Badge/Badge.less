@@ -29,3 +29,41 @@
     }
   }
 }
+
+.Badge-blue {
+  &-icon {
+    position: relative;
+    cursor: pointer;
+  }
+
+  &-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 11px;
+    left: -3px;
+    width: 12px;
+    height: 12px;
+    background: #577eea;
+    border: 1px solid #f7f9fc;
+    border-radius: 50%;
+
+    & > div {
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 600;
+        font-size: 8px;
+        line-height: 9px;
+        color: #fff;
+      }
+    }
+  }
+}

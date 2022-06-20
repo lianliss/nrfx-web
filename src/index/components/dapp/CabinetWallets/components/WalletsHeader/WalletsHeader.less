@@ -1,0 +1,102 @@
+@import '../../../../../../vars.less';
+
+.WalletsHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  &__col {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &:last-child {
+      justify-content: end;
+
+      & > * {
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+
+        &:last-child {
+          margin-left: 5px;
+        }
+      }
+
+      .Button {
+        min-width: 153px;
+        height: 50px;
+
+        .isvg {
+          margin-right: 9px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .WalletsExists .WalletsHeader {
+    margin-bottom: 17px;
+
+    &__col {
+      width: 100%;
+
+      .WalletsTotalBalance {
+        width: 100%;
+
+        &__icon {
+          margin-right: 12px;
+          margin-top: 0;
+        }
+        
+        &__content {
+          flex: 1 1 50%;
+          margin-top: 0;
+        }
+
+        &__row {
+          width: 100%;
+
+          .isvg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      &:last-child {
+        margin-top: 23px;
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .DynamicShadow {
+          .Button {
+            width: 100%;
+          }
+        }
+
+        .Button {
+          padding: 18px 15px;
+          min-width: 0;
+        }
+
+        & > button,
+        & > div {
+          flex: 1 0 101px;
+          margin: 0 0 8px !important;
+        }
+
+        & > .Button {
+          margin-right: 8px !important;
+        }
+      }
+    }
+  }
+}

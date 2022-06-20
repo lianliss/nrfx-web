@@ -1,0 +1,103 @@
+@import '../../../../../../../../vars.less';
+
+.FarmingTableHeader {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 24px;
+
+  // Components
+  // -- <SwitchTabs />
+  .SwitchTabs {
+    height: 46px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+    margin-right: 20px;
+
+    &__item {
+      padding: 14px 24px; // (12 + 4), (20 + 4). 4px is container padding.
+      flex: auto; // to null default styles.
+
+      &:not(.active) {
+        span {
+          background: var(--blue-light-gradient);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-fill-color: transparent;
+        }
+      }
+    }
+
+    &__indicator span {
+      border-radius: 10px;
+    }
+  }
+
+  // -- <Select /> from Cabinet
+  .CabinetSelect {
+    &__control {
+      height: 46px;
+      background: none !important;
+      border-radius: 10px !important;
+    }
+
+    &__menu {
+      z-index: 20;
+    }
+  }
+
+  // -- <Search />
+  .Search {
+    margin-left: 12px;
+    max-width: 152px;
+    height: 46px;
+    border-color: #dfe3f0;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: none;
+
+    .isvg {
+      svg,
+      path {
+        fill: #dfe3f0;
+      }
+    }
+
+    &__input {
+      background: none !important;
+
+      &::placeholder {
+        color: var(--cool-gray) !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: @mobile-width) {
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+
+    .SwitchTabs {
+      width: 100%;
+      margin: 0 0 12px;
+    }
+
+    .CabinetSelect,
+    .Search {
+      width: calc(50% - 6px);
+      margin: 0;
+    }
+
+    .CabinetSelect {
+      margin-right: 12px;
+
+      &__control {
+        min-width: 0 !important;
+        width: 100%;
+      }
+    }
+  }
+}

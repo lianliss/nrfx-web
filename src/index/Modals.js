@@ -45,6 +45,16 @@ import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvat
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
 import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
+import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
+import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
+import {
+  TransactionSubmittedModal,
+  LiquidityConfirmModal,
+  TransactionWaitingModal,
+  YourWalletModal,
+  ConnectToWalletModal
+} from "./components/dapp";
+import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
 
@@ -176,6 +186,31 @@ function Modals(props) {
       break;
     case "receive_qr":
       Component = ReceiveQRModal;
+      break;
+    case "stake":
+    case "unstake":
+      Component = FarmingPopupStake;
+      break;
+    case "farming_roi":
+      Component = FarmingPopupROI;
+      break;
+    case "liquidity_confirm_add":
+      Component = LiquidityConfirmModal;
+      break;
+    case "transaction_submitted":
+      Component = TransactionSubmittedModal;
+      break;
+    case "transaction_waiting":
+      Component = TransactionWaitingModal;
+      break;
+    case "your_wallet":
+      Component = YourWalletModal;
+      break;
+    case "connect_to_wallet":
+      Component = ConnectToWalletModal;
+      break;
+    case "swap_settings":
+      Component = SwapSettings;
       break;
     default:
       return null;

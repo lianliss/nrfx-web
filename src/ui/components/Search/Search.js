@@ -14,6 +14,7 @@ function Search(props) {
     lite: props.lite,
     simple: props.simple,
     disabled: props.disabled,
+    right: props.right,
   });
 
   return (
@@ -44,6 +45,7 @@ Search.propTypes = {
   lite: PropTypes.bool,
   simple: PropTypes.bool,
   disabled: PropTypes.bool,
+  right: PropTypes.bool,
 };
 
 export default React.memo(Search);

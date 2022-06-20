@@ -2,17 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import Web3 from 'web3/dist/web3.min.js';
 import wei from 'utils/wei';
+import wait from 'utils/wait';
 import _ from 'lodash';
 import axios from 'axios';
-import baseTokens from 'src/index/constants/baseTokens';
+import networks from 'src/index/constants/networks';
 import getAllPairsCombinations from 'utils/getPairCombinations';
 import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
 import significant from 'utils/significant';
+import TokenContract from './web3Provider/token';
+import MasterChefContract from './web3Provider/MasterChefContract';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
+const GWEI_DECIMALS = 9;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
+const AWAITING_DELAY = 2000;
 
 class Web3Provider extends React.PureComponent {
 
@@ -20,49 +25,24 @@ class Web3Provider extends React.PureComponent {
     isConnected: false,
     accountAddress: null,
     balancesRequested: null,
-    tokens: [
-      {
-        name: "Narfex",
-        symbol: "NRFX",
-        address: "0x3764Be118a1e09257851A3BD636D48DFeab5CAFE",
-        chainId: 56,
-        decimals: 18,
-        logoURI: "https://static.narfex.com/img/currencies/nrfx_pancake.svg"
-      },
-      {
-        name: "Tether",
-        symbol: "USDT",
-        address: "0x55d398326f99059fF775485246999027B3197955",
-        chainId: 56,
-        decimals: 18,
-        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-      },
-      {
-        name: "Binance Coin",
-        symbol: "BNB",
-        address: null,
-        chainId: 56,
-        decimals: 18,
-        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
-      },
-      ...baseTokens,
-    ],
+    blocksPerSecond: 0,
+    chainId: null,
+    tokens: networks[56].tokens,
+    pools: null,
+    prices: {},
   };
 
   ethereum = null;
-  providerAddress = 'https://bsc-dataseed1.defibit.io:443';
-  factoryAddress = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73';
-  routerAddress = '0x10ED43C718714eb63d5aA57B78B54704E256024E';
-  wrapBNB = {
-    name: "Wrapped BNB",
-    symbol: "WBNB",
-    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    chainId: 56,
-    decimals: 18,
-    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
-  };
+  //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
+  //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
+  providerAddress = 'asd';
+  factoryAddress = networks[56].factoryAddress;
+  routerAddress = networks[56].providerAddress;
+  tokenSale = networks[56].tokenSale;
+  wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
+  farm = null;
 
   getWeb3() {
     if (this.state.isConnected) {
@@ -226,7 +206,35 @@ class Web3Provider extends React.PureComponent {
       .lessThan(tradeB.executionPrice);
   }
 
-  getBSCScanLink = address => `https://bscscan.com/address/${address}#readContract`;
+  getBSCScanLink = address => this.state.chainId === 56
+    ? `https://bscscan.com/tx/${address}`
+    : `https://testnet.bscscan.com/tx/${address}`;
+
+  /**
+   * Switch to another chain
+   * @param id {integer} chainID
+   */
+  setChain(id) {
+    try {
+      if (!networks[id]) {
+        return this.setState({
+          chainId: id,
+        })
+      }
+      Object.assign(this, networks[id]);
+      this.farm = this.getFarmContract();
+      this.setState({
+        tokens: networks[id].tokens,
+        chainId: id,
+      });
+      this.getBlocksPerSecond();
+      if (id === 56) {
+        this.getTokens();
+      }
+    } catch (error) {
+      console.error('[setChain]', id, error);
+    }
+  }
 
   /**
    * Connect to web3 wallet plugin
@@ -239,6 +247,8 @@ class Web3Provider extends React.PureComponent {
       }
       this.ethereum = window.ethereum;
       this.web3 = new Web3(this.ethereum);
+      console.log('this.ethereum', this.ethereum);
+      this.setChain(this.getWeb3().utils.hexToNumber(this.ethereum.chainId));
 
       // Set account address
       const accountAddress = (await this.ethereum.request({ method: 'eth_requestAccounts' }))[0];
@@ -274,7 +284,8 @@ class Web3Provider extends React.PureComponent {
 
       // On chain change
       this.ethereum.on('chainChanged', (chainId) => {
-        window.location.reload();
+        console.log('chainChanged', chainId, this.web3Host.utils.hexToNumber(this.ethereum.chainId));
+        this.setChain(this.web3Host.utils.hexToNumber(chainId));
       });
 
       // On disconnect
@@ -301,9 +312,14 @@ class Web3Provider extends React.PureComponent {
    */
   async getTokens() {
     try {
-      const request = await axios.get('https://tokens.pancakeswap.finance/cmc.json');
-      const {tokens} = request.data;
+      let tokens = this.cmcTokens;
+      if (!tokens) {
+        const request = await axios.get('https://tokens.pancakeswap.finance/cmc.json');
+        tokens = request.data.tokens;
+        this.cmcTokens = tokens;
+      }
 
+      if (this.state.chainId !== 56) return [];
       if (!this._mounted) return;
       const result = _.uniqBy([
         ...this.state.tokens,
@@ -390,10 +406,7 @@ class Web3Provider extends React.PureComponent {
       ).call();
       return wei.from(data[1], Number(_.get(token1, 'decimals', 18)));
     } catch (error) {
-      console.error('[getTokensRelativePrice]',
-        this.getBSCScanLink(token0.address),
-        this.getBSCScanLink(token1.address),
-        error);
+      console.error('[getTokensRelativePrice]', error);
     }
   }
 
@@ -405,11 +418,12 @@ class Web3Provider extends React.PureComponent {
   async getTokenUSDPrice(token) {
     try {
       const USDT = this.state.tokens.find(t => t.symbol === 'USDT');
-      return token.address === USDT.address
+      return token.address.toLowerCase() === USDT.address.toLowerCase()
         ? 1
         : await this.getTokensRelativePrice(token, USDT);
     } catch (error) {
-      console.error('[getTokenUSDPrice]', error);
+      console.warn('[getTokenUSDPrice]', error);
+      return 0;
     }
   }
 
@@ -427,7 +441,7 @@ class Web3Provider extends React.PureComponent {
       if (tokenContractAddress) {
         // Return token balance
         const contract = new (this.getWeb3().eth.Contract)(
-          require('src/index/constants/ABI/NarfexToken'),
+          require('src/index/constants/ABI/Bep20Token'),
           tokenContractAddress,
         );
         return await contract.methods.balanceOf(accountAddress).call();
@@ -437,11 +451,67 @@ class Web3Provider extends React.PureComponent {
       }
     } catch (error) {
       console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
+      return '0';
     }
   }
 
   getTokenBalanceKey(token, accountAddress = this.state.accountAddress) {
     return `balance-${token.address || 'bnb'}-${accountAddress}`;
+  }
+
+  /**
+   * Returns LP token price in USDT
+   * @param pairAddress {string} - address of LP token
+   * @param isForce {bool} - is force update
+   * @returns {Promise.<number>}
+   */
+  async getPairUSDTPrice(pairAddress, isForce = false) {
+    if (typeof this.state.prices[pairAddress] !== 'undefined' && !isForce) return this.state.prices[pairAddress];
+    const newPairState = {};
+    if (!isForce) {
+      newPairState[pairAddress] = 0;
+      this.setState({
+        prices: {
+          ...this.state.prices,
+          ...newPairState,
+        }
+      });
+    }
+    try {
+      const {tokens} = this.state;
+      const contract = new (this.getWeb3().eth.Contract)(
+        require('src/index/constants/ABI/PancakePair'),
+        pairAddress,
+      );
+      const data = await Promise.all([
+        contract.methods.getReserves().call(),
+        contract.methods.totalSupply().call(),
+        contract.methods.token0().call(),
+        contract.methods.token1().call(),
+      ]);
+      const token0 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[2].toLowerCase())
+        || {address: data[2], decimals: 18};
+      const token1 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[3].toLowerCase())
+        || {address: data[3], decimals: 18};
+      const reserve0 = wei.from(data[0]._reserve0, token0.decimals);
+      const reserve1 = wei.from(data[0]._reserve1, token0.decimals);
+      const totalSupply = wei.from(data[1]);
+      const prices = await Promise.all([
+        this.getTokenUSDPrice(token0),
+        this.getTokenUSDPrice(token1),
+      ]);
+      newPairState[pairAddress] = (reserve0 * prices[0] + reserve1 * prices[1]) / totalSupply;
+      this.setState({
+        prices: {
+          ...this.state.prices,
+          ...newPairState,
+        }
+      });
+      return newPairState[pairAddress];
+    } catch (error) {
+      console.error('[getPairPrice]', error);
+      return 0;
+    }
   }
 
   /**
@@ -451,6 +521,7 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
     try {
+      if (!this.state.isConnected) return;
       // Stop additional loads
       if (this.state.balancesRequested === accountAddress) return;
       this.setState({
@@ -458,7 +529,9 @@ class Web3Provider extends React.PureComponent {
       });
 
       // Separate tokens to small chunks
-      const chunks = _.chunk(this.state.tokens, 64);
+      const chunks = _.chunk(
+        this.state.tokens.filter(t => t.chainId === this.state.chainId),
+        64);
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
         // Get request from the blockchain
@@ -475,6 +548,7 @@ class Web3Provider extends React.PureComponent {
             const balance = result.status === 'fulfilled' && typeof result.value !== 'undefined'
               ? result.value
               : "0";
+            const tokenAddress = token.address ? token.address.toLowerCase() : token.address;
 
             // Apply a new balance to the state
             newState[key] = balance;
@@ -487,7 +561,8 @@ class Web3Provider extends React.PureComponent {
 
                 // Save to the state
                 this.setState(state => {
-                  const tokenState = state.tokens.find(t => t.address === token.address);
+                  const tokenState = state.tokens
+                    .find(t => (t.address ? t.address.toLowerCase() : t.address) === tokenAddress);
                   if (!tokenState) return;
 
                   // Update token price
@@ -509,7 +584,15 @@ class Web3Provider extends React.PureComponent {
 
   fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
 
-  async swap(pair, trade, slippageTolerance = 2, isExactIn = true) {
+  /**
+   * Exchange the pair
+   * @param pair {array}
+   * @param trade {object}
+   * @param slippageTolerance {integer}
+   * @param isExactIn {bool}
+   * @returns {Promise.<*>}
+   */
+  async swap(pair, trade, slippageTolerance = 2, isExactIn = true, deadline = 20) {
     const {accountAddress} = this.state;
     const {web3} = this;
     const routerContract = new (this.getWeb3().eth.Contract)(
@@ -568,33 +651,270 @@ class Web3Provider extends React.PureComponent {
     options.push(path);
 
     options.push(accountAddress); // "to" field
-    options.push(this.getWeb3().utils.toHex(Math.round(Date.now()/1000)+60*20)); // Deadline 20 minutes
-
-    const count = await web3.eth.getTransactionCount(accountAddress);
-    const data = routerContract.methods[method](...options);
-
-    console.log('SWAP', pair, trade, isExactIn, method, options, count);
-    const rawTransaction = {
-      from: accountAddress,
-      gasPrice: web3.utils.toHex(5000000000),
-      gasLimit: web3.utils.toHex(290000),
-      to: this.routerAddress,
-      data: data.encodeABI(),
-      nonce: web3.utils.toHex(count),
-    };
-    if (isFromBNB) {
-      rawTransaction.value = value;
-    }
+    options.push(this.getWeb3().utils.toHex(Math.round(Date.now()/1000) + 60 * deadline)); // Deadline
 
     try {
-      const txHash = await this.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [rawTransaction],
-      });
-      return txHash;
+      try {
+        // Try to estimate transaction without fee support
+        await this.estimateTransaction(routerContract, method, options);
+      } catch (error) {
+        console.log(`[swap] Estimate method "${method}" error. Try to add "SupportingFeeOnTransferTokens"`);
+        // Add fee support
+        method += 'SupportingFeeOnTransferTokens';
+      }
+      // Run transaction
+      return await this.transaction(routerContract, method, options, value);
     } catch (error) {
       console.error('[swap]', error);
       throw error;
+    }
+  }
+
+  /**
+   * Returns TokenContract object
+   * @param token {TokenContract}
+   * @param isPair {bool}
+   */
+  getTokenContract = (token, isPair = false) => new TokenContract(token, this, isPair);
+
+  /**
+   * Returns MasterChefContract object
+   */
+  getFarmContract = () => new MasterChefContract(this);
+
+  /**
+   * Try to estimate contract method transaction
+   * @param contract {object}
+   * @param method {string} - method name
+   * @param params {array} - array of method params
+   * @returns {Promise.<*>}
+   */
+  estimateTransaction = async (contract, method, params) => {
+    try {
+      const accountAddress = _.get(this, 'state.accountAddress');
+      const data = contract.methods[method](...params);
+      return await data.estimateGas({from: accountAddress, gas: 50000000000});
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  /**
+   * Send transaction to connected wallet
+   * @param contract {object}
+   * @param method {string} - method name
+   * @param params {array} - array of method params
+   * @param value {number} - amount of BNB in wei
+   * @returns {Promise.<*>}
+   */
+  transaction = async (contract, method, params, value = 0) => {
+    try {
+      const accountAddress = _.get(this, 'state.accountAddress');
+      const count = await this.web3.eth.getTransactionCount(accountAddress);
+      const data = contract.methods[method](...params);
+      const gasPrice = await this.web3.eth.getGasPrice();
+      const gasLimit = await data.estimateGas({from: accountAddress, gas: 50000000000});
+      const rawTransaction = {
+        from: accountAddress,
+        gasPrice: this.web3.utils.toHex(gasPrice),
+        gasLimit: this.web3.utils.toHex(gasLimit),
+        to: contract._address,
+        data: data.encodeABI(),
+        nonce: this.web3.utils.toHex(count),
+      };
+      if (value) {
+        rawTransaction.value = this.web3.utils.toHex(value);
+      }
+      return await this.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [rawTransaction],
+      });
+    } catch (error) {
+      console.error('[Web3Provider][transaction]', method, error);
+      throw error;
+    }
+  };
+
+  /**
+   * Add a token to MetaMask
+   * @param token {object}
+   * @returns {Promise.<void>}
+   */
+  async addTokenToWallet(token) {
+    try {
+      await this.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: token.address,
+            symbol: token.symbol,
+            decimals: token.decimals || 18,
+            image: token.logoURI || token.image,
+          },
+        },
+      });
+    } catch (error) {
+      console.error('[addTokenToWallet]', error);
+    }
+  }
+
+  /**
+   * Wait for transaction receipt
+   * @param txHash {string} - transaction hash
+   * @returns {Promise.<*>} will returns a result when the transaction will be finished
+   */
+  async getTransactionReceipt(txHash) {
+    try {
+      const receipt = await this.web3.eth.getTransactionReceipt(txHash);
+      if (receipt) return receipt;
+      await wait(1000);
+      return await this.getTransactionReceipt(txHash);
+    } catch (error) {
+      console.log('[getTransactionReceipt]', error);
+      return null;
+    }
+  }
+
+  /**
+   * Update single pool data
+   * @param pool {object}
+   * @returns {Promise.<*>}
+   */
+  async updatePoolData(pool) {
+    console.log('[updatePoolData]', pool);
+    if (!this.state.isConnected) return;
+    try {
+      const farm = this.getFarmContract();
+      const addon = {};
+      const poolData = await farm.getPoolData(pool);
+      addon[poolData.address] = poolData;
+      console.log('poolData', poolData, addon, {
+        ...this.state.pools,
+        ...addon,
+      });
+      this.setState({
+        pools: {
+          ...this.state.pools,
+          ...addon,
+        }
+      });
+      return poolData;
+    } catch (error) {
+      await wait(AWAITING_DELAY);
+      return await this.updatePoolData();
+    }
+  };
+
+  /**
+   * Update all pools data
+   * @param _pools {object}
+   * @returns {Promise.<*>}
+   */
+  async updatePoolsData() {
+    if (!this.state.isConnected) return;
+    try {
+      const {pools} = this.state;
+      const farm = this.getFarmContract();
+      const data = await Promise.all(Object.keys(pools).map(address => farm.getPoolData(pools[address])));
+      const poolsWithData = {};
+      data.map((pool, index) => {
+        poolsWithData[pool.address] = data[index];
+      });
+      this.setState({pools: poolsWithData});
+    } catch (error) {
+      await wait(AWAITING_DELAY);
+      return await this.updatePoolsData();
+    }
+  };
+
+  /**
+   * Update pools list
+   * @returns {Promise.<*>}
+   */
+  async updatePoolsList() {
+    if (!this.state.isConnected) return;
+    try {
+      const farm = this.getFarmContract();
+      const pools = await farm.getPoolsList();
+      this.setState({pools});
+      return await this.updatePoolsData();
+    } catch (error) {
+      await wait(AWAITING_DELAY);
+      return await this.updatePoolsList();
+    }
+  };
+
+  /**
+   * Asks user to switch a network
+   * @param chainId {number} - network chain id
+   * @param firstAttempt {bool} - is there is a first call
+   * @returns {Promise.<*>}
+   */
+  async switchToChain(chainId, firstAttempt = true) {
+    if (firstAttempt) this.requiredChain = chainId;
+    if (firstAttempt && this.state.chainId !== chainId) {
+      this.setState({pools: null})
+    }
+    try {
+      if (chainId === 97) {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: this.web3.utils.toHex(97),
+            chainName: 'BSC web3 test',
+            nativeCurrency: {
+              name: 'BNB',
+              symbol: 'BNB',
+              decimals: 18
+            },
+            rpcUrls: ['https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3'],
+            blockExplorerUrls: ['https://testnet.bscscan.com']
+          }],
+        });
+      }
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: this.web3.utils.toHex(chainId) }]
+      });
+      return true;
+    } catch (error) {
+      console.log('[switchToChain]', error);
+      if (this.requiredChain === chainId) {
+        return await this.switchToChain(chainId, false);
+      }
+    }
+  }
+
+  /**
+   * Returns token by symbol
+   * @param _symbol {string}
+   * @return {object}
+   */
+  findTokenBySymbol(_symbol) {
+    const symbol = typeof _symbol === 'string' ? _symbol.toUpperCase() : _symbol;
+    return this.state.tokens.find(t => (t.symbol ? t.symbol.toUpperCase() : t.symbol) === symbol);
+  }
+
+  /**
+   * Returns blocks per second value and updates it in the state
+   * @returns {Promise.<void>}
+   */
+  async getBlocksPerSecond() {
+    if (!this.web3) return;
+    try {
+      const currentBlockNumber = await this.web3.eth.getBlockNumber();
+      const data = await Promise.all([
+        this.web3.eth.getBlock(currentBlockNumber),
+        this.web3.eth.getBlock(currentBlockNumber - 10000),
+      ]);
+      const blocksPerSecond = (data[0].number - data[1].number) / (data[0].timestamp - data[1].timestamp);
+      this.setState({
+        blocksPerSecond,
+      });
+      return blocksPerSecond;
+    } catch (error) {
+      console.error('[getBlocksPerSecond]', error);
     }
   }
 
@@ -611,8 +931,23 @@ class Web3Provider extends React.PureComponent {
       getTokenBalanceKey: this.getTokenBalanceKey.bind(this),
       getPairs: this.getPairs.bind(this),
       getTrade: this.getTrade.bind(this),
+      getTokenContract: this.getTokenContract.bind(this),
+      getFarmContract: this.getFarmContract.bind(this),
+      addTokenToWallet: this.addTokenToWallet.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
+      tokenSale: this.tokenSale,
+      estimateTransaction: this.estimateTransaction.bind(this),
+      transaction: this.transaction.bind(this),
+      farm: this.farm,
+      getBSCScanLink: this.getBSCScanLink.bind(this),
+      getTransactionReceipt: this.getTransactionReceipt.bind(this),
+      updatePoolData: this.updatePoolData.bind(this),
+      updatePoolsData: this.updatePoolsData.bind(this),
+      updatePoolsList: this.updatePoolsList.bind(this),
+      switchToChain: this.switchToChain.bind(this),
+      getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
+      findTokenBySymbol: this.findTokenBySymbol.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>
