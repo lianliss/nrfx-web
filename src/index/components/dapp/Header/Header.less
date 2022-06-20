@@ -1,8 +1,8 @@
-@import 'src/vars.less';
+@import '../../../../vars.less';
 @header-height: 57px;
 @adaptive-header-height: 48px;
 
-.CabinetHeader {
+.DappHeader {
   padding: 17px 0 2px;
   z-index: 2;
 
@@ -50,7 +50,7 @@
       }
     }
 
-    .CabinetHeader__icons {
+    .DappHeader__icons {
       position: relative;
       display: flex;
       margin-right: 18px;
@@ -63,20 +63,20 @@
         right: 0;
       }
 
-      .CabinetHeader__icon__svg {
+      .DappHeader__icon__svg {
         display: block;
       }
     }
 
-    .CabinetHeader__connect {
+    .DappHeader__connect {
       margin-left: 10px;
     }
-    .CabinetHeader__account-address {
+    .DappHeader__account-address {
       color: var(--blue-light-gradient-color-end);
       font-size: 12px;
     }
 
-    .CabinetHeader__icon {
+    .DappHeader__icon {
       color: var(--text-black);
       position: relative;
       width: 16px * 2;
@@ -329,10 +329,10 @@
   }
 }
 
-.CabinetHeader__connect {
+.DappHeader__connect {
   margin-left: 10px;
 }
-.CabinetHeader__account-address {
+.DappHeader__account-address {
   color: var(--blue-light-gradient-color-end);
   font-size: 12px;
 }
@@ -342,7 +342,7 @@
     --header-height: 50px !important;
   }
 
-  .CabinetHeader {
+  .DappHeader {
     position: relative;
     padding: 11px 0 0;
     z-index: 50;
@@ -387,7 +387,7 @@
 }
 
 @media screen and (max-width: 350px) {
-  .CabinetHeader {
+  .DappHeader {
     &__wallet {
       width: 63px;
     }

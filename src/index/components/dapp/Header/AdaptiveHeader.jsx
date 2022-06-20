@@ -9,19 +9,19 @@ class AdaptiveHeader extends React.Component {
 
   render() {
     return (
-      <div className="CabinetHeaderContainer">
-        <div className="CabinetHeader">
-          <div className="CabinetHeader__leftContent">
-            <div className="CabinetHeader__leftContent_icon">
+      <div className="DappHeaderContainer">
+        <div className="DappHeader">
+          <div className="DappHeader__leftContent">
+            <div className="DappHeader__leftContent_icon">
               {this.props.leftContent && this.props.leftContent}
             </div>
           </div>
-          <div className="CabinetHeader__mainContent">
-            <div className="CabinetHeader__mainContent_text">
+          <div className="DappHeader__mainContent">
+            <div className="DappHeader__mainContent_text">
               <span>{this.props.mainContent.content}</span>
             </div>
           </div>
-          <div className="CabinetHeader__rightContent">
+          <div className="DappHeader__rightContent">
             {this.props.rightContent}
           </div>
         </div>

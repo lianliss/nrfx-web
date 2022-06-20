@@ -108,7 +108,7 @@ export default () => {
           </ul>
 
           <div className="Header__authButtons">
-            {user || pending || true /* True - anytime make button */ ? (
+            {user || pending ? (
               <Button
                 type="secondary"
                 onClick={() => {

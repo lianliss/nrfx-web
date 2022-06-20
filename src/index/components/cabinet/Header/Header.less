@@ -1,41 +1,86 @@
-@import '../../../../vars.less';
-@header-height: 57px;
+@header-height: 56px;
 @adaptive-header-height: 48px;
 
+.CabinetHeaderContainer {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+}
+
 .CabinetHeader {
-  padding: 17px 0 2px;
-  z-index: 2;
+  background: var(--primary-background);
+  border-bottom: 1px solid var(--extra-light-gray);
+  width: 100%;
 
-  &__container {
-    display: flex;
-    margin: 0 auto;
+  .CabinetHeader__content {
+    height: @header-height;
+    max-width: 1400px;
     padding: 0 18px;
-    box-sizing: border-box;
-  }
-
-  &__logo {
-    height: 38px;
-    cursor: pointer;
-  }
-
-  &__menu {
+    margin: 0 auto;
     display: flex;
     align-items: center;
-    margin-left: auto;
+    justify-content: space-between;
+    box-sizing: border-box;
 
-    .dynamic-shadow {
+    .logo {
+      display: block;
+    }
+
+    .CabinetHeader__links {
       display: flex;
-      position: relative;
-      margin-left: 10px;
-      z-index: 1;
+
+      .isvg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .CabinetHeader__controls {
+      display: flex;
 
       .Button {
-        position: relative;
-        height: 39px;
+        margin-left: 8px;
+      }
+    }
 
-        .Button__label {
-          display: flex;
-          align-items: center;
+    .CabinetHeader__link {
+      position: relative;
+      color: var(--text-black);
+      display: flex;
+      align-items: center;
+      padding: 16px 8px 16px 3px;
+      justify-content: center;
+      font-weight: 600;
+      margin-right: 32px;
+      font-size: 13px;
+      line-height: 16px;
+      text-decoration: none !important;
+      transition: color.3s ease;
+
+      &:before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
+        border-radius: 0 0 2px 2px;
+        background: var(--primary-blue);
+        height: 0;
+        width: 0;
+        margin: 0 auto;
+        transition: width.3s ease, height.3s ease;
+      }
+
+      &:hover {
+        color: var(--almost-black);
+      }
+
+      &.active {
+        color: var(--primary-blue);
+
+        &:before {
+          height: 2px;
+          width: 90%;
         }
       }
 
@@ -43,18 +88,12 @@
         margin-right: 16px;
         height: 24px;
       }
-
-      &.disabled {
-        opacity: 0.3;
-        pointer-events: none;
-      }
     }
 
     .CabinetHeader__icons {
       position: relative;
       display: flex;
       margin-right: 18px;
-      align-items: center;
 
       .Notifications {
         width: 648px;
@@ -66,14 +105,6 @@
       .CabinetHeader__icon__svg {
         display: block;
       }
-    }
-
-    .CabinetHeader__connect {
-      margin-left: 10px;
-    }
-    .CabinetHeader__account-address {
-      color: var(--blue-light-gradient-color-end);
-      font-size: 12px;
     }
 
     .CabinetHeader__icon {
@@ -101,302 +132,92 @@
         margin-right: -8px;
 
         .isvg {
-          height: 23px;
-          width: 23px;
-          margin-right: 5px;
+          font-size: 0;
+          display: block;
+          width: 18px;
+          height: 13.5px;
+          border: 1px solid;
+        }
+
+        &::before {
+          position: absolute;
+          content: "";
+          display: block;
+          height: 12px;
+          width: 100%;
+          top: -12px;
         }
       }
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 12px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90.3%;
-        height: 35px;
-        z-index: -1;
-
-        background: var(--blue-light-gradient);
-        opacity: 0.5;
-        filter: blur(45px);
-        border-radius: 10px;
-      }
     }
   }
+}
 
-  &__language {
-    img {
-      width: 23px;
-      height: 23px;
-      border: 1px solid #ebeff4;
-      box-sizing: border-box;
-      border-radius: 50%;
-      object-fit: cover;
-      transition: border-color 0.2s;
-    }
-
-    &.active,
-    &:hover {
-      img {
-        border-color: var(--blue-light-gradient-color-start);
-      }
-    }
-
-    &:not(:last-child) {
-      margin-right: 3px;
-    }
-  }
-
-  &__settings {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    color: #f7f9fc;
-    cursor: pointer;
-
-    .isvg {
-      width: 25px;
-      height: 25px;
-    }
-
-    .ActionsSheet {
-      & > div:first-child {
-        display: flex;
-        align-items: center;
-        height: 39px;
-      }
-    }
-  }
-
-  .ActionsSheet__item__sub {
-    svg {
-      width: 18px;
-    }
-  }
-
-  // Token price
-  &__wallet-rate {
-    display: flex;
-    align-items: center;
-    height: 39px;
-    padding: 0 8px;
-    margin-left: 3px;
-    box-sizing: border-box;
-    border: 1px solid #dfe3f0;
-    border-radius: 10px;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 180%;
-    color: var(--dark-black);
-
-    & > div {
+.adaptive {
+  .CabinetHeaderContainer {
+    //height: @adaptive-header-height;
+    .CabinetHeader {
+      //height: @adaptive-header-height;
+      -webkit-border-radius: 0 0 8px 8px;
+      -moz-border-radius: 0 0 8px 8px;
+      border-radius: 0 0 8px 8px;
       display: flex;
     }
-
-    .full-number {
-      color: #d3d5db;
-    }
-
-    span {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .isvg {
-      svg {
-        height: 22.5px;
-        width: 15px;
-      }
-    }
   }
 
-  // <Select />
-  .CabinetSelect {
-    &__value-container {
-      height: 25px;
-    }
-
-    &__single-value {
-      height: 23px;
-
-      .isvg {
-        display: flex;
-        align-items: center;
-        width: 23px;
-        height: 23px;
-
-        svg {
-          width: 23px;
-          height: 23px;
-        }
-      }
-    }
-
-    &__option {
-      .isvg {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 23px;
-        height: 23px;
-
-        svg {
-          width: 23px;
-          height: 23px;
-        }
-      }
-    }
-
-    &__menu {
-      min-width: 150px;
-
-      svg {
-        width: 23px;
-        height: 23px;
-      }
-    }
-  }
-
-  .CabinetSelect__network {
-    .CabinetSelect__control {
-      p {
-        color: #0a1539;
-      }
-    }
-  }
-
-  .wallet-connect__button {
-    margin-right: 34px;
-  }
-
-  &__wallet {
-    height: 100%;
+  .CabinetHeader__leftContent,
+  .CabinetHeader__rightContent {
     display: flex;
     align-items: center;
-    width: 172px;
-    margin-right: 13px;
-    margin-left: 3px;
-    border: 1px solid #dfe3f0;
-    padding: 0 28px 0 12px;
-    border-radius: 10px;
-    box-sizing: border-box;
-    cursor: pointer;
-
-    .isvg {
-      display: inline-flex;
-      align-items: center;
-      margin-right: 3px;
-
-      svg,
-      path {
-        fill: var(--blue-light-gradient-color-start);
-      }
-    }
-
-    p {
-      text-overflow: ellipsis;
-      overflow: hidden !important;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 180%;
-      color: var(--black-gunmetal);
-    }
-  }
-
-  // Burger Menu
-  &__burger-menu {
-    display: flex;
     justify-content: center;
-    align-items: center;
-    width: 43px;
-    min-width: 43px;
-    margin-right: 3.38%;
-    background: #fff;
-    border-radius: var(--radius-panel);
-    box-sizing: border-box;
-    cursor: pointer;
+  }
 
-    .isvg {
+  @adaptive-header-side-width: 60px;
+  .CabinetHeader__leftContent {
+    width: @adaptive-header-side-width;
+    height: @adaptive-header-height;
+    .CabinetHeader__leftContent_icon {
+      width: 100%;
+      height: @adaptive-header-height;
       display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
-  .secondary-text {
-    color: var(--cool-gray);
-  }
-}
-
-.CabinetHeader__connect {
-  margin-left: 10px;
-}
-.CabinetHeader__account-address {
-  color: var(--blue-light-gradient-color-end);
-  font-size: 12px;
-}
-
-@media screen and (max-width: @mobile-width) {
-  body {
-    --header-height: 50px !important;
-  }
-
-  .CabinetHeader {
-    position: relative;
-    padding: 11px 0 0;
-    z-index: 50;
-
-    &__container {
-      padding: 0 10px;
-    }
-    // <Select />
-    .CabinetSelect {
-      &,
-      &__control {
-        min-width: 0 !important;
-        width: 63px;
+      span {
+        display: flex;
+        margin: auto;
       }
-
-      &__control {
-        padding: 0 9px !important;
-      }
-    }
-
-    &__wallet {
-      p {
-        overflow: hidden;
-      }
-    }
-
-    &__wallet {
-      width: 104px;
-    }
-
-    .wallet-connect__button {
-      width: 47px;
-      margin-right: 17px;
-
-      .Button__label {
-        .isvg {
-          margin-right: 0;
-        }
+      svg {
+        margin: auto;
+        //color: var(--text-black)
       }
     }
   }
-}
-
-@media screen and (max-width: 350px) {
-  .CabinetHeader {
-    &__wallet {
-      width: 63px;
+  .CabinetHeader__mainContent {
+    width: auto;
+    height: @adaptive-header-height;
+    margin: auto;
+    display: flex;
+    font-size: 16px;
+    div,
+    span {
+      margin: auto;
+      font-weight: 500;
+    }
+    .CabinetHeader__mainContent_logo {
+      //color: var(--primary-orange);
+      svg {
+        width: 150px;
+      }
     }
   }
-}
-
-html.noScroll,
-body.noScroll {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+  .CabinetHeader__rightContent {
+    width: @adaptive-header-side-width;
+    height: @adaptive-header-height;
+    display: flex;
+    span {
+      display: flex;
+      margin: auto;
+      svg {
+        margin: auto;
+        color: var(--text-black);
+      }
+    }
+  }
 }

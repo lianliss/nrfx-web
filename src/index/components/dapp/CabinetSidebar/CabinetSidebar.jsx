@@ -34,8 +34,8 @@ function CabinetSidebar({ className = '' }) {
               <SidebarItem
                 title="Wallet"
                 icon="wallet"
-                active={route.name === PAGES.WALLET}
-                onClick={() => router.navigate(PAGES.WALLET)}
+                active={route.name === PAGES.DAPP_WALLET}
+                onClick={() => router.navigate(PAGES.DAPP_WALLET)}
               />
               <SidebarItem
                 title="Exchanger"

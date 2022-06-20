@@ -70,18 +70,18 @@ function Header(props) {
 
   return (
     <>
-      <div className="CabinetHeader">
-        <div className="CabinetHeader__container">
+      <div className="DappHeader">
+        <div className="DappHeader__container">
           {props.adaptive && (
             <div
-              className="CabinetHeader__burger-menu"
+              className="DappHeader__burger-menu"
               onClick={() => setIsSidebar((prev) => !prev)}
             >
               <SVG src={require('src/asset/icons/burger-menu.svg')} />
             </div>
           )}
           <div
-            className="CabinetHeader__logo"
+            className="DappHeader__logo"
             onClick={() => router.navigate(MAIN)}
           >
             {props.adaptive ? (
@@ -92,7 +92,7 @@ function Header(props) {
               <SVG src={require('src/asset/logo/narfex-blue.svg')} />
             )}
           </div>
-          <div className="CabinetHeader__menu">
+          <div className="DappHeader__menu">
             <Select
               isSearchable={false}
               isDisabled
@@ -108,7 +108,7 @@ function Header(props) {
             />
             {isConnected ? (
               <>
-                <div className="CabinetHeader__wallet-rate">
+                <div className="DappHeader__wallet-rate">
                   <SVG src={require('src/asset/logo/narfex-icon.svg')} />
                   &nbsp;
                   <div>
@@ -119,7 +119,7 @@ function Header(props) {
                   </div>
                 </div>
                 <div
-                  className="CabinetHeader__wallet"
+                  className="DappHeader__wallet"
                   onClick={() => openModal('your_wallet')}
                 >
                   <SVG
@@ -142,7 +142,7 @@ function Header(props) {
                 </Button>
               </div>
             )}
-            <div className="CabinetHeader__settings">
+            <div className="DappHeader__settings">
               <ActionSheet
                 position="left"
                 type="drop"
@@ -152,7 +152,7 @@ function Header(props) {
                     onClick: () => {},
                     subContent: props.langList.map((item, index) => (
                       <span
-                        className={`CabinetHeader__language${
+                        className={`DappHeader__language${
                           item.value === props.currentLang ? ' active' : ''
                         }`}
                         onClick={() => setLang(item.value)}

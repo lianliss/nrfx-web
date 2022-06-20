@@ -44,7 +44,7 @@ class Header extends React.PureComponent {
       {}; // hack
 
     return (
-      <div className="CabinetHeaderContainer">
+      <div className="CabinetHeaderContainer">oldheader
         <div className="CabinetHeader">
           <div className="CabinetHeader__content">
             <BaseLink

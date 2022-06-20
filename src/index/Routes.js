@@ -29,6 +29,7 @@ import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoun
 // import UIKitScreen from "./containers/UIKit/UIKitScreen";
 // import SiteWrapper from "../wrappers/Site/SiteWrapper";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
+import DappWrapper from "../wrappers/Dapp/DappWrapper";
 import LandingWrapper from "../wrappers/Landing/LandingWrapper";
 import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
 
@@ -182,6 +183,7 @@ function Routes(props) {
     case pages.TRANSACTIONS:
     case pages.VALIDATOR:
       needAuthorization = false;
+      WrapperComponent = DappWrapper;
       Component = DappCabinet;
       break;
     case pages.FIAT:
