@@ -8,7 +8,7 @@ import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
 import { setLang } from '../../../../services/lang';
-import { MAIN } from '../../../constants/pages';
+import { MAIN, PARTNERS, SETTINGS } from '../../../constants/pages';
 import { Web3Context } from 'services/web3Provider';
 import { WEI_ETHER } from 'src/index/constants/cabinet';
 
@@ -30,10 +30,17 @@ function Header(props) {
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
   const [nrfxBalance, setNrfxBalance] = React.useState(0);
-  const { isConnected, accountAddress, getTokenBalance, tokens, chainId } = context;
+  const [settings, setSettings] = React.useState([]);
+
+  const { isConnected, accountAddress, getTokenBalance, tokens, chainId } =
+    context;
 
   const cryptoOptions = [
-    option(chainId === 56 ? 'BSC' : 'Testnet', 'bsc', require('src/asset/icons/wallets/bsc.svg')),
+    option(
+      chainId === 56 ? 'BSC' : 'Testnet',
+      'bsc',
+      require('src/asset/icons/wallets/bsc.svg')
+    ),
   ];
 
   // Adaptive sidebar is open
@@ -54,19 +61,72 @@ function Header(props) {
   };
 
   React.useEffect(() => {
-    const NRFX = tokens.find(t => t.symbol === 'NRFX');
+    const NRFX = tokens.find((t) => t.symbol === 'NRFX');
     if (!NRFX) return;
     if (!isConnected) return;
     if (NRFX.chainId !== chainId) return;
     getTokenBalance(NRFX.address)
-      .then(data => {
+      .then((data) => {
         if (!data) return setNrfxBalance(0);
         setNrfxBalance(wei.from(data).toFixed(2));
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.error('[Header][getTokenBalance]', error);
         setNrfxBalance(0);
       });
   }, [accountAddress, isConnected, chainId]);
+
+  React.useEffect(() => {
+    const defaultSettings = [
+      {
+        title: getLang('cabinet_header_language'),
+        onClick: () => {},
+        subContent: props.langList.map((item, index) => (
+          <span
+            className={`DappHeader__language${
+              item.value === props.currentLang ? ' active' : ''
+            }`}
+            onClick={() => setLang(item.value)}
+            key={index}
+          >
+            <img
+              src={
+                require(`../../../../asset/site/lang-flags/${item.value}.svg`)
+                  .default
+              }
+            />
+          </span>
+        )),
+      },
+      {
+        title: getLang('cabinet_header_theme'),
+        onClick: () => {},
+        subContent: <span className="secondary-text">Coming soon</span>,
+      },
+      {
+        title: isLogined ? 'Logout' : 'Login',
+        onClick: isLogined
+          ? logout
+          : () => openModal('auth', { type: steps.LOGIN }),
+      },
+    ];
+
+    if (isLogined) {
+      setSettings([
+        {
+          title: getLang('cabinet_header_settings'),
+          onClick: () => router.navigate(SETTINGS),
+        },
+        {
+          title: getLang('cabinet_header_partners'),
+          onClick: () => router.navigate(PARTNERS),
+        },
+        ...defaultSettings,
+      ]);
+    } else {
+      setSettings([...defaultSettings]);
+    }
+  }, [isLogined]);
 
   return (
     <>
@@ -143,45 +203,7 @@ function Header(props) {
               </div>
             )}
             <div className="DappHeader__settings">
-              <ActionSheet
-                position="left"
-                type="drop"
-                items={[
-                  {
-                    title: getLang('cabinet_header_language'),
-                    onClick: () => {},
-                    subContent: props.langList.map((item, index) => (
-                      <span
-                        className={`DappHeader__language${
-                          item.value === props.currentLang ? ' active' : ''
-                        }`}
-                        onClick={() => setLang(item.value)}
-                        key={index}
-                      >
-                        <img
-                          src={
-                            require(`../../../../asset/site/lang-flags/${item.value}.svg`)
-                              .default
-                          }
-                        />
-                      </span>
-                    )),
-                  },
-                  {
-                    title: getLang('cabinet_header_theme'),
-                    onClick: () => {},
-                    subContent: (
-                      <span className="secondary-text">Coming soon</span>
-                    ),
-                  },
-                  {
-                    title: isLogined ? 'Logout' : 'Login',
-                    onClick: isLogined
-                      ? logout
-                      : () => openModal('auth', { type: steps.LOGIN }),
-                  },
-                ]}
-              >
+              <ActionSheet position="left" type="drop" items={settings}>
                 <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
               </ActionSheet>
             </div>

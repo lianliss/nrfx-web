@@ -175,6 +175,7 @@ class Header extends React.PureComponent {
                         subContent: (
                           <SVG
                             src={require(`../../../../asset/site/lang-flags/${lang.value}.svg`)}
+                            style={{ height: "100%" }}
                           />
                         )
                       },
