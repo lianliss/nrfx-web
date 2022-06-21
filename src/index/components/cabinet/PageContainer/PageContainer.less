@@ -1,39 +1,22 @@
 @import '../../../../vars';
 
 .PageContainer {
-  --site-bar-width: 208px;
-  --content-width: 1300px;
-  --container-padding: 18px;
-  --header-height: 58px;
+  --site-bar-width: 280px;
+  --content-width: 648px;
 
   display: flex;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px var(--container-padding) var(--container-padding);
-  box-sizing: border-box;
-  min-height: calc(100vh - var(--header-height));
+  width: calc(var(--content-width) + var(--site-bar-width) + var(--gap-size));
+  margin: var(--gap-size) auto;
 }
 
 .PageContainer__content {
-  display: flex;
-  flex-direction: column;
-  max-width: calc(100vw - var(--site-bar-width) - var(--container-padding));
-  width: 100%;
-  position: relative;
-  z-index: 1;
+  width: var(--content-width);
 }
 
 .PageContainer__sideBar {
-  margin-right: 25px;
-  max-width: var(--site-bar-width);
-  width: 100%;
-  position: relative;
-  z-index: 2;
-}
-
-@media (min-width: @mobile-width) {
-  .PageContainer {
-  }
+  margin-right: 24px;
+  width: var(--site-bar-width);
+  flex: 0 0 auto;
 }
 
 @media (max-width: @mobile-width) {
@@ -42,33 +25,7 @@
     --content-width: 100%;
 
     width: 100%;
-    padding: 17px 10px 10px;
-    position: relative;
-    box-sizing: border-box;
-    // 17px padding top, 10px padding bottom
 
-    &__sideBar {
-      position: fixed;
-      display: none;
-      height: calc(100vh - var(--header-height) - 17px);
-      width: 100vw;
-      top: calc(var(--header-height) + 17px);
-      left: 0;
-      margin: 0;
-      box-sizing: border-box;
-      background: rgba(40, 40, 40, 0);
-      transition: background 0.5s;
-      z-index: 2;
-
-      &.active {
-        display: block;
-        background: rgba(40, 40, 40, 0.24);
-      }
-    }
-
-    &__content {
-      max-width: 100%;
-      box-sizing: border-box;
-    }
+    flex-direction: column;
   }
 }
