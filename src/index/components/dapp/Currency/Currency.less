@@ -20,6 +20,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 40px;
   }
 
   &__currency {
@@ -54,6 +55,40 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-fill-color: transparent;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    .col {
+      display: flex;
+      width: 50%;
+
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+
+      .Button:not(:last-child) {
+        margin-right: 15px;
+      }
+    }
+
+    .Button {
+      flex: 1 1 155px;
+      height: 68.9px;
+    }
+  }
+}
+
+.adaptive .Currency {
+  &__buttons {
+    flex-direction: column;
+
+    .col {
+      width: 100%;
+      margin-bottom: 10px;
     }
   }
 }
