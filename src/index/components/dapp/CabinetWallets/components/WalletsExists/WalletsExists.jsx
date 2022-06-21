@@ -11,7 +11,7 @@ import WalletsListItem from '../../../WalletsList/components/WalletsListItem/Wal
 import WalletsNFTCard from '../WalletsNFTCard/WalletsNFTCard';
 import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import { RateIndicator, SwitchTabs } from 'src/ui';
-import { testItems } from './testItems.js';
+import { testFiats, testCrypto } from './testItems.js';
 import SVG from 'utils/svg-wrap';
 
 // Constants
@@ -20,7 +20,8 @@ import currencies from 'src/currencies';
 function WalletsExists() {
   const adaptive = useSelector((store) => store.default.adaptive);
   const [switchTab, setSwitchTab] = React.useState('tokens');
-  const isTokens = switchTab === 'tokens' || !adaptive;
+  const isTokens = switchTab === 'tokens';
+  const isFiat = switchTab === 'fiat';
   const isNfts = switchTab === 'nfts' || !adaptive;
 
   const TokenItemControls = (
@@ -42,7 +43,7 @@ function WalletsExists() {
   return (
     <div className="WalletsExists">
       <div className="WalletsExists__container">
-        <WalletsHeader />
+        <WalletsHeader isFiat={isFiat} />
         {adaptive && (
           <div className="WalletsExists__switch">
             <SwitchTabs
@@ -52,16 +53,34 @@ function WalletsExists() {
               tabs={[
                 { value: 'tokens', label: 'Tokens' },
                 { value: 'nfts', label: 'NFT' },
+                { value: 'fiat', label: 'Fiat' },
               ]}
             />
           </div>
         )}
-        <div className="WalletsExists__content">
+        {!adaptive && (
+          <div className="WalletsExists__row">
+            <div>
+              <SwitchTabs
+                type="light-blue"
+                selected={switchTab}
+                onChange={setSwitchTab}
+                isAnimated={false}
+                tabs={[
+                  { value: 'tokens', label: 'Tokens' },
+                  { value: 'fiat', label: 'Fiat' },
+                ]}
+              />
+            </div>
+            <div />
+          </div>
+        )}
+        <div className="WalletsExists__content WalletsExists__row">
           {isTokens && (
             <CabinetBlock className="wallets-list">
               {!adaptive && (
                 <div className="WalletsExists__items_header">
-                  <span>your tokens</span>
+                  <span>tokens</span>
                   <div className="CabinetScrollBlock__headerTool">
                     <OpenPopupLink title="history" />
                   </div>
@@ -69,7 +88,62 @@ function WalletsExists() {
               )}
               <CabinetScrollBlock>
                 <WalletsList type="default">
-                  {testItems.map((item, key) => {
+                  {testCrypto.map((item, key) => {
+                    // Testing values. Don't know what object maybe here.
+                    const { name } = currencies[item.currency];
+                    let icon = '';
+
+                    // Set icon
+                    try {
+                      icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
+                    } catch {
+                      console.log('Icon is not defined');
+                    }
+
+                    return (
+                      <WalletsListItem
+                        icon={<SVG src={icon} />}
+                        startTexts={[
+                          name,
+                          <span className="CabinetWallets__tokens-content">
+                            {item.price} USD
+                            <RateIndicator type="up" number={12} procent />
+                          </span>,
+                        ]}
+                        controls={
+                          <TokenItemControls
+                            amount={item.amount}
+                            currency={item.currency}
+                            price={item.price}
+                          />
+                        }
+                        key={key}
+                        type="reverse"
+                      />
+                    );
+                  })}
+                </WalletsList>
+              </CabinetScrollBlock>
+              {adaptive && (
+                <div className="WalletsExists__items_footer">
+                  <OpenPopupLink title="history" />
+                </div>
+              )}
+            </CabinetBlock>
+          )}
+          {isFiat && (
+            <CabinetBlock className="wallets-list">
+              {!adaptive && (
+                <div className="WalletsExists__items_header">
+                  <span>fiat</span>
+                  <div className="CabinetScrollBlock__headerTool">
+                    <OpenPopupLink title="history" />
+                  </div>
+                </div>
+              )}
+              <CabinetScrollBlock>
+                <WalletsList type="default">
+                  {testFiats.map((item, key) => {
                     // Testing values. Don't know what object maybe here.
                     const { name } = currencies[item.currency];
                     let icon = '';
@@ -116,7 +190,7 @@ function WalletsExists() {
             <CabinetBlock className="nfts">
               {!adaptive && (
                 <div className="WalletsExists__items_header">
-                  <span>your nft</span>
+                  <span>nft</span>
                   <div className="CabinetScrollBlock__headerTool">
                     <OpenPopupLink title="history" />
                   </div>
