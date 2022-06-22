@@ -15,7 +15,7 @@ function WalletsHeader({ isFiat }) {
       <div className="WalletsHeader__col">
         {isFiat ? (
           <DynamicShadow>
-            <Button type="lightBlue">
+            <Button type="lightBlue" style={{ minWidth: 265 }}>
               <SVG
                 src={require('src/asset/icons/cabinet/buy.svg')}
                 className="white-icon"
