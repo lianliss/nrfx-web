@@ -79,6 +79,64 @@
       flex: 1 1 155px;
       height: 68.9px;
     }
+
+    .isvg {
+      margin-right: 10px;
+
+      .card-send {
+        &__body,
+        &__head {
+          fill: var(--royal-blue);
+        }
+      }
+    }
+  }
+
+  &__transactions {
+    padding: 29px 24px 41px 21px;
+    margin-top: 31px;
+    background: var(--alice-blue);
+    font-weight: 500;
+
+    h3 {
+      margin-bottom: 30px;
+      font-size: 20px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      color: var(--dark-black);
+    }
+
+    h4 {
+      margin-bottom: 27px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 110%;
+      color: #000;
+    }
+
+    .isvg {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  &__date {
+    &:not(:last-child) {
+      margin-bottom: 42px;
+    }
+  }
+
+  .white-icon {
+    path {
+      fill: #fff;
+    }
   }
 }
 

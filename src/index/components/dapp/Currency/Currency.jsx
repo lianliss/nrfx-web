@@ -9,9 +9,11 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import currencies from 'src/currencies';
+import { isFiat } from 'utils';
 
 // Styles
 import './Currency.less';
+import Transaction from './components/Transaction/Transaction';
 
 function Currency() {
   const params = useSelector((state) => state.router.route.params);
@@ -43,28 +45,72 @@ function Currency() {
             </div>
           </div>
           <div className="Currency__buttons">
-            <div className="col">
-              <Button type="secondary-light" shadow>
-                Trade
-              </Button>
-              <Button type="secondary-light" shadow>
-                Buy
-                <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-              </Button>
-            </div>
-            <div className="col">
-              <Button type="secondary-light" shadow>
-                Receive
+            {isFiat(currency.abbr) ? (
+              <Button type="lightBlue" shadow>
                 <SVG
-                  src={require('src/asset/icons/cabinet/card-receive.svg')}
+                  src={require('src/asset/icons/cabinet/buy.svg')}
+                  className="white-icon"
                 />
+                Deposit
               </Button>
-              <Button type="secondary-light" shadow>
-                Send
-                <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
-              </Button>
-            </div>
+            ) : (
+              <>
+                <div className="col">
+                  <Button type="secondary-light" shadow>
+                    <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
+                    Trade
+                  </Button>
+                  <Button type="secondary-light" shadow>
+                    <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
+                    Buy
+                  </Button>
+                </div>
+                <div className="col">
+                  <Button type="secondary-light" shadow>
+                    <SVG
+                      src={require('src/asset/icons/cabinet/card-receive.svg')}
+                    />
+                    Receive
+                  </Button>
+                  <Button type="secondary-light" shadow>
+                    <SVG
+                      src={require('src/asset/icons/cabinet/card-send.svg')}
+                    />
+                    Send
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
+        </div>
+        <div className="Currency__body">
+          <CabinetBlock className="Currency__transactions">
+            <div className="Currency__transactions__header">
+              <h3>Transaction history</h3>
+            </div>
+            <div className="Currency__transactions__body">
+              <ul className="Currency__dates">
+                <li className="Currency__date">
+                  <h4>May 25</h4>
+                  <div>
+                    <Transaction currency={currency} bank="Tinkoff" />
+                    <Transaction
+                      currency={currency}
+                      type="withdrawal"
+                      transactionsExists={false}
+                    />
+                  </div>
+                </li>
+                <li className="Currency__date">
+                  <h4>May 24</h4>
+                  <div>
+                    <Transaction currency={currency} />
+                    <Transaction currency={currency} />
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </CabinetBlock>
         </div>
       </div>
     </CabinetBlock>
