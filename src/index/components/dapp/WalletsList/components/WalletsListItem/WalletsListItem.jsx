@@ -13,7 +13,7 @@ function WalletsListItem({
   onClick,
   type,
 }) {
-  const className = cn({ WalletsListItem: true, border });
+  const className = cn({ WalletsListItem: true, border, onClick });
 
   return (
     <div className={className} onClick={onClick}>

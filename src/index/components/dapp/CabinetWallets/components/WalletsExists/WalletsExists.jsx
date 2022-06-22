@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useRoute } from 'react-router5';
 
 // Components
 import './WalletsExists.less';
@@ -11,13 +12,15 @@ import WalletsListItem from '../../../WalletsList/components/WalletsListItem/Wal
 import WalletsNFTCard from '../WalletsNFTCard/WalletsNFTCard';
 import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import { RateIndicator, SwitchTabs } from 'src/ui';
-import { testFiats, testCrypto } from './testItems.js';
 import SVG from 'utils/svg-wrap';
 
 // Constants
+import * as PAGES from 'src/index/constants/pages';
+import { testFiats, testCrypto } from './testItems.js';
 import currencies from 'src/currencies';
 
 function WalletsExists() {
+  const { router } = useRoute();
   const adaptive = useSelector((store) => store.default.adaptive);
   const [switchTab, setSwitchTab] = React.useState('tokens');
   const isTokens = switchTab === 'tokens';
@@ -119,6 +122,11 @@ function WalletsExists() {
                         }
                         key={key}
                         type="reverse"
+                        onClick={() => {
+                          router.navigate(PAGES.DAPP_CURRENCY, {
+                            currency: item.currency,
+                          });
+                        }}
                       />
                     );
                   })}
@@ -174,6 +182,11 @@ function WalletsExists() {
                         }
                         key={key}
                         type="reverse"
+                        onClick={() => {
+                          router.navigate(PAGES.DAPP_CURRENCY, {
+                            currency: item.currency,
+                          });
+                        }}
                       />
                     );
                   })}
