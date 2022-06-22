@@ -11,6 +11,7 @@ import SwitchPage from 'src/index/components/dapp/SwitchPage/SwitchPage';
 import Exchanger from 'src/index/components/dapp/Exchanger/Exchanger';
 import CabinetValidator from 'src/index/components/dapp/CabinetValidator/CabinetValidator';
 import CabinetWallets from 'src/index/components/dapp/CabinetWallets/CabinetWallets';
+import Currency from '../../../components/dapp/Currency/Currency';
 
 // Utils
 import * as PAGES from 'src/index/constants/pages';
@@ -25,6 +26,9 @@ export class DappCabinet extends Component {
     switch (route.name) {
       case PAGES.WALLET:
         Component = CabinetWallets;
+        break;
+      case PAGES.DAPP_CURRENCY:
+        Component = Currency;
         break;
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;

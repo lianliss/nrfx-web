@@ -85,6 +85,10 @@ export const routes =
           path: '/dapp/wallet',
         },
         {
+          name: pages.DAPP_CURRENCY,
+          path: '/dapp/currency/:currency',
+        },
+        {
           name: pages.DAPP_EXCHANGE,
           path: '/dapp/exchange',
         },
