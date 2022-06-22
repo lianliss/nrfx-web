@@ -47,6 +47,7 @@ export const DAPP_WALLET = "dapp_wallet";
 export const DAPP_CURRENCY = "dapp_currency";
 export const DAPP_SWAP = "dapp_swap";
 export const DAPP_EXCHANGE = "dapp_exchange";
+export const DAPP_REFERRAL = "dapp_referral";
 export const FARMING = "farming";
 export const LIQUIDITY = "liquidity";
 export const TRANSACTIONS = "transactions";

@@ -93,6 +93,10 @@ export const routes =
           path: '/dapp/exchange',
         },
         {
+          name: pages.DAPP_REFERRAL,
+          path: '/dapp/referral/:type',
+        },
+        {
           name: pages.DAPP_SWAP,
           path: '/dapp/swap',
         },
