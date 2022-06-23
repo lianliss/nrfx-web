@@ -1,0 +1,38 @@
+.Referral__Card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 280px;
+  min-height: 132px;
+  background: #fff;
+  border-radius: var(--radius-panel);
+  padding: 17px 16px;
+  margin: 0 16px;
+  box-sizing: border-box;
+
+  &:not(:last-child) {
+  }
+
+  & > div:first-child {
+    margin-bottom: 22px;
+  }
+
+  &__title {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--cool-gray);
+    font-size: 12px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+  }
+
+  &__count {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    background: var(--blue-light-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

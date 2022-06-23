@@ -12,6 +12,8 @@ import { DAPP, DAPP_REFERRAL } from '../../../constants/pages';
 
 // Styles
 import './Referral.less';
+import ReferralList from './components/ReferralList/ReferralList';
+import Dashboard from './components/Dashboard/Dashboard';
 
 function Referral() {
   const { router } = useRoute();
@@ -107,6 +109,8 @@ function Referral() {
           </CabinetBlock>
         </Col>
       </Row>
+      <Dashboard />
+      <ReferralList />
     </CabinetBlock>
   );
 }
