@@ -1,16 +1,19 @@
 .Referral__Card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1 1 280px;
+  flex: 1 1 180px;
   min-height: 132px;
   background: #fff;
   border-radius: var(--radius-panel);
   padding: 17px 16px;
-  margin: 0 16px;
+  margin: 5px 16px;
   box-sizing: border-box;
 
-  &:not(:last-child) {
+  &.secondary {
+    flex: 1 0 290px;
+    background: #e5ebfc;
+  }
+
+  & > .Row > .Col:not(:last-child) {
+    margin-right: 16px;
   }
 
   & > div:first-child {

@@ -2,7 +2,6 @@ import React from 'react';
 
 // Components
 import { Row, Col } from 'src/ui';
-import SVG from 'utils/svg-wrap';
 
 // Styles
 import './ReferralList.less';
