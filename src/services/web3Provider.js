@@ -39,6 +39,7 @@ class Web3Provider extends React.PureComponent {
   factoryAddress = networks[56].factoryAddress;
   routerAddress = networks[56].providerAddress;
   tokenSale = networks[56].tokenSale;
+  saleFactory = networks[56].saleFactory;
   wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
@@ -682,6 +683,11 @@ class Web3Provider extends React.PureComponent {
    */
   getFarmContract = () => new MasterChefContract(this);
 
+  getContract = (abi, address) => new (this.web3.eth.Contract)(
+    abi,
+    address,
+  );
+
   /**
    * Try to estimate contract method transaction
    * @param contract {object}
@@ -921,6 +927,7 @@ class Web3Provider extends React.PureComponent {
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
+      web3: this.web3,
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
       getPairAddress: this.getPairAddress.bind(this),
@@ -933,10 +940,12 @@ class Web3Provider extends React.PureComponent {
       getTrade: this.getTrade.bind(this),
       getTokenContract: this.getTokenContract.bind(this),
       getFarmContract: this.getFarmContract.bind(this),
+      getContract: this.getContract.bind(this),
       addTokenToWallet: this.addTokenToWallet.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
       tokenSale: this.tokenSale,
+      saleFactory: this.saleFactory,
       estimateTransaction: this.estimateTransaction.bind(this),
       transaction: this.transaction.bind(this),
       farm: this.farm,

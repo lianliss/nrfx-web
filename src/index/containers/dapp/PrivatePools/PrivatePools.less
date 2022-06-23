@@ -32,6 +32,20 @@
     font-weight: 600;
     text-align: center;
     margin-bottom: 15px;
+    position: relative;
+  }
+
+  &__back {
+    position: absolute;
+    left: 0;
+    padding: 4px 8px;
+    margin: -4px -8px;
+    cursor: pointer;
+    border-radius: var(--radius-button);
+
+    &:hover {
+      background: var(--alice-blue);
+    }
   }
 
   label {
@@ -76,6 +90,9 @@
     & > .Button {
       width: 100%;
     }
+    &.error {
+      color: var(--red);
+    }
   }
 
   .PrivatePools__table {
@@ -114,6 +131,37 @@
     & > * {
       &:not(:last-child) {
         margin-bottom: 5px;
+      }
+    }
+  }
+
+  &__container {
+    position: relative;
+  }
+  &__footer {
+    position: absolute;
+    top: 100%;
+    margin-top: 40px;
+
+    .row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+    }
+    .CopyTextComponent {
+    }
+    .CopyTextComponent__content {
+      font-size: 11px;
+      display: block;
+      padding: 8px 4px;
+      color: var(--dark-blue);
+      text-decoration: underline;
+      white-space: nowrap;
+
+      &:hover {
+        text-decoration: none;
+        color: var(--primary-blue);
       }
     }
   }

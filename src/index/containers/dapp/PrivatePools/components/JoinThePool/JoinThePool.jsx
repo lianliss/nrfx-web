@@ -29,9 +29,7 @@ function JoinThePool({ setStep, setPoolAddress }) {
       <div className="row">
         <UI.Button
           onClick={() => {
-            setPoolAddress(
-              'testText012x0x0901291aadcaewg12311asdfa23131231231312z'
-            );
+            setPoolAddress(value);
             setStep(steps.information);
           }}
           type="lightBlue"
