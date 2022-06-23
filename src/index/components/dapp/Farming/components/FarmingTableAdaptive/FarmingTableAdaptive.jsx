@@ -17,7 +17,6 @@ function FarmingTableAdaptive({ items, ...filters }) {
   const { farmsValue, setFarmsValue, sortBy, setSortBy, farms, sortOptions } =
     filters;
 
-  const height = useHeightSize();
   const context = React.useContext(Web3Context);
   const {pools} = context;
 
@@ -31,14 +30,12 @@ function FarmingTableAdaptive({ items, ...filters }) {
         sortBy={sortBy}
         setSortBy={setSortBy}
       />
-      <CabinetScrollBlock style={{ height, minHeight: 200 }}>
-        <div className="FarmingTableAdaptive__list">
-          {!!pools && Object.keys(pools).map((address, index) => {
-            const pool = pools[address];
-            return <FarmingAdaptiveItem key={index} pool={pool} />;
-          })}
-        </div>
-      </CabinetScrollBlock>
+      <div className="FarmingTableAdaptive__list">
+        {!!pools && Object.keys(pools).map((address, index) => {
+          const pool = pools[address];
+          return <FarmingAdaptiveItem key={index} pool={pool} />;
+        })}
+      </div>
     </div>
   );
 }

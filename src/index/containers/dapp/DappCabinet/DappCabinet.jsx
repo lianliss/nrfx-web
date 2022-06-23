@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Components
-import PageContainer from '../../../components/cabinet/PageContainer/PageContainer';
+import DappContainer from '../../../components/cabinet/DappContainer/DappContainer';
 import CabinetSidebar from 'src/index/components/dapp/CabinetSidebar/CabinetSidebar';
 
 // Pages
@@ -46,12 +46,12 @@ export class DappCabinet extends Component {
     // ------
 
     return (
-      <PageContainer
+      <DappContainer
         className="CabinetWalletScreen"
         sideBar={<CabinetSidebar />}
       >
         <Component route={route.name} adaptive={adaptive} />
-      </PageContainer>
+      </DappContainer>
     );
   }
 }

@@ -87,7 +87,7 @@ export default ({ visible, onClose }) => {
         </li>
       </ul>
       <div className="MobileMenu__authButtons">
-        {user || true /* True - anytime make button */ ? (
+        {user /* True - anytime make button */ ? (
           <Button
             onClick={() => {
               router.navigate(pages.WALLET);

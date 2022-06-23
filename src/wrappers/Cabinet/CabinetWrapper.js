@@ -8,6 +8,7 @@ import SVG from "utils/svg-wrap";
 import { classNames } from "../../../src/utils";
 import router from "../../../src/router";
 import Header from "../../index/components/cabinet/Header/Header";
+import AdaptiveHeader from "../../index/components/cabinet/Header/AdaptiveHeader";
 import * as PAGES from "../../index/constants/pages";
 import * as utils from "../../utils";
 import TabBar from "../../index/components/cabinet/TabBar/TabBar";
@@ -176,10 +177,42 @@ class CabinetWrapper extends Component {
 
     return (
       <div className={mainClassName}>
-        <Header adaptive={adaptive}  />
+        {adaptive ? (
+          <AdaptiveHeader
+            leftContent={
+              content.left ? (
+                <span>{content.left}</span>
+              ) : (
+                <Logo
+                  onClick={() => {
+                    router.navigate(PAGES.MAIN);
+                  }}
+                  className="AdaptiveHeader__logo"
+                  size="middle"
+                />
+              )
+            }
+            rightContent={
+              !user && (
+                <div
+                  onClick={() =>
+                    actions.openModal('auth', { type: steps.REGISTRATION })
+                  }
+                >
+                  <SVG src={require('../../asset/24px/login.svg')} />
+                </div>
+              )
+            }
+            mainContent={{
+              type: 'text',
+              content: this.props.title,
+            }}
+          />
+        ) : (
+          <Header />
+        )}
         <div className="CabinetWrapper__content">{this.__renderContent()}</div>
-        {/* Display TabBar for mobile */}
-        {/* {adaptive && user && <TabBar />} */}
+        {adaptive && user && <TabBar />}
       </div>
     );
   }
