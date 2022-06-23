@@ -35,6 +35,19 @@ class TokenContract {
     });
   });
 
+  getBalance = (address = this.provider.state.accountAddress) => new Promise((fulfill, reject) => {
+    this.contract.methods
+      .balanceOf(address)
+      .call()
+      .then(response => {
+        const balance = wei.from(response, this.decimals);
+        fulfill(balance);
+      }).catch(error => {
+        console.error('[TokenContract][getBalance]', error);
+        fulfill(0);
+    })
+  });
+
   getSymbol = async () => {
     if (this.address === '0x0000000000000000000000000000000000000000') return;
     return await this.contract.methods.symbol().call();

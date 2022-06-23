@@ -56,7 +56,7 @@ import DocumentationMethodListScreen from "./containers/documentation/MethodList
 import DappCabinet from "./containers/dapp/DappCabinet/DappCabinet";
 import * as actions from "../actions/index";
 import router from "../router";
-import PrivatePools from "./containers/cabinet/PrivatePools/PrivatePools";
+import PrivatePools from "./containers/dapp/PrivatePools/PrivatePools";
 
 function Routes(props) {
   const routeState = props.route;

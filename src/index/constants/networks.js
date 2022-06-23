@@ -7,6 +7,7 @@ const networks = {
     masterChefAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
     narfexToken: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
     tokenSale: '0xFbA1906e682BF0032D26EfBA6bFC5229a663B968',
+    saleFactory: '0x9f14b90780a5136ed2EDF800c997AB6eFb14Bf2E',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",
@@ -49,6 +50,7 @@ const networks = {
     masterChefAddress: '0x75e8563615f71C8078B6eD3CC86B24B976F2Ad1F',
     narfexToken: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
     tokenSale: '0x9cE316e703C6BdcaD8ada3dCF2d3a4E3911C0d4c',
+    saleFactory: '0x0b0800919cA682868e6db2fCdBc0a42f7AC1555E',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",
