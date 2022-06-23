@@ -11,7 +11,8 @@ import SwitchPage from 'src/index/components/dapp/SwitchPage/SwitchPage';
 import Exchanger from 'src/index/components/dapp/Exchanger/Exchanger';
 import CabinetValidator from 'src/index/components/dapp/CabinetValidator/CabinetValidator';
 import CabinetWallets from 'src/index/components/dapp/CabinetWallets/CabinetWallets';
-import Currency from '../../../components/dapp/Currency/Currency';
+import Currency from 'src/index/components/dapp/Currency/Currency';
+import Referral from 'src/index/components/dapp/Referral/Referral';
 
 // Utils
 import * as PAGES from 'src/index/constants/pages';
@@ -32,6 +33,9 @@ export class DappCabinet extends Component {
         break;
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;
+        break;
+      case PAGES.DAPP_REFERRAL:
+        Component = Referral;
         break;
       case PAGES.DAPP_SWAP:
       case PAGES.LIQUIDITY:
