@@ -34,6 +34,7 @@ function Dashboard() {
           }
           firstTitle="Active Friends / Total Friends"
           firstCount="0/0"
+          firstQuestion="Active Friends / Total Friends"
           secondIcon={
             <CardIcon
               src={require('src/asset/icons/narfex/white-icon.svg')}
