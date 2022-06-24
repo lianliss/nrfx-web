@@ -115,6 +115,8 @@ class PrivatePools extends React.PureComponent {
     this.handlePoolAddress();
     const {poolAddress} = this.state;
     this.accountAddress = this.context.accountAddress;
+    this.chainId = this.context.chainId;
+    this.isConnected = this.context.isConnected;
     if (poolAddress && poolAddress.length && this.accountAddress) {
       this.loadPoolData();
     }
@@ -127,8 +129,13 @@ class PrivatePools extends React.PureComponent {
       this.handlePoolAddress();
     }
     if (prevState.poolAddress !== this.state.poolAddress
-      || this.accountAddress !== this.context.accountAddress) {
+      || this.accountAddress !== this.context.accountAddress
+      || this.chainId !== this.context.chainId
+      || this.isConnected !== this.context.isConnected
+    ) {
       this.accountAddress = this.context.accountAddress;
+      this.chainId = this.context.chainId;
+      this.isConnected = this.context.isConnected;
       this.loadPoolData();
     }
   }
@@ -147,6 +154,29 @@ class PrivatePools extends React.PureComponent {
       poolBalance,
       targetAmount,
     } = this.state;
+    const {
+      isConnected, chainId, connectWallet,
+    } = this.context;
+
+    if (!isConnected) {
+      return <div className="PrivatePools__wrap">
+        <div className="PrivatePools">
+          <div className="PrivatePools__form">
+            <h2>
+              {steps.main}
+            </h2>
+            <div className="row">
+              <UI.Button
+                type="lightBlue"
+                onClick={connectWallet}
+              >
+                Connect wallet
+              </UI.Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
 
     return (
       <div className="PrivatePools__wrap">

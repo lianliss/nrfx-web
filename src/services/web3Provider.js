@@ -944,6 +944,7 @@ class Web3Provider extends React.PureComponent {
       addTokenToWallet: this.addTokenToWallet.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
+      routerAddress: this.routerAddress,
       tokenSale: this.tokenSale,
       saleFactory: this.saleFactory,
       estimateTransaction: this.estimateTransaction.bind(this),
