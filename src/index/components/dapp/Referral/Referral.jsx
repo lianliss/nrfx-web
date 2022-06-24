@@ -4,6 +4,7 @@ import { useRoute } from 'react-router5';
 
 // Components
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
+import SVG from 'utils/svg-wrap';
 
 // Utils
 import { DAPP_REFERRAL } from '../../../constants/pages';
@@ -27,10 +28,17 @@ function Referral() {
 
   return (
     <CabinetBlock className="Referral">
-      <Header />
-      <Dashboard />
-      <ReferralList />
-      <FAQ />
+      <div className="Referral__bg">
+        <SVG
+          src={require('src/asset/backgrounds/cabinet-swap/center-of-screen-fix.svg')}
+        />
+      </div>
+      <div className="Referral__container">
+        <Header />
+        <Dashboard />
+        <ReferralList />
+        <FAQ />
+      </div>
     </CabinetBlock>
   );
 }

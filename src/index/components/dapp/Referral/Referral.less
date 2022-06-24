@@ -1,7 +1,27 @@
 .Referral {
   padding: 93px 63px 76px 48px;
   height: 100%;
+  box-sizing: border-box;
 
+  &__container {
+    position: relative;
+  }
+
+  &__bg {
+    overflow: hidden;
+    position: absolute;
+    top: 385px;
+    left: 50%;
+    transform: translateX(calc(-50%));
+    max-width: 100%;
+
+    svg {
+      max-width: inherit;
+      width: 1071px;
+      height: 651px;
+    }
+  }
+  
   // Blocks
   &__header {
     margin-bottom: 32px;

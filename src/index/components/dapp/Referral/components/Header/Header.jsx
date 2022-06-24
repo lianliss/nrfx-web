@@ -10,7 +10,7 @@ import './Header.less';
 
 function Header() {
   return (
-    <Row justifyContent="space-between" className="Referral__header">
+    <Row justifyContent="space-between" className="Referral__header" wrap>
       <Col>
         <h1>Invite your friends. Earn cryptocurrency together</h1>
         <p className="subtitle">
