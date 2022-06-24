@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
-import { NumberFormat, Row, Col } from 'src/ui';
+import { Row } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
 // Styles
