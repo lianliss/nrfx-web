@@ -51,6 +51,8 @@ class DexSwap extends React.PureComponent {
       ? JSON.parse(window.localStorage.getItem('DexSwapTransactions'))
       : [],
     chainRequested: false,
+    allowance: 0,
+    isApproving: false,
   };
 
   balanceUpdateInterval = null;
@@ -82,6 +84,25 @@ class DexSwap extends React.PureComponent {
     this.chainRequested = false;
   }
 
+  setInitialAllowance = async () => {
+    try {
+      const {getTokenContract, routerAddress} = this.context;
+      const token = _.get(this, 'state.pair[0]');
+      console.log('[setInitialAllowance]', token);
+      if (!token) return;
+      if (this.tokenContract) this.tokenContract.stopWaiting();
+      this.tokenContract = getTokenContract(token);
+      const allowance = await this.tokenContract.getAllowance(routerAddress);
+      console.log('ALLOWANCE', token.symbol, allowance);
+      this.setState({
+        allowance,
+      });
+    } catch (error) {
+      console.error('[setInitialAllowance]', error);
+      this.tokenContract.stopWaiting();
+    }
+  };
+
   componentDidMount() {
     this._mount = true;
     this.setState({lastChainId: this.context.chainId});
@@ -90,6 +111,7 @@ class DexSwap extends React.PureComponent {
 
     this.balanceUpdateInterval = setInterval(this.updateExchangeTokenBalance.bind(this), BALANCE_UPDATE_INTERVAL);
     this.requireChain();
+    this.setInitialAllowance();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -112,6 +134,9 @@ class DexSwap extends React.PureComponent {
     const prevToken1 = _.get(prevState, 'pair[1].address');
     if (token0 !== prevToken0 || token1 !== prevToken1) {
       if (isConnected) this.updateLiquidity();
+    }
+    if (token0 !== prevToken0) {
+      if (isConnected) this.setInitialAllowance();
     }
     this.requireChain();
     if (prevState.lastChainId !== chainId) {
@@ -326,13 +351,15 @@ class DexSwap extends React.PureComponent {
   }
 
   async executeTrade() {
-    const {swap} = this.context;
+    const {swap, getTransactionReceipt} = this.context;
     const {trade} = this;
     const {pair, exactIndex, slippageTolerance} = this.state;
     const isExactIn = !exactIndex;
 
     try {
       const txHash = await swap(pair, trade, slippageTolerance, isExactIn);
+      const receipt = await getTransactionReceipt(txHash);
+      console.log('[executeTrade]', txHash, receipt);
 
       // Save transactions to localStorage
       const record = window.localStorage.getItem('DexSwapTransactions');
@@ -357,6 +384,30 @@ class DexSwap extends React.PureComponent {
     }
   }
 
+  async approve() {
+    const {isApproving, amount0} = this.state;
+    const {tokens, getTokenContract, routerAddress} = this.context;
+    const {poolAddress} = this.props;
+
+    if (isApproving) return;
+    this.setState({isApproving: true});
+    const token = _.get(this, 'state.pair[0]');
+    this.tokenContract = getTokenContract(token);
+    const amount = Number(amount0) || 0;
+    const maxApprove = 10**9;
+
+    try {
+      await this.tokenContract.approve(routerAddress, amount > maxApprove ? amount : maxApprove);
+      this.setState({
+        allowance: amount > maxApprove ? amount : maxApprove,
+      });
+    } catch (error) {
+      console.error('[onApprove]', error);
+      this.tokenContract.stopWaiting();
+    }
+    this.setState({isApproving: false});
+  }
+
   render() {
     const {
       isPro,
@@ -367,6 +418,8 @@ class DexSwap extends React.PureComponent {
       slippageTolerance,
       transactions,
       isSwappedPrice,
+      allowance,
+      isApproving,
     } = this.state;
     const {
       isConnected,
@@ -413,6 +466,9 @@ class DexSwap extends React.PureComponent {
       ? amount0 * LIQUIDITY_PROVIDER_FEE * (route.length - 1) / 100
       : 0;
 
+    const amount = Number(amount0) || 0;
+    const isAvailable = allowance >= amount && amount;
+
     let button = <Button type="lightBlue" onClick={connectWallet}>
       <SVG src={require('src/asset/token/wallet.svg')} />
       {getLang('dex_button_connect_wallet')}
@@ -424,10 +480,19 @@ class DexSwap extends React.PureComponent {
             {getLang('dex_button_insufficient_balance')}
           </Button>
         } else {
-          button = <Button type="lightBlue" onClick={() => this.executeTrade()}>
+          button = <>
+          {!isAvailable && <Button type={isAvailable ? 'secondary' : 'lightBlue'}
+                                   state={isApproving ? 'loading' : ''}
+                                   onClick={this.approve.bind(this)}>
+            Approve
+          </Button>}
+          <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
+                  disabled={!isAvailable}
+                  onClick={() => this.executeTrade()}>
             <SVG src={require('src/asset/icons/convert-card.svg')} />
             {priceImpactNumber >= 5 ? getLang('dex_button_swap_anyway') : getLang('dex_button_buy')}
           </Button>
+          </>
         }
       } else {
         button = <Button type="secondary" disabled>
@@ -576,12 +641,14 @@ class DexSwap extends React.PureComponent {
                       state.pair[secondToken] = state.pair[selectToken];
                     }
                     state.pair[selectToken] = value;
-                    this.updateLiquidity();
                     return {
                       ...state,
                       selectToken: null,
                       isSwappedPrice: false,
                     };
+                  }, () => {
+                    this.updateLiquidity();
+                    this.setInitialAllowance();
                   });
                 }}
                 onClose={() => this.setState({ selectToken: null })}
