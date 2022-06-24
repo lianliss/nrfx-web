@@ -22,6 +22,7 @@ function Dashboard() {
       <Row
         justifyContent="space-between"
         alignItems="center"
+        wrap
         className="Referral__Dashboard__cards"
       >
         <Card
