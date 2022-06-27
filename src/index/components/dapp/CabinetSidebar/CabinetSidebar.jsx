@@ -76,6 +76,52 @@ function CabinetSidebar({ className = '' }) {
                 active={route.name === PAGES.VALIDATOR}
                 onClick={() => router.navigate(PAGES.VALIDATOR)}
               />
+              <SidebarItem
+                title="About NRFX"
+                icon="nrfx-blue-bg-icon"
+                active={route.name === PAGES.VALIDATOR}
+                onClick={() => router.navigate(PAGES.VALIDATOR)}
+              />
+              <SidebarItem title="More" icon="more-vertical-icon">
+                <ul>
+                  <li
+                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                  >
+                    Docs
+                  </li>
+                  <li
+                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                  >
+                    Team
+                  </li>
+                  <li
+                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                  >
+                    Audit
+                  </li>
+                  <li
+                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                  >
+                    Governance
+                  </li>
+                  <li
+                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                  >
+                    Social media
+                  </li>
+                  <li
+                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                  >
+                    Blog
+                  </li>
+                </ul>
+              </SidebarItem>
             </ul>
           </CabinetBlock>
         </CabinetScrollBlock>
