@@ -1,24 +1,31 @@
 import React from 'react';
 
 // Components
-import { Row, Col } from 'src/ui';
+import { Row, Col, NumberFormat } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 
 // Styles
 import './Header.less';
 
-function Header() {
+function Header({
+  title,
+  subtitle,
+  link,
+  willGetNumber,
+  friendsWillGetNumber,
+}) {
   return (
     <Row justifyContent="space-between" className="Referral__header" wrap>
       <Col>
-        <h1>Invite your friends. Earn cryptocurrency together</h1>
+        <h1>{title}</h1>
         <p className="subtitle">
-          Earn up to <span className="blue">30%</span> from friends&#8217;
+          {subtitle}
+          {/* Earn up to <span className="blue">30%</span> from friends&#8217;
           commission <br />
-          on Fiat deposits and <span className="blue">5%</span>&nbsp; from their{' '}
+          on Fiat deposits and <span className="blue">5%</span>&nbsp; from their
           <br />
-          NRFX token purchases through an Narfex Exchanger
+          NRFX token purchases through an Narfex Exchanger */}
         </p>
         <span className="link blue-gradient-text">Read more ›</span>
       </Col>
@@ -38,7 +45,7 @@ function Header() {
           <Row justifyContent="space-between">
             <Col className="Referral__copy">
               <Row alignItems="center" justifyContent="space-between">
-                <span>https://narfex.org?ref=dd4e20hfj09nrtyasdasdasd</span>
+                <span>{link}</span>
                 <SVG src={require('src/asset/icons/action/copy.svg')} />
               </Row>
             </Col>
@@ -59,7 +66,7 @@ function Header() {
               <Col justifyContent="center">
                 <span className="strong">You will get</span>
                 <span className="Referral__information_procent blue-gradient-text">
-                  100%
+                  <NumberFormat number={willGetNumber} percent />
                 </span>
               </Col>
               <Col>
@@ -83,9 +90,9 @@ function Header() {
               className="Referral__information__future-secondary"
               alignItems="center"
             >
-              <span className="strong">You will get</span>
+              <span className="strong">Friends will get</span>
               <span className="Referral__information_procent blue-gradient-text">
-                0%
+                <NumberFormat number={friendsWillGetNumber} percent />
               </span>
             </Col>
           </Row>

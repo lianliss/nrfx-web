@@ -8,13 +8,13 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './ReferralList.less';
 
-function ReferralList({ items }) {
+function ReferralList({ title, subtitle, items }) {
   return (
     <div className="Referral__ReferralList">
       <Row alignItems="flex-end" justifyContent="space-between">
         <Col>
-          <h2>Referral List</h2>
-          <p className="subtitle">All your referral friends in one place</p>
+          <h2>{title}</h2>
+          <p className="subtitle">{subtitle}</p>
         </Col>
       </Row>
       <Col className="Referral__ReferralList__items">

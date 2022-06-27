@@ -5,46 +5,13 @@ import { useRoute } from 'react-router5';
 // Components
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import SVG from 'utils/svg-wrap';
+import Exchange from './containers/Exchange/Exchange';
 
 // Utils
 import { DAPP_REFERRAL } from '../../../constants/pages';
 
 // Styles
 import './Referral.less';
-import ReferralList from './components/ReferralList/ReferralList';
-import Dashboard from './components/Dashboard/Dashboard';
-import FAQ from './components/FAQ/FAQ';
-import Header from './components/Header/Header';
-
-const exchangeDashboardItems = [
-  {
-    firstTitle: 'Active Friends / Total Friends',
-    firstCount: '0/0',
-    firstIcon: { src: 'icons/cabinet/team-icon.svg', background: '#fff' },
-    firstQuestion: 'Answer',
-    secondTitle: 'Total earned',
-    secondCount: '0.0000 NRFX / 0.00 USD',
-    secondIcon: {
-      src: 'icons/narfex/white-icon.svg',
-      background: 'var(--blue-light-gradient)',
-    },
-    secondary: true,
-  },
-  {
-    firstTitle: 'Total Friends of NRFX Buyers',
-    firstCount: '0',
-    secondTitle: 'Total NRFX earned',
-    secondCount: '0.0000 NRFX',
-    secondary: false,
-  },
-  {
-    firstTitle: 'Total Friends of Fiat Deposits',
-    firstCount: '0',
-    secondTitle: 'Total Fiat earned',
-    secondCount: '0.00 USD',
-    secondary: false,
-  },
-];
 
 function Referral() {
   const { router } = useRoute();
@@ -64,10 +31,7 @@ function Referral() {
         />
       </div>
       <div className="Referral__container">
-        <Header />
-        <Dashboard items={exchangeDashboardItems} />
-        <ReferralList />
-        <FAQ />
+        {type === 'exchange' && <Exchange />}
       </div>
     </CabinetBlock>
   );

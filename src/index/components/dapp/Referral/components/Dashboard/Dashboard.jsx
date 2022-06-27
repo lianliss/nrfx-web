@@ -10,7 +10,7 @@ import Card from '../Card/Card';
 // Styles
 import './Dashboard.less';
 
-function Dashboard({ items = [] }) {
+function Dashboard({ children }) {
   return (
     <CabinetBlock className="Referral__Dashboard">
       <h2>Dashboard</h2>
@@ -20,38 +20,10 @@ function Dashboard({ items = [] }) {
         wrap
         className="Referral__Dashboard__cards"
       >
-        {items.map((item) => (
-          <Card
-            firstTitle={item.firstTitle}
-            firstCount={item.firstCount}
-            firstIcon={item.firstIcon}
-            firstQuestion={item.firstQuestion}
-            secondTitle={item.secondTitle}
-            secondCount={item.secondCount}
-            secondIcon={item.secondIcon}
-            secondQuestion={item.secondQuestion}
-            secondary={item.secondary}
-          />
-        ))}
+        {children}
       </Row>
     </CabinetBlock>
   );
 }
-
-Dashboard.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      firstTitle: PropTypes.string,
-      firstCount: PropTypes.string,
-      firstIcon: PropTypes.object,
-      firstQuestion: PropTypes.string,
-      secondTitle: PropTypes.string,
-      secondCount: PropTypes.string,
-      secondIcon: PropTypes.object,
-      secondQuestion: PropTypes.string,
-      secondary: PropTypes.bool,
-    })
-  ),
-};
 
 export default Dashboard;

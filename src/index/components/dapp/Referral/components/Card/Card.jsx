@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Row, Col, HoverPopup } from 'src/ui';
@@ -85,5 +86,17 @@ function Card({
     </Col>
   );
 }
+
+Card.propTypes = {
+  firstTitle: PropTypes.string,
+  firstCount: PropTypes.string,
+  firstIcon: PropTypes.object,
+  firstQuestion: PropTypes.string,
+  secondTitle: PropTypes.string,
+  secondCount: PropTypes.string,
+  secondIcon: PropTypes.object,
+  secondQuestion: PropTypes.string,
+  secondary: PropTypes.bool,
+};
 
 export default Card;
