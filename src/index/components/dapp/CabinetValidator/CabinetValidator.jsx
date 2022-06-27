@@ -26,7 +26,13 @@ function CabinetValidator() {
             <div>
               <h1>Become a Validator</h1>
               <p className="CabinetValidator__description">
-                Coming soon. <a href="mailto:admin@narfex.com">Contact us</a>
+                Validators are ambassadors and adherents of the project, they
+                are earning a percentage of the exchange and from the growth of
+                the NRFX/NUSD pool. Anyone in the world can become a validator
+                and start earn on the fiat exchange process more than on other
+                platforms, companies and even exchanges can be validators and
+                earn with us. We are open for partnerships,&nbsp;
+                <a href="mailto:admin@narfex.com">contact us</a>
               </p>
             </div>
             <div className="CabinetValidator__links">
