@@ -21,13 +21,23 @@ function Card({
   secondQuestion,
   secondary,
 }) {
+  const CardIcon = ({ src, background }) => (
+    <div className="icon-container" style={{ background }}>
+      <SVG src={require(`src/${src}`)} />
+    </div>
+  );
+
   return (
     <Col
       justifyContent="center"
       className={cn('Referral__Card', { secondary })}
     >
       <Row>
-        {firstIcon && <Col>{firstIcon}</Col>}
+        {firstIcon && (
+          <Col>
+            <CardIcon src={firstIcon.src} background={firstIcon.background} />
+          </Col>
+        )}
         <Col>
           <p className="Referral__Card__title">{firstTitle}</p>
           <p className="Referral__Card__count">{firstCount}</p>
@@ -48,7 +58,11 @@ function Card({
         )}
       </Row>
       <Row>
-        {secondIcon && <Col>{secondIcon}</Col>}
+        {secondIcon && (
+          <Col>
+            <CardIcon src={secondIcon.src} background={secondIcon.background} />
+          </Col>
+        )}
         <Col>
           <p className="Referral__Card__title">{secondTitle}</p>
           <p className="Referral__Card__count">{secondCount}</p>

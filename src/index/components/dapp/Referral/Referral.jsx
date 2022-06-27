@@ -16,6 +16,21 @@ import Dashboard from './components/Dashboard/Dashboard';
 import FAQ from './components/FAQ/FAQ';
 import Header from './components/Header/Header';
 
+const exchangeDashboardItems = [
+  {
+    firstTitle: 'Active Friends / Total Friends',
+    firstCount: '0/0',
+    firstIcon: { src: 'asset/icons/cabinet/team-icon.svg', background: '#fff' },
+    secondTitle: 'Total earned',
+    secondCount: '0.0000 NRFX / 0.00 USD',
+    secondIcon: {
+      src: 'asset/icons/narfex/white-icon.svg',
+      background: 'var(--blue-light-gradient)',
+    },
+    secondary: true,
+  },
+];
+
 function Referral() {
   const { router } = useRoute();
   const params = useSelector((state) => state.router.route.params);
@@ -35,7 +50,7 @@ function Referral() {
       </div>
       <div className="Referral__container">
         <Header />
-        <Dashboard />
+        <Dashboard items={exchangeDashboardItems} />
         <ReferralList />
         <FAQ />
       </div>
