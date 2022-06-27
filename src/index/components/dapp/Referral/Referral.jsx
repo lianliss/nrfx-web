@@ -37,6 +37,13 @@ const exchangeDashboardItems = [
     secondCount: '0.0000 NRFX',
     secondary: false,
   },
+  {
+    firstTitle: 'Total Friends of Fiat Deposits',
+    firstCount: '0',
+    secondTitle: 'Total Fiat earned',
+    secondCount: '0.00 USD',
+    secondary: false,
+  },
 ];
 
 function Referral() {
