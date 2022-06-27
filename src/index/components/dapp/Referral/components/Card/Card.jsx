@@ -23,7 +23,7 @@ function Card({
 }) {
   const CardIcon = ({ src, background }) => (
     <div className="icon-container" style={{ background }}>
-      <SVG src={require(`src/${src}`)} />
+      <SVG src={require(`src/asset/${src}`)} />
     </div>
   );
 

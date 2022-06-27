@@ -20,14 +20,22 @@ const exchangeDashboardItems = [
   {
     firstTitle: 'Active Friends / Total Friends',
     firstCount: '0/0',
-    firstIcon: { src: 'asset/icons/cabinet/team-icon.svg', background: '#fff' },
+    firstIcon: { src: 'icons/cabinet/team-icon.svg', background: '#fff' },
+    firstQuestion: 'Answer',
     secondTitle: 'Total earned',
     secondCount: '0.0000 NRFX / 0.00 USD',
     secondIcon: {
-      src: 'asset/icons/narfex/white-icon.svg',
+      src: 'icons/narfex/white-icon.svg',
       background: 'var(--blue-light-gradient)',
     },
     secondary: true,
+  },
+  {
+    firstTitle: 'Total Friends of NRFX Buyers',
+    firstCount: '0',
+    secondTitle: 'Total NRFX earned',
+    secondCount: '0.0000 NRFX',
+    secondary: false,
   },
 ];
 
