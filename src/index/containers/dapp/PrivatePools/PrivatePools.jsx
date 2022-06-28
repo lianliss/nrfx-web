@@ -195,7 +195,7 @@ class PrivatePools extends React.PureComponent {
               {(step !== steps.main) &&<div className="PrivatePools__back" onClick={this.deletePoolAddress.bind(this)}>
                 &#10094;
               </div>}
-              <span>{step}</span>
+              <span>{step}{chainId === 97 ? ' Testnet' : ''}</span>
             </h2>
             {step === steps.main && (
               <>
