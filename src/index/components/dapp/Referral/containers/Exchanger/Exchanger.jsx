@@ -7,7 +7,7 @@ import ReferralList from '../../components/ReferralList/ReferralList';
 import Card from '../../components/Card/Card';
 import FAQ from '../../components/FAQ/FAQ';
 
-function Exchange() {
+function Exchanger() {
   return (
     <>
       <Header
@@ -53,4 +53,4 @@ function Exchange() {
   );
 }
 
-export default Exchange;
+export default Exchanger;

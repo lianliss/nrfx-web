@@ -5,23 +5,22 @@ import { useRoute } from 'react-router5';
 // Components
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import SVG from 'utils/svg-wrap';
-import Exchange from './containers/Exchange/Exchange';
+import Exchanger from './containers/Exchanger/Exchanger';
 
 // Utils
-import { DAPP_REFERRAL } from '../../../constants/pages';
+import {
+  DAPP_REFERRAL,
+  DAPP_REFERRAL_EXCHANGER,
+  DAPP_REFERRAL_FARMING,
+} from '../../../constants/pages';
 
 // Styles
 import './Referral.less';
+import Farming from './containers/Farming/Farming';
 
 function Referral() {
-  const { router } = useRoute();
-  const params = useSelector((state) => state.router.route.params);
-  const type = params.type || null;
-
-  // Redirect to DAPP page, if type !== exchange or farming.
-  if (type !== 'exchange') {
-    router.navigate(DAPP_REFERRAL, { type: 'exchange' });
-  }
+  const { route, router } = useRoute();
+  const routeName = route.name;
 
   return (
     <CabinetBlock className="Referral">
@@ -31,7 +30,9 @@ function Referral() {
         />
       </div>
       <div className="Referral__container">
-        {type === 'exchange' && <Exchange />}
+        {routeName === DAPP_REFERRAL && <Exchanger />}
+        {routeName === DAPP_REFERRAL_EXCHANGER && <Exchanger />}
+        {routeName === DAPP_REFERRAL_FARMING && <Farming />}
       </div>
     </CabinetBlock>
   );
