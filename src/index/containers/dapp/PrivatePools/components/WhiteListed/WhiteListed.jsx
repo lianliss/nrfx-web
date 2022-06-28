@@ -47,6 +47,7 @@ function WhiteListed(props) {
       const txHash = await transaction(contract, 'buyNRFX', []);
       const receipt = await getTransactionReceipt(txHash);
       console.log('[onBuy]', txHash, receipt);
+      setErrorText('');
       await loadPoolData();
     } catch (error) {
       console.error('[onBuy]', error);

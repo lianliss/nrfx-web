@@ -37,6 +37,7 @@ class PrivatePools extends React.PureComponent {
     nrfxBalance: 0,
     userShare: 0,
     userNrfxBalance: 0,
+    userNrfxInSale: 0,
     userDeposit: 0,
     isAdmin: false,
   };
@@ -58,7 +59,7 @@ class PrivatePools extends React.PureComponent {
     const {poolAddress, isPoolCollected, isNarfexLocked, isWhitelisted, nrfxBalance} = this.state;
     if (poolAddress && poolAddress.length) {
       if (isPoolCollected) {
-        if (nrfxBalance) {
+        if (nrfxBalance || isNarfexLocked) {
           this.setStep(steps.unlock)
         } else {
           this.setStep(steps.whiteListed)
@@ -70,7 +71,7 @@ class PrivatePools extends React.PureComponent {
   };
 
   loadPoolData = async () => {
-    const {getContract, accountAddress} = this.context;
+    const {getContract, accountAddress, tokenSale} = this.context;
     const {poolAddress} = this.state;
     if (!poolAddress || !poolAddress.length) return;
     if (!this.accountAddress) return;
@@ -78,12 +79,18 @@ class PrivatePools extends React.PureComponent {
       require('src/index/constants/ABI/salePool'),
       poolAddress,
     );
+    const saleContract = getContract(
+      require('src/index/constants/ABI/TokenSale'),
+      tokenSale,
+    );
 
     this.setState({isPoolLoading: true});
     try {
       const data = await Promise.all([
         contract.methods.getPoolData().call(),
         contract.methods.getUserData(this.accountAddress).call(),
+        saleContract.methods.getNextUnlockTime(poolAddress).call(),
+        contract.methods.getUserNRFXBalance(this.accountAddress).call(),
       ]);
       console.log('[loadPoolData]', data);
       this.setState({
@@ -99,8 +106,10 @@ class PrivatePools extends React.PureComponent {
         nrfxBalance: wei.from(data[0]._nrfxBalance),
         userShare: wei.from(data[1]._share),
         userNrfxBalance: wei.from(data[1]._availableBalance),
+        userNrfxInSale: wei.from(data[3]),
         userDeposit: wei.from(data[1]._busdDeposit),
         isAdmin: data[1]._isOwner || data[1]._isFactoryOwner,
+        nextUnlock: data[2],
       })
     } catch (error) {
       console.error('[loadPoolData]', error);
@@ -231,7 +240,10 @@ class PrivatePools extends React.PureComponent {
               {...this.state}
               loadPoolData={this.loadPoolData.bind(this)}
               setStep={this.setStep.bind(this)} />}
-            {step === steps.unlock && <Unlock {...this.state} setStep={this.setStep.bind(this)} />}
+            {step === steps.unlock && <Unlock
+              {...this.state}
+              loadPoolData={this.loadPoolData.bind(this)}
+              setStep={this.setStep.bind(this)} />}
           </div>
         </div>
       </div>
