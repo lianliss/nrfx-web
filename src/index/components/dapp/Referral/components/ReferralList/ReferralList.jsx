@@ -45,8 +45,12 @@ function ReferralList({ title, subtitle, items }) {
               <Col>Total NRFX earned</Col>
               <Col>Total Fiat earned</Col>
             </Row>
-            {items.map((item) => (
-              <Row justifyContent="space-between" alignItems="center">
+            {items.map((item, index) => (
+              <Row
+                justifyContent="space-between"
+                alignItems="center"
+                key={item.login + index}
+              >
                 <Col>{item.login}</Col>
                 <Col>
                   <NumberFormat number={item.total.nrfx} currency="nrfx" />

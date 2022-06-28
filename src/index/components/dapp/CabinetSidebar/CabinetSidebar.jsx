@@ -18,6 +18,22 @@ function CabinetSidebar({ className = '' }) {
   const { route, router } = useRoute();
   const [nrfxRate, setNrfxRate] = React.useState(0);
 
+  // Check - current page is exists or empty in pages.
+  // @params pages (array or string). Page constant from PAGES.
+  const isPage = (pages) => {
+    if (Array.isArray(pages)) {
+      for (let page of pages) {
+        if (page === route.name) {
+          return true;
+        }
+      }
+    } else {
+      return route.name === pages;
+    }
+
+    return false;
+  };
+
   React.useEffect(() => {
     web3Backend.getTokenRate('nrfx').then((data) => {
       setNrfxRate(data.price);
@@ -34,13 +50,13 @@ function CabinetSidebar({ className = '' }) {
               <SidebarItem
                 title="Wallet"
                 icon="wallet"
-                active={route.name === PAGES.DAPP_WALLET}
+                active={isPage(PAGES.DAPP_WALLET)}
                 onClick={() => router.navigate(PAGES.DAPP_WALLET)}
               />
               <SidebarItem
                 title="Exchanger"
                 icon="exchange"
-                active={route.name === PAGES.DAPP_EXCHANGE}
+                active={isPage(PAGES.DAPP_EXCHANGE)}
                 onClick={() => router.navigate(PAGES.DAPP_EXCHANGE)}
               />
             </ul>
@@ -50,7 +66,7 @@ function CabinetSidebar({ className = '' }) {
               <SidebarItem title="Trade" icon="trade" active>
                 <ul>
                   <li
-                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    className={isPage(PAGES.DAPP_SWAP) ? 'active' : ''}
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                   >
                     Swap
@@ -61,64 +77,70 @@ function CabinetSidebar({ className = '' }) {
               <SidebarItem
                 title="Liquidity"
                 icon="liquidity"
-                active={route.name === PAGES.LIQUIDITY}
+                active={isPage(PAGES.LIQUIDITY)}
                 onClick={() => router.navigate(PAGES.LIQUIDITY)}
               />
               <SidebarItem
                 title="Farm"
                 icon="farm"
-                active={route.name === PAGES.FARMING}
+                active={isPage(PAGES.FARMING)}
                 onClick={() => router.navigate(PAGES.FARMING)}
               />
               <SidebarItem
                 title="Validator"
                 icon="validator"
-                active={route.name === PAGES.VALIDATOR}
+                active={isPage(PAGES.VALIDATOR)}
                 onClick={() => router.navigate(PAGES.VALIDATOR)}
               />
               <SidebarItem
                 title="About NRFX"
                 icon="nrfx-blue-bg-icon"
-                active={route.name === PAGES.VALIDATOR}
-                onClick={() => router.navigate(PAGES.VALIDATOR)}
+                href="/token"
+              />
+              <SidebarItem
+                title="Referral Program"
+                icon="team-icon"
+                active={isPage([
+                  PAGES.DAPP_REFERRAL,
+                  PAGES.DAPP_REFERRAL_EXCHANGER,
+                  PAGES.DAPP_REFERRAL_FARMING,
+                ])}
+                onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
               />
               <SidebarItem title="More" icon="more-vertical-icon">
                 <ul>
-                  <li
-                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
-                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
-                  >
-                    Docs
+                  <li>
+                    <a href="http://docs.narfex.com/narfex" target="_blank">
+                      Docs
+                    </a>
                   </li>
                   <li
-                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    className="disabled"
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                   >
                     Team
                   </li>
                   <li
-                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    className="disabled"
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                   >
                     Audit
                   </li>
-                  <li
-                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
-                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
-                  >
-                    Governance
+                  <li>
+                    <a href="/narfex_dao" target="_blank">
+                      Governance
+                    </a>
                   </li>
                   <li
-                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
+                    className="disabled"
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                   >
                     Social media
                   </li>
-                  <li
-                    className={route.name === PAGES.DAPP_SWAP ? 'active' : ''}
-                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
-                  >
-                    Blog
+                  <li>
+                    <a href="https://medium.com/@narfex" target="_blank">
+                      Blog
+                    </a>
                   </li>
                 </ul>
               </SidebarItem>

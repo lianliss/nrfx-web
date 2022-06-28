@@ -21,6 +21,10 @@
     .SidebarItem.active & {
       color: var(--royal-blue);
     }
+
+    span {
+      max-width: 100px;
+    }
   }
 
   &__children {
@@ -110,5 +114,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  a {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }

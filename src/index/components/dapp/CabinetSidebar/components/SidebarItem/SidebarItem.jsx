@@ -5,7 +5,7 @@ import SVG from 'utils/svg-wrap';
 
 import './SidebarItem.less';
 
-function SidebarItem({ title, icon, children, onClick, active }) {
+function SidebarItem({ title, icon, children, onClick, active, href }) {
   const [childIsVisible, setChildIsVisible] = React.useState(active);
   const className = cn({
     SidebarItem: true,
@@ -33,8 +33,16 @@ function SidebarItem({ title, icon, children, onClick, active }) {
               />
             </div>
           )}
-          <span>{title}</span>
-          {(active || children) && (
+          <span>
+            {href ? (
+              <a href={href} target="_blank">
+                {title}
+              </a>
+            ) : (
+              title
+            )}
+          </span>
+          {children && (
             <div
               className={cn({
                 SidebarItem__arrow: true,
@@ -60,6 +68,7 @@ SidebarItem.defaultProps = {
   title: '',
   icon: null,
   active: false,
+  href: null,
 };
 
 export default SidebarItem;

@@ -12,7 +12,7 @@ function Exchanger() {
     <>
       <Header
         title="Invite your friends. Earn cryptocurrency together"
-        subtitle="Earn up to 30% from friends’ commission on Fiat deposits and 5% from theirNRFX token purchases through an Narfex Exchanger"
+        subtitle="Earn up to 30% from friends’ commission on Fiat deposits and 5% from their NRFX token purchases through an Narfex Exchanger"
         link="https://narfex.org?ref=dd4e20hfj09nrtyasdasd"
         willGetNumber={100}
         friendsWillGetNumber={0}

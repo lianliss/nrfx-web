@@ -11,7 +11,7 @@ import currencies from 'src/currencies.js';
 // Styles.
 import './SwapFormInput.less';
 
-const SwapFormInput = React.forwardRef((props) => {
+const SwapFormInput = (props) => {
   const {
     title,
     prefix,
@@ -109,7 +109,7 @@ const SwapFormInput = React.forwardRef((props) => {
       </div>
     </div>
   );
-});
+};
 
 SwapFormInput.propTypes = {
   title: PropTypes.string,
