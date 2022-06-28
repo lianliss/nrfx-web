@@ -5,6 +5,8 @@
 
   &__container {
     position: relative;
+    max-width: 1033px;
+    margin: 0 auto;
   }
 
   &__bg {
@@ -21,7 +23,7 @@
       height: 651px;
     }
   }
-  
+
   // Blocks
   &__Dashboard {
     margin-bottom: 32px;
@@ -82,11 +84,10 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
-    color: var(--dark-gunmetal);
   }
 
   .blue {
-    color: var(--royal-blue);
+    color: var(--secondary-blue);
   }
 
   .link {
@@ -101,11 +102,7 @@
   }
 
   .blue-gradient-text {
-    background: var(--blue-light-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+    color: var(--secondary-blue);
   }
 
   &__copy {
