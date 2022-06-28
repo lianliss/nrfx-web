@@ -6,8 +6,8 @@ const networks = {
     routerAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
     masterChefAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
     narfexToken: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
-    tokenSale: '0xFbA1906e682BF0032D26EfBA6bFC5229a663B968',
-    saleFactory: '0x9f14b90780a5136ed2EDF800c997AB6eFb14Bf2E',
+    tokenSale: '0x2bFeCcE60E39Ed14ebbF2b8Fd8e4Ca364b3e6AD0',
+    saleFactory: '0x2c87f1f2896092d0660D32Ee69aE2e3227BCD6dB',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",
