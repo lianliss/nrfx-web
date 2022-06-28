@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
-import { NumberFormat, Row, Col } from 'src/ui';
+import { Row, Col, HoverPopup } from 'src/ui';
+import SVG from 'utils/svg-wrap';
 
 // Utils
 import { classNames as cn } from 'src/utils';
@@ -13,32 +15,88 @@ function Card({
   firstTitle,
   firstCount,
   firstIcon,
+  firstQuestion,
   secondTitle,
   secondCount,
   secondIcon,
+  secondQuestion,
   secondary,
 }) {
+  const CardIcon = ({ src, background }) => (
+    <div className="icon-container" style={{ background }}>
+      <SVG src={require(`src/asset/${src}`)} />
+    </div>
+  );
+
   return (
     <Col
       justifyContent="center"
       className={cn('Referral__Card', { secondary })}
     >
       <Row>
-        {firstIcon && <Col>{firstIcon}</Col>}
+        {firstIcon && (
+          <Col>
+            <CardIcon src={firstIcon.src} background={firstIcon.background} />
+          </Col>
+        )}
         <Col>
           <p className="Referral__Card__title">{firstTitle}</p>
           <p className="Referral__Card__count">{firstCount}</p>
         </Col>
+        {firstQuestion && (
+          <HoverPopup
+            content={<span>{firstQuestion}</span>}
+            type="top"
+            size="small"
+            windowRight={28}
+            windowLeft={28}
+          >
+            <SVG
+              src={require('src/asset/icons/warning-blue.svg')}
+              style={{ width: 14, height: 14 }}
+            />
+          </HoverPopup>
+        )}
       </Row>
       <Row>
-        {secondIcon && <Col>{secondIcon}</Col>}
+        {secondIcon && (
+          <Col>
+            <CardIcon src={secondIcon.src} background={secondIcon.background} />
+          </Col>
+        )}
         <Col>
           <p className="Referral__Card__title">{secondTitle}</p>
           <p className="Referral__Card__count">{secondCount}</p>
         </Col>
+        {secondQuestion && (
+          <HoverPopup
+            content={<span>{secondQuestion}</span>}
+            type="top"
+            size="small"
+            windowRight={28}
+            windowLeft={28}
+          >
+            <SVG
+              src={require('src/asset/icons/warning-blue.svg')}
+              style={{ width: 14, height: 14 }}
+            />
+          </HoverPopup>
+        )}
       </Row>
     </Col>
   );
 }
+
+Card.propTypes = {
+  firstTitle: PropTypes.string,
+  firstCount: PropTypes.string,
+  firstIcon: PropTypes.object,
+  firstQuestion: PropTypes.string,
+  secondTitle: PropTypes.string,
+  secondCount: PropTypes.string,
+  secondIcon: PropTypes.object,
+  secondQuestion: PropTypes.string,
+  secondary: PropTypes.bool,
+};
 
 export default Card;

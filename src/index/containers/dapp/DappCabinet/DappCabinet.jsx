@@ -34,9 +34,6 @@ export class DappCabinet extends Component {
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;
         break;
-      case PAGES.DAPP_REFERRAL:
-        Component = Referral;
-        break;
       case PAGES.DAPP_SWAP:
       case PAGES.LIQUIDITY:
       case PAGES.TRANSACTIONS:
@@ -47,6 +44,11 @@ export class DappCabinet extends Component {
         break;
       case PAGES.VALIDATOR:
         Component = CabinetValidator;
+        break;
+      case PAGES.DAPP_REFERRAL:
+      case PAGES.DAPP_REFERRAL_EXCHANGER:
+      case PAGES.DAPP_REFERRAL_FARMING:
+        Component = Referral;
         break;
       default:
         Component = CabinetWallets;

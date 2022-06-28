@@ -6,11 +6,11 @@ import { classNames as cn } from 'src/utils';
 // Styles
 import './Row.less';
 
-function Row({ children, className, alignItems, justifyContent }) {
+function Row({ children, className, alignItems, justifyContent, wrap }) {
   return (
     <div
       className={cn('Row', { [className]: className })}
-      style={{ alignItems, justifyContent }}
+      style={{ alignItems, justifyContent, flexWrap: wrap ? 'wrap' : 'nowrap' }}
     >
       {children}
     </div>
@@ -19,11 +19,7 @@ function Row({ children, className, alignItems, justifyContent }) {
 
 Row.propTypes = {
   className: PropTypes.string,
-  alignItems: PropTypes.oneOf([
-    'center',
-    'flex-start',
-    'flex-end',
-  ]),
+  alignItems: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
   justifyContent: PropTypes.oneOf([
     'center',
     'flex-start',
@@ -31,12 +27,14 @@ Row.propTypes = {
     'space-between',
     'space-around',
   ]),
+  wrap: PropTypes.bool,
 };
 
 Row.defaultProps = {
   className: '',
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
+  wrap: false,
 };
 
 export default Row;

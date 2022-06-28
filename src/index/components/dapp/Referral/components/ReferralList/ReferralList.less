@@ -8,4 +8,34 @@
   h2 {
     margin-bottom: 8px;
   }
+
+  &__items {
+    &-empty {
+      padding: 41px 0 63px;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 110%;
+      color: #bfcef8;
+      letter-spacing: -0.01em;
+      user-select: none;
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        background: var(--blue-light-gradient);
+        opacity: 0.3;
+
+        svg {
+          height: 59px;
+          width: 39px;
+        }
+      }
+    }
+  }
 }

@@ -9,7 +9,7 @@ import './DropdownElement.less';
 // Main
 // Get 2 elements, and drop "dropElement" when
 // Children click.
-function DropdownElement({ children, dropElement }) {
+function DropdownElement({ children, dropElement, className }) {
   const [isActive, setIsActive] = React.useState(false);
 
   // Handlers
@@ -18,7 +18,13 @@ function DropdownElement({ children, dropElement }) {
   };
 
   return (
-    <div className={cn('DropdownElement', { active: isActive })}>
+    <div
+      className={cn(
+        'DropdownElement',
+        { active: isActive },
+        { [className]: className }
+      )}
+    >
       <div className="DropdownElement__content" onClick={toggleDropdown}>
         {children}
       </div>
