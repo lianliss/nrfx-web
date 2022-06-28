@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useRoute } from 'react-router5';
 
 // Components
+import { SwitchTabs } from 'src/ui';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import SVG from 'utils/svg-wrap';
 import Exchanger from './containers/Exchanger/Exchanger';
@@ -30,6 +31,18 @@ function Referral() {
         />
       </div>
       <div className="Referral__container">
+        <SwitchTabs
+          selected={routeName}
+          onChange={(value) => {
+            router.navigate(value);
+          }}
+          tabs={[
+            { value: DAPP_REFERRAL_EXCHANGER, label: 'Referral Exchanger' },
+            { value: DAPP_REFERRAL_FARMING, label: 'Referral Farming' },
+          ]}
+          type="light-blue"
+          size="large"
+        />
         {routeName === DAPP_REFERRAL && <Exchanger />}
         {routeName === DAPP_REFERRAL_EXCHANGER && <Exchanger />}
         {routeName === DAPP_REFERRAL_FARMING && <Farming />}

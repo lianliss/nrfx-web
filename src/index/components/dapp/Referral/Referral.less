@@ -1,5 +1,5 @@
 .Referral {
-  padding: 93px 63px 76px 48px;
+  padding: 39px 63px 76px 48px;
   height: 100%;
   box-sizing: border-box;
 
@@ -7,12 +7,16 @@
     position: relative;
     max-width: 1033px;
     margin: 0 auto;
+
+    & > * {
+      animation: showElement 0.5s;
+    }
   }
 
   &__bg {
     overflow: hidden;
     position: absolute;
-    top: 385px;
+    top: 470px;
     left: 50%;
     transform: translateX(calc(-50%));
     max-width: 100%;
@@ -37,7 +41,7 @@
   h1 {
     margin-bottom: 14px;
     font-weight: 600;
-    font-size: 40px;
+    font-size: 32px;
     line-height: 110%;
     letter-spacing: -0.01em;
     color: var(--black-gunmetal);
@@ -78,12 +82,6 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
-  }
-
-  .subtitle {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
   }
 
   .blue {
@@ -142,6 +140,17 @@
     }
   }
 
+  .SwitchTabs {
+    margin-bottom: 73px;
+    font-weight: 600;
+
+    &__item {
+      &:not(.active) {
+        color: #365fd9;
+      }
+    }
+  }
+
   &__share {
     height: 53px;
     width: 53px;
@@ -157,5 +166,15 @@
     font-weight: 500;
     font-size: 32px;
     line-height: 39px;
+  }
+}
+
+@keyframes showElement {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

@@ -2,11 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import { Row, Col } from 'src/ui';
+import { Row, Col, NumberFormat } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
 // Styles
 import './ReferralList.less';
+
+const testItems = [
+  { login: 'Login', total: { nrfx: '212', usd: '21' } },
+  { login: 'Login', total: { nrfx: '212', usd: '21' } },
+  { login: 'Login', total: { nrfx: '212', usd: '21' } },
+  { login: 'Login', total: { nrfx: '212', usd: '21' } },
+  { login: 'Login', total: { nrfx: '212', usd: '21' } },
+];
 
 function ReferralList({ title, subtitle, items }) {
   return (
@@ -18,7 +26,7 @@ function ReferralList({ title, subtitle, items }) {
         </Col>
       </Row>
       <Col className="Referral__ReferralList__items">
-        {!items.length && (
+        {!items.length ? (
           <Row justifyContent="center">
             <Col
               className="Referral__ReferralList__items-empty"
@@ -30,6 +38,25 @@ function ReferralList({ title, subtitle, items }) {
               <p>No Data</p>
             </Col>
           </Row>
+        ) : (
+          <Col className="Referral__ReferralList__items-exists">
+            <Row justifyContent="space-between" className="title-row">
+              <Col>Partner</Col>
+              <Col>Total NRFX earned</Col>
+              <Col>Total Fiat earned</Col>
+            </Row>
+            {items.map((item) => (
+              <Row justifyContent="space-between" alignItems="center">
+                <Col>{item.login}</Col>
+                <Col>
+                  <NumberFormat number={item.total.nrfx} currency="nrfx" />
+                </Col>
+                <Col>
+                  <NumberFormat number={item.total.usd} currency="usd" />
+                </Col>
+              </Row>
+            ))}
+          </Col>
         )}
       </Col>
     </div>
@@ -41,7 +68,7 @@ ReferralList.propTypes = {
 };
 
 ReferralList.defaultProps = {
-  items: [],
+  items: testItems,
 };
 
 export default ReferralList;
