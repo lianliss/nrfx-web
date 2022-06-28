@@ -101,6 +101,7 @@ class Information extends React.PureComponent {
 
     try {
       await this.busd.approve(poolAddress, amount);
+      await this.setInitialAllowance();
       this.setState({
         allowance: amount,
         errorText: '',
