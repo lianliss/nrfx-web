@@ -1,12 +1,10 @@
 import React from 'react';
-import router from 'src/router';
 
 import { Button } from 'src/ui';
-import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import SVG from 'utils/svg-wrap';
-
 import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
+
 import './WalletsIsEmpty.less';
 
 function WalletsIsEmpty(props) {

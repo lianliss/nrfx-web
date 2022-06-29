@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useRoute } from 'react-router5';
 
 // Components
@@ -7,21 +6,26 @@ import { SwitchTabs } from 'src/ui';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import SVG from 'utils/svg-wrap';
 import Exchanger from './containers/Exchanger/Exchanger';
+import Farming from './containers/Farming/Farming';
+import Preview from './containers/Preview/Preview';
 
 // Utils
 import {
   DAPP_REFERRAL,
   DAPP_REFERRAL_EXCHANGER,
   DAPP_REFERRAL_FARMING,
-} from '../../../constants/pages';
+} from 'src/index/constants/pages';
 
 // Styles
 import './Referral.less';
-import Farming from './containers/Farming/Farming';
 
 function Referral() {
   const { route, router } = useRoute();
   const routeName = route.name;
+
+  if (routeName === DAPP_REFERRAL) {
+    return <Preview />;
+  }
 
   return (
     <CabinetBlock className="Referral">
@@ -43,7 +47,6 @@ function Referral() {
           type="light-blue"
           size="large"
         />
-        {routeName === DAPP_REFERRAL && <Exchanger />}
         {routeName === DAPP_REFERRAL_EXCHANGER && <Exchanger />}
         {routeName === DAPP_REFERRAL_FARMING && <Farming />}
       </div>
