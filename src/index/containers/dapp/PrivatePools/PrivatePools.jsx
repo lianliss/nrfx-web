@@ -24,7 +24,7 @@ class PrivatePools extends React.PureComponent {
 
   state = {
     step: steps.main,
-    poolAddress: _.get(window.localStorage, STORAGE_POOL_KEY, null),
+    poolAddress: _.get(window.localStorage, `${STORAGE_POOL_KEY}-${this.chainId || 56}`, null),
     isPoolLoading: false,
     minUserAmount: 0,
     maxUserAmount: 0,
@@ -36,20 +36,23 @@ class PrivatePools extends React.PureComponent {
     busdBalance: 0,
     nrfxBalance: 0,
     userShare: 0,
+    userDeposit: 0,
     userNrfxBalance: 0,
     userNrfxInSale: 0,
-    userDeposit: 0,
+    poolNrfxLocked: 0,
+    poolDeposit: 0,
+    poolTenPercents: 0,
     isAdmin: false,
   };
 
   setStep = step => this.setState({step});
   setPoolAddress = poolAddress => this.setState({poolAddress});
   updatePoolAddress = address => {
-    window.localStorage.setItem(STORAGE_POOL_KEY, address);
+    window.localStorage.setItem(`${STORAGE_POOL_KEY}-${this.chainId || 56}`, address);
     this.setPoolAddress(address);
   };
   deletePoolAddress = () => {
-    window.localStorage.removeItem(STORAGE_POOL_KEY);
+    window.localStorage.removeItem(`${STORAGE_POOL_KEY}-${this.chainId || 56}`);
     this.setState({
       poolAddress: null,
       step: steps.main,
@@ -72,7 +75,7 @@ class PrivatePools extends React.PureComponent {
 
   loadPoolData = async () => {
     const {getContract, accountAddress, tokenSale} = this.context;
-    const {poolAddress} = this.state;
+    const poolAddress = _.get(window.localStorage, `${STORAGE_POOL_KEY}-${this.chainId || 56}`, this.state);
     if (!poolAddress || !poolAddress.length) return;
     if (!this.accountAddress) return;
     const contract = getContract(
@@ -91,6 +94,8 @@ class PrivatePools extends React.PureComponent {
         contract.methods.getUserData(this.accountAddress).call(),
         saleContract.methods.getNextUnlockTime(poolAddress).call(),
         contract.methods.getUserNRFXBalance(this.accountAddress).call(),
+        contract.methods.crowd(this.accountAddress).call(),
+        saleContract.methods.buyers(poolAddress).call(),
       ]);
       console.log('[loadPoolData]', data);
       this.setState({
@@ -105,9 +110,11 @@ class PrivatePools extends React.PureComponent {
         busdBalance: wei.from(data[0]._busdBalance),
         nrfxBalance: wei.from(data[0]._nrfxBalance),
         userShare: wei.from(data[1]._share),
-        userNrfxBalance: wei.from(data[1]._availableBalance),
-        userNrfxInSale: wei.from(data[3]),
         userDeposit: wei.from(data[1]._busdDeposit),
+        userNrfxBalance: wei.from(data[4].availableBalance),
+        userNrfxInSale: wei.from(data[3]),
+        poolNrfxLocked: wei.from(data[5].narfexAmount),
+        poolTenPercents: wei.from(data[5].tenPercents),
         isAdmin: data[1]._isOwner || data[1]._isFactoryOwner,
         nextUnlock: data[2],
       })

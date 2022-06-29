@@ -1,5 +1,6 @@
 import React from 'react';
 import { Web3Context } from 'services/web3Provider';
+import wei from 'utils/wei';
 
 // Components
 import * as UI from 'src/ui';
@@ -33,26 +34,40 @@ function Unlock(props) {
   const [isWithdraw, setIsWithdraw] = React.useState(false);
   const [errorText, setErrorText] = React.useState('');
   const [time, setTime] = React.useState(Math.floor(Date.now() / 1000));
-  const {nextUnlock, userNrfxBalance, userNrfxInSale, loadPoolData, poolAddress} = props;
+  const {
+    nextUnlock,
+    userNrfxBalance, userNrfxInSale, userShare,
+    poolNrfxLocked, poolDeposit, poolTenPercents,
+    loadPoolData, poolAddress
+  } = props;
   const secondsToUnlock = Number(nextUnlock) || 0;
   let seconds = secondsToUnlock - time;
-  let days = Math.floor(seconds / DAY);
-  seconds = seconds % DAY;
-  let hours = Math.floor(seconds / HOUR);
-  seconds = seconds % HOUR;
-  let minutes = Math.floor(seconds / MINUTE);
-  seconds = seconds % MINUTE;
+  let days = 0;
+  let hours = 0;
+  let minutes = 0;
+  const isUnlockable = seconds <= 0 && poolNrfxLocked > 0;
+  if (!isUnlockable) {
+    days = Math.floor(seconds / DAY);
+    seconds = seconds % DAY;
+    hours = Math.floor(seconds / HOUR);
+    seconds = seconds % HOUR;
+    minutes = Math.floor(seconds / MINUTE);
+    seconds = seconds % MINUTE;
+  } else {
+    seconds = 0;
+  }
 
-  const nrfxAvailable = userNrfxBalance - userNrfxInSale;
+  const nrfxAvailable = Math.floor(userNrfxBalance);
 
   setTimeout(() => {
-    if (seconds <= 0) {
-      loadPoolData().then(() => {
-        setTime(Math.floor(Date.now() / 1000));
-      });
-    } else {
-      setTime(Math.floor(Date.now() / 1000));
-    }
+    // if (seconds <= 0) {
+    //   loadPoolData().then(() => {
+    //     setTime(Math.floor(Date.now() / 1000));
+    //   });
+    // } else {
+    //   setTime(Math.floor(Date.now() / 1000));
+    // }
+    setTime(Math.floor(Date.now() / 1000));
   }, 1000);
 
   const onUnlock = async () => {
@@ -86,6 +101,7 @@ function Unlock(props) {
         require('src/index/constants/ABI/salePool'),
         poolAddress,
       );
+      console.log("WITHDRAW", nrfxAvailable, wei.to(nrfxAvailable));
       const txHash = await transaction(contract, 'withdrawNRFX', [wei.to(nrfxAvailable)]);
       const receipt = await getTransactionReceipt(txHash);
       console.log('[onWithdraw]', txHash, receipt);
@@ -113,9 +129,9 @@ function Unlock(props) {
                 :{seconds < 10 ? `0${seconds}` : seconds}</span>
             </div>}
             <div className="row">
-              <span>Available to unlock:</span>
+              <span>Locked NRFX:</span>
               <span>
-                <UI.NumberFormat number={userNrfxInSale} currency="NRFX" />
+                <UI.NumberFormat number={poolNrfxLocked * userShare} currency="NRFX" />
               </span>
             </div>
             <div className="row">
@@ -141,7 +157,7 @@ function Unlock(props) {
           {errorText}
         </div>}
         <div className="row">
-          <UI.Button disabled={!userNrfxInSale}
+          <UI.Button disabled={!isUnlockable}
                      state={isUnlock ? 'loading' : ''}
                      onClick={onUnlock}
                      type="lightBlue">
