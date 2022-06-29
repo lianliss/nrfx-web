@@ -88,6 +88,11 @@ function WhiteListed(props) {
             text={poolAddress}
           />
         </div>
+        <div className="row">
+          <a href="https://forms.gle/FJyvpCfou7zmsgzt9" target="_blank">
+            Add pool to whitelist
+          </a>
+        </div>
       </div>
     </div>
 
