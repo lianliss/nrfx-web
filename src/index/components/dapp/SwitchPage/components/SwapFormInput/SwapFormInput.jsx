@@ -6,23 +6,21 @@ import SVG from 'utils/svg-wrap';
 import * as UI from 'src/ui';
 
 // Utils
-import currencies from 'src/currencies.js';
+import { classNames as cn } from 'src/utils';
 
 // Styles.
 import './SwapFormInput.less';
+import Options from './components/Options';
 
 const SwapFormInput = (props) => {
   const {
-    title,
     prefix,
-    rate,
-    manage,
-    label,
     iconSize,
     value,
     onTextChange,
+    currencies,
+    onCurrencyChange,
     currency,
-    onChange,
     inputId,
     className,
     onFocus,
@@ -31,20 +29,11 @@ const SwapFormInput = (props) => {
     disabled,
   } = props;
 
+  // States
+  const [isOptions, setIsOptions] = React.useState(false);
+
   // Refs
   const selectRef = React.useRef(null);
-
-  // Logic
-  // -- filter rate to text.
-  let displayRate = String(rate.toFixed(2)); // To string and fixed
-  displayRate = displayRate
-    .split('') // 1000.22 to 1 000.22
-    .reverse()
-    .join('')
-    .replace(/\d\d\d/g, '$& ')
-    .split('')
-    .reverse()
-    .join('');
 
   // Handlers
   const handleInput = (newValue) => {
@@ -60,38 +49,41 @@ const SwapFormInput = (props) => {
   // Render
   return (
     <div
-      className={`SwapFormInput ${className}`}
+      className={cn(
+        'SwapFormInput',
+        { [className]: className },
+        { disabled: disabled }
+      )}
       onClick={handleContainerClick}
     >
-      {label && (
-        <div className="SwapFormInput__label">
-          <div>
-            <span className="SwapFormInput__title">{title}</span>
-            {manage && (
-              <div className="SwapFormInput__manage">
-                <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
-              </div>
-            )}
-          </div>
-          <div>
-            <span className="SwapFormInput__rate">≈ ${displayRate}</span>
-          </div>
-        </div>
-      )}
       <div className="SwapFormInput__container">
         <div
-          className="SwapFormInput__icon"
-          style={{ width: iconSize, height: iconSize }}
+          className="SwapFormInput__select__wrap"
+          ref={selectRef}
+          onClick={() => setIsOptions(true)}
         >
-          <SVG src={require(`src/asset/icons/wallets/${currency}.svg`)} />
-        </div>
-        <div className="SwapFormInput__select" ref={selectRef}>
-          {prefix && <span>{currencies[currency].name}</span>}
-          <div className="SwapFormInput__currency">
-            <span>{currency.toUpperCase()}</span>
-            <SVG
-              src={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
-            />
+          <div
+            className="SwapFormInput__icon"
+            style={{ width: iconSize, height: iconSize }}
+          >
+            <SVG src={require(`src/asset/icons/wallets/${currency}.svg`)} />
+          </div>
+          <div className="SwapFormInput__select">
+            {prefix && <span>{currencies[currency].name}</span>}
+            <div className="SwapFormInput__currency">
+              <span>{currency.toUpperCase()}</span>
+              <SVG
+                src={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
+              />
+            </div>
+            {isOptions && (
+              <Options
+                currencies={currencies}
+                currency={currency}
+                onCurrencyChange={onCurrencyChange}
+                onClose={() => setIsOptions(false)}
+              />
+            )}
           </div>
         </div>
         <div className="SwapFormInput__input">
@@ -112,35 +104,33 @@ const SwapFormInput = (props) => {
 };
 
 SwapFormInput.propTypes = {
-  title: PropTypes.string,
   prefix: PropTypes.bool,
   rate: PropTypes.number,
-  manage: PropTypes.bool,
-  label: PropTypes.bool,
   iconSize: PropTypes.number,
   value: PropTypes.number,
   onTextChange: PropTypes.func,
+  currencies: PropTypes.array,
+  onCurrencyChange: PropTypes.func,
   currency: PropTypes.string,
-  onChange: PropTypes.func,
   inputId: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
 SwapFormInput.defaultProps = {
-  title: '',
   rate: 0,
-  manage: false,
-  label: false,
   prefix: false,
   iconSize: 41,
   value: 0,
   onTextChange: () => {},
+  currencies: [],
+  onCurrencyChange: () => {},
   currency: '',
-  onChange: () => {},
   inputId: '',
   className: '',
   disabled: false,
+  inputRef: null,
+  selectRef: null,
 };
 
 export default SwapFormInput;
