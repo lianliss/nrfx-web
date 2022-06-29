@@ -7,7 +7,7 @@ import WalletsIsEmpty from './components/WalletsIsEmpty/WalletsIsEmpty';
 
 function CabinetWallets() {
   // [testStart]
-  const [isExists, setIsExists] = React.useState(true);
+  const [isExists, setIsExists] = React.useState(false);
 
   const handleExists = (newState) => {
     setIsExists(newState);
