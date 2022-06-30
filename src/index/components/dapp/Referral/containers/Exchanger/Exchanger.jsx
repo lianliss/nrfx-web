@@ -49,7 +49,7 @@ function Exchanger({ adaptive }) {
         title="Referral List"
         subtitle="All your referral friends in one place"
       />
-      <FAQ />
+      <FAQ adaptive={adaptive} />
     </>
   );
 }

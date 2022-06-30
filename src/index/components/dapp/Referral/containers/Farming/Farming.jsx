@@ -43,7 +43,7 @@ function Farming({ adaptive }) {
         title="Farms Reward History"
         subtitle="All your Farms referral rewards are listed below"
       />
-      <FAQ />
+      <FAQ adaptive={adaptive} />
     </>
   );
 }

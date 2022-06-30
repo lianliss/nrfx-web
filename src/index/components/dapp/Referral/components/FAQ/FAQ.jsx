@@ -11,7 +11,7 @@ import { getLang } from 'utils';
 // Styles
 import './FAQ.less';
 
-function FAQ() {
+function FAQ({ adaptive }) {
   const FAQItem = ({ question, answer }) => {
     return (
       <DropdownElement
@@ -34,7 +34,7 @@ function FAQ() {
   return (
     <div className="Referral__FAQ">
       <h2>FAQ</h2>
-      <Row>
+      <Row wrap={adaptive}>
         <Col className="Referral__FAQ__items">
           <FAQItem
             question={getLang('Where do get my referral link?')}
