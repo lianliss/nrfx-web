@@ -85,3 +85,55 @@
     }
   }
 }
+
+.adaptive .Referral__ReferralList {
+  padding: 20px 9px;
+  border-radius: var(--radius-panel);
+
+  h2 {
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  h2,
+  .subtitle {
+    padding: 0 7px;
+  }
+
+  &__items {
+    &-exists {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 110%;
+
+      .Row {
+        padding-left: 6.35px;
+
+        &:not(.title-row) {
+          height: 45px;
+
+          &:not(:last-child) {
+            margin-bottom: 5px;
+          }
+        }
+      }
+
+      .title-row {
+        font-weight: 700;
+        font-size: 10px;
+        line-height: 110%;
+
+        & > .Col {
+          &:not(:first-child) {
+            font-size: 8px;
+          }
+        }
+      }
+    }
+  }
+}

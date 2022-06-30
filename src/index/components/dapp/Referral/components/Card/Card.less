@@ -63,3 +63,23 @@
     max-width: 420px;
   }
 }
+
+.adaptive .Referral__Card {
+  flex: 0 0 100%;
+  width: 100%;
+  min-height: 0;
+  background: #fff;
+  border-radius: var(--radius-panel);
+  padding: 17px 16px;
+  margin: 0;
+  box-sizing: border-box;
+
+  &.secondary {
+    flex: 0 0 100%;
+    background: #e5ebfc;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 18px;
+  }
+}

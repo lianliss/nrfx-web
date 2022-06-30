@@ -16,7 +16,7 @@ const testItems = [
   { login: 'Login', total: { nrfx: '212', usd: '21' } },
 ];
 
-function ReferralList({ title, subtitle, items }) {
+function ReferralList({ title, subtitle, items, adaptive }) {
   return (
     <div className="Referral__ReferralList">
       <Row alignItems="flex-end" justifyContent="space-between">
