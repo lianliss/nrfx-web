@@ -15,7 +15,29 @@ function Header({
   link,
   willGetNumber,
   friendsWillGetNumber,
+  adaptive,
 }) {
+  const FriendsWillGet = () => {
+    const Wrapper = adaptive ? Row : Col;
+
+    return (
+      <Wrapper
+        className="Referral__information__future-secondary"
+        alignItems="center"
+      >
+        <span className="strong">Friends will get</span>
+        <span className="Referral__information_procent blue-gradient-text">
+          <NumberFormat number={friendsWillGetNumber} percent />
+        </span>
+        {adaptive && (
+          <span style={{ marginLeft: 'auto' }}>
+            <SVG src={require('src/asset/icons/action/share.svg')} />
+          </span>
+        )}
+      </Wrapper>
+    );
+  };
+
   return (
     <Row justifyContent="space-between" className="Referral__header" wrap>
       <Col>
@@ -45,15 +67,18 @@ function Header({
                 <SVG src={require('src/asset/icons/action/copy.svg')} />
               </Row>
             </Col>
-            <Col
-              className="Referral__share"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <SVG src={require('src/asset/icons/action/share.svg')} />
-            </Col>
+            {!adaptive && (
+              <Col
+                className="Referral__share"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <SVG src={require('src/asset/icons/action/share.svg')} />
+              </Col>
+            )}
           </Row>
-          <Row justifyContent="space-between">
+          <Row justifyContent="space-between" wrap={adaptive}>
+            {adaptive && <FriendsWillGet />}
             <Row
               className="Referral__information__future"
               justifyContent="space-between"
@@ -85,15 +110,7 @@ function Header({
                 </Col>
               </Col>
             </Row>
-            <Col
-              className="Referral__information__future-secondary"
-              alignItems="center"
-            >
-              <span className="strong">Friends will get</span>
-              <span className="Referral__information_procent blue-gradient-text">
-                <NumberFormat number={friendsWillGetNumber} percent />
-              </span>
-            </Col>
+            {!adaptive && <FriendsWillGet />}
           </Row>
         </CabinetBlock>
       </Col>

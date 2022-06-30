@@ -1,3 +1,5 @@
+@import '../../../../../../vars.less';
+
 .Referral {
   &__header {
     margin-bottom: 32px;
@@ -80,10 +82,111 @@
       }
     }
   }
+
+  &__copy {
+    padding: 16.5px 18.5px;
+    box-sizing: border-box;
+    background: var(--blue-light-gradient);
+    border-radius: var(--radius-panel);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #fff;
+
+    span {
+      max-width: 335px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .isvg {
+      margin-left: 32px;
+      transition: opacity 0.1s;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+
+        path {
+          fill: #fff;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 1375px) {
   .Referral__information {
     margin: 32px auto 0;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Referral {
+    &__header {
+      margin-bottom: 32px;
+
+      .subtitle {
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 16px;
+        margin-bottom: 2px;
+      }
+
+      & > .Col {
+        &:first-child {
+          max-width: 100%;
+        }
+      }
+    }
+
+    & &__information {
+      margin-top: 42px;
+      
+      h2 {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      & > .CabinetBlock {
+        padding: 16px 11px 24px;
+      }
+
+      &__future {
+        padding: 8px 11px 8px 14px;
+        
+        &,
+        &-secondary {
+          max-width: 100%;
+        }
+
+        &-secondary {
+          padding: 7px 16px;
+
+          .strong {
+            max-width: 60px;
+            margin-right: 9px;
+          }
+        }
+      }
+    }
+
+    &__copy {
+      width: 100%;
+
+      span {
+        max-width: 100%;
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 13px;
+      }
+    }
   }
 }

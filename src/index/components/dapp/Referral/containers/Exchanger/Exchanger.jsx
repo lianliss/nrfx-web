@@ -7,7 +7,7 @@ import ReferralList from '../../components/ReferralList/ReferralList';
 import Card from '../../components/Card/Card';
 import FAQ from '../../components/FAQ/FAQ';
 
-function Exchanger() {
+function Exchanger({ adaptive }) {
   return (
     <>
       <Header
@@ -16,6 +16,7 @@ function Exchanger() {
         link="https://narfex.org?ref=dd4e20hfj09nrtyasdasd"
         willGetNumber={100}
         friendsWillGetNumber={0}
+        adaptive={adaptive}
       />
       <Dashboard>
         <Card
