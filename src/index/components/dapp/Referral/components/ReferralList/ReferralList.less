@@ -91,7 +91,7 @@
   border-radius: var(--radius-panel);
 
   h2 {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .subtitle {
@@ -107,6 +107,7 @@
 
   &__items {
     &-exists {
+      margin-top: 30px;
       font-weight: 600;
       font-size: 12px;
       line-height: 110%;
@@ -132,6 +133,29 @@
           &:not(:first-child) {
             font-size: 8px;
           }
+        }
+      }
+    }
+
+    &-empty {
+      padding: 34px 0 17px;
+      font-size: 20px;
+
+      .logo {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        background: var(--blue-light-gradient);
+        opacity: 0.3;
+
+        svg {
+          height: 36.6px;
+          width: 24.4px;
         }
       }
     }

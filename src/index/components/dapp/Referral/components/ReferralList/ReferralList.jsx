@@ -72,7 +72,7 @@ ReferralList.propTypes = {
 };
 
 ReferralList.defaultProps = {
-  items: testItems,
+  items: [],
 };
 
 export default ReferralList;

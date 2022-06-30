@@ -148,7 +148,7 @@
 
     & &__information {
       margin-top: 42px;
-      
+
       h2 {
         padding-left: 15px;
         font-weight: 600;
@@ -162,11 +162,21 @@
 
       & > .CabinetBlock {
         padding: 16px 11px 24px;
+
+        & > .Row {
+          &:nth-child(1) {
+            margin-bottom: 17px;
+          }
+
+          &:nth-child(2) {
+            margin-bottom: 11px;
+          }
+        }
       }
 
       &__future {
         padding: 8px 11px 8px 14px;
-        
+
         &,
         &-secondary {
           max-width: 100%;
