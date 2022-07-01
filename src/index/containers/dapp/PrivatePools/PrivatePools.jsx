@@ -40,8 +40,11 @@ class PrivatePools extends React.PureComponent {
     userNrfxBalance: 0,
     userNrfxInSale: 0,
     poolNrfxLocked: 0,
+    poolNrfxWithdrawn: 0,
     poolDeposit: 0,
     poolTenPercents: 0,
+    availableToWithdraw: 0,
+    isSaleEnded: false,
     isAdmin: false,
   };
 
@@ -75,7 +78,8 @@ class PrivatePools extends React.PureComponent {
 
   loadPoolData = async () => {
     const {getContract, accountAddress, tokenSale} = this.context;
-    const poolAddress = _.get(window.localStorage, `${STORAGE_POOL_KEY}-${this.chainId || 56}`, this.state);
+    console.log('LOAD', `${STORAGE_POOL_KEY}-${this.chainId || 56}`);
+    const poolAddress = _.get(window.localStorage, `${STORAGE_POOL_KEY}-${this.chainId || 56}`, this.state.poolAddress);
     if (!poolAddress || !poolAddress.length) return;
     if (!this.accountAddress) return;
     const contract = getContract(
@@ -92,10 +96,10 @@ class PrivatePools extends React.PureComponent {
       const data = await Promise.all([
         contract.methods.getPoolData().call(),
         contract.methods.getUserData(this.accountAddress).call(),
-        saleContract.methods.getNextUnlockTime(poolAddress).call(),
+        saleContract.methods.getNextUnlockTime().call(),
         contract.methods.getUserNRFXBalance(this.accountAddress).call(),
-        contract.methods.crowd(this.accountAddress).call(),
-        saleContract.methods.buyers(poolAddress).call(),
+        saleContract.methods.users(poolAddress).call(),
+        saleContract.methods.isSaleEnded().call(),
       ]);
       console.log('[loadPoolData]', data);
       this.setState({
@@ -111,12 +115,12 @@ class PrivatePools extends React.PureComponent {
         nrfxBalance: wei.from(data[0]._nrfxBalance),
         userShare: wei.from(data[1]._share),
         userDeposit: wei.from(data[1]._busdDeposit),
-        userNrfxBalance: wei.from(data[4].availableBalance),
-        userNrfxInSale: wei.from(data[3]),
-        poolNrfxLocked: wei.from(data[5].narfexAmount),
-        poolTenPercents: wei.from(data[5].tenPercents),
+        availableToWithdraw: wei.from(data[3]),
+        poolNrfxLocked: wei.from(data[4].narfexLocked),
+        poolNrfxWithdrawn: wei.from(data[4].withdrawn),
         isAdmin: data[1]._isOwner || data[1]._isFactoryOwner,
         nextUnlock: data[2],
+        isSaleEnded: data[5],
       })
     } catch (error) {
       console.error('[loadPoolData]', error);
@@ -129,11 +133,12 @@ class PrivatePools extends React.PureComponent {
   componentDidMount() {
     this._mounted = true;
     this.handlePoolAddress();
-    const {poolAddress} = this.state;
     this.accountAddress = this.context.accountAddress;
     this.chainId = this.context.chainId;
     this.isConnected = this.context.isConnected;
+    const poolAddress = _.get(window.localStorage, `${STORAGE_POOL_KEY}-${this.chainId || 56}`, null);
     if (poolAddress && poolAddress.length && this.accountAddress) {
+      this.setState({poolAddress});
       this.loadPoolData();
     }
   }
@@ -149,6 +154,7 @@ class PrivatePools extends React.PureComponent {
       || this.chainId !== this.context.chainId
       || this.isConnected !== this.context.isConnected
     ) {
+      console.log('NEW CHAIN');
       this.accountAddress = this.context.accountAddress;
       this.chainId = this.context.chainId;
       this.isConnected = this.context.isConnected;
