@@ -16,7 +16,7 @@ const testItems = [
   { login: 'Login', total: { nrfx: '212', usd: '21' } },
 ];
 
-function ReferralList({ title, subtitle, items, adaptive }) {
+function ReferralList({ title, subtitle, items }) {
   return (
     <div className="Referral__ReferralList">
       <Row alignItems="flex-end" justifyContent="space-between">
@@ -72,7 +72,7 @@ ReferralList.propTypes = {
 };
 
 ReferralList.defaultProps = {
-  items: [],
+  items: testItems,
 };
 
 export default ReferralList;

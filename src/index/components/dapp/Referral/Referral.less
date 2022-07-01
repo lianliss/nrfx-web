@@ -61,6 +61,12 @@
   }
 
   .create-new-link {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
     .isvg {
       margin-left: 10px;
     }
@@ -123,8 +129,12 @@
     border: 1px solid #dfe3f0;
     border-radius: 12px;
     box-sizing: border-box;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, background 0.2s;
     cursor: pointer;
+
+    &:hover {
+      background: #cfdaf9;
+    }
   }
 
   &__information_procent {

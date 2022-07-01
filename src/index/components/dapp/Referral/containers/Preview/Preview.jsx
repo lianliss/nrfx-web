@@ -16,7 +16,7 @@ import NumberToSpan from '../../../NumberToSpan/NumberToSpan';
 // Styles
 import './Preview.less';
 
-function Preview() {
+function Preview({ adaptive }) {
   const { router } = useRoute();
 
   return (
@@ -48,11 +48,21 @@ function Preview() {
             Referral Exchenger
           </Button>
         </div>
-        <div className="Referral__Preview-bg">
-          <img src={require('src/asset/backgrounds/referral-preview-bg.png')} />
-        </div>
+        {adaptive ? (
+          <div className="Referral__Preview-bg">
+            <img
+              src={require('src/asset/backgrounds/referral-preview-adaptive-bg.svg').default}
+            />
+          </div>
+        ) : (
+          <div className="Referral__Preview-bg">
+            <img
+              src={require('src/asset/backgrounds/referral-preview-bg.png')}
+            />
+          </div>
+        )}
       </div>
-      <SocialLinks />
+      {!adaptive && <SocialLinks />}
     </div>
   );
 }
