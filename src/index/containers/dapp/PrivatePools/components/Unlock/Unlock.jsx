@@ -37,8 +37,9 @@ function Unlock(props) {
   const {
     nextUnlock,
     userNrfxBalance, userNrfxInSale, userShare,
-    poolNrfxLocked, poolDeposit, poolTenPercents,
-    loadPoolData, poolAddress
+    poolNrfxLocked, poolNrfxWithdrawn,
+    loadPoolData, poolAddress,
+    availableToWithdraw, isSaleEnded,
   } = props;
   const secondsToUnlock = Number(nextUnlock) || 0;
   let seconds = secondsToUnlock - time;
@@ -60,37 +61,15 @@ function Unlock(props) {
   const nrfxAvailable = Math.floor(userNrfxBalance);
 
   setTimeout(() => {
-    // if (seconds <= 0) {
-    //   loadPoolData().then(() => {
-    //     setTime(Math.floor(Date.now() / 1000));
-    //   });
-    // } else {
-    //   setTime(Math.floor(Date.now() / 1000));
-    // }
-    setTime(Math.floor(Date.now() / 1000));
-  }, 1000);
-
-  const onUnlock = async () => {
-    const {transaction, getTransactionReceipt, getContract} = context;
-    if (isUnlock) return;
-    setIsUnlock(true);
-    try {
-      const contract = getContract(
-        require('src/index/constants/ABI/salePool'),
-        poolAddress,
-      );
-      const txHash = await transaction(contract, 'unlockNRFX', []);
-      const receipt = await getTransactionReceipt(txHash);
-      console.log('[onUnlock]', txHash, receipt);
-      setErrorText('');
-      await loadPoolData();
-    } catch (error) {
-      console.error('[onUnlock]', error);
-      setErrorText(processError(error));
-      await loadPoolData();
+    if (seconds <= 0) {
+      loadPoolData().then(() => {
+        setTime(Math.floor(Date.now() / 1000));
+      });
+    } else {
+      setTime(Math.floor(Date.now() / 1000));
     }
-    setIsUnlock(false);
-  };
+    //setTime(Math.floor(Date.now() / 1000));
+  }, 1000);
 
   const onWithdraw = async () => {
     const {transaction, getTransactionReceipt, getContract} = context;
@@ -101,8 +80,8 @@ function Unlock(props) {
         require('src/index/constants/ABI/salePool'),
         poolAddress,
       );
-      console.log("WITHDRAW", nrfxAvailable, wei.to(nrfxAvailable));
-      const txHash = await transaction(contract, 'withdrawNRFX', [wei.to(nrfxAvailable)]);
+      console.log("WITHDRAW", availableToWithdraw, wei.to(availableToWithdraw));
+      const txHash = await transaction(contract, 'withdrawNRFX', [wei.to(availableToWithdraw)]);
       const receipt = await getTransactionReceipt(txHash);
       console.log('[onWithdraw]', txHash, receipt);
       setErrorText('');
@@ -121,7 +100,7 @@ function Unlock(props) {
         <div className="row">
           <div className="PrivatePools__table">
             {!!secondsToUnlock && <div className="row">
-              <span>Lock-up:</span>
+              <span>{isSaleEnded ? 'Lockup' : 'Sale end'}:</span>
               <span>
                 {days ? `${days} days ` : ''}
                 {hours}
@@ -131,13 +110,13 @@ function Unlock(props) {
             <div className="row">
               <span>Locked NRFX:</span>
               <span>
-                <UI.NumberFormat number={poolNrfxLocked * userShare} currency="NRFX" />
+                <UI.NumberFormat number={(poolNrfxLocked - poolNrfxWithdrawn) * userShare} currency="NRFX" />
               </span>
             </div>
             <div className="row">
               <span>Available to withrawal:</span>
               <span>
-                <UI.NumberFormat number={nrfxAvailable} currency="NRFX" />
+                <UI.NumberFormat number={availableToWithdraw} currency="NRFX" />
               </span>
             </div>
           </div>
@@ -157,14 +136,8 @@ function Unlock(props) {
           {errorText}
         </div>}
         <div className="row">
-          <UI.Button disabled={!isUnlockable}
-                     state={isUnlock ? 'loading' : ''}
-                     onClick={onUnlock}
-                     type="lightBlue">
-            Unlock
-          </UI.Button>
           <UI.Button
-            disabled={!nrfxAvailable}
+            disabled={!availableToWithdraw}
             state={isWithdraw ? 'loading' : ''}
             onClick={onWithdraw}
             type="lightBlue">Withdrawal</UI.Button>
