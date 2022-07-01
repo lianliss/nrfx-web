@@ -147,7 +147,6 @@ class Information extends React.PureComponent {
     const {
       setStep,
       minUserAmount,
-      maxUserAmount,
       poolBalance,
       targetAmount,
       isPoolLoading,
@@ -155,6 +154,8 @@ class Information extends React.PureComponent {
       userShare,
       poolAddress,
     } = this.props;
+    let maxUserAmount = _.get(this.props, 'maxUserAmount', targetAmount);
+    if (maxUserAmount > targetAmount) maxUserAmount = targetAmount;
     const {
       value,
       isLoading,
@@ -167,7 +168,11 @@ class Information extends React.PureComponent {
 
 
     const amount = Number(value) || 0;
-    const isAvailable = allowance >= amount && amount && amount <= userBusdBalance;
+    const isAvailable = allowance >= amount
+      && amount
+      && amount <= userBusdBalance
+      && amount <= maxUserAmount
+      && amount >= minUserAmount;
 
     return (
       <div className="PrivatePools__container">
