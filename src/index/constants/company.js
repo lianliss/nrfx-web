@@ -10,12 +10,14 @@ export default {
   },
   social: {
     vk: "vk.com/narfex_com",
-    telegram: "t.me/narfex_ru",
-    twitter: "twitter.com/Narfex_id",
+    telegram: "t.me/Narfex_EN",
+    twitter: "twitter.com/narfexglobal?s=21",
     facebook: "facebook.com/narfex.id",
-    medium: "medium.com/@narfexindonesia",
-    linkedin: "www.linkedin.com/company/bitcoinbot-indonesia/",
-    instagram: "instagram.com/narfex.russia"
+    medium: "medium.com/@narfex",
+    linkedin: "linkedin.com/company/bitcoinbot-indonesia/",
+    instagram: "instagram.com/narfex.global",
+    discord: "discord.gg/T4hFnUaPFS",
+    youtube: "youtube.com/channel/UCDwJ0XUJDJpQAhB9DxYYUlw",
   },
   whitePaper: {
     en: "https://narfex-1.gitbook.io/narfex-white-paper/"

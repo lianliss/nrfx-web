@@ -339,7 +339,7 @@ export function getScrollbarWidth() {
 }
 
 export function isFiat(currency = "") {
-  return ["gbp", "usd", "usdt", "eur", "rub", "idr", "cny"].includes(
+  return ["gbp", "usd", "eur", "rub", "idr", "cny"].includes(
     currency.toLowerCase()
   );
   // TODO: Брать из state.default.currency

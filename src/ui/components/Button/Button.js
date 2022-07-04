@@ -25,7 +25,8 @@ const Button = memo(props => {
       disabled: props.disabled || props.state === "disabled",
       forCabinet: props.forCabinet,
       smallPadding: props.smallPadding
-    }
+    },
+    { shadow: props.shadow }
   );
 
   const fillStyle = {};
@@ -65,7 +66,8 @@ Button.defaultProps = {
   type: "default",
   size: "large",
   btnType: "button",
-  currency: {}
+  currency: {},
+  shadow: false,
 };
 
 Button.propTypes = {
@@ -99,6 +101,7 @@ Button.propTypes = {
     "light",
     "dark",
   ]),
+  shadow: PropTypes.bool,  
   currency: PropTypes.object,
   className: PropTypes.string,
   btnType: PropTypes.string,
@@ -109,7 +112,7 @@ Button.propTypes = {
   afterContent: PropTypes.node,
   smallPadding: PropTypes.bool,
   title: PropTypes.string,
-  state: PropTypes.oneOf(["default", "loading", "disabled", ""])
+  state: PropTypes.oneOf(["default", "loading", "disabled", ""]),
 };
 
 export default React.memo(Button);

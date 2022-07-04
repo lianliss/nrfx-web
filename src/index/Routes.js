@@ -176,12 +176,16 @@ function Routes(props) {
       break;
     case pages.DAPP:
     case pages.DAPP_WALLET:
+    case pages.DAPP_CURRENCY:
     case pages.DAPP_SWAP:
     case pages.DAPP_EXCHANGE:
     case pages.FARMING:
     case pages.LIQUIDITY:
     case pages.TRANSACTIONS:
     case pages.VALIDATOR:
+    case pages.DAPP_REFERRAL:
+    case pages.DAPP_REFERRAL_EXCHANGER:
+    case pages.DAPP_REFERRAL_FARMING:
       needAuthorization = false;
       WrapperComponent = DappWrapper;
       Component = DappCabinet;

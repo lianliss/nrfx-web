@@ -8,18 +8,18 @@ export default () => {
   return (
     <div className="Footer__social">
       <a
-        href={"//" + COMPANY.social.facebook}
+        href={"//" + COMPANY.social.telegram}
         target="__blank"
-        className="Footer__social__link facebook"
+        className="Footer__social__link telegram"
       >
-        <SVG src={require("src/asset/social/facebook.svg")} />
+        <SVG src={require("src/asset/social/telegram.svg")} />
       </a>
       <a
-        href={"//" + COMPANY.social.twitter}
+        href={"//" + COMPANY.social.discord}
         target="__blank"
-        className="Footer__social__link twitter"
+        className="Footer__social__link discord"
       >
-        <SVG src={require("src/asset/social/twitter.svg")} />
+        <SVG src={require("src/asset/icons/social/discord-solid.svg")} />
       </a>
       <a
         href={"//" + COMPANY.social.instagram}
@@ -36,11 +36,11 @@ export default () => {
         <SVG src={require("src/asset/social/medium.svg")} />
       </a>
       <a
-        href={"//" + COMPANY.social.telegram}
+        href={"//" + COMPANY.social.twitter}
         target="__blank"
-        className="Footer__social__link telegram"
+        className="Footer__social__link twitter"
       >
-        <SVG src={require("src/asset/social/telegram.svg")} />
+        <SVG src={require("src/asset/social/twitter.svg")} />
       </a>
       {/*<a*/}
       {/*  href={"//" + COMPANY.social.linkedin}*/}

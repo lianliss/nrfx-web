@@ -1,0 +1,211 @@
+@import '../../../../../../vars.less';
+
+.Referral {
+  &__header {
+    margin-bottom: 32px;
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .subtitle {
+      margin-bottom: 11px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--dark-gunmetal);
+    }
+
+    & > .Col {
+      &:first-child {
+        max-width: 446px;
+      }
+    }
+  }
+
+  &__information {
+    max-width: 557px;
+    width: 100%;
+
+    .CabinetBlock {
+      width: 100%;
+      background: var(--alice-blue);
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+      padding: 24px 32px 23px 28px;
+      box-sizing: border-box;
+
+      & > .Row {
+        &:not(:last-child) {
+          margin-bottom: 24px;
+        }
+      }
+    }
+
+    &__future {
+      padding: 16.5px 13px;
+      max-width: 338px;
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--azureish-white);
+      border-radius: var(--radius-panel);
+
+      box-sizing: border-box;
+
+      .secondary-text {
+        max-width: 147px;
+      }
+
+      // Future columns
+      & > .Col {
+        &:nth-child(1) {
+          & > span:not(:last-child) {
+            margin-bottom: 10px;
+          }
+        }
+
+        &:nth-child(3) {
+          & > span:not(:last-child) {
+            margin-bottom: 15.9px;
+          }
+        }
+      }
+
+      &-secondary {
+        max-width: 138px;
+        width: 100%;
+        height: 100%;
+        padding: 37.5px 0;
+        background: #fff;
+        border: 1px solid var(--azureish-white);
+        border-radius: var(--radius-panel);
+        box-sizing: border-box;
+      }
+    }
+  }
+
+  &__copy {
+    padding: 16.5px 18.5px;
+    box-sizing: border-box;
+    background: var(--blue-light-gradient);
+    border-radius: var(--radius-panel);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #fff;
+
+    span {
+      max-width: 335px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .isvg {
+      margin-left: 32px;
+      transition: opacity 0.1s;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+
+        path {
+          fill: #fff;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1375px) {
+  .Referral__information {
+    margin: 32px auto 0;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Referral {
+    &__header {
+      margin-bottom: 32px;
+
+      .subtitle {
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 16px;
+        margin-bottom: 2px;
+      }
+
+      & > .Col {
+        &:first-child {
+          max-width: 100%;
+        }
+      }
+    }
+
+    & &__information {
+      margin-top: 42px;
+
+      h2 {
+        padding-left: 15px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      .create-new-link {
+        padding-right: 15px;
+      }
+
+      & > .CabinetBlock {
+        padding: 16px 11px 24px;
+
+        & > .Row {
+          &:nth-child(1) {
+            margin-bottom: 17px;
+          }
+
+          &:nth-child(2) {
+            margin-bottom: 11px;
+          }
+        }
+      }
+
+      &__future {
+        padding: 8px 11px 8px 14px;
+
+        &,
+        &-secondary {
+          max-width: 100%;
+        }
+
+        &-secondary {
+          padding: 7px 16px;
+          margin-bottom: 8px;
+
+          .strong {
+            max-width: 60px;
+            margin-right: 9px;
+          }
+        }
+      }
+    }
+
+    &__copy {
+      width: 100%;
+
+      span {
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 13px;
+      }
+
+      .isvg {
+        margin-left: 20px;
+      }
+    }
+  }
+}

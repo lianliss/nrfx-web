@@ -1,4 +1,5 @@
 import React from 'react';
+import CopyText from '../../ui/components/CopyText/CopyText';
 
 // Styles
 import './FarmingInstruction.less';
@@ -7,7 +8,7 @@ function FarmingInstruction() {
   return (
     <div className="FarmingInstruction__wrap">
       <div className="FarmingInstruction">
-        <h1>NARFEX FARMING IS ON THE TESTNET NOW</h1>
+        <h2 className="title">NARFEX FARMING IS ON THE TESTNET NOW</h2>
         <a href="https://testnet.narfex.com/dapp/farming">
           &gt;&gt; I know how to work with it, go directly to the farming page
           &gt;&gt;
@@ -88,7 +89,9 @@ function FarmingInstruction() {
           <li> Amount of distributions of NRFX per block.</li>
           <li> Update rewards.</li>
         </ul>
-        <h2>Help us test Narfex</h2>
+        <br />
+        <h2 className="title">Help us test Narfex</h2>
+        <br />
         <p>
           Narfex is entering the stage of the public beta on testnet. We welcome
           you to take part on it.
@@ -122,13 +125,15 @@ function FarmingInstruction() {
         <h3>How to send the feedback?</h3>
         <p>
           We have a neat Google form for all your bug reports and feature
-          requests:{' '}
-          <a href="https://forms.gle/TrbXUjcsnCoTxYwB6">
-            https://forms.gle/TrbXUjcsnCoTxYwB6
-          </a>
+          requests:&nbsp;
+          <span className="long-text">
+            <a href="https://forms.gle/TrbXUjcsnCoTxYwB6">
+              https://forms.gle/TrbXUjcsnCoTxYwB6
+            </a>
+          </span>
         </p>
         <p>
-          Or talk to us directly in the telegram group:{' '}
+          Or talk to us directly in the telegram group:&nbsp;
           <a href="https://t.me/Narfex_EN">https://t.me/Narfex_EN</a>
         </p>
         <h3>What is a Testnet?</h3>
@@ -145,11 +150,11 @@ function FarmingInstruction() {
         <ol>
           <li>
             <h4>
-              Create a new{' '}
+              Create a new&nbsp;
               <strong>
                 <a href="https://metamask.io/">MetaMask</a>
-              </strong>{' '}
-              Wallet
+              </strong>
+              &nbsp; Wallet
             </h4>
             <p>
               We recommend using a metamask for the easiest and fastest use of
@@ -181,10 +186,12 @@ function FarmingInstruction() {
               </li>
               <li>
                 <p>
-                  <strong>RPC URL:</strong>{' '}
-                  <a href="https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3">
-                    https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3
-                  </a>
+                  <strong>RPC URL:</strong>&nbsp;
+                  <span className="long-text">
+                    <a href="https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3">
+                      https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3
+                    </a>
+                  </span>
                 </p>
               </li>
               <li>
@@ -207,9 +214,11 @@ function FarmingInstruction() {
           <li>
             <h4>Get Testnet Fund</h4>
             <p>Open the website:</p>
-            <a href="https://testnet.binance.org/faucet-smart">
-              https://testnet.binance.org/faucet-smart
-            </a>
+            <span className="long-text">
+              <a href="https://testnet.binance.org/faucet-smart">
+                https://testnet.binance.org/faucet-smart
+              </a>
+            </span>
             <p>
               Paste your wallet address.
               <br />
@@ -239,14 +248,32 @@ function FarmingInstruction() {
               Fill out the form to receive NRFX tokens on the testnet.
             </strong>
             <br />
-            <a href="https://forms.gle/y5W1yAWf4ZXXoxV18">
-              https://forms.gle/y5W1yAWf4ZXXoxV18
-            </a>
+            <span className="long-text">
+              <a href="https://forms.gle/y5W1yAWf4ZXXoxV18">
+                https://forms.gle/y5W1yAWf4ZXXoxV18
+              </a>
+            </span>
+            <br />
+            <br />
+            <p>
+              <strong>Import Narfex token in your Metamask Wallet.</strong>
+            </p>
+            <CopyText
+              text="0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320"
+              className="address"
+            >
+              <span style={{ marginTop: 10 }}>
+                <strong>NRFX (testnet) — </strong>
+              </span>
+              <span className="long-text">
+                0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320
+              </span>
+            </CopyText>
           </li>
           <li>
             <p>
               <strong>
-                Next, you need to get LP tokens, for this we go to{' '}
+                Next, you need to get LP tokens, for this we go to&nbsp;
                 <a href="https://pancake.kiemtienonline360.com/#/pool">
                   PancakeSwap
                 </a>
@@ -296,33 +323,69 @@ function FarmingInstruction() {
             <div className="image-container">
               <img src={require('./asset/10.png')} />
             </div>
-            <p>Thank you in advance for your goodwill and help!</p>
+            <br />
+            <p>
+              You can swap your test BNB for other tokens to start farming other
+              pairs.
+            </p>
+            <br />
+            <CopyText
+              text="0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684"
+              className="address"
+            >
+              <strong>USDT (testnet) — </strong>
+              <span className="long-text">
+                0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684
+              </span>
+            </CopyText>
+            <CopyText
+              text="0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7"
+              className="address"
+            >
+              <strong>BUSD (testnet) — </strong>
+              <span className="long-text">
+                0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7
+              </span>
+            </CopyText>
+            <br />
+            <br />
+            <h3>Thank you in advance for your goodwill and help!</h3>
             <h4>Stay on touch with Narfex</h4>
             <p>
               Narfex Token&nbsp;
-              <a href="https://narfex.com/token">https://narfex.com/token</a>
+              <span className="long-text">
+                <a href="https://narfex.com/token">https://narfex.com/token</a>
+              </span>
             </p>
             <p>
               Telegram&nbsp;
-              <a href="https://t.me/Narfex_EN">https://t.me/Narfex_EN</a>
+              <span className="long-text">
+                <a href="https://t.me/Narfex_EN">https://t.me/Narfex_EN</a>
+              </span>
             </p>
             <p>
               Instagram&nbsp;
-              <a href="https://instagram.com/narfex.global">
-                https://instagram.com/narfex.global
-              </a>
+              <span className="long-text">
+                <a href="https://instagram.com/narfex.global">
+                  https://instagram.com/narfex.global
+                </a>
+              </span>
             </p>
             <p>
               Twitter&nbsp;
-              <a href="https://twitter.com/narfexglobal">
-                https://twitter.com/narfexglobal
-              </a>
+              <span className="long-text">
+                <a href="https://twitter.com/narfexglobal">
+                  https://twitter.com/narfexglobal
+                </a>
+              </span>
             </p>
             <p>
               Discord&nbsp;
-              <a href="https://discord.gg/cKA5JPe2">
-                https://discord.gg/cKA5JPe2
-              </a>
+              <span className="long-text">
+                <a href="https://discord.gg/cKA5JPe2">
+                  https://discord.gg/cKA5JPe2
+                </a>
+              </span>
             </p>
           </li>
         </ol>

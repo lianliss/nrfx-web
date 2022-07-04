@@ -3,7 +3,7 @@ import { getLang } from 'utils';
 
 import './CopyText.less';
 
-function CopyText({ text, children }) {
+function CopyText({ text, children, className }) {
   const [isCopied, setIsCopied] = React.useState(false);
 
   const handleCopy = (e) => {
@@ -15,7 +15,7 @@ function CopyText({ text, children }) {
   return (
     <p
       onClick={handleCopy}
-      className="CopyTextComponent CopyTextComponent__container"
+      className={`CopyTextComponent CopyTextComponent__container ${className}`}
     >
       <span className="CopyTextComponent__content">
         {children ? children : text}
@@ -28,5 +28,9 @@ function CopyText({ text, children }) {
     </p>
   );
 }
+
+CopyText.defaultProps = {
+  className: '',
+};
 
 export default CopyText;

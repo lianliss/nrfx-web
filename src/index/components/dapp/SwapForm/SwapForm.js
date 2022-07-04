@@ -13,6 +13,8 @@ import {
   SwitchTabs,
 } from 'src/ui';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
+import SwapFormInput from '../SwitchPage/components/SwapFormInput/SwapFormInput';
+import { openModal } from 'src/actions';
 import Lang from 'src/components/Lang/Lang';
 import { classNames as cn } from 'utils';
 import {
@@ -48,7 +50,6 @@ import getFinePrice from 'utils/get-fine-price';
 
 // number to fixed custom function
 import { customToFixed } from 'utils/customToFixed';
-import SwapFormInput from '../SwitchPage/components/SwapFormInput/SwapFormInput';
 
 const Form = ({
   onChangeAmount,
@@ -70,7 +71,6 @@ const Form = ({
   // console.log('realRate', realRate);
 
   // Calculate rate for crypto or fiat currency.
-  console.log(rate, commission)
   const realRate = !isFiat(currency)
     ? rate + rate * commission
     : (1 * (1 / rate)) / (1 + commission);
@@ -92,11 +92,13 @@ const Form = ({
         <div className="SwapForm__form__control">
           <SwapFormInput
             onTextChange={onChangeAmount}
-            currency={currency}
             value={amount}
+            currency={currency}
+            currencies={options.map((currency) => currency)}
             iconSize={31}
             inputId={`swap-form-input-${currency}`}
             inputRef={inputRef}
+            onCurrencyChange={(value) => onCurrencyChange(value)}
             onFocus={onFocus}
             autoFocus={autoFocus}
             disabled={disabled}
@@ -105,7 +107,7 @@ const Form = ({
             {!!realRate ? (
               <>
                 <NumberFormat number={1} currency={currency} />
-                {' ≈ '}
+                {' = '}
                 {getFinePrice(realRate)} {secondaryCurrency.toUpperCase()}
               </>
             ) : (
@@ -182,18 +184,27 @@ const updateRates = async (
   gasPrice
 ) => {
   try {
-    const swapRate = await web3Backend.getFiatToTokenRate(from, to);
-    dispatch(walletSwapSetRate(swapRate.rate));
+    // Update rates in store.
+    const rates = await web3Backend.getAllRates();
+    const commissions = await web3Backend.getCommissions();
+    dispatch(web3SetData({ rates, commissions: JSON.parse(commissions) }));
+
+    // Get rate from rates
+    const rate = isFiat(from)
+      ? rates[to] / rates[from]
+      : rates[from] / rates[to];
+
+    dispatch(walletSwapSetRate(rate));
     dispatch(walletSetStatus('rate', ''));
     setAmounts({
       from: fromAmount,
-      to: calculateToAmount(fromAmount, swapRate.rate, commission, gasPrice),
+      to: calculateToAmount(fromAmount, rate, commission, gasPrice),
     });
 
     if (fromAmount && !toAmount) {
-      dispatch(walletSwapSetAmount('to', fromAmount / swapRate));
+      dispatch(walletSwapSetAmount('to', fromAmount / rate));
     }
-    return swapRate.rate;
+    return rate;
   } catch (error) {
     console.error('[SwapForm] getFiatToTokenRate', error);
   }
@@ -244,6 +255,7 @@ const updateGas = ({
 };
 
 export default () => {
+  const isLogined = !!useSelector((state) => state.default.profile.user);
   const [gasPrice, setGasPrice] = useState(0);
   const [amounts, setAmounts] = useState({ from: 0, to: 0 });
   const { from: fromAmount, to: toAmount } = amounts;
@@ -265,6 +277,56 @@ export default () => {
     useSelector((state) => state.web3.commissions),
     swap.toCurrency
   );
+
+  const onSubmit = () => {
+    //dispatch(walletSwapSubmit());
+    dispatch(walletSetStatus('swap', 'loading'));
+    (async () => {
+      try {
+        await web3Backend.swapFiatToToken(
+          swap.fromCurrency,
+          swap.toCurrency,
+          fromAmount
+        );
+        dispatch(walletSetStatus('swap', ''));
+        toast.success(getLang('status_success'));
+
+        // Get new balances
+        web3Balances.map((balance) => {
+          web3Backend
+            .getBalances(balance.address)
+            .then((data) => {
+              Object.keys(data).map(
+                (token) => (data[token] = Number(data[token]))
+              );
+              const balances = web3Balances.map((b) => ({
+                ...b,
+                items: b.address === balance.address ? data : b.items,
+              }));
+              dispatch(web3SetData({ balances }));
+            })
+            .catch((error) => {
+              console.error('[SwapForm][getBalances]', error);
+            });
+        });
+
+        // Update fiat balance
+        // balances.map(b => {
+        //   if (b.currency === swap.fromCurrency) b.amount -= fromAmount;
+        // });
+        // dispatch(walletUpdate({balances}));
+      } catch (error) {
+        const message = _.get(
+          error,
+          'data.name',
+          _.get(error, 'data.message', error.message)
+        );
+        console.error('[SwapForm] submit', error);
+        dispatch(walletSetStatus('swap', ''));
+        toast.warning(getLang(message));
+      }
+    })();
+  };
 
   useEffect(() => {
     dispatch(walletSetStatus('rate', 'loading'));
@@ -409,58 +471,14 @@ export default () => {
         <Button
           type={adaptive ? 'lightBlue' : 'primary-blue'}
           state={status.swap}
-          disabled={status.rate === 'loading' || toAmount <= 0}
-          onClick={() => {
-            //dispatch(walletSwapSubmit());
-            dispatch(walletSetStatus('swap', 'loading'));
-            (async () => {
-              try {
-                await web3Backend.swapFiatToToken(
-                  swap.fromCurrency,
-                  swap.toCurrency,
-                  fromAmount
-                );
-                dispatch(walletSetStatus('swap', ''));
-                toast.success(getLang('status_success'));
-
-                // Get new balances
-                web3Balances.map((balance) => {
-                  web3Backend
-                    .getBalances(balance.address)
-                    .then((data) => {
-                      Object.keys(data).map(
-                        (token) => (data[token] = Number(data[token]))
-                      );
-                      const balances = web3Balances.map((b) => ({
-                        ...b,
-                        items: b.address === balance.address ? data : b.items,
-                      }));
-                      dispatch(web3SetData({ balances }));
-                    })
-                    .catch((error) => {
-                      console.error('[SwapForm][getBalances]', error);
-                    });
-                });
-
-                // Update fiat balance
-                // balances.map(b => {
-                //   if (b.currency === swap.fromCurrency) b.amount -= fromAmount;
-                // });
-                // dispatch(walletUpdate({balances}));
-              } catch (error) {
-                const message = _.get(
-                  error,
-                  'data.name',
-                  _.get(error, 'data.message', error.message)
-                );
-                console.error('[SwapForm] submit', error);
-                dispatch(walletSetStatus('swap', ''));
-                toast.warning(getLang(message));
-              }
-            })();
-          }}
+          disabled={isLogined && (status.rate === 'loading' || toAmount <= 0)}
+          onClick={isLogined ? onSubmit : () => openModal('auth')}
         >
-          <Lang name="cabinet_fiatMarketExchangeActionButton" />
+          {!isLogined ? (
+            'Login'
+          ) : (
+            <Lang name="cabinet_fiatMarketExchangeActionButton" />
+          )}
         </Button>
       </div>
     </ContentBox>

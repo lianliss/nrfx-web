@@ -1,0 +1,155 @@
+.Currency {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding: 45px 10px 117px;
+
+  &__container {
+    max-width: 667px;
+    width: 100%;
+  }
+
+  &__header {
+    span {
+      line-height: 110%;
+      letter-spacing: -0.01em;
+    }
+  }
+
+  &__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  &__currency {
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--dark-black);
+    margin: 8px 0 6px;
+  }
+
+  &__rate {
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--black-gunmetal);
+    margin-bottom: 10px;
+  }
+
+  &__currency_amount {
+    margin-bottom: 5px;
+    color: var(--main-orange);
+    font-weight: 600;
+    font-size: 14px;
+
+    &_rate {
+      font-weight: 500;
+      font-size: 12px;
+      background: linear-gradient(
+        180deg,
+        var(--primary-blue-color-start) 0%,
+        var(--primary-dark-blue) 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+
+    .col {
+      display: flex;
+      width: 50%;
+
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+
+      .Button:not(:last-child) {
+        margin-right: 15px;
+      }
+    }
+
+    .Button {
+      flex: 1 1 155px;
+      max-height: 68.9px;
+      height: 68.9px;
+    }
+
+    .isvg {
+      margin-right: 10px;
+
+      .card-send {
+        &__body,
+        &__head {
+          fill: var(--royal-blue);
+        }
+      }
+    }
+  }
+
+  &__transactions {
+    padding: 29px 24px 41px 21px;
+    margin-top: 31px;
+    background: var(--alice-blue);
+    font-weight: 500;
+
+    h3 {
+      margin-bottom: 30px;
+      font-size: 20px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+      color: var(--dark-black);
+    }
+
+    h4 {
+      margin-bottom: 27px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 110%;
+      color: #000;
+    }
+
+    .isvg {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  &__date {
+    &:not(:last-child) {
+      margin-bottom: 42px;
+    }
+  }
+
+  .white-icon {
+    path {
+      fill: #fff;
+    }
+  }
+}
+
+.adaptive .Currency {
+  padding: 45px 10px 45px;
+
+  &__buttons {
+    flex-direction: column;
+
+    .col {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}

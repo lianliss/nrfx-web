@@ -85,8 +85,24 @@ export const routes =
           path: '/dapp/wallet',
         },
         {
+          name: pages.DAPP_CURRENCY,
+          path: '/dapp/currency/:currency',
+        },
+        {
           name: pages.DAPP_EXCHANGE,
           path: '/dapp/exchange',
+        },
+        {
+          name: pages.DAPP_REFERRAL,
+          path: '/dapp/referral',
+        },
+        {
+          name: pages.DAPP_REFERRAL_EXCHANGER,
+          path: '/dapp/referral/exchanger',
+        },
+        {
+          name: pages.DAPP_REFERRAL_FARMING,
+          path: '/dapp/referral/farming',
         },
         {
           name: pages.DAPP_SWAP,

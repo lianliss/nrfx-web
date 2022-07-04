@@ -10,7 +10,7 @@
   }
 
   &__container {
-    padding: 31px 27px 30px 36px;
+    padding: 31px 27px 18px 36px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -19,17 +19,29 @@
   }
 
   &__content {
-    width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: start;
-    box-sizing: border-box;
+    min-height: 440px;
 
     .CabinetBlock {
       background: var(--alice-blue) !important;
       padding: 17px 0px 25px;
       width: 100%;
       position: relative;
+    }
+  }
+
+  &__row {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    box-sizing: border-box;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+
+    & > div {
+      width: 100%;
 
       &:first-child {
         margin-right: 10px;
@@ -133,6 +145,28 @@
       width: calc((100% / 3) - @nft-margin * 2);
     }
   }
+
+  .SwitchTabs.light-blue {
+    font-size: 11px;
+    line-height: 16px;
+
+    .SwitchTabs__item:not(.active) {
+      color: var(--primary-dark-blue);
+    }
+  }
+
+  .Button {
+    animation: buttonShow .8s;
+  }
+
+  @keyframes buttonShow {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 // Cabinet token items.
@@ -162,9 +196,11 @@
 
 @media screen and (min-width: 1600px) {
   .WalletsExists {
-    .CabinetBlock {
-      &:last-child {
-        max-width: 600px;
+    &__row {
+      & > div {
+        &:last-child {
+          max-width: 600px;
+        }
       }
     }
 
@@ -181,7 +217,7 @@
     &__container {
       padding: 32px 11px 10px;
     }
-    
+
     &__content {
       .WalletsNFT__cards {
         padding: 0 calc(21px - @nft-margin) 0 calc(16px - @nft-margin);
@@ -226,16 +262,20 @@
     }
 
     &__switch {
-      padding: 0 56px;
+      padding: 0 30px;
       width: 100%;
       box-sizing: border-box;
+
+      .SwitchTabs__item::before {
+        display: none;
+      }
     }
 
     .Button {
       padding-top: 0;
       padding-bottom: 0;
     }
-    
+
     // <SwitchTabs />
     .SwitchTabs {
       height: auto;
