@@ -1,0 +1,16 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="24.0868" cy="23.9177" r="16.7549" transform="rotate(-141.054 24.0868 23.9177)" fill="#C4C4C4"/>
+<circle cx="24.0868" cy="23.9177" r="16.7549" transform="rotate(-141.054 24.0868 23.9177)" fill="url(#paint0_linear_2408_3470)"/>
+<circle cx="24.0868" cy="23.9177" r="16.7549" transform="rotate(-141.054 24.0868 23.9177)" stroke="url(#paint1_linear_2408_3470)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.7545 32.9819L18.7523 19.4831L18.7433 19.4649L23.4698 17.6949L23.4699 17.695L23.4795 17.6915L23.4762 17.7058L25.682 21.5146L26.5971 16.5332L31.5576 14.6757L29.5564 28.1976L24.0774 30.2492L24.0777 30.2477L24.0703 30.2505L21.6893 25.4297L20.2446 31.675L16.7545 32.9819Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear_2408_3470" x1="34.1966" y1="35.2934" x2="34.1966" y2="16.0746" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FABE4C"/>
+<stop offset="1" stop-color="#FA9751"/>
+</linearGradient>
+<linearGradient id="paint1_linear_2408_3470" x1="25.8505" y1="9.51439" x2="23.9888" y2="39.4968" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FABE4C"/>
+<stop offset="1" stop-color="#FA9751"/>
+</linearGradient>
+</defs>
+</svg>

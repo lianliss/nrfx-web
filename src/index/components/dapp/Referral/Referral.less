@@ -1,16 +1,24 @@
+@import '../../../../vars.less';
+
 .Referral {
-  padding: 93px 63px 76px 48px;
+  padding: 39px 63px 76px 48px;
   height: 100%;
   box-sizing: border-box;
 
   &__container {
     position: relative;
+    max-width: 1033px;
+    margin: 0 auto;
+
+    & > * {
+      animation: showElement 0.5s;
+    }
   }
 
   &__bg {
     overflow: hidden;
     position: absolute;
-    top: 385px;
+    top: 470px;
     left: 50%;
     transform: translateX(calc(-50%));
     max-width: 100%;
@@ -21,21 +29,21 @@
       height: 651px;
     }
   }
-  
+
   // Blocks
   &__Dashboard {
     margin-bottom: 32px;
   }
 
   &__ReferralList {
-    margin-bottom: 60px;
+    margin-bottom: 52px;
   }
 
   // Components
   h1 {
     margin-bottom: 14px;
     font-weight: 600;
-    font-size: 40px;
+    font-size: 32px;
     line-height: 110%;
     letter-spacing: -0.01em;
     color: var(--black-gunmetal);
@@ -53,6 +61,12 @@
   }
 
   .create-new-link {
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
     .isvg {
       margin-left: 10px;
     }
@@ -78,15 +92,8 @@
     line-height: 13px;
   }
 
-  .subtitle {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    color: var(--dark-gunmetal);
-  }
-
   .blue {
-    color: var(--royal-blue);
+    color: var(--secondary-blue);
   }
 
   .link {
@@ -101,46 +108,16 @@
   }
 
   .blue-gradient-text {
-    background: var(--blue-light-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
+    color: var(--secondary-blue);
   }
 
-  &__copy {
-    padding: 16.5px 18.5px;
-    box-sizing: border-box;
-    background: var(--blue-light-gradient);
-    border-radius: var(--radius-panel);
+  .SwitchTabs {
+    margin-bottom: 73px;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    color: #fff;
 
-    span {
-      max-width: 335px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .isvg {
-      margin-left: 32px;
-      transition: opacity 0.1s;
-      cursor: pointer;
-
-      &:hover {
-        opacity: 0.8;
-      }
-
-      svg {
-        width: 20px;
-        height: 20px;
-
-        path {
-          fill: #fff;
-        }
+    &__item {
+      &:not(.active) {
+        color: #365fd9;
       }
     }
   }
@@ -152,13 +129,75 @@
     border: 1px solid #dfe3f0;
     border-radius: 12px;
     box-sizing: border-box;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, background 0.2s;
     cursor: pointer;
+
+    &:hover {
+      background: #cfdaf9;
+    }
   }
 
   &__information_procent {
     font-weight: 500;
     font-size: 32px;
     line-height: 39px;
+  }
+}
+
+@keyframes showElement {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .Referral {
+    padding: 22px 10px 45px;
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 110%;
+    }
+
+    h2 {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    .link {
+      font-weight: 600;
+      font-size: 10px;
+      line-height: 16px;
+    }
+
+    .strong {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    .SwitchTabs {
+      height: 55px;
+      margin-bottom: 32px;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    .create-new-link {
+      span {
+        font-weight: 600;
+        font-size: 10px;
+        line-height: 12px;
+      }
+    }
   }
 }

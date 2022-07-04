@@ -4,6 +4,7 @@ import React from 'react';
 import { Row, Col, NumberFormat } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
+import NumberToSpan from '../../../NumberToSpan/NumberToSpan';
 
 // Styles
 import './Header.less';
@@ -14,18 +15,35 @@ function Header({
   link,
   willGetNumber,
   friendsWillGetNumber,
+  adaptive,
 }) {
+  const FriendsWillGet = () => {
+    const Wrapper = adaptive ? Row : Col;
+
+    return (
+      <Wrapper
+        className="Referral__information__future-secondary"
+        alignItems="center"
+      >
+        <span className="strong">Friends will get</span>
+        <span className="Referral__information_procent blue-gradient-text">
+          <NumberFormat number={friendsWillGetNumber} percent />
+        </span>
+        {adaptive && (
+          <span style={{ marginLeft: 'auto' }}>
+            <SVG src={require('src/asset/icons/action/share.svg')} />
+          </span>
+        )}
+      </Wrapper>
+    );
+  };
+
   return (
     <Row justifyContent="space-between" className="Referral__header" wrap>
       <Col>
         <h1>{title}</h1>
         <p className="subtitle">
-          {subtitle}
-          {/* Earn up to <span className="blue">30%</span> from friends&#8217;
-          commission <br />
-          on Fiat deposits and <span className="blue">5%</span>&nbsp; from their
-          <br />
-          NRFX token purchases through an Narfex Exchanger */}
+          <NumberToSpan text={subtitle} className="blue" />
         </p>
         <span className="link blue-gradient-text">Read more ›</span>
       </Col>
@@ -49,15 +67,18 @@ function Header({
                 <SVG src={require('src/asset/icons/action/copy.svg')} />
               </Row>
             </Col>
-            <Col
-              className="Referral__share"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <SVG src={require('src/asset/icons/action/share.svg')} />
-            </Col>
+            {!adaptive && (
+              <Col
+                className="Referral__share"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <SVG src={require('src/asset/icons/action/share.svg')} />
+              </Col>
+            )}
           </Row>
-          <Row justifyContent="space-between">
+          <Row justifyContent="space-between" wrap={adaptive}>
+            {adaptive && <FriendsWillGet />}
             <Row
               className="Referral__information__future"
               justifyContent="space-between"
@@ -74,11 +95,14 @@ function Header({
               </Col>
               <Col justifyContent="center">
                 <span className="secondary-text">
-                  NRFX purchases <span className="blue">5%</span>
+                  <NumberToSpan text="NRFX purchases 5%" className="blue" />
                 </span>
                 <Col>
                   <span className="secondary-text">
-                    Fiat replenishment <span className="blue">30%</span>
+                    <NumberToSpan
+                      text="Fiat replenishment 30%"
+                      className="blue"
+                    />
                   </span>
                   <span className="secondary-text small-text">
                     from the commission
@@ -86,15 +110,7 @@ function Header({
                 </Col>
               </Col>
             </Row>
-            <Col
-              className="Referral__information__future-secondary"
-              alignItems="center"
-            >
-              <span className="strong">Friends will get</span>
-              <span className="Referral__information_procent blue-gradient-text">
-                <NumberFormat number={friendsWillGetNumber} percent />
-              </span>
-            </Col>
+            {!adaptive && <FriendsWillGet />}
           </Row>
         </CabinetBlock>
       </Col>

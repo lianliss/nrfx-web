@@ -1,0 +1,150 @@
+@import '../../../../../../vars.less';
+
+.Exchanger__Instruction {
+  padding: 36px 80px 42px 114px;
+  background: #fff;
+  box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25);
+  border: none;
+  border-radius: var(--radius-panel-large);
+  color: var(--text-black);
+  overflow: hidden;
+
+  .ContentBox__content {
+    padding: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &:not(:last-child) {
+      .col {
+        margin-bottom: 55px;
+      }
+    }
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    max-width: 192px;
+    width: 100%;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    margin-bottom: 8px;
+  }
+
+  .description {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 8px;
+  }
+
+  .link {
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--primary-dark-blue);
+  }
+
+  &__bg-icon {
+    position: absolute;
+
+    &.wallets-bg {
+      left: 58.61px;
+      bottom: -9.43px;
+    }
+
+    &.usd-coin {
+      right: -54.47px;
+      top: 85.25px;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05));
+    }
+
+    &.narfex-usdt-coins {
+      right: 18.39px;
+      bottom: -59.17px;
+    }
+
+    &.narfex-coin {
+      display: none;
+    }
+
+    &.narfex-usdt-coins-adaptive {
+      display: none;
+    }
+  }
+}
+
+
+@media screen and (max-width: 1000px) {
+  .Exchanger__Instruction {
+    padding: 33.92px 0 44px 36.78px;
+    overflow: visible;
+
+    &__content {
+      margin: 0 auto;
+    }
+
+    .row {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__bg-icon {
+      position: absolute;
+
+      &.wallets-bg {
+        display: none;
+        left: 58.61px;
+        bottom: -9.43px;
+      }
+
+      &.usd-coin {
+        right: -73.37px;
+        top: 89.46px;
+
+        transform: rotate(32deg);
+      }
+
+      &.narfex-usdt-coins {
+        display: none;
+      }
+
+      &.narfex-coin {
+        display: block;
+        right: 14.35px;
+        top: 34.35px;
+      }
+
+      &.narfex-usdt-coins-adaptive {
+        display: block;
+        right: 66.66%;
+        bottom: 43.17px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @small-mobile-width) {
+  .Exchanger__Instruction {
+    &__bg-icon {
+      &.narfex-usdt-coins-adaptive {
+        right: 70%;
+      }
+    }
+  }
+}

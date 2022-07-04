@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 // Components
 import CabinetContent from '../CabinetContent/CabinetContent';
 import SwapForm from '../SwapForm/SwapForm';
-import SwapFormAdaptive from '../SwapFormAdaptive/SwapFormAdaptive';
+import Instruction from './components/Instruction/Instruction';
 import { Button, ContentBox } from 'src/ui';
 
 // Utils
@@ -20,11 +20,12 @@ function Exchanger({ adaptive }) {
 
   return (
     <CabinetContent className="Exchanger__wrap">
-      {user ? (
+      {user || true ? (
         <div className="Exchanger">
           <h2>Exchanger</h2>
           <div className="Exchanger__content">
             <SwapForm />
+            <Instruction />
           </div>
         </div>
       ) : (

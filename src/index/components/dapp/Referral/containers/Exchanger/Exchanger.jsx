@@ -7,15 +7,16 @@ import ReferralList from '../../components/ReferralList/ReferralList';
 import Card from '../../components/Card/Card';
 import FAQ from '../../components/FAQ/FAQ';
 
-function Exchanger() {
+function Exchanger({ adaptive }) {
   return (
     <>
       <Header
         title="Invite your friends. Earn cryptocurrency together"
-        subtitle="Earn up to 30% from friends’ commission on Fiat deposits and 5% from theirNRFX token purchases through an Narfex Exchanger"
+        subtitle="Earn up to 30% from friends’ commission on Fiat deposits and 5% from their NRFX token purchases through an Narfex Exchanger"
         link="https://narfex.org?ref=dd4e20hfj09nrtyasdasd"
         willGetNumber={100}
         friendsWillGetNumber={0}
+        adaptive={adaptive}
       />
       <Dashboard>
         <Card
@@ -48,7 +49,7 @@ function Exchanger() {
         title="Referral List"
         subtitle="All your referral friends in one place"
       />
-      <FAQ />
+      <FAQ adaptive={adaptive} />
     </>
   );
 }
