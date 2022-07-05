@@ -25,7 +25,7 @@ function SocialMedia() {
   return (
     <CabinetBlock className="SocialMedia">
       <CabinetBlock className="SocialMedia__container">
-        <h1>Social Mediaa</h1>
+        <h1>Social Media</h1>
         <Row>
           <Button type="secondary-light">
             <SocialLink icon="telegram-solid" title="Telegram" />
