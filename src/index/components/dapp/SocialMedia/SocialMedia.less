@@ -33,6 +33,42 @@
     padding-left: 62px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
 
+    a {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.2s;
+
+      .isvg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        width: 50px;
+        height: 50px;
+        background: var(--royal-blue);
+        border-radius: 50%;
+        transition: all 0.2s;
+      }
+
+      svg {
+        width: 53%;
+        height: 53%;
+
+        path {
+          fill: #fff;
+        }
+      }
+
+      .youtube-solid__triangle {
+        fill: var(--royal-blue);
+      }
+    }
+
     &:hover {
       box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
 
@@ -42,45 +78,14 @@
         line-height: 29px;
         color: var(--royal-blue);
       }
+
+      .isvg {
+        background: none;
+      }
     }
 
     &:first-child {
       margin-right: 24px;
-    }
-  }
-
-  a {
-    display: flex;
-    align-items: center;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.2s;
-
-    .isvg {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 15px;
-      width: 50px;
-      height: 50px;
-      background: var(--royal-blue);
-      border-radius: 50%;
-    }
-
-    svg {
-      width: 53%;
-      height: 53%;
-
-      path {
-        fill: #fff;
-      }
-    }
-
-    .youtube-solid__triangle {
-      fill: var(--royal-blue);
     }
   }
 }
