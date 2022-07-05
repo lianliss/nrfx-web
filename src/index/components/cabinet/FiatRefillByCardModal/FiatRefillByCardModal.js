@@ -91,7 +91,7 @@ export default props => {
 
       actions.closeModal();
       actions.openModal("merchant", {
-        currency: "rub"
+        currency
       });
     }
 
@@ -229,7 +229,7 @@ export default props => {
       status: "loading"
     });
     api
-      .call(apiSchema.Fiat_wallet().Cards["Reservation/confirmPaymentPost"], {
+      .call(apiSchema.Fiat_wallet(currency).Cards["Reservation/confirmPaymentPost"], {
         reservation_id: cardReservation.reservation.id
       })
       .then(({ status }) => {

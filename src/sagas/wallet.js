@@ -84,7 +84,7 @@ function* getRate() {
       walletSwapSelector
     );
     // yield put(walletSetStatus("rate", "loading"));
-    const { rate } = yield call(api, apiSchema.Fiat_wallet().RateGet, {
+    const { rate } = yield call(api, apiSchema.Fiat_wallet(currency).RateGet, {
       base,
       currency
     });
