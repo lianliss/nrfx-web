@@ -32,6 +32,7 @@
     justify-content: start;
     padding-left: 62px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s;
 
     a {
       display: flex;
@@ -41,7 +42,13 @@
       line-height: 24px;
       color: inherit;
       text-decoration: none;
-      transition: all 0.2s;
+
+      &,
+      .isvg,
+      svg,
+      path {
+        transition: all 0.3s;
+      }
 
       .isvg {
         display: flex;
@@ -52,25 +59,26 @@
         height: 50px;
         background: var(--royal-blue);
         border-radius: 50%;
-        transition: all 0.2s;
+        color: #fff;
       }
 
       svg {
         width: 53%;
         height: 53%;
 
-        path {
-          fill: #fff;
+        .stop-color-1 {
+          stop-color: #fff;
         }
-      }
 
-      .youtube-solid__triangle {
-        fill: var(--royal-blue);
+        .stop-color-2 {
+          stop-color: #fff;
+        }
       }
     }
 
+    // Button:hover
     &:hover {
-      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+      box-shadow: 1px 7px 10px rgba(199, 201, 207, 0.45);
 
       a {
         font-weight: 600;
@@ -81,6 +89,18 @@
 
       .isvg {
         background: none;
+
+        svg {
+          transform: scale(1.34);
+
+          .stop-color-1 {
+            stop-color: #4574ff;
+          }
+
+          .stop-color-2 {
+            stop-color: #84a3ff;
+          }
+        }
       }
     }
 

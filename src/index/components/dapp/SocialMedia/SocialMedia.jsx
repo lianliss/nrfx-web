@@ -15,12 +15,6 @@ function SocialMedia() {
   const SocialLink = ({ icon, title, to, className }) => (
     <a href={`//${to}`} target="_blank">
       <SVG src={require(`src/asset/icons/social/${icon}.svg`)} />
-      {icon === 'youtube-solid' && (
-        <SVG
-          src={require(`src/asset/icons/social/${icon}-hover.svg`)}
-          className="icon--hover"
-        />
-      )}
       <span className="link-title">{title}</span>
     </a>
   );
