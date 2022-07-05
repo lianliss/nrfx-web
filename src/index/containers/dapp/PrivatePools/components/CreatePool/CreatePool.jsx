@@ -82,7 +82,7 @@ function CreatePool({ setStep, setPoolAddress, deletePoolAddress, poolAddress })
         <>
           <div className="row">
             <label>
-              <span>Pool amount</span>
+              <span>Pool amount BUSD (30k-100k)</span>
               <UI.Input
                 disabled={isProcess}
                 placeholder="Pool amount"

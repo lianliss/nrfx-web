@@ -6,8 +6,8 @@ const networks = {
     routerAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
     masterChefAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
     narfexToken: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
-    tokenSale: '0xFbA1906e682BF0032D26EfBA6bFC5229a663B968',
-    saleFactory: '0x9f14b90780a5136ed2EDF800c997AB6eFb14Bf2E',
+    tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
+    saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",
@@ -49,8 +49,8 @@ const networks = {
     routerAddress: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3',
     masterChefAddress: '0x75e8563615f71C8078B6eD3CC86B24B976F2Ad1F',
     narfexToken: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
-    tokenSale: '0x9cE316e703C6BdcaD8ada3dCF2d3a4E3911C0d4c',
-    saleFactory: '0x0b0800919cA682868e6db2fCdBc0a42f7AC1555E',
+    tokenSale: '0x19E27fea1fC3ee50ab6A5354B812E1D8E8940FDB',
+    saleFactory: '0x7195274908d9c6A2991Ae17bD32e5245fD0b5d7b',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",

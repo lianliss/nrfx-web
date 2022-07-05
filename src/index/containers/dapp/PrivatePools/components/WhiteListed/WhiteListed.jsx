@@ -47,6 +47,7 @@ function WhiteListed(props) {
       const txHash = await transaction(contract, 'buyNRFX', []);
       const receipt = await getTransactionReceipt(txHash);
       console.log('[onBuy]', txHash, receipt);
+      setErrorText('');
       await loadPoolData();
     } catch (error) {
       console.error('[onBuy]', error);
@@ -86,6 +87,11 @@ function WhiteListed(props) {
             className="PrivatePools__address"
             text={poolAddress}
           />
+        </div>
+        <div className="row">
+          <a href="https://forms.gle/FJyvpCfou7zmsgzt9" target="_blank">
+            Add pool to whitelist
+          </a>
         </div>
       </div>
     </div>
