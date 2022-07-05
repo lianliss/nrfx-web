@@ -131,10 +131,7 @@ function CabinetSidebar({ className = '' }) {
                       Governance
                     </a>
                   </li>
-                  <li
-                    className="disabled"
-                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
-                  >
+                  <li onClick={() => router.navigate(PAGES.DAPP_SOCIAL_MEDIA)}>
                     Social media
                   </li>
                   <li>
