@@ -1,7 +1,6 @@
 import React from 'react';
 
 // Components
-import SVG from 'utils/svg-wrap';
 import LineBreaker from 'src/ui/components/LineBreaker/LineBreaker';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import SocialLinks from '../SocialLinks/SocialLinks';
@@ -15,15 +14,6 @@ import './CabinetValidator.less';
 function CabinetValidator() {
   const description =
     'Validators are ambassadors and adherents\n of the project, they are earning a percentage\n of the exchange and from the growth\n of the NRFX/NUSD pool.\n Anyone in the world can become a validator\n and start earn on the fiat exchange process more than on other platforms, companies and even exchanges can be validators and earn with us.\n We are open for partnerships, contact us.';
-
-  const LinkIcon = ({ icon, to, className }) => (
-    <a href={to} target="_blank">
-      <SVG
-        src={require(`src/asset/icons/social/${icon}.svg`)}
-        className={className}
-      />
-    </a>
-  );
 
   return (
     <CabinetBlock className="CabinetValidator__wrap">
