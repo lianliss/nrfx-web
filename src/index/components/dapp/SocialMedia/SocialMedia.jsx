@@ -7,11 +7,16 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import COMPANY from 'src/index/constants/company';
+import useAdaptive from 'src/hooks/adaptive';
+import { TABLET } from 'src/index/constants/breakpoints';
+import { classNames as cn } from 'src/utils';
 
 // Styles
 import './SocialMedia.less';
 
 function SocialMedia() {
+  const adaptive = useAdaptive(TABLET);
+
   const SocialLink = ({ icon, title, to }) => (
     <a href={`//${to}`} target="_blank">
       <SVG src={require(`src/asset/icons/social/${icon}.svg`)} />
@@ -20,10 +25,10 @@ function SocialMedia() {
   );
 
   return (
-    <CabinetBlock className="SocialMedia">
+    <CabinetBlock className={cn('SocialMedia', { adaptive })}>
       <CabinetBlock className="SocialMedia__container">
         <h1>Social Media</h1>
-        <Row>
+        <Row wrap>
           <Button type="secondary-light">
             <SocialLink
               icon="telegram-solid"
@@ -39,7 +44,7 @@ function SocialMedia() {
             />
           </Button>
         </Row>
-        <Row>
+        <Row wrap>
           <Button type="secondary-light">
             <SocialLink
               icon="instagram"
@@ -55,7 +60,7 @@ function SocialMedia() {
             />
           </Button>
         </Row>
-        <Row>
+        <Row wrap>
           <Button type="secondary-light">
             <SocialLink
               icon="twitter-solid"
