@@ -23,7 +23,7 @@ function RecentTransactions({ items }) {
         {items.map((item, index) => (
           <div className="RecentTransactions__item" key={index}>
             <p className="action-text">
-              Swap 11.9 USDT for 21 BSW
+              Swap 11.9 USDT for 21 NRFX
               <SVG src={require('src/asset/icons/export.svg')} />
             </p>
             <div>

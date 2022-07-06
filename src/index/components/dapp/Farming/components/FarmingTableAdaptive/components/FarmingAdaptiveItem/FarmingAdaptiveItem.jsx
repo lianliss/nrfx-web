@@ -184,27 +184,12 @@ class FarmingAdaptiveItem extends React.PureComponent {
               />
             </div>
             <div className="col">
-              <HoverPopup
-                content={
-                  <span>
-                  View contract
-                  <SVG
-                    src={require('src/asset/icons/export.svg')}
-                    style={{ marginLeft: 12 }}
-                  />
-                </span>
-                }
-                className="small-popup"
-                type="top"
-                size="small"
-                windowRight={28}
-                windowLeft={28}
-              >
+              <a href="https://docs.narfex.com/narfex/farming/functions-and-features" target="_blank">
                 <SVG
                   src={require('src/asset/icons/warning-blue.svg')}
                   style={{ width: 14, height: 14 }}
                 />
-              </HoverPopup>
+              </a>
             </div>
           </div>
           <div className="row">
@@ -213,23 +198,12 @@ class FarmingAdaptiveItem extends React.PureComponent {
                 <span className="little-title">APY</span>
                 <span>
                 <NumberFormat number={apy * 100} percent />
-                <HoverPopup
-                  content={
-                    <p style={{ maxWidth: 300 }}>
-                      APY is based on your one-year income if Harvest and
-                      Compound are made once a 14 days. Provided APY
-                      calculations depend on current APR rates.
-                    </p>
-                  }
-                  left
-                  windowLeft={28}
-                  windowRight={28}
-                >
+                <a href="https://docs.narfex.com/narfex/farming/functions-and-features" target="_blank">
                   <SVG
                     src={require('src/asset/icons/cabinet/question-icon.svg')}
                     className="FarmingTableAdaptive__icon-question"
                   />
-                </HoverPopup>
+                </a>
               </span>
               </div>
             </div>
