@@ -24,7 +24,7 @@ function SocialLinks() {
 
   return (
     <div className="SocialLinks">
-      <a href="https://narfex.gitbook.io/wiki/" target="_blank">
+      <a href="http://docs.narfex.com" target="_blank">
         <OpenPopupLink title="learn about narfex" />
       </a>
       <div className="SocialLinks-social">
