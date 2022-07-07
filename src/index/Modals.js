@@ -52,7 +52,8 @@ import {
   LiquidityConfirmModal,
   TransactionWaitingModal,
   YourWalletModal,
-  ConnectToWalletModal
+  ConnectToWalletModal,
+  CreateReferralLink
 } from "./components/dapp";
 import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
 import { closeModal } from "src/actions/index";
@@ -211,6 +212,9 @@ function Modals(props) {
       break;
     case "swap_settings":
       Component = SwapSettings;
+      break;
+    case "create_referral_link":
+      Component = CreateReferralLink;
       break;
     default:
       return null;

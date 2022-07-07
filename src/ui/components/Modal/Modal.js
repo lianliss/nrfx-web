@@ -1,44 +1,44 @@
 /* eslint-disable */
 // styles
-import "./Modal.less";
+import './Modal.less';
 // external
-import React, { useCallback, useEffect, useRef } from "react";
-import { useRoute } from "react-router5";
-import PropTypes from "prop-types";
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useRoute } from 'react-router5';
+import PropTypes from 'prop-types';
 // internal
-import { classNames } from "../../utils";
-import SVG from "utils/svg-wrap";
-import useAdaptive from "src/hooks/adaptive";
+import { classNames } from '../../utils';
+import SVG from 'utils/svg-wrap';
+import useAdaptive from 'src/hooks/adaptive';
 
 function Modal(props) {
   const node = useRef();
   const {
-    route: { params: modal }
+    route: { params: modal },
   } = useRoute();
   const adaptive = useAdaptive();
   const className = classNames(props.className, {
     adaptive,
     Modal: true,
     Modal__noSpacing: props.noSpacing,
-    Modal__grayBackground: props.grayBackground
+    Modal__grayBackground: props.grayBackground,
   });
 
-  const handlePressEsc = e => {
+  const handlePressEsc = (e) => {
     if (e.keyCode === 27) {
       props.onClose && props.onClose(e);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", handlePressEsc, false);
+    document.addEventListener('keydown', handlePressEsc, false);
 
     return () => {
-      document.removeEventListener("keydown", handlePressEsc, false);
+      document.removeEventListener('keydown', handlePressEsc, false);
     };
   }, []);
 
   const handleClose = useCallback(
-    e => {
+    (e) => {
       e.preventDefault();
       if (adaptive && modal) {
         window.history.back();
@@ -55,21 +55,26 @@ function Modal(props) {
         <div className="Modal__back" onClick={handleClose} />
         <div
           className="Modal__box"
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
           ref={node}
-          style={{ width: props.width }}
+          style={{
+            width: props.width,
+            background: props.custom && 'none',
+            padding: props.custom && 0,
+          }}
         >
-          {!props.skipClose && (
-            <div className="Modal__box__close" onClick={handleClose}>
-              <SVG
-                src={
-                  adaptive
-                    ? require("src/asset/24px/angle-left.svg")
-                    : require("src/asset/24px/close-large.svg")
-                }
-              />
-            </div>
-          )}
+          {!props.skipClose ||
+            (props.custom && (
+              <div className="Modal__box__close" onClick={handleClose}>
+                <SVG
+                  src={
+                    adaptive
+                      ? require('src/asset/24px/angle-left.svg')
+                      : require('src/asset/24px/close-large.svg')
+                  }
+                />
+              </div>
+            ))}
           {props.children}
         </div>
       </div>
@@ -81,7 +86,8 @@ function Modal(props) {
 
 Modal.defaultProps = {
   isOpen: true,
-  skipClose: false
+  skipClose: false,
+  custom: false,
 };
 
 Modal.propTypes = {
@@ -90,7 +96,8 @@ Modal.propTypes = {
   onClose: PropTypes.func,
   width: PropTypes.number,
   skipClose: PropTypes.bool,
-  grayBackground: PropTypes.bool
+  custom: PropTypes.bool,
+  grayBackground: PropTypes.bool,
 };
 
 export function ModalHeader({ children }) {
