@@ -125,6 +125,10 @@ export const routes =
           path: '/dapp/validator',
         },
         {
+          name: pages.DAPP_TEAM,
+          path: '/dapp/team',
+        },
+        {
           name: pages.TOKENSALE,
           path: '/tokensale',
         },

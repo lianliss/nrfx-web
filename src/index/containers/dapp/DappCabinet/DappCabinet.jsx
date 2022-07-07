@@ -13,6 +13,7 @@ import CabinetValidator from 'src/index/components/dapp/CabinetValidator/Cabinet
 import CabinetWallets from 'src/index/components/dapp/CabinetWallets/CabinetWallets';
 import Currency from 'src/index/components/dapp/Currency/Currency';
 import Referral from 'src/index/components/dapp/Referral/Referral';
+import Team from '../../../components/dapp/Team/Team';
 
 // Utils
 import * as PAGES from 'src/index/constants/pages';
@@ -49,6 +50,9 @@ export class DappCabinet extends Component {
       case PAGES.DAPP_REFERRAL_EXCHANGER:
       case PAGES.DAPP_REFERRAL_FARMING:
         Component = Referral;
+        break;
+      case PAGES.DAPP_TEAM:
+        Component = Team;
         break;
       default:
         Component = CabinetWallets;
