@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import wei from 'utils/wei';
+import getFinePrice from 'utils/get-fine-price';
 
 // Components
 import DexSwapInput from '../../../DexSwap/components/DexSwapInput/DexSwapInput';
@@ -12,10 +14,18 @@ import './LiquidityAdd.less';
 import TokenSelect from '../../../DexSwap/components/TokenSelect/TokenSelect';
 import { openStateModal } from 'src/actions';
 
+let balanceInterval;
+let token0;
+let token1;
+const TIMEOUT_BALANCE = 2000;
+
 function LiquidityAdd({ onClose, type }) {
   // Constants
   const context = React.useContext(Web3Context);
-  const {getPairAddress} = context;
+  const {
+    getPairAddress, getReserves, getTokenBalance, getTokenContract,
+    routerAddress,
+  } = context;
 
   const [isImport, setIsImport] = React.useState(type === 'import');
 
@@ -25,11 +35,92 @@ function LiquidityAdd({ onClose, type }) {
   // --Tokens
   const [selectedTokens, setSelectedTokens] = React.useState([{}, {}]);
   const [selectToken, setSelectToken] = React.useState(0);
+  const [reserves, setReserves] = React.useState([0,0]);
+  const [balances, setBalances] = React.useState([0,0]);
   const [isToken, setIsToken] = React.useState(false);
+  const [allowance, setAllowance] = React.useState([0, 0]);
+  const [isApproving, setIsApproving] = React.useState(false);
 
+  const amount0 = Number(values[0]) || 0;
+  const amount1 = Number(values[1]) || 1;
   const pairAddress = selectedTokens[0].symbol && selectedTokens[1].symbol
     ? getPairAddress(selectedTokens[0], selectedTokens[1])
     : '';
+
+  const updateBalances = () => {
+    if (!selectedTokens[0]
+      || !selectedTokens[1]
+      || selectedTokens[0].symbol === selectedTokens[1].symbol) {
+      setBalances([0, 0]);
+    }
+
+    Promise.all([
+      getTokenBalance(selectedTokens[0].address),
+      getTokenBalance(selectedTokens[1].address),
+    ]).then(data => {
+      selectedTokens[0].balance = data[0];
+      selectedTokens[1].balance = data[1];
+      setBalances([
+        wei.from(data[0], selectedTokens[0].decimals),
+        wei.from(data[1], selectedTokens[1].decimals),
+      ])
+    })
+  };
+
+  const approve = async () => {
+    console.log('APPROVE');
+    setIsApproving(true);
+    const token = !!allowance[0] ? token1 : token0;
+    try {
+      const amount = await token.approve(routerAddress, 5 * 10**9);
+      if (!!allowance[0]) {
+        setAllowance([allowance[0], amount]);
+      } else {
+        setAllowance([amount, allowance[1]]);
+      }
+    } catch (error) {
+      console.error('[LiquidityAdd][approve]', token);
+    }
+    setIsApproving(false);
+  };
+
+  React.useEffect(() => {
+    setReserves([0,0]);
+    setAllowance([0,0]);
+    if (!selectedTokens[0]
+      || !selectedTokens[1]
+      || selectedTokens[0].symbol === selectedTokens[1].symbol) {
+      return;
+    }
+
+    token0 = getTokenContract(selectedTokens[0]);
+    token1 = getTokenContract(selectedTokens[1]);
+
+    console.log("START", token0, token1);
+    Promise.allSettled([
+      getReserves(selectedTokens[0], selectedTokens[1]),
+      token0.getAllowance(routerAddress),
+      token1.getAllowance(routerAddress),
+    ]).then(data => {
+      console.log('DATA', data);
+      if (!!data[0].value) {
+        setReserves([
+          wei.from(data[0].value[0], selectedTokens[0].decimals),
+          wei.from(data[0].value[1], selectedTokens[1].decimals),
+        ]);
+      }
+      setAllowance([
+        data[1].value,
+        data[2].value,
+      ])
+    }).catch(error => {
+      console.error('[LiquidityAdd]', error);
+    });
+
+    updateBalances();
+    clearInterval(balanceInterval);
+    balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+  }, [selectedTokens]);
 
   // Set default selected tokens
   React.useEffect(() => {
@@ -42,7 +133,33 @@ function LiquidityAdd({ onClose, type }) {
     );
 
     setSelectedTokens([firstToken[0], secondToken[0]]);
+    clearInterval(balanceInterval);
+    balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+
+    return () => {
+      clearInterval(balanceInterval);
+    }
   }, []);
+
+  const rate0 = !!reserves[1]
+    ? reserves[0] / reserves[1]
+    : !!amount1
+      ? amount0 / amount1
+      : 0;
+  const rate1 = !!reserves[0]
+    ? reserves[1] / reserves[0]
+    : !!amount0
+      ? amount1 / amount0
+      : 0;
+  const share = !!reserves[0]
+    ? amount0 / (amount0 + reserves[0]) * 100
+    : 100;
+  const isAvailable = !!allowance[0]
+    && !!allowance[1]
+    && amount0 <= balances[0]
+    && amount1 <= balances[1]
+    && amount0 > 0
+    && amount1 > 0;
 
   return (
     <>
@@ -57,7 +174,10 @@ function LiquidityAdd({ onClose, type }) {
       <div className="Liquidity__body LiquidityAdd">
         <DexSwapInput
           onChange={(value) => {
-            setValues((state) => [value, state[1]]);
+            const secondValue = !!reserves[0]
+              ? reserves[1] / reserves[0] * (Number(value) || 0)
+              : values[1];
+            setValues((state) => [value, secondValue]);
           }}
           onSelectToken={() => {
             setSelectToken(0);
@@ -67,14 +187,17 @@ function LiquidityAdd({ onClose, type }) {
           token={selectedTokens[0]}
           showBalance
           label
-          title={!isImport ? `Balance ≈ $1 454.55` : ''}
+          title={`${getFinePrice(reserves[0])} ${selectedTokens[0].symbol} in the pool`}
         />
         <div className="LiquidityAdd__icon">
           <span>+</span>
         </div>
         <DexSwapInput
           onChange={(value) => {
-            setValues((state) => [state[0], value]);
+            const secondValue = !!reserves[1]
+              ? reserves[0] / reserves[1] * (Number(value) || 0)
+              : values[0];
+            setValues((state) => [secondValue, value]);
           }}
           onSelectToken={() => {
             setSelectToken(1);
@@ -84,36 +207,61 @@ function LiquidityAdd({ onClose, type }) {
           token={selectedTokens[1]}
           showBalance
           label
-          title={!isImport ? `Balance ≈ $1 454.55` : ''}
+          title={`${getFinePrice(reserves[1])} ${selectedTokens[1].symbol} in the pool`}
         />
-        pairAddress = {pairAddress}
         {!isImport && (
           <>
             <span className="default-text-light">Prices and pool share</span>
             <div className="LiquidityAdd__result">
               <div className="LiquidityAdd__item">
-                <span>250.115</span>
+                <span>{getFinePrice(rate0)}</span>
                 <span>
                   {selectedTokens[0].symbol} per {selectedTokens[1].symbol}
                 </span>
               </div>
               <div className="LiquidityAdd__item">
-                <span>250.115</span>
+                <span>{getFinePrice(rate1)}</span>
                 <span>
-                  {selectedTokens[0].symbol} per {selectedTokens[1].symbol}
+                  {selectedTokens[1].symbol} per {selectedTokens[0].symbol}
                 </span>
               </div>
               <div className="LiquidityAdd__item">
-                <span>250.115</span>
+                <span>{getFinePrice(share)} %</span>
                 <span>
-                  {selectedTokens[0].symbol} per {selectedTokens[1].symbol}
+                  Share of pool
                 </span>
               </div>
             </div>
-            <Button
+            {!allowance[0] && <Button
               type="lightBlue"
+              state={isApproving ? 'loading' : ''}
               size="extra_large"
-              onClick={() => openStateModal('liquidity_confirm_add')}
+              onClick={approve}
+            >
+              Enable {selectedTokens[0].symbol}
+            </Button>}
+            {(!!allowance[0] && !allowance[1]) && <Button
+              type="lightBlue"
+              state={isApproving ? 'loading' : ''}
+              size="extra_large"
+              onClick={approve}
+            >
+              Enable {selectedTokens[1].symbol}
+            </Button>}
+            <Button
+              type={!isAvailable ? 'secondary' : 'lightBlue'}
+              disabled={!isAvailable}
+              size="extra_large"
+              onClick={() => openStateModal('liquidity_confirm_add', {
+                selectedTokens,
+                reserves,
+                rate0,
+                rate1,
+                share,
+                amount0,
+                amount1,
+                pairAddress,
+              })}
             >
               Supply
             </Button>

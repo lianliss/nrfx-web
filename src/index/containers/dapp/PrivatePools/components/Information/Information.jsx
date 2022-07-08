@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Web3Context } from 'services/web3Provider';
+import getFinePrice from 'utils/get-fine-price';
 
 // Components
 import * as UI from 'src/ui';
@@ -102,6 +103,7 @@ class Information extends React.PureComponent {
     try {
       await this.busd.approve(poolAddress, amount);
       await this.setInitialAllowance();
+      console.log('APPROVE', amount);
       this.setState({
         allowance: amount,
         errorText: '',
@@ -166,13 +168,14 @@ class Information extends React.PureComponent {
       userBusdBalance,
     } = this.state;
 
-
     const amount = Number(value) || 0;
     const isAvailable = allowance >= amount
       && amount
       && amount <= userBusdBalance
       && amount <= maxUserAmount
       && amount >= minUserAmount;
+    const isNeedApprove = allowance < amount;
+    console.log('RENDER', allowance, amount, isAvailable);
 
     return (
       <div className="PrivatePools__container">
@@ -180,13 +183,17 @@ class Information extends React.PureComponent {
           {isPoolLoading ? <LoadingStatus status={'loading'}/> : <div className="PrivatePools__table">
             <div className="row">
               <span>Min deposit:</span>
-              <span>
+              <span style={{
+                color: amount < minUserAmount ? 'red' : 'inherit',
+              }}>
                 <UI.NumberFormat number={minUserAmount} currency="BUSD" />
               </span>
             </div>
             <div className="row">
               <span>Max deposit:</span>
-              <span>
+              <span style={{
+                color: amount > maxUserAmount ? 'red' : 'inherit',
+              }}>
                 <UI.NumberFormat number={maxUserAmount} currency="BUSD" />
               </span>
             </div>
@@ -223,7 +230,14 @@ class Information extends React.PureComponent {
           </div>}
           <div className="row deposit">
             <label>
-              <span>Deposit BUSD</span>
+              <span>
+                Deposit BUSD
+                <small style={{
+                  color: amount > userBusdBalance ? 'red' : 'inherit',
+                }}>
+                  &nbsp;Balance: {getFinePrice(userBusdBalance)} BUSD
+                </small>
+              </span>
               <UI.Input
                 disabled={isPoolLoading}
                 type="text"
@@ -233,13 +247,13 @@ class Information extends React.PureComponent {
             </label>
           </div>
           <div className="row">
-            <UI.Button type={isAvailable ? 'secondary' : 'lightBlue'}
+            <UI.Button type={!isNeedApprove ? 'secondary' : 'lightBlue'}
                        onClick={this.onApprove.bind(this)}
-                       disabled={!amount || isAvailable}
+                       disabled={!isNeedApprove}
                        state={isApproving ? 'loading' : ''}>
               Approve
             </UI.Button>
-            <UI.Button type={!isAvailable ? 'secondary' : 'lightBlue'}
+            <UI.Button type={isNeedApprove ? 'secondary' : 'lightBlue'}
                        onClick={this.onDeposit.bind(this)}
                        disabled={!isAvailable}
                        state={isDeposit ? 'loading' : ''}>

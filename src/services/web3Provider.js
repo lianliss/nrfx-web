@@ -44,6 +44,7 @@ class Web3Provider extends React.PureComponent {
   web3 = null;
   web3Host = null;
   farm = null;
+  pairs = {};
 
   getWeb3() {
     if (this.state.isConnected) {
@@ -224,6 +225,7 @@ class Web3Provider extends React.PureComponent {
       }
       Object.assign(this, networks[id]);
       this.farm = this.getFarmContract();
+      this.pairs = {};
       this.setState({
         tokens: networks[id].tokens,
         chainId: id,
@@ -343,9 +345,16 @@ class Web3Provider extends React.PureComponent {
   async getReserves(_token0, _token1) {
     const token0 = _token0.address ? _token0 : this.wrapBNB;
     const token1 = _token1.address ? _token1 : this.wrapBNB;
+    const pairAddress = this.getPairAddress(token0, token1);
 
     try {
-      const pairAddress = this.getPairAddress(token0, token1);
+      const reserves = this.pairs[pairAddress];
+      if (reserves) {
+        return [
+          reserves[token0.symbol],
+          reserves[token1.symbol],
+        ]
+      }
       const contract = new (this.getWeb3().eth.Contract)(
         require('src/index/constants/ABI/PancakePair'),
         pairAddress,
@@ -355,18 +364,26 @@ class Web3Provider extends React.PureComponent {
         contract.methods.getReserves().call(),
         contract.methods.token0().call(),
       ]);
-
-      if (data[1] === token0.address) {
-        return [
+      // Switch pair
+      const result = data[1] === token0.address
+        ? [
           data[0][0],
           data[0][1],
         ]
-      } else {
-        return [
+        : [
           data[0][1],
           data[0][0],
-        ]
-      }
+        ];
+      // Update reserves cache
+      this.pairs[pairAddress] = {
+        blockTimestamp: data[0]._blockTimestampLast * 1000,
+        updateTimestamp: Date.now(),
+        token0: _token0,
+        token1: _token1,
+      };
+      this.pairs[pairAddress][token0.symbol] = result[0];
+      this.pairs[pairAddress][token1.symbol] = result[1];
+      return result;
     } catch (error) {
       console.error('[getReserves]', this.getBSCScanLink(pairAddress), error);
     }
@@ -932,6 +949,7 @@ class Web3Provider extends React.PureComponent {
       connectWallet: this.connectWallet.bind(this),
       getPairAddress: this.getPairAddress.bind(this),
       getReserves: this.getReserves.bind(this),
+      pairs: this.pairs,
       getTokensRelativePrice: this.getTokensRelativePrice.bind(this),
       getTokenUSDPrice: this.getTokenUSDPrice.bind(this),
       getTokenBalance: this.getTokenBalance.bind(this),

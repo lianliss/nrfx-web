@@ -1,10 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import wei from 'utils/wei';
+import getFinePrice from 'utils/get-fine-price';
 
 // Components
 import { Modal, Button, BottomSheetModal, NumberFormat } from 'src/ui';
 import { WalletIcon } from 'src/index/components/dapp';
 import SVG from 'utils/svg-wrap';
+import { Web3Context } from 'services/web3Provider';
 
 // Utils
 import { openStateModal } from 'src/actions';
@@ -13,6 +16,18 @@ import { openStateModal } from 'src/actions';
 import './LiquidityConfirmModal.less';
 
 function LiquidityConfirmModal(props) {
+  const {
+    selectedTokens,
+    reserves,
+    rate0,
+    rate1,
+    share,
+    amount0,
+    amount1,
+    pairAddress,
+  } = props;
+  const context = React.useContext(Web3Context);
+  const {pairs} = context;
   const adaptive = useSelector((store) => store.default.adaptive);
   const Component = adaptive ? BottomSheetModal : Modal;
 
@@ -37,7 +52,7 @@ function LiquidityConfirmModal(props) {
         <WalletIcon currency="nrfx" size={41} />
       </div>
       <div className="LiquidityConfirmModal__row">
-        <p className="medium-text">USDT/DUSD Pool Tokens</p>
+        <p className="medium-text">{selectedTokens[0].symbol}/{selectedTokens[1].symbol} Pool Tokens</p>
       </div>
       <div className="LiquidityConfirmModal__row">
         <p className="small-text">
@@ -48,39 +63,39 @@ function LiquidityConfirmModal(props) {
       <div className="LiquidityConfirmModal__row">
         <div className="LiquidityConfirmModal__result">
           <div className="LiquidityConfirmModal__item">
-            <span className="default-text-dark">USDT Deposited</span>
+            <span className="default-text-dark">{selectedTokens[0].symbol} Deposited</span>
             <span className="default-text-dark">
               <WalletIcon currency="nrfx" size={24} marginRight={10} />
-              <NumberFormat number={4.99437} />
+              {getFinePrice(amount0)}
             </span>
           </div>
           <div className="LiquidityConfirmModal__item">
-            <span className="default-text-dark">BUSD Deposited</span>
+            <span className="default-text-dark">{selectedTokens[1].symbol} Deposited</span>
             <span className="default-text-dark">
               <WalletIcon currency="nrfx" size={24} marginRight={10} />
-              <NumberFormat number={4.99437} />
+              {getFinePrice(amount1)}
             </span>
           </div>
           <div className="LiquidityConfirmModal__item">
             <span className="default-text-dark">Rates</span>
             <span className="default-text-dark">
-              <NumberFormat number={15.05} currency="usdt" />
+              <NumberFormat number={1} currency={selectedTokens[0].symbol} />
               &nbsp;=&nbsp;
-              <NumberFormat number={15.05} currency="busd" />
+              <NumberFormat number={rate1} currency={selectedTokens[1].symbol} />
             </span>
           </div>
           <div className="LiquidityConfirmModal__item">
             <span className="default-text-dark"></span>
             <span className="default-text-dark">
-              <NumberFormat number={15.05} currency="usdt" />
+              <NumberFormat number={1} currency={selectedTokens[1].symbol} />
               &nbsp;=&nbsp;
-              <NumberFormat number={15.05} currency="busd" />
+              <NumberFormat number={rate0} currency={selectedTokens[0].symbol} />
             </span>
           </div>
           <div className="LiquidityConfirmModal__item">
             <span className="default-text-dark">Share of Pool:</span>
             <span className="default-text-dark">
-              <NumberFormat number={0.01653} percent />
+              <NumberFormat number={share} percent />
             </span>
           </div>
         </div>
