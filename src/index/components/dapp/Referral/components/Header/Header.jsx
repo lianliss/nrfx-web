@@ -6,6 +6,9 @@ import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import NumberToSpan from '../../../NumberToSpan/NumberToSpan';
 
+// Utils
+import { openModal } from 'src/actions';
+
 // Styles
 import './Header.less';
 
@@ -52,7 +55,11 @@ function Header({
           <Row alignItems="center" justifyContent="space-between">
             <h2>Copy Referral Link</h2>
             <Col>
-              <Row alignItems="center" className="create-new-link">
+              <Row
+                alignItems="center"
+                className="create-new-link"
+                onClick={() => openModal('create_referral_link')}
+              >
                 <span className="strong">Create new link</span>
                 <SVG
                   src={require('src/asset/icons/cabinet/add-icon-blue.svg')}

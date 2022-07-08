@@ -225,23 +225,9 @@ class FarmingTableItem extends React.PureComponent {
           <SVG src={require('src/asset/icons/cabinet/select-arrow.svg')} />
         </TableColumn>
         <TableColumn>
-          <HoverPopup
-            content={
-              <span>
-                View contract
-                <SVG
-                  src={require('src/asset/icons/export.svg')}
-                  style={{ marginLeft: 12 }}
-                />
-              </span>
-            }
-            className="small-popup"
-            type="top"
-            size="small"
-            windowRight={52}
-          >
+          <a href="https://docs.narfex.com/narfex/farming/functions-and-features" target="_blank">
             <SVG src={require('src/asset/icons/warning-blue.svg')} />
-          </HoverPopup>
+          </a>
         </TableColumn>
       </TableCell>
       {isActive && (

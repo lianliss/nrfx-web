@@ -50,6 +50,7 @@ export const DAPP_EXCHANGE = "dapp_exchange";
 export const DAPP_REFERRAL = "dapp_referral";
 export const DAPP_REFERRAL_EXCHANGER = "dapp_referral_exchanger";
 export const DAPP_REFERRAL_FARMING = "dapp_referral_farming";
+export const DAPP_TEAM = "dapp_team";
 export const FARMING = "farming";
 export const LIQUIDITY = "liquidity";
 export const TRANSACTIONS = "transactions";

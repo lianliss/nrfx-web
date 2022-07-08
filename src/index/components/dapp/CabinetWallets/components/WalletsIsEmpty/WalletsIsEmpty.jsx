@@ -59,7 +59,7 @@ function WalletsIsEmpty(props) {
             </DynamicShadow>
           </div>
           <div className="WalletsIsEmpty__links">
-            <a href="https://narfex.gitbook.io/wiki/" target="_blank">
+            <a href="http://docs.narfex.com" target="_blank">
               <OpenPopupLink title="learn about narfex" />
             </a>
             <div className="WalletsIsEmpty-social">

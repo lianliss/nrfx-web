@@ -7,6 +7,7 @@ import SVG from 'utils/svg-wrap';
 // Utils
 import { openModal } from 'src/actions';
 import { REGISTRATION } from 'src/components/AuthModal/fixtures.js';
+import { getLang } from 'src/utils';
 
 // Styles
 import './Instruction.less';
@@ -30,10 +31,11 @@ function Instruction() {
       <div className="Exchanger__Instruction__content">
         <div className="row">
           <div className="col">
-            <div className="title">1. Sign up</div>
+            <div className="title">
+              1. {getLang('dapp_exchanger_instruction_1_title')}
+            </div>
             <div className="description">
-              Registration is required only to work with the exchanger. We are
-              in the process of fixing this and switching to smart contracts.
+              {getLang('dapp_exchanger_instruction_1_description')}
             </div>
             <div
               className="link"
@@ -41,26 +43,29 @@ function Instruction() {
                 openModal('auth', { type: REGISTRATION });
               }}
             >
-              Sign up ›
+              {getLang('dapp_exchanger_instruction_1_button')} ›
             </div>
           </div>
           <div className="col">
-            <div className="title">2. Fill your balance</div>
-            <div className="description">
-              Choose your preferred method of payment to deposit directly into
-              your account by bank transfer: by credit card or a bank transfer.
+            <div className="title">
+              2. {getLang('dapp_exchanger_instruction_2_title')}
             </div>
-            <div className="link">Top up balance ›</div>
+            <div className="description">
+              {getLang('dapp_exchanger_instruction_2_description')}
+            </div>
+            <div className="link">
+              {getLang('dapp_exchanger_instruction_2_button')} ›
+            </div>
           </div>
         </div>
         <div className="row">
           <div className="col"></div>
           <div className="col">
-            <div className="title">3. Exchange currencies</div>
+            <div className="title">
+              3. {getLang('dapp_exchanger_instruction_3_title')}
+            </div>
             <div className="description">
-              Buy Bitcoin, Ethereum, Litecoin and other crypto with fiats
-              directly on your wallet. Send it out to friends, stake it, or
-              trade on the DEX exchange.
+              {getLang('dapp_exchanger_instruction_3_description')}
             </div>
             <div
               className="link"
@@ -68,7 +73,7 @@ function Instruction() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
-              Exchange ›
+              {getLang('dapp_exchanger_instruction_3_button')} ›
             </div>
           </div>
         </div>
