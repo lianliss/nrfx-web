@@ -114,12 +114,7 @@ function CabinetSidebar({ className = '' }) {
                       Docs
                     </a>
                   </li>
-                  <li
-                    className="disabled"
-                    onClick={() => router.navigate(PAGES.DAPP_SWAP)}
-                  >
-                    Team
-                  </li>
+                  <li onClick={() => router.navigate(PAGES.DAPP_TEAM)}>Team</li>
                   <li
                     className="disabled"
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
