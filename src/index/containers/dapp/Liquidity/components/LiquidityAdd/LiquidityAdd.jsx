@@ -84,6 +84,7 @@ function LiquidityAdd({ onClose, type }) {
     setIsApproving(false);
   };
 
+  // On tokens changed
   React.useEffect(() => {
     setReserves([0,0]);
     setAllowance([0,0]);
@@ -96,13 +97,11 @@ function LiquidityAdd({ onClose, type }) {
     token0 = getTokenContract(selectedTokens[0]);
     token1 = getTokenContract(selectedTokens[1]);
 
-    console.log("START", token0, token1);
     Promise.allSettled([
       getReserves(selectedTokens[0], selectedTokens[1]),
       token0.getAllowance(routerAddress),
       token1.getAllowance(routerAddress),
     ]).then(data => {
-      console.log('DATA', data);
       if (!!data[0].value) {
         setReserves([
           wei.from(data[0].value[0], selectedTokens[0].decimals),

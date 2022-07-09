@@ -24,7 +24,7 @@ class TokenContract {
 
   getAllowance = spender => new Promise((fulfill, reject) => {
     // Allow BNB
-    if (!this.token) return fulfill(5 * 10**9);
+    if (!this.address) return fulfill(5 * 10**9);
     // Get contract allowance
     this.contract.methods.allowance(
       this.provider.state.accountAddress,
