@@ -339,21 +339,40 @@ class Web3Provider extends React.PureComponent {
 
   /**
    * Returns current pair reserves
-   * @param pairAddress {address}
+   * @param _token0 {object|address} Token object or pair address
+   * @param _token1 {object|undefined} Token object or undefined if the pair address passed
    * @returns {Promise.<*>}
    */
   async getReserves(_token0, _token1) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
-    const pairAddress = this.getPairAddress(token0, token1);
+    let token0;
+    let token1;
+    let pairAddress;
+    if (_token1) {
+      // If tokens passed
+      token0 = _token0.address ? _token0 : this.wrapBNB;
+      token1 = _token1.address ? _token1 : this.wrapBNB;
+      pairAddress = this.getPairAddress(token0, token1);
+    } else {
+      // If only pair passed
+      pairAddress = _token0.address;
+    }
 
     try {
       const reserves = this.pairs[pairAddress];
       if (reserves) {
-        return [
-          reserves[token0.symbol],
-          reserves[token1.symbol],
-        ]
+        if (_token1) {
+          // If tokens passed
+          return [
+            reserves[token0.symbol],
+            reserves[token1.symbol],
+          ]
+        } else {
+          // If pair passed
+          return [
+            reserves[reserves.token0.symbol],
+            reserves[reserves.token1.symbol]
+          ]
+        }
       }
       const contract = new (this.getWeb3().eth.Contract)(
         require('src/index/constants/ABI/PancakePair'),
@@ -363,7 +382,14 @@ class Web3Provider extends React.PureComponent {
       const data = await Promise.all([
         contract.methods.getReserves().call(),
         contract.methods.token0().call(),
+        contract.methods.token1().call(),
+        contract.methods.totalSupply().call(),
       ]);
+      if (!_token1) {
+        // If no tokens passed
+        token0 = this.state.tokens.find(t => t.address.toLowerCase() === data[1]);
+        token1 = this.state.tokens.find(t => t.address.toLowerCase() === data[2]);
+      }
       // Switch pair
       const result = data[1] === token0.address
         ? [
@@ -374,12 +400,15 @@ class Web3Provider extends React.PureComponent {
           data[0][1],
           data[0][0],
         ];
+      // Skip caching is there is no tokens found
+      if (!token0 || !token1) return result;
       // Update reserves cache
       this.pairs[pairAddress] = {
         blockTimestamp: data[0]._blockTimestampLast * 1000,
         updateTimestamp: Date.now(),
-        token0: _token0,
-        token1: _token1,
+        token0: !!_token1 ? _token0 : token0,
+        token1: !!_token1 ? _token1 : token1,
+        totalSupply: data[3],
       };
       this.pairs[pairAddress][token0.symbol] = result[0];
       this.pairs[pairAddress][token1.symbol] = result[1];

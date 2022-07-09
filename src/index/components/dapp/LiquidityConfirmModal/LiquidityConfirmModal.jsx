@@ -8,6 +8,7 @@ import { Modal, Button, BottomSheetModal, NumberFormat } from 'src/ui';
 import { WalletIcon } from 'src/index/components/dapp';
 import SVG from 'utils/svg-wrap';
 import { Web3Context } from 'services/web3Provider';
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
 
 // Utils
 import { openStateModal } from 'src/actions';
@@ -27,9 +28,29 @@ function LiquidityConfirmModal(props) {
     pairAddress,
   } = props;
   const context = React.useContext(Web3Context);
-  const {pairs} = context;
+  const {pairs, getReserves} = context;
   const adaptive = useSelector((store) => store.default.adaptive);
   const Component = adaptive ? BottomSheetModal : Modal;
+
+  React.useEffect(() => {
+    getReserves();
+  }, []);
+
+  const pair = pairs[pairAddress];
+  if (!pair) return (<Component
+    className="LiquidityConfirmModal"
+    prefix="LiquidityConfirmModal"
+    skipClose
+    {...props}
+  >
+    <LoadingStatus status={'loading'} />
+  </Component>);
+
+  console.log('pair', pair);
+  const totalSupply = wei.from(pair.totalSupply);
+  const reserve0 = wei.from(pair[selectedTokens[0].symbol]);
+  const reserve1 = wei.from(pair[selectedTokens[1].symbol]);
+  const lpTokens = Math.min(amount0 * totalSupply / reserve0, amount1 * totalSupply / reserve1);
 
   return (
     <Component
@@ -46,10 +67,10 @@ function LiquidityConfirmModal(props) {
       </div>
       <div className="LiquidityConfirmModal__row">
         <span className="large-text">
-          <NumberFormat number={4.78749} />
+          <NumberFormat number={lpTokens} />
         </span>
-        <WalletIcon currency="nrfx" size={41} />
-        <WalletIcon currency="nrfx" size={41} />
+        <WalletIcon currency={selectedTokens[0].symbol} size={41} />
+        <WalletIcon currency={selectedTokens[1].symbol} size={41} />
       </div>
       <div className="LiquidityConfirmModal__row">
         <p className="medium-text">{selectedTokens[0].symbol}/{selectedTokens[1].symbol} Pool Tokens</p>
@@ -65,14 +86,14 @@ function LiquidityConfirmModal(props) {
           <div className="LiquidityConfirmModal__item">
             <span className="default-text-dark">{selectedTokens[0].symbol} Deposited</span>
             <span className="default-text-dark">
-              <WalletIcon currency="nrfx" size={24} marginRight={10} />
+              <WalletIcon currency={selectedTokens[0].symbol} size={24} marginRight={10} />
               {getFinePrice(amount0)}
             </span>
           </div>
           <div className="LiquidityConfirmModal__item">
             <span className="default-text-dark">{selectedTokens[1].symbol} Deposited</span>
             <span className="default-text-dark">
-              <WalletIcon currency="nrfx" size={24} marginRight={10} />
+              <WalletIcon currency={selectedTokens[1].symbol} size={24} marginRight={10} />
               {getFinePrice(amount1)}
             </span>
           </div>

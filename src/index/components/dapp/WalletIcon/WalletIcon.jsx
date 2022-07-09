@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 // Components
-import SVG from 'utils/svg-wrap';
+//import SVG from 'utils/svg-wrap';
+import { Web3Context } from 'services/web3Provider';
 
 // Styles
 import './WalletIcon.less';
@@ -11,14 +13,18 @@ import './WalletIcon.less';
 // basic circle.
 function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
   const [icon, setIcon] = React.useState(null);
+  const context = React.useContext(Web3Context);
+  const {tokens} = context;
+  const symbol = _.get(currency, 'symbol', currency).toUpperCase();
 
   React.useEffect(() => {
     try {
-      setIcon(require(`src/asset/icons/wallets/${currency}.svg`));
-    } catch {
+      const token = tokens.find(t => t.symbol === symbol);
+      setIcon(token.logoURI);
+    } catch (error) {
       console.log(`${currency} icon is not finded`);
     }
-  }, []);
+  }, [currency]);
 
   return (
     <span
@@ -30,7 +36,7 @@ function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
         marginRight: marginRight ? marginRight : null,
       }}
     >
-      {icon ? <SVG src={icon} /> : <span className="WalletIcon__empty" />}
+      {icon ? <img src={icon} /> : <span className="WalletIcon__empty" />}
     </span>
   );
 }
