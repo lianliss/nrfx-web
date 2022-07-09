@@ -85,13 +85,13 @@ export default props => {
         payload: null
       });
       // Delete expired reservation
-      api.call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
+      api.call(apiSchema.Fiat_wallet(currency).Cards.ReservationDelete, {
           reservation_id: _.get(cardReservation, 'reservation.id'),
         });
 
       actions.closeModal();
       actions.openModal("merchant", {
-        currency: "rub"
+        currency
       });
     }
 
@@ -103,7 +103,7 @@ export default props => {
       });
 
       api
-        .call(apiSchema.Fiat_wallet.Cards.RefillBanksGet, {
+        .call(apiSchema.Fiat_wallet(currency).Cards.RefillBanksGet, {
           amount: props.amount
         })
         .then(r => {
@@ -146,7 +146,7 @@ export default props => {
     });
 
     api
-      .call(apiSchema.Fiat_wallet.Cards.ReservationPost, {
+      .call(apiSchema.Fiat_wallet(currency).Cards.ReservationPost, {
         amount,
         bank_code: bankCode
       })
@@ -188,7 +188,7 @@ export default props => {
       dontClose: true
     }).then(() => {
       api
-        .call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
+        .call(apiSchema.Fiat_wallet(currency).Cards.ReservationDelete, {
           amount,
           reservation_id: cardReservation.reservation.id
         })
@@ -229,7 +229,7 @@ export default props => {
       status: "loading"
     });
     api
-      .call(apiSchema.Fiat_wallet.Cards["Reservation/confirmPaymentPost"], {
+      .call(apiSchema.Fiat_wallet(currency).Cards["Reservation/confirmPaymentPost"], {
         reservation_id: cardReservation.reservation.id
       })
       .then(({ status }) => {

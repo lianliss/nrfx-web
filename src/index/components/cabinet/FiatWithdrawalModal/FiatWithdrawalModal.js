@@ -28,7 +28,7 @@ const FiatWithdrawalModal = props => {
   const fee = Math.max((amount / 100) * percentFee, minFee);
 
   useEffect(() => {
-    props.withdrawalBanksGet();
+    props.withdrawalBanksGet(balance.currency);
 
     if (!amount || !balance) {
       // props.onClose();

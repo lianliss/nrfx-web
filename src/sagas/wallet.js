@@ -68,7 +68,7 @@ function* getHistoryMoreWorker(action) {
 function* getWalletPageWorker() {
   yield put(walletSetStatus("main", "loading"));
   try {
-    const payload = yield call(api, apiSchema.Fiat_wallet.DefaultGet, {
+    const payload = yield call(api, apiSchema.Fiat_wallet().DefaultGet, {
       count: PAGE_COUNT
     });
     yield put(walletSetInitState(payload));
@@ -84,7 +84,7 @@ function* getRate() {
       walletSwapSelector
     );
     // yield put(walletSetStatus("rate", "loading"));
-    const { rate } = yield call(api, apiSchema.Fiat_wallet.RateGet, {
+    const { rate } = yield call(api, apiSchema.Fiat_wallet(currency).RateGet, {
       base,
       currency
     });
@@ -161,7 +161,7 @@ function* swapSubmitWorker() {
 
   yield put(walletSetStatus("swap", "loading"));
   try {
-    const payload = yield call(api, apiSchema.Fiat_wallet.ExchangePost, {
+    const payload = yield call(api, apiSchema.Fiat_wallet().ExchangePost, {
       from_currency: fromCurrency,
       to_currency: toCurrency,
       amount_type: isFiat(currency) ? "fiat" : "crypto",

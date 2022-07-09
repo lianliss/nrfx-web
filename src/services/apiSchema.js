@@ -1921,7 +1921,7 @@ export default {
       path: "api_keys/secret"
     }
   },
-  Fiat_wallet: {
+  Fiat_wallet: ( fiat = '' ) => ({
     Cards: {
       RefillBanksGet: {
         method: "GET",
@@ -1933,7 +1933,7 @@ export default {
             type: "body"
           }
         },
-        path: "fiat_wallet/cards/refill_banks"
+        path: `fiat_wallet/${fiat}/cards/refill_banks`
       },
       ReservationPost: {
         method: "POST",
@@ -1953,7 +1953,7 @@ export default {
             type: "body"
           }
         },
-        path: "fiat_wallet/cards/reservation"
+        path: `fiat_wallet/${fiat}/cards/reservation`
       },
       ReservationDelete: {
         method: "DELETE",
@@ -1965,7 +1965,7 @@ export default {
             type: "body"
           }
         },
-        path: "fiat_wallet/cards/reservation"
+        path: `fiat_wallet/${fiat}/cards/reservation`
       },
       "Reservation/confirmPaymentPost": {
         method: "POST",
@@ -1977,7 +1977,7 @@ export default {
             type: "body"
           }
         },
-        path: "fiat_wallet/cards/reservation/confirm_payment"
+        path: `fiat_wallet/${fiat}/cards/reservation/confirm_payment`
       }
     },
     Xendit: {
@@ -2016,7 +2016,7 @@ export default {
             type: "body"
           }
         },
-        path: "fiat_wallet/xendit/disbursements/webhook"
+        path: `fiat_wallet/${fiat}/xendit/disbursements/webhook`
       },
       "Refill/webhookPost": {
         method: "POST",
@@ -2063,7 +2063,7 @@ export default {
             type: "body"
           }
         },
-        path: "fiat_wallet/xendit/refill/webhook"
+        path: `fiat_wallet/${fiat}/xendit/refill/webhook`
       },
       "VirtualAccount/webhookPost": {
         method: "POST",
@@ -2105,26 +2105,26 @@ export default {
             type: "body"
           }
         },
-        path: "fiat_wallet/xendit/virtual_account/webhook"
+        path: `fiat_wallet/${fiat}/xendit/virtual_account/webhook`
       },
       WithdrawalBanksGet: {
         method: "GET",
         name: "withdrawal_banks",
         params: [],
-        path: "fiat_wallet/xendit/withdrawal_banks"
+        path: `fiat_wallet/${fiat}/xendit/withdrawal_banks`
       },
       RefillBanksGet: {
         method: "GET",
         name: "refill_banks",
         params: [],
-        path: "fiat_wallet/xendit/refill_banks"
+        path: `fiat_wallet/${fiat}/xendit/refill_banks`
       }
     },
     BalancesGet: {
       method: "GET",
       name: "balances",
       params: [],
-      path: "fiat_wallet/balances"
+      path: `fiat_wallet/${fiat}/balances`
     },
     DefaultGet: {
       method: "GET",
@@ -2164,7 +2164,7 @@ export default {
           type: "body"
         }
       },
-      path: "fiat_wallet/transactions"
+      path: `fiat_wallet/${fiat}/transactions`
     },
     ExchangePost: {
       method: "POST",
@@ -2194,7 +2194,7 @@ export default {
           type: "body"
         }
       },
-      path: "fiat_wallet/exchange"
+      path: `fiat_wallet/${fiat}/exchange`
     },
     RefillFormGet: {
       method: "GET",
@@ -2216,13 +2216,13 @@ export default {
           type: "body"
         }
       },
-      path: "fiat_wallet/refill_form"
+      path: `fiat_wallet/${fiat}/refill_form`
     },
     RefillMethodsGet: {
       method: "GET",
       name: "refill_methods",
       params: [],
-      path: "fiat_wallet/refill_methods"
+      path: `fiat_wallet/${fiat}/refill_methods`
     },
     WithdrawPut: {
       method: "PUT",
@@ -2262,13 +2262,13 @@ export default {
           type: "body"
         }
       },
-      path: "fiat_wallet/withdraw"
+      path: `fiat_wallet/${fiat}/withdraw`
     },
     WithdrawMethodsGet: {
       method: "GET",
       name: "withdraw_methods",
       params: [],
-      path: "fiat_wallet/withdraw_methods"
+      path: `fiat_wallet/${fiat}/withdraw_methods`
     },
     RateGet: {
       method: "GET",
@@ -2285,7 +2285,7 @@ export default {
           type: "body"
         }
       },
-      path: "fiat_wallet/rate"
+      path: `fiat_wallet/${fiat}/rate`
     },
     EventAdvCashGet: {
       method: "GET",
@@ -2307,7 +2307,7 @@ export default {
           type: "body"
         }
       },
-      path: "fiat_wallet/event_adv_cash"
+      path: `fiat_wallet/${fiat}/event_adv_cash`
     },
     EventXenditPost: {
       method: "POST",
@@ -2324,9 +2324,9 @@ export default {
           type: "body"
         }
       },
-      path: "fiat_wallet/event_xendit"
+      path: `fiat_wallet/${fiat}/event_xendit`
     }
-  },
+  }),
   Admin: {
     DefaultGet: {
       method: "GET",

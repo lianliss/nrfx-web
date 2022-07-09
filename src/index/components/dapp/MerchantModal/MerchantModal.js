@@ -63,7 +63,7 @@ const MerchantModal = props => {
   const fiatState = useSelector(fiatSelector);
 
   useEffect(() => {
-    props.getMerchant(props.type);
+    props.getMerchant(props.type, currency);
     if (
       props.type !== "withdrawal" &&
       currency === "rub" &&
