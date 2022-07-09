@@ -8,3 +8,4 @@ export { default as TransactionSubmittedModal } from './TransactionSubmittedModa
 export { default as TransactionWaitingModal } from './TransactionWaitingModal/TransactionWaitingModal';
 export { default as YourWalletModal } from './YourWalletModal/YourWalletModal';
 export { default as ConnectToWalletModal } from './Modals/ConnectToWalletModal/ConnectToWalletModal';
+export { default as CreateReferralLink } from './Modals/CreateReferralLink/CreateReferralLink';

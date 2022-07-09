@@ -1,0 +1,141 @@
+.CreateReferralLink {
+  max-width: 482px;
+  padding: 32px;
+  box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25);
+  border-radius: var(--radius-panel-large);
+  box-sizing: border-box;
+
+  &__header {
+    padding-bottom: 17px;
+    border-bottom: 2px solid #dfe3f0;
+
+    .isvg {
+      cursor: pointer;
+
+      rect {
+        fill: var(--royal-blue);
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  h2 {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: var(--dark-gunmetal);
+  }
+
+  &__description {
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    color: var(--cool-dark-gray);
+  }
+
+  .isvg {
+    display: flex;
+    align-items: center;
+  }
+
+  .Number {
+    color: var(--secondary-blue);
+  }
+
+  &__main {
+    margin: 51.9px 0 39px;
+    box-sizing: border-box;
+
+    & > div {
+      &:not(:last-child) {
+        margin-right: 62px;
+      }
+    }
+
+    .title {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      color: var(--dark-gunmetal);
+
+      .HoverPopup {
+        margin-left: 5px;
+      }
+
+      .question-icon {
+        circle {
+          stroke: var(--royal-blue);
+        }
+
+        path {
+          fill: var(--royal-blue);
+        }
+      }
+    }
+
+    .Number {
+      font-weight: 500;
+      font-size: 32px;
+      line-height: 39px;
+    }
+  }
+
+  &__table {
+    margin-bottom: 32px;
+    padding: 18.25px 10px 19.75px;
+    background: var(--alice-blue);
+    border-radius: var(--radius-panel);
+    box-sizing: border-box;
+
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--cool-gray);
+
+    & > div {
+      &:not(:last-child) {
+        margin-right: 32px;
+      }
+    }
+  }
+
+  &__buttons {
+    margin-bottom: 32px;
+  }
+
+  .Button {
+    min-width: 90.5px;
+    box-sizing: border-box;
+
+    &.secondary {
+      .Button__label {
+        color: var(--secondary-blue);
+      }
+    }
+  }
+
+  .submit-button {
+    width: 100%;
+
+    span:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Adaptive
+.CreateReferralLink {
+  &-Bottom {
+    padding: 0;
+
+    .CreateReferralLink {
+      max-width: 100%;
+      border-radius: 0;
+      padding: 30px 20px;
+    }
+  }
+}

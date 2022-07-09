@@ -14,6 +14,7 @@ import CabinetWallets from 'src/index/components/dapp/CabinetWallets/CabinetWall
 import Currency from 'src/index/components/dapp/Currency/Currency';
 import Referral from 'src/index/components/dapp/Referral/Referral';
 import SocialMedia from 'src/index/components/dapp/SocialMedia/SocialMedia';
+import Team from '../../../components/dapp/Team/Team';
 
 // Utils
 import * as PAGES from 'src/index/constants/pages';
@@ -53,6 +54,9 @@ export class DappCabinet extends Component {
         break;
       case PAGES.DAPP_SOCIAL_MEDIA:
         Component = SocialMedia;
+        break;
+      case PAGES.DAPP_TEAM:
+        Component = Team;
         break;
       default:
         Component = CabinetWallets;

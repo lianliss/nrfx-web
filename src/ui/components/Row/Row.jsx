@@ -6,11 +6,19 @@ import { classNames as cn } from 'src/utils';
 // Styles
 import './Row.less';
 
-function Row({ children, className, alignItems, justifyContent, wrap }) {
+function Row({
+  children,
+  className,
+  alignItems,
+  justifyContent,
+  wrap,
+  onClick,
+}) {
   return (
     <div
       className={cn('Row', { [className]: className })}
       style={{ alignItems, justifyContent, flexWrap: wrap ? 'wrap' : 'nowrap' }}
+      onClick={onClick}
     >
       {children}
     </div>
@@ -28,6 +36,7 @@ Row.propTypes = {
     'space-around',
   ]),
   wrap: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 Row.defaultProps = {
@@ -35,6 +44,7 @@ Row.defaultProps = {
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
   wrap: false,
+  onClick: () => {},
 };
 
 export default Row;

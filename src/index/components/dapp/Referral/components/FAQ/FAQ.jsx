@@ -116,7 +116,7 @@ function FAQ({ adaptive }) {
           />
           <FAQItem
             question={getLang(
-              'What percentage of Swap referral rewards will I earn if I have 0 BSW staked in BSW Holder Pool?'
+              'What percentage of Swap referral rewards will I earn if I have 0 NRFX staked in NRFX Holder Pool?'
             )}
             answer="Connect a wallet and find your referral link in the Referral section."
           />

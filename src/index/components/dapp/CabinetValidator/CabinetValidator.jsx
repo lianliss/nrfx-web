@@ -1,22 +1,19 @@
 import React from 'react';
 
 // Components
-import OpenPopupLink from '../OpenPopupLink/OpenPopupLink';
-import SVG from 'utils/svg-wrap';
+import LineBreaker from 'src/ui/components/LineBreaker/LineBreaker';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
+import SocialLinks from '../SocialLinks/SocialLinks';
+
+// Utils
+import { getLang } from 'src/utils';
 
 // Styles
 import './CabinetValidator.less';
 
 function CabinetValidator() {
-  const LinkIcon = ({ icon, to, className }) => (
-    <a href={to} target="_blank">
-      <SVG
-        src={require(`src/asset/icons/social/${icon}.svg`)}
-        className={className}
-      />
-    </a>
-  );
+  const description =
+    'Validators are ambassadors and adherents\n of the project, they are earning a percentage\n of the exchange and from the growth\n of the NRFX/NUSD pool.\n Anyone in the world can become a validator\n and start earn on the fiat exchange process more than on other platforms, companies and even exchanges can be validators and earn with us.\n We are open for partnerships, contact us.';
 
   return (
     <CabinetBlock className="CabinetValidator__wrap">
@@ -26,52 +23,20 @@ function CabinetValidator() {
             <div>
               <h1>Become a Validator</h1>
               <p className="CabinetValidator__description">
-                Validators are ambassadors and adherents of the project, they
-                are earning a percentage of the exchange and from the growth of
-                the NRFX/NUSD pool. Anyone in the world can become a validator
-                and start earn on the fiat exchange process more than on other
-                platforms, companies and even exchanges can be validators and
-                earn with us. We are open for partnerships,&nbsp;
-                <a href="mailto:admin@narfex.com">contact us</a>
+                <LineBreaker text={getLang(description)} />
               </p>
+              <a href="mailto:admin@narfex.com">Сontact us ›</a>
             </div>
-            <div className="CabinetValidator__links">
-              <a href="https://narfex.gitbook.io/wiki/" target="_blank">
-                <OpenPopupLink title="learn about narfex" />
-              </a>
-              <div className="CabinetValidator-social">
-                <span className="CabinetValidator-social__title">
-                  our social
-                </span>
-                <div className="CabinetValidator-social__items">
-                  <LinkIcon
-                    to="https://t.me/narfexfeed"
-                    icon="telegram-solid"
-                  />
-                  <LinkIcon
-                    to="https://discord.gg/T4hFnUaPFS"
-                    icon="discord-solid"
-                  />
-                  <LinkIcon
-                    to="https://instagram.com/narfex.global"
-                    icon="instagram-solid"
-                  />
-                  <LinkIcon to="https://medium.com/@narfex" icon="M-solid" />
-                  <LinkIcon
-                    to="https://www.youtube.com/channel/UCDwJ0XUJDJpQAhB9DxYYUlw"
-                    icon="youtube-solid"
-                  />
-                  <LinkIcon
-                    to="https://twitter.com/narfexglobal?s=21"
-                    icon="twitter-solid"
-                  />
-                </div>
-              </div>
-            </div>
+            <SocialLinks />
           </div>
           <div className="CabinetValidator-bg">
             <img
-              src={require('src/asset/backgrounds/cabinet-wallets-bg.png')}
+              src={require('./asset/bg.svg').default}
+              className="desktop-bg"
+            />
+            <img
+              src={require('./asset/bg-mobile.svg').default}
+              className="mobile-bg"
             />
           </div>
         </div>
