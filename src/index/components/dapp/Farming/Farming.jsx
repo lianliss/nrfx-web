@@ -6,7 +6,11 @@ import wait from 'utils/wait';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import FarmingTable from './components/FarmingTable/FarmingTable';
 import FarmingTableAdaptive from './components/FarmingTableAdaptive/FarmingTableAdaptive';
-import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingStatus";
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
+
+// Utils
+import useAdaptive from 'src/hooks/adaptive';
+import { DESKTOP } from 'src/index/constants/breakpoints';
 
 // Styles
 import './Farming.less';
@@ -129,13 +133,22 @@ const sortOptions = [
   { value: 'newest', label: 'Sort by Newest' },
 ];
 
-function Farming({ adaptive }) {
+function Farming() {
   // States
   const context = React.useContext(Web3Context);
-  const {getFarmContract, chainId, isConnected, connectWallet, updatePoolsList, pools, switchToChain} = context;
+  const {
+    getFarmContract,
+    chainId,
+    isConnected,
+    connectWallet,
+    updatePoolsList,
+    pools,
+    switchToChain,
+  } = context;
   const [farmsValue, setFarmsValue] = React.useState(farms[0].value);
   const [sortBy, setSortBy] = React.useState(sortOptions[0].value);
   const [requestedChain, setRequestedChain] = React.useState(null);
+  const adaptive = useAdaptive(DESKTOP);
 
   const filters = {
     farmsValue,
@@ -156,12 +169,12 @@ function Farming({ adaptive }) {
       });
     }
     if (chainId === 97) {
-      updatePoolsList().catch(error => {
+      updatePoolsList().catch((error) => {
         console.error('[Farming][getPoolsList]', error);
       });
     }
   }, [chainId, isConnected]);
-  
+
   React.useEffect(() => {
     if (!isConnected) {
       connectWallet();
@@ -183,15 +196,19 @@ function Farming({ adaptive }) {
           </p>
         </div>
       </div>
-      {(isConnected && pools) ? <TableComponent items={farmingItems} {...{
-        pools,
-      }} {...filters} /> : <LoadingStatus status={'loading'}/>}
+      {isConnected && pools ? (
+        <TableComponent
+          items={farmingItems}
+          {...{
+            pools,
+          }}
+          {...filters}
+        />
+      ) : (
+        <LoadingStatus status={'loading'} />
+      )}
     </CabinetBlock>
   );
 }
-
-Farming.defaultProps = {
-  adaptive: false,
-};
 
 export default Farming;

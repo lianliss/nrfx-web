@@ -105,6 +105,10 @@ export const routes =
           path: '/dapp/referral/farming',
         },
         {
+          name: pages.DAPP_SOCIAL_MEDIA,
+          path: '/dapp/social_media',
+        },
+        {
           name: pages.DAPP_SWAP,
           path: '/dapp/swap',
         },
