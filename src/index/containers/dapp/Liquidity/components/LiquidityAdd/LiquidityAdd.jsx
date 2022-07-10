@@ -46,7 +46,6 @@ function LiquidityAdd({ onClose, type, addPool, currentPool }) {
 
   const amount0 = Number(values[0]) || 0;
   const amount1 = Number(values[1]) || 1;
-  console.log('selectedTokens', selectedTokens, tokens);
   const pairAddress = selectedTokens[0].symbol && selectedTokens[1].symbol
     ? getPairAddress(selectedTokens[0], selectedTokens[1])
     : '';
