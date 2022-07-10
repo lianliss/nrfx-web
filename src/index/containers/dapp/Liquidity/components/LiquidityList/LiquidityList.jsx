@@ -6,49 +6,100 @@ import DoubleWallets from 'src/index/components/dapp/DoubleWallets/DoubleWallets
 import WalletIcon from 'src/index/components/dapp/WalletIcon/WalletIcon';
 import { DropdownElement, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
+import _ from 'lodash';
+import { Web3Context } from 'services/web3Provider';
 
 // Utils
 import { classNames as cn } from 'src/utils';
+import wei from 'utils/wei';
+import getFinePrice from 'utils/get-fine-price';
 
 // Styles
 import './LiquidityList.less';
 
 // Main
-function LiquidityList({ items, onAddClick, onRemoveClick }) {
+function LiquidityList({ items, onAddClick, onRemoveClick, poolsList }) {
+
+  const context = React.useContext(Web3Context);
+  const {
+    getReserves, getTokenContract, accountAddress, chainId,
+  } = context;
+  const [pools, setPools] = React.useState([]);
+  const [balances, setBalances] = React.useState({});
+
+  React.useEffect(() => {
+    Promise.allSettled(poolsList.map(address => getReserves(address))).then(data => {
+      setPools(data.map(d => _.get(d, 'value[2]')).filter(d => d));
+    });
+    if (accountAddress) {
+      Promise.allSettled(poolsList.map(address => getTokenContract({
+        address,
+        decimals: 18,
+      }, true).getBalance()))
+        .then(data => {
+          const balances = {};
+          data.map((b, i) => {
+            balances[poolsList[i]] = b.value;
+          });
+          setBalances(balances);
+        });
+    }
+  }, [poolsList, accountAddress, chainId]);
+
   const ItemContent = ({ item }) => {
+
+    const symbol0 = _.get(item, 'token0.symbol', '');
+    const symbol1 = _.get(item, 'token1.symbol', '');
+    const decimals0 = _.get(item, 'token0.decimals', 18);
+    const decimals1 = _.get(item, 'token1.decimals', 18);
+    const reserve0 = wei.from(item[symbol0] || '0', decimals0);
+    const reserve1 = wei.from(item[symbol1] || '0', decimals1);
+    const totalSupply = wei.from(_.get(item, 'totalSupply', '0'));
+    const balance = balances[item.address];
+    const share = totalSupply ? balance / totalSupply : 0;
+    const userAmount0 = reserve0 * share;
+    const userAmount1 = reserve1 * share;
+
     return (
       <div className="ItemContent">
         <div className="ItemContent__body">
           <div>
-            <span>Pooled {item.currencies[0].toUpperCase()}</span>
+            <span>Pool balance</span>
             <span>
-              <span>{item.amounts[0]}</span>
-              <WalletIcon currency={item.currencies[0]} size={16} />
+              <span>{getFinePrice(reserve0)}</span>
+              <WalletIcon currency={item.token0} size={16} />
+              &nbsp;+&nbsp;
+              <span>{getFinePrice(reserve1)}</span>
+              <WalletIcon currency={item.token1} size={16} />
             </span>
           </div>
-          {item.currencies.length === 2 && (
-            <div>
-              <span>Pooled {item.currencies[1].toUpperCase()}</span>
-              <span>
-                <span>{item.amounts[1]}</span>
-                <WalletIcon currency={item.currencies[1]} size={16} />
-              </span>
-            </div>
-          )}
+          {!!balance && <>
           <div>
-            <span>Your pool tokens:</span>
-            <span>{item.pool.tokens}</span>
+            <span>You pooled</span>
+            <span>
+              <span>{getFinePrice(userAmount0)}</span>
+              <WalletIcon currency={item.token0} size={16} />
+              &nbsp;+&nbsp;
+              <span>{getFinePrice(userAmount1)}</span>
+              <WalletIcon currency={item.token1} size={16} />
+            </span>
           </div>
           <div>
-            <span>Your pool share:</span>
-            <span>{item.pool.share}</span>
+            <span>Your LP tokens:</span>
+            <span>{getFinePrice(balance)}</span>
           </div>
+          <div>
+            <span>Your share:</span>
+            <span>{getFinePrice(share * 100)}%</span>
+          </div>
+          </>}
         </div>
         <div className="ItemContent__footer">
-          <Button type="lightBlue" size="extra_large" onClick={onAddClick}>
+          <Button type="lightBlue" size="extra_large" onClick={() => onAddClick(item.address)}>
             Add
           </Button>
-          <Button type="dark" size="extra_large" onClick={onRemoveClick}>
+          <Button type="dark" disabled={!balance}
+                  size="extra_large" onClick={() => onRemoveClick(item.address)}>
             Remove
           </Button>
         </div>
@@ -57,15 +108,16 @@ function LiquidityList({ items, onAddClick, onRemoveClick }) {
   };
 
   return (
-    <ul className={cn('LiquidityList', { empty: !items.length })}>
-      {items.length ? (
-        items.map((item) => (
-          <li key={item.id} className="LiquidityList__item">
+    <ul className={cn('LiquidityList', { empty: !pools.length })}>
+      {pools.length ? (
+        pools.map((item, index) => (
+          <li key={index} className="LiquidityList__item">
             <DropdownElement dropElement={<ItemContent item={item} />}>
               <div className="LiquidityList__item__container">
                 <DoubleWallets
-                  first={item.currencies[0]}
-                  second={item.currencies[1]}
+                  first={item.token0}
+                  second={item.token1}
+                  pair={item}
                 />
                 <div className="dropdown-icon">
                   <SVG

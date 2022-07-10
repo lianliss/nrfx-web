@@ -20,6 +20,7 @@ import FarmingTableItemOptions from '../FarmingTableItemOptions/FarmingTableItem
 import FarmingIndicator from '../FarmingIndicator/FarmingIndicator';
 import SVG from 'utils/svg-wrap';
 import getFinePrice from 'utils/get-fine-price';
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
 
 // Utils
 import { openModal } from 'src/actions';
@@ -43,6 +44,7 @@ class FarmingTableItem extends React.PureComponent {
   state = {
     isActive: false,
     reward: 0,
+    pair: null,
   };
 
   constructor(props) {
@@ -54,11 +56,14 @@ class FarmingTableItem extends React.PureComponent {
   componentDidMount() {
     this._mount = true;
     const {pool} = this.props;
-    const {prices, getPairUSDTPrice} = this.context;
+    const {getReserves, prices, getPairUSDTPrice} = this.context;
     this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
     if (typeof prices[pool.address] === 'undefined') {
       getPairUSDTPrice(pool.address);
     }
+    getReserves(pool.address).then(data => {
+      this.setState({pair: data[2]});
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -152,7 +157,7 @@ class FarmingTableItem extends React.PureComponent {
       indicator,
       pool,
     } = this.props;
-    const {isActive, reward} = this.state;
+    const {isActive, reward, pair} = this.state;
     const {
       tokens, prices,
       blocksPerSecond,
@@ -190,10 +195,9 @@ class FarmingTableItem extends React.PureComponent {
           </span>
         </TableColumn>
         <TableColumn>
-          <DoubleWallets
-            first={token0}
-            second={token1}
-          />
+          {!!pair ? <DoubleWallets
+            pair={pair}
+          /> : <LoadingStatus status={'loading'} />}
         </TableColumn>
         <TableColumn>
           <NumberFormat number={apy * 100} percent />

@@ -29,6 +29,7 @@ class Web3Provider extends React.PureComponent {
     chainId: null,
     tokens: networks[56].tokens,
     pools: null,
+    poolsList: networks[56].poolsList,
     prices: {},
   };
 
@@ -228,6 +229,7 @@ class Web3Provider extends React.PureComponent {
       this.pairs = {};
       this.setState({
         tokens: networks[id].tokens,
+        poolsList: networks[id].poolsList,
         chainId: id,
       });
       this.getBlocksPerSecond();
@@ -351,10 +353,10 @@ class Web3Provider extends React.PureComponent {
       // If tokens passed
       token0 = _token0.address ? _token0 : this.wrapBNB;
       token1 = _token1.address ? _token1 : this.wrapBNB;
-      pairAddress = this.getPairAddress(token0, token1);
+      pairAddress = this.getPairAddress(token0, token1).toLowerCase();
     } else {
       // If only pair passed
-      pairAddress = _token0.address;
+      pairAddress = _token0.toLowerCase();
     }
 
     try {
@@ -365,12 +367,14 @@ class Web3Provider extends React.PureComponent {
           return [
             reserves[token0.symbol],
             reserves[token1.symbol],
+            reserves,
           ]
         } else {
           // If pair passed
           return [
             reserves[reserves.token0.symbol],
-            reserves[reserves.token1.symbol]
+            reserves[reserves.token1.symbol],
+            reserves,
           ]
         }
       }
@@ -386,9 +390,11 @@ class Web3Provider extends React.PureComponent {
         contract.methods.totalSupply().call(),
       ]);
       if (!_token1) {
+        const dataToken0 = data[1].toLowerCase();
+        const dataToken1 = data[2].toLowerCase();
         // If no tokens passed
-        token0 = this.state.tokens.find(t => t.address.toLowerCase() === data[1]);
-        token1 = this.state.tokens.find(t => t.address.toLowerCase() === data[2]);
+        token0 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === dataToken0);
+        token1 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === dataToken1);
       }
       // Switch pair
       const result = data[1] === token0.address
@@ -409,9 +415,12 @@ class Web3Provider extends React.PureComponent {
         token0: !!_token1 ? _token0 : token0,
         token1: !!_token1 ? _token1 : token1,
         totalSupply: data[3],
+        address: pairAddress,
+        decimals: 18,
       };
       this.pairs[pairAddress][token0.symbol] = result[0];
       this.pairs[pairAddress][token1.symbol] = result[1];
+      result.push(this.pairs[pairAddress]);
       return result;
     } catch (error) {
       console.error('[getReserves]', this.getBSCScanLink(pairAddress), error);
@@ -525,24 +534,30 @@ class Web3Provider extends React.PureComponent {
       });
     }
     try {
-      const {tokens} = this.state;
-      const contract = new (this.getWeb3().eth.Contract)(
-        require('src/index/constants/ABI/PancakePair'),
-        pairAddress,
-      );
-      const data = await Promise.all([
-        contract.methods.getReserves().call(),
-        contract.methods.totalSupply().call(),
-        contract.methods.token0().call(),
-        contract.methods.token1().call(),
-      ]);
-      const token0 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[2].toLowerCase())
-        || {address: data[2], decimals: 18};
-      const token1 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[3].toLowerCase())
-        || {address: data[3], decimals: 18};
-      const reserve0 = wei.from(data[0]._reserve0, token0.decimals);
-      const reserve1 = wei.from(data[0]._reserve1, token0.decimals);
-      const totalSupply = wei.from(data[1]);
+      const reserves = await this.getReserves(pairAddress);
+      // const {tokens} = this.state;
+      // const contract = new (this.getWeb3().eth.Contract)(
+      //   require('src/index/constants/ABI/PancakePair'),
+      //   pairAddress,
+      // );
+      // const data = await Promise.all([
+      //   contract.methods.getReserves().call(),
+      //   contract.methods.totalSupply().call(),
+      //   contract.methods.token0().call(),
+      //   contract.methods.token1().call(),
+      // ]);
+      // const token0 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[2].toLowerCase())
+      //   || {address: data[2], decimals: 18};
+      // const token1 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === data[3].toLowerCase())
+      //   || {address: data[3], decimals: 18};
+      // const reserve0 = wei.from(data[0]._reserve0, token0.decimals);
+      // const reserve1 = wei.from(data[0]._reserve1, token0.decimals);
+      // const totalSupply = wei.from(data[1]);
+      const token0 = reserves[2].token0;
+      const token1 = reserves[2].token1;
+      const reserve0 = reserves[0];
+      const reserve1 = reserves[1];
+      const totalSupply = reserves[2].totalSupply;
       const prices = await Promise.all([
         this.getTokenUSDPrice(token0),
         this.getTokenUSDPrice(token1),
@@ -1005,6 +1020,8 @@ class Web3Provider extends React.PureComponent {
       switchToChain: this.switchToChain.bind(this),
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
       findTokenBySymbol: this.findTokenBySymbol.bind(this),
+      bnb: this.bnb,
+      wrapBNB: this.wrapBNB,
     }}>
       {this.props.children}
     </Web3Context.Provider>

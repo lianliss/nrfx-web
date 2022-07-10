@@ -19,12 +19,12 @@ let token0;
 let token1;
 const TIMEOUT_BALANCE = 2000;
 
-function LiquidityAdd({ onClose, type }) {
+function LiquidityAdd({ onClose, type, addPool, currentPool }) {
   // Constants
   const context = React.useContext(Web3Context);
   const {
     getPairAddress, getReserves, getTokenBalance, getTokenContract,
-    routerAddress,
+    routerAddress, tokens,
   } = context;
 
   const [isImport, setIsImport] = React.useState(type === 'import');
@@ -33,7 +33,10 @@ function LiquidityAdd({ onClose, type }) {
   // --Inputs
   const [values, setValues] = React.useState(['0', '0']);
   // --Tokens
-  const [selectedTokens, setSelectedTokens] = React.useState([{}, {}]);
+  const [selectedTokens, setSelectedTokens] = React.useState([
+    tokens.find(t => t.symbol === 'NRFX'),
+    tokens.find(t => t.symbol === 'BNB'),
+  ]);
   const [selectToken, setSelectToken] = React.useState(0);
   const [reserves, setReserves] = React.useState([0,0]);
   const [balances, setBalances] = React.useState([0,0]);
@@ -43,6 +46,7 @@ function LiquidityAdd({ onClose, type }) {
 
   const amount0 = Number(values[0]) || 0;
   const amount1 = Number(values[1]) || 1;
+  console.log('selectedTokens', selectedTokens, tokens);
   const pairAddress = selectedTokens[0].symbol && selectedTokens[1].symbol
     ? getPairAddress(selectedTokens[0], selectedTokens[1])
     : '';
@@ -124,16 +128,22 @@ function LiquidityAdd({ onClose, type }) {
   // Set default selected tokens
   React.useEffect(() => {
     const { tokens } = context;
-    const firstToken = tokens.filter(
-      (token) => token.symbol.toUpperCase() === 'NRFX'
-    );
-    const secondToken = tokens.filter(
-      (token) => token.symbol.toUpperCase() === 'BNB'
-    );
+    if (currentPool) {
+      getReserves(currentPool).then(reserve => {
+        setSelectedTokens([reserve[2].token0, reserve[2].token1]);
+        clearInterval(balanceInterval);
+        balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+      }).catch(error => {
+        console.error("[LiquidityAdd] Can't set the current pool", currentPool, error);
+      });
+    } else {
+      const firstToken = tokens.find(t => t.symbol === 'NRFX');
+      const secondToken = tokens.find(t => t.symbol === 'BNB');
 
-    setSelectedTokens([firstToken[0], secondToken[0]]);
-    clearInterval(balanceInterval);
-    balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+      setSelectedTokens([firstToken, secondToken]);
+      clearInterval(balanceInterval);
+      balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+    }
 
     return () => {
       clearInterval(balanceInterval);
@@ -274,6 +284,7 @@ function LiquidityAdd({ onClose, type }) {
             <span
               className="LiquidityAdd__import__default_text link"
               onClick={() => {
+                if (pairAddress.length) addPool(pairAddress);
                 setIsImport(false);
                 setValues(['0', '0']);
               }}

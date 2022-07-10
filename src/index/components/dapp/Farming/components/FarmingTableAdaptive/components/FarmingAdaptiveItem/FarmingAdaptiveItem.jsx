@@ -6,6 +6,7 @@ import { Web3Context } from 'services/web3Provider';
 import wei from 'utils/wei';
 import _ from 'lodash';
 import * as roi from 'utils/roi';
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
 
 // Components
 import { NumberFormat, HoverPopup } from 'src/ui';
@@ -33,6 +34,7 @@ class FarmingAdaptiveItem extends React.PureComponent {
   state = {
     isActive: false,
     reward: 0,
+    pair: null,
   };
 
   constructor(props) {
@@ -44,11 +46,14 @@ class FarmingAdaptiveItem extends React.PureComponent {
   componentDidMount() {
     this._mount = true;
     const {pool} = this.props;
-    const {prices, getPairUSDTPrice} = this.context;
+    const {prices, getPairUSDTPrice, getReserves} = this.context;
     this.rewardTimeout = setTimeout(this.updateRewardAmount, REWARD_UPDATE_INTERVAL);
     if (typeof prices[pool.address] === 'undefined') {
       getPairUSDTPrice(pool.address);
     }
+    getReserves(pool.address).then(data => {
+      this.setState({pair: data[2]});
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -142,7 +147,7 @@ class FarmingAdaptiveItem extends React.PureComponent {
       indicator,
       pool,
     } = this.props;
-    const {isActive, reward} = this.state;
+    const {isActive, reward, pair} = this.state;
     const {
       tokens, prices,
       blocksPerSecond,
@@ -172,10 +177,9 @@ class FarmingAdaptiveItem extends React.PureComponent {
         >
           <div className="row">
             <div className="col">
-              <DoubleWallets
-                first={token0}
-                second={token1}
-              />
+              {!!pair ? <DoubleWallets
+                pair={pair}
+              /> : <LoadingStatus status={'loading'} />}
             </div>
             <div className="col">
               <FarmingIndicator

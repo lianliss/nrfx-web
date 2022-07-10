@@ -14,13 +14,13 @@ import { FARMING } from 'src/index/constants/pages';
 import './LiquidityMain.less';
 
 // Main
-function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick }) {
+function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick, poolsList }) {
   return (
     <>
       <div className="Liquidity__header">
         <div className="Liquidity__title">Liquidity</div>
         <p className="default-text">Add liquidity to receive LP tokens</p>
-        <Button type="lightBlue" size="extra_large" onClick={onAddClick}>
+        <Button type="lightBlue" size="extra_large" onClick={() => onAddClick()}>
           Add Liquidity <span>+</span>
         </Button>
       </div>
@@ -33,11 +33,12 @@ function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick }) {
           items={items}
           onAddClick={onAddClick}
           onRemoveClick={onRemoveClick}
+          poolsList={poolsList}
         />
       </div>
       <div className="Liquidity__footer">
         <p className="default-text">
-          Don't see a pool you joined? <a onClick={onImportClick}>Import it.</a>
+          Don't see a pool you joined? <a onClick={() => onImportClick()}>Import it.</a>
         </p>
         <p className="default-text">
           Or, if you staked your LP tokens in a farm, unstake them to see

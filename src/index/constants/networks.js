@@ -17,6 +17,15 @@ const networks = {
       decimals: 18,
       logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
     },
+    bnb: {
+      name: "Binance Coin",
+      symbol: "BNB",
+      address: null,
+      chainId: 56,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
+    },
+    poolsList: ["0xe38004a2124abe97f972b2af12e888962fae464b","0x4f191eff08dd7074f3a6584c2024290968ba94db"],
     tokens: [
       {
         name: "Narfex",
@@ -60,6 +69,17 @@ const networks = {
       decimals: 18,
       logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
     },
+    bnb: {
+      name: "Binance Coin",
+      symbol: "BNB",
+      address: null,
+      chainId: 97,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
+    },
+    poolsList: [
+
+    ],
     tokens: [
       {
         name: "Narfex",

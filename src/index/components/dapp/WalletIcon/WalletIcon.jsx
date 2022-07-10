@@ -42,7 +42,7 @@ function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
 }
 
 WalletIcon.propTypes = {
-  currency: PropTypes.string,
+  currency: PropTypes.any,
   size: PropTypes.number,
   marginLeft: PropTypes.number,
   marginRight: PropTypes.number,
