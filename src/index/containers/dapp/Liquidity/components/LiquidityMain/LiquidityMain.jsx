@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router5";
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import { Button } from 'src/ui';
@@ -15,13 +16,17 @@ import './LiquidityMain.less';
 
 // Main
 function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick, poolsList }) {
+  const context = React.useContext(Web3Context);
+  const {isConnected, connectWallet} = context;
+
   return (
     <>
-      <div className="Liquidity__header">
+    {!!isConnected
+      ? <><div className="Liquidity__header">
         <div className="Liquidity__title">Liquidity</div>
         <p className="default-text">Add liquidity to receive LP tokens</p>
         <Button type="lightBlue" size="extra_large" onClick={() => onAddClick()}>
-          Add Liquidity <span>+</span>
+          Add Liquidity&nbsp;<span>+</span>
         </Button>
       </div>
       <div className="Liquidity__body">
@@ -35,7 +40,12 @@ function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick, poolsL
           onRemoveClick={onRemoveClick}
           poolsList={poolsList}
         />
-      </div>
+      </div></> : <div className="Liquidity__header">
+        <div className="Liquidity__title">Liquidity</div>
+        <Button type="lightBlue" size="extra_large" onClick={() => connectWallet()}>
+          Connect wallet
+        </Button>
+      </div>}
       <div className="Liquidity__footer">
         <p className="default-text">
           Don't see a pool you joined? <a onClick={() => onImportClick()}>Import it.</a>

@@ -71,9 +71,9 @@ function DoubleWallets({ first, second, pair }) {
 }
 
 DoubleWallets.propTypes = {
-  first: PropTypes.object,
-  second: PropTypes.object,
-  pair: PropTypes.object,
+  first: PropTypes.any,
+  second: PropTypes.any,
+  pair: PropTypes.any,
 };
 
 DoubleWallets.defaultProps = {

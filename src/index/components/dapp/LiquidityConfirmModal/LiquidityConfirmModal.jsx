@@ -54,7 +54,7 @@ function LiquidityConfirmModal(props) {
   const [pair, setPair] = React.useState(null);
   const adaptive = useSelector((store) => store.default.adaptive);
   const Component = adaptive ? BottomSheetModal : Modal;
-  const [slippageTolerance, setSlippageTolerance] = React.useState(0.02);
+  const [slippageTolerance, setSlippageTolerance] = React.useState(0.08);
   const [isTransaction, setIsTransaction] = React.useState(false);
   const [errorText, setErrorText] = React.useState('');
 
@@ -73,7 +73,6 @@ function LiquidityConfirmModal(props) {
     <LoadingStatus status={'loading'} />
   </Component>);
 
-  console.log('pair', pair);
   const totalSupply = wei.from(pair.totalSupply);
   const reserve0 = wei.from(pair[selectedTokens[0].symbol]);
   const reserve1 = wei.from(pair[selectedTokens[1].symbol]);

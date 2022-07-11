@@ -1,17 +1,173 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import wei from 'utils/wei';
+import getFinePrice from 'utils/get-fine-price';
+import { openStateModal } from 'src/actions';
 
 // Components
 import SVG from 'utils/svg-wrap';
 import { Button, NumberFormat } from 'src/ui';
 import WalletIcon from 'src/index/components/dapp/WalletIcon/WalletIcon';
 import LiquidityRange from '../LiquidityRange/LiquidityRange';
+import { Web3Context } from 'services/web3Provider';
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
 
 // Styles
 import './LiquidityRemove.less';
 import DoubleWallets from 'src/index/components/dapp/DoubleWallets/DoubleWallets';
 
-function LiquidityRemove({ onClose }) {
+const processError = error => {
+  const {message} = error;
+  try {
+    if (message.indexOf('Internal JSON-RPC error.') >= 0) {
+      const internal = JSON.parse(message.split('Internal JSON-RPC error.')[1]);
+      return internal.message;
+    } else {
+      return message;
+    }
+  } catch (err) {
+    console.log('ERRR', err);
+    return message;
+  }
+};
+
+function LiquidityRemove({ onClose, currentPool }) {
+
+  const context = React.useContext(Web3Context);
+  const {
+    getReserves,
+    transaction, getTransactionReceipt,
+    getTokenContract, chainId,
+    routerAddress, web3,
+    accountAddress, bnb, wrapBNB,
+    getBSCScanLink,
+    addTokenToWallet,
+    approve,
+  } = context;
+  const [balance, setBalance] = React.useState(0);
+  const [allowance, setAllowance] = React.useState(0);
+  const [pair, setPair] = React.useState(null);
+  const [isApproving, setIsApproving] = React.useState(false);
+  const [isTransaction, setIsTransaction] = React.useState(false);
+  const [errorText, setErrorText] = React.useState('');
+  const [multiplier, setMultiplier] = React.useState(0.75);
+  const [slippageTolerance, setSlippageTolerance] = React.useState(0.08);
+
+  const tokenContract = getTokenContract({
+    address: currentPool,
+    decimals: 18,
+  });
+
+  React.useEffect(() => {
+    Promise.all([
+      getReserves(currentPool),
+      tokenContract.getBalance(),
+      tokenContract.getAllowance(routerAddress, 5 * 10**9),
+    ]).then(data => {
+      setPair(data[0][2]);
+      setBalance(data[1]);
+      setAllowance(data[2]);
+    });
+  }, [currentPool]);
+
+  if (!pair) return (<>
+    <LoadingStatus status={'loading'} />
+  </>);
+
+  const symbol0 = _.get(pair, 'token0.symbol', '');
+  const symbol1 = _.get(pair, 'token1.symbol', '');
+  const decimals0 = _.get(pair, 'token0.decimals', 18);
+  const decimals1 = _.get(pair, 'token1.decimals', 18);
+  const reserve0 = wei.from(pair[symbol0] || '0', decimals0);
+  const reserve1 = wei.from(pair[symbol1] || '0', decimals1);
+  const totalSupply = wei.from(_.get(pair, 'totalSupply', '0'));
+  const share = totalSupply ? balance / totalSupply : 0;
+  const userAmount0 = reserve0 * share;
+  const userAmount1 = reserve1 * share;
+
+  const onApprove = async () => {
+    setIsApproving(true);
+    try {
+      const amount = await tokenContract.approve(routerAddress, 5 * 10**9);
+      setAllowance(amount);
+    } catch (error) {
+      console.error('[LiquidityRemove][approve]', token);
+    }
+    setIsApproving(false);
+  };
+
+  const isApproved = allowance > balance;
+  const isToken0Wrap = pair.token0.address === wrapBNB.address || !pair.token0.address;
+  const isToken1Wrap = pair.token1.address === wrapBNB.address || !pair.token1.address;
+  const isBNB = isToken0Wrap || isToken1Wrap;
+
+  const onRemove = async () => {
+    setIsTransaction(true);
+    const token = isToken0Wrap ? pair.token1 : pair.token0;
+    const tokenAmount = isToken0Wrap ? userAmount1 : userAmount0;
+    const bnbAmount = isToken0Wrap ? userAmount0 : userAmount1;
+    const deadline = Number(Date.now() / 1000 + 60 * 15).toFixed(0);
+    const routerContract = new (web3.eth.Contract)(
+      require('src/index/constants/ABI/PancakeRouter'),
+      routerAddress,
+    );
+    try {
+      let method;
+      let params;
+      if (isBNB) {
+        method = 'removeLiquidityETH';
+        params = [
+          token.address,
+          wei.to(balance * multiplier),
+          wei.to(
+            (tokenAmount * multiplier - tokenAmount * multiplier * slippageTolerance),
+            token.decimals || 18),
+          wei.to(
+            (bnbAmount * multiplier - bnbAmount * multiplier * slippageTolerance),
+            bnb.decimals || 18),
+          accountAddress,
+          deadline,
+        ];
+      } else {
+        method = 'removeLiquidity';
+        params = [
+          pair.token0.address,
+          pair.token1.address,
+          wei.to(balance * multiplier),
+          wei.to(
+            (userAmount0 * multiplier - userAmount0 * multiplier * slippageTolerance),
+            pair.token0.decimals || 18),
+          wei.to(
+            (userAmount1 * multiplier - userAmount1 * multiplier * slippageTolerance),
+            pair.token1.decimals || 18),
+          accountAddress,
+          deadline,
+        ]
+      }
+      let txHash;
+      try {
+        txHash = await transaction(routerContract, method, params);
+      } catch (error) {
+        console.error('[LiquidityRemove][onRemove]', method, params, error);
+        if (isBNB) {
+          method = 'removeLiquidityETHSupportingFeeOnTransferTokens';
+          txHash = await transaction(routerContract, method, params);
+        }
+      }
+      const receipt = await getTransactionReceipt(txHash);
+      console.log('[onRemove] Success', txHash, receipt);
+      openStateModal('transaction_submitted', {
+        txLink: getBSCScanLink(txHash),
+        onClose: onClose,
+      });
+      onClose()
+    } catch (error) {
+      console.error('[LiquidityRemove][onRemove]', error);
+      setErrorText(processError(error));
+    }
+    setIsTransaction(false);
+  };
+
   return (
     <>
       <div className="Liquidity__header LiquidityRemove">
@@ -21,27 +177,27 @@ function LiquidityRemove({ onClose }) {
         </div>
       </div>
       <div className="Liquidity__body LiquidityRemove">
-        <LiquidityRange />
+        <LiquidityRange onChange={setMultiplier} defaultValue={0.75} />
         <div className="icon__wrap">
           <SVG src={require('src/asset/icons/arrows/long-arrow.svg')} />
         </div>
         <div className="LiquidityRemove__result">
           <div className="LiquidityRemove__item">
             <span className="default-text-dark">
-              <NumberFormat number={200.0155} />
+              <NumberFormat number={userAmount0 * multiplier} />
             </span>
             <span className="default-text-dark">
-              <WalletIcon currency="nrfx" size={24} marginRight={8} />
-              BNB
+              <WalletIcon currency={pair.token0} size={24} marginRight={8} />
+              {symbol0} {multiplier}
             </span>
           </div>
           <div className="LiquidityRemove__item">
             <span className="default-text-dark">
-              <NumberFormat number={200.0155} />
+              <NumberFormat number={userAmount1 * multiplier} />
             </span>
             <span className="default-text-dark">
-              <WalletIcon currency="nrfx" size={24} marginRight={8} />
-              BNB
+              <WalletIcon currency={pair.token1} size={24} marginRight={8} />
+              {symbol1}
             </span>
           </div>
         </div>
@@ -49,48 +205,56 @@ function LiquidityRemove({ onClose }) {
           <div className="LiquidityRemove__item">
             <span className="default-text-dark">Price:</span>
             <span className="default-text-dark">
-              <NumberFormat number={1} currency="bnb" />
+              <NumberFormat number={1} currency={symbol0} />
               &nbsp;=&nbsp;
-              <NumberFormat number={1} currency="nrfx" />
+              <NumberFormat number={reserve1 / reserve0} currency={symbol1} />
             </span>
           </div>
           <div className="LiquidityRemove__item">
             <span className="default-text-dark"></span>
             <span className="default-text-dark">
-              <NumberFormat number={1} currency="bnb" />
+              <NumberFormat number={1} currency={symbol1} />
               &nbsp;=&nbsp;
-              <NumberFormat number={1} currency="nrfx" />
+              <NumberFormat number={reserve0 / reserve1} currency={symbol0} />
             </span>
           </div>
         </div>
-        <Button type="lightBlue" size="extra_large" onClick={onClose}>
+        {!isApproved && <Button type="lightBlue"
+                state={isApproving ? 'loading' : ''}
+                size="extra_large" onClick={onApprove}>
+          Enable
+        </Button>}
+        <Button type={isApproved ? 'lightBlue' : 'secondary'}
+                disabled={!isApproved || isTransaction}
+                state={isTransaction ? 'loading' : ''}
+                size="extra_large" onClick={onRemove}>
           Remove
         </Button>
+        {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
         <div className="LiquidityRemove__result">
           <div className="LiquidityRemove__item">
             <span className="default-text-dark">
               <DoubleWallets
-                first="bnb"
-                second="nrfx"
+                pair={pair}
                 size={24}
                 separator="/"
                 className="default-text-dark"
               />
             </span>
             <span className="default-text-dark">
-              <NumberFormat number={0.0} />
+              <NumberFormat number={balance} />
             </span>
           </div>
           <div className="LiquidityRemove__item">
-            <span className="default-text-dark">BNB:</span>
+            <span className="default-text-dark">{symbol0}:</span>
             <span className="default-text-dark">
-              <NumberFormat number={15.05} />
+              <NumberFormat number={userAmount0} />
             </span>
           </div>
           <div className="LiquidityRemove__item">
-            <span className="default-text-dark">BNB:</span>
+            <span className="default-text-dark">{symbol1}:</span>
             <span className="default-text-dark">
-              <NumberFormat number={15.05} />
+              <NumberFormat number={userAmount1} />
             </span>
           </div>
         </div>

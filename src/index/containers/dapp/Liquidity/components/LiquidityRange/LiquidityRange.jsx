@@ -8,13 +8,14 @@ import { Button } from 'src/ui';
 import './LiquidityRange.less';
 
 // Main
-function LiquidityRange() {
-  const [value, setValue] = React.useState(75);
+function LiquidityRange({onChange, defaultValue}) {
+  const [value, setValue] = React.useState(defaultValue * 100);
 
   // Handlers
   // Range change handler
   const handleChange = (newValue) => {
     setValue(newValue);
+    onChange(newValue / 100);
   };
 
   return (
@@ -32,16 +33,16 @@ function LiquidityRange() {
         type="light-blue"
       />
       <div className="LiquidityRange__buttons">
-        <Button type="secondary" onClick={() => setValue(25)}>
+        <Button type="secondary" onClick={() => handleChange(25)}>
           25%
         </Button>
-        <Button type="secondary" onClick={() => setValue(50)}>
+        <Button type="secondary" onClick={() => handleChange(50)}>
           50%
         </Button>
-        <Button type="secondary" onClick={() => setValue(75)}>
+        <Button type="secondary" onClick={() => handleChange(75)}>
           75%
         </Button>
-        <Button type="secondary" onClick={() => setValue(100)}>
+        <Button type="secondary" onClick={() => handleChange(100)}>
           Max
         </Button>
       </div>

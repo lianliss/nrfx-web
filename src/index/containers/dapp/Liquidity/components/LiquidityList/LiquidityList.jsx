@@ -17,6 +17,9 @@ import getFinePrice from 'utils/get-fine-price';
 // Styles
 import './LiquidityList.less';
 
+let updateBalanceInterval;
+const UPDATE_BALANCE_TIMEOUT = 5000;
+
 // Main
 function LiquidityList({ items, onAddClick, onRemoveClick, poolsList }) {
 
@@ -27,7 +30,7 @@ function LiquidityList({ items, onAddClick, onRemoveClick, poolsList }) {
   const [pools, setPools] = React.useState([]);
   const [balances, setBalances] = React.useState({});
 
-  React.useEffect(() => {
+  const updateBalance = () => {
     Promise.allSettled(poolsList.map(address => getReserves(address))).then(data => {
       setPools(data.map(d => _.get(d, 'value[2]')).filter(d => d));
     });
@@ -43,6 +46,15 @@ function LiquidityList({ items, onAddClick, onRemoveClick, poolsList }) {
           });
           setBalances(balances);
         });
+    }
+  };
+
+  React.useEffect(() => {
+    updateBalance();
+    clearInterval(updateBalanceInterval);
+    setInterval(updateBalance, UPDATE_BALANCE_TIMEOUT);
+    return () => {
+      clearInterval(updateBalanceInterval);
     }
   }, [poolsList, accountAddress, chainId]);
 
