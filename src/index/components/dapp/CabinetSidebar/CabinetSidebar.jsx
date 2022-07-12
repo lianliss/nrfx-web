@@ -97,7 +97,7 @@ function CabinetSidebar({ className = '' }) {
                 icon="nrfx-blue-bg-icon"
                 href="/token"
               />
-              <SidebarItem
+              {/* <SidebarItem
                 title="Referral Program"
                 icon="team-icon"
                 active={isPage([
@@ -106,7 +106,7 @@ function CabinetSidebar({ className = '' }) {
                   PAGES.DAPP_REFERRAL_FARMING,
                 ])}
                 onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
-              />
+              /> */}
               <SidebarItem title="More" icon="more-vertical-icon">
                 <ul>
                   <li>
@@ -114,7 +114,12 @@ function CabinetSidebar({ className = '' }) {
                       Docs
                     </a>
                   </li>
-                  <li onClick={() => router.navigate(PAGES.DAPP_TEAM)}>Team</li>
+                  <li
+                    className="disabled"
+                    onClick={() => router.navigate(PAGES.DAPP_TEAM)}
+                  >
+                    Team
+                  </li>
                   <li
                     className="disabled"
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
