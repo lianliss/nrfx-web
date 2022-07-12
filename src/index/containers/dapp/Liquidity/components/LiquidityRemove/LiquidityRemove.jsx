@@ -188,7 +188,7 @@ function LiquidityRemove({ onClose, currentPool }) {
             </span>
             <span className="default-text-dark">
               <WalletIcon currency={pair.token0} size={24} marginRight={8} />
-              {symbol0} {multiplier}
+              {symbol0}
             </span>
           </div>
           <div className="LiquidityRemove__item">
