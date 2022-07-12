@@ -2324,7 +2324,7 @@ export default {
           type: "body"
         }
       },
-      path: 'fiat_wallet/event_xendit'
+      path: "fiat_wallet/event_xendit"
     }
   },
   Admin: {
