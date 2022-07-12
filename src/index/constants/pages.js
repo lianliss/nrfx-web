@@ -58,4 +58,5 @@ export const TRANSACTIONS = "transactions";
 export const VALIDATOR = "validator";
 export const TOKENSALE = "tokensale";
 export const FARMING_INSTRUCTION = "farming_instruction";
+export const TERMS_OF_SERVICE = "terms_of_service";
 export const PRIVATE_POOLS = "private_pools";
