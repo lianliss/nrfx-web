@@ -10,6 +10,7 @@ import SVG from 'utils/svg-wrap';
 import { getLang } from "utils";
 import { Form, Input, Button } from 'src/ui';
 import * as toast from 'actions/toasts';
+import { openStateModal } from 'src/actions';
 
 // Styles
 import './TokenSale.less';
@@ -37,7 +38,8 @@ function TokenSale() {
   const context = React.useContext(Web3Context);
   const {
     tokens, getTokenContract, tokenSale, transaction,
-    isConnected, connectWallet, chainId,
+    isConnected, connectWallet, chainId, getTransactionReceipt,
+    getBSCScanLink, addTokenToWallet,
   } = context;
   const [value, setValue] = React.useState('0');
   const [allowance, setAllowance] = React.useState(0);
@@ -54,8 +56,12 @@ function TokenSale() {
   };
 
   const amount = Number(value) || 0;
-  const busdAmount = (amount) * TOKEN_PRICE;
+  const busdAmount = amount;
   const isAvailable = allowance >= busdAmount && busdAmount;
+
+  const addToken = () => {
+    addTokenToWallet(tokens.find(t => t.symbol === 'NRFX'));
+  };
 
   const onApprove = async () => {
     if (isApproving) return;
@@ -76,16 +82,22 @@ function TokenSale() {
 
   const onBuyTokens = async () => {
     setIsDeposit(true);
+    setErrorText('');
     const web3 = new Web3(window.ethereum);
     const contract = new (web3.eth.Contract)(
       require('src/index/constants/ABI/TokenSale'),
       tokenSale,
     );
     try {
-      await transaction(contract, 'buyTokens', [wei.to(wei.bn(amount), 18)]);
+      const txHash = await transaction(contract, 'buy', [wei.to(wei.bn(amount), 18)]);
+      const receipt = await getTransactionReceipt(txHash);
+      console.log('[onBuyTokens]', txHash, receipt);
       setValue('0');
-      toast.success(getLang('status_success'));
-      setErrorText('');
+      openStateModal('transaction_submitted', {
+        txLink: getBSCScanLink(txHash),
+        symbol: `NRFX`,
+        addToken,
+      });
     } catch (error) {
       console.error('[onBuyTokens]', error);
       setErrorText(processError(error));
@@ -112,8 +124,8 @@ function TokenSale() {
           <h3>{chainId === 97 ? 'Testnet' : ''} Token Sale</h3>
           <label>
             <p>
-              <span>Amount</span>
-              <small>1 NRFX = {TOKEN_PRICE} BUSD</small>
+              <span>BUSD Amount</span>
+              <small>1 BUSD = {1 / TOKEN_PRICE} NRFX</small>
             </p>
             <Input value={value} onChange={onChange} disabled={isDeposit} />
           </label>
@@ -122,7 +134,7 @@ function TokenSale() {
                   onClick={onApprove}
                   disabled={!amount || isAvailable}
                   state={isApproving ? 'loading' : ''}>
-            Approve {busdAmount.toFixed(2)} BUSD
+            Approve {amount.toFixed(2)} BUSD
           </Button>
           <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
                   onClick={onBuyTokens}
