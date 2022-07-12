@@ -2,14 +2,14 @@ import * as api from "../../services/api";
 import apiSchema from "../../services/apiSchema";
 import * as actionTypes from "../actionTypes";
 import * as toast from "../toasts";
-import { getLang, isFiat } from "../../utils";
+import { getLang } from "../../utils";
 import { closeModal } from "../index";
 import { PAGE_COUNT } from "../../index/constants/cabinet";
 
 export function getFiatWallets() {
   return dispatch => {
     api
-      .call(apiSchema.Fiat_wallet().DefaultGet)
+      .call(apiSchema.Fiat_wallet.DefaultGet)
       .then(payload => {
         dispatch({ type: actionTypes.FIAT_WALLETS_SET, payload });
       })
@@ -50,12 +50,12 @@ export function getHistoryMore() {
   };
 }
 
-export function getMerchant(type, fiat) {
+export function getMerchant(type) {
   return (dispatch, getState) => {
     const apiMethod =
       type === "withdrawal"
-        ? apiSchema.Fiat_wallet(fiat).WithdrawMethodsGet
-        : apiSchema.Fiat_wallet(fiat).RefillMethodsGet;
+        ? apiSchema.Fiat_wallet.WithdrawMethodsGet
+        : apiSchema.Fiat_wallet.RefillMethodsGet;
 
     dispatch({
       type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
@@ -88,8 +88,6 @@ export function clearMerchants() {
 }
 
 export function exchange({ from, to, amount, amountType }) {
-  const fiat = isFiat(from) ? from : to;
-  
   return (dispatch, getState) => {
     dispatch({
       type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
@@ -97,7 +95,7 @@ export function exchange({ from, to, amount, amountType }) {
       status: "loading"
     });
     api
-      .call(apiSchema.Fiat_wallet(fiat).ExchangePost, {
+      .call(apiSchema.Fiat_wallet.ExchangePost, {
         from_currency: from,
         to_currency: to,
         amount_type: amountType,
@@ -122,7 +120,7 @@ export function exchange({ from, to, amount, amountType }) {
 
 export function payForm({ merchant, amount, currency }) {
   return api
-    .call(apiSchema.Fiat_wallet(currency).PayFormGet, {
+    .call(apiSchema.Fiat_wallet.PayFormGet, {
       merchant,
       amount,
       currency
@@ -151,7 +149,7 @@ export function getRate({ base, currency, type }) {
       payload: newMarket
     });
     api
-      .call(apiSchema.Fiat_wallet(currency).RateGet, { base, currency })
+      .call(apiSchema.Fiat_wallet.RateGet, { base, currency })
       .then(({ rate }) => {
         const {
           loadingStatus: { newRate },
@@ -182,7 +180,7 @@ export function getRate({ base, currency, type }) {
   };
 }
 
-export function withdrawalBanksGet(currency) {
+export function withdrawalBanksGet() {
   return dispatch => {
     dispatch({
       type: actionTypes.FIAT_WALLETS_SET_LOADING_STATUS,
@@ -190,7 +188,7 @@ export function withdrawalBanksGet(currency) {
       status: "loading"
     });
     api
-      .call(apiSchema.Fiat_wallet(currency).Xendit.WithdrawalBanksGet)
+      .call(apiSchema.Fiat_wallet.Xendit.WithdrawalBanksGet)
       .then(banks => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_WITHDRAWAL_BANK_LIST,
@@ -226,7 +224,7 @@ export function refillBanksGet() {
       status: "loading"
     });
     api
-      .call(apiSchema.Fiat_wallet().Xendit.RefillBanksGet)
+      .call(apiSchema.Fiat_wallet.Xendit.RefillBanksGet)
       .then(banks => {
         dispatch({
           type: actionTypes.FIAT_WALLETS_SET_REFILL_BANK_LIST,
@@ -272,7 +270,7 @@ export function fiatWithdrawal(params) {
       status: "loading"
     });
     api
-      .call(apiSchema.Fiat_wallet(currency).WithdrawPut, {
+      .call(apiSchema.Fiat_wallet.WithdrawPut, {
         bank_code: params.bank.code,
         account_holder_name: params.accountHolderName,
         account_number: params.accountNumber,
