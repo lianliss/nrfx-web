@@ -184,7 +184,7 @@ function LiquidityRemove({ onClose, currentPool }) {
         <div className="LiquidityRemove__result">
           <div className="LiquidityRemove__item">
             <span className="default-text-dark">
-              <NumberFormat number={userAmount0 * multiplier} />
+              {getFinePrice(userAmount0 * multiplier)}
             </span>
             <span className="default-text-dark">
               <WalletIcon currency={pair.token0} size={24} marginRight={8} />
@@ -193,7 +193,7 @@ function LiquidityRemove({ onClose, currentPool }) {
           </div>
           <div className="LiquidityRemove__item">
             <span className="default-text-dark">
-              <NumberFormat number={userAmount1 * multiplier} />
+              {getFinePrice(userAmount1 * multiplier)}
             </span>
             <span className="default-text-dark">
               <WalletIcon currency={pair.token1} size={24} marginRight={8} />
