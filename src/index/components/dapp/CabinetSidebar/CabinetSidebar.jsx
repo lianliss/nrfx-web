@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useRoute } from 'react-router5';
 
 import SVG from 'utils/svg-wrap';
@@ -11,12 +12,31 @@ import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
 import { NumberFormat } from 'src/ui';
 import web3Backend from 'services/web3-backend';
+import { useSidebarContainerHeight } from './hooks/useSidebarContainerHeight';
 
 import './CabinetSidebar.less';
 
-function CabinetSidebar({ className = '' }) {
+function CabinetSidebar({ className, adaptive }) {
   const { route, router } = useRoute();
   const [nrfxRate, setNrfxRate] = React.useState(0);
+  const containerSize = useSidebarContainerHeight(adaptive);
+
+  const NarfexBlock = ({ nrfxRate }) => (
+    <WalletsList>
+      <WalletsListItem
+        icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
+        startTexts={['Narfex', 'NRFX']}
+        endTexts={[
+          <br />,
+          <>
+            <RateIndicator number={12} type="up" procent />
+            $<NumberFormat number={nrfxRate} />
+          </>,
+        ]}
+        border
+      />
+    </WalletsList>
+  );
 
   // Check - current page is exists or empty in pages.
   // @params pages (array or string). Page constant from PAGES.
@@ -42,7 +62,10 @@ function CabinetSidebar({ className = '' }) {
 
   return (
     <div className={`CabinetSidebar ${className}`}>
-      <div className="CabinetSidebar__container">
+      <div
+        className="CabinetSidebar__container"
+        style={{ height: !adaptive && containerSize }}
+      >
         <CabinetScrollBlock>
           <CabinetBlock>
             <ul>
@@ -114,12 +137,7 @@ function CabinetSidebar({ className = '' }) {
                       Docs
                     </a>
                   </li>
-                  <li
-                    className="disabled"
-                    onClick={() => router.navigate(PAGES.DAPP_TEAM)}
-                  >
-                    Team
-                  </li>
+                  <li className="disabled">Team</li>
                   <li
                     className="disabled"
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
@@ -139,28 +157,28 @@ function CabinetSidebar({ className = '' }) {
                       Blog
                     </a>
                   </li>
+                  <li className="disabled">
+                    <a href="/terms-of-service">Terms of Service</a>
+                  </li>
                 </ul>
               </SidebarItem>
             </ul>
           </CabinetBlock>
+          {adaptive && <NarfexBlock nrfxRate={nrfxRate} />}
         </CabinetScrollBlock>
       </div>
-      <WalletsList>
-        <WalletsListItem
-          icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
-          startTexts={['Narfex', 'NRFX']}
-          endTexts={[
-            <br />,
-            <>
-              <RateIndicator number={12} type="up" procent />
-              $<NumberFormat number={nrfxRate} />
-            </>,
-          ]}
-          border
-        />
-      </WalletsList>
+        {!adaptive && <NarfexBlock nrfxRate={nrfxRate} />}
     </div>
   );
 }
+
+CabinetSidebar.propTypes = {
+  className: PropTypes.string,
+  adaptive: PropTypes.bool,
+};
+CabinetSidebar.defaultProps = {
+  className: '',
+  adaptive: false,
+};
 
 export default CabinetSidebar;
