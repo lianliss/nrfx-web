@@ -13,6 +13,7 @@
     overflow-y: scroll;
     border-radius: var(--radius-panel);
     scrollbar-width: none;
+    transition: height 0.3s;
 
     &::-webkit-scrollbar {
       display: none;
@@ -25,7 +26,9 @@
   }
 
   .CabinetBlock {
-    margin-bottom: 10px;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
   }
 
   ul {
@@ -37,7 +40,7 @@
   .WalletsList {
     position: sticky;
     width: 100%;
-    top: calc(100vh - 82px);
+    top: calc(100vh - 75px);
 
     .WalletsListItem {
       transition: box-shadow 0.3s;
@@ -68,7 +71,7 @@
     &__container {
       position: sticky;
       top: 18px;
-      height: 80vh;
+      height: 100%;
       max-height: auto;
     }
   }
@@ -95,7 +98,7 @@
 
     &__container {
       margin-bottom: 0;
-      height: 85%;
+      height: 100%;
       margin-bottom: 5%;
     }
 
@@ -108,8 +111,9 @@
     }
 
     .WalletsList {
-      height: 10%;
       position: static;
+      margin-top: auto;
+      margin-bottom: 15px;
       width: 100%;
       max-width: 205px;
       justify-content: end;
@@ -121,6 +125,11 @@
           }
         }
       }
+    }
+
+    .ScrollbarsCustom-Content {
+      display: flex;
+      flex-direction: column;
     }
   }
 }

@@ -38,7 +38,7 @@ function AdaptiveSidebar({ route, active, onClose }) {
   return (
     <div className={cn('AdaptiveSidebar', { active })}>
       <div className="AdaptiveSidebar__bg" onClick={onClose} />
-      <CabinetSidebar className={cn({ active })} />
+      <CabinetSidebar className={cn({ active })} adaptive={true} />
     </div>
   );
 }
