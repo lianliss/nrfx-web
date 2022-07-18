@@ -76,7 +76,7 @@ function LiquidityList({ items, onAddClick, onRemoveClick, poolsList }) {
       <div className="ItemContent">
         <div className="ItemContent__body">
           <div>
-            <span>Pool balance</span>
+            <span>Common pool balance</span>
             <span>
               <span>{getFinePrice(reserve0)}</span>
               <WalletIcon currency={item.token0} size={16} />
