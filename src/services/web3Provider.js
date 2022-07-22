@@ -955,7 +955,7 @@ class Web3Provider extends React.PureComponent {
     } catch (error) {
       console.log('[switchToChain]', error);
       if (this.requiredChain === chainId) {
-        return await this.switchToChain(chainId, false);
+        // return await this.switchToChain(chainId, false);
       }
     }
   }
