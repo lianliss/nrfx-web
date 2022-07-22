@@ -21,6 +21,23 @@ function CabinetSidebar({ className, adaptive }) {
   const [nrfxRate, setNrfxRate] = React.useState(0);
   const containerSize = useSidebarContainerHeight(adaptive);
 
+  const NarfexBlock = ({ nrfxRate }) => (
+    <WalletsList>
+      <WalletsListItem
+        icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
+        startTexts={['Narfex', 'NRFX']}
+        endTexts={[
+          <br />,
+          <>
+            <RateIndicator number={12} type="up" procent />
+            $<NumberFormat number={nrfxRate} />
+          </>,
+        ]}
+        border
+      />
+    </WalletsList>
+  );
+
   // Check - current page is exists or empty in pages.
   // @params pages (array or string). Page constant from PAGES.
   const isPage = (pages) => {
