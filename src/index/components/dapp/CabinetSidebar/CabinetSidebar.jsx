@@ -10,6 +10,7 @@ import WalletsListItem from '../WalletsList/components/WalletsListItem/WalletsLi
 import WalletsList from '../WalletsList/WalletsList';
 import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
+import ComingSoonItem from './components/ComingSoonItem/ComingSoonItem';
 import { NumberFormat } from 'src/ui';
 import web3Backend from 'services/web3-backend';
 import { useSidebarContainerHeight } from './hooks/useSidebarContainerHeight';
@@ -86,7 +87,12 @@ function CabinetSidebar({ className, adaptive }) {
           </CabinetBlock>
           <CabinetBlock>
             <ul>
-              <SidebarItem title="Trade" icon="trade" active>
+              <SidebarItem
+                title="Trade"
+                icon="trade"
+                onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                active
+              >
                 <ul>
                   <li
                     className={isPage(PAGES.DAPP_SWAP) ? 'active' : ''}
@@ -94,7 +100,7 @@ function CabinetSidebar({ className, adaptive }) {
                   >
                     Swap
                   </li>
-                  <li className="disabled">Pro DEX</li>
+                  <ComingSoonItem text="Pro DEX" />
                 </ul>
               </SidebarItem>
               <SidebarItem
@@ -167,7 +173,7 @@ function CabinetSidebar({ className, adaptive }) {
           {adaptive && <NarfexBlock nrfxRate={nrfxRate} />}
         </CabinetScrollBlock>
       </div>
-        {!adaptive && <NarfexBlock nrfxRate={nrfxRate} />}
+      {!adaptive && <NarfexBlock nrfxRate={nrfxRate} />}
     </div>
   );
 }
