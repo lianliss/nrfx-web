@@ -102,7 +102,6 @@ class Web3Provider extends React.PureComponent {
    * @returns {TokenAmount}
    */
   getTokenAmount(token, amount) {
-    console.log(Number.isInteger(amount), amount)
     const amountWei = amount > Number.MAX_SAFE_INTEGER
       ? Number.MAX_SAFE_INTEGER
       : wei.to(amount, token.decimals);
