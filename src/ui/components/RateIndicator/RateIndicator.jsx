@@ -8,7 +8,11 @@ function RateIndicator({ number, type, procent, icon }) {
   return (
     <span className={'RateIndicator ' + type}>
       <span className="RateIndicator-container">
-        <SVG src={icon ? icon : require('src/asset/icons/total-arrow.svg')} />
+        {type === 'noActive' ? (
+          <div className="isvg" />
+        ) : (
+          <SVG src={icon ? icon : require('src/asset/icons/total-arrow.svg')} />
+        )}
         {number}
         {procent && '%'}
       </span>

@@ -31,10 +31,22 @@
   }
 
   &.down {
-    background: #f07f4f;
+    background: #ff5d17;
 
     .isvg {
       transform: rotate(180deg);
+    }
+  }
+
+  &.noActive {
+    background: var(--cool-gray);
+
+    .isvg {
+      width: 5px;
+      height: 5px;
+      margin-right: 5px;
+      border-radius: 50%;
+      background: #dfe3f0;
     }
   }
 
