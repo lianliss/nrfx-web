@@ -102,7 +102,10 @@ class Web3Provider extends React.PureComponent {
    * @returns {TokenAmount}
    */
   getTokenAmount(token, amount) {
-    const amountWei = wei.to(amount, token.decimals);
+    const amountWei = amount > Number.MAX_SAFE_INTEGER
+      ? Number.MAX_SAFE_INTEGER
+      : wei.to(amount, token.decimals);
+
     return new TokenAmount(this.getToken(token), amountWei);
   }
 
