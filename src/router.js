@@ -263,6 +263,10 @@ export const routes =
           path: "/farming_instruction"
         },
         {
+          name: pages.TERMS_OF_SERVICE,
+          path: "/terms-of-service"
+        },
+        {
           name: pages.PRIVATE_POOLS,
           path: "/private_pools"
         }
