@@ -654,7 +654,7 @@ class Web3Provider extends React.PureComponent {
    * @param number {number}
    * @returns {Object} Fraction
   */
-  getFractionFromNumber(number = 0) {
+  numberToFraction(number = 0) {
     // Number int to Fraction.
     const numberIntFraction = new Fraction(JSBI.BigInt(parseInt(number)));
     const numberRemainder = Number(String(number % 1).slice(2));
@@ -690,7 +690,7 @@ class Web3Provider extends React.PureComponent {
     const isToBNB = !_.get(pair, '[1].address');
 
     // Calculate slippage tolerance tokens amount
-    const slippageFraction = this.getFractionFromNumber(slippageTolerance).divide(100);
+    const slippageFraction = this.numberToFraction(slippageTolerance).divide(100);
     const slippageAmount = isExactIn
       ? trade.outputAmount.asFraction.multiply(slippageFraction)
       : trade.inputAmount.asFraction.multiply(slippageFraction);
@@ -1049,7 +1049,7 @@ class Web3Provider extends React.PureComponent {
       switchToChain: this.switchToChain.bind(this),
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
       findTokenBySymbol: this.findTokenBySymbol.bind(this),
-      getFractionFromNumber: this.getFractionFromNumber.bind(this),
+      numberToFraction: this.numberToFraction.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
     }}>
