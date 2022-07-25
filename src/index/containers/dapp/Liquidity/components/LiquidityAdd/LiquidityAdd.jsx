@@ -195,7 +195,6 @@ function LiquidityAdd({ onClose, type, addPool, currentPool }) {
           token={selectedTokens[0]}
           showBalance
           label
-          title={`${getFinePrice(reserves[0])} ${selectedTokens[0].symbol} in the pool`}
         />
         <div className="LiquidityAdd__icon">
           <span>+</span>
@@ -215,7 +214,6 @@ function LiquidityAdd({ onClose, type, addPool, currentPool }) {
           token={selectedTokens[1]}
           showBalance
           label
-          title={`${getFinePrice(reserves[1])} ${selectedTokens[1].symbol} in the pool`}
         />
         {!isImport && (
           <>
