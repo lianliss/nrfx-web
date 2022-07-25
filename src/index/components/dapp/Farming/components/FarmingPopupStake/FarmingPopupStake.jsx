@@ -151,6 +151,7 @@ class FarmingPopupStake extends React.PureComponent {
 
   onDeposit = async () => {
     const {toastPush, pool, onClose} = this.props;
+    const { balance } = pool;
     const {isTransaction, value, token1Symbol, token0Symbol} = this.state;
     const {getFarmContract, getBSCScanLink, getTransactionReceipt, updatePoolData} = this.context;
     if (isTransaction) return;
@@ -158,10 +159,12 @@ class FarmingPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
+      const amountWei = wei.to(amount.toFixed(18));
+      const transactionAmount = amountWei > balance ? balance : amountWei;
       const farm = getFarmContract();
       const tx = await farm.transaction('deposit', [
         pool.address,
-        wei.to(amount.toFixed(18)),
+        transactionAmount,
         '0x0000000000000000000000000000000000000000',
       ]);
       console.log('transaction hash', tx, getBSCScanLink(tx));
@@ -182,6 +185,7 @@ class FarmingPopupStake extends React.PureComponent {
 
   onWithdraw = async () => {
     const {toastPush, pool, onClose} = this.props;
+    const { userPool } = pool;
     const {isTransaction, value, token1Symbol, token0Symbol} = this.state;
     const {getFarmContract, getBSCScanLink, getTransactionReceipt, updatePoolData} = this.context;
     if (isTransaction) return;
@@ -189,10 +193,12 @@ class FarmingPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
+      const amountWei = wei.to(amount.toFixed(18));
+      const transactionAmount = amountWei > userPool ? userPool : amountWei;
       const farm = getFarmContract();
       const tx = await farm.transaction('withdraw', [
         pool.address,
-        wei.to(amount.toFixed(18)),
+        transactionAmount,
       ]);
       console.log('transaction hash', tx, getBSCScanLink(tx));
       const receipt = await getTransactionReceipt(tx);

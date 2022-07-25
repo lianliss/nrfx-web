@@ -11,33 +11,6 @@ import { Web3Context } from 'services/web3Provider';
 // Styles
 import './Liquidity.less';
 
-const items = [
-  {
-    id: 0,
-    currencies: ['bnb', 'bsw'],
-    amounts: [2.005, 15.005],
-    pool: { tokens: 2, share: 55 },
-  },
-  {
-    id: 1,
-    currencies: ['usdt', 'nrfx'],
-    amounts: [2.005, 15.005],
-    pool: { tokens: 2, share: 55 },
-  },
-  {
-    id: 2,
-    currencies: ['bnb', 'usd'],
-    amounts: [2.005, 15.005],
-    pool: { tokens: 2, share: 55 },
-  },
-  {
-    id: 3,
-    currencies: ['rub', 'idr'],
-    amounts: [2.005, 15.005],
-    pool: { tokens: 2, share: 55 },
-  },
-];
-
 const POOLS_LIST_KEY = 'narfex-pools-list';
 
 // Main
@@ -81,7 +54,6 @@ function Liquidity() {
     <CabinetBlock className={`Liquidity ${currentDisplay}`}>
       {currentDisplay === 'main' && (
         <LiquidityMain
-          items={items}
           poolsList={poolsList}
           onAddClick={pairAddress => {
             setCurrentPool(pairAddress);

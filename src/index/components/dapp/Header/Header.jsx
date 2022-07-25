@@ -35,9 +35,11 @@ function Header(props) {
   const { isConnected, accountAddress, getTokenBalance, tokens, chainId } =
     context;
 
+  // If domen is testnet then display text 'Testnet' in network.
+  const isTestnetDomen = document.URL.indexOf('://testnet') >= 0;
   const cryptoOptions = [
     option(
-      chainId === 56 ? 'BSC' : 'Testnet',
+      isTestnetDomen ? 'Testnet' : 'BSC',
       'bsc',
       require('src/asset/icons/wallets/bsc.svg')
     ),

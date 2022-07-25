@@ -15,7 +15,7 @@ import { FARMING } from 'src/index/constants/pages';
 import './LiquidityMain.less';
 
 // Main
-function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick, poolsList }) {
+function LiquidityMain({ onAddClick, onRemoveClick, onImportClick, poolsList }) {
   const context = React.useContext(Web3Context);
   const {isConnected, connectWallet} = context;
 
@@ -28,24 +28,24 @@ function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick, poolsL
         <Button type="lightBlue" size="extra_large" onClick={() => onAddClick()}>
           Add Liquidity&nbsp;<span>+</span>
         </Button>
-      </div>
-      <div className="Liquidity__body">
-        <div className="Liquidity__subtitle">
-          <span>Your Liquidity</span>
-          <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
-        </div>
-        <LiquidityList
-          items={items}
-          onAddClick={onAddClick}
-          onRemoveClick={onRemoveClick}
-          poolsList={poolsList}
-        />
       </div></> : <div className="Liquidity__header">
         <div className="Liquidity__title">Liquidity</div>
         <Button type="lightBlue" size="extra_large" onClick={() => connectWallet()}>
           Connect wallet
         </Button>
       </div>}
+      <div className="Liquidity__body">
+        <div className="Liquidity__subtitle">
+          <span>Your Liquidity</span>
+          <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
+        </div>
+        <LiquidityList
+          onAddClick={onAddClick}
+          onRemoveClick={onRemoveClick}
+          poolsList={poolsList}
+          emptyText={isConnected ? 'No liquidity.' : 'Connect a wallet to view your liquidity.'}
+        />
+      </div>
       <div className="Liquidity__footer">
         <p className="default-text">
           Don't see a pool you joined? <a onClick={() => onImportClick()}>Import it.</a>
@@ -61,13 +61,11 @@ function LiquidityMain({ items, onAddClick, onRemoveClick, onImportClick, poolsL
 }
 
 LiquidityMain.propTypes = {
-  items: PropTypes.array,
   onAddClick: PropTypes.func,
   onRemoveClick: PropTypes.func,
 };
 
 LiquidityMain.defaultProps = {
-  items: [],
   onAddClick: () => {},
   onRemoveClick: () => {},
 };

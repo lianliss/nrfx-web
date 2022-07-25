@@ -4,7 +4,7 @@ import LandingContainer from '../../../components/LandingContainer/LandingContai
 import ContactsContainer from '../../../components/ContactsContainer/ContactsContainer';
 import TokenButton from '../../../components/TokenButton/TokenButton';
 import SVG from 'utils/svg-wrap';
-import contactsImage from '../../assets/contacts.svg';
+import contactsImage from '../../assets/contacts-new.svg';
 import { TOKEN } from 'src/index/constants/pages';
 import { useRouter } from 'react-router5';
 import { getLang } from 'utils';

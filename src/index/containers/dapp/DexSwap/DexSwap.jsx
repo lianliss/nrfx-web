@@ -425,6 +425,7 @@ class DexSwap extends React.PureComponent {
       isConnected,
       connectWallet,
       tokens,
+      numberToFraction
     } = this.context;
     const switchTabs = [
       { value: 'swap', label: 'Swap' },
@@ -437,7 +438,7 @@ class DexSwap extends React.PureComponent {
     const inputAmount = !!this.trade ? this.trade.inputAmount.asFraction : new Fraction(JSBI.BigInt(0));
     const outputAmount = !!this.trade ? this.trade.outputAmount.asFraction : new Fraction(JSBI.BigInt(0));
 
-    const slippageFraction = new Fraction(JSBI.BigInt(slippageTolerance), JSBI.BigInt(100));
+    const slippageFraction = numberToFraction(slippageTolerance).divide(100);
     const slippageAmount = !this.trade ? new Fraction(JSBI.BigInt(0)) : isExactIn
       ? outputAmount.multiply(slippageFraction)
       : inputAmount.multiply(slippageFraction);
