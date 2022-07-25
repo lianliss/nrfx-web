@@ -650,6 +650,28 @@ class Web3Provider extends React.PureComponent {
   fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
 
   /**
+   * Get slippage fraction from number.
+   * @param number {number}
+   * @returns {Object} Fraction
+  */
+  getFractionFromNumber(number = 0) {
+    // Number  int to Fraction.
+    const numberIntFraction = new Fraction(JSBI.BigInt(parseInt(number)));
+    const numberRemainder = Number(String(number % 1).slice(2));
+    const numberRemainderLength = String(numberRemainder).length;
+
+    // Number  remainder to Fraction.
+    const numberRemainderFraction = new Fraction(
+      JSBI.BigInt(numberRemainder),
+      JSBI.BigInt(Math.pow(10, numberRemainderLength))
+    );
+
+    // Add sleppage int and remainder to one fraction.
+    const result = numberIntFraction.add(numberRemainderFraction);
+    return result;
+  }
+
+  /**
    * Exchange the pair
    * @param pair {array}
    * @param trade {object}
@@ -668,7 +690,7 @@ class Web3Provider extends React.PureComponent {
     const isToBNB = !_.get(pair, '[1].address');
 
     // Calculate slippage tolerance tokens amount
-    const slippageFraction = new Fraction(JSBI.BigInt(slippageTolerance), JSBI.BigInt(100));
+    const slippageFraction = this.getFractionFromNumber(slippageTolerance).divide(100);
     const slippageAmount = isExactIn
       ? trade.outputAmount.asFraction.multiply(slippageFraction)
       : trade.inputAmount.asFraction.multiply(slippageFraction);
@@ -1027,6 +1049,7 @@ class Web3Provider extends React.PureComponent {
       switchToChain: this.switchToChain.bind(this),
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
       findTokenBySymbol: this.findTokenBySymbol.bind(this),
+      getFractionFromNumber: this.getFractionFromNumber.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
     }}>
