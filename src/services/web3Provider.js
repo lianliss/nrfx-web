@@ -650,7 +650,7 @@ class Web3Provider extends React.PureComponent {
   fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
 
   /**
-   * Get slippage fraction from number.
+   * Get fraction from number.
    * @param number {number}
    * @returns {Object} Fraction
   */
