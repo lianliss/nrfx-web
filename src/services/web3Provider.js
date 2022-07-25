@@ -660,7 +660,7 @@ class Web3Provider extends React.PureComponent {
     const numberRemainder = Number(String(number % 1).slice(2));
     const numberRemainderLength = String(numberRemainder).length;
 
-    // Number  remainder to Fraction.
+    // Number remainder to Fraction.
     const numberRemainderFraction = new Fraction(
       JSBI.BigInt(numberRemainder),
       JSBI.BigInt(Math.pow(10, numberRemainderLength))
