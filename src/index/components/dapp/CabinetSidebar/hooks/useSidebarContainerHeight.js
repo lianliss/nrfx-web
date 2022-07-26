@@ -4,7 +4,11 @@ import React from 'react';
 // Hook for set sidebar height after scroll.
 export const useSidebarContainerHeight = (adaptive) => {
   const [containerSize, setContainerSize] = React.useState('80vh');
-  const dappHeader = document.querySelector('.DappHeader');
+  const [dappHeader, setDappHeader] = React.useState(null);
+
+  React.useEffect(() => {
+    setDappHeader(document.querySelector('.DappHeader'));
+  }, []);
 
   React.useEffect(() => {
     const setHeight = () => {
