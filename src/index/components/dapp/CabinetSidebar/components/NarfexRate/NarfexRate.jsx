@@ -34,26 +34,33 @@ function NarfexRate() {
     };
   };
 
+  const getNarfexRate = async () => {
+    try {
+      const { narfexToken } = networks[56];
+      const yesterday = getYesterday();
+      const block = await dateToBlockMoralis(yesterday);
+
+      // Get prices
+      const todayPrice = await getTokenPriceMoralis(narfexToken);
+      const yesterdayPrice = await getTokenPriceMoralis(narfexToken, block);
+
+      // set price and difference
+      setCurrentPrice(todayPrice);
+      setPriceDifference(getPricesDifference(todayPrice, yesterdayPrice));
+    } catch {
+      web3Backend.getTokenRate('nrfx').then((data) => {
+        setCurrentPrice(data.price);
+      });
+    }
+  };
+
   React.useEffect(() => {
-    (async () => {
-      try {
-        const { narfexToken } = networks[56];
-        const yesterday = getYesterday();
-        const block = await dateToBlockMoralis(yesterday);
+    getNarfexRate();
 
-        // Get prices
-        const todayPrice = await getTokenPriceMoralis(narfexToken);
-        const yesterdayPrice = await getTokenPriceMoralis(narfexToken, block);
+    // Set interval for auto update price.
+    const narfexRateInterval = setInterval(() => getNarfexRate(), 10000);
 
-        // set price and difference
-        setCurrentPrice(todayPrice);
-        setPriceDifference(getPricesDifference(todayPrice, yesterdayPrice));
-      } catch {
-        web3Backend.getTokenRate('nrfx').then((data) => {
-          setCurrentPrice(data.price);
-        });
-      }
-    })();
+    return () => clearInterval(narfexRateInterval);
   }, []);
 
   return (
@@ -61,6 +68,7 @@ function NarfexRate() {
       <WalletsListItem
         icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
         startTexts={['Narfex', 'NRFX']}
+        onClick={getNarfexRate}
         endTexts={[
           <br />,
           <>
@@ -83,4 +91,3 @@ function NarfexRate() {
 }
 
 export default NarfexRate;
-
