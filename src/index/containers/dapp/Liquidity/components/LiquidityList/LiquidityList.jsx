@@ -21,7 +21,7 @@ let updateBalanceInterval;
 const UPDATE_BALANCE_TIMEOUT = 5000;
 
 // Main
-function LiquidityList({ items, onAddClick, onRemoveClick, poolsList }) {
+function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
 
   const context = React.useContext(Web3Context);
   const {
@@ -141,20 +141,20 @@ function LiquidityList({ items, onAddClick, onRemoveClick, poolsList }) {
           </li>
         ))
       ) : (
-        <li>No liquidity.</li>
+        <li>{emptyText}</li>
       )}
     </ul>
   );
 }
 
 LiquidityList.propTypes = {
-  items: PropTypes.array,
+  emptyText: PropTypes.string,
   onAddClick: PropTypes.func,
   onRemoveClick: PropTypes.func,
 };
 
 LiquidityList.defaultProps = {
-  items: [],
+  emptyText: 'No liquidity.',
   onAddClick: () => {},
   onRemoveClick: () => {},
 };

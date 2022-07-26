@@ -56,7 +56,7 @@ export function FarmingPopup({ message, onClose, pool, ...props }) {
           <span>{message}</span>
         </div>
       </div>
-      <PopupLink text="Wiew on scan" />
+      <PopupLink text="View on scan" />
     </Popup>
   );
 }

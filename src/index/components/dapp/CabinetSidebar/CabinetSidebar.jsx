@@ -7,6 +7,7 @@ import SidebarItem from './components/SidebarItem/SidebarItem';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
 import NarfexRate from './components/NarfexRate/NarfexRate';
+import ComingSoonItem from './components/ComingSoonItem/ComingSoonItem';
 import { useSidebarContainerHeight } from './hooks/useSidebarContainerHeight';
 
 import './CabinetSidebar.less';
@@ -57,7 +58,12 @@ function CabinetSidebar({ className, adaptive }) {
           </CabinetBlock>
           <CabinetBlock>
             <ul>
-              <SidebarItem title="Trade" icon="trade" active>
+              <SidebarItem
+                title="Trade"
+                icon="trade"
+                onClick={() => router.navigate(PAGES.DAPP_SWAP)}
+                active
+              >
                 <ul>
                   <li
                     className={isPage(PAGES.DAPP_SWAP) ? 'active' : ''}
@@ -65,7 +71,7 @@ function CabinetSidebar({ className, adaptive }) {
                   >
                     Swap
                   </li>
-                  <li className="disabled">Pro DEX</li>
+                  <ComingSoonItem text="Pro DEX" />
                 </ul>
               </SidebarItem>
               <SidebarItem

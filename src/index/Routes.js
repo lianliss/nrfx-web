@@ -16,6 +16,7 @@ import SiteAboutScreen from "../landing/containers/Company/Company";
 import TokenLanding from "../token_landing/containers/TokenLanding/TokenLanding";
 import NarfexDAO from "../landings/Narfex_DAO/NarfexDAO";
 import FarmingInstruction from "../landings/FarmingInstruction/FarmingInstruction";
+import TermsOfService from "../landings/containers/TermsOfService/TermsOfService";
 // import SiteWalletScreen from "./containers/site/SiteWalletScreen/SiteWalletScreen";
 // import SiteRobotsScreen from './containers/site/SiteRobotsScreen/SiteRobotsScreen';
 // import SiteCommerceScreen from './containers/site/SiteCommerceScreen/SiteCommerceScreen';
@@ -270,6 +271,10 @@ function Routes(props) {
       break;
     case pages.FARMING_INSTRUCTION:
       Component = FarmingInstruction;
+      WrapperComponent = LandingWrapper;
+      break;
+    case pages.TERMS_OF_SERVICE:
+      Component = TermsOfService;
       WrapperComponent = LandingWrapper;
       break;
     case pages.PRIVATE_POOLS:
