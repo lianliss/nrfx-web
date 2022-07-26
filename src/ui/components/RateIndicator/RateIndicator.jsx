@@ -9,7 +9,7 @@ function RateIndicator({ number, type, procent, icon }) {
     <span className={'RateIndicator ' + type}>
       <span className="RateIndicator-container">
         {type === 'noActive' ? (
-          <div className="isvg" />
+          <span className="isvg" />
         ) : (
           <SVG src={icon ? icon : require('src/asset/icons/total-arrow.svg')} />
         )}
@@ -22,14 +22,14 @@ function RateIndicator({ number, type, procent, icon }) {
 
 RateIndicator.propTypes = {
   number: PropTypes.number,
-  type: PropTypes.oneOf(['down', 'up']),
+  type: PropTypes.oneOf(['down', 'up', 'noActive']),
   procent: PropTypes.bool,
   icon: PropTypes.string,
 };
 
 RateIndicator.defaultProps = {
   number: 0,
-  type: 'up',
+  type: 'noActive',
   procent: false,
   icon: null,
 };
