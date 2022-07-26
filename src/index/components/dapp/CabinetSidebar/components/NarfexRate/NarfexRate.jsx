@@ -50,6 +50,7 @@ function NarfexRate() {
     } catch {
       web3Backend.getTokenRate('nrfx').then((data) => {
         setCurrentPrice(data.price);
+        setPriceDifference(null);
       });
     }
   };
@@ -72,15 +73,17 @@ function NarfexRate() {
         endTexts={[
           <br />,
           <>
-            {priceDifference ? (
-              <RateIndicator
-                number={priceDifference.number}
-                type={priceDifference.isPositive ? 'up' : 'down'}
-                procent
-              />
-            ) : (
-              <RateIndicator type="noActive" />
-            )}
+            <RateIndicator
+              number={priceDifference ? priceDifference.number : 0}
+              type={
+                priceDifference
+                  ? priceDifference.isPositive
+                    ? 'up'
+                    : 'down'
+                  : 'noActive'
+              }
+              procent
+            />
             $<NumberFormat number={currentPrice.toFixed(2)} />
           </>,
         ]}
