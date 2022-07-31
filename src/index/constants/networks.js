@@ -9,6 +9,7 @@ const networks = {
     narfexToken: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
     tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
     saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
+    fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",
@@ -61,6 +62,7 @@ const networks = {
     narfexToken: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
     tokenSale: '0x19E27fea1fC3ee50ab6A5354B812E1D8E8940FDB',
     saleFactory: '0x7195274908d9c6A2991Ae17bD32e5245fD0b5d7b',
+    fiatFactory: '0xd130280727E80d199438F6233DAa4dcDE80DecC1',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",

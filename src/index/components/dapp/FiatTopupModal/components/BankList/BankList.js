@@ -13,16 +13,18 @@ export default props => {
 
   return (
     <div className="BankList">
-      {!!props.items?.length ? (
-        props.items.map(bank => (
-          <div className="BankList__item" onClick={handleSelect(bank)}>
+      {!!props.items.length ? (
+        props.items.map(bank => {
+          const isSelected = props.selected === bank;
+          return <div className={`BankList__item ${isSelected ? 'active' : ''}`}
+                      onClick={handleSelect(bank)}>
             <div className="BankList__item__title">{bank.name}</div>
             <BankLogo className="BankList__item__logo" name={bank.code} />
-            <div className="BankList__item__arrow">
-              <SVG src={require("src/asset/24px/angle-right.svg")} />
-            </div>
+            {/*<div className="BankList__item__arrow">*/}
+              {/*<SVG src={require("src/asset/24px/angle-right.svg")} />*/}
+            {/*</div>*/}
           </div>
-        ))
+        })
       ) : (
         <LoadingStatus
           icon={require("src/asset/120/error.svg").default}

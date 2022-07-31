@@ -20,6 +20,25 @@
     padding: 40px;
     box-sizing: border-box;
 
+    .Input__wrapper {
+      margin-top: 4px;
+
+      input.Input {
+        background: none;
+        color: white;
+
+        &::placeholder {
+          color: white;
+          opacity: 0.5;
+        }
+      }
+      .Input__indicator {
+        color: white;
+        opacity: 0.3;
+        pointer-events: none;
+      }
+    }
+
     .FiatRefillModal__sideBar__content {
       box-sizing: border-box;
       width: 100%;

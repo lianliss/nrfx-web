@@ -18,6 +18,10 @@ const GWEI_DECIMALS = 9;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
+const KNOWN_FIATS = [
+  {symbol: 'RUB', logoURI: 'https://static.narfex.com/img/currencies/rubles.svg'},
+  {symbol: 'UAH', logoURI: 'https://static.narfex.com/img/currencies/uah-gryvnya.svg'},
+];
 
 class Web3Provider extends React.PureComponent {
 
@@ -31,6 +35,7 @@ class Web3Provider extends React.PureComponent {
     pools: null,
     poolsList: networks[56].poolsList,
     prices: {},
+    fiats: {},
   };
 
   ethereum = null;
@@ -41,6 +46,7 @@ class Web3Provider extends React.PureComponent {
   routerAddress = networks[56].providerAddress;
   tokenSale = networks[56].tokenSale;
   saleFactory = networks[56].saleFactory;
+  fiatFactory = networks[56].fiatFactory;
   wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
@@ -1014,6 +1020,52 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async updateFiats(symbol) {
+    console.log('updateFiats');
+    try {
+      const {accountAddress, chainId} = this.state;
+      const fiats = _.cloneDeep(this.state.fiats);
+      let list = _.get(fiats, 'list', []);
+
+      if (!list.length) {
+        const factoryContract = new (this.getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/fiatFactory'),
+          this.fiatFactory,
+        );
+        list = await factoryContract.methods.getFiats().call();
+        fiats.list = list;
+      }
+
+      const userId = `${chainId}${accountAddress}`;
+      const userFiats = (await Promise.all(list.map(fiatAddress => {
+        const fiatContract = new (this.getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/fiat'),
+          fiatAddress,
+        );
+        return fiatContract.methods.getInfo(accountAddress).call();
+      }))).map((fiat, index) => {
+        const known = KNOWN_FIATS.find(s => s.symbol === fiat[1]) || {};
+        return {
+          ...known,
+          address: list[index],
+          name: fiat[0],
+          symbol: fiat[1],
+          chainId,
+          decimals: 18,
+          balance: fiat[2],
+        }
+      });
+      fiats[userId] = userFiats;
+      this.setState({
+        fiats,
+      });
+      return fiats;
+    } catch (error) {
+      console.error('[updateFiats]', error);
+    }
+  }
+
+
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
@@ -1052,6 +1104,7 @@ class Web3Provider extends React.PureComponent {
       numberToFraction: this.numberToFraction.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
+      updateFiats: this.updateFiats.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

@@ -187,7 +187,7 @@ const updateRates = async (
     // Update rates in store.
     const rates = await web3Backend.getAllRates();
     const commissions = await web3Backend.getCommissions();
-    dispatch(web3SetData({ rates, commissions: JSON.parse(commissions) }));
+    dispatch(web3SetData({ rates, commissions, }));
 
     // Get rate from rates
     const rate = isFiat(from)

@@ -1,0 +1,114 @@
+.FiatSelector {
+    padding: 36px 40px 42px;
+    background: #fff;
+    box-shadow: 0 34px 70px rgba(199, 201, 207, 0.25);
+    border: none;
+    border-radius: var(--radius-panel-large);
+    color: var(--text-black);
+    margin-bottom: 40px;
+
+    .TokenSelect__token-icon {
+        background-color: var(--green);
+    }
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    &__dropdown {
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    &__track {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: -4px;
+        text-decoration: none;
+        font-size: 12px;
+        color: var(--primary-blue);
+
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    &__icon {
+        cursor: pointer;
+        border-radius: 50%;
+        background: var(--green);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        width: 41px;
+        height: 41px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+
+        .isvg,
+        svg,
+        img {
+            width: 100%;
+        }
+    }
+
+    &__select {
+        margin-left: 41px + 12px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 110%;
+        cursor: pointer;
+
+        // Medium text in select (subtitle)
+        & > span {
+            color: #cdcfd7;
+            margin-bottom: 4px;
+        }
+    }
+
+    &__currency {
+        display: flex;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 110%;
+        letter-spacing: -0.01em;
+
+        // Select icon
+        .isvg {
+            margin-left: 8px;
+        }
+    }
+
+    &__balance {
+        text-align: right;
+        margin-top: -6px;
+        position: relative;
+
+        &-number {
+            font-size: 40px;
+            font-weight: 600;
+            line-height: 48px;
+        }
+        &-price {
+            opacity: 0.5;
+            position: absolute;
+            bottom: 100%;
+            right: 6px;
+            font-size: 12px;
+            margin-bottom: -6px;
+
+            &:before {
+                content: "$";
+            }
+        }
+    }
+    &__actions {
+        margin-top: 40px;
+    }
+}
