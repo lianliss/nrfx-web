@@ -1099,6 +1099,28 @@ class Web3Provider extends React.PureComponent {
     }).then((r) => r.data.usdPrice);
   };
 
+  /**
+   * Returns Token difference,
+   * price from {timeFrom}, price from {timeTo}
+   * @param address {string}
+   * @param timeFrom {Date}
+   * @param timeTo {Date}
+   * @return {object} {difference, priceFrom, priceTo}
+   */
+  async getSomeTimePricesPairMoralis (address, timeFrom, timeTo) {
+      const blockFrom = await this.dateToBlockMoralis(timeFrom);
+      const blockTo = timeTo ? await this.dateToBlockMoralis(timeTo) : null;
+
+      // Get prices
+      const priceTo = await this.getTokenPriceMoralis(address, blockTo ? blockTo : null);
+      const priceFrom = await this.getTokenPriceMoralis(address, blockFrom);
+
+      // Set price and difference
+      const difference = Number((priceTo / (priceFrom / 100) - 100).toFixed(2));
+
+      return { difference, priceFrom, priceTo };
+  }
+
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
@@ -1138,6 +1160,7 @@ class Web3Provider extends React.PureComponent {
       getTokenPriceMoralis: this.getTokenPriceMoralis.bind(this),
       numberToFraction: this.numberToFraction.bind(this),
       getTokenAmount: this.getTokenAmount.bind(this),
+      getSomeTimePricesPairMoralis: this.getSomeTimePricesPairMoralis.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
     }}>

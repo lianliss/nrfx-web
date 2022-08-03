@@ -13,8 +13,7 @@ import networks from 'src/index/constants/networks';
 import web3Backend from 'services/web3-backend';
 
 function NarfexRate() {
-  const { dateToBlockMoralis, getTokenPriceMoralis } =
-    React.useContext(Web3Context);
+  const { getSomeTimePricesPairMoralis } = React.useContext(Web3Context);
   const [currentPrice, setCurrentPrice] = React.useState(0);
   const [priceDifference, setPriceDifference] = React.useState(null);
 
@@ -25,25 +24,15 @@ function NarfexRate() {
     return date;
   };
 
-  const getPricesDifference = (currentPrice, prevPrice) => {
-    const result = currentPrice / (prevPrice / 100) - 100;
-
-    return Math.abs(result.toFixed(2));
-  };
-
   const getNarfexRate = async () => {
     try {
       const { narfexToken } = networks[56];
-      const yesterday = getYesterday();
-      const block = await dateToBlockMoralis(yesterday);
-
-      // Get prices
-      const todayPrice = await getTokenPriceMoralis(narfexToken);
-      const yesterdayPrice = await getTokenPriceMoralis(narfexToken, block);
 
       // Set price and difference
-      setCurrentPrice(todayPrice);
-      setPriceDifference(getPricesDifference(todayPrice, yesterdayPrice));
+      getSomeTimePricesPairMoralis(narfexToken, getYesterday()).then((data) => {
+        setCurrentPrice(data.priceTo);
+        setPriceDifference(data.difference);
+      });
     } catch {
       web3Backend.getTokenRate('nrfx').then((data) => {
         setCurrentPrice(data.price);
