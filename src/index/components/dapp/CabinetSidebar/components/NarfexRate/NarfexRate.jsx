@@ -28,10 +28,7 @@ function NarfexRate() {
   const getPricesDifference = (currentPrice, prevPrice) => {
     const result = currentPrice / (prevPrice / 100) - 100;
 
-    return {
-      number: Math.abs(result.toFixed(2)),
-      isPositive: result >= 0,
-    };
+    return Math.abs(result.toFixed(2));
   };
 
   const getNarfexRate = async () => {
@@ -44,7 +41,7 @@ function NarfexRate() {
       const todayPrice = await getTokenPriceMoralis(narfexToken);
       const yesterdayPrice = await getTokenPriceMoralis(narfexToken, block);
 
-      // set price and difference
+      // Set price and difference
       setCurrentPrice(todayPrice);
       setPriceDifference(getPricesDifference(todayPrice, yesterdayPrice));
     } catch {
@@ -74,14 +71,8 @@ function NarfexRate() {
           <br />,
           <>
             <RateIndicator
-              number={priceDifference ? priceDifference.number : 0}
-              type={
-                priceDifference
-                  ? priceDifference.isPositive
-                    ? 'up'
-                    : 'down'
-                  : 'noActive'
-              }
+              number={priceDifference}
+              type={RateIndicator.getType(priceDifference)}
               procent
             />
             $<NumberFormat number={currentPrice.toFixed(2)} />
