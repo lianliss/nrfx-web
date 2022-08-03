@@ -51,6 +51,18 @@ class Web3Provider extends React.PureComponent {
   farm = null;
   pairs = {};
 
+  // Moralis
+  moralis = {
+    api: 'https://deep-index.moralis.io/api/v2',
+    headers: {
+      'X-API-Key': 'woP1gbSiPFLSSG92XkCvSud3dc6eYfzU4sG4kVeim105GMbLrSKv7mVdrWgVphTq',
+      accept: 'application/json',
+    },
+    params: {
+      chain: 'bsc',
+    }
+  };
+
   getWeb3() {
     if (this.state.isConnected) {
       return this.web3;
@@ -1055,6 +1067,38 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  // Get block from date.
+  async dateToBlockMoralis (date = new Date()) {
+    // Date to unix timestamp.
+    const unixDate = Math.floor(date.getTime() / 1000);
+
+    // Moralis request data.
+    const {headers, params, api} = this.moralis;
+
+    return axios
+      .get(`${api}/dateToBlock`, {
+        headers,
+        params: {
+          ...params,
+          date: unixDate,
+        },
+      })
+      .then((r) => r.data.block);
+  };
+
+  // Get token price from contract (required), block (optional).
+  async getTokenPriceMoralis (contractAddress, to_block = null) {
+    const {headers, params, api} = this.moralis;
+    
+    return axios(`${api}/erc20/${contractAddress}/price`, {
+      headers,
+      params: {
+        ...params,
+        to_block,
+      },
+    }).then((r) => r.data.usdPrice);
+  };
+
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
@@ -1090,6 +1134,8 @@ class Web3Provider extends React.PureComponent {
       switchToChain: this.switchToChain.bind(this),
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
       findTokenBySymbol: this.findTokenBySymbol.bind(this),
+      dateToBlockMoralis: this.dateToBlockMoralis.bind(this),
+      getTokenPriceMoralis: this.getTokenPriceMoralis.bind(this),
       numberToFraction: this.numberToFraction.bind(this),
       getTokenAmount: this.getTokenAmount.bind(this),
       bnb: this.bnb,

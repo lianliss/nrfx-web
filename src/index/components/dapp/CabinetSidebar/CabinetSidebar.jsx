@@ -2,42 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRoute } from 'react-router5';
 
-import SVG from 'utils/svg-wrap';
 import * as PAGES from 'src/index/constants/pages';
 import SidebarItem from './components/SidebarItem/SidebarItem';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
-import WalletsListItem from '../WalletsList/components/WalletsListItem/WalletsListItem';
-import WalletsList from '../WalletsList/WalletsList';
-import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
+import NarfexRate from './components/NarfexRate/NarfexRate';
 import ComingSoonItem from './components/ComingSoonItem/ComingSoonItem';
-import { NumberFormat } from 'src/ui';
-import web3Backend from 'services/web3-backend';
 import { useSidebarContainerHeight } from './hooks/useSidebarContainerHeight';
 
 import './CabinetSidebar.less';
 
 function CabinetSidebar({ className, adaptive }) {
   const { route, router } = useRoute();
-  const [nrfxRate, setNrfxRate] = React.useState(0);
   const containerSize = useSidebarContainerHeight(adaptive);
-
-  const NarfexBlock = ({ nrfxRate }) => (
-    <WalletsList>
-      <WalletsListItem
-        icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
-        startTexts={['Narfex', 'NRFX']}
-        endTexts={[
-          <br />,
-          <>
-            <RateIndicator number={12} type="up" procent />
-            $<NumberFormat number={nrfxRate} />
-          </>,
-        ]}
-        border
-      />
-    </WalletsList>
-  );
 
   // Check - current page is exists or empty in pages.
   // @params pages (array or string). Page constant from PAGES.
@@ -54,12 +31,6 @@ function CabinetSidebar({ className, adaptive }) {
 
     return false;
   };
-
-  React.useEffect(() => {
-    web3Backend.getTokenRate('nrfx').then((data) => {
-      setNrfxRate(data.price);
-    });
-  }, []);
 
   return (
     <div className={`CabinetSidebar ${className}`}>
@@ -170,10 +141,10 @@ function CabinetSidebar({ className, adaptive }) {
               </SidebarItem>
             </ul>
           </CabinetBlock>
-          {adaptive && <NarfexBlock nrfxRate={nrfxRate} />}
+          {adaptive && <NarfexRate />}
         </CabinetScrollBlock>
       </div>
-      {!adaptive && <NarfexBlock nrfxRate={nrfxRate} />}
+      {!adaptive && <NarfexRate />}
     </div>
   );
 }
