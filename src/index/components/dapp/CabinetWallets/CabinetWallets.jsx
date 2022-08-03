@@ -6,24 +6,18 @@ import WalletsExists from './components/WalletsExists/WalletsExists';
 import WalletsIsEmpty from './components/WalletsIsEmpty/WalletsIsEmpty';
 
 function CabinetWallets() {
-  // [testStart]
   const [isExists, setIsExists] = React.useState(false);
 
-  const handleExists = (newState) => {
-    setIsExists(newState);
+  const showWalletPage = () => {
+    setIsExists(true);
   };
-  // [testEnd]
 
   return (
     <CabinetBlock className="CabinetWallets">
       {isExists ? (
         <WalletsExists />
       ) : (
-        <WalletsIsEmpty
-          // [testStart]
-          onClick={handleExists}
-          // [testEnd]
-        />
+        <WalletsIsEmpty showWalletPage={showWalletPage} />
       )}
     </CabinetBlock>
   );

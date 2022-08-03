@@ -26,6 +26,10 @@ class Web3Provider extends React.PureComponent {
     accountAddress: null,
     balancesRequested: null,
     blocksPerSecond: 0,
+    balances: {
+      tokens: [],
+      fiats: []
+    },
     chainId: null,
     tokens: networks[56].tokens,
     pools: null,
@@ -216,6 +220,34 @@ class Web3Provider extends React.PureComponent {
     ? `https://bscscan.com/tx/${address}`
     : `https://testnet.bscscan.com/tx/${address}`;
 
+
+  /**
+   * Set balances
+   * @param balances {array || function} balances object
+   * @param type {string} fiats, tokens, clear
+   */
+   setBalances(balances, type = 'tokens') {
+    if(type === 'clear') {
+      this.setState({
+        balances: {
+          fiats: [],
+          tokens: [],
+        }
+      });
+
+      return;
+    }
+    
+    this.setState(state => ({
+      balances: {
+        ...state.balances,
+        [type]: balances instanceof Function
+          ? balances(state.balances[type])
+          : balances,
+      },
+    }));
+  }
+    
   /**
    * Switch to another chain
    * @param id {integer} chainID
@@ -586,12 +618,18 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
     try {
+      // Set positive balance tokens
+      this.setBalances(this.state.tokens.filter(t => t.balance > 0));
+
       if (!this.state.isConnected) return;
       // Stop additional loads
       if (this.state.balancesRequested === accountAddress) return;
       this.setState({
         balancesRequested: accountAddress,
       });
+      
+      // Clear tokens balances
+      this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
       const chunks = _.chunk(
@@ -633,7 +671,8 @@ class Web3Provider extends React.PureComponent {
                   // Update token price
                   tokenState.price = price;
                   return state;
-                })
+                });
+                this.setBalances(state => [...state, token]);
               }).catch(error => {
                 console.error('[loadAccountBalances][getTokenUSDPrice]', token.symbol, token.address, error);
               })
@@ -642,8 +681,10 @@ class Web3Provider extends React.PureComponent {
           return newState;
         });
       }
+      return 'loaded';
     } catch (error) {
       console.error('[loadAccountBalances]', accountAddress, error);
+      return 'error';
     }
   }
 
@@ -1050,6 +1091,7 @@ class Web3Provider extends React.PureComponent {
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
       findTokenBySymbol: this.findTokenBySymbol.bind(this),
       numberToFraction: this.numberToFraction.bind(this),
+      getTokenAmount: this.getTokenAmount.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
     }}>
