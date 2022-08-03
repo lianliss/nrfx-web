@@ -17,6 +17,7 @@ export default props => {
         props.items.map(bank => {
           const isSelected = props.selected === bank;
           return <div className={`BankList__item ${isSelected ? 'active' : ''}`}
+                      key={bank.code}
                       onClick={handleSelect(bank)}>
             <div className="BankList__item__title">{bank.name}</div>
             <BankLogo className="BankList__item__logo" name={bank.code} />

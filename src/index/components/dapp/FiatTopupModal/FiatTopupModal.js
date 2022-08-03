@@ -1,7 +1,7 @@
 import "./FiatTopupModal.less";
 
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import _ from 'lodash';
 
@@ -15,6 +15,9 @@ import BankLogo from "../../../../ui/components/BankLogo/BankLogo";
 import Clipboard from "src/index/components/cabinet/Clipboard/Clipboard";
 import {Button, ButtonWrapper, Input} from "src/ui";
 import { getLang } from "../../../../utils";
+import { Web3Context } from 'services/web3Provider';
+import * as actionTypes from "src/actions/actionTypes";
+import * as actions from "src/actions";
 
 const currencies = {
   RUB: {
@@ -31,25 +34,9 @@ const currencies = {
   },
 };
 
-const methods = [
-  {
-    currencies: ['RUB'],
-    code: 'tinkoff',
-    title: 'Tinkoff Bank',
-  },
-  {
-    currencies: ['RUB'],
-    code: 'gazprombank',
-    title: 'Газпромбанк',
-  },
-  {
-    currencies: ['UAH'],
-    code: 'vostokbank',
-    title: 'Восток Банк',
-  },
-];
-
 const FiatTopupModal = props => {
+  const dispatch = useDispatch();
+  const methods = useSelector(state => state.fiat.banks);
   const {
     balance, adaptive, bankList,
     currency,
@@ -57,6 +44,9 @@ const FiatTopupModal = props => {
   const [bank, changeBank] = useState(null);
   const [method, setMethod] = useState(null);
   const [value, setValue] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const context = React.useContext(Web3Context);
+  const {cardReserve} = context;
   const currencyOptions = currencies[currency];
   const percentFee = _.get(currencyOptions, 'fee', 0);
   const minFee = _.get(currencyOptions, 'minFee', 0);
@@ -86,7 +76,50 @@ const FiatTopupModal = props => {
   const isAllow = !!method && amount >= minAmount && (!maxAmount || amount <= maxAmount);
 
   function sendRequest() {
+    setIsLoading(true);
+    cardReserve(amount, currency, method.code).then(data => {
+      const res = data[0];
+      if (!res) return;
+      let payload = {};
+      payload[currency] = res;
+      dispatch({
+        type: actionTypes.FIAT_TOPUP_UPDATE,
+        payload,
+      });
 
+      const method = methods.find(b => b.code === res.bank);
+      const bankName = method ? method.title : res.bank;
+
+      payload = {
+        reservation: {
+          id: res.operation_id,
+          amount: res.amount,
+          status: res.status,
+          fee: res.fee,
+        },
+        card: {
+          number: res.number,
+          expire_in: res.book_expiration,
+          bank: {
+            code: res.bank,
+            name: bankName,
+            holder_name: res.holder_name,
+            currency: currency,
+          }
+        }
+      };
+      dispatch({
+        type: actionTypes.WALLET_SET_CARD_RESERVATION,
+        payload,
+      });
+      props.onClose();
+      actions.openModal("fiat_topup_card", {
+        currency: currency
+      });
+    }).catch(error => {
+      console.error('[FiatTopupModal][sendRequest]', error);
+      setIsLoading(false);
+    });
   }
 
   return (
@@ -153,7 +186,9 @@ const FiatTopupModal = props => {
                 <Button onClick={props.onClose} type="secondary">
                   {getLang("global_back")}
                 </Button>
-                <Button onClick={sendRequest} type="primary" disabled={!isAllow}>
+                <Button onClick={sendRequest}
+                        state={isLoading ? 'loading' : ''}
+                        type="primary" disabled={!isAllow}>
                   {getLang("topup_button")}
                 </Button>
               </ButtonWrapper>
@@ -189,6 +224,7 @@ const FiatTopupModal = props => {
                 className="FiatRefillModal__body__footer"
               >
                 <Button
+                  state={isLoading ? 'loading' : ''}
                   onClick={() => {
                     changeBank(null);
                   }}
@@ -208,8 +244,8 @@ const FiatTopupModal = props => {
 export default connect(
   state => ({
     accountName: [
-      state.default.profile.user.first_name,
-      state.default.profile.user.last_name
+      _.get(state, 'default.profile.user.first_name'),
+      _.get(state, 'default.profile.user.last_name'),
     ].join(" "),
     adaptive: state.default.adaptive,
     loadingStatus: state.fiat.loadingStatus.refillBankList,

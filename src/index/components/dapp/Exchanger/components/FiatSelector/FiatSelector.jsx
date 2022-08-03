@@ -8,7 +8,7 @@ import * as actions from "src/actions";
 
 // Components
 import SVG from 'utils/svg-wrap';
-import { ContentBox, Button } from 'src/ui';
+import { ContentBox, Button, Timer, BankLogo } from 'src/ui';
 import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelect/TokenSelect';
 import Lang from "src/components/Lang/Lang";
 
@@ -20,7 +20,7 @@ function FiatSelector(props) {
   const rates = useSelector(web3RatesSelector);
   const context = React.useContext(Web3Context);
   const {connectWallet, isConnected, addTokenToWallet} = context;
-  const {tokens, selected, onChange} = props;
+  const {tokens, selected, onChange, reservation, setReservation} = props;
   const [isSelectToken, setIsSelectToken] = React.useState(false);
   const balance = wei.from(_.get(selected, 'balance', "0"));
   const price = _.get(rates, _.get(selected, 'symbol', '').toLowerCase(), 0);
@@ -38,9 +38,15 @@ function FiatSelector(props) {
   }
 
   function topUp() {
-    actions.openModal("fiat_topup", {
-      currency: selected.symbol,
-    });
+    if (reservation) {
+      actions.openModal("fiat_refill_card", {
+        currency: selected.symbol,
+      });
+    } else {
+      actions.openModal("fiat_topup", {
+        currency: selected.symbol,
+      });
+    }
   }
 
   return (
@@ -88,16 +94,40 @@ function FiatSelector(props) {
           console.log('LOAD');
         }}
       />}
-      <div className="FiatSelector__row">
-        <div className="FiatSelector__operations">
-        </div>
-        <div className="FiatSelector__actions">
+      <div className="FiatSelector__actions">
+        {!!reservation
+          ? <div className="FiatSelector__reservation">
+            <div className="FiatSelector__reservation-bank">
+              <BankLogo name={reservation.bank} />
+            </div>
+            <div className="FiatSelector__reservation-status">
+              <span>
+                <Lang
+                  name={
+                    reservation.status === "wait_for_pay"
+                      ? "cabinet_fiatWallet_waitingForRefill"
+                      : "cabinet_fiatWallet_waitingForReview"
+                  }
+                />
+              </span>
+              {reservation.status === "wait_for_pay" && <Timer
+                hiddenAfterFinish
+                onFinish={() => setReservation(null)}
+                time={reservation.book_expiration * 1000}
+              />}
+            </div>
+            <Button className="default middle"
+                    onClick={() => actions.openModal("fiat_topup_card")}>
+              <Lang name="global_open" />
+            </Button>
+          </div>
+          : <>
           {isConnected ? <Button className="default middle" onClick={topUp}>
             <Lang name="cabinet_fiatBalance_add" />
           </Button> : <Button className="default middle" onClick={connectWallet}>
             Connect Wallet
           </Button>}
-        </div>
+        </>}
       </div>
     </ContentBox>
   )

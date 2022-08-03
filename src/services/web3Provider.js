@@ -11,6 +11,7 @@ import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fractio
 import significant from 'utils/significant';
 import TokenContract from './web3Provider/token';
 import MasterChefContract from './web3Provider/MasterChefContract';
+import web3Backend from './web3-backend';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -1021,7 +1022,6 @@ class Web3Provider extends React.PureComponent {
   }
 
   async updateFiats(symbol) {
-    console.log('updateFiats');
     try {
       const {accountAddress, chainId} = this.state;
       const fiats = _.cloneDeep(this.state.fiats);
@@ -1065,6 +1065,77 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async backendRequest(params, message, path, method = 'post') {
+    const {isConnected, accountAddress} = this.state;
+    if (!isConnected) throw new Error('Wallet is not connected');
+    try {
+      const signature = await this.ethereum.request({
+        method: 'personal_sign',
+        params: [
+          this.web3.utils.utf8ToHex(message),
+          accountAddress,
+        ],
+      });
+      return await web3Backend[method](path, {
+        headers: {
+          'nrfx-message': message,
+          'nrfx-sign': signature,
+        },
+        params
+      });
+    } catch (error) {
+      console.error('[backendRequest]', error);
+      throw error;
+    }
+  }
+
+  async cardReserve(amount, currency, bank) {
+    try {
+      const result = await this.backendRequest({
+          amount, currency, bank,
+        },
+        `Topup ${amount} ${currency} with ${_.capitalize(bank)}`,
+        'cards/reservation',
+        'post',
+      );
+      console.log('[cardReserve]', result);
+      return result;
+    } catch (error) {
+      console.error('[cardReserve]', error);
+    }
+  }
+
+  async confirmPayment(operationId) {
+    try {
+      const result = await this.backendRequest({
+          operationId,
+        },
+        `Confirm payment #${operationId}`,
+        'cards/confirm',
+        'post',
+      );
+      console.log('[confirmPayment]', result);
+      return true;
+    } catch (error) {
+      console.error('[confirmPayment]', error);
+    }
+  }
+
+  async cancelReservation(operationId) {
+    try {
+      const result = await this.backendRequest({
+          operationId,
+        },
+        `Cancel card reservation #${operationId}`,
+        'cards/cancel',
+        'post',
+      );
+      console.log('[cancelReservation]', result);
+      return true;
+    } catch (error) {
+      console.error('[cardReserve]', error);
+    }
+  }
 
   render() {
     return <Web3Context.Provider value={{
@@ -1105,6 +1176,9 @@ class Web3Provider extends React.PureComponent {
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
       updateFiats: this.updateFiats.bind(this),
+      cardReserve: this.cardReserve.bind(this),
+      confirmPayment: this.confirmPayment.bind(this),
+      cancelReservation: this.cancelReservation.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

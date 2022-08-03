@@ -32,6 +32,7 @@ import FiatWithdrawalModal from "../index/components/cabinet/FiatWithdrawalModal
 import FiatRefillModal from "../index/components/cabinet/FiatRefillModal/FiatRefillModal";
 import FiatTopupModal from "../index/components/dapp/FiatTopupModal/FiatTopupModal";
 import FiatRefillByCardModal from "../index/components/cabinet/FiatRefillByCardModal/FiatRefillByCardModal";
+import FiatTopupCardModal from "../index/components/dapp/FiatRefillByCardModal/FiatRefillByCardModal";
 // import FiatOperationModal from "../index/components/cabinet/FiatOperationModal/FiatOperationModal";
 import OperationModal from "../index/components/cabinet/OperationModal/OperationModal";
 import DepositPoolSuccessModal from "../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal";
@@ -101,6 +102,9 @@ function Modals(props) {
       break;
     case "fiat_refill_card":
       Component = FiatRefillByCardModal;
+      break;
+    case "fiat_topup_card":
+      Component = FiatTopupCardModal;
       break;
     case "fiat_withdrawal":
       Component = FiatWithdrawalModal;

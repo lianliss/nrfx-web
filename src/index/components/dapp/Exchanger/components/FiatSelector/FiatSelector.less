@@ -110,5 +110,28 @@
     }
     &__actions {
         margin-top: 40px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    &__reservation {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &-bank {
+
+        }
+        &-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            time {
+                opacity: 0.65;
+                font-size: 12px;
+            }
+        }
     }
 }
