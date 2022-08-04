@@ -8,9 +8,11 @@ import * as actions from "src/actions";
 
 // Components
 import SVG from 'utils/svg-wrap';
-import { ContentBox, Button, Timer, BankLogo } from 'src/ui';
+import { ContentBox, Button, Timer, BankLogo, Input } from 'src/ui';
 import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelect/TokenSelect';
 import Lang from "src/components/Lang/Lang";
+import DexSwapInput from 'src/index/containers/dapp/DexSwap/components/DexSwapInput/DexSwapInput';
+import limits from 'src/index/constants/fiats';
 
 // Styles
 import './FiatSelector.less';
@@ -18,33 +20,95 @@ import './FiatSelector.less';
 function FiatSelector(props) {
   const isAdaptive = useSelector(adaptiveSelector);
   const rates = useSelector(web3RatesSelector);
+  const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
   const context = React.useContext(Web3Context);
-  const {connectWallet, isConnected, addTokenToWallet} = context;
-  const {tokens, selected, onChange, reservation, setReservation} = props;
-  const [isSelectToken, setIsSelectToken] = React.useState(false);
-  const balance = wei.from(_.get(selected, 'balance', "0"));
-  const price = _.get(rates, _.get(selected, 'symbol', '').toLowerCase(), 0);
+  const {
+    connectWallet, isConnected, addTokenToWallet,
+    tokens, loadAccountBalances,
+  } = context;
+  const {
+    fiats, fiat, coins, coin,
+    setFiat, setCoin,
+    reservation, setReservation
+  } = props;
+  const [isSelectFiat, setIsSelectFiat] = React.useState(false);
+  const [isSelectCoin, setIsSelectCoin] = React.useState(false);
 
-  function openSelector() {
+  // Symbols
+  const fiatSymbol = _.get(fiat, 'symbol', '');
+  const coinSymbol = _.get(coin, 'symbol', '');
+
+  // Fiat price
+  const fiatBalance = wei.from(_.get(fiat, 'balance', "0"));
+  const fiatPrice = _.get(rates, fiatSymbol.toLowerCase(), 0);
+
+  // Calculate coin price
+  let coinPrice;
+  switch (coinSymbol) {
+    case 'NRFX': coinPrice = _.get(rates, 'nrfx', 0); break;
+    case 'USDT': coinPrice = 1; break;
+    default: coinPrice = _.get(rates, `${coinSymbol}USDT`, 0);
+  }
+
+  // Fiat input value
+  const [fiatValue, setFiatValue] = React.useState(null);
+  const handleFiatInput = newValue => {
+    if (isAdaptive) {
+      setFiatValue(newValue);
+      return;
+    }
+    let value = `${newValue}`;
+    value = value.replace(',', '.');
+    if (value.length >= 2 && value[0] === '0' && value[1] !== '.') {
+      value = _.trimStart(value, '0');
+    }
+    if (!_.isNaN(Number(value)) || value === '.') {
+      setFiatValue(value);
+    }
+  };
+
+  // Calculate amount
+  const commission = (Number(_.get(commissions, `${coinSymbol.toLowerCase()}`, commissions.default)) || 0) / 100;
+  const rate = fiatPrice / coinPrice;
+  const fiatAmount = Number(fiatValue) || 0;
+  const coinAmount = fiatAmount * rate * (1 - commission);
+  const rateDisplay = 1 / rate / (1 - commission);
+
+  // Apply commission
+
+  function fiatSelector() {
     if (!isConnected) {
       connectWallet()
-        .then(() => setIsSelectToken(true))
+        .then(() => setIsSelectFiat(true))
         .catch(error => {
-          setIsSelectToken(false);
+          setIsSelectFiat(false);
         })
     } else {
-      setIsSelectToken(true);
+      setIsSelectFiat(true);
+    }
+  }
+
+  function coinSelector() {
+    if (!isConnected) {
+      connectWallet()
+        .then(() => setIsSelectCoin(true))
+        .catch(error => {
+          setIsSelectCoin(false);
+        })
+    } else {
+      setIsSelectCoin(true);
     }
   }
 
   function topUp() {
     if (reservation) {
       actions.openModal("fiat_refill_card", {
-        currency: selected.symbol,
+        currency: fiatSymbol,
       });
     } else {
       actions.openModal("fiat_topup", {
-        currency: selected.symbol,
+        currency: fiatSymbol,
+        amount: fiatAmount,
       });
     }
   }
@@ -54,12 +118,12 @@ function FiatSelector(props) {
       <div className="FiatSelector__row">
         <div className="FiatSelector__dropdown">
           <div className="FiatSelector__icon" style={{
-            backgroundImage: `url('${_.get(selected, 'logoURI', '')}')`
-          }} onClick={openSelector} />
-          <div className="FiatSelector__select" onClick={openSelector}>
-            <span>{_.get(selected, 'name', 'Unknown')}</span>
+            backgroundImage: `url('${_.get(fiat, 'logoURI', '')}')`
+          }} onClick={fiatSelector} />
+          <div className="FiatSelector__select" onClick={fiatSelector}>
+            <span>{_.get(fiat, 'name', 'Unknown')}</span>
             <div className="FiatSelector__currency">
-              <span>{_.get(selected, 'symbol', 'Unknown')}</span>
+              <span>{_.get(fiat, 'symbol', 'Unknown')}</span>
               <SVG
                 src={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
               />
@@ -68,35 +132,48 @@ function FiatSelector(props) {
         </div>
         <div className="FiatSelector__balance">
           <div className="FiatSelector__balance-number">
-            {getFinePrice(balance)}
+            {getFinePrice(fiatBalance)}
           </div>
-          {(!!balance && !!price) && <div className="FiatSelector__balance-price">
-            {getFinePrice(balance * price)}
+          {(!!fiatBalance && !!fiatPrice) && <div className="FiatSelector__balance-price">
+            {getFinePrice(fiatBalance * fiatPrice)}
           </div>}
-          <div className="FiatSelector__track" onClick={() => addTokenToWallet(selected)}>
+          <div className="FiatSelector__track" onClick={() => addTokenToWallet(fiat)}>
             Track in wallet
           </div>
         </div>
       </div>
-      {isSelectToken && <TokenSelect
+      {isSelectFiat && <TokenSelect
         onChange={value => {
-          onChange(value);
-          setIsSelectToken(false);
+          setFiat(value);
+          setIsSelectFiat(false);
         }}
-        onClose={() => setIsSelectToken(false)}
-        selected={selected}
+        onClose={() => setIsSelectFiat(false)}
+        selected={fiat}
         isAdaptive={isAdaptive}
         {...context}
-        tokens={tokens}
+        tokens={fiats}
         disableSwitcher
         disableCommonBases
         loadAccountBalances={() => {
           console.log('LOAD');
         }}
       />}
+      {isSelectCoin && <TokenSelect
+        onChange={value => {
+          setCoin(value);
+          setIsSelectCoin(false);
+        }}
+        onClose={() => setIsSelectCoin(false)}
+        selected={coin}
+        isAdaptive={isAdaptive}
+        {...context}
+        tokens={coins}
+        disableSwitcher
+        loadAccountBalances={loadAccountBalances}
+      />}
       <div className="FiatSelector__actions">
         {!!reservation
-          ? <div className="FiatSelector__reservation">
+        ? <div className="FiatSelector__reservation">
             <div className="FiatSelector__reservation-bank">
               <BankLogo name={reservation.bank} />
             </div>
@@ -121,13 +198,50 @@ function FiatSelector(props) {
               <Lang name="global_open" />
             </Button>
           </div>
-          : <>
-          {isConnected ? <Button className="default middle" onClick={topUp}>
-            <Lang name="cabinet_fiatBalance_add" />
-          </Button> : <Button className="default middle" onClick={connectWallet}>
+        : <>
+          {isConnected
+            ? <>
+            <div className="FiatSelector__fiat-amount">
+              <Input placeholder="0.00"
+                     onTextChange={handleFiatInput}
+                     value={fiatValue}
+                     indicator={`From 5000 ${fiatSymbol}`} />
+              <span onClick={() => handleFiatInput(fiatBalance)}>Max</span>
+            </div>
+            <Button className="default middle" onClick={topUp}>
+              <Lang name="cabinet_fiatBalance_add" />
+            </Button>
+          </> : <Button className="default middle" onClick={connectWallet}>
             Connect Wallet
           </Button>}
         </>}
+      </div>
+      <div className="FiatSelector__swap">
+        <div className="FiatSelector__dropdown">
+          <div className="FiatSelector__icon" style={{
+            backgroundImage: `url('${_.get(coin, 'logoURI', '')}')`
+          }} onClick={coinSelector} />
+          <div className="FiatSelector__select" onClick={coinSelector}>
+            <span>{_.get(coin, 'name', 'Unknown')}</span>
+            <div className="FiatSelector__currency">
+              <span>{_.get(coin, 'symbol', 'Unknown')}</span>
+              <SVG
+                src={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="FiatSelector__coin">
+          {!!coinAmount && <div className="FiatSelector__coin-amount">
+            ≈ {!!coinAmount && getFinePrice(coinAmount)} <span>{coinSymbol}</span>
+          </div>}
+          {!!rate && <div className="FiatSelector__coin-price">
+            1 <span>{coinSymbol}</span> ≈ {getFinePrice(rateDisplay)} <span>{fiatSymbol}</span>
+          </div>}
+        </div>
+        {isConnected && <Button className="default middle" onClick={() => {}}>
+          Buy
+        </Button>}
       </div>
     </ContentBox>
   )

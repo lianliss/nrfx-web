@@ -35,30 +35,68 @@ function Exchanger(props) {
   const methods = useSelector(state => state.fiat.banks);
   const rates = useSelector(web3RatesSelector);
   const context = React.useContext(Web3Context);
-  const [selected, setSelected] = React.useState(null);
-  const currency = _.get(selected, 'symbol');
-  const reservation = useSelector(state => _.get(state, `fiat.topup.${currency}`));
+
   const {
     fiats, chainId, accountAddress,
     web3, updateFiats, isConnected,
+    tokens, loadAccountBalances,
   } = context;
+
+  const [fiatSelected, setFiatSelected] = React.useState(null);
+  const [coinSelected, setCoinSelected] = React.useState(
+    tokens.find(t => t.symbol === initGetParams.params.coin) || tokens.find(t => t.symbol === 'NRFX')
+  );
+  const fiatSymbol = _.get(fiatSelected, 'symbol');
+  const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
+
   const userId = `${chainId}${accountAddress}`;
-  const tokens = _.get(fiats, userId, []).map(token => {
+  const fiatTokens = _.get(fiats, userId, []).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
   });
 
+  // Get raw coins list
+  const binanceSymbols = Object.keys(rates)
+    .filter(symbol => symbol.indexOf('USDT') > 0)
+    .map(symbol => symbol.split('USDT')[0]);
+  const symbols = [
+    'NRFX',
+    'USDT',
+    ...binanceSymbols
+  ];
+  const coins = _.uniqBy(
+    tokens.filter(token => symbols.indexOf(token.symbol) >= 0),
+    'address',
+  );
+
   /**
-   * Update "selected" — fiat token state.
+   * Update "fiatSelected" — fiat token state.
    * Sets router param
    * @param currencyObject {object} - fiat token
    */
-  const setCurrency = currencyObject => {
-    setSelected(currencyObject);
+  const setFiat = currencyObject => {
+    setFiatSelected(currencyObject);
     const routerState = router.getState();
     if (routerState.params.currency !== currencyObject.symbol) {
       router.navigate(routerState.name, {
+        ...routerState.params,
         currency: currencyObject.symbol,
+      });
+    }
+  };
+
+  /**
+   * Update "fiatSelected" — coin token state.
+   * Sets router param
+   * @param currencyObject {object} - coin token
+   */
+  const setCoin = currencyObject => {
+    setCoinSelected(currencyObject);
+    const routerState = router.getState();
+    if (routerState.params.currency !== currencyObject.symbol) {
+      router.navigate(routerState.name, {
+        ...routerState.params,
+        coin: currencyObject.symbol,
       });
     }
   };
@@ -70,14 +108,14 @@ function Exchanger(props) {
   fiatsUpdate = () => {
     if (isConnected && accountAddress) {
       updateFiats().then(fiats => {
-        if (!selected) {
+        if (!fiatSelected) {
           const initialCurrency = fiats[userId]
             .find(fiat => fiat.symbol === initGetParams.params.currency);
-          setCurrency(initialCurrency || fiats[userId][0]);
+          setFiat(initialCurrency || fiats[userId][0]);
         } else {
-          const currency = fiats[userId].find(c => selected.symbol === c.symbol);
-          if (currency) {
-            setCurrency(currency);
+          const fiatSymbol = fiats[userId].find(c => fiatSelected.symbol === c.symbol);
+          if (fiatSymbol) {
+            setFiat(fiatSymbol);
           }
         }
       });
@@ -101,13 +139,15 @@ function Exchanger(props) {
    * Updates the current reservation with current selected fiat
    */
   cardsUpdate = () => {
-    if (!isConnected || !accountAddress || !selected) {
-      dispatch({
-        type: actionTypes.FIAT_TOPUP_DELETE,
-        payload: currency,
-      });
+    if (!isConnected || !accountAddress || !fiatSelected) {
+      if (reservation && reservation[fiatSymbol]) {
+        dispatch({
+          type: actionTypes.FIAT_TOPUP_DELETE,
+          payload: fiatSymbol,
+        });
+      }
     } else {
-      web3Backend.getReservation(currency, accountAddress)
+      web3Backend.getReservation(fiatSymbol, accountAddress)
         .then(data => {
           const res = data[0];
           if (!res) {
@@ -115,14 +155,16 @@ function Exchanger(props) {
               // If there was reservation before get available banks again
               getBanks();
             }
-            dispatch({
-              type: actionTypes.FIAT_TOPUP_DELETE,
-              payload: currency,
-            });
+            if (reservation && reservation[fiatSymbol]) {
+              dispatch({
+                type: actionTypes.FIAT_TOPUP_DELETE,
+                payload: fiatSymbol,
+              });
+            }
             return;
           }
           let payload = {};
-          payload[currency] = res;
+          payload[fiatSymbol] = res;
           dispatch({
             type: actionTypes.FIAT_TOPUP_UPDATE,
             payload,
@@ -145,7 +187,7 @@ function Exchanger(props) {
                 code: res.bank,
                 name: bankName,
                 holder_name: res.holder_name,
-                currency: selected.symbol,
+                currency: fiatSelected.symbol,
               }
             }
           };
@@ -154,11 +196,13 @@ function Exchanger(props) {
             payload,
           });
         }).catch(error => {
-        console.error('[Exchanger][getReservation]', error);
-        dispatch({
-          type: actionTypes.FIAT_TOPUP_DELETE,
-          payload: currency,
-        });
+          console.error('[Exchanger][getReservation]', error);
+          if (reservation && reservation[fiatSymbol]) {
+            dispatch({
+              type: actionTypes.FIAT_TOPUP_DELETE,
+              payload: fiatSymbol,
+            });
+          }
       });
     }
     cardsUpdateTimeout = setTimeout(() => cardsUpdate(), UPDATE_DELAY);
@@ -176,7 +220,7 @@ function Exchanger(props) {
     return () => {
       clearTimeout(cardsUpdateTimeout);
     }
-  }, [accountAddress, chainId, isConnected, selected]);
+  }, [accountAddress, chainId, isConnected, fiatSelected]);
 
   React.useEffect(() => {
     getBanks();
@@ -188,7 +232,12 @@ function Exchanger(props) {
         <h2>Exchanger</h2>
         <div className="Exchanger__content">
           <FiatSelector
-            tokens={tokens} selected={selected} onChange={setCurrency}
+            fiats={fiatTokens}
+            coins={coins}
+            fiat={fiatSelected}
+            coin={coinSelected}
+            setFiat={setFiat}
+            setCoin={setCoin}
             {...{reservation}}
           />
           <Instruction />

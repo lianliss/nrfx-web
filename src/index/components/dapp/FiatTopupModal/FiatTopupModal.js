@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import _ from 'lodash';
+import router from 'src/router';
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
@@ -19,20 +20,7 @@ import { Web3Context } from 'services/web3Provider';
 import * as actionTypes from "src/actions/actionTypes";
 import * as actions from "src/actions";
 
-const currencies = {
-  RUB: {
-    fee: 2,
-    minFee: 0,
-    minAmount: 5000,
-    maxAmount: 150000,
-  },
-  UAH: {
-    fee: 2,
-    minFee: 0,
-    minAmount: 5000,
-    maxAmount: 150000,
-  },
-};
+import currencies from 'src/index/constants/fiats';
 
 const FiatTopupModal = props => {
   const dispatch = useDispatch();
@@ -43,11 +31,11 @@ const FiatTopupModal = props => {
   } = props;
   const [bank, changeBank] = useState(null);
   const [method, setMethod] = useState(null);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(router.getState().params.amount);
   const [isLoading, setIsLoading] = useState(false);
   const context = React.useContext(Web3Context);
   const {cardReserve} = context;
-  const currencyOptions = currencies[currency];
+  const currencyOptions = currencies[currency] || currencies.default;
   const percentFee = _.get(currencyOptions, 'fee', 0);
   const minFee = _.get(currencyOptions, 'minFee', 0);
   let minAmount = _.get(currencyOptions, 'minAmount', 0);

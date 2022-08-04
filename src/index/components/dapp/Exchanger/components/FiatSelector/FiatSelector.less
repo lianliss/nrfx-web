@@ -111,7 +111,7 @@
     &__actions {
         margin-top: 40px;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
     }
     &__reservation {
@@ -132,6 +132,53 @@
                 opacity: 0.65;
                 font-size: 12px;
             }
+        }
+    }
+    &__swap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 40px;
+        padding-top: 40px;
+        border-top: 1px solid var(--light-gray);
+    }
+    &__fiat-amount {
+        display: flex;
+        position: relative;
+        align-items: center;
+
+        .Input__wrapper {
+            .Input__indicator {
+                opacity: 0.5;
+                pointer-events: none;
+            }
+        }
+        & > span {
+            margin-left: 6px;
+            font-size: 12px;
+            color: var(--primary-blue);
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    &__coin {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &-amount {
+            font-size: 24px;
+            font-weight: 600;
+
+            span {
+                opacity: 0.4;
+            }
+        }
+        &-price {
+            font-size: 12px;
         }
     }
 }
