@@ -13,6 +13,7 @@ import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelec
 import Lang from "src/components/Lang/Lang";
 import DexSwapInput from 'src/index/containers/dapp/DexSwap/components/DexSwapInput/DexSwapInput';
 import limits from 'src/index/constants/fiats';
+import * as toast from "src/actions/toasts";
 
 // Styles
 import './FiatSelector.less';
@@ -24,7 +25,7 @@ function FiatSelector(props) {
   const context = React.useContext(Web3Context);
   const {
     connectWallet, isConnected, addTokenToWallet,
-    tokens, loadAccountBalances,
+    tokens, loadAccountBalances, exchange,
   } = context;
   const {
     fiats, fiat, coins, coin,
@@ -50,6 +51,10 @@ function FiatSelector(props) {
     default: coinPrice = _.get(rates, `${coinSymbol}USDT`, 0);
   }
 
+  const limits = props.limits.find(l => l.coin === coinSymbol);
+  const minCoinAmount = Math.max(_.get(limits, 'min', 0), 20 / coinPrice);
+  const maxCoinAmount = _.get(limits, 'max', Infinity);
+
   // Fiat input value
   const [fiatValue, setFiatValue] = React.useState(null);
   const handleFiatInput = newValue => {
@@ -74,7 +79,12 @@ function FiatSelector(props) {
   const coinAmount = fiatAmount * rate * (1 - commission);
   const rateDisplay = 1 / rate / (1 - commission);
 
-  // Apply commission
+  // Button availability
+  const [isProcessing, setIsProcessing] = React.useState(false);
+  const [processingTime, setProcessingTime] = React.useState(false);
+  const isAvailable = coinAmount >= minCoinAmount
+    && coinAmount <= maxCoinAmount
+    && fiatBalance >= fiatAmount;
 
   function fiatSelector() {
     if (!isConnected) {
@@ -112,6 +122,21 @@ function FiatSelector(props) {
       });
     }
   }
+
+  const swapTokens = async () => {
+    setIsProcessing(true);
+    setProcessingTime(Date.now() + 60000 * 5);
+    try {
+      const result = await exchange(fiatSymbol, coinSymbol, fiatAmount);
+      console.log('[swapTokens]', result);
+      toast.success('Exchange confirmed');
+    } catch (error) {
+      console.error('[swapTokens]', error);
+      toast.error(_.get(error, 'data.message', error.message));
+    }
+    setIsProcessing(false);
+    setProcessingTime(null);
+  };
 
   return (
     <ContentBox className="FiatSelector">
@@ -235,13 +260,49 @@ function FiatSelector(props) {
           {!!coinAmount && <div className="FiatSelector__coin-amount">
             ≈ {!!coinAmount && getFinePrice(coinAmount)} <span>{coinSymbol}</span>
           </div>}
-          {!!rate && <div className="FiatSelector__coin-price">
-            1 <span>{coinSymbol}</span> ≈ {getFinePrice(rateDisplay)} <span>{fiatSymbol}</span>
+          {coinSymbol !== 'BNB' && <div className="FiatSelector__coin-track" onClick={() => addTokenToWallet(coin)}>
+            Track in wallet
           </div>}
         </div>
-        {isConnected && <Button className="default middle" onClick={() => {}}>
-          Buy
-        </Button>}
+        {isConnected && <div className="FiatSelector__actions-buy">
+          <Button className="default middle"
+                                state={isProcessing ? 'loading' : ''}
+                                disabled={!isAvailable}
+                                onClick={swapTokens}>
+            Buy
+          </Button>
+          {isProcessing && <Timer
+            hiddenAfterFinish
+            onFinish={() => {}}
+            time={processingTime}
+          />}
+        </div>}
+      </div>
+      <div className="FiatSelector__limits">
+        <div className="FiatSelector__limits-row">
+          <span>Price:</span>
+          <span>
+            1 {coinSymbol} ≈ {getFinePrice(rateDisplay)} {fiatSymbol}
+          </span>
+        </div>
+        <div className="FiatSelector__limits-row">
+          <span>Minimum:</span>
+          <span>
+            {getFinePrice(minCoinAmount)} {coinSymbol}
+          </span>
+        </div>
+        <div className="FiatSelector__limits-row">
+          <span>Maximum:</span>
+          <span>
+            {getFinePrice(maxCoinAmount)} {coinSymbol}
+          </span>
+        </div>
+        <div className="FiatSelector__limits-row">
+          <span>Time:</span>
+          <span>
+            ≈ {_.get(limits, 'time', 5)} min
+          </span>
+        </div>
       </div>
     </ContentBox>
   )

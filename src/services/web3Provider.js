@@ -1133,7 +1133,26 @@ class Web3Provider extends React.PureComponent {
       console.log('[cancelReservation]', result);
       return true;
     } catch (error) {
-      console.error('[cardReserve]', error);
+      console.error('[cancelReservation]', error);
+    }
+  }
+
+  async exchange(fiat, coin, fiatAmount) {
+    try {
+      const result = await this.backendRequest({
+          fiat,
+          coin,
+          fiatAmount,
+        },
+        `Exchange ${fiatAmount} ${fiat} to ${coin}`,
+        'swap/exchange',
+        'post',
+      );
+      console.log('[exchange]', result);
+      return true;
+    } catch (error) {
+      console.error('[exchange]', error);
+      throw error;
     }
   }
 
@@ -1179,6 +1198,7 @@ class Web3Provider extends React.PureComponent {
       cardReserve: this.cardReserve.bind(this),
       confirmPayment: this.confirmPayment.bind(this),
       cancelReservation: this.cancelReservation.bind(this),
+      exchange: this.exchange.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

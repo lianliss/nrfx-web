@@ -212,6 +212,8 @@ export class Web3Backend {
     }
   });
   getBanks = () => this.get('cards/banks');
+  getLimits = () => this.get('rates/limits');
+  getExchangerBalance = () => this.get('rates/balance');
 }
 
 const web3Backend = new Web3Backend();

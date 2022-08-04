@@ -42,6 +42,7 @@ function Exchanger(props) {
     tokens, loadAccountBalances,
   } = context;
 
+  const [limits, setLimits] = React.useState([]);
   const [fiatSelected, setFiatSelected] = React.useState(null);
   const [coinSelected, setCoinSelected] = React.useState(
     tokens.find(t => t.symbol === initGetParams.params.coin) || tokens.find(t => t.symbol === 'NRFX')
@@ -118,6 +119,8 @@ function Exchanger(props) {
             setFiat(fiatSymbol);
           }
         }
+      }).catch(error => {
+
       });
     }
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);
@@ -208,6 +211,15 @@ function Exchanger(props) {
     cardsUpdateTimeout = setTimeout(() => cardsUpdate(), UPDATE_DELAY);
   };
 
+  const getLimits = async () => {
+    web3Backend.getLimits().then(data => {
+      setLimits(data);
+    }).catch(error => {
+      console.error('[Exchanger][getLimits]', error);
+      setTimeout(getLimits, 5000);
+    })
+  };
+
   React.useEffect(() => {
     fiatsUpdate();
     return () => {
@@ -224,6 +236,7 @@ function Exchanger(props) {
 
   React.useEffect(() => {
     getBanks();
+    getLimits();
   }, []);
 
   return (
@@ -238,6 +251,7 @@ function Exchanger(props) {
             coin={coinSelected}
             setFiat={setFiat}
             setCoin={setCoin}
+            limits={limits}
             {...{reservation}}
           />
           <Instruction />

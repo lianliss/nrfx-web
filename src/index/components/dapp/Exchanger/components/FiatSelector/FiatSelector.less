@@ -7,10 +7,6 @@
     color: var(--text-black);
     margin-bottom: 40px;
 
-    .TokenSelect__token-icon {
-        background-color: var(--green);
-    }
-
     &__row {
         display: flex;
         justify-content: space-between;
@@ -113,6 +109,15 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        &-buy {
+            time {
+                margin-top: 10px;
+                font-size: 12px;
+                opacity: 0.65;
+                text-align: right;
+            }
+        }
     }
     &__reservation {
         width: 100%;
@@ -179,6 +184,31 @@
         }
         &-price {
             font-size: 12px;
+        }
+        &-track {
+            color: var(--primary-blue);
+            font-size: 12px;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    &__limits {
+        margin-top: 40px;
+        font-size: 12px;
+        line-height: 1.6em;
+
+        &-row {
+            display: flex;
+
+            span {
+                &:first-child {
+                    font-weight: 600;
+                    margin-right: 6px;
+                }
+            }
         }
     }
 }
