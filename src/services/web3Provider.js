@@ -11,6 +11,7 @@ import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fractio
 import significant from 'utils/significant';
 import TokenContract from './web3Provider/token';
 import MasterChefContract from './web3Provider/MasterChefContract';
+import web3Backend from './web3-backend';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -18,6 +19,10 @@ const GWEI_DECIMALS = 9;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
+const KNOWN_FIATS = [
+  {symbol: 'RUB', logoURI: 'https://static.narfex.com/img/currencies/rubles.svg'},
+  {symbol: 'UAH', logoURI: 'https://static.narfex.com/img/currencies/uah-gryvnya.svg'},
+];
 
 class Web3Provider extends React.PureComponent {
 
@@ -31,6 +36,7 @@ class Web3Provider extends React.PureComponent {
     pools: null,
     poolsList: networks[56].poolsList,
     prices: {},
+    fiats: {},
   };
 
   ethereum = null;
@@ -41,6 +47,7 @@ class Web3Provider extends React.PureComponent {
   routerAddress = networks[56].providerAddress;
   tokenSale = networks[56].tokenSale;
   saleFactory = networks[56].saleFactory;
+  fiatFactory = networks[56].fiatFactory;
   wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
@@ -1014,6 +1021,141 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async updateFiats(symbol) {
+    try {
+      const {accountAddress, chainId} = this.state;
+      const fiats = _.cloneDeep(this.state.fiats);
+      let list = _.get(fiats, 'list', []);
+
+      if (!list.length) {
+        const factoryContract = new (this.getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/fiatFactory'),
+          this.fiatFactory,
+        );
+        list = await factoryContract.methods.getFiats().call();
+        fiats.list = list;
+      }
+
+      const userId = `${chainId}${accountAddress}`;
+      const userFiats = (await Promise.all(list.map(fiatAddress => {
+        const fiatContract = new (this.getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/fiat'),
+          fiatAddress,
+        );
+        return fiatContract.methods.getInfo(accountAddress).call();
+      }))).map((fiat, index) => {
+        const known = KNOWN_FIATS.find(s => s.symbol === fiat[1]) || {};
+        return {
+          ...known,
+          address: list[index],
+          name: fiat[0],
+          symbol: fiat[1],
+          chainId,
+          decimals: 18,
+          balance: fiat[2],
+        }
+      });
+      fiats[userId] = userFiats;
+      this.setState({
+        fiats,
+      });
+      return fiats;
+    } catch (error) {
+      console.error('[updateFiats]', error);
+    }
+  }
+
+  async backendRequest(params, message, path, method = 'post') {
+    const {isConnected, accountAddress} = this.state;
+    if (!isConnected) throw new Error('Wallet is not connected');
+    try {
+      const signature = await this.ethereum.request({
+        method: 'personal_sign',
+        params: [
+          this.web3.utils.utf8ToHex(message),
+          accountAddress,
+        ],
+      });
+      return await web3Backend[method](path, {
+        headers: {
+          'nrfx-message': message,
+          'nrfx-sign': signature,
+        },
+        params
+      });
+    } catch (error) {
+      console.error('[backendRequest]', error);
+      throw error;
+    }
+  }
+
+  async cardReserve(amount, currency, bank) {
+    try {
+      const result = await this.backendRequest({
+          amount, currency, bank,
+        },
+        `Topup ${amount} ${currency} with ${_.capitalize(bank)}`,
+        'cards/reservation',
+        'post',
+      );
+      console.log('[cardReserve]', result);
+      return result;
+    } catch (error) {
+      console.error('[cardReserve]', error);
+    }
+  }
+
+  async confirmPayment(operationId) {
+    try {
+      const result = await this.backendRequest({
+          operationId,
+        },
+        `Confirm payment #${operationId}`,
+        'cards/confirm',
+        'post',
+      );
+      console.log('[confirmPayment]', result);
+      return true;
+    } catch (error) {
+      console.error('[confirmPayment]', error);
+    }
+  }
+
+  async cancelReservation(operationId) {
+    try {
+      const result = await this.backendRequest({
+          operationId,
+        },
+        `Cancel card reservation #${operationId}`,
+        'cards/cancel',
+        'post',
+      );
+      console.log('[cancelReservation]', result);
+      return true;
+    } catch (error) {
+      console.error('[cancelReservation]', error);
+    }
+  }
+
+  async exchange(fiat, coin, fiatAmount) {
+    try {
+      const result = await this.backendRequest({
+          fiat,
+          coin,
+          fiatAmount,
+        },
+        `Exchange ${fiatAmount} ${fiat} to ${coin}`,
+        'swap/exchange',
+        'post',
+      );
+      console.log('[exchange]', result);
+      return true;
+    } catch (error) {
+      console.error('[exchange]', error);
+      throw error;
+    }
+  }
+
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
@@ -1052,6 +1194,11 @@ class Web3Provider extends React.PureComponent {
       numberToFraction: this.numberToFraction.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
+      updateFiats: this.updateFiats.bind(this),
+      cardReserve: this.cardReserve.bind(this),
+      confirmPayment: this.confirmPayment.bind(this),
+      cancelReservation: this.cancelReservation.bind(this),
+      exchange: this.exchange.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

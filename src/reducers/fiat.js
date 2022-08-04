@@ -31,7 +31,9 @@ const initialState = {
     newRate: "",
     marketForm: "",
     history: ""
-  }
+  },
+  topup: {},
+  banks: [],
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -150,6 +152,35 @@ export default function reduce(state = initialState, action = {}) {
           items: [action.transaction, ...state.history.items]
         }
       };
+    }
+
+    case actionTypes.FIAT_TOPUP_UPDATE: {
+      return {
+        ...state,
+        topup: {
+          ...state.topup,
+          ...action.payload
+        }
+      }
+    }
+
+    case actionTypes.FIAT_TOPUP_DELETE: {
+      const newTopup = {};
+      newTopup[action.payload] = null;
+      return {
+        ...state,
+        topup: {
+          ...state.topup,
+          ...newTopup,
+        }
+      }
+    }
+
+    case actionTypes.FIAT_BANKS_UPDATE: {
+      return {
+        ...state,
+        banks: action.payload
+      }
     }
 
     default:

@@ -61,11 +61,10 @@ class TokenSelect extends React.PureComponent {
       isAdaptive,
       tokens,
       accountAddress,
-      getTokenBalance,
-      getTokenUSDPrice,
       getTokenBalanceKey,
-      updateTokenBalance,
       selected,
+      disableSwitcher,
+      disableCommonBases,
     } = this.props;
     const { search, switchTabsSelected } = this.state;
     const isTokens = switchTabsSelected === 'tokens';
@@ -111,7 +110,7 @@ class TokenSelect extends React.PureComponent {
               </div>
               <div className="TokenSelect__token-right">
                 <div className="TokenSelect__token-price">
-                  {!!price && `$${getFinePrice(price * balanceNumber)}`}
+                  {(!!price && !!balanceNumber) && `$${getFinePrice(price * balanceNumber)}`}
                 </div>
                 <div className="TokenSelect__token-balance">
                   {!!balanceNumber && getFinePrice(balanceNumber)}
@@ -150,7 +149,7 @@ class TokenSelect extends React.PureComponent {
               />
               <SVG src={require('src/asset/24px/search.svg')} />
             </div>
-            <SwitchTabs
+            {!disableSwitcher && <SwitchTabs
               selected={switchTabsSelected}
               onChange={(value) => this.setState({ switchTabsSelected: value })}
               tabs={[
@@ -159,8 +158,8 @@ class TokenSelect extends React.PureComponent {
               ]}
               type="light-blue"
               size="medium"
-            />
-            <SectionBlock className="TokenSelect__fiat" title="Common bases">
+            />}
+            {!disableCommonBases && <SectionBlock className="TokenSelect__fiat" title="Common bases">
               {tokens
                 .filter((token) => {
                   const symbol = token.symbol.toUpperCase();
@@ -196,7 +195,7 @@ class TokenSelect extends React.PureComponent {
                     </div>
                   );
                 })}
-            </SectionBlock>
+            </SectionBlock>}
             <div className="TokenSelect__list">
               <h3>
                 {isTokens && getLang('dex_tokens_list')}
