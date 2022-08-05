@@ -7,34 +7,32 @@ import CabinetScrollBlock from '../../../../../CabinetScrollBlock/CabinetScrollB
 import WalletsListItem from '../../../../../WalletsList/components/WalletsListItem/WalletsListItem';
 import WalletsList from '../../../../../WalletsList/WalletsList';
 import CabinetBlock from '../../../../../CabinetBlock/CabinetBlock';
-import OpenPopupLink from '../../../../../OpenPopupLink/OpenPopupLink';
 import SVG from 'utils/svg-wrap';
 import { RateIndicator, NumberFormat } from 'src/ui';
 
 // Utils
 import wei from 'utils/wei';
 import * as PAGES from 'src/index/constants/pages';
+import { simpleTokenPrice } from 'src/services/coingeckoApi';
 
 function BalancesBlock({ balances, type, title, adaptive }) {
   const { router } = useRoute();
+  const [priceDifferences, setPriceDifferences] = React.useState({});
 
-  const TokenItemControls = (
-    { price, amount, currency } // Texts
-  ) => (
-    <div className="CabinetWallets__tokens-controls">
-      <div>
-        <p className="WalletsListItem__text-large">
-          {amount} {currency.toUpperCase()}
-        </p>
-        <p className="WalletsListItem__text-medium">
-          <NumberFormat number={price * amount} currency="usd" />
-        </p>
-      </div>
-      <div>
-        <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
-      </div>
-    </div>
-  );
+  React.useEffect(() => {
+    balances.forEach((token) => {
+      if (!token.address) return;
+      // The price difference exists in object.
+      if (priceDifferences[token.address.toLowerCase()]) return;
+
+      simpleTokenPrice(token.address, true).then((data) => {
+        setPriceDifferences((state) => ({
+          ...state,
+          [data.address]: Number(data.usd_24h_change.toFixed(2)),
+        }));
+      });
+    });
+  }, [balances]);
 
   return (
     <CabinetBlock className="wallets-list">
@@ -46,59 +44,65 @@ function BalancesBlock({ balances, type, title, adaptive }) {
       )}
       <CabinetScrollBlock>
         <WalletsList type="default">
-          {balances
-            .sort((a) => {
-              if (a.symbol.toLowerCase() === 'nrfx') {
-                return -1;
+          {balances.map((balanceItem, key) => {
+            const currency = balanceItem.symbol.toLowerCase();
+
+            // Data needs filter.
+            const balanceAddress = balanceItem.address
+              ? balanceItem.address.toLowerCase()
+              : balanceItem.address;
+            const priceDifference =
+              balanceAddress && priceDifferences[balanceAddress]
+                ? priceDifferences[balanceAddress]
+                : null;
+
+            let icon = balanceItem.logoURI;
+
+            if (type === 'fiats') {
+              // Set icon
+              try {
+                icon =
+                  require(`src/asset/icons/wallets/${currency}.svg`).default;
+              } catch {
+                console.log('Icon is not defined');
               }
+            }
 
-              return 0;
-            })
-            .map((balanceItem, key) => {
-              const currency = balanceItem.symbol.toLowerCase();
-              let icon = balanceItem.logoURI;
-
-              if (type === 'fiats') {
-                // Set icon
-                try {
-                  icon =
-                    require(`src/asset/icons/wallets/${currency}.svg`).default;
-                } catch {
-                  console.log('Icon is not defined');
-                }
-              }
-
-              return (
-                <WalletsListItem
-                  icon={<img src={icon} />}
-                  startTexts={[
-                    balanceItem.name,
-                    <span className="CabinetWallets__tokens-content">
-                      <NumberFormat number={balanceItem.price} currency="usd" />
-                      <RateIndicator type="up" number={12} procent />
-                    </span>,
-                  ]}
-                  controls={
-                    <TokenItemControls
-                      amount={
-                        type === 'tokens'
-                          ? wei.from(balanceItem.balance).toFixed(2)
-                          : balanceItem.balance
-                      }
-                      currency={currency}
-                      price={balanceItem.price}
+            return (
+              <WalletsListItem
+                icon={<img src={icon} />}
+                startTexts={[
+                  balanceItem.name,
+                  <span className="CabinetWallets__tokens-content">
+                    <NumberFormat number={balanceItem.price} currency="usd" />
+                    <RateIndicator
+                      type={RateIndicator.getType(priceDifference)}
+                      number={priceDifference}
+                      procent
                     />
-                  }
-                  key={key}
-                  type="reverse"
-                  onClick={() => {
-                    router.navigate(PAGES.DAPP_CURRENCY, {
-                      currency,
-                    });
-                  }}
-                />
-              );
-            })}
+                  </span>,
+                ]}
+                controls={
+                  <TokenItemControls
+                    amount={
+                      type === 'tokens'
+                        ? wei.from(balanceItem.balance).toFixed(2)
+                        : balanceItem.balance
+                    }
+                    currency={currency}
+                    price={balanceItem.price}
+                  />
+                }
+                key={key}
+                type="reverse"
+                onClick={() => {
+                  router.navigate(PAGES.DAPP_CURRENCY, {
+                    currency,
+                  });
+                }}
+              />
+            );
+          })}
         </WalletsList>
       </CabinetScrollBlock>
       {adaptive && <div className="WalletsExists__items_footer"></div>}
@@ -119,5 +123,21 @@ BalancesBlock.defaultProps = {
   title: 'tokens',
   adaptive: false,
 };
+
+const TokenItemControls = ({ price, amount, currency }) => (
+  <div className="CabinetWallets__tokens-controls">
+    <div>
+      <p className="WalletsListItem__text-large">
+        {amount} {currency.toUpperCase()}
+      </p>
+      <p className="WalletsListItem__text-medium">
+        <NumberFormat number={price * amount} currency="usd" />
+      </p>
+    </div>
+    <div>
+      <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
+    </div>
+  </div>
+);
 
 export default React.memo(BalancesBlock);

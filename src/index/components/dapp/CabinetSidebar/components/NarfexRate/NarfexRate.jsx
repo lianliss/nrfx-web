@@ -8,44 +8,35 @@ import WalletsList from '../../../WalletsList/WalletsList';
 import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 
 // Utils
-import { Web3Context } from 'src/services/web3Provider';
 import networks from 'src/index/constants/networks';
 import web3Backend from 'services/web3-backend';
+import { simpleTokenPrice } from 'src/services/coingeckoApi';
 
 function NarfexRate() {
-  const { getSomeTimePricesPairMoralis } = React.useContext(Web3Context);
   const [currentPrice, setCurrentPrice] = React.useState(0);
   const [priceDifference, setPriceDifference] = React.useState(null);
 
-  const getYesterday = () => {
-    const date = new Date();
-    date.setDate(date.getDate() - 1);
+  const getNarfexRate = () => {
+    const { narfexToken } = networks[56];
 
-    return date;
-  };
-
-  const getNarfexRate = async () => {
-    try {
-      const { narfexToken } = networks[56];
-
-      // Set price and difference
-      getSomeTimePricesPairMoralis(narfexToken, getYesterday()).then((data) => {
-        setCurrentPrice(data.priceTo);
-        setPriceDifference(data.difference);
+    simpleTokenPrice(narfexToken, true)
+      .then((data) => {
+        setCurrentPrice(data.usd);
+        setPriceDifference(Number(data.usd_24h_change.toFixed(2)));
+      })
+      .catch(() => {
+        web3Backend.getTokenRate('nrfx').then((data) => {
+          setCurrentPrice(data.price);
+          setPriceDifference(null);
+        });
       });
-    } catch {
-      web3Backend.getTokenRate('nrfx').then((data) => {
-        setCurrentPrice(data.price);
-        setPriceDifference(null);
-      });
-    }
   };
 
   React.useEffect(() => {
     getNarfexRate();
 
     // Set interval for auto update price.
-    const narfexRateInterval = setInterval(() => getNarfexRate(), 10000);
+    const narfexRateInterval = setInterval(() => getNarfexRate(), 60000);
 
     return () => clearInterval(narfexRateInterval);
   }, []);
@@ -55,7 +46,6 @@ function NarfexRate() {
       <WalletsListItem
         icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
         startTexts={['Narfex', 'NRFX']}
-        onClick={getNarfexRate}
         endTexts={[
           <br />,
           <>

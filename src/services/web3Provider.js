@@ -1118,7 +1118,7 @@ class Web3Provider extends React.PureComponent {
       // Set price and difference
       const difference = Number((priceTo / (priceFrom / 100) - 100).toFixed(2));
 
-      return { difference, priceFrom, priceTo };
+      return { address, difference, priceFrom, priceTo };
   }
 
   render() {

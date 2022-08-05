@@ -5,6 +5,8 @@ import SVG from 'utils/svg-wrap';
 import './RateIndicator.less';
 
 function RateIndicator({ number, type, procent, icon }) {
+  const positiveNumber = Math.abs(number);
+
   return (
     <span className={'RateIndicator ' + type}>
       <span className="RateIndicator-container">
@@ -13,7 +15,7 @@ function RateIndicator({ number, type, procent, icon }) {
         ) : (
           <SVG src={icon ? icon : require('src/asset/icons/total-arrow.svg')} />
         )}
-        {!number ? 0 : number}
+        {!positiveNumber || positiveNumber === null ? 0 : positiveNumber}
         {procent && '%'}
       </span>
     </span>
