@@ -13,26 +13,9 @@ import { RateIndicator, NumberFormat } from 'src/ui';
 // Utils
 import wei from 'utils/wei';
 import * as PAGES from 'src/index/constants/pages';
-import { simpleTokenPrice } from 'src/services/coingeckoApi';
 
 function BalancesBlock({ balances, type, title, adaptive }) {
   const { router } = useRoute();
-  const [priceDifferences, setPriceDifferences] = React.useState({});
-
-  React.useEffect(() => {
-    balances.forEach((token) => {
-      if (!token.address) return;
-      // The price difference exists in object.
-      if (priceDifferences[token.address.toLowerCase()]) return;
-
-      simpleTokenPrice(token.address, true).then((data) => {
-        setPriceDifferences((state) => ({
-          ...state,
-          [data.address]: Number(data.usd_24h_change.toFixed(2)),
-        }));
-      });
-    });
-  }, [balances]);
 
   return (
     <CabinetBlock className="wallets-list">
@@ -46,15 +29,7 @@ function BalancesBlock({ balances, type, title, adaptive }) {
         <WalletsList type="default">
           {balances.map((balanceItem, key) => {
             const currency = balanceItem.symbol.toLowerCase();
-
-            // Data needs filter.
-            const balanceAddress = balanceItem.address
-              ? balanceItem.address.toLowerCase()
-              : balanceItem.address;
-            const priceDifference =
-              balanceAddress && priceDifferences[balanceAddress]
-                ? priceDifferences[balanceAddress]
-                : null;
+            const priceDifference = null;
 
             let icon = balanceItem.logoURI;
 
