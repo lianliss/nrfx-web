@@ -5,27 +5,40 @@ import SVG from 'utils/svg-wrap';
 import './RateIndicator.less';
 
 function RateIndicator({ number, type, procent, icon }) {
+  const positiveNumber = Math.abs(number);
+
   return (
     <span className={'RateIndicator ' + type}>
       <span className="RateIndicator-container">
-        <SVG src={icon ? icon : require('src/asset/icons/total-arrow.svg')} />
-        {number}
+        {type === 'noActive' || type === 'other' ? (
+          <span className="isvg" />
+        ) : (
+          <SVG src={icon ? icon : require('src/asset/icons/total-arrow.svg')} />
+        )}
+        {!positiveNumber || positiveNumber === null ? 0 : positiveNumber}
         {procent && '%'}
       </span>
     </span>
   );
 }
 
+RateIndicator.getType = (number = null) => {
+  if (number === null) return 'noActive';
+  if (number === 0) return 'other';
+  if (number > 0) return 'up';
+  if (number < 0) return 'down';
+};
+
 RateIndicator.propTypes = {
   number: PropTypes.number,
-  type: PropTypes.oneOf(['down', 'up']),
+  type: PropTypes.oneOf(['down', 'up', 'noActive', 'other']),
   procent: PropTypes.bool,
   icon: PropTypes.string,
 };
 
 RateIndicator.defaultProps = {
   number: 0,
-  type: 'up',
+  type: 'noActive',
   procent: false,
   icon: null,
 };

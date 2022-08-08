@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRoute } from 'react-router5';
 
 // Components
@@ -14,34 +14,36 @@ import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import { RateIndicator, SwitchTabs } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
-// Constants
+// Utils
 import * as PAGES from 'src/index/constants/pages';
-import { testFiats, testCrypto } from './testItems.js';
+import { testFiats } from './testItems.js';
 import currencies from 'src/currencies';
+import { Web3Context } from 'src/services/web3Provider';
+import BalancesBlock from './components/BalancesBlock/BalancesBlock';
+import NftsBlock from './components/NftsBlock/NftsBlock';
 
 function WalletsExists() {
+  // Design
   const { router } = useRoute();
   const adaptive = useSelector((store) => store.default.adaptive);
+
+  // Tabs
   const [switchTab, setSwitchTab] = React.useState('tokens');
   const isTokens = switchTab === 'tokens';
   const isFiat = switchTab === 'fiat';
   const isNfts = switchTab === 'nfts' || !adaptive;
 
-  const TokenItemControls = (
-    { price, amount, currency } // Texts
-  ) => (
-    <div className="CabinetWallets__tokens-controls">
-      <div>
-        <p className="WalletsListItem__text-large">
-          {price} {currency.toUpperCase()}
-        </p>
-        <p className="WalletsListItem__text-medium">{amount} USD</p>
-      </div>
-      <div>
-        <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
-      </div>
-    </div>
-  );
+  // Main
+  const { accountAddress, balances, loadAccountBalances } =
+    React.useContext(Web3Context);
+
+  const { tokens } = balances;
+
+  React.useEffect(() => {
+    if (!accountAddress) return;
+
+    loadAccountBalances(accountAddress);
+  }, [accountAddress]);
 
   return (
     <div className="WalletsExists">
@@ -80,159 +82,22 @@ function WalletsExists() {
         )}
         <div className="WalletsExists__content WalletsExists__row">
           {isTokens && (
-            <CabinetBlock className="wallets-list">
-              {!adaptive && (
-                <div className="WalletsExists__items_header">
-                  <span>tokens</span>
-                  <div className="CabinetScrollBlock__headerTool">
-                    <OpenPopupLink title="history" />
-                  </div>
-                </div>
-              )}
-              <CabinetScrollBlock>
-                <WalletsList type="default">
-                  {testCrypto.map((item, key) => {
-                    // Testing values. Don't know what object maybe here.
-                    const { name } = currencies[item.currency];
-                    let icon = '';
-
-                    // Set icon
-                    try {
-                      icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
-                    } catch {
-                      console.log('Icon is not defined');
-                    }
-
-                    return (
-                      <WalletsListItem
-                        icon={<SVG src={icon} />}
-                        startTexts={[
-                          name,
-                          <span className="CabinetWallets__tokens-content">
-                            {item.price} USD
-                            <RateIndicator type="up" number={12} procent />
-                          </span>,
-                        ]}
-                        controls={
-                          <TokenItemControls
-                            amount={item.amount}
-                            currency={item.currency}
-                            price={item.price}
-                          />
-                        }
-                        key={key}
-                        type="reverse"
-                        onClick={() => {
-                          router.navigate(PAGES.DAPP_CURRENCY, {
-                            currency: item.currency,
-                          });
-                        }}
-                      />
-                    );
-                  })}
-                </WalletsList>
-              </CabinetScrollBlock>
-              {adaptive && (
-                <div className="WalletsExists__items_footer">
-                  <OpenPopupLink title="history" />
-                </div>
-              )}
-            </CabinetBlock>
+            <BalancesBlock
+              balances={tokens}
+              type="tokens"
+              title="Tokens"
+              adaptive={adaptive}
+            />
           )}
           {isFiat && (
-            <CabinetBlock className="wallets-list">
-              {!adaptive && (
-                <div className="WalletsExists__items_header">
-                  <span>fiat</span>
-                  <div className="CabinetScrollBlock__headerTool">
-                    <OpenPopupLink title="history" />
-                  </div>
-                </div>
-              )}
-              <CabinetScrollBlock>
-                <WalletsList type="default">
-                  {testFiats.map((item, key) => {
-                    // Testing values. Don't know what object maybe here.
-                    const { name } = currencies[item.currency];
-                    let icon = '';
-
-                    // Set icon
-                    try {
-                      icon = require(`src/asset/icons/wallets/${item.currency}.svg`);
-                    } catch {
-                      console.log('Icon is not defined');
-                    }
-
-                    return (
-                      <WalletsListItem
-                        icon={<SVG src={icon} />}
-                        startTexts={[
-                          name,
-                          <span className="CabinetWallets__tokens-content">
-                            {item.price} USD
-                            <RateIndicator type="up" number={12} procent />
-                          </span>,
-                        ]}
-                        controls={
-                          <TokenItemControls
-                            amount={item.amount}
-                            currency={item.currency}
-                            price={item.price}
-                          />
-                        }
-                        key={key}
-                        type="reverse"
-                        onClick={() => {
-                          router.navigate(PAGES.DAPP_CURRENCY, {
-                            currency: item.currency,
-                          });
-                        }}
-                      />
-                    );
-                  })}
-                </WalletsList>
-              </CabinetScrollBlock>
-              {adaptive && (
-                <div className="WalletsExists__items_footer">
-                  <OpenPopupLink title="history" />
-                </div>
-              )}
-            </CabinetBlock>
+            <BalancesBlock
+              balances={testFiats}
+              type="fiats"
+              title="fiat"
+              adaptive={adaptive}
+            />
           )}
-          {isNfts && (
-            <CabinetBlock className="nfts">
-              {!adaptive && (
-                <div className="WalletsExists__items_header">
-                  <span>nft</span>
-                  <div className="CabinetScrollBlock__headerTool">
-                    <OpenPopupLink title="history" />
-                  </div>
-                </div>
-              )}
-              <CabinetScrollBlock disableTrackXMousewheelScrolling>
-                <div className="WalletsNFT__cards">
-                  <WalletsNFTCard title="Monkey" src={'1'} />
-                  <WalletsNFTCard title="Hello Kitty 1445" src={'2'} />
-                  <WalletsNFTCard title="Degen Ape 6" src={'4'} />
-                  <WalletsNFTCard title="Degen Ape 6" src={'5'} />
-                  <WalletsNFTCard title="Brod 45" src={'3'} />
-                  <WalletsNFTCard title="Monkey" src={'1'} />
-                  <WalletsNFTCard title="Hello Kitty 1445" src={'2'} />
-                  <WalletsNFTCard title="Degen Ape 6" src={'4'} />
-                  <WalletsNFTCard title="Degen Ape 6" src={'5'} />
-                  <WalletsNFTCard title="Brod 45" src={'3'} />
-                  <WalletsNFTCard title="Hello Kitty 1445" src={'2'} />
-                  <WalletsNFTCard title="Degen Ape 6" src={'5'} />
-                  <WalletsNFTCard title="Brod 45" src={'3'} />
-                </div>
-              </CabinetScrollBlock>
-              {adaptive && (
-                <div className="WalletsExists__items_footer">
-                  <OpenPopupLink title="history" />
-                </div>
-              )}
-            </CabinetBlock>
-          )}
+          {isNfts && <NftsBlock />}
         </div>
       </div>
     </div>
