@@ -19,10 +19,6 @@ const GWEI_DECIMALS = 9;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
-const KNOWN_FIATS = [
-  {symbol: 'RUB', logoURI: 'https://static.narfex.com/img/currencies/rubles.svg'},
-  {symbol: 'UAH', logoURI: 'https://static.narfex.com/img/currencies/uah-gryvnya.svg'},
-];
 
 class Web3Provider extends React.PureComponent {
 
@@ -31,6 +27,10 @@ class Web3Provider extends React.PureComponent {
     accountAddress: null,
     balancesRequested: null,
     blocksPerSecond: 0,
+    balances: {
+      tokens: [],
+      fiats: []
+    },
     chainId: null,
     tokens: networks[56].tokens,
     pools: null,
@@ -53,6 +53,18 @@ class Web3Provider extends React.PureComponent {
   web3Host = null;
   farm = null;
   pairs = {};
+
+  // Moralis
+  moralis = {
+    api: 'https://deep-index.moralis.io/api/v2',
+    headers: {
+      'X-API-Key': 'woP1gbSiPFLSSG92XkCvSud3dc6eYfzU4sG4kVeim105GMbLrSKv7mVdrWgVphTq',
+      accept: 'application/json',
+    },
+    params: {
+      chain: 'bsc',
+    }
+  };
 
   getWeb3() {
     if (this.state.isConnected) {
@@ -222,6 +234,34 @@ class Web3Provider extends React.PureComponent {
   getBSCScanLink = address => this.state.chainId === 56
     ? `https://bscscan.com/tx/${address}`
     : `https://testnet.bscscan.com/tx/${address}`;
+
+
+  /**
+   * Set balances
+   * @param balances {array || function} balances object
+   * @param type {string} fiats, tokens, clear
+   */
+   setBalances(balances, type = 'tokens') {
+    if(type === 'clear') {
+      this.setState({
+        balances: {
+          fiats: [],
+          tokens: [],
+        }
+      });
+
+      return;
+    }
+
+    this.setState(state => ({
+      balances: {
+        ...state.balances,
+        [type]: balances instanceof Function
+          ? balances(state.balances[type])
+          : balances,
+      },
+    }));
+  }
 
   /**
    * Switch to another chain
@@ -593,12 +633,18 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
     try {
+      // Set positive balance tokens
+      this.setBalances(this.state.tokens.filter(t => t.balance > 0));
+
       if (!this.state.isConnected) return;
       // Stop additional loads
       if (this.state.balancesRequested === accountAddress) return;
       this.setState({
         balancesRequested: accountAddress,
       });
+
+      // Clear tokens balances
+      this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
       const chunks = _.chunk(
@@ -640,7 +686,8 @@ class Web3Provider extends React.PureComponent {
                   // Update token price
                   tokenState.price = price;
                   return state;
-                })
+                });
+                this.setBalances(state => [...state, token]);
               }).catch(error => {
                 console.error('[loadAccountBalances][getTokenUSDPrice]', token.symbol, token.address, error);
               })
@@ -649,8 +696,10 @@ class Web3Provider extends React.PureComponent {
           return newState;
         });
       }
+      return 'loaded';
     } catch (error) {
       console.error('[loadAccountBalances]', accountAddress, error);
+      return 'error';
     }
   }
 
@@ -1156,6 +1205,60 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  // Get block from date.
+  async dateToBlockMoralis (date = new Date()) {
+    // Date to unix timestamp.
+    const unixDate = Math.floor(date.getTime() / 1000);
+
+    // Moralis request data.
+    const {headers, params, api} = this.moralis;
+
+    return axios
+      .get(`${api}/dateToBlock`, {
+        headers,
+        params: {
+          ...params,
+          date: unixDate,
+        },
+      })
+      .then((r) => r.data.block);
+  };
+
+  // Get token price from contract (required), block (optional).
+  async getTokenPriceMoralis (contractAddress, to_block = null) {
+    const {headers, params, api} = this.moralis;
+
+    return axios(`${api}/erc20/${contractAddress}/price`, {
+      headers,
+      params: {
+        ...params,
+        to_block,
+      },
+    }).then((r) => r.data.usdPrice);
+  };
+
+  /**
+   * Returns Token difference,
+   * price from {timeFrom}, price from {timeTo}
+   * @param address {string}
+   * @param timeFrom {Date}
+   * @param timeTo {Date}
+   * @return {object} {difference, priceFrom, priceTo}
+   */
+  async getSomeTimePricesPairMoralis (address, timeFrom, timeTo) {
+      const blockFrom = await this.dateToBlockMoralis(timeFrom);
+      const blockTo = timeTo ? await this.dateToBlockMoralis(timeTo) : null;
+
+      // Get prices
+      const priceTo = await this.getTokenPriceMoralis(address, blockTo ? blockTo : null);
+      const priceFrom = await this.getTokenPriceMoralis(address, blockFrom);
+
+      // Set price and difference
+      const difference = Number((priceTo / (priceFrom / 100) - 100).toFixed(2));
+
+      return { address, difference, priceFrom, priceTo };
+  }
+
   render() {
     return <Web3Context.Provider value={{
       ...this.state,
@@ -1191,7 +1294,11 @@ class Web3Provider extends React.PureComponent {
       switchToChain: this.switchToChain.bind(this),
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
       findTokenBySymbol: this.findTokenBySymbol.bind(this),
+      dateToBlockMoralis: this.dateToBlockMoralis.bind(this),
+      getTokenPriceMoralis: this.getTokenPriceMoralis.bind(this),
       numberToFraction: this.numberToFraction.bind(this),
+      getTokenAmount: this.getTokenAmount.bind(this),
+      getSomeTimePricesPairMoralis: this.getSomeTimePricesPairMoralis.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
       updateFiats: this.updateFiats.bind(this),
