@@ -4,7 +4,7 @@ import React from 'react';
 // and insert to span with className from props.
 function TextToSpan({
   text,
-  className,
+  className = '',
   regularExpression = /(-?\d(\.\d+)?%?)/g,
 }) {
   const stringForHtml = text
