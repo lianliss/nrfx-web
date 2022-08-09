@@ -8,7 +8,7 @@ import CabinetScrollBlock from 'src/index/components/dapp/CabinetScrollBlock/Cab
 // Styles
 import './ChooseBank.less';
 
-const banks = [
+const banks = [] || [
   {
     name: 'Tinkoff bank',
     icon: require('src/asset/banks/tinkoff.svg').default,
@@ -44,24 +44,37 @@ function ChooseBank() {
 
   return (
     <Col className="DepositModal__ChooseBank">
-      <h3 className="default dark medium">Choose a bank</h3>
-      <BanksWrapper className="DepositModal__ChooseBank-items">
-        {banks.map((bank, key) => {
-          return (
-            <Row
-              className="DepositModal__ChooseBank-item"
-              alignItems="center"
-              key={key}
-            >
-              <span className="secondary medium default">{bank.name}</span>
-              <Row alignItems="center">
-                <img src={bank.icon} alt={bank.name} className="bankIcon" />
-                <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
-              </Row>
-            </Row>
-          );
-        })}
-      </BanksWrapper>
+      {banks.length ? (
+        <>
+          <h3 className="default dark medium">Choose a bank</h3>
+          <BanksWrapper className="DepositModal__ChooseBank-items">
+            {banks.map((bank, key) => {
+              return (
+                <Row
+                  className="DepositModal__ChooseBank-item"
+                  alignItems="center"
+                  key={key}
+                >
+                  <span className="secondary medium default">{bank.name}</span>
+                  <Row alignItems="center">
+                    <img src={bank.icon} alt={bank.name} className="bankIcon" />
+                    <SVG
+                      src={require('src/asset/icons/list-arrow-large.svg')}
+                    />
+                  </Row>
+                </Row>
+              );
+            })}
+          </BanksWrapper>
+        </>
+      ) : (
+        <div className="DepositModal__ChooseBank__empty">
+          <h3 className="default dark medium extra-large-height">
+            Not banks available
+          </h3>
+          <SVG src={require('src/asset/icons/transaction/empty-icon.svg')} />
+        </div>
+      )}
       <Row className="buttons" justifyContent="flex-end">
         <Button type="secondary-alice" shadow>
           Back

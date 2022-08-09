@@ -16,8 +16,8 @@ function Bank() {
     <DepositModal className="DepositModal__Bank">
       <Row className="DepositModal__Bank__container">
         <Sidebar />
-        <ChooseBank />
-        {/* <ChoosedBank /> */}
+        {/* <ChooseBank /> */}
+        <ChoosedBank />
         {/* <DepositTransfer /> */}
       </Row>
     </DepositModal>
