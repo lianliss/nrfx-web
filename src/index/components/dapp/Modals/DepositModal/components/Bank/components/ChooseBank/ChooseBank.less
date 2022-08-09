@@ -1,0 +1,50 @@
+.DepositModal__ChooseBank {
+  height: 100%;
+  padding-top: 24px;
+  padding-left: 47px;
+  flex: 1;
+  box-sizing: border-box;
+
+  &-items {
+    margin-top: 48px;
+    margin-bottom: 30px;
+    padding-bottom: 28px;
+    width: 100%;
+    border-bottom: 1px solid #c4c4c4;
+
+    .ScrollbarBox .ScrollbarTrackY {
+      right: -25px !important;
+    }
+  }
+
+  .ScrollbarBox-container {
+    height: 100%;
+  }
+
+  &-item {
+    cursor: pointer;
+    padding: 8px 0;
+
+    & > * {
+      width: 50%;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+
+  img {
+    margin-left: auto;
+    margin-right: 25px;
+    height: 30px;
+  }
+
+  .buttons {
+    margin-top: auto;
+
+    .Button {
+      height: 50px;
+    }
+  }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 
 // Components
 import DepositModal from '../../DepositModal';
+import ChooseBank from './components/ChooseBank/ChooseBank';
 import Sidebar from './components/Sidebar/Sidebar';
 import { Row, Col } from 'src/ui';
 
@@ -11,9 +12,9 @@ import './Bank.less';
 function Bank() {
   return (
     <DepositModal className="DepositModal__Bank">
-      <Row>
+      <Row className="DepositModal__Bank__container">
         <Sidebar />
-        <Col></Col>
+        <ChooseBank />
       </Row>
     </DepositModal>
   );
