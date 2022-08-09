@@ -2,7 +2,7 @@ import React from 'react';
 
 // Get regularExpression in string (text)
 // and insert to span with className from props.
-function TextToSpan({
+function FormattedText({
   text,
   className = '',
   regularExpression = /(-?\d(\.\d+)?%?)/g,
@@ -18,4 +18,4 @@ function TextToSpan({
   return <span dangerouslySetInnerHTML={{ __html: stringForHtml }} />;
 }
 
-export default TextToSpan;
+export default FormattedText;

@@ -3,7 +3,7 @@ import React from 'react';
 // Components
 import { Row, Col, NumberFormat, Button, CopyText, LineBreaker } from 'src/ui';
 import SVG from 'utils/svg-wrap';
-import TextToSpan from 'src/index/components/dapp/TextToSpan/TextToSpan';
+import FormattedText from 'src/index/components/dapp/FormattedText/FormattedText';
 import InfoWrapper from '../InfoWrapper/InfoWrapper';
 import { getLang } from 'src/utils';
 
@@ -27,7 +27,7 @@ function ChoosedBank() {
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper type="secondary">
             <p className="dark default small hight-height left">
-              <TextToSpan
+              <FormattedText
                 text={getLang(
                   '{Attention!} \n To avoid loss of funds, send exactly {5 000 RUB one transaction} this is neccesary for the automatic confirmation of your payment'
                 )}
