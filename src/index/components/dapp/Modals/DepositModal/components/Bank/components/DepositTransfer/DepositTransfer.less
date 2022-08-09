@@ -1,5 +1,6 @@
 .DepositModal__Bank__DepositTransfer {
   height: 100%;
+  padding-left: 30px;
   flex: 1 1;
   text-align: center;
 
@@ -23,11 +24,19 @@
     margin-top: auto;
 
     .Button {
-      min-width: 182px;
+      flex: 1 1 50%;
+      padding: 0 10px;
 
       &:not(:last-child) {
         margin-right: 18px;
       }
+
+      &.secondary-alice {
+        .Button__label {
+          font-size: 12px;
+        }
+      }
+
       .isvg {
         margin-left: 5px;
       }
