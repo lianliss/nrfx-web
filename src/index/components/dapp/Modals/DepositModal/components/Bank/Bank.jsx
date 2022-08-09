@@ -11,9 +11,9 @@ import { Row } from 'src/ui';
 // Styles
 import './Bank.less';
 
-function Bank() {
+function Bank(props) {
   return (
-    <DepositModal className="DepositModal__Bank">
+    <DepositModal className="DepositModal__Bank" {...props}>
       <Row className="DepositModal__Bank__container">
         <Sidebar />
         {/* <ChooseBank /> */}

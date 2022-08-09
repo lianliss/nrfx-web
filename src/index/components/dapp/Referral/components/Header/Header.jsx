@@ -4,7 +4,7 @@ import React from 'react';
 import { Row, Col, NumberFormat } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
-import NumberToSpan from '../../../NumberToSpan/NumberToSpan';
+import TextToSpan from '../../../TextToSpan/TextToSpan';
 
 // Utils
 import { openModal } from 'src/actions';
@@ -46,7 +46,7 @@ function Header({
       <Col>
         <h1>{title}</h1>
         <p className="subtitle">
-          <NumberToSpan text={subtitle} className="blue" />
+          <TextToSpan text={subtitle} className="blue" />
         </p>
         <span className="link blue-gradient-text">Read more ›</span>
       </Col>
@@ -102,11 +102,11 @@ function Header({
               </Col>
               <Col justifyContent="center">
                 <span className="secondary-text">
-                  <NumberToSpan text="NRFX purchases 5%" className="blue" />
+                  <TextToSpan text="NRFX purchases 5%" className="blue" />
                 </span>
                 <Col>
                   <span className="secondary-text">
-                    <NumberToSpan
+                    <TextToSpan
                       text="Fiat replenishment 30%"
                       className="blue"
                     />
