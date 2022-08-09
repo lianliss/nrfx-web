@@ -1,9 +1,8 @@
 import React from 'react';
 
 // Components
-import { Row, Col, NumberFormat, Button } from 'src/ui';
+import { Row, Col, NumberFormat, Button, CopyText } from 'src/ui';
 import SVG from 'utils/svg-wrap';
-import CopyText from '../../../../../../../../../ui/components/CopyText/CopyText';
 import InfoWrapper from '../InfoWrapper/InfoWrapper';
 
 // Styles
@@ -36,7 +35,9 @@ function ChoosedBank() {
           <p className="dark default hight-height extra-small">
             Amount to top up
           </p>
-          <p className="blue default small">5 000 RUB</p>
+          <p className="blue default small">
+            <NumberFormat number={5000} currency="rub" />
+          </p>
         </InfoWrapper>
       </div>
       <div className="DepositModal__ChoosedBank__items">

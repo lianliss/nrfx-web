@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Row, Col, NumberFormat, Button } from 'src/ui';
+import { Row, Col, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetScrollBlock from 'src/index/components/dapp/CabinetScrollBlock/CabinetScrollBlock';
 
