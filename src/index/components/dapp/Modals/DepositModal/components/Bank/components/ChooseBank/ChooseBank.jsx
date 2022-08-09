@@ -55,7 +55,7 @@ function ChooseBank() {
             >
               <span className="secondary medium default">{bank.name}</span>
               <Row alignItems="center">
-                <img src={bank.icon} alt={bank.name} />
+                <img src={bank.icon} alt={bank.name} className="bankIcon" />
                 <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
               </Row>
             </Row>

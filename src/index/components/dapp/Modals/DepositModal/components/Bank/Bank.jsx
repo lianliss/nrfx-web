@@ -8,13 +8,15 @@ import { Row, Col } from 'src/ui';
 
 // Styles
 import './Bank.less';
+import ChoosedBank from './components/ChoosedBank/ChoosedBank';
 
 function Bank() {
   return (
     <DepositModal className="DepositModal__Bank">
       <Row className="DepositModal__Bank__container">
         <Sidebar />
-        <ChooseBank />
+        {/* <ChooseBank /> */}
+        <ChoosedBank />
       </Row>
     </DepositModal>
   );
