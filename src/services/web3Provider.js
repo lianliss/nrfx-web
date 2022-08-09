@@ -20,6 +20,11 @@ const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigIn
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
 
+const KNOWN_FIATS = [
+  {symbol: 'RUB', logoURI: 'https://static.narfex.com/img/currencies/rubles.svg'},
+  {symbol: 'UAH', logoURI: 'https://static.narfex.com/img/currencies/uah-gryvnya.svg'},
+];
+
 class Web3Provider extends React.PureComponent {
 
   state = {
