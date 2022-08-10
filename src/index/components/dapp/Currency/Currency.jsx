@@ -10,6 +10,7 @@ import SVG from 'utils/svg-wrap';
 // Utils
 import currencies from 'src/currencies';
 import { isFiat } from 'utils';
+import { openModal } from 'src/actions';
 
 // Styles
 import './Currency.less';
@@ -46,7 +47,11 @@ function Currency() {
           </div>
           <div className="Currency__buttons">
             {isFiat(currency.abbr) ? (
-              <Button type="lightBlue" shadow>
+              <Button
+                type="lightBlue"
+                shadow
+                onClick={() => openModal('deposit_balance')}
+              >
                 <SVG
                   src={require('src/asset/icons/cabinet/buy.svg')}
                   className="white-icon"

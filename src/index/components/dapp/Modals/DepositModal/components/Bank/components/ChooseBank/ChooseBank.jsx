@@ -4,11 +4,15 @@ import React from 'react';
 import { Row, Col, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetScrollBlock from 'src/index/components/dapp/CabinetScrollBlock/CabinetScrollBlock';
+import Bank from '../../Bank';
+
+// Utils
+import { openModal } from 'src/actions';
 
 // Styles
 import './ChooseBank.less';
 
-const banks = [] || [
+const banks = [
   {
     name: 'Tinkoff bank',
     icon: require('src/asset/banks/tinkoff.svg').default,
@@ -39,48 +43,61 @@ const banks = [] || [
   },
 ];
 
-function ChooseBank() {
+function ChooseBank(props) {
   const BanksWrapper = banks.length > 5 ? CabinetScrollBlock : Col;
 
   return (
-    <Col className="DepositModal__ChooseBank">
-      {banks.length ? (
-        <>
-          <h3 className="default dark medium">Choose a bank</h3>
-          <BanksWrapper className="DepositModal__ChooseBank-items">
-            {banks.map((bank, key) => {
-              return (
-                <Row
-                  className="DepositModal__ChooseBank-item"
-                  alignItems="center"
-                  key={key}
-                >
-                  <span className="secondary medium default">{bank.name}</span>
-                  <Row alignItems="center">
-                    <img src={bank.icon} alt={bank.name} className="bankIcon" />
-                    <SVG
-                      src={require('src/asset/icons/list-arrow-large.svg')}
-                    />
+    <Bank {...props}>
+      <Col className="DepositModal__ChooseBank">
+        {banks.length ? (
+          <>
+            <h3 className="default dark medium">Choose a bank</h3>
+            <BanksWrapper className="DepositModal__ChooseBank-items">
+              {banks.map((bank, key) => {
+                return (
+                  <Row
+                    className="DepositModal__ChooseBank-item"
+                    alignItems="center"
+                    onClick={() => openModal('deposit_choosed_bank')}
+                    key={key}
+                  >
+                    <span className="secondary medium default">
+                      {bank.name}
+                    </span>
+                    <Row alignItems="center">
+                      <img
+                        src={bank.icon}
+                        alt={bank.name}
+                        className="bankIcon"
+                      />
+                      <SVG
+                        src={require('src/asset/icons/list-arrow-large.svg')}
+                      />
+                    </Row>
                   </Row>
-                </Row>
-              );
-            })}
-          </BanksWrapper>
-        </>
-      ) : (
-        <div className="DepositModal__ChooseBank__empty">
-          <h3 className="default dark medium extra-large-height">
-            Not banks available
-          </h3>
-          <SVG src={require('src/asset/icons/transaction/empty-icon.svg')} />
-        </div>
-      )}
-      <Row className="buttons" justifyContent="flex-end">
-        <Button type="secondary-alice" shadow>
-          Back
-        </Button>
-      </Row>
-    </Col>
+                );
+              })}
+            </BanksWrapper>
+          </>
+        ) : (
+          <div className="DepositModal__ChooseBank__empty">
+            <h3 className="default dark medium extra-large-height">
+              Not banks available
+            </h3>
+            <SVG src={require('src/asset/icons/transaction/empty-icon.svg')} />
+          </div>
+        )}
+        <Row className="buttons" justifyContent="flex-end">
+          <Button
+            type="secondary-alice"
+            shadow
+            onClick={() => openModal('deposit_balance')}
+          >
+            Back
+          </Button>
+        </Row>
+      </Col>
+    </Bank>
   );
 }
 

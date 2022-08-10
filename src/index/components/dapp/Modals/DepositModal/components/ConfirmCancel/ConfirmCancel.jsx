@@ -1,10 +1,13 @@
 import React from 'react';
-import DepositModal from '../../DepositModal';
 
 // Components
+import DepositModal from '../../DepositModal';
+import FormattedText from 'src/index/components/dapp/FormattedText/FormattedText';
 import { Button, Col } from 'src/ui';
 import { getLang } from 'src/utils';
-import FormattedText from 'src/index/components/dapp/FormattedText/FormattedText';
+
+// Utils
+import { openModal } from 'src/actions';
 
 // Styles
 import './ConfirmCancel.less';
@@ -21,8 +24,15 @@ function ConfirmCancel(props) {
         />
       </p>
       <Col className="buttons">
-        <Button type="lightBlue">Cancel the deposit</Button>
-        <Button type="secondary-alice">Don’t cancel</Button>
+        <Button type="lightBlue" onClick={props.onClose}>
+          Cancel the deposit
+        </Button>
+        <Button
+          type="secondary-alice"
+          onClick={() => openModal('deposit_choosed_bank')}
+        >
+          Don’t cancel
+        </Button>
       </Col>
     </DepositModal>
   );

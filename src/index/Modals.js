@@ -51,7 +51,9 @@ import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopu
 // New Deposit Modals
 import {
   DepositModalBalance,
-  DepositModalBank,
+  DepositModalChooseBank,
+  DepositModalChoosedBank,
+  DepositModalDepositTransfer,
   DepositModalCancel,
 } from "./components/dapp/Modals/DepositModal";
 
@@ -227,8 +229,14 @@ function Modals(props) {
     case "deposit_balance":
       Component = DepositModalBalance;
       break;
-    case "deposit_bank":
-      Component = DepositModalBank;
+    case "deposit_choose_bank":
+      Component = DepositModalChooseBank;
+      break;
+    case "deposit_choosed_bank":
+      Component = DepositModalChoosedBank;
+      break;
+    case "deposit_transfer":
+      Component = DepositModalDepositTransfer;
       break;
     case "deposit_cancel":
       Component = DepositModalCancel;

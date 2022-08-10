@@ -5,6 +5,9 @@ import Select, { option } from 'src/index/components/dapp/Select/Select';
 import { Input, Row, Button } from 'src/ui';
 import DepositModal from '../../DepositModal';
 
+// Utils
+import { openModal } from 'src/actions';
+
 // Styles
 import './Balance.less';
 
@@ -65,8 +68,15 @@ function Balance(props) {
       <p className="secondary medium default hight">Fee: 2%</p>
       <p className="blue medium default hight">To be credited: 4 900 RUB</p>
       <Row className="DepositModal__Balance-buttons">
-        <Button type="secondary-alice">Back</Button>
-        <Button type="lightBlue">Next</Button>
+        <Button type="secondary-alice" onClick={props.onClose}>
+          Back
+        </Button>
+        <Button
+          type="lightBlue"
+          onClick={() => openModal('deposit_choose_bank')}
+        >
+          Next
+        </Button>
       </Row>
     </DepositModal>
   );
