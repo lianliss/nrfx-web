@@ -64,7 +64,7 @@ export const option = (title, value, icon, showValue = false) => {
     label: (
       <>
         <span className="CabinetSelect__option-icon">
-          <SVG src={icon} />
+          {icon && <img src={icon} />}
         </span>
         <p className="CabinetSelect__option-title">{title}</p>
         {showValue && <p className="CabinetSelect__option-value">{value}</p>}
