@@ -66,6 +66,7 @@ export { default as ScrollBox } from "./components/ScrollBox/ScrollBox";
 export { default as HoverPopup } from "./components/HoverPopup/HoverPopup";
 export { default as DropdownElement } from "./components/DropdownElement/DropdownElement";
 export { default as BottomSheetModal } from "./components/BottomSheetModal/BottomSheetModal";
+export { default as LineBreaker } from "./components/LineBreaker/LineBreaker";
 
 export { default as Row } from "./components/Row/Row";
 export { default as Col } from "./components/Col/Col";

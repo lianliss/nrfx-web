@@ -1,0 +1,64 @@
+.DepositModal {
+  .isvg {
+    display: flex;
+    align-items: center;
+  }
+
+  // Text styles
+  p,
+  span,
+  h3,
+  h4 {
+    &.blue {
+      color: var(--secondary-blue);
+    }
+    &.dark {
+      color: var(--dark-black);
+    }
+    &.secondary {
+      color: var(--cool-gray);
+    }
+
+    &.extra-small {
+      font-size: 12px;
+    }
+
+    &.small {
+      font-size: 14px;
+    }
+
+    &.medium {
+      font-size: 16px;
+    }
+
+    &.default {
+      font-weight: 600;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+    }
+
+    &.hight-height {
+      line-height: 150%;
+    }
+
+    &.large-height {
+      line-height: 18px;
+    }
+
+    &.extra-large-height {
+      line-height: 26px;
+    }
+
+    &.medium-weight {
+      font-weight: 500;
+    }
+
+    &.left {
+      text-align: left;
+    }
+
+    &.blue:not(.extra-small) {
+      margin-top: 10px;
+    }
+  }
+}

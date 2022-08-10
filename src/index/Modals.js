@@ -49,6 +49,16 @@ import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
 import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
 import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
+
+// New Deposit Modals
+import {
+  DepositModalBalance,
+  DepositModalChooseBank,
+  DepositModalChoosedBank,
+  DepositModalDepositTransfer,
+  DepositModalCancel,
+} from "./components/dapp/Modals/DepositModal";
+
 import {
   TransactionSubmittedModal,
   LiquidityConfirmModal,
@@ -223,6 +233,21 @@ function Modals(props) {
       break;
     case "create_referral_link":
       Component = CreateReferralLink;
+      break;
+    case "deposit_balance":
+      Component = DepositModalBalance;
+      break;
+    case "deposit_choose_bank":
+      Component = DepositModalChooseBank;
+      break;
+    case "deposit_choosed_bank":
+      Component = DepositModalChoosedBank;
+      break;
+    case "deposit_transfer":
+      Component = DepositModalDepositTransfer;
+      break;
+    case "deposit_cancel":
+      Component = DepositModalCancel;
       break;
     default:
       return null;
