@@ -26,6 +26,8 @@ const BALANCE_UPDATE_INTERVAL = 5000;
 const LIQUIDITY_UPDATE_INTERVAL = 5000;
 const LIQUIDITY_PROVIDER_FEE = 0.25; // Fee in percents
 
+const isNullOrNaN = value => _.isNull(value) || _.isNaN(value);
+
 class DexSwap extends React.PureComponent {
   static contextType = Web3Context;
 
@@ -35,8 +37,8 @@ class DexSwap extends React.PureComponent {
     isSettings: false,
     pair: [],
     address: null,
-    amount0: 0,
-    amount1: 0,
+    amount0: undefined,
+    amount1: undefined,
     exactIndex: 0,
     relation: 1,
     pairAddress: null,
@@ -88,12 +90,10 @@ class DexSwap extends React.PureComponent {
     try {
       const {getTokenContract, routerAddress} = this.context;
       const token = _.get(this, 'state.pair[0]');
-      console.log('[setInitialAllowance]', token);
       if (!token) return;
       if (this.tokenContract) this.tokenContract.stopWaiting();
       this.tokenContract = getTokenContract(token);
       const allowance = await this.tokenContract.getAllowance(routerAddress);
-      console.log('ALLOWANCE', token.symbol, allowance);
       this.setState({
         allowance,
       });
@@ -105,7 +105,10 @@ class DexSwap extends React.PureComponent {
 
   componentDidMount() {
     this._mount = true;
-    this.setState({lastChainId: this.context.chainId});
+    this.setState({
+      lastChainId: this.context.chainId,
+      lastIsConnected: this.context.isConnected,
+    });
     this.fillDefaultPair();
     this.updateAccountAddress();
 
@@ -139,7 +142,9 @@ class DexSwap extends React.PureComponent {
       if (isConnected) this.setInitialAllowance();
     }
     this.requireChain();
-    if (prevState.lastChainId !== chainId) {
+    if (prevState.lastChainId !== chainId
+      || prevState.lastIsConnected !== isConnected
+    ) {
       this.setState(state => {
         const token0Symbol = _.get(state, 'pair[0].symbol');
         const token1Symbol = _.get(state, 'pair[1].symbol');
@@ -149,16 +154,21 @@ class DexSwap extends React.PureComponent {
           return {
             ...state,
             lastChainId: chainId,
+            lastIsConnected: isConnected,
             pair: [token0, token1]
           }
         } else {
           return {
             ...state,
             lastChainId: chainId,
+            lastIsConnected: isConnected,
             pair: [tokens[0], tokens[1]],
           };
         }
-      }, () => this.updateLiquidity());
+      }, () => {
+        this.setInitialAllowance();
+        this.updateLiquidity();
+      });
     }
   }
 
@@ -203,6 +213,10 @@ class DexSwap extends React.PureComponent {
               isExactIn = !this.state.exactIndex,
               _amount = null,
               ) {
+    console.log('updateTrade', isUpdateState, token0, token1, isExactIn, _amount);
+    const {amount0, amount1} = this.state;
+    if (isNullOrNaN(Number(amount0)) && isNullOrNaN(Number(amount1))) return;
+
     const {getTrade} = this.context;
     const amount = !_.isNull(_amount) ? _amount : isExactIn
       ? _.get(this.state, 'amount0', 1)
@@ -271,6 +285,7 @@ class DexSwap extends React.PureComponent {
   swapPair() {
     if (!this.state.pair.length) return;
 
+    console.log('swapPair');
     const trade = this.updateTrade(
       false,
       this.state.pair[1],
@@ -329,6 +344,7 @@ class DexSwap extends React.PureComponent {
       newState[`amount${index}`] = value;
       newState.exactIndex = Number(index);
       const second = Number(!index);
+
       const trade = this.updateTrade(false, undefined, undefined, !index, value);
 
       if (trade) {
@@ -337,7 +353,7 @@ class DexSwap extends React.PureComponent {
           ? significant(trade.outputAmount)
           : significant(trade.inputAmount);
       } else {
-        newState[`amount${second}`] = '0';
+        newState[`amount${second}`] = undefined;
       }
 
       return newState;
@@ -407,6 +423,23 @@ class DexSwap extends React.PureComponent {
     }
     this.setState({isApproving: false});
   }
+
+  onSelectToken = index => {
+    const {
+      isConnected,
+      connectWallet,
+    } = this.context;
+
+    if (!isConnected) {
+      connectWallet()
+        .then(() => this.setState({ selectToken: index }))
+        .catch(error => {
+          this.setState({ selectToken: null });
+        })
+    } else {
+      this.setState({ selectToken: index });
+    }
+  };
 
   render() {
     const {
@@ -489,6 +522,7 @@ class DexSwap extends React.PureComponent {
           </Button>}
           <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
                   disabled={!isAvailable}
+                  className="DexSwap__button-swap"
                   onClick={() => this.executeTrade()}>
             <SVG src={require('src/asset/icons/convert-card.svg')} />
             {priceImpactNumber >= 5 ? getLang('dex_button_swap_anyway') : getLang('dex_button_buy')}
@@ -507,9 +541,9 @@ class DexSwap extends React.PureComponent {
         <CabinetBlock>
           <div className="DexSwap__form">
             <DexSwapInput
-              onSelectToken={() => this.setState({ selectToken: 0 })}
+              onSelectToken={() => this.onSelectToken(0)}
               onChange={(value) => this.onAmountChange(value, 0)}
-              value={amount0 || '0'}
+              value={amount0}
               token={this.state.pair[0]}
               setExact={() => this.setExact(0)}
               showBalance
@@ -529,9 +563,9 @@ class DexSwap extends React.PureComponent {
               src={require('src/asset/icons/cabinet/swap/swap-icon.svg')}
             />
             <DexSwapInput
-              onSelectToken={() => this.setState({ selectToken: 1 })}
+              onSelectToken={() => this.onSelectToken(1)}
               onChange={(value) => this.onAmountChange(value, 1)}
-              value={amount1 || '0'}
+              value={amount1}
               token={this.state.pair[1]}
               setExact={() => this.setExact(1)}
               label
@@ -668,7 +702,7 @@ class DexSwap extends React.PureComponent {
             )}
           </div>
         </CabinetBlock>
-        <div className="DexSwap__route">
+        {(!!route && !!route.length) && <div className="DexSwap__route">
           <h3>
             <span>{getLang('dex_route')}</span>
             <HoverPopup
@@ -680,29 +714,27 @@ class DexSwap extends React.PureComponent {
             </HoverPopup>
           </h3>
           <div className="DexSwap__route-container">
-            {!!route &&
-              !!route.length &&
-              route.map((symbol, index) => {
-                const token = tokens.find((t) => t.symbol === symbol);
-                const logo = _.get(token, 'logoURI', '');
-                return (
-                  <div className="DexSwap__route-symbol" key={symbol}>
-                    {!!index && (
-                      <SVG
-                        src={require('src/asset/icons/triangle-right.svg')}
-                        className="DexSwap__route-arrow"
-                      />
-                    )}
-                    <div
-                      className="DexSwap__route-logo"
-                      style={{ backgroundImage: `url('${logo}')` }}
+            {route.map((symbol, index) => {
+              const token = tokens.find((t) => t.symbol === symbol);
+              const logo = _.get(token, 'logoURI', '');
+              return (
+                <div className="DexSwap__route-symbol" key={symbol}>
+                  {!!index && (
+                    <SVG
+                      src={require('src/asset/icons/triangle-right.svg')}
+                      className="DexSwap__route-arrow"
                     />
-                    <span>{symbol}</span>
-                  </div>
-                );
-              })}
+                  )}
+                  <div
+                    className="DexSwap__route-logo"
+                    style={{ backgroundImage: `url('${logo}')` }}
+                  />
+                  <span>{symbol}</span>
+                </div>
+              );
+            })}
           </div>
-        </div>
+        </div>}
         {/*{!!transactions.length && <div className="DexSwap__description">*/}
         {/*<h3>*/}
         {/*{getLang('dex_last_transactions')}*/}

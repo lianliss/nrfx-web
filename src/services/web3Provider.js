@@ -307,7 +307,6 @@ class Web3Provider extends React.PureComponent {
       }
       this.ethereum = window.ethereum;
       this.web3 = new Web3(this.ethereum);
-      console.log('this.ethereum', this.ethereum);
       this.setChain(this.getWeb3().utils.hexToNumber(this.ethereum.chainId));
 
       // Set account address
@@ -318,6 +317,7 @@ class Web3Provider extends React.PureComponent {
 
       // Set provider state
       if (!this._mounted) return;
+      this.getTokens();
       this.setState({
         isConnected: true,
         accountAddress,
@@ -1265,6 +1265,8 @@ class Web3Provider extends React.PureComponent {
   }
 
   render() {
+    window.web3Provider = this;
+
     return <Web3Context.Provider value={{
       ...this.state,
       web3: this.web3,

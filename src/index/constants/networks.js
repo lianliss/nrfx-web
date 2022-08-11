@@ -5,7 +5,7 @@ const networks = {
     factoryAddress: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
     factoryInitCodeHash: '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5',
     routerAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
-    masterChefAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    masterChefAddress: '0x9032aEc2255680Ed14f832a7ba99603065C7a0ce',
     narfexToken: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
     tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
     saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',

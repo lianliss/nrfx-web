@@ -13,6 +13,8 @@ import { getLang } from "utils";
 // Styles.
 import './DexSwapInput.less';
 
+const isNullOrNaN = value => _.isNull(value) || _.isNaN(value);
+
 function DexSwapInput({
                         title,
                         manage,
@@ -25,7 +27,7 @@ function DexSwapInput({
                         setExact,
                       }) {
   // States
-  const [textValue, setTextValue] = React.useState(value || '');
+  const [textValue, setTextValue] = React.useState(value);
   const adaptive = useSelector((store) => store.default.adaptive);
 
   // Refs
@@ -54,7 +56,7 @@ function DexSwapInput({
   };
 
   React.useEffect(() => {
-    if (Number(textValue) !== value) {
+    if (Number(textValue) !== value && !isNullOrNaN(Number(value))) {
       setTextValue(`${value}`);
     }
   }, [value]);
@@ -72,7 +74,9 @@ function DexSwapInput({
 
   const tokenAddress = _.get(token, 'address');
   React.useEffect(() => {
-    onChange('0');
+    if (!isNullOrNaN(Number(value))) {
+      onChange('0');
+    }
   }, [tokenAddress]);
 
   // Render
@@ -113,6 +117,7 @@ function DexSwapInput({
             type={adaptive ? 'number' : 'text'}
             onTextChange={handleInput}
             value={textValue}
+            placeholder="0"
           />
         </div>
       </div>
@@ -136,7 +141,6 @@ DexSwapInput.defaultProps = {
   title: '',
   manage: null,
   label: false,
-  value: 0,
   showBalance: false,
   onSelectToken: () => {},
   setExact: () => {},
