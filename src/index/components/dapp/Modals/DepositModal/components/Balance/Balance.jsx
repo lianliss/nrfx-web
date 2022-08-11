@@ -27,27 +27,6 @@ import Lang from 'src/components/Lang/Lang';
 // Styles
 import './Balance.less';
 
-const options = [
-  option(
-    'Indonesian Rupiah',
-    'IDR',
-    require('src/asset/icons/wallets/idr.svg'),
-    true
-  ),
-  option(
-    'Russian Ruble',
-    'RUB',
-    require('src/asset/icons/wallets/rub.svg'),
-    true
-  ),
-  option(
-    'Ukrainian Hryvnia',
-    'UAH',
-    require('src/asset/icons/wallets/rub.svg'),
-    true
-  ),
-];
-
 const merchantList = {
   advcash: {
     icon: require('src/asset/merchants/adv_cash.svg').default,
@@ -159,7 +138,7 @@ function Balance(props) {
       props.merchants[merchant].currencies[currency].fees;
 
     actions.openModal(
-      merchant === 'cards' ? 'fiat_refill_card' : 'fiat_refill',
+      merchant === 'cards' ? 'deposit_choose_bank' : 'fiat_refill',
       null,
       {
         amount,
@@ -380,6 +359,7 @@ function Balance(props) {
           defaultIsOpen
         />
         <Input
+          error={touched && (!amount || checkAmount())}
           placeholder="0.00"
           value={amount}
           onTextChange={handleChangeAmount}
@@ -394,7 +374,7 @@ function Balance(props) {
         </p>
         <Row className="DepositModal__Balance-buttons">
           <Button type="secondary-alice" onClick={props.onClose}>
-            Back
+            {getLang('global_back')}
           </Button>
           {merchant === 'invoice' ? (
             <UI.Button

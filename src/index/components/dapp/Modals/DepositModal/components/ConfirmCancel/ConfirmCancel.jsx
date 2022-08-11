@@ -1,37 +1,62 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 // Components
 import DepositModal from '../../DepositModal';
 import FormattedText from 'src/index/components/dapp/FormattedText/FormattedText';
 import { Button, Col } from 'src/ui';
-import { getLang } from 'src/utils';
+import Lang from 'src/components/Lang/Lang';
 
 // Utils
-import { openModal } from 'src/actions';
+import { getLang } from 'src/utils';
+import { closeModal } from 'src/actions';
+import * as api from 'src/services/api';
+import apiSchema from 'src/services/apiSchema';
+import * as actionTypes from 'src/actions/actionTypes';
 
 // Styles
 import './ConfirmCancel.less';
 
-function ConfirmCancel(props) {
+function ConfirmCancel({ reservation_id, amount, ...props }) {
+  const dispatch = useDispatch();
+  const onCancel = () => {
+    api
+      .call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
+        amount,
+        reservation_id: reservation_id,
+      })
+      .then(() => {
+        dispatch({
+          type: actionTypes.WALLET_SET_CARD_RESERVATION,
+          payload: null,
+        });
+        dispatch({
+          type: actionTypes.WALLET_SET_STATUS,
+          section: 'cancelReservation',
+          status: '',
+        });
+      })
+      .finally(() => {
+        closeModal();
+      });
+  };
+
   return (
     <DepositModal className="DepositModal__ConfirmCancel" {...props}>
-      <h3>Cancel the deposit?</h3>
+      <h3>
+        <Lang name="fiatRefillCard_cancelReservation_confirmTitle" />
+      </h3>
       <p className="secondary default medium">
         <FormattedText
-          text={getLang(
-            'Are you sure that you want to cancel \n the deposit? You risk losing the already transferred funds'
-          )}
+          text={getLang('fiatRefillCard_cancelReservation_confirmText')}
         />
       </p>
       <Col className="buttons">
-        <Button type="lightBlue" onClick={props.onClose}>
-          Cancel the deposit
+        <Button type="lightBlue" onClick={onCancel}>
+          <Lang name="fiatRefillCard_cancelReservation_confirmOk" />
         </Button>
-        <Button
-          type="secondary-alice"
-          onClick={() => openModal('deposit_choosed_bank')}
-        >
-          Don’t cancel
+        <Button type="secondary-alice" onClick={closeModal}>
+          <Lang name="fiatRefillCard_cancelReservation_confirmCancel" />
         </Button>
       </Col>
     </DepositModal>

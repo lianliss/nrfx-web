@@ -83,6 +83,16 @@
     background: var(--alice-blue);
     border-radius: 15px;
     border: none;
+    border-color: transparent !important;
+
+    &.error {
+      border: 1px solid #e83a2a !important;
+
+      &,
+      &::placeholder {
+        color: #e83a2a;
+      }
+    }
 
     &__wrapper {
       --input-height: 60px;

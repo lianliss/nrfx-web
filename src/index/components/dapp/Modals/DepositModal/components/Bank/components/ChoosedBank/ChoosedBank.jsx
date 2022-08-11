@@ -1,100 +1,118 @@
 import React from 'react';
 
 // Components
-import { Row, Col, NumberFormat, Button, CopyText, LineBreaker } from 'src/ui';
+import {
+  Row,
+  Col,
+  NumberFormat,
+  Button,
+  CopyText,
+  LineBreaker,
+  BankLogo,
+  Timer,
+  Message,
+} from 'src/ui';
 import SVG from 'utils/svg-wrap';
-import FormattedText from 'src/index/components/dapp/FormattedText/FormattedText';
 import InfoWrapper from '../InfoWrapper/InfoWrapper';
-import { getLang } from 'src/utils';
-import Bank from '../../Bank';
+import Lang from 'src/components/Lang/Lang';
 
 // Utils
 import { openModal } from 'src/actions';
+import { dateFormat } from 'src/utils';
 
 // Styles
 import './ChoosedBank.less';
 
-const bank = {
-  name: 'Tinkoff bank',
-  icon: require('src/asset/banks/tinkoff.svg').default,
-};
+function ChoosedBank({
+  cardReservation,
+  amount,
+  currency,
+  onFinish,
+  onConfirm,
+}) {
+  const { card } = cardReservation;
+  const { bank } = card;
 
-function ChoosedBank(props) {
+  const handleCancel = () => {
+    openModal(
+      'deposit_cancel',
+      {},
+      { amount, reservation_id: cardReservation.reservation.id }
+    );
+  };
+
   return (
-    <Bank {...props}>
-      <Col className="DepositModal__ChoosedBank">
-        <h3 className="default dark medium">Choose a bank</h3>
-        <Row alignItems="center">
-          <img src={bank.icon} alt={bank.name} className="bankIcon" />
-          <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
-        </Row>
-        <Col>
-          <div className="DepositModal__ChoosedBank__items">
-            <InfoWrapper type="secondary">
-              <p className="dark default small hight-height left">
-                <FormattedText
-                  text={getLang(
-                    '{Attention!} \n To avoid loss of funds, send exactly {5 000 RUB one transaction} this is neccesary for the automatic confirmation of your payment'
-                  )}
-                  className="blue"
-                  regularExpression={/\{[а-яА-яa-zA-z0-9\s\!]+\}/g}
-                />
-              </p>
-            </InfoWrapper>
-          </div>
-          <div className="DepositModal__ChoosedBank__items">
-            <InfoWrapper>
-              <p className="dark default hight-height extra-small">
-                An account is reserved for you until 27 July 2022, 9:45
-              </p>
-              <p className="blue default small">01:59:53</p>
-            </InfoWrapper>
-            <InfoWrapper>
-              <p className="dark default hight-height extra-small">
-                Amount to top up
-              </p>
-              <p className="blue default small">
-                <NumberFormat number={5000} currency="rub" />
-              </p>
-            </InfoWrapper>
-          </div>
-          <div className="DepositModal__ChoosedBank__items">
-            <InfoWrapper size="large">
-              <p className="dark default hight-height extra-small extra-large-height">
-                Recharge card number
-              </p>
-              <CopyText text="4377 7237 4627 4764">
-                <span className="blue default small extra-large-height">
-                  4377 7237 4627 4764
-                </span>
-                <SVG src={require('src/asset/icons/action/copy.svg')} />
-              </CopyText>
-              <p className="dark default hight-height extra-small extra-large-height">
-                Name
-              </p>
-              <p className="blue default small extra-large-height">
-                Evgeny Igorevich G.
-              </p>
-            </InfoWrapper>
-          </div>
-        </Col>
-        <Row className="buttons" justifyContent="flex-end">
-          <Button
-            type="secondary-alice"
-            shadow
-            onClick={() => openModal('deposit_cancel')}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="lightBlue"
-            onClick={() => openModal('deposit_transfer')}
-          >
-            Confirm payment
-          </Button>
-        </Row>
+    <Col className="DepositModal__ChoosedBank">
+      <h3 className="default dark medium">Choose a bank</h3>
+      <Row alignItems="center">
+        <BankLogo name={bank.code} />
+        <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
+      </Row>
+      <Col>
+        <div className="DepositModal__ChoosedBank__items">
+          <InfoWrapper type="secondary">
+            <p className="dark default small hight-height left">
+              <Lang name="fiatRefillCard_attention_text_sendExactly" />
+              &nbsp;
+              <span className="blue">
+                <NumberFormat number={amount} currency={currency} />
+                &nbsp;
+                <Lang name="fiatRefillCard_attention_text_oneTransaction" />
+                &nbsp;
+              </span>
+              <Lang name="fiatRefillCard_attention_text" />
+            </p>
+          </InfoWrapper>
+        </div>
+        <div className="DepositModal__ChoosedBank__items">
+          <InfoWrapper>
+            <p className="dark default hight-height extra-small">
+              <Lang name="fiatRefillCard_cardReservation" />
+              &nbsp;
+              {dateFormat(card.expire_in)}
+            </p>
+            <p className="blue default small">
+              <Timer onFinish={onFinish} time={card.expire_in * 1000} />
+            </p>
+          </InfoWrapper>
+          <InfoWrapper>
+            <p className="dark default hight-height extra-small">
+              <Lang name="fiatRefillCard_paymentAmount" />
+            </p>
+            <p className="blue default small">
+              <NumberFormat number={amount} currency={currency} />
+            </p>
+          </InfoWrapper>
+        </div>
+        <div className="DepositModal__ChoosedBank__items">
+          <InfoWrapper size="large">
+            <p className="dark default hight-height extra-small extra-large-height">
+              <Lang name="fiatRefillCard_cardNumberForRefill" />
+            </p>
+            <CopyText text={card.number}>
+              <span className="blue default small extra-large-height">
+                {card.number.match(/.{1,4}/g).join(' ')}
+              </span>
+              <SVG src={require('src/asset/icons/action/copy.svg')} />
+            </CopyText>
+            <p className="dark default hight-height extra-small extra-large-height">
+              <Lang name="fiatRefillCard_cardHolderName" />
+            </p>
+            <p className="blue default small extra-large-height">
+              {bank.holder_name}
+            </p>
+          </InfoWrapper>
+        </div>
       </Col>
-    </Bank>
+      <Row className="buttons" justifyContent="flex-end">
+        <Button type="secondary-alice" shadow onClick={handleCancel}>
+          Cancel
+        </Button>
+        <Button type="lightBlue" onClick={onConfirm}>
+          Confirm payment
+        </Button>
+      </Row>
+    </Col>
   );
 }
 

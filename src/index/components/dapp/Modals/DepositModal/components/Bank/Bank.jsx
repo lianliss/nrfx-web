@@ -8,11 +8,10 @@ import { Row } from 'src/ui';
 // Styles
 import './Bank.less';
 
-function Bank({ children, ...props }) {
+function Bank({ children, amount, currency, fee, ...props }) {
   return (
     <DepositModal className="DepositModal__Bank" {...props}>
       <Row className="DepositModal__Bank__container">
-        <Sidebar />
         {children}
       </Row>
     </DepositModal>
