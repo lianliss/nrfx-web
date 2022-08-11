@@ -529,7 +529,8 @@ class Web3Provider extends React.PureComponent {
   async getTokenUSDPrice(token) {
     try {
       const USDT = this.state.tokens.find(t => t.symbol === 'USDT');
-      return token.address.toLowerCase() === USDT.address.toLowerCase()
+      const address = token.address ? token.address.toLowerCase() : null;
+      return address === USDT.address.toLowerCase()
         ? 1
         : await this.getTokensRelativePrice(token, USDT);
     } catch (error) {
@@ -679,7 +680,6 @@ class Web3Provider extends React.PureComponent {
 
             // Get token price for non-zero balance
             if (balance !== "0") {
-              console.log('[loadAccountBalances]', token.symbol, balance);
               this.getTokenUSDPrice(token).then(price => {
 
                 // Save to the state

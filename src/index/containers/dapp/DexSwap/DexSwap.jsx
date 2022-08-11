@@ -213,7 +213,6 @@ class DexSwap extends React.PureComponent {
               isExactIn = !this.state.exactIndex,
               _amount = null,
               ) {
-    console.log('updateTrade', isUpdateState, token0, token1, isExactIn, _amount);
     const {amount0, amount1} = this.state;
     if (isNullOrNaN(Number(amount0)) && isNullOrNaN(Number(amount1))) return;
 
