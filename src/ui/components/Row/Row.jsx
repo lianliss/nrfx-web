@@ -27,7 +27,7 @@ function Row({
 
 Row.propTypes = {
   className: PropTypes.string,
-  alignItems: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
+  alignItems: PropTypes.oneOf(['center', 'flex-start', 'flex-end', 'stretch']),
   justifyContent: PropTypes.oneOf([
     'center',
     'flex-start',

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import {
@@ -7,10 +8,8 @@ import {
   NumberFormat,
   Button,
   CopyText,
-  LineBreaker,
   BankLogo,
   Timer,
-  Message,
 } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import InfoWrapper from '../InfoWrapper/InfoWrapper';
@@ -29,6 +28,7 @@ function ChoosedBank({
   currency,
   onFinish,
   onConfirm,
+  statuses,
 }) {
   const { card } = cardReservation;
   const { bank } = card;
@@ -105,15 +105,42 @@ function ChoosedBank({
         </div>
       </Col>
       <Row className="buttons" justifyContent="flex-end">
-        <Button type="secondary-alice" shadow onClick={handleCancel}>
-          Cancel
+        <Button
+          state={statuses.cancelReservation}
+          type="secondary-alice"
+          shadow
+          onClick={handleCancel}
+        >
+          <Lang name="fiatRefillCard_cancelReservation" />
         </Button>
-        <Button type="lightBlue" onClick={onConfirm}>
-          Confirm payment
+        <Button
+          state={statuses.confirmPayment}
+          type="lightBlue"
+          onClick={onConfirm}
+        >
+          <Lang name="fiatRefillCard_confirmPayment" />
         </Button>
       </Row>
     </Col>
   );
 }
+
+ChoosedBank.propTypes = {
+  cardReservation: PropTypes.object,
+  amount: PropTypes.number,
+  currency: PropTypes.string,
+  onFinish: PropTypes.func,
+  onConfirm: PropTypes.func,
+  statuses: PropTypes.object,
+};
+
+ChoosedBank.defaultProps = {
+  cardReservation: {},
+  amount: 0,
+  currency: 'rub',
+  onFinish: () => {},
+  onConfirm: () => {},
+  statuses: {},
+};
 
 export default ChoosedBank;

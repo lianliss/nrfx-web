@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { Row, Col, Button, ButtonWrapper } from 'src/ui';
@@ -6,16 +7,15 @@ import SVG from 'utils/svg-wrap';
 import CabinetScrollBlock from 'src/index/components/dapp/CabinetScrollBlock/CabinetScrollBlock';
 import Bank from '../../Bank';
 import Sidebar from '../Sidebar/Sidebar';
+import ChoosedBank from '../ChoosedBank/ChoosedBank';
+import DepositTransfer from '../DepositTransfer/DepositTransfer';
+import Lang from 'src/components/Lang/Lang';
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
 
 // Utils
-import { useDispatch, useSelector } from 'react-redux';
 import { getAnalytics, logEvent } from 'firebase/analytics';
 import _ from 'lodash';
 
-import NumberFormat from 'src/ui/components/NumberFormat/NumberFormat';
-import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
-import BankLogo from 'src/ui/components/BankLogo/BankLogo';
-import Clipboard from 'src/index/components/cabinet/Clipboard/Clipboard';
 import { getLang } from 'src/utils';
 import * as actionTypes from 'src/actions/actionTypes';
 import {
@@ -24,18 +24,14 @@ import {
   walletStatusSelector,
 } from 'src/selectors';
 import useAdaptive from 'src/hooks/adaptive';
-import { Message, Timer } from 'src/ui';
-import Lang from 'src/components/Lang/Lang';
 import { confirm, closeModal, openModal } from 'src/actions/index';
 import * as api from 'src/services/api';
 import apiSchema from 'src/services/apiSchema';
-import * as utils from 'src/utils';
 import * as toast from 'src/actions/toasts';
 import * as actions from 'src/actions';
 
 // Styles
 import './ChooseBank.less';
-import ChoosedBank from '../ChoosedBank/ChoosedBank';
 
 const CustomLoadingStatus = ({ status }) => {
   const props = {};
@@ -270,7 +266,7 @@ function ChooseBank(props) {
 
     return (
       <>
-        <BanksWrapper className="DepositModal__ChooseBank-items">
+        <BanksWrapper className="DepositModal__ChooseBank-items" noScrollX>
           {items.map((bank, key) => {
             let icon = null;
 
@@ -325,67 +321,46 @@ function ChooseBank(props) {
 
     if (status.reservedCard === 'not_available_cards') {
       return (
-        <>
-          <div style={{ flex: 1, display: 'flex' }}>
-            <LoadingStatus
-              inline
-              icon={require('src/asset/120/info.svg')}
-              status={<Lang name="fiatRefillCard_status_not_available_cards" />}
-              description={
-                <Lang name="fiatRefillCard_status_description_not_available_cards" />
-              }
-            />
+        <Col className="DepositModal__ChooseBank">
+          <div className="DepositModal__ChooseBank__empty">
+            <h3 className="default dark medium extra-large-height">
+              <Lang name="fiatRefillCard_status_not_available_cards" />
+            </h3>
+            <SVG src={require('src/asset/icons/transaction/empty-icon.svg')} />
           </div>
-          <ButtonWrapper
-            align="center"
-            className="FiatRefillModal__body__footer"
-          >
-            <Button onClick={handleClickBack}>{getLang('global_back')}</Button>
-          </ButtonWrapper>
-        </>
+          <Row className="buttons" justifyContent="flex-end">
+            <Button type="secondary-alice" shadow onClick={handleClickBack}>
+              <Lang name="global_back" />
+            </Button>
+          </Row>
+        </Col>
       );
     }
 
     if ([status.refillBankList, status.reservedCard].some(Boolean)) {
       return (
-        <CustomLoadingStatus
-          status={status.refillBankList || status.reservedCard}
-        />
+        <div className="DepositModal__ChooseBank__loading">
+          <CustomLoadingStatus
+            status={status.refillBankList || status.reservedCard}
+          />
+        </div>
       );
     }
 
     if (cardReservation?.reservation.status === 'wait_for_review') {
-      return (
-        <>
-          <div style={{ margin: 'auto' }}>
-            <LoadingStatus
-              inline
-              icon={require('src/asset/120/clock.svg')}
-              status={getLang('fiatRefillCard_status_wait_for_review')}
-              description={getLang(
-                'fiatRefillCard_status_description_wait_for_review'
-              )}
-            />
-          </div>
-          <ButtonWrapper
-            align="justify"
-            className="FiatRefillModal__body__footer"
-          >
-            <Button onClick={handleCancel} type="secondary">
-              {getLang('global_cancel')}
-            </Button>
-            <Button onClick={props.onClose}>{getLang('global_ok')}</Button>
-          </ButtonWrapper>
-        </>
-      );
+      return <DepositTransfer onClose={props.onClose} />;
     }
 
     if (!cardReservation) {
+      const cardsExists = refillBankList.length && props.merchant === 'cards';
+
       return (
         <Col className="DepositModal__ChooseBank">
-          {refillBankList.length ? (
+          {cardsExists ? (
             <>
-              <h3 className="default dark medium">Choose a bank</h3>
+              <h3 className="default dark medium">
+                <Lang name="cabinet_fiatWithdrawalModal_chooseBank" />
+              </h3>
               <BanksList
                 items={refillBankList}
                 onChange={(b) => handleChoiceBank(b.code)}
@@ -394,7 +369,7 @@ function ChooseBank(props) {
           ) : (
             <div className="DepositModal__ChooseBank__empty">
               <h3 className="default dark medium extra-large-height">
-                Not banks available
+                <Lang name="fiatRefillCard_status_not_available_cards" />
               </h3>
               <SVG
                 src={require('src/asset/icons/transaction/empty-icon.svg')}
@@ -407,98 +382,24 @@ function ChooseBank(props) {
               shadow
               onClick={() => openModal('deposit_balance')}
             >
-              Back
+              <Lang name="global_back" />
             </Button>
           </Row>
         </Col>
       );
     } else {
       return (
-        <>
-          <ChoosedBank
-            cardReservation={cardReservation}
-            amount={amount}
-            currency={currency}
-            onFinish={handleTimerFinish}
-            onConfirm={handleConfirmPayment}
-            onCancel={handleCancel}
-          />
-          <div className="FiatRefillModal__body__content">
-            <div className="FiatRefillModal__header">
-              {cardReservation.card.bank.name}
-            </div>
-            <Message title={<Lang name="global_attention" />} type="warning">
-              <Lang name="fiatRefillCard_attention_text_sendExactly" />{' '}
-              <strong>
-                <NumberFormat number={amount} currency={currency} />{' '}
-                <Lang name="fiatRefillCard_attention_text_oneTransaction" />
-              </strong>{' '}
-              <Lang name="fiatRefillCard_attention_text" />
-            </Message>
-            <div className="FiatRefillModal__infoBlock">
-              <div className="FiatRefillModal__infoBlock__item">
-                <span>
-                  <Lang name="fiatRefillCard_cardReservation" />{' '}
-                  {utils.dateFormat(cardReservation.card.expire_in)}
-                </span>
-                <strong>
-                  <Timer
-                    onFinish={handleTimerFinish}
-                    time={cardReservation.card.expire_in * 1000}
-                  />
-                </strong>
-              </div>
-              <div className="FiatRefillModal__infoBlock__item">
-                <span>
-                  <Lang name="fiatRefillCard_paymentAmount" />
-                </span>
-                <strong>
-                  <NumberFormat number={amount} currency={currency} />
-                </strong>
-              </div>
-            </div>
-            <div className="FiatRefillModal__infoBlock">
-              <div className="FiatRefillModal__infoBlock__item primary">
-                <span>
-                  <Lang name="fiatRefillCard_cardNumberForRefill" />
-                </span>
-                <strong>
-                  <Clipboard
-                    displayText={cardReservation.card.number
-                      .match(/.{1,4}/g)
-                      .join(' ')}
-                    text={cardReservation.card.number}
-                  />
-                </strong>
-                <span>
-                  <Lang name="fiatRefillCard_cardHolderName" />
-                </span>
-                <strong className="holderName">
-                  {cardReservation.card.bank.holder_name}
-                </strong>
-              </div>
-            </div>
-          </div>
-
-          <ButtonWrapper
-            align="justify"
-            className="FiatRefillModal__body__footer"
-          >
-            <Button
-              state={status.cancelReservation}
-              onClick={handleCancel}
-              type="secondary"
-            >
-              <Lang name="fiatRefillCard_cancelReservation" />
-            </Button>
-            <Button
-              state={status.confirmPayment}
-              onClick={handleConfirmPayment}
-            >
-              <Lang name="fiatRefillCard_confirmPayment" />
-            </Button>
-          </ButtonWrapper>
-        </>
+        <ChoosedBank
+          cardReservation={cardReservation}
+          amount={amount}
+          currency={currency}
+          onFinish={handleTimerFinish}
+          onConfirm={handleConfirmPayment}
+          status={{
+            confirmPayment: status.confirmPayment,
+            cancelReservation: status.cancelReservation,
+          }}
+        />
       );
     }
   };

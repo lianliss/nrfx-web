@@ -3,26 +3,22 @@ import { connect, useSelector } from 'react-redux';
 
 // Components
 import Select, { option } from 'src/index/components/dapp/Select/Select';
-import { Input, Row, Button } from 'src/ui';
+import * as UI from 'src/ui/';
 import DepositModal from '../../DepositModal';
+import EmptyContentBlock from 'src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
+import NumberFormat from 'src/ui/components/NumberFormat/NumberFormat';
+import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
+import SVG from 'utils/svg-wrap';
+import { Status } from 'src/index/containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 
 // Utils
-import { openModal } from 'src/actions';
-
-import * as UI from 'src/ui/';
 import { getLang, classNames as cn } from 'src/utils';
-import SVG from 'utils/svg-wrap';
 import router from 'src/router';
 import * as actions from 'src/actions';
 import * as toasts from 'src/actions/toasts';
 import * as fiatActions from 'src/actions/cabinet/fiat';
-import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
-import { Status } from 'src/index/containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
-import EmptyContentBlock from 'src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
-import NumberFormat from 'src/ui/components/NumberFormat/NumberFormat';
 import { fiatSelector } from 'src/selectors';
 import { closeModal } from 'src/actions';
-import Lang from 'src/components/Lang/Lang';
 
 // Styles
 import './Balance.less';
@@ -137,17 +133,14 @@ function Balance(props) {
     const { min_fee: minFee, percent_fee: percentFee } =
       props.merchants[merchant].currencies[currency].fees;
 
-    actions.openModal(
-      merchant === 'cards' ? 'deposit_choose_bank' : 'fiat_refill',
-      null,
-      {
-        amount,
-        balance,
-        minFee,
-        percentFee,
-        currency,
-      }
-    );
+    actions.openModal('deposit_choose_bank', null, {
+      amount,
+      balance,
+      minFee,
+      percentFee,
+      currency,
+      merchant,
+    });
   };
 
   const handleFiatWithdrawal = () => {
@@ -303,14 +296,6 @@ function Balance(props) {
     return {};
   };
 
-  const handleGoToMerchantList = () => {
-    if (availableMerchants.length === 1) {
-      props.onBack();
-    } else {
-      setMerchant(null);
-    }
-  };
-
   const renderForm = () => {
     const currencyInfo = actions.getCurrencyInfo(currency);
     const { fee, percent_fee, min_fee } = getFee();
@@ -336,7 +321,7 @@ function Balance(props) {
 
     return (
       <DepositModal className="DepositModal__Balance" {...props}>
-        <h3>Balance Deposit</h3>
+        <h3>{getLang('cabinet_balanceDeposit')}</h3>
         <Select
           options={Object.keys(props.merchants[merchant].currencies)
             .map((b) => actions.getCurrencyInfo(b))
@@ -358,7 +343,7 @@ function Balance(props) {
           indicatorIcon={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
           defaultIsOpen
         />
-        <Input
+        <UI.Input
           error={touched && (!amount || checkAmount())}
           placeholder="0.00"
           value={amount}
@@ -369,13 +354,16 @@ function Balance(props) {
         <p className="secondary medium default hight">
           Fee: <NumberFormat percent number={percent_fee} />
         </p>
-        <p className="blue medium default hight">
-          To be credited: <NumberFormat number={total} currency={currency} />
-        </p>
-        <Row className="DepositModal__Balance-buttons">
-          <Button type="secondary-alice" onClick={props.onClose}>
+        {total >= 0 && (
+          <p className="blue medium default hight">
+            {getLang('cabinet_fiatRefillModal_total')}&nbsp;
+            <NumberFormat number={total} currency={currency} />
+          </p>
+        )}
+        <UI.Row className="DepositModal__Balance-buttons">
+          <UI.Button type="secondary-alice" onClick={props.onClose}>
             {getLang('global_back')}
-          </Button>
+          </UI.Button>
           {merchant === 'invoice' ? (
             <UI.Button
               type="lightBlue"
@@ -400,114 +388,8 @@ function Balance(props) {
               {getLang('global_next')}
             </UI.Button>
           )}
-        </Row>
+        </UI.Row>
       </DepositModal>
-    );
-
-    return (
-      <div className="MerchantModal__form">
-        <div className="MerchantModal__form__wallet">
-          <UI.CircleIcon
-            className="MerchantModal__form__wallet__icon"
-            currency={currencyInfo}
-          />
-          <UI.Dropdown
-            value={currency}
-            options={Object.keys(props.merchants[merchant].currencies)
-              .map((b) => actions.getCurrencyInfo(b))
-              .map((b) => ({
-                value: b.abbr,
-                title: b.name,
-                note: b.abbr.toUpperCase(),
-              }))}
-            onChange={(e) => {
-              setCurrency(e.value);
-              // getMerchantUrlThrottled({
-              //   amount,
-              //   merchant,
-              //   currency: e.value
-              // });
-            }}
-          />
-        </div>
-        <div className="MerchantModal__form__input__wrapper">
-          <UI.Input
-            error={touched && (!amount || checkAmount())}
-            value={amount}
-            onTextChange={handleChangeAmount}
-            type="number"
-            placeholder="0.00"
-            indicator={indicator}
-          />
-          {/*<div className="MerchantModal__form__input__description">*/}
-          {/*  <span>Комиссия 1%: $10</span>*/}
-          {/*  <span>~252.940254 BTC</span>*/}
-          {/*</div>*/}
-        </div>
-
-        {(props.type === 'withdrawal' ? amount > fee : total > 0) ? (
-          <div className="MerchantModal__form__description">
-            <div className="MerchantModal__form__description__fee">
-              <Lang name="global_fee" />:{' '}
-              <NumberFormat number={fee} currency={currency} />
-            </div>
-            <div className="MerchantModal__form__description__total">
-              {props.type === 'withdrawal' ? (
-                <Lang name="cabinet_fiatWithdrawalModal_total" />
-              ) : (
-                <Lang name="cabinet_fiatRefillModal_total" />
-              )}
-              {': '}
-              <NumberFormat number={total} currency={currency} />
-            </div>
-            {/*{getLang("cabinet_merchantModalDescription_" + merchant)}*/}
-          </div>
-        ) : (
-          <div className="MerchantModal__form__description">
-            <div className="MerchantModal__form__description__fee">
-              <Lang name="global_fee" />:{' '}
-              <NumberFormat percent number={percent_fee} />
-              {min_fee > 0 && (
-                <>
-                  , <NumberFormat number={min_fee} currency={currency} />{' '}
-                  <Lang name="global_min" />.
-                </>
-              )}
-            </div>
-            <div className="MerchantModal__form__description__total">
-              &nbsp;
-            </div>
-            {/*{getLang("cabinet_merchantModalDescription_" + merchant)}*/}
-          </div>
-        )}
-
-        {/*{fee > 0 && (*/}
-        {/*  <div className="MerchantModal__form__fee">*/}
-        {/*    {getLang("global_fee")}: <NumberFormat number={percent_fee} percent />,{" "}*/}
-        {/*    <NumberFormat number={fee} currency={currency} />{" "}*/}
-        {/*    {getLang("global_min")}.*/}
-        {/*  </div>*/}
-        {/*)}*/}
-
-        <div className="MerchantModal__buttons">
-          <UI.Button onClick={handleGoToMerchantList} type="secondary">
-            {getLang('global_back')}
-          </UI.Button>
-          {merchant === 'invoice' ? (
-            <UI.Button disabled={!amount} onClick={handleSubmitInvoice}>
-              {getLang('global_next')}
-            </UI.Button>
-          ) : props.type === 'withdrawal' ? (
-            <UI.Button disabled={!amount} onClick={handleFiatWithdrawal}>
-              {getLang('global_withdrawal')}
-            </UI.Button>
-          ) : (
-            <UI.Button /* state={urlStatus} */ onClick={handleFiatRefill}>
-              {getLang('global_next')}
-            </UI.Button>
-          )}
-        </div>
-      </div>
     );
   };
 
@@ -558,10 +440,10 @@ function Balance(props) {
         </div>
 
         <div className="MerchantModal__buttons">
-          <UI.Button onClick={() => setInvoice(null)} type="secondary">
+          <UI.Button type="secondary" onClick={() => setInvoice(null)}>
             {getLang('global_back')}
           </UI.Button>
-          <UI.Button onClick={props.onBack}>
+          <UI.Button type="lightBlue" onClick={props.onBack}>
             {getLang('global_close')}
           </UI.Button>
         </div>
@@ -594,20 +476,18 @@ function Balance(props) {
   };
 
   return (
-    <UI.Modal
-      className={cn('MerchantModal', {
+    <DepositModal
+      className={cn('DepositModal__Balance', {
         MerchantModal__list_wrapper: /* !status && */ !merchant,
       })}
       onClose={props.onBack}
       isOpen={true}
     >
-      <UI.ModalHeader>
-        {props.type === 'withdrawal'
-          ? getLang('cabinet_balanceWithdrawal')
-          : getLang('cabinet_balanceDeposit')}
-      </UI.ModalHeader>
+      {props.type === 'withdrawal' && (
+        <UI.ModalHeader>{getLang('cabinet_balanceWithdrawal')}</UI.ModalHeader>
+      )}
       {renderContent()}
-    </UI.Modal>
+    </DepositModal>
   );
 }
 

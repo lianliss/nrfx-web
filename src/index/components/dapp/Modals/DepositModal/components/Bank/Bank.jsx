@@ -11,7 +11,7 @@ import './Bank.less';
 function Bank({ children, amount, currency, fee, ...props }) {
   return (
     <DepositModal className="DepositModal__Bank" {...props}>
-      <Row className="DepositModal__Bank__container">
+      <Row className="DepositModal__Bank__container" alignItems="stretch">
         {children}
       </Row>
     </DepositModal>

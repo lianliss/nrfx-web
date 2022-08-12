@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 // Components
 import { Col } from 'src/ui';
 
+// Utils
+import { classNames as cn } from 'src/utils';
+
 // Styles
 import './InfoWrapper.less';
 
@@ -12,7 +15,11 @@ function InfoWrapper({ children, size, type, padding }) {
     <Col
       alignItems="center"
       justifyContent="center"
-      className={`DepositModal__InfoWrapper ${size} ${type}`}
+      className={cn(
+        'DepositModal__InfoWrapper',
+        { [type]: type },
+        { [size]: size }
+      )}
       style={{ padding: padding && padding }}
     >
       {children}
