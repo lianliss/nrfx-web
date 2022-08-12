@@ -123,7 +123,7 @@
 
     .Button {
       height: 50px;
-      flex: 1 1 50%;
+      flex: 1 1 40%;
 
       &__label {
         font-weight: 600;
@@ -133,6 +133,67 @@
 
       &:first-child {
         margin-right: 15px;
+      }
+    }
+  }
+}
+
+.adaptive .DepositModal__Balance {
+  .DepositModal__container {
+    max-width: 100%;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0px 15px 75px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 20px 18.5px;
+  }
+
+  h3 {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 23px;
+  }
+
+  .CabinetSelect {
+    &__option-icon {
+      margin-right: 5px;
+      width: 25px;
+      height: 25px;
+    }
+
+    &__option-title,
+    &__option-value {
+      font-size: 14px;
+    }
+  }
+
+  .Input {
+    &,
+    &::placeholder,
+    &__indicator {
+      font-size: 14px;
+    }
+
+    &__indicator {
+      padding-right: 11.5px;
+    }
+  }
+
+  &-buttons {
+    margin: 24px -7.5px 0;
+    width: auto;
+
+    .Button {
+      min-width: 210px;
+      margin: 0 7.5px;
+      
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &__label {
+        font-size: 14px;
+        line-height: 100%;
       }
     }
   }

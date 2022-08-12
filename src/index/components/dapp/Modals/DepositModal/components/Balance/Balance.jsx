@@ -320,7 +320,7 @@ function Balance(props) {
     );
 
     return (
-      <DepositModal className="DepositModal__Balance" {...props}>
+      <>
         <h3>{getLang('cabinet_balanceDeposit')}</h3>
         <Select
           options={Object.keys(props.merchants[merchant].currencies)
@@ -360,7 +360,7 @@ function Balance(props) {
             <NumberFormat number={total} currency={currency} />
           </p>
         )}
-        <UI.Row className="DepositModal__Balance-buttons">
+        <UI.Row className="DepositModal__Balance-buttons" wrap>
           <UI.Button type="secondary-alice" onClick={props.onClose}>
             {getLang('global_back')}
           </UI.Button>
@@ -389,7 +389,7 @@ function Balance(props) {
             </UI.Button>
           )}
         </UI.Row>
-      </DepositModal>
+      </>
     );
   };
 
@@ -480,8 +480,9 @@ function Balance(props) {
       className={cn('DepositModal__Balance', {
         MerchantModal__list_wrapper: /* !status && */ !merchant,
       })}
-      onClose={props.onBack}
-      isOpen={true}
+      onClose={closeModal}
+      useOnCloseForAdaptive
+      isOpen
     >
       {props.type === 'withdrawal' && (
         <UI.ModalHeader>{getLang('cabinet_balanceWithdrawal')}</UI.ModalHeader>

@@ -40,7 +40,10 @@ function Modal(props) {
   const handleClose = useCallback(
     (e) => {
       e.preventDefault();
-      if (adaptive && modal) {
+
+      const useHistoryBack = adaptive && modal && !props.useOnCloseForAdaptive;
+
+      if (useHistoryBack) {
         window.history.back();
       } else if (props.onClose) {
         props.onClose(e);
@@ -88,6 +91,7 @@ Modal.defaultProps = {
   isOpen: true,
   skipClose: false,
   custom: false,
+  useCloseForAdaptive: false,
 };
 
 Modal.propTypes = {
@@ -98,6 +102,7 @@ Modal.propTypes = {
   skipClose: PropTypes.bool,
   custom: PropTypes.bool,
   grayBackground: PropTypes.bool,
+  useCloseForAdaptive: PropTypes.bool,
 };
 
 export function ModalHeader({ children }) {
