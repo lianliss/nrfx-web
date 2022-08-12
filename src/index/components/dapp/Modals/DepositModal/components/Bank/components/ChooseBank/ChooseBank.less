@@ -65,14 +65,29 @@
       min-width: 155px;
     }
   }
+
+  &__timeIsOver {
+    position: relative;
+    min-height: 400px;
+
+    .LoadingStatus__failed__message {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--dark-black);
+    }
+
+    .LoadingStatus__failed__description {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--cool-gray);
+    }
+  }
 }
 
 .adaptive .DepositModal__ChooseBank {
-  padding: 0;
-
-  h3 {
-    margin: 52px 0 0;
-  }
+  padding: 52px 0 0;
 
   &-items {
     margin: 38px 0 54px;

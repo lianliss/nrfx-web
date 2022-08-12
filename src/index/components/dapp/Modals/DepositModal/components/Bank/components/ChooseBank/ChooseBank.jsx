@@ -300,7 +300,11 @@ function ChooseBank(props) {
   const RenderBody = () => {
     if (timeIsOver) {
       return (
-        <>
+        <Row
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          className="DepositModal__ChooseBank__timeIsOver"
+        >
           <div>
             <LoadingStatus
               icon={require('src/asset/120/error.svg')}
@@ -310,13 +314,10 @@ function ChooseBank(props) {
               }
             />
           </div>
-          <ButtonWrapper
-            align="center"
-            className="FiatRefillModal__body__footer"
-          >
-            <Button onClick={props.onClose}>{getLang('global_close')}</Button>
-          </ButtonWrapper>
-        </>
+          <Button onClick={props.onClose} type="lightBlue">
+            {getLang('global_close')}
+          </Button>
+        </Row>
       );
     }
 
@@ -400,6 +401,7 @@ function ChooseBank(props) {
             confirmPayment: status.confirmPayment,
             cancelReservation: status.cancelReservation,
           }}
+          adaptive={adaptive}
         />
       );
     }

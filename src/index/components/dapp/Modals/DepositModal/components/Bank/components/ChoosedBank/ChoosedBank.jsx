@@ -10,6 +10,7 @@ import {
   CopyText,
   BankLogo,
   Timer,
+  LineBreaker,
 } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import InfoWrapper from '../InfoWrapper/InfoWrapper';
@@ -18,6 +19,7 @@ import Lang from 'src/components/Lang/Lang';
 // Utils
 import { openModal } from 'src/actions';
 import { dateFormat } from 'src/utils';
+import { getLang } from 'src/utils';
 
 // Styles
 import './ChoosedBank.less';
@@ -29,6 +31,7 @@ function ChoosedBank({
   onFinish,
   onConfirm,
   statuses,
+  adaptive,
 }) {
   const { card } = cardReservation;
   const { bank } = card;
@@ -52,6 +55,10 @@ function ChoosedBank({
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper type="secondary">
             <p className="dark default small hight-height left">
+              <span className="blue">
+                <Lang name="global_attention" />
+              </span>
+              <br />
               <Lang name="fiatRefillCard_attention_text_sendExactly" />
               &nbsp;
               <span className="blue">
@@ -67,7 +74,9 @@ function ChoosedBank({
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper>
             <p className="dark default hight-height extra-small">
-              <Lang name="fiatRefillCard_cardReservation" />
+              <LineBreaker
+                text={getLang('An account is reserved \nfor you until')}
+              />
               &nbsp;
               {dateFormat(card.expire_in)}
             </p>
@@ -104,7 +113,7 @@ function ChoosedBank({
           </InfoWrapper>
         </div>
       </Col>
-      <Row className="buttons" justifyContent="flex-end">
+      <Row className="buttons" justifyContent="flex-end" wrap={adaptive}>
         <Button
           state={statuses.cancelReservation}
           type="secondary-alice"
@@ -132,6 +141,7 @@ ChoosedBank.propTypes = {
   onFinish: PropTypes.func,
   onConfirm: PropTypes.func,
   statuses: PropTypes.object,
+  adaptive: PropTypes.bool,
 };
 
 ChoosedBank.defaultProps = {
@@ -141,6 +151,7 @@ ChoosedBank.defaultProps = {
   onFinish: () => {},
   onConfirm: () => {},
   statuses: {},
+  adaptive: false,
 };
 
 export default ChoosedBank;
