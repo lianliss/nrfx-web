@@ -262,7 +262,8 @@ function ChooseBank(props) {
   };
 
   const BanksList = ({ items = [], onChange }) => {
-    const BanksWrapper = items.length > 5 ? CabinetScrollBlock : Col;
+    const BanksWrapper =
+      items.length > 5 && !adaptive ? CabinetScrollBlock : Col;
 
     return (
       <>
@@ -405,7 +406,7 @@ function ChooseBank(props) {
   };
 
   return (
-    <Bank {...props}>
+    <Bank {...props} adaptive={adaptive}>
       <Sidebar amount={amount} currency={currency} fee={fee} />
       <RenderBody />
     </Bank>
