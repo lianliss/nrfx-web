@@ -8,7 +8,7 @@ import Lang from 'src/components/Lang/Lang';
 // Styles
 import './DepositTransfer.less';
 
-function DepositTransfer({ onClose }) {
+function DepositTransfer({ onClose, adaptive }) {
   return (
     <Col className="DepositModal__Bank__DepositTransfer" alignItems="center">
       <h3 className="medium dark large-height">
@@ -21,12 +21,12 @@ function DepositTransfer({ onClose }) {
       <div className="speed-icon">
         <SVG src={require('src/asset/icons/transaction/speed.svg')} />
       </div>
-      <p className="medium-weight blue large-height">
+      <p className="medium-weight blue large-height small">
         <em>
           <Lang name="fiatRefillCard_status_description_wait_for_review" />
         </em>
       </p>
-      <Row className="buttons" justifyContent="center">
+      <Row className="buttons" justifyContent="center" wrap={adaptive}>
         <Button type="secondary-alice" shadow>
           Add to Metamask
           <SVG src={require('src/asset/icons/social/metaMask.svg')} />

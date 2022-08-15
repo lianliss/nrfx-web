@@ -45,7 +45,7 @@ function ChoosedBank({
   };
 
   return (
-    <Col className="DepositModal__ChoosedBank">
+    <Col className="DepositModal__ChoosedBank" alignItems='stretch'>
       <h3 className="default dark medium">Choose a bank</h3>
       <Row alignItems="center">
         <BankLogo name={bank.code} />

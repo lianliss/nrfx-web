@@ -350,7 +350,7 @@ function ChooseBank(props) {
     }
 
     if (cardReservation?.reservation.status === 'wait_for_review') {
-      return <DepositTransfer onClose={props.onClose} />;
+      return <DepositTransfer onClose={props.onClose} adaptive={adaptive} />;
     }
 
     if (!cardReservation) {

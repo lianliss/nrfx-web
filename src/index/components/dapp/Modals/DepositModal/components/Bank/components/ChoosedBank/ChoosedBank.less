@@ -107,15 +107,27 @@
   }
 
   .buttons {
-    margin: 32px -7.5px 0;
     width: auto;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    margin: 32px -7.5px 0;
 
     .Button {
+      flex: 1 1 40%;
       min-width: 210px;
       margin: 0 7.5px;
 
       &:not(:last-child) {
         margin-bottom: 10px;
+      }
+
+      &__label {
+        font-size: 14px !important;
+
+        .isvg {
+          height: 15px;
+          width: 13.65px;
+        }
       }
     }
   }
