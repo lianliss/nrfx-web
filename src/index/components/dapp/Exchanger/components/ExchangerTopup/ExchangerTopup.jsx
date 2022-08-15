@@ -159,18 +159,22 @@ function ExchangerTopup(props) {
         </div>
       </div>
       <div className="ExchangerTopup__actions">
-        {!!reservation ? <>
+        {isConnected ? <>
+          {!!reservation ? <>
           {(reservation.status !== 'wait_for_review' && reservation.status !== 'wait_for_admin_review')
-          ? <Timer
-            hiddenAfterFinish
-            onFinish={() => setReservation(null)}
-            time={reservation.book_expiration * 1000}
+            ? <Timer
+              hiddenAfterFinish
+              onFinish={() => setReservation(null)}
+              time={reservation.book_expiration * 1000}
             /> : <span className="ExchangerTopup__waiting">Waiting for confirmation</span>}
           <Button type="secondary" onClick={topUp}>
             View Details
           </Button>
-        </> : <Button type="secondary" onClick={topUp}>
-          Topup
+          </> : <Button type="secondary" onClick={topUp}>
+            Topup
+          </Button>}
+        </> : <Button type="secondary" onClick={connectWallet}>
+          Connect wallet
         </Button>}
       </div>
     </ContentBox>

@@ -53,8 +53,10 @@ function Exchanger(props) {
 
   const userId = `${chainId}${accountAddress}`;
   const fiatTokens = _.get(fiats, userId, [{
+    name: 'Russian Ruble on Narfex',
     symbol: 'RUB',
-    address: null,
+    address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
+    logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
   }]).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
@@ -86,7 +88,7 @@ function Exchanger(props) {
       router.navigate(routerState.name, {
         ...routerState.params,
         currency: currencyObject.symbol,
-      });
+      }, {replace: true});
     }
   };
 
@@ -102,7 +104,7 @@ function Exchanger(props) {
       router.navigate(routerState.name, {
         ...routerState.params,
         coin: currencyObject.symbol,
-      });
+      }, {replace: true});
     }
   };
 
@@ -259,7 +261,7 @@ function Exchanger(props) {
           <ExchangerSwap
             fiats={fiatTokens}
             coins={coins}
-            fiat={fiatSelected}
+            fiat={fiatSelected || fiatTokens[0]}
             coin={coinSelected}
             setFiat={setFiat}
             setCoin={setCoin}

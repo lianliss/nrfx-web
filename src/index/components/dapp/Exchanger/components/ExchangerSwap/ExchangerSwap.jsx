@@ -236,9 +236,9 @@ function ExchangerSwap(props) {
           onFinish={() => {}}
           time={processingTime}
         />}
-      </div> : <Button className="" onClick={connectWallet}>
+      </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
         Connect Wallet
-      </Button>}
+      </Button></div>}
       {isSelectFiat && <TokenSelect
         onChange={value => {
           setFiat(value);

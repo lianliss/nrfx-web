@@ -363,6 +363,7 @@ class Web3Provider extends React.PureComponent {
       });
     } catch (error) {
       console.log('error', error);
+      throw error;
     }
   }
 
