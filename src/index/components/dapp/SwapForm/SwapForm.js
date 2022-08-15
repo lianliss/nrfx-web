@@ -51,24 +51,24 @@ import getFinePrice from 'utils/get-fine-price';
 // number to fixed custom function
 import { customToFixed } from 'utils/customToFixed';
 
-const Form = ({
-  onChangeAmount,
-  currency,
-  secondaryCurrency,
-  amount,
-  options,
-  rate,
-  autoFocus,
-  onFocus,
-  onCurrencyChange,
-  disabled,
-  currentBalance,
-  title,
-  commission,
-  gasPrice,
-  adaptive,
-}) => {
-  // console.log('realRate', realRate);
+const Form = (props) => {
+  const {
+    onChangeAmount,
+    currency,
+    secondaryCurrency,
+    amount,
+    options,
+    rate,
+    autoFocus,
+    onFocus,
+    onCurrencyChange,
+    disabled,
+    currentBalance,
+    title,
+    commission,
+    gasPrice,
+    adaptive,
+  } = props;
 
   // Calculate rate for crypto or fiat currency.
   const realRate = !isFiat(currency)
@@ -160,12 +160,6 @@ const Form = ({
                 <NumberFormat number={currentBalance} currency={currency} />
               </div>
             )}
-            {/* {!!gasPrice && <div className="SwapForm__form__control__meta right">
-          {getLang('swap_gas')} ≈<NumberFormat number={gasPrice} skipRoughly currency={currency} />
-        </div>} */}
-            {/*{!!commission && <div className="SwapForm__form__control__meta right">*/}
-            {/*{getLang('swap_commission')} <NumberFormat number={commission * 100} currency={'%'} />*/}
-            {/*</div>}*/}
           </div>
         </>
       )}

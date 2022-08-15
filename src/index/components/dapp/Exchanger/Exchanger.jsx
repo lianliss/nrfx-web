@@ -12,7 +12,8 @@ import SwapForm from '../SwapForm/SwapForm';
 import Instruction from './components/Instruction/Instruction';
 import { Button, ContentBox } from 'src/ui';
 import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelect/TokenSelect';
-import FiatSelector from './components/FiatSelector/FiatSelector';
+import ExchangerSwap from './components/ExchangerSwap/ExchangerSwap';
+import ExchangerTopup from './components/ExchangerTopup/ExchangerTopup';
 
 // Utils
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
@@ -51,7 +52,10 @@ function Exchanger(props) {
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
 
   const userId = `${chainId}${accountAddress}`;
-  const fiatTokens = _.get(fiats, userId, []).map(token => {
+  const fiatTokens = _.get(fiats, userId, [{
+    symbol: 'RUB',
+    address: null,
+  }]).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
   });
@@ -157,8 +161,6 @@ function Exchanger(props) {
             if (reservation) {
               // If there was reservation before get available banks again
               getBanks();
-            }
-            if (reservation && reservation[fiatSymbol]) {
               dispatch({
                 type: actionTypes.FIAT_TOPUP_DELETE,
                 payload: fiatSymbol,
@@ -244,7 +246,17 @@ function Exchanger(props) {
       <div className="Exchanger">
         <h2>Exchanger</h2>
         <div className="Exchanger__content">
-          <FiatSelector
+          <ExchangerTopup
+            fiats={fiatTokens}
+            coins={coins}
+            fiat={fiatSelected}
+            coin={coinSelected}
+            setFiat={setFiat}
+            setCoin={setCoin}
+            limits={limits}
+            {...{reservation}}
+          />
+          <ExchangerSwap
             fiats={fiatTokens}
             coins={coins}
             fiat={fiatSelected}

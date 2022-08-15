@@ -21,21 +21,21 @@ function Sidebar({ amount, currency, fee }) {
           <NumberFormat number={amount} currency={currency} />
         </p>
       </div>
-      <div className="DepositModal__Bank__sidebar-item">
-        <p className="small default secondary">Fee</p>
-        <p className="small default dark">
-          <NumberFormat number={fee} currency={currency} />
-        </p>
-      </div>
-      <div className="DepositModal__Bank__sidebar-item line" />
-      <div className="DepositModal__Bank__sidebar-item">
-        <p className="small default secondary">
-          <Lang name="cabinet_fiatRefillModal_total" />
-        </p>
-        <p className="small default dark">
-          <NumberFormat number={amount - fee} currency={currency} />
-        </p>
-      </div>
+      {/*<div className="DepositModal__Bank__sidebar-item">*/}
+        {/*<p className="small default secondary">Fee</p>*/}
+        {/*<p className="small default dark">*/}
+          {/*<NumberFormat number={fee} currency={currency} />*/}
+        {/*</p>*/}
+      {/*</div>*/}
+      {/*<div className="DepositModal__Bank__sidebar-item line" />*/}
+      {/*<div className="DepositModal__Bank__sidebar-item">*/}
+        {/*<p className="small default secondary">*/}
+          {/*<Lang name="cabinet_fiatRefillModal_total" />*/}
+        {/*</p>*/}
+        {/*<p className="small default dark">*/}
+          {/*<NumberFormat number={amount - fee} currency={currency} />*/}
+        {/*</p>*/}
+      {/*</div>*/}
     </div>
   );
 }

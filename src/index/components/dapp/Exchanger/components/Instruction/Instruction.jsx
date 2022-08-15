@@ -37,14 +37,6 @@ function Instruction() {
             <div className="description">
               {getLang('dapp_exchanger_instruction_1_description')}
             </div>
-            <div
-              className="link"
-              onClick={() => {
-                openModal('auth', { type: REGISTRATION });
-              }}
-            >
-              {getLang('dapp_exchanger_instruction_1_button')} ›
-            </div>
           </div>
           <div className="col">
             <div className="title">
@@ -52,28 +44,6 @@ function Instruction() {
             </div>
             <div className="description">
               {getLang('dapp_exchanger_instruction_2_description')}
-            </div>
-            <div className="link">
-              {getLang('dapp_exchanger_instruction_2_button')} ›
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col"></div>
-          <div className="col">
-            <div className="title">
-              3. {getLang('dapp_exchanger_instruction_3_title')}
-            </div>
-            <div className="description">
-              {getLang('dapp_exchanger_instruction_3_description')}
-            </div>
-            <div
-              className="link"
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              {getLang('dapp_exchanger_instruction_3_button')} ›
             </div>
           </div>
         </div>

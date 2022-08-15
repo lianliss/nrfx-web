@@ -10,6 +10,7 @@ import NumberFormat from 'src/ui/components/NumberFormat/NumberFormat';
 import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
 import SVG from 'utils/svg-wrap';
 import { Status } from 'src/index/containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
+import { Web3Context } from 'services/web3Provider';
 
 // Utils
 import { getLang, classNames as cn } from 'src/utils';
@@ -55,6 +56,41 @@ const merchantList = {
 };
 
 function Balance(props) {
+  const context = React.useContext(Web3Context);
+  const {
+    fiats, chainId, accountAddress,
+  } = context;
+
+  const userId = `${chainId}${accountAddress}`;
+  const fiatTokens = _.get(fiats, userId, []);
+
+  const [fiatSelected, setFiatSelected] = React.useState(null);
+
+  /**
+   * Update "fiatSelected" — fiat token state.
+   * Sets router param
+   * @param currencyObject {object} - fiat token
+   */
+  const setFiat = currencyObject => {
+    console.log('SET FIAT', currencyObject);
+    setFiatSelected(currencyObject);
+    const routerState = router.getState();
+    if (routerState.params.currency !== currencyObject.symbol) {
+      router.navigate(routerState.name, {
+        ...routerState.params,
+        currency: currencyObject.symbol,
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    const routerState = router.getState();
+    console.log('fiatTokens', fiatTokens, routerState.params.currency);
+    const token = fiatTokens.find(t => t.symbol === routerState.params.currency);
+    if (!token) return;
+    setFiat(token);
+  }, [fiats]);
+
   const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(
@@ -133,7 +169,10 @@ function Balance(props) {
     const { min_fee: minFee, percent_fee: percentFee } =
       props.merchants[merchant].currencies[currency].fees;
 
-    actions.openModal('deposit_choose_bank', null, {
+    actions.openModal('deposit_choose_bank', {
+      currency: fiatSelected.symbol,
+      amount,
+    }, {
       amount,
       balance,
       minFee,
@@ -323,23 +362,13 @@ function Balance(props) {
       <>
         <h3>{getLang('cabinet_balanceDeposit')}</h3>
         <Select
-          options={Object.keys(props.merchants[merchant].currencies)
-            .map((b) => actions.getCurrencyInfo(b))
-            .map((b) => ({
-              value: b.abbr,
-              title: b.name,
-              note: b.abbr.toUpperCase(),
-              label: option(
-                b.name,
-                b.abbr.toUpperCase(),
-                b.icon ? b.icon : null,
-                true
-              ).label,
-            }))}
-          value={currency}
-          onChange={(value) => {
-            setCurrency(value);
-          }}
+          options={fiatTokens.map(t => ({
+            label: t.symbol,
+            value: t.symbol,
+            icon: t.logoURI,
+          }))}
+          value={_.get(fiatSelected, 'symbol')}
+          onChange={symbol => setFiat(fiatTokens.find(t => t.symbol === symbol))}
           indicatorIcon={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
           defaultIsOpen
         />
@@ -351,15 +380,15 @@ function Balance(props) {
           indicator={indicator}
           type="number"
         />
-        <p className="secondary medium default hight">
-          Fee: <NumberFormat percent number={percent_fee} />
-        </p>
-        {total >= 0 && (
-          <p className="blue medium default hight">
-            {getLang('cabinet_fiatRefillModal_total')}&nbsp;
-            <NumberFormat number={total} currency={currency} />
-          </p>
-        )}
+        {/*<p className="secondary medium default hight">*/}
+          {/*Fee: <NumberFormat percent number={percent_fee} />*/}
+        {/*</p>*/}
+        {/*{total >= 0 && (*/}
+          {/*<p className="blue medium default hight">*/}
+            {/*{getLang('cabinet_fiatRefillModal_total')}&nbsp;*/}
+            {/*<NumberFormat number={total} currency={currency} />*/}
+          {/*</p>*/}
+        {/*)}*/}
         <UI.Row className="DepositModal__Balance-buttons" wrap>
           <UI.Button type="secondary-alice" onClick={props.onClose}>
             {getLang('global_back')}

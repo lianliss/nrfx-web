@@ -141,7 +141,7 @@ const FiatTopupModal = props => {
             <div className="FiatRefillModal__sideBar__fee">
               <small>{getLang("global_fee")}</small>
               <strong>
-                <NumberFormat number={fee} currency={currency} />
+                <NumberFormat number={0} currency={currency} />
               </strong>
             </div>
             <hr />
@@ -149,7 +149,7 @@ const FiatTopupModal = props => {
               <small>{getLang("cabinet_fiatRefillModal_total")}</small>
               <strong>
                 <NumberFormat
-                  number={amount - fee}
+                  number={amount}
                   currency={currency}
                 />
               </strong>

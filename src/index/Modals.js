@@ -31,7 +31,7 @@ import MerchantModal from "../index/components/cabinet/MerchantModal/MerchantMod
 import FiatWithdrawalModal from "../index/components/cabinet/FiatWithdrawalModal/FiatWithdrawalModal";
 import FiatRefillModal from "../index/components/cabinet/FiatRefillModal/FiatRefillModal";
 import FiatTopupModal from "../index/components/dapp/FiatTopupModal/FiatTopupModal";
-import FiatRefillByCardModal from "../index/components/cabinet/FiatRefillByCardModal/FiatRefillByCardModal";
+import FiatRefillByCardModal from "../index/components/dapp/FiatRefillByCardModal/FiatRefillByCardModal";
 import FiatTopupCardModal from "../index/components/dapp/FiatRefillByCardModal/FiatRefillByCardModal";
 // import FiatOperationModal from "../index/components/cabinet/FiatOperationModal/FiatOperationModal";
 import OperationModal from "../index/components/cabinet/OperationModal/OperationModal";
