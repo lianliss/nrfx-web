@@ -95,7 +95,7 @@ class Input extends React.Component {
     }
 
     if (this.props.type === "number") {
-      if (isNaN(this.props.value)) {
+      if (this.props.value && isNaN(this.props.value)) {
         error = true;
       }
     }

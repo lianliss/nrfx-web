@@ -8,7 +8,14 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './Select.less';
 
-function Select({ options, value, onChange, className, ...props }) {
+function Select({
+  options,
+  value,
+  onChange,
+  className,
+  indicatorIcon,
+  ...props
+}) {
   // Get object value of string from options.
   const getValue = () => {
     return value ? options.find((c) => c.value === value) : '';
@@ -27,7 +34,21 @@ function Select({ options, value, onChange, className, ...props }) {
       value={getValue()}
       onChange={handleChange}
       components={{
-        DropdownIndicator,
+        DropdownIndicator: (props) => {
+          return (
+            <SVG
+              src={
+                indicatorIcon
+                  ? indicatorIcon
+                  : require('src/asset/icons/cabinet/select-arrow.svg')
+              }
+              className={classNames({
+                dropdownIndicator: true,
+                active: props.selectProps.menuIsOpen,
+              })}
+            />
+          );
+        },
         IndicatorSeparator: null,
       }}
       className={classNames('CabinetSelect', { [className]: className })}
@@ -37,27 +58,16 @@ function Select({ options, value, onChange, className, ...props }) {
   );
 }
 
-const DropdownIndicator = (props) => {
-  return (
-    <SVG
-      src={require('src/asset/icons/cabinet/select-arrow.svg')}
-      className={classNames({
-        dropdownIndicator: true,
-        active: props.selectProps.menuIsOpen,
-      })}
-    />
-  );
-};
-
 // Return object for options constant
-export const option = (title, value, icon) => {
+export const option = (title, value, icon, showValue = false) => {
   return {
     label: (
       <>
         <span className="CabinetSelect__option-icon">
-          <SVG src={icon} />
+          {icon && <img src={icon} />}
         </span>
         <p className="CabinetSelect__option-title">{title}</p>
+        {showValue && <p className="CabinetSelect__option-value">{value}</p>}
       </>
     ),
     value,

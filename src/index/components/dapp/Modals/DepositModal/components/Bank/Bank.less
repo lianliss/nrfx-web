@@ -1,0 +1,65 @@
+.DepositModal__Bank {
+  .Modal__box {
+    max-width: 650px;
+    width: 100%;
+  }
+
+  .DepositModal__container {
+    padding: 11px 36px 16px 9px;
+    background: var(--alice-blue);
+    box-sizing: border-box;
+  }
+
+  &__container {
+    min-height: 585px;
+    flex: 1 1;
+    box-sizing: border-box;
+  }
+
+  .BankLogo {
+    margin-right: 25px;
+  }
+
+  .bankIcon {
+    height: 30px;
+    margin-right: 25px;
+    max-width: 80%;
+  }
+
+  .Button {
+    height: 50px;
+
+    &__label {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+    }
+  }
+}
+
+.adaptive .DepositModal__Bank {
+  .Modal__box {
+    padding-bottom: 24px;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  &__container {
+    align-items: flex-start !important;
+    min-height: 0;
+  }
+  
+  .DepositModal__container {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+  }
+
+  &__sidebar {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}

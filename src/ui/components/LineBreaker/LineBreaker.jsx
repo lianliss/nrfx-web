@@ -8,13 +8,14 @@ import './LineBreaker.less';
 // Return just HTML text and <br /> tag which doesnt have container.
 function LineBreaker({ text }) {
   const textPieces = text.split('\n');
+  const lastIndex = textPieces.length - 1;
 
   return (
     <>
       {textPieces.map((piece, index) => (
         <React.Fragment key={index}>
           {piece}
-          <br />
+          {index !== lastIndex && <br />}
         </React.Fragment>
       ))}
     </>

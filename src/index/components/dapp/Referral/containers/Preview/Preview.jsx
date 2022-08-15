@@ -11,7 +11,7 @@ import {
   DAPP_REFERRAL_FARMING,
 } from 'src/index/constants/pages';
 import SocialLinks from '../../../SocialLinks/SocialLinks';
-import NumberToSpan from '../../../NumberToSpan/NumberToSpan';
+import FormattedText from '../../../FormattedText/FormattedText';
 
 // Styles
 import './Preview.less';
@@ -25,7 +25,7 @@ function Preview({ adaptive }) {
         <div className="Referral__Preview__content">
           <h1>Referral program</h1>
           <p className="subtitle">
-            <NumberToSpan
+            <FormattedText
               text="Earn up to 30% from friends’
               commission on Fiat deposits and 5% from
               their NRFX token purchases

@@ -41,7 +41,7 @@ function Header(props) {
     option(
       isTestnetDomen ? 'Testnet' : 'BSC',
       'bsc',
-      require('src/asset/icons/wallets/bsc.svg')
+      require('src/asset/icons/wallets/bsc.svg').default
     ),
   ];
 

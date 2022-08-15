@@ -279,6 +279,25 @@
     }
   }
 
+  &.secondary-alice {
+    background: var(--alice-blue);
+    transition: all 0.1s;
+
+    &:hover {
+      background: rgb(229, 235, 252);
+      opacity: 0.92;
+      box-shadow: 0 4px 8px rgba(229, 235, 252, 0.5);
+    }
+
+    &:active {
+      background: #cfdaf9;
+    }
+
+    .Button__label {
+      color: var(--secondary-blue);
+    }
+  }
+
   &.secondary-light {
     background: #f7f8fb;
     transition: all 0.2s;
@@ -332,6 +351,7 @@
   &.light,
   &.secondary-light,
   &.secondary-blue,
+  &.secondary-alice,
   &.gray,
   &.lightBlue,
   &.green-light {
