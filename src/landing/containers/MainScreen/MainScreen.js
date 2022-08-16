@@ -30,7 +30,7 @@ export default () => {
       <Promo
         title={<Lang name="landing_promo_title" />}
         description={<Lang name="landing_promo_description" />}
-        actionButtonText={<Lang name="site_launch_app" />}
+        actionButtonText={<Lang name="landing_promo_actionButton" />}
         image={require('./components/Promo/assets/promo.svg').default}
         label={<Lang name="landing_promo_nrfx_label" />}
         labelDescription={<Lang name="landing_promo_nrfx_description" />}
