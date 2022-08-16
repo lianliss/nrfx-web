@@ -1,12 +1,12 @@
 import React from "react";
 import "./Exchange.less";
 import { useSelector } from "react-redux";
+import router from "src/router";
 import { landingSelector } from "../../../../../selectors";
 import { getCurrencyInfo } from "../../../../../actions";
 import { Button, CircleIcon, NumberFormat } from "../../../../../ui";
 import Chart from "../Chart/Chart";
 import { joinComponents } from "../../../../../utils";
-import * as actions from "../../../../../actions";
 import * as pages from "../../../../../index/constants/pages";
 import Lang from "../../../../../components/Lang/Lang";
 import Skeleton from "../../../../../ui/components/Skeleton/Skeleton";
@@ -136,7 +136,7 @@ export default () => {
 
         <Button
           onClick={() => {
-            actions.openPage(pages.EXCHANGE);
+            router.navigate(pages.DAPP_EXCHANGE);
           }}
           type="secondary"
           size="extra_large"
