@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { ContentBox } from 'src/ui';
+import { ContentBox, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
 // Utils
@@ -25,9 +25,7 @@ function Instruction() {
     <ContentBox className="Exchanger__Instruction">
       <SVGContainer icon="wallets-bg" />
       <SVGContainer icon="usd-coin" />
-      <SVGContainer icon="narfex-usdt-coins" />
-      <SVGContainer icon="narfex-usdt-coins-adaptive" />
-      <SVGContainer icon="narfex-coin" />
+      <SVGContainer icon="usd-coin" />
       <div className="Exchanger__Instruction__content">
         <div className="row">
           <div className="col">
@@ -45,6 +43,14 @@ function Instruction() {
             <div className="description">
               {getLang('dapp_exchanger_instruction_2_description')}
             </div>
+          </div>
+          <div className="col">
+            <a
+              href="https://narfex.gitbook.io/wiki/Start/buy_crypto/exchanger"
+              target="_blank"
+            >
+              <Button type="lightBlue">Learn more how it works</Button>
+            </a>
           </div>
         </div>
       </div>
