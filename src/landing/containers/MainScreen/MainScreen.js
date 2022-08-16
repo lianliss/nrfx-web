@@ -12,6 +12,7 @@ import * as utils from '../../../utils';
 import { Helmet } from 'react-helmet';
 import ADVANTAGES_ITEMS from '../../constants/advantages';
 import * as pages from '../../../index/constants/pages';
+import router from "src/router";
 
 export default () => {
   return (
@@ -46,7 +47,10 @@ export default () => {
       />
       <Application />
       <Roadmap current={5} />
-      <Welcome />
+      <Welcome
+        actionButtonLang="site_launch_app"
+        action={() => router.navigate(pages.DAPP)}
+      />
     </div>
   );
 };
