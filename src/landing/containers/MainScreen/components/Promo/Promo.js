@@ -14,9 +14,7 @@ export default (props) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const page = props.buyPage ? props.buyPage : pages.TOKEN;
-
-    router.navigate(page);
+    router.navigate(pages.TOKEN);
   };
 
   const handleClickActionButton = () => {

@@ -11,6 +11,8 @@ import COMPANY from "../../../index/constants/company";
 import * as utils from "../../../utils";
 import { Helmet } from "react-helmet";
 import ADVANTAGES_ITEMS from "../../constants/advantages";
+import router from "src/router";
+import * as pages from "src/index/constants/pages";
 
 export default () => {
   useEffect(() => {
@@ -36,6 +38,7 @@ export default () => {
         description={<Lang name="lendingBitcoin_promo_description" />}
         actionButtonText={<Lang name="landingBitcoin_promo_actionButton" />}
         image={require("../MainScreen/components/Promo/assets/bitcoin.svg").default}
+        actionPage={pages.DAPP_EXCHANGE}
       />
       <Steps />
       {/*<Swap />*/}
@@ -84,6 +87,7 @@ export default () => {
       <Welcome
         titleLang="landingBitcoin_callToAction_title"
         actionButtonLang="landingBitcoin_callToAction_button"
+        action={() => router.navigate(pages.DAPP_EXCHANGE)}
       />
     </div>
   );

@@ -136,7 +136,7 @@ export default () => {
 
         <Button
           onClick={() => {
-            router.navigate(pages.DAPP_EXCHANGE);
+            router.navigate(pages.DAPP_SWAP);
           }}
           type="secondary"
           size="extra_large"

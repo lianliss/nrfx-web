@@ -35,7 +35,6 @@ export default () => {
         label={<Lang name="landing_promo_nrfx_label" />}
         labelDescription={<Lang name="landing_promo_nrfx_description" />}
         labelLink={<Lang name="global_buy" />}
-        buyPage={pages.DAPP_EXCHANGE}
         actionPage={pages.DAPP}
       />
       <Swap />
