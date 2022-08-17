@@ -19,7 +19,7 @@ let token0;
 let token1;
 const TIMEOUT_BALANCE = 2000;
 
-function LiquidityAdd({ onClose, type, addPool, currentPool }) {
+function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
   // Constants
   const context = React.useContext(Web3Context);
   const {
@@ -146,6 +146,20 @@ function LiquidityAdd({ onClose, type, addPool, currentPool }) {
 
     return () => {
       clearInterval(balanceInterval);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if(routerTokens.isExists) {
+      const tokensPair = [
+        tokens.find(t => t.symbol === routerTokens.token0),
+        tokens.find(t => t.symbol === routerTokens.token1),
+      ];
+
+      if (!tokensPair[0] || !tokensPair[1]) return;
+      if(tokensPair[0] === tokensPair[1]) return;
+
+      setSelectedTokens(tokensPair);
     }
   }, []);
 
@@ -318,11 +332,13 @@ function LiquidityAdd({ onClose, type, addPool, currentPool }) {
 LiquidityAdd.propTypes = {
   onClose: PropTypes.func,
   type: PropTypes.string,
+  routerTokens: PropTypes.object,
 };
 
 LiquidityAdd.defaultProps = {
   onClose: () => {},
   type: 'add',
+  routerTokens: { isExists: false },
 };
 
 export default LiquidityAdd;

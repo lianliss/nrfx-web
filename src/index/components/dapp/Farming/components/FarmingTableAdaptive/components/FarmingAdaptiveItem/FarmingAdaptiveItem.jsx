@@ -232,6 +232,10 @@ class FarmingAdaptiveItem extends React.PureComponent {
               pool={pool}
               pairPrice={pairPrice}
               apr={apr}
+              tokens={[
+                _.get(pair, 'token0', token0),
+                _.get(pair, 'token1', token1)
+              ]}
             />
           )}
         </div>

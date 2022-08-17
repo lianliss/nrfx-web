@@ -24,7 +24,7 @@ import './FarmingTableItemOptions.less';
 // Main
 function FarmingTableItemOptions({
                                    currency, available, staked, earned, pool,
-                                    pairPrice,
+                                    pairPrice, tokens
                                  }) {
   const dispatch = useDispatch();
   const {
@@ -78,7 +78,15 @@ function FarmingTableItemOptions({
     <>
       <TableCell className={cn('FarmingTableItem', 'options', { isVisible })}>
         <TableColumn>
-          <Button type="light" onClick={() => router.navigate(LIQUIDITY)}>
+          <Button
+            type="light"
+            onClick={() => {
+              router.navigate(LIQUIDITY, {
+                token0: _.get(tokens[0], 'symbol'),
+                token1: _.get(tokens[1], 'symbol'),
+              });
+            }}
+          >
             <SVG src={require('src/asset/icons/cabinet/add-icon.svg')} />
             Get LP
           </Button>

@@ -22,7 +22,7 @@ import './FarmingAdaptiveItemOptions.less';
 
 function FarmingAdaptiveItemOptions({
                                       currency, available, staked, earned, pool,
-                                      pairPrice, apr,
+                                      pairPrice, apr, tokens
                                     }) {
   const {size} = pool;
   const {
@@ -117,7 +117,12 @@ function FarmingAdaptiveItemOptions({
         <div className="col">
           <Button
             type="light"
-            onClick={() => router.navigate(LIQUIDITY)}
+            onClick={() => {
+              router.navigate(LIQUIDITY, {
+                token0: _.get(tokens[0], 'symbol'),
+                token1: _.get(tokens[1], 'symbol'),
+              });
+            }}
             className="get-lp"
           >
             <SVG src={require('src/asset/icons/cabinet/add-icon.svg')} />
