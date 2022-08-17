@@ -1,7 +1,7 @@
 @import '../../../../../../vars.less';
 
 .Exchanger__Instruction {
-  padding: 36px 80px 42px 114px;
+  padding: 32px 97.5px;
   background: #fff;
   box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25);
   border: none;
@@ -29,6 +29,23 @@
         margin-bottom: 55px;
       }
     }
+
+    a {
+      width: 100%;
+      text-decoration: none;
+    }
+
+    .Button {
+      width: 100%;
+      margin-top: 32px;
+      border-radius: 12px;
+      padding: 16px 22px;
+
+      &__label {
+        font-size: 11px;
+        font-weight: 600;
+      }
+    }
   }
 
   .col {
@@ -50,7 +67,6 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 16px;
-    margin-bottom: 8px;
   }
 
   .link {
@@ -64,14 +80,26 @@
     position: absolute;
 
     &.wallets-bg {
-      left: 58.61px;
-      bottom: -9.43px;
+      right: -14px;
+      bottom: -73px;
     }
 
     &.usd-coin {
-      right: -54.47px;
-      top: 85.25px;
+      display: none;
       filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.05));
+
+      &:nth-child(3) {
+        right: auto;
+        top: auto;
+        left: 10.7px;
+        bottom: 84px;
+        transform: rotate(-1deg);
+
+        svg {
+          width: 40.29px;
+          height: 37.37px;
+        }
+      }
     }
 
     &.narfex-usdt-coins {
@@ -89,19 +117,23 @@
   }
 }
 
-
 @media screen and (max-width: 1000px) {
   .Exchanger__Instruction {
-    padding: 33.92px 0 44px 36.78px;
+    padding: 32px 0 28px;
     overflow: visible;
 
     &__content {
       margin: 0 auto;
+      width: 58%;
     }
 
     .row {
       flex-direction: column;
       align-items: center;
+    }
+
+    .col {
+      max-width: 100%;
     }
 
     &__bg-icon {
@@ -114,26 +146,23 @@
       }
 
       &.usd-coin {
-        right: -73.37px;
+        display: block;
+        right: -78.37px;
         top: 89.46px;
 
         transform: rotate(32deg);
       }
+    }
 
-      &.narfex-usdt-coins {
-        display: none;
-      }
+    &__content {
+      .col {
+        &:not(:last-child) {
+          margin-bottom: 48px;
+        }
 
-      &.narfex-coin {
-        display: block;
-        right: 14.35px;
-        top: 34.35px;
-      }
-
-      &.narfex-usdt-coins-adaptive {
-        display: block;
-        right: 66.66%;
-        bottom: 43.17px;
+        .Button {
+          margin: 0 auto;
+        }
       }
     }
   }
