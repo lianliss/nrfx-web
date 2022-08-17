@@ -6,8 +6,10 @@
   &__wrap {
     position: absolute;
     top: 0;
-    left: 20px;
-    right: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 445px;
     z-index: 10;
 
     .CabinetBlock {
@@ -24,7 +26,7 @@
     position: absolute;
     display: flex;
     cursor: pointer;
-    right: 32px;
+    right: 25px;
     top: 16px;
     background-size: 14px;
     width: 14px + 12 * 2;
@@ -206,20 +208,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: absolute;
     }
     &-name {
-      margin-left: 42px;
+      margin-left: 8px;
       display: flex;
       flex-direction: column;
 
       span {
+        &:last-child {
+          font-size: 12px;
+        }
+
         &:first-child {
           font-size: 14px;
           font-weight: 600;
-        }
-        &:last-child {
-          font-size: 12px;
         }
       }
     }
@@ -238,6 +240,49 @@
       font-weight: 600;
     }
   }
+
+  &-small {
+    max-width: 342px;
+    width: 100%;
+    box-sizing: border-box;
+
+    .TokenSelect {
+      padding: 26px 26px 30px;
+      box-sizing: border-box;
+
+      &__close {
+        right: 20px;
+      }
+
+      &__token {
+        padding: 9px 12px 9px 12px;
+      }
+
+      &__search {
+        border: 1px solid var(--azureish-white);
+        border-radius: 10px;
+        margin: 16px 0 24px;
+
+        input {
+          &::placeholder {
+            color: var(--cool-gray);
+          }
+        }
+      }
+
+      &__list {
+        margin: 0 -12px;
+
+        h3 {
+          margin: 0px 12px 18px;
+        }
+
+        .react-scrollable-list {
+          height: 353px;
+        }
+      }
+    }
+  }
 }
 
 .adaptive .TokenSelect {
@@ -246,7 +291,14 @@
   &__wrap {
     left: 0;
     right: 0;
+    transform: none;
+    max-width: 100%;
+
+    .CabinetBlock {
+      border-radius: var(--radius-panel-large) !important;
+    }
   }
+
   h2 {
     span {
       &:first-child {

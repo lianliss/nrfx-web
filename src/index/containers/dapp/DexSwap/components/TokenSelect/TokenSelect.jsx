@@ -1,6 +1,7 @@
 import './TokenSelect.less';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import useAdaptive from 'src/hooks/adaptive';
@@ -65,6 +66,9 @@ class TokenSelect extends React.PureComponent {
       selected,
       disableSwitcher,
       disableCommonBases,
+      size,
+      disableName,
+      disableSymbol,
     } = this.props;
     const { search, switchTabsSelected } = this.state;
     const isTokens = switchTabsSelected === 'tokens';
@@ -104,8 +108,8 @@ class TokenSelect extends React.PureComponent {
                   }}
                 />
                 <div className="TokenSelect__token-name">
-                  <span>{symbol}</span>
-                  <span>{name}</span>
+                  {!disableSymbol && <span>{symbol}</span>}
+                  {!disableName && <span>{name}</span>}
                 </div>
               </div>
               <div className="TokenSelect__token-right">
@@ -123,7 +127,7 @@ class TokenSelect extends React.PureComponent {
 
     return (
       <div
-        className="TokenSelect__wrap"
+        className={`TokenSelect__wrap TokenSelect-${size}`}
         ref={(element) => (this.tokenSelectRef = element)}
       >
         <CabinetBlock>
@@ -215,6 +219,14 @@ class TokenSelect extends React.PureComponent {
       </div>
     );
   }
+}
+
+TokenSelect.defaultProps = {
+  size: 'medium',
+}
+
+TokenSelect.propTypes = {
+  size: PropTypes.oneOf(['medium', 'small']),
 }
 
 export default connect((state) => ({
