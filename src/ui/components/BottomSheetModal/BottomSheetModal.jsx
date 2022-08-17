@@ -91,6 +91,8 @@ function BottomSheetModal({ children, className, prefix, onClose, skipSwap }) {
   });
 
   const outsideClickHandler = (e) => {
+    e.preventDefault()
+    
     if (!modalRef.current.contains(e.target)) {
       swipedPosition = usingPosition;
       window.requestAnimationFrame(step);

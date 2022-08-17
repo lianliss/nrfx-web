@@ -4,20 +4,10 @@ import React from 'react';
 import TransactionModal from '../TransactionModal/TransactionModal';
 import SVG from 'utils/svg-wrap';
 
-// Utils
-import { openStateModal } from 'src/actions';
-
 // Styles
 import './TransactionWaitingModal.less';
 
 function TransactionWaitingModal(props) {
-  // Open submitted modal. Temporary.
-  React.useEffect(() => {
-    setTimeout(() => {
-      openStateModal('transaction_submitted');
-    }, 3000);
-  }, []);
-  
   return (
     <TransactionModal
       title="Waiting for confirmation"
