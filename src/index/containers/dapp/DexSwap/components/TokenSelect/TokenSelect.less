@@ -8,7 +8,7 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+    width: 100vw;
     max-width: 445px;
     z-index: 10;
 
@@ -17,9 +17,18 @@
     }
   }
 
+  .Modal & {
+    &__wrap {
+      .CabinetBlock {
+        box-shadow: none;
+      }
+    }
+  }
+
   h2 {
-    font-weight: 600;
-    font-size: 24px;
+    font-weight: 600 !important;
+    font-size: 24px !important;
+    text-align: left !important;
   }
 
   &__close {
@@ -243,7 +252,7 @@
 
   &-small {
     max-width: 342px;
-    width: 100%;
+    width: 100vw;
     box-sizing: border-box;
 
     .TokenSelect {
@@ -302,7 +311,7 @@
   h2 {
     span {
       &:first-child {
-        font-size: 18px;
+        font-size: 18px !important;
       }
     }
   }
