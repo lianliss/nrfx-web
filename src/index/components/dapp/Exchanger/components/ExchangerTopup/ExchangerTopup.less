@@ -31,8 +31,23 @@
         }
         &-balance {
             margin-top: 9px;
-            color: var(--royal-blue);
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+
+            span {
+                display: inline-block;
+                font-size: 11px;
+                color: var(--royal-blue);
+                cursor: pointer;
+                margin-left: 8px;
+                opacity: 0.65;
+                padding: 4px 8px;
+                transition: all 0.15s ease;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
     }
     &__actions {

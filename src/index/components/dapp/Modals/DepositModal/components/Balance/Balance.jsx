@@ -11,6 +11,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 import SVG from 'utils/svg-wrap';
 import { Status } from 'src/index/containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import { Web3Context } from 'services/web3Provider';
+import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelect/TokenSelect';
 
 // Utils
 import { getLang, classNames as cn } from 'src/utils';
@@ -18,7 +19,7 @@ import router from 'src/router';
 import * as actions from 'src/actions';
 import * as toasts from 'src/actions/toasts';
 import * as fiatActions from 'src/actions/cabinet/fiat';
-import { fiatSelector } from 'src/selectors';
+import { fiatSelector, adaptiveSelector, } from 'src/selectors';
 import { closeModal } from 'src/actions';
 
 // Styles
@@ -58,13 +59,16 @@ const merchantList = {
 function Balance(props) {
   const context = React.useContext(Web3Context);
   const {
-    fiats, chainId, accountAddress,
+    fiats, chainId, accountAddress, connectWallet, isConnected,
   } = context;
+  const isAdaptive = useSelector(adaptiveSelector);
 
   const userId = `${chainId}${accountAddress}`;
   const fiatTokens = _.get(fiats, userId, []);
 
   const [fiatSelected, setFiatSelected] = React.useState(null);
+  const [isSelectFiat, setIsSelectFiat] = React.useState(false);
+  const fiatSymbol = _.get(fiatSelected, 'symbol', '');
 
   /**
    * Update "fiatSelected" — fiat token state.
@@ -177,7 +181,7 @@ function Balance(props) {
       balance,
       minFee,
       percentFee,
-      currency,
+      currency: fiatSelected.symbol,
       merchant,
     });
   };
@@ -340,6 +344,18 @@ function Balance(props) {
     const { fee, percent_fee, min_fee } = getFee();
     const total = props.type === 'withdrawal' ? amount + fee : amount - fee;
 
+    function fiatSelector() {
+      if (!isConnected) {
+        connectWallet()
+          .then(() => setIsSelectFiat(true))
+          .catch(error => {
+            setIsSelectFiat(false);
+          })
+      } else {
+        setIsSelectFiat(true);
+      }
+    }
+
     const currentMerchantCurrency =
       props.merchants[merchant].currencies[currency];
 
@@ -353,7 +369,7 @@ function Balance(props) {
           : getLang('cabinet_merchantModal_max')}{' '}
         <NumberFormat
           number={minAmount || maxAmount}
-          currency={currencyInfo.abbr}
+          currency={fiatSelected.symbol}
         />
       </span>
     );
@@ -361,17 +377,36 @@ function Balance(props) {
     return (
       <>
         <h3>{getLang('cabinet_balanceDeposit')}</h3>
-        <Select
-          options={fiatTokens.map(t => ({
-            label: t.symbol,
-            value: t.symbol,
-            icon: t.logoURI,
-          }))}
-          value={_.get(fiatSelected, 'symbol')}
-          onChange={symbol => setFiat(fiatTokens.find(t => t.symbol === symbol))}
-          indicatorIcon={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
-          defaultIsOpen
-        />
+        <div className="DepositModal__Balance__dropdown" onClick={fiatSelector}>
+          <div className="DepositModal__Balance__icon" style={{
+            backgroundImage: `url('${_.get(fiatSelected, 'logoURI', '')}')`
+          }} />
+          <div className="DepositModal__Balance__select">
+            {/*<span>{_.get(fiat, 'name', 'Unknown')}</span>*/}
+            <div className="DepositModal__Balance__currency">
+              <span>{_.get(fiatSelected, 'symbol', 'Unknown')}</span>
+              <SVG
+                src={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
+              />
+            </div>
+          </div>
+        </div>
+        {isSelectFiat && <TokenSelect
+          onChange={value => {
+            setFiat(value);
+            setIsSelectFiat(false);
+          }}
+          onClose={() => setIsSelectFiat(false)}
+          selected={fiatSelected}
+          isAdaptive={isAdaptive}
+          {...context}
+          tokens={fiatTokens}
+          disableSwitcher
+          disableCommonBases
+          loadAccountBalances={() => {
+            console.log('LOAD');
+          }}
+        />}
         <UI.Input
           error={touched && (!amount || checkAmount())}
           placeholder="0.00"

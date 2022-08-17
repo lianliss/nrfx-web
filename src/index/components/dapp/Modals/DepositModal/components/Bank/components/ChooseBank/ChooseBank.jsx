@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import web3Backend from 'src/services/web3-backend';
+import {Web3Context} from "src/services/web3Provider";
 
 // Components
 import { Row, Col, Button, ButtonWrapper } from 'src/ui';
@@ -47,6 +49,7 @@ const CustomLoadingStatus = ({ status }) => {
 
 function ChooseBank(props) {
   const dispatch = useDispatch();
+  const context = React.useContext(Web3Context);
   const { refillBankList } = useSelector(walletSelector);
   const status = useSelector(walletStatusSelector);
   const cardReservation = useSelector(walletCardReservationSelector);
@@ -54,6 +57,10 @@ function ChooseBank(props) {
   const [timeIsOver, setTimeIsOver] = useState(false);
 
   const { minFee, percentFee, currency } = props;
+
+  const methods = useSelector(state => state.fiat.banks);
+  const availableMethods = methods.filter(m => !m.currencies
+    || m.currencies.indexOf(currency.toUpperCase()) >= 0);
 
   const amount = cardReservation
     ? cardReservation.reservation.amount
@@ -68,112 +75,165 @@ function ChooseBank(props) {
   }, [setTimeIsOver]);
 
   useEffect(() => {
+    web3Backend.getBanks().then(banks => {
+      dispatch({
+        type: actionTypes.FIAT_BANKS_UPDATE,
+        payload: banks,
+      });
+    });
+  }, []);
+
+  useEffect(() => {
     if (!cardReservation && !props.amount) {
       props.onClose();
     }
 
-    logEvent(getAnalytics(), 'open_rub_fiat_refill_modal');
-
-    const isReservationExpired =
-      _.get(cardReservation, 'card.expire_in', 0) * 1000 < Date.now();
-    if (
-      isReservationExpired &&
-      _.get(cardReservation, 'reservation.status') === 'wait_for_pay'
-    ) {
-      // time is over hack
-      dispatch({
-        type: actionTypes.FIAT_SET_RESERVED_CARD,
-        payload: null,
-      });
-      dispatch({
-        type: actionTypes.WALLET_SET_CARD_RESERVATION,
-        payload: null,
-      });
-      // Delete expired reservation
-      api.call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
-        reservation_id: _.get(cardReservation, 'reservation.id'),
-      });
-
-      actions.closeModal();
-      actions.openModal('merchant', {
-        currency: 'rub',
-      });
-    }
-
-    if (!cardReservation || isReservationExpired) {
-      dispatch({
-        type: actionTypes.WALLET_SET_STATUS,
-        section: 'refillBankList',
-        status: 'loading',
-      });
-
-      api
-        .call(apiSchema.Fiat_wallet.Cards.RefillBanksGet, {
-          amount: props.amount,
-        })
-        .then((r) => {
-          const isReservationExpired =
-            _.get(r, 'card.expire_in', 0) * 1000 < Date.now();
-          if (r.status === 'already_booked' && !isReservationExpired) {
-            dispatch({
-              type: actionTypes.WALLET_SET_CARD_RESERVATION,
-              payload: r,
-            });
-          } else {
-            dispatch({
-              type: actionTypes.WALLET_SET_REFILL_BANK_LIST,
-              banks: r,
-            });
-          }
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        })
-        .finally(() => {
-          dispatch({
-            type: actionTypes.WALLET_SET_STATUS,
-            section: 'refillBankList',
-            status: '',
-          });
-        });
-    }
-    return () => {
-      // dispatch({
-      //   type: actionTypes.FIAT_WALLETS_CLEAR_LOADING_STATUSES
-      // });
-    };
+    // logEvent(getAnalytics(), 'open_rub_fiat_refill_modal');
+    //
+    // const isReservationExpired =
+    //   _.get(cardReservation, 'card.expire_in', 0) * 1000 < Date.now();
+    // if (
+    //   isReservationExpired &&
+    //   _.get(cardReservation, 'reservation.status') === 'wait_for_pay'
+    // ) {
+    //   // time is over hack
+    //   dispatch({
+    //     type: actionTypes.FIAT_SET_RESERVED_CARD,
+    //     payload: null,
+    //   });
+    //   dispatch({
+    //     type: actionTypes.WALLET_SET_CARD_RESERVATION,
+    //     payload: null,
+    //   });
+    //   // Delete expired reservation
+    //   api.call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
+    //     reservation_id: _.get(cardReservation, 'reservation.id'),
+    //   });
+    //
+    //   actions.closeModal();
+    //   actions.openModal('merchant', {
+    //     currency: 'rub',
+    //   });
+    // }
+    //
+    // if (!cardReservation || isReservationExpired) {
+    //   dispatch({
+    //     type: actionTypes.WALLET_SET_STATUS,
+    //     section: 'refillBankList',
+    //     status: 'loading',
+    //   });
+    //
+    //   api
+    //     .call(apiSchema.Fiat_wallet.Cards.RefillBanksGet, {
+    //       amount: props.amount,
+    //     })
+    //     .then((r) => {
+    //       const isReservationExpired =
+    //         _.get(r, 'card.expire_in', 0) * 1000 < Date.now();
+    //       if (r.status === 'already_booked' && !isReservationExpired) {
+    //         dispatch({
+    //           type: actionTypes.WALLET_SET_CARD_RESERVATION,
+    //           payload: r,
+    //         });
+    //       } else {
+    //         dispatch({
+    //           type: actionTypes.WALLET_SET_REFILL_BANK_LIST,
+    //           banks: r,
+    //         });
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       toast.error(err.message);
+    //     })
+    //     .finally(() => {
+    //       dispatch({
+    //         type: actionTypes.WALLET_SET_STATUS,
+    //         section: 'refillBankList',
+    //         status: '',
+    //       });
+    //     });
+    // }
+    // return () => {
+    //   // dispatch({
+    //   //   type: actionTypes.FIAT_WALLETS_CLEAR_LOADING_STATUSES
+    //   // });
+    // };
   }, [dispatch, props, cardReservation]);
 
   const handleChoiceBank = (bankCode) => {
-    dispatch({
-      type: actionTypes.WALLET_SET_STATUS,
-      section: 'reservedCard',
-      status: 'loading',
-    });
+    // dispatch({
+    //   type: actionTypes.WALLET_SET_STATUS,
+    //   section: 'reservedCard',
+    //   status: 'loading',
+    // });
 
-    api
-      .call(apiSchema.Fiat_wallet.Cards.ReservationPost, {
-        amount,
-        bank_code: bankCode,
-      })
-      .then((response) => {
-        dispatch({
-          type: actionTypes.WALLET_SET_CARD_RESERVATION,
-          payload: response,
-        });
-        dispatch({
-          type: actionTypes.WALLET_SET_STATUS,
-          section: 'reservedCard',
-          status: '',
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          type: actionTypes.WALLET_SET_STATUS,
-          section: 'reservedCard',
-          status: err.status,
-        });
+    const {cardReserve} = context;
+    cardReserve(amount, currency.toUpperCase(), bankCode).then(data => {
+      const res = data[0];
+      if (!res) return;
+      let payload = {};
+      payload[currency] = res;
+      dispatch({
+        type: actionTypes.FIAT_TOPUP_UPDATE,
+        payload,
       });
+
+      const method = methods.find(b => b.code === res.bank);
+      const bankName = method ? method.title : res.bank;
+
+      payload = {
+        reservation: {
+          id: res.operation_id,
+          amount: res.amount,
+          status: res.status,
+          fee: res.fee,
+        },
+        card: {
+          number: res.number,
+          expire_in: res.book_expiration,
+          bank: {
+            code: res.bank,
+            name: bankName,
+            holder_name: res.holder_name,
+            currency: currency,
+          }
+        }
+      };
+      dispatch({
+        type: actionTypes.WALLET_SET_CARD_RESERVATION,
+        payload,
+      });
+      props.onClose();
+      actions.openModal("deposit_choose_bank", {
+        currency: currency.toUpperCase()
+      });
+    }).catch(error => {
+      console.error('[FiatTopupModal][sendRequest]', error);
+      setIsLoading(false);
+    });
+    // api
+    //   .call(apiSchema.Fiat_wallet.Cards.ReservationPost, {
+    //     amount,
+    //     bank_code: bankCode,
+    //   })
+    //   .then((response) => {
+    //     dispatch({
+    //       type: actionTypes.WALLET_SET_CARD_RESERVATION,
+    //       payload: response,
+    //     });
+    //     dispatch({
+    //       type: actionTypes.WALLET_SET_STATUS,
+    //       section: 'reservedCard',
+    //       status: '',
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     dispatch({
+    //       type: actionTypes.WALLET_SET_STATUS,
+    //       section: 'reservedCard',
+    //       status: err.status,
+    //     });
+    //   });
   };
 
   const handleCancel = () => {
@@ -358,15 +418,16 @@ function ChooseBank(props) {
 
       return (
         <Col className="DepositModal__ChooseBank">
-          {cardsExists ? (
+          {availableMethods.length ? (
             <>
               <h3 className="default dark medium">
                 <Lang name="cabinet_fiatWithdrawalModal_chooseBank" />
               </h3>
-              <BanksList
-                items={refillBankList}
-                onChange={(b) => handleChoiceBank(b.code)}
-              />
+              {availableMethods ? (
+                <BanksList onChange={b => handleChoiceBank(b.code)} items={availableMethods} />
+              ) : (
+                <LoadingStatus status={'loading'} />
+              )}
             </>
           ) : (
             <div className="DepositModal__ChooseBank__empty">

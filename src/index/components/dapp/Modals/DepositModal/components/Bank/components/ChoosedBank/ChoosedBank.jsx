@@ -1,5 +1,10 @@
 import React from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
+import web3Backend from 'src/services/web3-backend';
+import {Web3Context} from "src/services/web3Provider";
+import * as actionTypes from "src/actions/actionTypes";
+import * as toast from "src/actions/toasts";
 
 // Components
 import {
@@ -24,24 +29,55 @@ import { getLang } from 'src/utils';
 // Styles
 import './ChoosedBank.less';
 
-function ChoosedBank({
-  cardReservation,
-  amount,
-  currency,
-  onFinish,
-  onConfirm,
-  statuses,
-  adaptive,
-}) {
+function ChoosedBank(props) {
+  const {
+    cardReservation,
+    amount,
+    currency,
+    onFinish,
+    onConfirm,
+    statuses,
+    adaptive,
+  } = props;
+  const dispatch = useDispatch();
+  const context = React.useContext(Web3Context);
+  const {confirmPayment} = context;
   const { card } = cardReservation;
   const { bank } = card;
+  console.log('currency', currency);
 
   const handleCancel = () => {
     openModal(
       'deposit_cancel',
       {},
-      { amount, reservation_id: cardReservation.reservation.id }
+      { amount, reservation_id: cardReservation.reservation.id, currency }
     );
+  };
+
+  const handleConfirmPayment = () => {
+    confirmPayment(cardReservation.reservation.id).then(data => {
+      dispatch({
+        type: actionTypes.WALLET_SET_CARD_RESERVATION,
+        payload: {
+          ...cardReservation,
+          reservation: {
+            ...cardReservation.reservation,
+            status: 'wait_for_review'
+          }
+        }
+      });
+      const payload = {};
+      payload[currency] = {
+        ...cardReservation.reservation,
+        status: 'wait_for_review',
+      };
+      dispatch({
+        type: actionTypes.FIAT_TOPUP_UPDATE,
+        payload,
+      });
+    }).catch(err => {
+      toast.error(err.message);
+    });
   };
 
   return (
@@ -125,7 +161,7 @@ function ChoosedBank({
         <Button
           state={statuses.confirmPayment}
           type="lightBlue"
-          onClick={onConfirm}
+          onClick={handleConfirmPayment}
         >
           <Lang name="fiatRefillCard_confirmPayment" />
         </Button>
