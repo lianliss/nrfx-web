@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import router from "src/router"
 import { bindActionCreators } from 'redux';
 import { Web3Context } from 'services/web3Provider';
 import wei from 'utils/wei';
 import _ from 'lodash';
+
+import { LIQUIDITY } from 'src/index/constants/pages';
 
 import {
   NumberFormat,
@@ -12,6 +15,7 @@ import {
   Input,
   Modal,
   BottomSheetModal,
+  Row
 } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
@@ -296,13 +300,36 @@ class FarmingPopupStake extends React.PureComponent {
           </Button>}
         </Form>
         <div className="FarmingPopup__footer">
-          {isStake ? '' : <span className="popup-link" onClick={() => addTokenToWallet({
-            address: _.get(pool, 'address'),
-            symbol: `${token0Symbol}-${token1Symbol}`,
-            image: 'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
-          })}>
-            Add token to Metamask <SVG src={require('src/asset/icons/export.svg')} />
-          </span>}
+        {isStake && (
+            <Row
+              alignItems="center"
+              justifyContent="center"
+              className="popup-link"
+              onClick={() => {
+                router.navigate(LIQUIDITY, {
+                  token0: token0Symbol,
+                  token1: token1Symbol
+                }); 
+              }}
+            >
+              <span>Get {token0Symbol}-{token1Symbol}</span>
+              <SVG src={require('src/asset/icons/export.svg')} />
+            </Row>
+          )}
+          {/* <span
+            className="popup-link"
+            onClick={() =>
+              addTokenToWallet({
+                address: _.get(pool, 'address'),
+                symbol: `${token0Symbol}-${token1Symbol}`,
+                image:
+                  'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
+              })
+            }
+          >
+            Add token to Metamask&nbsp;
+            <SVG src={require('src/asset/icons/export.svg')} />
+          </span> */}
         </div>
         {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
       </Wrapper>

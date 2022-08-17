@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './Swap.less';
-import { CircleIcon, Input, Button, NumberFormat } from '../../../../../ui';
+import { CircleIcon, Input, Button, NumberFormat } from 'src/ui';
 import { formatDouble } from 'src/utils/index';
 import Select from '../Select/Select';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,12 +9,13 @@ import { getCurrencyInfo } from 'src/actions';
 import SVG from 'utils/svg-wrap';
 import Lang from 'src/components/Lang/Lang';
 import { classNames as cn } from 'src/utils/index';
-import * as actions from 'src/actions/landing/buttons';
 import { getCanExchangeWallets } from 'src/actions/cabinet/wallets';
 import { walletSwapSetCurrency } from 'src/actions/cabinet/wallet';
 import web3Backend from 'services/web3-backend';
 import { web3SetData } from 'src/actions/cabinet/web3';
 import getCommission from 'utils/get-commission';
+import router from 'src/router';
+import * as pages from 'src/index/constants/pages';
 
 export default () => {
   const dispatch = useDispatch();
@@ -219,7 +220,7 @@ export default () => {
             </div>
           </div>
           <Button
-            onClick={() => actions.swap()}
+            onClick={() => router.navigate(pages.DAPP_EXCHANGE)}
             disabled={pendingRate}
             size="extra_large"
           >

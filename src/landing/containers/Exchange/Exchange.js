@@ -9,6 +9,7 @@ import * as pages from "../../../index/constants/pages";
 import COMPANY from "../../../index/constants/company";
 import * as utils from "../../../utils";
 import { Helmet } from "react-helmet";
+import router from "src/router";
 
 export default () => {
   return (
@@ -30,8 +31,9 @@ export default () => {
         description={<Lang name="landingExchange_promo_description" />}
         actionButtonText={<Lang name="landingExchange_promo_actionButton" />}
         image={require("../MainScreen/components/Promo/assets/exchange.jpg")}
+        actionPage={pages.DAPP_SWAP}
       />
-      <Advantages
+      {/* <Advantages
         accent
         mode={"center"}
         items={[
@@ -53,8 +55,8 @@ export default () => {
             routeName: pages.DOCUMENTATION_API
           }
         ]}
-      />
-      <Exchange />
+      /> */}
+      {/* <Exchange /> */}
       <Application accent />
       <Advantages
         titleLang="landing_advantages_title"
@@ -91,7 +93,10 @@ export default () => {
           }
         ]}
       />
-      <Welcome />
+      <Welcome
+        actionButtonLang="site_launch_app"
+        action={() => router.navigate(pages.DAPP)}
+      />
     </div>
   );
 };
