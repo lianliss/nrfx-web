@@ -25,6 +25,7 @@ import { toastPush } from 'src/actions/toasts';
 // Styles
 import './FarmingPopupStake.less';
 import TransactionWaitingModal from '../../../TransactionWaitingModal/TransactionWaitingModal';
+import TransactionSubmittedModal from '../../../TransactionSubmittedModal/TransactionSubmittedModal';
 
 const processError = error => {
   const {message} = error;
@@ -335,7 +336,6 @@ class FarmingPopupStake extends React.PureComponent {
           </div>
           {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
         </Wrapper>
-        <TransactionWaitingModal />
       </>
     );
   }
