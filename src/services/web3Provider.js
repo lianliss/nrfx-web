@@ -12,6 +12,7 @@ import significant from 'utils/significant';
 import TokenContract from './web3Provider/token';
 import MasterChefContract from './web3Provider/MasterChefContract';
 import web3Backend from './web3-backend';
+import * as actions from "src/actions";
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -1120,7 +1121,7 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async backendRequest(params, message, path, method = 'post') {
+  async backendRequest(params, message, path, method = 'post', modalParams) {
     const {isConnected, accountAddress} = this.state;
     if (!isConnected) throw new Error('Wallet is not connected');
     try {
@@ -1131,6 +1132,9 @@ class Web3Provider extends React.PureComponent {
           accountAddress,
         ],
       });
+      if (!!modalParams && modalParams.isInProgress) {
+        actions.openModal("transaction_submitted", {}, modalParams);
+      }
       return await web3Backend[method](path, {
         headers: {
           'nrfx-message': message,
@@ -1192,7 +1196,7 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async exchange(fiat, coin, fiatAmount) {
+  async exchange(fiat, coin, fiatAmount, modalParams) {
     try {
       const result = await this.backendRequest({
           fiat,
@@ -1202,6 +1206,7 @@ class Web3Provider extends React.PureComponent {
         `Exchange ${fiatAmount} ${fiat} to ${coin}`,
         'swap/exchange',
         'post',
+        modalParams,
       );
       console.log('[exchange]', result);
       return true;

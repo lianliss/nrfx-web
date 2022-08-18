@@ -127,7 +127,12 @@ function ExchangerSwap(props) {
     setIsProcessing(true);
     setProcessingTime(Date.now() + 60000 * 5);
     try {
-      const result = await exchange(fiatSymbol, coinSymbol, fiatAmount);
+      const result = await exchange(fiatSymbol, coinSymbol, fiatAmount, {
+        symbol: coinSymbol,
+        isInProgress: true,
+        text: `Your tokens will be sent to your wallet\nwithin five minutes`,
+        token: coin,
+      });
       console.log('[swapTokens]', result);
       toast.success('Exchange confirmed');
     } catch (error) {
@@ -231,11 +236,6 @@ function ExchangerSwap(props) {
                 onClick={swapTokens}>
           Exchange
         </Button>
-        {isProcessing && <Timer
-          hiddenAfterFinish
-          onFinish={() => {}}
-          time={processingTime}
-        />}
       </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
         Connect Wallet
       </Button></div>}

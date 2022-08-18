@@ -62,6 +62,7 @@ function Balance(props) {
     fiats, chainId, accountAddress, connectWallet, isConnected,
   } = context;
   const isAdaptive = useSelector(adaptiveSelector);
+  const banks = useSelector(state => state.fiat.banks);
 
   const userId = `${chainId}${accountAddress}`;
   const fiatTokens = _.get(fiats, userId, []);
@@ -76,7 +77,6 @@ function Balance(props) {
    * @param currencyObject {object} - fiat token
    */
   const setFiat = currencyObject => {
-    console.log('SET FIAT', currencyObject);
     setFiatSelected(currencyObject);
     const routerState = router.getState();
     if (routerState.params.currency !== currencyObject.symbol) {
@@ -89,7 +89,6 @@ function Balance(props) {
 
   React.useEffect(() => {
     const routerState = router.getState();
-    console.log('fiatTokens', fiatTokens, routerState.params.currency);
     const token = fiatTokens.find(t => t.symbol === routerState.params.currency);
     if (!token) return;
     setFiat(token);
@@ -98,7 +97,7 @@ function Balance(props) {
   const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(
-    params.currency.toLowerCase() || 'usd'
+    params.currency.toUpperCase() || 'RUB'
   );
   const [merchant, setMerchant] = useState(null);
   const [amount, setAmount] = useState(null);
@@ -108,16 +107,16 @@ function Balance(props) {
   const fiatState = useSelector(fiatSelector);
 
   useEffect(() => {
-    props.getMerchant(props.type);
-    if (
-      props.type !== 'withdrawal' &&
-      currency === 'rub' &&
-      merchant &&
-      fiatState.reservedCard
-    ) {
-      closeModal();
-      actions.openModal('fiat_refill_card');
-    }
+    // props.getMerchant(props.type);
+    // if (
+    //   props.type !== 'withdrawal' &&
+    //   currency === 'rub' &&
+    //   merchant &&
+    //   fiatState.reservedCard
+    // ) {
+    //   closeModal();
+    //   actions.openModal('fiat_refill_card');
+    // }
     // eslint-disable-next-line
   }, [merchant]);
 
@@ -137,19 +136,20 @@ function Balance(props) {
   ]);
 
   const checkAmount = (value = amount) => {
-    const { min_amount, max_amount } =
-      props.merchants[merchant].currencies[currency];
+    const anyBank = banks.find(b => _.includes(b.currencies, currency.toUpperCase()));
+    const minAmount = _.get(anyBank, 'minAmount', 5000);
+    const maxAmount = _.get(anyBank, 'maxAmount', 150000);
     const currencyLabel = currency.toUpperCase();
-    if (value < min_amount) {
+    if (value < minAmount) {
       return (
         <>
-          {getLang('cabinet_amount_shouldBeMore')} {min_amount} {currencyLabel}
+          {getLang('cabinet_amount_shouldBeMore')} {minAmount} {currencyLabel}
         </>
       );
-    } else if (value > max_amount) {
+    } else if (value > maxAmount) {
       return (
         <>
-          {getLang('cabinet_amount_shouldBeLess')} {max_amount} {currencyLabel}
+          {getLang('cabinet_amount_shouldBeLess')} {maxAmount} {currencyLabel}
         </>
       );
     }
@@ -170,8 +170,8 @@ function Balance(props) {
 
     const balance = getBalance(currency);
 
-    const { min_fee: minFee, percent_fee: percentFee } =
-      props.merchants[merchant].currencies[currency].fees;
+    // const { min_fee: minFee, percent_fee: percentFee } =
+    //   props.merchants[merchant].currencies[currency].fees;
 
     actions.openModal('deposit_choose_bank', {
       currency: fiatSelected.symbol,
@@ -179,8 +179,8 @@ function Balance(props) {
     }, {
       amount,
       balance,
-      minFee,
-      percentFee,
+      minFee: 0,
+      percentFee: 0,
       currency: fiatSelected.symbol,
       merchant,
     });
@@ -340,9 +340,9 @@ function Balance(props) {
   };
 
   const renderForm = () => {
-    const currencyInfo = actions.getCurrencyInfo(currency);
-    const { fee, percent_fee, min_fee } = getFee();
-    const total = props.type === 'withdrawal' ? amount + fee : amount - fee;
+    // const currencyInfo = actions.getCurrencyInfo(currency);
+    // const { fee, percent_fee, min_fee } = getFee();
+    // const total = props.type === 'withdrawal' ? amount + fee : amount - fee;
 
     function fiatSelector() {
       if (!isConnected) {
@@ -356,11 +356,15 @@ function Balance(props) {
       }
     }
 
-    const currentMerchantCurrency =
-      props.merchants[merchant].currencies[currency];
+    // const currentMerchantCurrency =
+    //   props.merchants[merchant].currencies[currency];
 
-    const minAmount = currentMerchantCurrency.min_amount;
-    const maxAmount = currentMerchantCurrency.max_amount;
+    // const minAmount = currentMerchantCurrency.min_amount;
+    // const maxAmount = currentMerchantCurrency.max_amount;
+    const anyBank = banks.find(b => _.includes(b.currencies, currency.toUpperCase()));
+
+    const minAmount = _.get(anyBank, 'minAmount', 5000);
+    const maxAmount = _.get(anyBank, 'maxAmount', 150000);
 
     const indicator = (
       <span>
@@ -369,7 +373,7 @@ function Balance(props) {
           : getLang('cabinet_merchantModal_max')}{' '}
         <NumberFormat
           number={minAmount || maxAmount}
-          currency={fiatSelected.symbol}
+          currency={fiatSymbol}
         />
       </span>
     );
@@ -516,6 +520,7 @@ function Balance(props) {
   };
 
   const renderContent = () => {
+    return renderForm();
     if (
       /* status === 'loading' || */ props.loadingStatus.merchants === 'loading'
     ) {

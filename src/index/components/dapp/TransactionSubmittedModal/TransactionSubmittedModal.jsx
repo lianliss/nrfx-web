@@ -12,22 +12,34 @@ import './TransactionSubmittedModal.less';
 
 function TransactionSubmittedModal(props) {
   const context = React.useContext(Web3Context);
-  const {symbol, txLink, addToken} = props;
+  const {addTokenToWallet} = context;
+  const {symbol, txLink, addToken, isInProgress, text, token} = props;
   return (
     <TransactionModal title="Transaction submitted" {...props}>
       <div className="TransactionSubmittedModal">
         <div className="TransactionSubmittedModal__icon">
-          <SVG src={require('src/asset/icons/transaction/submitted.svg')} />
+          {isInProgress
+            ? <SVG src={require('src/asset/icons/transaction/speed.svg')} />
+            : <SVG src={require('src/asset/icons/transaction/submitted.svg')} />}
         </div>
-        <a href={txLink} target="_blank" className="text-with-icon view_on_bac_scan">
+        {!!text && <p className="default small secondary large-height">
+          {text}
+        </p>}
+        {!!txLink && <a href={txLink} target="_blank" className="text-with-icon view_on_bac_scan">
           <span className="default-text">View on BscScan</span>
           <SVG
             src={require('src/asset/icons/export.svg')}
             style={{ width: 14, height: 14 }}
           />
-        </a>
-        {!!addToken && (
-          <Button type="secondary-blue" className="metaMask_button" onClick={addToken}>
+        </a>}
+        {(!!addToken || !!token) && (
+          <Button type="secondary-blue" className="metaMask_button" onClick={() => {
+            if (addToken) {
+              addToken();
+            } else {
+              addTokenToWallet(token);
+            }
+          }}>
             <div className="text-with-icon">
               <span className="default-text">Add {symbol} to Metamask</span>
               <SVG src={require('src/asset/icons/social/metaMask.svg')} />

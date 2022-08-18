@@ -154,9 +154,9 @@ function ExchangerTopup(props) {
         <div className="ExchangerTopup__info-label">
           Your balance:
         </div>
-        <div className="ExchangerTopup__info-balance" onClick={() => addTokenToWallet(fiat)}>
+        <div className={`ExchangerTopup__info-balance ${!!fiatBalance && 'active'}`}
+             onClick={() => !!fiatBalance && addTokenToWallet(fiat)}>
           {getFinePrice(fiatBalance)} {fiatSymbol}
-          <span>Track in wallet</span>
         </div>
       </div>
       <div className="ExchangerTopup__actions">
