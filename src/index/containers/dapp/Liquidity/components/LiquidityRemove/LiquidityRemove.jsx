@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
-import { openStateModal } from 'src/actions';
+import { openStateModal, closeModal } from 'src/actions';
+import { toastPush } from 'src/actions/toasts';
+import { getLang } from "src/utils";
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -32,7 +35,7 @@ const processError = error => {
 };
 
 function LiquidityRemove({ onClose, currentPool }) {
-
+  const dispatch = useDispatch();
   const context = React.useContext(Web3Context);
   const {
     getReserves,
@@ -103,6 +106,18 @@ function LiquidityRemove({ onClose, currentPool }) {
 
   const onRemove = async () => {
     setIsTransaction(true);
+    openStateModal('transaction_waiting', {
+      onClose: onClose,
+      token0: {
+        symbol: symbol0,
+        number: getFinePrice(userAmount0 * multiplier),
+      },
+      token1: {
+        symbol: symbol1,
+        number: getFinePrice(userAmount1 * multiplier),
+      }
+    });
+    
     const token = isToken0Wrap ? pair.token1 : pair.token0;
     const tokenAmount = isToken0Wrap ? userAmount1 : userAmount0;
     const bnbAmount = isToken0Wrap ? userAmount0 : userAmount1;
@@ -156,10 +171,17 @@ function LiquidityRemove({ onClose, currentPool }) {
       }
       const receipt = await getTransactionReceipt(txHash);
       console.log('[onRemove] Success', txHash, receipt);
-      openStateModal('transaction_submitted', {
-        txLink: getBSCScanLink(txHash),
-        onClose: onClose,
-      });
+
+      if(txHash) {
+        openStateModal('transaction_submitted', {
+          txLink: getBSCScanLink(txHash),
+          onClose: onClose,
+        });
+      } else {
+        dispatch(toastPush(getLang('toast_transaction_declined'), 'error'));
+        closeModal();
+      }
+
       onClose()
     } catch (error) {
       console.error('[LiquidityRemove][onRemove]', error);
