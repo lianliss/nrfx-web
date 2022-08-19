@@ -171,7 +171,7 @@ function ExchangerTopup(props) {
             View Details
           </Button>
           </> : <Button type="secondary" onClick={topUp}>
-            Topup
+            Top up
           </Button>}
         </> : <Button type="secondary" onClick={connectWallet}>
           Connect wallet

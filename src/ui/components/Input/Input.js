@@ -113,9 +113,13 @@ class Input extends React.Component {
       [this.props.size]: !!this.props.size
     });
 
+    const inputType = this.props.type === "number" && !this.props.requiredType
+      ? "text"
+      : type;
+
     let params = {
       className,
-      type: this.props.type === "number" ? "text" : type,
+      type: inputType,
       name: this.props.name,
       placeholder: placeholder,
       autoComplete: this.props.autoComplete,
