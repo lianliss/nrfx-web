@@ -62,7 +62,7 @@ function Liquidity() {
   };
 
   React.useEffect(() => {
-    if(context.isConnected) {
+    if(context.isConnected && routerTokens.isExists) {
       setCurrentDisplay('add');
     }
   }, []);

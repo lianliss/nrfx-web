@@ -16,9 +16,7 @@ function BottomSheetModal({ children, className, prefix, onClose, skipSwap }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
 
-    if (!modalRef) {
-      return;
-    }
+    if (!modalRef) return;
 
     document.addEventListener('click', outsideClickHandler);
     document.body.classList.add('noScroll');
@@ -91,7 +89,7 @@ function BottomSheetModal({ children, className, prefix, onClose, skipSwap }) {
   });
 
   const outsideClickHandler = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     
     if (!modalRef.current.contains(e.target)) {
       swipedPosition = usingPosition;

@@ -87,7 +87,10 @@ export default ({ visible, onClose }) => {
         </li>
       </ul>
       <div className="MobileMenu__authButtons">
-        {user /* True - anytime make button */ ? (
+        <Button onClick={() => router.navigate(pages.DAPP)}>
+          <Lang name="site_launch_app" />
+        </Button>
+        {/* {user ? (
           <Button
             onClick={() => {
               router.navigate(pages.WALLET);
@@ -99,7 +102,7 @@ export default ({ visible, onClose }) => {
           <Button onClick={() => router.navigate(pages.DAPP)}>
             <Lang name="site_launch_app" />
           </Button>
-        )}
+        )} */}
       </div>
     </div>
   );
