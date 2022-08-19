@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 
@@ -12,6 +12,8 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 
 // Utils
 import { openStateModal } from 'src/actions';
+import { getLang } from "src/utils";
+import { toastPush } from 'src/actions/toasts';
 
 // Styles
 import './LiquidityConfirmModal.less';
@@ -51,6 +53,7 @@ function LiquidityConfirmModal(props) {
     getBSCScanLink,
     addTokenToWallet,
   } = context;
+  const dispatch = useDispatch();
   const [pair, setPair] = React.useState(null);
   const adaptive = useSelector((store) => store.default.adaptive);
   const Component = adaptive ? BottomSheetModal : Modal;
@@ -123,6 +126,7 @@ function LiquidityConfirmModal(props) {
     } catch (error) {
       console.error('[LiquidityConfirmModal][supply]', error);
       setErrorText(processError(error));
+      dispatch(toastPush(getLang('toast_transaction_declined'), 'error'));
     }
     setIsTransaction(false);
   };
@@ -163,6 +167,7 @@ function LiquidityConfirmModal(props) {
     } catch (error) {
       console.error('[LiquidityConfirmModal][supplyBNB]', error);
       setErrorText(processError(error));
+      dispatch(toastPush(getLang('toast_transaction_declined'), 'error'));
     }
     setIsTransaction(false);
   };
@@ -251,10 +256,10 @@ function LiquidityConfirmModal(props) {
             //openStateModal('transaction_waiting');
           }}
         >
-          Confirm Suppy
+          Confirm Supply
         </Button>
       </div>
-      {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
+      {/* {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>} */}
     </Component>
   );
 }

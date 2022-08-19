@@ -105,12 +105,12 @@ function Header(props) {
         onClick: () => {},
         subContent: <span className="secondary-text">Coming soon</span>,
       },
-      {
-        title: isLogined ? 'Logout' : 'Login',
-        onClick: isLogined
-          ? logout
-          : () => openModal('auth', { type: steps.LOGIN }),
-      },
+      // {
+      //   title: isLogined ? 'Logout' : 'Login',
+      //   onClick: isLogined
+      //     ? logout
+      //     : () => openModal('auth', { type: steps.LOGIN }),
+      // },
     ];
 
     if (isLogined) {

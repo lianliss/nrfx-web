@@ -107,14 +107,32 @@ export default () => {
           </ul>
 
           <div className="Header__authButtons">
-            {user || pending ? (
+            <ButtonWrapper>
               <Button
                 type="secondary"
                 onClick={() => {
-                  router.navigate(pages.WALLET);
+                  router.navigate(pages.DAPP);
                 }}
               >
-                <Lang name="cabinet_header_cabinet" />
+                <Lang name="site_launch_app" />
+              </Button>
+              <Button
+                type="lite"
+                onClick={() => {
+                  actions.openStateModal("language");
+                }}
+              >
+                {currentLang.toUpperCase()}
+              </Button>
+            </ButtonWrapper>
+            {/* {user || pending ? (
+              <Button
+                type="secondary"
+                onClick={() => {
+                  router.navigate(pages.DAPP);
+                }}
+              >
+                <Lang name="site_launch_app" />
               </Button>
             ) : (
               <ButtonWrapper>
@@ -135,7 +153,7 @@ export default () => {
                   {currentLang.toUpperCase()}
                 </Button>
               </ButtonWrapper>
-            )}
+            )} */}
           </div>
 
           <div
