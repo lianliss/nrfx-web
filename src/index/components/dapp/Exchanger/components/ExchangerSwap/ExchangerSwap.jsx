@@ -73,11 +73,12 @@ function ExchangerSwap(props) {
   };
 
   // Calculate amount
-  const commission = (Number(_.get(commissions, `${coinSymbol.toLowerCase()}`, commissions.default)) || 0) / 100;
-  const rate = fiatPrice / coinPrice;
+  const fiatCommission = (Number(_.get(commissions, `${fiatSymbol.toLowerCase()}`, 0)) || 0) / 100;
+  const coinCommission = (Number(_.get(commissions, `${coinSymbol.toLowerCase()}`, commissions.default)) || 0) / 100;
+  const rate = (fiatPrice * (1 - fiatCommission)) / coinPrice;
   const fiatAmount = Number(fiatValue) || 0;
-  const coinAmount = fiatAmount * rate * (1 - commission);
-  const rateDisplay = 1 / rate / (1 - commission);
+  const coinAmount = fiatAmount * rate * (1 - coinCommission);
+  const rateDisplay = 1 / rate / (1 - coinCommission);
 
   // Button availability
   const [isProcessing, setIsProcessing] = React.useState(false);
