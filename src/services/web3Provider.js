@@ -13,6 +13,7 @@ import TokenContract from './web3Provider/token';
 import MasterChefContract from './web3Provider/MasterChefContract';
 import web3Backend from './web3-backend';
 import * as actions from "src/actions";
+import * as toast from "src/actions/toasts";
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -24,6 +25,8 @@ const AWAITING_DELAY = 2000;
 const KNOWN_FIATS = [
   {symbol: 'RUB', logoURI: 'https://static.narfex.com/img/currencies/rubles.svg'},
   {symbol: 'UAH', logoURI: 'https://static.narfex.com/img/currencies/uah-gryvnya.svg'},
+  {symbol: 'IDR', logoURI: 'https://static.narfex.com/img/currencies/indonesian-rupiah.svg'},
+  {symbol: 'CNY', logoURI: 'https://static.narfex.com/img/currencies/yuan-cny.svg'},
 ];
 
 class Web3Provider extends React.PureComponent {
@@ -59,6 +62,7 @@ class Web3Provider extends React.PureComponent {
   web3Host = null;
   farm = null;
   pairs = {};
+  connectionCheckTimeout;
 
   // Moralis
   moralis = {
@@ -89,14 +93,24 @@ class Web3Provider extends React.PureComponent {
     this.web3Host = new Web3(provider);
 
     // Check web3 wallet plugin
-    if (window.ethereum
-      && window.ethereum.isConnected()
-      && window.ethereum.selectedAddress) {
-      this.connectWallet();
-    }
+    this.checkConnection();
 
     // Get tokens list
     this.getTokens();
+  }
+
+  checkConnection() {
+    try {
+      if (!_.get(this, 'state.isConnected')
+        && !!window.ethereum
+        && !!window.ethereum.isConnected()
+        && !!window.ethereum.selectedAddress) {
+        this.connectWallet();
+      }
+    } catch (error) {
+      console.error('[checkConnection]', error);
+    }
+    this.connectionCheckTimeout = setTimeout(this.checkConnection.bind(this), 1000);
   }
 
   componentWillUnmount() {
@@ -276,6 +290,7 @@ class Web3Provider extends React.PureComponent {
   setChain(id) {
     try {
       if (!networks[id]) {
+        toast.error(`Unknown network ID ${id}`);
         return this.setState({
           chainId: id,
         })
@@ -283,6 +298,9 @@ class Web3Provider extends React.PureComponent {
       Object.assign(this, networks[id]);
       this.farm = this.getFarmContract();
       this.pairs = {};
+      if (this.state.chainId !== id) {
+        toast.success(`Selected network is #${id}`);
+      }
       this.setState({
         tokens: networks[id].tokens,
         poolsList: networks[id].poolsList,
@@ -296,6 +314,71 @@ class Web3Provider extends React.PureComponent {
       console.error('[setChain]', id, error);
     }
   }
+
+  onConnect = info => {
+    console.log('[onConnect]', info);
+    if (!this._mounted) return;
+    const {chainId} = info;
+    this.setState({
+      isConnected: true,
+      accountAddress: this.ethereum.selectedAddress,
+    });
+    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+  };
+
+  onAccountsChanged = accounts => {
+    console.log('[onAccountsChanged]', accounts);
+    const accountAddress = accounts[0];
+
+    if (!this._mounted) return;
+    if (!accountAddress) {
+      this.setState({
+        isConnected: false,
+        accountAddress: null,
+      });
+    } else {
+      this.setState({
+        isConnected: true,
+        accountAddress,
+      });
+    }
+  };
+
+  onChainChanged = chainId => {
+    console.log('[onChainChanged]', chainId, this.web3Host.utils.hexToNumber(chainId));
+    if (!this._mounted) return;
+    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+  };
+
+  onDisconnect = reason => {
+    console.log('[onDisconnect]', reason.message);
+    if (!this._mounted) return;
+    this.setState({
+      isConnected: false,
+      accountAddress: null,
+    });
+  };
+
+  onMessage = message => {
+    console.log('[onMessage]', message);
+    if (!this._mounted) return;
+  };
+
+  ethereumSubsribe = () => {
+    this.ethereum.on('connect', this.onConnect.bind(this));
+    this.ethereum.on('accountsChanged', this.onAccountsChanged.bind(this));
+    this.ethereum.on('chainChanged', this.onChainChanged.bind(this));
+    this.ethereum.on('disconnect', this.onDisconnect.bind(this));
+    this.ethereum.on('message', this.onMessage.bind(this));
+  };
+
+  ethereumUnsubscribe = () => {
+    this.ethereum.removeListener('connect', this.onConnect.bind(this));
+    this.ethereum.removeListener('accountsChanged', this.onAccountsChanged.bind(this));
+    this.ethereum.removeListener('chainChanged', this.onChainChanged.bind(this));
+    this.ethereum.removeListener('disconnect', this.onDisconnect.bind(this));
+    this.ethereum.removeListener('message', this.onMessage.bind(this));
+  };
 
   /**
    * Connect to web3 wallet plugin
@@ -324,44 +407,11 @@ class Web3Provider extends React.PureComponent {
         accountAddress,
       });
 
+      // Clear old events
+      this.ethereumUnsubscribe();
+      this.ethereumSubsribe();
+
       // On account address change
-      this.ethereum.on('accountsChanged', accounts => {
-        const accountAddress = accounts[0];
-        console.log('accountsChanged', accounts);
-
-        if (!this._mounted) return;
-        if (!accountAddress) {
-          this.setState({
-            isConnected: false,
-            accountAddress: null,
-          });
-        } else {
-          this.setState({
-            isConnected: true,
-            accountAddress,
-          });
-        }
-      });
-
-      // On chain change
-      this.ethereum.on('chainChanged', (chainId) => {
-        console.log('chainChanged', chainId, this.web3Host.utils.hexToNumber(this.ethereum.chainId));
-        this.setChain(this.web3Host.utils.hexToNumber(chainId));
-      });
-
-      // On disconnect
-      this.ethereum.on('disconnect', error => {
-        console.log('Wallet disconnected', error);
-        this.setState({
-          isConnected: false,
-          accountAddress: null,
-        });
-      });
-
-      // On message
-      this.ethereum.on('message', message => {
-        console.log('Wallet message', message);
-      });
     } catch (error) {
       console.log('error', error);
       throw error;
@@ -386,7 +436,8 @@ class Web3Provider extends React.PureComponent {
       const result = _.uniqBy([
         ...this.state.tokens,
         ...tokens,
-      ], 'address');
+      ], 'address')
+        .filter(t => t.chainId === this.state.chainId);
       this.setState({
         tokens: result,
       });
