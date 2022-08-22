@@ -5,6 +5,7 @@ import { connect, useSelector } from 'react-redux';
 import Select, { option } from 'src/index/components/dapp/Select/Select';
 import * as UI from 'src/ui/';
 import DepositModal from '../../DepositModal';
+import DappInput from '../../../../DappInput/DappInput';
 import EmptyContentBlock from 'src/index/components/cabinet/EmptyContentBlock/EmptyContentBlock';
 import NumberFormat from 'src/ui/components/NumberFormat/NumberFormat';
 import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
@@ -411,11 +412,11 @@ function Balance(props) {
             console.log('LOAD');
           }}
         />}
-        <UI.Input
+        <DappInput
           error={touched && (!amount || checkAmount())}
           placeholder="0.00"
           value={amount}
-          onTextChange={handleChangeAmount}
+          onChange={handleChangeAmount}
           indicator={indicator}
           type="number"
         />

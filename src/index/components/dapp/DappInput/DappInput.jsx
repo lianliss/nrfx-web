@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
 import { adaptiveSelector } from 'src/selectors';
+import { classNames } from 'src/ui/utils';
 
 // Styles
 import './DappInput.less';
@@ -15,12 +16,27 @@ function DappInput({
   onChange,
   onFocus,
   selectLastSymbol,
+  indicator,
+  error,
 }) {
-  const [inputState, setInputState] = React.useState(value);
+  const [inputState, setInputState] = React.useState(value ? value : '');
   const adaptive = useSelector(adaptiveSelector);
+  const indicatorRef = React.useRef(null);
+
+  const [padding, setPadding] = React.useState(0);
   const style = {
     textAlign: textPosition,
   };
+
+  // Set padding for input of indicator width.
+  React.useEffect(() => {
+    if (!indicator) return;
+    if (!indicatorRef.current) return;
+
+    const indicatorWidth = indicatorRef.current.clientWidth;
+    const paddingKey = textPosition === 'left' ? 'paddingRight' : 'paddingLeft';
+    setPadding({ [paddingKey]: indicatorWidth });
+  }, []);
 
   const handleInput = (e) => {
     const newValue = e.currentTarget.value;
@@ -43,11 +59,13 @@ function DappInput({
         onChange(Number(value));
         setInputState(value);
       }
-    } else {
-      onChange(newValue);
-      setInputState(newValue);
+
       return;
     }
+
+    onChange(newValue);
+    setInputState(newValue);
+    return;
   };
 
   const handleFocus = (e) => {
@@ -65,17 +83,25 @@ function DappInput({
     });
   };
 
+  const className = classNames({
+    DappInput: true,
+    error: error,
+  });
+
   return (
     <div className="DappInput__wrapper">
       <input
         type={adaptive ? type : 'text'}
         value={inputState}
         onChange={handleInput}
-        className="DappInput"
+        className={className}
         placeholder={placeholder}
-        style={style}
+        style={{ ...style, ...padding }}
         onFocus={handleFocus}
       />
+      <div className="DappInput__indicator" ref={indicatorRef}>
+        {indicator}
+      </div>
     </div>
   );
 }
@@ -88,6 +114,7 @@ DappInput.defaultProps = {
   onChange: () => {},
   onFocus: () => {},
   selectLastSymbol: false,
+  error: false,
 };
 
 DappInput.propTypes = {
@@ -96,6 +123,7 @@ DappInput.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   selectLastSymbol: PropTypes.bool,
+  error: PropTypes.bool,
 };
 
 export default DappInput;
