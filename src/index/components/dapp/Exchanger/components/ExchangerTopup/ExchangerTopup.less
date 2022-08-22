@@ -21,6 +21,7 @@
         top: 0;
         left: 50%;
         margin-left: -90px;
+        pointer-events: none;
     }
     &__info {
         font-size: 18px;
@@ -31,8 +32,27 @@
         }
         &-balance {
             margin-top: 9px;
-            color: var(--royal-blue);
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+
+            &.active {
+                color: var(--royal-blue);
+                cursor: pointer;
+            }
+            span {
+                display: inline-block;
+                font-size: 11px;
+                color: var(--royal-blue);
+                cursor: pointer;
+                margin-left: 8px;
+                opacity: 0.65;
+                padding: 4px 8px;
+                transition: all 0.15s ease;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
     }
     &__actions {

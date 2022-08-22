@@ -136,6 +136,97 @@
       }
     }
   }
+
+  .TokenSelect__wrap {
+    .CabinetBlock {
+      padding: 0;
+    }
+  }
+
+  &__dropdown {
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    padding: 9px 8px;
+    margin-bottom: 24px;
+    position: relative;
+    background: var(--secondary-background);
+    cursor: pointer;
+
+    &-rate {
+      position: absolute;
+      top: 100%;
+      margin-top: 6px;
+      left: 12px;
+      font-size: 11px;
+      color: var(--gray);
+      font-weight: 500;
+    }
+  }
+  &__track {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: -4px;
+    text-decoration: none;
+    font-size: 12px;
+    color: var(--primary-blue);
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  &__icon {
+    cursor: pointer;
+    border-radius: 50%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    width: 41px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .isvg,
+    svg,
+    img {
+      width: 100%;
+    }
+  }
+
+  &__select {
+    margin-left: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 110%;
+    cursor: pointer;
+
+    // Medium text in select (subtitle)
+    & > span {
+      color: #cdcfd7;
+      margin-bottom: 4px;
+    }
+  }
+
+  &__currency {
+    display: flex;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+
+    // Select icon
+    .isvg {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      margin-top: -5px;
+    }
+  }
 }
 
 .adaptive .DepositModal__Balance {

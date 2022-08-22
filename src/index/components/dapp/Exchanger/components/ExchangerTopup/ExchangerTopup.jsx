@@ -121,11 +121,11 @@ function ExchangerTopup(props) {
 
   function topUp() {
     if (reservation) {
-      actions.openModal("fiat_refill_card", {
+      actions.openModal("deposit_choose_bank", {
         currency: fiatSymbol,
       });
     } else {
-      actions.openModal("fiat_topup", {
+      actions.openModal("deposit_balance", {
         currency: fiatSymbol,
         amount: fiatAmount,
       });
@@ -154,7 +154,8 @@ function ExchangerTopup(props) {
         <div className="ExchangerTopup__info-label">
           Your balance:
         </div>
-        <div className="ExchangerTopup__info-balance" onClick={() => addTokenToWallet(fiat)}>
+        <div className={`ExchangerTopup__info-balance ${!!fiatBalance && 'active'}`}
+             onClick={() => !!fiatBalance && addTokenToWallet(fiat)}>
           {getFinePrice(fiatBalance)} {fiatSymbol}
         </div>
       </div>

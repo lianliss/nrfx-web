@@ -24,6 +24,8 @@ import { toastPush } from 'src/actions/toasts';
 
 // Styles
 import './FarmingPopupStake.less';
+import TransactionWaitingModal from '../../../TransactionWaitingModal/TransactionWaitingModal';
+import TransactionSubmittedModal from '../../../TransactionSubmittedModal/TransactionSubmittedModal';
 
 const processError = error => {
   const {message} = error;
@@ -238,101 +240,103 @@ class FarmingPopupStake extends React.PureComponent {
       : amount && amount <= userPool;
 
     return (
-      <Wrapper
-        className="FarmingPopup FarmingPopup__fullscreen FarmingPopupStake"
-        {...this.props}
-        skipClose
-      >
-        <div className="close" onClick={this.props.onClose}>
-          <SVG src={require('src/asset/icons/close-popup.svg')} />
-        </div>
-        <div className="FarmingPopup__header">
-          <div className="title">
-          <span>
-            {modal === 'stake' ? 'Stake' : 'Unstake'}
-            &nbsp;Tokens
-          </span>
+      <>
+        <Wrapper
+          className="FarmingPopup FarmingPopup__fullscreen FarmingPopupStake"
+          {...this.props}
+          skipClose
+        >
+          <div className="close" onClick={this.props.onClose}>
+            <SVG src={require('src/asset/icons/close-popup.svg')} />
           </div>
-        </div>
-        <Form className="FarmingPopup__body" onSubmit={this.handleSubmit.bind(this)}>
-          <label>
-            <div className="FarmingPopup__label">
-            <span className="default-text">
+          <div className="FarmingPopup__header">
+            <div className="title">
+            <span>
               {modal === 'stake' ? 'Stake' : 'Unstake'}
+              &nbsp;Tokens
             </span>
+            </div>
+          </div>
+          <Form className="FarmingPopup__body" onSubmit={this.handleSubmit.bind(this)}>
+            <label>
+              <div className="FarmingPopup__label">
               <span className="default-text">
-              Balance: <NumberFormat number={isStake ? balance : userPool} />
-            </span>
-            </div>
-            <div className="input-container">
-              <Input type={adaptive ? 'number' : 'text'}
-                     disabled={isTransaction || isApproving}
-                     value={value}
-                     onChange={this.onChange.bind(this)} />
-              <div className="input-controls">
-                <p className="default-text">{token0Symbol}-{token1Symbol}</p>
-                <button
-                  type="button"
-                  className="input-controls__button"
-                  onClick={() => {if (!isTransaction && !isApproving) this.setState({value: isStake ? balance : userPool})}}
-                >
-                  <span>Max</span>
-                </button>
+                {modal === 'stake' ? 'Stake' : 'Unstake'}
+              </span>
+                <span className="default-text">
+                Balance: <NumberFormat number={isStake ? balance : userPool} />
+              </span>
               </div>
-            </div>
-          </label>
-          {isStake ? <><Button type={isAvailable ? 'secondary' : 'lightBlue'}
-                  onClick={this.onApprove.bind(this)}
-                  disabled={!amount || isAvailable || amount > balance}
-                  state={isApproving ? 'loading' : ''}>
-            Approve {amount.toFixed(2)} LP
-          </Button>
-          <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
-                  onClick={this.onDeposit.bind(this)}
-                  disabled={!isAvailable || isTransaction}
-                  state={isTransaction ? 'loading' : ''}>
-            Stake
-          </Button></> : <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
-                                 onClick={this.onWithdraw.bind(this)}
-                                 disabled={!isAvailable || isTransaction}
-                                 state={isTransaction ? 'loading' : ''}>
-            Unstake
-          </Button>}
-        </Form>
-        <div className="FarmingPopup__footer">
-        {isStake && (
-            <Row
-              alignItems="center"
-              justifyContent="center"
+              <div className="input-container">
+                <Input type={adaptive ? 'number' : 'text'}
+                      disabled={isTransaction || isApproving}
+                      value={value}
+                      onChange={this.onChange.bind(this)} />
+                <div className="input-controls">
+                  <p className="default-text">{token0Symbol}-{token1Symbol}</p>
+                  <button
+                    type="button"
+                    className="input-controls__button"
+                    onClick={() => {if (!isTransaction && !isApproving) this.setState({value: isStake ? balance : userPool})}}
+                  >
+                    <span>Max</span>
+                  </button>
+                </div>
+              </div>
+            </label>
+            {isStake ? <><Button type={isAvailable ? 'secondary' : 'lightBlue'}
+                    onClick={this.onApprove.bind(this)}
+                    disabled={!amount || isAvailable || amount > balance}
+                    state={isApproving ? 'loading' : ''}>
+              Approve {amount.toFixed(2)} LP
+            </Button>
+            <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
+                    onClick={this.onDeposit.bind(this)}
+                    disabled={!isAvailable || isTransaction}
+                    state={isTransaction ? 'loading' : ''}>
+              Stake
+            </Button></> : <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
+                                  onClick={this.onWithdraw.bind(this)}
+                                  disabled={!isAvailable || isTransaction}
+                                  state={isTransaction ? 'loading' : ''}>
+              Unstake
+            </Button>}
+          </Form>
+          <div className="FarmingPopup__footer">
+          {isStake && (
+              <Row
+                alignItems="center"
+                justifyContent="center"
+                className="popup-link"
+                onClick={() => {
+                  router.navigate(LIQUIDITY, {
+                    token0: token0Symbol,
+                    token1: token1Symbol
+                  }); 
+                }}
+              >
+                <span>Get {token0Symbol}-{token1Symbol}</span>
+                <SVG src={require('src/asset/icons/export.svg')} />
+              </Row>
+            )}
+            {/* <span
               className="popup-link"
-              onClick={() => {
-                router.navigate(LIQUIDITY, {
-                  token0: token0Symbol,
-                  token1: token1Symbol
-                }); 
-              }}
+              onClick={() =>
+                addTokenToWallet({
+                  address: _.get(pool, 'address'),
+                  symbol: `${token0Symbol}-${token1Symbol}`,
+                  image:
+                    'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
+                })
+              }
             >
-              <span>Get {token0Symbol}-{token1Symbol}</span>
+              Add token to Metamask&nbsp;
               <SVG src={require('src/asset/icons/export.svg')} />
-            </Row>
-          )}
-          {/* <span
-            className="popup-link"
-            onClick={() =>
-              addTokenToWallet({
-                address: _.get(pool, 'address'),
-                symbol: `${token0Symbol}-${token1Symbol}`,
-                image:
-                  'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
-              })
-            }
-          >
-            Add token to Metamask&nbsp;
-            <SVG src={require('src/asset/icons/export.svg')} />
-          </span> */}
-        </div>
-        {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
-      </Wrapper>
+            </span> */}
+          </div>
+          {!!errorText.length && <div className="FarmingPopup__error">{errorText}</div>}
+        </Wrapper>
+      </>
     );
   }
 }

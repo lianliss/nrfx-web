@@ -15,7 +15,7 @@ import './YourWalletModal.less';
 
 function YourWalletModal(props) {
   const context = React.useContext(Web3Context);
-  const { isConnected, accountAddress } = context;
+  const { isConnected, chainId, accountAddress } = context;
 
   React.useEffect(() => {
     if (!isConnected) {
@@ -52,9 +52,10 @@ function YourWalletModal(props) {
           </CopyText>
         </div>
         <div className="col">
-          <div className="action-text">
+          <a href={`https://${chainId !== 56 && 'testnet.'}bscscan.com/address/${accountAddress}`}
+             className="action-text">
             View on BscScan <SVG src={require('src/asset/icons/export.svg')} />
-          </div>
+          </a>
         </div>
       </div>
       <div className="row">

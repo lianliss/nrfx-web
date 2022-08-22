@@ -11,6 +11,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 import SVG from 'utils/svg-wrap';
 import { Status } from 'src/index/containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import { Web3Context } from 'services/web3Provider';
+import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelect/TokenSelect';
 
 // Utils
 import { getLang, classNames as cn } from 'src/utils';
@@ -18,7 +19,7 @@ import router from 'src/router';
 import * as actions from 'src/actions';
 import * as toasts from 'src/actions/toasts';
 import * as fiatActions from 'src/actions/cabinet/fiat';
-import { fiatSelector } from 'src/selectors';
+import { fiatSelector, adaptiveSelector, } from 'src/selectors';
 import { closeModal } from 'src/actions';
 
 // Styles
@@ -58,13 +59,17 @@ const merchantList = {
 function Balance(props) {
   const context = React.useContext(Web3Context);
   const {
-    fiats, chainId, accountAddress,
+    fiats, chainId, accountAddress, connectWallet, isConnected,
   } = context;
+  const isAdaptive = useSelector(adaptiveSelector);
+  const banks = useSelector(state => state.fiat.banks);
 
   const userId = `${chainId}${accountAddress}`;
   const fiatTokens = _.get(fiats, userId, []);
 
   const [fiatSelected, setFiatSelected] = React.useState(null);
+  const [isSelectFiat, setIsSelectFiat] = React.useState(false);
+  const fiatSymbol = _.get(fiatSelected, 'symbol', '');
 
   /**
    * Update "fiatSelected" — fiat token state.
@@ -72,7 +77,6 @@ function Balance(props) {
    * @param currencyObject {object} - fiat token
    */
   const setFiat = currencyObject => {
-    console.log('SET FIAT', currencyObject);
     setFiatSelected(currencyObject);
     const routerState = router.getState();
     if (routerState.params.currency !== currencyObject.symbol) {
@@ -85,7 +89,6 @@ function Balance(props) {
 
   React.useEffect(() => {
     const routerState = router.getState();
-    console.log('fiatTokens', fiatTokens, routerState.params.currency);
     const token = fiatTokens.find(t => t.symbol === routerState.params.currency);
     if (!token) return;
     setFiat(token);
@@ -94,7 +97,7 @@ function Balance(props) {
   const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(
-    params.currency.toLowerCase() || 'usd'
+    params.currency.toUpperCase() || 'RUB'
   );
   const [merchant, setMerchant] = useState(null);
   const [amount, setAmount] = useState(null);
@@ -104,16 +107,16 @@ function Balance(props) {
   const fiatState = useSelector(fiatSelector);
 
   useEffect(() => {
-    props.getMerchant(props.type);
-    if (
-      props.type !== 'withdrawal' &&
-      currency === 'rub' &&
-      merchant &&
-      fiatState.reservedCard
-    ) {
-      closeModal();
-      actions.openModal('fiat_refill_card');
-    }
+    // props.getMerchant(props.type);
+    // if (
+    //   props.type !== 'withdrawal' &&
+    //   currency === 'rub' &&
+    //   merchant &&
+    //   fiatState.reservedCard
+    // ) {
+    //   closeModal();
+    //   actions.openModal('fiat_refill_card');
+    // }
     // eslint-disable-next-line
   }, [merchant]);
 
@@ -133,19 +136,20 @@ function Balance(props) {
   ]);
 
   const checkAmount = (value = amount) => {
-    const { min_amount, max_amount } =
-      props.merchants[merchant].currencies[currency];
+    const anyBank = banks.find(b => _.includes(b.currencies, currency.toUpperCase()));
+    const minAmount = _.get(anyBank, 'minAmount', 5000);
+    const maxAmount = _.get(anyBank, 'maxAmount', 150000);
     const currencyLabel = currency.toUpperCase();
-    if (value < min_amount) {
+    if (value < minAmount) {
       return (
         <>
-          {getLang('cabinet_amount_shouldBeMore')} {min_amount} {currencyLabel}
+          {getLang('cabinet_amount_shouldBeMore')} {minAmount} {currencyLabel}
         </>
       );
-    } else if (value > max_amount) {
+    } else if (value > maxAmount) {
       return (
         <>
-          {getLang('cabinet_amount_shouldBeLess')} {max_amount} {currencyLabel}
+          {getLang('cabinet_amount_shouldBeLess')} {maxAmount} {currencyLabel}
         </>
       );
     }
@@ -166,8 +170,8 @@ function Balance(props) {
 
     const balance = getBalance(currency);
 
-    const { min_fee: minFee, percent_fee: percentFee } =
-      props.merchants[merchant].currencies[currency].fees;
+    // const { min_fee: minFee, percent_fee: percentFee } =
+    //   props.merchants[merchant].currencies[currency].fees;
 
     actions.openModal('deposit_choose_bank', {
       currency: fiatSelected.symbol,
@@ -175,9 +179,9 @@ function Balance(props) {
     }, {
       amount,
       balance,
-      minFee,
-      percentFee,
-      currency,
+      minFee: 0,
+      percentFee: 0,
+      currency: fiatSelected.symbol,
       merchant,
     });
   };
@@ -336,15 +340,31 @@ function Balance(props) {
   };
 
   const renderForm = () => {
-    const currencyInfo = actions.getCurrencyInfo(currency);
-    const { fee, percent_fee, min_fee } = getFee();
-    const total = props.type === 'withdrawal' ? amount + fee : amount - fee;
+    // const currencyInfo = actions.getCurrencyInfo(currency);
+    // const { fee, percent_fee, min_fee } = getFee();
+    // const total = props.type === 'withdrawal' ? amount + fee : amount - fee;
 
-    const currentMerchantCurrency =
-      props.merchants[merchant].currencies[currency];
+    function fiatSelector() {
+      if (!isConnected) {
+        connectWallet()
+          .then(() => setIsSelectFiat(true))
+          .catch(error => {
+            setIsSelectFiat(false);
+          })
+      } else {
+        setIsSelectFiat(true);
+      }
+    }
 
-    const minAmount = currentMerchantCurrency.min_amount;
-    const maxAmount = currentMerchantCurrency.max_amount;
+    // const currentMerchantCurrency =
+    //   props.merchants[merchant].currencies[currency];
+
+    // const minAmount = currentMerchantCurrency.min_amount;
+    // const maxAmount = currentMerchantCurrency.max_amount;
+    const anyBank = banks.find(b => _.includes(b.currencies, currency.toUpperCase()));
+
+    const minAmount = _.get(anyBank, 'minAmount', 5000);
+    const maxAmount = _.get(anyBank, 'maxAmount', 150000);
 
     const indicator = (
       <span>
@@ -353,7 +373,7 @@ function Balance(props) {
           : getLang('cabinet_merchantModal_max')}{' '}
         <NumberFormat
           number={minAmount || maxAmount}
-          currency={currencyInfo.abbr}
+          currency={fiatSymbol}
         />
       </span>
     );
@@ -361,17 +381,36 @@ function Balance(props) {
     return (
       <>
         <h3>{getLang('cabinet_balanceDeposit')}</h3>
-        <Select
-          options={fiatTokens.map(t => ({
-            label: t.symbol,
-            value: t.symbol,
-            icon: t.logoURI,
-          }))}
-          value={_.get(fiatSelected, 'symbol')}
-          onChange={symbol => setFiat(fiatTokens.find(t => t.symbol === symbol))}
-          indicatorIcon={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
-          defaultIsOpen
-        />
+        <div className="DepositModal__Balance__dropdown" onClick={fiatSelector}>
+          <div className="DepositModal__Balance__icon" style={{
+            backgroundImage: `url('${_.get(fiatSelected, 'logoURI', '')}')`
+          }} />
+          <div className="DepositModal__Balance__select">
+            {/*<span>{_.get(fiat, 'name', 'Unknown')}</span>*/}
+            <div className="DepositModal__Balance__currency">
+              <span>{_.get(fiatSelected, 'symbol', 'Unknown')}</span>
+              <SVG
+                src={require('src/asset/icons/cabinet/swap/select-arrow.svg')}
+              />
+            </div>
+          </div>
+        </div>
+        {isSelectFiat && <TokenSelect
+          onChange={value => {
+            setFiat(value);
+            setIsSelectFiat(false);
+          }}
+          onClose={() => setIsSelectFiat(false)}
+          selected={fiatSelected}
+          isAdaptive={isAdaptive}
+          {...context}
+          tokens={fiatTokens}
+          disableSwitcher
+          disableCommonBases
+          loadAccountBalances={() => {
+            console.log('LOAD');
+          }}
+        />}
         <UI.Input
           error={touched && (!amount || checkAmount())}
           placeholder="0.00"
@@ -481,6 +520,7 @@ function Balance(props) {
   };
 
   const renderContent = () => {
+    return renderForm();
     if (
       /* status === 'loading' || */ props.loadingStatus.merchants === 'loading'
     ) {

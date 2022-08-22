@@ -122,7 +122,7 @@ function Exchanger(props) {
         } else {
           const fiatSymbol = fiats[userId].find(c => fiatSelected.symbol === c.symbol);
           if (fiatSymbol) {
-            setFiat(fiatSymbol);
+            setFiatSelected(fiatSymbol);
           }
         }
       }).catch(error => {

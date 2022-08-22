@@ -103,9 +103,10 @@ export function invoke(method, name, params, options = {}) {
               reject(json);
             }
           })
-          .catch(() =>
-            reject({ message: "Cant't parse JSON", code: "failed" })
-          );
+          .catch(error => {
+            console.error("Can't parce JSON", url, error);
+            reject({ message: "Can't parse JSON", code: "failed" })
+          });
       })
       .catch(err =>
         reject({

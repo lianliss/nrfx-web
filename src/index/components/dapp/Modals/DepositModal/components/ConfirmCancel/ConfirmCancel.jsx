@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import {Web3Context} from "src/services/web3Provider";
 
 // Components
 import DepositModal from '../../DepositModal';
@@ -17,28 +18,41 @@ import * as actionTypes from 'src/actions/actionTypes';
 // Styles
 import './ConfirmCancel.less';
 
-function ConfirmCancel({ reservation_id, amount, ...props }) {
+function ConfirmCancel({ reservation_id, amount, currency, ...props }) {
   const dispatch = useDispatch();
+  const context = React.useContext(Web3Context);
+  const {cancelReservation} = context;
   const onCancel = () => {
-    api
-      .call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
-        amount,
-        reservation_id: reservation_id,
-      })
-      .then(() => {
-        dispatch({
-          type: actionTypes.WALLET_SET_CARD_RESERVATION,
-          payload: null,
-        });
-        dispatch({
-          type: actionTypes.WALLET_SET_STATUS,
-          section: 'cancelReservation',
-          status: '',
-        });
-      })
-      .finally(() => {
-        closeModal();
+    cancelReservation(reservation_id).then(data => {
+      dispatch({
+        type: actionTypes.FIAT_TOPUP_DELETE,
+        payload: currency.toUpperCase(),
       });
+      dispatch({
+        type: actionTypes.WALLET_SET_CARD_RESERVATION,
+        payload: null,
+      });
+      closeModal();
+    });
+    // api
+    //   .call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
+    //     amount,
+    //     reservation_id: reservation_id,
+    //   })
+    //   .then(() => {
+    //     dispatch({
+    //       type: actionTypes.WALLET_SET_CARD_RESERVATION,
+    //       payload: null,
+    //     });
+    //     dispatch({
+    //       type: actionTypes.WALLET_SET_STATUS,
+    //       section: 'cancelReservation',
+    //       status: '',
+    //     });
+    //   })
+    //   .finally(() => {
+    //     closeModal();
+    //   });
   };
 
   return (

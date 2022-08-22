@@ -14,23 +14,25 @@ export default () => {
   const dispatch = useDispatch();
   const [pending, setPending] = useState(true);
 
-  useEffect(
-    useCallback(() => {
-      api
-        .call(apiSchema.Exchange.MarketsGet)
-        .then(res => {
-          dispatch({
-            type: actionTypes.LANDING_SET_MARKETS,
-            payload: res.markets
-          });
-          setPending(false);
-        })
-        .catch(err => {
-          toast.error(err.message);
-        });
-    }, [dispatch]),
-    []
-  );
+  // useEffect(
+  //   useCallback(() => {
+  //     api
+  //       .call(apiSchema.Exchange.MarketsGet)
+  //       .then(res => {
+  //         dispatch({
+  //           type: actionTypes.LANDING_SET_MARKETS,
+  //           payload: res.markets
+  //         });
+  //         setPending(false);
+  //       })
+  //       .catch(err => {
+  //         toast.error(err.message);
+  //       });
+  //   }, [dispatch]),
+  //   []
+  // );
+
+  return <></>;
 
   return (
     <div className="Ticker">

@@ -46,12 +46,22 @@ class CommissionsScreen extends React.PureComponent {
     const rates = _.get(this.props, 'rates', {});
     const rubRate = rates.rub || 1;
 
+    console.log('processed', processed, rates);
+
     const items = {default: 0, ...processed};
     Object.keys(balances).map(token => {
       if (typeof items[token] === 'undefined') {
         items[token] = processed.default;
       }
     });
+
+    Object.keys(rates)
+      .filter(key => key.indexOf('USDT') < 0)
+      .map(token => {
+        if (typeof processed[token] === 'undefined') {
+          items[token] = processed.default;
+        }
+      });
 
     return <UI.ContentBox className="CommissionsScreen">
       <div className="Block__header">

@@ -1,4 +1,7 @@
 import React from 'react';
+import router from 'src/router';
+import _ from 'lodash';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import { Row, Button, Col } from 'src/ui';
@@ -9,6 +12,22 @@ import Lang from 'src/components/Lang/Lang';
 import './DepositTransfer.less';
 
 function DepositTransfer({ onClose, adaptive }) {
+
+  const context = React.useContext(Web3Context);
+  const {chainId, accountAddress, addTokenToWallet, fiats} = context;
+  const routerState = router.getState();
+  const currency = _.get(routerState, 'params.currency', 'RUB').toUpperCase();
+
+  const userId = `${chainId}${accountAddress}`;
+  const fiatTokens = _.get(fiats, userId, [{
+    name: 'Russian Ruble on Narfex',
+    symbol: 'RUB',
+    address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
+    logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
+  }]);
+  const fiat = fiatTokens.find(f => f.symbol === currency);
+
+
   return (
     <Col className="DepositModal__Bank__DepositTransfer" alignItems="center">
       <h3 className="medium dark large-height">
@@ -27,7 +46,7 @@ function DepositTransfer({ onClose, adaptive }) {
         </em>
       </p>
       <Row className="buttons" justifyContent="center" wrap={adaptive}>
-        <Button type="secondary-alice" shadow>
+        <Button type="secondary-alice" shadow onClick={() => addTokenToWallet(fiat)}>
           Add to Metamask
           <SVG src={require('src/asset/icons/social/metaMask.svg')} />
         </Button>
