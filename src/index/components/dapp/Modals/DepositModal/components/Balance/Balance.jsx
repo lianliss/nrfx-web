@@ -20,11 +20,12 @@ import router from 'src/router';
 import * as actions from 'src/actions';
 import * as toasts from 'src/actions/toasts';
 import * as fiatActions from 'src/actions/cabinet/fiat';
-import { fiatSelector, adaptiveSelector, } from 'src/selectors';
+import { fiatSelector, adaptiveSelector } from 'src/selectors';
 import { closeModal } from 'src/actions';
 
 // Styles
 import './Balance.less';
+import CabinetModal from '../../../CabinetModal/CabinetModal';
 
 const merchantList = {
   advcash: {
@@ -59,11 +60,10 @@ const merchantList = {
 
 function Balance(props) {
   const context = React.useContext(Web3Context);
-  const {
-    fiats, chainId, accountAddress, connectWallet, isConnected,
-  } = context;
+  const { fiats, chainId, accountAddress, connectWallet, isConnected } =
+    context;
   const isAdaptive = useSelector(adaptiveSelector);
-  const banks = useSelector(state => state.fiat.banks);
+  const banks = useSelector((state) => state.fiat.banks);
 
   const userId = `${chainId}${accountAddress}`;
   const fiatTokens = _.get(fiats, userId, []);
@@ -77,7 +77,7 @@ function Balance(props) {
    * Sets router param
    * @param currencyObject {object} - fiat token
    */
-  const setFiat = currencyObject => {
+  const setFiat = (currencyObject) => {
     setFiatSelected(currencyObject);
     const routerState = router.getState();
     if (routerState.params.currency !== currencyObject.symbol) {
@@ -90,7 +90,9 @@ function Balance(props) {
 
   React.useEffect(() => {
     const routerState = router.getState();
-    const token = fiatTokens.find(t => t.symbol === routerState.params.currency);
+    const token = fiatTokens.find(
+      (t) => t.symbol === routerState.params.currency
+    );
     if (!token) return;
     setFiat(token);
   }, [fiats]);
@@ -137,7 +139,9 @@ function Balance(props) {
   ]);
 
   const checkAmount = (value = amount) => {
-    const anyBank = banks.find(b => _.includes(b.currencies, currency.toUpperCase()));
+    const anyBank = banks.find((b) =>
+      _.includes(b.currencies, currency.toUpperCase())
+    );
     const minAmount = _.get(anyBank, 'minAmount', 5000);
     const maxAmount = _.get(anyBank, 'maxAmount', 150000);
     const currencyLabel = currency.toUpperCase();
@@ -174,17 +178,21 @@ function Balance(props) {
     // const { min_fee: minFee, percent_fee: percentFee } =
     //   props.merchants[merchant].currencies[currency].fees;
 
-    actions.openModal('deposit_choose_bank', {
-      currency: fiatSelected.symbol,
-      amount,
-    }, {
-      amount,
-      balance,
-      minFee: 0,
-      percentFee: 0,
-      currency: fiatSelected.symbol,
-      merchant,
-    });
+    actions.openModal(
+      'deposit_choose_bank',
+      {
+        currency: fiatSelected.symbol,
+        amount,
+      },
+      {
+        amount,
+        balance,
+        minFee: 0,
+        percentFee: 0,
+        currency: fiatSelected.symbol,
+        merchant,
+      }
+    );
   };
 
   const handleFiatWithdrawal = () => {
@@ -349,9 +357,9 @@ function Balance(props) {
       if (!isConnected) {
         connectWallet()
           .then(() => setIsSelectFiat(true))
-          .catch(error => {
+          .catch((error) => {
             setIsSelectFiat(false);
-          })
+          });
       } else {
         setIsSelectFiat(true);
       }
@@ -362,7 +370,9 @@ function Balance(props) {
 
     // const minAmount = currentMerchantCurrency.min_amount;
     // const maxAmount = currentMerchantCurrency.max_amount;
-    const anyBank = banks.find(b => _.includes(b.currencies, currency.toUpperCase()));
+    const anyBank = banks.find((b) =>
+      _.includes(b.currencies, currency.toUpperCase())
+    );
 
     const minAmount = _.get(anyBank, 'minAmount', 5000);
     const maxAmount = _.get(anyBank, 'maxAmount', 150000);
@@ -372,10 +382,7 @@ function Balance(props) {
         {minAmount
           ? getLang('cabinet_merchantModal_min')
           : getLang('cabinet_merchantModal_max')}{' '}
-        <NumberFormat
-          number={minAmount || maxAmount}
-          currency={fiatSymbol}
-        />
+        <NumberFormat number={minAmount || maxAmount} currency={fiatSymbol} />
       </span>
     );
 
@@ -383,9 +390,12 @@ function Balance(props) {
       <>
         <h3>{getLang('cabinet_balanceDeposit')}</h3>
         <div className="DepositModal__Balance__dropdown" onClick={fiatSelector}>
-          <div className="DepositModal__Balance__icon" style={{
-            backgroundImage: `url('${_.get(fiatSelected, 'logoURI', '')}')`
-          }} />
+          <div
+            className="DepositModal__Balance__icon"
+            style={{
+              backgroundImage: `url('${_.get(fiatSelected, 'logoURI', '')}')`,
+            }}
+          />
           <div className="DepositModal__Balance__select">
             {/*<span>{_.get(fiat, 'name', 'Unknown')}</span>*/}
             <div className="DepositModal__Balance__currency">
@@ -396,22 +406,6 @@ function Balance(props) {
             </div>
           </div>
         </div>
-        {isSelectFiat && <TokenSelect
-          onChange={value => {
-            setFiat(value);
-            setIsSelectFiat(false);
-          }}
-          onClose={() => setIsSelectFiat(false)}
-          selected={fiatSelected}
-          isAdaptive={isAdaptive}
-          {...context}
-          tokens={fiatTokens}
-          disableSwitcher
-          disableCommonBases
-          loadAccountBalances={() => {
-            console.log('LOAD');
-          }}
-        />}
         <DappInput
           error={touched && (!amount || checkAmount())}
           placeholder="0.00"
@@ -421,13 +415,13 @@ function Balance(props) {
           type="number"
         />
         {/*<p className="secondary medium default hight">*/}
-          {/*Fee: <NumberFormat percent number={percent_fee} />*/}
+        {/*Fee: <NumberFormat percent number={percent_fee} />*/}
         {/*</p>*/}
         {/*{total >= 0 && (*/}
-          {/*<p className="blue medium default hight">*/}
-            {/*{getLang('cabinet_fiatRefillModal_total')}&nbsp;*/}
-            {/*<NumberFormat number={total} currency={currency} />*/}
-          {/*</p>*/}
+        {/*<p className="blue medium default hight">*/}
+        {/*{getLang('cabinet_fiatRefillModal_total')}&nbsp;*/}
+        {/*<NumberFormat number={total} currency={currency} />*/}
+        {/*</p>*/}
         {/*)}*/}
         <UI.Row className="DepositModal__Balance-buttons" wrap>
           <UI.Button type="secondary-alice" onClick={props.onClose}>
@@ -546,19 +540,43 @@ function Balance(props) {
   };
 
   return (
-    <DepositModal
-      className={cn('DepositModal__Balance', {
-        MerchantModal__list_wrapper: /* !status && */ !merchant,
-      })}
-      onClose={closeModal}
-      useOnCloseForAdaptive
-      isOpen
-    >
-      {props.type === 'withdrawal' && (
-        <UI.ModalHeader>{getLang('cabinet_balanceWithdrawal')}</UI.ModalHeader>
+    <>
+      <DepositModal
+        className={cn('DepositModal__Balance', {
+          MerchantModal__list_wrapper: /* !status && */ !merchant,
+        })}
+        onClose={closeModal}
+        useOnCloseForAdaptive
+        isOpen
+      >
+        {props.type === 'withdrawal' && (
+          <UI.ModalHeader>
+            {getLang('cabinet_balanceWithdrawal')}
+          </UI.ModalHeader>
+        )}
+        {renderContent()}
+      </DepositModal>
+      {isSelectFiat && (
+        <CabinetModal onClose={() => setIsSelectFiat(false)}>
+          <TokenSelect
+            onChange={(value) => {
+              setFiat(value);
+              setIsSelectFiat(false);
+            }}
+            onClose={() => setIsSelectFiat(false)}
+            selected={fiatSelected}
+            isAdaptive={isAdaptive}
+            {...context}
+            tokens={fiatTokens}
+            disableSwitcher
+            disableCommonBases
+            loadAccountBalances={() => {
+              console.log('LOAD');
+            }}
+          />
+        </CabinetModal>
       )}
-      {renderContent()}
-    </DepositModal>
+    </>
   );
 }
 
