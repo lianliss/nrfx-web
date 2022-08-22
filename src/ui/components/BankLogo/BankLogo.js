@@ -11,7 +11,11 @@ const BankLogo = props => {
     bri: require("src/asset/banks/bri.svg"),
     mandiri: require("src/asset/banks/mandiri.svg"),
     permata: require("src/asset/banks/permata.svg"),
-    tinkoff: require("src/asset/banks/tinkoff.svg")
+    tinkoff: require("src/asset/banks/tinkoff.svg"),
+    gazprombank: require("src/asset/banks/gazprombank.svg"),
+    vostokbank: require("src/asset/banks/vostokbank.svg"),
+    privatbank: require("src/asset/banks/privatbank.svg"),
+    monobank: require("src/asset/banks/monobank.svg"),
   };
 
   const name = props.name.toLocaleLowerCase();

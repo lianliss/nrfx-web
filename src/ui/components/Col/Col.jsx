@@ -6,11 +6,11 @@ import { classNames as cn } from 'src/utils';
 // Styles
 import './Col.less';
 
-function Col({ children, className, alignItems, justifyContent }) {
+function Col({ children, className, alignItems, justifyContent, style }) {
   return (
     <div
       className={cn('Col', { [className]: className })}
-      style={{ alignItems, justifyContent }}
+      style={{ alignItems, justifyContent, ...style }}
     >
       {children}
     </div>
@@ -19,11 +19,7 @@ function Col({ children, className, alignItems, justifyContent }) {
 
 Col.propTypes = {
   className: PropTypes.string,
-  alignItems: PropTypes.oneOf([
-    'center',
-    'flex-start',
-    'flex-end',
-  ]),
+  alignItems: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
   justifyContent: PropTypes.oneOf([
     'center',
     'flex-start',
@@ -31,12 +27,14 @@ Col.propTypes = {
     'space-between',
     'space-around',
   ]),
+  style: PropTypes.object,
 };
 
 Col.defaultProps = {
   className: '',
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
+  style: {},
 };
 
 export default Col;

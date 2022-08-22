@@ -30,7 +30,9 @@ import AuthModal from "../components/AuthModal/AuthModal";
 import MerchantModal from "../index/components/cabinet/MerchantModal/MerchantModal";
 import FiatWithdrawalModal from "../index/components/cabinet/FiatWithdrawalModal/FiatWithdrawalModal";
 import FiatRefillModal from "../index/components/cabinet/FiatRefillModal/FiatRefillModal";
-import FiatRefillByCardModal from "../index/components/cabinet/FiatRefillByCardModal/FiatRefillByCardModal";
+import FiatTopupModal from "../index/components/dapp/FiatTopupModal/FiatTopupModal";
+import FiatRefillByCardModal from "../index/components/dapp/FiatRefillByCardModal/FiatRefillByCardModal";
+import FiatTopupCardModal from "../index/components/dapp/FiatRefillByCardModal/FiatRefillByCardModal";
 // import FiatOperationModal from "../index/components/cabinet/FiatOperationModal/FiatOperationModal";
 import OperationModal from "../index/components/cabinet/OperationModal/OperationModal";
 import DepositPoolSuccessModal from "../index/components/cabinet/DepositPoolSuccessModal/DepositPoolSuccessModal";
@@ -47,6 +49,16 @@ import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
 import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
 import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
+
+// New Deposit Modals
+import {
+  DepositModalBalance,
+  DepositModalChooseBank,
+  DepositModalChoosedBank,
+  DepositModalDepositTransfer,
+  DepositModalCancel,
+} from "./components/dapp/Modals/DepositModal";
+
 import {
   TransactionSubmittedModal,
   LiquidityConfirmModal,
@@ -95,8 +107,14 @@ function Modals(props) {
     case "fiat_refill":
       Component = FiatRefillModal;
       break;
+    case "fiat_topup":
+      Component = FiatTopupModal;
+      break;
     case "fiat_refill_card":
       Component = FiatRefillByCardModal;
+      break;
+    case "fiat_topup_card":
+      Component = FiatTopupCardModal;
       break;
     case "fiat_withdrawal":
       Component = FiatWithdrawalModal;
@@ -215,6 +233,21 @@ function Modals(props) {
       break;
     case "create_referral_link":
       Component = CreateReferralLink;
+      break;
+    case "deposit_balance":
+      Component = DepositModalBalance;
+      break;
+    case "deposit_choose_bank":
+      Component = DepositModalChooseBank;
+      break;
+    case "deposit_choosed_bank":
+      Component = DepositModalChoosedBank;
+      break;
+    case "deposit_transfer":
+      Component = DepositModalDepositTransfer;
+      break;
+    case "deposit_cancel":
+      Component = DepositModalCancel;
       break;
     default:
       return null;

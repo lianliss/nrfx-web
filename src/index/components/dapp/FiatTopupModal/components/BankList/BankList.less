@@ -7,9 +7,23 @@
     padding: 32px 40px;
     color: var(--almost-black);
 
+    &.active {
+      background: var(--secondary-background);
+
+      &:before {
+        content: "";
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--orange-gradient);
+      }
+    }
     &::after {
       content: "";
-      display: block;
+      //display: block;
       position: absolute;
       bottom: -1px;
       left: 0;
@@ -18,6 +32,7 @@
       margin: 0 40px;
       background: var(--gray);
       opacity: 0.4;
+      display: none;
     }
 
     &:hover {

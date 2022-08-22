@@ -1,8 +1,10 @@
-import "./FiatRefillModal.less";
+import "./FiatTopupModal.less";
 
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import _ from 'lodash';
+import router from 'src/router';
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
@@ -12,28 +14,100 @@ import { refillBanksGet } from "../../../../actions/cabinet/fiat";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import BankLogo from "../../../../ui/components/BankLogo/BankLogo";
 import Clipboard from "src/index/components/cabinet/Clipboard/Clipboard";
-import Button, { ButtonWrapper } from "../../../../ui/components/Button/Button";
+import {Button, ButtonWrapper, Input} from "src/ui";
 import { getLang } from "../../../../utils";
+import { Web3Context } from 'services/web3Provider';
+import * as actionTypes from "src/actions/actionTypes";
+import * as actions from "src/actions";
 
-const WithdrawalRefillModal = props => {
-  const { amount, balance, adaptive, bankList, percentFee, minFee } = props;
+import currencies from 'src/index/constants/fiats';
+
+const FiatTopupModal = props => {
+  const dispatch = useDispatch();
+  const methods = useSelector(state => state.fiat.banks);
+  const {
+    balance, adaptive, bankList,
+    currency,
+  } = props;
   const [bank, changeBank] = useState(null);
+  const [method, setMethod] = useState(null);
+  const [value, setValue] = useState(router.getState().params.amount);
+  const [isLoading, setIsLoading] = useState(false);
+  const context = React.useContext(Web3Context);
+  const {cardReserve} = context;
+  const currencyOptions = currencies[currency] || currencies.default;
+  const percentFee = _.get(currencyOptions, 'fee', 0);
+  const minFee = _.get(currencyOptions, 'minFee', 0);
+  let minAmount = _.get(currencyOptions, 'minAmount', 0);
+  let maxAmount = _.get(currencyOptions, 'maxAmount', null);
+
+  const amount = Number(value) || 0;
   const fee = Math.max((amount / 100) * percentFee, minFee);
 
-  console.log('WithdrawalRefillModal', props);
-  // useEffect(() => {
-  //   props.refillBanksGet();
-  //
-  //   if (!amount || !balance) {
-  //     props.onClose();
-  //   }
-  //
-  //   logEvent(getAnalytics(), "open_fiat_refill_modal");
-  //   // eslint-disable-next-line
-  // });
+  const availableMethods = methods.filter(m => !m.currencies || m.currencies.indexOf(currency) >= 0);
 
-  if (!amount || !balance) {
-    return null;
+  const handleInput = newValue => {
+    if (adaptive) {
+      setValue(newValue);
+      return;
+    }
+    let value = `${newValue}`;
+    value = value.replace(',', '.');
+    if (value.length >= 2 && value[0] === '0' && value[1] !== '.') {
+      value = _.trimStart(value, '0');
+    }
+    if (!_.isNaN(Number(value)) || value === '.') {
+      setValue(value);
+    }
+  };
+
+  const isAllow = !!method && amount >= minAmount && (!maxAmount || amount <= maxAmount);
+
+  function sendRequest() {
+    setIsLoading(true);
+    cardReserve(amount, currency, method.code).then(data => {
+      const res = data[0];
+      if (!res) return;
+      let payload = {};
+      payload[currency] = res;
+      dispatch({
+        type: actionTypes.FIAT_TOPUP_UPDATE,
+        payload,
+      });
+
+      const method = methods.find(b => b.code === res.bank);
+      const bankName = method ? method.title : res.bank;
+
+      payload = {
+        reservation: {
+          id: res.operation_id,
+          amount: res.amount,
+          status: res.status,
+          fee: res.fee,
+        },
+        card: {
+          number: res.number,
+          expire_in: res.book_expiration,
+          bank: {
+            code: res.bank,
+            name: bankName,
+            holder_name: res.holder_name,
+            currency: currency,
+          }
+        }
+      };
+      dispatch({
+        type: actionTypes.WALLET_SET_CARD_RESERVATION,
+        payload,
+      });
+      props.onClose();
+      actions.openModal("fiat_topup_card", {
+        currency: currency
+      });
+    }).catch(error => {
+      console.error('[FiatTopupModal][sendRequest]', error);
+      setIsLoading(false);
+    });
   }
 
   return (
@@ -51,14 +125,23 @@ const WithdrawalRefillModal = props => {
           <div className="FiatRefillModal__sideBar__content">
             <div className="FiatRefillModal__sideBar__amount">
               <small>{getLang("global_amount")}</small>
-              <strong>
-                <NumberFormat number={amount} currency={balance.currency} />
-              </strong>
+              <Input value={value}
+                     placeholder="0.00"
+                     indicator={<span>
+                       {getLang("cabinet_merchantModal_min")}
+                       &nbsp;
+                       <NumberFormat
+                         number={minAmount}
+                         currency={currency}
+                       />
+                     </span>}
+                     onTextChange={handleInput}
+                     type={adaptive ? 'number' : 'text'} />
             </div>
             <div className="FiatRefillModal__sideBar__fee">
               <small>{getLang("global_fee")}</small>
               <strong>
-                <NumberFormat number={fee} currency={balance.currency} />
+                <NumberFormat number={0} currency={currency} />
               </strong>
             </div>
             <hr />
@@ -66,30 +149,11 @@ const WithdrawalRefillModal = props => {
               <small>{getLang("cabinet_fiatRefillModal_total")}</small>
               <strong>
                 <NumberFormat
-                  number={amount - fee}
-                  currency={balance.currency}
+                  number={amount}
+                  currency={currency}
                 />
               </strong>
             </div>
-            {/*<div className="FiatRefillModal__sideBar__fee">*/}
-            {/*  <small>*/}
-            {/*    <NumberFormat number={amount} currency={balance.currency} />*/}
-            {/*  </small>*/}
-            {/*  <small>*/}
-            {/*    {getLang("global_fee")}:{" "}*/}
-            {/*    <NumberFormat number={fee} currency={balance.currency} />*/}
-            {/*  </small>*/}
-            {/*</div>*/}
-            {/*<div className="FiatRefillModal__sideBar__total">*/}
-            {/*  <h2>{getLang("global_total")}</h2>*/}
-            {/*  <h2>*/}
-            {/*    <NumberFormat number={total} currency={balance.currency} />*/}
-            {/*  </h2>*/}
-            {/*  <small>*/}
-            {/*    {getLang("cabinet_fiatWithdrawalModal_estimatedAt")}{" "}*/}
-            {/*    <NumberFormat number={amountUsd} currency="usd" />*/}
-            {/*  </small>*/}
-            {/*</div>*/}
           </div>
         </div>
         <div className="FiatRefillModal__body">
@@ -98,8 +162,8 @@ const WithdrawalRefillModal = props => {
               <div className="FiatRefillModal__header">
                 {getLang("cabinet_fiatWithdrawalModal_chooseBank")}
               </div>
-              {bankList && !props.loadingStatus ? (
-                <BankList onChange={changeBank} items={bankList} />
+              {availableMethods ? (
+                <BankList onChange={setMethod} selected={method} items={availableMethods} />
               ) : (
                 <LoadingStatus status={props.loadingStatus} />
               )}
@@ -107,8 +171,13 @@ const WithdrawalRefillModal = props => {
                 align="right"
                 className="FiatRefillModal__body__footer"
               >
-                <Button onClick={props.onBack} type="secondary">
+                <Button onClick={props.onClose} type="secondary">
                   {getLang("global_back")}
+                </Button>
+                <Button onClick={sendRequest}
+                        state={isLoading ? 'loading' : ''}
+                        type="primary" disabled={!isAllow}>
+                  {getLang("topup_button")}
                 </Button>
               </ButtonWrapper>
             </>
@@ -129,7 +198,6 @@ const WithdrawalRefillModal = props => {
                 </ul>
                 <p>{getLang("cabinet_fiatWithdrawalModal__infoText")}</p>
 
-                {/*<pre>{JSON.stringify(bank.methods, null, 2)}</pre>*/}
                 <MethodsList
                   keys={{
                     account_number: bank.account_number,
@@ -144,6 +212,7 @@ const WithdrawalRefillModal = props => {
                 className="FiatRefillModal__body__footer"
               >
                 <Button
+                  state={isLoading ? 'loading' : ''}
                   onClick={() => {
                     changeBank(null);
                   }}
@@ -163,8 +232,8 @@ const WithdrawalRefillModal = props => {
 export default connect(
   state => ({
     accountName: [
-      state.default.profile.user.first_name,
-      state.default.profile.user.last_name
+      _.get(state, 'default.profile.user.first_name'),
+      _.get(state, 'default.profile.user.last_name'),
     ].join(" "),
     adaptive: state.default.adaptive,
     loadingStatus: state.fiat.loadingStatus.refillBankList,
@@ -174,4 +243,4 @@ export default connect(
   {
     refillBanksGet: refillBanksGet
   }
-)(WithdrawalRefillModal);
+)(FiatTopupModal);

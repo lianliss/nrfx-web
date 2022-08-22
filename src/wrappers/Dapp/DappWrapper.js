@@ -50,13 +50,13 @@ class DappWrapper extends Component {
 
   componentDidMount() {
     const {updateProfile, web3SetData} = this.props;
-    this.runStream();
+    //this.runStream();
 
-    Web3Backend.getUserData().then(data => {
-      updateProfile(data);
-    }).catch(error => {
-      console.error("[DappWrapper] Can't get user data");
-    });
+    // Web3Backend.getUserData().then(data => {
+    //   updateProfile(data);
+    // }).catch(error => {
+    //   console.error("[DappWrapper] Can't get user data");
+    // });
     Promise.all([
       Web3Backend.getAllRates(),
       Web3Backend.getCommissions(),

@@ -1,0 +1,136 @@
+.DepositModal__ChoosedBank {
+  padding-top: 24px;
+  padding-left: 29px;
+  flex: 1 1;
+  box-sizing: border-box;
+
+  h3 {
+    margin-bottom: 30px;
+  }
+
+  &__items {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+
+    &:first-of-type {
+      margin-top: 24px;
+    }
+
+    &:nth-child(1) {
+      .DepositModal__InfoWrapper {
+        padding: 9px 56px 9px 19px;
+      }
+    }
+    &:nth-child(2) {
+      .DepositModal__InfoWrapper {
+        padding: 16px 13.5px;
+      }
+    }
+    &:nth-child(3) {
+      .DepositModal__InfoWrapper {
+        padding: 22px 37.8px;
+      }
+    }
+  }
+
+  .DepositModal__InfoWrapper {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  .buttons {
+    margin-top: auto;
+
+    .Button {
+      flex: 1 1 50%;
+
+      &:not(:last-child) {
+        margin-right: 17px;
+      }
+    }
+  }
+
+  .BankLogo {
+    .isvg {
+      height: 30px;
+    }
+  }
+}
+
+.adaptive .DepositModal__ChoosedBank {
+  padding: 52px 0 0;
+
+  h3 {
+    margin-bottom: 38px;
+  }
+
+  &__items {
+    width: 100%;
+    flex-wrap: wrap;
+
+    .hight-height {
+      line-height: 18px;
+    }
+
+    &:first-child {
+      margin-top: 28px;
+
+      .small {
+        font-size: 11px;
+      }
+    }
+
+    &:nth-child(2) .DepositModal__InfoWrapper {
+      min-height: 110px;
+      box-sizing: border-box;
+
+      padding: 9.5px 14px;
+    }
+
+    &:nth-child(3) .DepositModal__InfoWrapper {
+      padding-top: 22px;
+      padding-bottom: 22px;
+    }
+
+    .DepositModal__InfoWrapper {
+      flex: 1 1 100%;
+      padding: 9.5px 14.8px 9.5px 14.8px;
+
+      &:not(:last-child) {
+        margin: 0 0 10px;
+      }
+
+      .left {
+        text-align: center;
+      }
+    }
+  }
+
+  .buttons {
+    width: auto;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    margin: 32px -7.5px 0;
+
+    .Button {
+      flex: 1 1 40%;
+      min-width: 210px;
+      margin: 0 7.5px;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &__label {
+        font-size: 14px !important;
+
+        .isvg {
+          height: 15px;
+          width: 13.65px;
+        }
+      }
+    }
+  }
+}

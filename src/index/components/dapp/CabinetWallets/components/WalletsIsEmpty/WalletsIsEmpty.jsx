@@ -5,9 +5,15 @@ import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
 import SVG from 'utils/svg-wrap';
 import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 
+// Utils
+import { Web3Context } from 'src/services/web3Provider';
+
 import './WalletsIsEmpty.less';
 
-function WalletsIsEmpty(props) {
+function WalletsIsEmpty({ showWalletPage }) {
+  const { isConnected, ...context } = React.useContext(Web3Context);
+  const [isLogined, setIsLogined] = React.useState(false);
+
   const LinkIcon = ({ icon, to, className }) => (
     <a href={to} target="_blank">
       <SVG
@@ -16,6 +22,17 @@ function WalletsIsEmpty(props) {
       />
     </a>
   );
+
+  const handleConnectWallet = async () => {
+    await context.connectWallet();
+    setIsLogined(true);
+  };
+
+  React.useEffect(() => {
+    if (isConnected && isLogined) {
+      showWalletPage();
+    }
+  }, [isConnected, isLogined]);
 
   return (
     <div className="WalletsIsEmpty">
@@ -29,7 +46,11 @@ function WalletsIsEmpty(props) {
             </p>
           </div>
           <div className="WalletsIsEmpty__buttons">
-            <Button type="gray" size="extra_large">
+            <Button
+              type="gray"
+              size="extra_large"
+              onClick={handleConnectWallet}
+            >
               <div className="Button__icon">
                 <SVG
                   src={require('src/asset/icons/cabinet/empty-wallet-add.svg')}
@@ -41,13 +62,7 @@ function WalletsIsEmpty(props) {
               </div>
             </Button>
             <DynamicShadow>
-              <Button
-                type="lightBlue"
-                size="extra_large"
-                // [testStart]
-                onClick={() => props.onClick(true)}
-                // [testEnd]
-              >
+              <Button type="lightBlue" size="extra_large">
                 <div className="Button__icon">
                   <SVG src={require('src/asset/token/wallet.svg')} />
                 </div>

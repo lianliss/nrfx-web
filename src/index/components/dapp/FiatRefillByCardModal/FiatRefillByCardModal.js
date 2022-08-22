@@ -1,13 +1,14 @@
-import "../FiatRefillModal/FiatRefillModal.less";
+import "../FiatTopupModal/FiatTopupModal.less";
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import _ from "lodash";
+import { Web3Context } from 'services/web3Provider';
 
 import Modal, { ModalHeader } from "../../../../ui/components/Modal/Modal";
 import NumberFormat from "../../../../ui/components/NumberFormat/NumberFormat";
-import BankList from "../FiatRefillModal/components/BankList/BankList";
+import BankList from "../FiatTopupModal/components/BankList/BankList";
 import LoadingStatus from "../LoadingStatus/LoadingStatus";
 import BankLogo from "../../../../ui/components/BankLogo/BankLogo";
 import Clipboard from "src/index/components/cabinet/Clipboard/Clipboard";
@@ -48,8 +49,11 @@ export default props => {
   const cardReservation = useSelector(walletCardReservationSelector);
   const adaptive = useAdaptive();
   const [timeIsOver, setTimeIsOver] = useState(false);
+  const context = React.useContext(Web3Context);
+  const {confirmPayment, cancelReservation} = context;
 
   const { minFee, percentFee, currency } = props;
+  const reservation = useSelector(state => _.get(state, `fiat.topup.${currency}`));
 
   const amount = cardReservation
     ? cardReservation.reservation.amount
@@ -187,25 +191,13 @@ export default props => {
       type: "negative",
       dontClose: true
     }).then(() => {
-      api
-        .call(apiSchema.Fiat_wallet.Cards.ReservationDelete, {
-          amount,
-          reservation_id: cardReservation.reservation.id
-        })
-        .then(() => {
-          dispatch({
-            type: actionTypes.WALLET_SET_CARD_RESERVATION,
-            payload: null
-          });
-          dispatch({
-            type: actionTypes.WALLET_SET_STATUS,
-            section: "cancelReservation",
-            status: ""
-          });
-        })
-        .finally(() => {
-          closeModal();
-        });
+      dispatch({
+        type: actionTypes.FIAT_TOPUP_DELETE,
+        payload: currency,
+      });
+      cancelReservation(cardReservation.reservation.id).then(data => {
+        closeModal();
+      });
     });
   };
 
@@ -223,37 +215,30 @@ export default props => {
   };
 
   const handleConfirmPayment = () => {
-    dispatch({
-      type: actionTypes.WALLET_SET_STATUS,
-      section: "confirmPayment",
-      status: "loading"
-    });
-    api
-      .call(apiSchema.Fiat_wallet.Cards["Reservation/confirmPaymentPost"], {
-        reservation_id: cardReservation.reservation.id
-      })
-      .then(({ status }) => {
-        dispatch({
-          type: actionTypes.WALLET_SET_CARD_RESERVATION,
-          payload: {
-            ...cardReservation,
-            reservation: {
-              ...cardReservation.reservation,
-              status
-            }
+    confirmPayment(cardReservation.reservation.id).then(data => {
+      dispatch({
+        type: actionTypes.WALLET_SET_CARD_RESERVATION,
+        payload: {
+          ...cardReservation,
+          reservation: {
+            ...cardReservation.reservation,
+            status: 'wait_for_review'
           }
-        });
-      })
-      .catch(err => {
-        toast.error(err.message);
-      })
-      .finally(() => {
-        dispatch({
-          type: actionTypes.WALLET_SET_STATUS,
-          section: "confirmPayment",
-          status: ""
-        });
+        }
       });
+      const payload = {};
+      payload[currency] = {
+        ...reservation,
+        status: 'wait_for_review',
+      };
+      dispatch({
+        type: actionTypes.FIAT_TOPUP_UPDATE,
+        payload,
+      });
+      props.onClose();
+    }).catch(err => {
+      toast.error(err.message);
+    });
   };
 
   const renderBody = () => {
@@ -468,7 +453,7 @@ export default props => {
                 <Lang name="global_fee" />
               </small>
               <strong>
-                <NumberFormat number={fee} currency={currency} />
+                <NumberFormat number={0} currency={currency} />
               </strong>
             </div>
             <hr />
@@ -477,7 +462,7 @@ export default props => {
                 <Lang name="fiatRefillCard_totalAmount" />
               </small>
               <strong>
-                <NumberFormat number={amount - fee} currency={currency} />
+                <NumberFormat number={amount} currency={currency} />
               </strong>
             </div>
           </div>

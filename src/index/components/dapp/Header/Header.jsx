@@ -41,7 +41,7 @@ function Header(props) {
     option(
       isTestnetDomen ? 'Testnet' : 'BSC',
       'bsc',
-      require('src/asset/icons/wallets/bsc.svg')
+      require('src/asset/icons/wallets/bsc.svg').default
     ),
   ];
 
@@ -105,12 +105,12 @@ function Header(props) {
         onClick: () => {},
         subContent: <span className="secondary-text">Coming soon</span>,
       },
-      {
-        title: isLogined ? 'Logout' : 'Login',
-        onClick: isLogined
-          ? logout
-          : () => openModal('auth', { type: steps.LOGIN }),
-      },
+      // {
+      //   title: isLogined ? 'Logout' : 'Login',
+      //   onClick: isLogined
+      //     ? logout
+      //     : () => openModal('auth', { type: steps.LOGIN }),
+      // },
     ];
 
     if (isLogined) {

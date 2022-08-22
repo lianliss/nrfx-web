@@ -1,0 +1,40 @@
+.DepositModal__InfoWrapper {
+  background: var(--white);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-panel);
+  padding: 16.06px 13.5px;
+  text-align: center;
+  flex: 1;
+
+  &.large {
+    p:not(:first-child),
+    .blue:not(.extra-small) {
+      margin-top: 0;
+    }
+  }
+
+  &.secondary {
+    background-color: #e5ebfc;
+  }
+
+  p {
+    &:not(:first-child) {
+      margin-top: 7px;
+    }
+  }
+
+  .blue:not(.extra-small) {
+    margin-top: 5px;
+  }
+
+  .CopyTextComponent__content {
+    display: flex;
+    align-items: center;
+
+    .isvg {
+      position: absolute;
+      right: -5px;
+      transform: translateX(100%);
+    }
+  }
+}

@@ -90,8 +90,7 @@ export default function LoadingStatus({
 }
 
 LoadingStatus.propTypes = {
-  status: PropTypes.oneOf(["loading", "failed", "failed_connection"])
-    .isRequired,
+  status: PropTypes.string, // (["loading", "failed", "failed_connection"])
   onRetry: PropTypes.func,
   inline: PropTypes.bool
 };

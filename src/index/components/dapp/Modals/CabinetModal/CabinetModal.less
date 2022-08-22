@@ -1,0 +1,44 @@
+.CabinetModal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  z-index: 999;
+
+  .Modal__box {
+    padding: 0;
+    background: transparent;
+
+    & > * {
+      position: relative;
+      transform: none;
+      left: auto;
+      right: auto;
+      top: auto;
+      bottom: auto;
+      max-height: 100% !important;
+      box-shadow: none;
+    }
+  }
+
+  .adaptive & {
+    padding: 0;
+    height: auto;
+    min-height: 100vh;
+    background: transparent;
+
+    .Modal__box {
+      background: rgba(1, 1, 1, 0.2);
+
+      & > * {
+        width: 100% !important;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+  }
+}

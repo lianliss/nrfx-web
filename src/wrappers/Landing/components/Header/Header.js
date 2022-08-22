@@ -6,7 +6,6 @@ import MobileMenu from "../MobileMenu/MobileMenu";
 import "./Header.less";
 import SVG from "utils/svg-wrap";
 import * as actions from "src/actions/index";
-import * as steps from "../../../../components/AuthModal/fixtures";
 import { useRoute, useRouter } from "react-router5";
 import * as pages from "../../../../index/constants/pages";
 import { useSelector } from "react-redux";
@@ -108,32 +107,42 @@ export default () => {
           </ul>
 
           <div className="Header__authButtons">
-            {user || pending ? (
+            <ButtonWrapper>
               <Button
                 type="secondary"
                 onClick={() => {
-                  router.navigate(pages.WALLET);
+                  router.navigate(pages.DAPP);
                 }}
               >
-                <Lang name="cabinet_header_cabinet" />
+                <Lang name="site_launch_app" />
+              </Button>
+              <Button
+                type="lite"
+                onClick={() => {
+                  actions.openStateModal("language");
+                }}
+              >
+                {currentLang.toUpperCase()}
+              </Button>
+            </ButtonWrapper>
+            {/* {user || pending ? (
+              <Button
+                type="secondary"
+                onClick={() => {
+                  router.navigate(pages.DAPP);
+                }}
+              >
+                <Lang name="site_launch_app" />
               </Button>
             ) : (
               <ButtonWrapper>
                 <Button
-                  type="lite"
-                  onClick={() => {
-                    actions.openModal("auth", { type: steps.LOGIN });
-                  }}
-                >
-                  <Lang name="site__authModalLogInBtn" />
-                </Button>
-                <Button
                   type="secondary"
                   onClick={() => {
-                    actions.openModal("auth", { type: steps.REGISTRATION });
+                    router.navigate(pages.DAPP);
                   }}
                 >
-                  <Lang name="site__authModalSignUpBtn" />
+                  <Lang name="site_launch_app" />
                 </Button>
                 <Button
                   type="lite"
@@ -144,7 +153,7 @@ export default () => {
                   {currentLang.toUpperCase()}
                 </Button>
               </ButtonWrapper>
-            )}
+            )} */}
           </div>
 
           <div

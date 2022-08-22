@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Web3 from 'web3/dist/web3.min.js';
+import SHA256 from "crypto-js/sha256";
 import wei from 'utils/wei';
 import wait from 'utils/wait';
 import _ from 'lodash';
@@ -11,6 +12,9 @@ import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fractio
 import significant from 'utils/significant';
 import TokenContract from './web3Provider/token';
 import MasterChefContract from './web3Provider/MasterChefContract';
+import web3Backend from './web3-backend';
+import * as actions from "src/actions";
+import * as toast from "src/actions/toasts";
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -19,6 +23,13 @@ const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigIn
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
 
+const KNOWN_FIATS = [
+  {symbol: 'RUB', logoURI: 'https://static.narfex.com/img/currencies/rubles.svg'},
+  {symbol: 'UAH', logoURI: 'https://static.narfex.com/img/currencies/uah-gryvnya.svg'},
+  {symbol: 'IDR', logoURI: 'https://static.narfex.com/img/currencies/indonesian-rupiah.svg'},
+  {symbol: 'CNY', logoURI: 'https://static.narfex.com/img/currencies/yuan-cny.svg'},
+];
+
 class Web3Provider extends React.PureComponent {
 
   state = {
@@ -26,11 +37,16 @@ class Web3Provider extends React.PureComponent {
     accountAddress: null,
     balancesRequested: null,
     blocksPerSecond: 0,
+    balances: {
+      tokens: [],
+      fiats: []
+    },
     chainId: null,
     tokens: networks[56].tokens,
     pools: null,
     poolsList: networks[56].poolsList,
     prices: {},
+    fiats: {},
   };
 
   ethereum = null;
@@ -41,11 +57,25 @@ class Web3Provider extends React.PureComponent {
   routerAddress = networks[56].providerAddress;
   tokenSale = networks[56].tokenSale;
   saleFactory = networks[56].saleFactory;
+  fiatFactory = networks[56].fiatFactory;
   wrapBNB = networks[56].wrapBNB;
   web3 = null;
   web3Host = null;
   farm = null;
   pairs = {};
+  connectionCheckTimeout;
+
+  // Moralis
+  moralis = {
+    api: 'https://deep-index.moralis.io/api/v2',
+    headers: {
+      'X-API-Key': 'woP1gbSiPFLSSG92XkCvSud3dc6eYfzU4sG4kVeim105GMbLrSKv7mVdrWgVphTq',
+      accept: 'application/json',
+    },
+    params: {
+      chain: 'bsc',
+    }
+  };
 
   getWeb3() {
     if (this.state.isConnected) {
@@ -64,14 +94,24 @@ class Web3Provider extends React.PureComponent {
     this.web3Host = new Web3(provider);
 
     // Check web3 wallet plugin
-    if (window.ethereum
-      && window.ethereum.isConnected()
-      && window.ethereum.selectedAddress) {
-      this.connectWallet();
-    }
+    this.checkConnection();
 
     // Get tokens list
     this.getTokens();
+  }
+
+  checkConnection() {
+    try {
+      if (!_.get(this, 'state.isConnected')
+        && !!window.ethereum
+        && !!window.ethereum.isConnected()
+        && !!window.ethereum.selectedAddress) {
+        this.connectWallet();
+      }
+    } catch (error) {
+      console.error('[checkConnection]', error);
+    }
+    this.connectionCheckTimeout = setTimeout(this.checkConnection.bind(this), 1000);
   }
 
   componentWillUnmount() {
@@ -216,6 +256,34 @@ class Web3Provider extends React.PureComponent {
     ? `https://bscscan.com/tx/${address}`
     : `https://testnet.bscscan.com/tx/${address}`;
 
+
+  /**
+   * Set balances
+   * @param balances {array || function} balances object
+   * @param type {string} fiats, tokens, clear
+   */
+   setBalances(balances, type = 'tokens') {
+    if(type === 'clear') {
+      this.setState({
+        balances: {
+          fiats: [],
+          tokens: [],
+        }
+      });
+
+      return;
+    }
+
+    this.setState(state => ({
+      balances: {
+        ...state.balances,
+        [type]: balances instanceof Function
+          ? balances(state.balances[type])
+          : balances,
+      },
+    }));
+  }
+
   /**
    * Switch to another chain
    * @param id {integer} chainID
@@ -223,6 +291,7 @@ class Web3Provider extends React.PureComponent {
   setChain(id) {
     try {
       if (!networks[id]) {
+        if (!id) toast.error(`Check your network connection`);
         return this.setState({
           chainId: id,
         })
@@ -230,6 +299,9 @@ class Web3Provider extends React.PureComponent {
       Object.assign(this, networks[id]);
       this.farm = this.getFarmContract();
       this.pairs = {};
+      if (this.state.chainId !== id) {
+        toast.success(`Selected network is #${id}`);
+      }
       this.setState({
         tokens: networks[id].tokens,
         poolsList: networks[id].poolsList,
@@ -244,6 +316,71 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  onConnect = info => {
+    console.log('[onConnect]', info);
+    if (!this._mounted) return;
+    const {chainId} = info;
+    this.setState({
+      isConnected: true,
+      accountAddress: this.ethereum.selectedAddress,
+    });
+    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+  };
+
+  onAccountsChanged = accounts => {
+    console.log('[onAccountsChanged]', accounts);
+    const accountAddress = accounts[0];
+
+    if (!this._mounted) return;
+    if (!accountAddress) {
+      this.setState({
+        isConnected: false,
+        accountAddress: null,
+      });
+    } else {
+      this.setState({
+        isConnected: true,
+        accountAddress,
+      });
+    }
+  };
+
+  onChainChanged = chainId => {
+    console.log('[onChainChanged]', chainId, this.web3Host.utils.hexToNumber(chainId));
+    if (!this._mounted) return;
+    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+  };
+
+  onDisconnect = reason => {
+    console.log('[onDisconnect]', reason.message);
+    if (!this._mounted) return;
+    this.setState({
+      isConnected: false,
+      accountAddress: null,
+    });
+  };
+
+  onMessage = message => {
+    console.log('[onMessage]', message);
+    if (!this._mounted) return;
+  };
+
+  ethereumSubsribe = () => {
+    this.ethereum.on('connect', this.onConnect.bind(this));
+    this.ethereum.on('accountsChanged', this.onAccountsChanged.bind(this));
+    this.ethereum.on('chainChanged', this.onChainChanged.bind(this));
+    this.ethereum.on('disconnect', this.onDisconnect.bind(this));
+    this.ethereum.on('message', this.onMessage.bind(this));
+  };
+
+  ethereumUnsubscribe = () => {
+    this.ethereum.removeListener('connect', this.onConnect.bind(this));
+    this.ethereum.removeListener('accountsChanged', this.onAccountsChanged.bind(this));
+    this.ethereum.removeListener('chainChanged', this.onChainChanged.bind(this));
+    this.ethereum.removeListener('disconnect', this.onDisconnect.bind(this));
+    this.ethereum.removeListener('message', this.onMessage.bind(this));
+  };
+
   /**
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
@@ -255,7 +392,6 @@ class Web3Provider extends React.PureComponent {
       }
       this.ethereum = window.ethereum;
       this.web3 = new Web3(this.ethereum);
-      console.log('this.ethereum', this.ethereum);
       this.setChain(this.getWeb3().utils.hexToNumber(this.ethereum.chainId));
 
       // Set account address
@@ -266,51 +402,20 @@ class Web3Provider extends React.PureComponent {
 
       // Set provider state
       if (!this._mounted) return;
+      this.getTokens();
       this.setState({
         isConnected: true,
         accountAddress,
       });
 
+      // Clear old events
+      this.ethereumUnsubscribe();
+      this.ethereumSubsribe();
+
       // On account address change
-      this.ethereum.on('accountsChanged', accounts => {
-        const accountAddress = accounts[0];
-        console.log('accountsChanged', accounts);
-
-        if (!this._mounted) return;
-        if (!accountAddress) {
-          this.setState({
-            isConnected: false,
-            accountAddress: null,
-          });
-        } else {
-          this.setState({
-            isConnected: true,
-            accountAddress,
-          });
-        }
-      });
-
-      // On chain change
-      this.ethereum.on('chainChanged', (chainId) => {
-        console.log('chainChanged', chainId, this.web3Host.utils.hexToNumber(this.ethereum.chainId));
-        this.setChain(this.web3Host.utils.hexToNumber(chainId));
-      });
-
-      // On disconnect
-      this.ethereum.on('disconnect', error => {
-        console.log('Wallet disconnected', error);
-        this.setState({
-          isConnected: false,
-          accountAddress: null,
-        });
-      });
-
-      // On message
-      this.ethereum.on('message', message => {
-        console.log('Wallet message', message);
-      });
     } catch (error) {
       console.log('error', error);
+      throw error;
     }
   }
 
@@ -332,7 +437,8 @@ class Web3Provider extends React.PureComponent {
       const result = _.uniqBy([
         ...this.state.tokens,
         ...tokens,
-      ], 'address');
+      ], 'address')
+        .filter(t => t.chainId === this.state.chainId);
       this.setState({
         tokens: result,
       });
@@ -477,7 +583,8 @@ class Web3Provider extends React.PureComponent {
   async getTokenUSDPrice(token) {
     try {
       const USDT = this.state.tokens.find(t => t.symbol === 'USDT');
-      return token.address.toLowerCase() === USDT.address.toLowerCase()
+      const address = token.address ? token.address.toLowerCase() : null;
+      return address === USDT.address.toLowerCase()
         ? 1
         : await this.getTokensRelativePrice(token, USDT);
     } catch (error) {
@@ -586,12 +693,18 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
     try {
+      // Set positive balance tokens
+      this.setBalances(this.state.tokens.filter(t => t.balance > 0));
+
       if (!this.state.isConnected) return;
       // Stop additional loads
       if (this.state.balancesRequested === accountAddress) return;
       this.setState({
         balancesRequested: accountAddress,
       });
+
+      // Clear tokens balances
+      this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
       const chunks = _.chunk(
@@ -621,7 +734,6 @@ class Web3Provider extends React.PureComponent {
 
             // Get token price for non-zero balance
             if (balance !== "0") {
-              console.log('[loadAccountBalances]', token.symbol, balance);
               this.getTokenUSDPrice(token).then(price => {
 
                 // Save to the state
@@ -633,7 +745,8 @@ class Web3Provider extends React.PureComponent {
                   // Update token price
                   tokenState.price = price;
                   return state;
-                })
+                });
+                this.setBalances(state => [...state, token]);
               }).catch(error => {
                 console.error('[loadAccountBalances][getTokenUSDPrice]', token.symbol, token.address, error);
               })
@@ -642,8 +755,10 @@ class Web3Provider extends React.PureComponent {
           return newState;
         });
       }
+      return 'loaded';
     } catch (error) {
       console.error('[loadAccountBalances]', accountAddress, error);
+      return 'error';
     }
   }
 
@@ -1014,7 +1129,209 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async updateFiats(symbol) {
+    try {
+      const {accountAddress, chainId} = this.state;
+      const fiats = _.cloneDeep(this.state.fiats);
+      let list = _.get(fiats, 'list', []);
+
+      if (!list.length) {
+        const factoryContract = new (this.getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/fiatFactory'),
+          this.fiatFactory,
+        );
+        list = await factoryContract.methods.getFiats().call();
+        fiats.list = list;
+      }
+
+      const userId = `${chainId}${accountAddress}`;
+      const userFiats = (await Promise.all(list.map(fiatAddress => {
+        const fiatContract = new (this.getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/fiat'),
+          fiatAddress,
+        );
+        return fiatContract.methods.getInfo(accountAddress).call();
+      }))).map((fiat, index) => {
+        const known = KNOWN_FIATS.find(s => s.symbol === fiat[1]) || {};
+        return {
+          ...known,
+          address: list[index],
+          name: fiat[0],
+          symbol: fiat[1],
+          chainId,
+          decimals: 18,
+          balance: fiat[2],
+        }
+      });
+      fiats[userId] = userFiats;
+      this.setState({
+        fiats,
+      });
+      return fiats;
+    } catch (error) {
+      console.error('[updateFiats]', error);
+    }
+  }
+
+  async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams) {
+    const {isConnected, accountAddress} = this.state;
+    if (!isConnected) throw new Error('Wallet is not connected');
+    try {
+      const hash = SHA256(accountAddress, {outputLength: 4});
+      const key = `nrfx-signature-${hash}`;
+      const message = `Sign up with code ${hash}`;
+      let signature = window.localStorage.getItem(key);
+      if (!signature) {
+        signature = await this.ethereum.request({
+          method: 'personal_sign',
+          params: [
+            this.web3.utils.utf8ToHex(message),
+            accountAddress,
+          ],
+        });
+        window.localStorage.setItem(key, signature);
+      }
+      if (!!modalParams && modalParams.isInProgress) {
+        actions.openModal("transaction_submitted", {}, modalParams);
+      }
+      return await web3Backend[method](path, {
+        headers: {
+          'nrfx-message': hash,
+          'nrfx-sign': signature,
+        },
+        params
+      });
+    } catch (error) {
+      console.error('[backendRequest]', error);
+      throw error;
+    }
+  }
+
+  async cardReserve(amount, currency, bank) {
+    try {
+      const result = await this.backendRequest({
+          amount, currency, bank,
+        },
+        `Topup ${amount} ${currency} with ${_.capitalize(bank)}`,
+        'cards/reservation',
+        'post',
+      );
+      console.log('[cardReserve]', result);
+      return result;
+    } catch (error) {
+      console.error('[cardReserve]', error);
+    }
+  }
+
+  async confirmPayment(operationId) {
+    try {
+      const result = await this.backendRequest({
+          operationId,
+        },
+        `Confirm payment #${operationId}`,
+        'cards/confirm',
+        'post',
+      );
+      console.log('[confirmPayment]', result);
+      return true;
+    } catch (error) {
+      console.error('[confirmPayment]', error);
+    }
+  }
+
+  async cancelReservation(operationId) {
+    try {
+      const result = await this.backendRequest({
+          operationId,
+        },
+        `Cancel card reservation #${operationId}`,
+        'cards/cancel',
+        'post',
+      );
+      console.log('[cancelReservation]', result);
+      return true;
+    } catch (error) {
+      console.error('[cancelReservation]', error);
+    }
+  }
+
+  async exchange(fiat, coin, fiatAmount, modalParams) {
+    try {
+      const result = await this.backendRequest({
+          fiat,
+          coin,
+          fiatAmount,
+        },
+        `Exchange ${fiatAmount} ${fiat} to ${coin}`,
+        'swap/exchange',
+        'post',
+        modalParams,
+      );
+      console.log('[exchange]', result);
+      return true;
+    } catch (error) {
+      console.error('[exchange]', error);
+      throw error;
+    }
+  }
+
+  // Get block from date.
+  async dateToBlockMoralis (date = new Date()) {
+    // Date to unix timestamp.
+    const unixDate = Math.floor(date.getTime() / 1000);
+
+    // Moralis request data.
+    const {headers, params, api} = this.moralis;
+
+    return axios
+      .get(`${api}/dateToBlock`, {
+        headers,
+        params: {
+          ...params,
+          date: unixDate,
+        },
+      })
+      .then((r) => r.data.block);
+  };
+
+  // Get token price from contract (required), block (optional).
+  async getTokenPriceMoralis (contractAddress, to_block = null) {
+    const {headers, params, api} = this.moralis;
+
+    return axios(`${api}/erc20/${contractAddress}/price`, {
+      headers,
+      params: {
+        ...params,
+        to_block,
+      },
+    }).then((r) => r.data.usdPrice);
+  };
+
+  /**
+   * Returns Token difference,
+   * price from {timeFrom}, price from {timeTo}
+   * @param address {string}
+   * @param timeFrom {Date}
+   * @param timeTo {Date}
+   * @return {object} {difference, priceFrom, priceTo}
+   */
+  async getSomeTimePricesPairMoralis (address, timeFrom, timeTo) {
+      const blockFrom = await this.dateToBlockMoralis(timeFrom);
+      const blockTo = timeTo ? await this.dateToBlockMoralis(timeTo) : null;
+
+      // Get prices
+      const priceTo = await this.getTokenPriceMoralis(address, blockTo ? blockTo : null);
+      const priceFrom = await this.getTokenPriceMoralis(address, blockFrom);
+
+      // Set price and difference
+      const difference = Number((priceTo / (priceFrom / 100) - 100).toFixed(2));
+
+      return { address, difference, priceFrom, priceTo };
+  }
+
   render() {
+    window.web3Provider = this;
+
     return <Web3Context.Provider value={{
       ...this.state,
       web3: this.web3,
@@ -1049,9 +1366,18 @@ class Web3Provider extends React.PureComponent {
       switchToChain: this.switchToChain.bind(this),
       getPairUSDTPrice: this.getPairUSDTPrice.bind(this),
       findTokenBySymbol: this.findTokenBySymbol.bind(this),
+      dateToBlockMoralis: this.dateToBlockMoralis.bind(this),
+      getTokenPriceMoralis: this.getTokenPriceMoralis.bind(this),
       numberToFraction: this.numberToFraction.bind(this),
+      getTokenAmount: this.getTokenAmount.bind(this),
+      getSomeTimePricesPairMoralis: this.getSomeTimePricesPairMoralis.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
+      updateFiats: this.updateFiats.bind(this),
+      cardReserve: this.cardReserve.bind(this),
+      confirmPayment: this.confirmPayment.bind(this),
+      cancelReservation: this.cancelReservation.bind(this),
+      exchange: this.exchange.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

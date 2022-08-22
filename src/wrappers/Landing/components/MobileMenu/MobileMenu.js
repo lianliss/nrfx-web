@@ -87,7 +87,10 @@ export default ({ visible, onClose }) => {
         </li>
       </ul>
       <div className="MobileMenu__authButtons">
-        {user /* True - anytime make button */ ? (
+        <Button onClick={() => router.navigate(pages.DAPP)}>
+          <Lang name="site_launch_app" />
+        </Button>
+        {/* {user ? (
           <Button
             onClick={() => {
               router.navigate(pages.WALLET);
@@ -96,24 +99,10 @@ export default ({ visible, onClose }) => {
             <Lang name="cabinet_header_cabinet" />
           </Button>
         ) : (
-          <>
-            <Button
-              onClick={() => {
-                actions.openModal("auth", { type: steps.REGISTRATION });
-              }}
-            >
-              <Lang name="site__authModalSignUpBtn" />
-            </Button>
-            <Button
-              onClick={() => {
-                actions.openModal("auth", { type: steps.LOGIN });
-              }}
-              type="secondary"
-            >
-              <Lang name="site__authModalLogInBtn" />
-            </Button>
-          </>
-        )}
+          <Button onClick={() => router.navigate(pages.DAPP)}>
+            <Lang name="site_launch_app" />
+          </Button>
+        )} */}
       </div>
     </div>
   );

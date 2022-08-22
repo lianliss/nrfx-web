@@ -206,6 +206,14 @@ export class Web3Backend {
     const array = new Uint8Array(response);
     FileDownload(array.buffer, 'report.xlsx');
   });
+  getReservation = (currency, accountAddress) => this.get('cards/reservation', {
+    params: {
+      currency, accountAddress,
+    }
+  });
+  getBanks = () => this.get('cards/banks');
+  getLimits = () => this.get('rates/limits');
+  getExchangerBalance = () => this.get('rates/balance');
 }
 
 const web3Backend = new Web3Backend();

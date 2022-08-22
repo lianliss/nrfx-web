@@ -1,0 +1,105 @@
+.ExchangerTopup {
+    margin-bottom: 18px;
+    border: none;
+    padding: 0 40px;
+    background: #fff;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+    border-radius: var(--radius-panel-large);
+    position: relative;
+
+    .ContentBox__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 115px;
+        overflow: hidden;
+    }
+    &__bg-icon {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -90px;
+        pointer-events: none;
+    }
+    &__info {
+        font-size: 18px;
+        font-weight: 600;
+
+        &-label {
+
+        }
+        &-balance {
+            margin-top: 9px;
+            display: flex;
+            align-items: center;
+
+            &.active {
+                color: var(--royal-blue);
+                cursor: pointer;
+            }
+            span {
+                display: inline-block;
+                font-size: 11px;
+                color: var(--royal-blue);
+                cursor: pointer;
+                margin-left: 8px;
+                opacity: 0.65;
+                padding: 4px 8px;
+                transition: all 0.15s ease;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        time.Timer {
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: var(--royal-blue);
+            font-weight: 600;
+        }
+    }
+
+    .Button {
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+        color: var(--royal-blue);
+        background: var(--alice-blue);
+        width: 189px;
+
+        &:after {
+            opacity: 0;
+        }
+        &:hover:after {
+            background: var(--royal-blue);
+            opacity: 0.1;
+        }
+    }
+
+    &__waiting {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    &.adaptive {
+        .ContentBox__content {
+            flex-direction: column;
+            height: initial;
+            padding: 20px 18px 26px;
+            text-align: center;
+        }
+        .ExchangerTopup {
+            &__actions {
+                margin-top: 20px;
+            }
+        }
+    }
+}

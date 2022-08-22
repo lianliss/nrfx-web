@@ -1,0 +1,96 @@
+.DepositModal {
+  .isvg {
+    display: flex;
+    align-items: center;
+  }
+
+  // Text styles
+  p,
+  span,
+  h3,
+  h4 {
+    &.blue {
+      color: var(--secondary-blue);
+    }
+    &.dark {
+      color: var(--dark-black);
+    }
+    &.secondary {
+      color: var(--cool-gray);
+    }
+
+    &.extra-small {
+      font-size: 12px;
+    }
+
+    &.small {
+      font-size: 14px;
+    }
+
+    &.medium {
+      font-size: 16px;
+    }
+
+    &.default {
+      font-weight: 600;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+    }
+
+    &.hight-height {
+      line-height: 150%;
+    }
+
+    &.large-height {
+      line-height: 18px;
+    }
+
+    &.extra-large-height {
+      line-height: 26px;
+    }
+
+    &.medium-weight {
+      font-weight: 500;
+    }
+
+    &.left {
+      text-align: left;
+    }
+
+    &.blue:not(.extra-small) {
+      margin-top: 10px;
+    }
+  }
+
+  .Button {
+    border-radius: 15px;
+  }
+}
+
+.adaptive .DepositModal {
+  height: 100%;
+  padding: 60px 10px 23px;
+  background: none;
+
+  .Modal {
+    &__box {
+      display: flex;
+      align-items: flex-start;
+      min-height: 100%;
+      width: 100%;
+      padding: 24px 11.5px !important;
+      box-shadow: none;
+      background: #fff !important;
+      box-shadow: 0px 34px 70px rgba(199, 201, 207, 0.25) !important;
+      border-radius: var(--radius-panel-large) !important;
+    }
+  }
+
+  .medium {
+    font-size: 14px;
+  }
+
+  .small {
+    font-size: 12px;
+  }
+}
