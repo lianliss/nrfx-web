@@ -8,6 +8,7 @@
   position: relative;
   box-shadow: 0px 15px 75px rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
+  animation: showFromBottom 0.5s;
 
   width: 100%;
   position: fixed;
@@ -37,6 +38,16 @@
     background: rgba(255, 255, 255, 0.75);
     height: calc(100% - 67px); // 67 is header height
     width: 100%;
+  }
+
+  @keyframes showFromBottom {
+    from {
+      transform: translateY(100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
   }
 }
 
