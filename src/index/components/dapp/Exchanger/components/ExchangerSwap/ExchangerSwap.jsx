@@ -15,6 +15,7 @@ import Lang from "src/components/Lang/Lang";
 import DexSwapInput from 'src/index/containers/dapp/DexSwap/components/DexSwapInput/DexSwapInput';
 import limits from 'src/index/constants/fiats';
 import * as toast from "src/actions/toasts";
+import CabinetModal from '../../../Modals/CabinetModal/CabinetModal';
 
 // Styles
 import './ExchangerSwap.less';
@@ -234,35 +235,45 @@ function ExchangerSwap(props) {
       </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
         Connect Wallet
       </Button></div>}
-      {isSelectFiat && <TokenSelect
-        onChange={value => {
-          setFiat(value);
-          setIsSelectFiat(false);
-        }}
-        onClose={() => setIsSelectFiat(false)}
-        selected={fiat}
-        isAdaptive={isAdaptive}
-        {...context}
-        tokens={fiats}
-        disableSwitcher
-        disableCommonBases
-        loadAccountBalances={() => {
-          console.log('LOAD');
-        }}
-      />}
-      {isSelectCoin && <TokenSelect
-        onChange={value => {
-          setCoin(value);
-          setIsSelectCoin(false);
-        }}
-        onClose={() => setIsSelectCoin(false)}
-        selected={coin}
-        isAdaptive={isAdaptive}
-        {...context}
-        tokens={coins}
-        disableSwitcher
-        loadAccountBalances={loadAccountBalances}
-      />}
+      {isSelectFiat && 
+        <CabinetModal onClose={() => setIsSelectFiat(false)}>
+          <TokenSelect
+            onChange={value => {
+              setFiat(value);
+              setIsSelectFiat(false);
+            }}
+            onClose={() => setIsSelectFiat(false)}
+            selected={fiat}
+            isAdaptive={isAdaptive}
+            {...context}
+            tokens={fiats}
+            disableSwitcher
+            disableCommonBases
+            disableName
+            loadAccountBalances={() => {
+              console.log('LOAD');
+            }}
+            size="small"
+          />
+        </CabinetModal>
+      }
+      {isSelectCoin &&
+      <CabinetModal onClose={() => setIsSelectCoin(false)}>
+        <TokenSelect
+          onChange={value => {
+            setCoin(value);
+            setIsSelectCoin(false);
+          }}
+          onClose={() => setIsSelectCoin(false)}
+          selected={coin}
+          isAdaptive={isAdaptive}
+          {...context}
+          tokens={coins}
+          disableSwitcher
+          loadAccountBalances={loadAccountBalances}
+        />
+      </CabinetModal>
+      }
     </ContentBox>
   )
 }

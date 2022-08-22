@@ -17,8 +17,8 @@ function CabinetModal({ children, onClose }) {
   }, []);
 
   return (
-    <Modal className="CabinetModal" onClose={onClose}>
-      {children}
+    <Modal className="CabinetModal" onClose={onClose} useOnCloseForAdaptive>
+      <div className="CabinetModal__container">{children}</div>
     </Modal>
   );
 }

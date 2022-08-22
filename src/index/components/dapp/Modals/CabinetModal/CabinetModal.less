@@ -12,7 +12,9 @@
   .Modal__box {
     padding: 0;
     background: transparent;
+  }
 
+  &__container {
     & > * {
       position: relative;
       transform: none;
@@ -30,15 +32,28 @@
     height: auto;
     min-height: 100vh;
     background: transparent;
+    overflow: hidden;
 
     .Modal__box {
-      background: rgba(1, 1, 1, 0.2);
+      box-shadow: none;
+      padding: 20px 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      overflow-y: scroll;
+      max-height: 100vh;
+    }
 
+    &__container {
       & > * {
         width: 100% !important;
         max-width: 500px;
         margin: 0 auto;
+        border: none;
       }
+    }
+
+    .Modal__back {
+      background: rgba(1, 1, 1, 0.25);
     }
   }
 }
