@@ -5,6 +5,7 @@ import web3Backend from 'services/web3-backend';
 import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
 import router from 'src/router';
+import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 
 // Components
 import CabinetContent from '../CabinetContent/CabinetContent';
@@ -271,6 +272,7 @@ function Exchanger(props) {
           <Instruction />
         </div>
       </div>
+      <TestnetOverlay mainnetOnly />
     </CabinetContent>
   );
 }

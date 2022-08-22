@@ -46,7 +46,7 @@ function Instruction() {
           </div>
           <div className="col">
             <a
-              href="https://narfex.gitbook.io/wiki/Start/buy_crypto/exchanger"
+              href="https://docs.narfex.com/narfex/products/exchanger"
               target="_blank"
             >
               <Button type="lightBlue">Learn more how it works</Button>

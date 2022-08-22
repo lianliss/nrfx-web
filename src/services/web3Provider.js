@@ -291,7 +291,7 @@ class Web3Provider extends React.PureComponent {
   setChain(id) {
     try {
       if (!networks[id]) {
-        toast.error(`Unknown network ID ${id}`);
+        if (!id) toast.error(`Check your network connection`);
         return this.setState({
           chainId: id,
         })
