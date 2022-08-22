@@ -10,6 +10,7 @@ import * as actions from "src/actions";
 import SVG from 'utils/svg-wrap';
 import { ContentBox, Button, Timer, BankLogo, Input } from 'src/ui';
 import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelect/TokenSelect';
+import DappInput from '../../../DappInput/DappInput';
 import Lang from "src/components/Lang/Lang";
 import DexSwapInput from 'src/index/containers/dapp/DexSwap/components/DexSwapInput/DexSwapInput';
 import limits from 'src/index/constants/fiats';
@@ -56,20 +57,9 @@ function ExchangerSwap(props) {
   const maxCoinAmount = _.get(limits, 'max', Infinity);
 
   // Fiat input value
-  const [fiatValue, setFiatValue] = React.useState(null);
+  const [fiatValue, setFiatValue] = React.useState('');
   const handleFiatInput = newValue => {
-    if (isAdaptive) {
-      setFiatValue(newValue);
-      return;
-    }
-    let value = `${newValue}`;
-    value = value.replace(',', '.');
-    if (value.length >= 2 && value[0] === '0' && value[1] !== '.') {
-      value = _.trimStart(value, '0');
-    }
-    if (!_.isNaN(Number(value)) || value === '.') {
-      setFiatValue(value);
-    }
+    setFiatValue(newValue);
   };
 
   // Calculate amount
@@ -97,6 +87,7 @@ function ExchangerSwap(props) {
     } else {
       setIsSelectFiat(true);
     }
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
   function coinSelector() {
@@ -109,6 +100,7 @@ function ExchangerSwap(props) {
     } else {
       setIsSelectCoin(true);
     }
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
   function topUp() {
@@ -169,9 +161,11 @@ function ExchangerSwap(props) {
           </div>
           <div className="SwapForm__form__control">
             <div className="ExchangerSwap__fiat-amount">
-              <Input placeholder="0.00"
-                     onTextChange={handleFiatInput}
-                     value={fiatValue} />
+              <DappInput placeholder="0.00"
+                     onChange={handleFiatInput}
+                     value={fiatValue}
+                     type="number"
+                     textPosition="right" />
               <span className="ExchangerSwap__link" onClick={() => handleFiatInput(fiatBalance)}>
                 Balance: {getFinePrice(fiatBalance)} {fiatSymbol}
               </span>
