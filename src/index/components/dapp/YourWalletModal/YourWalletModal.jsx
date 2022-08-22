@@ -17,6 +17,17 @@ function YourWalletModal(props) {
   const context = React.useContext(Web3Context);
   const { isConnected, chainId, accountAddress } = context;
 
+  const transactions = window.localStorage
+    .getItem('DexSwapTransactions')
+    ? JSON.parse(window.localStorage.getItem('DexSwapTransactions'))
+    : [];
+  const [transactionsCount, setTransactionsCount] = React.useState(transactions.length);
+
+  const onClear = () => {
+    window.localStorage.removeItem('DexSwapTransactions');
+    setTransactionsCount(0);
+  };
+
   React.useEffect(() => {
     if (!isConnected) {
       props.onClose();
@@ -34,7 +45,7 @@ function YourWalletModal(props) {
           <span>Connected</span>
         </div>
         <div className="col">
-          <Button type="lightBlue" size="extra_large">
+          <Button type="lightBlue" disabled size="extra_large">
             Change
           </Button>
         </div>
@@ -59,10 +70,10 @@ function YourWalletModal(props) {
         </div>
       </div>
       <div className="row">
-        <RecentTransactions items={[1, 2]} />
+        <RecentTransactions items={transactions} onClear={onClear} />
       </div>
       <div className="row">
-        <Button type="secondary-light" size="big">
+        <Button type="secondary-light" disabled size="big">
           Logout
         </Button>
       </div>
