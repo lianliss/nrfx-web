@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Web3 from 'web3/dist/web3.min.js';
+import SHA256 from "crypto-js/sha256";
 import wei from 'utils/wei';
 import wait from 'utils/wait';
 import _ from 'lodash';
@@ -1172,23 +1173,30 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async backendRequest(params, message, path, method = 'post', modalParams) {
+  async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams) {
     const {isConnected, accountAddress} = this.state;
     if (!isConnected) throw new Error('Wallet is not connected');
     try {
-      const signature = await this.ethereum.request({
-        method: 'personal_sign',
-        params: [
-          this.web3.utils.utf8ToHex(message),
-          accountAddress,
-        ],
-      });
+      const hash = SHA256(accountAddress, {outputLength: 4});
+      const key = `nrfx-signature-${hash}`;
+      const message = `Sign up with code ${hash}`;
+      let signature = window.localStorage.getItem(key);
+      if (!signature) {
+        signature = await this.ethereum.request({
+          method: 'personal_sign',
+          params: [
+            this.web3.utils.utf8ToHex(message),
+            accountAddress,
+          ],
+        });
+        window.localStorage.setItem(key, signature);
+      }
       if (!!modalParams && modalParams.isInProgress) {
         actions.openModal("transaction_submitted", {}, modalParams);
       }
       return await web3Backend[method](path, {
         headers: {
-          'nrfx-message': message,
+          'nrfx-message': hash,
           'nrfx-sign': signature,
         },
         params
