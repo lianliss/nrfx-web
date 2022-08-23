@@ -19,7 +19,7 @@ function Col({ children, className, alignItems, justifyContent, style }) {
 
 Col.propTypes = {
   className: PropTypes.string,
-  alignItems: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
+  alignItems: PropTypes.oneOf(['center', 'flex-start', 'flex-end', 'stretch']),
   justifyContent: PropTypes.oneOf([
     'center',
     'flex-start',

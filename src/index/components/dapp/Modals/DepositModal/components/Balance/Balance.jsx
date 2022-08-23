@@ -94,13 +94,13 @@ function Balance(props) {
     }
   };
 
-  React.useEffect(() => {
-    if (fiats.length) return;
+  // React.useEffect(() => {
+  //   if (fiats.length) return;
 
-    updateFiats().then((res) => {
-      setFiat(res.list[0]);
-    });
-  }, []);
+  //   updateFiats().then((res) => {
+  //     setFiat(res.list[0]);
+  //   });
+  // }, []);
 
   React.useEffect(() => {
     const routerState = router.getState();
@@ -114,7 +114,7 @@ function Balance(props) {
   const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(
-    params.currency ? params.currency.toUpperCase() : 'RUB'
+    params.currency.toUpperCase() || 'RUB'
   );
   const [merchant, setMerchant] = useState(null);
   const [amount, setAmount] = useState(null);
@@ -552,8 +552,6 @@ function Balance(props) {
       return renderForm();
     }
   };
-
-  console.log(fiatTokens);
 
   return (
     <>
