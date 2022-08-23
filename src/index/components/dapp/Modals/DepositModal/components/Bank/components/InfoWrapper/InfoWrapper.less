@@ -1,5 +1,5 @@
 .DepositModal__InfoWrapper {
-  background: var(--white);
+  background: var(--alice-blue);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: var(--radius-panel);
   padding: 16.06px 13.5px;
@@ -35,6 +35,12 @@
       position: absolute;
       right: -5px;
       transform: translateX(100%);
+    }
+  }
+
+  .adaptive & {
+    &:not(.secondary) {
+      background: var(--white);
     }
   }
 }

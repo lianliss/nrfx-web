@@ -479,7 +479,11 @@ function ChooseBank(props) {
   };
 
   return (
-    <Bank {...props} size="small" adaptive={adaptive}>
+    <Bank
+      {...props}
+      size={cardReservation ? 'medium' : 'small'}
+      adaptive={adaptive}
+    >
       {/* <Sidebar amount={amount} currency={currency} fee={fee} /> */}
       <RenderBody />
     </Bank>
