@@ -1,17 +1,28 @@
 .DepositModal__Bank {
   .Modal__box {
-    max-width: 650px;
     width: 100%;
   }
 
+  &.small {
+    .Modal__box {
+      max-width: 441px;
+    }
+  }
+
+  &.medium {
+    .Modal__box {
+      max-width: 468px;
+    }
+  }
+
   .DepositModal__container {
-    padding: 11px 36px 16px 9px;
-    background: var(--alice-blue);
+    padding: 0;
+    background: #fff;
     box-sizing: border-box;
   }
 
   &__container {
-    min-height: 585px;
+    min-height: 529px;
     flex: 1 1;
     box-sizing: border-box;
   }
@@ -38,23 +49,21 @@
 }
 
 .adaptive .DepositModal__Bank {
-  .Modal__box {
-    padding-bottom: 24px;
+  &.small .Modal__box,
+  &.medium .Modal__box {
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
   }
 
   &__container {
     align-items: flex-start !important;
     min-height: 0;
   }
-  
+
   .DepositModal__container {
     width: 100%;
     padding: 0;
-    background: transparent;
   }
 
   &__sidebar {

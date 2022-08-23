@@ -16,6 +16,9 @@
   }
 
   &__container {
+    width: 100%;
+    box-sizing: border-box;
+
     & > * {
       position: relative;
       transform: none;
@@ -45,9 +48,11 @@
     }
 
     &__container {
+      max-width: 500px;
+      margin: 0 auto;
+      
       & > * {
         width: 100% !important;
-        max-width: 500px;
         margin: 0 auto;
         border: none;
       }

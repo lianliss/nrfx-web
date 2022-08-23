@@ -1,15 +1,19 @@
 .DepositModal__ChooseBank {
-  padding-top: 24px;
-  padding-left: 47px;
+  padding: 24px 32px;
   flex: 1;
   box-sizing: border-box;
 
+  h3 {
+    margin-bottom: 24px;
+  }
+
   &-items {
-    margin-top: 48px;
+    min-height: 413px;
+    padding-top: 24px;
     margin-bottom: 30px;
-    padding-bottom: 28px;
     width: 100%;
-    border-bottom: 1px solid #c4c4c4;
+    border-top: 1px solid #c4c4c4;
+    box-sizing: border-box;
 
     .ScrollbarBox .ScrollbarTrackY {
       right: -25px !important;
@@ -24,7 +28,7 @@
   }
 
   &__empty {
-    margin-top: 171px;
+    margin-top: 136px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -33,6 +37,12 @@
 
     h3 {
       margin-bottom: 29px;
+      font-size: 20px;
+    }
+
+    svg {
+      width: 120px;
+      height: 120px;
     }
   }
 
@@ -41,21 +51,38 @@
   }
 
   &-item {
+    width: 100%;
+    padding: 12.5px 10px;
+    background: var(--alice-blue);
+    border-radius: var(--radius-panel);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
     cursor: pointer;
-    padding: 8px 0;
 
     & > * {
       width: 50%;
+      height: 25px;
       flex: 1;
     }
 
+    .Row {
+      .isvg {
+        margin-left: 10px;
+        
+        svg {
+          height: 11px;
+          width: 11px;
+        }
+      }
+    }
+
     &:not(:last-child) {
-      margin-bottom: 24px;
+      margin-bottom: 10px;
     }
   }
 
-  img {
-    margin-left: auto;
+  .bankIcon {
+    height: 25px;
   }
 
   .buttons {
@@ -87,10 +114,10 @@
 }
 
 .adaptive .DepositModal__ChooseBank {
-  padding: 52px 0 0;
+  padding: 24px 32px;
 
   &-items {
-    margin: 38px 0 54px;
+    margin: 0 0 30px;
     padding-bottom: 24px;
   }
 

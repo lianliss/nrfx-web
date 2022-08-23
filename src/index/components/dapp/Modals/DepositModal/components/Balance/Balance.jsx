@@ -60,8 +60,14 @@ const merchantList = {
 
 function Balance(props) {
   const context = React.useContext(Web3Context);
-  const { fiats, chainId, accountAddress, connectWallet, isConnected } =
-    context;
+  const {
+    fiats,
+    updateFiats,
+    chainId,
+    accountAddress,
+    connectWallet,
+    isConnected,
+  } = context;
   const isAdaptive = useSelector(adaptiveSelector);
   const banks = useSelector((state) => state.fiat.banks);
 
@@ -87,6 +93,14 @@ function Balance(props) {
       });
     }
   };
+
+  React.useEffect(() => {
+    if (fiats.length) return;
+
+    updateFiats().then((res) => {
+      setFiat(res.list[0]);
+    });
+  }, []);
 
   React.useEffect(() => {
     const routerState = router.getState();
@@ -538,6 +552,8 @@ function Balance(props) {
       return renderForm();
     }
   };
+
+  console.log(fiatTokens);
 
   return (
     <>
