@@ -6,7 +6,7 @@ import { classNames as cn } from 'src/utils';
 
 import './CabinetModal.less';
 
-function CabinetModal({ children, className, onClose }) {
+function CabinetModal({ children, className, closeOfRef = false, onClose }) {
   const containerRef = React.useRef(null);
 
   openCabinetModal();
@@ -20,6 +20,7 @@ function CabinetModal({ children, className, onClose }) {
   }, []);
 
   React.useEffect(() => {
+    if (!closeOfRef) return;
     if (!containerRef.current) return;
 
     document.addEventListener('click', handleOutClick);

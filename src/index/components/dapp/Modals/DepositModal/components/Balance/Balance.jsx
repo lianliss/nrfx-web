@@ -13,6 +13,7 @@ import SVG from 'utils/svg-wrap';
 import { Status } from 'src/index/containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen';
 import { Web3Context } from 'services/web3Provider';
 import TokenSelect from 'src/index/containers/dapp/DexSwap/components/TokenSelect/TokenSelect';
+import CabinetModal from '../../../CabinetModal/CabinetModal';
 
 // Utils
 import { getLang, classNames as cn } from 'src/utils';
@@ -25,7 +26,6 @@ import { closeModal } from 'src/actions';
 
 // Styles
 import './Balance.less';
-import CabinetModal from '../../../CabinetModal/CabinetModal';
 
 const merchantList = {
   advcash: {
@@ -114,7 +114,7 @@ function Balance(props) {
   const { adaptive } = props;
   const { params } = router.getState();
   const [currency, setCurrency] = useState(
-    params.currency.toUpperCase() || 'RUB'
+    params.currency ? params.currency.toUpperCase() : 'RUB'
   );
   const [merchant, setMerchant] = useState(null);
   const [amount, setAmount] = useState(null);
@@ -573,7 +573,7 @@ function Balance(props) {
         {renderContent()}
       </DepositModal>
       {isSelectFiat && (
-        <CabinetModal onClose={() => setIsSelectFiat(false)}>
+        <CabinetModal onClose={() => setIsSelectFiat(false)} closeOfRef>
           <TokenSelect
             onChange={(value) => {
               setFiat(value);
