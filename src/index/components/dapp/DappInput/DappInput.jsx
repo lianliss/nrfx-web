@@ -18,6 +18,7 @@ function DappInput({
   selectLastSymbol,
   indicator,
   error,
+  disabled,
 }) {
   const [inputState, setInputState] = React.useState(value ? value : '');
   const adaptive = useSelector(adaptiveSelector);
@@ -27,6 +28,14 @@ function DappInput({
   const style = {
     textAlign: textPosition,
   };
+
+  React.useEffect(() => {
+    if (type === 'number') return;
+
+    if (value !== inputState) {
+      setInputState(value);
+    }
+  }, [value]);
 
   // Set padding for input of indicator width.
   React.useEffect(() => {
@@ -98,6 +107,7 @@ function DappInput({
         placeholder={placeholder}
         style={{ ...style, ...padding }}
         onFocus={handleFocus}
+        disabled={disabled}
       />
       <div className="DappInput__indicator" ref={indicatorRef}>
         {indicator}
@@ -123,7 +133,6 @@ DappInput.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   selectLastSymbol: PropTypes.bool,
-  error: PropTypes.bool,
 };
 
 export default DappInput;

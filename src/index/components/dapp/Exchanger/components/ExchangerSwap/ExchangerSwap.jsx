@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
+import { classNames } from "src/utils";
 import getFinePrice from 'utils/get-fine-price';
 import * as actions from "src/actions";
 
@@ -74,9 +75,10 @@ function ExchangerSwap(props) {
   // Button availability
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [processingTime, setProcessingTime] = React.useState(false);
-  const isAvailable = coinAmount >= minCoinAmount
-    && coinAmount <= maxCoinAmount
-    && fiatBalance >= fiatAmount;
+  const isAvailableOfFiat = fiatBalance >= fiatAmount;
+  const isAvailableOfMax = coinAmount <= maxCoinAmount;
+  const isAvailableOfMin = coinAmount >= minCoinAmount;
+  const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
 
   function fiatSelector() {
     if (!isConnected) {
@@ -212,15 +214,30 @@ function ExchangerSwap(props) {
           </div>
           <div className="SwapForm__form__control">
             <div className="ExchangerSwap__fiat-amount">
-              <Input placeholder="0.00"
+              <DappInput placeholder="0.00"
                      disabled
-                     value={`≈ ${getFinePrice(coinAmount)}`} />
-              <span>
+                     value={`≈ ${getFinePrice(coinAmount)}`}
+                     textPosition="right"
+                     error={!!(coinAmount && !isAvailable)} />
+              <span
+                className={classNames({
+                  ['error-orange']:
+                    coinAmount && !isAvailableOfMin,
+                })}
+              >
                 Min: {getFinePrice(minCoinAmount)} {coinSymbol}
               </span>
-              {isAdaptive && <div className="ExchangerSwap__rate">
-                1 {coinSymbol} ≈ {getFinePrice(rateDisplay)} {fiatSymbol}
-              </div>}
+              {isAdaptive && (
+                <div
+                  className={classNames({
+                    ExchangerSwap__rate: true,
+                    ['error-orange']:
+                      coinAmount && !isAvailableOfMin,
+                  })}
+                >
+                  1 {coinSymbol} ≈ {getFinePrice(rateDisplay)} {fiatSymbol}
+                </div>
+              )}
             </div>
           </div>
         </div>
