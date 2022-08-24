@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import web3Backend from 'src/services/web3-backend';
-import {Web3Context} from "src/services/web3Provider";
-import * as actionTypes from "src/actions/actionTypes";
-import * as toast from "src/actions/toasts";
+import { Web3Context } from 'src/services/web3Provider';
+import * as actionTypes from 'src/actions/actionTypes';
+import * as toast from 'src/actions/toasts';
 
 // Components
 import {
@@ -41,7 +41,7 @@ function ChoosedBank(props) {
   } = props;
   const dispatch = useDispatch();
   const context = React.useContext(Web3Context);
-  const {confirmPayment} = context;
+  const { confirmPayment } = context;
   const { card } = cardReservation;
   const { bank } = card;
   console.log('currency', currency);
@@ -55,80 +55,40 @@ function ChoosedBank(props) {
   };
 
   const handleConfirmPayment = () => {
-    confirmPayment(cardReservation.reservation.id).then(data => {
-      dispatch({
-        type: actionTypes.WALLET_SET_CARD_RESERVATION,
-        payload: {
-          ...cardReservation,
-          reservation: {
-            ...cardReservation.reservation,
-            status: 'wait_for_review'
-          }
-        }
+    confirmPayment(cardReservation.reservation.id)
+      .then((data) => {
+        dispatch({
+          type: actionTypes.WALLET_SET_CARD_RESERVATION,
+          payload: {
+            ...cardReservation,
+            reservation: {
+              ...cardReservation.reservation,
+              status: 'wait_for_review',
+            },
+          },
+        });
+        const payload = {};
+        payload[currency] = {
+          ...cardReservation.reservation,
+          status: 'wait_for_review',
+        };
+        dispatch({
+          type: actionTypes.FIAT_TOPUP_UPDATE,
+          payload,
+        });
+      })
+      .catch((err) => {
+        toast.error(err.message);
       });
-      const payload = {};
-      payload[currency] = {
-        ...cardReservation.reservation,
-        status: 'wait_for_review',
-      };
-      dispatch({
-        type: actionTypes.FIAT_TOPUP_UPDATE,
-        payload,
-      });
-    }).catch(err => {
-      toast.error(err.message);
-    });
   };
 
   return (
-    <Col className="DepositModal__ChoosedBank" alignItems='stretch'>
-      <h3 className="default dark medium">Choose a bank</h3>
-      <Row alignItems="center">
+    <Col className="DepositModal__ChoosedBank" alignItems="stretch">
+      <Row alignItems="center" justifyContent="center">
         <BankLogo name={bank.code} />
         <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
       </Row>
       <Col>
-        <div className="DepositModal__ChoosedBank__items">
-          <InfoWrapper type="secondary">
-            <p className="dark default small hight-height left">
-              <span className="blue">
-                <Lang name="global_attention" />
-              </span>
-              <br />
-              <Lang name="fiatRefillCard_attention_text_sendExactly" />
-              &nbsp;
-              <span className="blue">
-                <NumberFormat number={amount} currency={currency} />
-                &nbsp;
-                <Lang name="fiatRefillCard_attention_text_oneTransaction" />
-                &nbsp;
-              </span>
-              <Lang name="fiatRefillCard_attention_text" />
-            </p>
-          </InfoWrapper>
-        </div>
-        <div className="DepositModal__ChoosedBank__items">
-          <InfoWrapper>
-            <p className="dark default hight-height extra-small">
-              <LineBreaker
-                text={getLang('An account is reserved \nfor you until')}
-              />
-              &nbsp;
-              {dateFormat(card.expire_in)}
-            </p>
-            <p className="blue default small">
-              <Timer onFinish={onFinish} time={card.expire_in * 1000} />
-            </p>
-          </InfoWrapper>
-          <InfoWrapper>
-            <p className="dark default hight-height extra-small">
-              <Lang name="fiatRefillCard_paymentAmount" />
-            </p>
-            <p className="blue default small">
-              <NumberFormat number={amount} currency={currency} />
-            </p>
-          </InfoWrapper>
-        </div>
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper size="large">
             <p className="dark default hight-height extra-small extra-large-height">
@@ -145,6 +105,43 @@ function ChoosedBank(props) {
             </p>
             <p className="blue default small extra-large-height">
               {bank.holder_name}
+            </p>
+          </InfoWrapper>
+        </div>
+        <div className="DepositModal__ChoosedBank__items">
+          <InfoWrapper>
+            <p className="dark default hight-height extra-small">
+              <Lang name="fiatRefillCard_completeTransferBefore" />
+            </p>
+            <p className="blue default small">
+              <Timer onFinish={onFinish} time={card.expire_in * 1000} />
+            </p>
+          </InfoWrapper>
+          <InfoWrapper>
+            <p className="dark default extra-small">
+              <Lang name="fiatRefillCard_paymentAmount" />
+            </p>
+            <p className="blue default small">
+              <NumberFormat number={amount} currency={currency} />
+            </p>
+          </InfoWrapper>
+        </div>
+        <div className="DepositModal__ChoosedBank__items">
+          <InfoWrapper type="secondary">
+            <p className="dark default extra-small small-height">
+              <span className="blue">
+                <Lang name="global_attention" />
+              </span>
+              <br />
+              <Lang name="fiatRefillCard_attention_text_sendExactly" />
+              &nbsp;
+              <span className="blue">
+                <NumberFormat number={amount} currency={currency} />
+                &nbsp;
+                <Lang name="fiatRefillCard_attention_text_oneTransaction" />
+                &nbsp;
+              </span>
+              <Lang name="fiatRefillCard_attention_text" />
             </p>
           </InfoWrapper>
         </div>

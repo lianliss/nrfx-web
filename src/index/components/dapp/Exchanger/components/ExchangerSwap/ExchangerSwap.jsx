@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
+import { classNames } from "src/utils";
 import getFinePrice from 'utils/get-fine-price';
 import * as actions from "src/actions";
 
@@ -15,6 +16,7 @@ import Lang from "src/components/Lang/Lang";
 import DexSwapInput from 'src/index/containers/dapp/DexSwap/components/DexSwapInput/DexSwapInput';
 import limits from 'src/index/constants/fiats';
 import * as toast from "src/actions/toasts";
+import CabinetModal from '../../../Modals/CabinetModal/CabinetModal';
 
 // Styles
 import './ExchangerSwap.less';
@@ -73,9 +75,10 @@ function ExchangerSwap(props) {
   // Button availability
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [processingTime, setProcessingTime] = React.useState(false);
-  const isAvailable = coinAmount >= minCoinAmount
-    && coinAmount <= maxCoinAmount
-    && fiatBalance >= fiatAmount;
+  const isAvailableOfFiat = fiatBalance >= fiatAmount;
+  const isAvailableOfMax = coinAmount <= maxCoinAmount;
+  const isAvailableOfMin = coinAmount >= minCoinAmount;
+  const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
 
   function fiatSelector() {
     if (!isConnected) {
@@ -211,15 +214,30 @@ function ExchangerSwap(props) {
           </div>
           <div className="SwapForm__form__control">
             <div className="ExchangerSwap__fiat-amount">
-              <Input placeholder="0.00"
+              <DappInput placeholder="0.00"
                      disabled
-                     value={`≈ ${getFinePrice(coinAmount)}`} />
-              <span>
+                     value={`≈ ${getFinePrice(coinAmount)}`}
+                     textPosition="right"
+                     error={!!(coinAmount && !isAvailableOfMin)} />
+              <span
+                className={classNames({
+                  ['error-orange']:
+                    coinAmount && !isAvailableOfMin,
+                })}
+              >
                 Min: {getFinePrice(minCoinAmount)} {coinSymbol}
               </span>
-              {isAdaptive && <div className="ExchangerSwap__rate">
-                1 {coinSymbol} ≈ {getFinePrice(rateDisplay)} {fiatSymbol}
-              </div>}
+              {isAdaptive && (
+                <div
+                  className={classNames({
+                    ExchangerSwap__rate: true,
+                    ['error-orange']:
+                      coinAmount && !isAvailableOfMin,
+                  })}
+                >
+                  1 {coinSymbol} ≈ {getFinePrice(rateDisplay)} {fiatSymbol}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -234,35 +252,45 @@ function ExchangerSwap(props) {
       </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
         Connect Wallet
       </Button></div>}
-      {isSelectFiat && <TokenSelect
-        onChange={value => {
-          setFiat(value);
-          setIsSelectFiat(false);
-        }}
-        onClose={() => setIsSelectFiat(false)}
-        selected={fiat}
-        isAdaptive={isAdaptive}
-        {...context}
-        tokens={fiats}
-        disableSwitcher
-        disableCommonBases
-        loadAccountBalances={() => {
-          console.log('LOAD');
-        }}
-      />}
-      {isSelectCoin && <TokenSelect
-        onChange={value => {
-          setCoin(value);
-          setIsSelectCoin(false);
-        }}
-        onClose={() => setIsSelectCoin(false)}
-        selected={coin}
-        isAdaptive={isAdaptive}
-        {...context}
-        tokens={coins}
-        disableSwitcher
-        loadAccountBalances={loadAccountBalances}
-      />}
+      {isSelectFiat && 
+        <CabinetModal onClose={() => setIsSelectFiat(false)}>
+          <TokenSelect
+            onChange={value => {
+              setFiat(value);
+              setIsSelectFiat(false);
+            }}
+            onClose={() => setIsSelectFiat(false)}
+            selected={fiat}
+            isAdaptive={isAdaptive}
+            {...context}
+            tokens={fiats}
+            disableSwitcher
+            disableCommonBases
+            disableName
+            loadAccountBalances={() => {
+              console.log('LOAD');
+            }}
+            size="small"
+          />
+        </CabinetModal>
+      }
+      {isSelectCoin &&
+      <CabinetModal onClose={() => setIsSelectCoin(false)}>
+        <TokenSelect
+          onChange={value => {
+            setCoin(value);
+            setIsSelectCoin(false);
+          }}
+          onClose={() => setIsSelectCoin(false)}
+          selected={coin}
+          isAdaptive={isAdaptive}
+          {...context}
+          tokens={coins}
+          disableSwitcher
+          loadAccountBalances={loadAccountBalances}
+        />
+      </CabinetModal>
+      }
     </ContentBox>
   )
 }
