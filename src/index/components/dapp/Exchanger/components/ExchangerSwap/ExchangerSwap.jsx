@@ -218,7 +218,7 @@ function ExchangerSwap(props) {
                      disabled
                      value={`≈ ${getFinePrice(coinAmount)}`}
                      textPosition="right"
-                     error={!!(coinAmount && !isAvailable)} />
+                     error={!!(coinAmount && !isAvailableOfMin)} />
               <span
                 className={classNames({
                   ['error-orange']:
