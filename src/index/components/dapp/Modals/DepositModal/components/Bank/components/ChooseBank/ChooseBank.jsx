@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import web3Backend from 'src/services/web3-backend';
-import {Web3Context} from "src/services/web3Provider";
+import { Web3Context } from 'src/services/web3Provider';
 
 // Components
 import { Row, Col, Button, ButtonWrapper } from 'src/ui';
@@ -16,7 +16,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 
 // Utils
 import { getAnalytics, logEvent } from 'firebase/analytics';
-import _ from 'lodash';
+import _, { concat } from 'lodash';
 
 import { getLang } from 'src/utils';
 import * as actionTypes from 'src/actions/actionTypes';
@@ -58,9 +58,10 @@ function ChooseBank(props) {
 
   const { minFee, percentFee, currency } = props;
 
-  const methods = useSelector(state => state.fiat.banks);
-  const availableMethods = methods.filter(m => !m.currencies
-    || m.currencies.indexOf(currency.toUpperCase()) >= 0);
+  const methods = useSelector((state) => state.fiat.banks);
+  const availableMethods = methods.filter(
+    (m) => !m.currencies || m.currencies.indexOf(currency.toUpperCase()) >= 0
+  );
 
   const amount = cardReservation
     ? cardReservation.reservation.amount
@@ -75,7 +76,7 @@ function ChooseBank(props) {
   }, [setTimeIsOver]);
 
   useEffect(() => {
-    web3Backend.getBanks().then(banks => {
+    web3Backend.getBanks().then((banks) => {
       dispatch({
         type: actionTypes.FIAT_BANKS_UPDATE,
         payload: banks,
@@ -167,50 +168,52 @@ function ChooseBank(props) {
     //   status: 'loading',
     // });
 
-    const {cardReserve} = context;
-    cardReserve(amount, currency.toUpperCase(), bankCode).then(data => {
-      const res = data[0];
-      if (!res) return;
-      let payload = {};
-      payload[currency] = res;
-      dispatch({
-        type: actionTypes.FIAT_TOPUP_UPDATE,
-        payload,
-      });
+    const { cardReserve } = context;
+    cardReserve(amount, currency.toUpperCase(), bankCode)
+      .then((data) => {
+        const res = data[0];
+        if (!res) return;
+        let payload = {};
+        payload[currency] = res;
+        dispatch({
+          type: actionTypes.FIAT_TOPUP_UPDATE,
+          payload,
+        });
 
-      const method = methods.find(b => b.code === res.bank);
-      const bankName = method ? method.title : res.bank;
+        const method = methods.find((b) => b.code === res.bank);
+        const bankName = method ? method.title : res.bank;
 
-      payload = {
-        reservation: {
-          id: res.operation_id,
-          amount: res.amount,
-          status: res.status,
-          fee: res.fee,
-        },
-        card: {
-          number: res.number,
-          expire_in: res.book_expiration,
-          bank: {
-            code: res.bank,
-            name: bankName,
-            holder_name: res.holder_name,
-            currency: currency,
-          }
-        }
-      };
-      dispatch({
-        type: actionTypes.WALLET_SET_CARD_RESERVATION,
-        payload,
+        payload = {
+          reservation: {
+            id: res.operation_id,
+            amount: res.amount,
+            status: res.status,
+            fee: res.fee,
+          },
+          card: {
+            number: res.number,
+            expire_in: res.book_expiration,
+            bank: {
+              code: res.bank,
+              name: bankName,
+              holder_name: res.holder_name,
+              currency: currency,
+            },
+          },
+        };
+        dispatch({
+          type: actionTypes.WALLET_SET_CARD_RESERVATION,
+          payload,
+        });
+        props.onClose();
+        actions.openModal('deposit_choose_bank', {
+          currency: currency.toUpperCase(),
+        });
+      })
+      .catch((error) => {
+        console.error('[FiatTopupModal][sendRequest]', error);
+        setIsLoading(false);
       });
-      props.onClose();
-      actions.openModal("deposit_choose_bank", {
-        currency: currency.toUpperCase()
-      });
-    }).catch(error => {
-      console.error('[FiatTopupModal][sendRequest]', error);
-      setIsLoading(false);
-    });
     // api
     //   .call(apiSchema.Fiat_wallet.Cards.ReservationPost, {
     //     amount,
@@ -344,9 +347,13 @@ function ChooseBank(props) {
                 onClick={() => onChange(bank)}
                 key={key}
               >
-                <span className="secondary medium default">{bank.name}</span>
-                <Row alignItems="center">
+                <div>
                   <img src={icon} alt={bank.name} className="bankIcon" />
+                </div>
+                <Row alignItems="center" justifyContent="flex-end">
+                  <span className="secondary extra-small default">
+                    {bank.name}
+                  </span>
                   <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
                 </Row>
               </Row>
@@ -424,14 +431,17 @@ function ChooseBank(props) {
                 <Lang name="cabinet_fiatWithdrawalModal_chooseBank" />
               </h3>
               {availableMethods ? (
-                <BanksList onChange={b => handleChoiceBank(b.code)} items={availableMethods} />
+                <BanksList
+                  onChange={(b) => handleChoiceBank(b.code)}
+                  items={availableMethods}
+                />
               ) : (
                 <LoadingStatus status={'loading'} />
               )}
             </>
           ) : (
             <div className="DepositModal__ChooseBank__empty">
-              <h3 className="default dark medium extra-large-height">
+              <h3 className="default blue extra-large-height">
                 <Lang name="fiatRefillCard_status_not_available_cards" />
               </h3>
               <SVG
@@ -469,8 +479,12 @@ function ChooseBank(props) {
   };
 
   return (
-    <Bank {...props} adaptive={adaptive}>
-      <Sidebar amount={amount} currency={currency} fee={fee} />
+    <Bank
+      {...props}
+      size={cardReservation ? 'medium' : 'small'}
+      adaptive={adaptive}
+    >
+      {/* <Sidebar amount={amount} currency={currency} fee={fee} /> */}
       <RenderBody />
     </Bank>
   );

@@ -2,10 +2,13 @@ import React from 'react';
 
 import { openCabinetModal } from '../ConnectToWalletModal/hooks/openCabinetModal';
 import { Modal } from 'src/ui';
+import { classNames as cn } from 'src/utils';
 
 import './CabinetModal.less';
 
-function CabinetModal({ children, onClose }) {
+function CabinetModal({ children, className, closeOfRef = false, onClose }) {
+  const containerRef = React.useRef(null);
+
   openCabinetModal();
 
   React.useEffect(() => {
@@ -16,9 +19,34 @@ function CabinetModal({ children, onClose }) {
     };
   }, []);
 
+  React.useEffect(() => {
+    if (!closeOfRef) return;
+    if (!containerRef.current) return;
+
+    document.addEventListener('click', handleOutClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutClick);
+    };
+  }, []);
+
+  const handleOutClick = (e) => {
+    e.preventDefault();
+    console.log(containerRef.current.contains(e.target));
+    if (!containerRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+
   return (
-    <Modal className="CabinetModal" onClose={onClose}>
-      {children}
+    <Modal
+      className={cn({ CabinetModal: true, [className]: className })}
+      onClose={onClose}
+      useOnCloseForAdaptive
+    >
+      <div className="CabinetModal__container" ref={containerRef}>
+        {children}
+      </div>
     </Modal>
   );
 }
