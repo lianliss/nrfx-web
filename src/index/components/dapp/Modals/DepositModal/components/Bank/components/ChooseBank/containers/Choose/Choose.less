@@ -1,0 +1,138 @@
+.DepositModal__ChooseBank {
+  padding: 24px 32px;
+  flex: 1;
+  box-sizing: border-box;
+
+  &__title {
+    margin-bottom: 24px;
+  }
+
+  &__loading {
+    min-height: 608px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__empty {
+    margin-top: 136px;
+    margin-bottom: 148px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h3 {
+      margin-bottom: 29px;
+      font-size: 20px;
+    }
+
+    svg {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  .ScrollbarBox-container {
+    height: 100%;
+  }
+
+  &-items {
+    padding-top: 24px;
+    margin-bottom: 30px;
+    border-top: 1px solid #c4c4c4;
+  }
+
+  &-item {
+    width: 100%;
+    padding: 12.5px 10px;
+    background: var(--alice-blue);
+    border-radius: var(--radius-panel);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    cursor: pointer;
+
+    & > * {
+      width: 50%;
+      height: 25px;
+      flex: 1;
+    }
+
+    .Row {
+      .isvg {
+        margin-left: 10px;
+
+        svg {
+          height: 11px;
+          width: 11px;
+        }
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .bankIcon {
+    height: 25px;
+  }
+
+  .buttons {
+    margin-top: auto;
+
+    .Button {
+      min-width: 155px;
+    }
+  }
+
+  &.withdrawal &-items {
+    padding-top: 0;
+    margin-bottom: 0;
+    border: none;
+  }
+
+  &.withdrawal {
+    padding: 30px 32px 34px;
+
+    .DepositModal__ChooseBank__title {
+      margin-bottom: 24px;
+
+      h3 {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 110%;
+        letter-spacing: -0.01em;
+      }
+    }
+  }
+
+  &__close {
+    top: 0;
+    right: 0;
+  }
+}
+
+.adaptive .DepositModal__ChooseBank {
+  padding: 24px 32px;
+
+  &__empty {
+    margin: 150px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h3 {
+      margin: 0 0 10px;
+      color: var(--cool-gray);
+    }
+  }
+
+  &__loading {
+    min-height: 0px;
+    margin: 150px 0;
+  }
+}
