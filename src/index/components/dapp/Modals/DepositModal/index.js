@@ -4,3 +4,4 @@ export { default as DepositModalChoosedBank } from './components/Bank/components
 export { default as DepositModalDepositTransfer } from './components/Bank/components/DepositTransfer/DepositTransfer';
 export { default as DepositModalCancel } from './components/ConfirmCancel/ConfirmCancel';
 export { default as DepositModalWithdrawalTransfer } from './components/WithdrawalTransfer/WithdrawalTransfer';
+export { default as DepositModalWithdrawalDetails } from './components/WithdrawalDetails/WithdrawalDetails';
