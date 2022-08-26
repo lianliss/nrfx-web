@@ -28,8 +28,10 @@ function WithdrawalTransfer(props) {
           />
         </span>
         <p className="DepositModal__WithdrawalTransfer__subtitle">
-          If the funds are not received within 30 minutes, contact the buyer
-          via:
+          <em>
+            If the funds are not received within 30 minutes, contact the buyer
+            via:
+          </em>
         </p>
         <Button size="middle" type="secondary-alice" shadow>
           Telegram
@@ -43,7 +45,7 @@ function WithdrawalTransfer(props) {
           shadow
           onClick={props.onClose}
         >
-          Ok
+          OK
         </Button>
       </Col>
     </DepositModal>
