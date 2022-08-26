@@ -1,13 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // Components
 import DepositModal from '../../DepositModal';
 import { Input, Button, Row } from 'src/ui';
 
+// Utils
+import { adaptiveSelector } from 'src/selectors';
+
 // Styles
 import './WithdrawalDetails.less';
 
 function WithdrawalDetails(props) {
+  const adaptive = useSelector(adaptiveSelector);
+
   const Label = ({ title, children }) => {
     return (
       <label className="DepositModal__WithdrawalDetails__label">
@@ -33,8 +39,10 @@ function WithdrawalDetails(props) {
         <Input type="text" placeholder="Name" />
         <Input type="text" placeholder="Last name" />
       </Label>
-      <Row className="DepositModal__WithdrawalDetails__buttons">
-        <Button type="secondary-alice">Back</Button>
+      <Row className="DepositModal__WithdrawalDetails__buttons" wrap={adaptive}>
+        <Button type="secondary-alice" shadow>
+          Back
+        </Button>
         <Button type="lightBlue">Сonfirm</Button>
       </Row>
     </DepositModal>

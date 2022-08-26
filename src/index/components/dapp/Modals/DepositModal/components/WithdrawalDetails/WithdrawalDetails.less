@@ -63,10 +63,53 @@
   &__buttons {
     width: auto;
     margin: 0 -7.5px;
-    
+
     .Button {
       flex: 1 1 50%;
       margin: 0 7.5px;
+
+      &__label {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 100%;
+      }
+    }
+  }
+
+  .adaptive & {
+    .DepositModal__container {
+      padding: 20px 20.52px;
+    }
+
+    &__title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    &__label {
+      margin-bottom: 32px;
+
+      &:first-of-type {
+        margin-bottom: 24px;
+      }
+
+      & > span {
+        font-size: 14px;
+      }
+    }
+
+    &__buttons {
+      .Button {
+        flex: 1 1 100%;
+
+        &__label {
+          font-size: 14px;
+        }
+
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
     }
   }
 }
