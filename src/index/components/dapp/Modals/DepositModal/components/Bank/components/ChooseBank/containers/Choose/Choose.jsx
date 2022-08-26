@@ -41,6 +41,7 @@ function Choose({ items, onChange, onBack, adaptive, type }) {
               adaptive={adaptive}
               onChange={(b) => onChange(b.code)}
               items={items}
+              scrollEverywhere={type === 'withdrawal'}
             />
           ) : (
             <LoadingStatus status={'loading'} />

@@ -28,7 +28,7 @@ function CabinetModal({ children, className, closeOfRef = false, onClose }) {
     return () => {
       document.removeEventListener('click', handleOutClick);
     };
-  }, []);
+  }, [containerRef, closeOfRef]);
 
   const handleOutClick = (e) => {
     e.preventDefault();

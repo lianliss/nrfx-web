@@ -7,8 +7,11 @@ import SVG from 'utils/svg-wrap';
 
 import './BanksList.less';
 
-function BanksList({ items, onChange, adaptive }) {
-  const BanksWrapper = items.length > 5 && !adaptive ? CabinetScrollBlock : Col;
+function BanksList({ items, onChange, adaptive, scrollEverywhere }) {
+  const BanksWrapper =
+    items.length > 5 && (!adaptive || scrollEverywhere)
+      ? CabinetScrollBlock
+      : Col;
 
   return (
     <BanksWrapper className="DepositModal__ChooseBank-items" noScrollX>
@@ -46,12 +49,14 @@ BanksList.propTypes = {
   items: PropTypes.array,
   onChange: PropTypes.func,
   adaptive: PropTypes.bool,
+  scrollEverywhere: PropTypes.bool,
 };
 
 BanksList.defaultProps = {
   items: [],
   onChange: () => {},
   adaptive: false,
+  scrollEverywhere: false,
 };
 
 export default BanksList;

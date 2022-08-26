@@ -15,6 +15,7 @@ function Bank({ children, amount, currency, fee, size = 'medium', ...props }) {
   return (
     <DepositModal
       className={classNames({ DepositModal__Bank: true, [size]: size })}
+      closeOfRef={props.adaptive}
       {...props}
     >
       <Row

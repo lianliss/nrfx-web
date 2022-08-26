@@ -131,8 +131,27 @@
     }
   }
 
+  &-items .ScrollbarsCustom {
+    height: auto !important;
+  }
+
   &__loading {
     min-height: 0px;
     margin: 150px 0;
+  }
+
+  &.withdrawal {
+    padding: 20px;
+
+    .DepositModal__ChooseBank__title {
+      h3 {
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+
+    .DepositModal__ChooseBank-items {
+      padding: 0;
+    }
   }
 }
