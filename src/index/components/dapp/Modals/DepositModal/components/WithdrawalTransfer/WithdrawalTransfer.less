@@ -1,0 +1,61 @@
+.DepositModal__WithdrawalTransfer {
+  text-align: center;
+
+  & > .Modal__box {
+    max-width: 362px;
+    width: 100%;
+  }
+
+  &-content {
+    width: 100%;
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    letter-spacing: -0.01em;
+    color: var(--dark-black);
+  }
+
+  &__subtitle {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -0.01em;
+    color: var(--cool-gray);
+  }
+
+  &__icon {
+    margin: 32px 0;
+  }
+
+  .Button {
+    width: 100%;
+    margin-top: 18px;
+
+    &.middle {
+      border-radius: 10px;
+    }
+
+    &.extra_large {
+      height: 50px;
+    }
+
+    &:nth-of-type(2) {
+      margin-top: 10px;
+    }
+  }
+
+  .adaptive & {    
+    & > .Modal__box {
+      max-width: 100%;
+
+      & > .CabinetModal__container {
+        max-width: 362px;
+      }
+    }
+  }
+}

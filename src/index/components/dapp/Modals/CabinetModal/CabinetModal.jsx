@@ -32,7 +32,6 @@ function CabinetModal({ children, className, closeOfRef = false, onClose }) {
 
   const handleOutClick = (e) => {
     e.preventDefault();
-    console.log(containerRef.current.contains(e.target));
     if (!containerRef.current.contains(e.target)) {
       onClose();
     }
