@@ -6,13 +6,13 @@ import { Web3Context } from 'src/services/web3Provider';
 // Components
 import { Row, Col, Button, ButtonWrapper } from 'src/ui';
 import SVG from 'utils/svg-wrap';
-import CabinetScrollBlock from 'src/index/components/dapp/CabinetScrollBlock/CabinetScrollBlock';
 import Bank from '../../Bank';
 import Sidebar from '../Sidebar/Sidebar';
 import ChoosedBank from '../ChoosedBank/ChoosedBank';
 import DepositTransfer from '../DepositTransfer/DepositTransfer';
 import Lang from 'src/components/Lang/Lang';
 import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
+import Choose from './containers/Choose/Choose';
 
 // Utils
 import { getAnalytics, logEvent } from 'firebase/analytics';
@@ -324,46 +324,6 @@ function ChooseBank(props) {
       });
   };
 
-  const BanksList = ({ items = [], onChange }) => {
-    const BanksWrapper =
-      items.length > 5 && !adaptive ? CabinetScrollBlock : Col;
-
-    return (
-      <>
-        <BanksWrapper className="DepositModal__ChooseBank-items" noScrollX>
-          {items.map((bank, key) => {
-            let icon = null;
-
-            try {
-              icon = require(`src/asset/banks/${bank.code}.svg`).default;
-            } catch {
-              console.log('[BankList] Logo is not defined');
-            }
-
-            return (
-              <Row
-                className="DepositModal__ChooseBank-item"
-                alignItems="center"
-                onClick={() => onChange(bank)}
-                key={key}
-              >
-                <div>
-                  <img src={icon} alt={bank.name} className="bankIcon" />
-                </div>
-                <Row alignItems="center" justifyContent="flex-end">
-                  <span className="secondary extra-small default">
-                    {bank.name}
-                  </span>
-                  <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
-                </Row>
-              </Row>
-            );
-          })}
-        </BanksWrapper>
-      </>
-    );
-  };
-
   const RenderBody = () => {
     if (timeIsOver) {
       return (
@@ -390,19 +350,10 @@ function ChooseBank(props) {
 
     if (status.reservedCard === 'not_available_cards') {
       return (
-        <Col className="DepositModal__ChooseBank">
-          <div className="DepositModal__ChooseBank__empty">
-            <h3 className="default dark medium extra-large-height">
-              <Lang name="fiatRefillCard_status_not_available_cards" />
-            </h3>
-            <SVG src={require('src/asset/icons/transaction/empty-icon.svg')} />
-          </div>
-          <Row className="buttons" justifyContent="flex-end">
-            <Button type="secondary-alice" shadow onClick={handleClickBack}>
-              <Lang name="global_back" />
-            </Button>
-          </Row>
-        </Col>
+        <Choose
+          adaptive={adaptive}
+          onBack={() => openModal('deposit_balance')}
+        />
       );
     }
 
@@ -421,44 +372,13 @@ function ChooseBank(props) {
     }
 
     if (!cardReservation) {
-      const cardsExists = refillBankList.length && props.merchant === 'cards';
-
       return (
-        <Col className="DepositModal__ChooseBank">
-          {availableMethods.length ? (
-            <>
-              <h3 className="default dark medium">
-                <Lang name="cabinet_fiatWithdrawalModal_chooseBank" />
-              </h3>
-              {availableMethods ? (
-                <BanksList
-                  onChange={(b) => handleChoiceBank(b.code)}
-                  items={availableMethods}
-                />
-              ) : (
-                <LoadingStatus status={'loading'} />
-              )}
-            </>
-          ) : (
-            <div className="DepositModal__ChooseBank__empty">
-              <h3 className="default blue extra-large-height">
-                <Lang name="fiatRefillCard_status_not_available_cards" />
-              </h3>
-              <SVG
-                src={require('src/asset/icons/transaction/empty-icon.svg')}
-              />
-            </div>
-          )}
-          <Row className="buttons" justifyContent="flex-end">
-            <Button
-              type="secondary-alice"
-              shadow
-              onClick={() => openModal('deposit_balance')}
-            >
-              <Lang name="global_back" />
-            </Button>
-          </Row>
-        </Col>
+        <Choose
+          items={availableMethods}
+          onChange={handleChoiceBank}
+          adaptive={adaptive}
+          onBack={() => openModal('deposit_balance')}
+        />
       );
     } else {
       return (
