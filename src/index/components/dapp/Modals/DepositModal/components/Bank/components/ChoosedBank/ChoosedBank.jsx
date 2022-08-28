@@ -44,7 +44,6 @@ function ChoosedBank(props) {
   const { confirmPayment } = context;
   const { card } = cardReservation;
   const { bank } = card;
-  console.log('currency', currency);
 
   const handleCancel = () => {
     openModal(

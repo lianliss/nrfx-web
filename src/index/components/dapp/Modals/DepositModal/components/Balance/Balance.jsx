@@ -84,6 +84,7 @@ function Balance(props) {
    * @param currencyObject {object} - fiat token
    */
   const setFiat = (currencyObject) => {
+    setCurrency(currencyObject.symbol);
     setFiatSelected(currencyObject);
     const routerState = router.getState();
     if (routerState.params.currency !== currencyObject.symbol) {
