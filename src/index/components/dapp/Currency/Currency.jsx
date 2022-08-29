@@ -9,7 +9,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import currencies from 'src/currencies';
-import { isFiat } from 'utils';
+import { isFiat, getLang } from 'utils';
 import { openModal } from 'src/actions';
 
 // Styles
@@ -56,18 +56,18 @@ function Currency() {
                   src={require('src/asset/icons/cabinet/buy.svg')}
                   className="white-icon"
                 />
-                Deposit
+                {getLang('dapp_global_deposit')}
               </Button>
             ) : (
               <>
                 <div className="col">
                   <Button type="secondary-light" shadow>
                     <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
-                    Trade
+                    {getLang('dapp_global_trade')}
                   </Button>
                   <Button type="secondary-light" shadow>
                     <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-                    Buy
+                    {getLang('global_buy')}
                   </Button>
                 </div>
                 <div className="col">
@@ -75,13 +75,13 @@ function Currency() {
                     <SVG
                       src={require('src/asset/icons/cabinet/card-receive.svg')}
                     />
-                    Receive
+                    {getLang('global_receive')}
                   </Button>
                   <Button type="secondary-light" shadow>
                     <SVG
                       src={require('src/asset/icons/cabinet/card-send.svg')}
                     />
-                    Send
+                    {getLang('global_send')}
                   </Button>
                 </div>
               </>

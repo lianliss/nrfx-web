@@ -6,6 +6,7 @@ import OpenPopupLink from '../OpenPopupLink/OpenPopupLink';
 
 // Utils
 import COMPANY from '../../../constants/company';
+import { getLang } from 'src/utils';
 
 // Styles
 import './SocialLinks.less';
@@ -25,10 +26,12 @@ function SocialLinks() {
   return (
     <div className="SocialLinks">
       <a href="http://docs.narfex.com" target="_blank">
-        <OpenPopupLink title="learn about narfex" />
+        <OpenPopupLink title={getLang('dapp_global_learn_about_narfex')} />
       </a>
       <div className="SocialLinks-social">
-        <span className="SocialLinks-social__title">our social</span>
+        <span className="SocialLinks-social__title">
+          {getLang('dapp_global_our_social')}
+        </span>
         <div className="SocialLinks-social__items">
           <LinkIcon to="t.me/narfexfeed" icon="telegram-solid" />
           <LinkIcon to={social.discord} icon="discord-solid" />
