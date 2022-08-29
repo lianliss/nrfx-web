@@ -170,7 +170,8 @@ function ExchangerSwap(props) {
                      type="number"
                      textPosition="right" />
               <span className="ExchangerSwap__link" onClick={() => handleFiatInput(fiatBalance)}>
-                Balance: {getFinePrice(fiatBalance)} {fiatSymbol}
+                {getLang('dapp_global_balance')}:&nbsp;
+                {getFinePrice(fiatBalance)} {fiatSymbol}
               </span>
               {isAdaptive && <div className="ExchangerSwap__rate">
                 1 {fiatSymbol} ≈ {getFinePrice(1 / rateDisplay)} {coinSymbol}
@@ -247,7 +248,7 @@ function ExchangerSwap(props) {
                 state={isProcessing ? 'loading' : ''}
                 disabled={!isAvailable}
                 onClick={swapTokens}>
-          Exchange
+          {getLang('dapp_exchanger_exchange_button')}
         </Button>
       </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
         {getLang('dapp_global_connect_wallet')}

@@ -20,6 +20,7 @@ import ExchangerTopup from './components/ExchangerTopup/ExchangerTopup';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import { openModal } from 'src/actions';
 import { LOGIN } from 'src/components/AuthModal/fixtures';
+import { getLang } from 'src/utils';
 
 // Styles
 import './Exchanger.less';
@@ -247,7 +248,7 @@ function Exchanger(props) {
   return (
     <CabinetContent className="Exchanger__wrap">
       <div className="Exchanger">
-        <h2>Exchanger</h2>
+        <h2>{getLang('dapp_exchanger_page_title')}</h2>
         <div className="Exchanger__content">
           <ExchangerTopup
             fiats={fiatTokens}

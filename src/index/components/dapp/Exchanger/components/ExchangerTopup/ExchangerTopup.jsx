@@ -153,7 +153,7 @@ function ExchangerTopup(props) {
       {!isAdaptive && <SVGContainer icon="exchanger-topup" />}
       <div className="ExchangerTopup__info">
         <div className="ExchangerTopup__info-label">
-          Your balance:
+          {getLang('dapp_global_your_balance')}:
         </div>
         <div className={`ExchangerTopup__info-balance ${!!fiatBalance && 'active'}`}
              onClick={() => !!fiatBalance && addTokenToWallet(fiat)}>
@@ -168,12 +168,12 @@ function ExchangerTopup(props) {
               hiddenAfterFinish
               onFinish={() => setReservation(null)}
               time={reservation.book_expiration * 1000}
-            /> : <span className="ExchangerTopup__waiting">Waiting for confirmation</span>}
+            /> : <span className="ExchangerTopup__waiting">{getLang('dapp_global_waiting_for_confirmation')}</span>}
           <Button type="secondary" onClick={topUp}>
-            View Details
+            {getLang('dapp_global_view_details')}
           </Button>
           </> : <Button type="secondary" onClick={topUp}>
-            Top up
+            {getLang('topup_button')}
           </Button>}
         </> : <Button type="secondary" onClick={connectWallet}>
           {getLang('dapp_global_connect_wallet')}
