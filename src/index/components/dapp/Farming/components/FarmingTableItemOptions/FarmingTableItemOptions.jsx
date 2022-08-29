@@ -17,6 +17,7 @@ import { openModal } from 'src/actions';
 import { toastPush } from 'src/actions/toasts';
 import { Web3Context } from 'services/web3Provider';
 import getFinePrice from 'utils/get-fine-price';
+import { getLang } from 'src/utils';
 
 // Styles
 import './FarmingTableItemOptions.less';
@@ -140,7 +141,7 @@ function FarmingTableItemOptions({
               onClick={connectWallet}
               style={{ width: '100%' }}
             >
-              Connect Wallet
+              {getLang('dapp_global_connect_wallet')}
             </Button>
           )}
         </TableColumn>

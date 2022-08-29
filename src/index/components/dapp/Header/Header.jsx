@@ -200,7 +200,7 @@ function Header(props) {
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />
-                  {!props.adaptive && <span>{getLang('cabinet_manage')}</span>}
+                  {!props.adaptive && <span>{getLang('dapp_global_connect_wallet')}</span>}
                 </Button>
               </div>
             )}

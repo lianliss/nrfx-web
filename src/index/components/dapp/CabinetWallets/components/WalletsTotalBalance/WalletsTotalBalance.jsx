@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SVG from 'utils/svg-wrap';
 import largeTotalArrow from 'src/asset/icons/total-arrow-large.svg';
+import { getLang } from 'src/utils'
 import { RateIndicator } from 'src/ui';
 import './WalletsTotalBalance.less';
 
@@ -14,7 +15,7 @@ function WalletsTotalBalance({ amount, total, totalType }) {
         <SVG src={require('src/asset/icons/cabinet/sidebar/wallet.svg')} />
       </div>
       <div className="WalletsTotalBalance__content">
-        <span className="WalletsTotalBalance__text-medium">total balance</span>
+        <span className="WalletsTotalBalance__text-medium">{getLang('dapp_wallet_page_total_balance')}</span>
         <div className="WalletsTotalBalance__row">
           <span className="WalletsTotalBalance__text-large">${amount}</span>
           <RateIndicator

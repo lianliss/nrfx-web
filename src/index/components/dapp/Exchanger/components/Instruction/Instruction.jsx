@@ -49,7 +49,9 @@ function Instruction() {
               href="https://docs.narfex.com/narfex/products/exchanger"
               target="_blank"
             >
-              <Button type="lightBlue">Learn more how it works</Button>
+              <Button type="lightBlue">
+                {getLang('dapp_exchanger_instruction_button')}
+              </Button>
             </a>
           </div>
         </div>

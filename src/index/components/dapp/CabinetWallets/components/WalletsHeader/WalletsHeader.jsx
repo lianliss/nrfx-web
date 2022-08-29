@@ -3,6 +3,7 @@ import React from 'react';
 import WalletsTotalBalance from '../WalletsTotalBalance/WalletsTotalBalance';
 import { Button, DynamicShadow } from 'src/ui';
 import SVG from 'utils/svg-wrap';
+import { getLang } from 'src/utils';
 
 import './WalletsHeader.less';
 
@@ -20,23 +21,23 @@ function WalletsHeader({ isFiat }) {
                 src={require('src/asset/icons/cabinet/buy.svg')}
                 className="white-icon"
               />
-              Deposit
+              {getLang('dapp_global_deposit')}
             </Button>
           </DynamicShadow>
         ) : (
           <>
             <Button type="secondary-light">
               <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-              Buy
+              {getLang('global_buy')}
             </Button>
             <Button type="secondary-light">
               <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
-              Receive
+              {getLang('global_receive')}
             </Button>
             <DynamicShadow>
               <Button type="lightBlue">
                 <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
-                Send
+                {getLang('global_send')}
               </Button>
             </DynamicShadow>
           </>
