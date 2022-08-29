@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
-import { classNames } from "src/utils";
+import { classNames, getLang } from "src/utils";
 import getFinePrice from 'utils/get-fine-price';
 import * as actions from "src/actions";
 
@@ -250,7 +250,7 @@ function ExchangerSwap(props) {
           Exchange
         </Button>
       </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
-        Connect Wallet
+        {getLang('dapp_global_connect_wallet')}
       </Button></div>}
       {isSelectFiat && 
         <CabinetModal onClose={() => setIsSelectFiat(false)}>

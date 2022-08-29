@@ -16,6 +16,7 @@ import { openModal } from 'src/actions';
 import { toastPush } from 'src/actions/toasts';
 import { LIQUIDITY } from 'src/index/constants/pages';
 import getFinePrice from 'utils/get-fine-price';
+import { getLang } from 'src/utils';
 
 // Styles
 import './FarmingAdaptiveItemOptions.less';
@@ -138,7 +139,7 @@ function FarmingAdaptiveItemOptions({
               onClick={connectWallet}
               style={{ width: '100%' }}
             >
-              Connect Wallet
+              {getLang('dapp_global_connect_wallet')}
             </Button>
           </>
         ) : (

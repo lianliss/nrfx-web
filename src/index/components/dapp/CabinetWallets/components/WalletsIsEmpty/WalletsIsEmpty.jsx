@@ -7,6 +7,7 @@ import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 
 // Utils
 import { Web3Context } from 'src/services/web3Provider';
+import { getLang } from 'src/utils';
 
 import './WalletsIsEmpty.less';
 
@@ -57,7 +58,7 @@ function WalletsIsEmpty({ showWalletPage }) {
                 />
               </div>
               <div className="Button__content">
-                <span>Connect wallet</span>
+                <span>{getLang('dapp_global_connect_wallet')}</span>
                 <span>example wallet on MetaMask</span>
               </div>
             </Button>

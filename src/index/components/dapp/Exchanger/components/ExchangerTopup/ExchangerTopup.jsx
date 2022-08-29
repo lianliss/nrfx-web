@@ -4,6 +4,7 @@ import { Web3Context } from 'services/web3Provider';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
+import { getLang } from "src/utils";
 import * as actions from "src/actions";
 
 // Components
@@ -175,7 +176,7 @@ function ExchangerTopup(props) {
             Top up
           </Button>}
         </> : <Button type="secondary" onClick={connectWallet}>
-          Connect wallet
+          {getLang('dapp_global_connect_wallet')}
         </Button>}
       </div>
     </ContentBox>
