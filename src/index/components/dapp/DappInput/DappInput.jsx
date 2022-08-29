@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { adaptiveSelector } from 'src/selectors';
 import { classNames } from 'src/ui/utils';
+import _ from 'lodash';
 
 // Styles
 import './DappInput.less';
@@ -30,7 +31,16 @@ function DappInput({
   };
 
   React.useEffect(() => {
-    if (type === 'number') return;
+    // if (type === 'number') return;
+
+    if (type === 'number') {
+      if (Number(value) !== Number(inputState)) {
+        if (!_.isNaN(value)) {
+          setInputState(value);
+        }
+      }
+      return;
+    }
 
     if (value !== inputState) {
       setInputState(value);
@@ -64,9 +74,17 @@ function DappInput({
         value = _.trimStart(value, '0');
       }
 
-      if (!_.isNaN(Number(value)) || value === '.') {
+      if (value === '.') {
+        value = '0.';
+        onChange(value);
+        setInputState(value);
+        return;
+      }
+
+      if (!_.isNaN(Number(value))) {
         onChange(Number(value));
         setInputState(value);
+        return;
       }
 
       return;

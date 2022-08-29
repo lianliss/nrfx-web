@@ -133,7 +133,7 @@ function ExchangerSwap(props) {
       toast.success('Exchange confirmed');
     } catch (error) {
       console.error('[swapTokens]', error);
-      toast.error(_.get(error, 'data.message', error.message));
+      toast.error(_.get(error, 'data.message', error ? error.message : ''));
     }
     setIsProcessing(false);
     setProcessingTime(null);
@@ -245,7 +245,6 @@ function ExchangerSwap(props) {
       {isConnected ? <div className="ExchangerSwap__actions-buy">
         <Button className=""
                 state={isProcessing ? 'loading' : ''}
-                disabled={!isAvailable}
                 onClick={swapTokens}>
           Exchange
         </Button>
