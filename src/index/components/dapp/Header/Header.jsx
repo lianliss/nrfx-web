@@ -30,7 +30,6 @@ function Header(props) {
   // Current selected crypto.
   const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
   const [nrfxBalance, setNrfxBalance] = React.useState(0);
-  const [settings, setSettings] = React.useState([]);
 
   const { isConnected, accountAddress, getTokenBalance, tokens, chainId } =
     context;
@@ -77,58 +76,6 @@ function Header(props) {
         setNrfxBalance(0);
       });
   }, [accountAddress, isConnected, chainId]);
-
-  React.useEffect(() => {
-    const defaultSettings = [
-      {
-        title: getLang('cabinet_header_language'),
-        onClick: () => {},
-        subContent: props.langList.map((item, index) => (
-          <span
-            className={`DappHeader__language${
-              item.value === props.currentLang ? ' active' : ''
-            }`}
-            onClick={() => setLang(item.value)}
-            key={index}
-          >
-            <img
-              src={
-                require(`../../../../asset/site/lang-flags/${item.value}.svg`)
-                  .default
-              }
-            />
-          </span>
-        )),
-      },
-      {
-        title: getLang('cabinet_header_theme'),
-        onClick: () => {},
-        subContent: <span className="secondary-text">Coming soon</span>,
-      },
-      // {
-      //   title: isLogined ? 'Logout' : 'Login',
-      //   onClick: isLogined
-      //     ? logout
-      //     : () => openModal('auth', { type: steps.LOGIN }),
-      // },
-    ];
-
-    if (isLogined) {
-      setSettings([
-        {
-          title: getLang('cabinet_header_settings'),
-          onClick: () => router.navigate(SETTINGS),
-        },
-        {
-          title: getLang('cabinet_header_partners'),
-          onClick: () => router.navigate(PARTNERS),
-        },
-        ...defaultSettings,
-      ]);
-    } else {
-      setSettings([...defaultSettings]);
-    }
-  }, [isLogined]);
 
   return (
     <>
@@ -200,12 +147,52 @@ function Header(props) {
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                   />
-                  {!props.adaptive && <span>{getLang('dapp_global_connect_wallet')}</span>}
+                  {!props.adaptive && (
+                    <span>{getLang('dapp_global_connect_wallet')}</span>
+                  )}
                 </Button>
               </div>
             )}
             <div className="DappHeader__settings">
-              <ActionSheet position="left" type="drop" items={settings}>
+              <ActionSheet
+                position="left"
+                type="drop"
+                items={[
+                  {
+                    title: getLang('cabinet_header_language'),
+                    onClick: () => {},
+                    subContent: props.langList.map((item, index) => (
+                      <span
+                        className={`DappHeader__language${
+                          item.value === props.currentLang ? ' active' : ''
+                        }`}
+                        onClick={() => setLang(item.value)}
+                        key={index}
+                      >
+                        <img
+                          src={
+                            require(`../../../../asset/site/lang-flags/${item.value}.svg`)
+                              .default
+                          }
+                        />
+                      </span>
+                    )),
+                  },
+                  {
+                    title: getLang('cabinet_header_theme'),
+                    onClick: () => {},
+                    subContent: (
+                      <span className="secondary-text">Coming soon</span>
+                    ),
+                  },
+                  // {
+                  //   title: isLogined ? 'Logout' : 'Login',
+                  //   onClick: isLogined
+                  //     ? logout
+                  //     : () => openModal('auth', { type: steps.LOGIN }),
+                  // },
+                ]}
+              >
                 <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
               </ActionSheet>
             </div>
