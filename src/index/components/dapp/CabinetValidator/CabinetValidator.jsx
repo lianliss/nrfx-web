@@ -12,20 +12,19 @@ import { getLang } from 'src/utils';
 import './CabinetValidator.less';
 
 function CabinetValidator() {
-  const description =
-    'Validators are ambassadors and adherents\n of the project, they are earning a percentage\n of the exchange and from the growth\n of the NRFX/NUSD pool.\n Anyone in the world can become a validator\n and start earn on the fiat exchange process more than on other platforms, companies and even exchanges can be validators and earn with us.\n We are open for partnerships, contact us.';
-
   return (
     <CabinetBlock className="CabinetValidator__wrap">
       <div className="CabinetValidator">
         <div className="CabinetValidator__container">
           <div className="CabinetValidator__content">
             <div>
-              <h1>Become a Validator</h1>
+              <h1>{getLang('dapp_validator_page_title')}</h1>
               <p className="CabinetValidator__description">
-                <LineBreaker text={getLang(description)} />
+                {getLang('dapp_validator_page_subtitle')}
               </p>
-              <a href="mailto:admin@narfex.com">Сontact us ›</a>
+              <a href="mailto:admin@narfex.com">
+                {getLang('dapp_global_contact_us')} ›
+              </a>
             </div>
             <SocialLinks />
           </div>
