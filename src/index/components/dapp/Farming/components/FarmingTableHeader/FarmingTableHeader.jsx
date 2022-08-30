@@ -2,6 +2,7 @@ import React from 'react';
 
 import { SwitchTabs, Search } from 'src/ui';
 import Select from 'src/index/components/dapp/Select/Select';
+import { getLang } from 'utils';
 
 // Styles
 import './FarmingTableHeader.less';
@@ -23,7 +24,13 @@ function FarmingTableHeader({
         type="light-blue"
       />
       <Select value={sortBy} onChange={setSortBy} options={sortOptions} />
-      <Search placeholder="Search" lite simple icon right />
+      <Search
+        placeholder={getLang('dapp_global_search')}
+        lite
+        simple
+        icon
+        right
+      />
     </div>
   );
 }

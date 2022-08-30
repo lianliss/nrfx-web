@@ -7,6 +7,7 @@ import wei from 'utils/wei';
 import _ from 'lodash';
 import * as roi from 'utils/roi';
 import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingStatus';
+import { getLang } from 'src/utils';
 
 // Components
 import { NumberFormat, HoverPopup } from 'src/ui';
@@ -213,7 +214,7 @@ class FarmingAdaptiveItem extends React.PureComponent {
             </div>
             <div className="col">
               <div className="FarmingTableAdaptive__cell">
-                <span className="little-title">Earned</span>
+                <span className="little-title">{getLang('dapp_global_earned')}</span>
                 <span>{!!reward ? getFinePrice(reward) : '—'}</span>
               </div>
             </div>

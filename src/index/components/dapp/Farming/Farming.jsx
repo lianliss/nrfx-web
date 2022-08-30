@@ -12,6 +12,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 // Utils
 import useAdaptive from 'src/hooks/adaptive';
 import { DESKTOP } from 'src/index/constants/breakpoints';
+import { getLang } from 'src/utils';
 
 // Styles
 import './Farming.less';
@@ -121,20 +122,20 @@ const farmingItems = [
   },
 ];
 
-// Constants
-const farms = [
-  { value: 'all_farms', label: 'All Farms' },
-  { value: 'my_farms', label: 'My Farms' },
-];
-
-const sortOptions = [
-  { value: 'hot', label: 'Sort by Hot' },
-  { value: 'liquidity', label: 'Sort by Liquidity' },
-  { value: 'apr', label: 'Sort by APR' },
-  { value: 'newest', label: 'Sort by Newest' },
-];
-
 function Farming() {
+  // Constants
+  const farms = [
+    { value: 'all_farms', label: getLang('dapp_farming_all_farms') },
+    { value: 'my_farms', label: getLang('dapp_farming_my_farms') },
+  ];
+  
+  const sortOptions = [
+    { value: 'hot', label: getLang('dapp_sort_by_hot') },
+    { value: 'liquidity', label: getLang('dapp_sort_by_liquidity') },
+    { value: 'apr', label: getLang('dapp_sort_by_apr') },
+    { value: 'newest', label: getLang('dapp_sort_by_newest') },
+  ];
+
   // States
   const context = React.useContext(Web3Context);
   const {
@@ -188,12 +189,11 @@ function Farming() {
     <CabinetBlock className="Farming">
       <div className="Farming__header">
         <div className="row">
-          <h1>Farming</h1>
+          <h1>{getLang('dapp_farming_page_title')}</h1>
         </div>
         <div className="row">
           <p>
-            Earn fees and rewards by depositing and staking your tokens to the
-            platform.
+            {getLang('dapp_farming_page_subtitle')}
           </p>
         </div>
       </div>
