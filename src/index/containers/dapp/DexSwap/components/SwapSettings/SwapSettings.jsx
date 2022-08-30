@@ -8,17 +8,24 @@ import { Button, Input, Modal, BottomSheetModal } from 'src/ui';
 
 // Utils
 import { openCabinetModal } from 'src/index/components/dapp/Modals/ConnectToWalletModal/hooks/openCabinetModal';
+import { getLang } from 'utils'
 
 // Styles
 import './SwapSettings.less';
 
-const transactionSpeeds = [
-  { id: 0, title: 'Standart', amount: 7 },
-  { id: 2, title: 'Fast', amount: 3 },
-  { id: 3, title: 'Istant', amount: 8 },
-];
+function SwapSettings({
+  setSlippage,
+  slippageTolerance,
+  setDeadline,
+  deadline,
+  ...props
+}) {
+  const transactionSpeeds = [
+    { id: 0, title: getLang('dapp_swap_settings_speed_standart'), amount: 7 },
+    { id: 2, title: getLang('dapp_swap_settings_speed_fast'), amount: 3 },
+    { id: 3, title: getLang('dapp_swap_settings_speed_istant'), amount: 8 },
+  ];
 
-function SwapSettings({ setSlippage, slippageTolerance, setDeadline, deadline, ...props }) {
   const adaptive = useSelector((store) => store.default.adaptive);
 
   const [transactionSpeed, setTransactionSpeed] = React.useState(0);
@@ -54,13 +61,14 @@ function SwapSettings({ setSlippage, slippageTolerance, setDeadline, deadline, .
     >
       <div className="SwapSettings">
         <h2>
-          <span>Settings</span>
+          <span>{getLang('dapp_swap_settings_title')}</span>
           <span className="SwapSettings__close" onClick={props.onClose}>
             <SVG src={require('src/asset/24px/close-large.svg')} />
           </span>
         </h2>
         <SectionBlock
-          title="Default Transaction Speed (GWEI)"
+          title={getLang('dapp_swap_settings_speed_title')}
+          // title="Default Transaction Speed (GWEI)"
           className="transaction-speed"
         >
           {transactionSpeeds.map((item, index) => {
@@ -80,7 +88,7 @@ function SwapSettings({ setSlippage, slippageTolerance, setDeadline, deadline, .
         <SectionBlock
           title={
             <>
-              <span>Slippage tolerance</span>
+              <span>{getLang('dapp_swap_settings_slippage_title')}</span>
               <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
             </>
           }
@@ -106,7 +114,7 @@ function SwapSettings({ setSlippage, slippageTolerance, setDeadline, deadline, .
         </SectionBlock>
         <div className="deadline">
           <div className="deadline__title">
-            Transaction deadline
+            {getLang('dapp_swap_settings_deadline_title')}
             <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
           </div>
           <div className="Input__container">
@@ -115,7 +123,9 @@ function SwapSettings({ setSlippage, slippageTolerance, setDeadline, deadline, .
               value={deadlineValue}
               onTextChange={(value) => handleDeadline(value)}
             />
-            <div className="Input__icon">minutes</div>
+            <div className="Input__icon">
+              {getLang('dapp_global_minutes').toLowerCase()}
+            </div>
           </div>
         </div>
       </div>
