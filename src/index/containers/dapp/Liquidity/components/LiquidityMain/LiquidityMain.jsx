@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router5";
 import { Web3Context } from 'services/web3Provider';
+import { getLang } from 'src/utils';
 
 // Components
 import { Button } from 'src/ui';
@@ -31,7 +32,7 @@ function LiquidityMain({ onAddClick, onRemoveClick, onImportClick, poolsList }) 
       </div></> : <div className="Liquidity__header">
         <div className="Liquidity__title">Liquidity</div>
         <Button type="lightBlue" size="extra_large" onClick={() => connectWallet()}>
-          Connect wallet
+          {getLang('dapp_global_connect_wallet')}
         </Button>
       </div>}
       <div className="Liquidity__body">

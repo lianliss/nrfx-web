@@ -63,8 +63,9 @@ function YourWalletModal(props) {
           </CopyText>
         </div>
         <div className="col">
-          <a href={`https://${chainId !== 56 && 'testnet.'}bscscan.com/address/${accountAddress}`}
-             className="action-text">
+          <a href={`https://${chainId !== 56 ? 'testnet.' : ''}bscscan.com/address/${accountAddress}`}
+             className="action-text"
+             target="_blank">
             View on BscScan <SVG src={require('src/asset/icons/export.svg')} />
           </a>
         </div>

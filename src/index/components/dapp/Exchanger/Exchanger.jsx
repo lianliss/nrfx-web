@@ -6,6 +6,7 @@ import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
 import router from 'src/router';
 import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
+import networks from 'src/index/constants/networks';
 
 // Components
 import CabinetContent from '../CabinetContent/CabinetContent';
@@ -20,6 +21,7 @@ import ExchangerTopup from './components/ExchangerTopup/ExchangerTopup';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import { openModal } from 'src/actions';
 import { LOGIN } from 'src/components/AuthModal/fixtures';
+import { getLang } from 'src/utils';
 
 // Styles
 import './Exchanger.less';
@@ -41,7 +43,8 @@ function Exchanger(props) {
   const {
     fiats, chainId, accountAddress,
     web3, updateFiats, isConnected,
-    tokens, loadAccountBalances,
+    tokens, loadAccountBalances, cmcTokens,
+    getTokens,
   } = context;
 
   const [limits, setLimits] = React.useState([]);
@@ -73,9 +76,21 @@ function Exchanger(props) {
     ...binanceSymbols
   ];
   const coins = _.uniqBy(
-    tokens.filter(token => symbols.indexOf(token.symbol) >= 0),
+    (isConnected
+      ? tokens
+      : [
+        ...networks[56].tokens,
+        ...(cmcTokens || []),
+      ]
+    ).filter(token => symbols.indexOf(token.symbol) >= 0),
     'address',
   );
+
+  React.useEffect(() => {
+    if (!cmcTokens) {
+      getTokens();
+    }
+  }, []);
 
   /**
    * Update "fiatSelected" — fiat token state.
@@ -114,22 +129,20 @@ function Exchanger(props) {
    * Sets default fiat
    */
   fiatsUpdate = () => {
-    if (isConnected && accountAddress) {
-      updateFiats().then(fiats => {
-        if (!fiatSelected) {
-          const initialCurrency = fiats[userId]
-            .find(fiat => fiat.symbol === initGetParams.params.currency);
-          setFiat(initialCurrency || fiats[userId][0]);
-        } else {
-          const fiatSymbol = fiats[userId].find(c => fiatSelected.symbol === c.symbol);
-          if (fiatSymbol) {
-            setFiatSelected(fiatSymbol);
-          }
+    updateFiats().then(fiats => {
+      if (!fiatSelected) {
+        const initialCurrency = fiats[userId]
+          .find(fiat => fiat.symbol === initGetParams.params.currency);
+        setFiat(initialCurrency || fiats[userId][0]);
+      } else {
+        const fiatSymbol = fiats[userId].find(c => fiatSelected.symbol === c.symbol);
+        if (fiatSymbol) {
+          setFiatSelected(fiatSymbol);
         }
-      }).catch(error => {
+      }
+    }).catch(error => {
 
-      });
-    }
+    });
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);
   };
 
@@ -247,7 +260,7 @@ function Exchanger(props) {
   return (
     <CabinetContent className="Exchanger__wrap">
       <div className="Exchanger">
-        <h2>Exchanger</h2>
+        <h2>{getLang('dapp_exchanger_page_title')}</h2>
         <div className="Exchanger__content">
           <ExchangerTopup
             fiats={fiatTokens}

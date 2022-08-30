@@ -57,6 +57,9 @@ import {
   DepositModalChoosedBank,
   DepositModalDepositTransfer,
   DepositModalCancel,
+  DepositModalWithdrawalTransfer,
+  DepositModalWithdrawalDetails,
+  DepositModalInvoiceDetails,
 } from "./components/dapp/Modals/DepositModal";
 
 import {
@@ -248,6 +251,15 @@ function Modals(props) {
       break;
     case "deposit_cancel":
       Component = DepositModalCancel;
+      break;
+    case "deposit_withdrawal_transfer":
+      Component = DepositModalWithdrawalTransfer;
+      break;
+    case "deposit_withdrawal_details":
+      Component = DepositModalWithdrawalDetails;
+      break;
+    case "deposit_invoice_details":
+      Component = DepositModalInvoiceDetails;
       break;
     default:
       return null;

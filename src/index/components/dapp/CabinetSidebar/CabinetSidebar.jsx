@@ -9,6 +9,7 @@ import CabinetScrollBlock from '../CabinetScrollBlock/CabinetScrollBlock';
 import NarfexRate from './components/NarfexRate/NarfexRate';
 import ComingSoonItem from './components/ComingSoonItem/ComingSoonItem';
 import { useSidebarContainerHeight } from './hooks/useSidebarContainerHeight';
+import { getLang } from 'src/utils';
 
 import './CabinetSidebar.less';
 
@@ -41,15 +42,18 @@ function CabinetSidebar({ className, adaptive }) {
         <CabinetScrollBlock>
           <CabinetBlock>
             <ul>
-              <SidebarItem title="Dashboard" icon="dashboard" />
               <SidebarItem
-                title="Wallet"
+                title={getLang('dapp_sidebar_dashboard')}
+                icon="dashboard"
+              />
+              <SidebarItem
+                title={getLang('dapp_sidebar_wallet')}
                 icon="wallet"
                 active={isPage(PAGES.DAPP_WALLET)}
                 onClick={() => router.navigate(PAGES.DAPP_WALLET)}
               />
               <SidebarItem
-                title="Exchanger"
+                title={getLang('dapp_sidebar_exchanger')}
                 icon="exchange"
                 active={isPage(PAGES.DAPP_EXCHANGE)}
                 onClick={() => router.navigate(PAGES.DAPP_EXCHANGE)}
@@ -59,7 +63,7 @@ function CabinetSidebar({ className, adaptive }) {
           <CabinetBlock>
             <ul>
               <SidebarItem
-                title="Trade"
+                title={getLang('dapp_sidebar_trade')}
                 icon="trade"
                 onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                 active
@@ -69,31 +73,31 @@ function CabinetSidebar({ className, adaptive }) {
                     className={isPage(PAGES.DAPP_SWAP) ? 'active' : ''}
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                   >
-                    Swap
+                    {getLang('dapp_sidebar_swap')}
                   </li>
-                  <ComingSoonItem text="Pro DEX" />
+                  <ComingSoonItem text={getLang('dapp_sidebar_pro_dex')} />
                 </ul>
               </SidebarItem>
               <SidebarItem
-                title="Liquidity"
+                title={getLang('dapp_sidebar_liquidity')}
                 icon="liquidity"
                 active={isPage(PAGES.LIQUIDITY)}
                 onClick={() => router.navigate(PAGES.LIQUIDITY)}
               />
               <SidebarItem
-                title="Farm"
+                title={getLang('dapp_sidebar_farm')}
                 icon="farm"
                 active={isPage(PAGES.FARMING)}
                 onClick={() => router.navigate(PAGES.FARMING)}
               />
               <SidebarItem
-                title="Validator"
+                title={getLang('dapp_sidebar_validator')}
                 icon="validator"
                 active={isPage(PAGES.VALIDATOR)}
                 onClick={() => router.navigate(PAGES.VALIDATOR)}
               />
               <SidebarItem
-                title="About NRFX"
+                title={getLang('dapp_sidebar_about_nrfx')}
                 icon="nrfx-blue-bg-icon"
                 href="/token"
               />
@@ -107,35 +111,38 @@ function CabinetSidebar({ className, adaptive }) {
                 ])}
                 onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
               /> */}
-              <SidebarItem title="More" icon="more-vertical-icon">
+              <SidebarItem
+                title={getLang('dapp_sidebar_more')}
+                icon="more-vertical-icon"
+              >
                 <ul>
                   <li>
                     <a href="http://docs.narfex.com/narfex" target="_blank">
-                      Docs
+                      {getLang('dapp_sidebar_more_docs')}
                     </a>
                   </li>
-                  <li className="disabled">Team</li>
+                  <li className="disabled">{getLang('dapp_sidebar_more_team')}</li>
                   <li
                     className="disabled"
                     onClick={() => router.navigate(PAGES.DAPP_SWAP)}
                   >
-                    Audit
+                    {getLang('dapp_sidebar_more_audit')}
                   </li>
                   <li>
                     <a href="/narfex_dao" target="_blank">
-                      Governance
+                    {getLang('dapp_sidebar_more_governance')}
                     </a>
                   </li>
                   <li onClick={() => router.navigate(PAGES.DAPP_SOCIAL_MEDIA)}>
-                    Social media
+                  {getLang('dapp_sidebar_more_social_media')}
                   </li>
                   <li>
                     <a href="https://medium.com/@narfex" target="_blank">
-                      Blog
+                    {getLang('dapp_sidebar_more_blog')}
                     </a>
                   </li>
                   <li className="disabled">
-                    <a href="/terms-of-service">Terms of Service</a>
+                    <a href="/terms-of-service">{getLang('dapp_sidebar_more_terms')}</a>
                   </li>
                 </ul>
               </SidebarItem>

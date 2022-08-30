@@ -1,142 +1,19 @@
-.DepositModal__ChooseBank {
+.DepositModal__ChooseBank__timeIsOver {
+  position: relative;
   padding: 24px 32px;
-  flex: 1;
-  box-sizing: border-box;
+  min-height: 400px;
 
-  h3 {
-    margin-bottom: 24px;
+  .LoadingStatus__failed__message {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--dark-black);
   }
 
-  &-items {
-    min-height: 413px;
-    padding-top: 24px;
-    margin-bottom: 30px;
-    width: 100%;
-    border-top: 1px solid #c4c4c4;
-    box-sizing: border-box;
-
-    .ScrollbarBox .ScrollbarTrackY {
-      right: -25px !important;
-    }
-  }
-
-  &__loading {
-    min-height: 608px;
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  &__empty {
-    margin-top: 136px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-
-    h3 {
-      margin-bottom: 29px;
-      font-size: 20px;
-    }
-
-    svg {
-      width: 120px;
-      height: 120px;
-    }
-  }
-
-  .ScrollbarBox-container {
-    height: 100%;
-  }
-
-  &-item {
-    width: 100%;
-    padding: 12.5px 10px;
-    background: var(--alice-blue);
-    border-radius: var(--radius-panel);
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
-    box-sizing: border-box;
-    cursor: pointer;
-
-    & > * {
-      width: 50%;
-      height: 25px;
-      flex: 1;
-    }
-
-    .Row {
-      .isvg {
-        margin-left: 10px;
-        
-        svg {
-          height: 11px;
-          width: 11px;
-        }
-      }
-    }
-
-    &:not(:last-child) {
-      margin-bottom: 10px;
-    }
-  }
-
-  .bankIcon {
-    height: 25px;
-  }
-
-  .buttons {
-    margin-top: auto;
-
-    .Button {
-      min-width: 155px;
-    }
-  }
-
-  &__timeIsOver {
-    position: relative;
-    min-height: 400px;
-
-    .LoadingStatus__failed__message {
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-      color: var(--dark-black);
-    }
-
-    .LoadingStatus__failed__description {
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 18px;
-      color: var(--cool-gray);
-    }
-  }
-}
-
-.adaptive .DepositModal__ChooseBank {
-  padding: 24px 32px;
-
-  &-items {
-    margin: 0 0 30px;
-    padding-bottom: 24px;
-  }
-
-  &__empty {
-    margin: 150px 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-
-    h3 {
-      margin: 0 0 10px;
-      color: var(--cool-gray);
-    }
-  }
-
-  &__loading {
-    min-height: 0px;
-    margin: 150px 0;
+  .LoadingStatus__failed__description {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--cool-gray);
   }
 }

@@ -1,0 +1,115 @@
+.DepositModal__WithdrawalDetails {
+  & > .Modal__box {
+    max-width: 436px;
+    width: 100%;
+  }
+
+  .DepositModal__container {
+    padding: 32px;
+  }
+
+  &__title {
+    margin-bottom: 32px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: #0a1539;
+  }
+
+  &__label {
+    display: block;
+
+    &:not(:last-child) {
+      margin-bottom: 32px;
+    }
+
+    & > span {
+      display: block;
+      margin-bottom: 12px;
+
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--cool-gray);
+    }
+
+    .Input__wrapper {
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .Input {
+    background: var(--alice-blue);
+    border-radius: 15px;
+    border: none;
+
+    &,
+    &::placeholder {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    &::placeholder {
+      color: var(--azureish-white);
+    }
+  }
+
+  &__buttons {
+    width: auto;
+    margin: 0 -7.5px;
+
+    .Button {
+      flex: 1 1 50%;
+      margin: 0 7.5px;
+
+      &__label {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 100%;
+      }
+    }
+  }
+
+  .adaptive & {
+    .DepositModal__container {
+      padding: 20px 20.52px;
+    }
+
+    &__title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    &__label {
+      margin-bottom: 32px;
+
+      &:first-of-type {
+        margin-bottom: 24px;
+      }
+
+      & > span {
+        font-size: 14px;
+      }
+    }
+
+    &__buttons {
+      .Button {
+        flex: 1 1 100%;
+
+        &__label {
+          font-size: 14px;
+        }
+
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}

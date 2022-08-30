@@ -4,6 +4,7 @@ import { Web3Context } from 'services/web3Provider';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
+import { getLang } from "src/utils";
 import * as actions from "src/actions";
 
 // Components
@@ -26,6 +27,8 @@ const SVGContainer = ({ icon }) => {
   );
 };
 
+let invoiceTimeout;
+
 function ExchangerTopup(props) {
 
   const isAdaptive = useSelector(adaptiveSelector);
@@ -35,6 +38,7 @@ function ExchangerTopup(props) {
   const {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
+    getInvoice, cancelInvoice,
   } = context;
   const {
     fiats, fiat, coins, coin,
@@ -47,6 +51,26 @@ function ExchangerTopup(props) {
   // Symbols
   const fiatSymbol = _.get(fiat, 'symbol', '');
   const coinSymbol = _.get(coin, 'symbol', '');
+
+  const [invoice, setInvoice] = React.useState();
+
+  const updateInvoice = async () => {
+    try {
+      if (isConnected && fiatSymbol === 'USD') {
+        const invoice = await getInvoice();
+        if (invoice) {
+          setInvoice(invoice);
+        }
+      }
+    } catch (error) {
+
+    }
+    invoiceTimeout = setTimeout(updateInvoice, 4000);
+  };
+  React.useEffect(() => {
+    clearTimeout(invoiceTimeout);
+    updateInvoice();
+  }, [fiatSymbol]);
 
   // Fiat price
   const fiatBalance = wei.from(_.get(fiat, 'balance', "0"));
@@ -147,36 +171,71 @@ function ExchangerTopup(props) {
     setProcessingTime(null);
   };
 
+  const onCancelInvoice = async () => {
+    try {
+      await cancelInvoice();
+      toast.success('Invoice cancelled');
+      setInvoice(null);
+    } catch (error) {
+      console.error('[onCancelInvoice]', error);
+      toast.error(error.message);
+    }
+  };
+
+  const onDownloadInvoice = async () => {
+
+  };
+
+  let buttons = <Button type="secondary" onClick={connectWallet}>
+    {getLang('dapp_global_connect_wallet')}
+  </Button>;
+
+  if (isConnected) {
+    if (!!reservation) {
+      buttons = <>
+      {(reservation.status !== 'wait_for_review' && reservation.status !== 'wait_for_admin_review')
+        ? <Timer
+          hiddenAfterFinish
+          onFinish={() => setReservation(null)}
+          time={reservation.book_expiration * 1000}
+        />
+        : <span className="ExchangerTopup__waiting">{getLang('dapp_global_waiting_for_confirmation')}</span>}
+      <Button type="secondary" onClick={topUp}>
+        {getLang('dapp_global_view_details')}
+      </Button>
+      </>
+    } else {
+      if (invoice) {
+        buttons = <div className="ExchangerTopup__actions-buttons">
+          <Button type="secondary" onClick={onCancelInvoice}>
+            Cancel
+          </Button>
+          <Button type="secondary" onClick={onDownloadInvoice}>
+            Get Invoice
+          </Button>
+        </div>;
+      } else {
+        buttons = <Button type="secondary" onClick={topUp}>
+          {getLang('topup_button')}
+        </Button>;
+      }
+    }
+  }
+
   return (
     <ContentBox className={`ExchangerTopup ${isAdaptive && 'adaptive'}`}>
       {!isAdaptive && <SVGContainer icon="exchanger-topup" />}
       <div className="ExchangerTopup__info">
         <div className="ExchangerTopup__info-label">
-          Your balance:
+          {getLang('dapp_global_your_balance')}:
         </div>
-        <div className={`ExchangerTopup__info-balance ${!!fiatBalance && 'active'}`}
-             onClick={() => !!fiatBalance && addTokenToWallet(fiat)}>
+        <div className={`ExchangerTopup__info-balance ${isConnected && 'active'}`}
+             onClick={() => isConnected && addTokenToWallet(fiat)}>
           {getFinePrice(fiatBalance)} {fiatSymbol}
         </div>
       </div>
       <div className="ExchangerTopup__actions">
-        {isConnected ? <>
-          {!!reservation ? <>
-          {(reservation.status !== 'wait_for_review' && reservation.status !== 'wait_for_admin_review')
-            ? <Timer
-              hiddenAfterFinish
-              onFinish={() => setReservation(null)}
-              time={reservation.book_expiration * 1000}
-            /> : <span className="ExchangerTopup__waiting">Waiting for confirmation</span>}
-          <Button type="secondary" onClick={topUp}>
-            View Details
-          </Button>
-          </> : <Button type="secondary" onClick={topUp}>
-            Top up
-          </Button>}
-        </> : <Button type="secondary" onClick={connectWallet}>
-          Connect wallet
-        </Button>}
+        {buttons}
       </div>
     </ContentBox>
   )

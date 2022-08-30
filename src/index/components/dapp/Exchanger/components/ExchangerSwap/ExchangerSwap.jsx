@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
-import { classNames } from "src/utils";
+import { classNames, getLang } from "src/utils";
 import getFinePrice from 'utils/get-fine-price';
 import * as actions from "src/actions";
 
@@ -44,7 +44,7 @@ function ExchangerSwap(props) {
 
   // Fiat price
   const fiatBalance = wei.from(_.get(fiat, 'balance', "0"));
-  const fiatPrice = _.get(rates, fiatSymbol.toLowerCase(), 0);
+  const fiatPrice = _.get(rates, fiatSymbol.toLowerCase(), Number(fiatSymbol === 'USD'));
 
   // Calculate coin price
   let coinPrice;
@@ -81,28 +81,30 @@ function ExchangerSwap(props) {
   const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
 
   function fiatSelector() {
-    if (!isConnected) {
-      connectWallet()
-        .then(() => setIsSelectFiat(true))
-        .catch(error => {
-          setIsSelectFiat(false);
-        })
-    } else {
-      setIsSelectFiat(true);
-    }
+    setIsSelectFiat(true);
+    // if (!isConnected) {
+    //   connectWallet()
+    //     .then(() => setIsSelectFiat(true))
+    //     .catch(error => {
+    //       setIsSelectFiat(false);
+    //     })
+    // } else {
+    //   setIsSelectFiat(true);
+    // }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
   function coinSelector() {
-    if (!isConnected) {
-      connectWallet()
-        .then(() => setIsSelectCoin(true))
-        .catch(error => {
-          setIsSelectCoin(false);
-        })
-    } else {
-      setIsSelectCoin(true);
-    }
+    setIsSelectCoin(true);
+    // if (!isConnected) {
+    //   connectWallet()
+    //     .then(() => setIsSelectCoin(true))
+    //     .catch(error => {
+    //       setIsSelectCoin(false);
+    //     })
+    // } else {
+    //   setIsSelectCoin(true);
+    // }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
@@ -133,7 +135,7 @@ function ExchangerSwap(props) {
       toast.success('Exchange confirmed');
     } catch (error) {
       console.error('[swapTokens]', error);
-      toast.error(_.get(error, 'data.message', error.message));
+      toast.error(_.get(error, 'data.message', error ? error.message : ''));
     }
     setIsProcessing(false);
     setProcessingTime(null);
@@ -170,7 +172,8 @@ function ExchangerSwap(props) {
                      type="number"
                      textPosition="right" />
               <span className="ExchangerSwap__link" onClick={() => handleFiatInput(fiatBalance)}>
-                Balance: {getFinePrice(fiatBalance)} {fiatSymbol}
+                {getLang('dapp_global_balance')}:&nbsp;
+                {getFinePrice(fiatBalance)} {fiatSymbol}
               </span>
               {isAdaptive && <div className="ExchangerSwap__rate">
                 1 {fiatSymbol} ≈ {getFinePrice(1 / rateDisplay)} {coinSymbol}
@@ -245,12 +248,11 @@ function ExchangerSwap(props) {
       {isConnected ? <div className="ExchangerSwap__actions-buy">
         <Button className=""
                 state={isProcessing ? 'loading' : ''}
-                disabled={!isAvailable}
                 onClick={swapTokens}>
-          Exchange
+          {getLang('dapp_exchanger_exchange_button')}
         </Button>
       </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
-        Connect Wallet
+        {getLang('dapp_global_connect_wallet')}
       </Button></div>}
       {isSelectFiat && 
         <CabinetModal onClose={() => setIsSelectFiat(false)}>

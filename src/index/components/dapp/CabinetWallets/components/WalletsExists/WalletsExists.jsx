@@ -21,6 +21,7 @@ import currencies from 'src/currencies';
 import { Web3Context } from 'src/services/web3Provider';
 import BalancesBlock from './components/BalancesBlock/BalancesBlock';
 import NftsBlock from './components/NftsBlock/NftsBlock';
+import { getLang } from 'src/utils';
 
 function WalletsExists() {
   // Design
@@ -56,9 +57,9 @@ function WalletsExists() {
               onChange={setSwitchTab}
               isAnimated={false}
               tabs={[
-                { value: 'tokens', label: 'Tokens' },
+                { value: 'tokens', label: getLang('dapp_global_tokens') },
                 { value: 'nfts', label: 'NFT' },
-                { value: 'fiat', label: 'Fiat' },
+                { value: 'fiat', label: getLang('dapp_global_fiats') },
               ]}
             />
           </div>
@@ -72,8 +73,8 @@ function WalletsExists() {
                 onChange={setSwitchTab}
                 isAnimated={false}
                 tabs={[
-                  { value: 'tokens', label: 'Tokens' },
-                  { value: 'fiat', label: 'Fiat' },
+                  { value: 'tokens', label: getLang('dapp_global_tokens') },
+                  { value: 'fiat', label: getLang('dapp_global_fiats') },
                 ]}
               />
             </div>
@@ -85,7 +86,7 @@ function WalletsExists() {
             <BalancesBlock
               balances={tokens}
               type="tokens"
-              title="Tokens"
+              title={getLang('dapp_global_tokens')}
               adaptive={adaptive}
             />
           )}
@@ -93,7 +94,7 @@ function WalletsExists() {
             <BalancesBlock
               balances={testFiats}
               type="fiats"
-              title="fiat"
+              title={getLang('dapp_global_fiats')}
               adaptive={adaptive}
             />
           )}

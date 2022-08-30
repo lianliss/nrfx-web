@@ -7,6 +7,7 @@ import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 
 // Utils
 import { Web3Context } from 'src/services/web3Provider';
+import { getLang } from 'src/utils';
 
 import './WalletsIsEmpty.less';
 
@@ -39,10 +40,9 @@ function WalletsIsEmpty({ showWalletPage }) {
       <div className="WalletsIsEmpty__container">
         <div className="WalletsIsEmpty__content">
           <div>
-            <h1>Your Wallet</h1>
+            <h1>{getLang('dapp_wallet_page_title')}</h1>
             <p className="WalletsIsEmpty__description">
-              The Narfex token facilitates multiple tokenomics, serving as a
-              utility token and governance token.
+              {getLang('dapp_wallet_page_subtitle')}
             </p>
           </div>
           <div className="WalletsIsEmpty__buttons">
@@ -57,8 +57,10 @@ function WalletsIsEmpty({ showWalletPage }) {
                 />
               </div>
               <div className="Button__content">
-                <span>Connect wallet</span>
-                <span>example wallet on MetaMask</span>
+                <span>{getLang('dapp_wallet_page_connect_button_title')}</span>
+                <span>
+                  {getLang('dapp_wallet_page_connect_button_subtitle')}
+                </span>
               </div>
             </Button>
             <DynamicShadow>
@@ -67,18 +69,24 @@ function WalletsIsEmpty({ showWalletPage }) {
                   <SVG src={require('src/asset/token/wallet.svg')} />
                 </div>
                 <div className="Button__content">
-                  <span>Create wallet</span>
-                  <span>create wallet on our platform</span>
+                  <span>{getLang('dapp_wallet_page_create_button_title')}</span>
+                  <span>
+                    {getLang('dapp_wallet_page_create_button_subtitle')}
+                  </span>
                 </div>
               </Button>
             </DynamicShadow>
           </div>
           <div className="WalletsIsEmpty__links">
             <a href="http://docs.narfex.com" target="_blank">
-              <OpenPopupLink title="learn about narfex" />
+              <OpenPopupLink
+                title={getLang('dapp_global_learn_about_narfex')}
+              />
             </a>
             <div className="WalletsIsEmpty-social">
-              <span className="WalletsIsEmpty-social__title">our social</span>
+              <span className="WalletsIsEmpty-social__title">
+                {getLang('dapp_global_our_social')}
+              </span>
               <div className="WalletsIsEmpty-social__items">
                 <LinkIcon to="https://t.me/narfexfeed" icon="telegram-solid" />
                 <LinkIcon
