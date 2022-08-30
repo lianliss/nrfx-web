@@ -15,6 +15,7 @@ import MasterChefContract from './web3Provider/MasterChefContract';
 import web3Backend from './web3-backend';
 import * as actions from "src/actions";
 import * as toast from "src/actions/toasts";
+import KNOWN_FIATS from 'src/index/constants/knownFiats';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -22,13 +23,7 @@ const GWEI_DECIMALS = 9;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
-
-const KNOWN_FIATS = [
-  {symbol: 'RUB', logoURI: 'https://static.narfex.com/img/currencies/rubles.svg'},
-  {symbol: 'UAH', logoURI: 'https://static.narfex.com/img/currencies/uah-gryvnya.svg'},
-  {symbol: 'IDR', logoURI: 'https://static.narfex.com/img/currencies/indonesian-rupiah.svg'},
-  {symbol: 'CNY', logoURI: 'https://static.narfex.com/img/currencies/yuan-cny.svg'},
-];
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 class Web3Provider extends React.PureComponent {
 
@@ -1131,7 +1126,16 @@ class Web3Provider extends React.PureComponent {
 
   async updateFiats(symbol) {
     try {
-      const {accountAddress, chainId} = this.state;
+      const {accountAddress, chainId, isConnected} = this.state;
+      const userId = `${chainId}${accountAddress}`;
+      if (!isConnected) {
+        const fiats = {};
+        fiats[userId] = KNOWN_FIATS;
+        this.setState({
+          fiats,
+        });
+        return KNOWN_FIATS;
+      }
       const fiats = _.cloneDeep(this.state.fiats);
       let list = _.get(fiats, 'list', []);
 
@@ -1144,16 +1148,15 @@ class Web3Provider extends React.PureComponent {
         fiats.list = list;
       }
 
-      const userId = `${chainId}${accountAddress}`;
       const userFiats = (await Promise.all(list.map(fiatAddress => {
         const fiatContract = new (this.getWeb3().eth.Contract)(
           require('src/index/constants/ABI/fiat'),
           fiatAddress,
         );
-        return fiatContract.methods.getInfo(accountAddress).call();
+        return fiatContract.methods.getInfo(accountAddress || ZERO_ADDRESS).call();
       }))).map((fiat, index) => {
-        const known = KNOWN_FIATS.find(s => s.symbol === fiat[1]) || {};
-        return {
+        const known = KNOWN_FIATS.find(s => s.symbol === fiat[1]);
+        return known ? {
           ...known,
           address: list[index],
           name: fiat[0],
@@ -1161,8 +1164,8 @@ class Web3Provider extends React.PureComponent {
           chainId,
           decimals: 18,
           balance: fiat[2],
-        }
-      });
+        } : null;
+      }).filter(f => !!f);
       fiats[userId] = userFiats;
       this.setState({
         fiats,
@@ -1275,6 +1278,50 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async addInvoice(amount, currency, phone, name, lastName) {
+    try {
+      const result = await this.backendRequest({
+          amount, currency, phone, name, lastName,
+        },
+        `Add invoice`,
+        'invoice',
+        'post',
+      );
+      console.log('[addInvoice]', result);
+      return result;
+    } catch (error) {
+      console.error('[addInvoice]', error);
+    }
+  }
+
+  async getInvoice() {
+    try {
+      const result = await this.backendRequest({
+        },
+        `Get invoice`,
+        'invoice',
+        'get',
+      );
+      return result;
+    } catch (error) {
+      console.error('[getInvoice]', error);
+    }
+  }
+
+  async cancelInvoice() {
+    try {
+      const result = await this.backendRequest({},
+        `Cancel invoice`,
+        'invoice/cancel',
+        'post',
+      );
+      console.log('[cancelInvoice]', result);
+      return result;
+    } catch (error) {
+      console.error('[cancelInvoice]', error);
+    }
+  }
+
   // Get block from date.
   async dateToBlockMoralis (date = new Date()) {
     // Date to unix timestamp.
@@ -1340,6 +1387,7 @@ class Web3Provider extends React.PureComponent {
       getPairAddress: this.getPairAddress.bind(this),
       getReserves: this.getReserves.bind(this),
       pairs: this.pairs,
+      getTokens: this.getTokens.bind(this),
       getTokensRelativePrice: this.getTokensRelativePrice.bind(this),
       getTokenUSDPrice: this.getTokenUSDPrice.bind(this),
       getTokenBalance: this.getTokenBalance.bind(this),
@@ -1378,6 +1426,10 @@ class Web3Provider extends React.PureComponent {
       confirmPayment: this.confirmPayment.bind(this),
       cancelReservation: this.cancelReservation.bind(this),
       exchange: this.exchange.bind(this),
+      addInvoice: this.addInvoice.bind(this),
+      getInvoice: this.getInvoice.bind(this),
+      cancelInvoice: this.cancelInvoice.bind(this),
+      cmcTokens: this.cmcTokens,
     }}>
       {this.props.children}
     </Web3Context.Provider>

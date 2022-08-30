@@ -66,6 +66,13 @@
             color: var(--royal-blue);
             font-weight: 600;
         }
+        &-buttons {
+            display: flex;
+
+            .Button:not(:first-child) {
+                margin-left: 8px;
+            }
+        }
     }
 
     .Button {
@@ -99,6 +106,15 @@
         .ExchangerTopup {
             &__actions {
                 margin-top: 20px;
+
+                &-buttons {
+                    flex-direction: column;
+
+                    .Button:not(:first-child) {
+                        margin-left: 0;
+                        margin-top: 8px;
+                    }
+                }
             }
         }
     }

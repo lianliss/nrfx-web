@@ -44,7 +44,7 @@ function ExchangerSwap(props) {
 
   // Fiat price
   const fiatBalance = wei.from(_.get(fiat, 'balance', "0"));
-  const fiatPrice = _.get(rates, fiatSymbol.toLowerCase(), 0);
+  const fiatPrice = _.get(rates, fiatSymbol.toLowerCase(), Number(fiatSymbol === 'USD'));
 
   // Calculate coin price
   let coinPrice;
@@ -81,28 +81,30 @@ function ExchangerSwap(props) {
   const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
 
   function fiatSelector() {
-    if (!isConnected) {
-      connectWallet()
-        .then(() => setIsSelectFiat(true))
-        .catch(error => {
-          setIsSelectFiat(false);
-        })
-    } else {
-      setIsSelectFiat(true);
-    }
+    setIsSelectFiat(true);
+    // if (!isConnected) {
+    //   connectWallet()
+    //     .then(() => setIsSelectFiat(true))
+    //     .catch(error => {
+    //       setIsSelectFiat(false);
+    //     })
+    // } else {
+    //   setIsSelectFiat(true);
+    // }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
   function coinSelector() {
-    if (!isConnected) {
-      connectWallet()
-        .then(() => setIsSelectCoin(true))
-        .catch(error => {
-          setIsSelectCoin(false);
-        })
-    } else {
-      setIsSelectCoin(true);
-    }
+    setIsSelectCoin(true);
+    // if (!isConnected) {
+    //   connectWallet()
+    //     .then(() => setIsSelectCoin(true))
+    //     .catch(error => {
+    //       setIsSelectCoin(false);
+    //     })
+    // } else {
+    //   setIsSelectCoin(true);
+    // }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 

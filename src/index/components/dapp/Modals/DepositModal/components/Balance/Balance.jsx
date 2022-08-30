@@ -157,7 +157,7 @@ function Balance(props) {
     const anyBank = banks.find((b) =>
       _.includes(b.currencies, currency.toUpperCase())
     );
-    const minAmount = _.get(anyBank, 'minAmount', 5000);
+    const minAmount = _.get(anyBank, 'minAmount', 100);
     const maxAmount = _.get(anyBank, 'maxAmount', 150000);
     const currencyLabel = currency.toUpperCase();
     if (value < minAmount) {
@@ -389,7 +389,7 @@ function Balance(props) {
       _.includes(b.currencies, currency.toUpperCase())
     );
 
-    const minAmount = _.get(anyBank, 'minAmount', 5000);
+    const minAmount = _.get(anyBank, 'minAmount', 100);
     const maxAmount = _.get(anyBank, 'maxAmount', 150000);
 
     const indicator = (

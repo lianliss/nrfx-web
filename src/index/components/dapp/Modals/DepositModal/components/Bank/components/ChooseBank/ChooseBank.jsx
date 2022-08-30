@@ -62,6 +62,13 @@ function ChooseBank(props) {
   const availableMethods = methods.filter(
     (m) => !m.currencies || m.currencies.indexOf(currency.toUpperCase()) >= 0
   );
+  if (currency === 'USD') {
+    availableMethods.push({
+      currencies: ['USD'],
+      code: 'swift',
+      title: 'SWIFT',
+    })
+  }
 
   const amount = cardReservation
     ? cardReservation.reservation.amount
@@ -167,6 +174,14 @@ function ChooseBank(props) {
     //   section: 'reservedCard',
     //   status: 'loading',
     // });
+
+    if (bankCode === 'swift') {
+      actions.openModal('deposit_invoice_details', {
+        currency: currency.toUpperCase(),
+        amount,
+      });
+      return;
+    }
 
     const { cardReserve } = context;
     cardReserve(amount, currency.toUpperCase(), bankCode)
