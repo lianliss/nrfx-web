@@ -156,8 +156,7 @@ class FarmingAdaptiveItem extends React.PureComponent {
 
     const QuestionAPY = () => (
       <p>
-        APY is based on your one-year income if Harvest and Compound are made once
-        a 14 days. Provided APY calculations depend on current APR rates.
+        {getLang('dapp_what_is_apy')}
       </p>
     );
 

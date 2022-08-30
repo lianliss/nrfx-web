@@ -184,7 +184,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
     && amount0 > 0
     && amount1 > 0;
   
-  const perLang = getLang('dex_per');
+  const perLang = getLang('dapp_global_per').toLowerCase();
   const enableLang = getLang('dapp_global_enable');
 
   return (
