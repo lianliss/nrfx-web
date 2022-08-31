@@ -22,6 +22,7 @@ function NarfexRate() {
 
     simpleTokenPrice(narfexAddress, true).then((r) => {
       const resultChange = r.usd_24h_change.toFixed(2);
+
       setPriceDifference(Number(resultChange));
     });
   };
