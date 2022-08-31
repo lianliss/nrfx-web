@@ -5,13 +5,14 @@ import SVG from 'utils/svg-wrap';
 
 import './SidebarItem.less';
 
-function SidebarItem({ title, icon, children, onClick, active, href }) {
+function SidebarItem({ title, icon, children, onClick, active, href, disabled }) {
   const [childIsVisible, setChildIsVisible] = React.useState(active);
   const className = cn({
     SidebarItem: true,
     // If have children list and list is visible, or this is just title that have active class
     active: (children && childIsVisible) || (!children && active),
     haveChild: children,
+    disabled,
   });
 
   const handleClick = () => {
@@ -69,6 +70,7 @@ SidebarItem.defaultProps = {
   icon: null,
   active: false,
   href: null,
+  disabled: false,
 };
 
 export default SidebarItem;
