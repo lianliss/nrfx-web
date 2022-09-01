@@ -18,21 +18,28 @@ import Team from '../../../components/dapp/Team/Team';
 
 // Utils
 import * as PAGES from 'src/index/constants/pages';
+import router from 'src/router';
 
 export class DappCabinet extends Component {
+  componentDidMount() {
+    if(this.props.route.name === PAGES.DAPP) {
+      router.navigate(PAGES.DAPP_EXCHANGE);
+    }
+  }
+  
   render() {
     const { route, adaptive } = this.props;
 
     // Set page component
-    let Component = CabinetWallets;
+    let Component = Exchanger;
 
     switch (route.name) {
-      case PAGES.WALLET:
-        Component = CabinetWallets;
-        break;
-      case PAGES.DAPP_CURRENCY:
-        Component = Currency;
-        break;
+      // case PAGES.DAPP_WALLET:
+      //   Component = CabinetWallets;
+      //   break;
+      // case PAGES.DAPP_CURRENCY:
+      //   Component = Currency;
+      //   break;
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;
         break;
@@ -59,7 +66,7 @@ export class DappCabinet extends Component {
         Component = Team;
         break;
       default:
-        Component = CabinetWallets;
+        Component = Exchanger;
     }
     // ------
 

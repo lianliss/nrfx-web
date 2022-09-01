@@ -25,6 +25,11 @@
     font-weight: 600;
     line-height: 118% !important;
     letter-spacing: -0.01em;
+    margin-bottom: 20px;
+
+    @media screen and (min-width: 1100px) {
+      max-width: 460px;
+    }
   }
 
   &__image {
@@ -35,8 +40,6 @@
     @media screen and (min-width: @mobile-width) and (max-width: 1024px) {
       width: 40%;
     }
-
-
   }
 
   &__link {
@@ -99,6 +102,6 @@
 
     &__container {
       padding: 42px 15px;
-    }    
+    }
   }
 }

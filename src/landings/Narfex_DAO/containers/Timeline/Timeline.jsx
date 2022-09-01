@@ -17,7 +17,7 @@ function Timeline() {
       />
       <LandingContainer>
         <h2>
-          {getLang('narfex_dao_timeline_title_default')}&nbsp;
+          {getLang('narfex_dao_timeline_title_default')}<br />
           <span className="gradient-text">
             {getLang('narfex_dao_timeline_title_gradient')}
           </span>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Web3Context } from 'services/web3Provider';
+import { getLang } from 'src/utils';
 
 // Components
 import {
@@ -33,12 +34,12 @@ function FarmingTable({
       <div className="FarmingTable__body">
         <Table
           headings={[
-            <TableColumn sub="Tag" />,
-            <TableColumn sub="Pool" />,
+            <TableColumn sub={getLang('dapp_global_tag')} />,
+            <TableColumn sub={getLang('dapp_global_pool')} />,
             <TableColumn sub="APY" />,
             <TableColumn sub="APR" />,
-            <TableColumn sub="Liquidity" />,
-            <TableColumn sub="Earned" />,
+            <TableColumn sub={getLang('dapp_global_liquidity')} />,
+            <TableColumn sub={getLang('dapp_global_earned')} />,
             <TableColumn />,
             <TableColumn />,
           ]}

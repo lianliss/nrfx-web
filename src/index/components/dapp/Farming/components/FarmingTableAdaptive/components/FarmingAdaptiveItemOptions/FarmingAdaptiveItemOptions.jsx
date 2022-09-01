@@ -92,7 +92,7 @@ function FarmingAdaptiveItemOptions({
             </div>
           </div>
           <div className="row">
-            <div className="col little-title">Liquidity</div>
+            <div className="col little-title">{getLang('dapp_global_liquidity')}</div>
             <div className="col">
               <div className="row">
                 <span className="Number">
@@ -112,7 +112,7 @@ function FarmingAdaptiveItemOptions({
             first={lpBalance}
             second={lpBalance * pairPrice}
             currency={'LP'}
-            title="Available"
+            title={getLang('global_available')}
           />
         </div>
         <div className="col">
@@ -127,7 +127,7 @@ function FarmingAdaptiveItemOptions({
             className="get-lp"
           >
             <SVG src={require('src/asset/icons/cabinet/add-icon.svg')} />
-            Get LP
+            {getLang('dapp_global_get')} LP
           </Button>
         </div>
       </div>
@@ -149,7 +149,7 @@ function FarmingAdaptiveItemOptions({
                 first={stakedAmount}
                 second={stakedAmount * pairPrice}
                 currency={'LP'}
-                title="Staked"
+                title={getLang('dapp_farming_staked')}
               />
             </div>
             <div className="col">
@@ -161,7 +161,7 @@ function FarmingAdaptiveItemOptions({
                     openModal('stake', {}, modalData);
                   }}
                 >
-                  Stake
+                  {getLang('dapp_farming_stake_button')}
                 </Button>
                 {!!stakedAmount && <Button
                   type="dark"
@@ -170,7 +170,7 @@ function FarmingAdaptiveItemOptions({
                   }}
                   className="unstake"
                 >
-                  Unstake
+                  {getLang('dapp_farming_unstake_button')}
                 </Button>}
               </div>
             </div>
@@ -183,7 +183,7 @@ function FarmingAdaptiveItemOptions({
             first={getFinePrice(reward)}
             second={getFinePrice(reward * nrfxPrice)}
             currency={'NRFX'}
-            title="Earned"
+            title={getLang('dapp_global_earned')}
           />
         </div>
         <div className="col">
@@ -193,7 +193,7 @@ function FarmingAdaptiveItemOptions({
             onClick={harvest}
             state={isHarvest ? 'loading' : ''}
           >
-            Harvest
+            {getLang('dapp_farming_harvest')}
           </Button>
         </div>
       </div>

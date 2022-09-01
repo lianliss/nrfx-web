@@ -3,7 +3,8 @@ import React from 'react';
 import './NarfexToken.less';
 import TokenButton from '../../components/TokenButton/TokenButton';
 import SVG from 'utils/svg-wrap';
-import * as actions from 'actions/landing/buttons';
+import router from 'src/router';
+import { DAPP_EXCHANGE } from 'src/index/constants/pages';
 import { getLang } from 'utils';
 
 const NarfexToken = (props) => {
@@ -14,7 +15,10 @@ const NarfexToken = (props) => {
           <h1>{getLang('token_landing_narfex_token')}</h1>
           <p>{getLang('token_landing_narfex_token_text')}</p>
           <div className="NarfexToken__buttons">
-            <TokenButton onClick={() => actions.swap()} className="light-btn">
+            <TokenButton
+              onClick={() => router.navigate(DAPP_EXCHANGE)}
+              className="light-btn"
+            >
               {getLang('token_landing_buy_on_narfex')}
             </TokenButton>
             <a

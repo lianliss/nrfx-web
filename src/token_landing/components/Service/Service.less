@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 240px;
 
   &__title {
     font-weight: 600;
@@ -28,6 +29,7 @@
 @media screen and (max-width: @mobile-width) {
   .Service {
     flex-direction: row;
+    max-width: 100%;
 
     &:not(:last-child) {
       margin-bottom: 25px;
@@ -35,9 +37,11 @@
 
     &__title {
       margin-left: 25px;
+      text-align: left;
     }
 
     .icon-container {
+      min-width: 107px;
       margin-bottom: 0;
     }
   }

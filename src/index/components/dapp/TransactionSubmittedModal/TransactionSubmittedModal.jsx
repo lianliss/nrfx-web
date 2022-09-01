@@ -13,7 +13,32 @@ import './TransactionSubmittedModal.less';
 
 function TransactionSubmittedModal(props) {
   const context = React.useContext(Web3Context);
-  const { symbol, txLink, addToken, isInProgress, text } = props;
+  const { addTokenToWallet } = context;
+  const { symbol, txLink, addToken, isInProgress, text, coinForAddToWallet } =
+    props;
+
+  const AddToMetamaskButton = ({ onClick }) => {
+    return (
+      <Button
+        type={isInProgress ? 'secondary-light' : 'secondary-blue'}
+        className="metaMask_button"
+        onClick={onClick}
+        shadow={isInProgress}
+      >
+        <div className="text-with-icon">
+          <span
+            className={cn(
+              { ['default-text']: !isInProgress },
+              { ['dark-text']: isInProgress }
+            )}
+          >
+            Add {symbol} to Metamask
+          </span>
+          <SVG src={require('src/asset/icons/social/metaMask.svg')} />
+        </div>
+      </Button>
+    );
+  };
   return (
     <TransactionModal title="Transaction submitted" {...props}>
       <div
@@ -45,25 +70,11 @@ function TransactionSubmittedModal(props) {
         )}
         {text && <p className="default-text text-with-icon">{text}</p>}
         <div className="TransactionSubmittedModal__buttons">
-          {!!addToken && (
-            <Button
-              type={isInProgress ? 'secondary-light' : 'secondary-blue'}
-              className="metaMask_button"
-              onClick={addToken}
-              shadow={isInProgress}
-            >
-              <div className="text-with-icon">
-                <span
-                  className={cn(
-                    { ['default-text']: !isInProgress },
-                    { ['dark-text']: isInProgress }
-                  )}
-                >
-                  Add {symbol} to Metamask
-                </span>
-                <SVG src={require('src/asset/icons/social/metaMask.svg')} />
-              </div>
-            </Button>
+          {!!addToken && <AddToMetamaskButton onClick={addToken} />}
+          {!!coinForAddToWallet && (
+            <AddToMetamaskButton
+              onClick={() => addTokenToWallet(coinForAddToWallet)}
+            />
           )}
           <Button type="lightBlue" size="extra_large" onClick={props.onClose}>
             Close

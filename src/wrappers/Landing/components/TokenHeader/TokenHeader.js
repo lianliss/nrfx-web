@@ -110,7 +110,18 @@ export default () => {
           </ul>
 
           <div className="TokenHeader__authButtons">
-            {user || pending ? (
+            <ButtonWrapper>
+              <Button
+                type="secondary"
+                onClick={() => {
+                  router.navigate(pages.DAPP);
+                }}
+              >
+                <Lang name="site_launch_app" />
+              </Button>
+              <LanguageChanger />
+            </ButtonWrapper>
+            {/* {user || pending ? (
               <Button
                 type="secondary"
                 onClick={() => {
@@ -139,16 +150,16 @@ export default () => {
                 </Button>
                 
                 <LanguageChanger />
-                {/* <Button
+                <Button
                   type="lite"
                   onClick={() => {
                     actions.openStateModal("language");
                   }}
                 >
                   {currentLang.toUpperCase()}
-                </Button> */}
+                </Button>
               </ButtonWrapper>
-            )}
+            )} */}
           </div>
 
           <Button

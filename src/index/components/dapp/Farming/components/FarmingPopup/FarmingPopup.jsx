@@ -5,6 +5,7 @@ import { Web3Context } from 'services/web3Provider';
 import wei from 'utils/wei';
 import _ from 'lodash';
 import getFinePrice from 'utils/get-fine-price';
+import { getLang } from 'src/utils';
 
 // All popups for Farming
 // is here.
@@ -108,19 +109,18 @@ export function FarmingPopupROI(props) {
       </div>
       <div className="FarmingPopup__header">
         <div className="title">
-          <span>ROI</span>
+          <span>{getLang('dapp_farming_roi_title')}</span>
         </div>
         <p>
-          Calculated based on current rates. Rates are estimates provided for
-          your convenience only, and by no means represent guaranteed returns.
+          {getLang('dapp_farming_roi_subtitle')}
         </p>
       </div>
       <div className="FarmingPopup__body">
         <Table
           headings={[
-            <TableColumn sub="Timeframe" />,
+            <TableColumn sub={getLang('dapp_global_timeframe')} />,
             <TableColumn sub="ROI" />,
-            <TableColumn sub={`Per $${getFinePrice(userPool * pairPrice)}`} />,
+            <TableColumn sub={`${getLang('dapp_global_per')} $${getFinePrice(userPool * pairPrice)}`} />,
           ]}
           className="FarmingPopup__table"
         >
