@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import router from "src/router";
 import "./Footer.less";
 import { Logo } from "../../../../ui";
 import SVG from "utils/svg-wrap";
@@ -11,6 +12,7 @@ import { customStyles } from "../../../../ui/components/Select/Select";
 import { currentLangSelector, langListSelector } from "../../../../selectors";
 import { setLang } from "../../../../services/lang";
 import { Link } from "react-router5";
+import * as PAGES from 'src/index/constants/pages';
 import * as pages from "../../../../index/constants/pages";
 import * as actions from "../../../../actions";
 import COMPANY from "../../../../index/constants/company";
@@ -93,9 +95,24 @@ export default ({ logoType = "default" }) => {
                 <Lang name="landing_footer_exchange" />
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="https://bscscan.com/address/0x3764be118a1e09257851a3bd636d48dfeab5cafe" target="_blank">
                 Smart contract
+              </a>
+            </li> */}
+            <li>
+              <a onClick={() => router.navigate(PAGES.LIQUIDITY)}>
+                <Lang name="dapp_sidebar_liquidity" />
+              </a>
+            </li>
+            <li>
+              <a onClick={() => router.navigate(PAGES.FARMING)}>
+                <Lang name="dapp_sidebar_farm" />
+              </a>
+            </li>
+            <li onClick={() => router.navigate(PAGES.VALIDATOR)}>
+              <a>
+                <Lang name="dapp_sidebar_validator" />
               </a>
             </li>
           </ul>
@@ -120,6 +137,11 @@ export default ({ logoType = "default" }) => {
                 GitHub
               </a>
             </li>
+            <li>
+              <a href={COMPANY.docs} target="_blank">
+                <Lang name="landing_footer_white_paper" />
+              </a>
+            </li>
             {/*<li>*/}
               {/*<Link routeName={pages.FEE}>*/}
                 {/*<Lang name="landing_footer_fee" />*/}
@@ -139,26 +161,17 @@ export default ({ logoType = "default" }) => {
             </li>
             <li>
               <a
-                href={COMPANY.faqUrl}
+                href={COMPANY.docs}
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <Lang name="landing_footer_faq" />
+                <Lang name="landing_footer_docs" />
               </a>
             </li>
             <li>
               <Link routeName={pages.CONTACT}>
                 <Lang name="landing_footer_support" />
               </Link>
-            </li>
-            <li>
-              <span
-                onClick={() =>
-                  actions.openModal("static_content", { type: "privacy" })
-                }
-              >
-                <Lang name="landing_footer_privacy" />
-              </span>
             </li>
             <li>
               <span

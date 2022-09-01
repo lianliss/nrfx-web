@@ -29,5 +29,6 @@ export default {
     android: "https://play.google.com/store/apps/details?id=com.narfex"
     // ios: '#'
   },
-  reCaptchaSiteKey: "6LdRL9QUAAAAAE45WnoX0AM_MSiYgS2aJsbiNI0a"
+  reCaptchaSiteKey: "6LdRL9QUAAAAAE45WnoX0AM_MSiYgS2aJsbiNI0a",
+  docs: "https://docs.narfex.com"
 };

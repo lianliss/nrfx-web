@@ -57,9 +57,13 @@ function ExchangerTopup(props) {
   const updateInvoice = async () => {
     try {
       if (isConnected && fiatSymbol === 'USD') {
-        const invoice = await getInvoice();
-        if (invoice) {
-          setInvoice(invoice);
+        const newInvoice = await getInvoice();
+        if (newInvoice) {
+          if (_.get(invoice, 'id') !== newInvoice.id) {
+            setInvoice(newInvoice);
+          }
+        } else {
+          setInvoice(null);
         }
       }
     } catch (error) {
@@ -183,7 +187,12 @@ function ExchangerTopup(props) {
   };
 
   const onDownloadInvoice = async () => {
-
+    try {
+      const {getInvoicePDF} = context;
+      await getInvoicePDF();
+    } catch (error) {
+      console.error('[onDownloadInvoice]', error);
+    }
   };
 
   let buttons = <Button type="secondary" onClick={connectWallet}>
