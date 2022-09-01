@@ -1176,7 +1176,7 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams) {
+  async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams, additionalOptions = {}) {
     const {isConnected, accountAddress} = this.state;
     if (!isConnected) throw new Error('Wallet is not connected');
     try {
@@ -1202,7 +1202,8 @@ class Web3Provider extends React.PureComponent {
           'nrfx-message': hash,
           'nrfx-sign': signature,
         },
-        params
+        params,
+        ...additionalOptions,
       });
     } catch (error) {
       console.error('[backendRequest]', error);
@@ -1305,6 +1306,33 @@ class Web3Provider extends React.PureComponent {
       return result;
     } catch (error) {
       console.error('[getInvoice]', error);
+    }
+  }
+
+  async getInvoicePDF() {
+    console.log('getInvoicePDF');
+    try {
+      const result = await this.backendRequest({
+        },
+        `Get invoice`,
+        'invoice/pdf',
+        'get',
+        undefined,
+        {
+          responseType: 'blob',
+        }
+      );
+      console.log('getInvoicePDF result', result);
+      const url = window.URL.createObjectURL(result);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'file.pdf');
+      document.body.appendChild(link);
+      link.click();
+      console.log('click');
+      return true;
+    } catch (error) {
+      console.error('[getInvoicePDF]', error);
     }
   }
 
@@ -1428,6 +1456,7 @@ class Web3Provider extends React.PureComponent {
       exchange: this.exchange.bind(this),
       addInvoice: this.addInvoice.bind(this),
       getInvoice: this.getInvoice.bind(this),
+      getInvoicePDF: this.getInvoicePDF.bind(this),
       cancelInvoice: this.cancelInvoice.bind(this),
       cmcTokens: this.cmcTokens,
     }}>

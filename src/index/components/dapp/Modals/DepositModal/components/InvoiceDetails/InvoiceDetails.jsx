@@ -10,6 +10,7 @@ import { Input, Button, Row } from 'src/ui';
 import { adaptiveSelector } from 'src/selectors';
 import * as actions from 'src/actions';
 import * as toast from "src/actions/toasts";
+import wait from 'src/utils/wait';
 
 // Styles
 import './InvoiceDetails.less';
@@ -18,7 +19,7 @@ function InvoiceDetails(props) {
   const adaptive = useSelector(adaptiveSelector);
   const context = React.useContext(Web3Context);
   const {currency, amount} = props;
-  const {accountAddress, isConnected, addInvoice} = context;
+  const {accountAddress, isConnected, addInvoice, getInvoicePDF} = context;
 
   const [phone, setPhone] = React.useState();
   const [name, setName] = React.useState();
@@ -46,8 +47,11 @@ function InvoiceDetails(props) {
     setIsProcess(true);
     try {
       await addInvoice(amount, currency, phone, name, lastName);
-      props.onClose();
+      await wait(1000);
+      await getInvoicePDF();
       toast.success('Invoice added');
+      await wait(4000);
+      props.onClose();
     } catch (error) {
       console.error('[onConfirm]', error);
       toast.error(error.message);
@@ -71,7 +75,7 @@ function InvoiceDetails(props) {
                placeholder="+7 (xxx) xxx-xxxx" />
       </label>
       <label className="DepositModal__WithdrawalDetails__label">
-        <span>Full name</span>
+        <span>Full name (only latin characters)</span>
         <Input type="text" value={name}
                onChange={e => setName(e.target.value)}
                placeholder="Name" />
