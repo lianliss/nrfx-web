@@ -22,9 +22,9 @@ function SwitchPage({ adaptive }) {
   // Constants
   const { route, router } = useRoute();
   const switchTabs = [
-    { value: PAGES.DAPP_SWAP, label: 'Swap' },
-    { value: PAGES.LIQUIDITY, label: 'Liquidity' },
-    { value: PAGES.TRANSACTIONS, label: 'Transactions' },
+    { value: PAGES.DAPP_SWAP, label: getLang('dapp_sidebar_swap') },
+    { value: PAGES.LIQUIDITY, label: getLang('dapp_sidebar_liquidity') },
+    { value: PAGES.TRANSACTIONS, label: getLang('dapp_sidebar_transactions') },
   ];
   // Current page is ...
   const isSwap = route.name === PAGES.DAPP_SWAP;
@@ -32,7 +32,8 @@ function SwitchPage({ adaptive }) {
   const isTransactions = route.name === PAGES.TRANSACTIONS;
 
   // Page Title.
-  const title = getSwitchedTitle(route.name, adaptive);
+  const titleLang = getSwitchedTitle(route.name, adaptive);
+  const title = getLang(titleLang);
 
   // Handlers.
   // Pro version toggler
@@ -65,7 +66,7 @@ function SwitchPage({ adaptive }) {
         {isLiquidity && !adaptive && (
           <div className="SwitchPage__row">
             <p className="SwitchPage__description">
-              Earn high yields from transaction fees.
+              {getLang('dapp_liquidity_page_subtitle')}
             </p>
           </div>
         )}
@@ -96,19 +97,19 @@ function getSwitchedTitle(route, adaptive = false) {
   const isSwap = route.name === PAGES.DAPP_SWAP;
   const isLiquidity = route.name === PAGES.LIQUIDITY;
   if (route === PAGES.DAPP_SWAP) {
-    return 'Exchange';
+    return 'dapp_swap_page_title';
   }
 
   if (route === PAGES.TRANSACTIONS) {
-    return 'Transactions';
+    return 'dapp_sidebar_transactions';
   }
 
   if (route === PAGES.LIQUIDITY) {
     if (adaptive) {
-      return 'Liquidity provider';
+      return 'dapp_liquidity_page_title_adaptive';
     }
 
-    return 'Become a Liquidity provider';
+    return 'dapp_liquidity_page_title';
   }
 
   return '';

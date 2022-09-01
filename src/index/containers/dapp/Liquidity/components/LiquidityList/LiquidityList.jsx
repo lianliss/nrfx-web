@@ -10,7 +10,7 @@ import _ from 'lodash';
 import { Web3Context } from 'services/web3Provider';
 
 // Utils
-import { classNames as cn } from 'src/utils';
+import { classNames as cn, getLang } from 'src/utils';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 
@@ -76,7 +76,7 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
       <div className="ItemContent">
         <div className="ItemContent__body">
           <div>
-            <span>Common pool balance</span>
+            <span>{getLang('dapp_liquidity_common_pool_balance')}</span>
             <span>
               <span>{getFinePrice(reserve0)}</span>
               <WalletIcon currency={item.token0} size={16} />
@@ -87,7 +87,7 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
           </div>
           {!!balance && <>
           <div>
-            <span>You pooled</span>
+            <span>{getLang('dapp_liquidity_you_pooled')}</span>
             <span>
               <span>{getFinePrice(userAmount0)}</span>
               <WalletIcon currency={item.token0} size={16} />
@@ -97,22 +97,22 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
             </span>
           </div>
           <div>
-            <span>Your LP tokens:</span>
+            <span>{getLang('dapp_liquidity_your_lp_tokens')}:</span>
             <span>{getFinePrice(balance)}</span>
           </div>
           <div>
-            <span>Your share:</span>
+            <span>{getLang('dapp_liquidity_your_share')}:</span>
             <span>{getFinePrice(share * 100)}%</span>
           </div>
           </>}
         </div>
         <div className="ItemContent__footer">
           <Button type="lightBlue" size="extra_large" onClick={() => onAddClick(item.address)}>
-            Add
+            {getLang('dapp_global_add')}
           </Button>
           <Button type="dark" disabled={!balance}
                   size="extra_large" onClick={() => onRemoveClick(item.address)}>
-            Remove
+            {getLang('dapp_global_remove')}
           </Button>
         </div>
       </div>
@@ -141,7 +141,7 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
           </li>
         ))
       ) : (
-        <li>{emptyText}</li>
+        <li>{getLang(emptyText)}</li>
       )}
     </ul>
   );
@@ -154,7 +154,7 @@ LiquidityList.propTypes = {
 };
 
 LiquidityList.defaultProps = {
-  emptyText: 'No liquidity.',
+  emptyText: 'dapp_liquidity_list_no_liquidity',
   onAddClick: () => {},
   onRemoveClick: () => {},
 };

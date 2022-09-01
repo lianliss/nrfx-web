@@ -130,7 +130,8 @@ function ExchangerSwap(props) {
         isInProgress: true,
         text: `Your tokens will be sent to your wallet\nwithin five minutes`,
         token: coin,
-      });
+        coinForAddToWallet: coin,
+    });
       console.log('[swapTokens]', result);
       toast.success('Exchange confirmed');
     } catch (error) {

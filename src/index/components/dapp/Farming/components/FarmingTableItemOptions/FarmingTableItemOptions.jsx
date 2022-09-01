@@ -89,7 +89,7 @@ function FarmingTableItemOptions({
             }}
           >
             <SVG src={require('src/asset/icons/cabinet/add-icon.svg')} />
-            Get LP
+            {getLang('dapp_global_get')} LP
           </Button>
         </TableColumn>
         <TableColumn>
@@ -97,7 +97,7 @@ function FarmingTableItemOptions({
             first={lpBalance}
             second={lpBalance * pairPrice}
             currency={'LP'}
-            title="Available"
+            title={getLang('global_available')}
           />
         </TableColumn>
         <TableColumn colspan={2}>
@@ -111,7 +111,7 @@ function FarmingTableItemOptions({
                     openModal('stake', {}, modalData);
                   }}
                 >
-                  Stake
+                  {getLang('dapp_farming_stake_button')}
                 </Button>
                 <Button
                   type="dark"
@@ -120,7 +120,7 @@ function FarmingTableItemOptions({
                   }}
                   className="unstake"
                 >
-                  Unstake
+                  {getLang('dapp_farming_unstake_button')}
                 </Button>
               </>
             ) : (
@@ -132,7 +132,7 @@ function FarmingTableItemOptions({
                 }}
                 style={{ width: '100%' }}
               >
-                Stake
+                {getLang('dapp_farming_stake_button')}
               </Button>
             )
           ) : (
@@ -150,7 +150,7 @@ function FarmingTableItemOptions({
             first={stakedAmount}
             second={stakedAmount * pairPrice}
             currency={'LP'}
-            title="Staked"
+            title={getLang('dapp_farming_staked')}
           />
         </TableColumn>
         <TableColumn style={{ maxWidth: 110 }}>
@@ -160,7 +160,7 @@ function FarmingTableItemOptions({
             onClick={harvest}
             state={isHarvest ? 'loading' : ''}
           >
-            Harvest
+            {getLang('dapp_farming_harvest')}
           </Button>
         </TableColumn>
         <TableColumn colspan={3}>
@@ -168,7 +168,7 @@ function FarmingTableItemOptions({
             first={getFinePrice(reward)}
             second={getFinePrice(reward * nrfxPrice)}
             currency={'NRFX'}
-            title="Earned"
+            title={getLang('dapp_global_earned')}
           />
         </TableColumn>
       </TableCell>

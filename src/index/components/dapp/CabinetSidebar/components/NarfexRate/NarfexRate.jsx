@@ -9,6 +9,8 @@ import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 
 // Utils
 import { useSelector } from 'react-redux';
+import { simpleTokenPrice } from 'src/services/coingeckoApi';
+import networks from 'src/index/constants/networks';
 
 function NarfexRate() {
   const currentPrice = useSelector((state) => state.web3.rates.nrfx);
@@ -16,6 +18,13 @@ function NarfexRate() {
 
   const getNarfexRate = () => {
     setPriceDifference(null);
+    const narfexAddress = networks[56]['narfexToken'];
+
+    simpleTokenPrice(narfexAddress, true).then((r) => {
+      const resultChange = r.usd_24h_change.toFixed(2);
+
+      setPriceDifference(Number(resultChange));
+    });
   };
 
   React.useEffect(() => {

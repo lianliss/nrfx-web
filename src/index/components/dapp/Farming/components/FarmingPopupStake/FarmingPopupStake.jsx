@@ -21,6 +21,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { toastPush } from 'src/actions/toasts';
+import { getLang } from 'src/utils';
 
 // Styles
 import './FarmingPopupStake.less';
@@ -177,7 +178,7 @@ class FarmingPopupStake extends React.PureComponent {
       const receipt = await getTransactionReceipt(tx);
       console.log('transaction receipt', receipt);
       updatePoolData(pool);
-      toastPush(`Staked ${amount.toFixed(2)} ${token1Symbol}-${token0Symbol}`, 'farming');
+      toastPush(`${getLang('dapp_farming_staked')} ${amount.toFixed(2)} ${token1Symbol}-${token0Symbol}`, 'farming');
       if (!this._mount) return;
       onClose();
     } catch (error) {
@@ -210,7 +211,7 @@ class FarmingPopupStake extends React.PureComponent {
       const receipt = await getTransactionReceipt(tx);
       console.log('transaction receipt', receipt);
       updatePoolData(pool);
-      toastPush(`Unstaked ${amount.toFixed(2)} ${token1Symbol}-${token0Symbol}`, 'farming');
+      toastPush(`${getLang('dapp_farming_unstaked')} ${amount.toFixed(2)} ${token1Symbol}-${token0Symbol}`, 'farming');
       if (!this._mount) return;
       onClose();
     } catch (error) {
@@ -239,6 +240,10 @@ class FarmingPopupStake extends React.PureComponent {
       ? allowance >= amount && amount && amount <= balance
       : amount && amount <= userPool;
 
+    const title = modal === 'stake'
+      ? getLang('dapp_farming_stake')
+      : getLang('dapp_farming_unstake');
+      
     return (
       <>
         <Wrapper
@@ -252,20 +257,21 @@ class FarmingPopupStake extends React.PureComponent {
           <div className="FarmingPopup__header">
             <div className="title">
             <span>
-              {modal === 'stake' ? 'Stake' : 'Unstake'}
-              &nbsp;Tokens
+              {title}&nbsp;
+              {getLang('dapp_global_tokens')}
             </span>
             </div>
           </div>
           <Form className="FarmingPopup__body" onSubmit={this.handleSubmit.bind(this)}>
             <label>
               <div className="FarmingPopup__label">
-              <span className="default-text">
-                {modal === 'stake' ? 'Stake' : 'Unstake'}
-              </span>
                 <span className="default-text">
-                Balance: <NumberFormat number={isStake ? balance : userPool} />
-              </span>
+                  {title}
+                </span>
+                <span className="default-text">
+                  {getLang('dapp_global_balance')}:&nbsp;
+                  <NumberFormat number={isStake ? balance : userPool} />
+                </span>
               </div>
               <div className="input-container">
                 <Input type={adaptive ? 'number' : 'text'}
@@ -279,7 +285,7 @@ class FarmingPopupStake extends React.PureComponent {
                     className="input-controls__button"
                     onClick={() => {if (!isTransaction && !isApproving) this.setState({value: isStake ? balance : userPool})}}
                   >
-                    <span>Max</span>
+                    <span>{getLang('global_max')}</span>
                   </button>
                 </div>
               </div>
@@ -288,18 +294,19 @@ class FarmingPopupStake extends React.PureComponent {
                     onClick={this.onApprove.bind(this)}
                     disabled={!amount || isAvailable || amount > balance}
                     state={isApproving ? 'loading' : ''}>
-              Approve {amount.toFixed(2)} LP
+              {getLang('dapp_global_approve')}&nbsp;
+              {amount.toFixed(2)} LP
             </Button>
             <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
                     onClick={this.onDeposit.bind(this)}
                     disabled={!isAvailable || isTransaction}
                     state={isTransaction ? 'loading' : ''}>
-              Stake
+              {getLang('dapp_farming_stake_button')}
             </Button></> : <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
                                   onClick={this.onWithdraw.bind(this)}
                                   disabled={!isAvailable || isTransaction}
                                   state={isTransaction ? 'loading' : ''}>
-              Unstake
+              {getLang('dapp_farming_unstake_button')}
             </Button>}
           </Form>
           <div className="FarmingPopup__footer">
@@ -315,7 +322,7 @@ class FarmingPopupStake extends React.PureComponent {
                   }); 
                 }}
               >
-                <span>Get {token0Symbol}-{token1Symbol}</span>
+                <span>{getLang('dapp_global_get')} {token0Symbol}-{token1Symbol}</span>
                 <SVG src={require('src/asset/icons/export.svg')} />
               </Row>
             )}

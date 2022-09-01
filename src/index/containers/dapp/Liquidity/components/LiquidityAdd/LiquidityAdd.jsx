@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
+import { getLang } from 'src/utils';
 
 // Components
 import DexSwapInput from '../../../DexSwap/components/DexSwapInput/DexSwapInput';
@@ -182,12 +183,17 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
     && amount1 <= balances[1]
     && amount0 > 0
     && amount1 > 0;
+  
+  const perLang = getLang('dapp_global_per').toLowerCase();
+  const enableLang = getLang('dapp_global_enable');
 
   return (
     <>
       <div className="Liquidity__header LiquidityAdd">
         <div className="Liquidity__title">
-          {isImport ? 'Import pool' : 'Add Liquidity'}
+          {isImport
+            ? getLang('dapp_liquidity_import_page_title')
+            : getLang('dapp_liquidity_add_page_title')}
         </div>
         <div className="close" onClick={onClose}>
           <SVG src={require('src/asset/icons/close-popup.svg')} />
@@ -231,24 +237,30 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
         />
         {!isImport && (
           <>
-            <span className="default-text-light">Prices and pool share</span>
+            <span className="default-text-light">
+              {getLang('dapp_liquidity_add_info_title')}
+            </span>
             <div className="LiquidityAdd__result">
               <div className="LiquidityAdd__item">
                 <span>{getFinePrice(rate0)}</span>
                 <span>
-                  {selectedTokens[0].symbol} per {selectedTokens[1].symbol}
+                  {selectedTokens[0].symbol}&nbsp;
+                  {perLang}&nbsp;
+                  {selectedTokens[1].symbol}
                 </span>
               </div>
               <div className="LiquidityAdd__item">
                 <span>{getFinePrice(rate1)}</span>
                 <span>
-                  {selectedTokens[1].symbol} per {selectedTokens[0].symbol}
+                  {selectedTokens[1].symbol}&nbsp;
+                  {perLang}&nbsp;
+                  {selectedTokens[0].symbol}
                 </span>
               </div>
               <div className="LiquidityAdd__item">
                 <span>{getFinePrice(share)} %</span>
                 <span>
-                  Share of pool
+                  {getLang('dapp_liquidity_add_info_3')}
                 </span>
               </div>
             </div>
@@ -258,7 +270,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
               size="extra_large"
               onClick={approve}
             >
-              Enable {selectedTokens[0].symbol}
+              {enableLang} {selectedTokens[0].symbol}
             </Button>}
             {(!!allowance[0] && !allowance[1]) && <Button
               type="lightBlue"
@@ -266,7 +278,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
               size="extra_large"
               onClick={approve}
             >
-              Enable {selectedTokens[1].symbol}
+              {enableLang} {selectedTokens[1].symbol}
             </Button>}
             <Button
               type={!isAvailable ? 'secondary' : 'lightBlue'}
@@ -283,14 +295,14 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
                 pairAddress,
               })}
             >
-              Supply
+              {getLang('dapp_global_supply')}
             </Button>
           </>
         )}
         {isImport && (
           <div className="LiquidityAdd__import__footer">
             <p className="LiquidityAdd__import__default_text">
-              Select a token to find your liquidity.
+              {getLang('dapp_liquidity_import_page_instruction')}
             </p>
             <span
               className="LiquidityAdd__import__default_text link"
@@ -300,7 +312,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
                 setValues(['0', '0']);
               }}
             >
-              Add liquidity
+              {getLang('dapp_liquidity_main_add_liquidity_button')}
             </span>
           </div>
         )}

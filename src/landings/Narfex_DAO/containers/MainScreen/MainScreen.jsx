@@ -9,6 +9,9 @@ import mainScreenBgMobile from '../../assets/main_screen_bg-mobile.svg';
 import * as landingActions from 'actions/landing/buttons';
 import { getLang } from 'utils';
 
+import router from 'src/router';
+import * as pages from "src/index/constants/pages";
+
 import './MainScreen.less';
 
 function MainScreen({ adaptive }) {
@@ -21,7 +24,7 @@ function MainScreen({ adaptive }) {
           <TokenButton
             className="light-btn"
             onClick={() => {
-              landingActions.swap();
+              router.navigate(pages.DAPP);
             }}
           >
             {getLang('narfex_dao_launch_narfex')}

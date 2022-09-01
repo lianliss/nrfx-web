@@ -24,6 +24,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 
 // Utils
 import { openModal } from 'src/actions';
+import { getLang } from 'src/utils';
 
 // Styles
 import './FarmingTableItem.less';
@@ -165,8 +166,7 @@ class FarmingTableItem extends React.PureComponent {
 
     const QuestionAPY = () => (
       <p>
-        APY is based on your one-year income if Harvest and Compound are made once
-        a 14 days. Provided APY calculations depend on current APR rates.
+        {getLang('dapp_what_is_apy')}
       </p>
     );
 
@@ -225,7 +225,7 @@ class FarmingTableItem extends React.PureComponent {
           {!!reward ? `${getFinePrice(reward)} NRFX` : '—'}
         </TableColumn>
         <TableColumn className={'details' + (isActive ? ' active' : '')}>
-          <span>Details</span>
+          <span>{getLang('dapp_global_details')}</span>
           <SVG src={require('src/asset/icons/cabinet/select-arrow.svg')} />
         </TableColumn>
         <TableColumn>
