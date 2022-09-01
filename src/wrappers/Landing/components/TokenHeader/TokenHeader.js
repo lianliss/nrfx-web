@@ -90,13 +90,13 @@ export default () => {
             type="NRFX"
           />
           <ul className="TokenHeader__nav">
-            <li
+            {/* <li
               onClick={handleClickProducts}
               className={cn({ active: openedMegaMenu })}
             >
               <Lang name="site__headerProducts" />
               <SVG src={require("src/asset/24px/angle-down-small.svg")} />
-            </li>
+            </li> */}
             <li onClick={() => router.navigate(pages.NARFEX_DAO)}>
               <Lang name="site__headerCompany" />
             </li>

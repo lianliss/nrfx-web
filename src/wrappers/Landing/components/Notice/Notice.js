@@ -13,7 +13,6 @@ export default () => {
 
   return (
     <div className="LandingWrapper__block">
-      <div className="FreePik">Illustration by Stories by Freepik</div>
       <div
         onClick={() => setCrop(false)}
         className={cn("FooterNotice", { active: crop })}

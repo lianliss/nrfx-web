@@ -18,59 +18,65 @@ export default () => {
   const headerRef = useRef(null);
   const { user, pending } = useSelector(profileSelector);
   const currentLang = useSelector(currentLangSelector);
-  const [openedMegaMenu, setOpenedMegaMenu] = useState(false);
+  // const [openedMegaMenu, setOpenedMegaMenu] = useState(false);
   const [openedMobileMenu, setOpenedMobileMenu] = useState(false);
 
-  const handleClickProducts = useCallback(() => {
-    setOpenedMegaMenu(!openedMegaMenu);
-  }, [openedMegaMenu]);
-
-  const escFunction = useCallback(
-    event => {
-      if (event.keyCode === 27) {
-        setOpenedMegaMenu(false);
-      }
-    },
-    [setOpenedMegaMenu]
-  );
+  // 31.08.2022 Remove products
+  // ----------------------------
+  // const handleClickProducts = useCallback(() => {
+  //   setOpenedMegaMenu(!openedMegaMenu);
+  // }, [openedMegaMenu]);
+  // const escFunction = useCallback(
+  //   event => {
+  //     if (event.keyCode === 27) {
+  //       setOpenedMegaMenu(false);
+  //     }
+  //   },
+  //   [setOpenedMegaMenu]
+  // );
+  // ----------------------------
 
   const handleClickMobileMenu = useCallback(() => {
     setOpenedMobileMenu(!openedMobileMenu);
-    if (openedMobileMenu) {
-      document.removeEventListener("keydown", escFunction, false);
-    }
-  }, [escFunction, openedMobileMenu, setOpenedMobileMenu]);
+    // 31.08.2022 Remove products
+    // ----------------------------
+    // if (openedMobileMenu) {
+    //   document.removeEventListener("keydown", escFunction, false);
+    // }
+    // [escFunction]
+    // ----------------------------
+  }, [openedMobileMenu, setOpenedMobileMenu]);
 
   useEffect(() => {
-    setOpenedMegaMenu(false);
+    // 31.08.2022 Remove products
+    // setOpenedMegaMenu(false);
     setOpenedMobileMenu(false);
   }, [route.route.name]);
 
-  const handleClick = e => {
-    if (!headerRef.current.contains(e.target)) {
-      setOpenedMegaMenu(false);
-    }
-  };
-
-  useEffect(() => {
-    if (openedMegaMenu) {
-      document.addEventListener("click", handleClick, false);
-    } else {
-      document.removeEventListener("click", handleClick, false);
-    }
-
-    return () => {
-      document.removeEventListener("click", handleClick, false);
-    };
-  }, [openedMegaMenu]);
-
-  useEffect(() => {
-    document.addEventListener("keydown", escFunction, false);
-
-    return () => {
-      document.removeEventListener("keydown", escFunction, false);
-    };
-  }, [escFunction]);
+  // 31.08.2022 Remove products
+  // ----------------------------
+  // const handleClick = e => {
+  //   if (!headerRef.current.contains(e.target)) {
+  //     setOpenedMegaMenu(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (openedMegaMenu) {
+  //     document.addEventListener("click", handleClick, false);
+  //   } else {
+  //     document.removeEventListener("click", handleClick, false);
+  //   }
+  //   return () => {
+  //     document.removeEventListener("click", handleClick, false);
+  //   };
+  // }, [openedMegaMenu]);
+  // useEffect(() => {
+  //   document.addEventListener("keydown", escFunction, false);
+  //   return () => {
+  //     document.removeEventListener("keydown", escFunction, false);
+  //   };
+  // }, [escFunction]);
+  // ----------------------------
 
   return (
     <div
@@ -87,13 +93,16 @@ export default () => {
             size="extra-large"
           />
           <ul className="Header__nav">
-            <li
+            {/* // 31.08.2022 Remove products */}
+            {/* // ---------------------------- */}
+            {/* <li
               onClick={handleClickProducts}
               className={cn({ active: openedMegaMenu })}
             >
               <Lang name="site__headerProducts" />
               <SVG src={require("src/asset/24px/angle-down-small.svg")} />
-            </li>
+            </li> */}
+            {/* // ---------------------------- */}
             <li onClick={() => router.navigate(pages.NARFEX_DAO)}>
               <Lang name="site__headerCompany" />
             </li>
@@ -169,10 +178,13 @@ export default () => {
           onClose={() => setOpenedMobileMenu(false)}
         />
       </div>
-      <MegaMenu
+      {/* // 31.08.2022 Remove products */}
+      {/* // ---------------------------- */}
+      {/* <MegaMenu
         visible={openedMegaMenu}
         onClose={() => setOpenedMegaMenu(false)}
-      />
+      /> */}
+      {/* // ---------------------------- */}
     </div>
   );
 };
