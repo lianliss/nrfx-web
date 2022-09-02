@@ -195,9 +195,10 @@ class CabinetWrapper extends Component {
             rightContent={
               !user && (
                 <div
-                  onClick={() =>
-                    actions.openModal('auth', { type: steps.REGISTRATION })
-                  }
+                  onClick={() => {
+                    router.navigate(PAGES.DAPP);
+                    // actions.openModal('auth', { type: steps.REGISTRATION })
+                  }}
                 >
                   <SVG src={require('../../asset/24px/login.svg')} />
                 </div>
