@@ -70,6 +70,10 @@ function InvoiceDetails(props) {
     }, 50);
   };
 
+  const setLatinValueToState = (text, setter) => {
+    setter(text.replace(/[А-Яа-я0-9]+/, ''));
+  };
+
   React.useEffect(() => {
     if (!phoneInputRef) return;
     if (!adaptive) return;
@@ -105,13 +109,13 @@ function InvoiceDetails(props) {
         <Input
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setLatinValueToState(e.target.value, setName)}
           placeholder="Name"
         />
         <Input
           type="text"
           value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+          onChange={(e) => setLatinValueToState(e.target.value, setLastName)}
           placeholder="Last name"
         />
       </label>
