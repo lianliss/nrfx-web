@@ -301,6 +301,15 @@ router.addListener((state, prevState) => {
   if (state.params.path === '/profile') {
     router.navigate(pages.PARTNERS);
   }
+
+  // Scroll to top when route change.
+  if (!state || !prevState) return;
+  // Remove double scroll on redirect.
+  if (state.name === pages.DAPP) return;
+  if (state.name === prevState.name) return;
+  if (!state.params.modal && !prevState.params.modal) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 });
 
 export default router;
