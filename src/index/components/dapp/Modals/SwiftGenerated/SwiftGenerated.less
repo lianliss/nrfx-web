@@ -1,0 +1,103 @@
+.SwiftGenerated {
+  text-align: center;
+
+  .Modal__box {
+    padding: 32px;
+    border-radius: var(--radius-panel);
+  }
+
+  &__row {
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+  }
+
+  h3 {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--secondary-blue);
+  }
+
+  p {
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+    color: var(--cool-gray);
+  }
+
+  strong {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--dark-black);
+  }
+
+  .Button {
+    width: 100%;
+    border-radius: 15px;
+
+    &.large {
+      height: 50px;
+
+      .Button__label {
+        font-size: 16px !important;
+        line-height: 20px !important;
+        text-transform: capitalize;
+      }
+
+      &:not(.disabled) {
+        .Button__label {
+          font-weight: 700 !important;
+        }
+      }
+    }
+
+    &.secondary-alice {
+      &.disabled {
+        .Button__label {
+          color: var(--cool-gray);
+        }
+      }
+    }
+  }
+
+  .HaveAQuestion__title {
+    color: var(--secondary-blue);
+  }
+
+  &__next {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: capitalize;
+    color: var(--secondary-blue);
+    cursor: pointer;
+
+    .isvg {
+      transform: rotate(-90deg);
+      display: flex;
+      align-items: center;
+      margin-left: 6px;
+
+      svg {
+        width: 10px !important;
+        height: 6px !important;
+
+        path {
+          fill: var(--secondary-blue);
+        }
+      }
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
