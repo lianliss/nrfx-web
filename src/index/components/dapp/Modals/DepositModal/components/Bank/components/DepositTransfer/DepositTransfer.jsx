@@ -8,6 +8,9 @@ import { Row, Button, Col } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import Lang from 'src/components/Lang/Lang';
 
+// Utils
+import { getLang } from 'src/utils';
+
 // Styles
 import './DepositTransfer.less';
 
@@ -48,7 +51,8 @@ function DepositTransfer({ onClose, adaptive, text }) {
           shadow
           onClick={() => addTokenToWallet(fiat)}
         >
-          Add to Metamask
+          {getLang('dapp_global_add')}&nbsp;
+          {getLang('dapp_global_to_metamask')}
           <SVG src={require('src/asset/icons/social/metaMask.svg')} />
         </Button>
         <Button type="lightBlue" shadow onClick={onClose}>
