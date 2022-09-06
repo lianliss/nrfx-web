@@ -2,8 +2,14 @@
   text-align: center;
 
   .Modal__box {
+    width: auto;
+  }
+
+  &__container {
     padding: 32px;
+    background: #fff;
     border-radius: var(--radius-panel);
+    box-sizing: border-box;
   }
 
   &__row {
@@ -99,5 +105,11 @@
     &:hover {
       opacity: 0.8;
     }
+  }
+}
+
+.adaptive .SwiftGenerated {
+  &__row {
+    width: 100%;
   }
 }

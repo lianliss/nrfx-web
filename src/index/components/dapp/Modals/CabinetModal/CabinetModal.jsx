@@ -23,10 +23,10 @@ function CabinetModal({ children, className, closeOfRef = false, onClose }) {
     if (!closeOfRef) return;
     if (!containerRef.current) return;
 
-    document.addEventListener('click', handleOutClick);
+    document.addEventListener('pointerup', handleOutClick);
 
     return () => {
-      document.removeEventListener('click', handleOutClick);
+      document.removeEventListener('pointerup', handleOutClick);
     };
   }, [containerRef, closeOfRef]);
 
