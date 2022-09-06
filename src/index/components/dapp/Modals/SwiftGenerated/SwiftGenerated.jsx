@@ -16,12 +16,7 @@ function SwiftGenerated(props) {
   return (
     <CabinetModal {...props} closeOfRef className="SwiftGenerated">
       <div className="SwiftGenerated__container">
-        {step === 'main' && (
-          <Main
-            onDownload={() => setStep('download')}
-            onNext={() => setStep('download')}
-          />
-        )}
+        {step === 'main' && <Main onNext={() => setStep('download')} />}
         {step === 'download' && (
           <Download
             onBack={() => setStep('main')}

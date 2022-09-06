@@ -31,8 +31,8 @@ function CabinetModal({ children, className, closeOfRef = false, onClose }) {
   }, [containerRef, closeOfRef]);
 
   const handleOutClick = (e) => {
-    e.preventDefault();
     if (!containerRef.current.contains(e.target)) {
+      e.preventDefault();
       onClose();
     }
   };
