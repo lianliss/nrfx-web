@@ -208,7 +208,18 @@ class Header extends React.PureComponent {
                   {/*</UI.Button>}*/}
               </div>
             )}
-            {!isLogged && (
+            <div className="CabinetHeader__controls">
+              <UI.Button
+                onClick={() => {
+                  router.navigate(pages.DAPP);
+                }}
+                size="middle"
+                type="secondary"
+              >
+                <Lang name="site_launch_app" />
+              </UI.Button>
+            </div>
+            {/* {!isLogged && (
               <div className="CabinetHeader__controls">
                 <UI.Button
                   onClick={() =>
@@ -232,7 +243,7 @@ class Header extends React.PureComponent {
                   <Lang name="site__authModalSignUpBtn" />
                 </UI.Button>
               </div>
-            )}
+            )} */}
           </div>
 
           <InternalNotification />

@@ -128,7 +128,7 @@ function ExchangerSwap(props) {
       const result = await exchange(fiatSymbol, coinSymbol, fiatAmount, {
         symbol: coinSymbol,
         isInProgress: true,
-        text: `Your tokens will be sent to your wallet\nwithin five minutes`,
+        text: getLang('dapp_exchanger_swap_submitted_text'),
         token: coin,
         coinForAddToWallet: coin,
     });

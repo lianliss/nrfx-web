@@ -8,10 +8,13 @@ import { Row, Button, Col } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import Lang from 'src/components/Lang/Lang';
 
+// Utils
+import { getLang } from 'src/utils';
+
 // Styles
 import './DepositTransfer.less';
 
-function DepositTransfer({ onClose, adaptive }) {
+function DepositTransfer({ onClose, adaptive, text }) {
   const context = React.useContext(Web3Context);
   const { chainId, accountAddress, addTokenToWallet, fiats } = context;
   const routerState = router.getState();
@@ -33,10 +36,7 @@ function DepositTransfer({ onClose, adaptive }) {
       <h3 className="blue large-height">
         <Lang name="fiatRefillCard_status_wait_for_review" />
       </h3>
-      <p className="DepositModal__Bank__DepositTransfer-subtitle">
-        Your tokens will be credited directly to your connected wallet. Import
-        the token into your wallet using the button below.
-      </p>
+      <p className="DepositModal__Bank__DepositTransfer-subtitle">{text}</p>
       <div className="speed-icon">
         <SVG src={require('src/asset/icons/transaction/speed.svg')} />
       </div>
@@ -51,7 +51,8 @@ function DepositTransfer({ onClose, adaptive }) {
           shadow
           onClick={() => addTokenToWallet(fiat)}
         >
-          Add to Metamask
+          {getLang('dapp_global_add')}&nbsp;
+          {getLang('dapp_global_to_metamask')}
           <SVG src={require('src/asset/icons/social/metaMask.svg')} />
         </Button>
         <Button type="lightBlue" shadow onClick={onClose}>

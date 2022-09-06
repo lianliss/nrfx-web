@@ -6,7 +6,9 @@ import { Web3Context } from 'services/web3Provider';
 import TransactionModal from '../TransactionModal/TransactionModal';
 import SVG from 'utils/svg-wrap';
 import { Button } from 'src/ui';
-import { classNames as cn } from 'src/utils';
+
+// Utils
+import { classNames as cn, getLang } from 'src/utils';
 
 // Styles
 import './TransactionSubmittedModal.less';
@@ -32,7 +34,9 @@ function TransactionSubmittedModal(props) {
               { ['dark-text']: isInProgress }
             )}
           >
-            Add {symbol} to Metamask
+            {getLang('dapp_global_add')}&nbsp;
+            {symbol}&nbsp;
+            {getLang('dapp_global_to_metamask')}
           </span>
           <SVG src={require('src/asset/icons/social/metaMask.svg')} />
         </div>
@@ -40,7 +44,7 @@ function TransactionSubmittedModal(props) {
     );
   };
   return (
-    <TransactionModal title="Transaction submitted" {...props}>
+    <TransactionModal title={getLang('dapp_transaction_submitted')} {...props}>
       <div
         className={cn('TransactionSubmittedModal', {
           ['TransactionSubmittedModal__isInProgress']: isInProgress,
@@ -77,7 +81,7 @@ function TransactionSubmittedModal(props) {
             />
           )}
           <Button type="lightBlue" size="extra_large" onClick={props.onClose}>
-            Close
+            {getLang('global_close')}
           </Button>
         </div>
       </div>

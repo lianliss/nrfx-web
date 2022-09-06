@@ -67,7 +67,7 @@ function ChooseBank(props) {
       currencies: ['USD'],
       code: 'swift',
       title: 'SWIFT',
-    })
+    });
   }
 
   const amount = cardReservation
@@ -383,7 +383,13 @@ function ChooseBank(props) {
     }
 
     if (cardReservation?.reservation.status === 'wait_for_review') {
-      return <DepositTransfer onClose={props.onClose} adaptive={adaptive} />;
+      return (
+        <DepositTransfer
+          onClose={props.onClose}
+          adaptive={adaptive}
+          text={getLang('dapp_topup_modal_submitted_text')}
+        />
+      );
     }
 
     if (!cardReservation) {

@@ -1,60 +1,60 @@
 // styles
 // external
-import createRouter from "router5";
-import browserPlugin from "router5-plugin-browser";
-import listenersPlugin from "router5-plugin-listeners";
+import createRouter from 'router5';
+import browserPlugin from 'router5-plugin-browser';
+import listenersPlugin from 'router5-plugin-listeners';
 // internal
-import * as pages from "./index/constants/pages";
-import * as adminPages from "./admin/constants/pages";
+import * as pages from './index/constants/pages';
+import * as adminPages from './admin/constants/pages';
 
 export const routes =
-  process.env.DOMAIN === "admin"
+  process.env.DOMAIN === 'admin'
     ? [
         {
           name: adminPages.MAIN,
-          path: "/"
+          path: '/',
         },
         {
           name: adminPages.PANEL,
-          path: `/panel`
+          path: `/panel`,
         },
         {
           name: adminPages.PANEL_PAGE,
-          path: `/panel/:page`
+          path: `/panel/:page`,
         },
         {
           name: adminPages.NOT_FOUND,
-          path: "/not_found"
-        }
+          path: '/not_found',
+        },
       ]
     : [
         {
           name: pages.MAIN,
-          path: "/"
+          path: '/',
         },
         {
           name: pages.BUY_BITCOIN,
-          path: "/buy_bitcoin"
+          path: '/buy_bitcoin',
         },
         {
           name: pages.MENU,
-          path: "/menu"
+          path: '/menu',
         },
         {
           name: pages.NOTIFICATIONS,
-          path: "/notifications"
+          path: '/notifications',
         },
         {
           name: pages.ABOUT,
-          path: "/about"
+          path: '/about',
         },
         {
           name: pages.MISSION,
-          path: "/mission"
+          path: '/mission',
         },
         {
           name: pages.HISTORY,
-          path: "/history"
+          path: '/history',
         },
         {
           name: pages.SITE_EXCHANGE,
@@ -66,7 +66,7 @@ export const routes =
         },
         {
           name: pages.WALLET_SWAP,
-          path: "/wallet/swap"
+          path: '/wallet/swap',
         },
         {
           name: pages.WALLET_CRYPTO,
@@ -256,20 +256,20 @@ export const routes =
         },
         {
           name: pages.NARFEX_DAO,
-          path: "/narfex_dao"
+          path: '/narfex_dao',
         },
         {
           name: pages.FARMING_INSTRUCTION,
-          path: "/farming_instruction"
+          path: '/farming_instruction',
         },
         {
           name: pages.TERMS_OF_SERVICE,
-          path: "/terms-of-service"
+          path: '/terms-of-service',
         },
         {
           name: pages.PRIVATE_POOLS,
-          path: "/private_pools"
-        }
+          path: '/private_pools',
+        },
       ];
 
 const params = {
@@ -301,6 +301,13 @@ router.addListener((state, prevState) => {
   if (state.params.path === '/profile') {
     router.navigate(pages.PARTNERS);
   }
+
+  // Scroll to top when route change.
+  if (!state || !prevState) return;
+  // Remove double scroll on redirect.
+  if (state.name === pages.DAPP) return;
+  if (state.name === prevState.name) return;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 export default router;

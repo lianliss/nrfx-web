@@ -5,11 +5,12 @@ import { Web3Context } from 'services/web3Provider';
 // Components
 import DepositModal from '../../DepositModal';
 import { Input, Button, Row } from 'src/ui';
+import PhoneInput from 'react-phone-number-input/input';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
 import * as actions from 'src/actions';
-import * as toast from "src/actions/toasts";
+import * as toast from 'src/actions/toasts';
 import wait from 'src/utils/wait';
 
 // Styles
@@ -18,8 +19,9 @@ import './InvoiceDetails.less';
 function InvoiceDetails(props) {
   const adaptive = useSelector(adaptiveSelector);
   const context = React.useContext(Web3Context);
-  const {currency, amount} = props;
-  const {accountAddress, isConnected, addInvoice, getInvoicePDF} = context;
+  const { currency, amount } = props;
+  const { accountAddress, isConnected, addInvoice, getInvoicePDF } = context;
+  const phoneInputRef = React.useRef(null);
 
   const [phone, setPhone] = React.useState();
   const [name, setName] = React.useState();
@@ -59,6 +61,30 @@ function InvoiceDetails(props) {
     setIsProcess(false);
   };
 
+  const phoneOnInputHandler = (e) => {
+    setTimeout(() => {
+      const valueLength = e.target.value.length;
+      if (valueLength > 3) return;
+
+      e.target.setSelectionRange(valueLength, valueLength);
+    }, 50);
+  };
+
+  const setLatinValueToState = (text, setter) => {
+    setter(text.replace(/[А-Яа-я0-9]+/, ''));
+  };
+
+  React.useEffect(() => {
+    if (!phoneInputRef) return;
+    if (!adaptive) return;
+
+    phoneInputRef.current.addEventListener('input', phoneOnInputHandler);
+
+    return () => {
+      phoneInputRef.current.removeEventListener('input', phoneOnInputHandler);
+    };
+  }, [adaptive]);
+
   return (
     <DepositModal
       {...props}
@@ -70,26 +96,38 @@ function InvoiceDetails(props) {
       </h3>
       <label className="DepositModal__WithdrawalDetails__label">
         <span>Phone number</span>
-        <Input type="text" value={phone}
-               onChange={e => setPhone(e.target.value)}
-               placeholder="+7 (xxx) xxx-xxxx" />
+        <PhoneInput
+          value={phone}
+          onChange={setPhone}
+          className="Input"
+          placeholder="+7 (xxx) xxx-xxxx"
+          ref={phoneInputRef}
+        />
       </label>
       <label className="DepositModal__WithdrawalDetails__label">
         <span>Full name (only latin characters)</span>
-        <Input type="text" value={name}
-               onChange={e => setName(e.target.value)}
-               placeholder="Name" />
-        <Input type="text" value={lastName}
-               onChange={e => setLastName(e.target.value)}
-               placeholder="Last name" />
+        <Input
+          type="text"
+          value={name}
+          onChange={(e) => setLatinValueToState(e.target.value, setName)}
+          placeholder="Name"
+        />
+        <Input
+          type="text"
+          value={lastName}
+          onChange={(e) => setLatinValueToState(e.target.value, setLastName)}
+          placeholder="Last name"
+        />
       </label>
       <Row className="DepositModal__WithdrawalDetails__buttons" wrap={adaptive}>
         <Button type="secondary-alice" onClick={onBack} shadow>
           Back
         </Button>
-        <Button type="lightBlue"
-                state={isProcess ? 'loading' : ''}
-                onClick={onConfirm}>
+        <Button
+          type="lightBlue"
+          state={isProcess ? 'loading' : ''}
+          onClick={onConfirm}
+        >
           Сonfirm
         </Button>
       </Row>
