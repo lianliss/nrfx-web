@@ -1,0 +1,61 @@
+.SwiftGenerated__download {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5px 0;
+
+  &__title {
+    margin: 0 auto;
+    padding: 0 4.65px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+
+    .back {
+      width: 18px;
+      height: 9px;
+      transform: rotate(90deg);
+
+      .isvg {
+        height: inherit;
+        width: inherit;
+        display: flex;
+        justify-content: center;
+
+        svg {
+          width: inherit;
+          height: inherit;
+        }
+      }
+    }
+
+    .close {
+      svg {
+        rect {
+          fill: var(--secondary-blue);
+        }
+      }
+    }
+
+    .close,
+    .back {
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .SwiftGenerated__row {
+    width: 80vw;
+    max-width: 359px;
+
+    .Button {
+      &:not(:last-child) {
+        margin-bottom: 18px;
+      }
+    }
+  }
+}

@@ -9,3 +9,5 @@ export { default as TransactionWaitingModal } from './TransactionWaitingModal/Tr
 export { default as YourWalletModal } from './YourWalletModal/YourWalletModal';
 export { default as ConnectToWalletModal } from './Modals/ConnectToWalletModal/ConnectToWalletModal';
 export { default as CreateReferralLink } from './Modals/CreateReferralLink/CreateReferralLink';
+
+export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGenerated';
