@@ -68,7 +68,8 @@ import {
   TransactionWaitingModal,
   YourWalletModal,
   ConnectToWalletModal,
-  CreateReferralLink
+  CreateReferralLink,
+  SwiftGeneratedModal
 } from "./components/dapp";
 import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
 import { closeModal } from "src/actions/index";
@@ -260,6 +261,9 @@ function Modals(props) {
       break;
     case "deposit_invoice_details":
       Component = DepositModalInvoiceDetails;
+      break;
+    case "swift_generated":
+      Component = SwiftGeneratedModal;
       break;
     default:
       return null;
