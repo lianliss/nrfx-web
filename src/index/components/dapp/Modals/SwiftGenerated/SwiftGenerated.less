@@ -110,7 +110,7 @@
 
 .adaptive .SwiftGenerated {
   .CabinetModal__container {
-    max-width: 380px;
+    max-width: 329px;
   }
 
   .Modal__box {
@@ -118,10 +118,44 @@
   }
 
   &__container {
-    padding: 25px;
+    padding: 32px 20px;
   }
 
   &__row {
     width: 100%;
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+
+  h3 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  strong {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .HaveAQuestion__title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .Button {
+    &.large {
+      .Button__label {
+        font-size: 15px !important;
+        line-height: 18px !important;
+      }
+    }
   }
 }
