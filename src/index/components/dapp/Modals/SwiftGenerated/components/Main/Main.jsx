@@ -5,7 +5,9 @@ import HaveAQuestion from '../../../components/HaveAQuestion/HaveAQuestion';
 import SVG from 'utils/svg-wrap';
 import { Button } from 'src/ui';
 
-function Main({ onDownload, onNext }) {
+function Main({ onNext }) {
+  const [invoiceLoaded, setInvoiceLoaded] = React.useState(false);
+
   return (
     <div className="SwiftGenerated__main">
       <div className="SwiftGenerated__row">
@@ -19,8 +21,12 @@ function Main({ onDownload, onNext }) {
         <HaveAQuestion />
       </div>
       <div className="SwiftGenerated__row">
-        <Button type="lightBlue" onClick={onDownload}>
-          Download Invoice
+        <Button
+          type="lightBlue"
+          onClick={() => setInvoiceLoaded(true)}
+          disabled={invoiceLoaded}
+        >
+          {invoiceLoaded ? 'Invoice loaded' : 'Download Invoice'}
         </Button>
       </div>
       <div className="SwiftGenerated__row">

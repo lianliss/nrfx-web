@@ -2,6 +2,7 @@ import React from 'react';
 
 // Components
 import { Modal } from 'src/ui';
+import CabinetModal from '../CabinetModal/CabinetModal';
 import Download from './components/Download/Download';
 import Finally from './components/Finally/Finally';
 import Main from './components/Main/Main';
@@ -13,14 +14,9 @@ function SwiftGenerated(props) {
   const [step, setStep] = React.useState('main');
 
   return (
-    <Modal {...props} className="SwiftGenerated">
+    <CabinetModal {...props} closeOfRef className="SwiftGenerated">
       <div className="SwiftGenerated__container">
-        {step === 'main' && (
-          <Main
-            onDownload={() => setStep('download')}
-            onNext={() => setStep('download')}
-          />
-        )}
+        {step === 'main' && <Main onNext={() => setStep('download')} />}
         {step === 'download' && (
           <Download
             onBack={() => setStep('main')}
@@ -30,7 +26,7 @@ function SwiftGenerated(props) {
         )}
         {step === 'finally' && <Finally />}
       </div>
-    </Modal>
+    </CabinetModal>
   );
 }
 
