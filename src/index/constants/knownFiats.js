@@ -45,7 +45,7 @@ module.exports = [
     address: "0x815fe8056d867052bde314018166f144c11f6c4c",
     chainId: 56,
     decimals: 18,
-    logoURI: "https://static.narfex.com/img/currencies/null.svg"
+    logoURI: "https://static.narfex.com/img/currencies/pln.svg"
   },
   {
     name: "Thai Baht on Narfex",
@@ -53,7 +53,7 @@ module.exports = [
     address: "0xf21311db1d6ae2538dc86a0bbc751c53439e0895",
     chainId: 56,
     decimals: 18,
-    logoURI: "https://static.narfex.com/img/currencies/null.svg"
+    logoURI: "https://static.narfex.com/img/currencies/thb.svg"
   },
   {
     name: "Vietnamese Dong on Narfex",
@@ -61,7 +61,7 @@ module.exports = [
     address: "0x9a630ef70abf193bb24b082d7a10c515c0e847c6",
     chainId: 56,
     decimals: 18,
-    logoURI: "https://static.narfex.com/img/currencies/null.svg"
+    logoURI: "https://static.narfex.com/img/currencies/vnd.svg"
   },
   {
     name: "Canadian Dollar on Narfex",
@@ -69,6 +69,6 @@ module.exports = [
     address: "0x1ade4f9b177a42b160cb304ce402f1daabfb2d2d",
     chainId: 56,
     decimals: 18,
-    logoURI: "https://static.narfex.com/img/currencies/null.svg"
+    logoURI: "https://static.narfex.com/img/currencies/cad.svg"
   },
 ];
