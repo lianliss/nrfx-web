@@ -69,7 +69,8 @@ import {
   YourWalletModal,
   ConnectToWalletModal,
   CreateReferralLink,
-  SwiftGeneratedModal
+  SwiftGeneratedModal,
+  AttentionBuyTokenModal,
 } from "./components/dapp";
 import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
 import { closeModal } from "src/actions/index";
@@ -264,6 +265,9 @@ function Modals(props) {
       break;
     case "swift_generated":
       Component = SwiftGeneratedModal;
+      break;
+    case "attention_buy_token":
+      Component = AttentionBuyTokenModal;
       break;
     default:
       return null;

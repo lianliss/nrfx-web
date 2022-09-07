@@ -1,0 +1,78 @@
+.AttentionBuyToken {
+  text-align: center;
+
+  &__container {
+    padding: 32px 29px;
+    background: #fff;
+    border-radius: var(--radius-panel);
+    box-sizing: border-box;
+  }
+
+  h3 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 30px;
+    color: var(--secondary-blue);
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin: 0 auto;
+    max-width: 305px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    color: var(--dark-black);
+
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+
+    &.AttentionBuyToken__text {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 16px;
+
+      &.secondary-alice {
+        background: rgba(48, 113, 238, 0.12);
+        padding: 11.6px 36.3px;
+        border-radius: var(--radius-panel);
+      }
+    }
+  }
+
+  .Button {
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 15px;
+
+    &.large {
+      height: 50px;
+      max-width: 360px;
+
+      .Button__label {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 14px;
+    }
+  }
+}
+
+.adaptive .AttentionBuyToken {
+  .Modal__box {
+    padding: 20px;
+  }
+
+  .CabinetModal__container {
+    max-width: 435.594px;
+  }
+  
+  &__container {
+    padding: 23px 20px 30px;
+  }
+}

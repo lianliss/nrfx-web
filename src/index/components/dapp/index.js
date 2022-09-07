@@ -11,3 +11,4 @@ export { default as ConnectToWalletModal } from './Modals/ConnectToWalletModal/C
 export { default as CreateReferralLink } from './Modals/CreateReferralLink/CreateReferralLink';
 
 export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGenerated';
+export { default as AttentionBuyTokenModal } from './Modals/AttentionBuyToken/AttentionBuyToken';
