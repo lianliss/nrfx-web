@@ -39,13 +39,12 @@ class TokenContract {
   });
 
   getBalance = (address = this.provider.state.accountAddress) => new Promise((fulfill, reject) => {
-    console.log(address)
     this.contract.methods
       .balanceOf(address)
       .call()
       .then(response => {
         const balance = wei.from(response, this.decimals);
-        fulfill(balance);d
+        fulfill(balance);
       }).catch(error => {
         console.error('[TokenContract][getBalance]', error);
         fulfill(0);
