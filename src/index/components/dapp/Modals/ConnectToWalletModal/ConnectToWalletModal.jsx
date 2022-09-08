@@ -42,14 +42,17 @@ function ConnectToWalletModal(props) {
             </div>
             <div className="ConnectToWalletModal__title">Metamask</div>
           </div>
-          <div className="ConnectToWalletModal__wallet">
+          <div
+            className="ConnectToWalletModal__wallet"
+            onClick={() => connectWallet('binanceChain')}
+          >
             <div
               className="ConnectToWalletModal__wallet__icon"
               style={{ background: '#3375bb' }}
             >
               <SVG src={require('src/asset/icons/social/trustWallet.svg')} />
             </div>
-            <div className="ConnectToWalletModal__title">TrustWallet</div>
+            <div className="ConnectToWalletModal__title">Binance Chain</div>
           </div>
         </div>
         <div className="row">

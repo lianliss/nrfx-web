@@ -16,6 +16,7 @@ import web3Backend from './web3-backend';
 import * as actions from "src/actions";
 import * as toast from "src/actions/toasts";
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
+import { getRequestMetods, getEthereumObject } from './multiwalletsDifference';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -29,6 +30,7 @@ class Web3Provider extends React.PureComponent {
 
   state = {
     isConnected: false,
+    wallet: null,
     accountAddress: null,
     balancesRequested: null,
     blocksPerSecond: 0,
@@ -59,6 +61,7 @@ class Web3Provider extends React.PureComponent {
   farm = null;
   pairs = {};
   connectionCheckTimeout;
+  requestMethods = {};
 
   // Moralis
   moralis = {
@@ -89,7 +92,7 @@ class Web3Provider extends React.PureComponent {
     this.web3Host = new Web3(provider);
 
     // Check web3 wallet plugin
-    this.checkConnection();
+    // this.checkConnection();
 
     // Get tokens list
     this.getTokens();
@@ -317,7 +320,6 @@ class Web3Provider extends React.PureComponent {
     const {chainId} = info;
     this.setState({
       isConnected: true,
-      accountAddress: this.ethereum.selectedAddress,
     });
     this.setChain(this.web3Host.utils.hexToNumber(chainId));
   };
@@ -380,17 +382,17 @@ class Web3Provider extends React.PureComponent {
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
    */
-  async connectWallet() {
+  async connectWallet(walletConnector = 'metamask') {
     try {
-      if (!window.ethereum) {
-        throw new Error('No wallet plugins detected');
-      }
-      this.ethereum = window.ethereum;
+      this.requestMethods = getRequestMetods(walletConnector);
+      this.ethereum = getEthereumObject(walletConnector);
       this.web3 = new Web3(this.ethereum);
       this.setChain(this.getWeb3().utils.hexToNumber(this.ethereum.chainId));
 
       // Set account address
-      const accountAddress = (await this.ethereum.request({ method: 'eth_requestAccounts' }))[0];
+      const accountAddress = (await this.ethereum.request({
+        method: this.requestMethods.request_accounts
+      }))[0];
       if (!accountAddress) {
         throw new Error('No accounts connected');
       }
@@ -404,7 +406,7 @@ class Web3Provider extends React.PureComponent {
       });
 
       // Clear old events
-      this.ethereumUnsubscribe();
+      // this.ethereumUnsubscribe();
       this.ethereumSubsribe();
 
       // On account address change
@@ -611,7 +613,7 @@ class Web3Provider extends React.PureComponent {
         return await (this.getWeb3().eth.getBalance(accountAddress));
       }
     } catch (error) {
-      console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
+      // console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
       return '0';
     }
   }
