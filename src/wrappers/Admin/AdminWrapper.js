@@ -37,7 +37,7 @@ export default memo(props => {
         <ContentBox className="Admin_wrapper__menu">
           <TelegramLoginButton dataOnauth={onTelegramAuth}
                                cornerRadius={12}
-                               buttonSize="small"
+                               buttonSize="medium"
                                botName="GreedIsGoodAIBot" />
           <Menu />
         </ContentBox>
