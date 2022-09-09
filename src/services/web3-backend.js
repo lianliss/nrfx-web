@@ -214,6 +214,11 @@ export class Web3Backend {
   getBanks = () => this.get('cards/banks');
   getLimits = () => this.get('rates/limits');
   getExchangerBalance = () => this.get('rates/balance');
+  setUserTelegram = telegramID => this.post('user/telegram', {
+    params: {
+      telegramID,
+    }
+  });
 }
 
 const web3Backend = new Web3Backend();
