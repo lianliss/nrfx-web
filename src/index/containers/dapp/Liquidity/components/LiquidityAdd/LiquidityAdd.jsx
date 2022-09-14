@@ -333,7 +333,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
             } else {
               setSelectedTokens((state) => {
                 if(state[0].symbol === token.symbol) {
-                  return [token, state[1]];
+                  return [state[1], token];
                 }
 
                 return [state[0], token];

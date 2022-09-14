@@ -46,15 +46,17 @@ function DepositTransfer({ onClose, adaptive, text }) {
         </em>
       </p>
       <Row className="buttons" justifyContent="center" wrap={adaptive}>
-        <Button
-          type="secondary-alice"
-          shadow
-          onClick={() => addTokenToWallet(fiat)}
-        >
-          {getLang('dapp_global_add')}&nbsp;
-          {getLang('dapp_global_to_metamask')}
-          <SVG src={require('src/asset/icons/social/metaMask.svg')} />
-        </Button>
+        {context.ethereum.isMetaMask && (
+          <Button
+            type="secondary-alice"
+            shadow
+            onClick={() => addTokenToWallet(fiat)}
+          >
+            {getLang('dapp_global_add')}&nbsp;
+            {getLang('dapp_global_to_metamask')}
+            <SVG src={require('src/asset/icons/social/metaMask.svg')} />
+          </Button>
+        )}
         <Button type="lightBlue" shadow onClick={onClose}>
           <Lang name="global_ok" />
         </Button>
