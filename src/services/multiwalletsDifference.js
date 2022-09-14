@@ -1,3 +1,8 @@
+export const CONNECTORS = {
+  bsc: 'BinanceChain',
+  metamask: 'ethereum',
+};
+
 export const requests = {
   metamask: {
     request_accounts: 'eth_requestAccounts',
@@ -7,47 +12,48 @@ export const requests = {
     wallet_switchEthereumChain: 'wallet_switchEthereumChain',
     personal_sign: 'personal_sign',
   },
-  binanceChain: {
+  bsc: {
     request_accounts: 'eth_accounts',
     eth_sendTransaction: 'eth_sendTransaction',
-    wallet_watchAsset: 'wallet_watchAsset',
+    wallet_watchAsset: null,
     wallet_addEthereumChain: 'wallet_addEthereumChain',
-    wallet_switchEthereumChain: 'wallet_switchEthereumChain',
+    wallet_switchEthereumChain: null,
     personal_sign: 'personal_sign',
   },
 };
 
 /**
- * Wallet connectors:
- *  metamask
- *  binanceChain
- */
-
-/**
  * Returns ethereum request methods for wallet.
- * @param walletConnector {string} - Wallet connector name in camelCase.
+ * @param connector {string} - Wallet connector name from constant.
  * @returns {object}
  */
-export const getRequestMetods = (walletConnector) => {
-  return requests[walletConnector];
+export const getRequestMetods = (connector) => {
+  return requests[connector];
 };
 
 /**
  * Returns ethereum object.
- * @param walletConnector {string} - Wallet connector name in camelCase.
+ * @param connector {string} - Wallet connector name from constant.
  * @returns {object}
  */
-export const getEthereumObject = (walletConnector) => {
-  const ethereums = {
-    metamask: 'ethereum',
-    binanceChain: 'BinanceChain',
-  };
-
-  const ethereum = ethereums[walletConnector];
+export const getEthereumObject = (connector) => {
+  const ethereum = CONNECTORS[connector];
 
   if (!window[ethereum]) {
-    throw new Error('No wallet plugins detected');
+    return null;
   }
 
   return window[ethereum];
+};
+
+/**
+ * Returns ethereum fetch result.
+ * @param requestObject {object} - ethereum request object.
+ * @returns {Promise.<*>} - Fetch result.
+ */
+export const fetchEthereumRequest = async function (requestObject, ethereum) {
+  if (!requestObject.method) return false;
+  if (!this && !ethereum) return false;
+
+  return await this.ethereum.request(requestObject);
 };

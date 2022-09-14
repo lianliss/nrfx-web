@@ -16,7 +16,11 @@ import web3Backend from './web3-backend';
 import * as actions from "src/actions";
 import * as toast from "src/actions/toasts";
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
-import { getRequestMetods, getEthereumObject } from './multiwalletsDifference';
+import {
+  getRequestMetods,
+  getEthereumObject,
+  fetchEthereumRequest,
+} from './multiwalletsDifference';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -44,11 +48,16 @@ class Web3Provider extends React.PureComponent {
     poolsList: networks[56].poolsList,
     prices: {},
     fiats: {},
+    connector: 'metamask'
   };
 
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
+  rpcProviderUrl = {
+    mainnet: 'https://bsc-mainnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
+    testnet: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a'
+  };
   providerAddress = 'asd';
   factoryAddress = networks[56].factoryAddress;
   routerAddress = networks[56].providerAddress;
@@ -62,6 +71,7 @@ class Web3Provider extends React.PureComponent {
   pairs = {};
   connectionCheckTimeout;
   requestMethods = {};
+  fetchEthereumRequest = fetchEthereumRequest.bind(this);
 
   // Moralis
   moralis = {
@@ -371,6 +381,9 @@ class Web3Provider extends React.PureComponent {
   };
 
   ethereumUnsubscribe = () => {
+    // Other connectors have not removeListener.
+    if (!this.ethereum.isMetaMask) return;
+
     this.ethereum.removeListener('connect', this.onConnect.bind(this));
     this.ethereum.removeListener('accountsChanged', this.onAccountsChanged.bind(this));
     this.ethereum.removeListener('chainChanged', this.onChainChanged.bind(this));
@@ -382,16 +395,33 @@ class Web3Provider extends React.PureComponent {
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
    */
-  async connectWallet(walletConnector = 'metamask') {
+  async connectWallet(connector = this.state.connector) {
     try {
-      this.requestMethods = getRequestMetods(walletConnector);
-      this.ethereum = getEthereumObject(walletConnector);
-      this.web3 = new Web3(this.ethereum);
-      this.setChain(this.getWeb3().utils.hexToNumber(this.ethereum.chainId));
+      // Get connector.
+      this.ethereum = getEthereumObject(connector);
+      if (!this.ethereum) {
+        return toast.error('No wallet plugins detected');
+      }
+
+      const chainIdNumber = this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
+      this.requestMethods = getRequestMetods(connector);
+
+      // Rpc of chainId
+      const currentChainRPC = chainIdNumber === 97
+        ? this.rpcProviderUrl.testnet
+        : this.rpcProviderUrl.mainnet;
+      
+      // Provider of connector.
+      const provider = this.ethereum.isMetaMask
+        ? this.ethereum
+        : currentChainRPC;
+      this.web3 = new Web3(provider);
+      this.setChain(chainIdNumber);
 
       // Set account address
-      const accountAddress = (await this.ethereum.request({
-        method: this.requestMethods.request_accounts
+      const accountAddress = (
+        await this.fetchEthereumRequest({
+          method: this.requestMethods.request_accounts
       }))[0];
       if (!accountAddress) {
         throw new Error('No accounts connected');
@@ -403,10 +433,11 @@ class Web3Provider extends React.PureComponent {
       this.setState({
         isConnected: true,
         accountAddress,
+        connector
       });
 
       // Clear old events
-      // this.ethereumUnsubscribe();
+      this.ethereumUnsubscribe();
       this.ethereumSubsribe();
 
       // On account address change
@@ -613,7 +644,7 @@ class Web3Provider extends React.PureComponent {
         return await (this.getWeb3().eth.getBalance(accountAddress));
       }
     } catch (error) {
-      // console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
+      console.error('[getTokenBalance]', this.getBSCScanLink(tokenContractAddress), error);
       return '0';
     }
   }
@@ -689,6 +720,10 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<void>}
    */
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
+    // Only MetaMask have a good provider
+    // for send more requests on one time.
+    if(!this.ethereum.isMetaMask) return;
+
     try {
       // Set positive balance tokens
       this.setBalances(this.state.tokens.filter(t => t.balance > 0));
@@ -933,8 +968,8 @@ class Web3Provider extends React.PureComponent {
       if (value) {
         rawTransaction.value = this.web3.utils.toHex(value);
       }
-      return await this.ethereum.request({
-        method: 'eth_sendTransaction',
+      return await this.fetchEthereumRequest({
+        method: this.requestMethods.eth_sendTransaction,
         params: [rawTransaction],
       });
     } catch (error) {
@@ -950,8 +985,8 @@ class Web3Provider extends React.PureComponent {
    */
   async addTokenToWallet(token) {
     try {
-      await this.ethereum.request({
-        method: 'wallet_watchAsset',
+      await this.fetchEthereumRequest({
+        method: this.requestMethods.wallet_watchAsset,
         params: {
           type: 'ERC20',
           options: {
@@ -1066,8 +1101,8 @@ class Web3Provider extends React.PureComponent {
     }
     try {
       if (chainId === 97) {
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
+        await this.fetchEthereumRequest({
+          method: this.requestMethods.wallet_addEthereumChain,
           params: [{
             chainId: this.web3.utils.toHex(97),
             chainName: 'BSC web3 test',
@@ -1081,8 +1116,8 @@ class Web3Provider extends React.PureComponent {
           }],
         });
       }
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
+      await this.fetchEthereumRequest({
+        method: this.requestMethods.wallet_switchEthereumChain,
         params: [{ chainId: this.web3.utils.toHex(chainId) }]
       });
       return true;
@@ -1187,8 +1222,8 @@ class Web3Provider extends React.PureComponent {
       const message = `Sign up with code ${hash}`;
       let signature = window.localStorage.getItem(key);
       if (!signature) {
-        signature = await this.ethereum.request({
-          method: 'personal_sign',
+        signature = await this.fetchEthereumRequest({
+          method: this.requestMethods.personal_sign,
           params: [
             this.web3.utils.utf8ToHex(message),
             accountAddress,

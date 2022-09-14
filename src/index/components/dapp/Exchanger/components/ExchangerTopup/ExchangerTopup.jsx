@@ -195,7 +195,7 @@ function ExchangerTopup(props) {
     }
   };
 
-  let buttons = <Button type="secondary" onClick={connectWallet}>
+  let buttons = <Button type="secondary" onClick={() => actions.openModal('connect_to_wallet')}>
     {getLang('dapp_global_connect_wallet')}
   </Button>;
 

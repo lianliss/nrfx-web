@@ -14,7 +14,7 @@ function ConnectToWalletModal(props) {
   const context = React.useContext(Web3Context);
   const { isConnected, connectWallet } = context;
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (isConnected) {
       props.onClose();
     }
@@ -30,9 +30,7 @@ function ConnectToWalletModal(props) {
         <div className="row">
           <div
             className="ConnectToWalletModal__wallet"
-            onClick={() => {
-              connectWallet();
-            }}
+            onClick={() => connectWallet('metamask')}
           >
             <div
               className="ConnectToWalletModal__wallet__icon"
@@ -44,7 +42,7 @@ function ConnectToWalletModal(props) {
           </div>
           <div
             className="ConnectToWalletModal__wallet"
-            onClick={() => connectWallet('binanceChain')}
+            onClick={() => connectWallet('bsc')}
           >
             <div
               className="ConnectToWalletModal__wallet__icon"

@@ -144,7 +144,7 @@ function TokenSale() {
           </Button>
           </> : <>
           <Button type={'lightBlue'}
-                  onClick={connectWallet}>
+                  onClick={() => connectWallet()}>
             <SVG src={require('src/asset/token/wallet.svg')} />
             {getLang('dex_button_connect_wallet')}
           </Button>

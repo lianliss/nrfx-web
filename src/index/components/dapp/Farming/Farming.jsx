@@ -13,6 +13,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 import useAdaptive from 'src/hooks/adaptive';
 import { DESKTOP } from 'src/index/constants/breakpoints';
 import { getLang } from 'src/utils';
+import { openModal } from 'src/actions';
 
 // Styles
 import './Farming.less';
@@ -179,7 +180,7 @@ function Farming() {
 
   React.useEffect(() => {
     if (!isConnected) {
-      connectWallet();
+      openModal('connect_to_wallet');
     }
   }, [isConnected]);
 

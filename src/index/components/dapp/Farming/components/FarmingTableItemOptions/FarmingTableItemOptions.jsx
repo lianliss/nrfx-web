@@ -138,7 +138,7 @@ function FarmingTableItemOptions({
           ) : (
             <Button
               type="lightBlue"
-              onClick={connectWallet}
+              onClick={() => openModal('connect_to_wallet')}
               style={{ width: '100%' }}
             >
               {getLang('dapp_global_connect_wallet')}

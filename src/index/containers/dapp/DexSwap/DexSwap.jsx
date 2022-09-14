@@ -425,17 +425,10 @@ class DexSwap extends React.PureComponent {
   }
 
   onSelectToken = index => {
-    const {
-      isConnected,
-      connectWallet,
-    } = this.context;
+    const { isConnected } = this.context;
 
     if (!isConnected) {
-      connectWallet()
-        .then(() => this.setState({ selectToken: index }))
-        .catch(error => {
-          this.setState({ selectToken: null });
-        })
+      openModal('connect_to_wallet');
     } else {
       this.setState({ selectToken: index });
     }
@@ -503,7 +496,7 @@ class DexSwap extends React.PureComponent {
     const amount = Number(amount0) || 0;
     const isAvailable = allowance >= amount && amount;
 
-    let button = <Button type="lightBlue" onClick={connectWallet}>
+    let button = <Button type="lightBlue" onClick={() => openModal('connect_to_wallet')}>
       <SVG src={require('src/asset/token/wallet.svg')} />
       {getLang('dex_button_connect_wallet')}
     </Button>;
