@@ -473,8 +473,8 @@ function Balance(props) {
           ) : props.type === 'withdrawal' ? (
             <UI.Button
               type="lightBlue"
-              disabled={!amount}
-              onClick={handleFiatWithdrawal}
+              // disabled={!amount}
+              disabled={true}
             >
               {getLang('global_withdrawal')}
             </UI.Button>
