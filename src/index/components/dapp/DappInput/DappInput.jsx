@@ -20,6 +20,7 @@ function DappInput({
   indicator,
   error,
   disabled,
+  footer,
 }) {
   const [inputState, setInputState] = React.useState(value ? value : '');
   const adaptive = useSelector(adaptiveSelector);
@@ -127,9 +128,12 @@ function DappInput({
         onFocus={handleFocus}
         disabled={disabled}
       />
-      <div className="DappInput__indicator" ref={indicatorRef}>
-        {indicator}
-      </div>
+      {indicator && (
+        <div className="DappInput__indicator" ref={indicatorRef}>
+          {indicator}
+        </div>
+      )}
+      {footer && <div className="DappInput__footer">{footer}</div>}
     </div>
   );
 }

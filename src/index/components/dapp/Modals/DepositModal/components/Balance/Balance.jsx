@@ -396,14 +396,29 @@ function Balance(props) {
       <span>
         {minAmount
           ? getLang('cabinet_merchantModal_min')
-          : getLang('cabinet_merchantModal_max')}{' '}
+          : getLang('cabinet_merchantModal_max')}
+        &nbsp;
         <NumberFormat number={minAmount || maxAmount} currency={fiatSymbol} />
       </span>
     );
 
+    const InputFooter = ({ onClick }) => {
+      const fiatBalance = fiatSelected?.balance || 0;
+
+      return (
+        <span onClick={() => onClick(Number(fiatBalance))}>
+          {getLang('dapp_global_balance')}: {fiatBalance}
+        </span>
+      );
+    };
+
     return (
       <>
-        <h3>{getLang('cabinet_balanceDeposit')}</h3>
+        <h3>
+          {props.type === 'withdrawal'
+            ? getLang('cabinet_balanceWithdrawal')
+            : getLang('cabinet_balanceDeposit')}
+        </h3>
         <div className="DepositModal__Balance__dropdown" onClick={fiatSelector}>
           <div
             className="DepositModal__Balance__icon"
@@ -428,6 +443,11 @@ function Balance(props) {
           onChange={handleChangeAmount}
           indicator={indicator}
           type="number"
+          footer={
+            props.type === 'withdrawal' && (
+              <InputFooter onClick={handleChangeAmount} />
+            )
+          }
         />
         {/*<p className="secondary medium default hight">*/}
         {/*Fee: <NumberFormat percent number={percent_fee} />*/}
@@ -564,11 +584,11 @@ function Balance(props) {
         useOnCloseForAdaptive
         isOpen
       >
-        {props.type === 'withdrawal' && (
+        {/* {props.type === 'withdrawal' && (
           <UI.ModalHeader>
             {getLang('cabinet_balanceWithdrawal')}
           </UI.ModalHeader>
-        )}
+        )} */}
         {renderContent()}
       </DepositModal>
       {isSelectFiat && (
