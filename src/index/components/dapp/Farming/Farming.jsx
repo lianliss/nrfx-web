@@ -163,13 +163,13 @@ function Farming() {
 
   React.useEffect(() => {
     if (!isConnected) return;
-    if (chainId !== 97 && requestedChain !== 97) {
-      setRequestedChain(97);
-      console.log('[Farming][switchToChain]', 97);
-      switchToChain(97).then(() => {
-        setRequestedChain(null);
-      });
-    }
+    // if (chainId !== 97 && requestedChain !== 97) {
+    //   setRequestedChain(97);
+    //   console.log('[Farming][switchToChain]', 97);
+    //   switchToChain(97).then(() => {
+    //     setRequestedChain(null);
+    //   });
+    // }
     if (chainId === 97) {
       updatePoolsList().catch((error) => {
         console.error('[Farming][getPoolsList]', error);
