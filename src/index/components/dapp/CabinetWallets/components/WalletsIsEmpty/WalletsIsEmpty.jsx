@@ -8,6 +8,7 @@ import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 // Utils
 import { Web3Context } from 'src/services/web3Provider';
 import { getLang } from 'src/utils';
+import { openModal } from 'src/actions';
 
 import './WalletsIsEmpty.less';
 
@@ -24,8 +25,8 @@ function WalletsIsEmpty({ showWalletPage }) {
     </a>
   );
 
-  const handleConnectWallet = async () => {
-    await context.connectWallet();
+  const handleConnectWallet = () => {
+    openModal('connect_to_wallet');
     setIsLogined(true);
   };
 

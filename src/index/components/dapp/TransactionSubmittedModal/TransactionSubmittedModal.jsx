@@ -15,7 +15,8 @@ import './TransactionSubmittedModal.less';
 
 function TransactionSubmittedModal(props) {
   const context = React.useContext(Web3Context);
-  const { addTokenToWallet } = context;
+  const { addTokenToWallet, ethereum } = context;
+  const isMetaMask = ethereum.isMetaMask;
   const { symbol, txLink, addToken, isInProgress, text, coinForAddToWallet } =
     props;
 
@@ -74,8 +75,10 @@ function TransactionSubmittedModal(props) {
         )}
         {text && <p className="default-text text-with-icon">{text}</p>}
         <div className="TransactionSubmittedModal__buttons">
-          {!!addToken && <AddToMetamaskButton onClick={addToken} />}
-          {!!coinForAddToWallet && (
+          {!!addToken && isMetaMask && (
+            <AddToMetamaskButton onClick={addToken} />
+          )}
+          {!!coinForAddToWallet && isMetaMask && (
             <AddToMetamaskButton
               onClick={() => addTokenToWallet(coinForAddToWallet)}
             />

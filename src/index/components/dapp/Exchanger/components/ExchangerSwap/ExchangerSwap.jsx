@@ -252,9 +252,11 @@ function ExchangerSwap(props) {
                 onClick={swapTokens}>
           {getLang('dapp_exchanger_exchange_button')}
         </Button>
-      </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
-        {getLang('dapp_global_connect_wallet')}
-      </Button></div>}
+      </div> : <div className="ExchangerSwap__actions-buy">
+        <Button className="" onClick={() => actions.openModal('connect_to_wallet')}>
+          {getLang('dapp_global_connect_wallet')}
+        </Button>
+      </div>}
       {isSelectFiat && 
         <CabinetModal onClose={() => setIsSelectFiat(false)}>
           <TokenSelect
