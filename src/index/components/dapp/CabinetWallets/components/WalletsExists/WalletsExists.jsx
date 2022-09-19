@@ -29,22 +29,22 @@ function WalletsExists() {
   const adaptive = useSelector((store) => store.default.adaptive);
 
   // Tabs
-  const [switchTab, setSwitchTab] = React.useState('tokens');
+  const [switchTab, setSwitchTab] = React.useState('fiat');
   const isTokens = switchTab === 'tokens';
   const isFiat = switchTab === 'fiat';
   const isNfts = switchTab === 'nfts' || !adaptive;
 
   // Main
-  const { accountAddress, balances, loadAccountBalances } =
+  const { accountAddress, balances, loadAccountBalances, fiats } =
     React.useContext(Web3Context);
 
   const { tokens } = balances;
 
-  React.useEffect(() => {
+  const tokensLoad = () => {
     if (!accountAddress) return;
 
     loadAccountBalances(accountAddress);
-  }, [accountAddress]);
+  };
 
   return (
     <div className="WalletsExists">
@@ -88,6 +88,8 @@ function WalletsExists() {
               type="tokens"
               title={getLang('dapp_global_tokens')}
               adaptive={adaptive}
+              onLoad={tokensLoad}
+              accountAddress={accountAddress}
             />
           )}
           {isFiat && (

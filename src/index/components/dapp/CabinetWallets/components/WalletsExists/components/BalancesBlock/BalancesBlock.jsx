@@ -14,8 +14,19 @@ import { RateIndicator, NumberFormat } from 'src/ui';
 import wei from 'utils/wei';
 import * as PAGES from 'src/index/constants/pages';
 
-function BalancesBlock({ balances, type, title, adaptive }) {
+function BalancesBlock({
+  balances,
+  type,
+  title,
+  adaptive,
+  onLoad,
+  accountAddress,
+}) {
   const { router } = useRoute();
+
+  React.useEffect(() => {
+    onLoad();
+  }, [accountAddress]);
 
   return (
     <CabinetBlock className="wallets-list">
@@ -90,6 +101,8 @@ BalancesBlock.propTypes = {
   type: PropTypes.oneOf('tokens', 'fiats'),
   title: PropTypes.string,
   adaptive: PropTypes.bool,
+  onLoad: PropTypes.func,
+  accountAddress: PropTypes.string,
 };
 
 BalancesBlock.defaultProps = {
@@ -97,6 +110,8 @@ BalancesBlock.defaultProps = {
   type: 'tokens',
   title: 'tokens',
   adaptive: false,
+  onLoad: () => {},
+  accountAddress: null,
 };
 
 const TokenItemControls = ({ price, amount, currency }) => (
