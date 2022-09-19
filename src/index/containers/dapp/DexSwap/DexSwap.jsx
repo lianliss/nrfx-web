@@ -114,7 +114,7 @@ class DexSwap extends React.PureComponent {
     this.updateAccountAddress();
 
     this.balanceUpdateInterval = setInterval(this.updateExchangeTokenBalance.bind(this), BALANCE_UPDATE_INTERVAL);
-    this.requireChain();
+    // this.requireChain();
     this.setInitialAllowance();
   }
 
@@ -128,7 +128,7 @@ class DexSwap extends React.PureComponent {
       this.props.openModal();
     }
     // -----
-    
+
     this.fillDefaultPair();
     this.updateAccountAddress();
 
@@ -142,7 +142,7 @@ class DexSwap extends React.PureComponent {
     if (token0 !== prevToken0) {
       if (isConnected) this.setInitialAllowance();
     }
-    this.requireChain();
+    // this.requireChain();
     if (prevState.lastChainId !== chainId
       || prevState.lastIsConnected !== isConnected
     ) {
