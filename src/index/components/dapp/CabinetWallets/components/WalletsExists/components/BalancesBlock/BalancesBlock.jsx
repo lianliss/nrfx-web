@@ -7,6 +7,7 @@ import CabinetScrollBlock from '../../../../../CabinetScrollBlock/CabinetScrollB
 import WalletsListItem from '../../../../../WalletsList/components/WalletsListItem/WalletsListItem';
 import WalletsList from '../../../../../WalletsList/WalletsList';
 import CabinetBlock from '../../../../../CabinetBlock/CabinetBlock';
+import WalletIcon from '../../../../../WalletIcon/WalletIcon';
 import SVG from 'utils/svg-wrap';
 import { RateIndicator, NumberFormat } from 'src/ui';
 
@@ -19,14 +20,8 @@ function BalancesBlock({
   type,
   title,
   adaptive,
-  onLoad,
-  accountAddress,
 }) {
   const { router } = useRoute();
-
-  React.useEffect(() => {
-    onLoad();
-  }, [accountAddress]);
 
   return (
     <CabinetBlock className="wallets-list">
@@ -41,22 +36,11 @@ function BalancesBlock({
           {balances.map((balanceItem, key) => {
             const currency = balanceItem.symbol.toLowerCase();
             const priceDifference = null;
-
-            let icon = balanceItem.logoURI;
-
-            if (type === 'fiats') {
-              // Set icon
-              try {
-                icon =
-                  require(`src/asset/icons/wallets/${currency}.svg`).default;
-              } catch {
-                console.log('Icon is not defined');
-              }
-            }
+            const icon = balanceItem.logoURI;
 
             return (
               <WalletsListItem
-                icon={<img src={icon} />}
+                icon={<WalletImage icon={icon} />}
                 startTexts={[
                   balanceItem.name,
                   <span className="CabinetWallets__tokens-content">
@@ -101,8 +85,6 @@ BalancesBlock.propTypes = {
   type: PropTypes.oneOf('tokens', 'fiats'),
   title: PropTypes.string,
   adaptive: PropTypes.bool,
-  onLoad: PropTypes.func,
-  accountAddress: PropTypes.string,
 };
 
 BalancesBlock.defaultProps = {
@@ -110,8 +92,6 @@ BalancesBlock.defaultProps = {
   type: 'tokens',
   title: 'tokens',
   adaptive: false,
-  onLoad: () => {},
-  accountAddress: null,
 };
 
 const TokenItemControls = ({ price, amount, currency }) => (
@@ -129,5 +109,11 @@ const TokenItemControls = ({ price, amount, currency }) => (
     </div>
   </div>
 );
+
+const WalletImage = ({ icon }) => {
+  const [isError, setIsError] = React.useState(false);
+
+  return isError ? <WalletIcon currency="" size={39} /> : <img src={icon} onError={() => setIsError(true)} />
+}
 
 export default React.memo(BalancesBlock);

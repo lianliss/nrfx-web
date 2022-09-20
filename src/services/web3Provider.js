@@ -337,6 +337,7 @@ class Web3Provider extends React.PureComponent {
   onAccountsChanged = accounts => {
     console.log('[onAccountsChanged]', accounts);
     const accountAddress = accounts[0];
+    this.setBalances([], 'clear');
 
     if (!this._mounted) return;
     if (!accountAddress) {
@@ -360,6 +361,8 @@ class Web3Provider extends React.PureComponent {
 
   onDisconnect = reason => {
     console.log('[onDisconnect]', reason.message);
+    this.setBalances([], 'clear');
+
     if (!this._mounted) return;
     this.setState({
       isConnected: false,
@@ -1161,7 +1164,9 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async updateFiats(symbol) {
+  async updateFiats(symbol, rates) {
+    // Clear fiat balances.
+    this.setBalances([], 'fiats');
     try {
       const {accountAddress, chainId, isConnected} = this.state;
       const userId = `${chainId}${accountAddress}`;
@@ -1207,6 +1212,25 @@ class Web3Provider extends React.PureComponent {
       this.setState({
         fiats,
       });
+
+      this.setBalances(userFiats.map((userFiat) => {
+        const userFiatBalance = userFiat.balance || '0';
+        const etherBalance = this.web3.utils.fromWei(userFiatBalance, 'ether');
+        let price = 0;
+        if (rates) {
+          const symbol = userFiat.symbol.toLowerCase();
+          const rate = rates[symbol] || 0;
+
+          price = symbol === 'usd' ? 1 : rate;
+        }
+
+        return {
+          ...userFiat,
+          balance: etherBalance,
+          price
+        }
+      }), 'fiats');
+
       return fiats;
     } catch (error) {
       console.error('[updateFiats]', error);

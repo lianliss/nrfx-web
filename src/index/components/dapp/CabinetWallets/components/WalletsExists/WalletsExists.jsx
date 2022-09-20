@@ -22,11 +22,13 @@ import { Web3Context } from 'src/services/web3Provider';
 import BalancesBlock from './components/BalancesBlock/BalancesBlock';
 import NftsBlock from './components/NftsBlock/NftsBlock';
 import { getLang } from 'src/utils';
+import { web3RatesSelector } from 'src/selectors';
 
 function WalletsExists() {
   // Design
   const { router } = useRoute();
   const adaptive = useSelector((store) => store.default.adaptive);
+  const rates = useSelector(web3RatesSelector)
 
   // Tabs
   const [switchTab, setSwitchTab] = React.useState('fiat');
@@ -35,16 +37,17 @@ function WalletsExists() {
   const isNfts = switchTab === 'nfts' || !adaptive;
 
   // Main
-  const { accountAddress, balances, loadAccountBalances, fiats } =
+  const { accountAddress, balances, loadAccountBalances, updateFiats } =
     React.useContext(Web3Context);
 
-  const { tokens } = balances;
+  const { tokens, fiats } = balances;
 
-  const tokensLoad = () => {
+  React.useEffect(() => {
     if (!accountAddress) return;
 
+    updateFiats(null, rates);
     loadAccountBalances(accountAddress);
-  };
+  }, [accountAddress]);
 
   return (
     <div className="WalletsExists">
@@ -88,13 +91,11 @@ function WalletsExists() {
               type="tokens"
               title={getLang('dapp_global_tokens')}
               adaptive={adaptive}
-              onLoad={tokensLoad}
-              accountAddress={accountAddress}
             />
           )}
           {isFiat && (
             <BalancesBlock
-              balances={testFiats}
+              balances={fiats}
               type="fiats"
               title={getLang('dapp_global_fiats')}
               adaptive={adaptive}
