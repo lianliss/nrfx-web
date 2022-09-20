@@ -31,7 +31,7 @@ function WalletsExists() {
   const rates = useSelector(web3RatesSelector)
 
   // Tabs
-  const [switchTab, setSwitchTab] = React.useState('fiat');
+  const [switchTab, setSwitchTab] = React.useState('tokens');
   const isTokens = switchTab === 'tokens';
   const isFiat = switchTab === 'fiat';
   const isNfts = switchTab === 'nfts' || !adaptive;
