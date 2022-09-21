@@ -230,3 +230,6 @@ export const WEB3_SET_STATUS = "WEB3_SET_STATUS";
 export const WEB3_SET_DATA = "WEB3_SET_DATA";
 export const WEB3_UPDATE = "WEB3_UPDATE";
 export const WEB3_SET_RATE = "WEB3_SET_RATE";
+
+// Dapp
+export const DAPP_SET_SWAP = "DAPP_SET_SWAP";
