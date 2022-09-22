@@ -11,6 +11,8 @@ import SVG from 'utils/svg-wrap';
 import currencies from 'src/currencies';
 import { isFiat, getLang } from 'utils';
 import { openModal } from 'src/actions';
+import { Web3Context } from 'src/services/web3Provider';
+import { web3RatesSelector } from 'src/selectors';
 
 // Styles
 import './Currency.less';
@@ -18,73 +20,120 @@ import Transaction from './components/Transaction/Transaction';
 
 function Currency() {
   const params = useSelector((state) => state.router.route.params);
+  const rates = useSelector(web3RatesSelector);
+  const { isConnected, accountAddress, getTokens, balances, updateFiats } =
+    React.useContext(Web3Context);
 
-  // Get currency object
-  const currency = currencies[params.currency] || null;
+  const { fiats } = balances;
+  const [currency, setCurrency] = React.useState({});
 
-  if (!currency) {
-    return (
-      <div className="Currency">
-        <div>{params.currency.toUpperCase()} is not exists</div>
-      </div>
+  const TokenActionButtons = () =>
+    isFiat(currency.symbol) ? (
+      <Button
+        type="lightBlue"
+        shadow
+        onClick={() => openModal('deposit_balance')}
+      >
+        <SVG
+          src={require('src/asset/icons/cabinet/buy.svg')}
+          className="white-icon"
+        />
+        {getLang('dapp_global_deposit')}
+      </Button>
+    ) : (
+      <>
+        <div className="col">
+          <Button type="secondary-light" shadow>
+            <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
+            {getLang('dapp_global_trade')}
+          </Button>
+          <Button type="secondary-light" shadow>
+            <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
+            {getLang('global_buy')}
+          </Button>
+        </div>
+        <div className="col">
+          <Button type="secondary-light" shadow>
+            <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
+            {getLang('global_receive')}
+          </Button>
+          <Button type="secondary-light" shadow>
+            <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
+            {getLang('global_send')}
+          </Button>
+        </div>
+      </>
     );
-  }
+
+  React.useEffect(() => {
+    if (!isConnected) return;
+    if (!fiats.length) return;
+    const currencyFiat = fiats.filter(
+      (fiat) => fiat.symbol.toLowerCase() === params.currency.toLowerCase()
+    )[0];
+
+    if (currencyFiat) {
+      setCurrency(currencyFiat);
+    }
+  }, [fiats]);
+
+  React.useEffect(() => {
+    if (!isConnected) return;
+    if (isFiat(params.currency)) return;
+
+    // Get tokens, for check currency.
+    getTokens().then((tokens) => {
+      const currencyToken = tokens.filter((token) => {
+        return token.symbol.toLowerCase() === params.currency.toLowerCase();
+      })[0];
+
+      if (currencyToken) {
+        setCurrency(currencyToken);
+      }
+    });
+  }, [accountAddress]);
+
+  React.useEffect(() => {
+    if (!isConnected) return;
+    if (!isFiat(params.currency)) return;
+
+    // Update fiats, for check currency.
+    updateFiats(null, rates);
+  }, [accountAddress]);
 
   return (
     <CabinetBlock className="Currency">
       <div className="Currency__container">
         <div className="Currency__header">
           <div className="Currency__preview">
-            <WalletIcon currency={currency.abbr} size={41} />
-            <span className="Currency__currency">{currency.name}</span>
-            <span className="Currency__rate">12 USD</span>
-            <div className="Currency__currency_amount">
-              <NumberFormat number={155} currency={currency.abbr} />
-            </div>
-            <div className="Currency__currency_amount_rate">
-              <NumberFormat number={54.0} currency={'usd'} />
-            </div>
+            <WalletIcon currency={currency} size={41} />
+            {isConnected && (
+              <>
+                <span className="Currency__currency">{currency.name}</span>
+                <span className="Currency__rate">12 USD</span>
+                <div className="Currency__currency_amount">
+                  <NumberFormat number={155} currency={currency.symbol} />
+                </div>
+                <div className="Currency__currency_amount_rate">
+                  <NumberFormat number={54.0} currency={'usd'} />
+                </div>
+              </>
+            )}
           </div>
           <div className="Currency__buttons">
-            {isFiat(currency.abbr) ? (
+            {isConnected ? (
+              <TokenActionButtons />
+            ) : (
               <Button
                 type="lightBlue"
                 shadow
-                onClick={() => openModal('deposit_balance')}
+                onClick={() => openModal('connect_to_wallet')}
               >
                 <SVG
-                  src={require('src/asset/icons/cabinet/buy.svg')}
-                  className="white-icon"
+                  src={require('src/asset/icons/cabinet/connect-wallet.svg')}
                 />
-                {getLang('dapp_global_deposit')}
+                {getLang('dapp_global_connect_wallet')}
               </Button>
-            ) : (
-              <>
-                <div className="col">
-                  <Button type="secondary-light" shadow>
-                    <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
-                    {getLang('dapp_global_trade')}
-                  </Button>
-                  <Button type="secondary-light" shadow>
-                    <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-                    {getLang('global_buy')}
-                  </Button>
-                </div>
-                <div className="col">
-                  <Button type="secondary-light" shadow>
-                    <SVG
-                      src={require('src/asset/icons/cabinet/card-receive.svg')}
-                    />
-                    {getLang('global_receive')}
-                  </Button>
-                  <Button type="secondary-light" shadow>
-                    <SVG
-                      src={require('src/asset/icons/cabinet/card-send.svg')}
-                    />
-                    {getLang('global_send')}
-                  </Button>
-                </div>
-              </>
             )}
           </div>
         </div>
