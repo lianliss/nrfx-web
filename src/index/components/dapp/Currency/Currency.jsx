@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import _ from 'lodash';
 
 // Components
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
@@ -8,19 +9,20 @@ import { NumberFormat, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 
 // Utils
-import currencies from 'src/currencies';
 import { isFiat, getLang } from 'utils';
 import { openModal } from 'src/actions';
 import { Web3Context } from 'src/services/web3Provider';
 import { web3RatesSelector } from 'src/selectors';
 import router from 'src/router';
 import * as PAGES from 'src/index/constants/pages';
+import { setSwap } from 'src/actions/dapp/swap';
 
 // Styles
 import './Currency.less';
 import Transaction from './components/Transaction/Transaction';
 
 function Currency() {
+  const dispatch = useDispatch();
   const params = useSelector((state) => state.router.route.params);
   const rates = useSelector(web3RatesSelector);
   const { isConnected, accountAddress, getTokens, balances, updateFiats } =
@@ -28,9 +30,10 @@ function Currency() {
 
   const { fiats } = balances;
   const [currency, setCurrency] = React.useState({});
+  const currencyIsEmpty = _.isEmpty(currency);
 
-  const TokenActionButtons = () =>
-    isFiat(currency.symbol) ? (
+  const LoginedButtons = () =>
+    isFiat(params.currency) ? (
       <Button
         type="lightBlue"
         shadow
@@ -45,7 +48,14 @@ function Currency() {
     ) : (
       <>
         <div className="col">
-          <Button type="secondary-light" shadow>
+          <Button
+            type="secondary-light"
+            shadow
+            onClick={() => {
+              dispatch(setSwap(currency));
+              router.navigate(PAGES.DAPP_SWAP);
+            }}
+          >
             <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
             {getLang('dapp_global_trade')}
           </Button>
@@ -74,6 +84,23 @@ function Currency() {
         </div>
       </>
     );
+
+  const NotLoginedButton = () => {
+    if (isConnected && currencyIsEmpty) {
+      return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
+    }
+
+    return (
+      <Button
+        type="lightBlue"
+        shadow
+        onClick={() => openModal('connect_to_wallet')}
+      >
+        <SVG src={require('src/asset/icons/cabinet/connect-wallet.svg')} />
+        {getLang('dapp_global_connect_wallet')}
+      </Button>
+    );
+  };
 
   React.useEffect(() => {
     if (!isConnected) return;
@@ -114,7 +141,7 @@ function Currency() {
         <div className="Currency__header">
           <div className="Currency__preview">
             <WalletIcon currency={currency} size={41} />
-            {isConnected && (
+            {!currencyIsEmpty && (
               <>
                 <span className="Currency__currency">{currency.name}</span>
                 <span className="Currency__rate">12 USD</span>
@@ -128,20 +155,7 @@ function Currency() {
             )}
           </div>
           <div className="Currency__buttons">
-            {isConnected ? (
-              <TokenActionButtons />
-            ) : (
-              <Button
-                type="lightBlue"
-                shadow
-                onClick={() => openModal('connect_to_wallet')}
-              >
-                <SVG
-                  src={require('src/asset/icons/cabinet/connect-wallet.svg')}
-                />
-                {getLang('dapp_global_connect_wallet')}
-              </Button>
-            )}
+            {!currencyIsEmpty ? <LoginedButtons /> : <NotLoginedButton />}
           </div>
         </div>
         <div className="Currency__body">

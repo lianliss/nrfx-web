@@ -165,8 +165,9 @@ function ExchangerSwap(props) {
     }
 
     if (isConnected) {
+      const paramsCoin = params.coin && params.coin.toLowerCase();
       coins.forEach((coin) => {
-        if (coin.symbol.toLowerCase() === params.coin.toLowerCase()) {
+        if (coin.symbol.toLowerCase() === paramsCoin) {
           handleCoinChange(coin);
         }
       });

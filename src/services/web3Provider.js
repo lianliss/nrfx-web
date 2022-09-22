@@ -1138,6 +1138,8 @@ class Web3Provider extends React.PureComponent {
    * @return {object}
    */
   findTokenBySymbol(_symbol) {
+    if(!_symbol) return;
+    
     const symbol = typeof _symbol === 'string' ? _symbol.toUpperCase() : _symbol;
     return this.state.tokens.find(t => (t.symbol ? t.symbol.toUpperCase() : t.symbol) === symbol);
   }
