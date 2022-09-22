@@ -13,6 +13,8 @@ import { isFiat, getLang } from 'utils';
 import { openModal } from 'src/actions';
 import { Web3Context } from 'src/services/web3Provider';
 import { web3RatesSelector } from 'src/selectors';
+import router from 'src/router';
+import * as PAGES from 'src/index/constants/pages';
 
 // Styles
 import './Currency.less';
@@ -47,7 +49,15 @@ function Currency() {
             <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
             {getLang('dapp_global_trade')}
           </Button>
-          <Button type="secondary-light" shadow>
+          <Button
+            type="secondary-light"
+            shadow
+            onClick={() => {
+              router.navigate(PAGES.DAPP_EXCHANGE, {
+                coin: currency.symbol,
+              });
+            }}
+          >
             <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
             {getLang('global_buy')}
           </Button>
