@@ -79,7 +79,12 @@ function Currency() {
 
   React.useEffect(() => {
     if (!isConnected) return;
-    if (isFiat(params.currency)) return;
+
+    // Update fiats, for check currency.
+    if (isFiat(params.currency)) {
+      updateFiats(null, rates);
+      return;
+    }
 
     // Get tokens, for check currency.
     getTokens().then((tokens) => {
@@ -91,14 +96,6 @@ function Currency() {
         setCurrency(currencyToken);
       }
     });
-  }, [accountAddress]);
-
-  React.useEffect(() => {
-    if (!isConnected) return;
-    if (!isFiat(params.currency)) return;
-
-    // Update fiats, for check currency.
-    updateFiats(null, rates);
   }, [accountAddress]);
 
   return (
