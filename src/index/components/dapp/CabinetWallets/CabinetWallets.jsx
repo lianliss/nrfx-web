@@ -1,5 +1,6 @@
 import React from 'react';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
+import ShowPageOn from '../ShowPageOn/ShowPageOn';
 
 import './CabinetWallets.less';
 import WalletsExists from './components/WalletsExists/WalletsExists';
@@ -19,6 +20,7 @@ function CabinetWallets() {
       ) : (
         <WalletsIsEmpty showWalletPage={showWalletPage} />
       )}
+      <ShowPageOn />
     </CabinetBlock>
   );
 }

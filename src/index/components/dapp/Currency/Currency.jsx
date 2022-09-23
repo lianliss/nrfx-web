@@ -7,6 +7,7 @@ import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import { WalletIcon } from '../index';
 import { NumberFormat, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
+import Transaction from './components/Transaction/Transaction';
 
 // Utils
 import { isFiat, getLang } from 'utils';
@@ -16,11 +17,11 @@ import { web3RatesSelector } from 'src/selectors';
 import router from 'src/router';
 import * as PAGES from 'src/index/constants/pages';
 import { setSwap } from 'src/actions/dapp/swap';
-import Transaction from './components/Transaction/Transaction';
 
 // Styles
 import './Currency.less';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
+import ShowPageOn from '../ShowPageOn/ShowPageOn';
 
 function Currency() {
   const dispatch = useDispatch();
@@ -239,6 +240,7 @@ function Currency() {
           </CabinetBlock>
         </div>
       </div>
+      <ShowPageOn />
     </CabinetBlock>
   );
 }
