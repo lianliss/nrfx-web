@@ -16,10 +16,10 @@ import { web3RatesSelector } from 'src/selectors';
 import router from 'src/router';
 import * as PAGES from 'src/index/constants/pages';
 import { setSwap } from 'src/actions/dapp/swap';
+import Transaction from './components/Transaction/Transaction';
 
 // Styles
 import './Currency.less';
-import Transaction from './components/Transaction/Transaction';
 
 function Currency() {
   const dispatch = useDispatch();
@@ -73,11 +73,19 @@ function Currency() {
           </Button>
         </div>
         <div className="col">
-          <Button type="secondary-light" shadow>
+          <Button
+            type="secondary-light"
+            shadow
+            onClick={() => openModal('receive_qr')}
+          >
             <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
             {getLang('global_receive')}
           </Button>
-          <Button type="secondary-light" shadow>
+          <Button
+            type="secondary-light"
+            shadow
+            onClick={() => openModal('deposit_transfer_send')}
+          >
             <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
             {getLang('global_send')}
           </Button>

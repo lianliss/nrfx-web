@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Web3Context } from 'src/services/web3Provider';
 import { connect } from 'react-redux';
 import QRCode from 'react-qr-code';
 import { getLang } from 'src/utils';
@@ -12,8 +13,9 @@ import { web3WalletsSelector } from 'src/selectors';
 import BottomSheetModal from 'src/ui/components/BottomSheetModal/BottomSheetModal';
 
 function ReceiveQRModal({ web3Wallets, onClose, adaptive }) {
+  const { accountAddress } = React.useContext(Web3Context);
   const wallet = web3Wallets[0];
-  const { address } = wallet;
+  const address = accountAddress || wallet.address;
 
   const ParentComponent = adaptive ? BottomSheetModal : Modal;
 
@@ -50,4 +52,5 @@ ReceiveQRModal.defaultProps = {
 
 export default connect((state) => ({
   web3Wallets: web3WalletsSelector(state),
+  adaptive: state.default.adaptive,
 }))(ReceiveQRModal);
