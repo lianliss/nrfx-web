@@ -1,9 +1,10 @@
 import React from 'react';
 
+// Utils
 import router from 'src/router';
 import * as pages from 'src/index/constants/pages';
 
-function ShowPageOn({ hostNames = ['', 'nrfxlab.world'], children }) {
+function ShowPageOn({ hostNames = ['localhost', 'nrfxlab.world'] }) {
   const show = !(hostNames.indexOf(window.location.hostname) < 0);
 
   React.useEffect(() => {
@@ -12,7 +13,7 @@ function ShowPageOn({ hostNames = ['', 'nrfxlab.world'], children }) {
     }
   }, []);
 
-  return <>{show && children}</>;
+  return null;
 }
 
 export default ShowPageOn;
