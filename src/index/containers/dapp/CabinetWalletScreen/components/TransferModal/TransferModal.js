@@ -135,7 +135,12 @@ class TransferModal extends React.PureComponent {
     const { isLoading } = this.state;
     return (
       <>
-        <CabinetModal isOpen={true} onClose={onClose} className="TransferModal">
+        <CabinetModal
+          isOpen={true}
+          onClose={onClose}
+          className="TransferModal"
+          closeOfRef
+        >
           <h3>
             {getLang('cabinetWalletTransfer_header')} {currency.toUpperCase()}
           </h3>
