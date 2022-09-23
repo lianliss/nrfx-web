@@ -20,20 +20,84 @@ import Transaction from './components/Transaction/Transaction';
 
 // Styles
 import './Currency.less';
+import LoadingStatus from '../LoadingStatus/LoadingStatus';
 
 function Currency() {
   const dispatch = useDispatch();
   const params = useSelector((state) => state.router.route.params);
+  const adaptive = useSelector((state) => state.default.adaptive);
   const rates = useSelector(web3RatesSelector);
-  const { isConnected, accountAddress, getTokens, balances, updateFiats } =
-    React.useContext(Web3Context);
+  const {
+    isConnected,
+    accountAddress,
+    chainId,
+    getTokens,
+    getTokenBalance,
+    updateFiats,
+    web3,
+  } = React.useContext(Web3Context);
 
-  const { fiats } = balances;
   const [currency, setCurrency] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
   const currencyIsEmpty = _.isEmpty(currency);
+  const paramsCurrency = params.currency || '';
+  const rate = rates[paramsCurrency.toLowerCase()] || 0;
+  const currencyBalance = Number(Number(currency.balance).toFixed(2));
 
+  React.useEffect(() => {
+    if (!isConnected) return;
+
+    // Update fiats, and get currency fiat.
+    if (isFiat(paramsCurrency)) {
+      fetchCurrencyFiat();
+      return;
+    }
+
+    // Get tokens, and get currency token.
+    fetchCurrencyToken();
+  }, [accountAddress]);
+
+  const fetchCurrencyFiat = async () => {
+    setLoading(true);
+
+    const userId = `${chainId}${accountAddress}`;
+    const fiats = await updateFiats().then((r) => r[userId]);
+    const currencyFiat = fiats.filter(
+      (fiat) => fiat.symbol.toLowerCase() === paramsCurrency.toLowerCase()
+    )[0];
+
+    if (currencyFiat) {
+      setCurrency({
+        ...currencyFiat,
+        balance: web3.utils.fromWei(currencyFiat.balance),
+      });
+    }
+
+    setLoading(false);
+  };
+
+  const fetchCurrencyToken = async () => {
+    setLoading(true);
+
+    // Get tokens, for check currency.
+    const tokens = await getTokens().then((tokens) => tokens);
+    const currencyToken = tokens.filter((token) => {
+      return token.symbol.toLowerCase() === paramsCurrency.toLowerCase();
+    })[0];
+
+    if (currencyToken) {
+      const balance = await getTokenBalance(currencyToken.address).then((r) =>
+        web3.utils.fromWei(r)
+      );
+      setCurrency({ ...currencyToken, balance });
+    }
+
+    setLoading(false);
+  };
+
+  // Render components
   const LoginedButtons = () =>
-    isFiat(params.currency) ? (
+    isFiat(paramsCurrency) ? (
       <Button
         type="lightBlue"
         shadow
@@ -94,6 +158,10 @@ function Currency() {
     );
 
   const NotLoginedButton = () => {
+    if (loading) {
+      return <LoadingStatus status="loading" inline />;
+    }
+
     if (isConnected && currencyIsEmpty) {
       return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
     }
@@ -110,56 +178,31 @@ function Currency() {
     );
   };
 
-  React.useEffect(() => {
-    if (!isConnected) return;
-    if (!fiats.length) return;
-    const currencyFiat = fiats.filter(
-      (fiat) => fiat.symbol.toLowerCase() === params.currency.toLowerCase()
-    )[0];
-
-    if (currencyFiat) {
-      setCurrency(currencyFiat);
-    }
-  }, [fiats]);
-
-  React.useEffect(() => {
-    if (!isConnected) return;
-
-    // Update fiats, for check currency.
-    if (isFiat(params.currency)) {
-      updateFiats(null, rates);
-      return;
-    }
-
-    // Get tokens, for check currency.
-    getTokens().then((tokens) => {
-      const currencyToken = tokens.filter((token) => {
-        return token.symbol.toLowerCase() === params.currency.toLowerCase();
-      })[0];
-
-      if (currencyToken) {
-        setCurrency(currencyToken);
-      }
-    });
-  }, [accountAddress]);
-
   return (
     <CabinetBlock className="Currency">
       <div className="Currency__container">
         <div className="Currency__header">
+          <div className="Currency__currency">
+            <span>{currency.name}</span>
+          </div>
           <div className="Currency__preview">
-            <WalletIcon currency={currency} size={41} />
+            <WalletIcon currency={currency} size={adaptive ? 45 : 55} />
             {!currencyIsEmpty && (
-              <>
-                <span className="Currency__currency">{currency.name}</span>
-                <span className="Currency__rate">12 USD</span>
-                <div className="Currency__currency_amount">
-                  <NumberFormat number={155} currency={currency.symbol} />
-                </div>
+              <div className="Currency__preview__container">
+                <span className="Currency__rate">
+                  <NumberFormat
+                    number={currencyBalance}
+                    currency={currency.symbol}
+                  />
+                </span>
                 <div className="Currency__currency_amount_rate">
-                  <NumberFormat number={54.0} currency={'usd'} />
+                  $&nbsp;
+                  <NumberFormat
+                    number={currency.balance * rate}
+                    currency={'usd'}
+                  />
                 </div>
-              </>
+              </div>
             )}
           </div>
           <div className="Currency__buttons">

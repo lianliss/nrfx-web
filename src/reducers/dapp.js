@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   swap: {
-    from: { symbol: 'AVA' },
+    from: { symbol: 'NRFX' },
     to: { symbol: 'USDT' },
   },
 };

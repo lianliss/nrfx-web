@@ -18,43 +18,50 @@
 
   &__preview {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
+    padding: 25px 15.5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .WalletIcon {
+      margin-right: 24px;
+    }
   }
 
   &__currency {
-    font-weight: 500;
-    font-size: 26px;
-    color: var(--dark-black);
-    margin: 8px 0 6px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 180%;
+    color: var(--cool-gray);
+    margin: 8px 15px;
+  }
+
+  .LoadingStatus {
+    &.inline {
+      min-height: 50px;
+    }
   }
 
   &__rate {
-    font-weight: 600;
-    font-size: 24px;
     color: var(--black-gunmetal);
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 110%;
     margin-bottom: 10px;
   }
 
   &__currency_amount {
-    margin-bottom: 5px;
-    color: var(--main-orange);
-    font-weight: 600;
-    font-size: 14px;
-
     &_rate {
-      font-weight: 500;
-      font-size: 12px;
-      background: linear-gradient(
-        180deg,
-        var(--primary-blue-color-start) 0%,
-        var(--primary-dark-blue) 100%
-      );
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 110%;
+      color: var(--secondary-blue);
     }
   }
 
@@ -142,7 +149,7 @@
 }
 
 .adaptive .Currency {
-  padding: 45px 10px 45px;
+  padding: 20px 10px 45px;
 
   &__buttons {
     flex-direction: column;
@@ -150,6 +157,16 @@
     .col {
       width: 100%;
       margin-bottom: 10px;
+    }
+  }
+
+  &__rate {
+    font-size: 25px;
+  }
+
+  &__currency_amount {
+    &_rate {
+      font-size: 16px;
     }
   }
 }

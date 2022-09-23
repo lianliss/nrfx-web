@@ -139,7 +139,7 @@ class TransferModal extends React.PureComponent {
           isOpen={true}
           onClose={onClose}
           className="TransferModal"
-          closeOfRef
+          closeOfRef={!this.state.isQRModal}
         >
           <h3>
             {getLang('cabinetWalletTransfer_header')} {currency.toUpperCase()}
