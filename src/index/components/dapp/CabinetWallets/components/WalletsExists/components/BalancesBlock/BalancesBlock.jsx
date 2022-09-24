@@ -15,12 +15,7 @@ import { RateIndicator, NumberFormat } from 'src/ui';
 import wei from 'utils/wei';
 import * as PAGES from 'src/index/constants/pages';
 
-function BalancesBlock({
-  balances,
-  type,
-  title,
-  adaptive,
-}) {
+function BalancesBlock({ balances, type, title, adaptive }) {
   const { router } = useRoute();
 
   return (
@@ -67,7 +62,7 @@ function BalancesBlock({
                 type="reverse"
                 onClick={() => {
                   router.navigate(PAGES.DAPP_CURRENCY, {
-                    currency,
+                    currency: currency.toUpperCase(),
                   });
                 }}
               />
@@ -113,7 +108,11 @@ const TokenItemControls = ({ price, amount, currency }) => (
 const WalletImage = ({ icon }) => {
   const [isError, setIsError] = React.useState(false);
 
-  return isError ? <WalletIcon currency="" size={39} /> : <img src={icon} onError={() => setIsError(true)} />
-}
+  return isError ? (
+    <WalletIcon currency="" size={39} />
+  ) : (
+    <img src={icon} onError={() => setIsError(true)} />
+  );
+};
 
 export default React.memo(BalancesBlock);

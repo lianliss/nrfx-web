@@ -14,6 +14,7 @@ import { WEI_ETHER } from 'src/index/constants/cabinet';
 import { timeout } from 'utils';
 import * as toastsActions from 'src/actions/toasts';
 import QRScannerModal from '../../../../../components/cabinet/QRScannerModal/QRScannerModal';
+import CabinetModal from '../../../../../components/dapp/Modals/CabinetModal/CabinetModal';
 class TransferModal extends React.PureComponent {
   state = {
     isLoading: false,
@@ -82,16 +83,6 @@ class TransferModal extends React.PureComponent {
             {getLang('cabinetWalletTransfer_submit')}
           </UI.Button>
         </center>
-        {this.state.isQRModal && (
-          <QRScannerModal
-            adaptive={this.props.adaptive}
-            onResult={(result) => this.setState({ address: result })}
-            onClose={() => {
-              this.setState({ isQRModal: false });
-            }}
-            toastPush={this.props.toastPush}
-          />
-        )}
       </div>
     );
   }
@@ -143,14 +134,31 @@ class TransferModal extends React.PureComponent {
     const { onClose, currency } = this.props;
     const { isLoading } = this.state;
     return (
-      <UI.Modal isOpen={true} onClose={onClose} className="TransferModal">
-        <UI.ModalHeader>
-          {getLang('cabinetWalletTransfer_header')} {currency.toUpperCase()}
-        </UI.ModalHeader>
-        <div className="TransferModal-content">
-          {isLoading ? this.renderLoading() : this.renderForm()}
-        </div>
-      </UI.Modal>
+      <>
+        <CabinetModal
+          isOpen={true}
+          onClose={onClose}
+          className="TransferModal"
+          closeOfRef={!this.state.isQRModal}
+        >
+          <h3>
+            {getLang('cabinetWalletTransfer_header')} {currency.toUpperCase()}
+          </h3>
+          <div className="TransferModal-content">
+            {isLoading ? this.renderLoading() : this.renderForm()}
+          </div>
+        </CabinetModal>
+        {this.state.isQRModal && (
+          <QRScannerModal
+            adaptive={this.props.adaptive}
+            onResult={(result) => this.setState({ address: result })}
+            onClose={() => {
+              this.setState({ isQRModal: false });
+            }}
+            toastPush={this.props.toastPush}
+          />
+        )}
+      </>
     );
   }
 }
@@ -159,6 +167,7 @@ export default connect(
     wallets: state.web3.wallets,
     balances: state.web3.balances,
     currencies: state.cabinet.currencies,
+    adaptive: state.default.adaptive,
   }),
   (dispatch) =>
     bindActionCreators(

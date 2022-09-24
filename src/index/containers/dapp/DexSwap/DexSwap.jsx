@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { setSwap } from 'src/actions/dapp/swap';
 
 // Components
 import { Switch, SwitchTabs, Button, HoverPopup, } from 'src/ui';
@@ -246,9 +247,19 @@ class DexSwap extends React.PureComponent {
     const {tokens} = this.context;
     if (!tokens || !tokens.length) return;
 
+    const { dappSwap } = this.props;
+    const defaultToken0 = tokens.filter(
+      (token) =>
+        token.symbol.toLowerCase() === dappSwap.from.symbol.toLowerCase()
+    )[0];
+    const defaultToken1 = tokens.filter(
+      (token) =>
+        token.symbol.toLowerCase() === dappSwap.to.symbol.toLowerCase()
+    )[0];
+
     // Get default pair
-    const token0 = window.localStorage.getItem('token0') || tokens[0].address;
-    const token1 = window.localStorage.getItem('token1') || tokens[1].address;
+    const token0 = defaultToken0.address || window.localStorage.getItem('token0') || tokens[0].address;
+    const token1 = defaultToken1.address || window.localStorage.getItem('token1') || tokens[1].address;
 
     // Get user tokens from local storage
     let userTokens = [];
@@ -669,6 +680,7 @@ class DexSwap extends React.PureComponent {
                       state.pair[secondToken] = state.pair[selectToken];
                     }
                     state.pair[selectToken] = value;
+                    this.props.setSwap(secondToken === 1 && value, secondToken === 0 && value);
                     return {
                       ...state,
                       selectToken: null,
@@ -757,6 +769,16 @@ DexSwap.defaultProps = {
   openModal: () => {},
 };
 
-export default connect((state) => ({
-  currentLang: state.default.currentLang
-}))(DexSwap);
+export default connect(
+  (state) => ({
+    currentLang: state.default.currentLang,
+    dappSwap: state.dapp.swap,
+  }),
+  (dispatch) => {
+    return {
+      setSwap: (from, to) => {
+        dispatch(setSwap(from, to))
+      },
+    }
+  }
+)(DexSwap);

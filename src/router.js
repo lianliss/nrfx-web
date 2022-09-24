@@ -86,7 +86,7 @@ export const routes =
         },
         {
           name: pages.DAPP_CURRENCY,
-          path: '/dapp/currency/:currency',
+          path: '/dapp/currency',
         },
         {
           name: pages.DAPP_EXCHANGE,

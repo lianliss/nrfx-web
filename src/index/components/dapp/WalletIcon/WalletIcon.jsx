@@ -14,15 +14,17 @@ import './WalletIcon.less';
 function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
   const [icon, setIcon] = React.useState(null);
   const context = React.useContext(Web3Context);
-  const {tokens} = context;
-  const symbol = _.get(currency, 'symbol', currency).toUpperCase();
+  const { tokens } = context;
+  const defaultSymbol = _.isObject(currency) ? '' : currency;
+  const symbol = _.get(currency, 'symbol', defaultSymbol).toUpperCase();
 
   React.useEffect(() => {
     try {
-      const token = tokens.find(t => t.symbol === symbol);
-      setIcon(token.logoURI);
+      let logo = _.isObject(currency) && currency.logoURI;
+      const token = !logo && tokens.find((t) => t.symbol === symbol);
+      setIcon(logo ? logo : token.logoURI);
     } catch (error) {
-      console.log(`${currency} icon is not finded`);
+      console.log(`${symbol} icon is not finded`);
     }
   }, [currency]);
 
@@ -36,7 +38,11 @@ function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
         marginRight: marginRight ? marginRight : null,
       }}
     >
-      {icon ? <img src={icon} /> : <span className="WalletIcon__empty" />}
+      {icon ? (
+        <img src={icon} onError={() => setIcon(null)} />
+      ) : (
+        <span className="WalletIcon__empty" />
+      )}
     </span>
   );
 }
