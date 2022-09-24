@@ -12,6 +12,7 @@ import { adaptiveSelector } from 'src/selectors';
 import * as actions from 'src/actions';
 import * as toast from 'src/actions/toasts';
 import wait from 'src/utils/wait';
+import { getLang } from 'src/utils';
 
 // Styles
 import './InvoiceDetails.less';
@@ -92,10 +93,10 @@ function InvoiceDetails(props) {
       closeOfRef
     >
       <h3 className="DepositModal__WithdrawalDetails__title">
-        Specify the details
+        {getLang('dapp_deposit_invoice_title')}
       </h3>
       <label className="DepositModal__WithdrawalDetails__label">
-        <span>Phone number</span>
+        <span>{getLang('dapp_global_phone_number')}</span>
         <PhoneInput
           value={phone}
           onChange={setPhone}
@@ -105,30 +106,33 @@ function InvoiceDetails(props) {
         />
       </label>
       <label className="DepositModal__WithdrawalDetails__label">
-        <span>Full name (only latin characters)</span>
+        <span>
+          {getLang('dapp_global_full_name')} (
+          {getLang('dapp_only_latin_characters')})
+        </span>
         <Input
           type="text"
           value={name}
           onChange={(e) => setLatinValueToState(e.target.value, setName)}
-          placeholder="Name"
+          placeholder={getLang('dapp_global_name')}
         />
         <Input
           type="text"
           value={lastName}
           onChange={(e) => setLatinValueToState(e.target.value, setLastName)}
-          placeholder="Last name"
+          placeholder={getLang('dapp_global_last_name')}
         />
       </label>
       <Row className="DepositModal__WithdrawalDetails__buttons" wrap={adaptive}>
         <Button type="secondary-alice" onClick={onBack} shadow>
-          Back
+          {getLang('global_back')}
         </Button>
         <Button
           type="lightBlue"
           state={isProcess ? 'loading' : ''}
           onClick={onConfirm}
         >
-          Сonfirm
+          {getLang('global_confirm')}
         </Button>
       </Row>
     </DepositModal>
