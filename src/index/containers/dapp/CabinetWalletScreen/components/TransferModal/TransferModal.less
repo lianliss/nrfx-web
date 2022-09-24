@@ -5,6 +5,18 @@
 }
 
 .TransferModal {
+    & > .Modal__box {
+        & > .CabinetModal__container {
+            padding: 32px 40px;
+            background: #fff;
+            border-radius: var(--radius-panel);
+        }
+    }
+
+    h3 {
+        text-align: center;
+    }
+    
     &__address {
         position: relative;
 
@@ -93,6 +105,26 @@
         }
         .Button {
             margin: 8px auto 20px;
+        }
+    }
+}
+
+.adaptive .TransferModal {
+    & > .Modal__box {
+        padding: 20px !important;
+        
+        & > .CabinetModal__container {
+            padding: 32px 25px;
+            background: #fff;
+            border-radius: var(--radius-panel);
+        }
+    }
+
+    & + .BottomSheetModal-container {
+        z-index: 999;
+        
+        .BottomSheetModal__bg {
+            background: none;
         }
     }
 }

@@ -34,12 +34,12 @@ export class DappCabinet extends Component {
     let Component = Exchanger;
 
     switch (route.name) {
-      // case PAGES.DAPP_WALLET:
-      //   Component = CabinetWallets;
-      //   break;
-      // case PAGES.DAPP_CURRENCY:
-      //   Component = Currency;
-      //   break;
+      case PAGES.DAPP_WALLET:
+        Component = CabinetWallets;
+        break;
+      case PAGES.DAPP_CURRENCY:
+        Component = Currency;
+        break;
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;
         break;

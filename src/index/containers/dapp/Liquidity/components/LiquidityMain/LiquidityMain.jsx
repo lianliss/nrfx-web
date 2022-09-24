@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router5';
 import { Web3Context } from 'services/web3Provider';
 import { getLang } from 'src/utils';
+import { openModal } from 'src/actions';
 
 // Components
 import { Button } from 'src/ui';
@@ -54,7 +55,7 @@ function LiquidityMain({
           <Button
             type="lightBlue"
             size="extra_large"
-            onClick={() => connectWallet()}
+            onClick={() => openModal('connect_to_wallet')}
           >
             {getLang('dapp_global_connect_wallet')}
           </Button>

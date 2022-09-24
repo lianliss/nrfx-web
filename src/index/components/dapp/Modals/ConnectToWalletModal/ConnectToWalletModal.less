@@ -14,17 +14,6 @@
     justify-content: space-between;
   }
 
-  &__wallets {
-    .row {
-      &:first-child {
-        .ConnectToWalletModal__wallet:first-child {
-          opacity: 1;
-          pointer-events: all;
-        }
-      }
-    }
-  }
-
   &__wallet {
     display: flex;
     flex-direction: column;
@@ -42,16 +31,12 @@
     transition: all 0.1s;
     cursor: pointer;
 
-    // Disabled
-    pointer-events: none;
-    opacity: 0.5;
-
     &:hover {
       opacity: 0.92;
       box-shadow: 0 4px 10px rgba(229, 235, 252, 0.7);
     }
 
-    &:first-child {
+    &:not(:last-child) {
       margin-right: 10px;
     }
 
@@ -69,6 +54,11 @@
         align-items: center;
         justify-content: center;
       }
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
     }
   }
 

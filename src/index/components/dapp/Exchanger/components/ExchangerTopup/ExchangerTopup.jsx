@@ -156,8 +156,17 @@ function ExchangerTopup(props) {
       actions.openModal("deposit_balance", {
         currency: fiatSymbol,
         amount: fiatAmount,
+        type: 'refill'
       });
     }
+  }
+
+  function withdrawal() {
+    actions.openModal("deposit_balance", {
+      currency: fiatSymbol,
+      amount: fiatAmount,
+      type: 'withdrawal'
+    });
   }
 
   const swapTokens = async () => {
@@ -195,7 +204,7 @@ function ExchangerTopup(props) {
     }
   };
 
-  let buttons = <Button type="secondary" onClick={connectWallet}>
+  let buttons = <Button type="secondary" onClick={() => actions.openModal('connect_to_wallet')}>
     {getLang('dapp_global_connect_wallet')}
   </Button>;
 
@@ -224,9 +233,16 @@ function ExchangerTopup(props) {
           </Button>
         </div>;
       } else {
-        buttons = <Button type="secondary" onClick={topUp}>
-          {getLang('topup_button')}
-        </Button>;
+        buttons = (
+          <>
+            <Button type="secondary" onClick={topUp}>
+              {getLang('topup_button')}
+            </Button>
+            <Button type="secondary" onClick={withdrawal}>
+              {getLang('global_withdrawal')}
+            </Button>
+          </>
+        )
       }
     }
   }

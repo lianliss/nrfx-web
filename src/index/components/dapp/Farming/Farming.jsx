@@ -13,6 +13,7 @@ import LoadingStatus from 'src/index/components/cabinet/LoadingStatus/LoadingSta
 import useAdaptive from 'src/hooks/adaptive';
 import { DESKTOP } from 'src/index/constants/breakpoints';
 import { getLang } from 'src/utils';
+import { openModal } from 'src/actions';
 
 // Styles
 import './Farming.less';
@@ -163,13 +164,13 @@ function Farming() {
 
   React.useEffect(() => {
     if (!isConnected) return;
-    if (chainId !== 97 && requestedChain !== 97) {
-      setRequestedChain(97);
-      console.log('[Farming][switchToChain]', 97);
-      switchToChain(97).then(() => {
-        setRequestedChain(null);
-      });
-    }
+    // if (chainId !== 97 && requestedChain !== 97) {
+    //   setRequestedChain(97);
+    //   console.log('[Farming][switchToChain]', 97);
+    //   switchToChain(97).then(() => {
+    //     setRequestedChain(null);
+    //   });
+    // }
     if (chainId === 97) {
       updatePoolsList().catch((error) => {
         console.error('[Farming][getPoolsList]', error);
@@ -179,7 +180,7 @@ function Farming() {
 
   React.useEffect(() => {
     if (!isConnected) {
-      connectWallet();
+      openModal('connect_to_wallet');
     }
   }, [isConnected]);
 

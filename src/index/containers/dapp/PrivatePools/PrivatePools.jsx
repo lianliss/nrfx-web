@@ -190,7 +190,7 @@ class PrivatePools extends React.PureComponent {
             <div className="row">
               <UI.Button
                 type="lightBlue"
-                onClick={connectWallet}
+                onClick={() => connectWallet()}
               >
                 Connect wallet
               </UI.Button>

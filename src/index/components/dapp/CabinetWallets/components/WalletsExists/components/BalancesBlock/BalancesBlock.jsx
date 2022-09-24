@@ -7,6 +7,7 @@ import CabinetScrollBlock from '../../../../../CabinetScrollBlock/CabinetScrollB
 import WalletsListItem from '../../../../../WalletsList/components/WalletsListItem/WalletsListItem';
 import WalletsList from '../../../../../WalletsList/WalletsList';
 import CabinetBlock from '../../../../../CabinetBlock/CabinetBlock';
+import WalletIcon from '../../../../../WalletIcon/WalletIcon';
 import SVG from 'utils/svg-wrap';
 import { RateIndicator, NumberFormat } from 'src/ui';
 
@@ -30,22 +31,11 @@ function BalancesBlock({ balances, type, title, adaptive }) {
           {balances.map((balanceItem, key) => {
             const currency = balanceItem.symbol.toLowerCase();
             const priceDifference = null;
-
-            let icon = balanceItem.logoURI;
-
-            if (type === 'fiats') {
-              // Set icon
-              try {
-                icon =
-                  require(`src/asset/icons/wallets/${currency}.svg`).default;
-              } catch {
-                console.log('Icon is not defined');
-              }
-            }
+            const icon = balanceItem.logoURI;
 
             return (
               <WalletsListItem
-                icon={<img src={icon} />}
+                icon={<WalletImage icon={icon} />}
                 startTexts={[
                   balanceItem.name,
                   <span className="CabinetWallets__tokens-content">
@@ -72,7 +62,7 @@ function BalancesBlock({ balances, type, title, adaptive }) {
                 type="reverse"
                 onClick={() => {
                   router.navigate(PAGES.DAPP_CURRENCY, {
-                    currency,
+                    currency: currency.toUpperCase(),
                   });
                 }}
               />
@@ -114,5 +104,15 @@ const TokenItemControls = ({ price, amount, currency }) => (
     </div>
   </div>
 );
+
+const WalletImage = ({ icon }) => {
+  const [isError, setIsError] = React.useState(false);
+
+  return isError ? (
+    <WalletIcon currency="" size={39} />
+  ) : (
+    <img src={icon} onError={() => setIsError(true)} />
+  );
+};
 
 export default React.memo(BalancesBlock);

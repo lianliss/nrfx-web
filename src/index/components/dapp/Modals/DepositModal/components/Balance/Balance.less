@@ -84,6 +84,17 @@
     border: none;
     border-color: transparent !important;
 
+    &__footer {
+      span {
+        color: var(--royal-blue);
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
     &.error {
       border: 1px solid var(--orange-error) !important;
 
@@ -276,7 +287,7 @@
     .Button {
       min-width: 210px;
       margin: 0 7.5px;
-      
+
       &:not(:last-child) {
         margin-bottom: 10px;
       }

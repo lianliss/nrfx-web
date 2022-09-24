@@ -25,6 +25,7 @@ function ExchangerSwap(props) {
   const isAdaptive = useSelector(adaptiveSelector);
   const rates = useSelector(web3RatesSelector);
   const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
+  const route = useSelector(state => state.router.route);
   const context = React.useContext(Web3Context);
   const {
     connectWallet, isConnected, addTokenToWallet,
@@ -32,8 +33,8 @@ function ExchangerSwap(props) {
   } = context;
   const {
     fiats, fiat, coins, coin,
-    setFiat, setCoin,
-    reservation, setReservation
+    setFiat, setCoin, reservation,
+    setReservation, fiatsLoaded,
   } = props;
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const [isSelectCoin, setIsSelectCoin] = React.useState(false);
@@ -141,6 +142,37 @@ function ExchangerSwap(props) {
     setIsProcessing(false);
     setProcessingTime(null);
   };
+
+  const handleFiatChange = (value) => {
+    setFiat(value);
+    setIsSelectFiat(false);
+  }
+
+  const handleCoinChange = (value) => {
+    setCoin(value);
+    setIsSelectCoin(false);
+  }
+
+  React.useEffect(() => {
+    const { params } = route;
+
+    if (fiatsLoaded) {
+      fiats.forEach((fiat) => {
+        if (fiat.symbol.toLowerCase() === params.currency.toLowerCase()) {
+          handleFiatChange(fiat);
+        }
+      });
+    }
+
+    if (isConnected) {
+      const paramsCoin = params.coin && params.coin.toLowerCase();
+      coins.forEach((coin) => {
+        if (coin.symbol.toLowerCase() === paramsCoin) {
+          handleCoinChange(coin);
+        }
+      });
+    }
+  }, [fiatsLoaded, isConnected]);
 
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
@@ -252,16 +284,15 @@ function ExchangerSwap(props) {
                 onClick={swapTokens}>
           {getLang('dapp_exchanger_exchange_button')}
         </Button>
-      </div> : <div className="ExchangerSwap__actions-buy"><Button className="" onClick={connectWallet}>
-        {getLang('dapp_global_connect_wallet')}
-      </Button></div>}
+      </div> : <div className="ExchangerSwap__actions-buy">
+        <Button className="" onClick={() => actions.openModal('connect_to_wallet')}>
+          {getLang('dapp_global_connect_wallet')}
+        </Button>
+      </div>}
       {isSelectFiat && 
         <CabinetModal onClose={() => setIsSelectFiat(false)}>
           <TokenSelect
-            onChange={value => {
-              setFiat(value);
-              setIsSelectFiat(false);
-            }}
+            onChange={value => handleFiatChange(value)}
             onClose={() => setIsSelectFiat(false)}
             selected={fiat}
             isAdaptive={isAdaptive}
@@ -280,10 +311,7 @@ function ExchangerSwap(props) {
       {isSelectCoin &&
       <CabinetModal onClose={() => setIsSelectCoin(false)}>
         <TokenSelect
-          onChange={value => {
-            setCoin(value);
-            setIsSelectCoin(false);
-          }}
+          onChange={value => handleCoinChange(value)}
           onClose={() => setIsSelectCoin(false)}
           selected={coin}
           isAdaptive={isAdaptive}

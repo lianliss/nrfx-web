@@ -52,6 +52,7 @@ function Exchanger(props) {
   const [coinSelected, setCoinSelected] = React.useState(
     tokens.find(t => t.symbol === initGetParams.params.coin) || tokens.find(t => t.symbol === 'NRFX')
   );
+  const [fiatsLoaded, setFiatsLoaded] = React.useState(false);
   const fiatSymbol = _.get(fiatSelected, 'symbol');
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
 
@@ -140,6 +141,7 @@ function Exchanger(props) {
           setFiatSelected(fiatSymbol);
         }
       }
+      setFiatsLoaded(true);
     }).catch(error => {
 
     });
@@ -274,6 +276,7 @@ function Exchanger(props) {
           />
           <ExchangerSwap
             fiats={fiatTokens}
+            fiatsLoaded={fiatsLoaded}
             coins={coins}
             fiat={fiatSelected || fiatTokens[0]}
             coin={coinSelected}

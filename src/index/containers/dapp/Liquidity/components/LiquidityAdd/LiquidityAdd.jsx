@@ -324,10 +324,18 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
           onChange={(token) => {
             if (selectToken === 0) {
               setSelectedTokens((state) => {
+                if(token.symbol === state[1].symbol) {
+                  return [token, state[0]];
+                }
+
                 return [token, state[1]];
               });
             } else {
               setSelectedTokens((state) => {
+                if(state[0].symbol === token.symbol) {
+                  return [state[1], token];
+                }
+
                 return [state[0], token];
               });
             }

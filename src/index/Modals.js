@@ -45,7 +45,7 @@ import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailM
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
-import ReceiveQRModal from "./components/cabinet/ReceiveQRModal/ReceiveQRModal";
+import ReceiveQRModal from "./components/dapp/ReceiveQRModal/ReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
 import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
 import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
@@ -72,6 +72,7 @@ import {
   SwiftGeneratedModal,
   AttentionBuyTokenModal,
 } from "./components/dapp";
+import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
 import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
@@ -268,6 +269,9 @@ function Modals(props) {
       break;
     case "attention_buy_token":
       Component = AttentionBuyTokenModal;
+      break;
+    case "deposit_transfer_send":
+      Component = TransferModal;
       break;
     default:
       return null;
