@@ -1,11 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
+import web3Backend from 'services/web3-backend';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 import { getLang } from "src/utils";
 import * as actions from "src/actions";
+import {setWithdraw} from "src/actions/dapp/withdraw";
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -31,8 +33,10 @@ let invoiceTimeout;
 
 function ExchangerTopup(props) {
 
+  const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
   const rates = useSelector(web3RatesSelector);
+  const withdrawBanks = useSelector(state => _.get(state, 'dapp.withdraw.banks', {}));
   const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
   const context = React.useContext(Web3Context);
   const {
@@ -51,6 +55,8 @@ function ExchangerTopup(props) {
   // Symbols
   const fiatSymbol = _.get(fiat, 'symbol', '');
   const coinSymbol = _.get(coin, 'symbol', '');
+
+  const currentWithdrawBanks = _.get(withdrawBanks, fiatSymbol, []);
 
   const [invoice, setInvoice] = React.useState();
 
@@ -204,6 +210,13 @@ function ExchangerTopup(props) {
     }
   };
 
+  React.useEffect(async () => {
+    const withdrawBanks = await web3Backend.getWithdrawBanks();
+    dispatch(setWithdraw({
+      banks: withdrawBanks,
+    }))
+  }, []);
+
   let buttons = <Button type="secondary" onClick={() => actions.openModal('connect_to_wallet')}>
     {getLang('dapp_global_connect_wallet')}
   </Button>;
@@ -238,8 +251,9 @@ function ExchangerTopup(props) {
             <Button type="secondary" onClick={topUp}>
               {getLang('topup_button')}
             </Button>
-            <Button type="secondary" onClick={withdrawal}>
+            <Button type="secondary" disabled={!currentWithdrawBanks.length} onClick={withdrawal}>
               {getLang('global_withdrawal')}
+              {!currentWithdrawBanks.length && <><br/>(coming soon)</>}
             </Button>
           </>
         )

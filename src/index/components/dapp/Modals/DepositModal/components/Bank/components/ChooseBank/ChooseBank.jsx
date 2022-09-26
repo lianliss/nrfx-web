@@ -57,17 +57,23 @@ function ChooseBank(props) {
   const [timeIsOver, setTimeIsOver] = useState(false);
 
   const { minFee, percentFee, currency } = props;
+  const withdrawBanks = useSelector(state => _.get(state, `dapp.withdraw.banks[${currency}]`, []));
 
   const methods = useSelector((state) => state.fiat.banks);
-  const availableMethods = methods.filter(
-    (m) => !m.currencies || m.currencies.indexOf(currency.toUpperCase()) >= 0
-  );
-  if (currency === 'USD') {
-    availableMethods.push({
-      currencies: ['USD'],
-      code: 'swift',
-      title: 'SWIFT',
-    });
+  let availableMethods;
+  if (props.type === 'withdrawal') {
+    availableMethods = withdrawBanks.map(w => ({...w, currencies: [currency]}) );
+  } else {
+    availableMethods = methods.filter(
+      (m) => !m.currencies || m.currencies.indexOf(currency.toUpperCase()) >= 0
+    );
+    if (currency === 'USD') {
+      availableMethods.push({
+        currencies: ['USD'],
+        code: 'swift',
+        title: 'SWIFT',
+      });
+    }
   }
 
   const amount = cardReservation
@@ -169,11 +175,14 @@ function ChooseBank(props) {
   }, [dispatch, props, cardReservation]);
 
   const handleChoiceBank = (bankCode) => {
-    // dispatch({
-    //   type: actionTypes.WALLET_SET_STATUS,
-    //   section: 'reservedCard',
-    //   status: 'loading',
-    // });
+    if (props.type === 'withdrawal') {
+      actions.openModal('deposit_withdrawal_details', {
+        currency: currency.toUpperCase(),
+        amount,
+        bank: bankCode,
+      });
+      return;
+    }
 
     if (bankCode === 'swift') {
       actions.openModal('deposit_invoice_details', {
@@ -398,7 +407,10 @@ function ChooseBank(props) {
           items={availableMethods}
           onChange={handleChoiceBank}
           adaptive={adaptive}
-          onBack={() => openModal('deposit_balance')}
+          onBack={() => openModal('deposit_balance', {
+            type: props.type,
+            currency: props.currency,
+          })}
         />
       );
     } else {

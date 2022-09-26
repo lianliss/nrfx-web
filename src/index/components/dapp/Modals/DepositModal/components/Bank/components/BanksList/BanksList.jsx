@@ -35,7 +35,7 @@ function BanksList({ items, onChange, adaptive, scrollEverywhere }) {
               <img src={icon} alt={bank.name} className="bankIcon" />
             </div>
             <Row alignItems="center" justifyContent="flex-end">
-              <span className="secondary extra-small default">{bank.name}</span>
+              <span className="secondary extra-small default">{bank.title}</span>
               <SVG src={require('src/asset/icons/list-arrow-large.svg')} />
             </Row>
           </Row>

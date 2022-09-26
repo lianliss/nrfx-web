@@ -27,6 +27,14 @@ function reduce(state = initialState, action = {}) {
           to,
         },
       };
+    case actionTypes.DAPP_SET_WITHDRAW:
+      return {
+        ...state,
+        withdraw: {
+          ...state.withdraw,
+          ...payload,
+        },
+      };
     default:
       return state;
   }
