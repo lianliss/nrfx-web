@@ -62,7 +62,6 @@ const merchantList = {
 };
 
 function Balance(props) {
-  console.log('PROPS', props);
   const context = React.useContext(Web3Context);
   const {
     fiats,

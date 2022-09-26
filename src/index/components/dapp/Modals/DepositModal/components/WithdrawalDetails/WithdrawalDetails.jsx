@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 // Components
 import DepositModal from '../../DepositModal';
 import { Input, Button, Row } from 'src/ui';
+import PhoneInput from 'react-phone-number-input/input';
 import * as actions from 'src/actions';
 
 // Utils
@@ -19,9 +20,11 @@ function WithdrawalDetails(props) {
   const {addWithdrawal, isConnected, connectWallet} = context;
   const adaptive = useSelector(adaptiveSelector);
   const {currency, amount, bank} = props;
+  const [phone, setPhone] = React.useState('');
   const [accountNumber, setAccountNumber] = React.useState('');
   const [name, setName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
+  const phoneInputRef = React.useRef(null);
 
   const Label = ({ title, children }) => {
     return (
@@ -48,6 +51,7 @@ function WithdrawalDetails(props) {
       currency,
       bank,
       amount,
+      phone,
     });
     actions.openModal('deposit_withdrawal_transfer', {}, {});
   };
@@ -58,6 +62,26 @@ function WithdrawalDetails(props) {
 
   const isWithdrawAvailable = !!accountNumber.length && !!name.length && !!lastName.length;
 
+  const phoneOnInputHandler = (e) => {
+    setTimeout(() => {
+      const valueLength = e.target.value.length;
+      if (valueLength > 3) return;
+
+      e.target.setSelectionRange(valueLength, valueLength);
+    }, 50);
+  };
+
+  React.useEffect(() => {
+    if (!phoneInputRef) return;
+    if (!adaptive) return;
+
+    phoneInputRef.current.addEventListener('input', phoneOnInputHandler);
+
+    return () => {
+      phoneInputRef.current.removeEventListener('input', phoneOnInputHandler);
+    };
+  }, [adaptive]);
+
   return (
     <DepositModal
       {...props}
@@ -67,6 +91,16 @@ function WithdrawalDetails(props) {
       <h3 className="DepositModal__WithdrawalDetails__title">
         Specify the details
       </h3>
+      <label className="DepositModal__WithdrawalDetails__label">
+        <span>{getLang('dapp_global_phone_number')}</span>
+        <PhoneInput
+          value={phone}
+          onChange={setPhone}
+          className="Input"
+          placeholder="+7 (xxx) xxx-xxxx"
+          ref={phoneInputRef}
+        />
+      </label>
       <label className="DepositModal__WithdrawalDetails__label">
         <span>Account (card number)</span>
         <Input type="text"
