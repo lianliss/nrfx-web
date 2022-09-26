@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
+import _ from 'lodash';
 
 // Components
 import Select, { option } from 'src/index/components/dapp/Select/Select';
@@ -23,6 +24,8 @@ import * as toasts from 'src/actions/toasts';
 import * as fiatActions from 'src/actions/cabinet/fiat';
 import { fiatSelector, adaptiveSelector } from 'src/selectors';
 import { closeModal } from 'src/actions';
+import wei from 'src/utils/wei';
+import getFinePrice from 'src/utils/get-fine-price';
 
 // Styles
 import './Balance.less';
@@ -210,6 +213,21 @@ function Balance(props) {
     );
   };
 
+  const handleWithdraw = () => {
+    actions.openModal(
+      'deposit_choose_bank',
+      {
+        currency: fiatSelected.symbol,
+        amount,
+        type: 'withdrawal',
+      },
+      {
+        amount,
+        currency: fiatSelected.symbol,
+      }
+    );
+  };
+
   const handleFiatWithdrawal = () => {
     setTouched(true);
     const message = checkAmount();
@@ -392,6 +410,9 @@ function Balance(props) {
     const minAmount = _.get(anyBank, 'minAmount', 100);
     const maxAmount = _.get(anyBank, 'maxAmount', 150000);
 
+    const fiatBalance = wei.from(_.get(fiatSelected, 'balance', '0'));
+    const isWithdrawAvailable = amount && amount <= fiatBalance;
+
     const indicator = (
       <span>
         {minAmount
@@ -403,11 +424,9 @@ function Balance(props) {
     );
 
     const InputFooter = ({ onClick }) => {
-      const fiatBalance = fiatSelected?.balance || 0;
-
       return (
         <span onClick={() => onClick(Number(fiatBalance))}>
-          {getLang('dapp_global_balance')}: {fiatBalance}
+          {getLang('dapp_global_balance')}: {getFinePrice(fiatBalance)} {_.get(fiatSelected, 'symbol')}
         </span>
       );
     };
@@ -474,7 +493,8 @@ function Balance(props) {
             <UI.Button
               type="lightBlue"
               // disabled={!amount}
-              disabled={true}
+              disabled={!isWithdrawAvailable}
+              onClick={handleWithdraw}
             >
               {getLang('global_withdrawal')}
             </UI.Button>

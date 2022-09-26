@@ -1413,6 +1413,20 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async addWithdrawal(params) {
+    try {
+      const result = await this.backendRequest(params,
+        `Cancel invoice`,
+        'withdraw',
+        'post',
+      );
+      console.log('[cancelInvoice]', result);
+      return result;
+    } catch (error) {
+      console.error('[cancelInvoice]', error);
+    }
+  }
+
   // Get block from date.
   async dateToBlockMoralis (date = new Date()) {
     // Date to unix timestamp.
@@ -1521,6 +1535,7 @@ class Web3Provider extends React.PureComponent {
       getInvoice: this.getInvoice.bind(this),
       getInvoicePDF: this.getInvoicePDF.bind(this),
       cancelInvoice: this.cancelInvoice.bind(this),
+      addWithdrawal: this.addWithdrawal.bind(this),
       cmcTokens: this.cmcTokens,
     }}>
       {this.props.children}

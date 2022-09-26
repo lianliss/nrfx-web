@@ -219,6 +219,7 @@ export class Web3Backend {
       telegramID,
     }
   });
+  getWithdrawBanks = () => this.get('withdraw/banks');
 }
 
 const web3Backend = new Web3Backend();

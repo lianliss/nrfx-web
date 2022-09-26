@@ -233,3 +233,4 @@ export const WEB3_SET_RATE = "WEB3_SET_RATE";
 
 // Dapp
 export const DAPP_SET_SWAP = "DAPP_SET_SWAP";
+export const DAPP_SET_WITHDRAW = "DAPP_SET_WITHDRAW";
