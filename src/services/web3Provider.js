@@ -292,6 +292,32 @@ class Web3Provider extends React.PureComponent {
     }));
   }
 
+   /**
+   * Update balance, or add if it not exist.
+   * @param token {object} token object
+   * @param type {string} fiats, tokens
+   */
+  async updateTokenInBalances(token, type = 'tokens') {
+    this.setBalances((prevBalances) => {
+      let finded = false;
+      const newBalances = prevBalances.map((prevBalancesToken) => {
+        if (prevBalancesToken.symbol === token.symbol) {
+          finded = true;
+
+          return token;
+        }
+
+        return prevBalancesToken;
+      });
+
+      if (!finded) {
+        newBalances.push(token);
+      }
+
+      return newBalances;
+    }, type);
+  }
+
   /**
    * Switch to another chain
    * @param id {integer} chainID
@@ -1467,6 +1493,34 @@ class Web3Provider extends React.PureComponent {
       return { address, difference, priceFrom, priceTo };
   }
 
+  /**
+ * Send token from current address to receiver.
+ * @param token {object} - token object
+ * @param address {string} - receiver address
+ * @param value {number} - send tokens amount
+ * @return {string|null} - TX result.
+ */
+  async sendTokens(token, address, value) {
+    const contract = this.getTokenContract(token).contract;
+    // const accountBalance = await contract.methods
+    // .balanceOf(this.state.accountAddress)
+    // .call();
+    // const amount = accountBalance < wei.to(value)
+    //   ? accountBalance
+    //   : wei.to(value);
+    const amount = this.web3.utils.toWei(String(value));
+    const params = [address, amount];
+  
+    try {
+      const result = await this.transaction(contract, 'transfer', params);
+
+      return result;
+    } catch(error) {
+      console.log('[sendTokens]', error);
+      return null;
+    }
+  }
+
   render() {
     window.web3Provider = this;
 
@@ -1521,6 +1575,9 @@ class Web3Provider extends React.PureComponent {
       getInvoice: this.getInvoice.bind(this),
       getInvoicePDF: this.getInvoicePDF.bind(this),
       cancelInvoice: this.cancelInvoice.bind(this),
+      sendTokens: this.sendTokens.bind(this),
+      setBalances: this.setBalances.bind(this),
+      updateTokenInBalances: this.updateTokenInBalances.bind(this),
       cmcTokens: this.cmcTokens,
     }}>
       {this.props.children}

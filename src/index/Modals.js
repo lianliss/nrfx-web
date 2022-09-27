@@ -71,6 +71,7 @@ import {
   CreateReferralLink,
   SwiftGeneratedModal,
   AttentionBuyTokenModal,
+  SendTokensModal,
 } from "./components/dapp";
 import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
 import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
@@ -270,8 +271,8 @@ function Modals(props) {
     case "attention_buy_token":
       Component = AttentionBuyTokenModal;
       break;
-    case "deposit_transfer_send":
-      Component = TransferModal;
+    case "send_tokens":
+      Component = SendTokensModal;
       break;
     default:
       return null;

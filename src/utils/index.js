@@ -372,3 +372,5 @@ export function dateFormat(date, format = "DD MMMM YYYY, HH:mm") {
 export const timeout = miliseconds => {
   return new Promise(resolve => setTimeout(resolve, miliseconds));
 };
+
+export { default as wei } from './wei';
