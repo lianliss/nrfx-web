@@ -1502,13 +1502,37 @@ class Web3Provider extends React.PureComponent {
  */
   async sendTokens(token, address, value) {
     const contract = this.getTokenContract(token).contract;
+    const amount = this.web3.utils.toWei(String(value));
     // const accountBalance = await contract.methods
     // .balanceOf(this.state.accountAddress)
     // .call();
     // const amount = accountBalance < wei.to(value)
     //   ? accountBalance
     //   : wei.to(value);
-    const amount = this.web3.utils.toWei(String(value));
+    if(token.symbol === 'BNB') {
+      const gasPrice = await this.web3.eth.getGasPrice();
+
+
+      const rawTransaction = {
+        gasPrice: this.web3.utils.toHex(gasPrice),
+        gas: this.web3.utils.toHex(21000),
+        to: address,
+        from: this.state.accountAddress,
+        value: this.web3.utils.toHex(amount),
+        chainId: '0x38',
+      };
+
+      try {
+        return await this.fetchEthereumRequest({
+          method: this.requestMethods.eth_sendTransaction,
+          params: [rawTransaction],
+        });
+      } catch(error) {
+        console.log('[sendTokens]', error);
+        return null;
+      }
+    }
+
     const params = [address, amount];
   
     try {

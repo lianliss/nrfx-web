@@ -52,7 +52,7 @@ function SendTokens({ onClose, token }) {
     if (sendResult) {
       toastPush(getLang('cabinet_sendCoinsModal_success'), 'success');
     } else {
-      toastPush('Transaction failed', 'warning');
+      toastPush(getLang('toast_transaction_declined'), 'error');
     }
 
     setIsLoading(false);
@@ -92,7 +92,10 @@ function SendTokens({ onClose, token }) {
               className="active"
               onClick={() => setAmount(Number(balance.toFixed(5)))}
             >
-              <UI.NumberFormat number={balance} currency={token.symbol} />
+              <UI.NumberFormat
+                number={Number(balance.toFixed(5))}
+                currency={token.symbol}
+              />
             </span>
           </h3>
           <UI.Input
@@ -130,7 +133,7 @@ function SendTokens({ onClose, token }) {
           adaptive={adaptive}
           onResult={(result) => {
             const filteredResult = result.replace(/(^ethereum\:|@56$)/g, '');
-            
+
             setAddress(filteredResult);
           }}
           onClose={() => setIsQRModal(false)}
