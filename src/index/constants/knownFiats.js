@@ -71,4 +71,7 @@ module.exports = [
     decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/cad.svg"
   },
-];
+].map(fiat => ({
+  ...fiat,
+  isFiat: true,
+}));

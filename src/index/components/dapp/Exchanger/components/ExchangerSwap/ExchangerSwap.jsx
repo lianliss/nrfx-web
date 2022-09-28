@@ -17,9 +17,27 @@ import DexSwapInput from 'src/index/containers/dapp/DexSwap/components/DexSwapIn
 import limits from 'src/index/constants/fiats';
 import * as toast from "src/actions/toasts";
 import CabinetModal from '../../../Modals/CabinetModal/CabinetModal';
+import router from 'src/router';
+import * as PAGES from 'src/index/constants/pages';
 
 // Styles
 import './ExchangerSwap.less';
+
+function getTokenPrice(token) {
+  const rates = useSelector(web3RatesSelector);
+  const isFiat = _.get(token, 'isFiat', false);
+  const symbol = _.get(token, 'symbol');
+  let price;
+  switch (symbol) {
+    case 'NRFX': price = _.get(rates, 'nrfx', 0); break;
+    case 'USDT':
+    case 'USD': price = 1; break;
+    default: price = isFiat
+      ? _.get(rates, symbol.toLowerCase(), 0)
+      : _.get(rates, `${symbol}USDT`, 0);
+  }
+  return price;
+}
 
 function ExchangerSwap(props) {
   const isAdaptive = useSelector(adaptiveSelector);
@@ -30,6 +48,7 @@ function ExchangerSwap(props) {
   const {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
+    exchangerRouter, getTokenContract,
   } = context;
   const {
     fiats, fiat, coins, coin,
@@ -43,17 +62,15 @@ function ExchangerSwap(props) {
   const fiatSymbol = _.get(fiat, 'symbol', '');
   const coinSymbol = _.get(coin, 'symbol', '');
 
+  const isFirstFiat = _.get(fiat, 'isFiat', false);
+  const isSecondFiat = _.get(coin, 'isFiat', false);
+
   // Fiat price
   const fiatBalance = wei.from(_.get(fiat, 'balance', "0"));
-  const fiatPrice = _.get(rates, fiatSymbol.toLowerCase(), Number(fiatSymbol === 'USD'));
+  const fiatPrice = getTokenPrice(fiat);
 
   // Calculate coin price
-  let coinPrice;
-  switch (coinSymbol) {
-    case 'NRFX': coinPrice = _.get(rates, 'nrfx', 0); break;
-    case 'USDT': coinPrice = 1; break;
-    default: coinPrice = _.get(rates, `${coinSymbol}USDT`, 0);
-  }
+  const coinPrice = getTokenPrice(coin);
 
   const limits = props.limits.find(l => l.coin === coinSymbol);
   const minCoinAmount = Math.max(_.get(limits, 'min', 0), 20 / coinPrice);
@@ -83,50 +100,26 @@ function ExchangerSwap(props) {
 
   function fiatSelector() {
     setIsSelectFiat(true);
-    // if (!isConnected) {
-    //   connectWallet()
-    //     .then(() => setIsSelectFiat(true))
-    //     .catch(error => {
-    //       setIsSelectFiat(false);
-    //     })
-    // } else {
-    //   setIsSelectFiat(true);
-    // }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
   function coinSelector() {
     setIsSelectCoin(true);
-    // if (!isConnected) {
-    //   connectWallet()
-    //     .then(() => setIsSelectCoin(true))
-    //     .catch(error => {
-    //       setIsSelectCoin(false);
-    //     })
-    // } else {
-    //   setIsSelectCoin(true);
-    // }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }
-
-  function topUp() {
-    if (reservation) {
-      actions.openModal("fiat_refill_card", {
-        currency: fiatSymbol,
-      });
-    } else {
-      actions.openModal("fiat_topup", {
-        currency: fiatSymbol,
-        amount: fiatAmount,
-      });
-    }
   }
 
   const swapTokens = async () => {
     setIsProcessing(true);
     setProcessingTime(Date.now() + 60000 * 5);
     try {
-      const result = await exchange(fiatSymbol, coinSymbol, fiatAmount, {
+      if (!fiat.isFiat) {
+        const token = getTokenContract(fiat);
+        const allowance = await token.getAllowance(exchangerRouter);
+        if (allowance < fiatAmount) {
+          await token.approve(exchangerRouter, fiatAmount);
+        }
+      }
+      const result = await exchange(fiat.address, coin.address, fiatAmount, {
         symbol: coinSymbol,
         isInProgress: true,
         text: getLang('dapp_exchanger_swap_submitted_text'),
@@ -146,12 +139,12 @@ function ExchangerSwap(props) {
   const handleFiatChange = (value) => {
     setFiat(value);
     setIsSelectFiat(false);
-  }
+  };
 
   const handleCoinChange = (value) => {
     setCoin(value);
     setIsSelectCoin(false);
-  }
+  };
 
   React.useEffect(() => {
     const { params } = route;
@@ -216,9 +209,10 @@ function ExchangerSwap(props) {
         </div>
         <div className="SwapForm__separator">
           <div
-            className="SwapForm__switchButton"
+            className="ExchangerSwap__switchButton"
             onClick={() => {
-              return; // TODO unlock swap switch buttun
+              setFiat(coin);
+              setCoin(fiat);
             }}
           >
             {isAdaptive ? (
@@ -279,11 +273,20 @@ function ExchangerSwap(props) {
         </div>
       </div>
       {isConnected ? <div className="ExchangerSwap__actions-buy">
-        <Button className=""
-                state={isProcessing ? 'loading' : ''}
-                onClick={swapTokens}>
-          {getLang('dapp_exchanger_exchange_button')}
-        </Button>
+        {!isFirstFiat && !isSecondFiat
+          ? <Button className=""
+                    state={isProcessing ? 'loading' : ''}
+                    onClick={() => {
+                      router.navigate(PAGES.DAPP_SWAP);
+                    }}>
+            {getLang('dapp_exchanger_exchange_on_dex_button')}
+          </Button>
+          : <Button className=""
+                    state={isProcessing ? 'loading' : ''}
+                    onClick={swapTokens}>
+            {getLang('dapp_exchanger_exchange_button')}
+          </Button>
+        }
       </div> : <div className="ExchangerSwap__actions-buy">
         <Button className="" onClick={() => actions.openModal('connect_to_wallet')}>
           {getLang('dapp_global_connect_wallet')}
@@ -297,13 +300,14 @@ function ExchangerSwap(props) {
             selected={fiat}
             isAdaptive={isAdaptive}
             {...context}
-            tokens={fiats}
+            tokens={[
+              ...fiats,
+              ...coins,
+            ].filter(t => t.symbol !== coinSymbol)}
             disableSwitcher
             disableCommonBases
             disableName
-            loadAccountBalances={() => {
-              console.log('LOAD');
-            }}
+            loadAccountBalances={loadAccountBalances}
             size="small"
           />
         </CabinetModal>
@@ -316,7 +320,10 @@ function ExchangerSwap(props) {
           selected={coin}
           isAdaptive={isAdaptive}
           {...context}
-          tokens={coins}
+          tokens={[
+            ...fiats,
+            ...coins,
+          ].filter(t => t.symbol !== fiatSymbol)}
           disableSwitcher
           loadAccountBalances={loadAccountBalances}
         />
