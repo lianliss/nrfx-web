@@ -1512,7 +1512,6 @@ class Web3Provider extends React.PureComponent {
     if(token.symbol === 'BNB') {
       const gasPrice = await this.web3.eth.getGasPrice();
 
-
       const rawTransaction = {
         gasPrice: this.web3.utils.toHex(gasPrice),
         gas: this.web3.utils.toHex(21000),
