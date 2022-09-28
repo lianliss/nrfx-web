@@ -65,6 +65,7 @@ class Web3Provider extends React.PureComponent {
   saleFactory = networks[56].saleFactory;
   fiatFactory = networks[56].fiatFactory;
   wrapBNB = networks[56].wrapBNB;
+  exchangerRouter = networks[56].exchangerRouter;
   web3 = null;
   web3Host = null;
   farm = null;
@@ -725,7 +726,7 @@ class Web3Provider extends React.PureComponent {
   async loadAccountBalances(accountAddress = this.state.accountAddress) {
     // Only MetaMask have a good provider
     // for send more requests on one time.
-    if(!this.ethereum.isMetaMask) return;
+    if(!_.get(window, 'ethereum.isMetaMask')) return;
 
     try {
       // Set positive balance tokens
@@ -1508,6 +1509,7 @@ class Web3Provider extends React.PureComponent {
       routerAddress: this.routerAddress,
       tokenSale: this.tokenSale,
       saleFactory: this.saleFactory,
+      exchangerRouter: this.exchangerRouter,
       estimateTransaction: this.estimateTransaction.bind(this),
       transaction: this.transaction.bind(this),
       farm: this.farm,

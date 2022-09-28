@@ -56,6 +56,8 @@ function ExchangerTopup(props) {
   const fiatSymbol = _.get(fiat, 'symbol', '');
   const coinSymbol = _.get(coin, 'symbol', '');
 
+  const isFiat = _.get(fiat, 'isFiat', false);
+
   const currentWithdrawBanks = _.get(withdrawBanks, fiatSymbol, []);
 
   const [invoice, setInvoice] = React.useState();
@@ -100,20 +102,6 @@ function ExchangerTopup(props) {
 
   // Fiat input value
   const [fiatValue, setFiatValue] = React.useState(null);
-  const handleFiatInput = newValue => {
-    if (isAdaptive) {
-      setFiatValue(newValue);
-      return;
-    }
-    let value = `${newValue}`;
-    value = value.replace(',', '.');
-    if (value.length >= 2 && value[0] === '0' && value[1] !== '.') {
-      value = _.trimStart(value, '0');
-    }
-    if (!_.isNaN(Number(value)) || value === '.') {
-      setFiatValue(value);
-    }
-  };
 
   // Calculate amount
   const commission = (Number(_.get(commissions, `${coinSymbol.toLowerCase()}`, commissions.default)) || 0) / 100;
@@ -128,30 +116,6 @@ function ExchangerTopup(props) {
   const isAvailable = coinAmount >= minCoinAmount
     && coinAmount <= maxCoinAmount
     && fiatBalance >= fiatAmount;
-
-  function fiatSelector() {
-    if (!isConnected) {
-      connectWallet()
-        .then(() => setIsSelectFiat(true))
-        .catch(error => {
-          setIsSelectFiat(false);
-        })
-    } else {
-      setIsSelectFiat(true);
-    }
-  }
-
-  function coinSelector() {
-    if (!isConnected) {
-      connectWallet()
-        .then(() => setIsSelectCoin(true))
-        .catch(error => {
-          setIsSelectCoin(false);
-        })
-    } else {
-      setIsSelectCoin(true);
-    }
-  }
 
   function topUp() {
     if (reservation) {
@@ -210,11 +174,15 @@ function ExchangerTopup(props) {
     }
   };
 
-  React.useEffect(async () => {
-    const withdrawBanks = await web3Backend.getWithdrawBanks();
-    dispatch(setWithdraw({
-      banks: withdrawBanks,
-    }))
+  React.useEffect(() => {
+    web3Backend.getWithdrawBanks()
+      .then(withdrawBanks => {
+        dispatch(setWithdraw({
+          banks: withdrawBanks,
+        }))
+      }).catch(error => {
+        console.error('[getWithdrawBanks]', error);
+      });
   }, []);
 
   let buttons = <Button type="secondary" onClick={() => actions.openModal('connect_to_wallet')}>
@@ -274,7 +242,7 @@ function ExchangerTopup(props) {
         </div>
       </div>
       <div className="ExchangerTopup__actions">
-        {buttons}
+        {isFiat && buttons}
       </div>
     </ContentBox>
   )
