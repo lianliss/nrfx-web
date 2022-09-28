@@ -1,4 +1,4 @@
-module.exports = [
+const KNOWN_FIATS = [
   {
     name: "United States Dollar on Narfex",
     symbol: "USD",
@@ -75,3 +75,5 @@ module.exports = [
   ...fiat,
   isFiat: true,
 }));
+
+export default KNOWN_FIATS;
