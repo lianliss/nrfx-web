@@ -26,6 +26,11 @@ class TokenSelect extends React.PureComponent {
     switchTabsSelected: 'tokens',
   };
 
+  constructor(props) {
+    super(props);
+    this.state.switchTabsSelected = props.defaultList;
+  }
+
   onSearchInput = (event) => {
     this.setState({
       search: event.target.value,
@@ -61,6 +66,7 @@ class TokenSelect extends React.PureComponent {
       onClose,
       isAdaptive,
       tokens,
+      fiats,
       accountAddress,
       getTokenBalanceKey,
       selected,
@@ -72,9 +78,9 @@ class TokenSelect extends React.PureComponent {
     } = this.props;
     const { search, switchTabsSelected } = this.state;
     const isTokens = switchTabsSelected === 'tokens';
-    const isList = switchTabsSelected === 'list';
+    const isFiats = switchTabsSelected === 'fiats';
 
-    const filtered = tokens
+    const filtered = (isTokens ? tokens : fiats)
       .filter(
         (token) =>
           token.symbol.toUpperCase().indexOf(search.toUpperCase()) >= 0 ||
@@ -157,13 +163,13 @@ class TokenSelect extends React.PureComponent {
               selected={switchTabsSelected}
               onChange={(value) => this.setState({ switchTabsSelected: value })}
               tabs={[
-                { value: 'list', label: 'List' },
+                { value: 'fiats', label: 'Fiats' },
                 { value: 'tokens', label: 'Tokens' },
               ]}
               type="light-blue"
               size="medium"
             />}
-            {!disableCommonBases && <SectionBlock className="TokenSelect__fiat" title="Common bases">
+            {(!disableCommonBases && isTokens) && <SectionBlock className="TokenSelect__fiat" title="Common bases">
               {tokens
                 .filter((token) => {
                   const symbol = token.symbol.toUpperCase();
@@ -203,17 +209,15 @@ class TokenSelect extends React.PureComponent {
             <div className="TokenSelect__list">
               <h3>
                 {isTokens && getLang('dex_tokens_list')}
-                {isList && 'List'}
+                {isFiats && 'List'}
                 </h3>
-              {isTokens && (
-                <ReactScrollableList
-                  listItems={filtered}
-                  heightOfItem={54}
-                  maxItemsToRender={10}
-                />
-              )}
+              {!!filtered.length && <ReactScrollableList
+                listItems={filtered}
+                heightOfItem={54}
+                maxItemsToRender={10}
+              />}
             </div>
-              {isList && 'Coming soon'}
+              {!filtered.length && 'Coming soon'}
           </div>
         </CabinetBlock>
       </div>
@@ -223,11 +227,17 @@ class TokenSelect extends React.PureComponent {
 
 TokenSelect.defaultProps = {
   size: 'medium',
-}
+  fiats: [],
+  tokens: [],
+  defaultList: 'tokens',
+};
 
 TokenSelect.propTypes = {
   size: PropTypes.oneOf(['medium', 'small']),
-}
+  fiats: PropTypes.array,
+  tokens: PropTypes.array,
+  defaultList: PropTypes.oneOf(['fiats', 'tokens']),
+};
 
 export default connect((state) => ({
   isAdaptive: state.default.adaptive,
