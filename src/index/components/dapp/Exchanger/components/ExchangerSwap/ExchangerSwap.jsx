@@ -49,6 +49,7 @@ function ExchangerSwap(props) {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
     exchangerRouter, getTokenContract,
+    accountAddress
   } = context;
   const {
     fiats, fiat, coins, coin,
@@ -108,6 +109,29 @@ function ExchangerSwap(props) {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
 
+  function setTransactionToLocalStorage(transaction) {
+    const record = window.localStorage.getItem('ExchangerSwapTransactions');
+    let transactions = record ? JSON.parse(record) : [];
+
+    transactions = [
+      {
+        accountAddress: accountAddress,
+        date: new Date(),
+        tx: transaction.tx,
+        token0: transaction.token0,
+        token1: transaction.token1,
+        amount0: transaction.amount0,
+        amount1: transaction.amount1,
+      },
+      ...transactions
+    ];
+
+    window.localStorage.setItem(
+      'ExchangerSwapTransactions',
+      JSON.stringify(transactions)
+    );
+  }
+
   const swapTokens = async () => {
     setIsProcessing(true);
     setProcessingTime(Date.now() + 60000 * 5);
@@ -127,6 +151,13 @@ function ExchangerSwap(props) {
         coinForAddToWallet: coin,
     });
       console.log('[swapTokens]', result);
+       setTransactionToLocalStorage({
+        tx: result,
+        token0: fiat.symbol,
+        token1: coin.symbol,
+        amount0: fiatAmount,
+        amount1: coinAmount,
+      });
       toast.success('Exchange confirmed');
     } catch (error) {
       console.error('[swapTokens]', error);

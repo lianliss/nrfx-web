@@ -2,15 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import { NumberFormat, Col, Row } from 'src/ui';
+import { Col, Row } from 'src/ui';
 import SVG from 'utils/svg-wrap';
+import { getLang } from 'src/utils';
 
 // Styles
 import './Transaction.less';
 
-function Transaction({ currency, type, bank, number, transactionsExists }) {
-  const isReplenishment = type === 'replenishment';
-
+function Transaction({
+  type,
+  description,
+  transactionsExists,
+  number,
+  isIncrement,
+}) {
   return (
     <Row
       justifyContent="space-between"
@@ -19,14 +24,20 @@ function Transaction({ currency, type, bank, number, transactionsExists }) {
     >
       <Col>
         <Row justifyContent="space-between" alignItems="center">
-          {isReplenishment ? (
+          {type === 'Trade' && (
+            <SVG
+              src={require(`src/asset/icons/cabinet/sidebar/exchange.svg`)}
+            />
+          )}
+          {type === 'Replenishment' && (
             <SVG src={require('src/asset/icons/cabinet/replenishment.svg')} />
-          ) : (
+          )}
+          {type === 'Withdrawal' && (
             <SVG src={require('src/asset/icons/cabinet/withdrawal.svg')} />
           )}
           <Col>
-            <p>{isReplenishment ? 'Replenishment' : 'Withdrawal'}</p>
-            {isReplenishment && bank && <p>{bank}</p>}
+            <p>{getLang(`dapp_currency_transaction_${type.toLowerCase()}`)}</p>
+            {description && <p>{description}</p>}
           </Col>
         </Row>
       </Col>
@@ -34,8 +45,8 @@ function Transaction({ currency, type, bank, number, transactionsExists }) {
         <Row alignItems="center">
           {transactionsExists ? (
             <div className="Currency__Transaction__amount">
-              +&nbsp;
-              <NumberFormat number={number} currency={currency.abbr} />
+              {isIncrement ? '+' : '-'}&nbsp;
+              {number}
             </div>
           ) : (
             <div className="Currency__Transaction__amount-empty">
@@ -52,19 +63,19 @@ function Transaction({ currency, type, bank, number, transactionsExists }) {
 }
 
 Transaction.propTypes = {
-  currency: PropTypes.object,
-  type: PropTypes.string,
-  bank: PropTypes.string,
-  number: PropTypes.number,
+  type: PropTypes.oneOf('Replenishment', 'Withdrawal', 'Trade'),
+  description: PropTypes.oneOfType(PropTypes.string, PropTypes.element),
+  number: PropTypes.oneOfType(PropTypes.number, PropTypes.element),
   transactionsExists: PropTypes.bool,
+  isIncrement: PropTypes.bool,
 };
 
 Transaction.defaultProps = {
-  currency: {},
   type: 'replenishment',
-  bank: '',
+  description: '',
   number: 0,
   transactionsExists: true,
+  isIncrement: true,
 };
 
 export default Transaction;
