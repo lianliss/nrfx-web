@@ -147,7 +147,10 @@ function Transactions({ currency }) {
                         isIncrement={transaction.isIncrement}
                         number={
                           <NumberFormat
-                            number={transaction.currencyAmount}
+                            number={getFineNumber(
+                              transaction.currencyAmount,
+                              5
+                            )}
                             currency={adaptive ? '' : currency.symbol}
                           />
                         }
