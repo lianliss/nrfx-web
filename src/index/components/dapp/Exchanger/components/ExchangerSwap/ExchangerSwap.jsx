@@ -49,7 +49,7 @@ function ExchangerSwap(props) {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
     exchangerRouter, getTokenContract,
-    accountAddress
+    accountAddress,
   } = context;
   const {
     fiats, fiat, coins, coin,
