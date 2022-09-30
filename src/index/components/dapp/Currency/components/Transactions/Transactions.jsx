@@ -16,6 +16,7 @@ function Transactions({ currency }) {
   const [transactionsHistory, setTransactionsHistory] = React.useState([]);
   const { accountAddress } = React.useContext(Web3Context);
   const fixedNumber = adaptive ? 2 : 5;
+
   const TradeDescription = ({ token0, token1, amount0, amount1 }) => (
     <>
       <NumberFormat
