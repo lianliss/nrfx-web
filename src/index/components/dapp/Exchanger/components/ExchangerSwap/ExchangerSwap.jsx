@@ -51,6 +51,7 @@ function ExchangerSwap(props) {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
     exchangerRouter, getTokenContract,
+    getTokenBalance
   } = context;
   const {
     fiats, fiat, coins, coin,
@@ -59,6 +60,7 @@ function ExchangerSwap(props) {
   } = props;
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const [isSelectCoin, setIsSelectCoin] = React.useState(false);
+  const [defaultTokensSetted, setDefaultTokensSetted] = React.useState(false);
 
   // Symbols
   const fiatSymbol = _.get(fiat, 'symbol', '');
@@ -153,21 +155,58 @@ function ExchangerSwap(props) {
   React.useEffect(() => {
     const { params } = route;
 
-    if (fiatsLoaded) {
-      fiats.forEach((fiat) => {
-        if (fiat.symbol.toLowerCase() === params.currency.toLowerCase()) {
-          handleFiatChange(fiat);
-        }
-      });
-    }
-
     if (isConnected) {
-      const paramsCoin = params.coin && params.coin.toLowerCase();
-      coins.forEach((coin) => {
-        if (coin.symbol.toLowerCase() === paramsCoin) {
-          handleCoinChange(coin);
-        }
-      });
+      // const allCoins = [...fiats, ...coins];
+
+      // if(params.currency !== fiat.symbol) {
+      //   let currencyFiat = fiats.find((item) => {
+      //     return item.symbol.toLowerCase() === params.currency.toLowerCase()
+      //   });
+      //   currencyFiat = currencyFiat || coins.filter((item) => {
+      //     return item.symbol.toLowerCase() === params.currency.toLowerCase()
+      //   }).map(item => {
+      //     getTokenBalance(item.address)
+      //   });
+
+      //   console.log(currencyFiat)
+      //   handleFiatChange(item);
+      // }
+
+      // if (params.coin !== coin.symbol) {
+      //   allCoins.forEach((item) => {
+      //     if (item.symbol.toLowerCase() === params.coin.toLowerCase()) {
+      //       handleCoinChange(item);
+      //     }
+      //   });
+
+      //   const currencyIsFine = params.currency && params.currency === fiat.symbol
+      //   const coinIsFine = params.coin && params.coin === coin.symbol
+      //   if (
+      //     params.currency &&
+      //     params.currency === fiat.symbol &&
+      //     params.coin &&
+      //     params.coin === coin.symbol
+      //   ) {
+      //     setDefaultTokensSetted(true);
+      //   }
+      // }
+
+      if (fiatsLoaded) {
+        fiats.forEach((fiat) => {
+          if (fiat.symbol.toLowerCase() === params.currency.toLowerCase()) {
+            handleFiatChange(fiat);
+          }
+        });
+      }
+  
+      if (isConnected) {
+        const paramsCoin = params.coin && params.coin.toLowerCase();
+        coins.forEach((coin) => {
+          if (coin.symbol.toLowerCase() === paramsCoin) {
+            handleCoinChange(coin);
+          }
+        });
+      }
     }
   }, [fiatsLoaded, isConnected]);
 
