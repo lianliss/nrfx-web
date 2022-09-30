@@ -23,7 +23,7 @@ function Transaction({
       className="Currency__Transaction"
     >
       <Col>
-        <Row justifyContent="space-between" alignItems="center">
+        <Row justifyContent="stretch" alignItems="center">
           {type === 'Trade' && (
             <SVG
               src={require(`src/asset/icons/cabinet/sidebar/exchange.svg`)}
