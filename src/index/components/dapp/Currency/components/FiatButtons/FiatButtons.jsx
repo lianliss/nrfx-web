@@ -80,7 +80,6 @@ function FiatButtons({ currency }) {
           onClick={() => {
             router.navigate(PAGES.DAPP_EXCHANGE, {
               coin: currency.symbol,
-              currency: 'USDT'
             });
           }}
         >
@@ -92,7 +91,7 @@ function FiatButtons({ currency }) {
           shadow
           onClick={() => {
             router.navigate(PAGES.DAPP_EXCHANGE, {
-              fiat: currency.symbol,
+              currency: currency.symbol,
             });
           }}
         >

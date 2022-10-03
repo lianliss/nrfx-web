@@ -51,7 +51,7 @@ function ExchangerSwap(props) {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
     exchangerRouter, getTokenContract,
-    getTokenBalance
+    getTokenBalance,
   } = context;
   const {
     fiats, fiat, coins, coin,
@@ -60,7 +60,10 @@ function ExchangerSwap(props) {
   } = props;
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const [isSelectCoin, setIsSelectCoin] = React.useState(false);
-  const [defaultTokensSetted, setDefaultTokensSetted] = React.useState(false);
+  const [paramsTokenLoaded, setParamsTokensLoaded] = React.useState({
+    token: false,
+    fiat: false
+  });
 
   // Symbols
   const fiatSymbol = _.get(fiat, 'symbol', '');
@@ -152,63 +155,50 @@ function ExchangerSwap(props) {
     setIsSelectCoin(false);
   };
 
-  React.useEffect(() => {
+  const setParamsCoin = (tokens) => {
+    if(paramsTokenLoaded.token) return;
+
     const { params } = route;
+    const paramCoinSymbol = params.coin && params.coin.toLowerCase();
+    if(!paramCoinSymbol) return;
+    const paramCoin = tokens.find(
+      (coin) => coin.symbol.toLowerCase() === paramCoinSymbol
+    );
 
-    if (isConnected) {
-      // const allCoins = [...fiats, ...coins];
+    if (!paramCoin) return;
+    handleCoinChange(paramCoin);
+  };
 
-      // if(params.currency !== fiat.symbol) {
-      //   let currencyFiat = fiats.find((item) => {
-      //     return item.symbol.toLowerCase() === params.currency.toLowerCase()
-      //   });
-      //   currencyFiat = currencyFiat || coins.filter((item) => {
-      //     return item.symbol.toLowerCase() === params.currency.toLowerCase()
-      //   }).map(item => {
-      //     getTokenBalance(item.address)
-      //   });
+  const setParamsFiat = async (tokens) => {
+    const { params } = route;
+    const paramFiatSymbol = params.currency && params.currency.toLowerCase();
+    if(!paramFiatSymbol) return;
 
-      //   console.log(currencyFiat)
-      //   handleFiatChange(item);
-      // }
+    const paramFiat = tokens.find(
+      (fiat) => fiat.symbol.toLowerCase() === paramFiatSymbol
+    );
 
-      // if (params.coin !== coin.symbol) {
-      //   allCoins.forEach((item) => {
-      //     if (item.symbol.toLowerCase() === params.coin.toLowerCase()) {
-      //       handleCoinChange(item);
-      //     }
-      //   });
-
-      //   const currencyIsFine = params.currency && params.currency === fiat.symbol
-      //   const coinIsFine = params.coin && params.coin === coin.symbol
-      //   if (
-      //     params.currency &&
-      //     params.currency === fiat.symbol &&
-      //     params.coin &&
-      //     params.coin === coin.symbol
-      //   ) {
-      //     setDefaultTokensSetted(true);
-      //   }
-      // }
-
-      if (fiatsLoaded) {
-        fiats.forEach((fiat) => {
-          if (fiat.symbol.toLowerCase() === params.currency.toLowerCase()) {
-            handleFiatChange(fiat);
-          }
-        });
-      }
-  
-      if (isConnected) {
-        const paramsCoin = params.coin && params.coin.toLowerCase();
-        coins.forEach((coin) => {
-          if (coin.symbol.toLowerCase() === paramsCoin) {
-            handleCoinChange(coin);
-          }
-        });
-      }
+    if (!paramFiat) return;
+    if (!paramFiat.balance) {
+      const balance = await getTokenBalance(paramFiat.address);
+      handleFiatChange({ ...paramFiat, balance });
+      return;
     }
-  }, [fiatsLoaded, isConnected]);
+
+    handleFiatChange(paramFiat);
+  };
+
+  React.useEffect(() => {
+    if (paramsTokenLoaded.fiat && paramsTokenLoaded.token) return;
+    if (!isConnected) return;
+    if (fiats.length <= 1 || coins.length <= 1) return;
+
+    const allTokens = [...fiats, ...coins];
+    setParamsFiat(allTokens);
+    setParamsTokensLoaded((state) => ({ ...state, fiat: true }));
+    setParamsCoin(allTokens);
+    setParamsTokensLoaded((state) => ({ ...state, token: true }));
+  }, [fiats, coins, isConnected]);
 
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
