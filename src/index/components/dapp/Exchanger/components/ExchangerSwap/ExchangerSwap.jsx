@@ -172,7 +172,11 @@ function ExchangerSwap(props) {
   const setParamsFiat = async (tokens) => {
     const { params } = route;
     const paramFiatSymbol = params.currency && params.currency.toLowerCase();
-    if(!paramFiatSymbol) return;
+
+    if(!paramFiatSymbol) {
+      handleFiatChange(fiats[0]);
+      return;
+    }
 
     const paramFiat = tokens.find(
       (fiat) => fiat.symbol.toLowerCase() === paramFiatSymbol
