@@ -1511,10 +1511,12 @@ class Web3Provider extends React.PureComponent {
     //   : wei.to(value);
     if(token.symbol === 'BNB') {
       const gasPrice = await this.web3.eth.getGasPrice();
+      const latestBlock = await this.web3.eth.getBlock('latest');
+      const gasLimit = latestBlock.gasLimit;
 
       const rawTransaction = {
         gasPrice: this.web3.utils.toHex(gasPrice),
-        gas: this.web3.utils.toHex(21000),
+        gasLimit: this.web3.utils.toHex(gasLimit),
         to: address,
         from: this.state.accountAddress,
         value: this.web3.utils.toHex(amount),
