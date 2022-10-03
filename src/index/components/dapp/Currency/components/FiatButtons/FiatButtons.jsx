@@ -52,10 +52,6 @@ function FiatButtons({ currency }) {
           shadow
           onClick={() => openModal('deposit_balance')}
         >
-          <SVG
-            src={require('src/asset/icons/cabinet/buy.svg')}
-            className="white-icon"
-          />
           {getLang('dapp_global_deposit')}
         </Button>
         <Button
@@ -83,7 +79,6 @@ function FiatButtons({ currency }) {
             });
           }}
         >
-          <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
           {getLang('global_buy')}
         </Button>
         <Button
@@ -95,7 +90,6 @@ function FiatButtons({ currency }) {
             });
           }}
         >
-          <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
           {getLang('global_sell')}
         </Button>
       </div>
