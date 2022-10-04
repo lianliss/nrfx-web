@@ -23,12 +23,15 @@ import BalancesBlock from './components/BalancesBlock/BalancesBlock';
 import NftsBlock from './components/NftsBlock/NftsBlock';
 import { getLang } from 'src/utils';
 import { web3RatesSelector } from 'src/selectors';
+import { marketCoins } from 'src/services/coingeckoApi';
+import { setWalletTokens } from 'src/actions/dapp/wallet';
 
 function WalletsExists() {
   // Design
   const { router } = useRoute();
+  const dispatch = useDispatch();
   const adaptive = useSelector((store) => store.default.adaptive);
-  const rates = useSelector(web3RatesSelector)
+  const rates = useSelector(web3RatesSelector);
 
   // Tabs
   const [switchTab, setSwitchTab] = React.useState('tokens');
@@ -37,17 +40,42 @@ function WalletsExists() {
   const isNfts = switchTab === 'nfts' || !adaptive;
 
   // Main
-  const { accountAddress, balances, loadAccountBalances, updateFiats } =
-    React.useContext(Web3Context);
-
-  const { tokens, fiats } = balances;
+  const {
+    accountAddress,
+    isConnected,
+    balances,
+    loadAccountBalances,
+    updateFiats,
+    tokens,
+  } = React.useContext(Web3Context);
 
   React.useEffect(() => {
     if (!accountAddress) return;
 
     updateFiats(null, rates);
-    loadAccountBalances(accountAddress);
+    // loadAccountBalances(accountAddress);
   }, [accountAddress]);
+
+  React.useEffect(() => {
+    if (!isConnected) return;
+
+    setCoins();
+  }, [isConnected]);
+
+  const setCoins = async () => {
+    const topCoingeckoCoins = await marketCoins();
+    const topCoinsSymbols = topCoingeckoCoins.map((coin) => coin.symbol);
+    const pancakeTokens = tokens;
+
+    const topCoins = pancakeTokens.filter((token) => {
+      return topCoinsSymbols.find(
+        (coinSymbol) => token.symbol.toLowerCase() === coinSymbol.toLowerCase()
+      );
+    });
+
+    
+    dispatch(setWalletTokens([pancakeTokens[0], ...topCoins]));
+  };
 
   return (
     <div className="WalletsExists">
@@ -87,7 +115,7 @@ function WalletsExists() {
         <div className="WalletsExists__content WalletsExists__row">
           {isTokens && (
             <BalancesBlock
-              balances={tokens}
+              balances={balances.tokens}
               type="tokens"
               title={getLang('dapp_global_tokens')}
               adaptive={adaptive}
@@ -95,7 +123,7 @@ function WalletsExists() {
           )}
           {isFiat && (
             <BalancesBlock
-              balances={fiats}
+              balances={balances.fiats}
               type="fiats"
               title={getLang('dapp_global_fiats')}
               adaptive={adaptive}
