@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
 import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import wei from 'utils/wei';
@@ -18,6 +18,7 @@ import limits from 'src/index/constants/fiats';
 import * as toast from "src/actions/toasts";
 import CabinetModal from '../../../Modals/CabinetModal/CabinetModal';
 import router from 'src/router';
+import { setSwap } from 'src/actions/dapp/swap';
 import * as PAGES from 'src/index/constants/pages';
 
 // Styles
@@ -40,6 +41,7 @@ function getTokenPrice(token) {
 }
 
 function ExchangerSwap(props) {
+  const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
   const rates = useSelector(web3RatesSelector);
   const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
@@ -73,7 +75,9 @@ function ExchangerSwap(props) {
   const coinPrice = getTokenPrice(coin);
 
   const limits = props.limits.find(l => l.coin === coinSymbol);
-  const minCoinAmount = Math.max(_.get(limits, 'min', 0), 20 / coinPrice);
+  const minCoinAmount = isFirstFiat && isSecondFiat
+    ? 50
+    : Math.max(_.get(limits, 'min', 0), 20 / coinPrice);
   const maxCoinAmount = _.get(limits, 'max', Infinity);
 
   // Fiat input value
@@ -277,6 +281,7 @@ function ExchangerSwap(props) {
           ? <Button className=""
                     state={isProcessing ? 'loading' : ''}
                     onClick={() => {
+                      dispatch(setSwap(fiat, coin));
                       router.navigate(PAGES.DAPP_SWAP);
                     }}>
             {getLang('dapp_exchanger_exchange_on_dex_button')}
@@ -300,12 +305,11 @@ function ExchangerSwap(props) {
             selected={fiat}
             isAdaptive={isAdaptive}
             {...context}
+            defaultList="fiats"
             tokens={[
-              ...fiats,
               ...coins,
-            ].filter(t => t.symbol !== coinSymbol)}
-            disableSwitcher
-            disableCommonBases
+            ].filter(t => t.symbol !== coinSymbol && t.symbol !== 'BNB')}
+            fiats={fiats}
             disableName
             loadAccountBalances={loadAccountBalances}
             size="small"
@@ -321,10 +325,9 @@ function ExchangerSwap(props) {
           isAdaptive={isAdaptive}
           {...context}
           tokens={[
-            ...fiats,
             ...coins,
           ].filter(t => t.symbol !== fiatSymbol)}
-          disableSwitcher
+          fiats={fiats}
           loadAccountBalances={loadAccountBalances}
         />
       </CabinetModal>
