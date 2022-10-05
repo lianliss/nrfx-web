@@ -37,6 +37,7 @@ function WalletsExists() {
     updateFiats,
     tokens,
   } = React.useContext(Web3Context);
+  const fineTokens = tokens.filter((t) => t.balance && t.balance !== '0');
 
   React.useEffect(() => {
     if (!accountAddress) return;
@@ -108,7 +109,7 @@ function WalletsExists() {
         <div className="WalletsExists__content WalletsExists__row">
           {isTokens && (
             <BalancesBlock
-              balances={balances.tokens}
+              balances={fineTokens}
               type="tokens"
               title={getLang('dapp_global_tokens')}
               adaptive={adaptive}
