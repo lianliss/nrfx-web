@@ -1,35 +1,23 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRoute } from 'react-router5';
 
 // Components
 import './WalletsExists.less';
 import WalletsHeader from '../WalletsHeader/WalletsHeader';
-import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
-import CabinetScrollBlock from '../../../CabinetScrollBlock/CabinetScrollBlock';
-import WalletsList from '../../../WalletsList/WalletsList';
-import WalletsListItem from '../../../WalletsList/components/WalletsListItem/WalletsListItem';
-import WalletsNFTCard from '../WalletsNFTCard/WalletsNFTCard';
-import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
-import { RateIndicator, SwitchTabs } from 'src/ui';
-import SVG from 'utils/svg-wrap';
+import { SwitchTabs } from 'src/ui';
 
 // Utils
-import * as PAGES from 'src/index/constants/pages';
-import { testFiats } from './testItems.js';
-import currencies from 'src/currencies';
 import { Web3Context } from 'src/services/web3Provider';
 import BalancesBlock from './components/BalancesBlock/BalancesBlock';
 import NftsBlock from './components/NftsBlock/NftsBlock';
 import { getLang } from 'src/utils';
 import { web3RatesSelector } from 'src/selectors';
 import { marketCoins } from 'src/services/coingeckoApi';
-import { setWalletTokens } from 'src/actions/dapp/wallet';
 
 function WalletsExists() {
   // Design
   const { router } = useRoute();
-  const dispatch = useDispatch();
   const adaptive = useSelector((store) => store.default.adaptive);
   const rates = useSelector(web3RatesSelector);
 
@@ -41,8 +29,9 @@ function WalletsExists() {
 
   // Main
   const {
+    connector,
     accountAddress,
-    isConnected,
+    chainId,
     balances,
     loadAccountBalances,
     updateFiats,
@@ -53,19 +42,19 @@ function WalletsExists() {
     if (!accountAddress) return;
 
     updateFiats(null, rates);
-    // loadAccountBalances(accountAddress);
+
+    if (connector === 'bsc') {
+      setCoins();
+      return;
+    }
+
+    loadAccountBalances(accountAddress, null, false, true);
   }, [accountAddress]);
-
-  React.useEffect(() => {
-    if (!isConnected) return;
-
-    setCoins();
-  }, [isConnected]);
 
   const setCoins = async () => {
     const topCoingeckoCoins = await marketCoins();
     const topCoinsSymbols = topCoingeckoCoins.map((coin) => coin.symbol);
-    const pancakeTokens = tokens;
+    const pancakeTokens = tokens.filter((t) => t.chainId === chainId);
 
     const topCoins = pancakeTokens.filter((token) => {
       return topCoinsSymbols.find(
@@ -73,8 +62,12 @@ function WalletsExists() {
       );
     });
 
-    
-    dispatch(setWalletTokens([pancakeTokens[0], ...topCoins]));
+    // NRFX + other tokens.
+    const fineCoins = topCoins.find((t) => t.symbol === 'NRFX')
+      ? topCoins
+      : [pancakeTokens[0], ...topCoins];
+
+    loadAccountBalances(accountAddress, fineCoins, false, true);
   };
 
   return (
