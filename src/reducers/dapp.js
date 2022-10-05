@@ -1,6 +1,9 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
+  wallet: {
+    tokens: [],
+  },
   swap: {
     from: { symbol: 'NRFX' },
     to: { symbol: 'USDT' },
@@ -35,6 +38,14 @@ function reduce(state = initialState, action = {}) {
           ...payload,
         },
       };
+    case actionTypes.DAPP_SET_WALLET_TOKENS:
+      return {
+        ...state,
+        wallet: {
+          ...state.wallet,
+          tokens: payload,
+        }
+      }
     default:
       return state;
   }

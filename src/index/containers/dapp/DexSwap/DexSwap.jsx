@@ -398,6 +398,8 @@ class DexSwap extends React.PureComponent {
           token1: pair[1].symbol,
           amount0: Number(trade.inputAmount.asFraction.toFixed(10)),
           amount1: Number(trade.outputAmount.asFraction.toFixed(10)),
+          date: new Date(),
+          accountAddress: this.context.accountAddress
         },
         ...transactions,
       ];

@@ -34,6 +34,7 @@ Row.propTypes = {
     'flex-end',
     'space-between',
     'space-around',
+    'stretch'
   ]),
   wrap: PropTypes.bool,
   onClick: PropTypes.func,
