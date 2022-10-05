@@ -26,6 +26,7 @@ Col.propTypes = {
     'flex-end',
     'space-between',
     'space-around',
+    'stretch'
   ]),
   style: PropTypes.object,
 };
