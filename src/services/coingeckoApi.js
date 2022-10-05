@@ -15,6 +15,19 @@ export const api = {
         ],
       },
     },
+    coins: {
+      markets: {
+        path: 'coins/markets',
+        params: [
+          'vs_currency',
+          'category',
+          'order',
+          'per_page',
+          'page',
+          'sparkline',
+        ],
+      },
+    },
   },
 };
 
@@ -82,4 +95,42 @@ export const simpleTokenPrice = async (
   });
 
   return response;
+};
+
+/**
+ * Fetch coins from market
+ * @param params {object}
+ * @param vs_currency {string} - Fiat
+ * @param category {string} - market name,
+ * @param order {string} - order of,
+ * @param per_page {number}
+ * @param page {number}
+ * @param sparkline {bool}
+ * @returns {Promise.<object>}
+ */
+export const marketCoins = async (
+  vs_currency = 'usd',
+  category = 'binance-smart-chain',
+  order = 'market_cap_desc',
+  per_page = 50,
+  page = 1,
+  sparkline = false
+) => {
+  const path = api.paths.coins.markets.path;
+  const params = { vs_currency, category, order, per_page, page, sparkline };
+
+  try {
+    const firstHalf = await coingeckoCall(path, {
+      ...params,
+    });
+    const secondHalf = await coingeckoCall(path, {
+      ...params,
+      page: 2,
+    });
+
+    return [...firstHalf, ...secondHalf];
+  } catch (error) {
+    console.log('[marketCoins]', error);
+    return [];
+  }
 };

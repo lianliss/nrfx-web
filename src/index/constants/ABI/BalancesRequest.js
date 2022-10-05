@@ -1,0 +1,1 @@
+module.exports = [{"inputs":[{"internalType":"address","name":"_address","type":"address"},{"internalType":"address[]","name":"tokens","type":"address[]"}],"name":"getBalances","outputs":[{"internalType":"uint256[256]","name":"","type":"uint256[256]"}],"stateMutability":"view","type":"function"}];

@@ -310,9 +310,7 @@ function ExchangerSwap(props) {
               ...coins,
             ].filter(t => t.symbol !== coinSymbol && t.symbol !== 'BNB')}
             fiats={fiats}
-            disableName
             loadAccountBalances={loadAccountBalances}
-            size="small"
           />
         </CabinetModal>
       }
