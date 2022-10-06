@@ -11,6 +11,7 @@ import * as actions from 'src/actions';
 import { adaptiveSelector } from 'src/selectors';
 import { getLang } from 'src/utils';
 import {Web3Context} from 'src/services/web3Provider';
+import * as toasts from 'src/actions/toasts';
 
 // Styles
 import './WithdrawalDetails.less';
@@ -26,15 +27,6 @@ function WithdrawalDetails(props) {
   const [lastName, setLastName] = React.useState('');
   const phoneInputRef = React.useRef(null);
 
-  const Label = ({ title, children }) => {
-    return (
-      <label className="DepositModal__WithdrawalDetails__label">
-        <span>{title}</span>
-        {children}
-      </label>
-    );
-  };
-
   const backHandler = () => {
     actions.openModal('deposit_choose_bank', {
       currency,
@@ -44,6 +36,14 @@ function WithdrawalDetails(props) {
   };
 
   const confirmHandler = () => {
+    if (!_.get(phone, 'length', '')
+      || !_.get(accountNumber, 'length', '')
+      || !_.get(name, 'length', '')
+      || !_.get(lastName, 'length', '')) {
+      toasts.error(getLang('dapp_modal_details_empty'));
+      return;
+    }
+
     const accountHolder = `${name} ${lastName}`;
     addWithdrawal({
       accountHolder,
