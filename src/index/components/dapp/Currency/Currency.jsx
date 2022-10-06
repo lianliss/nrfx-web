@@ -23,6 +23,7 @@ import './Currency.less';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import ShowPageOn from '../ShowPageOn/ShowPageOn';
 import Transactions from './components/Transactions/Transactions';
+import FiatButtons from './components/FiatButtons/FiatButtons';
 
 function Currency() {
   const dispatch = useDispatch();
@@ -151,18 +152,8 @@ function Currency() {
 
   // Render components
   const LoginedButtons = () =>
-    currencyIsFiat ? (
-      <Button
-        type="lightBlue"
-        shadow
-        onClick={() => openModal('deposit_balance')}
-      >
-        <SVG
-          src={require('src/asset/icons/cabinet/buy.svg')}
-          className="white-icon"
-        />
-        {getLang('dapp_global_deposit')}
-      </Button>
+    isFiat(paramsCurrency) ? (
+      <FiatButtons currency={currency} />
     ) : (
       <>
         <div className="col">
