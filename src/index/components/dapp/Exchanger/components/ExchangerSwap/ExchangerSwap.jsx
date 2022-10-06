@@ -75,9 +75,12 @@ function ExchangerSwap(props) {
   const coinPrice = getTokenPrice(coin);
 
   const limits = props.limits.find(l => l.coin === coinSymbol);
-  const minCoinAmount = isFirstFiat && isSecondFiat
-    ? 50
-    : Math.max(_.get(limits, 'min', 0), 20 / coinPrice);
+  const minCoinAmount = Math.max(
+    _.get(limits, 'min', 0),
+    isFirstFiat && isSecondFiat
+      ? 50 / coinPrice
+      : 20 / coinPrice
+  );
   const maxCoinAmount = _.get(limits, 'max', Infinity);
 
   // Fiat input value
