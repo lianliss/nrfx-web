@@ -386,7 +386,7 @@ class Web3Provider extends React.PureComponent {
 
   ethereumUnsubscribe = () => {
     // Other connectors have not removeListener.
-    if (this.state.connector === 'bsc') return;
+    if (!this.ethereum.isMetaMask) return;
 
     this.ethereum.removeListener('connect', this.onConnect.bind(this));
     this.ethereum.removeListener('accountsChanged', this.onAccountsChanged.bind(this));
@@ -416,9 +416,9 @@ class Web3Provider extends React.PureComponent {
         : this.rpcProviderUrl.mainnet;
       
       // Provider of connector.
-      const provider = this.state.connector === 'bsc'
-        ? currentChainRPC
-        : this.ethereum;
+      const provider = this.ethereum.isMetaMask
+        ? this.ethereum
+        : currentChainRPC;
       this.web3 = new Web3(provider);
       this.setChain(chainIdNumber);
 
@@ -757,7 +757,7 @@ class Web3Provider extends React.PureComponent {
   ) {
     // Only MetaMask have a good provider
     // for send more requests on one time.
-    if (this.state.connector === 'bsc' && !required) return;
+    if (!_.get(window, 'ethereum.isMetaMask') && !required) return;
 
     try {
       // Set positive balance tokens
