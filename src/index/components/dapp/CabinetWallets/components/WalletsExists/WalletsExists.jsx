@@ -1,34 +1,25 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useRoute } from 'react-router5';
 
 // Components
 import './WalletsExists.less';
 import WalletsHeader from '../WalletsHeader/WalletsHeader';
-import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
-import CabinetScrollBlock from '../../../CabinetScrollBlock/CabinetScrollBlock';
-import WalletsList from '../../../WalletsList/WalletsList';
-import WalletsListItem from '../../../WalletsList/components/WalletsListItem/WalletsListItem';
-import WalletsNFTCard from '../WalletsNFTCard/WalletsNFTCard';
-import OpenPopupLink from '../../../OpenPopupLink/OpenPopupLink';
-import { RateIndicator, SwitchTabs } from 'src/ui';
-import SVG from 'utils/svg-wrap';
+import { SwitchTabs } from 'src/ui';
 
 // Utils
-import * as PAGES from 'src/index/constants/pages';
-import { testFiats } from './testItems.js';
-import currencies from 'src/currencies';
 import { Web3Context } from 'src/services/web3Provider';
 import BalancesBlock from './components/BalancesBlock/BalancesBlock';
 import NftsBlock from './components/NftsBlock/NftsBlock';
 import { getLang } from 'src/utils';
 import { web3RatesSelector } from 'src/selectors';
+import { marketCoins } from 'src/services/coingeckoApi';
 
 function WalletsExists() {
   // Design
   const { router } = useRoute();
   const adaptive = useSelector((store) => store.default.adaptive);
-  const rates = useSelector(web3RatesSelector)
+  const rates = useSelector(web3RatesSelector);
 
   // Tabs
   const [switchTab, setSwitchTab] = React.useState('tokens');
@@ -37,17 +28,48 @@ function WalletsExists() {
   const isNfts = switchTab === 'nfts' || !adaptive;
 
   // Main
-  const { accountAddress, balances, loadAccountBalances, updateFiats } =
-    React.useContext(Web3Context);
-
-  const { tokens, fiats } = balances;
+  const {
+    connector,
+    accountAddress,
+    chainId,
+    balances,
+    loadAccountBalances,
+    updateFiats,
+    tokens,
+  } = React.useContext(Web3Context);
+  const fineTokens = tokens.filter((t) => t.balance && t.balance !== '0');
 
   React.useEffect(() => {
     if (!accountAddress) return;
 
     updateFiats(null, rates);
-    loadAccountBalances(accountAddress);
+
+    if (connector === 'bsc') {
+      setCoins();
+      return;
+    }
+
+    loadAccountBalances(accountAddress, null, false, true);
   }, [accountAddress]);
+
+  const setCoins = async () => {
+    const topCoingeckoCoins = await marketCoins();
+    const topCoinsSymbols = topCoingeckoCoins.map((coin) => coin.symbol);
+    const pancakeTokens = tokens.filter((t) => t.chainId === chainId);
+
+    const topCoins = pancakeTokens.filter((token) => {
+      return topCoinsSymbols.find(
+        (coinSymbol) => token.symbol.toLowerCase() === coinSymbol.toLowerCase()
+      );
+    });
+
+    // NRFX + other tokens.
+    const fineCoins = topCoins.find((t) => t.symbol === 'NRFX')
+      ? topCoins
+      : [pancakeTokens[0], ...topCoins];
+
+    loadAccountBalances(accountAddress, fineCoins, false, true);
+  };
 
   return (
     <div className="WalletsExists">
@@ -87,7 +109,7 @@ function WalletsExists() {
         <div className="WalletsExists__content WalletsExists__row">
           {isTokens && (
             <BalancesBlock
-              balances={tokens}
+              balances={fineTokens}
               type="tokens"
               title={getLang('dapp_global_tokens')}
               adaptive={adaptive}
@@ -95,7 +117,7 @@ function WalletsExists() {
           )}
           {isFiat && (
             <BalancesBlock
-              balances={fiats}
+              balances={balances.fiats}
               type="fiats"
               title={getLang('dapp_global_fiats')}
               adaptive={adaptive}

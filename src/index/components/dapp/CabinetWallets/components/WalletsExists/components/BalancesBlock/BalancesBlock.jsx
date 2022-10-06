@@ -31,6 +31,11 @@ function BalancesBlock({ balances, type, title, adaptive }) {
           {balances.map((balanceItem, key) => {
             const currency = balanceItem.symbol.toLowerCase();
             const priceDifference = null;
+            const rawBalance =
+              type === 'tokens'
+                ? wei.from(balanceItem.balance)
+                : balanceItem.balance;
+            const balance = Number(Number(rawBalance).toFixed(5));
             const icon = balanceItem.logoURI;
 
             return (
@@ -49,11 +54,7 @@ function BalancesBlock({ balances, type, title, adaptive }) {
                 ]}
                 controls={
                   <TokenItemControls
-                    amount={
-                      type === 'tokens'
-                        ? wei.from(balanceItem.balance).toFixed(2)
-                        : balanceItem.balance
-                    }
+                    amount={balance}
                     currency={currency}
                     price={balanceItem.price}
                   />

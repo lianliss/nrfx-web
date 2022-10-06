@@ -658,6 +658,29 @@ class Web3Provider extends React.PureComponent {
   }
 
   /**
+   * Returns tokens balances.
+   * @param tokenContractAddresses {address[]} - token contract addresses array.
+   * @returns {Promise.<array>}
+   */
+  async getTokensBalances(contractAddresses) {
+    try {
+      const contract = await new this.web3.eth.Contract(
+        require('src/index/constants/ABI/BalancesRequest'),
+        '0xd98B8A68254aEB7d3BdF1DC53936BE2718292A03'
+      );
+
+      const results = await contract.methods
+      .getBalances(this.state.accountAddress, contractAddresses)
+      .call();
+
+      return results;
+    } catch (error) {
+      console.log('[getTokensBalances]', error);
+      return [];
+    }
+  }
+
+  /**
    * Returns LP token price in USDT
    * @param pairAddress {string} - address of LP token
    * @param isForce {bool} - is force update
@@ -721,16 +744,24 @@ class Web3Provider extends React.PureComponent {
   /**
    * Preload all tokens balances for current account
    * @param accountAddress
+   * @param choosenTokens {array}
+   * @param loadAgain {bool} - loadbalances when balances getted.
+   * @param required {bool} - loadbalances is required for another connectors.
    * @returns {Promise.<void>}
    */
-  async loadAccountBalances(accountAddress = this.state.accountAddress) {
+  async loadAccountBalances(
+    accountAddress = this.state.accountAddress,
+    choosenTokens = null,
+    loadAgain = false,
+    required = false,
+  ) {
     // Only MetaMask have a good provider
     // for send more requests on one time.
-    if(!_.get(window, 'ethereum.isMetaMask')) return;
+    if (!_.get(window, 'ethereum.isMetaMask') && !required) return;
 
     try {
       // Set positive balance tokens
-      this.setBalances(this.state.tokens.filter(t => t.balance > 0));
+      this.setBalances(this.state.tokens.filter((t) => t.balance > 0));
 
       if (!this.state.isConnected) return;
       // Stop additional loads
@@ -743,26 +774,44 @@ class Web3Provider extends React.PureComponent {
       this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
-      const chunks = _.chunk(
-        this.state.tokens.filter(t => t.chainId === this.state.chainId),
-        64);
+      const tokens = choosenTokens
+        ? choosenTokens.filter(
+            (t) => t.chainId === this.state.chainId && t.address
+          )
+        : this.state.tokens.filter(
+            (t) => t.chainId === this.state.chainId && t.address
+          );
+
+      if (!loadAgain) {
+        const tokensWithBalance = tokens.filter((t) => t.balance);
+
+        if (tokensWithBalance.length === tokens.length) {
+          return 'loaded';
+        }
+      }
+
+      await this.setBNBBalance();
+
+      const chunksNumber = tokens.length > 256 ? tokens.length / 256 : 1;
+      const chunks = _.chunk(tokens, chunksNumber);
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
         // Get request from the blockchain
-        const results = await Promise.allSettled(chunk.map(token => this.getTokenBalance(token.address)));
+        const results = await this.getTokensBalances(
+          chunk.map((t) => t.address)
+        );
 
         // Process the results
-        this.setState(state => {
-          const newState = {...state};
-
+        this.setState((state) => {
+          const newState = { ...state };
           // Process each token
           chunk.map((token, index) => {
             const key = this.getTokenBalanceKey(token, accountAddress);
             const result = results[index];
-            const balance = result.status === 'fulfilled' && typeof result.value !== 'undefined'
-              ? result.value
-              : "0";
-            const tokenAddress = token.address ? token.address.toLowerCase() : token.address;
+            const balance = typeof result !== 'undefined' ? result : '0';
+            const tokenAddress = token.address
+              ? token.address.toLowerCase()
+              : token.address;
 
             // Apply a new balance to the state
             newState[key] = balance;
@@ -771,7 +820,6 @@ class Web3Provider extends React.PureComponent {
             // Get token price for non-zero balance
             if (balance !== "0") {
               this.getTokenUSDPrice(token).then(price => {
-
                 // Save to the state
                 this.setState(state => {
                   const tokenState = state.tokens
@@ -799,6 +847,53 @@ class Web3Provider extends React.PureComponent {
   }
 
   fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
+  
+  // Set BNB balance to balances and tokens.
+  async setBNBBalance() {
+    try {
+      // Get BNB balance
+      const bnbBalance = await new this.web3.eth.getBalance(
+        this.state.accountAddress
+      );
+
+      if (bnbBalance === '0') return false;
+
+      const bnbPrice = await this.getTokenUSDPrice(
+        this.state.tokens.find((t) => t.symbol === 'BNB')
+      );
+
+      // Set bnb balance to state.
+      this.setState((state) => {
+        const tokens = state.tokens.map((token) => {
+          if (token.symbol === 'BNB') {
+            // Token with balance and price.
+            const tokenWithBalance = {
+              ...token,
+              balance: bnbBalance,
+              price: bnbPrice,
+            };
+
+            return tokenWithBalance;
+          }
+
+          return token;
+        });
+
+        return { ...state, tokens };
+      });
+
+      this.setBalances((tokens) => {
+        const bnbToken = this.state.tokens.find(t => t.symbol === 'BNB');
+
+        return [...tokens, bnbToken];
+      }, 'tokens');
+
+      return true;
+    } catch (error) {
+      console.log('[setBNBBalance]', error);
+      return false;
+    }
+  }
 
   /**
    * Get fraction from number.

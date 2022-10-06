@@ -22,6 +22,7 @@ import { setSwap } from 'src/actions/dapp/swap';
 import './Currency.less';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import ShowPageOn from '../ShowPageOn/ShowPageOn';
+import Transactions from './components/Transactions/Transactions';
 
 function Currency() {
   const dispatch = useDispatch();
@@ -211,33 +212,7 @@ function Currency() {
           </div>
         </div>
         <div className="Currency__body">
-          <CabinetBlock className="Currency__transactions">
-            <div className="Currency__transactions__header">
-              <h3>Transaction history</h3>
-            </div>
-            <div className="Currency__transactions__body">
-              <ul className="Currency__dates">
-                <li className="Currency__date">
-                  <h4>May 25</h4>
-                  <div>
-                    <Transaction currency={currency} bank="Tinkoff" />
-                    <Transaction
-                      currency={currency}
-                      type="withdrawal"
-                      transactionsExists={false}
-                    />
-                  </div>
-                </li>
-                <li className="Currency__date">
-                  <h4>May 24</h4>
-                  <div>
-                    <Transaction currency={currency} />
-                    <Transaction currency={currency} />
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </CabinetBlock>
+          <Transactions currency={!currencyIsEmpty && currency} />
         </div>
       </div>
       <ShowPageOn />
