@@ -10,10 +10,12 @@ import { classNames as cn } from 'src/utils';
 
 // Styles
 import './ConnectToWalletModal.less';
+import { useSelector } from 'react-redux';
 
 function ConnectToWalletModal(props) {
   const context = React.useContext(Web3Context);
   const { isConnected, connectWallet } = context;
+  const adaptive = useSelector((state) => state.default.adaptive);
 
   React.useEffect(() => {
     if (isConnected) {
@@ -39,7 +41,8 @@ function ConnectToWalletModal(props) {
             title="Trust Wallet"
             icon={require('src/asset/icons/social/walletConnect.svg')}
             style={{ background: '#3375bb' }}
-            disabled
+            onClick={() => connectWallet('metamask')}
+            disabled={!adaptive}
           />
         </div>
         <div className="row">

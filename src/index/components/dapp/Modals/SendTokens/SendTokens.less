@@ -1,0 +1,127 @@
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.SendTokens {
+  & > .Modal__box {
+    & > .CabinetModal__container {
+      padding: 32px 40px;
+      background: #fff;
+      border-radius: var(--radius-panel);
+    }
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  &__address {
+    position: relative;
+
+    input {
+      padding-right: 36px !important;
+    }
+
+    &-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      fill: var(--light-gray);
+      cursor: pointer;
+
+      path {
+        fill: var(--light-gray);
+      }
+    }
+  }
+
+  .Modal__header {
+  }
+  &-content {
+  }
+  &-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 40px;
+
+    .isvg {
+      svg {
+        margin-bottom: 16px;
+        animation: spin 1s linear infinite;
+
+        path {
+          fill: rgb(250, 190, 76);
+        }
+      }
+    }
+    &-text {
+    }
+  }
+  &-form {
+    margin-top: 40px;
+
+    h3 {
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        &:not(:first-child) {
+          margin-left: 16px;
+        }
+        &.active {
+          color: var(--primary-blue);
+          text-decoration: underline;
+          cursor: pointer;
+          outline: none;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+    .Input__wrapper {
+      margin-bottom: 20px;
+
+      .Input {
+        min-width: 640px;
+
+        .adaptive & {
+          min-width: initial;
+          width: 100%;
+        }
+      }
+      .Input__description {
+        margin: 16px 0 0;
+      }
+    }
+    .Button {
+      margin: 8px auto 20px;
+    }
+  }
+}
+
+.adaptive .SendTokens {
+  & > .Modal__box {
+    padding: 20px !important;
+
+    & > .CabinetModal__container {
+      padding: 32px 25px;
+      background: #fff;
+      border-radius: var(--radius-panel);
+    }
+  }
+
+  & + .BottomSheetModal-container {
+    z-index: 999;
+
+    .BottomSheetModal__bg {
+      background: none;
+    }
+  }
+}

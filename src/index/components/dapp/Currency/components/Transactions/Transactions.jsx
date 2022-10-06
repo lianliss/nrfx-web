@@ -121,8 +121,6 @@ function Transactions({ currency }) {
     }).format(new Date(date));
   };
 
-  console.log(transactionsHistory);
-
   return (
     <CabinetBlock className="Currency__transactions">
       <div className="Currency__transactions__header">
