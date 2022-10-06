@@ -456,6 +456,21 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<void>}
    */
   async getTokens() {
+    // Addresses with problems which have to skip.
+    const incorrectAddresses = [
+      '0x179960442Ece8dE9f390011b7f7c9b56C74e4D0a',
+      '0x03a3cDa7F684Db91536e5b36DC8e9077dC451081',
+    ];
+
+    // @param token.
+    // Returns boolean if token is fine.
+    const fineToken = (t) => {
+      return !!(
+        t.chainId === this.state.chainId &&
+        !incorrectAddresses.find((address) => address === t.address)
+      );
+    };
+
     try {
       let tokens = this.cmcTokens;
       if (!tokens) {
@@ -470,7 +485,7 @@ class Web3Provider extends React.PureComponent {
         ...this.state.tokens,
         ...tokens,
       ], 'address')
-        .filter(t => t.chainId === this.state.chainId);
+        .filter(fineToken);
       this.setState({
         tokens: result,
       });
@@ -774,13 +789,14 @@ class Web3Provider extends React.PureComponent {
       this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
+
+      const tokenIsFine = (t) => {
+        return !!(t.chainId === this.state.chainId && t.address);
+      };
+
       const tokens = choosenTokens
-        ? choosenTokens.filter(
-            (t) => t.chainId === this.state.chainId && t.address
-          )
-        : this.state.tokens.filter(
-            (t) => t.chainId === this.state.chainId && t.address
-          );
+        ? choosenTokens.filter(tokenIsFine)
+        : this.state.tokens.filter(tokenIsFine);
 
       if (!loadAgain) {
         const tokensWithBalance = tokens.filter((t) => t.balance);
@@ -792,15 +808,15 @@ class Web3Provider extends React.PureComponent {
 
       await this.setBNBBalance();
 
-      const chunksNumber = tokens.length > 256 ? tokens.length / 256 : 1;
-      const chunks = _.chunk(tokens, chunksNumber);
+      const oneChunkNumber = 256;
+      const chunks = _.chunk(tokens, oneChunkNumber);
+
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
-        // Get request from the blockchain
-        const results = await this.getTokensBalances(
-          chunk.map((t) => t.address)
-        );
+        const addresses = chunk.map((t) => t.address);
 
+        // Get request from the blockchain
+        const results = await this.getTokensBalances(addresses);
         // Process the results
         this.setState((state) => {
           const newState = { ...state };
