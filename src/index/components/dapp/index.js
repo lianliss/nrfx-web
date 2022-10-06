@@ -12,3 +12,5 @@ export { default as CreateReferralLink } from './Modals/CreateReferralLink/Creat
 
 export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGenerated';
 export { default as AttentionBuyTokenModal } from './Modals/AttentionBuyToken/AttentionBuyToken';
+
+export { default as SendTokensModal } from './Modals/SendTokens/SendTokens';
