@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Web3 from 'web3/dist/web3.min.js';
 import SHA256 from "crypto-js/sha256";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 import wei from 'utils/wei';
 import wait from 'utils/wait';
 import _ from 'lodash';
