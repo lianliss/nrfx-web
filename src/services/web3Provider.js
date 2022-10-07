@@ -294,6 +294,32 @@ class Web3Provider extends React.PureComponent {
     }));
   }
 
+   /**
+   * Update balance, or add if it not exist.
+   * @param token {object} token object
+   * @param type {string} fiats, tokens
+   */
+  async updateTokenInBalances(token, type = 'tokens') {
+    this.setBalances((prevBalances) => {
+      let finded = false;
+      const newBalances = prevBalances.map((prevBalancesToken) => {
+        if (prevBalancesToken.symbol === token.symbol) {
+          finded = true;
+
+          return token;
+        }
+
+        return prevBalancesToken;
+      });
+
+      if (!finded) {
+        newBalances.push(token);
+      }
+
+      return newBalances;
+    }, type);
+  }
+
   /**
    * Switch to another chain
    * @param id {integer} chainID
@@ -457,6 +483,21 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<void>}
    */
   async getTokens() {
+    // Addresses with problems which have to skip.
+    const incorrectAddresses = [
+      '0x179960442Ece8dE9f390011b7f7c9b56C74e4D0a',
+      '0x03a3cDa7F684Db91536e5b36DC8e9077dC451081',
+    ];
+
+    // @param token.
+    // Returns boolean if token is fine.
+    const fineToken = (t) => {
+      return !!(
+        t.chainId === this.state.chainId &&
+        !incorrectAddresses.find((address) => address === t.address)
+      );
+    };
+
     try {
       let tokens = this.cmcTokens;
       if (!tokens) {
@@ -471,7 +512,7 @@ class Web3Provider extends React.PureComponent {
         ...this.state.tokens,
         ...tokens,
       ], 'address')
-        .filter(t => t.chainId === this.state.chainId);
+        .filter(fineToken);
       this.setState({
         tokens: result,
       });
@@ -775,13 +816,14 @@ class Web3Provider extends React.PureComponent {
       this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
+
+      const tokenIsFine = (t) => {
+        return !!(t.chainId === this.state.chainId && t.address);
+      };
+
       const tokens = choosenTokens
-        ? choosenTokens.filter(
-            (t) => t.chainId === this.state.chainId && t.address
-          )
-        : this.state.tokens.filter(
-            (t) => t.chainId === this.state.chainId && t.address
-          );
+        ? choosenTokens.filter(tokenIsFine)
+        : this.state.tokens.filter(tokenIsFine);
 
       if (!loadAgain) {
         const tokensWithBalance = tokens.filter((t) => t.balance);
@@ -793,15 +835,15 @@ class Web3Provider extends React.PureComponent {
 
       await this.setBNBBalance();
 
-      const chunksNumber = tokens.length > 256 ? tokens.length / 256 : 1;
-      const chunks = _.chunk(tokens, chunksNumber);
+      const oneChunkNumber = 256;
+      const chunks = _.chunk(tokens, oneChunkNumber);
+
       for (let i = 0; i < chunks.length; i++) {
         const chunk = chunks[i];
-        // Get request from the blockchain
-        const results = await this.getTokensBalances(
-          chunk.map((t) => t.address)
-        );
+        const addresses = chunk.map((t) => t.address);
 
+        // Get request from the blockchain
+        const results = await this.getTokensBalances(addresses);
         // Process the results
         this.setState((state) => {
           const newState = { ...state };
@@ -1578,6 +1620,59 @@ class Web3Provider extends React.PureComponent {
       return { address, difference, priceFrom, priceTo };
   }
 
+  /**
+ * Send token from current address to receiver.
+ * @param token {object} - token object
+ * @param address {string} - receiver address
+ * @param value {number} - send tokens amount
+ * @return {string|null} - TX result.
+ */
+  async sendTokens(token, address, value) {
+    const contract = this.getTokenContract(token).contract;
+    const amount = this.web3.utils.toWei(String(value));
+    // const accountBalance = await contract.methods
+    // .balanceOf(this.state.accountAddress)
+    // .call();
+    // const amount = accountBalance < wei.to(value)
+    //   ? accountBalance
+    //   : wei.to(value);
+    if(token.symbol === 'BNB') {
+      const gasPrice = await this.web3.eth.getGasPrice();
+      const latestBlock = await this.web3.eth.getBlock('latest');
+      const gasLimit = latestBlock.gasLimit;
+
+      const rawTransaction = {
+        gasPrice: this.web3.utils.toHex(gasPrice),
+        gasLimit: this.web3.utils.toHex(gasLimit),
+        to: address,
+        from: this.state.accountAddress,
+        value: this.web3.utils.toHex(amount),
+        chainId: '0x38',
+      };
+
+      try {
+        return await this.fetchEthereumRequest({
+          method: this.requestMethods.eth_sendTransaction,
+          params: [rawTransaction],
+        });
+      } catch(error) {
+        console.log('[sendTokens]', error);
+        return null;
+      }
+    }
+
+    const params = [address, amount];
+  
+    try {
+      const result = await this.transaction(contract, 'transfer', params);
+
+      return result;
+    } catch(error) {
+      console.log('[sendTokens]', error);
+      return null;
+    }
+  }
+
   render() {
     window.web3Provider = this;
 
@@ -1634,6 +1729,9 @@ class Web3Provider extends React.PureComponent {
       getInvoicePDF: this.getInvoicePDF.bind(this),
       cancelInvoice: this.cancelInvoice.bind(this),
       addWithdrawal: this.addWithdrawal.bind(this),
+      sendTokens: this.sendTokens.bind(this),
+      setBalances: this.setBalances.bind(this),
+      updateTokenInBalances: this.updateTokenInBalances.bind(this),
       cmcTokens: this.cmcTokens,
     }}>
       {this.props.children}

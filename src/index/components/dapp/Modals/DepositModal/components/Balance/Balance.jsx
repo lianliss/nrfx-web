@@ -214,6 +214,13 @@ function Balance(props) {
   };
 
   const handleWithdraw = () => {
+    setTouched(true);
+    const message = checkAmount();
+    if (message) {
+      toasts.error(message);
+      return false;
+    }
+
     actions.openModal(
       'deposit_choose_bank',
       {
@@ -226,25 +233,6 @@ function Balance(props) {
         currency: fiatSelected.symbol,
       }
     );
-  };
-
-  const handleFiatWithdrawal = () => {
-    setTouched(true);
-    const message = checkAmount();
-    if (message) {
-      toasts.error(message);
-      return false;
-    }
-
-    const balance = getBalance(currency);
-    const { min_fee: minFee, percent_fee: percentFee } =
-      props.merchants[merchant].currencies[currency].fees;
-    actions.openModal('fiat_withdrawal', null, {
-      amount,
-      balance,
-      minFee,
-      percentFee,
-    });
   };
 
   const handleSubmitInvoice = () => {

@@ -10,7 +10,7 @@ import SVG from 'utils/svg-wrap';
 import Transaction from './components/Transaction/Transaction';
 
 // Utils
-import { isFiat, getLang } from 'utils';
+import { isFiat, getLang, wei } from 'utils';
 import { openModal } from 'src/actions';
 import { Web3Context } from 'src/services/web3Provider';
 import { web3RatesSelector } from 'src/selectors';
@@ -23,6 +23,7 @@ import './Currency.less';
 import LoadingStatus from '../LoadingStatus/LoadingStatus';
 import ShowPageOn from '../ShowPageOn/ShowPageOn';
 import Transactions from './components/Transactions/Transactions';
+import FiatButtons from './components/FiatButtons/FiatButtons';
 
 function Currency() {
   const dispatch = useDispatch();
@@ -36,28 +37,60 @@ function Currency() {
     getTokens,
     getTokenBalance,
     updateFiats,
+    updateTokenInBalances,
     web3,
+    balances,
   } = React.useContext(Web3Context);
 
-  const [currency, setCurrency] = React.useState({});
+  // const [currency, setCurrency] = React.useState({});
   const [loading, setLoading] = React.useState(false);
-  const currencyIsEmpty = _.isEmpty(currency);
   const paramsCurrency = params.currency || '';
-  const rate = rates[paramsCurrency.toLowerCase()] || 0;
+  const currencyIsFiat = isFiat(paramsCurrency);
+  const balancesType = currencyIsFiat ? 'fiats' : 'tokens';
+  const balancesOfType = balances[balancesType];
+  const currency =
+    balancesOfType.find((coin) => {
+      return coin.symbol.toLowerCase() === paramsCurrency.toLowerCase();
+    }) || {};
+  const currencyIsEmpty = _.isEmpty(currency);
+  const rate =
+    rates[paramsCurrency.toLowerCase()] ||
+    rates[paramsCurrency.toUpperCase()] ||
+    0;
   const currencyBalance = Number(Number(currency.balance).toFixed(2));
 
   React.useEffect(() => {
     if (!isConnected) return;
 
     // Update fiats, and get currency fiat.
-    if (isFiat(paramsCurrency)) {
+    if (currencyIsFiat) {
       fetchCurrencyFiat();
       return;
     }
 
     // Get tokens, and get currency token.
     fetchCurrencyToken();
+    const tokenBalanceUpdateInterval = setInterval(
+      () => fetchCurrencyToken(),
+      5000
+    );
+
+    return () => {
+      clearInterval(tokenBalanceUpdateInterval);
+    };
   }, [accountAddress]);
+
+  // React.useEffect(() => {
+  //   const balancesOfType = balances[balancesType];
+  //   if (!balancesOfType.length) return;
+
+  //   const coin =
+  //     balancesOfType.find((coin) => {
+  //       return coin.symbol.toLowerCase() === paramsCurrency.toLowerCase();
+  //     }) || {};
+
+  //   setCurrency(coin);
+  // }, [balances]);
 
   const fetchCurrencyFiat = async () => {
     setLoading(true);
@@ -69,48 +102,58 @@ function Currency() {
     )[0];
 
     if (currencyFiat) {
-      setCurrency({
+      const token = {
         ...currencyFiat,
         balance: web3.utils.fromWei(currencyFiat.balance),
-      });
+      };
+
+      updateTokenInBalances(token, 'fiats');
     }
 
     setLoading(false);
+  };
+
+  const fetchTokenBalance = async (currencyToken) => {
+    const balance = await getTokenBalance(currencyToken.address).then((r) =>
+      // web3.utils.fromWei(r)
+      wei.from(r)
+    );
+
+    const token = {
+      ...currencyToken,
+      balance: balance,
+    };
+
+    updateTokenInBalances(token, balancesType);
+
+    if (loading) {
+      setLoading(false);
+    }
   };
 
   const fetchCurrencyToken = async () => {
     setLoading(true);
 
     // Get tokens, for check currency.
-    const tokens = await getTokens().then((tokens) => tokens);
-    const currencyToken = tokens.filter((token) => {
-      return token.symbol.toLowerCase() === paramsCurrency.toLowerCase();
-    })[0];
-
-    if (currencyToken) {
-      const balance = await getTokenBalance(currencyToken.address).then((r) =>
-        web3.utils.fromWei(r)
-      );
-      setCurrency({ ...currencyToken, balance });
+    if (!currencyIsEmpty) {
+      fetchTokenBalance(currency);
+      return;
     }
 
-    setLoading(false);
+    const tokens = await getTokens().then((tokens) => tokens);
+    const currencyToken = tokens.find((token) => {
+      return token.symbol.toLowerCase() === paramsCurrency.toLowerCase();
+    });
+
+    if (currencyToken) {
+      fetchTokenBalance(currencyToken);
+    }
   };
 
   // Render components
   const LoginedButtons = () =>
     isFiat(paramsCurrency) ? (
-      <Button
-        type="lightBlue"
-        shadow
-        onClick={() => openModal('deposit_balance')}
-      >
-        <SVG
-          src={require('src/asset/icons/cabinet/buy.svg')}
-          className="white-icon"
-        />
-        {getLang('dapp_global_deposit')}
-      </Button>
+      <FiatButtons currency={currency} />
     ) : (
       <>
         <div className="col">
@@ -150,7 +193,7 @@ function Currency() {
           <Button
             type="secondary-light"
             shadow
-            onClick={() => openModal('deposit_transfer_send')}
+            onClick={() => openModal('send_tokens', {}, { token: currency })}
           >
             <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
             {getLang('global_send')}

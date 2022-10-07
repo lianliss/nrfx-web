@@ -47,6 +47,13 @@ function InvoiceDetails(props) {
 
   const onConfirm = async () => {
     if (!isConnected) return;
+    if (!_.get(phone, 'length', '')
+      || !_.get(name, 'length', '')
+      || !_.get(lastName, 'length', '')) {
+      toast.error(getLang('dapp_modal_details_empty'));
+      return;
+    }
+
     setIsProcess(true);
     try {
       await addInvoice(amount, currency, phone, name, lastName);

@@ -52,6 +52,7 @@ function ExchangerSwap(props) {
     tokens, loadAccountBalances, exchange,
     exchangerRouter, getTokenContract,
     accountAddress,
+    getTokenBalance,
   } = context;
   const {
     fiats, fiat, coins, coin,
@@ -60,6 +61,10 @@ function ExchangerSwap(props) {
   } = props;
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const [isSelectCoin, setIsSelectCoin] = React.useState(false);
+  const [paramsTokenLoaded, setParamsTokensLoaded] = React.useState({
+    token: false,
+    fiat: false
+  });
 
   // Symbols
   const fiatSymbol = _.get(fiat, 'symbol', '');
@@ -76,9 +81,12 @@ function ExchangerSwap(props) {
   const coinPrice = getTokenPrice(coin);
 
   const limits = props.limits.find(l => l.coin === coinSymbol);
-  const minCoinAmount = isFirstFiat && isSecondFiat
-    ? 50
-    : Math.max(_.get(limits, 'min', 0), 20 / coinPrice);
+  const minCoinAmount = Math.max(
+    _.get(limits, 'min', 0),
+    isFirstFiat && isSecondFiat
+      ? 50 / coinPrice
+      : 20 / coinPrice
+  );
   const maxCoinAmount = _.get(limits, 'max', Infinity);
 
   // Fiat input value
@@ -181,26 +189,54 @@ function ExchangerSwap(props) {
     setIsSelectCoin(false);
   };
 
-  React.useEffect(() => {
+  const setParamsCoin = (tokens) => {
+    if(paramsTokenLoaded.token) return;
+
     const { params } = route;
+    const paramCoinSymbol = params.coin && params.coin.toLowerCase();
+    if(!paramCoinSymbol) return;
+    const paramCoin = tokens.find(
+      (coin) => coin.symbol.toLowerCase() === paramCoinSymbol
+    );
 
-    if (fiatsLoaded) {
-      fiats.forEach((fiat) => {
-        if (fiat.symbol.toLowerCase() === params.currency.toLowerCase()) {
-          handleFiatChange(fiat);
-        }
-      });
+    if (!paramCoin) return;
+    handleCoinChange(paramCoin);
+  };
+
+  const setParamsFiat = async (tokens) => {
+    const { params } = route;
+    const paramFiatSymbol = params.currency && params.currency.toLowerCase();
+
+    if(!paramFiatSymbol) {
+      handleFiatChange(fiats[0]);
+      return;
     }
 
-    if (isConnected) {
-      const paramsCoin = params.coin && params.coin.toLowerCase();
-      coins.forEach((coin) => {
-        if (coin.symbol.toLowerCase() === paramsCoin) {
-          handleCoinChange(coin);
-        }
-      });
+    const paramFiat = tokens.find(
+      (fiat) => fiat.symbol.toLowerCase() === paramFiatSymbol
+    );
+
+    if (!paramFiat) return;
+    if (!paramFiat.balance) {
+      const balance = await getTokenBalance(paramFiat.address);
+      handleFiatChange({ ...paramFiat, balance });
+      return;
     }
-  }, [fiatsLoaded, isConnected]);
+
+    handleFiatChange(paramFiat);
+  };
+
+  React.useEffect(() => {
+    if (paramsTokenLoaded.fiat && paramsTokenLoaded.token) return;
+    if (!isConnected) return;
+    if (fiats.length <= 1 || coins.length <= 1) return;
+
+    const allTokens = [...fiats, ...coins];
+    setParamsFiat(allTokens);
+    setParamsTokensLoaded((state) => ({ ...state, fiat: true }));
+    setParamsCoin(allTokens);
+    setParamsTokensLoaded((state) => ({ ...state, token: true }));
+  }, [fiats, coins, isConnected]);
 
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
