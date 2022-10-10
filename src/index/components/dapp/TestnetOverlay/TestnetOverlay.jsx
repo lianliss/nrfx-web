@@ -8,7 +8,8 @@ import './TestnetOverlay.less';
 
 const TestnetOverlay = (props) => {
   const context = React.useContext(Web3Context);
-  const { chainId, switchToChain, isConnected } = context;
+  const { chainId, switchToChain, isConnected, connector, connectWallet } =
+    context;
   const { testnetOnly, mainnetOnly } = props;
 
   const changeLocation = () => {
@@ -21,14 +22,20 @@ const TestnetOverlay = (props) => {
   };
 
   const Body = ({ isChainChanger, isLocationChanger }) => {
+    let text = getLang('dapp_connection_or_settings_error');
+
+    if (isLocationChanger) {
+      const page = testnetOnly ? 'Testnet' : 'Mainnet';
+      const textFor = getLang('dapp_page_for');
+
+      text = `${textFor} ${page}`;
+    }
+
     return (
       <div className="TestnetOverlay__wrap">
         <div className="TestnetOverlay__background"></div>
         <div className="TestnetOverlay__content">
-          <h2>
-            {getLang('dapp_page_for')}&nbsp;
-            {testnetOnly ? 'Testnet' : 'Mainnet'}
-          </h2>
+          <h2>{text}</h2>
           {isLocationChanger && (
             <div className="TestnetOverlay__buttons">
               <Button onClick={changeLocation} type="lightBlue" shadow>
@@ -39,12 +46,21 @@ const TestnetOverlay = (props) => {
           )}
           {isChainChanger && (
             <div className="TestnetOverlay__buttons">
+              {chainId && (
+                <Button
+                  onClick={() => switchToChain(testnetOnly ? 97 : 56)}
+                  type="lightBlue"
+                  shadow
+                >
+                  {getLang('dapp_switch_your_chain')}
+                </Button>
+              )}
               <Button
-                onClick={() => switchToChain(testnetOnly ? 97 : 56)}
+                onClick={() => connectWallet(connector || 'metamask')}
                 type="lightBlue"
                 shadow
               >
-                {getLang('dapp_switch_your_chain')}
+                {getLang('dapp_global_connect_wallet')}
               </Button>
             </div>
           )}
