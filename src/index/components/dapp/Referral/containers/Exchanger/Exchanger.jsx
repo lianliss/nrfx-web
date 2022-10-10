@@ -7,7 +7,8 @@ import ReferralList from '../../components/ReferralList/ReferralList';
 import Card from '../../components/Card/Card';
 import FAQ from '../../components/FAQ/FAQ';
 
-function Exchanger({ adaptive }) {
+function Exchanger(params) {
+  const {adaptive, friends, rewards} = params;
   return (
     <>
       <Header
@@ -16,13 +17,13 @@ function Exchanger({ adaptive }) {
         link="https://narfex.org?ref=dd4e20hfj09nrtyasdasd"
         willGetNumber={100}
         friendsWillGetNumber={0}
-        adaptive={adaptive}
+        {...params}
       />
       <Dashboard>
         <Card
           firstIcon={{ src: 'icons/cabinet/team-icon.svg', background: '#fff' }}
           firstTitle="Active Friends / Total Friends"
-          firstCount="0/0"
+          firstCount={`0/${friends.length}`}
           firstQuestion="Active Friends, Total Friends"
           secondIcon={{
             src: 'icons/narfex/white-icon.svg',
@@ -31,12 +32,14 @@ function Exchanger({ adaptive }) {
           secondTitle="Total earned"
           secondCount="0.0000 NRFX / 0.00 USD"
           secondary
+          {...params}
         />
         <Card
           firstTitle="Total NRFX buyers friends"
           firstCount="0"
           secondTitle="Total NRFX earned"
           secondCount="0.0000 NRFX"
+          {...params}
         />
         <Card
           firstTitle="Total Fiat deposit friends "
@@ -48,6 +51,7 @@ function Exchanger({ adaptive }) {
       <ReferralList
         title="Referral List"
         subtitle="All your referral friends in one place"
+        {...params}
       />
       <FAQ adaptive={adaptive} />
     </>

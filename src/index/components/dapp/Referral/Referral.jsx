@@ -16,6 +16,9 @@ import {
   DAPP_REFERRAL_FARMING,
 } from 'src/index/constants/pages';
 import useAdaptive from 'src/hooks/adaptive';
+import { classNames, getLang } from "src/utils";
+import { Web3Context } from 'src/services/web3Provider';
+import * as actions from "src/actions";
 
 // Styles
 import './Referral.less';
@@ -25,9 +28,34 @@ function Referral() {
   const routeName = route.name;
   const adaptive = useAdaptive();
 
+  const context = React.useContext(Web3Context);
+  const {chainId, accountAddress, isConnected} = context;
+  const [hashLink, setHashLink] = React.useState();
+  const [friends, setFriends] = React.useState([]);
+  const [rewards, setRewards] = React.useState([]);
+
+  React.useEffect(() => {
+    if (!isConnected || !chainId || !accountAddress) return;
+
+    context.getReferHash().then(hash => {
+      if (hash) {
+        setHashLink(`https://narfex.com?ref=${hash}`);
+      }
+    });
+    context.getReferFriends().then(setFriends);
+    context.getReferRewards().then(setRewards);
+  }, [chainId, accountAddress, isConnected]);
+
   if (routeName === DAPP_REFERRAL) {
     return <Preview adaptive={adaptive} />;
   }
+
+  const containerParams = {
+    hashLink,
+    friends,
+    rewards,
+    adaptive,
+  };
 
   return (
     <CabinetBlock className="Referral">
@@ -52,9 +80,9 @@ function Referral() {
           size="large"
         />
         {routeName === DAPP_REFERRAL_EXCHANGER && (
-          <Exchanger adaptive={adaptive} />
+          <Exchanger {...containerParams} />
         )}
-        {routeName === DAPP_REFERRAL_FARMING && <Farming adaptive={adaptive} />}
+        {routeName === DAPP_REFERRAL_FARMING && <Farming {...containerParams} />}
       </div>
     </CabinetBlock>
   );
