@@ -60,7 +60,7 @@ const TestnetOverlay = (props) => {
                 type="lightBlue"
                 shadow
               >
-                {getLang('dapp_try_connect_wallet')}
+                {getLang('dapp_reconnect_wallet')}
               </Button>
             </div>
           )}
