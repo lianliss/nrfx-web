@@ -60,7 +60,7 @@ const TestnetOverlay = (props) => {
                 type="lightBlue"
                 shadow
               >
-                {getLang('dapp_global_connect_wallet')}
+                {getLang('cabinet_loadingStatus_tryAgain')}
               </Button>
             </div>
           )}
