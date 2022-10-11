@@ -464,7 +464,6 @@ module.exports = function(webpackEnv) {
             !!~process.env.BRANCH_NAME.indexOf('fe') &&
             'stage'
           ) || process.env.BRANCH_NAME)),
-        'global': {},
       }),
       new webpack.IgnorePlugin({
         resourceRegExp: /^\.\/locale$/,
@@ -544,7 +543,9 @@ module.exports = function(webpackEnv) {
           process: 'process/browser',
       }),
     ].filter(Boolean),
-    node: false,
+    node: {
+      global: true,
+    },
     performance: false,
   };
 };
