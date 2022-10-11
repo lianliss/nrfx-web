@@ -1,10 +1,13 @@
 import React from 'react';
 
 // Components
-import { Row, Col, NumberFormat } from 'src/ui';
+import { Row, Col, NumberFormat, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import FormattedText from '../../../FormattedText/FormattedText';
+import { Web3Context } from 'src/services/web3Provider';
+import * as actions from "src/actions";
+import { classNames, getLang } from "src/utils";
 
 // Utils
 import { openModal } from 'src/actions';
@@ -19,7 +22,11 @@ function Header({
   willGetNumber,
   friendsWillGetNumber,
   adaptive,
+  hashLink,
 }) {
+  const context = React.useContext(Web3Context);
+  const {chainId, accountAddress, isConnected} = context;
+
   const FriendsWillGet = () => {
     const Wrapper = adaptive ? Row : Col;
 
@@ -54,35 +61,39 @@ function Header({
         <CabinetBlock>
           <Row alignItems="center" justifyContent="space-between">
             <h2>Copy Referral Link</h2>
-            <Col>
-              <Row
-                alignItems="center"
-                className="create-new-link"
-                onClick={() => openModal('create_referral_link')}
-              >
-                <span className="strong">Create new link</span>
-                <SVG
-                  src={require('src/asset/icons/cabinet/add-icon-blue.svg')}
-                />
-              </Row>
-            </Col>
+            {/*<Col>*/}
+              {/*<Row*/}
+                {/*alignItems="center"*/}
+                {/*className="create-new-link"*/}
+                {/*onClick={() => openModal('create_referral_link')}*/}
+              {/*>*/}
+                {/*<span className="strong">Create new link</span>*/}
+                {/*<SVG*/}
+                  {/*src={require('src/asset/icons/cabinet/add-icon-blue.svg')}*/}
+                {/*/>*/}
+              {/*</Row>*/}
+            {/*</Col>*/}
           </Row>
           <Row justifyContent="space-between">
-            <Col className="Referral__copy">
-              <Row alignItems="center" justifyContent="space-between">
-                <span>{link}</span>
-                <SVG src={require('src/asset/icons/action/copy.svg')} />
-              </Row>
-            </Col>
-            {!adaptive && (
-              <Col
-                className="Referral__share"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <SVG src={require('src/asset/icons/action/share.svg')} />
-              </Col>
-            )}
+            {isConnected ? <>
+              {!!hashLink && <Col className="Referral__copy">
+                <Row alignItems="center" justifyContent="space-between">
+                  <span>{hashLink}</span>
+                  <SVG src={require('src/asset/icons/action/copy.svg')} />
+                </Row>
+              </Col>}
+              {!adaptive && (
+                <Col
+                  className="Referral__share"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <SVG src={require('src/asset/icons/action/share.svg')} />
+                </Col>
+              )}
+            </> : <Button onClick={() => actions.openModal('connect_to_wallet')}>
+              {getLang('dapp_global_connect_wallet')}
+            </Button>}
           </Row>
           <Row justifyContent="space-between" wrap={adaptive}>
             {adaptive && <FriendsWillGet />}
@@ -101,9 +112,9 @@ function Header({
                 <SVG src={require('../../asset/box-break.svg')} />
               </Col>
               <Col justifyContent="center">
-                <span className="secondary-text">
-                  <FormattedText text="NRFX purchases 5%" className="blue" />
-                </span>
+                {/*<span className="secondary-text">*/}
+                  {/*<FormattedText text="NRFX purchases 5%" className="blue" />*/}
+                {/*</span>*/}
                 <Col>
                   <span className="secondary-text">
                     <FormattedText
@@ -117,7 +128,7 @@ function Header({
                 </Col>
               </Col>
             </Row>
-            {!adaptive && <FriendsWillGet />}
+            {/*{!adaptive && <FriendsWillGet />}*/}
           </Row>
         </CabinetBlock>
       </Col>

@@ -21,6 +21,7 @@ import {
   getEthereumObject,
   fetchEthereumRequest,
 } from './multiwalletsDifference';
+import router from 'src/router';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -421,6 +422,14 @@ class Web3Provider extends React.PureComponent {
     this.ethereum.removeListener('message', this.onMessage.bind(this));
   };
 
+  checkRefer = async () => {
+    const hash = window.localStorage.getItem('nrfx-ref');
+    if (hash) {
+      this.setRefer(hash);
+      window.localStorage.removeItem('nrfx-ref');
+    }
+  };
+
   /**
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
@@ -469,6 +478,8 @@ class Web3Provider extends React.PureComponent {
       // Clear old events
       this.ethereumUnsubscribe();
       this.ethereumSubsribe();
+
+      this.checkRefer();
 
       // On account address change
     } catch (error) {
@@ -1565,6 +1576,62 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async setRefer(hash) {
+    try {
+      const result = await this.backendRequest({hash},
+        `Set referral`,
+        'refer/hash',
+        'post',
+      );
+      console.log('[setRefer]', result);
+      return result;
+    } catch (error) {
+      console.error('[setRefer]', error);
+    }
+  }
+
+  async getReferHash() {
+    try {
+      const result = await this.backendRequest({},
+        `Get refer hash`,
+        'refer/hash',
+        'get',
+      );
+      console.log('[getReferHash]', result);
+      return result;
+    } catch (error) {
+      console.error('[getReferHash]', error);
+    }
+  }
+
+  async getReferFriends() {
+    try {
+      const result = await this.backendRequest({},
+        `Get friends`,
+        'refer',
+        'get',
+      );
+      console.log('[getReferFriends]', result);
+      return result;
+    } catch (error) {
+      console.error('[getReferFriends]', error);
+    }
+  }
+
+  async getReferRewards() {
+    try {
+      const result = await this.backendRequest({},
+        `Get friends`,
+        'refer/rewards',
+        'get',
+      );
+      console.log('[getReferRewards]', result);
+      return result;
+    } catch (error) {
+      console.error('[getReferRewards]', error);
+    }
+  }
+
   // Get block from date.
   async dateToBlockMoralis (date = new Date()) {
     // Date to unix timestamp.
@@ -1731,6 +1798,10 @@ class Web3Provider extends React.PureComponent {
       sendTokens: this.sendTokens.bind(this),
       setBalances: this.setBalances.bind(this),
       updateTokenInBalances: this.updateTokenInBalances.bind(this),
+      setRefer: this.setRefer.bind(this),
+      getReferHash: this.getReferHash.bind(this),
+      getReferFriends: this.getReferFriends.bind(this),
+      getReferRewards: this.getReferRewards.bind(this),
       cmcTokens: this.cmcTokens,
     }}>
       {this.props.children}

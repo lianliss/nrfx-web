@@ -310,4 +310,9 @@ router.addListener((state, prevState) => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+const ref = new URLSearchParams(window.location.search).get('ref');
+if (ref) {
+  window.localStorage.setItem('nrfx-ref', ref);
+}
+
 export default router;
