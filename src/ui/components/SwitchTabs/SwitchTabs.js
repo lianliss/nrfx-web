@@ -49,8 +49,9 @@ export default function SwitchTabs({
             className={classNames({
               SwitchTabs__item: true,
               active: tab.value === selected,
+              disabled: tab.disabled,
             })}
-            onClick={tab.onClick || (() => onChange(tab.value))}
+            onClick={!tab.disabled && (tab.onClick || (() => onChange(tab.value)))}
           >
             <span>{tab.label}</span>
           </div>

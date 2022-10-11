@@ -74,7 +74,7 @@ function Referral() {
           }}
           tabs={[
             { value: DAPP_REFERRAL_EXCHANGER, label: 'Referral Exchanger' },
-            { value: DAPP_REFERRAL_FARMING, label: 'Referral Farming' },
+            { value: DAPP_REFERRAL_FARMING, label: 'Referral Farming', disabled: true },
           ]}
           type="light-blue"
           size="large"

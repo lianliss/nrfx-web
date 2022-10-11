@@ -35,6 +35,7 @@ function Preview({ adaptive }) {
           </p>
           <Button
             type="lightBlue"
+            disabled
             onClick={() => router.navigate(DAPP_REFERRAL_FARMING)}
           >
             <SVG src={require('src/asset/icons/cabinet/coin.svg')} />

@@ -112,9 +112,9 @@ function Header({
                 <SVG src={require('../../asset/box-break.svg')} />
               </Col>
               <Col justifyContent="center">
-                <span className="secondary-text">
-                  <FormattedText text="NRFX purchases 5%" className="blue" />
-                </span>
+                {/*<span className="secondary-text">*/}
+                  {/*<FormattedText text="NRFX purchases 5%" className="blue" />*/}
+                {/*</span>*/}
                 <Col>
                   <span className="secondary-text">
                     <FormattedText
@@ -128,7 +128,7 @@ function Header({
                 </Col>
               </Col>
             </Row>
-            {!adaptive && <FriendsWillGet />}
+            {/*{!adaptive && <FriendsWillGet />}*/}
           </Row>
         </CabinetBlock>
       </Col>
