@@ -33,7 +33,7 @@ function YourWalletModal(props) {
     if (!isConnected) {
       props.onClose();
     }
-  }, []);
+  }, [isConnected]);
 
   return (
     <TransactionModal
