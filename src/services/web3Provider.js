@@ -482,6 +482,22 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async logout() {
+    switch (this.state.connector) {
+      case CONNECTORS.WALLET_CONNECT:
+        await this.ethereum.disconnect();
+        break;
+      default:
+        break;
+    }
+
+    this.setState({
+      isConnected: false,
+      accountAddress: null,
+      chainId: null,
+    });
+  }
+
   /**
    * Get tokens list from the Coin Market Cap
    * @returns {Promise.<void>}
@@ -1741,6 +1757,7 @@ class Web3Provider extends React.PureComponent {
       web3: this.web3,
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
+      logout: this.logout.bind(this),
       getPairAddress: this.getPairAddress.bind(this),
       getReserves: this.getReserves.bind(this),
       pairs: this.pairs,
