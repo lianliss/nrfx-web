@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import getFinePrice from 'src/utils/get-fine-price';
 
 // Components
 import { Row, Col, NumberFormat } from 'src/ui';
@@ -35,7 +36,8 @@ const testItems = [
   { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
 ];
 
-function ReferralList({ title, subtitle, items }) {
+function ReferralList(params) {
+  const {title, subtitle, items, rewards, getUsdPrice} = params;
   const [visibleNumber, setVisibleNumber] = React.useState(10);
 
   return (
@@ -47,7 +49,7 @@ function ReferralList({ title, subtitle, items }) {
         </Col>
       </Row>
       <Col className="Referral__ReferralList__items">
-        {!items.length ? (
+        {!rewards.length ? (
           <Row justifyContent="center">
             <Col
               className="Referral__ReferralList__items-empty"
@@ -64,27 +66,27 @@ function ReferralList({ title, subtitle, items }) {
             <Col className="Referral__ReferralList__items-exists">
               <Row justifyContent="space-between" className="title-row">
                 <Col>Partner</Col>
-                <Col>Total NRFX earned</Col>
-                <Col>Total Fiat earned</Col>
+                <Col>Total currency earned</Col>
+                <Col>USD equivalent</Col>
               </Row>
-              {items.slice(0, visibleNumber).map((item, index) => (
+              {rewards.slice(0, visibleNumber).map((item, index) => (
                 <Row
                   justifyContent="space-between"
                   alignItems="center"
                   key={item.login + index}
                 >
-                  <Col>{item.login}</Col>
+                  <Col>{item.account}</Col>
                   <Col>
-                    <NumberFormat number={item.total.nrfx} currency="nrfx" />
+                    {getFinePrice(item.amount)} {item.currency}
                   </Col>
                   <Col>
-                    <NumberFormat number={item.total.usd} currency="usd" />
+                    {getFinePrice(getUsdPrice(item.amount, item.currency))} USD
                   </Col>
                 </Row>
               ))}
             </Col>
             <Row alignItems="center" className="smoothShow">
-              {visibleNumber <= items.length && (
+              {visibleNumber <= rewards.length && (
                 <div
                   onClick={() => {
                     setVisibleNumber((prevState) => prevState + 10);
