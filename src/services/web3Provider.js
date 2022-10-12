@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import Web3 from 'web3/dist/web3.min.js';
 import SHA256 from "crypto-js/sha256";
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import wei from 'utils/wei';
 import wait from 'utils/wait';
 import _ from 'lodash';
@@ -19,9 +18,10 @@ import * as toast from "src/actions/toasts";
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
 import {
   getRequestMetods,
-  getEthereumObject,
+  getConnectorObject,
   fetchEthereumRequest,
-} from './multiwalletsDifference';
+} from './multiwallets/multiwalletsDifference';
+import * as CONNECTORS from './multiwallets/connectors';
 
 export const Web3Context = React.createContext();
 const DEFAULT_DECIMALS = 18;
@@ -49,16 +49,12 @@ class Web3Provider extends React.PureComponent {
     poolsList: networks[56].poolsList,
     prices: {},
     fiats: {},
-    connector: 'metamask'
+    connector: CONNECTORS.METAMASK
   };
 
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
-  rpcProviderUrl = {
-    mainnet: 'https://bsc-mainnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
-    testnet: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a'
-  };
   providerAddress = 'asd';
   factoryAddress = networks[56].factoryAddress;
   routerAddress = networks[56].providerAddress;
@@ -97,7 +93,7 @@ class Web3Provider extends React.PureComponent {
 
   componentDidMount() {
     this._mounted = true;
-
+    
     const provider = new Web3.providers.HttpProvider(
       this.providerAddress
     );
@@ -429,23 +425,21 @@ class Web3Provider extends React.PureComponent {
   async connectWallet(connector = this.state.connector) {
     try {
       // Get connector.
-      this.ethereum = getEthereumObject(connector);
-      if (!this.ethereum) {
+      const ethereumObject = getConnectorObject(connector);
+
+      if (!ethereumObject) {
         return toast.error('No wallet plugins detected');
       }
 
+      this.ethereum = ethereumObject.ethereum;
       const chainIdNumber = this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
       this.requestMethods = getRequestMetods(connector);
+      const provider = ethereumObject.provider;
 
-      // Rpc of chainId
-      const currentChainRPC = chainIdNumber === 97
-        ? this.rpcProviderUrl.testnet
-        : this.rpcProviderUrl.mainnet;
+      if (connector === CONNECTORS.WALLET_CONNECT) {
+        await provider.enable();
+      }
       
-      // Provider of connector.
-      const provider = this.ethereum.isMetaMask
-        ? this.ethereum
-        : currentChainRPC;
       this.web3 = new Web3(provider);
       this.setChain(chainIdNumber);
 

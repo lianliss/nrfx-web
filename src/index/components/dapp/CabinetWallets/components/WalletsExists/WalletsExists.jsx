@@ -14,6 +14,7 @@ import NftsBlock from './components/NftsBlock/NftsBlock';
 import { getLang } from 'src/utils';
 import { web3RatesSelector } from 'src/selectors';
 import { marketCoins } from 'src/services/coingeckoApi';
+import * as CONNECTORS from 'services/multiwallets/connectors';
 
 function WalletsExists() {
   // Design
@@ -44,7 +45,7 @@ function WalletsExists() {
 
     updateFiats(null, rates);
 
-    if (connector === 'bsc') {
+    if (connector === CONNECTORS.BSC) {
       setCoins();
       return;
     }

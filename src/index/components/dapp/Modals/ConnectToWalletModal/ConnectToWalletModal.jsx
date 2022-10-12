@@ -7,6 +7,7 @@ import TransactionModal from '../../TransactionModal/TransactionModal';
 // Utils
 import { Web3Context } from 'services/web3Provider';
 import { classNames as cn } from 'src/utils';
+import * as CONNECTORS from 'services/multiwallets/connectors';
 
 // Styles
 import './ConnectToWalletModal.less';
@@ -35,13 +36,13 @@ function ConnectToWalletModal(props) {
             title="Metamask"
             icon={require('src/asset/icons/social/metaMask.svg')}
             style={{ background: '#fff' }}
-            onClick={() => connectWallet('metamask')}
+            onClick={() => connectWallet(CONNECTORS.METAMASK)}
           />
           <Wallet
             title="Trust Wallet"
             icon={require('src/asset/icons/social/walletConnect.svg')}
             style={{ background: '#3375bb' }}
-            onClick={() => connectWallet('metamask')}
+            onClick={() => connectWallet(CONNECTORS.METAMASK)}
             disabled={!adaptive}
           />
         </div>
@@ -53,7 +54,7 @@ function ConnectToWalletModal(props) {
               background:
                 'radial-gradient(100% 100% at 0% 50%, #5D9DF6 0%, #006FFF 100%)',
             }}
-            disabled
+            onClick={() => connectWallet(CONNECTORS.WALLET_CONNECT)}
           />
           <Wallet
             title="Coinbase"
@@ -66,7 +67,7 @@ function ConnectToWalletModal(props) {
           <Wallet
             title="Binance Wallet"
             icon={require('src/asset/icons/social/binance-wallet.svg')}
-            onClick={() => connectWallet('bsc')}
+            onClick={() => connectWallet(CONNECTORS.BSC)}
           />
         </div>
       </div>
