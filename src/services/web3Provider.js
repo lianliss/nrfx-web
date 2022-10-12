@@ -447,7 +447,7 @@ class Web3Provider extends React.PureComponent {
       if (connector === CONNECTORS.WALLET_CONNECT) {
         await provider.enable();
       }
-      
+
       this.web3 = new Web3(provider);
       this.setChain(chainIdNumber);
 
@@ -483,6 +483,13 @@ class Web3Provider extends React.PureComponent {
   }
 
   async logout() {
+    this.setBalances([], 'clear');
+    this.setState({
+      isConnected: false,
+      accountAddress: null,
+      chainId: null,
+    });
+
     switch (this.state.connector) {
       case CONNECTORS.WALLET_CONNECT:
         await this.ethereum.disconnect();
@@ -490,12 +497,6 @@ class Web3Provider extends React.PureComponent {
       default:
         break;
     }
-
-    this.setState({
-      isConnected: false,
-      accountAddress: null,
-      chainId: null,
-    });
   }
 
   /**
