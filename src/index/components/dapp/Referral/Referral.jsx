@@ -46,9 +46,9 @@ function Referral() {
     context.getReferRewards().then(setRewards);
   }, [chainId, accountAddress, isConnected]);
 
-  if (routeName === DAPP_REFERRAL) {
-    return <Preview adaptive={adaptive} />;
-  }
+  // if (routeName === DAPP_REFERRAL) {
+  //   return <Preview adaptive={adaptive} />;
+  // }
 
   const containerParams = {
     hashLink,
@@ -67,7 +67,7 @@ function Referral() {
         </div>
       )}
       <div className="Referral__container">
-        <SwitchTabs
+        {/* <SwitchTabs
           selected={routeName}
           onChange={(value) => {
             router.navigate(value);
@@ -81,8 +81,9 @@ function Referral() {
         />
         {routeName === DAPP_REFERRAL_EXCHANGER && (
           <Exchanger {...containerParams} />
-        )}
-        {routeName === DAPP_REFERRAL_FARMING && <Farming {...containerParams} />}
+        )} */}
+        {/* {routeName === DAPP_REFERRAL_FARMING && <Farming {...containerParams} />} */}
+        <Exchanger {...containerParams} />
       </div>
     </CabinetBlock>
   );

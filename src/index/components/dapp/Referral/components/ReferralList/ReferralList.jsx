@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getFinePrice from 'src/utils/get-fine-price';
+import { getLang } from 'utils';
 
 // Components
 import { Row, Col, NumberFormat } from 'src/ui';
@@ -37,7 +38,7 @@ const testItems = [
 ];
 
 function ReferralList(params) {
-  const {title, subtitle, items, rewards, getUsdPrice} = params;
+  const { title, subtitle, items, rewards, getUsdPrice } = params;
   const [visibleNumber, setVisibleNumber] = React.useState(10);
 
   return (
@@ -58,16 +59,16 @@ function ReferralList(params) {
               <div className="logo">
                 <SVG src={require('src/asset/icons/narfex/white-icon.svg')} />
               </div>
-              <p>No Data</p>
+              <p>{getLang('dapp_global_no_data')}</p>
             </Col>
           </Row>
         ) : (
           <>
             <Col className="Referral__ReferralList__items-exists">
               <Row justifyContent="space-between" className="title-row">
-                <Col>Partner</Col>
-                <Col>Total currency earned</Col>
-                <Col>USD equivalent</Col>
+                <Col>{getLang('dapp_partner')}</Col>
+                <Col>{getLang('dapp_referral_total_currency_earned')}</Col>
+                <Col>USD {getLang('dapp_global_equivalent').toLowerCase()}</Col>
               </Row>
               {rewards.slice(0, visibleNumber).map((item, index) => (
                 <Row
@@ -93,7 +94,7 @@ function ReferralList(params) {
                   }}
                   className="show-more"
                 >
-                  <span>Show more</span>
+                  <span>{getLang('site__technologyReadMore')}</span>
                   <SVG
                     src={require('src/asset/icons/arrows/form-dropdown.svg')}
                   />

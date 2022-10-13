@@ -35,7 +35,9 @@ function Header({
         className="Referral__information__future-secondary"
         alignItems="center"
       >
-        <span className="strong">Friends will get</span>
+        <span className="strong">
+          {getLang('dapp_referral_friends_will_get')}
+        </span>
         <span className="Referral__information_procent blue-gradient-text">
           <NumberFormat number={friendsWillGetNumber} percent />
         </span>
@@ -55,7 +57,9 @@ function Header({
         <p className="subtitle">
           <FormattedText text={subtitle} className="blue" />
         </p>
-        <span className="link blue-gradient-text">Read more ›</span>
+        <span className="link blue-gradient-text">
+          {getLang('site__technologyReadMore')} ›
+        </span>
       </Col>
       <Col className="Referral__information">
         <CabinetBlock>
@@ -103,7 +107,9 @@ function Header({
               alignItems="center"
             >
               <Col justifyContent="center">
-                <span className="strong">You will get</span>
+                <span className="strong">
+                  {getLang('dapp_referral_you_will_get')}
+                </span>
                 <span className="Referral__information_procent blue-gradient-text">
                   <NumberFormat number={willGetNumber} percent />
                 </span>
@@ -118,12 +124,12 @@ function Header({
                 <Col>
                   <span className="secondary-text">
                     <FormattedText
-                      text="Fiat replenishment 30%"
+                      text={`${getLang('dapp_referral_fiat_replinishment')} 30%`}
                       className="blue"
                     />
                   </span>
                   <span className="secondary-text small-text">
-                    from the commission
+                    {getLang('dapp_from_the_commission').toLowerCase()}
                   </span>
                 </Col>
               </Col>
