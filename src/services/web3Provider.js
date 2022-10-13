@@ -820,7 +820,9 @@ class Web3Provider extends React.PureComponent {
   ) {
     // Only MetaMask have a good provider
     // for send more requests on one time.
-    if (!_.get(window, 'ethereum.isMetaMask') && !required) return;
+    const isMetamask = this.state.connector === CONNECTORS.METAMASK &&
+      _.get(window, 'ethereum.isMetaMask');
+    if (!isMetamask && !required) return;
 
     try {
       // Set positive balance tokens

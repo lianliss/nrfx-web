@@ -1,37 +1,11 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import * as CONNECTORS from './connectors';
+import requests from './requests';
 import _ from 'lodash';
 
 export const noderealRPC = {
   56: 'https://bsc-mainnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
   97: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
-};
-
-export const requests = {
-  [CONNECTORS.METAMASK]: {
-    request_accounts: 'eth_requestAccounts',
-    eth_sendTransaction: 'eth_sendTransaction',
-    wallet_watchAsset: 'wallet_watchAsset',
-    wallet_addEthereumChain: 'wallet_addEthereumChain',
-    wallet_switchEthereumChain: 'wallet_switchEthereumChain',
-    personal_sign: 'personal_sign',
-  },
-  [CONNECTORS.BSC]: {
-    request_accounts: 'eth_accounts',
-    eth_sendTransaction: 'eth_sendTransaction',
-    wallet_watchAsset: null,
-    wallet_addEthereumChain: 'wallet_addEthereumChain',
-    wallet_switchEthereumChain: null,
-    personal_sign: 'personal_sign',
-  },
-  [CONNECTORS.WALLET_CONNECT]: {
-    request_accounts: 'eth_accounts',
-    eth_sendTransaction: 'eth_sendTransaction',
-    wallet_watchAsset: null,
-    wallet_addEthereumChain: 'wallet_addEthereumChain',
-    wallet_switchEthereumChain: null,
-    personal_sign: 'personal_sign',
-  },
 };
 
 /**
@@ -64,11 +38,12 @@ export const getEthereum = (connector) => {
 
       return window['ethereum'];
     }
-    case CONNECTORS.WALLET_CONNECT:
+    case CONNECTORS.WALLET_CONNECT: {
       return new WalletConnectProvider({
         chainId: 56,
         rpc: noderealRPC,
       });
+    }
     default:
       return null;
   }

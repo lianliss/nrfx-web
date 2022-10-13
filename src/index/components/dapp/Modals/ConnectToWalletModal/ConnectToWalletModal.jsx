@@ -42,8 +42,11 @@ function ConnectToWalletModal(props) {
             title="Trust Wallet"
             icon={require('src/asset/icons/social/trustWallet.svg')}
             style={{ background: '#3375bb' }}
-            onClick={() => connectWallet(CONNECTORS.METAMASK)}
-            disabled={!adaptive}
+            onClick={() =>
+              connectWallet(
+                adaptive ? CONNECTORS.METAMASK : CONNECTORS.WALLET_CONNECT
+              )
+            }
           />
         </div>
         <div className="row">
