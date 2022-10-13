@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env DOMAIN=index PORT=80 HTTPS=false node scripts/start.js",
+    "startHost": "cross-env HOST=0.0.0.0 DOMAIN=index PORT=80 HTTPS=true node scripts/start.js",
     "startStage": "cross-env WEB3=https://web3.nrfxlab.world DOMAIN=index PORT=80 HTTPS=false node scripts/start.js",
     "startLocal": "cross-env WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 DOMAIN=index PORT=80 HTTPS=false node scripts/start.js",
     "startLocalAdmin": "cross-env DOMAIN=admin WEB3=http://localhost:3001 WEBSOCKET=ws://localhost:3009 PORT=80 HTTPS=false node scripts/start.js",
