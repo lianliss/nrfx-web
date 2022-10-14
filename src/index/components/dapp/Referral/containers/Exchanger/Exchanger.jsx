@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import getFinePrice from 'src/utils/get-fine-price';
+import { getLang } from 'utils';
 
 // Components
 import Header from '../../components/Header/Header';
@@ -11,7 +12,7 @@ import Card from '../../components/Card/Card';
 import FAQ from '../../components/FAQ/FAQ';
 
 function Exchanger(params) {
-  const {adaptive, friends, rewards} = params;
+  const { adaptive, friends, rewards } = params;
   const activeFriends = _.uniqBy(rewards, 'account');
   const rates = useSelector((state) => state.web3.rates);
 
@@ -22,7 +23,7 @@ function Exchanger(params) {
 
   const totalByCurrencies = {};
   let totalUsd = 0;
-  rewards.map(r => {
+  rewards.map((r) => {
     if (!totalByCurrencies[r.currency]) totalByCurrencies[r.currency] = 0;
     totalByCurrencies[r.currency] += Number(r.amount) || 0;
     totalUsd += getUsdPrice(Number(r.amount) || 0, r.currency);
@@ -31,8 +32,8 @@ function Exchanger(params) {
   return (
     <>
       <Header
-        title="Invite your friends. Earn cryptocurrency together"
-        subtitle="Earn up to 30% from friends’ commission on Fiat deposits and 5% from their NRFX token purchases through an Narfex Exchanger"
+        title={getLang('dapp_referral_exchanger_title')}
+        subtitle={getLang('dapp_referral_exchanger_subtitle')}
         link="https://narfex.org?ref=dd4e20hfj09nrtyasdasd"
         willGetNumber={100}
         friendsWillGetNumber={0}
@@ -41,36 +42,46 @@ function Exchanger(params) {
       <Dashboard>
         <Card
           firstIcon={{ src: 'icons/cabinet/team-icon.svg', background: '#fff' }}
-          firstTitle="Active Friends / Total Friends"
+          firstTitle={`${getLang('dapp_referral_active_friends')} / ${getLang(
+            'dapp_referral_total_friends'
+          )}`}
           firstCount={`${activeFriends.length}/${friends.length}`}
-          firstQuestion="Active Friends, Total Friends"
+          firstQuestion={`${getLang('dapp_referral_active_friends')}, ${getLang(
+            'dapp_referral_total_friends'
+          )}`}
           secondIcon={{
             src: 'icons/narfex/white-icon.svg',
             background: 'var(--blue-light-gradient)',
           }}
-          secondTitle="Total earned"
+          secondTitle={`${getLang('global_total')} ${getLang(
+            'dapp_global_earned'
+          ).toLowerCase()}`}
           secondCount={`${getFinePrice(totalUsd)} USD`}
           secondary
           {...params}
         />
-        {Object.keys(totalByCurrencies).map(currency => {
+        {Object.keys(totalByCurrencies).map((currency) => {
           const amount = totalByCurrencies[currency];
           const usd = getUsdPrice(amount, currency);
-          return <Card
-            firstTitle={`Total ${currency} earned`}
-            firstCount={`${getFinePrice(amount)} ${currency}`}
-            secondTitle="Equivalently"
-            secondCount={`${getFinePrice(usd)} USD`}
-          />
+          return (
+            <Card
+              firstTitle={`${getLang('global_total')} ${currency} ${getLang(
+                'dapp_global_earned'
+              ).toLowerCase()}`}
+              firstCount={`${getFinePrice(amount)} ${currency}`}
+              secondTitle={getLang('dapp_global_equivalently')}
+              secondCount={`${getFinePrice(usd)} USD`}
+            />
+          );
         })}
       </Dashboard>
       <ReferralList
-        title="Referral List"
-        subtitle="All your referral friends in one place"
+        title={getLang('dapp_referral_list_title')}
+        subtitle={getLang('dapp_referral_list_subtitle')}
         getUsdPrice={getUsdPrice}
         {...params}
       />
-      <FAQ adaptive={adaptive} />
+      <FAQ adaptive={adaptive} type="exchanger" />
     </>
   );
 }

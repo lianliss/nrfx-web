@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Row, Col, DropdownElement } from 'src/ui';
@@ -11,7 +12,35 @@ import { getLang } from 'utils';
 // Styles
 import './FAQ.less';
 
-function FAQ({ adaptive }) {
+function FAQ({ adaptive, type }) {
+  const [items, setItems] = React.useState([]);
+  const leftColumnItems = items.filter((__, i) => i % 2 === 0);
+  const rightColumnItems = items.filter((__, i) => i % 2 !== 0);
+
+  React.useEffect(() => {
+    setItems(getItems());
+  }, []);
+
+  const getItems = () => {
+    const findedQuestions = Array(18)
+      .fill({})
+      .map((__, index) => {
+        const questionLang = `dapp_referral_faq_${type}_${index + 1}_question`;
+        const question = getLang(questionLang);
+        const answerLang = `dapp_referral_faq_${type}_${index + 1}_answer`;
+        const answer = getLang(answerLang);
+
+        if (questionLang === question) {
+          return null;
+        }
+
+        return { question, answer: answer === answerLang ? '' : answer };
+      })
+      .filter((item) => item);
+
+    return findedQuestions;
+  };
+
   const FAQItem = ({ question, answer }) => {
     return (
       <DropdownElement
@@ -36,94 +65,28 @@ function FAQ({ adaptive }) {
       <h2>FAQ</h2>
       <Row wrap={adaptive}>
         <Col className="Referral__FAQ__items">
-          <FAQItem
-            question={getLang('Where do get my referral link?')}
-            answer={getLang(
-              'How much crypto can I earn via the Swap\n Referral Program?'
-            )}
-          />
-          <FAQItem
-            question={getLang('How do I Invite a referral friends?  ')}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'Are there separate balances for referral rewards from friends Swaps, Farms, Launchpools?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang('How do I generate a new referral link?')}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang('Where are all my generated referral links?')}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'In what crypto currency the referral commission is accounted to my referral balance?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'Are there fees for referral rewards withdrawal from referral balances?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang('How does profit sharing work?')}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
+          {leftColumnItems.map((item, key) => (
+            <FAQItem question={item.question} answer={item.answer} key={key} />
+          ))}
         </Col>
         <Col className="Referral__FAQ__items">
-          <FAQItem
-            question={getLang(
-              'How much crypto can I earn via the Swap Referral Program?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'Is Referral Program Active for all Launchpools?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'Is the Swap referral program active for all swap pairs?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'How much can I earn from my friends Farms & Launchpools?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'Can I profit from the Referral Program without any investments from my side?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'When will I get my referral reward from Farms & Launchpools?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
-          <FAQItem
-            question={getLang(
-              'What percentage of Swap referral rewards will I earn if I have 0 NRFX staked in NRFX Holder Pool?'
-            )}
-            answer="Connect a wallet and find your referral link in the Referral section."
-          />
+          {rightColumnItems.map((item, key) => (
+            <FAQItem question={item.question} answer={item.answer} key={key} />
+          ))}
         </Col>
       </Row>
     </div>
   );
 }
+
+FAQ.propTypes = {
+  type: PropTypes.oneOf(['exchanger', 'farming']),
+  adaptive: PropTypes.bool,
+};
+
+FAQ.defaultProps = {
+  type: 'exchanger',
+  adaptive: false,
+};
 
 export default FAQ;
