@@ -22,6 +22,8 @@ import {
   fetchEthereumRequest,
 } from './multiwallets/multiwalletsDifference';
 import * as CONNECTORS from './multiwallets/connectors';
+import { marketCoins } from 'src/services/coingeckoApi';
+
 export const Web3Context = React.createContext();
 
 const DEFAULT_DECIMALS = 18;
@@ -485,6 +487,7 @@ class Web3Provider extends React.PureComponent {
   async logout() {
     this.setBalances([], 'clear');
     this.setState({
+      tokens: [],
       isConnected: false,
       accountAddress: null,
       chainId: null,
@@ -533,7 +536,8 @@ class Web3Provider extends React.PureComponent {
         ...this.state.tokens,
         ...tokens,
       ], 'address')
-        .filter(fineToken);
+        .filter(fineToken)
+        .map(token => ({ ...token, balance: '0' }));
       this.setState({
         tokens: result,
       });
@@ -814,17 +818,12 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(
     accountAddress = this.state.accountAddress,
-    choosenTokens = null,
-    loadAgain = false,
-    required = false,
   ) {
-    // Only MetaMask have a good provider
-    // for send more requests on one time.
-    const isMetamask = this.state.connector === CONNECTORS.METAMASK &&
-      _.get(window, 'ethereum.isMetaMask');
-    if (!isMetamask && !required) return;
-
     try {
+      // Only MetaMask have a good provider
+      // for send more requests on one time.
+      const isMetamask = this.state.connector === CONNECTORS.METAMASK &&
+        _.get(window, 'ethereum.isMetaMask');
       // Set positive balance tokens
       this.setBalances(this.state.tokens.filter((t) => t.balance > 0));
 
@@ -839,22 +838,14 @@ class Web3Provider extends React.PureComponent {
       this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
-
       const tokenIsFine = (t) => {
         return !!(t.chainId === this.state.chainId && t.address);
       };
 
-      const tokens = choosenTokens
+      const choosenTokens = !isMetamask ? await this.getChoosenTokens() : [];
+      const tokens = !isMetamask
         ? choosenTokens.filter(tokenIsFine)
         : this.state.tokens.filter(tokenIsFine);
-
-      if (!loadAgain) {
-        const tokensWithBalance = tokens.filter((t) => t.balance);
-
-        if (tokensWithBalance.length === tokens.length) {
-          return 'loaded';
-        }
-      }
 
       await this.setBNBBalance();
 
@@ -1750,6 +1741,28 @@ class Web3Provider extends React.PureComponent {
       console.log('[sendTokens]', error);
       return null;
     }
+  }
+
+  async getChoosenTokens() {
+    const { tokens, chainId } = this.state;
+
+    const topCoingeckoCoins = await marketCoins();
+    const topCoinsSymbols = topCoingeckoCoins.map((coin) => coin.symbol);
+    const pancakeTokens = tokens.filter((t) => t.chainId === chainId);
+
+    const topCoins = pancakeTokens.filter((token) => {
+      return topCoinsSymbols.find(
+        (coinSymbol) => token.symbol.toLowerCase() === coinSymbol.toLowerCase()
+      );
+    });
+
+    // NRFX + other tokens.
+    const fineCoins = topCoins.find((t) => t.symbol === 'NRFX')
+      ? topCoins
+      : [pancakeTokens[0], ...topCoins];
+
+    // loadAccountBalances(accountAddress, fineCoins, false, true);
+    return fineCoins;
   }
 
   render() {
