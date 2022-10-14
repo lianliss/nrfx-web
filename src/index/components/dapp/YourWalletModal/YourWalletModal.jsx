@@ -15,13 +15,14 @@ import './YourWalletModal.less';
 
 function YourWalletModal(props) {
   const context = React.useContext(Web3Context);
-  const { isConnected, chainId, accountAddress } = context;
+  const { isConnected, chainId, accountAddress, logout } = context;
 
-  const transactions = window.localStorage
-    .getItem('DexSwapTransactions')
+  const transactions = window.localStorage.getItem('DexSwapTransactions')
     ? JSON.parse(window.localStorage.getItem('DexSwapTransactions'))
     : [];
-  const [transactionsCount, setTransactionsCount] = React.useState(transactions.length);
+  const [transactionsCount, setTransactionsCount] = React.useState(
+    transactions.length
+  );
 
   const onClear = () => {
     window.localStorage.removeItem('DexSwapTransactions');
@@ -32,7 +33,7 @@ function YourWalletModal(props) {
     if (!isConnected) {
       props.onClose();
     }
-  }, []);
+  }, [isConnected]);
 
   return (
     <TransactionModal
@@ -63,9 +64,13 @@ function YourWalletModal(props) {
           </CopyText>
         </div>
         <div className="col">
-          <a href={`https://${chainId !== 56 ? 'testnet.' : ''}bscscan.com/address/${accountAddress}`}
-             className="action-text"
-             target="_blank">
+          <a
+            href={`https://${
+              chainId !== 56 ? 'testnet.' : ''
+            }bscscan.com/address/${accountAddress}`}
+            className="action-text"
+            target="_blank"
+          >
             View on BscScan <SVG src={require('src/asset/icons/export.svg')} />
           </a>
         </div>
@@ -74,7 +79,7 @@ function YourWalletModal(props) {
         <RecentTransactions items={transactions} onClear={onClear} />
       </div>
       <div className="row">
-        <Button type="secondary-light" disabled size="big">
+        <Button type="secondary-light" size="big" onClick={logout}>
           Logout
         </Button>
       </div>

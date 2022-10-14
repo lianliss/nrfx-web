@@ -13,7 +13,6 @@ import BalancesBlock from './components/BalancesBlock/BalancesBlock';
 import NftsBlock from './components/NftsBlock/NftsBlock';
 import { getLang } from 'src/utils';
 import { web3RatesSelector } from 'src/selectors';
-import { marketCoins } from 'src/services/coingeckoApi';
 
 function WalletsExists() {
   // Design
@@ -29,9 +28,7 @@ function WalletsExists() {
 
   // Main
   const {
-    connector,
     accountAddress,
-    chainId,
     balances,
     loadAccountBalances,
     updateFiats,
@@ -43,33 +40,8 @@ function WalletsExists() {
     if (!accountAddress) return;
 
     updateFiats(null, rates);
-
-    if (connector === 'bsc') {
-      setCoins();
-      return;
-    }
-
-    loadAccountBalances(accountAddress, null, false, true);
+    loadAccountBalances(accountAddress);
   }, [accountAddress]);
-
-  const setCoins = async () => {
-    const topCoingeckoCoins = await marketCoins();
-    const topCoinsSymbols = topCoingeckoCoins.map((coin) => coin.symbol);
-    const pancakeTokens = tokens.filter((t) => t.chainId === chainId);
-
-    const topCoins = pancakeTokens.filter((token) => {
-      return topCoinsSymbols.find(
-        (coinSymbol) => token.symbol.toLowerCase() === coinSymbol.toLowerCase()
-      );
-    });
-
-    // NRFX + other tokens.
-    const fineCoins = topCoins.find((t) => t.symbol === 'NRFX')
-      ? topCoins
-      : [pancakeTokens[0], ...topCoins];
-
-    loadAccountBalances(accountAddress, fineCoins, false, true);
-  };
 
   return (
     <div className="WalletsExists">

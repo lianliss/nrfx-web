@@ -40,6 +40,13 @@ function getTokenPrice(token) {
   return price;
 }
 
+function getDefaultCommission(token) {
+  const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
+  return token.isFiat
+    ? _.get(commissions, 'FiatDefault', 0)
+    : _.get(commissions, 'BinanceDefault', 0);
+}
+
 function ExchangerSwap(props) {
   const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
@@ -96,8 +103,16 @@ function ExchangerSwap(props) {
   };
 
   // Calculate amount
-  const fiatCommission = (Number(_.get(commissions, `${fiatSymbol.toLowerCase()}`, 0)) || 0) / 100;
-  const coinCommission = (Number(_.get(commissions, `${coinSymbol.toLowerCase()}`, commissions.default)) || 0) / 100;
+  const fiatCommission = (Number(_.get(
+    commissions,
+    `${fiatSymbol.toLowerCase()}`,
+    getDefaultCommission(fiat),
+  ))) / 100;
+  const coinCommission = (Number(_.get(
+    commissions,
+    `${coinSymbol.toLowerCase()}`,
+    getDefaultCommission(coin)
+    )) || 0) / 100;
   const rate = (fiatPrice * (1 - fiatCommission)) / coinPrice;
   const fiatAmount = Number(fiatValue) || 0;
   const coinAmount = fiatAmount * rate * (1 - coinCommission);
