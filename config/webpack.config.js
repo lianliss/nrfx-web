@@ -259,10 +259,15 @@ module.exports = function(webpackEnv) {
       ],
       fallback: {
         fs: false,
-        'stream': require.resolve('stream-browserify'),
-        'buffer': require.resolve('buffer/'),
         'util': require.resolve('util/'),
+        'url': require.resolve(`url/`),
         'assert': require.resolve('assert/'),
+        "crypto": require.resolve("crypto-browserify"),
+        "os": require.resolve("os-browserify/browser"),
+        "https": require.resolve("https-browserify"),
+        "http": require.resolve("stream-http"),
+        'stream': require.resolve('stream-browserify'),
+        'buffer': require.resolve('buffer'),
       },
     },
     resolveLoader: {
@@ -274,7 +279,7 @@ module.exports = function(webpackEnv) {
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
-        { parser: { requireEnsure: false } },
+        // { parser: { requireEnsure: false } },
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
@@ -459,7 +464,6 @@ module.exports = function(webpackEnv) {
             !!~process.env.BRANCH_NAME.indexOf('fe') &&
             'stage'
           ) || process.env.BRANCH_NAME)),
-        'global': {},
       }),
       new webpack.IgnorePlugin({
         resourceRegExp: /^\.\/locale$/,
@@ -532,8 +536,16 @@ module.exports = function(webpackEnv) {
           //formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
       isEnvDevelopment && new WriteFilePlugin(),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+      }),
+      new webpack.ProvidePlugin({
+          process: 'process/browser',
+      }),
     ].filter(Boolean),
-    node: false,
+    node: {
+      global: true,
+    },
     performance: false,
   };
 };

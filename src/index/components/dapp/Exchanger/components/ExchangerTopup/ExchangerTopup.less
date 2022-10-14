@@ -65,16 +65,18 @@
       color: var(--royal-blue);
       font-weight: 600;
     }
-    &-buttons {
-      display: flex;
-
-      .Button:not(:first-child) {
-        margin-left: 8px;
-      }
-    }
 
     .Button:not(:first-child) {
       margin-top: 13px;
+    }
+    
+    &-buttons {
+      display: flex;
+      
+      .Button:not(:first-child) {
+        margin-top: 0;
+        margin-left: 8px;
+      }
     }
   }
 
