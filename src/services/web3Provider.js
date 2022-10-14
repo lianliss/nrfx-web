@@ -18,12 +18,14 @@ import * as toast from "src/actions/toasts";
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
 import {
   getRequestMetods,
-  getEthereumObject,
+  getConnectorObject,
   fetchEthereumRequest,
-} from './multiwalletsDifference';
-import router from 'src/router';
+} from './multiwallets/multiwalletsDifference';
+import * as CONNECTORS from './multiwallets/connectors';
+import { marketCoins } from 'src/services/coingeckoApi';
 
 export const Web3Context = React.createContext();
+
 const DEFAULT_DECIMALS = 18;
 const GWEI_DECIMALS = 9;
 const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigInt(10000));
@@ -49,16 +51,12 @@ class Web3Provider extends React.PureComponent {
     poolsList: networks[56].poolsList,
     prices: {},
     fiats: {},
-    connector: 'metamask'
+    connector: CONNECTORS.METAMASK
   };
 
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
-  rpcProviderUrl = {
-    mainnet: 'https://bsc-mainnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
-    testnet: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a'
-  };
   providerAddress = 'asd';
   factoryAddress = networks[56].factoryAddress;
   routerAddress = networks[56].providerAddress;
@@ -97,7 +95,7 @@ class Web3Provider extends React.PureComponent {
 
   componentDidMount() {
     this._mounted = true;
-
+    
     const provider = new Web3.providers.HttpProvider(
       this.providerAddress
     );
@@ -437,23 +435,21 @@ class Web3Provider extends React.PureComponent {
   async connectWallet(connector = this.state.connector) {
     try {
       // Get connector.
-      this.ethereum = getEthereumObject(connector);
-      if (!this.ethereum) {
+      const ethereumObject = getConnectorObject(connector);
+
+      if (!ethereumObject) {
         return toast.error('No wallet plugins detected');
       }
 
+      this.ethereum = ethereumObject.ethereum;
       const chainIdNumber = this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
       this.requestMethods = getRequestMetods(connector);
+      const provider = ethereumObject.provider;
 
-      // Rpc of chainId
-      const currentChainRPC = chainIdNumber === 97
-        ? this.rpcProviderUrl.testnet
-        : this.rpcProviderUrl.mainnet;
-      
-      // Provider of connector.
-      const provider = this.ethereum.isMetaMask
-        ? this.ethereum
-        : currentChainRPC;
+      if (connector === CONNECTORS.WALLET_CONNECT) {
+        await provider.enable();
+      }
+
       this.web3 = new Web3(provider);
       this.setChain(chainIdNumber);
 
@@ -485,6 +481,24 @@ class Web3Provider extends React.PureComponent {
     } catch (error) {
       console.log('error', error);
       throw error;
+    }
+  }
+
+  async logout() {
+    this.setBalances([], 'clear');
+    this.setState({
+      tokens: [],
+      isConnected: false,
+      accountAddress: null,
+      chainId: null,
+    });
+
+    switch (this.state.connector) {
+      case CONNECTORS.WALLET_CONNECT:
+        await this.ethereum.disconnect();
+        break;
+      default:
+        break;
     }
   }
 
@@ -522,7 +536,8 @@ class Web3Provider extends React.PureComponent {
         ...this.state.tokens,
         ...tokens,
       ], 'address')
-        .filter(fineToken);
+        .filter(fineToken)
+        .map(token => ({ ...token, balance: '0' }));
       this.setState({
         tokens: result,
       });
@@ -803,15 +818,12 @@ class Web3Provider extends React.PureComponent {
    */
   async loadAccountBalances(
     accountAddress = this.state.accountAddress,
-    choosenTokens = null,
-    loadAgain = false,
-    required = false,
   ) {
-    // Only MetaMask have a good provider
-    // for send more requests on one time.
-    if (!_.get(window, 'ethereum.isMetaMask') && !required) return;
-
     try {
+      // Only MetaMask have a good provider
+      // for send more requests on one time.
+      const isMetamask = this.state.connector === CONNECTORS.METAMASK &&
+        _.get(window, 'ethereum.isMetaMask');
       // Set positive balance tokens
       this.setBalances(this.state.tokens.filter((t) => t.balance > 0));
 
@@ -826,22 +838,14 @@ class Web3Provider extends React.PureComponent {
       this.setBalances([], 'tokens');
 
       // Separate tokens to small chunks
-
       const tokenIsFine = (t) => {
         return !!(t.chainId === this.state.chainId && t.address);
       };
 
-      const tokens = choosenTokens
+      const choosenTokens = !isMetamask ? await this.getChoosenTokens() : [];
+      const tokens = !isMetamask
         ? choosenTokens.filter(tokenIsFine)
         : this.state.tokens.filter(tokenIsFine);
-
-      if (!loadAgain) {
-        const tokensWithBalance = tokens.filter((t) => t.balance);
-
-        if (tokensWithBalance.length === tokens.length) {
-          return 'loaded';
-        }
-      }
 
       await this.setBNBBalance();
 
@@ -1739,6 +1743,28 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  async getChoosenTokens() {
+    const { tokens, chainId } = this.state;
+
+    const topCoingeckoCoins = await marketCoins();
+    const topCoinsSymbols = topCoingeckoCoins.map((coin) => coin.symbol);
+    const pancakeTokens = tokens.filter((t) => t.chainId === chainId);
+
+    const topCoins = pancakeTokens.filter((token) => {
+      return topCoinsSymbols.find(
+        (coinSymbol) => token.symbol.toLowerCase() === coinSymbol.toLowerCase()
+      );
+    });
+
+    // NRFX + other tokens.
+    const fineCoins = topCoins.find((t) => t.symbol === 'NRFX')
+      ? topCoins
+      : [pancakeTokens[0], ...topCoins];
+
+    // loadAccountBalances(accountAddress, fineCoins, false, true);
+    return fineCoins;
+  }
+
   render() {
     window.web3Provider = this;
 
@@ -1747,6 +1773,7 @@ class Web3Provider extends React.PureComponent {
       web3: this.web3,
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
+      logout: this.logout.bind(this),
       getPairAddress: this.getPairAddress.bind(this),
       getReserves: this.getReserves.bind(this),
       pairs: this.pairs,
