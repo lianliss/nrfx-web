@@ -191,8 +191,8 @@ class CommissionsScreen extends React.PureComponent {
     let total = result;
     if (numSecondValue) {
       total = currency
-        ? rate - rate * (numSecondValue / 100)
-        : rate + rate * (numSecondValue / 100);
+        ? result - result * (numSecondValue / 100)
+        : result + result * (numSecondValue / 100);
     }
   
     return <tr key={symbol}>
