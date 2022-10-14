@@ -4,6 +4,7 @@ import "./Input.less";
 import React from "react";
 import PropTypes from "prop-types";
 import SVG from "utils/svg-wrap";
+import _ from 'lodash';
 // internal
 import MarkDown from "../MarkDown/MarkDown";
 import { classNames } from "../../utils";
@@ -77,7 +78,7 @@ class Input extends React.Component {
     placeholder =
       typeof placeholder === "string"
         ? placeholder
-        : placeholder && placeholder.props.langContent;
+        : _.get(placeholder, 'props.langContent', undefined);
 
     let type = this.props.type;
     let error = false;
@@ -159,7 +160,7 @@ class Input extends React.Component {
         <input
           ref="input"
           {...params}
-          value={value === null ? "" : value}
+          value={value === null || typeof value === 'undefined' ? "" : value}
           onKeyPress={this.__onKeyPress}
           onChange={this.__onChange}
           onBlur={this.props.onBlur || (() => {})}
