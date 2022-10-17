@@ -11,7 +11,7 @@ function WalletsHeader({ isFiat }) {
   return (
     <div className="WalletsHeader">
       <div className="WalletsHeader__col">
-        <WalletsTotalBalance amount={1} totalType="up" total={1} />
+        <WalletsTotalBalance />
       </div>
       <div className="WalletsHeader__col">
         {isFiat ? (
