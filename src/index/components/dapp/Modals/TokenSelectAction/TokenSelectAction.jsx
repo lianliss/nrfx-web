@@ -38,10 +38,10 @@ function TokenSelectAction({ type, onClose, onSelected }) {
         fiats={fiatTokens}
         selected={selected}
         onChange={handleSelectedChange}
-        defautList={type}
+        defaultList={type}
         getTokenBalanceKey={getTokenBalanceKey}
-        disableSwitcher
         onClose={onClose}
+        disableSwitcher
       />
     </CabinetModal>
   );

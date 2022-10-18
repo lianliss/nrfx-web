@@ -26,19 +26,28 @@ function WalletsHeader({ isFiat }) {
   const coinsType = isFiat ? 'fiats' : 'tokens';
 
   const handlers = {
-    tokens: {
-      buy: (coin) => {
-        router.navigate(PAGES.DAPP_EXCHANGE, { coin: coin.symbol });
-      },
-      send: () => {
-        setIsSendTokens(true);
-      },
-    },
-    fiats: {},
+    buy: (coin) => router.navigate(PAGES.DAPP_EXCHANGE, { coin: coin.symbol }),
+    send: () => setIsSendTokens(true),
+    deposit: (fiat) => handleFiatSelect('refill', fiat),
+    withdrawal: (fiat) => handleFiatSelect('withdrawal', fiat),
+  };
+
+  /**
+   * Opens modal for withdrawal or refill.
+   * @param type {string} - oneOf('withdrawal', 'refill').
+   * @param fiat {tokenObject}
+   * @return {void}
+   */
+  const handleFiatSelect = (type, fiat) => {
+    openModal('deposit_balance', {
+      currency: fiat.symbol,
+      amount: '0',
+      type,
+    });
   };
 
   const handleTokenSelect = (coin) => {
-    const selectHandler = handlers[coinsType][action];
+    const selectHandler = handlers[action];
     setCoin(coin);
 
     if (_.isFunction(selectHandler)) {
@@ -55,62 +64,88 @@ function WalletsHeader({ isFiat }) {
     <TokenSelectAction
       onClose={() => setIsTokenSelect(false)}
       onSelected={handleTokenSelect}
+      type={coinsType}
     />
   );
 
   return (
-    <div className="WalletsHeader">
-      <div className="WalletsHeader__col">
-        <WalletsTotalBalance amount={1} totalType="up" total={1} />
-      </div>
-      <div className="WalletsHeader__col">
-        {isFiat ? (
-          <DynamicShadow>
-            <Button type="lightBlue" style={{ minWidth: 265 }}>
-              <SVG
-                src={require('src/asset/icons/cabinet/buy.svg')}
-                className="white-icon"
-              />
-              {getLang('dapp_global_deposit')}
-            </Button>
-          </DynamicShadow>
-        ) : (
-          <>
-            <Button
-              type="secondary-light"
-              onClick={() => handleButtonClick('buy')}
-            >
-              <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-              {getLang('global_buy')}
-            </Button>
-            <Button
-              type="secondary-light"
-              onClick={() => openModal('receive_qr')}
-            >
-              <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
-              {getLang('global_receive')}
-            </Button>
-            <DynamicShadow>
+    <>
+      <div className="WalletsHeader">
+        <div className="WalletsHeader__col">
+          <WalletsTotalBalance amount={1} totalType="up" total={1} />
+        </div>
+        <div className="WalletsHeader__col">
+          {isFiat ? (
+            <>
+              <DynamicShadow>
+                <Button
+                  type="lightBlue"
+                  style={{ minWidth: 265 }}
+                  onClick={() => handleButtonClick('deposit')}
+                >
+                  <SVG
+                    src={require('src/asset/icons/cabinet/buy.svg')}
+                    className="white-icon"
+                  />
+                  {getLang('dapp_global_deposit')}
+                </Button>
+              </DynamicShadow>
+              <DynamicShadow>
+                <Button
+                  type="lightBlue"
+                  style={{ minWidth: 265 }}
+                  onClick={() => handleButtonClick('withdrawal')}
+                >
+                  <SVG
+                    src={require('src/asset/icons/cabinet/buy.svg')}
+                    className="white-icon"
+                  />
+                  {getLang('global_withdrawal')}
+                </Button>
+              </DynamicShadow>
+            </>
+          ) : (
+            <>
               <Button
-                type="lightBlue"
-                onClick={() => handleButtonClick('send')}
+                type="secondary-light"
+                onClick={() => handleButtonClick('buy')}
               >
-                <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
-                {getLang('global_send')}
+                <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
+                {getLang('global_buy')}
               </Button>
-            </DynamicShadow>
-          </>
+              <Button
+                type="secondary-light"
+                onClick={() => openModal('receive_qr')}
+              >
+                <SVG
+                  src={require('src/asset/icons/cabinet/card-receive.svg')}
+                />
+                {getLang('global_receive')}
+              </Button>
+              <DynamicShadow>
+                <Button
+                  type="lightBlue"
+                  onClick={() => handleButtonClick('send')}
+                >
+                  <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
+                  {getLang('global_send')}
+                </Button>
+              </DynamicShadow>
+            </>
+          )}
+        </div>
+      </div>
+      <div className="Modals">
+        {isTokenSelect && TokenSelectComponent}
+        {isSendTokens && (
+          <SendTokens
+            token={coin}
+            etherBalance={coin.balance ? wei.from(coin.balance) : 0}
+            onClose={() => setIsSendTokens(false)}
+          />
         )}
       </div>
-      {isTokenSelect && TokenSelectComponent}
-      {isSendTokens && (
-        <SendTokens
-          token={coin}
-          etherBalance={wei.from(coin.balance)}
-          onClose={() => setIsSendTokens(false)}
-        />
-      )}
-    </div>
+    </>
   );
 }
 
