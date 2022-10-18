@@ -1389,6 +1389,26 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
+  /**
+   * Returns tokens array
+   * @param rates {array}
+   * @return {array}
+   */
+  getFiatsArray(rates) {
+    const userId = `${this.state.chainId}${this.state.accountAddress}`;
+    const fiatTokens = _.get(this.state.fiats, userId, [{
+      name: 'Russian Ruble on Narfex',
+      symbol: 'RUB',
+      address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
+      logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
+    }]).map(token => {
+      const price = _.get(rates, token.symbol.toLowerCase());
+      return price ? {...token, price} : token;
+    });
+
+    return fiatTokens;
+  }
+
   async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams, additionalOptions = {}) {
     const {isConnected, accountAddress} = this.state;
     if (!isConnected) throw new Error('Wallet is not connected');
@@ -1810,6 +1830,7 @@ class Web3Provider extends React.PureComponent {
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
       updateFiats: this.updateFiats.bind(this),
+      getFiatsArray: this.getFiatsArray.bind(this),
       cardReserve: this.cardReserve.bind(this),
       confirmPayment: this.confirmPayment.bind(this),
       cancelReservation: this.cancelReservation.bind(this),
