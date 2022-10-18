@@ -14,7 +14,7 @@ import _ from 'lodash';
 
 import './SendTokens.less';
 
-function SendTokens({ onClose, token }) {
+function SendTokens({ onClose, token, etherBalance }) {
   // Constants
   const dispatch = useDispatch();
   const adaptive = useSelector((state) => state.default.adaptive);
@@ -37,7 +37,7 @@ function SendTokens({ onClose, token }) {
       (balanceToken) =>
         balanceToken.symbol.toLowerCase() === token.symbol.toLowerCase()
     ) || {};
-  const balance = balancesToken.balance || 0;
+  const balance = etherBalance || balancesToken.balance || 0;
 
   // Functions
   const toastPush = (text, type) => {
