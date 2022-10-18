@@ -1369,8 +1369,6 @@ class Web3Provider extends React.PureComponent {
       });
 
       this.setBalances(userFiats.map((userFiat) => {
-        const userFiatBalance = userFiat.balance || '0';
-        const etherBalance = this.web3.utils.fromWei(userFiatBalance, 'ether');
         let price = 0;
         if (rates) {
           const symbol = userFiat.symbol.toLowerCase();
@@ -1381,7 +1379,6 @@ class Web3Provider extends React.PureComponent {
 
         return {
           ...userFiat,
-          balance: etherBalance,
           price
         }
       }), 'fiats');

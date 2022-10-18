@@ -15,7 +15,7 @@ function WalletsTotalBalance() {
 
   const getTotalBalance = () => {
     const fiatsTotalBalance = fiats.reduce((value, fiat) => {
-      const currentValue = fiat.balance * fiat.price || 0;
+      const currentValue = wei.from(fiat.balance) * fiat.price || 0;
 
       return value + currentValue;
     }, 0);
