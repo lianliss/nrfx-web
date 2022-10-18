@@ -77,10 +77,19 @@ function WalletsHeader({ isFiat }) {
         <div className="WalletsHeader__col">
           {isFiat ? (
             <>
+              <Button
+                type="secondary-light"
+                style={{ minWidth: 230 }}
+                onClick={() => handleButtonClick('withdrawal')}
+                shadow
+              >
+                <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
+                {getLang('global_withdrawal')}
+              </Button>
               <DynamicShadow>
                 <Button
                   type="lightBlue"
-                  style={{ minWidth: 265 }}
+                  style={{ minWidth: 230 }}
                   onClick={() => handleButtonClick('deposit')}
                 >
                   <SVG
@@ -88,19 +97,6 @@ function WalletsHeader({ isFiat }) {
                     className="white-icon"
                   />
                   {getLang('dapp_global_deposit')}
-                </Button>
-              </DynamicShadow>
-              <DynamicShadow>
-                <Button
-                  type="lightBlue"
-                  style={{ minWidth: 265 }}
-                  onClick={() => handleButtonClick('withdrawal')}
-                >
-                  <SVG
-                    src={require('src/asset/icons/cabinet/buy.svg')}
-                    className="white-icon"
-                  />
-                  {getLang('global_withdrawal')}
                 </Button>
               </DynamicShadow>
             </>
