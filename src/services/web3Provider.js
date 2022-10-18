@@ -1635,6 +1635,20 @@ class Web3Provider extends React.PureComponent {
       console.error('[getReferRewards]', error);
     }
   }
+  
+  async getAccountHistory() {
+    try {
+      const result = await this.backendRequest({},
+        `Get history`,
+        'history',
+        'get',
+      );
+      console.log('[getAccountHistory]', result);
+      return result;
+    } catch (error) {
+      console.error('[getAccountHistory]', error);
+    }
+  }
 
   // Get block from date.
   async dateToBlockMoralis (date = new Date()) {
@@ -1829,6 +1843,7 @@ class Web3Provider extends React.PureComponent {
       getReferHash: this.getReferHash.bind(this),
       getReferFriends: this.getReferFriends.bind(this),
       getReferRewards: this.getReferRewards.bind(this),
+      getAccountHistory: this.getAccountHistory.bind(this),
       cmcTokens: this.cmcTokens,
     }}>
       {this.props.children}
