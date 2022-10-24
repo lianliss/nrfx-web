@@ -10,7 +10,7 @@ const BankLogo = props => {
     bni: require("src/asset/banks/bni.svg"),
     bri: require("src/asset/banks/BRI.svg"),
     mandiri: require("src/asset/banks/mandiri.svg"),
-    permata: require("src/asset/banks/permata.svg"),
+    permata: require("src/asset/banks/Permata.svg"),
     tinkoff: require("src/asset/banks/tinkoff.svg"),
     gazprombank: require("src/asset/banks/gazprombank.svg"),
     vostokbank: require("src/asset/banks/vostokbank.svg"),
