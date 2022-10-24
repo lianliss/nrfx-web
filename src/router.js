@@ -93,6 +93,10 @@ export const routes =
           path: '/dapp/exchange',
         },
         {
+          name: pages.DAPP_TRANSACTION_HISTORY,
+          path: '/dapp/transaction_history',
+        },
+        {
           name: pages.DAPP_REFERRAL,
           path: '/dapp/referral',
         },
