@@ -8,9 +8,9 @@ import { classNames as cn } from "../../utils";
 const BankLogo = props => {
   const logos = {
     bni: require("src/asset/banks/bni.svg"),
-    bri: require("src/asset/banks/BRI.svg"),
+    bri: require("src/asset/banks/bri.svg"),
     mandiri: require("src/asset/banks/mandiri.svg"),
-    permata: require("src/asset/banks/Permata.svg"),
+    permata: require("src/asset/banks/permata.svg"),
     tinkoff: require("src/asset/banks/tinkoff.svg"),
     gazprombank: require("src/asset/banks/gazprombank.svg"),
     vostokbank: require("src/asset/banks/vostokbank.svg"),
