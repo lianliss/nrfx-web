@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
+import {setInvoice} from "src/actions/dapp/wallet";
 
 // Components
 import DepositModal from '../../DepositModal';
@@ -18,10 +19,11 @@ import { getLang } from 'src/utils';
 import './InvoiceDetails.less';
 
 function InvoiceDetails(props) {
+  const dispatch = useDispatch();
   const adaptive = useSelector(adaptiveSelector);
   const context = React.useContext(Web3Context);
   const { currency, amount } = props;
-  const { accountAddress, isConnected, addInvoice, getInvoicePDF } = context;
+  const { accountAddress, isConnected, addInvoice, getInvoice } = context;
   const phoneInputRef = React.useRef(null);
 
   const [phone, setPhone] = React.useState();
@@ -57,11 +59,14 @@ function InvoiceDetails(props) {
     setIsProcess(true);
     try {
       await addInvoice(amount, currency, phone, name, lastName);
-      await wait(1000);
-      await getInvoicePDF();
+      const newInvoice = await getInvoice(currency);
+      const invoiceObject = {};
+      invoiceObject[currency] = newInvoice;
+      dispatch(setInvoice(invoiceObject));
       toast.success('Invoice added');
-      await wait(4000);
-      props.onClose();
+      actions.openModal("swift_generated", {
+        currency: currency,
+      });
     } catch (error) {
       console.error('[onConfirm]', error);
       toast.error(error.message);
