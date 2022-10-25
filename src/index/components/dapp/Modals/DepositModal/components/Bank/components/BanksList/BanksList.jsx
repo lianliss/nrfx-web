@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CabinetScrollBlock from 'src/index/components/dapp/CabinetScrollBlock/CabinetScrollBlock';
 import { Row, Col } from 'src/ui';
 import SVG from 'utils/svg-wrap';
+import _ from 'lodash';
 
 import './BanksList.less';
 
@@ -17,9 +18,10 @@ function BanksList({ items, onChange, adaptive, scrollEverywhere }) {
     <BanksWrapper className="DepositModal__ChooseBank-items" noScrollX>
       {items.map((bank, key) => {
         let icon = null;
+        let bankCode = _.isFunction(bank.code.toLowerCase) ? bank.code.toLowerCase() : bank.code;
 
         try {
-          icon = require(`src/asset/banks/${bank.code}.svg`).default;
+          icon = require(`src/asset/banks/${bankCode}.svg`).default;
         } catch {
           console.log('[BankList] Logo is not defined');
         }
