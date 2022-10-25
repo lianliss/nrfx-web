@@ -45,7 +45,15 @@ function reduce(state = initialState, action = {}) {
           ...state.wallet,
           tokens: payload,
         }
-      }
+      };
+    case actionTypes.DAPP_SET_INVOICE:
+      return {
+        ...state,
+        invoices: {
+          ...state.invoices,
+          ...payload,
+        }
+      };
     default:
       return state;
   }

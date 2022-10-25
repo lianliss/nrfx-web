@@ -1,12 +1,36 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
+import { useDispatch, useSelector } from 'react-redux';
+import * as toast from 'src/actions/toasts';
 
 // Components
 import HaveAQuestion from '../../../components/HaveAQuestion/HaveAQuestion';
 import SVG from 'utils/svg-wrap';
 import { Button } from 'src/ui';
 
-function Main({ onNext }) {
-  const [invoiceLoaded, setInvoiceLoaded] = React.useState(false);
+function Main(props) {
+  const {onNext, currency} = props;
+  const [isProcess, setIsProcess] = React.useState(false);
+  const [isDownloaded, setIsDownloaded] = React.useState(false);
+  const context = React.useContext(Web3Context);
+  const {getInvoicePDF} = context;
+  const invoice = useSelector(state => _.get(state, `dapp.invoices.${currency}`));
+  if (!invoice) {
+    props.onClose();
+    return <></>;
+  }
+  
+  const onDownload = async () => {
+    setIsProcess(true);
+    try {
+      await getInvoicePDF(invoice.id);
+      setIsDownloaded(true);
+    } catch (error) {
+      console.error('[onDownload]', error);
+      toast.error(error.message);
+    }
+    setIsProcess(false);
+  };
 
   return (
     <div className="SwiftGenerated__main">
@@ -15,25 +39,30 @@ function Main({ onNext }) {
       </div>
       <div className="SwiftGenerated__row">
         <p>Download the invoice and make a Swift transfer in the amount</p>
-        <strong>of 0000 USD</strong>
+        <strong>of {invoice.amount} {currency}</strong>
       </div>
       <div className="SwiftGenerated__row">
         <HaveAQuestion />
       </div>
       <div className="SwiftGenerated__row">
         <Button
-          type="lightBlue"
-          onClick={() => setInvoiceLoaded(true)}
-          disabled={invoiceLoaded}
+          type={isDownloaded ? 'secondary' : 'lightBlue'}
+          onClick={onDownload}
+          state={isProcess ? 'loading' : ''}
         >
-          {invoiceLoaded ? 'Invoice loaded' : 'Download Invoice'}
+          Download Invoice
         </Button>
       </div>
       <div className="SwiftGenerated__row">
-        <div className="SwiftGenerated__next" onClick={onNext}>
+        {isDownloaded ? <Button
+          type="lightBlue"
+          onClick={onNext}
+        >
+          Next
+        </Button> : <div className="SwiftGenerated__next" onClick={onNext}>
           Next
           <SVG src={require('src/asset/icons/arrows/form-dropdown.svg')} />
-        </div>
+        </div>}
       </div>
     </div>
   );

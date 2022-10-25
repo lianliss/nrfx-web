@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import { Modal } from 'src/ui';
@@ -12,19 +13,31 @@ import './SwiftGenerated.less';
 
 function SwiftGenerated(props) {
   const [step, setStep] = React.useState('main');
+  const {currency} = props;
+  const invoice = useSelector(state => _.get(state, `dapp.invoices.${currency}`));
+  if (!invoice) {
+    props.onClose();
+    return <></>;
+  }
+  
+  const isWaitForReview = invoice.status === 'wait_for_review';
+  if (isWaitForReview && step !== 'finally') {
+    setStep('finally');
+  }
 
   return (
     <CabinetModal {...props} closeOfRef className="SwiftGenerated">
       <div className="SwiftGenerated__container">
-        {step === 'main' && <Main onNext={() => setStep('download')} />}
+        {step === 'main' && <Main {...props} onNext={() => setStep('download')} />}
         {step === 'download' && (
           <Download
             onBack={() => setStep('main')}
             onIPaidClick={() => setStep('finally')}
             onClose={props.onClose}
+            {...props}
           />
         )}
-        {step === 'finally' && <Finally />}
+        {step === 'finally' && <Finally {...props} />}
       </div>
     </CabinetModal>
   );

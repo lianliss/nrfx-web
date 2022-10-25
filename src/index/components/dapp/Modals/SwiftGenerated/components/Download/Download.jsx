@@ -1,4 +1,7 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
+import { useDispatch, useSelector } from 'react-redux';
+import {setInvoice} from "src/actions/dapp/wallet";
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -7,8 +10,46 @@ import { Button } from 'src/ui';
 // Styles
 import './Download.less';
 
-function Download({ onIPaidClick, onBack, onClose }) {
-  const [downloaded, setDownloaded] = React.useState(false);
+function Download({ onIPaidClick, onBack, onClose, currency }) {
+  const dispatch = useDispatch();
+  const [isProcess, setIsProcess] = React.useState(false);
+  const context = React.useContext(Web3Context);
+  const {uploadInvoiceScreenshot, getInvoice, reviewInvoice} = context;
+  const invoice = useSelector(state => _.get(state, `dapp.invoices.${currency}`));
+  if (!invoice) {
+    onClose();
+    return <></>;
+  }
+  
+  const isScreenshotUploaded = !!invoice.screenshot && invoice.screenshot.length;
+  
+  const upload = async () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('id', `invoiceInput${invoice.id}`);
+    input.setAttribute('accept', 'image/png, image/jpeg');
+    input.setAttribute('style', 'display: none');
+    input.addEventListener('change', async event => {
+      const file = event.target.files[0];
+      await uploadInvoiceScreenshot(currency, file);
+      const newInvoice = await getInvoice(currency);
+      const invoiceObject = {};
+      invoiceObject[currency] = newInvoice;
+      dispatch(setInvoice(invoiceObject));
+    });
+    document.body.appendChild(input);
+    input.click();
+  };
+  
+  const onReview = async () => {
+    setIsProcess(true);
+    await reviewInvoice(currency);
+    const newInvoice = await getInvoice(currency);
+    const invoiceObject = {};
+    invoiceObject[currency] = newInvoice;
+    dispatch(setInvoice(invoiceObject));
+    setIsProcess(false);
+  };
 
   return (
     <div className="SwiftGenerated__download">
@@ -25,19 +66,20 @@ function Download({ onIPaidClick, onBack, onClose }) {
       </div>
       <div className="SwiftGenerated__row">
         <Button
-          disabled={downloaded}
-          type="lightBlue"
+          type={!isScreenshotUploaded ? 'lightBlue' : 'secondary-alice'}
           size="large"
-          onClick={() => setDownloaded(true)}
+          disabled={isProcess}
+          onClick={upload}
         >
-          {downloaded ? 'Screenshot uploaded' : 'Download a screenshot'}
+          {isScreenshotUploaded ? 'Screenshot uploaded' : 'Upload a screenshot'}
         </Button>
         <Button
-          disabled={!downloaded}
-          shadow={!downloaded}
-          type={downloaded ? 'lightBlue' : 'secondary-alice'}
+          disabled={!isScreenshotUploaded}
+          shadow={!isScreenshotUploaded}
+          state={isProcess ? 'loading' : ''}
+          type={isScreenshotUploaded ? 'lightBlue' : 'secondary-alice'}
           size="large"
-          onClick={onIPaidClick}
+          onClick={onReview}
         >
           I paid
         </Button>

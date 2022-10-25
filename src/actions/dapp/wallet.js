@@ -5,3 +5,9 @@ export const setWalletTokens = (tokens) => {
     dispatch({ type: actionTypes.DAPP_SET_WALLET_TOKENS, payload: tokens });
   };
 };
+
+export const setInvoice = (payload) => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.DAPP_SET_INVOICE, payload });
+  };
+};

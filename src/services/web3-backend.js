@@ -49,7 +49,7 @@ export class Web3Backend {
           ...headers,
         };
 
-        if (responseType !== 'blob' &&  responseType !== 'arraybuffer') {
+        if (responseType !== 'blob' &&  responseType !== 'arraybuffer' && !headers['Content-Type']) {
           requestHeaders["Content-Type"] = "application/json";
         }
 
