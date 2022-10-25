@@ -63,6 +63,7 @@ function Exchanger(props) {
     symbol: 'RUB',
     address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
     logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
+    isFiat: true,
   }]).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
