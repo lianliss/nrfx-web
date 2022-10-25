@@ -25,7 +25,7 @@ function TransactionTableAdaptive({ accountHistory, getTokenFromSymbol }) {
                 target_amount={item.target_amount}
               />
             </Row>
-            <Row>
+            <Row alignItems="flex-end" justifyContent="space-between">
               <Col>
                 <span className="TransactionHistory__table-date">
                   10.01.2022
