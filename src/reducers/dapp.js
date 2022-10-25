@@ -3,6 +3,10 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   wallet: {
     tokens: [],
+    transactions: {
+      items: [],
+      status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    },
   },
   swap: {
     from: { symbol: 'NRFX' },
@@ -44,8 +48,20 @@ function reduce(state = initialState, action = {}) {
         wallet: {
           ...state.wallet,
           tokens: payload,
-        }
-      }
+        },
+      };
+    case actionTypes.DAPP_SET_TRANSACTIONS:
+      return {
+        ...state,
+        wallet: {
+          ...state.wallet,
+          transactions: {
+            ...state.wallet.transactions,
+            items: payload.items,
+            status: payload.status,
+          },
+        },
+      };
     default:
       return state;
   }

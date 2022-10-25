@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
@@ -8,71 +8,68 @@ import TransactionTableAdaptive from './components/TransactionTableAdaptive/Tran
 
 // Utils
 import { getLang } from 'src/utils';
-import { Web3Context } from '../../../../services/web3Provider';
-import { adaptiveSelector } from 'src/selectors';
+import { Web3Context } from 'src/services/web3Provider';
+import { adaptiveSelector, dappTransactionsSelector } from 'src/selectors';
+import { setTransactions } from 'src/actions/dapp/wallet';
 
 // Styles
 import './TransactionHistory.less';
 
-const accountHistory = [
-  {
-    type: 'topup',
-    source_currency: 'RUB',
-    target_currency: 'RUB',
-    source_amount: 22000,
-    target_amount: 22000,
-    timestamp: 1666282025,
-  },
-  {
-    type: 'exchange',
-    source_currency: 'RUB',
-    target_currency: 'USDT',
-    source_amount: 22000,
-    target_amount: 334.342,
-    timestamp: 1666282429,
-  },
-  {
-    type: 'topup',
-    source_currency: 'RUB',
-    target_currency: 'RUB',
-    source_amount: 22000,
-    target_amount: 22000,
-    timestamp: 1666282025,
-  },
-  {
-    type: 'exchange',
-    source_currency: 'RUB',
-    target_currency: 'USDT',
-    source_amount: 22000,
-    target_amount: 334.342,
-    timestamp: 1666282429,
-  },
-  {
-    type: 'topup',
-    source_currency: 'RUB',
-    target_currency: 'RUB',
-    source_amount: 22000,
-    target_amount: 22000,
-    timestamp: 1666282025,
-  },
-  {
-    type: 'exchange',
-    source_currency: 'RUB',
-    target_currency: 'USDT',
-    source_amount: 22000,
-    target_amount: 334.342,
-    timestamp: 1666282429,
-  },
-];
-
 function TransactionHistory() {
-  const adaptive = useSelector(adaptiveSelector);
-  const { getAccountHistory, accountAddress, getTokenFromSymbol } =
-    React.useContext(Web3Context);
+  // Context.
+  const {
+    getAccountHistory,
+    accountAddress,
+    isConnected,
+    updateFiats,
+    getTokenFromSymbol,
+    getFiatsArray,
+  } = React.useContext(Web3Context);
 
+  // Store.
+  const dispatch = useDispatch();
+  const adaptive = useSelector(adaptiveSelector);
+  const transactions = useSelector(dappTransactionsSelector);
+
+  // Constants
+  const accountHistory = transactions.items;
+
+  // Functional.
+  // Clear the filled transactions.
   React.useEffect(() => {
-    getAccountHistory().then(console.log);
+    if (transactions.status !== 'loaded') return;
+
+    dispatch(setTransactions([], 'idle'));
+  }, []);
+
+  // Get transactions.
+  React.useEffect(() => {
+    if (!isConnected) return;
+
+    getTransactionsData();
   }, [accountAddress]);
+
+  const getTransactionsData = async () => {
+    dispatch(setTransactions([], 'loading'));
+
+    try {
+      await updateFiatsByStatus();
+      const transactionItems = await getAccountHistory();
+
+      dispatch(setTransactions(transactionItems, 'loaded'));
+    } catch (error) {
+      console.log('[getTransactionsData]', error);
+      dispatch(setTransactions([], 'failed'));
+    }
+  };
+
+  const updateFiatsByStatus = async () => {
+    const fiats = getFiatsArray() || [];
+
+    if (fiats.length === 1) {
+      await updateFiats();
+    }
+  };
 
   return (
     <CabinetBlock className="TransactionHistory__wrap">
