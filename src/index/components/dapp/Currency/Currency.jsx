@@ -57,7 +57,10 @@ function Currency() {
     rates[paramsCurrency.toLowerCase()] ||
     rates[paramsCurrency.toUpperCase()] ||
     0;
-  const currencyBalance = Number(Number(currency.balance).toFixed(2));
+
+  const currencyBalance = currency.balance
+    ? Number(wei.from(currency.balance).toFixed(2))
+    : 0;
 
   React.useEffect(() => {
     if (!isConnected) return;
@@ -102,26 +105,18 @@ function Currency() {
     )[0];
 
     if (currencyFiat) {
-      const token = {
-        ...currencyFiat,
-        balance: web3.utils.fromWei(currencyFiat.balance),
-      };
-
-      updateTokenInBalances(token, 'fiats');
+      updateTokenInBalances(currencyFiat, 'fiats');
     }
 
     setLoading(false);
   };
 
   const fetchTokenBalance = async (currencyToken) => {
-    const balance = await getTokenBalance(currencyToken.address).then((r) =>
-      // web3.utils.fromWei(r)
-      wei.from(r)
-    );
+    const balance = await getTokenBalance(currencyToken.address);
 
     const token = {
       ...currencyToken,
-      balance: balance,
+      balance,
     };
 
     updateTokenInBalances(token, balancesType);
@@ -243,7 +238,7 @@ function Currency() {
                 <div className="Currency__currency_amount_rate">
                   $&nbsp;
                   <NumberFormat
-                    number={currency.balance * rate}
+                    number={currencyBalance * rate}
                     currency={'usd'}
                   />
                 </div>

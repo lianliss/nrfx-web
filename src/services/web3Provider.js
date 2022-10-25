@@ -1369,8 +1369,6 @@ class Web3Provider extends React.PureComponent {
       });
 
       this.setBalances(userFiats.map((userFiat) => {
-        const userFiatBalance = userFiat.balance || '0';
-        const etherBalance = this.web3.utils.fromWei(userFiatBalance, 'ether');
         let price = 0;
         if (rates) {
           const symbol = userFiat.symbol.toLowerCase();
@@ -1381,7 +1379,6 @@ class Web3Provider extends React.PureComponent {
 
         return {
           ...userFiat,
-          balance: etherBalance,
           price
         }
       }), 'fiats');
@@ -1390,6 +1387,26 @@ class Web3Provider extends React.PureComponent {
     } catch (error) {
       console.error('[updateFiats]', error);
     }
+  }
+
+  /**
+   * Returns tokens array
+   * @param rates {array}
+   * @return {array}
+   */
+  getFiatsArray(rates) {
+    const userId = `${this.state.chainId}${this.state.accountAddress}`;
+    const fiatTokens = _.get(this.state.fiats, userId, [{
+      name: 'Russian Ruble on Narfex',
+      symbol: 'RUB',
+      address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
+      logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
+    }]).map(token => {
+      const price = _.get(rates, token.symbol.toLowerCase());
+      return price ? {...token, price} : token;
+    });
+
+    return fiatTokens;
   }
 
   async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams, additionalOptions = {}) {
@@ -1635,6 +1652,20 @@ class Web3Provider extends React.PureComponent {
       console.error('[getReferRewards]', error);
     }
   }
+  
+  async getAccountHistory() {
+    try {
+      const result = await this.backendRequest({},
+        `Get history`,
+        'history',
+        'get',
+      );
+      console.log('[getAccountHistory]', result);
+      return result;
+    } catch (error) {
+      console.error('[getAccountHistory]', error);
+    }
+  }
 
   // Get block from date.
   async dateToBlockMoralis (date = new Date()) {
@@ -1813,6 +1844,7 @@ class Web3Provider extends React.PureComponent {
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
       updateFiats: this.updateFiats.bind(this),
+      getFiatsArray: this.getFiatsArray.bind(this),
       cardReserve: this.cardReserve.bind(this),
       confirmPayment: this.confirmPayment.bind(this),
       cancelReservation: this.cancelReservation.bind(this),
@@ -1829,6 +1861,7 @@ class Web3Provider extends React.PureComponent {
       getReferHash: this.getReferHash.bind(this),
       getReferFriends: this.getReferFriends.bind(this),
       getReferRewards: this.getReferRewards.bind(this),
+      getAccountHistory: this.getAccountHistory.bind(this),
       cmcTokens: this.cmcTokens,
     }}>
       {this.props.children}

@@ -13,7 +13,7 @@ import { Web3Context } from 'services/web3Provider';
 import { WEI_ETHER } from 'src/index/constants/cabinet';
 
 import { logout } from 'src/actions/auth';
-import { openModal } from 'src/actions';
+import { openStateModal } from 'src/actions';
 import * as steps from 'src/components/AuthModal/fixtures';
 
 import './Header.less';
@@ -129,7 +129,7 @@ function Header(props) {
                 </div>
                 <div
                   className="DappHeader__wallet"
-                  onClick={() => openModal('your_wallet')}
+                  onClick={() => openStateModal('your_wallet')}
                 >
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}
@@ -142,7 +142,7 @@ function Header(props) {
                 <Button
                   type="lightBlue"
                   size="small"
-                  onClick={() => openModal('connect_to_wallet')}
+                  onClick={() => openStateModal('connect_to_wallet')}
                 >
                   <SVG
                     src={require('src/asset/icons/cabinet/connect-wallet.svg')}

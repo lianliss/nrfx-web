@@ -8,7 +8,7 @@ import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 // Utils
 import { Web3Context } from 'src/services/web3Provider';
 import { getLang } from 'src/utils';
-import { openModal } from 'src/actions';
+import { openStateModal } from 'src/actions';
 
 import './WalletsIsEmpty.less';
 
@@ -26,7 +26,7 @@ function WalletsIsEmpty({ showWalletPage }) {
   );
 
   const handleConnectWallet = () => {
-    openModal('connect_to_wallet');
+    openStateModal('connect_to_wallet');
     setIsLogined(true);
   };
 
