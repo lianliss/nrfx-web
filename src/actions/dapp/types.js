@@ -1,0 +1,7 @@
+// Dapp
+export const DAPP_SET_SWAP = 'DAPP_SET_SWAP';
+export const DAPP_SET_WITHDRAW = 'DAPP_SET_WITHDRAW';
+export const DAPP_SET_WALLET_TOKENS = 'DAPP_SET_WALLET_TOKENS';
+
+// Transactions
+export const DAPP_SET_TRANSACTIONS = 'DAPP_SET_TRANSACTIONS';
