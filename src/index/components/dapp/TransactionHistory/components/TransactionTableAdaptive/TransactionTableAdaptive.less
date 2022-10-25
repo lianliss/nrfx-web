@@ -1,7 +1,13 @@
 .adaptive .TransactionHistory__table {
-  color: var(--dark-black);
-  line-height: 100%;
-  font-weight: 600;
+  &-operation,
+  &-date,
+  &-link,
+  &-status,
+  &-currency {
+    color: var(--dark-black);
+    line-height: 100%;
+    font-weight: 600;
+  }
 
   &-operation,
   &-date,
@@ -11,8 +17,8 @@
   }
 
   &-currency {
+    position: relative;
     margin-bottom: 16px;
-    padding-bottom: 16px;
     font-size: 14px;
   }
 
@@ -34,7 +40,18 @@
   &__item {
     background: var(--alice-blue);
     border-radius: var(--radius-panel);
-    padding: 12px;
+
+    & > .Row {
+      box-sizing: border-box;
+
+      &:first-child {
+        padding: 12px 0 16px 12px;
+        border-bottom: 1px solid #eeeeee;
+      }
+      &:last-child {
+        padding: 0 12px 12px 12px;
+      }
+    }
 
     &:not(:last-child) {
       margin-bottom: 8px;

@@ -31,6 +31,38 @@ const accountHistory = [
     target_amount: 334.342,
     timestamp: 1666282429,
   },
+  {
+    type: 'topup',
+    source_currency: 'RUB',
+    target_currency: 'RUB',
+    source_amount: 22000,
+    target_amount: 22000,
+    timestamp: 1666282025,
+  },
+  {
+    type: 'exchange',
+    source_currency: 'RUB',
+    target_currency: 'USDT',
+    source_amount: 22000,
+    target_amount: 334.342,
+    timestamp: 1666282429,
+  },
+  {
+    type: 'topup',
+    source_currency: 'RUB',
+    target_currency: 'RUB',
+    source_amount: 22000,
+    target_amount: 22000,
+    timestamp: 1666282025,
+  },
+  {
+    type: 'exchange',
+    source_currency: 'RUB',
+    target_currency: 'USDT',
+    source_amount: 22000,
+    target_amount: 334.342,
+    timestamp: 1666282429,
+  },
 ];
 
 function TransactionHistory() {
@@ -38,9 +70,9 @@ function TransactionHistory() {
   const { getAccountHistory, accountAddress, getTokenFromSymbol } =
     React.useContext(Web3Context);
 
-  // React.useEffect(() => {
-  //   getAccountHistory().then(console.log);
-  // }, [accountAddress]);
+  React.useEffect(() => {
+    getAccountHistory().then(console.log);
+  }, [accountAddress]);
 
   return (
     <CabinetBlock className="TransactionHistory__wrap">

@@ -23,18 +23,19 @@ function Currency({
           size={24}
           disableSymbols
         />
-        &nbsp;
-        <NumberFormat
-          number={source_amount}
-          currency={source_currency.symbol}
-        />
-        &nbsp;
-        <SVG src={require('src/asset/icons/arrows/to-arrow.svg')} />
-        &nbsp;
-        <NumberFormat
-          number={target_amount}
-          currency={target_currency.symbol}
-        />
+        <Row wrap>
+          <NumberFormat
+            number={source_amount}
+            currency={source_currency.symbol}
+          />
+          <span className='TransactionHistory__icon-arrow'>
+            <SVG src={require('src/asset/icons/arrows/to-arrow.svg')} />
+          </span>
+          <NumberFormat
+            number={target_amount}
+            currency={target_currency.symbol}
+          />
+        </Row>
       </Row>
     );
   }

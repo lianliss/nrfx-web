@@ -1,4 +1,10 @@
 .TransactionHistory {
+  &__wrap {
+    min-height: 100%;
+    padding: 23px 18px;
+    box-sizing: border-box;
+  }
+
   &__title {
     font-weight: 700;
     font-size: 24px;
@@ -21,13 +27,19 @@
     text-transform: capitalize;
   }
 
-  &__icon-export {
-    margin-left: 4px;
+  &__icon {
+    &-export {
+      margin-left: 4px;
 
-    .isvg {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      .isvg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &-arrow {
+      margin: 0 6px;
     }
   }
 }

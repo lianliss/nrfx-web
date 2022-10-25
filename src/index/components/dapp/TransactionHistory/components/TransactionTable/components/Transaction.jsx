@@ -12,7 +12,6 @@ const Transaction = ({
   target_currency,
   source_amount,
   target_amount,
-  approved,
   date,
   link,
 }) => (
@@ -29,7 +28,7 @@ const Transaction = ({
       />
     </TD>
     <TD type="small" color="gray">
-      {approved ? 'Approved' : 'Not Approved'}
+      {type === 'exchange' ? 'Done' : 'Approved'}
     </TD>
     <TD color="blue">
       <TransactionLink />
@@ -43,7 +42,6 @@ Transaction.propTypes = {
   target_currency: PropTypes.object,
   source_amount: PropTypes.number,
   target_amount: PropTypes.number,
-  approved: PropTypes.bool,
   date: PropTypes.number,
   link: PropTypes.string,
 };
@@ -54,7 +52,6 @@ Transaction.defaultProps = {
   target_currency: {},
   source_amount: 0,
   target_amount: 0,
-  approved: false,
   date: 0,
   link: null,
 };

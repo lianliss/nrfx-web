@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
+// Components
 import { Col, Row } from 'ui';
 import Currency from '../Currency/Currency';
 import TransactionLink from '../TransactionLink/TransactionLink';
@@ -31,7 +33,7 @@ function TransactionTableAdaptive({ accountHistory, getTokenFromSymbol }) {
                   10.01.2022
                 </span>
                 <span className="TransactionHistory__table-status">
-                  Approved
+                  {item.type === 'exchange' ? 'Done' : 'Approved'}
                 </span>
               </Col>
               <span className="TransactionHistory__table-operation">
@@ -47,5 +49,15 @@ function TransactionTableAdaptive({ accountHistory, getTokenFromSymbol }) {
     </div>
   );
 }
+
+TransactionTableAdaptive.propTypes = {
+  accountHistory: PropTypes.array,
+  getTokenFromSymbol: PropTypes.func,
+};
+
+TransactionTableAdaptive.defaultProps = {
+  accountHistory: [],
+  getTokenFromSymbol: () => {},
+};
 
 export default TransactionTableAdaptive;
