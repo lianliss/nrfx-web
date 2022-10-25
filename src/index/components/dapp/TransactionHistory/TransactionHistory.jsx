@@ -1,19 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // Components
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
-import { NumberFormat, Row } from 'ui';
-import SVG from 'utils/svg-wrap';
+import TransactionTable from './components/TransactionTable/TransactionTable';
+import TransactionTableAdaptive from './components/TransactionTableAdaptive/TransactionTableAdaptive';
 
 // Utils
 import { getLang } from 'src/utils';
+import { Web3Context } from '../../../../services/web3Provider';
+import { adaptiveSelector } from 'src/selectors';
 
 // Styles
 import './TransactionHistory.less';
-import CabinetTable, { TR, TD } from '../CabinetTable/CabinetTable';
-import { Web3Context } from '../../../../services/web3Provider';
-import DoubleWallets from '../DoubleWallets/DoubleWallets';
-import WalletIcon from '../WalletIcon/WalletIcon';
 
 const accountHistory = [
   {
@@ -35,6 +34,7 @@ const accountHistory = [
 ];
 
 function TransactionHistory() {
+  const adaptive = useSelector(adaptiveSelector);
   const { getAccountHistory, accountAddress, getTokenFromSymbol } =
     React.useContext(Web3Context);
 
@@ -51,45 +51,17 @@ function TransactionHistory() {
           readable content of a page when looking at its layout.
         </p>
         <div className="TransactionHistory__table">
-          <CabinetTable
-            header={
-              <TR>
-                <TD>Date</TD>
-                <TD>Operation</TD>
-                <TD>Currency</TD>
-                <TD>Status</TD>
-                <TD></TD>
-              </TR>
-            }
-          >
-            {accountHistory.map((item, key) => {
-              const firstToken = getTokenFromSymbol(item.source_currency);
-              const secondToken = getTokenFromSymbol(item.target_currency);
-              let icon =
-                item.type === 'exchange' ? (
-                  <DoubleWallets first={firstToken} second={secondToken} />
-                ) : (
-                  <WalletIcon currency={firstToken} />
-                );
-
-              return (
-                <TR key={key}>
-                  <TD color="gray">10.01.2022</TD>
-                  <TD>Top up</TD>
-                  <TD>
-                    <Row>
-                      {icon}
-                      <NumberFormat number={1500000} currency="usd" />
-                    </Row>
-                  </TD>
-                  <TD type="small" color="gray">
-                    Approved
-                  </TD>
-                  <TD color="blue">Link</TD>
-                </TR>
-              );
-            })}
-          </CabinetTable>
+          {adaptive ? (
+            <TransactionTableAdaptive
+              accountHistory={accountHistory}
+              getTokenFromSymbol={getTokenFromSymbol}
+            />
+          ) : (
+            <TransactionTable
+              accountHistory={accountHistory}
+              getTokenFromSymbol={getTokenFromSymbol}
+            />
+          )}
         </div>
       </div>
     </CabinetBlock>

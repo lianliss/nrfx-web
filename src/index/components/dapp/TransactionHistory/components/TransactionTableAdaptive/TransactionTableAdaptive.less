@@ -1,0 +1,40 @@
+.adaptive .TransactionHistory__table {
+  color: var(--dark-black);
+  line-height: 100%;
+  font-weight: 600;
+
+  &-operation,
+  &-date,
+  &-link {
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+
+  &-currency {
+    font-size: 14px;
+  }
+
+  &-status {
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--cool-gray);
+  }
+
+  &-link {
+    color: var(--royal-blue);
+  }
+
+  &-date {
+    color: var(--cool-gray);
+  }
+
+  &__item {
+    background: var(--alice-blue);
+    border-radius: var(--radius-panel);
+    padding: 12px;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+}

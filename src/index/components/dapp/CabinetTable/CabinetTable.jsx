@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Utils
 import { classNames as cn } from 'utils';
 
 // Styles
@@ -15,7 +16,7 @@ function CabinetTable({ header, children }) {
 }
 
 export const TR = ({ children, className }) => (
-  <tr className={cn({ className })}>{children}</tr>
+  <tr className={cn({ [className]: className })}>{children}</tr>
 );
 
 export const TD = ({ type, color, className, children }) => (
