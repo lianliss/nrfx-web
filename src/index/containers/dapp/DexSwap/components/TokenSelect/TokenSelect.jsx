@@ -39,7 +39,9 @@ class TokenSelect extends React.PureComponent {
 
   componentDidMount() {
     this._mounted = true;
-    this.props.loadAccountBalances();
+    if (this.props.loadAccountBalances) {
+      this.props.loadAccountBalances();
+    }
 
     document.addEventListener('click', this.__handleOutClick);
   }

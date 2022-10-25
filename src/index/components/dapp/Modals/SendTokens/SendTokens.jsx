@@ -10,6 +10,7 @@ import { Web3Context } from 'src/services/web3Provider';
 import SVG from 'utils/svg-wrap';
 import { getLang } from 'utils';
 import * as toastsActions from 'src/actions/toasts';
+import wei from 'utils/wei';
 import _ from 'lodash';
 
 import './SendTokens.less';
@@ -37,7 +38,7 @@ function SendTokens({ onClose, token }) {
       (balanceToken) =>
         balanceToken.symbol.toLowerCase() === token.symbol.toLowerCase()
     ) || {};
-  const balance = balancesToken.balance || 0;
+  const balance = wei.from(balancesToken.balance) || 0;
 
   // Functions
   const toastPush = (text, type) => {
