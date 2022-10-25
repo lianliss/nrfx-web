@@ -41,6 +41,7 @@ function getTokenPrice(token) {
 }
 
 function getDefaultCommission(token) {
+  if (!token) return 0;
   const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
   return token.isFiat
     ? _.get(commissions, 'FiatDefault', 0)
