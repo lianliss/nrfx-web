@@ -54,6 +54,7 @@ function Exchanger(props) {
   );
   const [fiatsLoaded, setFiatsLoaded] = React.useState(false);
   const fiatSymbol = _.get(fiatSelected, 'symbol');
+  const coinSymbol = _.get(coinSelected, 'symbol');
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
 
   const userId = `${chainId}${accountAddress}`;
@@ -92,6 +93,17 @@ function Exchanger(props) {
       getTokens();
     }
   }, []);
+  
+  const swapSelected = () => {
+    setFiatSelected(coinSelected);
+    setCoinSelected(fiatSelected);
+    const routerState = router.getState();
+    router.navigate(routerState.name, {
+      ...routerState.params,
+      currency: coinSymbol,
+      coin: fiatSymbol,
+    }, {replace: true});
+  };
 
   /**
    * Update "fiatSelected" — fiat token state.
@@ -99,6 +111,9 @@ function Exchanger(props) {
    * @param currencyObject {object} - fiat token
    */
   const setFiat = currencyObject => {
+    if (currencyObject.symbol === coinSymbol) {
+      return swapSelected();
+    }
     setFiatSelected(currencyObject);
     const routerState = router.getState();
     if (routerState.params.currency !== currencyObject.symbol) {
@@ -115,6 +130,9 @@ function Exchanger(props) {
    * @param currencyObject {object} - coin token
    */
   const setCoin = currencyObject => {
+    if (currencyObject.symbol === fiatSymbol) {
+      return swapSelected();
+    }
     setCoinSelected(currencyObject);
     const routerState = router.getState();
     if (routerState.params.currency !== currencyObject.symbol) {
@@ -259,6 +277,9 @@ function Exchanger(props) {
   React.useEffect(() => {
     getBanks();
     getLimits();
+    if (!fiatSelected) {
+      setFiatSelected(fiatTokens[0]);
+    }
   }, []);
 
   return (

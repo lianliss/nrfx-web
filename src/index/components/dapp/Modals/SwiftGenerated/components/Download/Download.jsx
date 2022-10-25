@@ -30,12 +30,18 @@ function Download({ onIPaidClick, onBack, onClose, currency }) {
     input.setAttribute('accept', 'image/png, image/jpeg');
     input.setAttribute('style', 'display: none');
     input.addEventListener('change', async event => {
-      const file = event.target.files[0];
-      await uploadInvoiceScreenshot(currency, file);
-      const newInvoice = await getInvoice(currency);
-      const invoiceObject = {};
-      invoiceObject[currency] = newInvoice;
-      dispatch(setInvoice(invoiceObject));
+      setIsProcess(true);
+      try {
+        const file = event.target.files[0];
+        await uploadInvoiceScreenshot(currency, file);
+        const newInvoice = await getInvoice(currency);
+        const invoiceObject = {};
+        invoiceObject[currency] = newInvoice;
+        dispatch(setInvoice(invoiceObject));
+      } catch (error) {
+        console.error('Screenshot upload error', error);
+      }
+      setIsProcess(true);
     });
     document.body.appendChild(input);
     input.click();
@@ -69,6 +75,7 @@ function Download({ onIPaidClick, onBack, onClose, currency }) {
           type={!isScreenshotUploaded ? 'lightBlue' : 'secondary-alice'}
           size="large"
           disabled={isProcess}
+          state={isProcess ? 'loading' : ''}
           onClick={upload}
         >
           {isScreenshotUploaded ? 'Screenshot uploaded' : 'Upload a screenshot'}
