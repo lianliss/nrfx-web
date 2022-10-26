@@ -1370,8 +1370,6 @@ class Web3Provider extends React.PureComponent {
       });
 
       this.setBalances(userFiats.map((userFiat) => {
-        const userFiatBalance = userFiat.balance || '0';
-        const etherBalance = this.web3.utils.fromWei(userFiatBalance, 'ether');
         let price = 0;
         if (rates) {
           const symbol = userFiat.symbol.toLowerCase();
@@ -1382,7 +1380,6 @@ class Web3Provider extends React.PureComponent {
 
         return {
           ...userFiat,
-          balance: etherBalance,
           price
         }
       }), 'fiats');
@@ -1434,10 +1431,16 @@ class Web3Provider extends React.PureComponent {
       if (!!modalParams && modalParams.isInProgress) {
         actions.openModal("transaction_submitted", {}, modalParams);
       }
+      let additionalHeaders = {};
+      if (additionalOptions.headers) {
+        additionalHeaders = additionalOptions.headers;
+        delete additionalOptions.headers;
+      }
       return await web3Backend[method](path, {
         headers: {
           'nrfx-message': hash,
           'nrfx-sign': signature,
+          ...additionalHeaders,
         },
         params,
         ...additionalOptions,
@@ -1532,9 +1535,10 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async getInvoice() {
+  async getInvoice(currency = 'USD') {
     try {
       const result = await this.backendRequest({
+          currency,
         },
         `Get invoice`,
         'invoice',
@@ -1546,8 +1550,7 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async getInvoicePDF() {
-    console.log('getInvoicePDF');
+  async getInvoicePDF(id = '') {
     try {
       const result = await this.backendRequest({
         },
@@ -1559,23 +1562,59 @@ class Web3Provider extends React.PureComponent {
           responseType: 'blob',
         }
       );
-      console.log('getInvoicePDF result', result);
       const url = window.URL.createObjectURL(result);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'file.pdf');
+      link.setAttribute('download', `invoice${id}.pdf`);
       document.body.appendChild(link);
       link.click();
-      console.log('click');
       return true;
     } catch (error) {
       console.error('[getInvoicePDF]', error);
     }
   }
-
-  async cancelInvoice() {
+  
+  async uploadInvoiceScreenshot(currency, file) {
     try {
-      const result = await this.backendRequest({},
+      const data = new FormData();
+      data.append('file', file);
+      const result = await this.backendRequest({
+          currency,
+        },
+        `Upload invoice`,
+        'invoice/screenshot',
+        'post',
+        undefined,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          data,
+        }
+      );
+      return true;
+    } catch (error) {
+      console.error('[uploadInvoiceScreenshot]', error);
+    }
+  }
+  
+  async reviewInvoice(currency) {
+    try {
+      const result = await this.backendRequest({currency},
+        `Review invoice`,
+        'invoice/review',
+        'post',
+      );
+      console.log('[reviewInvoice]', result);
+      return result;
+    } catch (error) {
+      console.error('[reviewInvoice]', error);
+    }
+  }
+
+  async cancelInvoice(currency) {
+    try {
+      const result = await this.backendRequest({currency},
         `Cancel invoice`,
         'invoice/cancel',
         'post',
@@ -1856,6 +1895,8 @@ class Web3Provider extends React.PureComponent {
       addInvoice: this.addInvoice.bind(this),
       getInvoice: this.getInvoice.bind(this),
       getInvoicePDF: this.getInvoicePDF.bind(this),
+      uploadInvoiceScreenshot: this.uploadInvoiceScreenshot.bind(this),
+      reviewInvoice: this.reviewInvoice.bind(this),
       cancelInvoice: this.cancelInvoice.bind(this),
       addWithdrawal: this.addWithdrawal.bind(this),
       sendTokens: this.sendTokens.bind(this),

@@ -101,6 +101,14 @@ function reduce(state = initialState, action = {}) {
         },
       };
     }
+    case actionTypes.DAPP_SET_INVOICE:
+      return {
+        ...state,
+        invoices: {
+          ...state.invoices,
+          ...payload,
+        },
+      };
     default:
       return state;
   }

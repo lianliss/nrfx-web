@@ -231,4 +231,5 @@ export const WEB3_SET_DATA = "WEB3_SET_DATA";
 export const WEB3_UPDATE = "WEB3_UPDATE";
 export const WEB3_SET_RATE = "WEB3_SET_RATE";
 
+// Dapp
 export * from './dapp/types';

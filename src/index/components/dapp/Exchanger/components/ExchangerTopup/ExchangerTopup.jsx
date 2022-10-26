@@ -8,6 +8,7 @@ import getFinePrice from 'utils/get-fine-price';
 import { getLang } from "src/utils";
 import * as actions from "src/actions";
 import {setWithdraw} from "src/actions/dapp/withdraw";
+import {setInvoice} from "src/actions/dapp/wallet";
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -60,18 +61,22 @@ function ExchangerTopup(props) {
 
   const currentWithdrawBanks = _.get(withdrawBanks, fiatSymbol, []);
 
-  const [invoice, setInvoice] = React.useState();
+  const invoice = useSelector(state => _.get(state, `dapp.invoices.${fiatSymbol}`));
 
   const updateInvoice = async () => {
     try {
       if (isConnected && fiatSymbol === 'USD') {
-        const newInvoice = await getInvoice();
+        const newInvoice = await getInvoice(fiatSymbol);
         if (newInvoice) {
           if (_.get(invoice, 'id') !== newInvoice.id) {
-            setInvoice(newInvoice);
+            const invoiceObject = {};
+            invoiceObject[fiatSymbol] = newInvoice;
+            dispatch(setInvoice(invoiceObject));
           }
         } else {
-          setInvoice(null);
+          const invoiceObject = {};
+          invoiceObject[fiatSymbol] = null;
+          dispatch(setInvoice(invoiceObject));
         }
       }
     } catch (error) {
@@ -156,7 +161,7 @@ function ExchangerTopup(props) {
 
   const onCancelInvoice = async () => {
     try {
-      await cancelInvoice();
+      await cancelInvoice(fiatSymbol);
       toast.success('Invoice cancelled');
       setInvoice(null);
     } catch (error) {
@@ -166,12 +171,9 @@ function ExchangerTopup(props) {
   };
 
   const onDownloadInvoice = async () => {
-    try {
-      const {getInvoicePDF} = context;
-      await getInvoicePDF();
-    } catch (error) {
-      console.error('[onDownloadInvoice]', error);
-    }
+    actions.openModal("swift_generated", {
+      currency: fiatSymbol,
+    });
   };
 
   React.useEffect(() => {
@@ -210,7 +212,9 @@ function ExchangerTopup(props) {
             Cancel
           </Button>
           <Button type="secondary" onClick={onDownloadInvoice}>
-            Get Invoice
+            {invoice.status === 'wait_for_review'
+              ? 'Under Review'
+              : 'Get Invoice'}
           </Button>
         </div>;
       } else {

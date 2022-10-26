@@ -47,3 +47,9 @@ export const sortTransactions = (sortType) => {
     });
   };
 };
+
+export const setInvoice = (payload) => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.DAPP_SET_INVOICE, payload });
+  };
+};
