@@ -13,16 +13,13 @@ function TransactionTableAdaptive({ accountHistory, getTokenFromSymbol }) {
   return (
     <div className="TransactionHistory__table">
       {accountHistory.map((item, key) => {
-        const firstToken = getTokenFromSymbol(item.source_currency);
-        const secondToken = getTokenFromSymbol(item.target_currency);
-
         return (
           <Col className="TransactionHistory__table__item" key={key}>
             <Row className="TransactionHistory__table-currency">
               <Currency
                 type={item.type}
-                source_currency={firstToken}
-                target_currency={secondToken}
+                source_token={item.source_token}
+                target_token={item.target_token}
                 source_amount={item.source_amount}
                 target_amount={item.target_amount}
               />
@@ -30,7 +27,7 @@ function TransactionTableAdaptive({ accountHistory, getTokenFromSymbol }) {
             <Row alignItems="flex-end" justifyContent="space-between">
               <Col>
                 <span className="TransactionHistory__table-date">
-                  10.01.2022
+                  {item.date}
                 </span>
                 <span className="TransactionHistory__table-status">
                   {item.type === 'exchange' ? 'Done' : 'Approved'}
@@ -40,7 +37,7 @@ function TransactionTableAdaptive({ accountHistory, getTokenFromSymbol }) {
                 {item.type}
               </span>
               <div className="TransactionHistory__table-link">
-                <TransactionLink />
+                <TransactionLink tx_hash={item.tx_hash} />
               </div>
             </Row>
           </Col>

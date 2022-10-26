@@ -57,8 +57,8 @@ function reduce(state = initialState, action = {}) {
           ...state.wallet,
           transactions: {
             ...state.wallet.transactions,
-            items: payload.items,
-            status: payload.status,
+            items: payload.items || state.wallet.transactions.items,
+            status: payload.status || state.wallet.transactions.status,
           },
         },
       };

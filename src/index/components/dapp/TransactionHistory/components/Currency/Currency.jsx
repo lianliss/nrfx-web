@@ -9,8 +9,8 @@ import SVG from 'utils/svg-wrap';
 
 function Currency({
   type,
-  source_currency,
-  target_currency,
+  source_token,
+  target_token,
   source_amount,
   target_amount,
 }) {
@@ -18,23 +18,17 @@ function Currency({
     return (
       <Row alignItems="center">
         <DoubleWallets
-          first={source_currency}
-          second={target_currency}
+          first={source_token}
+          second={target_token}
           size={24}
           disableSymbols
         />
         <Row wrap>
-          <NumberFormat
-            number={source_amount}
-            currency={source_currency.symbol}
-          />
-          <span className='TransactionHistory__icon-arrow'>
+          <NumberFormat number={source_amount} currency={source_token.symbol} />
+          <span className="TransactionHistory__icon-arrow">
             <SVG src={require('src/asset/icons/arrows/to-arrow.svg')} />
           </span>
-          <NumberFormat
-            number={target_amount}
-            currency={target_currency.symbol}
-          />
+          <NumberFormat number={target_amount} currency={target_token.symbol} />
         </Row>
       </Row>
     );
@@ -42,25 +36,25 @@ function Currency({
 
   return (
     <Row alignItems="center">
-      <WalletIcon currency={target_currency} size={24} />
+      <WalletIcon currency={target_token} size={24} />
       &nbsp;
-      <NumberFormat number={target_amount} currency={target_currency.symbol} />
+      <NumberFormat number={target_amount} currency={target_token.symbol} />
     </Row>
   );
 }
 
 Currency.propTypes = {
   type: PropTypes.string,
-  source_currency: PropTypes.object,
-  target_currency: PropTypes.object,
+  source_token: PropTypes.object,
+  target_token: PropTypes.object,
   source_amount: PropTypes.number,
   target_amount: PropTypes.number,
 };
 
 Currency.defaultProps = {
   type: '',
-  source_currency: {},
-  target_currency: {},
+  source_token: {},
+  target_token: {},
   source_amount: 0,
   target_amount: 0,
 };

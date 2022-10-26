@@ -11,6 +11,8 @@ import { getLang } from 'src/utils';
 import { Web3Context } from 'src/services/web3Provider';
 import { adaptiveSelector, dappTransactionsSelector } from 'src/selectors';
 import { setTransactions } from 'src/actions/dapp/wallet';
+import _ from 'lodash';
+import moment from 'moment';
 
 // Styles
 import './TransactionHistory.less';
@@ -54,7 +56,20 @@ function TransactionHistory() {
 
     try {
       await updateFiatsByStatus();
-      const transactionItems = await getAccountHistory();
+      const transactionsResponse = await getAccountHistory();
+      const transactionItems = transactionsResponse.map((transaction) => {
+        // Get tokens object
+        const source_token = getTokenFromSymbol(transaction.source_currency);
+        const target_token =
+          transaction.type !== 'exchange'
+            ? source_token
+            : getTokenFromSymbol(transaction.target_currency);
+
+        // Get date from timestamp
+        const date = moment(transaction.timestamp * 1000).format('DD.MM.YYYY');
+
+        return { ...transaction, source_token, target_token, date };
+      });
 
       dispatch(setTransactions(transactionItems, 'loaded'));
     } catch (error) {
@@ -81,15 +96,9 @@ function TransactionHistory() {
         </p>
         <div className="TransactionHistory__table">
           {adaptive ? (
-            <TransactionTableAdaptive
-              accountHistory={accountHistory}
-              getTokenFromSymbol={getTokenFromSymbol}
-            />
+            <TransactionTableAdaptive accountHistory={accountHistory} />
           ) : (
-            <TransactionTable
-              accountHistory={accountHistory}
-              getTokenFromSymbol={getTokenFromSymbol}
-            />
+            <TransactionTable accountHistory={accountHistory} />
           )}
         </div>
       </div>

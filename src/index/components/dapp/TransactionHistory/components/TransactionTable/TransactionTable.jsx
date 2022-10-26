@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CabinetTable, { TD, TR } from '../../../CabinetTable/CabinetTable';
 import Transaction from './components/Transaction';
 
-function TransactionTable({ accountHistory, getTokenFromSymbol }) {
+function TransactionTable({ accountHistory }) {
   return (
     <CabinetTable
       header={
@@ -19,19 +19,7 @@ function TransactionTable({ accountHistory, getTokenFromSymbol }) {
       }
     >
       {accountHistory.map((item, key) => {
-        const firstToken = getTokenFromSymbol(item.source_currency);
-        const secondToken = getTokenFromSymbol(item.target_currency);
-
-        return (
-          <Transaction
-            key={key}
-            type={item.type}
-            source_currency={firstToken}
-            target_currency={secondToken}
-            source_amount={item.source_amount}
-            target_amount={item.target_amount}
-          />
-        );
+        return <Transaction key={key} {...item} />;
       })}
     </CabinetTable>
   );
@@ -39,12 +27,10 @@ function TransactionTable({ accountHistory, getTokenFromSymbol }) {
 
 TransactionTable.propTypes = {
   accountHistory: PropTypes.array,
-  getTokenFromSymbol: PropTypes.func,
 };
 
 TransactionTable.defaultProps = {
   accountHistory: [],
-  getTokenFromSymbol: () => {},
 };
 
 export default TransactionTable;

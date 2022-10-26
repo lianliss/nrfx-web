@@ -4,14 +4,27 @@ import React from 'react';
 import { Row } from 'ui';
 import SVG from 'utils/svg-wrap';
 
-function TransactionLink() {
+// Utils
+import { classNames as cn } from 'utils';
+
+// Styles
+import './TransactionLink.less';
+
+function TransactionLink({ tx_hash }) {
   return (
-    <Row alignItems="center">
+    <a
+      className={cn({
+        TransactionHistory__TransactionLink: true,
+        disabled: !tx_hash,
+      })}
+      href={`https://bscscan.com/tx/${tx_hash}`}
+      target="_blank"
+    >
       Link
       <div className="TransactionHistory__icon-export">
         <SVG src={require('src/asset/icons/action/export-light-bg.svg')} />
       </div>
-    </Row>
+    </a>
   );
 }
 
