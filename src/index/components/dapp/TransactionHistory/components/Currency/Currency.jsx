@@ -37,7 +37,6 @@ function Currency({
   return (
     <Row alignItems="center">
       <WalletIcon currency={target_token} size={24} />
-      &nbsp;
       <NumberFormat number={target_amount} currency={target_token.symbol} />
     </Row>
   );

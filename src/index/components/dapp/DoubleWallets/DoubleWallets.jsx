@@ -6,13 +6,18 @@ import _ from 'lodash';
 // Styles
 import './DoubleWallets.less';
 
-function DoubleWallets({ first, second, pair, disableSymbols }) {
+function DoubleWallets({ first, second, pair, disableSymbols, size }) {
   const context = React.useContext(Web3Context);
   const { tokens, wrapBNB, bnb } = context;
   // const [symbol0, setSymbol0] = React.useState(first.symbol);
   // const [symbol1, setSymbol1] = React.useState(second.symbol);
   const [token0, setToken0] = React.useState(_.get(pair, 'token0', first));
   const [token1, setToken1] = React.useState(_.get(pair, 'token1', second));
+  const containerSize = size && size * 2 - size * 2 * 0.1956;
+  const sizeStyles = {
+    width: size,
+    height: size,
+  };
 
   React.useEffect(() => {}, [first, second, pair]);
 
@@ -55,14 +60,14 @@ function DoubleWallets({ first, second, pair, disableSymbols }) {
 
   return (
     <div className="DoubleWallets">
-      <div className="DoubleWallets__icons">
+      <div className="DoubleWallets__icons" style={{ width: containerSize }}>
         <div
           className="DoubleWallets__icon"
-          style={{ backgroundImage: `url('${logo0}')` }}
+          style={{ backgroundImage: `url('${logo0}')`, ...sizeStyles }}
         />
         <div
           className="DoubleWallets__icon"
-          style={{ backgroundImage: `url('${logo1}')` }}
+          style={{ backgroundImage: `url('${logo1}')`, ...sizeStyles }}
         />
       </div>
       {!disableSymbols && (
