@@ -16,6 +16,7 @@ import moment from 'moment';
 
 // Styles
 import './TransactionHistory.less';
+import LoadingStatus from '../LoadingStatus/LoadingStatus';
 
 function TransactionHistory() {
   // Context.
@@ -86,6 +87,16 @@ function TransactionHistory() {
     }
   };
 
+  const Transactions = ({ accountHistory }) => {
+    const Component = adaptive ? (
+      <TransactionTableAdaptive accountHistory={accountHistory} />
+    ) : (
+      <TransactionTable accountHistory={accountHistory} />
+    );
+
+    return Component;
+  };
+
   return (
     <CabinetBlock className="TransactionHistory__wrap">
       <div className="TransactionHistory">
@@ -95,10 +106,11 @@ function TransactionHistory() {
           readable content of a page when looking at its layout.
         </p>
         <div className="TransactionHistory__table">
-          {adaptive ? (
-            <TransactionTableAdaptive accountHistory={accountHistory} />
-          ) : (
-            <TransactionTable accountHistory={accountHistory} />
+          {transactions.status === 'loading' && (
+            <LoadingStatus status="loading" />
+          )}
+          {transactions.status === 'loaded' && (
+            <Transactions accountHistory={accountHistory} />
           )}
         </div>
       </div>
