@@ -5,18 +5,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import TransactionTable from './components/TransactionTable/TransactionTable';
 import TransactionTableAdaptive from './components/TransactionTableAdaptive/TransactionTableAdaptive';
+import LoadingStatus from '../LoadingStatus/LoadingStatus';
 
 // Utils
 import { getLang } from 'src/utils';
 import { Web3Context } from 'src/services/web3Provider';
 import { adaptiveSelector, dappTransactionsSelector } from 'src/selectors';
-import { setTransactions } from 'src/actions/dapp/wallet';
+import {
+  setTransactionItems,
+  setTransactionsStatus,
+  sortTransactions,
+} from 'src/actions/dapp/wallet';
 import _ from 'lodash';
 import moment from 'moment';
+import { dataStatus, sortTypes } from 'src/index/constants/dapp/types';
 
 // Styles
 import './TransactionHistory.less';
-import LoadingStatus from '../LoadingStatus/LoadingStatus';
 
 function TransactionHistory() {
   // Context.
@@ -40,9 +45,10 @@ function TransactionHistory() {
   // Functional.
   // Clear the filled transactions.
   React.useEffect(() => {
-    if (transactions.status !== 'loaded') return;
+    if (transactions.status !== dataStatus.LOADED) return;
 
-    dispatch(setTransactions([], 'idle'));
+    dispatch(setTransactionItems([]));
+    dispatch(setTransactionsStatus(dataStatus.IDLE));
   }, []);
 
   // Get transactions.
@@ -53,7 +59,7 @@ function TransactionHistory() {
   }, [accountAddress]);
 
   const getTransactionsData = async () => {
-    dispatch(setTransactions([], 'loading'));
+    dispatch(setTransactionsStatus(dataStatus.LOADING));
 
     try {
       await updateFiatsByStatus();
@@ -72,10 +78,12 @@ function TransactionHistory() {
         return { ...transaction, source_token, target_token, date };
       });
 
-      dispatch(setTransactions(transactionItems, 'loaded'));
+      dispatch(setTransactionItems(transactionItems));
+      dispatch(sortTransactions(sortTypes.DATE_DESC));
+      dispatch(setTransactionsStatus(dataStatus.LOADED));
     } catch (error) {
       console.log('[getTransactionsData]', error);
-      dispatch(setTransactions([], 'failed'));
+      dispatch(setTransactionsStatus(dataStatus.FAILED));
     }
   };
 
@@ -88,13 +96,13 @@ function TransactionHistory() {
   };
 
   const Transactions = ({ accountHistory }) => {
-    const Component = adaptive ? (
+    const component = adaptive ? (
       <TransactionTableAdaptive accountHistory={accountHistory} />
     ) : (
       <TransactionTable accountHistory={accountHistory} />
     );
 
-    return Component;
+    return component;
   };
 
   return (
@@ -106,10 +114,10 @@ function TransactionHistory() {
           readable content of a page when looking at its layout.
         </p>
         <div className="TransactionHistory__table">
-          {transactions.status === 'loading' && (
+          {transactions.status === dataStatus.LOADING && (
             <LoadingStatus status="loading" />
           )}
-          {transactions.status === 'loaded' && (
+          {transactions.status === dataStatus.LOADED && (
             <Transactions accountHistory={accountHistory} />
           )}
         </div>
