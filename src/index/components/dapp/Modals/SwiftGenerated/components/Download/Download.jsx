@@ -41,7 +41,7 @@ function Download({ onIPaidClick, onBack, onClose, currency }) {
       } catch (error) {
         console.error('Screenshot upload error', error);
       }
-      setIsProcess(true);
+      setIsProcess(false);
     });
     document.body.appendChild(input);
     input.click();
