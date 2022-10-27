@@ -6,17 +6,20 @@ import _ from 'lodash';
 // Styles
 import './DoubleWallets.less';
 
-function DoubleWallets({ first, second, pair }) {
+function DoubleWallets({ first, second, pair, disableSymbols, size }) {
   const context = React.useContext(Web3Context);
-  const {tokens, wrapBNB, bnb} = context;
+  const { tokens, wrapBNB, bnb } = context;
   // const [symbol0, setSymbol0] = React.useState(first.symbol);
   // const [symbol1, setSymbol1] = React.useState(second.symbol);
   const [token0, setToken0] = React.useState(_.get(pair, 'token0', first));
   const [token1, setToken1] = React.useState(_.get(pair, 'token1', second));
+  const containerSize = size && size * 2 - size * 2 * 0.1956;
+  const sizeStyles = {
+    width: size,
+    height: size,
+  };
 
-  React.useEffect(() => {
-
-  }, [first, second, pair]);
+  React.useEffect(() => {}, [first, second, pair]);
 
   // React.useEffect(() => {
   //   const getSymbol = async (token, index) => {
@@ -52,20 +55,28 @@ function DoubleWallets({ first, second, pair }) {
   const logo0 = token0.logoURI;
   const logo1 = token1.logoURI;
 
-  const symbol0 = token0.symbol === wrapBNB.symbol ? bnb.symbol: token0.symbol;
-  const symbol1 = token1.symbol === wrapBNB.symbol ? bnb.symbol: token1.symbol;
+  const symbol0 = token0.symbol === wrapBNB.symbol ? bnb.symbol : token0.symbol;
+  const symbol1 = token1.symbol === wrapBNB.symbol ? bnb.symbol : token1.symbol;
 
   return (
     <div className="DoubleWallets">
-      <div className="DoubleWallets__icons">
-        <div className="DoubleWallets__icon" style={{backgroundImage: `url('${logo0}')`}} />
-        <div className="DoubleWallets__icon" style={{backgroundImage: `url('${logo1}')`}} />
+      <div className="DoubleWallets__icons" style={{ width: containerSize }}>
+        <div
+          className="DoubleWallets__icon"
+          style={{ backgroundImage: `url('${logo0}')`, ...sizeStyles }}
+        />
+        <div
+          className="DoubleWallets__icon"
+          style={{ backgroundImage: `url('${logo1}')`, ...sizeStyles }}
+        />
       </div>
-      <span>
-        {symbol0 || '???'}
-        {!!(token0 && token1) && '-'}
-        {symbol1 || '???'}
-      </span>
+      {!disableSymbols && (
+        <span>
+          {symbol0 || '???'}
+          {!!(token0 && token1) && '-'}
+          {symbol1 || '???'}
+        </span>
+      )}
     </div>
   );
 }

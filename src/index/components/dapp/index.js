@@ -14,3 +14,15 @@ export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGen
 export { default as AttentionBuyTokenModal } from './Modals/AttentionBuyToken/AttentionBuyToken';
 
 export { default as SendTokensModal } from './Modals/SendTokens/SendTokens';
+
+// Pages
+export { default as TransactionHistory } from './TransactionHistory/TransactionHistory';
+export { default as Farming } from './Farming/Farming';
+export { default as SwitchPage } from './SwitchPage/SwitchPage';
+export { default as Exchanger } from './Exchanger/Exchanger';
+export { default as CabinetValidator } from './CabinetValidator/CabinetValidator';
+export { default as CabinetWallets } from './CabinetWallets/CabinetWallets';
+export { default as Currency } from './Currency/Currency';
+export { default as Referral } from './Referral/Referral';
+export { default as SocialMedia } from './SocialMedia/SocialMedia';
+export { default as Team } from './Team/Team';
