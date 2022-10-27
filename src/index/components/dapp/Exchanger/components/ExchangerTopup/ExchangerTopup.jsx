@@ -65,7 +65,7 @@ function ExchangerTopup(props) {
 
   const updateInvoice = async () => {
     try {
-      if (isConnected && fiatSymbol === 'USD') {
+      if (isConnected && _.includes(['USD', 'CNY'], fiatSymbol)) {
         const newInvoice = await getInvoice(fiatSymbol);
         if (newInvoice) {
           if (_.get(invoice, 'id') !== newInvoice.id) {
