@@ -23,8 +23,9 @@ function InvoiceDetails(props) {
   const adaptive = useSelector(adaptiveSelector);
   const context = React.useContext(Web3Context);
   const { currency, amount } = props;
-  const { accountAddress, isConnected, addInvoice, getInvoice } = context;
+  const { accountAddress, isConnected, addInvoice, getInvoice, cancelInvoice } = context;
   const phoneInputRef = React.useRef(null);
+  const invoice = useSelector(state => _.get(state, `dapp.invoices.${currency}`));
 
   const [phone, setPhone] = React.useState();
   const [name, setName] = React.useState();
@@ -58,6 +59,13 @@ function InvoiceDetails(props) {
 
     setIsProcess(true);
     try {
+      if (invoice) {
+        try {
+          await cancelInvoice(currency);
+        } catch (error) {
+          console.error('[onConfirm] cancelInvoice', error);
+        }
+      }
       await addInvoice(amount, currency, phone, name, lastName);
       const newInvoice = await getInvoice(currency);
       const invoiceObject = {};
