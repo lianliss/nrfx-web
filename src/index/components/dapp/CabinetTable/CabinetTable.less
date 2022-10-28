@@ -27,11 +27,11 @@
 
   // Row backgrounds
   tbody {
-    tr:nth-child(2n) {
+    tr:not(.custom):nth-child(2n) {
       background: transparent;
     }
 
-    tr {
+    tr:not(.custom) {
       background: var(--alice-blue);
     }
   }
