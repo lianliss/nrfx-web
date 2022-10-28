@@ -16,7 +16,7 @@
     margin: 0 -28px;
 
     &__container {
-      padding: 0 28px;
+      padding: 0 28px 0 38px;
     }
   }
 
@@ -41,10 +41,18 @@
       margin-right: 20px;
     }
   }
+
+  &__cards {
+    & > *:first-child {
+      z-index: 2;
+      position: relative;
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+    }
+  }
 }
 
 .adaptive .Referral__Dashboard {
-  padding: 20px 11px;
+  padding: 25px 15px;
   margin-bottom: 43px;
   border-radius: 20px;
 
@@ -53,7 +61,26 @@
   }
 
   &__cards {
+    flex-direction: column;
     margin: 0;
     height: 100%;
+  }
+
+  .DappUI__Slider {
+    &__container {
+      padding: 0 28px;
+    }
+    
+    .Referral__Card {
+      min-width: 158px;
+      
+      &:not(:last-child) {
+        margin-right: 6px;
+      }
+
+      &__title, &__count {
+        white-space: normal;
+      }
+    }
   }
 }

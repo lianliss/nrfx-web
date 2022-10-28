@@ -3,29 +3,50 @@ import React from 'react';
 // Styles
 import './Slider.less';
 
-function Slider({ children, nextSlideRef, prevSlideRef, stepSize = 300 }) {
+function Slider({
+  children,
+  nextSlideRef,
+  prevSlideRef,
+  adaptive,
+  stepSize = 300,
+}) {
+  const [eventsExists, setEventsExists] = React.useState(false);
   const sliderRef = React.useRef(null);
   const containerRef = React.useRef(null);
   const allRefsIsFine =
-    sliderRef && containerRef && nextSlideRef && prevSlideRef;
+    sliderRef.current &&
+    containerRef.current &&
+    nextSlideRef.current &&
+    prevSlideRef.current;
 
   React.useEffect(() => {
     if (!allRefsIsFine) return;
+    if (eventsExists) return;
 
     nextSlideRef.current.addEventListener('click', onNextSlide);
     prevSlideRef.current.addEventListener('click', onPrevSlide);
 
     onScroll();
     sliderRef.current.addEventListener('scroll', onScroll);
+    setEventsExists(true);
 
     return () => {
-      nextSlideRef.current.removeEventListener('click', onNextSlide);
-      prevSlideRef.current.removeEventListener('click', onPrevSlide);
-      sliderRef.current.removeEventListener('scroll', onScroll);
+      if (nextSlideRef.current) {
+        nextSlideRef.current.removeEventListener('click', onNextSlide);
+      }
+      if (prevSlideRef.current) {
+        prevSlideRef.current.removeEventListener('click', onPrevSlide);
+      }
+      if (sliderRef.current) {
+        sliderRef.current.removeEventListener('scroll', onScroll);
+      }
+      setEventsExists(false);
     };
-  }, []);
+  }, [adaptive, allRefsIsFine]);
 
   const onScroll = () => {
+    if (!allRefsIsFine) return;
+
     const slider = sliderRef.current;
     const currentPosition = slider.scrollLeft;
     const maxScroll = slider.scrollWidth - slider.clientWidth;

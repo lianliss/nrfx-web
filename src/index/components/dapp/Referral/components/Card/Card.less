@@ -8,10 +8,6 @@
 
   &:not(:last-child) {
     margin-right: 10px;
-
-    &:first-child {
-      margin-right: 20px;
-    }
   }
 
   &.secondary {
@@ -36,20 +32,22 @@
   }
 
   &__count {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    color: var(--dark-black);
     white-space: nowrap;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
 
     .secondary &,
     .Referral__Card .Row:first-child & {
+      font-size: 20px;
+      line-height: 24px;
       color: var(--secondary-blue);
     }
   }
 
   .HoverPopup {
     margin-left: auto;
+    margin-top: 4px;
     font-weight: 600;
     font-size: 12px;
     line-height: 110%;
@@ -76,14 +74,22 @@
 }
 
 .adaptive .Referral__Card {
-  flex: 0 0 100%;
-  width: 100%;
   min-height: 0;
   background: #fff;
   border-radius: var(--radius-panel);
   padding: 17px 16px;
-  margin: 0;
   box-sizing: border-box;
+  margin: 0;
+
+  &__title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  & > .Row > .Col:not(:last-child) {
+    margin-right: 7px;
+  }
 
   &.secondary {
     flex: 0 0 100%;
