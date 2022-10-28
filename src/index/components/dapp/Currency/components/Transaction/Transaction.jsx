@@ -63,7 +63,7 @@ function Transaction({
 }
 
 Transaction.propTypes = {
-  type: PropTypes.oneOf('Replenishment', 'Withdrawal', 'Trade'),
+  type: PropTypes.oneOf(['Replenishment', 'Withdrawal', 'Trade']),
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   number: PropTypes.oneOfType([PropTypes.number, PropTypes.element]),
   transactionsExists: PropTypes.bool,
