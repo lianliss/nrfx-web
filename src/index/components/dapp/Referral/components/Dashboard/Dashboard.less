@@ -17,6 +17,10 @@
 
     &__container {
       padding: 0 28px 0 38px;
+
+      & > .Row {
+        height: 100%;
+      }
     }
   }
 
@@ -66,20 +70,30 @@
     height: 100%;
   }
 
+  .Referral__Card {
+    margin-bottom: 20px;
+
+    &__title,
+    &__count {
+      white-space: normal;
+    }
+  }
+
   .DappUI__Slider {
     &__container {
       padding: 0 28px;
     }
-    
+
     .Referral__Card {
-      min-width: 158px;
-      
+      margin-bottom: 0;
+
       &:not(:last-child) {
         margin-right: 6px;
       }
 
-      &__title, &__count {
-        white-space: normal;
+      &__title,
+      &__count {
+        white-space: nowrap;
       }
     }
   }
