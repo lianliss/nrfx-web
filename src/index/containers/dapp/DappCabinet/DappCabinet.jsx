@@ -6,15 +6,18 @@ import DappContainer from '../../../components/cabinet/DappContainer/DappContain
 import CabinetSidebar from 'src/index/components/dapp/CabinetSidebar/CabinetSidebar';
 
 // Pages
-import Farming from 'src/index/components/dapp/Farming/Farming';
-import SwitchPage from 'src/index/components/dapp/SwitchPage/SwitchPage';
-import Exchanger from 'src/index/components/dapp/Exchanger/Exchanger';
-import CabinetValidator from 'src/index/components/dapp/CabinetValidator/CabinetValidator';
-import CabinetWallets from 'src/index/components/dapp/CabinetWallets/CabinetWallets';
-import Currency from 'src/index/components/dapp/Currency/Currency';
-import Referral from 'src/index/components/dapp/Referral/Referral';
-import SocialMedia from 'src/index/components/dapp/SocialMedia/SocialMedia';
-import Team from '../../../components/dapp/Team/Team';
+import {
+  TransactionHistory,
+  Farming,
+  SwitchPage,
+  Exchanger,
+  CabinetValidator,
+  CabinetWallets,
+  Currency,
+  Referral,
+  SocialMedia,
+  Team
+} from 'src/index/components/dapp';
 
 // Utils
 import * as PAGES from 'src/index/constants/pages';
@@ -22,11 +25,11 @@ import router from 'src/router';
 
 export class DappCabinet extends Component {
   componentDidMount() {
-    if(this.props.route.name === PAGES.DAPP) {
+    if (this.props.route.name === PAGES.DAPP) {
       router.navigate(PAGES.DAPP_EXCHANGE);
     }
   }
-  
+
   render() {
     const { route, adaptive } = this.props;
 
@@ -42,6 +45,9 @@ export class DappCabinet extends Component {
         break;
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;
+        break;
+      case PAGES.DAPP_TRANSACTION_HISTORY:
+        Component = TransactionHistory;
         break;
       case PAGES.DAPP_SWAP:
       case PAGES.LIQUIDITY:

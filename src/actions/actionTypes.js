@@ -232,7 +232,4 @@ export const WEB3_UPDATE = "WEB3_UPDATE";
 export const WEB3_SET_RATE = "WEB3_SET_RATE";
 
 // Dapp
-export const DAPP_SET_SWAP = "DAPP_SET_SWAP";
-export const DAPP_SET_WITHDRAW = "DAPP_SET_WITHDRAW";
-export const DAPP_SET_WALLET_TOKENS = "DAPP_SET_WALLET_TOKENS";
-export const DAPP_SET_INVOICE = "DAPP_SET_INVOICE";
+export * from './dapp/types';

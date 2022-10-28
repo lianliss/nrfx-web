@@ -180,6 +180,7 @@ function Routes(props) {
     case pages.DAPP_CURRENCY:
     case pages.DAPP_SWAP:
     case pages.DAPP_EXCHANGE:
+    case pages.DAPP_TRANSACTION_HISTORY:
     case pages.FARMING:
     case pages.LIQUIDITY:
     case pages.TRANSACTIONS:
