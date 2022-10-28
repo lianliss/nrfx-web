@@ -45,7 +45,7 @@ function ReferralList(params) {
         </Col>
       </Row>
       <Col className="Referral__ReferralList__items">
-        {!(testItems || rewards).length ? (
+        {!rewards.length ? (
           <Row justifyContent="center">
             <Col
               className="Referral__ReferralList__items-empty"
@@ -71,34 +71,37 @@ function ReferralList(params) {
                   </TR>
                 }
               >
-                {(testItems || rewards)
-                  .slice(0, visibleNumber)
-                  .map((item, index) => (
-                    <>
-                      <TR
-                        custom
-                        background={
-                          index === 0 || index % 2 === 0
-                            ? '#fff'
-                            : 'transparent'
-                        }
-                        key={item.login + index}
-                      >
-                        <TD color="gray" type="small">
-                          {item.account}
-                        </TD>
-                        <TD>
-                          {getFinePrice(item.amount)} {item.currency}
-                        </TD>
-                        <TD color="gray">
-                          {getFinePrice(
-                            getUsdPrice(item.amount, item.currency)
-                          )}{' '}
-                          USD
-                        </TD>
-                      </TR>
-                    </>
-                  ))}
+                {rewards.slice(0, visibleNumber).map((item, index) => (
+                  <TR
+                    custom
+                    background={
+                      index === 0 || index % 2 === 0 ? '#fff' : 'transparent'
+                    }
+                    key={item.login + index}
+                  >
+                    <TD
+                      color="gray"
+                      type="small"
+                      dataLabel={getLang('dapp_partner')}
+                    >
+                      {item.account}
+                    </TD>
+                    <TD
+                      dataLabel={getLang('dapp_referral_total_currency_earned')}
+                    >
+                      {getFinePrice(item.amount)} {item.currency}
+                    </TD>
+                    <TD
+                      color="gray"
+                      dataLabel={`USD ${getLang(
+                        'dapp_global_equivalent'
+                      ).toLowerCase()}`}
+                    >
+                      {getFinePrice(getUsdPrice(item.amount, item.currency))}{' '}
+                      USD
+                    </TD>
+                  </TR>
+                ))}
               </CabinetTable>
             </Col>
             <Row alignItems="center" className="smoothShow">
@@ -128,7 +131,7 @@ ReferralList.propTypes = {
 };
 
 ReferralList.defaultProps = {
-  items: testItems,
+  items: [],
 };
 
 export default ReferralList;
