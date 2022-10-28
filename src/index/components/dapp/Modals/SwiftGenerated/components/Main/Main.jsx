@@ -2,6 +2,7 @@ import React from 'react';
 import { Web3Context } from 'services/web3Provider';
 import { useDispatch, useSelector } from 'react-redux';
 import * as toast from 'src/actions/toasts';
+import { getLang } from 'utils';
 
 // Components
 import HaveAQuestion from '../../../components/HaveAQuestion/HaveAQuestion';
@@ -19,7 +20,7 @@ function Main(props) {
     props.onClose();
     return <></>;
   }
-  
+
   const onDownload = async () => {
     setIsProcess(true);
     try {
@@ -35,11 +36,13 @@ function Main(props) {
   return (
     <div className="SwiftGenerated__main">
       <div className="SwiftGenerated__row">
-        <h3>Your invoice is generated</h3>
+        <h3>{getLang('dapp_swift_generated_modal_title')}</h3>
       </div>
       <div className="SwiftGenerated__row">
-        <p>Download the invoice and make a Swift transfer in the amount</p>
-        <strong>of {invoice.amount} {currency}</strong>
+        <p>{getLang('dapp_swift_generated_modal_description')}</p>
+        <strong>
+          {getLang('dapp_swift_generated_modal_of')} {invoice.amount} {currency}
+        </strong>
       </div>
       <div className="SwiftGenerated__row">
         <HaveAQuestion />
@@ -50,19 +53,20 @@ function Main(props) {
           onClick={onDownload}
           state={isProcess ? 'loading' : ''}
         >
-          Download Invoice
+          {getLang('dapp_button_download_invoice')}
         </Button>
       </div>
       <div className="SwiftGenerated__row">
-        {isDownloaded ? <Button
-          type="lightBlue"
-          onClick={onNext}
-        >
-          Next
-        </Button> : <div className="SwiftGenerated__next" onClick={onNext}>
-          Next
-          <SVG src={require('src/asset/icons/arrows/form-dropdown.svg')} />
-        </div>}
+        {isDownloaded ? (
+          <Button type="lightBlue" onClick={onNext}>
+            {getLang('global_next')}
+          </Button>
+        ) : (
+          <div className="SwiftGenerated__next" onClick={onNext}>
+            {getLang('global_next')}
+            <SVG src={require('src/asset/icons/arrows/form-dropdown.svg')} />
+          </div>
+        )}
       </div>
     </div>
   );

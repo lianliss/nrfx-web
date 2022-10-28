@@ -6,6 +6,7 @@ import {setInvoice} from "src/actions/dapp/wallet";
 // Components
 import SVG from 'utils/svg-wrap';
 import { Button } from 'src/ui';
+import { getLang } from 'utils';
 
 // Styles
 import './Download.less';
@@ -64,7 +65,7 @@ function Download({ onIPaidClick, onBack, onClose, currency }) {
           <div className="back" onClick={onBack}>
             <SVG src={require('src/asset/icons/arrows/dropdown-medium.svg')} />
           </div>
-          <h3>Swift transfer</h3>
+          <h3>{getLang('dapp_swift_transfer')}</h3>
           <span className="close" onClick={onClose}>
             <SVG src={require('src/asset/icons/close-popup.svg')} />
           </span>
@@ -78,7 +79,9 @@ function Download({ onIPaidClick, onBack, onClose, currency }) {
           state={isProcess ? 'loading' : ''}
           onClick={upload}
         >
-          {isScreenshotUploaded ? 'Screenshot uploaded' : 'Upload a screenshot'}
+          {isScreenshotUploaded
+            ? getLang('dapp_screenshot_uploaded')
+            : getLang('dapp_upload_a_screenshot')}
         </Button>
         <Button
           disabled={!isScreenshotUploaded}
@@ -88,7 +91,7 @@ function Download({ onIPaidClick, onBack, onClose, currency }) {
           size="large"
           onClick={onReview}
         >
-          I paid
+          {getLang('dapp_i_paid')}
         </Button>
       </div>
     </div>
