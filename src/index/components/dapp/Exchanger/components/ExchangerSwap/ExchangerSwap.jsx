@@ -360,7 +360,7 @@ function ExchangerSwap(props) {
         </div>
       </div>
       {isConnected ? <div className="ExchangerSwap__actions-buy">
-        {!isFirstFiat && !isSecondFiat
+        {(!isFirstFiat && !isSecondFiat) || fiatSymbol === 'NRFX'
           ? <Button className=""
                     state={isProcessing ? 'loading' : ''}
                     onClick={() => {
