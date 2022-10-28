@@ -47,9 +47,8 @@ const CustomLoadingStatus = ({ status }) => {
   return <LoadingStatus status={status} {...props} />;
 };
 
-function ChooseBank(props) {
+const ChooseBank = React.memo((props) => {
   const dispatch = useDispatch();
-  const context = React.useContext(Web3Context);
   const { refillBankList } = useSelector(walletSelector);
   const status = useSelector(walletStatusSelector);
   const cardReservation = useSelector(walletCardReservationSelector);
@@ -192,8 +191,7 @@ function ChooseBank(props) {
       return;
     }
 
-    const { cardReserve } = context;
-    cardReserve(amount, currency.toUpperCase(), bankCode)
+    props.cardReserve(amount, currency.toUpperCase(), bankCode)
       .then((data) => {
         const res = data[0];
         if (!res) return;
@@ -348,7 +346,7 @@ function ChooseBank(props) {
       });
   };
 
-  const RenderBody = () => {
+  const renderBody = () => {
     if (timeIsOver) {
       return (
         <Row
@@ -438,9 +436,16 @@ function ChooseBank(props) {
       adaptive={adaptive}
     >
       {/* <Sidebar amount={amount} currency={currency} fee={fee} /> */}
-      <RenderBody />
+      { renderBody() }
     </Bank>
   );
+})
+
+const Wrapper = (props) => {
+  const context = React.useContext(Web3Context);
+  const cardReserve = React.useCallback(context.cardReserve, [])
+
+  return <ChooseBank {...props} cardReserve={cardReserve} />
 }
 
-export default ChooseBank;
+export default React.memo(Wrapper);
