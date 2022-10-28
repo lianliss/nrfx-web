@@ -1,14 +1,12 @@
 .Referral__Card {
-  flex: 1 1 180px;
   min-height: 132px;
   background: #fff;
   border-radius: var(--radius-panel);
-  padding: 17px 16px;
-  margin: 5px 16px;
+  padding: 30px 16px 27px;
+  margin: 5px 10px;
   box-sizing: border-box;
 
   &.secondary {
-    flex: 1 0 290px;
     background: #e5ebfc;
   }
 
@@ -17,24 +15,27 @@
   }
 
   & > div:first-child {
-    margin-bottom: 22px;
+    margin-bottom: 27px;
   }
 
   &__title {
     margin-bottom: 5px;
-    font-weight: 600;
     color: var(--cool-gray);
-    font-size: 12px;
-    line-height: 110%;
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
   }
 
   &__count {
     font-weight: 600;
-    font-size: 16px;
-    line-height: 110%;
-    letter-spacing: -0.01em;
-    color: var(--secondary-blue);
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--dark-black);
+
+    .secondary &,
+    .Referral__Card .Row:first-child & {
+      color: var(--secondary-blue);
+    }
   }
 
   .HoverPopup {

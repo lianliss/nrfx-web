@@ -89,7 +89,7 @@ function Card({
 
 Card.propTypes = {
   firstTitle: PropTypes.string,
-  firstCount: PropTypes.string,
+  firstCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   firstIcon: PropTypes.object,
   firstQuestion: PropTypes.string,
   secondTitle: PropTypes.string,

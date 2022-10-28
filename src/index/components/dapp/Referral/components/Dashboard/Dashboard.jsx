@@ -15,7 +15,7 @@ function Dashboard({ children }) {
     <CabinetBlock className="Referral__Dashboard">
       <h2>Dashboard</h2>
       <Row
-        justifyContent="space-between"
+        justifyContent="flex-start"
         alignItems="center"
         wrap
         className="Referral__Dashboard__cards"

@@ -60,6 +60,17 @@ function Exchanger(params) {
           secondary
           {...params}
         />
+        {Array(10).fill({}).map((__, i) => {
+          return (
+            <Card
+              firstTitle={'Total RUB earned'}
+              firstCount={9}
+              secondTitle={'Equivalently'}
+              secondCount={`${getFinePrice(14444.139)} USD`}
+              key={i}
+            />
+          );
+        })}
         {Object.keys(totalByCurrencies).map((currency) => {
           const amount = totalByCurrencies[currency];
           const usd = getUsdPrice(amount, currency);
