@@ -1,18 +1,45 @@
 .Referral__Dashboard {
+  position: relative;
   padding: 32px 28px;
   background: var(--blue-light-gradient);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: var(--radius-panel-large);
   margin-bottom: 32px;
+  overflow: hidden;
 
   h2 {
     color: #fff;
     margin-bottom: 15px;
   }
 
-  &__cards {
-    margin: -5px -10px;
-    height: 100%;
+  .DappUI__Slider {
+    margin: 0 -28px;
+
+    &__container {
+      padding: 0 28px;
+    }
+  }
+
+  &__arrows {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    right: 28px;
+  }
+
+  &__arrow {
+    cursor: pointer;
+
+    &.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    &:first-child {
+      transform: rotate(180deg);
+      margin-right: 20px;
+    }
   }
 }
 
@@ -24,7 +51,7 @@
   h2 {
     margin-bottom: 18px;
   }
-  
+
   &__cards {
     margin: 0;
     height: 100%;
