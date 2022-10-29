@@ -23,12 +23,12 @@ function Dashboard({ mainChild, children }) {
       <h2>Dashboard</h2>
       {!adaptive && (
         <div className="Referral__Dashboard__arrows">
-          <div className="Referral__Dashboard__arrow" ref={prevSlideRef}>
+          <button className="Referral__Dashboard__arrow" ref={prevSlideRef}>
             <SVG src={require('src/asset/icons/arrows/slider-arrow.svg')} />
-          </div>
-          <div className="Referral__Dashboard__arrow" ref={nextSlideRef}>
+          </button>
+          <button className="Referral__Dashboard__arrow" ref={nextSlideRef}>
             <SVG src={require('src/asset/icons/arrows/slider-arrow.svg')} />
-          </div>
+          </button>
         </div>
       )}
       <Row

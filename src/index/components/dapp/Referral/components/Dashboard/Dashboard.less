@@ -34,6 +34,21 @@
 
   &__arrow {
     cursor: pointer;
+    background: none;
+    border: none;
+    border-radius: 5px;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:active {
+      svg {
+        opacity: 0.9;
+        transform: scale(0.94);
+      }
+    }
 
     &.disabled {
       opacity: 0.4;
