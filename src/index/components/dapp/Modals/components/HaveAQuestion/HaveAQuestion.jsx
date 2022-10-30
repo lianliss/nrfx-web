@@ -5,6 +5,7 @@ import { Button } from 'src/ui';
 
 // Utils
 import _ from 'lodash';
+import { getLang } from 'utils';
 
 // Styles
 import './HaveAQuestion.less';
@@ -55,15 +56,12 @@ function HaveAQuestion() {
   return (
     <div className="HaveAQuestion">
       <p className="HaveAQuestion__title">
-        <em>
-          If the funds are not received within 30 minutes, contact the buyer
-          via:
-        </em>
+        <em>{getLang('dapp_contact_the_buyer_via')}</em>
       </p>
       <div className="HaveAQuestion__button">
         <a href="https://t.me/NarfexExchange" target="_blank">
           <Button size="middle" type="secondary-alice" shadow>
-            Telegram
+            {getLang('global_social_telegram')}
           </Button>
         </a>
       </div>
@@ -74,7 +72,7 @@ function HaveAQuestion() {
           shadow
           onClick={chatHandler}
         >
-          Online chat
+          {getLang('dapp_global_online_chat')}
         </Button>
       </div>
     </div>

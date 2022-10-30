@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -6,12 +7,11 @@ import TransactionModal from '../../TransactionModal/TransactionModal';
 
 // Utils
 import { Web3Context } from 'services/web3Provider';
-import { classNames as cn } from 'src/utils';
+import { classNames as cn, getLang } from 'src/utils';
 import * as CONNECTORS from 'services/multiwallets/connectors';
 
 // Styles
 import './ConnectToWalletModal.less';
-import { useSelector } from 'react-redux';
 
 function ConnectToWalletModal(props) {
   const context = React.useContext(Web3Context);
@@ -26,7 +26,7 @@ function ConnectToWalletModal(props) {
 
   return (
     <TransactionModal
-      title="Connect to a wallet"
+      title={getLang('dapp_connet_wallet_modal_title')}
       className="ConnectToWalletModal"
       {...props}
     >
@@ -76,7 +76,7 @@ function ConnectToWalletModal(props) {
       </div>
       <span className="action-text">
         <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
-        &nbsp;Learn how to connect
+        &nbsp;{getLang('dapp_learn_how_to_connect')}
       </span>
     </TransactionModal>
   );
