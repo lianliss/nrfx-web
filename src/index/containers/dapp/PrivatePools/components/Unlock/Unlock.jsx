@@ -34,7 +34,7 @@ function Unlock(props) {
   const [isWithdraw, setIsWithdraw] = React.useState(false);
   const [errorText, setErrorText] = React.useState('');
   const [time, setTime] = React.useState(Math.floor(Date.now() / 1000));
-  const {
+  let {
     nextUnlock,
     userNrfxBalance, userNrfxInSale, userShare,
     poolNrfxLocked, poolNrfxWithdrawn,
@@ -56,6 +56,12 @@ function Unlock(props) {
     seconds = seconds % MINUTE;
   } else {
     seconds = 0;
+  }
+  
+  const shareAmount = (poolNrfxLocked - poolNrfxWithdrawn) * userShare;
+  if (availableToWithdraw > shareAmount) {
+    //availableToWithdraw = shareAmount;
+    // TODO: раскомментить строчку выше, чтобы пользователь мог вывести столько, сколько зарезервировано
   }
 
   const nrfxAvailable = Math.floor(userNrfxBalance);
@@ -110,7 +116,7 @@ function Unlock(props) {
             <div className="row">
               <span>Locked NRFX:</span>
               <span>
-                <UI.NumberFormat number={(poolNrfxLocked - poolNrfxWithdrawn) * userShare} currency="NRFX" />
+                <UI.NumberFormat number={shareAmount} currency="NRFX" />
               </span>
             </div>
             <div className="row">

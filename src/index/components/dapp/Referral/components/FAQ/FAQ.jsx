@@ -54,7 +54,9 @@ function FAQ({ adaptive, type }) {
           <p>
             <LineBreaker text={question} />
           </p>
-          <SVG src={require('src/asset/icons/arrows/dropdown-medium.svg')} />
+          <SVG
+            src={require('src/asset/icons/arrows/dropdown-small-bordered.svg')}
+          />
         </Row>
       </DropdownElement>
     );

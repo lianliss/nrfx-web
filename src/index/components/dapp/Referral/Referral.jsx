@@ -59,13 +59,6 @@ function Referral() {
 
   return (
     <CabinetBlock className="Referral">
-      {!adaptive && (
-        <div className="Referral__bg">
-          <SVG
-            src={require('src/asset/backgrounds/cabinet-swap/center-of-screen-fix.svg')}
-          />
-        </div>
-      )}
       <div className="Referral__container">
         {/* <SwitchTabs
           selected={routeName}

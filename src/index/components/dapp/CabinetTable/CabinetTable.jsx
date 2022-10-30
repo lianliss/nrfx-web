@@ -15,12 +15,17 @@ function CabinetTable({ header, children }) {
   );
 }
 
-export const TR = ({ children, className }) => (
-  <tr className={cn({ [className]: className })}>{children}</tr>
+export const TR = ({ children, className, background, custom }) => (
+  <tr className={cn({ [className]: className, custom })} style={{ background }}>
+    {children}
+  </tr>
 );
 
-export const TD = ({ type, color, className, children }) => (
-  <td className={cn({ [type]: type, [color]: color, className })}>
+export const TD = ({ type, color, className, children, dataLabel }) => (
+  <td
+    className={cn({ [type]: type, [color]: color, className })}
+    data-label={dataLabel}
+  >
     {children}
   </td>
 );

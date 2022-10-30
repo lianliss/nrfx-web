@@ -39,27 +39,46 @@ function Exchanger(params) {
         friendsWillGetNumber={0}
         {...params}
       />
-      <Dashboard>
-        <Card
-          firstIcon={{ src: 'icons/cabinet/team-icon.svg', background: '#fff' }}
-          firstTitle={`${getLang('dapp_referral_active_friends')} / ${getLang(
-            'dapp_referral_total_friends'
-          )}`}
-          firstCount={`${activeFriends.length}/${friends.length}`}
-          firstQuestion={`${getLang('dapp_referral_active_friends')}, ${getLang(
-            'dapp_referral_total_friends'
-          )}`}
-          secondIcon={{
-            src: 'icons/narfex/white-icon.svg',
-            background: 'var(--blue-light-gradient)',
-          }}
-          secondTitle={`${getLang('global_total')} ${getLang(
-            'dapp_global_earned'
-          ).toLowerCase()}`}
-          secondCount={`${getFinePrice(totalUsd)} USD`}
-          secondary
-          {...params}
-        />
+      <Dashboard
+        mainChild={
+          <Card
+            firstIcon={{
+              src: 'icons/cabinet/team-icon.svg',
+              background: '#fff',
+            }}
+            firstTitle={`${getLang('dapp_referral_active_friends')} / ${getLang(
+              'dapp_referral_total_friends'
+            )}`}
+            firstCount={`${activeFriends.length}/${friends.length}`}
+            firstQuestion={`${getLang(
+              'dapp_referral_active_friends'
+            )}, ${getLang('dapp_referral_total_friends')}`}
+            secondIcon={{
+              src: 'icons/narfex/white-icon.svg',
+              background: 'var(--blue-light-gradient)',
+            }}
+            secondTitle={`${getLang('global_total')} ${getLang(
+              'dapp_global_earned'
+            ).toLowerCase()}`}
+            secondCount={`${getFinePrice(totalUsd)} USD`}
+            secondary
+            {...params}
+          />
+        }
+      >
+        {Array(10)
+          .fill({})
+          .map((__, i) => {
+            return (
+              <Card
+                firstTitle={'Total RUB earned'}
+                firstCount={9}
+                secondTitle={'Equivalently'}
+                secondCount={`${getFinePrice(14444.139)} USD`}
+                key={i}
+              />
+            );
+          })}
         {Object.keys(totalByCurrencies).map((currency) => {
           const amount = totalByCurrencies[currency];
           const usd = getUsdPrice(amount, currency);
