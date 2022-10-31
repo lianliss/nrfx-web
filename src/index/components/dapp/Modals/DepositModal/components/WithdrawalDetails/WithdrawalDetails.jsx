@@ -89,7 +89,7 @@ function WithdrawalDetails(props) {
       closeOfRef
     >
       <h3 className="DepositModal__WithdrawalDetails__title">
-        Specify the details
+        {getLang('dapp_specify_the_details')}
       </h3>
       <label className="DepositModal__WithdrawalDetails__label">
         <span>{getLang('dapp_global_phone_number')}</span>
@@ -102,7 +102,10 @@ function WithdrawalDetails(props) {
         />
       </label>
       <label className="DepositModal__WithdrawalDetails__label">
-        <span>Account (card number)</span>
+        <span>
+          {getLang('dapp_global_account')}{' '}
+          ({getLang('dapp_global_card_number').toLowerCase()})
+        </span>
         <Input type="text"
                value={accountNumber}
                onChange={e => setAccountNumber(e.target.value)}
@@ -118,15 +121,15 @@ function WithdrawalDetails(props) {
         <Input type="text"
                value={name}
                onChange={e => setLatinValueToState(e.target.value, setName)}
-               placeholder="Name" />
+               placeholder={getLang('dapp_global_name')} />
         <Input type="text"
                value={lastName}
                onChange={e => setLatinValueToState(e.target.value, setLastName)}
-               placeholder="Last name" />
+               placeholder={getLang('dapp_global_last_name')} />
       </label>
       <Row className="DepositModal__WithdrawalDetails__buttons" wrap={adaptive}>
         <Button type="secondary-alice" shadow onClick={backHandler}>
-          Back
+          {getLang('global_back')}
         </Button>
         {isConnected
           ? <Button type="lightBlue"

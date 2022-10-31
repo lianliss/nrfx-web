@@ -113,7 +113,7 @@ function InvoiceDetails(props) {
       closeOfRef
     >
       <h3 className="DepositModal__WithdrawalDetails__title">
-        {getLang('dapp_deposit_invoice_title')}
+        {getLang('dapp_specify_the_details')}
       </h3>
       <label className="DepositModal__WithdrawalDetails__label">
         <span>{getLang('dapp_global_phone_number')}</span>
