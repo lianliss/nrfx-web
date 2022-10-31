@@ -43,7 +43,9 @@ function Referral() {
       }
     });
     context.getReferFriends().then(setFriends);
-    context.getReferRewards().then(setRewards);
+    context.getReferRewards().then(rewards => {
+      setRewards(rewards || []);
+    });
   }, [chainId, accountAddress, isConnected]);
 
   // if (routeName === DAPP_REFERRAL) {
