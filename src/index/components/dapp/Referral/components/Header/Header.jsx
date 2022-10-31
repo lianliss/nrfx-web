@@ -67,9 +67,13 @@ function Header({
         <p className="subtitle">
           <FormattedText text={subtitle} className="blue" />
         </p>
-        <span className="link blue-gradient-text">
+        <a
+          className="link blue-gradient-text"
+          href="https://docs.narfex.com/narfex/referral-system/description"
+          target="_blank"
+        >
           {getLang('site__technologyReadMore')} ›
-        </span>
+        </a>
       </Col>
       <Col className="Referral__information">
         <CabinetBlock>
