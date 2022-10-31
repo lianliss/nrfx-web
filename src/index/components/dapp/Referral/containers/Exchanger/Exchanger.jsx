@@ -70,7 +70,7 @@ function Exchanger(params) {
           />
         }
       >
-        {KNOWN_FIATS.map(({ symbol }) => {
+        {KNOWN_FIATS.map(({ symbol }, key) => {
           const amount = totalByCurrencies[symbol] || 0;
           const usd = getUsdPrice(amount, symbol);
           return (
@@ -81,6 +81,7 @@ function Exchanger(params) {
               firstCount={`${getFinePrice(amount)} ${symbol}`}
               secondTitle={getLang('dapp_global_equivalently')}
               secondCount={`${getFinePrice(usd)} USD`}
+              key={key}
             />
           );
         })}
