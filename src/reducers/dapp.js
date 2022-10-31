@@ -14,6 +14,17 @@ const initialState = {
     from: { symbol: 'NRFX' },
     to: { symbol: 'USDT' },
   },
+  exchange: {
+    from: {
+      amount: 0,
+      token: { symbol: 'RUB' },
+    },
+    to: {
+      amount: 0,
+      token: { symbol: 'NRFX' },
+    },
+    focus: 'to',
+  },
 };
 
 function reduce(state = initialState, action = {}) {
@@ -109,6 +120,39 @@ function reduce(state = initialState, action = {}) {
           ...payload,
         },
       };
+    case actionTypes.DAPP_SET_EXCHANGE_AMOUNT: {
+      return {
+        ...state,
+        exchange: {
+          ...state.exchange,
+          [payload.focus]: {
+            ...state.exchange[payload.focus],
+            amount: payload.amount,
+          },
+        },
+      };
+    }
+    case actionTypes.DAPP_SET_EXCHANGE_TOKEN: {
+      return {
+        ...state,
+        exchange: {
+          ...state.exchange,
+          [payload.focus]: {
+            ...state.exchange[payload.focus],
+            token: payload.token,
+          },
+        },
+      };
+    }
+    case actionTypes.DAPP_SET_EXCHANGE_FOCUS: {
+      return {
+        ...state,
+        exchange: {
+          ...state.exchange,
+          focus: payload,
+        },
+      };
+    }
     default:
       return state;
   }

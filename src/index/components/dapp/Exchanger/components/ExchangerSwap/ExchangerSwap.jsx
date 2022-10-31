@@ -23,6 +23,8 @@ import * as PAGES from 'src/index/constants/pages';
 
 // Styles
 import './ExchangerSwap.less';
+import { setExchangeAmount } from '../../../../../../actions/dapp/exchange';
+import { dappExchangeAmountSelector } from '../../../../../../selectors';
 
 function getTokenPrice(token) {
   const rates = useSelector(web3RatesSelector);
@@ -98,9 +100,9 @@ function ExchangerSwap(props) {
   const maxCoinAmount = _.get(limits, 'max', Infinity);
 
   // Fiat input value
-  const [fiatValue, setFiatValue] = React.useState('');
+  const fiatValue = useSelector(dappExchangeAmountSelector('from')) || 0;
   const handleFiatInput = newValue => {
-    setFiatValue(newValue);
+    dispatch(setExchangeAmount(newValue, 'from'));
   };
 
   // Calculate amount
