@@ -101,9 +101,7 @@ function ExchangerSwap(props) {
 
   // Fiat input value
   const fiatValue = useSelector(dappExchangeAmountSelector('from')) || 0;
-  const handleFiatInput = newValue => {
-    dispatch(setExchangeAmount(newValue, 'from'));
-  };
+  const coinValue = useSelector(dappExchangeAmountSelector('to')) || 0;
 
   // Calculate amount
   const fiatCommission = (Number(_.get(
@@ -118,7 +116,7 @@ function ExchangerSwap(props) {
     )) || 0) / 100;
   const rate = (fiatPrice * (1 - fiatCommission)) / coinPrice;
   const fiatAmount = Number(fiatValue) || 0;
-  const coinAmount = fiatAmount * rate * (1 - coinCommission);
+  const coinAmount = Number(coinValue);
   const rateDisplay = 1 / rate / (1 - coinCommission);
 
   // Button availability
@@ -128,6 +126,16 @@ function ExchangerSwap(props) {
   const isAvailableOfMax = coinAmount <= maxCoinAmount;
   const isAvailableOfMin = coinAmount >= minCoinAmount;
   const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
+
+  const handleFiatInput = newValue => {
+    dispatch(setExchangeAmount(newValue, 'from'));
+    dispatch(setExchangeAmount(newValue * rate * (1 - coinCommission), 'to'));
+  };
+
+  const handleCoinInput = newValue => {
+    dispatch(setExchangeAmount(newValue, 'to'));
+    dispatch(setExchangeAmount(newValue / rate * (1 + coinCommission), 'from'));
+  }
 
   function fiatSelector() {
     setIsSelectFiat(true);
@@ -334,8 +342,9 @@ function ExchangerSwap(props) {
           <div className="SwapForm__form__control">
             <div className="ExchangerSwap__fiat-amount">
               <DappInput placeholder="0.00"
-                     disabled
-                     value={`≈ ${getFinePrice(coinAmount)}`}
+                     value={coinAmount}
+                     onChange={handleCoinInput}
+                     type="number"
                      textPosition="right"
                      error={!!(coinAmount && !isAvailableOfMin)} />
               <span
