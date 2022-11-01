@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import getFinePrice from 'src/utils/get-fine-price';
 import { getLang } from 'utils';
+import KNOWN_FIATS from 'src/index/constants/knownFiats';
 
 // Components
 import Header from '../../components/Header/Header';
@@ -35,8 +36,7 @@ function Exchanger(params) {
         title={getLang('dapp_referral_exchanger_title')}
         subtitle={getLang('dapp_referral_exchanger_subtitle')}
         link="https://narfex.org?ref=dd4e20hfj09nrtyasdasd"
-        willGetNumber={100}
-        friendsWillGetNumber={0}
+        willGetNumber={30}
         {...params}
       />
       <Dashboard
@@ -49,7 +49,11 @@ function Exchanger(params) {
             firstTitle={`${getLang('dapp_referral_active_friends')} / ${getLang(
               'dapp_referral_total_friends'
             )}`}
-            firstCount={`${activeFriends.length}/${friends.length}`}
+            firstCount={`${_.get(activeFriends, 'length', 0)}/${_.get(
+              friends,
+              'length',
+              0
+            )}`}
             firstQuestion={`${getLang(
               'dapp_referral_active_friends'
             )}, ${getLang('dapp_referral_total_friends')}`}
@@ -66,30 +70,18 @@ function Exchanger(params) {
           />
         }
       >
-        {Array(10)
-          .fill({})
-          .map((__, i) => {
-            return (
-              <Card
-                firstTitle={'Total RUB earned'}
-                firstCount={9}
-                secondTitle={'Equivalently'}
-                secondCount={`${getFinePrice(14444.139)} USD`}
-                key={i}
-              />
-            );
-          })}
-        {Object.keys(totalByCurrencies).map((currency) => {
-          const amount = totalByCurrencies[currency];
-          const usd = getUsdPrice(amount, currency);
+        {KNOWN_FIATS.map(({ symbol }, key) => {
+          const amount = totalByCurrencies[symbol] || 0;
+          const usd = getUsdPrice(amount, symbol);
           return (
             <Card
-              firstTitle={`${getLang('global_total')} ${currency} ${getLang(
+              firstTitle={`${getLang('global_total')} ${symbol} ${getLang(
                 'dapp_global_earned'
               ).toLowerCase()}`}
-              firstCount={`${getFinePrice(amount)} ${currency}`}
+              firstCount={`${getFinePrice(amount)} ${symbol}`}
               secondTitle={getLang('dapp_global_equivalently')}
               secondCount={`${getFinePrice(usd)} USD`}
+              key={key}
             />
           );
         })}
