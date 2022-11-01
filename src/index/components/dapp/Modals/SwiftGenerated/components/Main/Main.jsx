@@ -24,7 +24,7 @@ function Main(props) {
   const onDownload = async () => {
     setIsProcess(true);
     try {
-      await getInvoicePDF(invoice.id);
+      await getInvoicePDF(invoice.id, currency);
       setIsDownloaded(true);
     } catch (error) {
       console.error('[onDownload]', error);

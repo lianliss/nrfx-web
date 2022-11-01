@@ -1550,9 +1550,10 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async getInvoicePDF(id = '') {
+  async getInvoicePDF(id = '', currency = 'USD') {
     try {
       const result = await this.backendRequest({
+          currency,
         },
         `Get invoice`,
         'invoice/pdf',

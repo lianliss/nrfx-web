@@ -66,7 +66,7 @@ const ChooseBank = React.memo((props) => {
     availableMethods = methods.filter(
       (m) => !m.currencies || m.currencies.indexOf(currency.toUpperCase()) >= 0
     );
-    if (currency === 'USD') {
+    if (_.includes(['USD', 'CNY',], currency)) {
       availableMethods.push({
         currencies: ['USD'],
         code: 'swift',
