@@ -40,9 +40,9 @@ function getTokenPrice(token) {
   return price;
 }
 
-function getDefaultCommission(token) {
+function getDefaultCommission(token, _commissions) {
   if (!token) return 0;
-  const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
+  const commissions = _commissions || useSelector(state => _.get(state, 'web3.commissions', {}));
   return token.isFiat
     ? _.get(commissions, 'FiatDefault', 0)
     : _.get(commissions, 'BinanceDefault', 0);
@@ -73,6 +73,7 @@ function ExchangerSwap(props) {
     token: false,
     fiat: false
   });
+  const bnbToken = coins.find(c => c.symbol === 'BNB');
 
   // Symbols
   const fiatSymbol = _.get(fiat, 'symbol', '');
@@ -107,13 +108,18 @@ function ExchangerSwap(props) {
   const fiatCommission = (Number(_.get(
     commissions,
     `${fiatSymbol.toLowerCase()}`,
-    getDefaultCommission(fiat),
+    getDefaultCommission(fiat, commissions),
   ))) / 100;
   const coinCommission = (Number(_.get(
     commissions,
     `${coinSymbol.toLowerCase()}`,
-    getDefaultCommission(coin)
+    getDefaultCommission(coin, commissions)
     )) || 0) / 100;
+  const bnbCommission = (Number(_.get(
+    commissions,
+    `bnb`,
+    getDefaultCommission(bnbToken, commissions)
+  )) || 0) / 100;
   const rate = (fiatPrice * (1 - fiatCommission)) / coinPrice;
   const fiatAmount = Number(fiatValue) || 0;
   const coinAmount = fiatAmount * rate * (1 - coinCommission);
@@ -159,11 +165,44 @@ function ExchangerSwap(props) {
       JSON.stringify(transactions)
     );
   }
-
+  
+  const bnbPrice = getTokenPrice(bnbToken);
   const swapTokens = async () => {
     setIsProcessing(true);
     setProcessingTime(Date.now() + 60000 * 5);
+    
     try {
+      let fiatToBNBAmount = 0;
+      const bnbBalance = wei.from(await getTokenBalance());
+      const bnbAmount = 0.01;
+      const minBNBAmount = 0.005;
+  
+      const sourcePrice = fiat.isFiat ? fiatPrice : coinPrice;
+      const sourceCommission = fiat.isFiat ? fiatCommission : coinCommission;
+      const gasPrice = bnbAmount
+        * (bnbPrice / sourcePrice)
+        * (1 + sourceCommission)
+        * (1 + bnbCommission);
+      
+      // Check BNB balance and ask to exchange some fiat to bnbAmount
+      if ((bnbBalance < minBNBAmount) && (fiat.isFiat || coin.isFiat)) {
+        try {
+          await actions.openModal('attention_buy_token', {}, {
+            toToken: {
+              amount: bnbAmount,
+              label: 'BNB',
+            },
+            fromToken: {
+              amount: Number(gasPrice.toFixed(0)),
+              label: fiat.isFiat ? fiatSymbol : coinSymbol,
+            }
+          });
+          fiatToBNBAmount = gasPrice;
+        } catch (error) {
+          console.warn('Gas buy cancelled', error);
+        }
+      }
+      
       if (!fiat.isFiat) {
         const token = getTokenContract(fiat);
         const allowance = await token.getAllowance(exchangerRouter);
@@ -171,7 +210,7 @@ function ExchangerSwap(props) {
           await token.approve(exchangerRouter, fiatAmount);
         }
       }
-      const result = await exchange(fiat.address, coin.address, fiatAmount, {
+      const result = await exchange(fiat.address, coin.address, fiatAmount, fiatToBNBAmount, {
         symbol: coinSymbol,
         isInProgress: true,
         text: getLang('dapp_exchanger_swap_submitted_text'),

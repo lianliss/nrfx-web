@@ -1498,12 +1498,13 @@ class Web3Provider extends React.PureComponent {
     }
   }
 
-  async exchange(fiat, coin, fiatAmount, modalParams) {
+  async exchange(fiat, coin, fiatAmount, fiatToBNBAmount, modalParams) {
     try {
       const result = await this.backendRequest({
           fiat,
           coin,
           fiatAmount,
+          fiatToBNBAmount,
         },
         `Exchange ${fiatAmount} ${fiat} to ${coin}`,
         'swap/exchange',
