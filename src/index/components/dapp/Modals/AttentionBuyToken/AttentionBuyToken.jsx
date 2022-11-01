@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import router from 'src/router';
 
 // Components
 import CabinetModal from '../CabinetModal/CabinetModal';
@@ -12,6 +13,16 @@ import { getLang, classNames as cn } from 'src/utils';
 import './AttentionBuyToken.less';
 
 function AttentionBuyToken({ fromToken, toToken, text, type, ...props }) {
+  
+  const routerState = router.getState();
+  const onSubmit = () => {
+    routerState.onSubmit(fromToken.amount || 0);
+  };
+  
+  const onCancel = () => {
+    routerState.onCancel(0);
+  };
+  
   return (
     <CabinetModal {...props} className="AttentionBuyToken" closeOfRef>
       <div className="AttentionBuyToken__container">
@@ -27,8 +38,8 @@ function AttentionBuyToken({ fromToken, toToken, text, type, ...props }) {
           {fromToken.amount}&nbsp;
           {fromToken.label}?
         </p>
-        <Button type="lightBlue">{getLang('global_confirm')}</Button>
-        <Button type="secondary-alice" shadow>
+        <Button type="lightBlue" onClick={onSubmit}>{getLang('global_confirm')}</Button>
+        <Button type="secondary-alice" shadow onClick={onCancel}>
           {getLang('dapp_global_no_thanks')}
         </Button>
       </div>

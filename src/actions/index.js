@@ -101,15 +101,6 @@ export function profileSetHasNotifications(value) {
   };
 }
 
-export function openModal(name, params = {}, props = {}, done) {
-  router.navigate(
-    router.getState().name,
-    utils.makeModalParams(name, params),
-    props,
-    done
-  );
-}
-
 export function openPage(page) {
   window.location.href = window.location.origin + "/" + page;
 }
@@ -128,6 +119,27 @@ export function closeModal() {
   router.navigate(route.name, {
     ...route.params,
     modal: undefined
+  });
+}
+
+export function openModal(name, params = {}, props = {}, done = () => {}) {
+  return new Promise((fulfill, reject) => {
+    router.navigate(
+      router.getState().name,
+      utils.makeModalParams(name, params),
+      props,
+      (error, state) => {
+        state.onSubmit = data => {
+          closeModal();
+          fulfill(data);
+        };
+        state.onCancel = data => {
+          closeModal();
+          reject(data);
+        };
+        done(error, state);
+      },
+    );
   });
 }
 
