@@ -21,10 +21,13 @@ import router from 'src/router';
 import { setSwap } from 'src/actions/dapp/swap';
 import * as PAGES from 'src/index/constants/pages';
 
+// Utils
+import { setExchangeAmount } from 'src/actions/dapp/exchange';
+import { dappExchangeAmountSelector } from 'src/selectors';
+import { getFixedNumber } from 'src/utils';
+
 // Styles
 import './ExchangerSwap.less';
-import { setExchangeAmount } from '../../../../../../actions/dapp/exchange';
-import { dappExchangeAmountSelector } from '../../../../../../selectors';
 
 function getTokenPrice(token) {
   const rates = useSelector(web3RatesSelector);
@@ -128,13 +131,17 @@ function ExchangerSwap(props) {
   const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
 
   const handleFiatInput = newValue => {
+    const newCoinAmount = newValue * rate * (1 - coinCommission);
+
     dispatch(setExchangeAmount(newValue, 'from'));
-    dispatch(setExchangeAmount(newValue * rate * (1 - coinCommission), 'to'));
+    dispatch(setExchangeAmount(getFixedNumber(newCoinAmount, 5), 'to'));
   };
 
   const handleCoinInput = newValue => {
+    const newFiatAmount = newValue / (rate * (1 - coinCommission));
+
     dispatch(setExchangeAmount(newValue, 'to'));
-    dispatch(setExchangeAmount(newValue / rate * (1 + coinCommission), 'from'));
+    dispatch(setExchangeAmount(getFixedNumber(newFiatAmount, 5), 'from'));
   }
 
   function fiatSelector() {
@@ -342,6 +349,7 @@ function ExchangerSwap(props) {
           <div className="SwapForm__form__control">
             <div className="ExchangerSwap__fiat-amount">
               <DappInput placeholder="0.00"
+                     disabled={!coin?.isFiat}
                      value={coinAmount}
                      onChange={handleCoinInput}
                      type="number"
