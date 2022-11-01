@@ -22,8 +22,14 @@ import { setSwap } from 'src/actions/dapp/swap';
 import * as PAGES from 'src/index/constants/pages';
 
 // Utils
-import { setExchangeAmount } from 'src/actions/dapp/exchange';
-import { dappExchangeAmountSelector } from 'src/selectors';
+import {
+  setExchangeAmount,
+  setExchangeFocus
+} from 'src/actions/dapp/exchange';
+import {
+  dappExchangeAmountSelector,
+  dappExchangeFocusSelector,
+} from 'src/selectors';
 import { getFixedNumber } from 'src/utils';
 
 // Styles
@@ -102,7 +108,8 @@ function ExchangerSwap(props) {
   );
   const maxCoinAmount = _.get(limits, 'max', Infinity);
 
-  // Fiat input value
+  // input values
+  const inputFocus = useSelector(dappExchangeFocusSelector);
   const fiatValue = useSelector(dappExchangeAmountSelector('from')) || 0;
   const coinValue = useSelector(dappExchangeAmountSelector('to')) || 0;
 
@@ -271,6 +278,15 @@ function ExchangerSwap(props) {
     setParamsTokensLoaded((state) => ({ ...state, token: true }));
   }, [fiats, coins, isConnected]);
 
+  React.useEffect(() => {
+    if (inputFocus === 'to') {
+      handleCoinInput(coinAmount);
+      return;
+    }
+
+    handleFiatInput(fiatAmount);
+  }, [fiat, coin]);
+
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
       <div className="SwapForm__formWrapper">
@@ -300,6 +316,9 @@ function ExchangerSwap(props) {
                      onChange={handleFiatInput}
                      value={fiatValue}
                      type="number"
+                     onFocus={() => {
+                      dispatch(setExchangeFocus('from'));
+                     }}
                      textPosition="right" />
               <span className="ExchangerSwap__link" onClick={() => handleFiatInput(fiatBalance)}>
                 {getLang('dapp_global_balance')}:&nbsp;
@@ -353,6 +372,9 @@ function ExchangerSwap(props) {
                      value={coinAmount}
                      onChange={handleCoinInput}
                      type="number"
+                     onFocus={() => {
+                      dispatch(setExchangeFocus('to'));
+                     }}
                      textPosition="right"
                      error={!!(coinAmount && !isAvailableOfMin)} />
               <span
