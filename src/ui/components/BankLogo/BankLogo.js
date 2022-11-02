@@ -9,6 +9,7 @@ const BankLogo = (props) => {
   const logos = {
     tinkoff: require('src/asset/banks/tinkoff.svg'),
     sberbank: require('src/asset/banks/sberbank.svg'),
+    sber: require('src/asset/banks/sber.svg'),
     bankvtb: require('src/asset/banks/bankvtb.svg'),
     gazprombank: require('src/asset/banks/gazprombank.svg'),
     alfabank: require('src/asset/banks/alfabank.svg'),
