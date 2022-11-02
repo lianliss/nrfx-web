@@ -405,7 +405,7 @@ function ExchangerSwap(props) {
           ? <Button className=""
                     state={isProcessing ? 'loading' : ''}
                     onClick={() => {
-                      if (fiatSymbol === 'NRFX') {
+                      if (fiatSymbol === 'NRFX' && isSecondFiat) {
                         const secondToken =
                           coins.find(t => t.symbol === 'USDT') ||
                           coins[1];
