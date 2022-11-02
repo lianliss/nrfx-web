@@ -19,6 +19,7 @@ import {
 import _ from 'lodash';
 import moment from 'moment';
 import { dataStatus, sortTypes } from 'src/index/constants/dapp/types';
+import { Web3Backend } from '../../../../services/web3-backend';
 
 // Styles
 import './TransactionHistory.less';
@@ -45,6 +46,28 @@ function TransactionHistory() {
   // Functional.
   // Clear the filled transactions.
   React.useEffect(() => {
+    const back = new Web3Backend();
+    back.getBanks().then(console.log);
+    back.getWithdrawBanks().then((r) => {
+      const arr = {};
+      r.RUB.map((i) => {
+        const code = i.code.toLowerCase();
+        arr[code] = `require('src/asset/banks/${code}.svg')`;
+      });
+
+      r.IDR.map((i) => {
+        const code = i.code.toLowerCase();
+        arr[code] = `require('src/asset/banks/${code}.svg')`;
+      });
+
+      r.UAH.map((i) => {
+        const code = i.code.toLowerCase();
+        arr[code] = `require('src/asset/banks/${code}.svg')`;
+      });
+
+      console.log(arr);
+    });
+
     if (transactions.status !== dataStatus.LOADED) return;
 
     dispatch(setTransactionItems([]));
