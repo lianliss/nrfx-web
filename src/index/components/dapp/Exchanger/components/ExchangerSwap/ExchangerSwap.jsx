@@ -405,7 +405,15 @@ function ExchangerSwap(props) {
           ? <Button className=""
                     state={isProcessing ? 'loading' : ''}
                     onClick={() => {
-                      dispatch(setSwap(fiat, coin));
+                      if (fiatSymbol === 'NRFX') {
+                        const secondToken =
+                          coins.find(t => t.symbol === 'USDT') ||
+                          coins[1];
+                        dispatch(setSwap(fiat, secondToken));
+                      } else {
+                        dispatch(setSwap(fiat, coin));
+                      }
+
                       router.navigate(PAGES.DAPP_SWAP);
                     }}>
             {getLang('dapp_exchanger_exchange_on_dex_button')}
