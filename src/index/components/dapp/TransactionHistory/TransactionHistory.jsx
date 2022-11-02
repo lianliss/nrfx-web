@@ -108,10 +108,11 @@ function TransactionHistory() {
   return (
     <CabinetBlock className="TransactionHistory__wrap">
       <div className="TransactionHistory">
-        <h1 className="TransactionHistory__title">Transaction History</h1>
+        <h1 className="TransactionHistory__title">
+          {getLang('dapp_transaction_history_title')}
+        </h1>
         <p className="TransactionHistory__description">
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout.
+          {getLang('dapp_transaction_history_description')}
         </p>
         <div className="TransactionHistory__table">
           {transactions.status === dataStatus.LOADING && (

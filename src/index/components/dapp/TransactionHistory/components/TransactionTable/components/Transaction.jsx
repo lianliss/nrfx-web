@@ -6,6 +6,10 @@ import { TD, TR } from '../../../../CabinetTable/CabinetTable';
 import Currency from '../../Currency/Currency';
 import TransactionLink from '../../TransactionLink/TransactionLink';
 
+// Utils
+import { getLang } from 'utils';
+import transactionLangs from '../../../constants/transactionLangs';
+
 const Transaction = ({
   type,
   source_token,
@@ -18,7 +22,7 @@ const Transaction = ({
   return (
     <TR className="TransactionHistory__item">
       <TD color="gray">{date}</TD>
-      <TD>{type}</TD>
+      <TD>{transactionLangs[type] ? getLang(transactionLangs[type]) : type}</TD>
       <TD>
         <Currency
           type={type}
@@ -29,7 +33,9 @@ const Transaction = ({
         />
       </TD>
       <TD type="small" color="gray">
-        {type === 'exchange' ? 'Done' : 'Approved'}
+        {type === 'exchange'
+          ? getLang('status_done')
+          : getLang('status_approved')}
       </TD>
       <TD color="blue">
         <TransactionLink tx_hash={tx_hash} />
