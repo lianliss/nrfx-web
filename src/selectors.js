@@ -48,3 +48,6 @@ export const web3BalancesCountSelector = state => state.web3.balances.length;
 
 // dapp
 export const dappTransactionsSelector = state => state.dapp.wallet.transactions;
+export const dappExchangeAmountSelector = focus => state => state.dapp.exchange[focus].amount;
+export const dappExchangeTokenSelector = focus => state => state.dapp.exchange[focus].token;
+export const dappExchangeFocusSelector = state => state.dapp.exchange.focus;

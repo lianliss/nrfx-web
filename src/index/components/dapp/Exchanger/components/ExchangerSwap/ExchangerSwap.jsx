@@ -21,6 +21,17 @@ import router from 'src/router';
 import { setSwap } from 'src/actions/dapp/swap';
 import * as PAGES from 'src/index/constants/pages';
 
+// Utils
+import {
+  setExchangeAmount,
+  setExchangeFocus
+} from 'src/actions/dapp/exchange';
+import {
+  dappExchangeAmountSelector,
+  dappExchangeFocusSelector,
+} from 'src/selectors';
+import { getFixedNumber } from 'src/utils';
+
 // Styles
 import './ExchangerSwap.less';
 
@@ -98,11 +109,10 @@ function ExchangerSwap(props) {
   );
   const maxCoinAmount = _.get(limits, 'max', Infinity);
 
-  // Fiat input value
-  const [fiatValue, setFiatValue] = React.useState('');
-  const handleFiatInput = newValue => {
-    setFiatValue(newValue);
-  };
+  // input values
+  const inputFocus = useSelector(dappExchangeFocusSelector);
+  const fiatValue = useSelector(dappExchangeAmountSelector('from')) || 0;
+  const coinValue = useSelector(dappExchangeAmountSelector('to')) || 0;
 
   // Calculate amount
   const fiatCommission = (Number(_.get(
@@ -122,7 +132,7 @@ function ExchangerSwap(props) {
   )) || 0) / 100;
   const rate = (fiatPrice * (1 - fiatCommission)) / coinPrice;
   const fiatAmount = Number(fiatValue) || 0;
-  const coinAmount = fiatAmount * rate * (1 - coinCommission);
+  const coinAmount = Number(coinValue);
   const rateDisplay = 1 / rate / (1 - coinCommission);
 
   // Button availability
@@ -132,6 +142,20 @@ function ExchangerSwap(props) {
   const isAvailableOfMax = coinAmount <= maxCoinAmount;
   const isAvailableOfMin = coinAmount >= minCoinAmount;
   const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
+
+  const handleFiatInput = newValue => {
+    const newCoinAmount = newValue * rate * (1 - coinCommission);
+
+    dispatch(setExchangeAmount(newValue, 'from'));
+    dispatch(setExchangeAmount(getFixedNumber(newCoinAmount, 5), 'to'));
+  };
+
+  const handleCoinInput = newValue => {
+    const newFiatAmount = newValue / (rate * (1 - coinCommission));
+
+    dispatch(setExchangeAmount(newValue, 'to'));
+    dispatch(setExchangeAmount(getFixedNumber(newFiatAmount, 5), 'from'));
+  }
 
   function fiatSelector() {
     setIsSelectFiat(true);
@@ -293,6 +317,15 @@ function ExchangerSwap(props) {
     setParamsTokensLoaded((state) => ({ ...state, token: true }));
   }, [fiats, coins, isConnected]);
 
+  React.useEffect(() => {
+    if (inputFocus === 'to') {
+      handleCoinInput(coinAmount);
+      return;
+    }
+
+    handleFiatInput(fiatAmount);
+  }, [fiat, coin]);
+
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
       <div className="SwapForm__formWrapper">
@@ -322,6 +355,9 @@ function ExchangerSwap(props) {
                      onChange={handleFiatInput}
                      value={fiatValue}
                      type="number"
+                     onFocus={() => {
+                      dispatch(setExchangeFocus('from'));
+                     }}
                      textPosition="right" />
               <span className="ExchangerSwap__link" onClick={() => handleFiatInput(fiatBalance)}>
                 {getLang('dapp_global_balance')}:&nbsp;
@@ -371,8 +407,13 @@ function ExchangerSwap(props) {
           <div className="SwapForm__form__control">
             <div className="ExchangerSwap__fiat-amount">
               <DappInput placeholder="0.00"
-                     disabled
-                     value={`≈ ${getFinePrice(coinAmount)}`}
+                     disabled={!coin?.isFiat}
+                     value={coinAmount}
+                     onChange={handleCoinInput}
+                     type="number"
+                     onFocus={() => {
+                      dispatch(setExchangeFocus('to'));
+                     }}
                      textPosition="right"
                      error={!!(coinAmount && !isAvailableOfMin)} />
               <span
@@ -403,7 +444,15 @@ function ExchangerSwap(props) {
           ? <Button className=""
                     state={isProcessing ? 'loading' : ''}
                     onClick={() => {
-                      dispatch(setSwap(fiat, coin));
+                      if (fiatSymbol === 'NRFX' && isSecondFiat) {
+                        const secondToken =
+                          coins.find(t => t.symbol === 'USDT') ||
+                          coins[1];
+                        dispatch(setSwap(fiat, secondToken));
+                      } else {
+                        dispatch(setSwap(fiat, coin));
+                      }
+
                       router.navigate(PAGES.DAPP_SWAP);
                     }}>
             {getLang('dapp_exchanger_exchange_on_dex_button')}

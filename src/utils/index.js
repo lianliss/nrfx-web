@@ -373,4 +373,8 @@ export const timeout = miliseconds => {
   return new Promise(resolve => setTimeout(resolve, miliseconds));
 };
 
+export const getFixedNumber = (number, fixedNumber) => {
+  return Number(Number(number).toFixed(fixedNumber));
+}
+
 export { default as wei } from './wei';
