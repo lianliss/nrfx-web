@@ -59,7 +59,7 @@ AttentionBuyToken.propTypes = {
     amount: PropTypes.number,
   }),
   text: PropTypes.string,
-  type: PropTypes.oneOf('secondary-alice'),
+  type: PropTypes.oneOf(['secondary-alice']),
 };
 
 AttentionBuyToken.defaultProps = {

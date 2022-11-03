@@ -6,35 +6,30 @@ import { getLang } from 'utils';
 // Components
 import { Row, Col, NumberFormat } from 'src/ui';
 import SVG from 'utils/svg-wrap';
+import CabinetTable, { TD, TR } from '../../../CabinetTable/CabinetTable';
 
 // Styles
 import './ReferralList.less';
 
 const testItems = [
-  { login: 'Login 1', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 2', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 3', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 4', total: { nrfx: '2121212', usd: '21122212121111' } },
-  { login: 'Login 5', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 6', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 7', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 8', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 9', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 10', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
-  { login: 'Login 11', total: { nrfx: '212', usd: '21' } },
+  {
+    login: 'Login 1',
+    account: '124124214124124',
+    amount: 123123,
+    currency: 'RUB',
+  },
+  {
+    login: 'Login 1',
+    account: '124124214124124',
+    amount: 123123,
+    currency: 'RUB',
+  },
+  {
+    login: 'Login 1',
+    account: '124124214124124',
+    amount: 123123,
+    currency: 'RUB',
+  },
 ];
 
 function ReferralList(params) {
@@ -65,26 +60,49 @@ function ReferralList(params) {
         ) : (
           <>
             <Col className="Referral__ReferralList__items-exists">
-              <Row justifyContent="space-between" className="title-row">
-                <Col>{getLang('dapp_partner')}</Col>
-                <Col>{getLang('dapp_referral_total_currency_earned')}</Col>
-                <Col>USD {getLang('dapp_global_equivalent').toLowerCase()}</Col>
-              </Row>
-              {rewards.slice(0, visibleNumber).map((item, index) => (
-                <Row
-                  justifyContent="space-between"
-                  alignItems="center"
-                  key={item.login + index}
-                >
-                  <Col>{item.account}</Col>
-                  <Col>
-                    {getFinePrice(item.amount)} {item.currency}
-                  </Col>
-                  <Col>
-                    {getFinePrice(getUsdPrice(item.amount, item.currency))} USD
-                  </Col>
-                </Row>
-              ))}
+              <CabinetTable
+                header={
+                  <TR>
+                    <TD>{getLang('dapp_partner')}</TD>
+                    <TD>{getLang('dapp_referral_total_currency_earned')}</TD>
+                    <TD>
+                      USD {getLang('dapp_global_equivalent').toLowerCase()}
+                    </TD>
+                  </TR>
+                }
+              >
+                {rewards.slice(0, visibleNumber).map((item, index) => (
+                  <TR
+                    custom
+                    background={
+                      index === 0 || index % 2 === 0 ? '#fff' : 'transparent'
+                    }
+                    key={item.login + index}
+                  >
+                    <TD
+                      color="gray"
+                      type="small"
+                      dataLabel={getLang('dapp_partner')}
+                    >
+                      {item.account}
+                    </TD>
+                    <TD
+                      dataLabel={getLang('dapp_referral_total_currency_earned')}
+                    >
+                      {getFinePrice(item.amount)} {item.currency}
+                    </TD>
+                    <TD
+                      color="gray"
+                      dataLabel={`USD ${getLang(
+                        'dapp_global_equivalent'
+                      ).toLowerCase()}`}
+                    >
+                      {getFinePrice(getUsdPrice(item.amount, item.currency))}{' '}
+                      USD
+                    </TD>
+                  </TR>
+                ))}
+              </CabinetTable>
             </Col>
             <Row alignItems="center" className="smoothShow">
               {visibleNumber <= rewards.length && (
@@ -113,7 +131,7 @@ ReferralList.propTypes = {
 };
 
 ReferralList.defaultProps = {
-  items: testItems,
+  items: [],
 };
 
 export default ReferralList;

@@ -6,8 +6,8 @@ import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import FormattedText from '../../../FormattedText/FormattedText';
 import { Web3Context } from 'src/services/web3Provider';
-import * as actions from "src/actions";
-import { classNames, getLang } from "src/utils";
+import * as actions from 'src/actions';
+import { classNames, getLang } from 'src/utils';
 
 // Utils
 import { openModal } from 'src/actions';
@@ -25,7 +25,7 @@ function Header({
   hashLink,
 }) {
   const context = React.useContext(Web3Context);
-  const {chainId, accountAddress, isConnected} = context;
+  const { chainId, accountAddress, isConnected } = context;
 
   const FriendsWillGet = () => {
     const Wrapper = adaptive ? Row : Col;
@@ -50,63 +50,76 @@ function Header({
     );
   };
 
+  const ShareButton = () => (
+    <Col
+      className="Referral__share"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <SVG src={require('src/asset/icons/action/share.svg')} />
+    </Col>
+  );
+
   return (
-    <Row justifyContent="space-between" className="Referral__header" wrap>
+    <div className="Referral__header">
       <Col>
         <h1>{title}</h1>
         <p className="subtitle">
           <FormattedText text={subtitle} className="blue" />
         </p>
-        <span className="link blue-gradient-text">
+        <a
+          className="link blue-gradient-text"
+          href="https://docs.narfex.com/narfex/referral-system/description"
+          target="_blank"
+        >
           {getLang('site__technologyReadMore')} ›
-        </span>
+        </a>
       </Col>
       <Col className="Referral__information">
         <CabinetBlock>
           <Row alignItems="center" justifyContent="space-between">
             <h2>Copy Referral Link</h2>
+            {adaptive && <ShareButton />}
             {/*<Col>*/}
-              {/*<Row*/}
-                {/*alignItems="center"*/}
-                {/*className="create-new-link"*/}
-                {/*onClick={() => openModal('create_referral_link')}*/}
-              {/*>*/}
-                {/*<span className="strong">Create new link</span>*/}
-                {/*<SVG*/}
-                  {/*src={require('src/asset/icons/cabinet/add-icon-blue.svg')}*/}
-                {/*/>*/}
-              {/*</Row>*/}
+            {/*<Row*/}
+            {/*alignItems="center"*/}
+            {/*className="create-new-link"*/}
+            {/*onClick={() => openModal('create_referral_link')}*/}
+            {/*>*/}
+            {/*<span className="strong">Create new link</span>*/}
+            {/*<SVG*/}
+            {/*src={require('src/asset/icons/cabinet/add-icon-blue.svg')}*/}
+            {/*/>*/}
+            {/*</Row>*/}
             {/*</Col>*/}
           </Row>
-          <Row justifyContent="space-between">
-            {isConnected ? <>
-              {!!hashLink && <Col className="Referral__copy">
-                <Row alignItems="center" justifyContent="space-between">
-                  <span>{hashLink}</span>
-                  <SVG src={require('src/asset/icons/action/copy.svg')} />
-                </Row>
-              </Col>}
-              {!adaptive && (
-                <Col
-                  className="Referral__share"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <SVG src={require('src/asset/icons/action/share.svg')} />
-                </Col>
-              )}
-            </> : <Button onClick={() => actions.openModal('connect_to_wallet')}>
-              {getLang('dapp_global_connect_wallet')}
-            </Button>}
-          </Row>
+          <div className="Referral__information__header">
+            {isConnected ? (
+              <>
+                {!!hashLink && (
+                  <Col className="Referral__copy">
+                    <Row alignItems="center" justifyContent="space-between">
+                      <span>{hashLink}</span>
+                      <SVG src={require('src/asset/icons/action/copy.svg')} />
+                    </Row>
+                  </Col>
+                )}
+                {!adaptive && <ShareButton />}
+              </>
+            ) : (
+              <Button onClick={() => actions.openModal('connect_to_wallet')}>
+                {getLang('dapp_global_connect_wallet')}
+              </Button>
+            )}
+          </div>
           <Row justifyContent="space-between" wrap={adaptive}>
-            {adaptive && <FriendsWillGet />}
+            {/* {adaptive && <FriendsWillGet />} */}
             <Row
               className="Referral__information__future"
               justifyContent="space-between"
-              alignItems="center"
+              alignItems="stretch"
             >
-              <Col justifyContent="center">
+              <Col justifyContent="center" alignItems="center">
                 <span className="strong">
                   {getLang('dapp_referral_you_will_get')}
                 </span>
@@ -114,23 +127,12 @@ function Header({
                   <NumberFormat number={willGetNumber} percent />
                 </span>
               </Col>
-              <Col>
-                <SVG src={require('../../asset/box-break.svg')} />
-              </Col>
-              <Col justifyContent="center">
+              <Col justifyContent="center" alignItems="center">
                 {/*<span className="secondary-text">*/}
-                  {/*<FormattedText text="NRFX purchases 5%" className="blue" />*/}
+                {/*<FormattedText text="NRFX purchases 5%" className="blue" />*/}
                 {/*</span>*/}
                 <Col>
-                  <span className="secondary-text">
-                    <FormattedText
-                      text={`${getLang('dapp_referral_fiat_replinishment')} 30%`}
-                      className="blue"
-                    />
-                  </span>
-                  <span className="secondary-text small-text">
-                    {getLang('dapp_from_the_commission').toLowerCase()}
-                  </span>
+                  <span>{getLang('dapp_from_the_commission')}</span>
                 </Col>
               </Col>
             </Row>
@@ -138,7 +140,7 @@ function Header({
           </Row>
         </CabinetBlock>
       </Col>
-    </Row>
+    </div>
   );
 }
 

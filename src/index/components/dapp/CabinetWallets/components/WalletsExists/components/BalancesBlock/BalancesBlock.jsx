@@ -75,7 +75,7 @@ function BalancesBlock({ balances, type, title, adaptive }) {
 
 BalancesBlock.propTypes = {
   balances: PropTypes.array,
-  type: PropTypes.oneOf('tokens', 'fiats'),
+  type: PropTypes.oneOf(['tokens', 'fiats']),
   title: PropTypes.string,
   adaptive: PropTypes.bool,
 };

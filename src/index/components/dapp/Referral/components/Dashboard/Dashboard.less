@@ -1,32 +1,115 @@
 .Referral__Dashboard {
-  padding: 32px 60px 72px;
+  position: relative;
+  padding: 32px 28px;
   background: var(--blue-light-gradient);
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
   border-radius: var(--radius-panel-large);
   margin-bottom: 32px;
+  overflow: hidden;
 
   h2 {
     color: #fff;
     margin-bottom: 15px;
   }
 
+  .DappUI__Slider {
+    margin: 0 -28px;
+
+    &__container {
+      padding: 0 28px 0 38px;
+
+      & > .Row {
+        height: 100%;
+      }
+    }
+  }
+
+  &__arrows {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    right: 28px;
+  }
+
+  &__arrow {
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-radius: 5px;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:active {
+      svg {
+        opacity: 0.9;
+        transform: scale(0.94);
+      }
+    }
+
+    &.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    &:first-child {
+      transform: rotate(180deg);
+      margin-right: 20px;
+    }
+  }
+
   &__cards {
-    margin: -5px -16px;
-    height: 100%;
+    & > *:first-child {
+      z-index: 2;
+      position: relative;
+      box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+    }
   }
 }
 
 .adaptive .Referral__Dashboard {
-  padding: 20px 11px;
+  padding: 25px 15px;
   margin-bottom: 43px;
   border-radius: 20px;
 
   h2 {
     margin-bottom: 18px;
   }
-  
+
   &__cards {
+    flex-direction: column;
     margin: 0;
     height: 100%;
+  }
+
+  .Referral__Card {
+    margin-bottom: 20px;
+
+    &__title,
+    &__count {
+      white-space: normal;
+    }
+  }
+
+  .DappUI__Slider {
+    &__container {
+      padding: 0 28px;
+    }
+
+    .Referral__Card {
+      margin-bottom: 0;
+
+      &:not(:last-child) {
+        margin-right: 6px;
+      }
+
+      &__title,
+      &__count {
+        white-space: nowrap;
+      }
+    }
   }
 }

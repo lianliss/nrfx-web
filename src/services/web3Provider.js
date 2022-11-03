@@ -23,6 +23,7 @@ import {
 } from './multiwallets/multiwalletsDifference';
 import * as CONNECTORS from './multiwallets/connectors';
 import { marketCoins } from 'src/services/coingeckoApi';
+import { getTokenFromSymbol } from "./web3Provider/utils";
 
 export const Web3Context = React.createContext();
 
@@ -1909,6 +1910,7 @@ class Web3Provider extends React.PureComponent {
       getReferRewards: this.getReferRewards.bind(this),
       getAccountHistory: this.getAccountHistory.bind(this),
       cmcTokens: this.cmcTokens,
+      getTokenFromSymbol: getTokenFromSymbol.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

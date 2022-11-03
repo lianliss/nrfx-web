@@ -1,0 +1,14 @@
+.TransactionHistory__TransactionLink {
+  display: flex;
+  align-items: center;
+  color: inherit;
+
+  &.disabled {
+    pointer-events: none;
+    color: var(--cool-gray);
+
+    .isvg {
+      filter: grayscale(60%);
+    }
+  }
+}
