@@ -152,7 +152,7 @@ function TransactionHistory() {
             {isBlur && (
               <Transactions
                 accountHistory={
-                  adaptive ? mappedTestHistory.slice(0, 3) : mappedTestHistory
+                  adaptive ? mappedTestHistory.slice(0, 4) : mappedTestHistory
                 }
               />
             )}

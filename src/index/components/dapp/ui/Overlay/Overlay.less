@@ -12,6 +12,7 @@
     height: 100%;
     position: absolute;
     border-radius: inherit;
+    box-sizing: border-box;
   }
 
   &__bg {
@@ -25,5 +26,21 @@
   &__container {
     padding: 28px;
     position: relative;
+  }
+}
+
+.adaptive .DappUI__Overlay {
+  align-items: stretch;
+
+  &__bg {
+    background: linear-gradient(
+      179.85deg,
+      rgba(255, 255, 255, 0.9) 0.13%,
+      rgba(255, 255, 255, 0.18) 95.94%
+    );
+  }
+
+  &__container {
+    padding-top: 44px;
   }
 }
