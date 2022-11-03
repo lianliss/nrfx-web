@@ -6,6 +6,10 @@ import { Col, Row } from 'ui';
 import Currency from '../Currency/Currency';
 import TransactionLink from '../TransactionLink/TransactionLink';
 
+// Utils
+import { getLang } from 'utils';
+import transactionLangs from '../../constants/transactionLangs';
+
 // Styles
 import './TransactionTableAdaptive.less';
 
@@ -30,11 +34,15 @@ function TransactionTableAdaptive({ accountHistory, getTokenFromSymbol }) {
                   {item.date}
                 </span>
                 <span className="TransactionHistory__table-status">
-                  {item.type === 'exchange' ? 'Done' : 'Approved'}
+                  {item.type === 'exchange'
+                    ? getLang('status_done')
+                    : getLang('status_approved')}
                 </span>
               </Col>
               <span className="TransactionHistory__table-operation">
-                {item.type}
+                {transactionLangs[item.type]
+                  ? getLang(transactionLangs[item.type])
+                  : item.type}
               </span>
               <div className="TransactionHistory__table-link">
                 <TransactionLink tx_hash={item.tx_hash} />

@@ -6,20 +6,23 @@ import CabinetTable, { TD, TR } from '../../../CabinetTable/CabinetTable';
 import Transaction from './components/Transaction';
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import { getLang } from 'utils';
+
 function TransactionTable({ accountHistory }) {
   return (
     <CabinetTable
       header={
         <TR>
           <TD>
-            Date
+            {getLang('dapp_transaction_date')}
             <span className="TransactionHistory__icon-sortArrow">
               <SVG src={require('src/asset/icons/cabinet/select-arrow.svg')} />
             </span>
           </TD>
-          <TD>Operation</TD>
-          <TD>Currency</TD>
-          <TD>Status</TD>
+          <TD>{getLang('dapp_transaction_operation')}</TD>
+          <TD>{getLang('dapp_transaction_currency')}</TD>
+          <TD>{getLang('dapp_transaction_status')}</TD>
           <TD></TD>
         </TR>
       }

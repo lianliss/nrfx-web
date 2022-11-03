@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { adaptiveSelector } from 'src/selectors';
+import { getLang } from 'utils';
 
 // Components
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
@@ -20,7 +21,7 @@ function Dashboard({ mainChild, children }) {
 
   return (
     <CabinetBlock className="Referral__Dashboard">
-      <h2>Dashboard</h2>
+      <h2>{getLang('dapp_global_dashboard')}</h2>
       {!adaptive && (
         <div className="Referral__Dashboard__arrows">
           <button className="Referral__Dashboard__arrow" ref={prevSlideRef}>

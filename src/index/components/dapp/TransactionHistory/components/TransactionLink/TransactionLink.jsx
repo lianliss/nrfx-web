@@ -6,6 +6,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { classNames as cn } from 'utils';
+import { getLang } from 'utils';
 
 // Styles
 import './TransactionLink.less';
@@ -20,7 +21,7 @@ function TransactionLink({ tx_hash }) {
       href={`https://bscscan.com/tx/${tx_hash}`}
       target="_blank"
     >
-      Link
+      {getLang('dapp_global_link')}
       <div className="TransactionHistory__icon-export">
         <SVG src={require('src/asset/icons/action/export-light-bg.svg')} />
       </div>

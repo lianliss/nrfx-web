@@ -19,6 +19,7 @@ import {
 import _ from 'lodash';
 import moment from 'moment';
 import { dataStatus, sortTypes } from 'src/index/constants/dapp/types';
+import { Web3Backend } from '../../../../services/web3-backend';
 
 // Styles
 import './TransactionHistory.less';
@@ -45,6 +46,28 @@ function TransactionHistory() {
   // Functional.
   // Clear the filled transactions.
   React.useEffect(() => {
+    const back = new Web3Backend();
+    back.getBanks().then(console.log);
+    back.getWithdrawBanks().then((r) => {
+      const arr = {};
+      r.RUB.map((i) => {
+        const code = i.code.toLowerCase();
+        arr[code] = `require('src/asset/banks/${code}.svg')`;
+      });
+
+      r.IDR.map((i) => {
+        const code = i.code.toLowerCase();
+        arr[code] = `require('src/asset/banks/${code}.svg')`;
+      });
+
+      r.UAH.map((i) => {
+        const code = i.code.toLowerCase();
+        arr[code] = `require('src/asset/banks/${code}.svg')`;
+      });
+
+      console.log(arr);
+    });
+
     if (transactions.status !== dataStatus.LOADED) return;
 
     dispatch(setTransactionItems([]));
@@ -108,10 +131,11 @@ function TransactionHistory() {
   return (
     <CabinetBlock className="TransactionHistory__wrap">
       <div className="TransactionHistory">
-        <h1 className="TransactionHistory__title">Transaction History</h1>
+        <h1 className="TransactionHistory__title">
+          {getLang('dapp_transaction_history_title')}
+        </h1>
         <p className="TransactionHistory__description">
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout.
+          {getLang('dapp_transaction_history_description')}
         </p>
         <div className="TransactionHistory__table">
           {transactions.status === dataStatus.LOADING && (
