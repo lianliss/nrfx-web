@@ -1,0 +1,46 @@
+.DappUI__Overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &,
+  &__bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: inherit;
+    box-sizing: border-box;
+  }
+
+  &__bg {
+    background: linear-gradient(
+      179.85deg,
+      #ffffff 0.13%,
+      rgba(255, 255, 255, 0.71) 107.49%
+    );
+  }
+
+  &__container {
+    padding: 28px;
+    position: relative;
+  }
+}
+
+.adaptive .DappUI__Overlay {
+  align-items: stretch;
+
+  &__bg {
+    background: linear-gradient(
+      179.85deg,
+      rgba(255, 255, 255, 0.9) 0.13%,
+      rgba(255, 255, 255, 0.18) 95.94%
+    );
+  }
+
+  &__container {
+    padding-top: 44px;
+  }
+}
