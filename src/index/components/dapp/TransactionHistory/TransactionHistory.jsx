@@ -47,9 +47,9 @@ function TransactionHistory() {
   // Constants
   const accountHistory = transactions.items;
   const [mappedTestHistory, setMappedTestHistory] = React.useState([]);
-  const isBlur = !(statusEqual(dataStatus.LOADING) || accountHistory.length);
+  const historyLength = accountHistory.length > 0;
   const accountHistoryExists =
-    statusEqual(dataStatus.LOADED) && accountHistory.length > 0;
+    isConnected && statusEqual(dataStatus.LOADED) && historyLength;
 
   // Functional.
   // Clear the filled transactions and set testItems.
@@ -140,16 +140,12 @@ function TransactionHistory() {
           <div
             className={cn({
               TransactionHistory__table__container: true,
-              blur: isBlur,
+              blur: !accountHistoryExists,
             })}
           >
-            {statusEqual(dataStatus.LOADING) && (
-              <LoadingStatus status="loading" />
-            )}
-            {accountHistoryExists && (
+            {accountHistoryExists ? (
               <Transactions accountHistory={accountHistory} />
-            )}
-            {isBlur && (
+            ) : (
               <Transactions
                 accountHistory={
                   adaptive ? mappedTestHistory.slice(0, 4) : mappedTestHistory
@@ -157,23 +153,29 @@ function TransactionHistory() {
               />
             )}
           </div>
-          {isBlur && (
+          {!accountHistoryExists && (
             <Overlay>
               <Col alignItems="center">
-                <span className="DappUI__Overlay-empty">
-                  {getLang('dapp_transactions_empty_yet')}
-                </span>
-                {!isConnected && (
-                  <Button
-                    type="lightBlue"
-                    size="extra_large"
-                    onClick={() => openStateModal('connect_to_wallet')}
-                  >
-                    <SVG
-                      src={require('src/asset/icons/cabinet/connect-wallet.svg')}
-                    />
-                    {getLang('dapp_global_connect_wallet')}
-                  </Button>
+                {statusEqual(dataStatus.LOADING) ? (
+                  <LoadingStatus status="loading" />
+                ) : (
+                  <>
+                    <span className="DappUI__Overlay-empty">
+                      {getLang('dapp_transactions_empty_yet')}
+                    </span>
+                    {!isConnected && (
+                      <Button
+                        type="lightBlue"
+                        size="extra_large"
+                        onClick={() => openStateModal('connect_to_wallet')}
+                      >
+                        <SVG
+                          src={require('src/asset/icons/cabinet/connect-wallet.svg')}
+                        />
+                        {getLang('dapp_global_connect_wallet')}
+                      </Button>
+                    )}
+                  </>
                 )}
               </Col>
             </Overlay>

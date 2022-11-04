@@ -13,19 +13,18 @@ import './TransactionLink.less';
 
 function TransactionLink({ tx_hash }) {
   return (
-    <a
-      className={cn({
-        TransactionHistory__TransactionLink: true,
-        disabled: !tx_hash,
-      })}
-      href={`https://bscscan.com/tx/${tx_hash}`}
-      target="_blank"
-    >
-      {getLang('dapp_global_link')}
-      <div className="TransactionHistory__icon-export">
-        <SVG src={require('src/asset/icons/action/export-light-bg.svg')} />
-      </div>
-    </a>
+    <div className="TransactionHistory__TransactionLink">
+      <a
+        className={cn({ disabled: !tx_hash })}
+        href={`https://bscscan.com/tx/${tx_hash}`}
+        target="_blank"
+      >
+        {getLang('dapp_global_link')}
+        <div className="TransactionHistory__icon-export">
+          <SVG src={require('src/asset/icons/action/export-light-bg.svg')} />
+        </div>
+      </a>
+    </div>
   );
 }
 
