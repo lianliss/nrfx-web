@@ -41,6 +41,9 @@ const BankLogo = (props) => {
     btpn: require('src/asset/banks/btpn.svg'),
     monobank: require('src/asset/banks/monobank.svg'),
     privatbank: require('src/asset/banks/privatbank.svg'),
+    pochtabank: require('src/asset/banks/pochtabank.svg'),
+    mtsbank: require('src/asset/banks/mtsbank.svg'),
+    bksbank: require('src/asset/banks/bksbank.svg'),
   };
 
   const name = props.name.toLocaleLowerCase();
