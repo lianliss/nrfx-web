@@ -8,12 +8,7 @@ import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
 import { setLang } from '../../../../services/lang';
-import {
-  MAIN,
-  PARTNERS,
-  SETTINGS,
-  DAPP_TRANSACTION_HISTORY,
-} from '../../../constants/pages';
+import { MAIN, PARTNERS, SETTINGS } from '../../../constants/pages';
 import { Web3Context } from 'services/web3Provider';
 import { WEI_ETHER } from 'src/index/constants/cabinet';
 
@@ -27,7 +22,6 @@ import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 import wei from 'utils/wei';
 import { option } from '../Select/Select';
-import CustomButton from '../ui/CustomButton/CustomButton';
 
 function Header(props) {
   const context = React.useContext(Web3Context);
@@ -108,15 +102,6 @@ function Header(props) {
             )}
           </div>
           <div className="DappHeader__menu">
-            <CustomButton
-              className="DappHeader__button-history"
-              onClick={() => router.navigate(DAPP_TRANSACTION_HISTORY)}
-              disabled={props.router.route.name === DAPP_TRANSACTION_HISTORY}
-            >
-              <SVG
-                src={require('src/asset/icons/cabinet/sidebar/history.svg')}
-              />
-            </CustomButton>
             <Select
               isSearchable={false}
               isDisabled
