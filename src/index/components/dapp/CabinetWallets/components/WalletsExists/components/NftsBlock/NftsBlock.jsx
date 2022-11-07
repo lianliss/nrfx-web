@@ -12,7 +12,7 @@ import SVG from 'utils/svg-wrap';
 import { getLang } from 'utils';
 
 function NftsBlock({ adaptive }) {
-  const NFTsExists = false;
+  const NFTsExists = true;
 
   return (
     <CabinetBlock className="nfts">
@@ -48,10 +48,12 @@ function NftsBlock({ adaptive }) {
         </div>
       </CabinetScrollBlock>
       {adaptive && <div className="WalletsExists__items_footer"></div>}
-      <Overlay>
-        <SVG src={require('src/asset/icons/status/empty-image.svg')} />
-        <h3>{getLang('global_comingSoon')}</h3>
-      </Overlay>
+      {!NFTsExists && (
+        <Overlay>
+          <SVG src={require('src/asset/icons/status/empty-image.svg')} />
+          <h3>{getLang('global_comingSoon')}</h3>
+        </Overlay>
+      )}
     </CabinetBlock>
   );
 }
