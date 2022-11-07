@@ -12,7 +12,7 @@ import SVG from 'utils/svg-wrap';
 import { getLang } from 'utils';
 
 function NftsBlock({ adaptive }) {
-  const NFTsExists = true;
+  const NFTsExists = false;
 
   return (
     <CabinetBlock className="nfts">
