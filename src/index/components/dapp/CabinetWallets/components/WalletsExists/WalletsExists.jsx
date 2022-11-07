@@ -43,6 +43,10 @@ function WalletsExists() {
     loadAccountBalances(accountAddress);
   }, [accountAddress]);
 
+  React.useEffect(() => {
+    setSwitchTab('tokens');
+  }, [adaptive]);
+
   return (
     <div className="WalletsExists">
       <div className="WalletsExists__container">
