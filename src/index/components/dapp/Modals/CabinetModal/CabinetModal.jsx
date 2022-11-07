@@ -5,8 +5,17 @@ import { Modal } from 'src/ui';
 import { classNames as cn } from 'src/utils';
 
 import './CabinetModal.less';
+import Close from '../components/Close/Close';
 
-function CabinetModal({ children, className, closeOfRef = false, onClose }) {
+function CabinetModal({
+  children,
+  className,
+  closeOfRef = false,
+  onClose,
+  closeButton,
+  closeButtonTop,
+  closeButtonRight,
+}) {
   const containerRef = React.useRef(null);
 
   openCabinetModal();
@@ -45,6 +54,13 @@ function CabinetModal({ children, className, closeOfRef = false, onClose }) {
     >
       <div className="CabinetModal__container" ref={containerRef}>
         {children}
+        {closeButton && (
+          <Close
+            top={closeButtonTop}
+            right={closeButtonRight}
+            onClose={onClose}
+          />
+        )}
       </div>
     </Modal>
   );

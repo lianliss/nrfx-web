@@ -11,16 +11,15 @@ import maximizeIcon from 'src/ui/components/CopyText/assets/maximize.svg';
 import './ReceiveQRModal.less';
 import { web3WalletsSelector } from 'src/selectors';
 import BottomSheetModal from 'src/ui/components/BottomSheetModal/BottomSheetModal';
+import CabinetModal from '../Modals/CabinetModal/CabinetModal';
 
 function ReceiveQRModal({ web3Wallets, onClose, adaptive }) {
   const { accountAddress } = React.useContext(Web3Context);
   const wallet = web3Wallets[0];
-  const address = accountAddress || wallet.address;
-
-  const ParentComponent = adaptive ? BottomSheetModal : Modal;
+  const address = accountAddress || wallet?.address || '';
 
   return (
-    <ParentComponent onClose={onClose}>
+    <CabinetModal onClose={onClose} closeButton>
       <div className="ReceiveQRModal">
         <h3 className="ReceiveQRModal__title">
           {getLang('receive_qr_global')}
@@ -34,7 +33,7 @@ function ReceiveQRModal({ web3Wallets, onClose, adaptive }) {
           <SVG src={maximizeIcon} />
         </div>
       </div>
-    </ParentComponent>
+    </CabinetModal>
   );
 }
 
