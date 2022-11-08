@@ -107,7 +107,10 @@ function Header({
                 {!adaptive && <ShareButton />}
               </>
             ) : (
-              <Button onClick={() => actions.openModal('connect_to_wallet')}>
+              <Button
+                onClick={() => actions.openModal('connect_to_wallet')}
+                className="connect-wallet"
+              >
                 {getLang('dapp_global_connect_wallet')}
               </Button>
             )}

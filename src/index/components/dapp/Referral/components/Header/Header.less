@@ -3,7 +3,7 @@
 .Referral {
   &__header {
     display: grid;
-    grid-template-columns: minmax(200px, 358px) minmax(auto, 521px);
+    grid-template-columns: minmax(200px, 450px) minmax(auto, 521px);
     grid-auto-columns: auto;
     justify-content: space-between;
     margin-bottom: 32px;
@@ -13,11 +13,18 @@
     }
 
     .subtitle {
+      max-width: 352px;
       margin-bottom: 9px;
       font-weight: 500;
       font-size: 14px;
       line-height: 22px;
       color: var(--cool-gray);
+    }
+
+    .connect-wallet {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      box-sizing: border-box;
     }
   }
 
@@ -181,6 +188,7 @@
       margin-bottom: 32px;
 
       .subtitle {
+        max-width: 90%;
         font-weight: 500;
         font-size: 12px;
         line-height: 20px;
@@ -204,7 +212,6 @@
       }
 
       &__header {
-        grid-template-columns: 100%;
         margin-bottom: 15px;
       }
 
@@ -252,6 +259,9 @@
     }
 
     &__copy {
+      grid-column-start: 1;
+      grid-column-end: 3;
+
       span {
         font-weight: 600;
         font-size: 11px;
