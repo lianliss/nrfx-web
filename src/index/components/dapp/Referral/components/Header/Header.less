@@ -26,6 +26,16 @@
       grid-column-end: 3;
       box-sizing: border-box;
     }
+
+    .CopyTextComponent {
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-left: 32px;
+      &__container {
+        // width: 100%;
+      }
+    }
   }
 
   &__information {
@@ -33,12 +43,18 @@
 
     &__header {
       display: grid;
-      grid-template-columns: auto 54px;
+      grid-template-columns: minmax(auto, calc(100% - 65px)) 54px;
       column-gap: 11px;
       margin-bottom: 23px;
 
       .Referral__share {
         grid-column: 2/2;
+
+        &.disabled {
+          pointer-events: none;
+          opacity: 0.8;
+          filter: grayscale(1);
+        }
       }
     }
 
@@ -148,7 +164,6 @@
     }
 
     .isvg {
-      margin-left: 32px;
       transition: opacity 0.1s;
       cursor: pointer;
 

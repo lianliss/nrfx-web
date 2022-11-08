@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Row, Col, NumberFormat, Button } from 'src/ui';
+import { Row, Col, NumberFormat, Button, CopyText } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import FormattedText from '../../../FormattedText/FormattedText';
@@ -50,9 +50,9 @@ function Header({
     );
   };
 
-  const ShareButton = () => (
+  const ShareButton = ({ disabled }) => (
     <Col
-      className="Referral__share"
+      className={classNames({ Referral__share: true, disabled })}
       alignItems="center"
       justifyContent="center"
     >
@@ -100,11 +100,13 @@ function Header({
                   <Col className="Referral__copy">
                     <Row alignItems="center" justifyContent="space-between">
                       <span>{hashLink}</span>
-                      <SVG src={require('src/asset/icons/action/copy.svg')} />
+                      <CopyText text={hashLink}>
+                        <SVG src={require('src/asset/icons/action/copy.svg')} />
+                      </CopyText>
                     </Row>
                   </Col>
                 )}
-                {!adaptive && <ShareButton />}
+                {!adaptive && <ShareButton disabled />}
               </>
             ) : (
               <Button
