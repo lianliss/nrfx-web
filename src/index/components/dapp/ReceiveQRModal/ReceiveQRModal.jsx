@@ -24,7 +24,9 @@ function ReceiveQRModal({ web3Wallets, onClose, adaptive }) {
         <h3 className="ReceiveQRModal__title">
           {getLang('receive_qr_global')}
         </h3>
-        <QRCode value={address} size={250} />
+        <div className="ReceiveQRModal__qr">
+          <QRCode value={address} size={158} />
+        </div>
         <p className="ReceiveQRModal__subtitle">
           {getLang('receive_qr_modal_subtitle')}
         </p>
