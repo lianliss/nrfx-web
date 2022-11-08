@@ -79,7 +79,7 @@ function Header({
         <CabinetBlock>
           <Row alignItems="center" justifyContent="space-between">
             <h2>{getLang('dapp_referral_copy_referral_link')}</h2>
-            {adaptive && <ShareButton />}
+            {adaptive && <ShareButton disabled />}
             {/*<Col>*/}
             {/*<Row*/}
             {/*alignItems="center"*/}
