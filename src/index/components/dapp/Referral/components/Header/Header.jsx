@@ -5,6 +5,7 @@ import { Row, Col, NumberFormat, Button, CopyText } from 'src/ui';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import FormattedText from '../../../FormattedText/FormattedText';
+import SharePopup from '../../../ui/SharePopup/SharePopup';
 import { Web3Context } from 'src/services/web3Provider';
 import * as actions from 'src/actions';
 import { classNames, getLang } from 'src/utils';
@@ -50,14 +51,16 @@ function Header({
     );
   };
 
-  const ShareButton = ({ disabled }) => (
-    <Col
-      className={classNames({ Referral__share: true, disabled })}
-      alignItems="center"
-      justifyContent="center"
-    >
-      <SVG src={require('src/asset/icons/action/share.svg')} />
-    </Col>
+  const ShareButton = ({ disabled, referralLink }) => (
+    <SharePopup sharingURI={referralLink}>
+      <Col
+        className={classNames({ Referral__share: true, disabled })}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <SVG src={require('src/asset/icons/action/share.svg')} />
+      </Col>
+    </SharePopup>
   );
 
   return (
@@ -79,7 +82,7 @@ function Header({
         <CabinetBlock>
           <Row alignItems="center" justifyContent="space-between">
             <h2>{getLang('dapp_referral_copy_referral_link')}</h2>
-            {adaptive && <ShareButton disabled />}
+            {adaptive && !!hashLink && <ShareButton referralLink={hashLink} />}
             {/*<Col>*/}
             {/*<Row*/}
             {/*alignItems="center"*/}
@@ -106,7 +109,9 @@ function Header({
                     </Row>
                   </Col>
                 )}
-                {!adaptive && <ShareButton disabled />}
+                {!adaptive && !!hashLink && (
+                  <ShareButton referralLink={hashLink} />
+                )}
               </>
             ) : (
               <Button
