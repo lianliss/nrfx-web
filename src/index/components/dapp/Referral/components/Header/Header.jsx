@@ -6,6 +6,7 @@ import SVG from 'utils/svg-wrap';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
 import FormattedText from '../../../FormattedText/FormattedText';
 import SharePopup from '../../../ui/SharePopup/SharePopup';
+import LoadingStatus from '../../../LoadingStatus/LoadingStatus';
 import { Web3Context } from 'src/services/web3Provider';
 import * as actions from 'src/actions';
 import { classNames, getLang } from 'src/utils';
@@ -99,7 +100,7 @@ function Header({
           <div className="Referral__information__header">
             {isConnected ? (
               <>
-                {!!hashLink && (
+                {!!hashLink ? (
                   <Col className="Referral__copy">
                     <Row alignItems="center" justifyContent="space-between">
                       <span>{hashLink}</span>
@@ -108,6 +109,8 @@ function Header({
                       </CopyText>
                     </Row>
                   </Col>
+                ) : (
+                  <LoadingStatus status="loading" inline />
                 )}
                 {!adaptive && !!hashLink && (
                   <ShareButton referralLink={hashLink} />
