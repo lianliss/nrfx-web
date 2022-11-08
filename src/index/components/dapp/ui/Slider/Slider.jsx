@@ -71,7 +71,7 @@ function Slider({
   };
 
   const refClassesToggler = (currentPosition, maxScroll) => {
-    if (currentPosition >= maxScroll) {
+    if (Math.floor(currentPosition) >= maxScroll) {
       nextSlideRef.current.classList.add('disabled');
     }
 
