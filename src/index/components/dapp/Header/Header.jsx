@@ -211,10 +211,10 @@ function Header(props) {
 }
 
 const addressCut = (address) => {
-  if(!address) {
+  if (!address) {
     return '';
   }
-  
+
   const finallyAddress =
     address.length > 13 ? address.slice(0, 8) : address.slice(0, 5);
   const lastNumbers = address.slice(-4);

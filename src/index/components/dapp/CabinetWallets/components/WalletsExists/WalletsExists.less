@@ -172,6 +172,50 @@
       opacity: 1;
     }
   }
+
+  // Overlay
+  &__content .DappUI__Overlay {
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__bg {
+      background: linear-gradient(
+        179.85deg,
+        rgba(255, 255, 255, 0.54) 0.13%,
+        rgba(255, 255, 255, 0.426) 68.91%
+      );
+      backdrop-filter: blur(5px);
+    }
+
+    h3 {
+      margin-top: 25px;
+    }
+  }
+
+  .nfts .DappUI__Overlay {
+    .isvg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 63px;
+      height: 63px;
+      background: rgba(80, 120, 230, 0.1);
+      border-radius: 21px;
+    }
+
+    svg {
+      width: 29.25px;
+      height: 29.25px;
+    }
+
+    svg path {
+      fill: #5078e6;
+    }
+  }
 }
 
 // Cabinet token items.

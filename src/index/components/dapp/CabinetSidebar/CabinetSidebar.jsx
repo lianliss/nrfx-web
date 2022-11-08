@@ -60,6 +60,12 @@ function CabinetSidebar({ className, adaptive }) {
                 active={isPage(PAGES.DAPP_EXCHANGE)}
                 onClick={() => router.navigate(PAGES.DAPP_EXCHANGE)}
               />
+              <SidebarItem
+                title={getLang('dapp_sidebar_history')}
+                icon="history"
+                active={isPage(PAGES.DAPP_TRANSACTION_HISTORY)}
+                onClick={() => router.navigate(PAGES.DAPP_TRANSACTION_HISTORY)}
+              />
             </ul>
           </CabinetBlock>
           <CabinetBlock>

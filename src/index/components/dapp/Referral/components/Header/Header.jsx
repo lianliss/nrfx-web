@@ -78,7 +78,7 @@ function Header({
       <Col className="Referral__information">
         <CabinetBlock>
           <Row alignItems="center" justifyContent="space-between">
-            <h2>Copy Referral Link</h2>
+            <h2>{getLang('dapp_referral_copy_referral_link')}</h2>
             {adaptive && <ShareButton />}
             {/*<Col>*/}
             {/*<Row*/}
