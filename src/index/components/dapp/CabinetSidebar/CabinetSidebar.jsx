@@ -110,7 +110,7 @@ function CabinetSidebar({ className, adaptive }) {
                 href="/token"
               />
               {/* <SidebarItem
-                title="Referral Program"
+                title={getLang('dapp_sidebar_referral_program')}
                 icon="team-icon"
                 active={isPage([
                   PAGES.DAPP_REFERRAL,
