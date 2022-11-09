@@ -17,7 +17,7 @@ import { getLang } from 'src/utils';
 // Styles
 import './DappReceiveQRModal.less';
 
-function DappReceiveQRModal({ web3Wallets, onClose }) {
+function DappReceiveQRModal({ web3Wallets, onClose, adaptive }) {
   const { accountAddress } = React.useContext(Web3Context);
   const wallet = web3Wallets[0];
   const address = accountAddress || wallet?.address || '';
@@ -29,7 +29,7 @@ function DappReceiveQRModal({ web3Wallets, onClose }) {
           {getLang('receive_qr_global')}
         </h3>
         <div className="DappReceiveQRModal__qr">
-          <QRCode value={address} size={158} />
+          <QRCode value={address} size={adaptive ? 132 : 158} />
         </div>
         {/* <p className="DappReceiveQRModal__subtitle">
           {getLang('receive_qr_modal_subtitle')}
@@ -48,13 +48,16 @@ function DappReceiveQRModal({ web3Wallets, onClose }) {
 DappReceiveQRModal.propTypes = {
   web3Wallets: PropTypes.array,
   onClose: PropTypes.func,
+  adaptive: PropTypes.bool,
 };
 
 DappReceiveQRModal.defaultProps = {
   web3Wallets: [],
   onClose: () => {},
+  adaptive: false,
 };
 
 export default connect((state) => ({
   web3Wallets: web3WalletsSelector(state),
+  adaptive: state.default.adaptive,
 }))(DappReceiveQRModal);
