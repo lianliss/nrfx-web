@@ -117,6 +117,7 @@ function SendTokens({ onClose, token }) {
           size="extra_large"
           disabled={!amount || !address}
         >
+          <SVG src={require('src/asset/icons/cabinet/wallet-with-coin.svg')} />
           {getLang('global_send')}
         </UI.Button>
       </div>

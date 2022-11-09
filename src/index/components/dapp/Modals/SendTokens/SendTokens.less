@@ -104,6 +104,7 @@
         border: 1px solid #dfe3f0;
         background: none;
         border-radius: 10px;
+        height: 46px;
 
         .adaptive & {
           min-width: initial;
@@ -125,6 +126,15 @@
     .Button {
       margin: 30px auto 0;
       width: 100%;
+
+      .isvg {
+        margin-right: 10.6px;
+
+        svg {
+          width: 24.12px;
+          height: 27.13px;
+        }
+      }
     }
   }
 }
@@ -135,15 +145,46 @@
 
     & > .CabinetModal__container {
       padding: 48px 20px 40px;
-      border-radius: var(--radius-panel);
     }
   }
 
-  & + .BottomSheetModal-container {
-    z-index: 999;
+  h3 {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 20.85px;
+  }
 
-    .BottomSheetModal__bg {
-      background: none;
+  &-form {
+    h3 {
+      font-size: 14px;
+      margin: 0;
+      align-items: center;
+    }
+
+    .Input__wrapper {
+      margin: 8.15px 0 0;
+
+      .Input {
+        height: 42px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+    }
+    .Button {
+      margin: 22px auto 0;
+      width: 100%;
+
+      &__label {
+        font-size: 14px;
+        line-height: 17px;
+      }
+
+      svg {
+        width: 21.33px;
+        height: 24px;
+      }
     }
   }
 }

@@ -14,7 +14,10 @@ function Close({ onClose, top, right }) {
       style={{ top, right }}
       onClick={onClose}
     >
-      <SVG src={require('src/asset/icons/close/default.svg')} />
+      <SVG
+        src={require('src/asset/icons/close/default.svg')}
+        className="default"
+      />
     </CustomButton>
   );
 }
