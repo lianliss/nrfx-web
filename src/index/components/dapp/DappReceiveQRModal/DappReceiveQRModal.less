@@ -1,6 +1,6 @@
 @import '../../../../vars.less';
 
-.ReceiveQRModal {
+.DappReceiveQRModal {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,15 +40,43 @@
     }
   }
 
+  &__CopyText {
+    max-width: 206px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100%);
+    margin-right: 15px;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--cool-gray);
+  }
+
   &__CopyText-container {
-    position: relative;
-    display: flex;
-    align-items: center;
+    width: 100%;
+    padding: 18px 21px;
+    background: #edf1f8;
+    border-radius: 13px;
+    margin-top: 30px;
+    border: none;
+    box-sizing: border-box;
 
     .isvg {
-      position: absolute;
-      right: 10px;
-      pointer-events: none;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 100%;
+        width: 100%;
+
+        path {
+          fill: var(--cool-gray);
+        }
+      }
     }
   }
 
@@ -59,32 +87,16 @@
   }
 
   .CopyTextComponent {
-    position: relative;
-    background: #edf1f8;
-    color: rgba(45, 49, 63, 0.7);
-    text-align: left;
-    font-size: 14px;
-    font-weight: 500;
-    border: none;
-    border-radius: 13px;
-    box-sizing: border-box;
-
-    &__container {
-      max-width: 250px !important;
-      padding: 15px 38px 15px 20px;
-      border-radius: 20px;
-      box-sizing: border-box;
-    }
-
     &__content {
       display: flex;
-      overflow-x: scroll;
-      white-space: nowrap;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      align-items: center;
+      justify-content: space-between;
     }
+  }
+}
+
+.adaptive .DappReceiveQRModal {
+  &__CopyText {
+    max-width: 100% !important;
   }
 }
