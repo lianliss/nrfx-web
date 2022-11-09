@@ -35,6 +35,7 @@ function Referral() {
   const [rewards, setRewards] = React.useState([]);
 
   React.useEffect(() => {
+    setHashLink(null);
     if (!isConnected || !chainId || !accountAddress) return;
 
     context.getReferHash().then(hash => {

@@ -109,7 +109,7 @@ function CabinetSidebar({ className, adaptive }) {
                 icon="nrfx-blue-bg-icon"
                 href="/token"
               />
-              {/* <SidebarItem
+              <SidebarItem
                 title={getLang('dapp_sidebar_referral_program')}
                 icon="team-icon"
                 active={isPage([
@@ -118,7 +118,7 @@ function CabinetSidebar({ className, adaptive }) {
                   PAGES.DAPP_REFERRAL_FARMING,
                 ])}
                 onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
-              /> */}
+              />
               <SidebarItem
                 title={getLang('dapp_sidebar_more')}
                 icon="more-vertical-icon"
