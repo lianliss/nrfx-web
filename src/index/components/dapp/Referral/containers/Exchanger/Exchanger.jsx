@@ -36,7 +36,7 @@ function Exchanger(params) {
         title={getLang('dapp_referral_exchanger_title')}
         subtitle={getLang('dapp_referral_exchanger_subtitle')}
         link="https://narfex.org?ref=dd4e20hfj09nrtyasdasd"
-        willGetNumber={30}
+        willGetNumber={getLang('dapp_referral_exchange_will_get_percent')}
         {...params}
       />
       <Dashboard

@@ -13,6 +13,7 @@ import { classNames, getLang } from 'src/utils';
 
 // Utils
 import { openModal } from 'src/actions';
+import _ from 'lodash';
 
 // Styles
 import './Header.less';
@@ -137,7 +138,14 @@ function Header({
                   {getLang('dapp_referral_you_will_get')}
                 </span>
                 <span className="Referral__information_procent blue-gradient-text">
-                  <NumberFormat number={willGetNumber} percent />
+                  <NumberFormat
+                    number={
+                      !_.isNaN(Number(willGetNumber))
+                        ? Number(willGetNumber)
+                        : 0
+                    }
+                    percent
+                  />
                 </span>
               </Col>
               <Col justifyContent="center" alignItems="center">
