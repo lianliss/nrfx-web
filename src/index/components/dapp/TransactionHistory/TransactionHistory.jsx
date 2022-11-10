@@ -14,19 +14,14 @@ import SVG from 'utils/svg-wrap';
 import { getLang, classNames as cn } from 'src/utils';
 import { Web3Context } from 'src/services/web3Provider';
 import { adaptiveSelector, dappTransactionsSelector } from 'src/selectors';
-import {
-  setTransactionItems,
-  setTransactionsStatus,
-  sortTransactions,
-} from 'src/actions/dapp/wallet';
 import _ from 'lodash';
-import moment from 'moment';
-import { dataStatus, sortTypes } from 'src/index/constants/dapp/types';
+import { dataStatus } from 'src/index/constants/dapp/types';
 import { openStateModal } from 'src/actions';
-import testItems from './constants/testItems';
 
 // Styles
 import './TransactionHistory.less';
+import { getTransactionsData, statusEqual } from './utils/actions';
+import { useClearTransactions } from './utils/hooks';
 
 function TransactionHistory() {
   // Context.
@@ -46,76 +41,30 @@ function TransactionHistory() {
 
   // Constants
   const accountHistory = transactions.items;
-  const [mappedTestHistory, setMappedTestHistory] = React.useState([]);
   const historyLength = accountHistory.length > 0;
   const accountHistoryExists =
-    isConnected && statusEqual(dataStatus.LOADED) && historyLength;
+    isConnected &&
+    statusEqual(transactions.status, dataStatus.LOADED) &&
+    historyLength;
 
-  // Functional.
-  // Clear the filled transactions and set testItems.
-  React.useEffect(() => {
-    const newMappedTestHistory = transactionsMap(testItems);
-    setMappedTestHistory(newMappedTestHistory);
-
-    if (!statusEqual(dataStatus.LOADED)) return;
-
-    dispatch(setTransactionItems([]));
-    dispatch(setTransactionsStatus(dataStatus.IDLE));
-  }, []);
+  const mappedTestHistory = useClearTransactions(
+    dispatch,
+    transactions,
+    getTokenFromSymbol
+  );
 
   // Get transactions.
   React.useEffect(() => {
     if (!isConnected) return;
 
-    getTransactionsData();
+    getTransactionsData(
+      dispatch,
+      getFiatsArray,
+      getAccountHistory,
+      getTokenFromSymbol,
+      updateFiats
+    );
   }, [accountAddress]);
-
-  const getTransactionsData = async () => {
-    dispatch(setTransactionsStatus(dataStatus.LOADING));
-
-    try {
-      await updateFiatsByStatus();
-      const transactionsResponse = await getAccountHistory();
-      const transactionItems = transactionsMap(transactionsResponse || []);
-
-      dispatch(setTransactionItems(transactionItems));
-      dispatch(sortTransactions(sortTypes.DATE_DESC));
-      dispatch(setTransactionsStatus(dataStatus.LOADED));
-    } catch (error) {
-      console.log('[getTransactionsData]', error);
-      dispatch(setTransactionsStatus(dataStatus.FAILED));
-    }
-  };
-
-  const transactionsMap = (array) => {
-    const transactionItems = array.map((transaction) => {
-      // Get tokens object
-      const source_token = getTokenFromSymbol(transaction.source_currency);
-      const target_token =
-        transaction.type !== 'exchange'
-          ? source_token
-          : getTokenFromSymbol(transaction.target_currency);
-
-      // Get date from timestamp
-      const date = moment(transaction.timestamp * 1000).format('DD.MM.YYYY');
-
-      return { ...transaction, source_token, target_token, date };
-    });
-
-    return transactionItems;
-  };
-
-  const updateFiatsByStatus = async () => {
-    const fiats = getFiatsArray() || [];
-
-    if (fiats.length === 1) {
-      await updateFiats();
-    }
-  };
-
-  function statusEqual(status) {
-    return transactions.status === status;
-  }
 
   const Transactions = ({ accountHistory }) => {
     const component = adaptive ? (
@@ -156,7 +105,7 @@ function TransactionHistory() {
           {!accountHistoryExists && (
             <Overlay>
               <Col alignItems="center">
-                {statusEqual(dataStatus.LOADING) ? (
+                {statusEqual(transactions.status, dataStatus.LOADING) ? (
                   <LoadingStatus status="loading" />
                 ) : (
                   <>
