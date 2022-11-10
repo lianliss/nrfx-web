@@ -7,14 +7,17 @@
 .SendTokens {
   & > .Modal__box {
     & > .CabinetModal__container {
-      padding: 32px 40px;
+      padding: 40px 38px;
       background: #fff;
       border-radius: var(--radius-panel);
     }
   }
 
   h3 {
-    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: var(--dark-black);
   }
 
   &__address {
@@ -34,14 +37,17 @@
 
       path {
         fill: var(--light-gray);
+        transition: fill 0.2s;
+      }
+
+      &:hover {
+        path {
+          fill: var(--royal-blue);
+        }
       }
     }
   }
 
-  .Modal__header {
-  }
-  &-content {
-  }
   &-loading {
     display: flex;
     flex-direction: column;
@@ -58,50 +64,77 @@
         }
       }
     }
-    &-text {
-    }
   }
   &-form {
-    margin-top: 40px;
+    margin-top: 16.85px;
 
     h3 {
-      font-size: 13px;
       display: flex;
       justify-content: space-between;
+      align-items: flex-end;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 180%;
+      color: var(--cool-gray);
 
       span {
         &:not(:first-child) {
           margin-left: 16px;
         }
+
         &.active {
-          color: var(--primary-blue);
-          text-decoration: underline;
-          cursor: pointer;
+          font-weight: 600;
+          font-size: 11px;
+          line-height: 180%;
+          color: var(--royal-blue);
           outline: none;
+          cursor: pointer;
 
           &:hover {
-            text-decoration: none;
+            text-decoration: underline;
           }
         }
       }
     }
     .Input__wrapper {
-      margin-bottom: 20px;
+      margin: 7.5px 0 0;
 
       .Input {
-        min-width: 640px;
+        min-width: 381px;
+        border: 1px solid #dfe3f0;
+        background: none;
+        border-radius: 10px;
+        height: 46px;
 
         .adaptive & {
           min-width: initial;
           width: 100%;
         }
+
+        &:focus {
+          border-color: var(--royal-blue) !important;
+        }
       }
       .Input__description {
         margin: 16px 0 0;
       }
+
+      &:not(:last-child) {
+        margin-bottom: 27px;
+      }
     }
     .Button {
-      margin: 8px auto 20px;
+      margin: 30px auto 0;
+      width: 100%;
+
+      .isvg {
+        margin-right: 10.6px;
+
+        svg {
+          width: 24.12px;
+          height: 27.13px;
+        }
+      }
     }
   }
 }
@@ -111,17 +144,47 @@
     padding: 20px !important;
 
     & > .CabinetModal__container {
-      padding: 32px 25px;
-      background: #fff;
-      border-radius: var(--radius-panel);
+      padding: 48px 20px 40px;
     }
   }
 
-  & + .BottomSheetModal-container {
-    z-index: 999;
+  h3 {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 20.85px;
+  }
 
-    .BottomSheetModal__bg {
-      background: none;
+  &-form {
+    h3 {
+      font-size: 14px;
+      margin: 0;
+      align-items: center;
+    }
+
+    .Input__wrapper {
+      margin: 8.15px 0 0;
+
+      .Input {
+        height: 42px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+    }
+    .Button {
+      margin: 22px auto 0;
+      width: 100%;
+
+      &__label {
+        font-size: 14px;
+        line-height: 17px;
+      }
+
+      svg {
+        width: 21.33px;
+        height: 24px;
+      }
     }
   }
 }

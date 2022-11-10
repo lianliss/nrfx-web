@@ -45,7 +45,7 @@ import ChangeEmailModal from "./components/cabinet/ChangeEmailModal/ChangeEmailM
 import CheckNewEmailModal from "./components/cabinet/CheckNewEmailModal/CheckNewEmailModal";
 import UploadAvatarModal from "./components/cabinet/UploadAvatarModal/UploadAvatarModal";
 import NrfxPresaleModal from "./components/cabinet/NrfxPresaleModal/NrfxPresaleModal";
-import ReceiveQRModal from "./components/dapp/ReceiveQRModal/ReceiveQRModal";
+import DappReceiveQRModal from "./components/dapp/DappReceiveQRModal/DappReceiveQRModal";
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
 import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
 import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
@@ -211,7 +211,7 @@ function Modals(props) {
       Component = WalletModal;
       break;
     case "receive_qr":
-      Component = ReceiveQRModal;
+      Component = DappReceiveQRModal;
       break;
     case "stake":
     case "unstake":

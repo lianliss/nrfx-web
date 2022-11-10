@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import QRScannerModal from 'src/index/components/dapp/QRScannerModal/QRScannerModal';
 import CabinetModal from 'src/index/components/dapp/Modals/CabinetModal/CabinetModal';
 import * as UI from 'ui';
+import Close from '../components/Close/Close';
 
 // Utils
 import { Web3Context } from 'src/services/web3Provider';
@@ -46,6 +47,11 @@ function SendTokens({ onClose, token }) {
   };
 
   const transfer = async () => {
+    if (!amount || !address) {
+      toastPush(getLang('toast_transaction_declined'), 'error');
+      return;
+    }
+
     setIsLoading(true);
 
     const sendResult = await sendTokens(token, address, amount);
@@ -105,11 +111,15 @@ function SendTokens({ onClose, token }) {
             onChange={(event) => setAmount(Number(event.currentTarget.value))}
           />
         </form>
-        <center>
-          <UI.Button onClick={transfer}>
-            {getLang('cabinetWalletTransfer_submit')}
-          </UI.Button>
-        </center>
+        <UI.Button
+          onClick={transfer}
+          type="lightBlue"
+          size="extra_large"
+          disabled={!amount || !address}
+        >
+          <SVG src={require('src/asset/icons/cabinet/wallet-with-coin.svg')} />
+          {getLang('global_send')}
+        </UI.Button>
       </div>
     );
   };
@@ -128,6 +138,7 @@ function SendTokens({ onClose, token }) {
         <div className="SendTokens-content">
           {isLoading ? renderLoading() : renderForm()}
         </div>
+        <Close onClose={onClose} />
       </CabinetModal>
       {isQRModal && (
         <QRScannerModal
