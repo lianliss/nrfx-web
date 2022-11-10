@@ -8,25 +8,20 @@ import LoadingStatus from '../../../LoadingStatus/LoadingStatus';
 import TransactionTableAdaptive from '../../../TransactionHistory/components/TransactionTableAdaptive/TransactionTableAdaptive';
 
 // Utils
-import { Web3Context } from 'src/services/web3Provider';
-import { useSelector } from 'react-redux';
 import { getLang } from 'src/utils';
-import txs from './txs';
+import useTransactionHistory from 'src/hooks/useTransactionHistory';
+import { statusEqual } from '../../../TransactionHistory/utils/actions';
+import { dataStatus } from 'src/index/constants/dapp/types';
 
 function Transactions({ currency }) {
-  const adaptive = useSelector((state) => state.default.adaptive);
-  const lang = useSelector((state) => state.default.currentLang);
-  const [loading, setLoading] = React.useState(null);
-  const [transactionsHistory, setTransactionsHistory] = React.useState([]);
-  const { accountAddress } = React.useContext(Web3Context);
+  const { accountHistory, transactions, accountHistoryExists } =
+    useTransactionHistory();
 
-  React.useEffect(() => {
-    if (accountAddress) {
-      setLoading('loading');
-    }
-
-    setLoading('loaded');
-  }, [currency, lang]);
+  const currencyAccountHistory = accountHistory.filter(
+    (transaction) =>
+      transaction.source_currency === currency.symbol ||
+      transaction.target_currency === currency.symbol
+  );
 
   return (
     <CabinetBlock className="Currency__transactions">
@@ -34,13 +29,13 @@ function Transactions({ currency }) {
         <h3>{getLang('dapp_transaction_history')}</h3>
       </div>
       <div className="Currency__transactions__body">
-        {loading === 'loading' && <LoadingStatus status="loading" inline />}
-        {!loading &&
-          (transactionsHistory.length ? (
-            <div>Transactions not exists</div>
-          ) : (
-            <TransactionTableAdaptive accountHistory={txs} />
-          ))}
+        {statusEqual(transactions.status, dataStatus.LOADING) ? (
+          <LoadingStatus status="loading" inline />
+        ) : accountHistoryExists ? (
+          <TransactionTableAdaptive accountHistory={currencyAccountHistory} />
+        ) : (
+          <div>Transactions not exists</div>
+        )}
       </div>
     </CabinetBlock>
   );

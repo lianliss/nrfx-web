@@ -65,6 +65,7 @@ const useTransactionHistory = () => {
     mappedTestHistory,
     transactions,
     accountHistoryExists,
+    accountAddress,
   };
 };
 
