@@ -18,7 +18,8 @@ function Exchanger(params) {
   const rates = useSelector((state) => state.web3.rates);
 
   const getUsdPrice = (amount, currency) => {
-    const rate = _.get(rates, currency.toLowerCase(), 0);
+    const rate =
+      currency === 'USD' ? 1 : _.get(rates, currency.toLowerCase(), 0);
     return amount * rate;
   };
 
