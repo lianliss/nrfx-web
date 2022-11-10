@@ -7,6 +7,14 @@ import { dataStatus } from '../../../../constants/dapp/types';
 import testItems from '../constants/testItems';
 import { statusEqual, transactionsMap } from './actions';
 
+/**
+ * Clear transactions and returns history
+ * for display when its empty.
+ * @param {function} dispatch
+ * @param {function} transactions
+ * @param {function} getTokenFromSymbol
+ * @returns mappedTestHistory
+ */
 export const useClearTransactions = (
   dispatch,
   transactions,

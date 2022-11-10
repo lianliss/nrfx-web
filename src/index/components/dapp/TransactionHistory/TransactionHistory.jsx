@@ -12,59 +12,24 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { getLang, classNames as cn } from 'src/utils';
-import { Web3Context } from 'src/services/web3Provider';
-import { adaptiveSelector, dappTransactionsSelector } from 'src/selectors';
 import _ from 'lodash';
 import { dataStatus } from 'src/index/constants/dapp/types';
 import { openStateModal } from 'src/actions';
+import { statusEqual } from './utils/actions';
+import useTransactionHistory from 'src/hooks/useTransactionHistory';
 
 // Styles
 import './TransactionHistory.less';
-import { getTransactionsData, statusEqual } from './utils/actions';
-import { useClearTransactions } from './utils/hooks';
 
 function TransactionHistory() {
-  // Context.
   const {
-    getAccountHistory,
-    accountAddress,
+    adaptive,
     isConnected,
-    updateFiats,
-    getTokenFromSymbol,
-    getFiatsArray,
-  } = React.useContext(Web3Context);
-
-  // Store.
-  const dispatch = useDispatch();
-  const adaptive = useSelector(adaptiveSelector);
-  const transactions = useSelector(dappTransactionsSelector);
-
-  // Constants
-  const accountHistory = transactions.items;
-  const historyLength = accountHistory.length > 0;
-  const accountHistoryExists =
-    isConnected &&
-    statusEqual(transactions.status, dataStatus.LOADED) &&
-    historyLength;
-
-  const mappedTestHistory = useClearTransactions(
-    dispatch,
+    accountHistory,
+    mappedTestHistory,
     transactions,
-    getTokenFromSymbol
-  );
-
-  // Get transactions.
-  React.useEffect(() => {
-    if (!isConnected) return;
-
-    getTransactionsData(
-      dispatch,
-      getFiatsArray,
-      getAccountHistory,
-      getTokenFromSymbol,
-      updateFiats
-    );
-  }, [accountAddress]);
+    accountHistoryExists,
+  } = useTransactionHistory();
 
   const Transactions = ({ accountHistory }) => {
     const component = adaptive ? (
