@@ -77,7 +77,7 @@ function ReferralList(params) {
                     background={
                       index === 0 || index % 2 === 0 ? '#fff' : 'transparent'
                     }
-                    key={item.login + index}
+                    key={`${item.login}${index}`}
                   >
                     <TD
                       color="gray"
