@@ -1,20 +1,17 @@
 import React from 'react';
 
 // Components
-import { NumberFormat } from 'src/ui';
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
-import Transaction from '../Transaction/Transaction';
-import LoadingStatus from '../../../LoadingStatus/LoadingStatus';
 import TransactionTableAdaptive from '../../../TransactionHistory/components/TransactionTableAdaptive/TransactionTableAdaptive';
+import TransactionHistoryOverlay from '../../../TransactionHistory/components/TransactionHistoryOverlay/TransactionHistoryOverlay';
 
 // Utils
 import { getLang } from 'src/utils';
 import useTransactionHistory from 'src/hooks/useTransactionHistory';
-import { statusEqual } from '../../../TransactionHistory/utils/actions';
-import { dataStatus } from 'src/index/constants/dapp/types';
 
 function Transactions({ currency }) {
-  const { accountHistory, transactions, adaptive } = useTransactionHistory();
+  const { accountHistory, mappedTestHistory, transactions, adaptive } =
+    useTransactionHistory();
 
   const currencyAccountHistory = accountHistory.filter(
     (transaction) =>
@@ -28,15 +25,17 @@ function Transactions({ currency }) {
         <h3>{getLang('dapp_transaction_history')}</h3>
       </div>
       <div className="Currency__transactions__body">
-        {statusEqual(transactions.status, dataStatus.LOADING) ? (
-          <LoadingStatus status="loading" inline />
-        ) : currencyAccountHistory.length ? (
-          <TransactionTableAdaptive
-            adaptive={adaptive}
-            accountHistory={currencyAccountHistory}
-          />
-        ) : (
-          <div>Transactions not exists</div>
+        {/* <LoadingStatus status="loading" inline /> */}
+        <TransactionTableAdaptive
+          adaptive={adaptive}
+          accountHistory={
+            currencyAccountHistory.length
+              ? currencyAccountHistory
+              : mappedTestHistory.slice(0, 3)
+          }
+        />
+        {!currencyAccountHistory.length && (
+          <TransactionHistoryOverlay transactionsStatus={transactions.status} />
         )}
       </div>
     </CabinetBlock>

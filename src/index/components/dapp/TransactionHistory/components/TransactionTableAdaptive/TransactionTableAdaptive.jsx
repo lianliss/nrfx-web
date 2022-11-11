@@ -13,9 +13,20 @@ import transactionLangs from '../../constants/transactionLangs';
 // Styles
 import './TransactionTableAdaptive.less';
 
-function TransactionTableAdaptive({ accountHistory, adaptive }) {
+function TransactionTableAdaptive({ accountHistory, adaptive, blur }) {
   return (
-    <div className="TransactionHistory__tableAdaptive">
+    <div
+      className="TransactionHistory__tableAdaptive"
+      style={
+        blur
+          ? {
+              filter: 'blur(5px)',
+              pointerEvents: 'none',
+              userSelect: 'none',
+            }
+          : {}
+      }
+    >
       {accountHistory.map((item, key) => {
         return (
           <Col className="TransactionHistory__tableAdaptive__item" key={key}>
