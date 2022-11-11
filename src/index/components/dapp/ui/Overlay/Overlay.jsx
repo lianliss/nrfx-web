@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { classNames } from 'utils';
 
 // Styles
@@ -17,5 +18,17 @@ function Overlay({ children, backdropFilter, background, className }) {
     </div>
   );
 }
+
+Overlay.propTypes = {
+  backdropFilter: PropTypes.string,
+  background: PropTypes.string,
+  className: PropTypes.string,
+};
+
+Overlay.defaultProps = {
+  backdropFilter: null,
+  background: null,
+  className: null,
+};
 
 export default Overlay;

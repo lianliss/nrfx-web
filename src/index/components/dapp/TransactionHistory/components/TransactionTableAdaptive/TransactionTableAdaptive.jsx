@@ -81,11 +81,13 @@ function TransactionTableAdaptive({ accountHistory, adaptive, blur }) {
 TransactionTableAdaptive.propTypes = {
   accountHistory: PropTypes.array,
   adaptive: PropTypes.bool,
+  blur: PropTypes.bool,
 };
 
 TransactionTableAdaptive.defaultProps = {
   accountHistory: [],
   adaptive: false,
+  blur: false,
 };
 
 export default TransactionTableAdaptive;

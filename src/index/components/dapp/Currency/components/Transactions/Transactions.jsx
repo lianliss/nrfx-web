@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import CabinetBlock from '../../../CabinetBlock/CabinetBlock';
@@ -50,8 +51,12 @@ function Transactions({ currency }) {
   );
 }
 
-function getFineNumber(number, fractionNumber) {
-  return Number(number.toFixed(fractionNumber));
-}
+Transactions.propTypes = {
+  currency: PropTypes.object,
+};
+
+Transactions.defaultProps = {
+  currency: {},
+};
 
 export default Transactions;

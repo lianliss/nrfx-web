@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Col, Button } from 'src/ui';
@@ -19,7 +20,6 @@ function TransactionHistoryOverlay({
   transactionsStatus,
   isConnectWalletButton,
 }) {
-  
   return (
     <Overlay className="TransactionHistoryOverlay">
       <Col alignItems="center">
@@ -48,5 +48,15 @@ function TransactionHistoryOverlay({
     </Overlay>
   );
 }
+
+TransactionHistoryOverlay.propTypes = {
+  transactionsStatus: PropTypes.oneOf(Object.keys(dataStatus)),
+  isConnectWalletButton: PropTypes.bool,
+};
+
+TransactionHistoryOverlay.defaultProps = {
+  transactionsStatus: dataStatus.IDLE,
+  isConnectWalletButton: false,
+};
 
 export default TransactionHistoryOverlay;

@@ -262,7 +262,7 @@ function Currency() {
           </div>
         </div>
         <div className="Currency__body">
-          <Transactions currency={!currencyIsEmpty && currency} />
+          <Transactions currency={!currencyIsEmpty ? currency : null} />
         </div>
       </div>
     </CabinetBlock>
