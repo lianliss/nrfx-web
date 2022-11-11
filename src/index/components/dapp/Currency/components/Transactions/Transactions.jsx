@@ -17,6 +17,7 @@ function Transactions({ currency }) {
     transactions,
     adaptive,
     isConnected,
+    accountHistoryExists,
   } = useTransactionHistory();
 
   const currencyAccountHistory = currency
@@ -26,6 +27,9 @@ function Transactions({ currency }) {
           transaction.target_currency === currency.symbol
       )
     : [];
+
+  const currencyHistoryExists =
+    accountHistoryExists && currencyAccountHistory.length;
 
   return (
     <CabinetBlock className="Currency__transactions">
@@ -37,12 +41,12 @@ function Transactions({ currency }) {
         <TransactionTableAdaptive
           adaptive={adaptive}
           accountHistory={
-            currencyAccountHistory.length
+            currencyHistoryExists
               ? currencyAccountHistory
               : mappedTestHistory.slice(0, 3)
           }
         />
-        {!currencyAccountHistory.length && (
+        {!currencyHistoryExists && (
           <TransactionHistoryOverlay
             transactionsStatus={transactions.status}
             isConnectWalletButton={!isConnected}
