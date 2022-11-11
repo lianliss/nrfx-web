@@ -207,24 +207,38 @@ function Currency() {
       </>
     );
 
-  const NotLoginedButton = () => {
-    if (loading) {
-      return <LoadingStatus status="loading" inline />;
-    }
+  // const NotLoginedButton = () => {
+  //   if (loading) {
+  //     return <LoadingStatus status="loading" inline />;
+  //   }
 
-    if (isConnected && currencyIsEmpty) {
-      return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
-    }
+  //   if (isConnected && currencyIsEmpty) {
+  //     return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
+  //   }
 
+  //   return (
+  //     <Button
+  //       type="lightBlue"
+  //       shadow
+  //       onClick={() => openModal('connect_to_wallet')}
+  //     >
+  //       <SVG src={require('src/asset/icons/cabinet/connect-wallet.svg')} />
+  //       {getLang('dapp_global_connect_wallet')}
+  //     </Button>
+  //   );
+  // };
+
+  const Header = ({ currencyBalance, rate, symbol }) => {
     return (
-      <Button
-        type="lightBlue"
-        shadow
-        onClick={() => openModal('connect_to_wallet')}
-      >
-        <SVG src={require('src/asset/icons/cabinet/connect-wallet.svg')} />
-        {getLang('dapp_global_connect_wallet')}
-      </Button>
+      <div className="Currency__preview__container">
+        <span className="Currency__rate">
+          <NumberFormat number={currencyBalance} currency={symbol} />
+        </span>
+        <div className="Currency__currency_amount_rate">
+          $&nbsp;
+          <NumberFormat number={currencyBalance * rate} currency={'usd'} />
+        </div>
+      </div>
     );
   };
 
@@ -237,23 +251,11 @@ function Currency() {
           </div>
           <div className="Currency__preview">
             <WalletIcon currency={currency} size={adaptive ? 45 : 55} />
-            {!currencyIsEmpty && (
-              <div className="Currency__preview__container">
-                <span className="Currency__rate">
-                  <NumberFormat
-                    number={currencyBalance}
-                    currency={currency.symbol}
-                  />
-                </span>
-                <div className="Currency__currency_amount_rate">
-                  $&nbsp;
-                  <NumberFormat
-                    number={currencyBalance * rate}
-                    currency={'usd'}
-                  />
-                </div>
-              </div>
-            )}
+            <Header
+              symbol={currency.symbol || paramsCurrency}
+              rate={rate}
+              currencyBalance={currencyBalance}
+            />
           </div>
           <div className="Currency__buttons">
             <LoginedButtons disabled={!isConnected || currencyIsEmpty} />
