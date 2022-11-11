@@ -12,7 +12,6 @@ function CabinetWallets() {
   return (
     <CabinetBlock className="CabinetWallets">
       {isConnected ? <WalletsExists /> : <WalletsIsEmpty />}
-      <ShowPageOn />
     </CabinetBlock>
   );
 }

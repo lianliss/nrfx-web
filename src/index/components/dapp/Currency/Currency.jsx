@@ -20,8 +20,6 @@ import { setSwap } from 'src/actions/dapp/swap';
 
 // Styles
 import './Currency.less';
-import LoadingStatus from '../LoadingStatus/LoadingStatus';
-import ShowPageOn from '../ShowPageOn/ShowPageOn';
 import Transactions from './components/Transactions/Transactions';
 import FiatButtons from './components/FiatButtons/FiatButtons';
 
