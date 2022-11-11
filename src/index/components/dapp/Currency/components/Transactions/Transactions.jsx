@@ -14,8 +14,7 @@ import { statusEqual } from '../../../TransactionHistory/utils/actions';
 import { dataStatus } from 'src/index/constants/dapp/types';
 
 function Transactions({ currency }) {
-  const { accountHistory, transactions, accountHistoryExists } =
-    useTransactionHistory();
+  const { accountHistory, transactions } = useTransactionHistory();
 
   const currencyAccountHistory = accountHistory.filter(
     (transaction) =>
@@ -31,7 +30,7 @@ function Transactions({ currency }) {
       <div className="Currency__transactions__body">
         {statusEqual(transactions.status, dataStatus.LOADING) ? (
           <LoadingStatus status="loading" inline />
-        ) : accountHistoryExists ? (
+        ) : currencyAccountHistory.length ? (
           <TransactionTableAdaptive accountHistory={currencyAccountHistory} />
         ) : (
           <div>Transactions not exists</div>

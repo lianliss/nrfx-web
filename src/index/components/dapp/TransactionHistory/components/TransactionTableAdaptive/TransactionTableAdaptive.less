@@ -62,4 +62,44 @@
   .DoubleWallets {
     margin-right: 5px;
   }
+
+  .TransactionHistory {
+    &__icon {
+      &-export {
+        margin-left: 4px;
+
+        .isvg {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      &-arrow {
+        margin: 0 6px;
+        display: flex;
+        justify-content: center;
+        .isvg {
+          margin: 0 !important;
+        }
+      }
+
+      &-sortArrow {
+        margin-left: 4px;
+
+        &.up {
+          svg {
+            transform: rotate(-180deg);
+          }
+        }
+
+        .isvg {
+          svg {
+            width: 8px;
+            height: 8px;
+          }
+        }
+      }
+    }
+  }
 }
