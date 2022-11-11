@@ -47,7 +47,7 @@ import * as MenuScreen from "./containers/cabinet/adaptive/MenuScreen/MenuScreen
 import * as NotificationsScreen from "./containers/cabinet/adaptive/NotificationsScreen/NotificationsScreen";
 import CabinetExchangeScreen from "./containers/cabinet/CabinetExchangeScreen/CabinetExchangeScreen";
 import CabinetMerchantStatusScreen from "./containers/cabinet/CabinetMerchantStatusScreen/CabinetMerchantStatusScreen";
-import SiteFeeScreen from "../landing/containers/Fee/SiteFeeScreen";
+// import SiteFeeScreen from "../landing/containers/Fee/SiteFeeScreen";
 import SiteTokenScreen from "./containers/site/SiteTokenScreen/SiteTokenScreen";
 import TokenSale from "./containers/dapp/TokenSale/TokenSale";
 import TraderScreen from "./containers/cabinet/TraderScreen/TraderScreen";
@@ -151,10 +151,10 @@ function Routes(props) {
     //   Component = SiteFaqScreen;
     //   WrapperComponent = SiteWrapper;
     //   break;
-    case pages.FEE:
-      Component = SiteFeeScreen;
-      WrapperComponent = LandingWrapper;
-      break;
+    // case pages.FEE:
+    //   Component = SiteFeeScreen;
+    //   WrapperComponent = LandingWrapper;
+    //   break;
     case pages.TOKEN:
       Component = TokenLanding;
       WrapperComponent = LandingWrapper;
@@ -299,7 +299,7 @@ function Routes(props) {
     pages.NOT_FOUND,
     pages.SAFETY,
     pages.TECHNOLOGY,
-    pages.FEE
+    // pages.FEE
   ].includes(route);
 
   if (
