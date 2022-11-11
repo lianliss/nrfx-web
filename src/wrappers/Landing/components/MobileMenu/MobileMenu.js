@@ -27,7 +27,7 @@ export default ({ visible, onClose }) => {
         >
           <Lang name="site__headerCompany" />
         </Button>
-        <Button
+        {/* <Button
           type="secondary"
           onClick={() => {
             router.navigate(pages.FEE);
@@ -35,7 +35,7 @@ export default ({ visible, onClose }) => {
           }}
         >
           <Lang name="global_fee" />
-        </Button>
+        </Button> */}
         <Button
           type="secondary"
           onClick={() => {

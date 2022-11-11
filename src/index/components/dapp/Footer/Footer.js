@@ -23,7 +23,7 @@ const Footer = props => {
           FAQ
         </a>
       </li>
-      <li className="CabinetFooter__item">
+      {/* <li className="CabinetFooter__item">
         <a
           href={COMPANY.url + pages.FEE}
           target="_blank"
@@ -31,7 +31,7 @@ const Footer = props => {
         >
           <Lang name="global_fee" />
         </a>
-      </li>
+      </li> */}
       {/*<li className="CabinetFooter__item"><BaseLink router={router} routeName={pages.FAQ}>{utils.getLang("site__footerFAQ")}</BaseLink></li>*/}
       <li className="CabinetFooter__item">
         <span className="link" onClick={handleChangeLanguage}>

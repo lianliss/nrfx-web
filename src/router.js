@@ -222,10 +222,10 @@ export const routes =
           name: pages.MERCHANT,
           path: '/merchant/:merchant/:status',
         },
-        {
-          name: pages.FEE,
-          path: '/fee',
-        },
+        // {
+        //   name: pages.FEE,
+        //   path: '/fee',
+        // },
         {
           name: pages.TOKEN,
           path: '/token',
