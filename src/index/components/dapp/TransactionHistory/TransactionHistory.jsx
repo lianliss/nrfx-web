@@ -33,7 +33,10 @@ function TransactionHistory() {
 
   const Transactions = ({ accountHistory }) => {
     const component = adaptive ? (
-      <TransactionTableAdaptive accountHistory={accountHistory} />
+      <TransactionTableAdaptive
+        adaptive={true}
+        accountHistory={accountHistory}
+      />
     ) : (
       <TransactionTable accountHistory={accountHistory} />
     );
