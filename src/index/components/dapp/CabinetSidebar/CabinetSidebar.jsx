@@ -66,6 +66,16 @@ function CabinetSidebar({ className, adaptive }) {
                 active={isPage(PAGES.DAPP_TRANSACTION_HISTORY)}
                 onClick={() => router.navigate(PAGES.DAPP_TRANSACTION_HISTORY)}
               />
+              <SidebarItem
+                title={getLang('dapp_sidebar_referral_program')}
+                icon="team-icon"
+                active={isPage([
+                  PAGES.DAPP_REFERRAL,
+                  PAGES.DAPP_REFERRAL_EXCHANGER,
+                  PAGES.DAPP_REFERRAL_FARMING,
+                ])}
+                onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
+              />
             </ul>
           </CabinetBlock>
           <CabinetBlock>
@@ -108,16 +118,6 @@ function CabinetSidebar({ className, adaptive }) {
                 title={getLang('dapp_sidebar_about_nrfx')}
                 icon="nrfx-blue-bg-icon"
                 href="/token"
-              />
-              <SidebarItem
-                title={getLang('dapp_sidebar_referral_program')}
-                icon="team-icon"
-                active={isPage([
-                  PAGES.DAPP_REFERRAL,
-                  PAGES.DAPP_REFERRAL_EXCHANGER,
-                  PAGES.DAPP_REFERRAL_FARMING,
-                ])}
-                onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
               />
               <SidebarItem
                 title={getLang('dapp_sidebar_more')}
