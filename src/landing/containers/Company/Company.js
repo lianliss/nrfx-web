@@ -6,6 +6,7 @@ import Roadmap from "./components/Roadmap/Roadmap";
 import Lang from "../../../components/Lang/Lang";
 import COMPANY from "../../../index/constants/company";
 import * as utils from "../../../utils";
+import * as pages from 'src/index/constants/pages';
 import { Helmet } from "react-helmet";
 
 export default () => {
@@ -27,6 +28,7 @@ export default () => {
         title={<Lang name="landingCompany_promo_title" />}
         description={<Lang name="landingCompany_promo_description" />}
         actionButtonText={<Lang name="landingCompany_promo_actionButton" />}
+        actionPage={pages.DAPP}
         image={require("../MainScreen/components/Promo/assets/company.svg").default}
       />
       <About />
