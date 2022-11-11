@@ -19,11 +19,13 @@ function Transactions({ currency }) {
     isConnected,
   } = useTransactionHistory();
 
-  const currencyAccountHistory = accountHistory.filter(
-    (transaction) =>
-      transaction.source_currency === currency.symbol ||
-      transaction.target_currency === currency.symbol
-  );
+  const currencyAccountHistory = currency
+    ? accountHistory.filter(
+        (transaction) =>
+          transaction.source_currency === currency.symbol ||
+          transaction.target_currency === currency.symbol
+      )
+    : [];
 
   return (
     <CabinetBlock className="Currency__transactions">

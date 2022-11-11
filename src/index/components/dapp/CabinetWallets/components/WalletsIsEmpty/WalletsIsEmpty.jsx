@@ -6,16 +6,12 @@ import SVG from 'utils/svg-wrap';
 import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 
 // Utils
-import { Web3Context } from 'src/services/web3Provider';
 import { getLang } from 'src/utils';
 import { openStateModal } from 'src/actions';
 
 import './WalletsIsEmpty.less';
 
-function WalletsIsEmpty({ showWalletPage }) {
-  const { isConnected, ...context } = React.useContext(Web3Context);
-  const [isLogined, setIsLogined] = React.useState(false);
-
+function WalletsIsEmpty() {
   const LinkIcon = ({ icon, to, className }) => (
     <a href={to} target="_blank">
       <SVG
@@ -27,14 +23,7 @@ function WalletsIsEmpty({ showWalletPage }) {
 
   const handleConnectWallet = () => {
     openStateModal('connect_to_wallet');
-    setIsLogined(true);
   };
-
-  React.useEffect(() => {
-    if (isConnected && isLogined) {
-      showWalletPage();
-    }
-  }, [isConnected, isLogined]);
 
   return (
     <div className="WalletsIsEmpty">

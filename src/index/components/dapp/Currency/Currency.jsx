@@ -154,7 +154,7 @@ function Currency() {
   // Render components
   const LoginedButtons = ({ disabled }) =>
     isFiat(paramsCurrency) ? (
-      <FiatButtons currency={currency} />
+      <FiatButtons disabled={disabled} currency={currency} />
     ) : (
       <>
         <div className="col">
@@ -247,7 +247,7 @@ function Currency() {
       <div className="Currency__container">
         <div className="Currency__header">
           <div className="Currency__currency">
-            <span>{currency.name}</span>
+            <span>{currency.name || paramsCurrency}</span>
           </div>
           <div className="Currency__preview">
             <WalletIcon currency={currency} size={adaptive ? 45 : 55} />
