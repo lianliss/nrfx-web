@@ -10,8 +10,13 @@ import { getLang } from 'src/utils';
 import useTransactionHistory from 'src/hooks/useTransactionHistory';
 
 function Transactions({ currency }) {
-  const { accountHistory, mappedTestHistory, transactions, adaptive } =
-    useTransactionHistory();
+  const {
+    accountHistory,
+    mappedTestHistory,
+    transactions,
+    adaptive,
+    isConnected,
+  } = useTransactionHistory();
 
   const currencyAccountHistory = accountHistory.filter(
     (transaction) =>
@@ -35,7 +40,10 @@ function Transactions({ currency }) {
           }
         />
         {!currencyAccountHistory.length && (
-          <TransactionHistoryOverlay transactionsStatus={transactions.status} />
+          <TransactionHistoryOverlay
+            transactionsStatus={transactions.status}
+            isConnectWalletButton={!isConnected}
+          />
         )}
       </div>
     </CabinetBlock>

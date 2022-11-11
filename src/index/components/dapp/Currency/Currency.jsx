@@ -63,6 +63,12 @@ function Currency() {
     : 0;
 
   React.useEffect(() => {
+    if (!paramsCurrency) {
+      router.navigate(PAGES.DAPP_CURRENCY, { currency: 'NRFX' });
+    }
+  }, []);
+
+  React.useEffect(() => {
     if (!isConnected) return;
 
     // Update fiats, and get currency fiat.
@@ -146,7 +152,7 @@ function Currency() {
   };
 
   // Render components
-  const LoginedButtons = () =>
+  const LoginedButtons = ({ disabled }) =>
     isFiat(paramsCurrency) ? (
       <FiatButtons currency={currency} />
     ) : (
@@ -159,6 +165,7 @@ function Currency() {
               dispatch(setSwap(currency));
               router.navigate(PAGES.DAPP_SWAP);
             }}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
             {getLang('dapp_global_trade')}
@@ -171,6 +178,7 @@ function Currency() {
                 coin: currency.symbol,
               });
             }}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
             {getLang('global_buy')}
@@ -181,6 +189,7 @@ function Currency() {
             type="secondary-light"
             shadow
             onClick={() => openModal('receive_qr')}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
             {getLang('global_receive')}
@@ -189,6 +198,7 @@ function Currency() {
             type="secondary-light"
             shadow
             onClick={() => openModal('send_tokens', {}, { token: currency })}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
             {getLang('global_send')}
@@ -246,14 +256,13 @@ function Currency() {
             )}
           </div>
           <div className="Currency__buttons">
-            {!currencyIsEmpty ? <LoginedButtons /> : <NotLoginedButton />}
+            <LoginedButtons disabled={!isConnected || currencyIsEmpty} />
           </div>
         </div>
         <div className="Currency__body">
           <Transactions currency={!currencyIsEmpty && currency} />
         </div>
       </div>
-      <ShowPageOn />
     </CabinetBlock>
   );
 }
