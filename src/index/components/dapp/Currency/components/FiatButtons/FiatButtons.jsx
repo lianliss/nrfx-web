@@ -12,7 +12,7 @@ import * as PAGES from 'src/index/constants/pages';
 import router from 'src/router';
 import _ from 'lodash';
 
-function FiatButtons({ currency }) {
+function FiatButtons({ currency, disabled }) {
   const dispatch = useDispatch();
   const fiatSymbol = _.get(currency, 'symbol', '');
   const withdrawBanks = useSelector((state) =>
@@ -51,13 +51,14 @@ function FiatButtons({ currency }) {
           type="lightBlue"
           shadow
           onClick={() => openModal('deposit_balance')}
+          disabled={disabled}
         >
           {getLang('dapp_global_deposit')}
         </Button>
         <Button
           type="secondary-light"
           shadow
-          disabled={!currentWithdrawBanks.length}
+          disabled={disabled || !currentWithdrawBanks.length}
           onClick={withdrawal}
         >
           {getLang('global_withdrawal')}
@@ -78,6 +79,7 @@ function FiatButtons({ currency }) {
               coin: currency.symbol,
             });
           }}
+          disabled={disabled}
         >
           {getLang('global_buy')}
         </Button>
@@ -89,6 +91,7 @@ function FiatButtons({ currency }) {
               currency: currency.symbol,
             });
           }}
+          disabled={disabled}
         >
           {getLang('global_sell')}
         </Button>

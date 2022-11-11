@@ -23,7 +23,7 @@ function Currency({
           size={24}
           disableSymbols
         />
-        <Row wrap>
+        <Row alignItems="center" wrap>
           <NumberFormat number={source_amount} currency={source_token.symbol} />
           <span className="TransactionHistory__icon-arrow">
             <SVG src={require('src/asset/icons/arrows/to-arrow.svg')} />

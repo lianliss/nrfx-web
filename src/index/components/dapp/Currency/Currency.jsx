@@ -20,8 +20,6 @@ import { setSwap } from 'src/actions/dapp/swap';
 
 // Styles
 import './Currency.less';
-import LoadingStatus from '../LoadingStatus/LoadingStatus';
-import ShowPageOn from '../ShowPageOn/ShowPageOn';
 import Transactions from './components/Transactions/Transactions';
 import FiatButtons from './components/FiatButtons/FiatButtons';
 
@@ -61,6 +59,12 @@ function Currency() {
   const currencyBalance = currency.balance
     ? Number(wei.from(currency.balance).toFixed(2))
     : 0;
+
+  React.useEffect(() => {
+    if (!paramsCurrency) {
+      router.navigate(PAGES.DAPP_CURRENCY, { currency: 'NRFX' });
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!isConnected) return;
@@ -146,9 +150,9 @@ function Currency() {
   };
 
   // Render components
-  const LoginedButtons = () =>
+  const LoginedButtons = ({ disabled }) =>
     isFiat(paramsCurrency) ? (
-      <FiatButtons currency={currency} />
+      <FiatButtons disabled={disabled} currency={currency} />
     ) : (
       <>
         <div className="col">
@@ -159,6 +163,7 @@ function Currency() {
               dispatch(setSwap(currency));
               router.navigate(PAGES.DAPP_SWAP);
             }}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
             {getLang('dapp_global_trade')}
@@ -171,6 +176,7 @@ function Currency() {
                 coin: currency.symbol,
               });
             }}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
             {getLang('global_buy')}
@@ -181,6 +187,7 @@ function Currency() {
             type="secondary-light"
             shadow
             onClick={() => openModal('receive_qr')}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
             {getLang('global_receive')}
@@ -189,6 +196,7 @@ function Currency() {
             type="secondary-light"
             shadow
             onClick={() => openModal('send_tokens', {}, { token: currency })}
+            disabled={disabled}
           >
             <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
             {getLang('global_send')}
@@ -197,24 +205,38 @@ function Currency() {
       </>
     );
 
-  const NotLoginedButton = () => {
-    if (loading) {
-      return <LoadingStatus status="loading" inline />;
-    }
+  // const NotLoginedButton = () => {
+  //   if (loading) {
+  //     return <LoadingStatus status="loading" inline />;
+  //   }
 
-    if (isConnected && currencyIsEmpty) {
-      return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
-    }
+  //   if (isConnected && currencyIsEmpty) {
+  //     return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
+  //   }
 
+  //   return (
+  //     <Button
+  //       type="lightBlue"
+  //       shadow
+  //       onClick={() => openModal('connect_to_wallet')}
+  //     >
+  //       <SVG src={require('src/asset/icons/cabinet/connect-wallet.svg')} />
+  //       {getLang('dapp_global_connect_wallet')}
+  //     </Button>
+  //   );
+  // };
+
+  const Header = ({ currencyBalance, rate, symbol }) => {
     return (
-      <Button
-        type="lightBlue"
-        shadow
-        onClick={() => openModal('connect_to_wallet')}
-      >
-        <SVG src={require('src/asset/icons/cabinet/connect-wallet.svg')} />
-        {getLang('dapp_global_connect_wallet')}
-      </Button>
+      <div className="Currency__preview__container">
+        <span className="Currency__rate">
+          <NumberFormat number={currencyBalance} currency={symbol} />
+        </span>
+        <div className="Currency__currency_amount_rate">
+          $&nbsp;
+          <NumberFormat number={currencyBalance * rate} currency={'usd'} />
+        </div>
+      </div>
     );
   };
 
@@ -223,37 +245,24 @@ function Currency() {
       <div className="Currency__container">
         <div className="Currency__header">
           <div className="Currency__currency">
-            <span>{currency.name}</span>
+            <span>{currency.name || paramsCurrency}</span>
           </div>
           <div className="Currency__preview">
             <WalletIcon currency={currency} size={adaptive ? 45 : 55} />
-            {!currencyIsEmpty && (
-              <div className="Currency__preview__container">
-                <span className="Currency__rate">
-                  <NumberFormat
-                    number={currencyBalance}
-                    currency={currency.symbol}
-                  />
-                </span>
-                <div className="Currency__currency_amount_rate">
-                  $&nbsp;
-                  <NumberFormat
-                    number={currencyBalance * rate}
-                    currency={'usd'}
-                  />
-                </div>
-              </div>
-            )}
+            <Header
+              symbol={currency.symbol || paramsCurrency}
+              rate={rate}
+              currencyBalance={currencyBalance}
+            />
           </div>
           <div className="Currency__buttons">
-            {!currencyIsEmpty ? <LoginedButtons /> : <NotLoginedButton />}
+            <LoginedButtons disabled={!isConnected || currencyIsEmpty} />
           </div>
         </div>
         <div className="Currency__body">
-          <Transactions currency={!currencyIsEmpty && currency} />
+          <Transactions currency={!currencyIsEmpty ? currency : null} />
         </div>
       </div>
-      <ShowPageOn />
     </CabinetBlock>
   );
 }

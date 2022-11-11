@@ -39,7 +39,7 @@ function SendTokens({ onClose, token }) {
       (balanceToken) =>
         balanceToken.symbol.toLowerCase() === token.symbol.toLowerCase()
     ) || {};
-  const balance = wei.from(balancesToken.balance) || 0;
+  const balance = balancesToken.balance ? wei.from(balancesToken.balance) : 0;
 
   // Functions
   const toastPush = (text, type) => {
