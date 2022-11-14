@@ -25,6 +25,7 @@
     &__container {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
     }
 
     .WalletIcon {
@@ -90,10 +91,19 @@
       flex: 1 1 155px;
       max-height: 68.9px;
       height: 68.9px;
+
+      &.secondary-alice .Button__label {
+        color: var(--dark-black) !important;
+      }
+
+      .coming-soon {
+        width: 100%;
+        font-size: 9px;
+      }
     }
 
     .isvg {
-      margin-right: 10px;
+      margin-right: 7.2px;
 
       .card-send {
         &__body,
@@ -165,6 +175,12 @@
         #ffffff 0.13%,
         rgba(255, 255, 255, 0.71) 107.49%
       );
+    }
+  }
+
+  .icon {
+    &__wallet {
+      fill: var(--royal-blue);
     }
   }
 }

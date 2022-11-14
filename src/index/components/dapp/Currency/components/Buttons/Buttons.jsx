@@ -23,8 +23,7 @@ function Buttons({ disabled, paramsCurrency, currency }) {
     <>
       <div className="col">
         <Button
-          type="secondary-light"
-          shadow
+          type="secondary-alice"
           onClick={() => {
             dispatch(setSwap(currency));
             router.navigate(PAGES.DAPP_SWAP);
@@ -35,8 +34,7 @@ function Buttons({ disabled, paramsCurrency, currency }) {
           {getLang('dapp_global_trade')}
         </Button>
         <Button
-          type="secondary-light"
-          shadow
+          type="secondary-alice"
           onClick={() => {
             router.navigate(PAGES.DAPP_EXCHANGE, {
               coin: currency.symbol,
@@ -50,21 +48,19 @@ function Buttons({ disabled, paramsCurrency, currency }) {
       </div>
       <div className="col">
         <Button
-          type="secondary-light"
-          shadow
+          type="secondary-alice"
           onClick={() => openModal('receive_qr')}
           disabled={disabled}
         >
-          <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
+          <SVG src={require('src/asset/icons/cabinet/card-receive-2.svg')} />
           {getLang('global_receive')}
         </Button>
         <Button
-          type="secondary-light"
-          shadow
+          type="secondary-alice"
           onClick={() => openModal('send_tokens', {}, { token: currency })}
           disabled={disabled}
         >
-          <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
+          <SVG src={require('src/asset/icons/cabinet/wallet-with-coin.svg')} />
           {getLang('global_send')}
         </Button>
       </div>
