@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 32px;
-    padding: 25px 15.5px;
+    padding: 0;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
 
@@ -37,11 +37,14 @@
   }
 
   &__currency {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 180%;
-    color: var(--cool-gray);
-    margin: 8px 15px;
+    margin: 8px 0;
+
+    span {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 180%;
+      color: var(--cool-gray);
+    }
   }
 
   .LoadingStatus {
@@ -51,7 +54,7 @@
   }
 
   &__rate {
-    color: var(--black-gunmetal);
+    color: var(--dark-black);
     font-weight: 600;
     font-size: 32px;
     line-height: 110%;
@@ -61,7 +64,7 @@
   &__currency_amount {
     &_rate {
       justify-content: flex-start;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 20px;
       line-height: 110%;
       color: var(--secondary-blue);
