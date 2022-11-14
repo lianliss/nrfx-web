@@ -7,7 +7,9 @@ import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import { WalletIcon } from '../index';
 import { NumberFormat, Button } from 'src/ui';
 import SVG from 'utils/svg-wrap';
-import Transaction from './components/Transaction/Transaction';
+import Transactions from './components/Transactions/Transactions';
+import FiatButtons from './components/FiatButtons/FiatButtons';
+import CustomButton, { buttonTypes } from '../ui/CustomButton/CustomButton';
 
 // Utils
 import { isFiat, getLang, wei } from 'utils';
@@ -20,8 +22,6 @@ import { setSwap } from 'src/actions/dapp/swap';
 
 // Styles
 import './Currency.less';
-import Transactions from './components/Transactions/Transactions';
-import FiatButtons from './components/FiatButtons/FiatButtons';
 
 function Currency() {
   const dispatch = useDispatch();
@@ -36,12 +36,13 @@ function Currency() {
     getTokenBalance,
     updateFiats,
     updateTokenInBalances,
-    web3,
+    addTokenToWallet,
     balances,
   } = React.useContext(Web3Context);
 
   // const [currency, setCurrency] = React.useState({});
   const [loading, setLoading] = React.useState(false);
+  const [amountRateDisabled, setAmountRateDisabled] = React.useState(false);
   const paramsCurrency = params.currency || '';
   const currencyIsFiat = isFiat(paramsCurrency);
   const balancesType = currencyIsFiat ? 'fiats' : 'tokens';
@@ -86,6 +87,15 @@ function Currency() {
       clearInterval(tokenBalanceUpdateInterval);
     };
   }, [accountAddress]);
+
+  React.useEffect(() => {
+    if (currencyIsEmpty || !isConnected) {
+      setAmountRateDisabled(true);
+      return;
+    }
+
+    setAmountRateDisabled(false);
+  }, [currencyIsEmpty, isConnected]);
 
   // React.useEffect(() => {
   //   const balancesOfType = balances[balancesType];
@@ -147,6 +157,14 @@ function Currency() {
     if (currencyToken) {
       fetchTokenBalance(currencyToken);
     }
+  };
+
+  const handleAddTokenToWallet = async () => {
+    if (currencyIsEmpty) return;
+
+    setAmountRateDisabled(true);
+    await addTokenToWallet(currency);
+    setAmountRateDisabled(false);
   };
 
   // Render components
@@ -232,10 +250,15 @@ function Currency() {
         <span className="Currency__rate">
           <NumberFormat number={currencyBalance} currency={symbol} />
         </span>
-        <div className="Currency__currency_amount_rate">
+        <CustomButton
+          className="Currency__currency_amount_rate"
+          type={buttonTypes.link}
+          disabled={amountRateDisabled}
+          onClick={handleAddTokenToWallet}
+        >
           $&nbsp;
           <NumberFormat number={currencyBalance * rate} currency={'usd'} />
-        </div>
+        </CustomButton>
       </div>
     );
   };
