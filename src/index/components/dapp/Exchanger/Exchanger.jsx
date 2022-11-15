@@ -4,6 +4,7 @@ import { Web3Context } from 'services/web3Provider';
 import web3Backend from 'services/web3-backend';
 import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
+import { useRoute } from 'react-router5';
 import router from 'src/router';
 import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 import networks from 'src/index/constants/networks';
@@ -36,6 +37,9 @@ let cardsUpdate;
 function Exchanger(props) {
   const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
+  const { route } = useRoute();
+  const initialCurrencySymbol = route.params.currency;
+  // const initialCoinSymbol = route.params.coin;
   const methods = useSelector(state => state.fiat.banks);
   const rates = useSelector(web3RatesSelector);
   const context = React.useContext(Web3Context);
@@ -292,7 +296,7 @@ function Exchanger(props) {
   React.useEffect(() => {
     getBanks();
     getLimits();
-    if (!initGetParams.params.currency && !fiatSelected) {
+    if (!initialCurrencySymbol && !fiatSelected) {
       setFiat(
         [...fiatTokens, ...coins].find((t) => t.symbol !== coinSelected?.symbol)
       );

@@ -78,6 +78,7 @@ function FiatButtons({ currency, disabled }) {
           onClick={() => {
             router.navigate(PAGES.DAPP_EXCHANGE, {
               coin: currency.symbol,
+              currency: 'USDT',
             });
           }}
           disabled={disabled}
@@ -90,6 +91,7 @@ function FiatButtons({ currency, disabled }) {
           onClick={() => {
             router.navigate(PAGES.DAPP_EXCHANGE, {
               currency: currency.symbol,
+              coin: 'NRFX',
             });
           }}
           disabled={disabled}
