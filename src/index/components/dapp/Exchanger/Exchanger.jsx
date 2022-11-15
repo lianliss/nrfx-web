@@ -96,8 +96,22 @@ function Exchanger(props) {
   }, []);
   
   const swapSelected = () => {
-    setFiatSelected(coinSelected);
-    setCoinSelected(fiatSelected);
+    if (coinSelected) {
+      setFiatSelected(coinSelected);
+    } else {
+      setFiatSelected(
+        [...fiatTokens, ...coins].find((t) => t.symbol !== fiatSelected?.symbol)
+      );
+    }
+
+    if (fiatSelected) {
+      setCoinSelected(fiatSelected);
+    } else {
+      setCoinSelected(
+        [...fiatTokens, ...coins].find((t) => t.symbol !== coinSelected?.symbol)
+      );
+    }
+
     const routerState = router.getState();
     router.navigate(routerState.name, {
       ...routerState.params,
@@ -159,7 +173,7 @@ function Exchanger(props) {
       } else {
         const fiatSymbol = fiats[userId].find(c => fiatSelected.symbol === c.symbol);
         if (fiatSymbol) {
-          setFiatSelected(fiatSymbol);
+          setFiat(fiatSymbol);
         }
       }
       setFiatsLoaded(true);
@@ -278,8 +292,10 @@ function Exchanger(props) {
   React.useEffect(() => {
     getBanks();
     getLimits();
-    if (!fiatSelected) {
-      setFiatSelected(fiatTokens[0]);
+    if (!initGetParams.params.currency && !fiatSelected) {
+      setFiat(
+        [...fiatTokens, ...coins].find((t) => t.symbol !== coinSelected?.symbol)
+      );
     }
   }, []);
 
