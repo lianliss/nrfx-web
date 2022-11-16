@@ -27,13 +27,8 @@ function WalletsExists() {
   const isNfts = switchTab === 'nfts' || !adaptive;
 
   // Main
-  const {
-    accountAddress,
-    balances,
-    loadAccountBalances,
-    updateFiats,
-    tokens,
-  } = React.useContext(Web3Context);
+  const { accountAddress, balances, loadAccountBalances, updateFiats, tokens } =
+    React.useContext(Web3Context);
   const fineTokens = tokens.filter((t) => t.balance && t.balance !== '0');
 
   React.useEffect(() => {
@@ -93,7 +88,7 @@ function WalletsExists() {
           )}
           {isFiat && (
             <BalancesBlock
-              balances={balances.fiats}
+              balances={balances.fiats.sort((a, b) => b.balance - a.balance)}
               type="fiats"
               title={getLang('dapp_global_fiats')}
               adaptive={adaptive}
