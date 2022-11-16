@@ -51,6 +51,7 @@ function BalancesBlock({ balances, type, title, adaptive }) {
                     amount={balance}
                     currency={currency}
                     price={balanceItem.price}
+                    adaptive={adaptive}
                   />
                 }
                 key={key}
@@ -84,11 +85,11 @@ BalancesBlock.defaultProps = {
   adaptive: false,
 };
 
-const TokenItemControls = ({ price, amount, currency }) => (
+const TokenItemControls = ({ price, amount, currency, adaptive = false }) => (
   <div className="CabinetWallets__tokens-controls">
     <div>
       <p className="WalletsListItem__text-large">
-        {amount} {currency.toUpperCase()}
+        {amount} {!adaptive && currency.toUpperCase()}
       </p>
       <p className="WalletsListItem__text-medium">
         <NumberFormat number={price * amount} currency="usd" />
