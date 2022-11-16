@@ -42,11 +42,6 @@ function BalancesBlock({ balances, type, title, adaptive }) {
                   balanceItem.name,
                   <span className="CabinetWallets__tokens-content">
                     <NumberFormat number={balanceItem.price} currency="usd" />
-                    <RateIndicator
-                      type={RateIndicator.getType(priceDifference)}
-                      number={priceDifference}
-                      procent
-                    />
                   </span>,
                 ]}
                 controls={
