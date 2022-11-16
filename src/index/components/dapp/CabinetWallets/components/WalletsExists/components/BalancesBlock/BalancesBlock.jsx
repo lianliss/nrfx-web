@@ -89,7 +89,10 @@ const TokenItemControls = ({ price, amount, currency, adaptive = false }) => (
   <div className="CabinetWallets__tokens-controls">
     <div>
       <p className="WalletsListItem__text-large">
-        {amount} {!adaptive && currency.toUpperCase()}
+        <NumberFormat
+          number={amount}
+          currency={!adaptive ? currency.toUpperCase() : ''}
+        />
       </p>
       <p className="WalletsListItem__text-medium">
         <NumberFormat number={price * amount} currency="usd" />
