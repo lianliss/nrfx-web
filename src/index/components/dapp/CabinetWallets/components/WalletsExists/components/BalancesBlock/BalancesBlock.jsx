@@ -30,6 +30,8 @@ function BalancesBlock({ balances, type, title, adaptive }) {
         <WalletsList type="default">
           {balances.map((balanceItem, key) => {
             const currency = balanceItem.symbol.toLowerCase();
+            const name =
+              balanceItem.name && balanceItem.name.replace('on Narfex', '');
             const priceDifference = null;
             const rawBalance = wei.from(balanceItem.balance);
             const balance = Number(Number(rawBalance).toFixed(5));
@@ -39,7 +41,7 @@ function BalancesBlock({ balances, type, title, adaptive }) {
               <WalletsListItem
                 icon={<WalletImage icon={icon} />}
                 startTexts={[
-                  balanceItem.name,
+                  name,
                   <span className="CabinetWallets__tokens-content">
                     <NumberFormat number={balanceItem.price} currency="usd" />
                   </span>,
