@@ -30,6 +30,8 @@ function BalancesBlock({ balances, type, title, adaptive }) {
         <WalletsList type="default">
           {balances.map((balanceItem, key) => {
             const currency = balanceItem.symbol.toLowerCase();
+            const name =
+              balanceItem.name && balanceItem.name.replace('on Narfex', '');
             const priceDifference = null;
             const rawBalance = wei.from(balanceItem.balance);
             const balance = Number(Number(rawBalance).toFixed(5));
@@ -39,14 +41,9 @@ function BalancesBlock({ balances, type, title, adaptive }) {
               <WalletsListItem
                 icon={<WalletImage icon={icon} />}
                 startTexts={[
-                  balanceItem.name,
+                  name,
                   <span className="CabinetWallets__tokens-content">
                     <NumberFormat number={balanceItem.price} currency="usd" />
-                    <RateIndicator
-                      type={RateIndicator.getType(priceDifference)}
-                      number={priceDifference}
-                      procent
-                    />
                   </span>,
                 ]}
                 controls={
@@ -54,6 +51,7 @@ function BalancesBlock({ balances, type, title, adaptive }) {
                     amount={balance}
                     currency={currency}
                     price={balanceItem.price}
+                    adaptive={adaptive}
                   />
                 }
                 key={key}
@@ -87,11 +85,14 @@ BalancesBlock.defaultProps = {
   adaptive: false,
 };
 
-const TokenItemControls = ({ price, amount, currency }) => (
+const TokenItemControls = ({ price, amount, currency, adaptive = false }) => (
   <div className="CabinetWallets__tokens-controls">
     <div>
       <p className="WalletsListItem__text-large">
-        {amount} {currency.toUpperCase()}
+        <NumberFormat
+          number={amount}
+          currency={!adaptive ? currency.toUpperCase() : ''}
+        />
       </p>
       <p className="WalletsListItem__text-medium">
         <NumberFormat number={price * amount} currency="usd" />
