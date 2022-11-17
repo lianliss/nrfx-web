@@ -262,10 +262,31 @@
   }
 }
 
-@media screen and (max-width: @mobile-width) {
+@media screen and (max-width: 1200px) and (min-width: 600px) {
+  .WalletsExists {
+    .WalletsNFT__cards {
+      .WalletsNFTCard {
+        width: calc((100% / 4) - @nft-margin * 2);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
   .WalletsExists {
     &__container {
       padding: 32px 11px 10px;
+    }
+
+    .WalletsHeader {
+      flex-direction: column;
+
+      &__col {
+        &:not(:first-child) {
+          flex-wrap: nowrap;
+          margin: 23px auto 0;
+        }
+      }
     }
 
     &__content {
@@ -357,12 +378,6 @@
         }
       }
     }
-
-    .WalletsListItem__text {
-      &-large {
-        max-width: 90%;
-      }
-    }
   }
 }
 
@@ -373,6 +388,12 @@
         margin: 0 8px;
         margin-bottom: 13px;
         width: calc((100% / 2) - @nft-margin * 2);
+      }
+    }
+
+    .WalletsListItem__text {
+      &-large {
+        max-width: 90%;
       }
     }
   }

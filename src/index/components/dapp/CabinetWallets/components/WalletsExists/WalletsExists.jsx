@@ -13,11 +13,13 @@ import BalancesBlock from './components/BalancesBlock/BalancesBlock';
 import NftsBlock from './components/NftsBlock/NftsBlock';
 import { getLang } from 'src/utils';
 import { web3RatesSelector } from 'src/selectors';
+import useAdaptive from 'src/hooks/adaptive';
+import { DESKTOP } from 'src/index/constants/breakpoints';
 
 function WalletsExists() {
   // Design
   const { router } = useRoute();
-  const adaptive = useSelector((store) => store.default.adaptive);
+  const adaptive = useAdaptive(DESKTOP, false);
   const rates = useSelector(web3RatesSelector);
 
   // Tabs
