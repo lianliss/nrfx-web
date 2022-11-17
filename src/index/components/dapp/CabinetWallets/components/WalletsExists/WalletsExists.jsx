@@ -19,14 +19,14 @@ import { DESKTOP } from 'src/index/constants/breakpoints';
 function WalletsExists() {
   // Design
   const { router } = useRoute();
-  const adaptive = useAdaptive(DESKTOP, false);
+  const isSmallDisplay = useAdaptive(DESKTOP, false);
   const rates = useSelector(web3RatesSelector);
 
   // Tabs
   const [switchTab, setSwitchTab] = React.useState('tokens');
   const isTokens = switchTab === 'tokens';
   const isFiat = switchTab === 'fiat';
-  const isNfts = switchTab === 'nfts' || !adaptive;
+  const isNfts = switchTab === 'nfts' || !isSmallDisplay;
 
   // Main
   const { accountAddress, balances, loadAccountBalances, updateFiats, tokens } =
@@ -42,13 +42,13 @@ function WalletsExists() {
 
   React.useEffect(() => {
     setSwitchTab('tokens');
-  }, [adaptive]);
+  }, [isSmallDisplay]);
 
   return (
     <div className="WalletsExists">
       <div className="WalletsExists__container">
         <WalletsHeader isFiat={isFiat} />
-        {adaptive && (
+        {isSmallDisplay && (
           <div className="WalletsExists__switch">
             <SwitchTabs
               selected={switchTab}
@@ -62,7 +62,7 @@ function WalletsExists() {
             />
           </div>
         )}
-        {!adaptive && (
+        {!isSmallDisplay && (
           <div className="WalletsExists__row">
             <div>
               <SwitchTabs
@@ -85,7 +85,7 @@ function WalletsExists() {
               balances={fineTokens}
               type="tokens"
               title={getLang('dapp_global_tokens')}
-              adaptive={adaptive}
+              adaptive={isSmallDisplay}
             />
           )}
           {isFiat && (
@@ -93,7 +93,7 @@ function WalletsExists() {
               balances={balances.fiats.sort((a, b) => b.balance - a.balance)}
               type="fiats"
               title={getLang('dapp_global_fiats')}
-              adaptive={adaptive}
+              adaptive={isSmallDisplay}
             />
           )}
           {isNfts && <NftsBlock />}
