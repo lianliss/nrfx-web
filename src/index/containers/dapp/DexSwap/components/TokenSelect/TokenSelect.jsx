@@ -165,8 +165,8 @@ class TokenSelect extends React.PureComponent {
               selected={switchTabsSelected}
               onChange={(value) => this.setState({ switchTabsSelected: value })}
               tabs={[
-                { value: 'fiats', label: 'Fiats' },
-                { value: 'tokens', label: 'Tokens' },
+                { value: 'fiats', label: getLang('dapp_global_fiats') },
+                { value: 'tokens', label: getLang('dapp_global_tokens') },
               ]}
               type="light-blue"
               size="medium"
