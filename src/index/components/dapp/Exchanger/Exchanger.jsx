@@ -4,6 +4,7 @@ import { Web3Context } from 'services/web3Provider';
 import web3Backend from 'services/web3-backend';
 import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
+import { useRoute } from 'react-router5';
 import router from 'src/router';
 import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 import networks from 'src/index/constants/networks';
@@ -36,6 +37,9 @@ let cardsUpdate;
 function Exchanger(props) {
   const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
+  const { route } = useRoute();
+  const initialCurrencySymbol = route.params.currency;
+  // const initialCoinSymbol = route.params.coin;
   const methods = useSelector(state => state.fiat.banks);
   const rates = useSelector(web3RatesSelector);
   const context = React.useContext(Web3Context);
@@ -96,8 +100,22 @@ function Exchanger(props) {
   }, []);
   
   const swapSelected = () => {
-    setFiatSelected(coinSelected);
-    setCoinSelected(fiatSelected);
+    if (coinSelected) {
+      setFiatSelected(coinSelected);
+    } else {
+      setFiatSelected(
+        [...fiatTokens, ...coins].find((t) => t.symbol !== fiatSelected?.symbol)
+      );
+    }
+
+    if (fiatSelected) {
+      setCoinSelected(fiatSelected);
+    } else {
+      setCoinSelected(
+        [...fiatTokens, ...coins].find((t) => t.symbol !== coinSelected?.symbol)
+      );
+    }
+
     const routerState = router.getState();
     router.navigate(routerState.name, {
       ...routerState.params,
@@ -159,7 +177,7 @@ function Exchanger(props) {
       } else {
         const fiatSymbol = fiats[userId].find(c => fiatSelected.symbol === c.symbol);
         if (fiatSymbol) {
-          setFiatSelected(fiatSymbol);
+          setFiat(fiatSymbol);
         }
       }
       setFiatsLoaded(true);
@@ -278,8 +296,10 @@ function Exchanger(props) {
   React.useEffect(() => {
     getBanks();
     getLimits();
-    if (!fiatSelected) {
-      setFiatSelected(fiatTokens[0]);
+    if (!initialCurrencySymbol && !fiatSelected) {
+      setFiat(
+        [...fiatTokens, ...coins].find((t) => t.symbol !== coinSelected?.symbol)
+      );
     }
   }, []);
 

@@ -51,7 +51,7 @@ function CabinetSidebar({ className, adaptive }) {
                 title={getLang('dapp_sidebar_wallet')}
                 icon="wallet"
                 active={isPage(PAGES.DAPP_WALLET)}
-                // onClick={() => router.navigate(PAGES.DAPP_WALLET)}
+                onClick={() => router.navigate(PAGES.DAPP_WALLET)}
                 disabled
               />
               <SidebarItem
