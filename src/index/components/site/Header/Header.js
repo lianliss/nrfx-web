@@ -50,10 +50,10 @@ function Header({ showLightLogo, langList, routerState, profile }) {
           title: getLang("site__headerAboutUs"),
           route: pages.ABOUT
         },
-        {
-          title: getLang("site__headerFee"),
-          route: pages.FEE
-        },
+        // {
+        //   title: getLang("site__headerFee"),
+        //   route: pages.FEE
+        // },
         {
           title: getLang("site__headerTechnology"),
           route: pages.TECHNOLOGY

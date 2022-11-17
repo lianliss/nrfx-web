@@ -5,28 +5,21 @@ import _ from 'lodash';
 // Components
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import { WalletIcon } from '../index';
-import { NumberFormat, Button } from 'src/ui';
-import SVG from 'utils/svg-wrap';
-import Transaction from './components/Transaction/Transaction';
+import Header from './components/Header/Header';
+import Buttons from './components/Buttons/Buttons';
+import Transactions from './components/Transactions/Transactions';
 
 // Utils
-import { isFiat, getLang, wei } from 'utils';
-import { openModal } from 'src/actions';
+import { isFiat, wei } from 'utils';
 import { Web3Context } from 'src/services/web3Provider';
 import { web3RatesSelector } from 'src/selectors';
 import router from 'src/router';
 import * as PAGES from 'src/index/constants/pages';
-import { setSwap } from 'src/actions/dapp/swap';
 
 // Styles
 import './Currency.less';
-import LoadingStatus from '../LoadingStatus/LoadingStatus';
-import ShowPageOn from '../ShowPageOn/ShowPageOn';
-import Transactions from './components/Transactions/Transactions';
-import FiatButtons from './components/FiatButtons/FiatButtons';
 
 function Currency() {
-  const dispatch = useDispatch();
   const params = useSelector((state) => state.router.route.params);
   const adaptive = useSelector((state) => state.default.adaptive);
   const rates = useSelector(web3RatesSelector);
@@ -38,12 +31,13 @@ function Currency() {
     getTokenBalance,
     updateFiats,
     updateTokenInBalances,
-    web3,
+    addTokenToWallet,
     balances,
   } = React.useContext(Web3Context);
 
   // const [currency, setCurrency] = React.useState({});
   const [loading, setLoading] = React.useState(false);
+  const [amountRateDisabled, setAmountRateDisabled] = React.useState(false);
   const paramsCurrency = params.currency || '';
   const currencyIsFiat = isFiat(paramsCurrency);
   const balancesType = currencyIsFiat ? 'fiats' : 'tokens';
@@ -61,6 +55,12 @@ function Currency() {
   const currencyBalance = currency.balance
     ? Number(wei.from(currency.balance).toFixed(2))
     : 0;
+
+  React.useEffect(() => {
+    if (!paramsCurrency) {
+      router.navigate(PAGES.DAPP_CURRENCY, { currency: 'NRFX' });
+    }
+  }, []);
 
   React.useEffect(() => {
     if (!isConnected) return;
@@ -82,6 +82,15 @@ function Currency() {
       clearInterval(tokenBalanceUpdateInterval);
     };
   }, [accountAddress]);
+
+  React.useEffect(() => {
+    if (currencyIsEmpty || !isConnected) {
+      setAmountRateDisabled(true);
+      return;
+    }
+
+    setAmountRateDisabled(false);
+  }, [currencyIsEmpty, isConnected]);
 
   // React.useEffect(() => {
   //   const balancesOfType = balances[balancesType];
@@ -145,115 +154,64 @@ function Currency() {
     }
   };
 
-  // Render components
-  const LoginedButtons = () =>
-    isFiat(paramsCurrency) ? (
-      <FiatButtons currency={currency} />
-    ) : (
-      <>
-        <div className="col">
-          <Button
-            type="secondary-light"
-            shadow
-            onClick={() => {
-              dispatch(setSwap(currency));
-              router.navigate(PAGES.DAPP_SWAP);
-            }}
-          >
-            <SVG src={require('src/asset/icons/cabinet/trade.svg')} />
-            {getLang('dapp_global_trade')}
-          </Button>
-          <Button
-            type="secondary-light"
-            shadow
-            onClick={() => {
-              router.navigate(PAGES.DAPP_EXCHANGE, {
-                coin: currency.symbol,
-              });
-            }}
-          >
-            <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-            {getLang('global_buy')}
-          </Button>
-        </div>
-        <div className="col">
-          <Button
-            type="secondary-light"
-            shadow
-            onClick={() => openModal('receive_qr')}
-          >
-            <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
-            {getLang('global_receive')}
-          </Button>
-          <Button
-            type="secondary-light"
-            shadow
-            onClick={() => openModal('send_tokens', {}, { token: currency })}
-          >
-            <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
-            {getLang('global_send')}
-          </Button>
-        </div>
-      </>
-    );
+  const handleAddTokenToWallet = async () => {
+    if (currencyIsEmpty) return;
 
-  const NotLoginedButton = () => {
-    if (loading) {
-      return <LoadingStatus status="loading" inline />;
-    }
-
-    if (isConnected && currencyIsEmpty) {
-      return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
-    }
-
-    return (
-      <Button
-        type="lightBlue"
-        shadow
-        onClick={() => openModal('connect_to_wallet')}
-      >
-        <SVG src={require('src/asset/icons/cabinet/connect-wallet.svg')} />
-        {getLang('dapp_global_connect_wallet')}
-      </Button>
-    );
+    setAmountRateDisabled(true);
+    await addTokenToWallet(currency);
+    setAmountRateDisabled(false);
   };
+
+  // const NotLoginedButton = () => {
+  //   if (loading) {
+  //     return <LoadingStatus status="loading" inline />;
+  //   }
+
+  //   if (isConnected && currencyIsEmpty) {
+  //     return <h3 style={{ margin: '0 auto' }}>Currency is not exists</h3>;
+  //   }
+
+  //   return (
+  //     <Button
+  //       type="lightBlue"
+  //       shadow
+  //       onClick={() => openModal('connect_to_wallet')}
+  //     >
+  //       <SVG src={require('src/asset/icons/cabinet/connect-wallet.svg')} />
+  //       {getLang('dapp_global_connect_wallet')}
+  //     </Button>
+  //   );
+  // };
 
   return (
     <CabinetBlock className="Currency">
       <div className="Currency__container">
         <div className="Currency__header">
           <div className="Currency__currency">
-            <span>{currency.name}</span>
+            <span>{currency.name || paramsCurrency}</span>
           </div>
           <div className="Currency__preview">
             <WalletIcon currency={currency} size={adaptive ? 45 : 55} />
-            {!currencyIsEmpty && (
-              <div className="Currency__preview__container">
-                <span className="Currency__rate">
-                  <NumberFormat
-                    number={currencyBalance}
-                    currency={currency.symbol}
-                  />
-                </span>
-                <div className="Currency__currency_amount_rate">
-                  $&nbsp;
-                  <NumberFormat
-                    number={currencyBalance * rate}
-                    currency={'usd'}
-                  />
-                </div>
-              </div>
-            )}
+            <Header
+              symbol={currency.symbol || paramsCurrency}
+              rate={rate}
+              currencyBalance={currencyBalance}
+              amountRateDisabled={amountRateDisabled}
+              onAmountRateClick={handleAddTokenToWallet}
+            />
           </div>
           <div className="Currency__buttons">
-            {!currencyIsEmpty ? <LoginedButtons /> : <NotLoginedButton />}
+            <Buttons
+              paramsCurrency={paramsCurrency}
+              currency={currency}
+              disabled={!isConnected || currencyIsEmpty}
+            />
           </div>
         </div>
         <div className="Currency__body">
-          <Transactions currency={!currencyIsEmpty && currency} />
+          <Transactions currency={!currencyIsEmpty ? currency : null} />
         </div>
       </div>
-      <ShowPageOn />
     </CabinetBlock>
   );
 }

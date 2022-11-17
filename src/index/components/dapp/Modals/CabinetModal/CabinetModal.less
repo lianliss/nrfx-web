@@ -18,8 +18,9 @@
   &__container {
     width: 100%;
     box-sizing: border-box;
+    position: relative;
 
-    & > * {
+    & > *:not(.DappModal__Close) {
       position: relative;
       transform: none;
       left: auto;
@@ -50,8 +51,8 @@
     &__container {
       max-width: 500px;
       margin: 0 auto;
-      
-      & > * {
+
+      & > *:not(.DappModal__Close) {
         width: 100% !important;
         margin: 0 auto;
         border: none;

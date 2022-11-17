@@ -7,12 +7,18 @@ import { classNames } from 'utils';
 // Styles
 import './CustomButton.less';
 
-function CustomButton({ children, className, onClick, style, disabled }) {
+export const buttonTypes = {
+  button: 'button',
+  link: 'link',
+};
+
+function CustomButton({ children, className, onClick, style, disabled, type }) {
   return (
     <button
       className={classNames({
         CustomButton: true,
         [className]: className,
+        [type]: type,
         disabled,
       })}
       style={style}
@@ -28,6 +34,7 @@ CustomButton.propTypes = {
   onClick: PropTypes.func,
   style: PropTypes.object,
   disabled: PropTypes.bool,
+  buttonType: PropTypes.oneOf(Object.values(buttonTypes)),
 };
 
 CustomButton.defaultProps = {
@@ -35,6 +42,7 @@ CustomButton.defaultProps = {
   onClick: () => {},
   style: {},
   disabled: false,
+  buttonType: buttonTypes.button,
 };
 
 export default CustomButton;

@@ -5,16 +5,13 @@
   border: none;
   background: none;
   padding: 0;
+  font-family: inherit;
   cursor: pointer;
 
   &.disabled {
     pointer-events: none;
     filter: grayscale(1);
     opacity: 0.9;
-  }
-
-  &:active {
-    transform: scale(0.93);
   }
 
   &:focus {
@@ -24,5 +21,21 @@
   .isvg {
     display: inline-flex;
     align-items: center;
+  }
+
+  &.button {
+    &:active {
+      transform: scale(0.93);
+    }
+  }
+
+  &.link {
+    &:active {
+      opacity: 0.8;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

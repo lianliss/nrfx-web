@@ -6,16 +6,12 @@ import SVG from 'utils/svg-wrap';
 import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 
 // Utils
-import { Web3Context } from 'src/services/web3Provider';
 import { getLang } from 'src/utils';
 import { openStateModal } from 'src/actions';
 
 import './WalletsIsEmpty.less';
 
-function WalletsIsEmpty({ showWalletPage }) {
-  const { isConnected, ...context } = React.useContext(Web3Context);
-  const [isLogined, setIsLogined] = React.useState(false);
-
+function WalletsIsEmpty() {
   const LinkIcon = ({ icon, to, className }) => (
     <a href={to} target="_blank">
       <SVG
@@ -27,14 +23,7 @@ function WalletsIsEmpty({ showWalletPage }) {
 
   const handleConnectWallet = () => {
     openStateModal('connect_to_wallet');
-    setIsLogined(true);
   };
-
-  React.useEffect(() => {
-    if (isConnected && isLogined) {
-      showWalletPage();
-    }
-  }, [isConnected, isLogined]);
 
   return (
     <div className="WalletsIsEmpty">
@@ -47,32 +36,23 @@ function WalletsIsEmpty({ showWalletPage }) {
             </p>
           </div>
           <div className="WalletsIsEmpty__buttons">
-            <Button
-              type="gray"
-              size="extra_large"
-              onClick={handleConnectWallet}
-            >
-              <div className="Button__icon">
-                <SVG
-                  src={require('src/asset/icons/cabinet/empty-wallet-add.svg')}
-                />
-              </div>
-              <div className="Button__content">
-                <span>{getLang('dapp_wallet_page_connect_button_title')}</span>
-                <span>
-                  {getLang('dapp_wallet_page_connect_button_subtitle')}
-                </span>
-              </div>
-            </Button>
             <DynamicShadow>
-              <Button type="lightBlue" size="extra_large">
+              <Button
+                type="lightBlue"
+                size="extra_large"
+                onClick={handleConnectWallet}
+              >
                 <div className="Button__icon">
-                  <SVG src={require('src/asset/token/wallet.svg')} />
+                  <SVG
+                    src={require('src/asset/icons/cabinet/connect-wallet.svg')}
+                  />
                 </div>
                 <div className="Button__content">
-                  <span>{getLang('dapp_wallet_page_create_button_title')}</span>
                   <span>
-                    {getLang('dapp_wallet_page_create_button_subtitle')}
+                    {getLang('dapp_wallet_page_connect_button_title')}
+                  </span>
+                  <span>
+                    {getLang('dapp_wallet_page_connect_button_subtitle')}
                   </span>
                 </div>
               </Button>
@@ -91,7 +71,7 @@ function WalletsIsEmpty({ showWalletPage }) {
               <div className="WalletsIsEmpty-social__items">
                 <LinkIcon to="https://t.me/narfexfeed" icon="telegram-solid" />
                 <LinkIcon
-                  to="https://discord.gg/T4hFnUaPFS"
+                  to="https://discord.gg/56Xrq2rXYv"
                   icon="discord-solid"
                 />
                 <LinkIcon

@@ -4,7 +4,6 @@ import { useRoute } from 'react-router5';
 // Components
 import { SwitchTabs } from 'src/ui';
 import CabinetBlock from '../CabinetBlock/CabinetBlock';
-import SVG from 'utils/svg-wrap';
 import Exchanger from './containers/Exchanger/Exchanger';
 import Farming from './containers/Farming/Farming';
 import Preview from './containers/Preview/Preview';
@@ -16,9 +15,7 @@ import {
   DAPP_REFERRAL_FARMING,
 } from 'src/index/constants/pages';
 import useAdaptive from 'src/hooks/adaptive';
-import { classNames, getLang } from "src/utils";
 import { Web3Context } from 'src/services/web3Provider';
-import * as actions from "src/actions";
 
 // Styles
 import './Referral.less';
@@ -29,21 +26,22 @@ function Referral() {
   const adaptive = useAdaptive();
 
   const context = React.useContext(Web3Context);
-  const {chainId, accountAddress, isConnected} = context;
+  const { chainId, accountAddress, isConnected } = context;
   const [hashLink, setHashLink] = React.useState();
   const [friends, setFriends] = React.useState([]);
   const [rewards, setRewards] = React.useState([]);
 
   React.useEffect(() => {
+    setHashLink(null);
     if (!isConnected || !chainId || !accountAddress) return;
 
-    context.getReferHash().then(hash => {
+    context.getReferHash().then((hash) => {
       if (hash) {
         setHashLink(`https://narfex.com?ref=${hash}`);
       }
     });
     context.getReferFriends().then(setFriends);
-    context.getReferRewards().then(rewards => {
+    context.getReferRewards().then((rewards) => {
       setRewards(rewards || []);
     });
   }, [chainId, accountAddress, isConnected]);

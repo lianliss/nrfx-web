@@ -47,6 +47,7 @@
 @media screen and (max-width: @mobile-width) {
   .WalletsExists .WalletsHeader {
     margin-bottom: 17px;
+    justify-content: center;
 
     &__col {
       width: 100%;
@@ -79,6 +80,7 @@
       }
 
       &:last-child {
+        margin: 0 -4px;
         margin-top: 23px;
         width: 100%;
         justify-content: space-between;
@@ -98,11 +100,7 @@
         & > button,
         & > div {
           flex: 1 0 101px;
-          margin: 0 0 8px !important;
-        }
-
-        & > .Button {
-          margin-right: 8px !important;
+          margin: 0 4px 8px !important;
         }
       }
     }

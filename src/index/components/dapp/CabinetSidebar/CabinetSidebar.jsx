@@ -51,7 +51,7 @@ function CabinetSidebar({ className, adaptive }) {
                 title={getLang('dapp_sidebar_wallet')}
                 icon="wallet"
                 active={isPage(PAGES.DAPP_WALLET)}
-                // onClick={() => router.navigate(PAGES.DAPP_WALLET)}
+                onClick={() => router.navigate(PAGES.DAPP_WALLET)}
                 disabled
               />
               <SidebarItem
@@ -65,6 +65,16 @@ function CabinetSidebar({ className, adaptive }) {
                 icon="history"
                 active={isPage(PAGES.DAPP_TRANSACTION_HISTORY)}
                 onClick={() => router.navigate(PAGES.DAPP_TRANSACTION_HISTORY)}
+              />
+              <SidebarItem
+                title={getLang('dapp_sidebar_referral_program')}
+                icon="team-icon"
+                active={isPage([
+                  PAGES.DAPP_REFERRAL,
+                  PAGES.DAPP_REFERRAL_EXCHANGER,
+                  PAGES.DAPP_REFERRAL_FARMING,
+                ])}
+                onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
               />
             </ul>
           </CabinetBlock>
@@ -109,16 +119,6 @@ function CabinetSidebar({ className, adaptive }) {
                 icon="nrfx-blue-bg-icon"
                 href="/token"
               />
-              {/* <SidebarItem
-                title="Referral Program"
-                icon="team-icon"
-                active={isPage([
-                  PAGES.DAPP_REFERRAL,
-                  PAGES.DAPP_REFERRAL_EXCHANGER,
-                  PAGES.DAPP_REFERRAL_FARMING,
-                ])}
-                onClick={() => router.navigate(PAGES.DAPP_REFERRAL)}
-              /> */}
               <SidebarItem
                 title={getLang('dapp_sidebar_more')}
                 icon="more-vertical-icon"

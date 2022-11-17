@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 // Components
-//import SVG from 'utils/svg-wrap';
+import SVG from 'utils/svg-wrap';
 import { Web3Context } from 'services/web3Provider';
 
 // Styles
@@ -41,7 +41,9 @@ function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
       {icon ? (
         <img src={icon} onError={() => setIcon(null)} />
       ) : (
-        <span className="WalletIcon__empty" />
+        <span className="WalletIcon__empty">
+          <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
+        </span>
       )}
     </span>
   );

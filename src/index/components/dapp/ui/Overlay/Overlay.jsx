@@ -1,11 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { classNames } from 'utils';
 
 // Styles
 import './Overlay.less';
 
-function Overlay({ children, backdropFilter, background }) {
+function Overlay({ children, backdropFilter, background, className }) {
   return (
-    <div className="DappUI__Overlay">
+    <div
+      className={classNames({ DappUI__Overlay: true, [className]: className })}
+    >
       <div
         className="DappUI__Overlay__bg"
         style={{ backdropFilter, background }}
@@ -14,5 +18,17 @@ function Overlay({ children, backdropFilter, background }) {
     </div>
   );
 }
+
+Overlay.propTypes = {
+  backdropFilter: PropTypes.string,
+  background: PropTypes.string,
+  className: PropTypes.string,
+};
+
+Overlay.defaultProps = {
+  backdropFilter: null,
+  background: null,
+  className: null,
+};
 
 export default Overlay;

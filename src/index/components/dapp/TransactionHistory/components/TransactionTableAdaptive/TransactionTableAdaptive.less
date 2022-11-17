@@ -1,4 +1,4 @@
-.adaptive .TransactionHistory__table {
+.TransactionHistory__tableAdaptive {
   &-operation,
   &-date,
   &-link,
@@ -12,19 +12,18 @@
   &-operation,
   &-date,
   &-link {
-    font-size: 12px;
+    font-size: 14px;
     text-transform: capitalize;
   }
 
   &-currency {
     position: relative;
-    margin-bottom: 16px;
     font-size: 14px;
   }
 
   &-status {
     font-weight: 500;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--cool-gray);
   }
 
@@ -45,11 +44,90 @@
       box-sizing: border-box;
 
       &:first-child {
-        padding: 12px 0 16px 12px;
-        border-bottom: 1px solid #eeeeee;
+        padding: 15px 21px 26px 21px;
+        border-bottom: 1px solid #eee;
       }
       &:last-child {
-        padding: 0 12px 12px 12px;
+        padding: 15px 21px;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  .TransactionHistory {
+    &__icon {
+      &-export {
+        margin-left: 4px;
+
+        .isvg {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+        }
+      }
+
+      &-arrow {
+        margin: 0 6px;
+        display: flex;
+        justify-content: center;
+
+        .isvg {
+          margin: 0 !important;
+        }
+      }
+
+      &-sortArrow {
+        margin-left: 4px;
+
+        &.up {
+          svg {
+            transform: rotate(-180deg);
+          }
+        }
+
+        .isvg {
+          margin: 0;
+
+          svg {
+            width: 8px;
+            height: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .WalletIcon,
+  .DoubleWallets {
+    margin-right: 8px;
+  }
+}
+
+.adaptive .TransactionHistory__tableAdaptive {
+  &-operation,
+  &-date,
+  &-link {
+    font-size: 12px;
+  }
+
+  &-status {
+    font-size: 12px;
+  }
+
+  &__item {
+    & > .Row {
+      box-sizing: border-box;
+
+      &:first-child {
+        padding: 12px 12px 16px 12px;
+      }
+
+      &:last-child {
+        padding: 15px 12px 12px 12px;
       }
     }
 

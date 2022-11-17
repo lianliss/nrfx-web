@@ -68,6 +68,52 @@ function WalletsHeader({ isFiat }) {
     />
   );
 
+  const FiatButtons = () => (
+    <>
+      <Button
+        type="secondary-light"
+        style={{ minWidth: 230 }}
+        onClick={() => handleButtonClick('withdrawal')}
+        shadow
+      >
+        <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
+        {getLang('global_withdrawal')}
+      </Button>
+      <DynamicShadow>
+        <Button
+          type="lightBlue"
+          style={{ minWidth: 230 }}
+          onClick={() => handleButtonClick('deposit')}
+        >
+          <SVG
+            src={require('src/asset/icons/cabinet/buy.svg')}
+            className="white-icon"
+          />
+          {getLang('dapp_global_deposit')}
+        </Button>
+      </DynamicShadow>
+    </>
+  );
+
+  const TokenButtons = () => (
+    <>
+      <Button type="secondary-light" onClick={() => handleButtonClick('buy')}>
+        <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
+        {getLang('global_buy')}
+      </Button>
+      <Button type="secondary-light" onClick={() => openModal('receive_qr')}>
+        <SVG src={require('src/asset/icons/cabinet/card-receive.svg')} />
+        {getLang('global_receive')}
+      </Button>
+      <DynamicShadow>
+        <Button type="lightBlue" onClick={() => handleButtonClick('send')}>
+          <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
+          {getLang('global_send')}
+        </Button>
+      </DynamicShadow>
+    </>
+  );
+
   return (
     <>
       <div className="WalletsHeader">
@@ -75,73 +121,17 @@ function WalletsHeader({ isFiat }) {
           <WalletsTotalBalance />
         </div>
         <div className="WalletsHeader__col">
-          {isFiat ? (
-            <>
-              <Button
-                type="secondary-light"
-                style={{ minWidth: 230 }}
-                onClick={() => handleButtonClick('withdrawal')}
-                shadow
-              >
-                <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-                {getLang('global_withdrawal')}
-              </Button>
-              <DynamicShadow>
-                <Button
-                  type="lightBlue"
-                  style={{ minWidth: 230 }}
-                  onClick={() => handleButtonClick('deposit')}
-                >
-                  <SVG
-                    src={require('src/asset/icons/cabinet/buy.svg')}
-                    className="white-icon"
-                  />
-                  {getLang('dapp_global_deposit')}
-                </Button>
-              </DynamicShadow>
-            </>
-          ) : (
-            <>
-              <Button
-                type="secondary-light"
-                onClick={() => handleButtonClick('buy')}
-              >
-                <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
-                {getLang('global_buy')}
-              </Button>
-              <Button
-                type="secondary-light"
-                onClick={() => openModal('receive_qr')}
-              >
-                <SVG
-                  src={require('src/asset/icons/cabinet/card-receive.svg')}
-                />
-                {getLang('global_receive')}
-              </Button>
-              <DynamicShadow>
-                <Button
-                  type="lightBlue"
-                  onClick={() => handleButtonClick('send')}
-                >
-                  <SVG src={require('src/asset/icons/cabinet/card-send.svg')} />
-                  {getLang('global_send')}
-                </Button>
-              </DynamicShadow>
-            </>
-          )}
+          {isFiat ? <FiatButtons /> : <TokenButtons />}
         </div>
       </div>
       <div className="Modals">
         {isTokenSelect && TokenSelectComponent}
         {isSendTokens && (
-          <SendTokens
-            token={coin}
-            onClose={() => setIsSendTokens(false)}
-          />
+          <SendTokens token={coin} onClose={() => setIsSendTokens(false)} />
         )}
       </div>
     </>
   );
 }
 
-export default WalletsHeader;
+export default React.memo(WalletsHeader);

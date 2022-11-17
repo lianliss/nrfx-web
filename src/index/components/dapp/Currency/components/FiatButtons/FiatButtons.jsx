@@ -12,7 +12,7 @@ import * as PAGES from 'src/index/constants/pages';
 import router from 'src/router';
 import _ from 'lodash';
 
-function FiatButtons({ currency }) {
+function FiatButtons({ currency, disabled }) {
   const dispatch = useDispatch();
   const fiatSymbol = _.get(currency, 'symbol', '');
   const withdrawBanks = useSelector((state) =>
@@ -48,48 +48,55 @@ function FiatButtons({ currency }) {
     <>
       <div className="col">
         <Button
-          type="lightBlue"
-          shadow
+          type="secondary-alice"
           onClick={() => openModal('deposit_balance')}
+          disabled={disabled}
         >
+          <SVG src={require('src/asset/icons/cabinet/sidebar/farm.svg')} />
           {getLang('dapp_global_deposit')}
         </Button>
         <Button
-          type="secondary-light"
-          shadow
-          disabled={!currentWithdrawBanks.length}
+          type="secondary-alice"
+          disabled={disabled || !currentWithdrawBanks.length}
           onClick={withdrawal}
         >
-          {getLang('global_withdrawal')}
-          {!currentWithdrawBanks.length && (
-            <>
-              <br />
-              (coming soon)
-            </>
-          )}
+          <SVG src={require('src/asset/icons/cabinet/money-send.svg')} />
+          <span>
+            {getLang('global_withdrawal')}
+            <br />
+            {!currentWithdrawBanks.length && (
+              <span className="coming-soon">
+                ({getLang('global_comingSoon')})
+              </span>
+            )}
+          </span>
         </Button>
       </div>
       <div className="col">
         <Button
-          type="secondary-light"
-          shadow
+          type="secondary-alice"
           onClick={() => {
             router.navigate(PAGES.DAPP_EXCHANGE, {
               coin: currency.symbol,
+              currency: 'USDT',
             });
           }}
+          disabled={disabled}
         >
+          <SVG src={require('src/asset/icons/cabinet/buy.svg')} />
           {getLang('global_buy')}
         </Button>
         <Button
-          type="secondary-light"
-          shadow
+          type="secondary-alice"
           onClick={() => {
             router.navigate(PAGES.DAPP_EXCHANGE, {
               currency: currency.symbol,
+              coin: 'NRFX',
             });
           }}
+          disabled={disabled}
         >
+          <SVG src={require('src/asset/icons/cabinet/card-tick.svg')} />
           {getLang('global_sell')}
         </Button>
       </div>

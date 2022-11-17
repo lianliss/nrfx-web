@@ -19,27 +19,35 @@
   &__preview {
     display: flex;
     align-items: center;
-    margin-bottom: 32px;
-    padding: 25px 15.5px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+    margin-bottom: 30px;
+    padding: 0;
 
     &__container {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
     }
 
     .WalletIcon {
       margin-right: 24px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      &__empty {
+        background: var(--alice-blue);
+      }
     }
   }
 
   &__currency {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 180%;
-    color: var(--cool-gray);
-    margin: 8px 15px;
+    margin: 8px 0 15px;
+
+    span {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 180%;
+      color: var(--cool-gray);
+    }
   }
 
   .LoadingStatus {
@@ -49,16 +57,17 @@
   }
 
   &__rate {
-    color: var(--black-gunmetal);
+    color: var(--dark-black);
     font-weight: 600;
     font-size: 32px;
     line-height: 110%;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   &__currency_amount {
     &_rate {
-      font-weight: 600;
+      justify-content: flex-start;
+      font-weight: 500;
       font-size: 20px;
       line-height: 110%;
       color: var(--secondary-blue);
@@ -86,10 +95,19 @@
       flex: 1 1 155px;
       max-height: 68.9px;
       height: 68.9px;
+
+      &.secondary-alice .Button__label {
+        color: var(--dark-black) !important;
+      }
+
+      .coming-soon {
+        width: 100%;
+        font-size: 9px;
+      }
     }
 
     .isvg {
-      margin-right: 10px;
+      margin-right: 7.2px;
 
       .card-send {
         &__body,
@@ -100,14 +118,17 @@
     }
   }
 
+  &__body {
+    margin-top: 30px;
+  }
+
   &__transactions {
-    padding: 29px 24px 41px 21px;
-    margin-top: 31px;
-    background: var(--alice-blue);
+    padding: 0;
     font-weight: 500;
 
     h3 {
-      margin-bottom: 30px;
+      margin-bottom: 20px;
+      font-weight: 600;
       font-size: 20px;
       line-height: 110%;
       letter-spacing: -0.01em;
@@ -126,6 +147,10 @@
       display: flex;
       align-items: center;
       margin-right: 10px;
+    }
+
+    &__body {
+      position: relative;
     }
   }
 
@@ -146,27 +171,46 @@
       fill: #fff;
     }
   }
+
+  .TransactionHistoryOverlay {
+    height: 100%;
+    border-radius: 15px;
+
+    &__bg {
+      background: linear-gradient(
+        179.85deg,
+        #ffffff 0.13%,
+        rgba(255, 255, 255, 0.71) 107.49%
+      );
+    }
+  }
+
+  .icon {
+    &__wallet {
+      fill: var(--royal-blue);
+    }
+  }
 }
 
 .adaptive .Currency {
-  padding: 20px 10px 45px;
+  padding: 20px 21px 23px;
 
   &__buttons {
     flex-direction: column;
 
     .col {
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
   }
 
-  &__rate {
-    font-size: 25px;
+  &__body {
+    margin-top: 22px;
   }
 
-  &__currency_amount {
-    &_rate {
-      font-size: 16px;
+  &__transactions__header {
+    h3 {
+      display: none;
     }
   }
 }

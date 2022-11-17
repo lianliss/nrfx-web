@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 // Components
 import { Row, Col, DropdownElement } from 'src/ui';
@@ -8,18 +9,20 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { getLang } from 'utils';
+import { currentLangSelector } from 'src/selectors';
 
 // Styles
 import './FAQ.less';
 
 function FAQ({ adaptive, type }) {
+  const lang = useSelector(currentLangSelector);
   const [items, setItems] = React.useState([]);
   const leftColumnItems = items.filter((__, i) => i % 2 === 0);
   const rightColumnItems = items.filter((__, i) => i % 2 !== 0);
 
   React.useEffect(() => {
     setItems(getItems());
-  }, []);
+  }, [lang]);
 
   const getItems = () => {
     const findedQuestions = Array(18)

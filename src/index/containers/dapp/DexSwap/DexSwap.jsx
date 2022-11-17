@@ -695,6 +695,7 @@ class DexSwap extends React.PureComponent {
                 }}
                 onClose={() => this.setState({ selectToken: null })}
                 selected={this.state.pair[selectToken]}
+                disableSwitcher
                 {...this.context}
               />
             )}
