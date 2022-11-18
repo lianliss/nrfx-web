@@ -6,6 +6,7 @@ import { CabinetModal } from 'dapp';
 import SVG from 'utils/svg-wrap';
 
 // Utils
+import { Web3Context } from 'src/services/web3Provider';
 import { getLang, classNames as cn } from 'utils';
 import _ from 'lodash';
 import { statusIcons, types } from './types';
@@ -15,12 +16,14 @@ import './TransactionResponse.less';
 
 function TransactionResponse({
   token,
-  addTokenToWallet = true,
+  addToken,
   title,
   description,
   type = types.ERROR,
   ...cabinetModalProps
 }) {
+  const { addTokenToWallet, ethereum } = React.useContext(Web3Context);
+  const isMetaMask = ethereum && ethereum.isMetaMask;
   const [textAddTokenTo, setTextAddToTokenTo] = React.useState('');
 
   React.useEffect(() => {
@@ -54,8 +57,12 @@ function TransactionResponse({
         </div>
         <h3>{title}</h3>
         <p>{description}</p>
-        {addTokenToWallet && (
-          <Button type="secondary-alice" size="extra_large">
+        {addToken && isMetaMask && (
+          <Button
+            type="secondary-alice"
+            size="extra_large"
+            onClick={() => addTokenToWallet(token)}
+          >
             <Row alignItems="center" justifyContent="center" wrap>
               {textAddTokenTo}
               <SVG
@@ -78,7 +85,7 @@ function TransactionResponse({
 
 TransactionResponse.propTypes = {
   token: PropTypes.object,
-  addTokenToWallet: PropTypes.func,
+  addToken: PropTypes.bool,
   title: PropTypes.string,
   description: PropTypes.string,
   type: PropTypes.oneOf(Object.values(types)).isRequired,
@@ -86,7 +93,7 @@ TransactionResponse.propTypes = {
 
 TransactionResponse.defaultProps = {
   token: {},
-  addTokenToWallet: null,
+  addToken: false,
   title: '',
   description: '',
   type: types.ERROR,
