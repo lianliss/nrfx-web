@@ -252,6 +252,7 @@ module.exports = function(webpackEnv) {
         asset: path.resolve(__dirname, "../src/asset"),
         services: path.resolve(__dirname, "../src/services"),
         components: path.resolve(__dirname, "../src/components"),
+        dapp: path.resolve(__dirname, "../src/index/components/dapp"),
       },
       plugins: [
         PnpWebpackPlugin,
