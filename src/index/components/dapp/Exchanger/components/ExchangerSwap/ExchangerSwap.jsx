@@ -479,7 +479,7 @@ function ExchangerSwap(props) {
             defaultList="fiats"
             tokens={[
               ...coins,
-            ].filter(t => t.symbol !== coinSymbol && t.symbol !== 'BNB')}
+            ].filter(t => t.symbol !== 'BNB')}
             fiats={fiats}
             loadAccountBalances={loadAccountBalances}
           />
@@ -493,9 +493,7 @@ function ExchangerSwap(props) {
           selected={coin}
           isAdaptive={isAdaptive}
           {...context}
-          tokens={[
-            ...coins,
-          ].filter(t => t.symbol !== fiatSymbol)}
+          tokens={[...coins]}
           fiats={fiats}
           loadAccountBalances={loadAccountBalances}
         />
