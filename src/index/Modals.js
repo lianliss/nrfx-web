@@ -72,6 +72,7 @@ import {
   SwiftGeneratedModal,
   AttentionBuyTokenModal,
   SendTokensModal,
+  TransactionResponseModal,
 } from "./components/dapp";
 import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
 import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
@@ -228,6 +229,9 @@ function Modals(props) {
       break;
     case "transaction_waiting":
       Component = TransactionWaitingModal;
+      break;
+    case "transaction_response":
+      Component = TransactionResponseModal;
       break;
     case "your_wallet":
       Component = YourWalletModal;
