@@ -20,6 +20,7 @@ import {
   getRequestMetods,
   getConnectorObject,
   fetchEthereumRequest,
+  getFineChainId,
 } from './multiwallets/multiwalletsDifference';
 import * as CONNECTORS from './multiwallets/connectors';
 import { marketCoins } from 'src/services/coingeckoApi';
@@ -73,6 +74,7 @@ class Web3Provider extends React.PureComponent {
   connectionCheckTimeout;
   requestMethods = {};
   fetchEthereumRequest = fetchEthereumRequest.bind(this);
+  getFineChainId = getFineChainId.bind(this);
 
   // Moralis
   moralis = {
@@ -359,11 +361,7 @@ class Web3Provider extends React.PureComponent {
       isConnected: true,
     });
 
-    this.setChain(
-      this.state.connector === CONNECTORS.TRUST_WALLET
-        ? Number(chainId)
-        : this.web3Host.utils.hexToNumber(chainId)
-    );
+    this.setChain(this.getFineChainId(chainId));
   };
 
   onAccountsChanged = accounts => {
@@ -386,14 +384,11 @@ class Web3Provider extends React.PureComponent {
   };
 
   onChainChanged = chainId => {
-    const integratedChainId =
-      this.state.connector === CONNECTORS.TRUST_WALLET
-        ? Number(chainId)
-        : this.web3Host.utils.hexToNumber(chainId);
+    const fineChainId = this.getFineChainId(chainId);
 
-    console.log('[onChainChanged]', chainId, integratedChainId);
+    console.log('[onChainChanged]', chainId, fineChainId);
     if (!this._mounted) return;
-    this.setChain(integratedChainId);
+    this.setChain(fineChainId);
   };
 
   onDisconnect = reason => {
@@ -454,10 +449,7 @@ class Web3Provider extends React.PureComponent {
       }
 
       this.ethereum = ethereumObject.ethereum;
-      let chainIdNumber =
-        connector === CONNECTORS.TRUST_WALLET
-          ? Number(this.ethereum.chainId)
-          : this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
+      let chainIdNumber = this.getFineChainId(this.ethereum.chainId);
       this.requestMethods = getRequestMetods(connector);
       const provider = ethereumObject.provider;
 
@@ -478,7 +470,9 @@ class Web3Provider extends React.PureComponent {
         throw new Error('No accounts connected');
       }
 
-      if (!chainIdNumber) {}
+      if (!chainIdNumber) {
+        chainIdNumber = this.getFineChainId(this.ethereum.chainId);
+      }
 
       // Set provider state
       if (!this._mounted) return;

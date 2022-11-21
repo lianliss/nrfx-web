@@ -114,3 +114,24 @@ export const fetchEthereumRequest = async function (requestObject, ethereum) {
 
   return await this.ethereum.request(requestObject);
 };
+
+/**
+ * Returns chainId number for currency wallet connector.
+ * @param id {number | string} - chain id in number or hex.
+ * @returns {number} - fine chainId.
+ */
+export const getFineChainId = function (id) {
+  if (!this) return;
+  if (!id) return;
+  let chainId;
+
+  // If id is hex, use hexToNumber
+  // Else just set id in Number type.
+  try {
+    chainId = this.getWeb3().utils.hexToNumber(id);
+  } catch {
+    chainId = Number(id);
+  }
+
+  return chainId;
+};
