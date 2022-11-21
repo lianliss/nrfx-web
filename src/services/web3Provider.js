@@ -358,7 +358,12 @@ class Web3Provider extends React.PureComponent {
     this.setState({
       isConnected: true,
     });
-    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+
+    this.setChain(
+      this.state.connector === CONNECTORS.TRUST_WALLET
+        ? Number(chainId)
+        : this.web3Host.utils.hexToNumber(chainId)
+    );
   };
 
   onAccountsChanged = accounts => {
@@ -381,9 +386,14 @@ class Web3Provider extends React.PureComponent {
   };
 
   onChainChanged = chainId => {
-    console.log('[onChainChanged]', chainId, this.web3Host.utils.hexToNumber(chainId));
+    const integratedChainId =
+      this.state.connector === CONNECTORS.TRUST_WALLET
+        ? Number(chainId)
+        : this.web3Host.utils.hexToNumber(chainId);
+
+    console.log('[onChainChanged]', chainId, integratedChainId);
     if (!this._mounted) return;
-    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+    this.setChain(integratedChainId);
   };
 
   onDisconnect = reason => {
@@ -440,18 +450,14 @@ class Web3Provider extends React.PureComponent {
       let ethereumObject = getConnectorObject(connector);
 
       if (!ethereumObject) {
-        if (connector !== CONNECTORS.TRUST_WALLET) {
-        }
         return toast.error('No wallet plugins detected');
-
-        // connector = CONNECTORS.WALLET_CONNECT;
-        // ethereumObject = getConnectorObject(connector);
       }
 
       this.ethereum = ethereumObject.ethereum;
-      const chainIdNumber = ethereum.isTrust
-        ? Number(this.ethereum.chainId)
-        : this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
+      let chainIdNumber =
+        connector === CONNECTORS.TRUST_WALLET
+          ? Number(this.ethereum.chainId)
+          : this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
       this.requestMethods = getRequestMetods(connector);
       const provider = ethereumObject.provider;
 
@@ -467,9 +473,12 @@ class Web3Provider extends React.PureComponent {
         await this.fetchEthereumRequest({
           method: this.requestMethods.request_accounts
       }))[0];
+
       if (!accountAddress) {
         throw new Error('No accounts connected');
       }
+
+      if (!chainIdNumber) {}
 
       // Set provider state
       if (!this._mounted) return;

@@ -91,11 +91,11 @@ export const getConnectorObject = (connector, chainID = 56) => {
     return null;
   }
 
-  if (connector === CONNECTORS.METAMASK && !window.ethereum.isMetaMask) {
+  if (connector === CONNECTORS.METAMASK && !ethereum.isMetaMask) {
     return null;
   }
 
-  if (connector === CONNECTORS.TRUST_WALLET && !window.ethereum.isTrustWallet) {
+  if (connector === CONNECTORS.TRUST_WALLET && !ethereum.isTrustWallet) {
     return null;
   }
 
