@@ -4,16 +4,22 @@ import { PHONE } from '../index/constants/breakpoints';
 
 // Return boolean adaptive state.
 // @param maxWidth (number) - Window width < number then return true.
-export default (maxWidth = PHONE) => {
+export default (maxWidth = PHONE, setInStore = true) => {
   const [adaptive, setAdaptive] = useState();
 
   const handleResize = () => {
     if (document.body.offsetWidth <= maxWidth) {
       setAdaptive(true);
-      setAdaptiveStore(true);
+
+      if (setInStore) {
+        setAdaptiveStore(true);
+      }
     } else {
       setAdaptive(false);
-      setAdaptiveStore(false);
+
+      if (setInStore) {
+        setAdaptiveStore(false);
+      }
     }
   };
 
