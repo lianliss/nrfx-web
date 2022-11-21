@@ -433,17 +433,25 @@ class Web3Provider extends React.PureComponent {
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
    */
-  async connectWallet(connector = this.state.connector) {
+  async connectWallet(incomingConnector = this.state.connector) {
     try {
       // Get connector.
-      const ethereumObject = getConnectorObject(connector);
+      let connector = incomingConnector;
+      let ethereumObject = getConnectorObject(connector);
 
       if (!ethereumObject) {
+        if (connector !== CONNECTORS.TRUST_WALLET) {
+        }
         return toast.error('No wallet plugins detected');
+
+        // connector = CONNECTORS.WALLET_CONNECT;
+        // ethereumObject = getConnectorObject(connector);
       }
 
       this.ethereum = ethereumObject.ethereum;
-      const chainIdNumber = this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
+      const chainIdNumber = ethereum.isTrust
+        ? Number(this.ethereum.chainId)
+        : this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
       this.requestMethods = getRequestMetods(connector);
       const provider = ethereumObject.provider;
 
