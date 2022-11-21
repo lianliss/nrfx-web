@@ -4,13 +4,14 @@
   display: flex;
   width: 100%;
   box-sizing: border-box;
+  color: var(--dark-black);
 
   &:not(:last-child) {
     margin-bottom: 15px;
   }
 
   &.border {
-    padding: 14px 14px 14px 11px;
+    padding: 13px 11px;
     border: 1px solid #dfe3f0;
     border-radius: var(--radius-panel);
   }
@@ -41,12 +42,12 @@
 
   &__text {
     &-medium {
-      margin-bottom: 2px;
+      margin-bottom: 1px;
       font-weight: 500;
       font-size: 10px;
       line-height: 110%;
       letter-spacing: -0.01em;
-      color: #cdcfd7;
+      color: var(--cool-gray);
     }
 
     &-large {
@@ -63,7 +64,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     .isvg {
       display: flex;
       align-items: center;
