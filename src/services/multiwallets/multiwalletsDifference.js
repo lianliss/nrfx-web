@@ -135,3 +135,19 @@ export const getFineChainId = function (id) {
 
   return chainId;
 };
+
+/**
+ * Returns current browser connector type.
+ * @returns {string}
+ */
+export const getCurrentConnector = () => {
+  if (_.get(window, 'ethereum.isMetaMask')) {
+    return CONNECTORS.METAMASK;
+  }
+
+  if (_.get(window, 'ethereum.isTrustWallet')) {
+    return CONNECTORS.TRUST_WALLET;
+  }
+
+  return CONNECTORS.WALLET_CONNECT;
+};

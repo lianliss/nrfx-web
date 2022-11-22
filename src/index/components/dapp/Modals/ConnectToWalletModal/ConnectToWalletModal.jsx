@@ -8,6 +8,7 @@ import TransactionModal from '../../TransactionModal/TransactionModal';
 // Utils
 import { Web3Context } from 'services/web3Provider';
 import { classNames as cn, getLang } from 'src/utils';
+import { getCurrentConnector } from 'services/multiwallets/multiwalletsDifference';
 import * as CONNECTORS from 'services/multiwallets/connectors';
 
 // Styles
@@ -22,7 +23,12 @@ function ConnectToWalletModal(props) {
     if (isConnected) {
       props.onClose();
     }
-  }, [isConnected]);
+
+    if (!isConnected && adaptive) {
+      connectWallet(getCurrentConnector());
+      props.onClose();
+    }
+  }, [isConnected, adaptive]);
 
   return (
     <TransactionModal
