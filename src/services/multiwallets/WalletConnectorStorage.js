@@ -25,10 +25,13 @@ class WalletConnectorStorage {
    * connect function.
    * @returns connectionStatus {boolean}
    */
-  async connect() {
+  async connect(showErrorMessage = true) {
     if (!this.connector) return false;
 
-    const connected = await this.connectWallet(this.connector);
+    const connected = await this.connectWallet(
+      this.connector,
+      showErrorMessage
+    );
 
     return !!connected;
   }

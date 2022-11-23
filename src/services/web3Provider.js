@@ -76,6 +76,7 @@ class Web3Provider extends React.PureComponent {
   requestMethods = {};
   fetchEthereumRequest = fetchEthereumRequest.bind(this);
   getFineChainId = getFineChainId.bind(this);
+  connectWallet = this.connectWallet.bind(this);
   walletConnectorStorage = () => new WalletConnectorStorage(this);
 
   // Moralis
@@ -121,7 +122,7 @@ class Web3Provider extends React.PureComponent {
         !_.get(this, 'state.isConnected') &&
         this.walletConnectorStorage().get()
       ) {
-        this.walletConnectorStorage().connect();
+        this.walletConnectorStorage().connect(false);
       }
     } catch (error) {
       console.error('[checkConnection]', error);
@@ -445,12 +446,12 @@ class Web3Provider extends React.PureComponent {
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
    */
-  connectWallet = async (connector = this.state.connector) => {
+  async connectWallet (connector = this.state.connector, showErrorMessage = true) {
     try {
       // Get connector.
       let ethereumObject = getConnectorObject(connector);
 
-      if (!ethereumObject) {
+      if (!ethereumObject && showErrorMessage) {
         return toast.error('No wallet plugins detected');
       }
 
@@ -515,6 +516,7 @@ class Web3Provider extends React.PureComponent {
 
     // Clear default wallet connection.
     this.walletConnectorStorage().clear();
+    this.getTokens();
 
     switch (this.state.connector) {
       case CONNECTORS.WALLET_CONNECT:
