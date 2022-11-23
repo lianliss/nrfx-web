@@ -25,6 +25,7 @@ import {
 import * as CONNECTORS from './multiwallets/connectors';
 import { marketCoins } from 'src/services/coingeckoApi';
 import { getTokenFromSymbol } from "./web3Provider/utils";
+import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
 
 export const Web3Context = React.createContext();
 
@@ -75,6 +76,7 @@ class Web3Provider extends React.PureComponent {
   requestMethods = {};
   fetchEthereumRequest = fetchEthereumRequest.bind(this);
   getFineChainId = getFineChainId.bind(this);
+  walletConnectorStorage = () => new WalletConnectorStorage(this);
 
   // Moralis
   moralis = {
@@ -98,14 +100,16 @@ class Web3Provider extends React.PureComponent {
 
   componentDidMount() {
     this._mounted = true;
-    
+
     const provider = new Web3.providers.HttpProvider(
       this.providerAddress
     );
     this.web3Host = new Web3(provider);
 
     // Check web3 wallet plugin
-    // this.checkConnection();
+    setTimeout(() => this.checkConnection(), 2000);
+    setTimeout(() => this.checkConnection(), 3000);
+    setTimeout(() => this.checkConnection(), 4000);
 
     // Get tokens list
     this.getTokens();
@@ -113,16 +117,19 @@ class Web3Provider extends React.PureComponent {
 
   checkConnection() {
     try {
-      if (!_.get(this, 'state.isConnected')
-        && !!window.ethereum
-        && !!window.ethereum.isConnected()
-        && !!window.ethereum.selectedAddress) {
-        this.connectWallet();
+      if (
+        !_.get(this, 'state.isConnected') &&
+        this.walletConnectorStorage().get()
+      ) {
+        this.walletConnectorStorage().connect();
       }
     } catch (error) {
       console.error('[checkConnection]', error);
     }
-    this.connectionCheckTimeout = setTimeout(this.checkConnection.bind(this), 1000);
+    // this.connectionCheckTimeout = setTimeout(
+    //   this.checkConnection.bind(this),
+    //   1000
+    // );
   }
 
   componentWillUnmount() {
@@ -438,7 +445,7 @@ class Web3Provider extends React.PureComponent {
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
    */
-  async connectWallet(connector = this.state.connector) {
+  connectWallet = async (connector = this.state.connector) => {
     try {
       // Get connector.
       let ethereumObject = getConnectorObject(connector);
@@ -468,6 +475,8 @@ class Web3Provider extends React.PureComponent {
       if (!accountAddress) {
         throw new Error('No accounts connected');
       }
+
+      this.walletConnectorStorage().set(connector);
 
       if (!chainIdNumber) {
         chainIdNumber = this.getFineChainId(this.ethereum.chainId);
@@ -503,6 +512,9 @@ class Web3Provider extends React.PureComponent {
       accountAddress: null,
       chainId: null,
     });
+
+    // Clear default wallet connection.
+    this.walletConnectorStorage().clear();
 
     switch (this.state.connector) {
       case CONNECTORS.WALLET_CONNECT:
