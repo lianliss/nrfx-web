@@ -39,11 +39,11 @@ export const getEthereum = (connector) => {
       return window['ethereum'];
     }
     case CONNECTORS.TRUST_WALLET: {
-      if (!window['ethereum']) {
+      if (!window['trustwallet']) {
         return null;
       }
 
-      return window['ethereum'];
+      return window['trustwallet'];
     }
     case CONNECTORS.WALLET_CONNECT: {
       return new WalletConnectProvider({
@@ -68,8 +68,6 @@ const getProviderOfConnector = (connector, ethereum, chainID = 56) => {
 
   switch (connector) {
     case CONNECTORS.BSC:
-      break;
-    case CONNECTORS.TRUST_WALLET:
       break;
     default:
       provider = ethereum;
@@ -145,7 +143,7 @@ export const getCurrentConnector = () => {
     return CONNECTORS.METAMASK;
   }
 
-  if (_.get(window, 'ethereum.isTrustWallet')) {
+  if (_.get(window, 'trustwallet.isTrustWallet')) {
     return CONNECTORS.TRUST_WALLET;
   }
 
