@@ -73,6 +73,7 @@ import {
   AttentionBuyTokenModal,
   SendTokensModal,
   TransactionResponseModal,
+  ExchangerModal,
 } from "./components/dapp";
 import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
 import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
@@ -277,6 +278,9 @@ function Modals(props) {
       break;
     case "send_tokens":
       Component = SendTokensModal;
+      break;
+    case "exchanger":
+      Component = ExchangerModal;
       break;
     default:
       return null;
