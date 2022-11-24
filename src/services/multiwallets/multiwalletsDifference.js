@@ -121,17 +121,14 @@ export const fetchEthereumRequest = async function (requestObject, ethereum) {
 export const getFineChainId = function (id) {
   if (!this) return;
   if (!id) return;
-  let chainId;
 
   // If id is hex, use hexToNumber
   // Else just set id in Number type.
-  try {
-    chainId = this.getWeb3().utils.hexToNumber(id);
-  } catch {
-    chainId = Number(id);
+  if (String(id).search('x') >= 0 && !_.isNumber(id)) {
+    return this.getWeb3().utils.hexToNumber(id);
   }
 
-  return chainId;
+  return Number(id);
 };
 
 /**
