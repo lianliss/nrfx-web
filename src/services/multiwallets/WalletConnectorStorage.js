@@ -23,17 +23,15 @@ class WalletConnectorStorage {
   /**
    * Connect wallet if previously used
    * connect function.
-   * @returns connectionStatus {boolean}
+   * @param showErrorMessage {boolean} - Display error message
+   * in toast if can't connect.
+   * Returns response of connectWallet.
    */
   async connect(showErrorMessage = true) {
-    if (!this.connector) return false;
+    if (!this.connector) return;
 
-    const connected = await this.connectWallet(
-      this.connector,
-      showErrorMessage
-    );
-
-    return !!connected;
+    const connected = await this.connectWallet(this.connector, showErrorMessage);
+    return connected;
   }
 }
 

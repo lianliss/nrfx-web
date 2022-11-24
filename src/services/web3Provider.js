@@ -73,6 +73,7 @@ class Web3Provider extends React.PureComponent {
   farm = null;
   pairs = {};
   connectionCheckTimeout;
+  successConnectionCheck = false;
   requestMethods = {};
   fetchEthereumRequest = fetchEthereumRequest.bind(this);
   getFineChainId = getFineChainId.bind(this);
@@ -108,29 +109,29 @@ class Web3Provider extends React.PureComponent {
     this.web3Host = new Web3(provider);
 
     // Check web3 wallet plugin
-    setTimeout(() => this.checkConnection(), 2000);
-    setTimeout(() => this.checkConnection(), 3000);
-    setTimeout(() => this.checkConnection(), 4000);
+    this.checkConnection();
 
     // Get tokens list
     this.getTokens();
   }
 
-  checkConnection() {
+  async checkConnection() {
+    if (this.successConnectionCheck) return;
+
     try {
-      if (
-        !_.get(this, 'state.isConnected') &&
-        this.walletConnectorStorage().get()
-      ) {
-        this.walletConnectorStorage().connect(false);
+      if (_.get(this, 'state.isConnected')) return;
+
+      const storageConnector = this.walletConnectorStorage().get();
+      if (storageConnector) {
+        await this.walletConnectorStorage().connect(false);
       }
     } catch (error) {
       console.error('[checkConnection]', error);
     }
-    // this.connectionCheckTimeout = setTimeout(
-    //   this.checkConnection.bind(this),
-    //   1000
-    // );
+    this.connectionCheckTimeout = setTimeout(
+      this.checkConnection.bind(this),
+      1000
+    );
   }
 
   componentWillUnmount() {
@@ -451,8 +452,12 @@ class Web3Provider extends React.PureComponent {
       // Get connector.
       let ethereumObject = getConnectorObject(connector);
 
-      if (!ethereumObject && showErrorMessage) {
-        return toast.error('No wallet plugins detected');
+      if (!ethereumObject) {
+        if (showErrorMessage) {
+          toast.error('No wallet plugins detected');
+        }
+
+        return;
       }
 
       this.ethereum = ethereumObject.ethereum;
@@ -460,6 +465,7 @@ class Web3Provider extends React.PureComponent {
       this.requestMethods = getRequestMetods(connector);
       const provider = ethereumObject.provider;
 
+      this.successConnectionCheck = true;
       if (connector === CONNECTORS.WALLET_CONNECT) {
         await provider.enable();
       }
