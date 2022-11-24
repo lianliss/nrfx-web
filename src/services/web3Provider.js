@@ -471,7 +471,9 @@ class Web3Provider extends React.PureComponent {
       }
 
       this.web3 = new Web3(provider);
-      this.setChain(chainIdNumber);
+      if (chainIdNumber) {
+        this.setChain(chainIdNumber);
+      }
 
       // Set account address
       const accountAddress = (
@@ -487,6 +489,7 @@ class Web3Provider extends React.PureComponent {
 
       if (!chainIdNumber) {
         chainIdNumber = this.getFineChainId(this.ethereum.chainId);
+        this.setChain(chainIdNumber);
       }
 
       // Set provider state
