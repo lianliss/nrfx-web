@@ -7,7 +7,13 @@ import { CabinetModal } from 'dapp';
 import './Exchanger.less';
 
 function Exchanger() {
-  return <CabinetModal className="ExchangerModal">Exchanger</CabinetModal>;
+  return (
+    <CabinetModal className="ExchangerModal">
+      <div className="ExchangerModal__container">
+        <h3>Exchange</h3>
+      </div>
+    </CabinetModal>
+  );
 }
 
 export default Exchanger;
