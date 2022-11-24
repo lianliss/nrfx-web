@@ -119,8 +119,8 @@ export const fetchEthereumRequest = async function (requestObject, ethereum) {
  * @returns {number} - fine chainId.
  */
 export const getFineChainId = function (id) {
-  if (!this) return;
-  if (!id) return;
+  if (!this) return null;
+  if (!id) return null;
 
   // If id is hex, use hexToNumber
   // Else just set id in Number type.
