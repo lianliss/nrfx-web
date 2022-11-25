@@ -605,7 +605,7 @@ class DexSwap extends React.PureComponent {
 
             {!!this.trade && !!Number(amount0) && (
               <DexDescription>
-                <DexDescription.Item className="DexSwap__description-item">
+                <DexDescription.Item>
                   <span>
                     {isExactIn
                       ? getLang('dex_minimum_receive')
@@ -744,7 +744,7 @@ class DexSwap extends React.PureComponent {
             })}
           </div>
         </div>}
-        {/*{!!transactions.length && <div className="DexSwap__description">*/}
+        {/*{!!transactions.length && <div className="DexDescription">*/}
         {/*<h3>*/}
         {/*{getLang('dex_last_transactions')}*/}
         {/*</h3>*/}
@@ -752,7 +752,7 @@ class DexSwap extends React.PureComponent {
         {/*const {txHash, token0, token1, amount0, amount1} = item;*/}
         {/*const link = `https://bscscan.com/tx/${txHash}`;*/}
 
-        {/*return <div className="DexSwap__description-item" key={txHash}>*/}
+        {/*return <div className="DexDescription-item" key={txHash}>*/}
         {/*<span>*/}
         {/*<a href={link} target="_blank">{txHash}</a>*/}
         {/*</span>*/}

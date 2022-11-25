@@ -3,11 +3,11 @@ import React from 'react';
 import './DexDescription.less';
 
 function DexDescription({ children }) {
-  return <div className="DexSwap__description">{children}</div>;
+  return <div className="DexDescription">{children}</div>;
 }
 
 DexDescription.Item = ({ children }) => (
-  <div className="DexSwap__description-item">{children}</div>
+  <div className="DexDescription-item">{children}</div>
 );
 
 export default DexDescription;
