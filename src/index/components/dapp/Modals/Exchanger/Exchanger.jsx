@@ -10,11 +10,14 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { getLang } from 'utils';
+import { useSelector } from 'react-redux';
 
 // Styles
 import './Exchanger.less';
 
 function Exchanger({ ...props }) {
+  const adaptive = useSelector((state) => state.default.adaptive);
+
   const ListItem = ({ title, value }) => (
     <Row
       className="ExchangerModal-ListItem"
@@ -38,11 +41,21 @@ function Exchanger({ ...props }) {
         <h3>Exchange</h3>
         <Col className="ExchangerModal__Currency__container">
           <span>{getLang('dapp_exchanger_you_give')}</span>
-          <Currency name="ethereum" currency="NRFX" amount={14293123.13123} />
+          <Currency
+            adaptive={adaptive}
+            name="ethereum"
+            currency="NRFX"
+            amount={14293123.13123}
+          />
         </Col>
         <Col className="ExchangerModal__Currency__container">
           <span>{getLang('dapp_exchanger_you_receive')}</span>
-          <Currency name="ethereum" currency="USDT" amount={14293123.13123} />
+          <Currency
+            adaptive={adaptive}
+            name="ethereum"
+            currency="USDT"
+            amount={14293123.13123}
+          />
         </Col>
         <div className="ExchangerModal__rate">
           <ListItem

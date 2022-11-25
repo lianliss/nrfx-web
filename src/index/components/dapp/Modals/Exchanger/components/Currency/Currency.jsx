@@ -8,10 +8,10 @@ import { NumberFormat, Row, Col } from 'ui';
 // Styles
 import './Currency.less';
 
-function Currency({ currency, amount, name }) {
+function Currency({ currency, amount, name, adaptive }) {
   return (
     <Row className="ExchangerModal__Currency" alignItems="center">
-      <WalletIcon size={41} currency={currency} />
+      <WalletIcon size={adaptive ? 35 : 41} currency={currency} />
       <NumberFormat number={amount} />
       <Col>
         <span className="ExchangerModal__Currency-name">{name}</span>
