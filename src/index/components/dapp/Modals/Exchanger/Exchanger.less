@@ -28,4 +28,62 @@
       color: var(--cool-gray);
     }
   }
+
+  &-List {
+    color: var(--black-gunmetal);
+
+    &Item {
+      font-size: 14px;
+      line-height: 110%;
+      letter-spacing: -0.01em;
+
+      &__title {
+        font-weight: 500;
+        opacity: 0.5;
+        display: flex;
+        align-items: center;
+      }
+
+      &__value {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .CustomButton.swap {
+    background: #e5ebfc;
+    border-radius: 50%;
+    width: 19px;
+    height: 19px;
+    margin-left: 8px;
+
+    &:active {
+      background: #d1dbf6;
+    }
+  }
+
+  &__rate {
+    margin-top: 25px;
+  }
+
+  .Button.exchange {
+    margin-top: 30px;
+    width: 100%;
+
+    .Button__label {
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+
+  .DexDescription {
+    padding: 17px 23px 20px;
+    margin-top: 30px;
+  }
+  
+  .AnswerPopup {
+    margin-left: 7px;
+  }
 }
