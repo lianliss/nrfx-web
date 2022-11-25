@@ -20,6 +20,7 @@ import * as toast from 'actions/toasts';
 import { openModal } from "src/actions"
 import { getLang } from "utils";
 import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
+import DexDescription from '../../../components/dapp/DexDescription/DexDescription';
 
 // Styles
 import './DexSwap.less';
@@ -603,8 +604,8 @@ class DexSwap extends React.PureComponent {
             {button}
 
             {!!this.trade && !!Number(amount0) && (
-              <div className="DexSwap__description">
-                <div className="DexSwap__description-item">
+              <DexDescription>
+                <DexDescription.Item className="DexSwap__description-item">
                   <span>
                     {isExactIn
                       ? getLang('dex_minimum_receive')
@@ -631,8 +632,8 @@ class DexSwap extends React.PureComponent {
                     &nbsp;
                     {pair[Number(!exactIndex)].symbol}
                   </span>
-                </div>
-                <div className="DexSwap__description-item">
+                </DexDescription.Item>
+                <DexDescription.Item>
                   <span>
                     {getLang('dex_price_impact')}
                     <HoverPopup
@@ -652,8 +653,8 @@ class DexSwap extends React.PureComponent {
                   <span className={priceImpactColor}>
                     {priceImpactNumber.toFixed(2)}%
                   </span>
-                </div>
-                <div className="DexSwap__description-item">
+                </DexDescription.Item>
+                <DexDescription.Item>
                   <span>
                     {getLang('dex_liquidity_fee')}
                     {/*<HoverPopup content={<div className="DexSwap__hint">*/}
@@ -669,8 +670,8 @@ class DexSwap extends React.PureComponent {
                     {getFinePrice(fee)}{' '}
                     {_.get(this.state, 'pair[0].symbol', '')}
                   </span>
-                </div>
-              </div>
+                </DexDescription.Item>
+              </DexDescription>
             )}
 
             {!_.isNull(selectToken) && (
