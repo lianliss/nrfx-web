@@ -20,7 +20,7 @@ import * as toast from 'actions/toasts';
 import { openModal } from "src/actions"
 import { getLang } from "utils";
 import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
-import DexDescription from '../../../components/dapp/DexDescription/DexDescription';
+import { DexRoute, DexDescription } from 'dapp';
 
 // Styles
 import './DexSwap.less';
@@ -711,39 +711,7 @@ class DexSwap extends React.PureComponent {
             )}
           </div>
         </CabinetBlock>
-        {(!!route && !!route.length) && <div className="DexSwap__route">
-          <h3>
-            <span>{getLang('dex_route')}</span>
-            <HoverPopup
-              content={
-                <div className="DexSwap__hint">{getLang('dex_route_hint')}</div>
-              }
-            >
-              ?
-            </HoverPopup>
-          </h3>
-          <div className="DexSwap__route-container">
-            {route.map((symbol, index) => {
-              const token = tokens.find((t) => t.symbol === symbol);
-              const logo = _.get(token, 'logoURI', '');
-              return (
-                <div className="DexSwap__route-symbol" key={symbol}>
-                  {!!index && (
-                    <SVG
-                      src={require('src/asset/icons/triangle-right.svg')}
-                      className="DexSwap__route-arrow"
-                    />
-                  )}
-                  <div
-                    className="DexSwap__route-logo"
-                    style={{ backgroundImage: `url('${logo}')` }}
-                  />
-                  <span>{symbol}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>}
+        {(!!route && !!route.length) && <DexRoute tokens={tokens} route={route} />}
         {/*{!!transactions.length && <div className="DexDescription">*/}
         {/*<h3>*/}
         {/*{getLang('dex_last_transactions')}*/}

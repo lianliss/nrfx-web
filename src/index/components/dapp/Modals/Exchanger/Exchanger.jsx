@@ -5,6 +5,7 @@ import { CabinetModal, CustomButton, AnswerPopup } from 'dapp';
 import { Col, Row, Button, NumberFormat } from 'ui';
 import Currency from './components/Currency/Currency';
 import DexDescription from 'dapp/DexDescription/DexDescription.jsx';
+import ExchangeRoute from './components/ExchangeRoute/ExchangeRoute';
 import SVG from 'utils/svg-wrap';
 
 // Styles
@@ -90,6 +91,9 @@ function Exchanger({ ...props }) {
             <span>$00.55 - BNB557483875475</span>
           </DexDescription.Item>
         </DexDescription>
+        <ExchangeRoute
+          route={['NRFX', 'USDT', 'BNB', 'BUSD', 'NRFX', 'USDT', 'BNB', 'BUSD']}
+        />
       </div>
     </CabinetModal>
   );
