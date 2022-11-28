@@ -31,11 +31,13 @@
 
     & > * {
       transition: all 0.3s;
+      transition-timing-function: ease-in;
       border-radius: 0;
     }
 
     &:not(.isActive) > * {
       margin-top: -100%;
+      height: 0;
     }
   }
 
@@ -50,5 +52,15 @@
       margin-bottom: 20px;
       padding: 0;
     }
+  }
+}
+
+.adaptive .ExchangerModal__Settings {
+  .Button {
+    width: auto;
+  }
+
+  .settings-toggler {
+    width: 100%;
   }
 }
