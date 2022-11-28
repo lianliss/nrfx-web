@@ -6,6 +6,7 @@ import { Col, Row, Button, NumberFormat } from 'ui';
 import Currency from './components/Currency/Currency';
 import DexDescription from 'dapp/DexDescription/DexDescription.jsx';
 import ExchangeRoute from './components/ExchangeRoute/ExchangeRoute';
+import ExchangerSettings from './components/ExchangerSettings/ExchangerSettings';
 import SVG from 'utils/svg-wrap';
 
 // Utils
@@ -106,6 +107,7 @@ function Exchanger({ ...props }) {
         <ExchangeRoute
           route={['NRFX', 'USDT', 'BNB', 'BUSD', 'NRFX', 'USDT', 'BNB', 'BUSD']}
         />
+        <ExchangerSettings />
       </div>
     </CabinetModal>
   );
