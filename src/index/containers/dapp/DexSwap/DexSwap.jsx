@@ -6,7 +6,7 @@ import { setSwap } from 'src/actions/dapp/swap';
 
 // Components
 import { Switch, SwitchTabs, Button, HoverPopup, } from 'src/ui';
-import SwapSettings from './components/SwapSettings/SwapSettings';
+import DexSettingsModal from './components/DexSettingsModal/DexSettingsModal';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import DexSwapInput from './components/DexSwapInput/DexSwapInput';
@@ -703,12 +703,13 @@ class DexSwap extends React.PureComponent {
               />
             )}
             {isSettings && (
-              <SwapSettings
+              <DexSettingsModal
                 slippageTolerance={this.state.slippageTolerance}
                 deadline={this.state.deadline}
                 setSlippage={value => this.setState({slippageTolerance: value})}
                 setDeadline={value => this.setState({deadline: value})}
                 onClose={() => this.setState({ isSettings: false })}
+                showTitle={true}
               />
             )}
           </div>
