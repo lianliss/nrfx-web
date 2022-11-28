@@ -53,8 +53,12 @@
     }
   }
 
-  .transaction-speed {
+  .transaction-speed__content {
+    display: flex;
+
     .Button {
+      width: auto;
+      flex: 1 1 auto !important;
       &:not(:last-child) {
         margin-right: 10px;
       }
@@ -67,8 +71,10 @@
     }
 
     .Button {
-      &:not(:last-of-type) {
-        margin-right: 5px;
+      margin-right: 5px;
+
+      &:last-of-type {
+        margin-right: 20px;
       }
     }
 
@@ -78,7 +84,9 @@
       box-sizing: border-box;
 
       &__container {
-        margin-left: 20px;
+        margin-left: auto;
+        max-width: 170px;
+        width: 100%;
       }
     }
   }
@@ -170,7 +178,7 @@
 
     &__content {
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
     }
 
     .Button {
@@ -191,6 +199,7 @@
     .Input {
       &__container {
         width: 100%;
+        max-width: 100%;
         margin: 10px 0 0;
       }
     }
