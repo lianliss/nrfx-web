@@ -161,6 +161,7 @@ class DexSwap extends React.PureComponent {
             pair: [token0, token1]
           }
         } else {
+          const { tokens } = this.context;
           return {
             ...state,
             lastChainId: chainId,
@@ -698,6 +699,7 @@ class DexSwap extends React.PureComponent {
                 selected={this.state.pair[selectToken]}
                 disableSwitcher
                 {...this.context}
+                fiats={this.context.getFiatsArray()}
               />
             )}
             {isSettings && (

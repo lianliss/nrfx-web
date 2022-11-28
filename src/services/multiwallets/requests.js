@@ -17,6 +17,14 @@ export default {
     wallet_switchEthereumChain: null,
     personal_sign: 'personal_sign',
   },
+  [CONNECTORS.TRUST_WALLET]: {
+    request_accounts: 'eth_requestAccounts',
+    eth_sendTransaction: 'eth_sendTransaction',
+    wallet_watchAsset: null,
+    wallet_addEthereumChain: 'wallet_switchEthereumChain',
+    wallet_switchEthereumChain: null,
+    personal_sign: 'personal_sign',
+  },
   [CONNECTORS.WALLET_CONNECT]: {
     request_accounts: 'eth_accounts',
     eth_sendTransaction: 'eth_sendTransaction',

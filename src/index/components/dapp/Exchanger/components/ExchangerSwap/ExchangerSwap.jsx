@@ -464,7 +464,10 @@ function ExchangerSwap(props) {
           </Button>
         }
       </div> : <div className="ExchangerSwap__actions-buy">
-        <Button className="" onClick={() => actions.openModal('connect_to_wallet')}>
+        <Button
+          className=""
+          onClick={() => actions.openStateModal('connect_to_wallet')}
+        >
           {getLang('dapp_global_connect_wallet')}
         </Button>
       </div>}
