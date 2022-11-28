@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -132,5 +133,23 @@ function SwapSettings({
     </div>
   );
 }
+
+SwapSettings.propTypes = {
+  setSlippage: PropTypes.func,
+  slippageTolerance: PropTypes.number,
+  setDeadline: PropTypes.func,
+  deadline: PropTypes.number,
+  showTitle: PropTypes.bool,
+  onClose: PropTypes.func,
+};
+
+SwapSettings.defaultProps = {
+  setSlippage: () => {},
+  slippageTolerance: 0,
+  setDeadline: () => {},
+  deadline: 0,
+  showTitle: false,
+  onClose: () => {},
+};
 
 export default SwapSettings;
