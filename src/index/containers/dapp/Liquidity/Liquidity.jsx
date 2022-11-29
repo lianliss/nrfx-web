@@ -8,7 +8,6 @@ import LiquidityMain from './components/LiquidityMain/LiquidityMain';
 import _ from 'lodash';
 import { Web3Context } from 'services/web3Provider';
 import router from 'src/router';
-import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 
 // Styles
 import './Liquidity.less';
@@ -111,7 +110,6 @@ function Liquidity() {
           type="import"
         />
       )}
-      <TestnetOverlay mainnetOnly networks={[56]} />
     </CabinetBlock>
   );
 }

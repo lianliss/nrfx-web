@@ -6,7 +6,6 @@ import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
 import { useRoute } from 'react-router5';
 import router from 'src/router';
-import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 import networks from 'src/index/constants/networks';
 
 // Components
@@ -334,7 +333,6 @@ function Exchanger(props) {
           <Instruction />
         </div>
       </div>
-      <TestnetOverlay mainnetOnly networks={[56]} />
     </CabinetContent>
   );
 }
