@@ -37,7 +37,7 @@ function ExchangerSettings() {
       <div
         className={cn({ ExchangerModal__Settings__container: true, isActive })}
       >
-        <SwapSettings />
+        <SwapSettings slippageNumbers={[0.1, 0.5, 1]} />
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import './SwapSettings.less';
 function SwapSettings({
   setSlippage,
   slippageTolerance,
+  slippageNumbers,
   setDeadline,
   deadline,
   showTitle,
@@ -84,27 +85,16 @@ function SwapSettings({
         }
         className="slippage"
       >
-        <Button
-          type="secondary-blue"
-          onClick={() => handleSlippage(0.5)}
-          size="medium"
-        >
-          0.5%
-        </Button>
-        <Button
-          type="secondary-blue"
-          onClick={() => handleSlippage(1)}
-          size="medium"
-        >
-          1%
-        </Button>
-        <Button
-          type="secondary-blue"
-          onClick={() => handleSlippage(2)}
-          size="medium"
-        >
-          2%
-        </Button>
+        {slippageNumbers.map((number, key) => (
+          <Button
+            type="secondary-blue"
+            onClick={() => handleSlippage(number)}
+            size="medium"
+            key={key}
+          >
+            {number}%
+          </Button>
+        ))}
         <div className="Input__container">
           <Input
             type="number"
@@ -137,6 +127,7 @@ function SwapSettings({
 SwapSettings.propTypes = {
   setSlippage: PropTypes.func,
   slippageTolerance: PropTypes.number,
+  slippageNumbers: PropTypes.arrayOf(PropTypes.number),
   setDeadline: PropTypes.func,
   deadline: PropTypes.number,
   showTitle: PropTypes.bool,
@@ -146,6 +137,7 @@ SwapSettings.propTypes = {
 SwapSettings.defaultProps = {
   setSlippage: () => {},
   slippageTolerance: 0,
+  slippageNumbers: [0.5],
   setDeadline: () => {},
   deadline: 0,
   showTitle: false,

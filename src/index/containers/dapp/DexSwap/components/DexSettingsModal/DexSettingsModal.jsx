@@ -23,6 +23,7 @@ function DexSettingsModal({
   const settingsProps = {
     setSlippage,
     slippageTolerance,
+    slippageNumbers: [0.5, 1, 2],
     setDeadline,
     deadline,
     showTitle: true,
