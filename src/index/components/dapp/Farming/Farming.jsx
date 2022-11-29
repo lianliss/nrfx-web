@@ -209,7 +209,7 @@ function Farming() {
       ) : (
         <LoadingStatus status={'loading'} />
       )}
-      <TestnetOverlay testnetOnly />
+      <TestnetOverlay testnetOnly networks={[97]} />
     </CabinetBlock>
   );
 }

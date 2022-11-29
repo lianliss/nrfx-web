@@ -763,7 +763,7 @@ class DexSwap extends React.PureComponent {
         {/*</div>*/}
         {/*})}*/}
         {/*</div>}*/}
-        <TestnetOverlay mainnetOnly />
+        <TestnetOverlay mainnetOnly networks={[56]} />
       </div>
     );
   }

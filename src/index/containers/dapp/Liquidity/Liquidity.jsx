@@ -111,7 +111,7 @@ function Liquidity() {
           type="import"
         />
       )}
-      <TestnetOverlay mainnetOnly />
+      <TestnetOverlay mainnetOnly networks={[56]} />
     </CabinetBlock>
   );
 }

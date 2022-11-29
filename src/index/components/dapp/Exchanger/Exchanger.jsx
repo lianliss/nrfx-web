@@ -334,7 +334,7 @@ function Exchanger(props) {
           <Instruction />
         </div>
       </div>
-      <TestnetOverlay mainnetOnly />
+      <TestnetOverlay mainnetOnly networks={[56]} />
     </CabinetContent>
   );
 }
