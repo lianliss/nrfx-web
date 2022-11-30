@@ -57,7 +57,7 @@ export class DappCabinet extends Component {
       case PAGES.FARMING:
         Component = Farming;
         break;
-      case PAGES.VALIDATOR:
+      case PAGES.DAPP_VALIDATOR:
         Component = CabinetValidator;
         break;
       case PAGES.DAPP_REFERRAL:

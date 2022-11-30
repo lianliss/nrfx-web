@@ -33,6 +33,7 @@ import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
 import DappWrapper from "../wrappers/Dapp/DappWrapper";
 import LandingWrapper from "../wrappers/Landing/LandingWrapper";
 import DocumentationWrapper from "../wrappers/Documentation/DocumentationWrapper";
+import ValidatorWrapper from "../wrappers/Validator/ValidatorWrapper";
 
 import * as pages from "./constants/pages";
 import * as CabinetWalletScreen from "./containers/cabinet/CabinetWalletScreen/CabinetWalletScreen";
@@ -55,6 +56,7 @@ import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
 import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
 import DappCabinet from "./containers/dapp/DappCabinet/DappCabinet";
+import Validator from "./containers/validator/Main/Main";
 import * as actions from "../actions/index";
 import router from "../router";
 import PrivatePools from "./containers/dapp/PrivatePools/PrivatePools";
@@ -184,7 +186,7 @@ function Routes(props) {
     case pages.FARMING:
     case pages.LIQUIDITY:
     case pages.TRANSACTIONS:
-    case pages.VALIDATOR:
+    case pages.DAPP_VALIDATOR:
     case pages.DAPP_REFERRAL:
     case pages.DAPP_REFERRAL_EXCHANGER:
     case pages.DAPP_REFERRAL_FARMING:
@@ -194,6 +196,11 @@ function Routes(props) {
       WrapperComponent = DappWrapper;
       Component = DappCabinet;
       break;
+    case pages.VALIDATOR:
+      needAuthorization = false;
+      WrapperComponent = ValidatorWrapper;
+      Component = Validator;
+      break
     case pages.FIAT:
       needAuthorization = true;
       Component = CabinetFiatScreen.default;

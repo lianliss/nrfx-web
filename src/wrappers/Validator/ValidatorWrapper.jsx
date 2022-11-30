@@ -1,79 +1,67 @@
 // styles
-import "./DappWrapper.less";
+import './ValidatorWrapper.less';
 // external
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import SVG from "utils/svg-wrap";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import SVG from 'utils/svg-wrap';
 // internal
-import { classNames } from "../../../src/utils";
-import router from "../../../src/router";
-import Header from "../../index/components/dapp/Header/Header";
-import * as PAGES from "../../index/constants/pages";
-import * as utils from "../../utils";
-import TabBar from "../../index/components/cabinet/TabBar/TabBar";
-import { BaseLink } from "react-router5";
-import * as actions from "../../actions";
-import * as steps from "../../components/AuthModal/fixtures";
-import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingStatus";
-import LogoLoader from "../../ui/components/LogoLoader/LogoLoader";
+import { classNames } from '../../../src/utils';
+import router from '../../../src/router';
+import Header from '../../index/components/dapp/Header/Header';
+import * as PAGES from '../../index/constants/pages';
+import * as utils from '../../utils';
+import { BaseLink } from 'react-router5';
+import * as actions from '../../actions';
+import LoadingStatus from '../../index/components/cabinet/LoadingStatus/LoadingStatus';
+import LogoLoader from '../../ui/components/LogoLoader/LogoLoader';
 import Web3Backend from 'services/web3-backend';
 import streamMessage from '../steam-message';
 import TagManager from 'react-gtm-module';
-import { PHONE } from "../../index/constants/breakpoints";
-import { Logo } from "../../ui";
+import { PHONE } from '../../index/constants/breakpoints';
 
 import {
   walletBalancesSelector,
   web3WalletsSelector,
   web3BalancesSelector,
-} from "src/selectors";
-import {
-  walletUpdate,
-} from "src/actions/cabinet/wallet";
-import { getCurrencyInfo } from "src/actions";
-import {
-  updateProfile,
-} from 'src/actions/cabinet/profile';
+} from 'src/selectors';
+import { walletUpdate } from 'src/actions/cabinet/wallet';
+import { updateProfile } from 'src/actions/cabinet/profile';
 
-import {
-  web3Update,
-  web3SetData,
-} from 'actions/cabinet/web3';
+import { web3Update, web3SetData } from 'actions/cabinet/web3';
 
 const STREAM_RECONNECT_TIMEOUT = 2000;
 
-class DappWrapper extends Component {
+class ValidatorWrapper extends Component {
   state = {
-    error: null
+    error: null,
   };
   stream = null;
 
   componentDidMount() {
-    const {updateProfile, web3SetData} = this.props;
+    const { updateProfile, web3SetData } = this.props;
     //this.runStream();
 
     // Web3Backend.getUserData().then(data => {
     //   updateProfile(data);
     // }).catch(error => {
-    //   console.error("[DappWrapper] Can't get user data");
+    //   console.error("[ValidatorWrapper] Can't get user data");
     // });
-    Promise.all([
-      Web3Backend.getAllRates(),
-      Web3Backend.getCommissions(),
-    ]).then(data => {
-      let commissions = data[1];
-      try {
-        commissions = JSON.parse(commissions);
-      } catch (error) {
-        console.warn('Commissions in not JSON format', data[1]);
-      }
-      web3SetData({
-        rates: data[0],
-        commissions: commissions,
+    Promise.all([Web3Backend.getAllRates(), Web3Backend.getCommissions()])
+      .then((data) => {
+        let commissions = data[1];
+        try {
+          commissions = JSON.parse(commissions);
+        } catch (error) {
+          console.warn('Commissions in not JSON format', data[1]);
+        }
+        web3SetData({
+          rates: data[0],
+          commissions: commissions,
+        });
+      })
+      .catch((error) => {
+        console.error("[ValidatorWrapper] Can't get rates");
       });
-    }).catch(error => {
-      console.error("[DappWrapper] Can't get rates");
-    });
 
     TagManager.initialize({
       gtmId: 'GTM-NSSCKZG',
@@ -81,26 +69,26 @@ class DappWrapper extends Component {
 
     // Set adaptive.
     this.handleResize();
-    
+
     // Set adaptive.
-    window.addEventListener("resize", this.handleResize);
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
     // Unset adaptive.
-    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   handleResize = () => {
     const { setAdaptive } = this.props;
     // If phone - true, else - false.
     setAdaptive(document.body.offsetWidth <= PHONE);
-  }
+  };
 
   runStream = async () => {
     this.stream = await Web3Backend.stream(
-      message => streamMessage(message, this.props),
-      error => setTimeout(this.runStream, STREAM_RECONNECT_TIMEOUT),
+      (message) => streamMessage(message, this.props),
+      (error) => setTimeout(this.runStream, STREAM_RECONNECT_TIMEOUT)
     );
 
     window.pingWeb3Backend = () => this.stream.send('ping');
@@ -113,12 +101,12 @@ class DappWrapper extends Component {
   }
 
   componentDidCatch(error, info) {
-    console.error('[DappWrapper]', error, info);
+    console.error('[ValidatorWrapper]', error, info);
     this.setState({
       error: {
         name: error.name,
-        message: error.message
-      }
+        message: error.message,
+      },
     });
   }
 
@@ -138,26 +126,26 @@ class DappWrapper extends Component {
       [PAGES.NOTIFICATIONS]: {
         left: (
           <BaseLink router={router} routeName={PAGES.WALLET}>
-            <SVG src={require("../../asset/24px/angle-left.svg")} />
+            <SVG src={require('../../asset/24px/angle-left.svg')} />
           </BaseLink>
-        )
+        ),
       },
       default: {
         left: !!Object.keys(route.params).length && (
           <span onClick={() => window.history.back()}>
-            <SVG src={require("../../asset/24px/angle-left.svg")} />
+            <SVG src={require('../../asset/24px/angle-left.svg')} />
           </span>
-        )
-      }
+        ),
+      },
     };
 
     if (!Object.keys(route.params)) {
       contentRules[PAGES.WALLET] = {
         left: (
           <BaseLink router={router} routeName={PAGES.NOTIFICATIONS}>
-            <SVG src={require("../../asset/24px/bell.svg")} />
+            <SVG src={require('../../asset/24px/bell.svg')} />
           </BaseLink>
-        )
+        ),
       };
     }
 
@@ -170,25 +158,27 @@ class DappWrapper extends Component {
     }
 
     const mainClassName = classNames({
-      DappWrapper: true,
-      [className]: !!className
+      ValidatorWrapper: true,
+      [className]: !!className,
     });
 
     return (
       <div className={mainClassName}>
-        <Header adaptive={adaptive}  />
-        <div className="DappWrapper__content">{this.__renderContent()}</div>
+        <Header adaptive={adaptive} />
+        <div className="ValidatorWrapper__content">
+          {this.__renderContent()}
+        </div>
       </div>
     );
   }
 }
 
-DappWrapper.defaultProps = {
+ValidatorWrapper.defaultProps = {
   adaptive: false,
 };
 
 export default connect(
-  state => ({
+  (state) => ({
     ...state.default,
     router: state.router,
     user: state.default.profile.user,
@@ -204,4 +194,4 @@ export default connect(
     walletUpdate,
     updateProfile,
   }
-)(DappWrapper);
+)(ValidatorWrapper);
