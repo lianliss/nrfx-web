@@ -6,13 +6,32 @@
 
   &__container {
     flex: 1 1 100%;
+    padding: 33px 8.6% 33px 50px;
     display: flex;
     align-items: center;
     height: auto;
+    position: relative;
+    justify-content: space-between;
   }
 
   &__content {
-    padding: 0 50px;
+    position: relative;
+    margin-right: 20px;
+    z-index: 2;
+  }
+
+  &__background {
+    flex: 0 1 426px;
+    position: relative;
+
+    & > .isvg {
+      display: flex;
+      box-sizing: border-box;
+    }
+
+    svg {
+      width: 100%;
+    }
   }
 
   &__title {
@@ -41,11 +60,13 @@
 
     .Button:not(:last-child) {
       margin-right: 13px;
+      margin-bottom: 13px;
     }
   }
 
   .SocialLinks {
     padding-bottom: 30px;
+    margin-left: 50px;
 
     & > * {
       margin-top: 38px;
