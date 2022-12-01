@@ -1,24 +1,25 @@
 import React from 'react';
 
 // Components
-import { Button } from 'ui';
+import { Button, Col } from 'ui';
 import CabinetBlock from '../../../components/dapp/CabinetBlock/CabinetBlock';
+import SocialLinks from '../../../components/dapp/SocialLinks/SocialLinks';
 
 // Styles
-import './Login.less';
+import './Preview.less';
 
-function Login() {
+function Preview() {
   return (
-    <div className="ValidatorLogin">
-      <CabinetBlock className="ValidatorLogin__container">
-        <div className="ValidatorLogin__content">
-          <h1 className="ValidatorLogin__title">Validator Admin panel</h1>
-          <p className="ValidatorLogin__description">
+    <div className="ValidatorPreview">
+      <CabinetBlock className="ValidatorPreview__container">
+        <div className="ValidatorPreview__content">
+          <h1 className="ValidatorPreview__title">Validator Admin panel</h1>
+          <p className="ValidatorPreview__description">
             Validators are ambassadors and adherents of the project, they are
             earning a percentage of the exchange and from the growth of the
             NRFX/NUSD pool.
           </p>
-          <div className="ValidatorLogin__buttons">
+          <div className="ValidatorPreview__buttons">
             <Button type="lightBlue" size="extra_large">
               Launch App
             </Button>
@@ -28,8 +29,9 @@ function Login() {
           </div>
         </div>
       </CabinetBlock>
+      <SocialLinks />
     </div>
   );
 }
 
-export default Login;
+export default Preview;

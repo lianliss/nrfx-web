@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import Login from '../Login/Login';
+import Preview from '../Preview/Preview';
 
 // Utils
 import router from 'src/router';
@@ -12,11 +12,11 @@ import './Main.less';
 
 function Main(props) {
   const route = router.getState();
-  let Component = Login;
+  let Component = Preview;
 
   switch (route.name) {
     case pages.VALIDATOR:
-      Component = Login;
+      Component = Preview;
     default:
       break;
   }

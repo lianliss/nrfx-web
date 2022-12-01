@@ -1,0 +1,54 @@
+.ValidatorPreview {
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  &__container {
+    flex: 1 1 100%;
+    display: flex;
+    align-items: center;
+    height: auto;
+  }
+
+  &__content {
+    padding: 0 50px;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+    color: var(--black-gunmetal);
+  }
+
+  &__description {
+    margin-top: 22px;
+    max-width: 550px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 180%;
+    color: var(--cool-gray);
+  }
+
+  &__buttons {
+    margin-top: 49px;
+
+    .Button {
+      min-width: 250px;
+    }
+
+    .Button:not(:last-child) {
+      margin-right: 13px;
+    }
+  }
+
+  .SocialLinks {
+    padding-bottom: 30px;
+
+    & > * {
+      margin-top: 38px;
+    }
+  }
+}
