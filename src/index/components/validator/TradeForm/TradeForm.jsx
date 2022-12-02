@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { From } from 'ui';
+import { Form, Radio, RadioGroup } from 'ui';
 
 // Utils
 
@@ -9,7 +9,23 @@ import { From } from 'ui';
 import './TradeForm.less';
 
 function TradeForm() {
-  return <div className="ValidatorTradeForm"></div>;
+  const [tradeType, setTradeType] = React.useState('sell');
+
+  return (
+    <Form className="ValidatorTradeForm">
+      <h2>Trade type</h2>
+      <div>
+        <RadioGroup selected={tradeType} onChange={setTradeType}>
+          <Radio size="small" type="light-blue" value="sell">
+            Sell bitcoins online
+          </Radio>
+          <Radio size="small" type="light-blue" value="buy">
+            Buy bitcoins online
+          </Radio>
+        </RadioGroup>
+      </div>
+    </Form>
+  );
 }
 
 export default TradeForm;
