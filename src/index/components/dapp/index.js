@@ -1,6 +1,10 @@
 // Ui
 export { default as WalletIcon } from './WalletIcon/WalletIcon';
 export { default as DoubleWallets } from './DoubleWallets/DoubleWallets';
+export { default as CustomButton } from './ui/CustomButton/CustomButton';
+export { default as AnswerPopup } from './ui/AnswerPopup/AnswerPopup';
+export { default as DexRoute } from './DexRoute/DexRoute';
+export { default as DexDescription } from './DexDescription/DexDescription';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';
@@ -11,6 +15,7 @@ export { default as YourWalletModal } from './YourWalletModal/YourWalletModal';
 export { default as ConnectToWalletModal } from './Modals/ConnectToWalletModal/ConnectToWalletModal';
 export { default as CreateReferralLink } from './Modals/CreateReferralLink/CreateReferralLink';
 export { default as TransactionResponseModal } from './Modals/TransactionResponse/TransactionResponse';
+export { default as ExchangerModal } from './Modals/Exchanger/Exchanger';
 
 export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGenerated';
 export { default as AttentionBuyTokenModal } from './Modals/AttentionBuyToken/AttentionBuyToken';

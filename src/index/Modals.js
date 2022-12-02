@@ -73,9 +73,10 @@ import {
   AttentionBuyTokenModal,
   SendTokensModal,
   TransactionResponseModal,
+  ExchangerModal,
 } from "./components/dapp";
 import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
-import SwapSettings from "./containers/dapp/DexSwap/components/SwapSettings/SwapSettings";
+import DexSettingsModal from "./containers/dapp/DexSwap/components/DexSettingsModal/DexSettingsModal";
 import { closeModal } from "src/actions/index";
 import { Modal } from "../ui";
 
@@ -240,7 +241,7 @@ function Modals(props) {
       Component = ConnectToWalletModal;
       break;
     case "swap_settings":
-      Component = SwapSettings;
+      Component = DexSettingsModal;
       break;
     case "create_referral_link":
       Component = CreateReferralLink;
@@ -277,6 +278,9 @@ function Modals(props) {
       break;
     case "send_tokens":
       Component = SendTokensModal;
+      break;
+    case "exchanger":
+      Component = ExchangerModal;
       break;
     default:
       return null;
