@@ -71,6 +71,14 @@ const KNOWN_FIATS = [
     decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/cad.svg"
   },
+  {
+    name: "Turkish Lire on Narfex",
+    symbol: "TRY",
+    address: "0x8845161A0EA235F9e94c815241A0e63AcbaC144B",
+    chainId: 56,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/try.svg"
+  },
 ].map(fiat => ({
   ...fiat,
   isFiat: true,

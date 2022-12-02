@@ -1,8 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import isTestnet from 'src/utils/isTestnet';
 import { Web3Context } from 'services/web3Provider';
 import { Button } from 'src/ui';
 import { getLang } from 'src/utils';
+import { METAMASK } from 'src/services/multiwallets/connectors';
+import networkTypes from './constants/networks';
 
 import './TestnetOverlay.less';
 
@@ -10,7 +14,7 @@ const TestnetOverlay = (props) => {
   const context = React.useContext(Web3Context);
   const { chainId, switchToChain, isConnected, connector, connectWallet } =
     context;
-  const { testnetOnly, mainnetOnly } = props;
+  const { testnetOnly, mainnetOnly, networks } = props;
 
   const changeLocation = () => {
     const { pathname, search } = window.location;
@@ -36,6 +40,12 @@ const TestnetOverlay = (props) => {
         <div className="TestnetOverlay__background"></div>
         <div className="TestnetOverlay__content">
           <h2>{text}</h2>
+          {isChainChanger && !networks.includes(chainId) && (
+            <p>
+              {getLang('dapp_overlay_switch_chain_to')}&nbsp;
+              {networkTypes[networks[0]]}.
+            </p>
+          )}
           {isLocationChanger && (
             <div className="TestnetOverlay__buttons">
               <Button onClick={changeLocation} type="lightBlue" shadow>
@@ -46,7 +56,7 @@ const TestnetOverlay = (props) => {
           )}
           {isChainChanger && (
             <div className="TestnetOverlay__buttons">
-              {chainId && (
+              {chainId && connector === METAMASK && (
                 <Button
                   onClick={() => switchToChain(testnetOnly ? 97 : 56)}
                   type="lightBlue"
@@ -98,6 +108,14 @@ const TestnetOverlay = (props) => {
   }
 
   return <Body isLocationChanger />;
+};
+
+TestnetOverlay.propTypes = {
+  networks: PropTypes.array,
+};
+
+TestnetOverlay.defaultProps = {
+  networks: [],
 };
 
 export default TestnetOverlay;
