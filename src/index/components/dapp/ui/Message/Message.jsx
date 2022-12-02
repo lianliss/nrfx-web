@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -9,7 +10,7 @@ import { classNames as cn } from 'utils';
 // Styles
 import './Message.less';
 
-function Message({ children, type, width, onClose }) {
+function Message({ children, type, maxWidth, onClose }) {
   const [opacity, setOpacity] = React.useState(1);
   const animationDuration = 0.3;
 
@@ -22,8 +23,8 @@ function Message({ children, type, width, onClose }) {
     <div
       className={cn({ DappMessage: true, [type]: type })}
       style={{
-        maxWidth: width,
         transition: `opacity ${animationDuration}s`,
+        maxWidth,
         opacity,
       }}
     >
@@ -34,5 +35,17 @@ function Message({ children, type, width, onClose }) {
     </div>
   );
 }
+
+Message.propTypes = {
+  type: PropTypes.oneOf(['warning']),
+  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onClose: PropTypes.func,
+};
+
+Message.defaultProps = {
+  type: 'warning',
+  maxWidth: null,
+  onClose: () => {},
+};
 
 export default Message;
