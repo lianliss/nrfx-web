@@ -6,6 +6,7 @@ import { Container } from 'ui';
 
 // Styles
 import './CreateTrade.less';
+import TradeForm from '../../../components/validator/TradeForm/TradeForm';
 
 function CreateTrade() {
   const [isWarning, setIsWarning] = React.useState(true);
@@ -60,6 +61,9 @@ function CreateTrade() {
               risk payment methods.
             </li>
           </ul>
+        </CabinetBlock>
+        <CabinetBlock>
+          <TradeForm />
         </CabinetBlock>
       </Container>
     </div>
