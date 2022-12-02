@@ -1,0 +1,75 @@
+.AnswerPopup {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  white-space: initial;
+
+  &__container {
+    display: none;
+    padding: 12px 13px 15px;
+    width: 205px;
+    background: #fff;
+    border-radius: var(--radius-panel);
+    position: absolute;
+    z-index: 111;
+    left: 50%;
+    bottom: -12px;
+    transform: translate(-50%, 100%);
+    box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.1);
+    animation: showElement 0.2s;
+  }
+
+  &__icon .isvg {
+    display: flex;
+    align-items: center;
+
+    path {
+      fill: #fff;
+      transition: fill 0.1s;
+    }
+
+    circle {
+      fill: var(--black-gunmetal);
+      stroke: var(--black-gunmetal);
+      opacity: 0.21;
+      transition: fill 0.1s, stroke 0.1s, opacity 0.1s;
+    }
+
+    &:hover {
+      path {
+        fill: var(--cool-gray);
+      }
+
+      circle {
+        fill: transparent;
+        stroke: var(--cool-gray);
+        opacity: 1;
+      }
+    }
+  }
+
+  &__icon {
+    cursor: pointer;
+  }
+
+  &__triangle {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__content {
+    z-index: 10;
+    position: relative;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 160%;
+    color: var(--black-gunmetal);
+  }
+
+  &:hover &__container {
+    display: block;
+  }
+}
