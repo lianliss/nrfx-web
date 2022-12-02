@@ -1,6 +1,8 @@
 // Ui
 export { default as WalletIcon } from './WalletIcon/WalletIcon';
 export { default as DoubleWallets } from './DoubleWallets/DoubleWallets';
+export { default as Message } from './ui/Message/Message';
+export { default as CabinetBlock } from './CabinetBlock/CabinetBlock';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';

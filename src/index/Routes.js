@@ -197,6 +197,7 @@ function Routes(props) {
       Component = DappCabinet;
       break;
     case pages.VALIDATOR:
+    case pages.VALIDATOR_CREATE_TRADE:
       needAuthorization = false;
       WrapperComponent = ValidatorWrapper;
       Component = Validator;

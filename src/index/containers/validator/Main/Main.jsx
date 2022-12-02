@@ -2,6 +2,7 @@ import React from 'react';
 
 // Components
 import Preview from '../Preview/Preview';
+import CreateTrade from '../CreateTrade/CreateTrade';
 
 // Utils
 import router from 'src/router';
@@ -17,6 +18,8 @@ function Main(props) {
   switch (route.name) {
     case pages.VALIDATOR:
       Component = Preview;
+    case pages.VALIDATOR_CREATE_TRADE:
+      Component = CreateTrade
     default:
       break;
   }

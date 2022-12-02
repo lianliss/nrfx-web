@@ -64,3 +64,4 @@ export const PRIVATE_POOLS = "private_pools";
 
 // Validator
 export const VALIDATOR = 'validator';
+export const VALIDATOR_CREATE_TRADE = 'VALIDATOR_CREATE_TRADE';
