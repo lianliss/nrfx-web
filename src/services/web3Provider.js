@@ -461,7 +461,6 @@ class Web3Provider extends React.PureComponent {
       }
 
       this.ethereum = ethereumObject.ethereum;
-      let chainIdNumber = this.getFineChainId(this.ethereum.chainId);
       this.requestMethods = getRequestMetods(connector);
       const provider = ethereumObject.provider;
 
@@ -471,8 +470,9 @@ class Web3Provider extends React.PureComponent {
       }
 
       this.web3 = new Web3(provider);
-      if (chainIdNumber) {
-        this.setChain(chainIdNumber);
+      let chainId = await this.web3.eth.getChainId();
+      if (chainId) {
+        this.setChain(chainId);
       }
 
       // Set account address
@@ -487,9 +487,9 @@ class Web3Provider extends React.PureComponent {
 
       this.walletConnectorStorage().set(connector);
 
-      if (!chainIdNumber) {
-        chainIdNumber = this.getFineChainId(this.ethereum.chainId);
-        this.setChain(chainIdNumber);
+      if (!chainId) {
+        chainId = await this.web3.eth.getChainId();
+        this.setChain(chainId);
       }
 
       // Set provider state

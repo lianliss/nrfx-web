@@ -19,7 +19,6 @@ import { Fraction, JSBI } from '@pancakeswap/sdk';
 import * as toast from 'actions/toasts';
 import { openModal } from "src/actions"
 import { getLang } from "utils";
-import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 import { DexRoute, DexDescription } from 'dapp';
 
 // Styles
@@ -733,7 +732,6 @@ class DexSwap extends React.PureComponent {
         {/*</div>*/}
         {/*})}*/}
         {/*</div>}*/}
-        <TestnetOverlay mainnetOnly />
       </div>
     );
   }
