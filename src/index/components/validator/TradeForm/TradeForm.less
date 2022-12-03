@@ -14,7 +14,19 @@
     color: var(--black-gunmetal);
   }
 
+  &-row {
+    gap: 10px 50px;
+  }
+  .trade-type {
+    margin-bottom: 40px;
+  }
+  .more-information {
+    
+  }
+
   &-col {
+    flex: 1 1 0;
+
     &__title {
       margin-bottom: 15px;
     }
@@ -27,6 +39,35 @@
   .Radio {
     &:first-child {
       margin-top: 0;
+    }
+  }
+
+  .Input {
+    --input-height: 46px;
+    background: transparent;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 140%;
+    border-color: #dfe3f0;
+    border-radius: 10px;
+
+    &__wrapper {
+      margin: 0;
+    }
+
+    &__indicator {
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 140%;
+      color: var(--azureish-white);
+    }
+  }
+
+  .CabinetSelect {
+    width: 100%;
+
+    &__control {
+      height: 46px;
     }
   }
 }
