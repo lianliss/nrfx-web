@@ -17,17 +17,26 @@
   &-row {
     gap: 10px 50px;
   }
+
   .trade-type {
     margin-bottom: 40px;
   }
   .more-information {
-    
+    &__item {
+      width: 100%;
+
+      &:not(:last-child) {
+        margin-bottom: 30px;
+      }
+    }
   }
 
   &-col {
     flex: 1 1 0;
 
     &__title {
+      display: flex;
+      align-items: center;
       margin-bottom: 15px;
     }
   }
@@ -68,6 +77,20 @@
 
     &__control {
       height: 46px;
+    }
+  }
+
+  .trade-price {
+    width: 260px;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    font-style: italic;
+    color: var(--cool-gray);
+
+    strong {
+      font-weight: 600;
     }
   }
 }

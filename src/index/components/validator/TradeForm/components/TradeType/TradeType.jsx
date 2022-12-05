@@ -11,7 +11,7 @@ function TradeType() {
       <h2>Trade type</h2>
       <Row className="ValidatorTradeForm-row trade-type">
         <Col className="ValidatorTradeForm-col">
-          <Row className="ValidatorTradeForm-col__title" alignItems="center">
+          <Row className="ValidatorTradeForm-col__title">
             <h3>I want to...</h3>
             <AnswerPopup>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
@@ -28,7 +28,7 @@ function TradeType() {
           </RadioGroup>
         </Col>
         <Col className="ValidatorTradeForm-col">
-          <Row className="ValidatorTradeForm-col__title" alignItems="center">
+          <Row className="ValidatorTradeForm-col__title">
             <h3>Location</h3>
             <AnswerPopup>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis

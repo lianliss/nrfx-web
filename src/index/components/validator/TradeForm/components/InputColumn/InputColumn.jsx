@@ -14,10 +14,10 @@ function InputColumn({
 }) {
   return (
     <Col className="ValidatorTradeForm-col">
-      <Row className="ValidatorTradeForm-col__title" alignItems="center">
+      <div className="ValidatorTradeForm-col__title">
         <h3>{title}</h3>
         {description && <AnswerPopup>{description}</AnswerPopup>}
-      </Row>
+      </div>
       <Input
         placeholder={placeholder}
         value={value}
