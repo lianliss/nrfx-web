@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Col, Row } from 'ui';
+import { Col, Row, Input } from 'ui';
 import { Select } from 'dapp';
 import InputColumn from '../InputColumn/InputColumn';
 import OpeningHours from '../OpeningHours/OpeningHours';
@@ -82,6 +82,10 @@ function MoreInformation() {
           </p>
         </div>
         <OpeningHours />
+        <div className="more-information__item">
+          <ColumnTitle title="Terms of trade" description={defaultAnswer} />
+          <Input placeholder="Your text..." multiLine />
+        </div>
       </Col>
     </>
   );

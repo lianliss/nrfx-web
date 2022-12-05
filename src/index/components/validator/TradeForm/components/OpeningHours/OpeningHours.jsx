@@ -13,13 +13,13 @@ function OpeningHours() {
   return (
     <div className="ValidatorTradeForm-opening-hours more-information__item">
       <ColumnTitle title="Opening hours" description={defaultAnswer} />
-      <Row className="ValidatorTradeForm-row">
+      <Row className="ValidatorTradeForm-row" wrap>
         <Hours day="Sun" />
         <Hours day="Mon" />
         <Hours day="Tue" />
         <Hours day="Wed" />
       </Row>
-      <Row className="ValidatorTradeForm-row">
+      <Row className="ValidatorTradeForm-row" wrap>
         <Hours day="Thu" />
         <Hours day="Fri" />
         <Hours day="Sat" />
