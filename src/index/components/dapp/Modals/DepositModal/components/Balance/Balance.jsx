@@ -48,6 +48,8 @@ function Balance(props) {
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const fiatSymbol = _.get(fiatSelected, 'symbol', '');
   const invoice = useSelector(state => _.get(state, `dapp.invoices.${fiatSymbol}`));
+  
+  const withdrawBanks = useSelector(state => _.get(state, `dapp.withdraw.banks.${fiatSymbol}`, []));
 
   /**
    * Update "fiatSelected" — fiat token state.
@@ -114,8 +116,12 @@ function Balance(props) {
     const anyBank = banks.find((b) =>
       _.includes(b.currencies, currency.toUpperCase())
     );
-    const minAmount = _.get(anyBank, 'minAmount', 100);
-    const maxAmount = _.get(anyBank, 'maxAmount', 150000);
+    const minAmount = withdrawBanks.length
+      ? withdrawBanks[0].min
+      : _.get(anyBank, 'minAmount', 100);
+    const maxAmount = withdrawBanks.length
+      ? withdrawBanks[0].max
+      : _.get(anyBank, 'maxAmount', 150000);
     const currencyLabel = currency.toUpperCase();
     if (value < minAmount) {
       return (
@@ -203,9 +209,13 @@ function Balance(props) {
     const anyBank = banks.find((b) =>
       _.includes(b.currencies, currency.toUpperCase())
     );
-
-    const minAmount = _.get(anyBank, 'minAmount', 100);
-    const maxAmount = _.get(anyBank, 'maxAmount', 150000);
+  
+    const minAmount = withdrawBanks.length
+      ? withdrawBanks[0].min
+      : _.get(anyBank, 'minAmount', 100);
+    const maxAmount = withdrawBanks.length
+      ? withdrawBanks[0].max
+      : _.get(anyBank, 'maxAmount', 150000);
 
     const fiatBalance = wei.from(_.get(fiatSelected, 'balance', '0'));
     const isWithdrawAvailable = amount && amount <= fiatBalance;

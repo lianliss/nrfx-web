@@ -179,6 +179,7 @@ function ExchangerTopup(props) {
   React.useEffect(() => {
     web3Backend.getWithdrawBanks()
       .then(withdrawBanks => {
+        console.log('WITHDRAW BAKS', withdrawBanks);
         dispatch(setWithdraw({
           banks: withdrawBanks,
         }))
