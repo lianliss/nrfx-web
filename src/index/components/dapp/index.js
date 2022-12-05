@@ -36,3 +36,6 @@ export { default as Currency } from './Currency/Currency';
 export { default as Referral } from './Referral/Referral';
 export { default as SocialMedia } from './SocialMedia/SocialMedia';
 export { default as Team } from './Team/Team';
+
+// Action Components
+export { default as SocialLinks } from './SocialLinks/SocialLinks';

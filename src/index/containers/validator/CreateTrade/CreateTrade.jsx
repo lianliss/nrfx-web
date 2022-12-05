@@ -1,12 +1,12 @@
 import React from 'react';
 
 // Components
-import { Message, CabinetBlock } from 'dapp';
+import { Message, CabinetBlock, SocialLinks } from 'dapp';
 import { Container } from 'ui';
+import TradeForm from '../../../components/validator/TradeForm/TradeForm';
 
 // Styles
 import './CreateTrade.less';
-import TradeForm from '../../../components/validator/TradeForm/TradeForm';
 
 function CreateTrade() {
   const [isWarning, setIsWarning] = React.useState(true);
@@ -66,6 +66,7 @@ function CreateTrade() {
           <TradeForm />
         </CabinetBlock>
       </Container>
+      <SocialLinks />
     </div>
   );
 }
