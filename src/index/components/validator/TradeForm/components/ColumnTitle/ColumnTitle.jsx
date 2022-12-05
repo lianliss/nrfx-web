@@ -6,7 +6,7 @@ function ColumnTitle({ title, description }) {
   return (
     <div className="ValidatorTradeForm-col__title">
       <h3>{title}</h3>
-      <AnswerPopup>{description}</AnswerPopup>
+      {description && <AnswerPopup>{description}</AnswerPopup>}
     </div>
   );
 }
