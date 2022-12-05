@@ -11,7 +11,7 @@ import Column from '../Column/Column';
 
 function OpeningHours() {
   return (
-    <div className="more-information__item">
+    <div className="ValidatorTradeForm-opening-hours more-information__item">
       <ColumnTitle title="Opening hours" description={defaultAnswer} />
       <Row className="ValidatorTradeForm-row">
         <Hours day="Sun" />
