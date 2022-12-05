@@ -5,8 +5,6 @@ import { Form } from 'ui';
 import MoreInformation from './components/MoreInformation/MoreInformation';
 import TradeType from './components/TradeType/TradeType';
 
-// Utils
-
 // Styles
 import './TradeForm.less';
 
