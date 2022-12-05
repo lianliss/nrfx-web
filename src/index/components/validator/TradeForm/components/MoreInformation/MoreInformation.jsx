@@ -34,19 +34,13 @@ function MoreInformation() {
             </Column>
             <InputColumn
               title="Bank name"
-              description="Lorem ipsum dolor
-            sit amet consectetur adipisicing
-            elit. Quis quidem
-            explicabo alias."
+              description={defaultAnswer}
               placeholder="0"
               indicator="%"
             />
             <InputColumn
               title="Margin"
-              description="Lorem ipsum dolor
-            sit amet consectetur adipisicing
-            elit. Quis quidem
-            explicabo alias."
+              description={defaultAnswer}
               placeholder="0"
               indicator="%"
             />
@@ -70,19 +64,13 @@ function MoreInformation() {
             </Column>
             <InputColumn
               title="Min. transaction limit"
-              description="Lorem ipsum dolor
-            sit amet consectetur adipisicing
-            elit. Quis quidem
-            explicabo alias."
+              description={defaultAnswer}
               placeholder="0"
               indicator="USD"
             />
             <InputColumn
               title="Max. transaction limit"
-              description="Lorem ipsum dolor
-            sit amet consectetur adipisicing
-            elit. Quis quidem
-            explicabo alias."
+              description={defaultAnswer}
               placeholder="0"
               indicator="USD"
             />
