@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Col, Row, Input } from 'ui';
 import { AnswerPopup } from 'dapp';
+import ColumnTitle from '../ColumnTitle/ColumnTitle';
 
 function InputColumn({
   title,
@@ -14,10 +15,7 @@ function InputColumn({
 }) {
   return (
     <Col className="ValidatorTradeForm-col">
-      <div className="ValidatorTradeForm-col__title">
-        <h3>{title}</h3>
-        {description && <AnswerPopup>{description}</AnswerPopup>}
-      </div>
+      <ColumnTitle title={title} description={description} />
       <Input
         placeholder={placeholder}
         value={value}

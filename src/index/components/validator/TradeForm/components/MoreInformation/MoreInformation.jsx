@@ -1,8 +1,14 @@
 import React from 'react';
 
+// Components
 import { Col, Row } from 'ui';
-import { Select, AnswerPopup } from 'dapp';
+import { Select } from 'dapp';
 import InputColumn from '../InputColumn/InputColumn';
+import OpeningHours from '../OpeningHours/OpeningHours';
+import ColumnTitle from '../ColumnTitle/ColumnTitle';
+
+// Utils
+import defaultAnswer from '../../constants/defaultAnswer';
 
 function MoreInformation() {
   return (
@@ -12,9 +18,7 @@ function MoreInformation() {
         <div className="more-information__item">
           <Row className="ValidatorTradeForm-row">
             <Col className="ValidatorTradeForm-col">
-              <div className="ValidatorTradeForm-col__title">
-                <h3>Currency</h3>
-              </div>
+              <ColumnTitle title="Currency" />
               <Select
                 value={'light'}
                 onChange={() => {}}
@@ -50,13 +54,7 @@ function MoreInformation() {
         <div className="more-information__item">
           <Row className="ValidatorTradeForm-row">
             <Col className="ValidatorTradeForm-col">
-              <div className="ValidatorTradeForm-col__title">
-                <h3>Price equation</h3>
-                <AnswerPopup>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
-                  blanditiis cum tenetur.
-                </AnswerPopup>
-              </div>
+              <ColumnTitle title="Price equation" description={defaultAnswer} />
               <Select
                 value={'BTC/USD'}
                 onChange={() => {}}
@@ -94,17 +92,7 @@ function MoreInformation() {
             <strong>16,190.20 USD / BTC</strong>
           </p>
         </div>
-        <div className="more-information__item">
-          <div className="ValidatorTradeForm-col__title">
-            <h3>Opening hours</h3>
-            <AnswerPopup>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
-              blanditiis cum tenetur.
-            </AnswerPopup>
-          </div>
-          <Row className="ValidatorTradeForm-row"></Row>
-          <Row className="ValidatorTradeForm-row"></Row>
-        </div>
+        <OpeningHours />
       </Col>
     </>
   );
