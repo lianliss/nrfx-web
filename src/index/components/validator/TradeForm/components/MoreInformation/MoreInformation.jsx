@@ -6,6 +6,7 @@ import { Select } from 'dapp';
 import InputColumn from '../InputColumn/InputColumn';
 import OpeningHours from '../OpeningHours/OpeningHours';
 import ColumnTitle from '../ColumnTitle/ColumnTitle';
+import Column from '../Column/Column';
 
 // Utils
 import defaultAnswer from '../../constants/defaultAnswer';
@@ -17,7 +18,7 @@ function MoreInformation() {
       <Col className="more-information">
         <div className="more-information__item">
           <Row className="ValidatorTradeForm-row">
-            <Col className="ValidatorTradeForm-col">
+            <Column>
               <ColumnTitle title="Currency" />
               <Select
                 value={'light'}
@@ -30,7 +31,7 @@ function MoreInformation() {
                 type="simple"
                 indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
               />
-            </Col>
+            </Column>
             <InputColumn
               title="Bank name"
               description="Lorem ipsum dolor
@@ -53,7 +54,7 @@ function MoreInformation() {
         </div>
         <div className="more-information__item">
           <Row className="ValidatorTradeForm-row">
-            <Col className="ValidatorTradeForm-col">
+            <Column>
               <ColumnTitle title="Price equation" description={defaultAnswer} />
               <Select
                 value={'BTC/USD'}
@@ -66,7 +67,7 @@ function MoreInformation() {
                 type="simple"
                 indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
               />
-            </Col>
+            </Column>
             <InputColumn
               title="Min. transaction limit"
               description="Lorem ipsum dolor

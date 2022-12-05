@@ -16,6 +16,8 @@
 
   &-row {
     gap: 10px 50px;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .trade-type {
@@ -77,6 +79,14 @@
 
     &__control {
       height: 46px;
+      min-width: 0 !important;
+    }
+  }
+
+  &__hours {
+    .Row {
+      margin-top: 5px;
+      gap: 10px;
     }
   }
 

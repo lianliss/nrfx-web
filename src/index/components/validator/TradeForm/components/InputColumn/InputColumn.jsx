@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Col, Row, Input } from 'ui';
-import { AnswerPopup } from 'dapp';
+import { Input } from 'ui';
 import ColumnTitle from '../ColumnTitle/ColumnTitle';
+import Column from '../Column/Column';
 
 function InputColumn({
   title,
@@ -14,7 +14,7 @@ function InputColumn({
   onChange,
 }) {
   return (
-    <Col className="ValidatorTradeForm-col">
+    <Column>
       <ColumnTitle title={title} description={description} />
       <Input
         placeholder={placeholder}
@@ -22,7 +22,7 @@ function InputColumn({
         onTextChange={onChange}
         indicator={indicator}
       />
-    </Col>
+    </Column>
   );
 }
 
