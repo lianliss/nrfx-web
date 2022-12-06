@@ -1,5 +1,7 @@
 export const landingSelector = state => state.landing;
 export const langListSelector = state => state.default.langList;
+export const displayedLangListSelector = state =>
+  langListSelector(state).filter(lang => lang.display);
 export const currentLangSelector = state => state.default.currentLang;
 export const langSelector = (lang, key) => state =>
   state.default.translations[lang][key];

@@ -53,10 +53,7 @@ function Select({
         },
         IndicatorSeparator: null,
       }}
-      className={classNames('CabinetSelect', {
-        [className]: className,
-        [type]: type,
-      })}
+      className={classNames('CabinetSelect', className, type)}
       classNamePrefix="CabinetSelect"
       {...props}
     />
