@@ -1,7 +1,6 @@
 import React from 'react';
 import { Web3Context } from 'services/web3Provider';
 import wait from 'utils/wait';
-import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 
 // Components
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
@@ -209,7 +208,6 @@ function Farming() {
       ) : (
         <LoadingStatus status={'loading'} />
       )}
-      <TestnetOverlay testnetOnly />
     </CabinetBlock>
   );
 }

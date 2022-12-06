@@ -20,10 +20,12 @@ import {
   getRequestMetods,
   getConnectorObject,
   fetchEthereumRequest,
+  getFineChainId,
 } from './multiwallets/multiwalletsDifference';
 import * as CONNECTORS from './multiwallets/connectors';
 import { marketCoins } from 'src/services/coingeckoApi';
 import { getTokenFromSymbol } from "./web3Provider/utils";
+import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
 
 export const Web3Context = React.createContext();
 
@@ -71,8 +73,12 @@ class Web3Provider extends React.PureComponent {
   farm = null;
   pairs = {};
   connectionCheckTimeout;
+  successConnectionCheck = false;
   requestMethods = {};
   fetchEthereumRequest = fetchEthereumRequest.bind(this);
+  getFineChainId = getFineChainId.bind(this);
+  connectWallet = this.connectWallet.bind(this);
+  walletConnectorStorage = () => new WalletConnectorStorage(this);
 
   // Moralis
   moralis = {
@@ -96,31 +102,36 @@ class Web3Provider extends React.PureComponent {
 
   componentDidMount() {
     this._mounted = true;
-    
+
     const provider = new Web3.providers.HttpProvider(
       this.providerAddress
     );
     this.web3Host = new Web3(provider);
 
     // Check web3 wallet plugin
-    // this.checkConnection();
+    this.checkConnection();
 
     // Get tokens list
     this.getTokens();
   }
 
-  checkConnection() {
+  async checkConnection() {
+    if (this.successConnectionCheck) return;
+
     try {
-      if (!_.get(this, 'state.isConnected')
-        && !!window.ethereum
-        && !!window.ethereum.isConnected()
-        && !!window.ethereum.selectedAddress) {
-        this.connectWallet();
+      if (_.get(this, 'state.isConnected')) return;
+
+      const storageConnector = this.walletConnectorStorage().get();
+      if (storageConnector) {
+        await this.walletConnectorStorage().connect(false);
       }
     } catch (error) {
       console.error('[checkConnection]', error);
     }
-    this.connectionCheckTimeout = setTimeout(this.checkConnection.bind(this), 1000);
+    this.connectionCheckTimeout = setTimeout(
+      this.checkConnection.bind(this),
+      1000
+    );
   }
 
   componentWillUnmount() {
@@ -358,7 +369,8 @@ class Web3Provider extends React.PureComponent {
     this.setState({
       isConnected: true,
     });
-    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+
+    this.setChain(this.getFineChainId(chainId));
   };
 
   onAccountsChanged = accounts => {
@@ -381,9 +393,11 @@ class Web3Provider extends React.PureComponent {
   };
 
   onChainChanged = chainId => {
-    console.log('[onChainChanged]', chainId, this.web3Host.utils.hexToNumber(chainId));
+    const fineChainId = this.getFineChainId(chainId);
+
+    console.log('[onChainChanged]', chainId, fineChainId);
     if (!this._mounted) return;
-    this.setChain(this.web3Host.utils.hexToNumber(chainId));
+    this.setChain(fineChainId);
   };
 
   onDisconnect = reason => {
@@ -433,34 +447,49 @@ class Web3Provider extends React.PureComponent {
    * Connect to web3 wallet plugin
    * @returns {Promise.<void>}
    */
-  async connectWallet(connector = this.state.connector) {
+  async connectWallet (connector = this.state.connector, showErrorMessage = true) {
     try {
       // Get connector.
-      const ethereumObject = getConnectorObject(connector);
+      let ethereumObject = getConnectorObject(connector);
 
       if (!ethereumObject) {
-        return toast.error('No wallet plugins detected');
+        if (showErrorMessage) {
+          toast.error('No wallet plugins detected');
+        }
+
+        return;
       }
 
       this.ethereum = ethereumObject.ethereum;
-      const chainIdNumber = this.getWeb3().utils.hexToNumber(this.ethereum.chainId);
       this.requestMethods = getRequestMetods(connector);
       const provider = ethereumObject.provider;
 
+      this.successConnectionCheck = true;
       if (connector === CONNECTORS.WALLET_CONNECT) {
         await provider.enable();
       }
 
       this.web3 = new Web3(provider);
-      this.setChain(chainIdNumber);
+      let chainId = await this.web3.eth.getChainId();
+      if (chainId) {
+        this.setChain(chainId);
+      }
 
       // Set account address
       const accountAddress = (
         await this.fetchEthereumRequest({
           method: this.requestMethods.request_accounts
       }))[0];
+
       if (!accountAddress) {
         throw new Error('No accounts connected');
+      }
+
+      this.walletConnectorStorage().set(connector);
+
+      if (!chainId) {
+        chainId = await this.web3.eth.getChainId();
+        this.setChain(chainId);
       }
 
       // Set provider state
@@ -493,6 +522,10 @@ class Web3Provider extends React.PureComponent {
       accountAddress: null,
       chainId: null,
     });
+
+    // Clear default wallet connection.
+    this.walletConnectorStorage().clear();
+    this.getTokens();
 
     switch (this.state.connector) {
       case CONNECTORS.WALLET_CONNECT:

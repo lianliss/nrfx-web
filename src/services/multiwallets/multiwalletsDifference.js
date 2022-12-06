@@ -38,6 +38,13 @@ export const getEthereum = (connector) => {
 
       return window['ethereum'];
     }
+    case CONNECTORS.TRUST_WALLET: {
+      if (!window['trustwallet']) {
+        return null;
+      }
+
+      return window['trustwallet'];
+    }
     case CONNECTORS.WALLET_CONNECT: {
       return new WalletConnectProvider({
         chainId: 56,
@@ -82,6 +89,14 @@ export const getConnectorObject = (connector, chainID = 56) => {
     return null;
   }
 
+  if (connector === CONNECTORS.METAMASK && !ethereum.isMetaMask) {
+    return null;
+  }
+
+  if (connector === CONNECTORS.TRUST_WALLET && !ethereum.isTrustWallet) {
+    return null;
+  }
+
   const provider = getProviderOfConnector(connector, ethereum, chainID);
   return { ethereum, provider };
 };
@@ -96,4 +111,38 @@ export const fetchEthereumRequest = async function (requestObject, ethereum) {
   if (!this && !ethereum) return false;
 
   return await this.ethereum.request(requestObject);
+};
+
+/**
+ * Returns chainId number for currency wallet connector.
+ * @param id {number | string} - chain id in number or hex.
+ * @returns {number} - fine chainId.
+ */
+export const getFineChainId = function (id) {
+  if (!this) return null;
+  if (!id) return null;
+
+  // If id is hex, use hexToNumber
+  // Else just set id in Number type.
+  if (String(id).search('x') >= 0 && !_.isNumber(id)) {
+    return this.getWeb3().utils.hexToNumber(id);
+  }
+
+  return Number(id);
+};
+
+/**
+ * Returns current browser connector type.
+ * @returns {string}
+ */
+export const getCurrentConnector = () => {
+  if (_.get(window, 'ethereum.isMetaMask')) {
+    return CONNECTORS.METAMASK;
+  }
+
+  if (_.get(window, 'trustwallet.isTrustWallet')) {
+    return CONNECTORS.TRUST_WALLET;
+  }
+
+  return CONNECTORS.WALLET_CONNECT;
 };

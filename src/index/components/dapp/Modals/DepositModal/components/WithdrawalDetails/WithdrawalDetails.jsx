@@ -12,6 +12,7 @@ import { adaptiveSelector } from 'src/selectors';
 import { getLang } from 'src/utils';
 import {Web3Context} from 'src/services/web3Provider';
 import * as toasts from 'src/actions/toasts';
+import ibanFiats from 'src/index/constants/ibanFiats';
 
 // Styles
 import './WithdrawalDetails.less';
@@ -61,6 +62,9 @@ function WithdrawalDetails(props) {
   };
 
   const isWithdrawAvailable = !!accountNumber.length && !!name.length && !!lastName.length;
+  const withdrawalAccountText = ibanFiats.includes(currency)
+    ? 'IBAN'
+    : getLang('dapp_global_card_number').toLowerCase();
 
   const phoneOnInputHandler = (e) => {
     setTimeout(() => {
@@ -103,8 +107,7 @@ function WithdrawalDetails(props) {
       </label>
       <label className="DepositModal__WithdrawalDetails__label">
         <span>
-          {getLang('dapp_global_account')}{' '}
-          ({getLang('dapp_global_card_number').toLowerCase()})
+          {getLang('dapp_global_account')} ({withdrawalAccountText})
         </span>
         <Input type="text"
                value={accountNumber}

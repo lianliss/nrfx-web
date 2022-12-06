@@ -25,6 +25,7 @@ import Lang from 'src/components/Lang/Lang';
 import { openModal } from 'src/actions';
 import { dateFormat } from 'src/utils';
 import { getLang } from 'src/utils';
+import ibanFiats from 'src/index/constants/ibanFiats';
 
 // Styles
 import './ChoosedBank.less';
@@ -91,7 +92,11 @@ function ChoosedBank(props) {
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper size="large">
             <p className="dark default hight-height extra-small extra-large-height">
-              <Lang name="fiatRefillCard_cardNumberForRefill" />
+              {ibanFiats.includes(currency) ? (
+                <Lang name="fiatRefillCard_IBANForRefill" />
+              ) : (
+                <Lang name="fiatRefillCard_cardNumberForRefill" />
+              )}
             </p>
             <CopyText text={card.number}>
               <span className="blue default small extra-large-height">

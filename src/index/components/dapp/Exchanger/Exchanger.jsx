@@ -6,7 +6,6 @@ import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
 import { useRoute } from 'react-router5';
 import router from 'src/router';
-import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
 import networks from 'src/index/constants/networks';
 
 // Components
@@ -168,14 +167,16 @@ function Exchanger(props) {
    */
   fiatsUpdate = () => {
     updateFiats().then(fiats => {
+      const currencySymbol = router.getState().params.currency;
+
       if (!fiatSelected) {
         const initialCurrency = fiats[userId]
-          .find(fiat => fiat.symbol === initGetParams.params.currency);
+          .find(fiat => fiat.symbol === currencySymbol);
         if (fiatSelected.symbol !== initialCurrency.symbol) {
           setFiat(initialCurrency || fiats[userId][0]);
         }
       } else {
-        const fiatSymbol = fiats[userId].find(c => fiatSelected.symbol === c.symbol);
+        const fiatSymbol = fiats[userId].find(c => currencySymbol === c.symbol);
         if (fiatSymbol) {
           setFiat(fiatSymbol);
         }
@@ -332,7 +333,6 @@ function Exchanger(props) {
           <Instruction />
         </div>
       </div>
-      <TestnetOverlay mainnetOnly />
     </CabinetContent>
   );
 }

@@ -37,16 +37,15 @@ function NarfexRate() {
         icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
         startTexts={['Narfex', 'NRFX']}
         endTexts={[
-          <br />,
-          <>
-            <RateIndicator
-              number={priceDifference}
-              type={RateIndicator.getType(priceDifference)}
-              procent
-            />
+          <span className="NarfexRate__large">
             $
             <NumberFormat number={currentPrice ? currentPrice.toFixed(2) : 0} />
-          </>,
+          </span>,
+          <RateIndicator
+            number={priceDifference}
+            type={RateIndicator.getType(priceDifference)}
+            procent
+          />,
         ]}
         border
       />

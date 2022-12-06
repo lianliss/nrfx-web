@@ -464,7 +464,10 @@ function ExchangerSwap(props) {
           </Button>
         }
       </div> : <div className="ExchangerSwap__actions-buy">
-        <Button className="" onClick={() => actions.openModal('connect_to_wallet')}>
+        <Button
+          className=""
+          onClick={() => actions.openStateModal('connect_to_wallet')}
+        >
           {getLang('dapp_global_connect_wallet')}
         </Button>
       </div>}
@@ -479,7 +482,7 @@ function ExchangerSwap(props) {
             defaultList="fiats"
             tokens={[
               ...coins,
-            ].filter(t => t.symbol !== coinSymbol && t.symbol !== 'BNB')}
+            ].filter(t => t.symbol !== 'BNB')}
             fiats={fiats}
             loadAccountBalances={loadAccountBalances}
           />
@@ -493,9 +496,7 @@ function ExchangerSwap(props) {
           selected={coin}
           isAdaptive={isAdaptive}
           {...context}
-          tokens={[
-            ...coins,
-          ].filter(t => t.symbol !== fiatSymbol)}
+          tokens={[...coins]}
           fiats={fiats}
           loadAccountBalances={loadAccountBalances}
         />

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // Components
 import DappContainer from '../../../components/cabinet/DappContainer/DappContainer';
 import CabinetSidebar from 'src/index/components/dapp/CabinetSidebar/CabinetSidebar';
+import TestnetOverlay from 'dapp/TestnetOverlay/TestnetOverlay';
 
 // Pages
 import {
@@ -16,7 +17,7 @@ import {
   Currency,
   Referral,
   SocialMedia,
-  Team
+  Team,
 } from 'src/index/components/dapp';
 
 // Utils
@@ -35,27 +36,35 @@ export class DappCabinet extends Component {
 
     // Set page component
     let Component = Exchanger;
+    let mainnetOnly = false;
+    let testnetOnly = false;
 
     switch (route.name) {
       case PAGES.DAPP_WALLET:
         Component = CabinetWallets;
+        mainnetOnly = true;
         break;
       case PAGES.DAPP_CURRENCY:
         Component = Currency;
+        mainnetOnly = true;
         break;
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;
+        mainnetOnly = true;
         break;
       case PAGES.DAPP_TRANSACTION_HISTORY:
         Component = TransactionHistory;
+        mainnetOnly = true;
         break;
       case PAGES.DAPP_SWAP:
       case PAGES.LIQUIDITY:
       case PAGES.TRANSACTIONS:
         Component = SwitchPage;
+        mainnetOnly = true;
         break;
       case PAGES.FARMING:
         Component = Farming;
+        testnetOnly = true;
         break;
       case PAGES.VALIDATOR:
         Component = CabinetValidator;
@@ -64,6 +73,7 @@ export class DappCabinet extends Component {
       case PAGES.DAPP_REFERRAL_EXCHANGER:
       case PAGES.DAPP_REFERRAL_FARMING:
         Component = Referral;
+        mainnetOnly = true;
         break;
       case PAGES.DAPP_SOCIAL_MEDIA:
         Component = SocialMedia;
@@ -82,6 +92,8 @@ export class DappCabinet extends Component {
         sideBar={<CabinetSidebar />}
       >
         <Component route={route.name} adaptive={adaptive} />
+        {testnetOnly && <TestnetOverlay testnetOnly networks={[97]} />}
+        {mainnetOnly && <TestnetOverlay mainnetOnly networks={[56]} />}
       </DappContainer>
     );
   }

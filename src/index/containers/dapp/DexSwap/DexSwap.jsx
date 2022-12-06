@@ -6,7 +6,7 @@ import { setSwap } from 'src/actions/dapp/swap';
 
 // Components
 import { Switch, SwitchTabs, Button, HoverPopup, } from 'src/ui';
-import SwapSettings from './components/SwapSettings/SwapSettings';
+import DexSettingsModal from './components/DexSettingsModal/DexSettingsModal';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import DexSwapInput from './components/DexSwapInput/DexSwapInput';
@@ -19,7 +19,7 @@ import { Fraction, JSBI } from '@pancakeswap/sdk';
 import * as toast from 'actions/toasts';
 import { openModal } from "src/actions"
 import { getLang } from "utils";
-import TestnetOverlay from 'src/index/components/dapp/TestnetOverlay/TestnetOverlay';
+import { DexRoute, DexDescription } from 'dapp';
 
 // Styles
 import './DexSwap.less';
@@ -160,6 +160,7 @@ class DexSwap extends React.PureComponent {
             pair: [token0, token1]
           }
         } else {
+          const { tokens } = this.context;
           return {
             ...state,
             lastChainId: chainId,
@@ -603,8 +604,8 @@ class DexSwap extends React.PureComponent {
             {button}
 
             {!!this.trade && !!Number(amount0) && (
-              <div className="DexSwap__description">
-                <div className="DexSwap__description-item">
+              <DexDescription>
+                <DexDescription.Item>
                   <span>
                     {isExactIn
                       ? getLang('dex_minimum_receive')
@@ -631,8 +632,8 @@ class DexSwap extends React.PureComponent {
                     &nbsp;
                     {pair[Number(!exactIndex)].symbol}
                   </span>
-                </div>
-                <div className="DexSwap__description-item">
+                </DexDescription.Item>
+                <DexDescription.Item>
                   <span>
                     {getLang('dex_price_impact')}
                     <HoverPopup
@@ -652,8 +653,8 @@ class DexSwap extends React.PureComponent {
                   <span className={priceImpactColor}>
                     {priceImpactNumber.toFixed(2)}%
                   </span>
-                </div>
-                <div className="DexSwap__description-item">
+                </DexDescription.Item>
+                <DexDescription.Item>
                   <span>
                     {getLang('dex_liquidity_fee')}
                     {/*<HoverPopup content={<div className="DexSwap__hint">*/}
@@ -669,8 +670,8 @@ class DexSwap extends React.PureComponent {
                     {getFinePrice(fee)}{' '}
                     {_.get(this.state, 'pair[0].symbol', '')}
                   </span>
-                </div>
-              </div>
+                </DexDescription.Item>
+              </DexDescription>
             )}
 
             {!_.isNull(selectToken) && (
@@ -697,53 +698,23 @@ class DexSwap extends React.PureComponent {
                 selected={this.state.pair[selectToken]}
                 disableSwitcher
                 {...this.context}
+                fiats={this.context.getFiatsArray()}
               />
             )}
             {isSettings && (
-              <SwapSettings
+              <DexSettingsModal
                 slippageTolerance={this.state.slippageTolerance}
                 deadline={this.state.deadline}
                 setSlippage={value => this.setState({slippageTolerance: value})}
                 setDeadline={value => this.setState({deadline: value})}
                 onClose={() => this.setState({ isSettings: false })}
+                showTitle={true}
               />
             )}
           </div>
         </CabinetBlock>
-        {(!!route && !!route.length) && <div className="DexSwap__route">
-          <h3>
-            <span>{getLang('dex_route')}</span>
-            <HoverPopup
-              content={
-                <div className="DexSwap__hint">{getLang('dex_route_hint')}</div>
-              }
-            >
-              ?
-            </HoverPopup>
-          </h3>
-          <div className="DexSwap__route-container">
-            {route.map((symbol, index) => {
-              const token = tokens.find((t) => t.symbol === symbol);
-              const logo = _.get(token, 'logoURI', '');
-              return (
-                <div className="DexSwap__route-symbol" key={symbol}>
-                  {!!index && (
-                    <SVG
-                      src={require('src/asset/icons/triangle-right.svg')}
-                      className="DexSwap__route-arrow"
-                    />
-                  )}
-                  <div
-                    className="DexSwap__route-logo"
-                    style={{ backgroundImage: `url('${logo}')` }}
-                  />
-                  <span>{symbol}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>}
-        {/*{!!transactions.length && <div className="DexSwap__description">*/}
+        {(!!route && !!route.length) && <DexRoute tokens={tokens} route={route} />}
+        {/*{!!transactions.length && <div className="DexDescription">*/}
         {/*<h3>*/}
         {/*{getLang('dex_last_transactions')}*/}
         {/*</h3>*/}
@@ -751,7 +722,7 @@ class DexSwap extends React.PureComponent {
         {/*const {txHash, token0, token1, amount0, amount1} = item;*/}
         {/*const link = `https://bscscan.com/tx/${txHash}`;*/}
 
-        {/*return <div className="DexSwap__description-item" key={txHash}>*/}
+        {/*return <div className="DexDescription-item" key={txHash}>*/}
         {/*<span>*/}
         {/*<a href={link} target="_blank">{txHash}</a>*/}
         {/*</span>*/}
@@ -761,7 +732,6 @@ class DexSwap extends React.PureComponent {
         {/*</div>*/}
         {/*})}*/}
         {/*</div>}*/}
-        <TestnetOverlay mainnetOnly />
       </div>
     );
   }

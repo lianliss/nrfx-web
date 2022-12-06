@@ -192,17 +192,21 @@
   }
 }
 
-.adaptive .Currency {
-  padding: 20px 21px 23px;
+@media screen and (max-width: 1024px) {
+  .Currency {
+    &__buttons {
+      flex-direction: column;
 
-  &__buttons {
-    flex-direction: column;
-
-    .col {
-      width: 100%;
-      margin-bottom: 8px;
+      .col {
+        width: 100%;
+        margin-bottom: 8px;
+      }
     }
   }
+}
+
+.adaptive .Currency {
+  padding: 20px 21px 23px;
 
   &__body {
     margin-top: 22px;
