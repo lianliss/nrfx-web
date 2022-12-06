@@ -47,7 +47,7 @@ function Exchanger(props) {
     fiats, chainId, accountAddress,
     web3, updateFiats, isConnected,
     tokens, loadAccountBalances, cmcTokens,
-    getTokens,
+    getTokens, getPairAddress,
   } = context;
 
   const [limits, setLimits] = React.useState([]);

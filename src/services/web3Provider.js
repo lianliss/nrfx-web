@@ -9,6 +9,8 @@ import axios from 'axios';
 import networks from 'src/index/constants/networks';
 import getAllPairsCombinations from 'utils/getPairCombinations';
 import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
+import { getAddress, getCreate2Address } from '@ethersproject/address';
+import { keccak256, pack } from '@ethersproject/solidity';
 import significant from 'utils/significant';
 import TokenContract from './web3Provider/token';
 import MasterChefContract from './web3Provider/MasterChefContract';
@@ -176,10 +178,27 @@ class Web3Provider extends React.PureComponent {
    * @returns {string}
    */
   getPairAddress(_token0, _token1) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
-
-    return Pair.getAddress(this.getToken(token0), this.getToken(token1));
+    const token0 = this.getToken(_token0.address ? _token0 : this.wrapBNB);
+    const token1 = this.getToken(_token1.address ? _token1 : this.wrapBNB);
+    
+    let first;
+    let second;
+    
+    if (token0.sortsBefore(token1)) {
+      first = token0;
+      second = token1;
+    } else {
+      first = token1;
+      second = token0;
+    }
+  
+    const network = networks[token0.chainId];
+    return getCreate2Address(
+      network.factoryAddress,
+      keccak256(
+        ['bytes'],
+        [pack(['address', 'address'], [first.address, second.address])]),
+      network.factoryInitCodeHash);
   }
 
   /**
@@ -1361,11 +1380,11 @@ class Web3Provider extends React.PureComponent {
       const userId = `${chainId}${accountAddress}`;
       if (!isConnected) {
         const fiats = {};
-        fiats[userId] = KNOWN_FIATS;
+        fiats[userId] = KNOWN_FIATS.filter(f => f.chainId === chainId);
         this.setState({
           fiats,
         });
-        return KNOWN_FIATS;
+        return KNOWN_FIATS.filter(f => f.chainId === chainId);
       }
       const fiats = _.cloneDeep(this.state.fiats);
       let list = _.get(fiats, 'list', []);
@@ -1386,7 +1405,8 @@ class Web3Provider extends React.PureComponent {
         );
         return fiatContract.methods.getInfo(accountAddress || ZERO_ADDRESS).call();
       }))).map((fiat, index) => {
-        const known = KNOWN_FIATS.find(s => s.symbol === fiat[1]);
+        const known = KNOWN_FIATS.filter(f => f.chainId === chainId)
+          .find(s => s.symbol === fiat[1]);
         return known ? {
           ...known,
           address: list[index],
