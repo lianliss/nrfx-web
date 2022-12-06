@@ -29,6 +29,7 @@ import SiteContactScreen from "../landing/containers/Contacts/Contacts";
 import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoundScreen";
 // import UIKitScreen from "./containers/UIKit/UIKitScreen";
 // import SiteWrapper from "../wrappers/Site/SiteWrapper";
+import MainLandingWrapper from "../wrappers/MainLanding";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
 import DappWrapper from "../wrappers/Dapp/DappWrapper";
 import LandingWrapper from "../wrappers/Landing/LandingWrapper";
@@ -58,6 +59,7 @@ import DappCabinet from "./containers/dapp/DappCabinet/DappCabinet";
 import * as actions from "../actions/index";
 import router from "../router";
 import PrivatePools from "./containers/dapp/PrivatePools/PrivatePools";
+import MainLanding from "../landings/Main";
 
 function Routes(props) {
   const routeState = props.route;
@@ -92,11 +94,10 @@ function Routes(props) {
     setDefaultFavicon([pages.TOKEN]);
   }, [route]);
 
-
   switch (route) {    
     case pages.MAIN:
-      Component = SiteMainScreen;
-      WrapperComponent = LandingWrapper;
+      Component = MainLanding;
+      WrapperComponent = MainLandingWrapper;
       break;
     case pages.BUY_BITCOIN:
       Component = BuyBitcoinScreen;
