@@ -8,7 +8,7 @@ import SuggestiveBox from '../../components/SuggestiveBox';
 // Styles
 import './index.less';
 
-function Promo() {
+function Promo({ adaptive }) {
   return (
     <div className="MainLanding-promo">
       <Container maxWidth={1352}>
@@ -16,7 +16,11 @@ function Promo() {
           <SVG src={require('src/asset/backgrounds/main-landing-promo.svg')} />
         </div>
       </Container>
-      <Container className="MainLanding-promo__content" maxWidth={1262} padding={62}>
+      <Container
+        className="MainLanding-promo__content"
+        maxWidth={1262}
+        padding={adaptive ? 23 : 62}
+      >
         <Col>
           <h1>
             <span>Narfex</span>. Exchanger. Free transaction.
