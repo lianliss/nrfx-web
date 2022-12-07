@@ -14,8 +14,8 @@ function Currency({ currency, amount, name, adaptive }) {
       <WalletIcon size={adaptive ? 35 : 41} currency={currency} />
       <NumberFormat number={amount} />
       <Col>
-        <span className="ExchangerModal__Currency-name">{name}</span>
-        <span className="ExchangerModal__Currency-currency">{currency}</span>
+        <span className="ExchangerModal__Currency-name">{currency.name}</span>
+        <span className="ExchangerModal__Currency-currency">{currency.symbol}</span>
       </Col>
     </Row>
   );

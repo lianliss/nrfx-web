@@ -1,3 +1,30 @@
+const TESTNET_BASE_TOKENS = [
+  {
+    name: "Wrapped BNB",
+    symbol: "WBNB",
+    address: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+    chainId: 97,
+    decimals: 18,
+    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
+  },
+  {
+    name: "Tether",
+    symbol: "USDT",
+    address: "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684",
+    chainId: 97,
+    decimals: 18,
+    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+  },
+  {
+    name: "Dai Token",
+    symbol: "DAI",
+    address: "0x8a9424745056Eb399FD19a0EC26A14316684e274",
+    chainId: 97,
+    decimals: 18,
+    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+  },
+];
+
 module.exports = [
   {
     name: "Wrapped BNB",
@@ -63,4 +90,5 @@ module.exports = [
     decimals: 18,
     logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
   },
+  ...TESTNET_BASE_TOKENS,
 ];

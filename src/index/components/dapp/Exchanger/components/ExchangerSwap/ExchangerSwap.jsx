@@ -59,6 +59,9 @@ function getDefaultCommission(token, _commissions) {
     : _.get(commissions, 'BinanceDefault', 0);
 }
 
+// For asynchronous amounts check
+let inputAmount, outputAmount;
+
 function ExchangerSwap(props) {
   const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
@@ -80,6 +83,9 @@ function ExchangerSwap(props) {
   } = props;
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const [isSelectCoin, setIsSelectCoin] = React.useState(false);
+  // Display rate
+  const [outputRate, setOutputRate] = React.useState(0);
+  const [isExactOut, setIsExactOut] = React.useState(false);
   const [paramsTokenLoaded, setParamsTokensLoaded] = React.useState({
     token: false,
     fiat: false
@@ -142,20 +148,70 @@ function ExchangerSwap(props) {
   const isAvailableOfMax = coinAmount <= maxCoinAmount;
   const isAvailableOfMin = coinAmount >= minCoinAmount;
   const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
+  
+  // Get output amount for connected and not connected states
+  const getOutAmount = async inAmount => {
+    try {
+      if (isConnected) {
+        const data = await getTokenContract(fiat).getOutAmount(coin, inAmount);
+        return _.get(data, 'outAmount', 0);
+      } else {
+        return inAmount * rate * (1 - coinCommission);
+      }
+    } catch (error) {
+      console.error('[ExchangerSwap][getOutAmount]', error);
+      return 0;
+    }
+  };
+  
+  // Get input amount for connected and not connected states
+  const getInAmount = async outAmount => {
+    try {
+      if (isConnected) {
+        const data = await getTokenContract(fiat).getInAmount(coin, outAmount);
+        return _.get(data, 'inAmount', 0);
+      } else {
+        return outAmount / (rate * (1 - coinCommission));
+      }
+    } catch (error) {
+      console.error('[ExchangerSwap][getInAmount]', error);
+      return 0;
+    }
+  };
 
   const handleFiatInput = newValue => {
-    const newCoinAmount = newValue * rate * (1 - coinCommission);
-
+    inputAmount = newValue;
     dispatch(setExchangeAmount(newValue, 'from'));
-    dispatch(setExchangeAmount(getFixedNumber(newCoinAmount, 5), 'to'));
+    setIsExactOut(false);
+    
+    if (newValue) {
+      getOutAmount(newValue).then(outAmount => {
+        if (inputAmount !== newValue) return;
+        dispatch(setExchangeAmount(getFixedNumber(outAmount, 5), 'to'));
+        outputAmount = outAmount;
+      }).catch(e => console.error('[handleFiatInput]', e));
+    } else {
+      dispatch(setExchangeAmount(null, 'to'));
+      outputAmount = 0;
+    }
   };
 
   const handleCoinInput = newValue => {
-    const newFiatAmount = newValue / (rate * (1 - coinCommission));
-
+    outputAmount = newValue;
     dispatch(setExchangeAmount(newValue, 'to'));
-    dispatch(setExchangeAmount(getFixedNumber(newFiatAmount, 5), 'from'));
-  }
+    setIsExactOut(true);
+  
+    if (newValue) {
+      getInAmount(newValue).then(inAmount => {
+        if (outputAmount !== newValue) return;
+        dispatch(setExchangeAmount(getFixedNumber(inAmount, 5), 'from'));
+        inputAmount = inAmount;
+      }).catch(e => console.error('[handleCoinInput]', e));
+    } else {
+      dispatch(setExchangeAmount(null, 'from'));
+      inputAmount = 0;
+    }
+  };
 
   function fiatSelector() {
     setIsSelectFiat(true);
@@ -325,6 +381,14 @@ function ExchangerSwap(props) {
 
     handleFiatInput(fiatAmount);
   }, [fiat, coin]);
+  
+  // Update rates display (1 RUB = 123 USDT)
+  React.useEffect(() => {
+    if (!fiat || !coin) return;
+    getOutAmount(1).then(outAmount => {
+      setOutputRate(outAmount);
+    });
+  }, [fiatSymbol, coinSymbol, isConnected]);
 
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
@@ -345,7 +409,7 @@ function ExchangerSwap(props) {
                 </div>
               </div>
               <div className="ExchangerSwap__dropdown-rate">
-                1 {fiatSymbol} ≈ {getFinePrice(1 / rateDisplay)} {coinSymbol}
+                1 {fiatSymbol} ≈ {getFinePrice(outputRate)} {coinSymbol}
               </div>
             </div>
           </div>
@@ -364,7 +428,7 @@ function ExchangerSwap(props) {
                 {getFinePrice(fiatBalance)} {fiatSymbol}
               </span>
               {isAdaptive && <div className="ExchangerSwap__rate">
-                1 {fiatSymbol} ≈ {getFinePrice(1 / rateDisplay)} {coinSymbol}
+                1 {fiatSymbol} ≈ {getFinePrice(outputRate)} {coinSymbol}
               </div>}
             </div>
           </div>
@@ -400,14 +464,13 @@ function ExchangerSwap(props) {
                 </div>
               </div>
               <div className="ExchangerSwap__dropdown-rate">
-                1 {coinSymbol} ≈ {getFinePrice(rateDisplay)} {fiatSymbol}
+                1 {coinSymbol} ≈ {getFinePrice(1 / outputRate)} {fiatSymbol}
               </div>
             </div>
           </div>
           <div className="SwapForm__form__control">
             <div className="ExchangerSwap__fiat-amount">
               <DappInput placeholder="0.00"
-                     disabled={!coin?.isFiat}
                      value={coinAmount}
                      onChange={handleCoinInput}
                      type="number"
@@ -415,54 +478,24 @@ function ExchangerSwap(props) {
                       dispatch(setExchangeFocus('to'));
                      }}
                      textPosition="right"
-                     error={!!(coinAmount && !isAvailableOfMin)} />
-              <span
-                className={classNames({
-                  ['error-orange']:
-                    coinAmount && !isAvailableOfMin,
-                })}
-              >
-                Min: {getFinePrice(minCoinAmount)} {coinSymbol}
-              </span>
-              {isAdaptive && (
-                <div
-                  className={classNames({
-                    ExchangerSwap__rate: true,
-                    ['error-orange']:
-                      coinAmount && !isAvailableOfMin,
-                  })}
-                >
-                  1 {coinSymbol} ≈ {getFinePrice(rateDisplay)} {fiatSymbol}
-                </div>
-              )}
+                     error={false} />
             </div>
           </div>
         </div>
       </div>
       {isConnected ? <div className="ExchangerSwap__actions-buy">
-        {(!isFirstFiat && !isSecondFiat) || fiatSymbol === 'NRFX'
-          ? <Button className=""
-                    state={isProcessing ? 'loading' : ''}
-                    onClick={() => {
-                      if (fiatSymbol === 'NRFX' && isSecondFiat) {
-                        const secondToken =
-                          coins.find(t => t.symbol === 'USDT') ||
-                          coins[1];
-                        dispatch(setSwap(fiat, secondToken));
-                      } else {
-                        dispatch(setSwap(fiat, coin));
-                      }
-
-                      router.navigate(PAGES.DAPP_SWAP);
-                    }}>
-            {getLang('dapp_exchanger_exchange_on_dex_button')}
-          </Button>
-          : <Button className=""
-                    state={isProcessing ? 'loading' : ''}
-                    onClick={swapTokens}>
-            {getLang('dapp_exchanger_exchange_button')}
-          </Button>
-        }
+        <Button className=""
+                disabled={!fiatAmount || !coinAmount}
+                state={isProcessing ? 'loading' : ''}
+                onClick={() => actions.openStateModal('exchanger', {
+                  isExactOut,
+                  fiat,
+                  coin,
+                  fiatAmount,
+                  coinAmount,
+                })}>
+          {getLang('dapp_exchanger_exchange_button')}
+        </Button>
       </div> : <div className="ExchangerSwap__actions-buy">
         <Button
           className=""
@@ -482,7 +515,7 @@ function ExchangerSwap(props) {
             defaultList="fiats"
             tokens={[
               ...coins,
-            ].filter(t => t.symbol !== 'BNB')}
+            ]}
             fiats={fiats}
             loadAccountBalances={loadAccountBalances}
           />

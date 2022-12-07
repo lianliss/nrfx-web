@@ -11,8 +11,14 @@ import { classNames as cn, getLang } from 'utils';
 // Styles
 import './ExchangerSettings.less';
 
-function ExchangerSettings() {
+function ExchangerSettings(props) {
   const [isActive, setIsActive] = React.useState(false);
+  const {
+    slippage,
+    setSlippage,
+    deadline,
+    setDeadline,
+  } = props;
 
   return (
     <div className="ExchangerModal__Settings">
@@ -37,7 +43,14 @@ function ExchangerSettings() {
       <div
         className={cn({ ExchangerModal__Settings__container: true, isActive })}
       >
-        <SwapSettings slippageNumbers={[0.1, 0.5, 1]} />
+        <SwapSettings
+          slippageNumbers={[0.1, 0.5, 1]}
+          {...{
+            slippageTolerance: slippage,
+            setSlippage,
+            deadline,
+            setDeadline,
+          }} />
       </div>
     </div>
   );

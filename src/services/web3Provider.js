@@ -178,13 +178,13 @@ class Web3Provider extends React.PureComponent {
    * @returns {string}
    */
   getPairAddress(_token0, _token1) {
-    const token0 = this.getToken(_token0.address ? _token0 : this.wrapBNB);
-    const token1 = this.getToken(_token1.address ? _token1 : this.wrapBNB);
+    const token0 = _token0.address ? _token0 : this.wrapBNB;
+    const token1 = _token1.address ? _token1 : this.wrapBNB;
     
     let first;
     let second;
     
-    if (token0.sortsBefore(token1)) {
+    if (token0.address.toLowerCase() < token1.address.toLowerCase()) {
       first = token0;
       second = token1;
     } else {
@@ -231,11 +231,12 @@ class Web3Provider extends React.PureComponent {
       const pair = combinations[index];
       const token0 = this.getToken(pair[0]);
       const token1 = this.getToken(pair[1]);
-      const isForward = token0.sortsBefore(token1); // True if token0 is the first token of LP
+      const isForward = token0.address.toLowerCase() < token1.address.toLowerCase(); // True if token0 is the first token of LP
       const reserve0 = _.get(result, 'value._reserve0', 0);
       const reserve1 = _.get(result, 'value._reserve1', 0);
       const tokenAmount0 = new TokenAmount(token0, isForward ? reserve0 : reserve1);
       const tokenAmount1 = new TokenAmount(token1, isForward ? reserve1 : reserve0);
+      
       return new Pair(tokenAmount0, tokenAmount1);
     }).filter(r => r);
   }
@@ -1900,6 +1901,7 @@ class Web3Provider extends React.PureComponent {
     return <Web3Context.Provider value={{
       ...this.state,
       web3: this.web3,
+      getWeb3: this.getWeb3.bind(this),
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
       logout: this.logout.bind(this),

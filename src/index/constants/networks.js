@@ -28,6 +28,14 @@ const networks = {
       decimals: 18,
       logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
     },
+    usdt: {
+      name: "Tether",
+      symbol: "USDT",
+      address: "0x55d398326f99059fF775485246999027B3197955",
+      chainId: 56,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+    },
     poolsList: ["0xe38004a2124abe97f972b2af12e888962fae464b","0x4f191eff08dd7074f3a6584c2024290968ba94db"],
     tokens: [
       {
@@ -84,6 +92,14 @@ const networks = {
       decimals: 18,
       logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
     },
+    usdt: {
+      name: "Tether",
+      symbol: "USDT",
+      address: "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684",
+      chainId: 97,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+    },
     poolsList: [
 
     ],
@@ -124,6 +140,14 @@ const networks = {
         name: "Tether",
         symbol: "USDT",
         address: "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684",
+        chainId: 97,
+        decimals: 18,
+        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+      },
+      {
+        name: "Dai Token",
+        symbol: "DAI",
+        address: "0x8a9424745056Eb399FD19a0EC26A14316684e274",
         chainId: 97,
         decimals: 18,
         logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
