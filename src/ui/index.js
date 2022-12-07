@@ -13,6 +13,7 @@ export { default as Label } from "./components/Label/Label";
 export { default as Filter } from "./components/Filter/Filter";
 export { default as OnScroll } from "./components/OnScroll/OnScroll";
 export { default as HamburgerButton } from "./components/HamburgerButton/HamburgerButton";
+export { default as Container } from "./components/Container";
 // export {
 //   default as Notifications,
 //   Notification,

@@ -2,6 +2,7 @@ import React from 'react';
 import Skeleton from '../../ui/components/Skeleton/Skeleton';
 
 // Components
+import Promo from './containers/Promo';
 
 // Styles
 import './index.less';
@@ -9,8 +10,7 @@ import './index.less';
 function Main() {
   return (
     <div className="MainLanding">
-      <div className="MainLanding-first-screen">
-      </div>
+      <Promo />
     </div>
   );
 }
