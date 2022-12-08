@@ -123,12 +123,19 @@
 
       .isvg {
         position: absolute;
-        right: 0;
+        right: -1px;
         bottom: -4px;
+        width: 45.95%;
+
+        @media screen and (max-width: 1300px) {
+          width: 50%;
+          right: -20%;
+        }
       }
 
       svg {
         max-width: 100%;
+        height: auto;
       }
 
       &::before {
