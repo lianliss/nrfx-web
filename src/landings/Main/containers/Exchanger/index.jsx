@@ -11,11 +11,11 @@ import { sizes } from '../../components/SuggestiveBox/constants/types';
 // Styles
 import './index.less';
 
-function Exchanger() {
+function Exchanger({ adaptive }) {
   return (
     <Container
       maxWidth={1356}
-      padding={22}
+      padding={adaptive ? 15 : 22}
       className="MainLanding-exchanger__wrapper"
     >
       <div className="MainLanding-exchanger">
@@ -41,27 +41,39 @@ function Exchanger() {
             </Col>
           </div>
         </div>
-        <SuggestiveBox
-          title="Support Telegram"
-          subtitle="online 24 / 7"
-          icon={
-            <SVG src={require('src/asset/icons/social/telegram-solid.svg')} />
-          }
-          size={sizes.medium}
-          background
-        />
+        {!adaptive && (
+          <SuggestiveBox
+            title="Support Telegram"
+            subtitle="online 24 / 7"
+            icon={
+              <SVG src={require('src/asset/icons/social/telegram-solid.svg')} />
+            }
+            size={sizes.medium}
+            background
+          />
+        )}
         <div className="MainLanding-exchanger__backgrounds exchanger-backgrounds">
-          <div className="exchanger-backgrounds__monitor">
-            <SVG
-              src={require('src/asset/backgrounds/main-landing/exchanger-monitor.svg')}
-            />
-          </div>
-          <div className="exchanger-backgrounds__monitor--adaptive"></div>
-          <div className="exchanger-backgrounds__select-tokens">
-            <SVG
-              src={require('src/asset/backgrounds/main-landing/exchanger-select-tokens.svg')}
-            />
-          </div>
+          <div className="exchanger-backgrounds__shadow" />
+          {adaptive ? (
+            <div className="exchanger-backgrounds__monitor--adaptive">
+              <SVG
+                src={require('src/asset/backgrounds/main-landing/exchanger-monitor-adaptive.svg')}
+              />
+            </div>
+          ) : (
+            <>
+              <div className="exchanger-backgrounds__monitor">
+                <SVG
+                  src={require('src/asset/backgrounds/main-landing/exchanger-monitor.svg')}
+                />
+              </div>
+              <div className="exchanger-backgrounds__select-tokens">
+                <SVG
+                  src={require('src/asset/backgrounds/main-landing/exchanger-select-tokens.svg')}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </Container>

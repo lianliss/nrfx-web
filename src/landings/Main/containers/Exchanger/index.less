@@ -1,6 +1,7 @@
 .MainLanding-exchanger {
+  --container-radius: 45px;
   background: #5078e6;
-  border-radius: 45px;
+  border-radius: var(--container-radius);
   padding: 70px 41px;
   position: relative;
 
@@ -18,7 +19,7 @@
 
   p {
     margin-bottom: 211px;
-    width: 360px;
+    max-width: 360px;
     font-weight: 500;
     font-size: 18px;
     line-height: 160%;
@@ -83,6 +84,7 @@
       width: 16px;
       height: 16px;
       position: relative;
+      margin-right: 9px;
 
       &::after {
         content: '';
@@ -118,8 +120,8 @@
       bottom: 0;
       width: 100%;
       height: 100%;
+      border-radius: var(--container-radius);
       overflow: hidden;
-      border-radius: 45px;
 
       .isvg {
         position: absolute;
@@ -137,17 +139,6 @@
         max-width: 100%;
         height: auto;
       }
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 94px;
-        right: -47px;
-        background: #6ccaff;
-        filter: blur(242px);
-        width: 872px;
-        height: 872px;
-      }
     }
 
     &__select-tokens {
@@ -160,6 +151,28 @@
         display: none;
       }
     }
+
+    &__shadow {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      overflow: hidden;
+      border-radius: var(--container-radius);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 94px;
+        left: 39.15%;
+        background: #6ccaff;
+        filter: blur(242px);
+        width: 872px;
+        height: 872px;
+        border-radius: 50%;
+      }
+    }
   }
 
   .MainLanding-SuggestiveBox {
@@ -167,5 +180,61 @@
     right: 38px;
     bottom: 96px;
     z-index: 3;
+  }
+}
+
+.adaptive .MainLanding-exchanger {
+  --container-radius: 35px;
+  padding: 53px 34px 340px;
+
+  p {
+    margin-bottom: 43px;
+    font-size: 16px;
+  }
+
+  .Button {
+    margin: 0 0 50px;
+    padding: 0 29px;
+
+    &__label {
+      text-align: left;
+    }
+
+    .isvg {
+      margin-left: 15px;
+    }
+  }
+
+  &__action {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .exchanger-backgrounds {
+    &__monitor--adaptive {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      max-width: 95%;
+
+      .isvg {
+        display: flex;
+      }
+
+      svg {
+        height: auto;
+      }
+    }
+
+    &__shadow {
+      &::after {
+        width: 379.58px;
+        height: 379.58px;
+        top: auto;
+        bottom: -56px;
+        left: -71px;
+      }
+    }
   }
 }
