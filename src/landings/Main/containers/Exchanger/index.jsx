@@ -3,6 +3,10 @@ import React from 'react';
 // Component
 import { Container, Button, Row, Col } from 'ui';
 import SVG from 'utils/svg-wrap';
+import SuggestiveBox from '../../components/SuggestiveBox';
+
+// Utils
+import { sizes } from '../../components/SuggestiveBox/constants/types';
 
 // Styles
 import './index.less';
@@ -37,6 +41,15 @@ function Exchanger() {
             </Col>
           </div>
         </div>
+        <SuggestiveBox
+          title="Support Telegram"
+          subtitle="online 24 / 7"
+          icon={
+            <SVG src={require('src/asset/icons/social/telegram-solid.svg')} />
+          }
+          size={sizes.medium}
+          background
+        />
         <div className="MainLanding-exchanger__backgrounds exchanger-backgrounds">
           <div className="exchanger-backgrounds__monitor">
             <SVG

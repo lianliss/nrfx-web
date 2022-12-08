@@ -1,30 +1,52 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
-import { Row, Col } from 'ui';
-import SVG from 'utils/svg-wrap';
+import { Col } from 'ui';
 import CustomButton from 'dapp/ui/CustomButton/CustomButton';
+
+// Utils
+import { classNames as cn } from 'utils';
+import { sizes } from './constants/types';
 
 // Styles
 import './index.less';
 
-function SuggestiveBox() {
+function SuggestiveBox({ title, subtitle, icon, size, border, background }) {
   return (
-    <CustomButton className="MainLanding-SuggestiveBox">
-      <div className="MainLanding-SuggestiveBox-icon">
-        <div className="MainLanding-SuggestiveBox-icon__bg" />
-        <SVG src={require('src/asset/icons/action/play-circle.svg')} />
-      </div>
+    <CustomButton
+      className={cn('MainLanding-SuggestiveBox', size, { border, background })}
+    >
+      {icon && (
+        <div className="MainLanding-SuggestiveBox-icon">
+          <div className="MainLanding-SuggestiveBox-icon__bg" />
+          {icon}
+        </div>
+      )}
       <Col className="MainLanding-SuggestiveBox__content">
-        <div className="MainLanding-SuggestiveBox__title">
-          How our exchanger works
-        </div>
-        <div className="MainLanding-SuggestiveBox__subtitle">
-          video instruction
-        </div>
+        <div className="MainLanding-SuggestiveBox__title">{title}</div>
+        <div className="MainLanding-SuggestiveBox__subtitle">{subtitle}</div>
       </Col>
     </CustomButton>
   );
 }
+
+SuggestiveBox.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  icon: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  size: PropTypes.oneOf(Object.values(sizes)),
+  border: PropTypes.bool,
+  background: PropTypes.bool,
+};
+
+SuggestiveBox.defaultProps = {
+  title: '',
+  subtitle: '',
+  icon: '',
+  size: sizes.medium,
+  border: false,
+  background: false,
+};
 
 export default SuggestiveBox;

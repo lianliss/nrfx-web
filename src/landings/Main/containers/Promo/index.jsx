@@ -5,6 +5,9 @@ import { Container, Col } from 'ui';
 import SVG from 'utils/svg-wrap';
 import SuggestiveBox from '../../components/SuggestiveBox';
 
+// Utils
+import { sizes } from '../../components/SuggestiveBox/constants/types';
+
 // Styles
 import './index.less';
 
@@ -30,7 +33,13 @@ function Promo({ adaptive }) {
             verification
           </p>
         </Col>
-        <SuggestiveBox />
+        <SuggestiveBox
+          icon={<SVG src={require('src/asset/icons/action/play-circle.svg')} />}
+          title="How our exchanger works"
+          subtitle="video instruction"
+          size={sizes.large}
+          border
+        />
       </Container>
     </div>
   );

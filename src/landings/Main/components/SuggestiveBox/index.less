@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   padding: 25px;
-  border: 1px solid var(--azureish-white);
   border-radius: 29px;
   color: #000;
   box-sizing: border-box;
@@ -41,8 +40,15 @@
       position: relative;
 
       svg {
+        min-width: 22px;
+        min-height: 22px;
         max-width: 70%;
         max-height: 70%;
+        fill: var(--royal-blue);
+
+        path {
+          fill: inherit;
+        }
       }
     }
   }
@@ -65,8 +71,28 @@
   &__subtitle {
     max-width: 137px;
   }
+
+  &.small {
+    padding: 11px 10px 9px;
+  }
+  &.medium {
+    padding: 19px 21px 19px 16px;
+  }
+  &.large {
+    padding: 25px;
+  }
+
+  &.border {
+    border: 1px solid var(--azureish-white);
+  }
+  &.background {
+    background: #fff;
+    box-shadow: 0px 34px 74px rgba(13, 40, 80, 0.26);
+  }
 }
 
 .adaptive .MainLanding-SuggestiveBox {
-  padding: 13px 43px 12px 11px;
+  &.large {
+    padding: 11px 10px 9px;
+  }
 }
