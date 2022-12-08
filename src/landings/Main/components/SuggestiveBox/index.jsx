@@ -10,11 +10,11 @@ import './index.less';
 
 function SuggestiveBox() {
   return (
-    <div className="MainLanding-SuggestiveBox">
-      <CustomButton className="MainLanding-SuggestiveBox-icon">
+    <CustomButton className="MainLanding-SuggestiveBox">
+      <div className="MainLanding-SuggestiveBox-icon">
         <div className="MainLanding-SuggestiveBox-icon__bg" />
         <SVG src={require('src/asset/icons/action/play-circle.svg')} />
-      </CustomButton>
+      </div>
       <Col className="MainLanding-SuggestiveBox__content">
         <div className="MainLanding-SuggestiveBox__title">
           How our exchanger works
@@ -23,7 +23,7 @@ function SuggestiveBox() {
           video instruction
         </div>
       </Col>
-    </div>
+    </CustomButton>
   );
 }
 
