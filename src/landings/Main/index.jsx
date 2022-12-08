@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { adaptiveSelector } from '../../selectors';
-import Skeleton from '../../ui/components/Skeleton/Skeleton';
-import Exchanger from './containers/Exchanger';
 
 // Components
 import Promo from './containers/Promo';
+import Exchanger from './containers/Exchanger';
+import OtherProducts from './containers/OtherProducts';
 
 // Styles
 import './index.less';
@@ -17,7 +17,7 @@ function Main() {
     <div className="MainLanding">
       <Promo adaptive={adaptive} />
       <Exchanger adaptive={adaptive} />
-      <div>jaj</div>
+      <OtherProducts />
     </div>
   );
 }
