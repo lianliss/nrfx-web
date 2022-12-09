@@ -1,5 +1,37 @@
 .MainLanding-other-products {
   &__title {
+    margin-bottom: 35px;
+  }
+
+  .slider-control {
+    display: flex;
+    gap: 8px;
+
+    &__arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 67px;
+      width: 67px;
+      border: 2px solid #e5e9f4;
+      border-radius: 21px;
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    &__prev .isvg {
+      transform: rotate(180deg);
+    }
+
+    &__next {
+    }
+  }
+}
+
+.adaptive .MainLanding-other-products {
+  &__title {
     margin-bottom: 18px;
   }
 }

@@ -9,7 +9,7 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './index.less';
 
-function ProductCards({ adaptive }) {
+function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
   const testDescription =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
 
@@ -17,7 +17,13 @@ function ProductCards({ adaptive }) {
     require(`src/asset/backgrounds/main-landing/${fileName}`);
 
   return (
-    <Slider className="MainLanding-ProductCards">
+    <Slider
+      className="MainLanding-ProductCards"
+      prevSlideRef={prevSlideRef}
+      nextSlideRef={nextSlideRef}
+      stepSize={adaptive ? 315 : 521}
+      adaptive={adaptive}
+    >
       <Row className="MainLanding-ProductCards__slider">
         <ProductCard
           title="Dex & Liquidity"

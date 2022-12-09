@@ -29,10 +29,7 @@ function Exchanger({ adaptive }) {
             <Button>
               <Row alignItems="center">
                 Try exchanger
-                <SVG
-                  src={require('src/asset/icons/arrows/slider-arrow.svg')}
-                  className="slider-arrow"
-                />
+                <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
               </Row>
             </Button>
             <Col className="transactions-today">

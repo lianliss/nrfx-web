@@ -28,7 +28,7 @@ function ProductCard({
           ) : (
             <>
               Try now
-              <SVG src={require('src/asset/icons/arrows/slider-arrow.svg')} />
+              <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
             </>
           )}
         </CustomButton>
@@ -53,7 +53,7 @@ ProductCard.propTypes = {
   adaptive: PropTypes.bool,
 };
 
-ProductCard.propTypes = {
+ProductCard.defaultProps = {
   title: '',
   description: '',
   onClick: () => {},
