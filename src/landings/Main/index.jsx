@@ -18,6 +18,7 @@ function Main() {
       <Promo adaptive={adaptive} />
       <Exchanger adaptive={adaptive} />
       <OtherProducts adaptive={adaptive} />
+      <OurBenefits adaptive={adaptive} />
     </div>
   );
 }
