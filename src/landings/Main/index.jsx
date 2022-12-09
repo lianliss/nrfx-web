@@ -6,6 +6,7 @@ import { adaptiveSelector } from '../../selectors';
 import Promo from './containers/Promo';
 import Exchanger from './containers/Exchanger';
 import OtherProducts from './containers/OtherProducts';
+import OurBenefits from './containers/OurBenefits';
 
 // Styles
 import './index.less';
