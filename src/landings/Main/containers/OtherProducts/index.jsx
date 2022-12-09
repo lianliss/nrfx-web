@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import { Row, Container } from 'ui';
-import { Slider } from 'dapp';
+import ProductCards from '../../components/ProductCards';
 
 // Styles
 import './index.less';
@@ -15,6 +15,7 @@ function OtherProducts({ adaptive }) {
           <h2>Other product</h2>
         </Row>
       </Container>
+      <ProductCards />
     </div>
   );
 }

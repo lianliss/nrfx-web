@@ -14,10 +14,10 @@ function Slider({
   const sliderRef = React.useRef(null);
   const containerRef = React.useRef(null);
   const allRefsIsFine =
-    sliderRef.current &&
-    containerRef.current &&
-    nextSlideRef.current &&
-    prevSlideRef.current;
+    sliderRef?.current &&
+    containerRef?.current &&
+    nextSlideRef?.current &&
+    prevSlideRef?.current;
 
   React.useEffect(() => {
     if (!allRefsIsFine) return;
