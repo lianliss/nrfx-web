@@ -19,6 +19,7 @@ function OtherProducts({ adaptive }) {
         <Row
           className="MainLanding-other-products__title"
           alignItems="center"
+          wrap
           justifyContent="space-between"
         >
           <h2>Other product</h2>
