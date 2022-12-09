@@ -15,7 +15,7 @@ function OtherProducts({ adaptive }) {
           <h2>Other product</h2>
         </Row>
       </Container>
-      <ProductCards />
+      <ProductCards adaptive={adaptive} />
     </div>
   );
 }

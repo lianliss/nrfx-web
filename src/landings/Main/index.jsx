@@ -17,7 +17,7 @@ function Main() {
     <div className="MainLanding">
       <Promo adaptive={adaptive} />
       <Exchanger adaptive={adaptive} />
-      <OtherProducts />
+      <OtherProducts adaptive={adaptive} />
     </div>
   );
 }
