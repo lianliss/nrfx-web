@@ -247,7 +247,7 @@ function Exchanger(props) {
               isCard: !!res.is_card,
               number: res.number,
               expire_in: res.book_expiration,
-              account_address: res.account_address,
+              address: res.address,
               routing_number: res.routing_number,
               account_type: res.account_type,
               bank: {

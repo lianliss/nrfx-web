@@ -132,8 +132,8 @@ function ChoosedBank(props) {
               <p className="dark default hight-height extra-small extra-large-height">
                 Address
               </p>
-              <CopyText text={card.account_address} className="blue default small extra-large-height">
-                {card.account_address}
+              <CopyText text={card.address} className="blue default small extra-large-height">
+                {card.address}
               </CopyText>
             </>}
           </InfoWrapper>
