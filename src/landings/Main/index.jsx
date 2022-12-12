@@ -7,6 +7,7 @@ import Promo from './containers/Promo';
 import Exchanger from './containers/Exchanger';
 import OtherProducts from './containers/OtherProducts';
 import OurBenefits from './containers/OurBenefits';
+import JoinUs from './containers/JoinUs';
 
 // Styles
 import './index.less';
@@ -20,6 +21,7 @@ function Main() {
       <Exchanger adaptive={adaptive} />
       <OtherProducts adaptive={adaptive} />
       <OurBenefits adaptive={adaptive} />
+      <JoinUs adaptive={adaptive} />
     </div>
   );
 }
