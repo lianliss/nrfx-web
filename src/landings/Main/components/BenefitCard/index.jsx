@@ -12,6 +12,7 @@ import './index.less';
 function BenefitCard({ size, background, image, title }) {
   return (
     <div className={cn('MainLanding-BenefitCard', size, background)}>
+      {image}
       <p className="MainLanding-BenefitCard__title">{title}</p>
     </div>
   );
@@ -25,6 +26,17 @@ BenefitCard.propTypes = {
 BenefitCard.defaultProps = {
   size: 'small',
   background: 'alice-blue',
+};
+
+BenefitCard.BackgroundImage = ({ children, style }) => {
+  return (
+    <div
+      className="MainLanding-BenefitCard__background"
+      style={{ position: 'absolute', ...style }}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default BenefitCard;
