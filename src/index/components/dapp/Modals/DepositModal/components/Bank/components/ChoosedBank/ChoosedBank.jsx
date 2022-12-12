@@ -91,13 +91,15 @@ function ChoosedBank(props) {
       <Col>
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper size="large">
-            <p className="dark default hight-height extra-small extra-large-height">
+            {card.isCard ? <p className="dark default hight-height extra-small extra-large-height">
               {ibanFiats.includes(currency) ? (
                 <Lang name="fiatRefillCard_IBANForRefill" />
               ) : (
                 <Lang name="fiatRefillCard_cardNumberForRefill" />
               )}
-            </p>
+            </p> : <p className="dark default hight-height extra-small extra-large-height">
+              Account number
+              </p>}
             <CopyText text={card.number}>
               <span className="blue default small extra-large-height">
                 {card.number.match(/.{1,4}/g).join(' ')}
@@ -107,9 +109,33 @@ function ChoosedBank(props) {
             <p className="dark default hight-height extra-small extra-large-height">
               <Lang name="fiatRefillCard_cardHolderName" />
             </p>
-            <p className="blue default small extra-large-height">
+            <CopyText text={card.holder_name} className="blue default small extra-large-height">
               {bank.holder_name}
-            </p>
+            </CopyText>
+            {!card.isCard && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Routing Number
+              </p>
+              <CopyText text={card.routing_number} className="blue default small extra-large-height">
+                {card.routing_number}
+              </CopyText>
+            </>}
+            {!card.isCard && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Account type
+              </p>
+              <CopyText text={card.account_type} className="blue default small extra-large-height">
+                {card.account_type}
+              </CopyText>
+            </>}
+            {!card.isCard && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Address
+              </p>
+              <CopyText text={card.account_address} className="blue default small extra-large-height">
+                {card.account_address}
+              </CopyText>
+            </>}
           </InfoWrapper>
         </div>
         <div className="DepositModal__ChoosedBank__items">

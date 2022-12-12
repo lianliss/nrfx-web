@@ -8,6 +8,14 @@ const KNOWN_FIATS = [
     logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
   },
   {
+    name: "Euro on Narfex",
+    symbol: "EUR",
+    address: "0xa702e05965FEd09FDDFE4ca182b0915CdBa367c8",
+    chainId: 56,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/try.svg"
+  },
+  {
     name: "Russian Ruble on Narfex",
     symbol: "RUB",
     address: "0xC7b9dA3D064a918B8e04B23AEEdBD64CBa21D37d",

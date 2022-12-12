@@ -244,8 +244,12 @@ function Exchanger(props) {
               fee: res.fee,
             },
             card: {
+              isCard: !!res.is_card,
               number: res.number,
               expire_in: res.book_expiration,
+              account_address: res.account_address,
+              routing_number: res.routing_number,
+              account_type: res.account_type,
               bank: {
                 code: res.bank,
                 name: bankName,
