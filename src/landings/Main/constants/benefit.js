@@ -6,6 +6,6 @@ export const sizes = {
 
 export const backgrounds = {
   blue: 'blue',
-  'alice-blue': 'alice-blue',
+  aliceBlue: 'alice-blue',
   orange: 'orange',
 };

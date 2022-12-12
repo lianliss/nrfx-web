@@ -60,30 +60,6 @@
     color: var(--gunmetal);
   }
 
-  .transactions-every-day-image {
-    font-weight: 600;
-    font-size: 148px;
-    line-height: 114%;
-    text-align: center;
-    letter-spacing: -0.07em;
-    color: #d0d3dc;
-
-    span {
-      opacity: 0.4;
-    }
-
-    span:nth-child(2) {
-      padding: 0 13px;
-      opacity: 1;
-
-      background: linear-gradient(179.57deg, #fa9751 -2.68%, #ffbc3c 86.61%),
-        #2f323d;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: rgba(0, 0, 0, 0);
-      background-clip: text;
-    }
-  }
-
   .users-image {
     font-weight: 600;
     font-size: 88px;
@@ -95,9 +71,10 @@
 }
 
 .adaptive .MainLanding-BenefitCard {
+  padding: 29px;
   height: 210px;
-  
-  .transactions-every-day-image {
-    font-size: 78px;
+
+  &__title {
+    font-size: 18px;
   }
 }

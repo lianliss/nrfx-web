@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 // Utils
 import { classNames as cn } from 'utils';
+import { backgrounds, sizes } from '../../constants/benefit';
 
 // Styles
 import './index.less';
@@ -19,19 +20,19 @@ function BenefitCard({ size, background, image, title }) {
 }
 
 BenefitCard.propTypes = {
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  background: PropTypes.oneOf(['blue', 'alice-blue', 'orange']),
+  size: PropTypes.oneOf(sizes),
+  background: PropTypes.oneOf(backgrounds),
 };
 
 BenefitCard.defaultProps = {
-  size: 'small',
-  background: 'alice-blue',
+  size: sizes.small,
+  background: backgrounds.aliceBlue,
 };
 
-BenefitCard.BackgroundImage = ({ children, style }) => {
+BenefitCard.BackgroundImage = ({ children, style, className }) => {
   return (
     <div
-      className="MainLanding-BenefitCard__background"
+      className={cn('MainLanding-BenefitCard__background', className)}
       style={{ position: 'absolute', ...style }}
     >
       {children}
