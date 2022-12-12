@@ -110,7 +110,7 @@ export default ({ logoType = "default" }) => {
                 <Lang name="dapp_sidebar_farm" />
               </a>
             </li>
-            <li onClick={() => router.navigate(PAGES.VALIDATOR)}>
+            <li onClick={() => router.navigate(PAGES.DAPP_VALIDATOR)}>
               <a>
                 <Lang name="dapp_sidebar_validator" />
               </a>

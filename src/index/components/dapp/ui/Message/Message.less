@@ -1,0 +1,26 @@
+.DappMessage {
+  padding: 18px 51px 18px 29px;
+  border-radius: 15px;
+  position: relative;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--cool-gray);
+
+  &.warning {
+    background: #fff7ea;
+    border: 1px solid #f6e2ad;
+  }
+
+  .close {
+    position: absolute;
+    top: min(31%, 25px);
+    right: 32px;
+    cursor: pointer;
+
+    &:not(:hover) path {
+      fill: #767676;
+    }
+  }
+}

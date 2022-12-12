@@ -110,8 +110,8 @@ function CabinetSidebar({ className, adaptive }) {
               <SidebarItem
                 title={getLang('dapp_sidebar_validator')}
                 icon="validator"
-                active={isPage(PAGES.VALIDATOR)}
-                onClick={() => router.navigate(PAGES.VALIDATOR)}
+                active={isPage(PAGES.DAPP_VALIDATOR)}
+                onClick={() => router.navigate(PAGES.DAPP_VALIDATOR)}
               />
               <SidebarItem
                 title={getLang('dapp_sidebar_about_nrfx')}

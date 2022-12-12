@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { classNames } from 'utils';
 import { default as ReactSelect } from 'react-select';
 
@@ -14,6 +15,7 @@ function Select({
   onChange,
   className,
   indicatorIcon,
+  type,
   ...props
 }) {
   // Get object value of string from options.
@@ -51,12 +53,23 @@ function Select({
         },
         IndicatorSeparator: null,
       }}
-      className={classNames('CabinetSelect', { [className]: className })}
+      className={classNames('CabinetSelect', {
+        [className]: className,
+        [type]: type,
+      })}
       classNamePrefix="CabinetSelect"
       {...props}
     />
   );
 }
+
+Select.propTypes = {
+  type: PropTypes.oneOf(['simple', 'dapp']),
+};
+
+Select.defaultProps = {
+  type: 'dapp',
+};
 
 // Return object for options constant
 export const option = (title, value, icon, showValue = false) => {

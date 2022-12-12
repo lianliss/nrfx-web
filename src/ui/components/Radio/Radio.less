@@ -1,4 +1,4 @@
-@import "../../vars";
+@import '../../vars';
 
 .Radio {
   display: flex;
@@ -27,7 +27,7 @@
   border-radius: 50%;
 
   &:after {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -64,4 +64,43 @@
   margin-left: 12px;
   font-size: 15px;
   line-height: 20px;
+}
+
+.Radio.small {
+  margin-top: 5px;
+
+  .Radio__label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .Radio__indicator {
+    width: 16px;
+    height: 16px;
+    border-width: 1px;
+
+    &::after {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+.Radio.light-blue {
+  .Radio__label {
+    color: var(--cool-gray);
+  }
+
+  .Radio__indicator {
+    border-color: var(--cool-gray);
+  }
+
+  &.selected .Radio__indicator {
+    border-color: var(--royal-blue);
+
+    &::after {
+      background: var(--royal-blue);
+    }
+  }
 }
