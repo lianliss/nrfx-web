@@ -1,0 +1,53 @@
+.MainLanding-BenefitCard {
+  display: flex;
+  flex: 1 1 0;
+  height: 307px;
+  padding: 40px 43px;
+  border-radius: 30px;
+  box-sizing: border-box;
+
+  &.small {
+    flex: 1 1 306px;
+    text-align: center;
+  }
+  &.medium {
+    flex: 1 1 504px;
+  }
+  &.large {
+    flex: 1 1 702px;
+    text-align: center;
+  }
+
+  &.small &__title,
+  &.large &__title {
+    margin: auto auto 0;
+  }
+
+  &.medium &__title {
+    max-width: 273px;
+  }
+
+  &.blue {
+    background: var(--royal-blue);
+  }
+
+  &.orange {
+    background: linear-gradient(202.23deg, #fa9751 1.99%, #fabe4c 100%);
+  }
+
+  &.alice-blue {
+    background: linear-gradient(198.49deg, #e5e9f4 12.53%, #f2f6ff 95.91%);
+  }
+
+  &__title {
+    margin-top: auto;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 114%;
+    color: #fff;
+  }
+
+  &.alice-blue &__title {
+    color: var(--gunmetal);
+  }
+}
