@@ -26,7 +26,7 @@ function JoinUs({ adaptive }) {
     >
       <Row
         className="MainLanding-join-us"
-        justifyContent="space-between"
+        justifyContent={adaptive ? 'center' : 'space-between'}
         alignItems="stretch"
         wrap={isDesktop}
       >
@@ -46,6 +46,7 @@ function JoinUs({ adaptive }) {
             className="MainLanding-join-us__buttons"
             wrap
             wrapAnyway={adaptive}
+            alignItems={adaptive ? 'center' : 'flex-start'}
           >
             <SuggestiveBox
               icon={<SVG src={require('src/asset/24px/draft.svg')} />}

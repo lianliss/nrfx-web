@@ -39,3 +39,32 @@
     transform: translate(-50%, -60%);
   }
 }
+
+.adaptive .MainLanding-JoinUsCard {
+  align-items: center;
+  height: 300px;
+  width: 100%;
+  min-width: 0;
+
+  &.education-card {
+    img {
+      width: 168px;
+    }
+  }
+
+  &.governance-card {
+    img {
+      width: 282px;
+      height: 290px;
+    }
+  }
+
+  .MainLanding-JoinUsCard__title {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  a {
+    font-size: 16px;
+  }
+}

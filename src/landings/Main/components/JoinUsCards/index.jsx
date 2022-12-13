@@ -25,6 +25,7 @@ function JoinUsCards() {
         }
         title="Education Hub"
         icon={educationHubBg}
+        className="education-card"
       />
       <JoinUsCard
         link={
@@ -35,6 +36,7 @@ function JoinUsCards() {
         }
         title="Governance"
         icon={governanceBg}
+        className="governance-card"
       />
     </div>
   );
