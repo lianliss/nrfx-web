@@ -112,7 +112,47 @@ function ChoosedBank(props) {
             <CopyText text={card.holder_name} className="blue default small extra-large-height">
               {bank.holder_name}
             </CopyText>
-            {!card.isCard && <>
+            {(!card.isCard && !!card.iban) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                IBAN
+              </p>
+              <CopyText text={card.iban} className="blue default small extra-large-height">
+                {card.iban}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.bic) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                BIC
+              </p>
+              <CopyText text={card.bic} className="blue default small extra-large-height">
+                {card.bic}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.short_code) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Short Code
+              </p>
+              <CopyText text={card.short_code} className="blue default small extra-large-height">
+                {card.short_code}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.institution_number) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Institution Number
+              </p>
+              <CopyText text={card.institution_number} className="blue default small extra-large-height">
+                {card.institution_number}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.transit_number) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Transit Number
+              </p>
+              <CopyText text={card.transit_number} className="blue default small extra-large-height">
+                {card.transit_number}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.routing_number) && <>
               <p className="dark default hight-height extra-small extra-large-height">
                 Routing Number
               </p>
@@ -120,7 +160,7 @@ function ChoosedBank(props) {
                 {card.routing_number}
               </CopyText>
             </>}
-            {!card.isCard && <>
+            {(!card.isCard && !!card.account_type) && <>
               <p className="dark default hight-height extra-small extra-large-height">
                 Account type
               </p>
@@ -128,7 +168,7 @@ function ChoosedBank(props) {
                 {card.account_type}
               </CopyText>
             </>}
-            {!card.isCard && <>
+            {(!card.isCard && !!card.address) && <>
               <p className="dark default hight-height extra-small extra-large-height">
                 Address
               </p>

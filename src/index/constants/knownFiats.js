@@ -13,7 +13,7 @@ const KNOWN_FIATS = [
     address: "0xa702e05965FEd09FDDFE4ca182b0915CdBa367c8",
     chainId: 56,
     decimals: 18,
-    logoURI: "https://static.narfex.com/img/currencies/try.svg"
+    logoURI: "https://static.narfex.com/img/currencies/euro.svg"
   },
   {
     name: "Russian Ruble on Narfex",
