@@ -10,9 +10,13 @@ import socialNames from '../../constants/socialNames';
 // Styles
 import './index.less';
 
-function SocialLinks() {
+function SocialLinks({ adaptive }) {
   return (
-    <Row className="MainLanding-SocialLinks" wrap>
+    <Row
+      className="MainLanding-SocialLinks"
+      wrap
+      justifyContent={adaptive ? 'center' : 'flex-start'}
+    >
       <SocialLink name={socialNames.telegram} />
       <SocialLink name={socialNames.discord} />
       <SocialLink name={socialNames.twitter} />

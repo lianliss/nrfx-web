@@ -30,16 +30,23 @@ function JoinUs({ adaptive }) {
         alignItems="stretch"
         wrap={isDesktop}
       >
-        <Col className="MainLanding-join-us__content">
+        <Col
+          className="MainLanding-join-us__content"
+          alignItems={adaptive ? 'center' : 'flex-start'}
+        >
           <h2>Join us</h2>
-          <p>social media</p>
-          <SocialLinks />
-          <p>
+          <p className="MainLanding-join-us__text">social media</p>
+          <SocialLinks adaptive={adaptive} />
+          <p className="MainLanding-join-us__text">
             Lorem ipsum dolor sit amet,
             <br />
             consectetur adipiscing elit
           </p>
-          <Row className="MainLanding-join-us__buttons" wrap>
+          <Row
+            className="MainLanding-join-us__buttons"
+            wrap
+            wrapAnyway={adaptive}
+          >
             <SuggestiveBox
               icon={<SVG src={require('src/asset/24px/draft.svg')} />}
               title="White paper"
