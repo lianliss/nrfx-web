@@ -87,6 +87,14 @@ const KNOWN_FIATS = [
     decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/try.svg"
   },
+  {
+    name: "British Pound on Narfex",
+    symbol: "GBP",
+    address: "0xC00565016486b345BefdD38c6BEA3A4E497F7633",
+    chainId: 56,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/gbp-pound.svg"
+  },
 ].map(fiat => ({
   ...fiat,
   isFiat: true,
