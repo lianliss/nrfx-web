@@ -15,7 +15,7 @@ import './index.less';
 
 function JoinUsCards() {
   return (
-    <div className="MainLandging-JoinUsCards">
+    <div className="MainLanding-JoinUsCards">
       <JoinUsCard
         link={
           <Link routeName="">
