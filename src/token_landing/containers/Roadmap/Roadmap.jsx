@@ -6,10 +6,9 @@ import { getLang } from 'utils';
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../assets/play.svg';
 
-import { roadmapItems } from '../../constants/roadmap';
 import RoadmapModal from '../../components/Roadmap/Modal/RoadmapModal';
 
-function Roadmap() {
+function Roadmap({ title = '', items = [] }) {
   // Modal State.
   const [showModal, setShowModal] = React.useState(false);
   const [modalTasks, setModalTasks] = React.useState([]);
@@ -33,11 +32,9 @@ function Roadmap() {
   return (
     <section className="Roadmap">
       <div className="Roadmap__container">
-        <h2 className="Roadmap__title">
-          {getLang('token_landing_roadmap_title')}
-        </h2>
+        <h2 className="Roadmap__title">{title}</h2>
         <div className="Roadmap__items">
-          {roadmapItems.map((item, key) => (
+          {items.map((item, key) => (
             <div className="Roadmap__item step" key={key}>
               <span className="step__number">
                 {getLang('token_landing_step')} {key + 1}
