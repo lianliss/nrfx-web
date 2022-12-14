@@ -1,20 +1,39 @@
 .MainLanding-SocialLink {
-  height: 104px;
-  width: 104px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  border-radius: 30px;
+
+  &.buttons {
+    height: 104px;
+    width: 104px;
+    background: #fff;
+    border-radius: 30px;
+  }
+
+  &.icons {
+    svg {
+      height: 32.75px;
+      width: 32.75px;
+    }
+  }
 }
 
 .adaptive .MainLanding-SocialLink {
-  height: 77.54px;
-  width: 77.54px;
+  &.buttons {
+    height: 77.54px;
+    width: 77.54px;
 
-  svg {
-    height: 33.55px;
-    width: 33.55px;
+    svg {
+      height: 33.55px;
+      width: 33.55px;
+    }
+  }
+
+  &.icons {
+    svg {
+      height: 27.37px;
+      width: 27.37px;
+    }
   }
 }

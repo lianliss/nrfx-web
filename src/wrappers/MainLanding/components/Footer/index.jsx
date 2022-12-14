@@ -3,6 +3,8 @@ import { Link } from 'react-router5';
 
 // Components
 import { Row, Col, Container } from 'ui';
+import SocialLinks from 'src/landings/Main/components/SocialLinks';
+import socialLinksType from 'src/landings/Main/constants/socialLinksType';
 
 // Styles
 import './index.less';
@@ -44,6 +46,22 @@ function Footer({ adaptive }) {
             </Col>
           </nav>
           <Col></Col>
+        </Row>
+        <Row
+          className="MainLandingWrapperFooter-footer MainLandingWrapperFooter__footer"
+          alignItems="center"
+          justifyContent={adaptive ? 'center' : 'flex-start'}
+          wrap={adaptive}
+        >
+          <img
+            src={require('src/asset/logo/narfex-blue.svg').default}
+            alt="Narfex"
+            className="MainLandingWrapperFooter__logo"
+          />
+          <span className="copyright">2022 All right reserved</span>
+          <Col className="MainLandingWrapperFooter-social-links">
+            <SocialLinks type={socialLinksType.icons} wrap={false} />
+          </Col>
         </Row>
       </Container>
     </footer>

@@ -10,13 +10,13 @@ import socialIcons from '../../constants/socialIcons';
 // Styles
 import './index.less';
 
-function SocialLink({ name }) {
+function SocialLink({ name, type }) {
   const { social } = COMPANY;
   const icon = socialIcons[name];
 
   return (
     <a
-      className="MainLanding-SocialLink"
+      className={`MainLanding-SocialLink ${type}`}
       href={`https://${social[name]}`}
       target="_blank"
     >
