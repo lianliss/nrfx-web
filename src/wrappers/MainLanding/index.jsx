@@ -1,5 +1,6 @@
 import React from 'react';
 import useAdaptive from 'src/hooks/adaptive';
+import Footer from './components/Footer';
 import Header from './components/Header';
 
 // Styles
@@ -12,6 +13,7 @@ function MainLandingWrapper({ children }) {
     <div className="MainLandingWrapper">
       {/* <Header adaptive={adaptive} /> */}
       <main className="MainLandingWrapper__content">{children}</main>
+      <Footer adaptive={adaptive} />
     </div>
   );
 }
