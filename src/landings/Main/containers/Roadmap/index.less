@@ -1,3 +1,11 @@
+.MainLanding-roadmap {
+  &__wrapper {
+    &:not(:last-child) {
+      margin-bottom: 150px;
+    }
+  }
+}
+
 .MainLanding-roadmap .Roadmap {
   padding: 0;
   box-sizing: border-box;
@@ -7,5 +15,13 @@
     padding: 0;
     display: flex;
     flex-direction: column;
+  }
+}
+
+.adaptive .MainLanding-roadmap {
+  &__wrapper {
+    &:not(:last-child) {
+      margin-bottom: 105px;
+    }
   }
 }

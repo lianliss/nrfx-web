@@ -9,6 +9,7 @@ import OtherProducts from './containers/OtherProducts';
 import OurBenefits from './containers/OurBenefits';
 import JoinUs from './containers/JoinUs';
 import Roadmap from './containers/Roadmap';
+import OurPartner from './containers/OurPartner';
 
 // Styles
 import './index.less';
@@ -24,6 +25,7 @@ function Main() {
       <OurBenefits adaptive={adaptive} />
       <JoinUs adaptive={adaptive} />
       <Roadmap adaptive={adaptive} />
+      <OurPartner adaptive={adaptive} />
     </div>
   );
 }
