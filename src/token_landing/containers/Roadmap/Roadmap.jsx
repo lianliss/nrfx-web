@@ -7,8 +7,9 @@ import SVG from 'utils/svg-wrap';
 import playIcon from '../../assets/play.svg';
 
 import RoadmapModal from '../../components/Roadmap/Modal/RoadmapModal';
+import { types } from './constants/roadmapTypes';
 
-function Roadmap({ title = '', items = [] }) {
+function Roadmap({ title = '', items = [], type = types.default }) {
   // Modal State.
   const [showModal, setShowModal] = React.useState(false);
   const [modalTasks, setModalTasks] = React.useState([]);
@@ -30,7 +31,7 @@ function Roadmap({ title = '', items = [] }) {
   };
 
   return (
-    <section className="Roadmap">
+    <section className={`Roadmap ${type}`}>
       <div className="Roadmap__container">
         <h2 className="Roadmap__title">{title}</h2>
         <div className="Roadmap__items">
@@ -50,10 +51,17 @@ function Roadmap({ title = '', items = [] }) {
                   openModal(item.tasks, key + 1, { x, y });
                 }}
               >
-                <span className="Roadmap__icon">
-                  <SVG src={playIcon} />
-                </span>
+                {type === types.default && (
+                  <span className="Roadmap__icon">
+                    <SVG src={playIcon} />
+                  </span>
+                )}
                 <span>{getLang('tokne_landing_see_all')}</span>
+                {type === types.medium && (
+                  <span className="Roadmap__icon">
+                    <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
+                  </span>
+                )}
               </div>
             </div>
           ))}

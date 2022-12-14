@@ -96,3 +96,76 @@
     padding: 70px 0 59px;
   }
 }
+
+.medium.Roadmap {
+  .Roadmap__title {
+    max-width: 1356px;
+    padding: 0 72px;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto 35px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 114%;
+    color: var(--gunmetal);
+  }
+
+  .Roadmap__icon {
+    margin-left: 9px;
+
+    .isvg {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .Roadmap__items {
+    margin: 0 auto;
+    max-width: 100%;
+    gap: 25px;
+    padding: 0 33px;
+    box-sizing: border-box;
+  }
+
+  .Roadmap__item.step {
+    padding: 39px 29px 31px 36px;
+    max-width: 250px;
+    min-width: 250px;
+    height: 278px;
+    margin: 0;
+  }
+
+  .step {
+    &__number {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    &__title {
+      font-weight: 600;
+      font-size: 25px;
+      line-height: 125%;
+    }
+
+    &__modal-open {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 100%;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--royal-blue);
+    }
+  }
+}
+
+.adaptive .medium.Roadmap {
+  .Roadmap__title {
+    padding: 0 15px;
+  }
+
+  .Roadmap__items {
+    padding: 0 15px;
+  }
+}
