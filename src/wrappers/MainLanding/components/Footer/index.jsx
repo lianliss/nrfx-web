@@ -4,6 +4,9 @@ import { Link } from 'react-router5';
 // Components
 import { Row, Col, Container } from 'ui';
 import SocialLinks from 'src/landings/Main/components/SocialLinks';
+import FooterReadDoc from '../FooterReadDoc';
+
+// Utils
 import socialLinksType from 'src/landings/Main/constants/socialLinksType';
 
 // Styles
@@ -16,6 +19,7 @@ function Footer({ adaptive }) {
         <Row
           className="MainLandingWrapperFooter__main"
           justifyContent="space-between"
+          wrap
         >
           <nav className="MainLandingWrapperFooter-nav">
             <Col className="MainLandingWrapperFooter-nav__col">
@@ -45,7 +49,7 @@ function Footer({ adaptive }) {
               </Col>
             </Col>
           </nav>
-          <Col></Col>
+          <FooterReadDoc />
         </Row>
         <Row
           className="MainLandingWrapperFooter-footer MainLandingWrapperFooter__footer"
