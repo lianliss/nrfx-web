@@ -36,21 +36,23 @@ function Select({
       value={getValue()}
       onChange={handleChange}
       components={{
-        DropdownIndicator: (props) => {
-          return (
-            <SVG
-              src={
-                indicatorIcon
-                  ? indicatorIcon
-                  : require('src/asset/icons/cabinet/select-arrow.svg')
-              }
-              className={classNames({
-                dropdownIndicator: true,
-                active: props.selectProps.menuIsOpen,
-              })}
-            />
-          );
-        },
+        DropdownIndicator: indicatorIcon
+          ? (props) => {
+              return (
+                <SVG
+                  src={
+                    indicatorIcon
+                      ? indicatorIcon
+                      : require('src/asset/icons/cabinet/select-arrow.svg')
+                  }
+                  className={classNames({
+                    dropdownIndicator: true,
+                    active: props.selectProps.menuIsOpen,
+                  })}
+                />
+              );
+            }
+          : null,
         IndicatorSeparator: null,
       }}
       className={classNames('CabinetSelect', className, type)}

@@ -11,7 +11,7 @@ function MainLandingWrapper({ children }) {
 
   return (
     <div className="MainLandingWrapper">
-      {/* <Header adaptive={adaptive} /> */}
+      <Header adaptive={adaptive} />
       <main className="MainLandingWrapper__content">{children}</main>
       <Footer adaptive={adaptive} />
     </div>
