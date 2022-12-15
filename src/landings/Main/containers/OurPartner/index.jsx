@@ -23,12 +23,12 @@ function OurPartner({ adaptive }) {
         padding={adaptive ? 15 : 43}
         className="MainLanding-our-partner__list"
       >
-        {partners.map((partner) => {
+        {partners.map((partner, key) => {
           const logo = getLogo(partner);
 
           if (!logo) return null;
 
-          return <SVG src={logo} />;
+          return <SVG src={logo} key={key} />;
         })}
       </Container>
     </div>
