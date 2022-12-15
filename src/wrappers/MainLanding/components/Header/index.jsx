@@ -6,6 +6,7 @@ import { Row, Button } from 'ui';
 import SVG from 'utils/svg-wrap';
 import Select from 'src/index/components/dapp/Select/Select';
 import Navbar from './components/Navbar';
+import BurgerMenu from './components/BurgerMenu';
 
 // Utils
 import { setLang } from 'src/services/lang';
@@ -14,7 +15,6 @@ import languageIcon from 'src/asset/icons/social/language.svg';
 
 // Styles
 import './index.less';
-import BurgerMenu from './components/BurgerMenu';
 
 function Header({ adaptive }) {
   const lang = useSelector(currentLangSelector);
