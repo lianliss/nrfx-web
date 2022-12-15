@@ -46,7 +46,11 @@ function Header({ adaptive }) {
       <div className="MainLandingWrapperHeader__action">
         <Select
           options={adaptive ? adaptiveLangList : langList}
-          indicatorIcon={null}
+          indicatorIcon={
+            adaptive
+              ? null
+              : require('src/asset/icons/cabinet/select-arrow.svg')
+          }
           value={lang}
           onChange={setLang}
         />
