@@ -96,7 +96,7 @@
     }
   }
 
-  .CabinetSelect {
+  &__action .CabinetSelect {
     width: 71px;
     margin-right: 4px;
 
@@ -123,4 +123,11 @@
   .Button.middle {
     padding: 0 15px;
   }
+}
+
+html.noScroll,
+body.noScroll {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 }

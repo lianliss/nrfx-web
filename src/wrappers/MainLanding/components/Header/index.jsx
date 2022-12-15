@@ -7,6 +7,7 @@ import SVG from 'utils/svg-wrap';
 import Select from 'src/index/components/dapp/Select/Select';
 import Navbar from './components/Navbar';
 import BurgerMenu from './components/BurgerMenu';
+import Sidebar from './components/Sidebar';
 
 // Utils
 import { setLang } from 'src/services/lang';
@@ -17,6 +18,7 @@ import languageIcon from 'src/asset/icons/social/language.svg';
 import './index.less';
 
 function Header({ adaptive }) {
+  const [isSidebar, setIsSidebar] = React.useState(false);
   const lang = useSelector(currentLangSelector);
   const LangLabel = ({ title }) => (
     <Row alignItems="center">
@@ -44,7 +46,7 @@ function Header({ adaptive }) {
       <div className="MainLandingWrapperHeader__action">
         <Select
           options={adaptive ? adaptiveLangList : langList}
-          DropdownIndicator={null}
+          indicatorIcon={null}
           value={lang}
           onChange={setLang}
         />
@@ -60,8 +62,15 @@ function Header({ adaptive }) {
             )}
           </Row>
         </Button>
-        {adaptive && <BurgerMenu />}
+        {adaptive && <BurgerMenu onClick={() => setIsSidebar(true)} />}
       </div>
+      <Sidebar
+        active={isSidebar}
+        onClose={() => setIsSidebar(false)}
+        langList={langList}
+        lang={lang}
+        setLang={setLang}
+      />
     </div>
   );
 }
