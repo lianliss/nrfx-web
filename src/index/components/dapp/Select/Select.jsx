@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { classNames } from 'utils';
 import { default as ReactSelect } from 'react-select';
+import defaultIcon from 'src/asset/icons/cabinet/select-arrow.svg';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -14,7 +15,7 @@ function Select({
   value,
   onChange,
   className,
-  indicatorIcon,
+  indicatorIcon = defaultIcon,
   type,
   ...props
 }) {
@@ -40,11 +41,7 @@ function Select({
           ? (props) => {
               return (
                 <SVG
-                  src={
-                    indicatorIcon
-                      ? indicatorIcon
-                      : require('src/asset/icons/cabinet/select-arrow.svg')
-                  }
+                  src={indicatorIcon}
                   className={classNames({
                     dropdownIndicator: true,
                     active: props.selectProps.menuIsOpen,
