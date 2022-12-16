@@ -16,7 +16,13 @@ function Promo({ adaptive }) {
     <div className="MainLanding-promo">
       <Container maxWidth={1352}>
         <div className="MainLanding-promo__bg">
-          <SVG src={require('src/asset/backgrounds/main-landing-promo.svg')} />
+          <img
+            src={
+              require('src/asset/backgrounds/main-landing-promo.svg').default
+            }
+            width="1417"
+            height="858"
+          />
         </div>
       </Container>
       <Container
