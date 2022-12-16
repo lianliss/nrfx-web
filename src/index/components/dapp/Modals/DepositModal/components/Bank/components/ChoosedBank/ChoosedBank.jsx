@@ -102,7 +102,7 @@ function ChoosedBank(props) {
               </p>}
             <CopyText text={card.number}>
               <span className="blue default small extra-large-height">
-                {card.number.match(/.{1,4}/g).join(' ')}
+                {card.number ? card.number.match(/.{1,4}/g).join(' ') : ''}
               </span>
               <SVG src={require('src/asset/icons/action/copy.svg')} />
             </CopyText>
