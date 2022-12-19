@@ -1,0 +1,80 @@
+<svg width="193" height="193" viewBox="0 0 193 193" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      :root {
+        --bit-animation: bit-show-animation 2s infinite;
+      }
+
+      .bit-1,
+      .bit-2,
+      .bit-3,
+      .bit-4,
+      .bit-5 {
+        opacity: 0;
+      }
+
+      .bit-1 {
+        animation: var(--bit-animation) 0s;
+      }
+
+      .bit-2 {
+        animation: var(--bit-animation) 0.2s;
+      }
+
+      .bit-3 {
+        animation: var(--bit-animation) 0.3s;
+      }
+
+      .bit-4 {
+        animation: var(--bit-animation) 0.4s;
+      }
+
+      .bit-5 {
+        animation: var(--bit-animation) 0.5s;
+      }
+
+      @keyframes bit-show-animation {
+        0% {
+          opacity: 0;
+        }
+
+        20% {
+          opacity: 1;
+        }
+
+        60% {
+          opacity: 1;
+        }
+
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </defs>
+  <g id="animated-logo" clip-path="url(#clip0_880_1952)">
+    <ellipse class="circle" cx="96.5501" cy="96.5509" rx="84.6497" ry="84.6497"
+      transform="rotate(8.75745 96.5501 96.5509)" fill="url(#paint0_linear_880_1952)"
+      stroke="url(#paint1_linear_880_1952)" stroke-width="10" />
+    <path class="bit-1" d="M91.5 155.5L108 135.5L95.5 107L74.5 122.5L91.5 155.5Z" fill="white" />
+    <path class="bit-2" d="M59 91L75 123.5L96.5 109.5L78.5 69L59 91Z" fill="white" />
+    <path class="bit-3" d="M104 85L78.5 69V69.5L95 107L96.5 110L118 122L104 85Z" fill="white" />
+    <path class="bit-4" d="M135 103L118 122L117 120.5L103.5 85.5L104 85L120 73.5L135 103Z" fill="white" />
+    <path class="bit-5" d="M102.5 39L120 73.5L120.5 74.5L104 85L90.5 52.5L102.5 39Z" fill="white" />
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear_880_1952" x1="147.627" y1="154.024" x2="147.627" y2="56.9256"
+      gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FABE4C" />
+      <stop offset="1" stop-color="#FA9751" />
+    </linearGradient>
+    <linearGradient id="paint1_linear_880_1952" x1="105.461" y1="23.7819" x2="96.0551" y2="175.26"
+      gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FABE4C" />
+      <stop offset="1" stop-color="#FA9751" />
+    </linearGradient>
+    <clipPath id="clip0_880_1952">
+      <rect width="193" height="193" fill="white" />
+    </clipPath>
+  </defs>
+</svg>

@@ -16,16 +16,25 @@ import './index.less';
 
 function Main() {
   const adaptive = useSelector(adaptiveSelector);
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   return (
     <div className="MainLanding">
-      <Promo adaptive={adaptive} />
-      <Exchanger adaptive={adaptive} />
-      <OtherProducts adaptive={adaptive} />
-      <OurBenefits adaptive={adaptive} />
-      <JoinUs adaptive={adaptive} />
-      <Roadmap adaptive={adaptive} />
-      <OurPartner adaptive={adaptive} />
+      <Promo
+        adaptive={adaptive}
+        isLoaded={isLoaded}
+        setIsLoaded={setIsLoaded}
+      />
+      {isLoaded && (
+        <>
+          <Exchanger adaptive={adaptive} />
+          <OtherProducts adaptive={adaptive} />
+          <OurBenefits adaptive={adaptive} />
+          <JoinUs adaptive={adaptive} />
+          <Roadmap adaptive={adaptive} />
+          <OurPartner adaptive={adaptive} />
+        </>
+      )}
     </div>
   );
 }
