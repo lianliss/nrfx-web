@@ -35,6 +35,14 @@ const KNOWN_FIATS = [
     logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
   },
   {
+    name: "Euro on Narfex",
+    symbol: "EUR",
+    address: "0xa702e05965FEd09FDDFE4ca182b0915CdBa367c8",
+    chainId: 56,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/euro.svg"
+  },
+  {
     name: "Russian Ruble on Narfex",
     symbol: "RUB",
     address: "0xC7b9dA3D064a918B8e04B23AEEdBD64CBa21D37d",
@@ -105,6 +113,14 @@ const KNOWN_FIATS = [
     chainId: 56,
     decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/try.svg"
+  },
+  {
+    name: "British Pound on Narfex",
+    symbol: "GBP",
+    address: "0xC00565016486b345BefdD38c6BEA3A4E497F7633",
+    chainId: 56,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/gbp-pound.svg"
   },
   ...TESTNET_FIATS,
 ].map(fiat => ({

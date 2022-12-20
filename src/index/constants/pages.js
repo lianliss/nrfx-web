@@ -56,8 +56,12 @@ export const DAPP_TEAM = "dapp_team";
 export const FARMING = "farming";
 export const LIQUIDITY = "liquidity";
 export const TRANSACTIONS = "transactions";
-export const VALIDATOR = "validator";
+export const DAPP_VALIDATOR = "dapp_validator";
 export const TOKENSALE = "tokensale";
 export const FARMING_INSTRUCTION = "farming_instruction";
 export const TERMS_OF_SERVICE = "terms_of_service";
 export const PRIVATE_POOLS = "private_pools";
+
+// Validator
+export const VALIDATOR = 'validator';
+export const VALIDATOR_CREATE_TRADE = 'VALIDATOR_CREATE_TRADE';

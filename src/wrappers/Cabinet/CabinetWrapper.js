@@ -18,7 +18,7 @@ import * as steps from "../../components/AuthModal/fixtures";
 import LoadingStatus from "../../index/components/cabinet/LoadingStatus/LoadingStatus";
 import LogoLoader from "../../ui/components/LogoLoader/LogoLoader";
 import Web3Backend from 'services/web3-backend';
-import streamMessage from './steam-message';
+import streamMessage from '../steam-message';
 import TagManager from 'react-gtm-module';
 import { PHONE } from "../../index/constants/breakpoints";
 import { Logo } from "../../ui";
