@@ -10,8 +10,8 @@ const networks = {
     tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
     saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
     fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
-    exchangerRouter: '0x86a3D79afbD77bc2EaecD2C9a1EdB5bC768C584C',
-    narfexOracle: '0x0CdCad1e2c9C59920E916aDC75B7b21B5c2f78D5',
+    exchangerRouter: '0x779dba00E967A86135Ba873F266891b4c94885F1',
+    narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
     wrapBNB: {
       name: "Wrapped BNB",
       symbol: "WBNB",
