@@ -5,32 +5,26 @@ import PropTypes from 'prop-types';
 import { classNames as cn } from 'utils';
 import useIsInViewport from 'src/hooks/useIsInViewport';
 
-function ShowIn({ children, type, animation, className, delay }) {
-  const [styles, setStyles] = React.useState({
-    opacity: 0,
-    transition: `all ${delay}s`,
-    pointerEvents: 'none',
-  });
+// Styles
+import './index.less';
+
+function ShowIn({ children, type, animation, className }) {
   const showInRef = React.useRef(null);
-  const isInViewport = useIsInViewport(showInRef);
-
-  React.useEffect(() => {
-    if (!isInViewport) return;
-
-    const activeStyles = {
-      pointerEvents: 'all',
-    };
-
-    if (animation === 'opacity') {
-      setStyles((prev) => ({ ...prev, ...activeStyles, opacity: 1 }));
-    }
-  }, [isInViewport]);
+  const { visible, rect } = useIsInViewport(showInRef);
 
   return (
     <div
-      className={cn('MainLanding-ShowIn', className)}
+      className={cn('MainLanding-ShowIn', className, animation, {
+        visible,
+      })}
       ref={showInRef}
-      style={styles}
+      style={
+        animation === 'swipeHorizontal'
+          ? {
+              transform: `translateX(-${rect.top}px)`,
+            }
+          : {}
+      }
     >
       {children}
     </div>
@@ -39,15 +33,13 @@ function ShowIn({ children, type, animation, className, delay }) {
 
 ShowIn.propTypes = {
   type: PropTypes.oneOf(['scroll']),
-  animation: PropTypes.oneOf(['opacity']),
-  delay: PropTypes.number,
+  animation: PropTypes.oneOf(['opacity', 'swipeHorizontal']),
   className: PropTypes.string,
 };
 
 ShowIn.defaultProps = {
   type: 'scroll',
   animation: 'opacity',
-  delay: 1,
   className: '',
 };
 

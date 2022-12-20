@@ -1,0 +1,17 @@
+.MainLanding-ShowIn {
+  &.opacity {
+    transition: opacity 1s;
+
+    &:not(.visible) {
+      opacity: 0;
+    }
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  &.swipeHorizontal {
+    transition: transform .05s;
+  }
+}

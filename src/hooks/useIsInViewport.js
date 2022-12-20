@@ -1,29 +1,57 @@
 import React from 'react';
 
-export default function (element) {
-  if (!element) return;
+export const types = {
+  full: 'full',
+  half: 'half',
+};
 
+export default function (element, type = types.half) {
+  if (!element) return;
   const [isInViewport, setIsInViewport] = React.useState(false);
+  const [rect, setRect] = React.useState(null);
 
   const checkElement = () => {
     if (!element.current) return;
 
-    const rect = element.current.getBoundingClientRect();
-    const result =
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <=
-        (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+    const newRect = element.current.getBoundingClientRect();
+    const documentHeight = document.documentElement.clientHeight;
+    const documentWidth = document.documentElement.clientWidth;
+    let result;
+
+    switch (type) {
+      case types.full:
+        result =
+          newRect.top >= 0 &&
+          newRect.left >= 0 &&
+          newRect.bottom <= (window.innerHeight || documentHeight) &&
+          newRect.right <= (window.innerWidth || documentWidth);
+        break;
+      case types.half: {
+        result = newRect.top <= (window.innerHeight || documentHeight) * 0.7;
+      }
+      default:
+        break;
+    }
 
     if (result) {
       setIsInViewport(result);
     }
+
+    if (newRect.top <= 0) {
+      document.removeEventListener('scroll', checkElement);
+    }
+
+    setRect(newRect);
   };
 
   React.useEffect(() => {
     document.addEventListener('scroll', checkElement);
+
+    return () => {
+      document.removeEventListener('scroll', checkElement);
+    };
   }, []);
 
-  return isInViewport;
+  console.log(rect);
+  return { visible: isInViewport, rect: rect || {} };
 }
