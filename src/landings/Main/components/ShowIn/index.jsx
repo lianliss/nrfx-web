@@ -11,6 +11,15 @@ import './index.less';
 function ShowIn({ children, type, animation, className }) {
   const showInRef = React.useRef(null);
   const { visible, rect } = useIsInViewport(showInRef);
+  let transform = 'null';
+
+  switch (animation) {
+    case 'swipeHorizontal':
+      transform = `translateX(-${rect.top}px)`;
+      break;
+    default:
+      break;
+  }
 
   return (
     <div
@@ -18,13 +27,7 @@ function ShowIn({ children, type, animation, className }) {
         visible,
       })}
       ref={showInRef}
-      style={
-        animation === 'swipeHorizontal'
-          ? {
-              transform: `translateX(-${rect.top}px)`,
-            }
-          : {}
-      }
+      style={{ transform }}
     >
       {children}
     </div>
