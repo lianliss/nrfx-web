@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.1s;
 
   &.buttons {
     height: 104px;
@@ -16,6 +17,10 @@
       height: 32.75px;
       width: 32.75px;
     }
+  }
+
+  &:hover {
+    transform: scale(1.1);
   }
 }
 
