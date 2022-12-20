@@ -6,10 +6,16 @@ import Slider from 'dapp/ui/Slider/Slider';
 import ProductCard from '../ProductCard';
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import useIsInViewport from 'src/hooks/useIsInViewport';
+import { classNames as cn } from 'utils';
+
 // Styles
 import './index.less';
 
 function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
+  const sliderContainerRef = React.useRef(null);
+  const { visible } = useIsInViewport(sliderContainerRef);
   const testDescription =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
 
@@ -24,7 +30,10 @@ function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
       stepSize={adaptive ? 315 : 521}
       adaptive={adaptive}
     >
-      <Row className="MainLanding-ProductCards__slider">
+      <div
+        className={cn('MainLanding-ProductCards__slider', { visible })}
+        ref={sliderContainerRef}
+      >
         <ProductCard
           title="Dex & Liquidity"
           description={testDescription}
@@ -96,7 +105,7 @@ function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
           adaptive={adaptive}
           comingSoon
         />
-      </Row>
+      </div>
     </Slider>
   );
 }

@@ -1,8 +1,15 @@
 .MainLanding-ProductCards {
   &__slider {
+    display: flex;
     padding: 0 22px;
     gap: 21px;
     box-sizing: border-box;
+    transform: translateX(-100%);
+    transition: all 2s ease-out;
+
+    &.visible {
+      transform: none;
+    }
   }
 }
 
