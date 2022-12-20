@@ -7,6 +7,7 @@ import SocialLinks from '../../components/SocialLinks';
 import SuggestiveBox from '../../components/SuggestiveBox';
 import { sizes } from '../../components/SuggestiveBox/constants/types';
 import SVG from 'utils/svg-wrap';
+import ShowIn from '../../components/ShowIn';
 
 // Utils
 import useAdaptive from 'src/hooks/adaptive';
@@ -36,7 +37,9 @@ function JoinUs({ adaptive }) {
         >
           <h2>Join us</h2>
           <p className="MainLanding-join-us__text">social media</p>
-          <SocialLinks adaptive={adaptive} />
+          <ShowIn type="scroll">
+            <SocialLinks adaptive={adaptive} />
+          </ShowIn>
           <p className="MainLanding-join-us__text">
             Lorem ipsum dolor sit amet,
             <br />
@@ -64,7 +67,9 @@ function JoinUs({ adaptive }) {
             />
           </Row>
         </Col>
-        <JoinUsCards adaptive={adaptive} />
+        <ShowIn type="scroll" className="MainLanding-JoinUsCards__showIn">
+          <JoinUsCards adaptive={adaptive} />
+        </ShowIn>
       </Row>
     </Container>
   );
