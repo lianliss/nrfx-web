@@ -52,6 +52,5 @@ export default function (element, type = types.half) {
     };
   }, []);
 
-  console.log(rect);
   return { visible: isInViewport, rect: rect || {} };
 }
