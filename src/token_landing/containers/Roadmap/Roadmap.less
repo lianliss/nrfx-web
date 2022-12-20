@@ -28,7 +28,9 @@
   }
 }
 
-.step {
+.Roadmap .step {
+  --transition-delay: 0.3s;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -40,11 +42,7 @@
   background: #edf1f8;
   border: 2px solid #edf1f8;
   border-radius: 18px;
-  transition: border 0.2s;
-
-  &:hover {
-    border-color: #78a0ff;
-  }
+  transition: background var(--transition-delay);
 
   &:not(:last-child) {
     margin-right: 25px;
@@ -75,6 +73,48 @@
 
     .Roadmap__icon {
       margin-right: 9px;
+    }
+  }
+
+  &__title,
+  &__number {
+    cursor: default;
+  }
+
+  &__title,
+  &__number,
+  &__modal-open {
+    transition: color var(--transition-delay);
+  }
+
+  &__modal-open path {
+    transition: fill var(--transition-delay);
+  }
+
+  &:hover,
+  &.active {
+    background: #5078e6;
+
+    .step {
+      &__title {
+        color: #fff;
+      }
+
+      &__number {
+        color: #a4b9f1;
+      }
+
+      &__modal-open {
+        color: #fff;
+
+        .Roadmap__icon {
+          margin-right: 9px;
+        }
+
+        svg path {
+          fill: #fff;
+        }
+      }
     }
   }
 }
