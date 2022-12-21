@@ -10,7 +10,7 @@ const networks = {
     tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
     saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
     fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
-    exchangerRouter: '0x779dba00E967A86135Ba873F266891b4c94885F1',
+    exchangerRouter: '0x94d0376ba6617D96c8c89213de81F4307e4490d0',
     narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
     wrapBNB: {
       name: "Wrapped BNB",
