@@ -8,7 +8,7 @@ import useIsInViewport from 'src/hooks/useIsInViewport';
 // Styles
 import './index.less';
 
-function ShowIn({ children, type, animation, className }) {
+function ShowIn({ children, type, animation, className, tag: Tag = 'div' }) {
   const showInRef = React.useRef(null);
   const { visible, rect } = useIsInViewport(showInRef);
   let transform = 'null';
@@ -22,7 +22,7 @@ function ShowIn({ children, type, animation, className }) {
   }
 
   return (
-    <div
+    <Tag
       className={cn('MainLanding-ShowIn', className, animation, {
         visible,
       })}
@@ -30,7 +30,7 @@ function ShowIn({ children, type, animation, className }) {
       style={{ transform }}
     >
       {children}
-    </div>
+    </Tag>
   );
 }
 
