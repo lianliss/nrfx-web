@@ -5,7 +5,7 @@ import { classNames as cn } from 'utils';
 // Styles
 import './index.less';
 
-function TypewriterEffect({ className, text, delay = 0.15, play }) {
+function TypewriterEffect({ className, text, duration = 0.15, play }) {
   const [displayedText, setDisplayedText] = React.useState('');
   const [finished, setFinished] = React.useState(false);
 
@@ -24,7 +24,7 @@ function TypewriterEffect({ className, text, delay = 0.15, play }) {
       return;
     }
 
-    return setTimeout(() => playAnimation(newText), delay * 1000);
+    return setTimeout(() => playAnimation(newText), duration * 1000);
   };
 
   return (
