@@ -5,7 +5,13 @@ import { classNames as cn } from 'utils';
 // Styles
 import './index.less';
 
-function TypewriterEffect({ className, text, duration = 0.15, play }) {
+function TypewriterEffect({
+  className,
+  text,
+  duration = 0.15,
+  play,
+  tag: Tag = 'span',
+}) {
   const [displayedText, setDisplayedText] = React.useState('');
   const [finished, setFinished] = React.useState(false);
 
@@ -28,14 +34,14 @@ function TypewriterEffect({ className, text, duration = 0.15, play }) {
   };
 
   return (
-    <span
+    <Tag
       className={cn('MainLanding-TypewriterEffect', className, {
         play,
         finished,
       })}
     >
       {displayedText}
-    </span>
+    </Tag>
   );
 }
 

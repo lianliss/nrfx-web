@@ -8,24 +8,25 @@ import SuggestiveBox from '../../components/SuggestiveBox';
 
 // Utils
 import { sizes } from '../../components/SuggestiveBox/constants/types';
+import useIsInViewport from 'src/hooks/useIsInViewport';
+import TypewriterEffect from '../../components/TypewriterEffect';
 
 // Styles
 import './index.less';
 
-function Exchanger({ adaptive }) {
+const Exchanger = React.forwardRef(({ adaptive, visible = true }, ref) => {
   return (
-    <ShowIn
-      className="MainLanding-exchanger__wrapper"
-      animation="swipeHorizontal"
-    >
+    <div className="MainLanding-exchanger__wrapper" ref={ref}>
       <Container maxWidth={1356} padding={adaptive ? 15 : 22}>
         <div className="MainLanding-exchanger">
           <div className="MainLanding-exchanger__content">
-            <h2>Exchanger</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna
-            </p>
+            <TypewriterEffect text="Exchanger" tag="h2" play={visible} />
+            <TypewriterEffect
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
+              tag="p"
+              play={visible}
+              duration={0.02}
+            />
             <div className="MainLanding-exchanger__action">
               <Button>
                 <Row alignItems="center">
@@ -80,8 +81,8 @@ function Exchanger({ adaptive }) {
           </div>
         </div>
       </Container>
-    </ShowIn>
+    </div>
   );
-}
+});
 
 export default Exchanger;
