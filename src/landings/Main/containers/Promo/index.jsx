@@ -8,12 +8,16 @@ import SuggestiveBox from '../../components/SuggestiveBox';
 // Utils
 import { sizes } from '../../components/SuggestiveBox/constants/types';
 import { classNames as cn } from 'utils';
+import TypewriterEffect from '../../components/TypewriterEffect';
+import useIsInViewport from '../../../../hooks/useIsInViewport';
 
 // Styles
 import './index.less';
 
 function Promo({ adaptive, isLoaded, setIsLoaded }) {
+  const titleRef = React.useRef(null);
   const promoBg = require('src/asset/backgrounds/main-landing-promo.svg');
+  const { visible: titleIsVisible } = useIsInViewport(titleRef);
 
   return (
     <div className="MainLanding-promo">
@@ -24,19 +28,10 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
             flex
           />
         </div>
-        {/* <img
-            src={
-              require('src/asset/backgrounds/main-landing-promo.svg').default
-            }
-            width="1417"
-            height="858"
-            onLoad={() => setIsLoaded(true)}
-            className={cn({ loaded: isLoaded })}
-          /> */}
         <SVG
           src={promoBg}
           handleLoaded={setIsLoaded}
-          className={isLoaded ? 'loaded' : ''}
+          className={cn({ loaded: isLoaded })}
           flex
         />
       </div>
@@ -47,8 +42,10 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
           padding={adaptive ? 23 : 62}
         >
           <Col>
-            <h1>
-              <span>Narfex</span>. Exchanger. Free transaction.
+            <h1 ref={titleRef}>
+              <TypewriterEffect text="Narfex" play={titleIsVisible} />.
+              Exchanger. Free transaction.
+              <br />
             </h1>
             <p>
               Exchange fiat and cryptocurrency without authorization and

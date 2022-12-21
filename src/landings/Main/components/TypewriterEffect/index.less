@@ -1,0 +1,28 @@
+.MainLanding-TypewriterEffect {
+  position: relative;
+  
+  &:not(.finished)::after {
+    content: '|';
+    animation: blinking 1s infinite ease-in;
+  }
+
+  @keyframes blinking {
+    0% {
+      opacity: 0;
+    }
+
+    1%,
+    49% {
+      opacity: 0.9;
+    }
+
+    50%,
+    99% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 0.9;
+    }
+  }
+}
