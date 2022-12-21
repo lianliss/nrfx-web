@@ -48,7 +48,7 @@ function Exchanger({ ...props }) {
   const [rate, setRate] = React.useState(coinAmount / fiatAmount);
   const [isRateReverse, setIsRateReverse] = React.useState(false);
   const [path, setPath] = React.useState([]);
-  const [slippage, setSlippage] = React.useState(4);
+  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 4);
   const [deadline, setDeadline] = React.useState(20);
   const [allowance, setAllowance] = React.useState(999999999);
   const [isProcess, setIsProcess] = React.useState(true);
@@ -122,6 +122,18 @@ function Exchanger({ ...props }) {
         routerABI,
         networks[chainId].exchangerRouter,
       );
+      
+      const isFromBNB = !path[0].address
+        || path[0].address.toLowerCase() === networks[chainId].wrapBNB.address.toLowerCase();
+      let value;
+      if (isFromBNB) {
+        if (isExactOut) {
+          value = wei.to(inAmountMax);
+        } else {
+          value = wei.to(inAmount);
+        }
+      }
+      
       const receipt = await transaction(router, 'swap', [
         path.map(token => token.address),
         isExactOut,
@@ -129,7 +141,7 @@ function Exchanger({ ...props }) {
         wei.to(isExactOut ? inAmountMax : outAmountMin),
         Math.floor(Date.now() / 1000) + deadline * 60,
         '0x0000000000000000000000000000000000000000',
-      ]);
+      ], value);
       openStateModal('transaction_submitted', {
         txLink: getBSCScanLink(receipt),
         symbol: coin.symbol,
@@ -137,7 +149,7 @@ function Exchanger({ ...props }) {
       });
     } catch (error) {
       console.error('[swap]', error);
-      toast.warning('Transaction error');
+      toast.warning(error.message);
     }
     setIsProcess(false);
   };
