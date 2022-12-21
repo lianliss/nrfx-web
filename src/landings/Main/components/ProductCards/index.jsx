@@ -8,6 +8,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import useIsInViewport from 'src/hooks/useIsInViewport';
+import productCards from '../../constants/productCards';
 import { classNames as cn } from 'utils';
 
 // Styles
@@ -18,9 +19,24 @@ function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
   const { visible } = useIsInViewport(sliderContainerRef);
   const testDescription =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+  const [displayedCards, setDisplayedCards] = React.useState([]);
 
-  const getImage = (fileName) =>
-    require(`src/asset/backgrounds/main-landing/${fileName}`);
+  React.useEffect(() => {
+    if (!visible) return;
+
+    const productCardsInterval = setInterval(() => {
+      setDisplayedCards((prev) => {
+        const nextCard = [...productCards].reverse()[prev.length];
+
+        if (!nextCard) {
+          clearInterval(productCardsInterval);
+          return prev;
+        }
+
+        return [nextCard, ...prev];
+      });
+    }, 500);
+  }, [visible]);
 
   return (
     <Slider
@@ -34,77 +50,29 @@ function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
         className={cn('MainLanding-ProductCards__slider', { visible })}
         ref={sliderContainerRef}
       >
-        <ProductCard
-          title="Dex & Liquidity"
-          description={testDescription}
-          backgroundImage={getImage('product-dex.png')}
-          statistics={
-            <ProductCard.Statistics
-              title="475,678"
-              subtitle="transaction"
-              icon={<SVG src={require('src/asset/24px/track_changes.svg')} />}
-            />
-          }
-          adaptive={adaptive}
-        />
-        <ProductCard
-          title="NRFX Token"
-          description={testDescription}
-          backgroundImage={getImage('product-token.png')}
-          statistics={
-            <ProductCard.Statistics
-              title="$0.434"
-              subtitle="price"
-              icon={<SVG src={require('src/asset/24px/monetization_on.svg')} />}
-            />
-          }
-          adaptive={adaptive}
-        />
-        <ProductCard
-          title="Farming"
-          description={testDescription}
-          backgroundImage={getImage('product-farming.png')}
-          adaptive={adaptive}
-        />
-        <ProductCard
-          title="Validator"
-          description={testDescription}
-          backgroundImage={getImage('product-validator.png')}
-          adaptive={adaptive}
-        />
-        <ProductCard
-          title="Wallet"
-          description={testDescription}
-          backgroundImage={getImage('product-wallet.png')}
-          adaptive={adaptive}
-        />
-        <ProductCard
-          title="Referral Program"
-          description={testDescription}
-          backgroundImage={getImage('product-referral.png')}
-          statistics={
-            <ProductCard.Statistics
-              title="75 678"
-              subtitle="users love"
-              icon={<SVG src={require('src/asset/24px/favorite.svg')} />}
-            />
-          }
-          adaptive={adaptive}
-        />
-        <ProductCard
-          title="Mobile Apps"
-          description={testDescription}
-          backgroundImage={getImage('product-mobile-apps.png')}
-          statistics={
-            <ProductCard.Statistics
-              title="475 678"
-              subtitle="users love"
-              icon={<SVG src={require('src/asset/24px/favorite.svg')} />}
-            />
-          }
-          adaptive={adaptive}
-          comingSoon
-        />
+        {displayedCards.map((product, index) => (
+          <ProductCard
+            key={product.id}
+            title={product.title}
+            description={product.description}
+            backgroundImage={product.backgroundImage}
+            dark={product.dark}
+            statistics={
+              product.statistics && (
+                <ProductCard.Statistics
+                  title={product.statistics.title}
+                  subtitle={product.statistics.subtitle}
+                  icon={<SVG src={product.statistics.icon} />}
+                />
+              )
+            }
+            comingSoon={product.comingSoon}
+            adaptive={adaptive}
+            style={{
+              zIndex: index + -index * 2 + displayedCards.length,
+            }}
+          />
+        ))}
       </div>
     </Slider>
   );

@@ -1,11 +1,43 @@
 .MainLanding-ProductCard {
-  height: 660px;
+  height: var(--card-height, 660px);
   width: 521px;
   padding: 61px 47px;
   border-radius: 45px;
   position: relative;
-  box-sizing: border-box;
   overflow: hidden;
+  box-sizing: border-box;
+  border: 2px solid #e5e9f4;
+  background: #f7f9fc;
+
+  &__wrapper {
+    --gap-between-cards: 21px;
+    animation: showCard 1s;
+
+    &:not(:last-child) {
+      margin-right: var(--gap-between-cards);
+    }
+  }
+
+  @keyframes showCard {
+    0% {
+      transform: translateX(100vw + 100%);
+      width: 0;
+      margin-right: 0;
+    }
+
+    50% {
+      // width: 0;
+      transform: none;
+    }
+
+    70% {
+      margin-right: var(--gap-between-cards);
+    }
+
+    100% {
+      width: 521px;
+    }
+  }
 
   h4 {
     margin-bottom: 17px;
@@ -94,28 +126,28 @@
     }
   }
 
-  &:nth-child(2n - 1) {
+  .MainLanding-ProductCard-statistics__icon {
+    background: #f4f7fe;
+  }
+
+  &.dark {
     background: #e6e9f4;
 
     .MainLanding-ProductCard-statistics__icon {
       background: #fff;
     }
   }
-
-  &:nth-child(2n) {
-    border: 2px solid #e5e9f4;
-
-    .MainLanding-ProductCard-statistics__icon {
-      background: #f4f7fe;
-    }
-  }
 }
 
 .adaptive .MainLanding-ProductCard {
-  height: 524px;
+  height: var(--card-height, 524px);
   width: 315px;
   padding: 45px 32px 45px 35px;
   border-radius: var(--radius-panel-large);
+
+  &__wrapper {
+    --gap-between-cards: 12px;
+  }
 
   h4 {
     font-size: 23px;

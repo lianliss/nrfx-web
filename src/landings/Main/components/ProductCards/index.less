@@ -1,21 +1,16 @@
 .MainLanding-ProductCards {
   &__slider {
+    --card-height: 660px;
     display: flex;
     padding: 0 22px;
-    gap: 21px;
     box-sizing: border-box;
-    transform: translateX(-100%);
-    transition: all 2s ease-out;
-
-    &.visible {
-      transform: none;
-    }
+    height: var(--card-height);
   }
 }
 
 .adaptive .MainLanding-ProductCards {
   &__slider {
+    --card-height: 524px;
     padding: 0 15px;
-    gap: 12px;
   }
 }
