@@ -16,7 +16,7 @@ function OtherProducts({ adaptive }) {
   const titleRef = React.useRef(null);
   const nextSlideRef = React.useRef(null);
   const prevSlideRef = React.useRef(null);
-  const { visible } = useIsInViewport(titleRef, 50);
+  const visible = useIsInViewport(titleRef, 50);
 
   return (
     <div className="MainLanding-other-products">

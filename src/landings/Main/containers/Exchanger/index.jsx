@@ -14,15 +14,15 @@ import TypewriterEffect from '../../components/TypewriterEffect';
 // Styles
 import './index.less';
 
-const Exchanger = React.forwardRef(({ adaptive, visible = true }, ref) => {
+const Exchanger = ({ adaptive }) => {
   return (
-    <div className="MainLanding-exchanger__wrapper" ref={ref}>
+    <ShowIn className="MainLanding-exchanger__wrapper" animation="slideRight">
       <Container maxWidth={1356} padding={adaptive ? 15 : 22}>
         <div className="MainLanding-exchanger">
           <ShowIn
             className="MainLanding-exchanger__content"
             animation="slideRight"
-            scrollRemainderPercent={40}
+            scrollRemainderPercent={60}
           >
             <h2>Exchanger</h2>
             <p>
@@ -87,8 +87,8 @@ const Exchanger = React.forwardRef(({ adaptive, visible = true }, ref) => {
           </div>
         </div>
       </Container>
-    </div>
+    </ShowIn>
   );
-});
+};
 
 export default Exchanger;

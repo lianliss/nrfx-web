@@ -15,29 +15,13 @@ function ShowIn({
   type,
   animation,
   className,
-  viewport,
+  inputVisibleStatus,
   scrollRemainderPercent = 70,
   tag: Tag = 'div',
 }) {
   const showInRef = React.useRef(null);
-  const { visible, rect } =
-    viewport || useIsInViewport(showInRef, scrollRemainderPercent);
-  const [transform, setTransform] = React.useState('');
-
-  React.useEffect(() => {
-    setDynamicStep();
-  }, [rect, visible]);
-
-  const setDynamicStep = () => {
-    switch (animation) {
-      case 'swipeHorizontal': {
-        setTransform(`translateX(-${rect.top}px)`);
-        break;
-      }
-      default:
-        break;
-    }
-  };
+  const visible =
+    inputVisibleStatus || useIsInViewport(showInRef, scrollRemainderPercent);
 
   return (
     <Tag
@@ -45,7 +29,6 @@ function ShowIn({
         visible,
       })}
       ref={showInRef}
-      style={{ transform }}
     >
       {children}
     </Tag>
@@ -62,17 +45,14 @@ ShowIn.propTypes = {
     'slideBottom',
     'slideLeft',
   ]),
-  viewport: PropTypes.shape({
-    visible: PropTypes.bool,
-    rect: PropTypes.object,
-  }),
+  inputVisibleStatus: PropTypes.bool,
   className: PropTypes.string,
 };
 
 ShowIn.defaultProps = {
   type: 'scroll',
   animation: 'opacity',
-  viewport: null,
+  inputVisibleStatust: false,
   className: '',
 };
 

@@ -9,29 +9,25 @@ import React from 'react';
 export default function (element, scrollRemainderPercent = 70) {
   if (!element) return;
   const [isInViewport, setIsInViewport] = React.useState(false);
-  const [rect, setRect] = React.useState(null);
 
-  const checkElement = () => {
+  const checkElement = React.useCallback(() => {
     if (!element.current) return;
 
     const newRect = element.current.getBoundingClientRect();
     const documentHeight = document.documentElement.clientHeight;
-    // const documentWidth = document.documentElement.clientWidth;
-
     const fullHeight = window.innerHeight || documentHeight;
     const windowPosition = fullHeight * (scrollRemainderPercent / 100);
+
+    // is not in viewport
+    if (newRect.top > windowPosition) return;
+
     const result = newRect.top <= windowPosition;
 
     if (result) {
       setIsInViewport(result);
-    }
-
-    if (newRect.top <= 0) {
       document.removeEventListener('scroll', checkElement);
     }
-
-    setRect(newRect);
-  };
+  });
 
   React.useEffect(() => {
     document.addEventListener('scroll', checkElement);
@@ -41,5 +37,5 @@ export default function (element, scrollRemainderPercent = 70) {
     };
   }, []);
 
-  return { visible: isInViewport, rect: rect || {} };
+  return isInViewport;
 }
