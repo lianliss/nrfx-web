@@ -6,12 +6,17 @@ import { CustomButton } from 'dapp';
 import ProductCards from '../../components/ProductCards';
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import useIsInViewport from 'src/hooks/useIsInViewport';
+
 // Styles
 import './index.less';
 
 function OtherProducts({ adaptive }) {
+  const titleRef = React.useRef(null);
   const nextSlideRef = React.useRef(null);
   const prevSlideRef = React.useRef(null);
+  const { visible } = useIsInViewport(titleRef, 50);
 
   return (
     <div className="MainLanding-other-products">
@@ -22,7 +27,7 @@ function OtherProducts({ adaptive }) {
           wrap
           justifyContent="space-between"
         >
-          <h2>Other product</h2>
+          <h2 ref={titleRef}>Other product</h2>
           <div className="slider-control">
             <CustomButton
               ref={prevSlideRef}
@@ -43,6 +48,7 @@ function OtherProducts({ adaptive }) {
         prevSlideRef={prevSlideRef}
         nextSlideRef={nextSlideRef}
         adaptive={adaptive}
+        visible={visible}
       />
     </div>
   );

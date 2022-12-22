@@ -23,29 +23,27 @@ function ProductCard({
   ...otherProps
 }) {
   return (
-    <div className="MainLanding-ProductCard__wrapper" {...otherProps}>
-      <div className={cn('MainLanding-ProductCard', { dark })}>
-        <div className="MainLanding-ProductCard__content">
-          <h4>{title}</h4>
-          <p>{description}</p>
-          <CustomButton disabled={comingSoon}>
-            {comingSoon ? (
-              'Coming Soon'
-            ) : (
-              <>
-                Try now
-                <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
-              </>
-            )}
-          </CustomButton>
-        </div>
-        {backgroundImage && (
-          <div className="MainLanding-ProductCard__background">
-            <img src={backgroundImage} />
-          </div>
-        )}
-        {!adaptive && statistics}
+    <div className={cn('MainLanding-ProductCard', { dark })} {...otherProps}>
+      <div className="MainLanding-ProductCard__content">
+        <h4>{title}</h4>
+        <p>{description}</p>
+        <CustomButton disabled={comingSoon}>
+          {comingSoon ? (
+            'Coming Soon'
+          ) : (
+            <>
+              Try now
+              <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
+            </>
+          )}
+        </CustomButton>
       </div>
+      {backgroundImage && (
+        <div className="MainLanding-ProductCard__background">
+          <img src={backgroundImage} />
+        </div>
+      )}
+      {!adaptive && statistics}
     </div>
   );
 }

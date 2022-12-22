@@ -1,42 +1,41 @@
 import React from 'react';
 
 // Components
-import { Row } from 'ui';
 import Slider from 'dapp/ui/Slider/Slider';
 import ProductCard from '../ProductCard';
 import SVG from 'utils/svg-wrap';
 
 // Utils
-import useIsInViewport from 'src/hooks/useIsInViewport';
 import productCards from '../../constants/productCards';
 import { classNames as cn } from 'utils';
 
 // Styles
 import './index.less';
 
-function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
-  const sliderContainerRef = React.useRef(null);
-  const { visible } = useIsInViewport(sliderContainerRef);
-  const testDescription =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
-  const [displayedCards, setDisplayedCards] = React.useState([]);
+function ProductCards({
+  adaptive,
+  prevSlideRef,
+  nextSlideRef,
+  visible = true,
+}) {
+  const playCardAnimation = (index) => {
+    if (adaptive) {
+      return {};
+    }
 
-  React.useEffect(() => {
-    if (!visible) return;
+    const delay = index / 3;
 
-    const productCardsInterval = setInterval(() => {
-      setDisplayedCards((prev) => {
-        const nextCard = [...productCards].reverse()[prev.length];
+    return {
+      animation: `
+        cardIsHidden ${delay}s,
+        showCard 0.7s ${delay}s
+      `,
+    };
+  };
 
-        if (!nextCard) {
-          clearInterval(productCardsInterval);
-          return prev;
-        }
-
-        return [nextCard, ...prev];
-      });
-    }, 500);
-  }, [visible]);
+  if (!visible) {
+    return <div className="MainLanding-ProductCards__slider" />;
+  }
 
   return (
     <Slider
@@ -46,11 +45,8 @@ function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
       stepSize={adaptive ? 315 : 521}
       adaptive={adaptive}
     >
-      <div
-        className={cn('MainLanding-ProductCards__slider', { visible })}
-        ref={sliderContainerRef}
-      >
-        {displayedCards.map((product, index) => (
+      <div className={cn('MainLanding-ProductCards__slider')}>
+        {productCards.map((product, index) => (
           <ProductCard
             key={product.id}
             title={product.title}
@@ -67,10 +63,8 @@ function ProductCards({ adaptive, prevSlideRef, nextSlideRef }) {
               )
             }
             comingSoon={product.comingSoon}
+            style={playCardAnimation(index)}
             adaptive={adaptive}
-            style={{
-              zIndex: index + -index * 2 + displayedCards.length,
-            }}
           />
         ))}
       </div>
