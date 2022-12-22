@@ -20,15 +20,22 @@ function ShowIn({
 }) {
   const showInRef = React.useRef(null);
   const { visible, rect } = viewport || useIsInViewport(showInRef);
-  let transform;
+  const [transform, setTransform] = React.useState('');
 
-  switch (animation) {
-    case 'swipeHorizontal':
-      transform = `translateX(-${rect.top}px)`;
-      break;
-    default:
-      break;
-  }
+  React.useEffect(() => {
+    setDynamicStep();
+  }, [rect, visible]);
+
+  const setDynamicStep = () => {
+    switch (animation) {
+      case 'swipeHorizontal': {
+        setTransform(`translateX(-${rect.top}px)`);
+        break;
+      }
+      default:
+        break;
+    }
+  };
 
   return (
     <Tag
