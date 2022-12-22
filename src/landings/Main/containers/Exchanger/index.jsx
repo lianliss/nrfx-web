@@ -22,6 +22,7 @@ const Exchanger = React.forwardRef(({ adaptive, visible = true }, ref) => {
           <ShowIn
             className="MainLanding-exchanger__content"
             animation="slideRight"
+            scrollRemainderPercent={40}
           >
             <h2>Exchanger</h2>
             <p>
@@ -72,11 +73,15 @@ const Exchanger = React.forwardRef(({ adaptive, visible = true }, ref) => {
                     src={require('src/asset/backgrounds/main-landing/exchanger-monitor.svg')}
                   />
                 </div>
-                <div className="exchanger-backgrounds__select-tokens">
+                <ShowIn
+                  animation="slideTop"
+                  className="exchanger-backgrounds__select-tokens"
+                  scrollRemainderPercent={100}
+                >
                   <SVG
                     src={require('src/asset/backgrounds/main-landing/exchanger-select-tokens.svg')}
                   />
-                </div>
+                </ShowIn>
               </>
             )}
           </div>

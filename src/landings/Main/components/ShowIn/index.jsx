@@ -78,9 +78,10 @@ ShowIn.defaultProps = {
 
 function ShowInWrapper({ children, ...props }) {
   const adaptive = useSelector(adaptiveSelector);
+  const Tag = props.tag || 'div';
 
   if (adaptive) {
-    return children;
+    return <Tag className={props.className}>{children}</Tag>;
   }
 
   return <ShowIn {...props}>{children}</ShowIn>;
