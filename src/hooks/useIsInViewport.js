@@ -1,11 +1,12 @@
 import React from 'react';
 
-export const types = {
-  full: 'full',
-  half: 'half',
-};
-
-export default function (element, type = types.half) {
+/**
+ * Returns visible when scrolled to element and rect object.
+ * @param {elementRef} element
+ * @param {viewportVisibleType} type
+ * @returns {object} viewport
+ */
+export default function (element, scrollRemainderPercent = 70) {
   if (!element) return;
   const [isInViewport, setIsInViewport] = React.useState(false);
   const [rect, setRect] = React.useState(null);
@@ -15,23 +16,11 @@ export default function (element, type = types.half) {
 
     const newRect = element.current.getBoundingClientRect();
     const documentHeight = document.documentElement.clientHeight;
-    const documentWidth = document.documentElement.clientWidth;
-    let result;
+    // const documentWidth = document.documentElement.clientWidth;
 
-    switch (type) {
-      case types.full:
-        result =
-          newRect.top >= 0 &&
-          newRect.left >= 0 &&
-          newRect.bottom <= (window.innerHeight || documentHeight) &&
-          newRect.right <= (window.innerWidth || documentWidth);
-        break;
-      case types.half: {
-        result = newRect.top <= (window.innerHeight || documentHeight) * 0.7;
-      }
-      default:
-        break;
-    }
+    const fullHeight = window.innerHeight || documentHeight;
+    const windowPosition = fullHeight * (scrollRemainderPercent / 100);
+    const result = newRect.top <= windowPosition;
 
     if (result) {
       setIsInViewport(result);

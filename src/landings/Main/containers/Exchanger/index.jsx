@@ -19,14 +19,15 @@ const Exchanger = React.forwardRef(({ adaptive, visible = true }, ref) => {
     <div className="MainLanding-exchanger__wrapper" ref={ref}>
       <Container maxWidth={1356} padding={adaptive ? 15 : 22}>
         <div className="MainLanding-exchanger">
-          <div className="MainLanding-exchanger__content">
-            <TypewriterEffect text="Exchanger" tag="h2" play={visible} />
-            <TypewriterEffect
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna"
-              tag="p"
-              play={visible}
-              duration={0.02}
-            />
+          <ShowIn
+            className="MainLanding-exchanger__content"
+            animation="slideRight"
+          >
+            <h2>Exchanger</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna
+            </p>
             <div className="MainLanding-exchanger__action">
               <Button>
                 <Row alignItems="center">
@@ -42,7 +43,7 @@ const Exchanger = React.forwardRef(({ adaptive, visible = true }, ref) => {
                 </div>
               </Col>
             </div>
-          </div>
+          </ShowIn>
           {!adaptive && (
             <SuggestiveBox
               title="Support Telegram"

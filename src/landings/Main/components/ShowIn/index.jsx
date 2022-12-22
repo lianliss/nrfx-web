@@ -16,10 +16,12 @@ function ShowIn({
   animation,
   className,
   viewport,
+  scrollRemainderPercent = 70,
   tag: Tag = 'div',
 }) {
   const showInRef = React.useRef(null);
-  const { visible, rect } = viewport || useIsInViewport(showInRef);
+  const { visible, rect } =
+    viewport || useIsInViewport(showInRef, scrollRemainderPercent);
   const [transform, setTransform] = React.useState('');
 
   React.useEffect(() => {
