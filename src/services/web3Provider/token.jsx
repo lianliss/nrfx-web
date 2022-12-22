@@ -1,5 +1,8 @@
 import wei from 'utils/wei';
 import _ from 'lodash';
+import NarfexOracleABI from 'src/index/constants/ABI/NarfexOracle';
+import networks from 'src/index/constants/networks';
+import significant from 'utils/significant';
 
 const wait = miliseconds => new Promise(fulfill => setTimeout(fulfill, miliseconds));
 
@@ -89,6 +92,172 @@ class TokenContract {
     } catch (error) {
       this.stopWaiting();
       throw error;
+    }
+  };
+  
+  _updateTokensData = async (tokens) => {
+    try {
+      const network = networks[this.provider.state.chainId];
+      const oracleContract = new (this.web3.eth.Contract)(
+        NarfexOracleABI,
+        network.narfexOracle,
+      );
+      const tokensData = (await oracleContract.methods.getTokensData(tokens.map(t => t.address), false).call())
+        .map((tokenData, index) => {
+        const token = tokens[index];
+        this.provider.oracleTokens[token.address] = Object.assign(
+          this.provider.getTokenContract(token),
+          {
+            price: wei.from(tokenData.price),
+            commission: wei.from(tokenData.commission, 4),
+            transferFee: wei.from(tokenData.transferFee, 4),
+            isFiat: tokenData.isFiat,
+          });
+      });
+    } catch (error) {
+      console.error('[TokenContract][_updateTokensData]', tokens.map(t => t.address), error);
+    }
+  };
+  
+  _getFiatExchange = (token0, token1) => {
+    const rate = token0.price / token1.price;
+    const commission = (token0.commission + 1) * (token1.commission + 1) - 1;
+    return {rate, commission};
+  };
+  
+  _getFiatExchangeOut = (token0, token1, inAmount) => {
+    const {rate, commission} = this._getFiatExchange(token0, token1);
+    return inAmount * rate * (1 - commission);
+  };
+  
+  _getFiatExchangeIn = (token0, token1, outAmount) => {
+    const {rate, commission} = this._getFiatExchange(token0, token1);
+    return outAmount / rate * (1 + commission);
+  };
+  
+  _getExchangeTokens = async secondToken => {
+    if (!this.provider.oracleTokens) this.provider.oracleTokens = {};
+    const {oracleTokens} = this.provider;
+    const network = networks[this.provider.state.chainId];
+    
+    const current = this.address ? this : network.wrapBNB;
+    const second = secondToken.address ? secondToken : network.wrapBNB;
+    
+    if (!oracleTokens[current.address]
+      || !oracleTokens[second.address]
+      || !oracleTokens[network.usdt.address]) {
+      await this._updateTokensData([current, second, network.usdt]);
+    }
+    
+    return {
+      token0: oracleTokens[current.address],
+      token1: oracleTokens[second.address],
+      usdt: oracleTokens[network.usdt.address],
+    }
+  };
+  
+  _getDEXResult = async (token0, token1, amount, isExactIn = true) => {
+    const pairs = await this.provider.getPairs(token0, token1);
+    const trade = this.provider.getTrade(pairs, token0, token1, amount, isExactIn);
+    const transferFee = (token0.transferFee + 1) * (token1.transferFee + 1) - 1;
+    const priceImpact = significant(trade.priceImpact.asFraction);
+    return {
+      inAmount: isExactIn ? amount : significant(trade.inputAmount) * (1 + transferFee),
+      outAmount: isExactIn ? significant(trade.outputAmount) * (1 - transferFee) : amount,
+      path: trade.route.path,
+      priceImpact
+    };
+  };
+  
+  getOutAmount = async (secondToken, inAmount) => {
+    try {
+      const {token0, token1, usdt} = await this._getExchangeTokens(secondToken);
+      
+      if (
+        (token0.isFiat && token1.isFiat)
+        || token0.isFiat && token1.address === usdt.address
+        || token1.isFiat && token0.address === usdt.address
+        ) {
+        /// Exchange between two fiats or fiat with USDT
+        return {
+          inAmount,
+          outAmount: this._getFiatExchangeOut(token0, token1, inAmount),
+          path: [token0, token1],
+        }
+      }
+      if (!token0.isFiat && !token1.isFiat) {
+        // Only DEX exchange
+        return await this._getDEXResult(token0, token1, inAmount, true);
+      }
+      if (token0.isFiat) {
+        // Exchange from fiat to coin
+        const usdtAmount = this._getFiatExchangeOut(token0, usdt, inAmount);
+        const dexResult = await this._getDEXResult(usdt, token1, usdtAmount, true);
+        return {
+          ...dexResult,
+          inAmount,
+          outAmount: dexResult.outAmount,
+          path: [token0, ...dexResult.path],
+        };
+      } else {
+        // Exchange from coin to fiat
+        const dexResult = await this._getDEXResult(token0, usdt, inAmount, true);
+        return {
+          ...dexResult,
+          inAmount,
+          outAmount: this._getFiatExchangeOut(usdt, token1, dexResult.outAmount, true),
+          path: [...dexResult.path, token1],
+        }
+      }
+    } catch (error) {
+      console.error('[TokenContract][getOutAmount]', error);
+      return null;
+    }
+  };
+  
+  getInAmount = async (secondToken, outAmount) => {
+    try {
+      const {token0, token1, usdt} = await this._getExchangeTokens(secondToken);
+      
+      if (
+        (token0.isFiat && token1.isFiat)
+        || token0.isFiat && token1.address === usdt.address
+        || token1.isFiat && token0.address === usdt.address
+      ) {
+        /// Exchange between two fiats or fiat with USDT
+        return {
+          inAmount: this._getFiatExchangeIn(token0, token1, outAmount),
+          outAmount,
+          path: [token0, token1],
+        }
+      }
+      if (!token0.isFiat && !token1.isFiat) {
+        // Only DEX exchange
+        return await this._getDEXResult(token0, token1, outAmount, false);
+      }
+      if (token0.isFiat) {
+        // Exchange from fiat to coin
+        const dexResult = await this._getDEXResult(usdt, token1, outAmount, false);
+        return {
+          ...dexResult,
+          inAmount: this._getFiatExchangeIn(token0, usdt, dexResult.inAmount),
+          outAmount,
+          path: [token0, ...dexResult.path],
+        };
+      } else {
+        // Exchange from coin to fiat
+        const usdtAmount = this._getFiatExchangeIn(usdt, token1, outAmount);
+        const dexResult = await this._getDEXResult(token0, usdt, usdtAmount, false);
+        return {
+          ...dexResult,
+          inAmount: dexResult.inAmount,
+          outAmount,
+          path: [...dexResult.path, token1],
+        }
+      }
+    } catch (error) {
+      console.error('[TokenContract][getInAmount]', error);
+      return null;
     }
   }
 }

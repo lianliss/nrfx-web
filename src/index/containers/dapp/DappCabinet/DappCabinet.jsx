@@ -50,7 +50,7 @@ export class DappCabinet extends Component {
         break;
       case PAGES.DAPP_EXCHANGE:
         Component = Exchanger;
-        mainnetOnly = true;
+        mainnetOnly = false;
         break;
       case PAGES.DAPP_TRANSACTION_HISTORY:
         Component = TransactionHistory;

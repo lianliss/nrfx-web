@@ -37,6 +37,7 @@ function SwapSettings({
     if (value > 100) value = 100;
     setSlippageValue(_value);
     setSlippage(value);
+    window.localStorage.setItem('nrfx-slippage', value);
   };
 
   const handleDeadline = (_value) => {

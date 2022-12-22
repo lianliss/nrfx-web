@@ -1,3 +1,30 @@
+const TESTNET_FIATS = [
+  {
+    name: "Testnet United States Dollar",
+    symbol: "USD",
+    address: "0x6dBB65750a6BBE8A0CBD28257008C464bAbe4de6",
+    chainId: 97,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
+  },
+  {
+    name: "Testnet Russian Ruble",
+    symbol: "RUB",
+    address: "0x93e9fefdb37431882D1A27bB794E73a191ebD945",
+    chainId: 97,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+  },
+  {
+    name: "Testnet Ukrainian Hryvnia",
+    symbol: "UAH",
+    address: "0xbD6a27FF04405F0111D8d811951b53B7cbb1bf95",
+    chainId: 97,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/uah-gryvnya.svg"
+  },
+];
+
 const KNOWN_FIATS = [
   {
     name: "United States Dollar on Narfex",
@@ -95,6 +122,7 @@ const KNOWN_FIATS = [
     decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/gbp-pound.svg"
   },
+  ...TESTNET_FIATS,
 ].map(fiat => ({
   ...fiat,
   isFiat: true,

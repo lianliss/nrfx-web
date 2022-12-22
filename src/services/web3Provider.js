@@ -9,6 +9,8 @@ import axios from 'axios';
 import networks from 'src/index/constants/networks';
 import getAllPairsCombinations from 'utils/getPairCombinations';
 import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
+import { getAddress, getCreate2Address } from '@ethersproject/address';
+import { keccak256, pack } from '@ethersproject/solidity';
 import significant from 'utils/significant';
 import TokenContract from './web3Provider/token';
 import MasterChefContract from './web3Provider/MasterChefContract';
@@ -178,8 +180,25 @@ class Web3Provider extends React.PureComponent {
   getPairAddress(_token0, _token1) {
     const token0 = _token0.address ? _token0 : this.wrapBNB;
     const token1 = _token1.address ? _token1 : this.wrapBNB;
-
-    return Pair.getAddress(this.getToken(token0), this.getToken(token1));
+    
+    let first;
+    let second;
+    
+    if (token0.address.toLowerCase() < token1.address.toLowerCase()) {
+      first = token0;
+      second = token1;
+    } else {
+      first = token1;
+      second = token0;
+    }
+  
+    const network = networks[token0.chainId];
+    return getCreate2Address(
+      network.factoryAddress,
+      keccak256(
+        ['bytes'],
+        [pack(['address', 'address'], [first.address, second.address])]),
+      network.factoryInitCodeHash);
   }
 
   /**
@@ -212,11 +231,12 @@ class Web3Provider extends React.PureComponent {
       const pair = combinations[index];
       const token0 = this.getToken(pair[0]);
       const token1 = this.getToken(pair[1]);
-      const isForward = token0.sortsBefore(token1); // True if token0 is the first token of LP
+      const isForward = token0.address.toLowerCase() < token1.address.toLowerCase(); // True if token0 is the first token of LP
       const reserve0 = _.get(result, 'value._reserve0', 0);
       const reserve1 = _.get(result, 'value._reserve1', 0);
       const tokenAmount0 = new TokenAmount(token0, isForward ? reserve0 : reserve1);
       const tokenAmount1 = new TokenAmount(token1, isForward ? reserve1 : reserve0);
+      
       return new Pair(tokenAmount0, tokenAmount1);
     }).filter(r => r);
   }
@@ -1361,11 +1381,11 @@ class Web3Provider extends React.PureComponent {
       const userId = `${chainId}${accountAddress}`;
       if (!isConnected) {
         const fiats = {};
-        fiats[userId] = KNOWN_FIATS;
+        fiats[userId] = KNOWN_FIATS.filter(f => f.chainId === chainId);
         this.setState({
           fiats,
         });
-        return KNOWN_FIATS;
+        return KNOWN_FIATS.filter(f => f.chainId === chainId);
       }
       const fiats = _.cloneDeep(this.state.fiats);
       let list = _.get(fiats, 'list', []);
@@ -1386,7 +1406,8 @@ class Web3Provider extends React.PureComponent {
         );
         return fiatContract.methods.getInfo(accountAddress || ZERO_ADDRESS).call();
       }))).map((fiat, index) => {
-        const known = KNOWN_FIATS.find(s => s.symbol === fiat[1]);
+        const known = KNOWN_FIATS.filter(f => f.chainId === chainId)
+          .find(s => s.symbol === fiat[1]);
         return known ? {
           ...known,
           address: list[index],
@@ -1880,6 +1901,7 @@ class Web3Provider extends React.PureComponent {
     return <Web3Context.Provider value={{
       ...this.state,
       web3: this.web3,
+      getWeb3: this.getWeb3.bind(this),
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
       logout: this.logout.bind(this),
