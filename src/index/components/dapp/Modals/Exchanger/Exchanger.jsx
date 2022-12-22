@@ -149,7 +149,17 @@ function Exchanger({ ...props }) {
       });
     } catch (error) {
       console.error('[swap]', error);
-      toast.warning(error.message);
+      if (error.message.indexOf('Internal JSON-RPC error.') >= 0) {
+        const message = error.message.split('Internal JSON-RPC error.')[1];
+        try {
+          const parsed = JSON.parse(message);
+          toast.warning(parsed.message.split('execution reverted:')[1]);
+        } catch (error) {
+          toast.warning(error.message);
+        }
+      } else {
+        toast.warning(error.message);
+      }
     }
     setIsProcess(false);
   };
