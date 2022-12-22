@@ -27,8 +27,8 @@ function ProductCards({
 
     return {
       animation: `
-        cardIsHidden ${delay}s,
-        showCard 0.7s ${delay}s
+        productCardIsHidden ${delay}s,
+        showProductCard 0.7s ${delay}s
       `,
     };
   };
