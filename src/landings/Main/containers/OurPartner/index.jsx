@@ -6,6 +6,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { getLogo } from '../../../utils/getters';
+import { getLang } from 'utils';
 
 // Styles
 import './index.less';
@@ -16,7 +17,7 @@ function OurPartner({ adaptive }) {
   return (
     <div className="MainLanding-our-partner">
       <Container maxWidth={1262} padding={adaptive ? 15 : 71}>
-        <h2>Our partner</h2>
+        <h2>{getLang('main_landing_our_partner_title')}</h2>
       </Container>
       <Container
         maxWidth={1356}
