@@ -12,6 +12,7 @@ import ShowIn from '../../components/ShowIn';
 // Utils
 import useAdaptive from 'src/hooks/adaptive';
 import { DESKTOP } from 'src/index/constants/breakpoints';
+import { getLang } from 'utils';
 
 // Styles
 import './index.less';
@@ -35,15 +36,15 @@ function JoinUs({ adaptive }) {
           className="MainLanding-join-us__content"
           alignItems={adaptive ? 'center' : 'flex-start'}
         >
-          <h2>Join us</h2>
-          <p className="MainLanding-join-us__text">social media</p>
+          <h2>{getLang('main_landing_join_us_title')}</h2>
+          <p className="MainLanding-join-us__text">
+            {getLang('main_landing_join_us_subtitle')}
+          </p>
           <ShowIn type="scroll">
             <SocialLinks adaptive={adaptive} />
           </ShowIn>
           <p className="MainLanding-join-us__text">
-            Lorem ipsum dolor sit amet,
-            <br />
-            consectetur adipiscing elit
+            {getLang('main_landing_join_us_description')}
           </p>
           <Row
             className="MainLanding-join-us__buttons"
@@ -53,15 +54,15 @@ function JoinUs({ adaptive }) {
           >
             <SuggestiveBox
               icon={<SVG src={require('src/asset/24px/draft.svg')} />}
-              title="White paper"
-              subtitle="click for read"
+              title={getLang('main_landing_white_paper_button_title')}
+              subtitle={getLang('main_landing_white_paper_button_subtitle')}
               size={sizes.small}
               border
             />
             <SuggestiveBox
               icon={<SVG src={require('src/asset/24px/code.svg')} />}
-              title="Github"
-              subtitle="click for open"
+              title={getLang('main_landing_github_button_title')}
+              subtitle={getLang('main_landing_github_button_subtitle')}
               size={sizes.small}
               border
             />
