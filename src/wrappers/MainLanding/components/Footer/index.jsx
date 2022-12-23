@@ -10,10 +10,10 @@ import FooterReadDoc from '../FooterReadDoc';
 import socialLinksType from 'src/landings/Main/constants/socialLinksType';
 import { getLang } from 'utils';
 import * as pages from 'src/index/constants/pages';
+import company from 'src/index/constants/company';
 
 // Styles
 import './index.less';
-import company from '../../../../index/constants/company';
 
 function Footer({ adaptive }) {
   return (
