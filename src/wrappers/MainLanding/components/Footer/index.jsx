@@ -46,7 +46,7 @@ function Footer({ adaptive }) {
               <h6>{getLang('site__footerLegacy')}</h6>
               <Col className="MainLandingWrapperFooter-nav__items">
                 <Link routeName="">{getLang('landing_footer_privacy')}</Link>
-                <Link routeName="">{getLang('landing_footer_security')}</Link>
+                <Link routeName="">{getLang('landing_footer_terms')}</Link>
               </Col>
             </Col>
           </nav>
