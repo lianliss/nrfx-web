@@ -7,9 +7,8 @@ import ShowIn from '../../components/ShowIn';
 import SuggestiveBox from '../../components/SuggestiveBox';
 
 // Utils
+import { getLang } from 'utils';
 import { sizes } from '../../components/SuggestiveBox/constants/types';
-import useIsInViewport from 'src/hooks/useIsInViewport';
-import TypewriterEffect from '../../components/TypewriterEffect';
 
 // Styles
 import './index.less';
@@ -24,15 +23,12 @@ const Exchanger = ({ adaptive }) => {
             animation="slideRight"
             scrollRemainderPercent={60}
           >
-            <h2>Exchanger</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna
-            </p>
+            <h2>{getLang('main_landing_exchanger_title')}</h2>
+            <p>{getLang('main_landing_exchanger_description')}</p>
             <div className="MainLanding-exchanger__action">
               <Button>
                 <Row alignItems="center">
-                  Try exchanger
+                  {getLang('main_landing_try_exchanger')}
                   <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
                 </Row>
               </Button>
@@ -40,15 +36,15 @@ const Exchanger = ({ adaptive }) => {
                 <span className="transactions-today__title">445 678</span>
                 <div className="transactions-today__description">
                   <div className="transactions-today__marker" />
-                  <span>transaction today</span>
+                  <span>{getLang('main_landing_transactions_today')}</span>
                 </div>
               </Col>
             </div>
           </ShowIn>
           {!adaptive && (
             <SuggestiveBox
-              title="Support Telegram"
-              subtitle="online 24 / 7"
+              title={getLang('main_landing_telegram_button_title')}
+              subtitle={getLang('main_landing_telegram_button_subtitle')}
               icon={
                 <SVG
                   src={require('src/asset/icons/social/telegram-solid.svg')}
