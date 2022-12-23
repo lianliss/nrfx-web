@@ -3,14 +3,14 @@ import { backgrounds, sizes } from './benefit';
 export default [
   {
     id: 1,
-    title: 'Trustless & Based on smart contracts',
+    title: 'main_landing_benefits_trustless',
     size: sizes.medium,
     background: backgrounds.blue,
     image: 'trustlessImageComponent',
   },
   {
     id: 2,
-    title: 'users',
+    title: 'main_landing_benefits_users',
     size: sizes.small,
     background: backgrounds.aliceBlue,
     image: 'usersImageComponent',
@@ -24,21 +24,21 @@ export default [
   },
   {
     id: 4,
-    title: 'exchange transactions every day',
+    title: 'main_landing_benefits_transactions',
     size: sizes.large,
     background: backgrounds.aliceBlue,
     image: 'transactionsImageComponent',
   },
   {
     id: 5,
-    title: '50+ fiat currencies',
+    title: 'main_landing_benefits_currencies',
     size: sizes.small,
     background: backgrounds.orange,
     image: 'currenciesImageComponent',
   },
   {
     id: 6,
-    title: 'Community driven (DAO)',
+    title: 'main_landing_benefits_community',
     size: sizes.small,
     background: backgrounds.aliceBlue,
     image: 'communityImageComponent',
