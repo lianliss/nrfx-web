@@ -10,6 +10,7 @@ import BurgerMenu from './components/BurgerMenu';
 import Sidebar from './components/Sidebar';
 
 // Utils
+import { getLang } from 'utils';
 import { setLang } from 'src/services/lang';
 import { currentLangSelector, displayedLangListSelector } from 'src/selectors';
 import languageIcon from 'src/asset/icons/social/language.svg';
@@ -60,7 +61,7 @@ function Header({ adaptive }) {
               'App'
             ) : (
               <>
-                Launch App
+                {getLang('site_launch_app')}
                 <SVG src={require('src/asset/icons/arrows/slider-arrow.svg')} />
               </>
             )}

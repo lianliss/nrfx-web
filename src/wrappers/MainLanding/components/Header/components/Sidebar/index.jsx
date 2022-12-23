@@ -9,7 +9,7 @@ import { Button, Row } from 'ui';
 import SVG from 'utils/svg-wrap';
 
 // Utils
-import { classNames as cn } from 'utils';
+import { classNames as cn, getLang } from 'utils';
 
 // Styles
 import './index.less';
@@ -40,7 +40,7 @@ function Sidebar({ langList, lang, setLang, active, onClose }) {
         <Select options={langList} value={lang} onChange={setLang} />
         <Button size="middle" type="lightBlue">
           <Row alignItems="center">
-            Launch App
+            {getLang('site_launch_app')}
             <SVG src={require('src/asset/icons/arrows/slider-arrow.svg')} />
           </Row>
         </Button>

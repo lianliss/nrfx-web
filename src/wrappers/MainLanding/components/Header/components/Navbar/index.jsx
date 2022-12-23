@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router5';
 
 // Utils
+import { getLang } from 'utils';
 import navbarItems from '../../../../constants/navbarItems';
 
 function Navbar({ items = navbarItems }) {
@@ -13,7 +14,7 @@ function Navbar({ items = navbarItems }) {
           routeName={route}
           key={key}
         >
-          {title}
+          {getLang(title)}
         </Link>
       ))}
     </nav>
