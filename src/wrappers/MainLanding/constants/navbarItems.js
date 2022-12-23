@@ -1,7 +1,7 @@
 import * as pages from 'src/index/constants/pages';
 
 export default [
-  { title: 'narfex_dao_title', route: pages.NARFEX_DAO },
-  { title: 'global_support', route: pages.MAIN },
-  { title: 'token_landing_narfex_token', route: pages.TOKEN_LANDING },
+  { title: 'main_landing_navbar_dao', route: pages.NARFEX_DAO },
+  { title: 'main_landing_navbar_support', route: pages.MAIN },
+  { title: 'main_landing_navbar_token', route: pages.TOKEN_LANDING },
 ];
