@@ -8,7 +8,7 @@ import ShowIn from '../../components/ShowIn';
 
 // Utils
 import { sizes } from '../../components/SuggestiveBox/constants/types';
-import { classNames as cn } from 'utils';
+import { classNames as cn, getLang } from 'utils';
 import useIsInViewport from 'src/hooks/useIsInViewport';
 
 // Styles
@@ -44,13 +44,10 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
           <ShowIn viewport={titleViewport} animation="slideRight">
             <Col>
               <h1 ref={titleRef}>
-                <span>Narfex</span>. Exchanger. Free transaction.
-                <br />
+                <span>Narfex</span>.&nbsp;
+                {getLang('main_landing_title')}
               </h1>
-              <p>
-                Exchange fiat and cryptocurrency without authorization and
-                verification
-              </p>
+              <p>{getLang('main_landing_description')}</p>
             </Col>
           </ShowIn>
           <ShowIn
@@ -61,8 +58,8 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
               icon={
                 <SVG src={require('src/asset/icons/action/play-circle.svg')} />
               }
-              title="How our exchanger works"
-              subtitle="video instruction"
+              title={getLang('main_landing_video_button_title')}
+              subtitle={getLang('main_landing_video_button_subtitle')}
               size={sizes.large}
               border
             />
