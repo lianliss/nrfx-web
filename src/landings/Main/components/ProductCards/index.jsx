@@ -33,7 +33,7 @@ function ProductCards({
     };
   };
 
-  if (!visible) {
+  if (!visible && !adaptive) {
     return <div className="MainLanding-ProductCards__slider" />;
   }
 

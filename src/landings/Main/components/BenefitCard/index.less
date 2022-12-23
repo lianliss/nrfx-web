@@ -7,10 +7,11 @@
   position: relative;
   border-radius: 30px;
   box-sizing: border-box;
-  transition: transform .3s ease-out;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 
-  &:hover {
-    transform: scale(1.02);
+  &:not(.visible) {
+    opacity: 0;
+    transform: translateY(100%);
   }
 
   &.small {
@@ -73,11 +74,26 @@
     letter-spacing: -0.07em;
     opacity: 0.23;
   }
+
+  @keyframes showBenefitCard {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
 }
 
 .adaptive .MainLanding-BenefitCard {
   padding: 29px;
   height: 210px;
+
+  &:not(.visible) {
+    opacity: 1;
+    transform: none;
+  }
 
   &__title {
     font-size: 18px;

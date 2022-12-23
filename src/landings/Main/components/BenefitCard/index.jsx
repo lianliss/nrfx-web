@@ -4,17 +4,19 @@ import PropTypes from 'prop-types';
 // Components
 
 // Utils
-import { classNames as cn } from 'utils';
+import { classNames as cn, getLang } from 'utils';
 import { backgrounds, sizes } from '../../constants/benefit';
 
 // Styles
 import './index.less';
 
-function BenefitCard({ size, background, image, title }) {
+function BenefitCard({ size, background, image, title, visible }) {
   return (
-    <div className={cn('MainLanding-BenefitCard', size, background)}>
+    <div
+      className={cn('MainLanding-BenefitCard', size, background, { visible })}
+    >
       {image}
-      <p className="MainLanding-BenefitCard__title">{title}</p>
+      <p className="MainLanding-BenefitCard__title">{getLang(title)}</p>
     </div>
   );
 }

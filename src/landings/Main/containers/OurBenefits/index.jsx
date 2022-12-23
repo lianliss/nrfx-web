@@ -16,7 +16,7 @@ function OurBenefits({ adaptive }) {
     >
       <div className="MainLanding-our-benefits">
         <h2>Our Benefits</h2>
-        <BenefitCards />
+        <BenefitCards adaptive={adaptive} />
       </div>
     </Container>
   );

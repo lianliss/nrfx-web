@@ -2,6 +2,7 @@
   gap: 26px 0;
 
   &__row {
+    display: flex;
     gap: 26px 21px;
   }
 
@@ -96,6 +97,12 @@
   .community-background,
   .currencies-background {
     top: 35px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .MainLanding-BenefitCards__row {
+    flex-wrap: wrap;
   }
 }
 
