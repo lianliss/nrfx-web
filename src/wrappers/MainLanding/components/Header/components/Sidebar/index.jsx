@@ -14,7 +14,7 @@ import { classNames as cn, getLang } from 'utils';
 // Styles
 import './index.less';
 
-function Sidebar({ langList, lang, setLang, active, onClose }) {
+function Sidebar({ langList, lang, setLang, active, launchApp, onClose }) {
   React.useEffect(() => {
     if (active) {
       document.body.classList.toggle('noScroll', true);
@@ -38,7 +38,7 @@ function Sidebar({ langList, lang, setLang, active, onClose }) {
       >
         <Navbar />
         <Select options={langList} value={lang} onChange={setLang} />
-        <Button size="middle" type="lightBlue">
+        <Button size="middle" type="lightBlue" onClick={launchApp}>
           <Row alignItems="center">
             {getLang('site_launch_app')}
             <SVG src={require('src/asset/icons/arrows/slider-arrow.svg')} />

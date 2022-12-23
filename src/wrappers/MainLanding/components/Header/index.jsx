@@ -12,8 +12,10 @@ import Sidebar from './components/Sidebar';
 // Utils
 import { getLang } from 'utils';
 import { setLang } from 'src/services/lang';
+import { DAPP } from 'src/index/constants/pages';
 import { currentLangSelector, displayedLangListSelector } from 'src/selectors';
 import languageIcon from 'src/asset/icons/social/language.svg';
+import router from 'src/router';
 
 // Styles
 import './index.less';
@@ -21,6 +23,7 @@ import './index.less';
 function Header({ adaptive }) {
   const [isSidebar, setIsSidebar] = React.useState(false);
   const lang = useSelector(currentLangSelector);
+
   const LangLabel = ({ title }) => (
     <Row alignItems="center">
       <SVG src={languageIcon} />
@@ -37,6 +40,8 @@ function Header({ adaptive }) {
     label: <LangLabel title={value} />,
     value,
   }));
+
+  const launchApp = () => router.navigate(DAPP);
 
   return (
     <div className="MainLandingWrapperHeader">
@@ -55,7 +60,7 @@ function Header({ adaptive }) {
           value={lang}
           onChange={setLang}
         />
-        <Button size="middle" type="lightBlue">
+        <Button size="middle" type="lightBlue" onClick={launchApp}>
           <Row alignItems="center">
             {adaptive ? (
               'App'
@@ -75,6 +80,7 @@ function Header({ adaptive }) {
         langList={langList}
         lang={lang}
         setLang={setLang}
+        launchApp={launchApp}
       />
     </div>
   );

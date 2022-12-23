@@ -3,7 +3,7 @@ import { Link } from 'react-router5';
 
 // Utils
 import { getLang } from 'utils';
-import navbarItems from '../../../../constants/navbarItems';
+import navbarItems from 'src/wrappers/MainLanding/constants/navbarItems';
 
 function Navbar({ items = navbarItems }) {
   return (
