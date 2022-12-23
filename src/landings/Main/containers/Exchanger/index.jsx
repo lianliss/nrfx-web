@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router5';
 
 // Component
-import { Container, Button, Row, Col } from 'ui';
+import { Container, Row, Col } from 'ui';
+import { CustomButton } from 'dapp';
 import SVG from 'utils/svg-wrap';
 import ShowIn from '../../components/ShowIn';
 import SuggestiveBox from '../../components/SuggestiveBox';
@@ -9,6 +11,7 @@ import SuggestiveBox from '../../components/SuggestiveBox';
 // Utils
 import { getLang } from 'utils';
 import { sizes } from '../../components/SuggestiveBox/constants/types';
+import { DAPP_EXCHANGE } from 'src/index/constants/pages';
 
 // Styles
 import './index.less';
@@ -26,12 +29,14 @@ const Exchanger = ({ adaptive }) => {
             <h2>{getLang('main_landing_exchanger_title')}</h2>
             <p>{getLang('main_landing_exchanger_description')}</p>
             <div className="MainLanding-exchanger__action">
-              <Button>
-                <Row alignItems="center">
-                  {getLang('main_landing_try_exchanger')}
-                  <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
-                </Row>
-              </Button>
+              <CustomButton className="MainLanding-exchanger__button">
+                <Link routeName={DAPP_EXCHANGE}>
+                  <Row alignItems="center">
+                    {getLang('main_landing_try_exchanger')}
+                    <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
+                  </Row>
+                </Link>
+              </CustomButton>
               <Col className="transactions-today">
                 <span className="transactions-today__title">445 678</span>
                 <div className="transactions-today__description">

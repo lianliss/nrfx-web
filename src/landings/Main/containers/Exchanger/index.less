@@ -29,19 +29,30 @@
     opacity: 0.6;
   }
 
-  .Button {
+  &__button {
     margin-right: 106px;
     height: 77px;
     border: 2px solid rgba(255, 255, 255, 0.25);
     border-radius: 19px;
     background: transparent;
     padding: 0 31px;
+    transition: opacity 0.1s;
 
-    &__label {
+    &:hover {
+      opacity: 0.85;
+    }
+
+    &:active {
+      opacity: 0.75;
+    }
+
+    a {
       font-weight: 600;
       font-size: 18px;
       line-height: 100%;
       letter-spacing: -0.01em;
+      color: #fff;
+      text-decoration: none;
     }
 
     .isvg {
@@ -193,11 +204,11 @@
     font-size: 16px;
   }
 
-  .Button {
+  &__button {
     margin: 0 0 50px;
     padding: 0 29px;
 
-    &__label {
+    a {
       text-align: left;
     }
 
