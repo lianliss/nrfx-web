@@ -73,7 +73,9 @@ ProductCard.Statistics = ({ title, subtitle, icon }) => {
     <div className="MainLanding-ProductCard-statistics">
       <div className="MainLanding-ProductCard-statistics__icon">{icon}</div>
       <div className="MainLanding-ProductCard-statistics__content">
-        <div className="MainLanding-ProductCard-statistics__title">{title}</div>
+        <div className="MainLanding-ProductCard-statistics__title">
+          {getLang(title)}
+        </div>
         <div className="MainLanding-ProductCard-statistics__subtitle">
           {getLang(subtitle)}
         </div>

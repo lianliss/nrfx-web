@@ -11,8 +11,8 @@ export default [
     description: 'main_landing_product_1_description',
     backgroundImage: getImage('product-dex.png'),
     statistics: {
-      title: '475,678',
-      subtitle: 'main_landing_product_1_statistic_title',
+      title: 'main_landing_product_1_statistic_title',
+      subtitle: 'main_landing_product_1_statistic_sutitle',
       icon: require('src/asset/24px/track_changes.svg'),
     },
     dark: true,
@@ -23,8 +23,8 @@ export default [
     description: 'main_landing_product_2_description',
     backgroundImage: getImage('product-token.png'),
     statistics: {
-      title: '$0.434',
-      subtitle: 'main_landing_product_2_statistic_title',
+      title: 'narfexTokenPrice',
+      subtitle: 'main_landing_product_2_statistic_sutitle',
       icon: require('src/asset/24px/monetization_on.svg'),
     },
     dark: false,
@@ -34,6 +34,11 @@ export default [
     title: 'main_landing_product_3_title',
     description: 'main_landing_product_3_description',
     backgroundImage: getImage('product-farming.png'),
+    statistics: {
+      title: 'main_landing_product_3_statistic_title',
+      subtitle: 'main_landing_product_3_statistic_subtitle',
+      icon: require('src/asset/24px/percent-home.svg'),
+    },
     dark: true,
   },
   {
@@ -41,6 +46,11 @@ export default [
     title: 'main_landing_product_4_title',
     description: 'main_landing_product_4_description',
     backgroundImage: getImage('product-validator.png'),
+    statistics: {
+      title: 'main_landing_product_4_statistic_title',
+      subtitle: 'main_landing_product_4_statistic_subtitle',
+      icon: require('src/asset/24px/landing-validators.svg'),
+    },
     dark: false,
   },
   {
@@ -48,6 +58,11 @@ export default [
     title: 'main_landing_product_5_title',
     description: 'main_landing_product_5_description',
     backgroundImage: getImage('product-wallet.png'),
+    statistics: {
+      title: 'main_landing_product_5_statistic_title',
+      subtitle: 'main_landing_product_5_statistic_subtitle',
+      icon: require('src/asset/24px/landing-app.svg'),
+    },
     dark: true,
   },
   {
@@ -56,9 +71,9 @@ export default [
     description: 'main_landing_product_6_description',
     backgroundImage: getImage('product-referral.png'),
     statistics: {
-      title: '75 678',
-      subtitle: 'main_landing_product_6_statistic_title',
-      icon: require('src/asset/24px/favorite.svg'),
+      title: 'main_landing_product_6_statistic_title',
+      subtitle: 'main_landing_product_6_statistic_subtitle',
+      icon: require('src/asset/24px/referral-lines.svg'),
     },
     dark: false,
   },
@@ -67,11 +82,6 @@ export default [
     title: 'main_landing_product_7_title',
     description: 'main_landing_product_7_description',
     backgroundImage: getImage('product-mobile-apps.png'),
-    statistics: {
-      title: '475 678',
-      subtitle: 'main_landing_product_7_statistic_title',
-      icon: require('src/asset/24px/favorite.svg'),
-    },
     dark: true,
     comingSoon: true,
   },
