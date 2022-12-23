@@ -1,5 +1,4 @@
-const testDescription =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+import * as pages from 'src/index/constants/pages';
 
 export const getImage = (fileName) =>
   require(`src/asset/backgrounds/main-landing/${fileName}`);
@@ -15,6 +14,7 @@ export default [
       subtitle: 'main_landing_product_1_statistic_sutitle',
       icon: require('src/asset/24px/track_changes.svg'),
     },
+    routeName: pages.DAPP_SWAP,
     dark: true,
   },
   {
@@ -27,6 +27,7 @@ export default [
       subtitle: 'main_landing_product_2_statistic_sutitle',
       icon: require('src/asset/24px/monetization_on.svg'),
     },
+    routeName: pages.TOKEN_LANDING,
     dark: false,
   },
   {
@@ -39,6 +40,7 @@ export default [
       subtitle: 'main_landing_product_3_statistic_subtitle',
       icon: require('src/asset/24px/percent-home.svg'),
     },
+    routeName: pages.FARMING,
     dark: true,
   },
   {
@@ -51,6 +53,7 @@ export default [
       subtitle: 'main_landing_product_4_statistic_subtitle',
       icon: require('src/asset/24px/landing-validators.svg'),
     },
+    routeName: pages.VALIDATOR,
     dark: false,
   },
   {
@@ -63,6 +66,7 @@ export default [
       subtitle: 'main_landing_product_5_statistic_subtitle',
       icon: require('src/asset/24px/landing-app.svg'),
     },
+    routeName: pages.DAPP_WALLET,
     dark: true,
   },
   {
@@ -75,6 +79,7 @@ export default [
       subtitle: 'main_landing_product_6_statistic_subtitle',
       icon: require('src/asset/24px/referral-lines.svg'),
     },
+    routeName: pages.DAPP_REFERRAL,
     dark: false,
   },
   {
@@ -86,19 +91,3 @@ export default [
     comingSoon: true,
   },
 ];
-
-/*
-<ProductCard
-title="Mobile Apps"
-description={testDescription}
-backgroundImage={getImage('product-mobile-apps.png')}
-statistics={
-  <ProductCard.Statistics
-    title="475 678"
-    subtitle="users love"
-    icon={<SVG src={require('src/asset/24px/favorite.svg')} />}
-  />
-}
-adaptive={adaptive}
-comingSoon
-/> */

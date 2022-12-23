@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router5';
 
 // Components
-import CustomButton from 'dapp/ui/CustomButton/CustomButton';
 import SVG from 'utils/svg-wrap';
 
 // Utils
@@ -14,7 +14,7 @@ import './index.less';
 function ProductCard({
   title,
   description,
-  onClick,
+  routeName,
   backgroundImage,
   statistics,
   comingSoon,
@@ -27,16 +27,18 @@ function ProductCard({
       <div className="MainLanding-ProductCard__content">
         <h4>{getLang(title)}</h4>
         <p>{getLang(description)}</p>
-        <CustomButton disabled={comingSoon}>
-          {comingSoon ? (
-            getLang('global_comingSoon')
-          ) : (
-            <>
-              {getLang('main_landing_product_try_now')}
-              <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
-            </>
-          )}
-        </CustomButton>
+        <div className="MainLanding-ProductCard-link__wrapper">
+          <Link className={cn({ disabled: comingSoon })} routeName={routeName}>
+            {comingSoon ? (
+              getLang('global_comingSoon')
+            ) : (
+              <>
+                {getLang('main_landing_product_try_now')}
+                <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
+              </>
+            )}
+          </Link>
+        </div>
       </div>
       {backgroundImage && (
         <div className="MainLanding-ProductCard__background">

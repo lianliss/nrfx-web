@@ -53,6 +53,7 @@ function ProductCards({
             description={product.description}
             backgroundImage={product.backgroundImage}
             dark={product.dark}
+            routeName={product.routeName || ''}
             statistics={
               product.statistics && (
                 <ProductCard.Statistics
