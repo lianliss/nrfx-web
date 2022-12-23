@@ -8,6 +8,7 @@ import FooterReadDoc from '../FooterReadDoc';
 
 // Utils
 import socialLinksType from 'src/landings/Main/constants/socialLinksType';
+import { getLang } from 'utils';
 
 // Styles
 import './index.less';
@@ -23,29 +24,29 @@ function Footer({ adaptive }) {
         >
           <nav className="MainLandingWrapperFooter-nav">
             <Col className="MainLandingWrapperFooter-nav__col">
-              <h6>Products</h6>
+              <h6>{getLang('site__footerProducts')}</h6>
               <div className="MainLandingWrapperFooter-nav__items">
-                <Link routeName="">Narfex token</Link>
-                <Link routeName="">Exchanger</Link>
-                <Link routeName="">Dex</Link>
-                <Link routeName="">Liqudity</Link>
-                <Link routeName="">Farming</Link>
-                <Link routeName="">Validator</Link>
+                <Link routeName="">{getLang('main_landing_navbar_token')}</Link>
+                <Link routeName="">{getLang('dapp_sidebar_exchanger')}</Link>
+                <Link routeName="">{getLang('main_landing_footer_dex')}</Link>
+                <Link routeName="">{getLang('dapp_sidebar_liquidity')}</Link>
+                <Link routeName="">{getLang('dapp_farming_page_title')}</Link>
+                <Link routeName="">{getLang('dapp_sidebar_validator')}</Link>
               </div>
             </Col>
             <Col className="MainLandingWrapperFooter-nav__col">
-              <h6>Company</h6>
+              <h6>{getLang('site__footerCompany')}</h6>
               <Col className="MainLandingWrapperFooter-nav__items">
-                <Link routeName="">Governance</Link>
-                <Link routeName="">Support</Link>
-                <Link routeName="">FAQ</Link>
+                <Link routeName="">{getLang('landing_footer_company')}</Link>
+                <Link routeName="">{getLang('landing_footer_support')}</Link>
+                <Link routeName="">{getLang('landing_footer_faq')}</Link>
               </Col>
             </Col>
             <Col className="MainLandingWrapperFooter-nav__col">
-              <h6>Legasy</h6>
+              <h6>{getLang('site__footerLegacy')}</h6>
               <Col className="MainLandingWrapperFooter-nav__items">
-                <Link routeName="">Privacy Policy</Link>
-                <Link routeName="">Security</Link>
+                <Link routeName="">{getLang('landing_footer_privacy')}</Link>
+                <Link routeName="">{getLang('landing_footer_security')}</Link>
               </Col>
             </Col>
           </nav>
