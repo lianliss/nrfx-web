@@ -6,7 +6,7 @@ import CustomButton from 'dapp/ui/CustomButton/CustomButton';
 import SVG from 'utils/svg-wrap';
 
 // Utils
-import { classNames as cn } from 'utils';
+import { classNames as cn, getLang } from 'utils';
 
 // Styles
 import './index.less';
@@ -25,14 +25,14 @@ function ProductCard({
   return (
     <div className={cn('MainLanding-ProductCard', { dark })} {...otherProps}>
       <div className="MainLanding-ProductCard__content">
-        <h4>{title}</h4>
-        <p>{description}</p>
+        <h4>{getLang(title)}</h4>
+        <p>{getLang(description)}</p>
         <CustomButton disabled={comingSoon}>
           {comingSoon ? (
-            'Coming Soon'
+            getLang('global_comingSoon')
           ) : (
             <>
-              Try now
+              {getLang('main_landing_product_try_now')}
               <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />
             </>
           )}
@@ -75,7 +75,7 @@ ProductCard.Statistics = ({ title, subtitle, icon }) => {
       <div className="MainLanding-ProductCard-statistics__content">
         <div className="MainLanding-ProductCard-statistics__title">{title}</div>
         <div className="MainLanding-ProductCard-statistics__subtitle">
-          {subtitle}
+          {getLang(subtitle)}
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import useIsInViewport from 'src/hooks/useIsInViewport';
+import { getLang } from 'utils';
 
 // Styles
 import './index.less';
@@ -27,7 +28,7 @@ function OtherProducts({ adaptive }) {
           wrap
           justifyContent="space-between"
         >
-          <h2 ref={titleRef}>Other product</h2>
+          <h2 ref={titleRef}>{getLang('main_landing_other_products_title')}</h2>
           <div className="slider-control">
             <CustomButton
               ref={prevSlideRef}
