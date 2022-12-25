@@ -12,10 +12,19 @@ import { sizes } from './constants/types';
 // Styles
 import './index.less';
 
-function SuggestiveBox({ title, subtitle, icon, size, border, background }) {
+function SuggestiveBox({
+  title,
+  subtitle,
+  icon,
+  size,
+  border,
+  background,
+  onClick,
+}) {
   return (
     <CustomButton
       className={cn('MainLanding-SuggestiveBox', size, { border, background })}
+      onClick={onClick}
     >
       {icon && (
         <div className="MainLanding-SuggestiveBox-icon">
@@ -38,6 +47,7 @@ SuggestiveBox.propTypes = {
   size: PropTypes.oneOf(Object.values(sizes)),
   border: PropTypes.bool,
   background: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 SuggestiveBox.defaultProps = {
@@ -47,6 +57,7 @@ SuggestiveBox.defaultProps = {
   size: sizes.medium,
   border: false,
   background: false,
+  onClick: () => {},
 };
 
 export default SuggestiveBox;

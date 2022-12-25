@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router5';
+import { useSelector } from 'react-redux';
 
 // Component
 import { Container, Row, Col } from 'ui';
@@ -12,11 +13,14 @@ import SuggestiveBox from '../../components/SuggestiveBox';
 import { getLang } from 'utils';
 import { sizes } from '../../components/SuggestiveBox/constants/types';
 import { DAPP_EXCHANGE } from 'src/index/constants/pages';
+import { currentLangSelector } from 'src/selectors';
 
 // Styles
 import './index.less';
 
 const Exchanger = ({ adaptive }) => {
+  const lang = useSelector(currentLangSelector);
+
   return (
     <ShowIn className="MainLanding-exchanger__wrapper" animation="slideRight">
       <Container maxWidth={1356} padding={adaptive ? 15 : 22}>
@@ -38,7 +42,9 @@ const Exchanger = ({ adaptive }) => {
                 </Link>
               </CustomButton>
               <Col className="transactions-today">
-                <span className="transactions-today__title">445 678</span>
+                <span className="transactions-today__title">
+                  {getLang('main_landing_transactions_today_number')}
+                </span>
                 <div className="transactions-today__description">
                   <div className="transactions-today__marker" />
                   <span>{getLang('main_landing_transactions_today')}</span>
@@ -56,6 +62,14 @@ const Exchanger = ({ adaptive }) => {
                 />
               }
               size={sizes.medium}
+              onClick={() =>
+                window.open(
+                  lang === 'ru'
+                    ? 'https://t.me/Narfex_RU'
+                    : 'https://t.me/Narfex_EN',
+                  '_blank'
+                )
+              }
               background
             />
           )}
