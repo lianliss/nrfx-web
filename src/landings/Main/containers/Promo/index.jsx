@@ -5,11 +5,13 @@ import { Container, Col } from 'ui';
 import SVG from 'utils/svg-wrap';
 import SuggestiveBox from '../../components/SuggestiveBox';
 import ShowIn from '../../components/ShowIn';
+import FormattedText from 'dapp/FormattedText/FormattedText';
 
 // Utils
 import { sizes } from '../../components/SuggestiveBox/constants/types';
 import { classNames as cn, getLang } from 'utils';
 import useIsInViewport from 'src/hooks/useIsInViewport';
+import regexes from 'src/index/constants/regexes';
 
 // Styles
 import './index.less';
@@ -44,8 +46,11 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
           <ShowIn viewport={titleViewport} animation="slideRight">
             <Col>
               <h1 ref={titleRef}>
-                <span>Narfex</span>.&nbsp;
-                {getLang('main_landing_title')}
+                <FormattedText
+                  text={getLang('main_landing_title')}
+                  className="blue"
+                  regularExpression={regexes.betweenCharacters}
+                />
               </h1>
               <p>{getLang('main_landing_description')}</p>
             </Col>
