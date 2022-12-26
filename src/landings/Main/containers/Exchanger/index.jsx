@@ -62,14 +62,12 @@ const Exchanger = ({ adaptive }) => {
                 />
               }
               size={sizes.medium}
-              onClick={() =>
-                window.open(
-                  lang === 'ru'
-                    ? 'https://t.me/Narfex_RU'
-                    : 'https://t.me/Narfex_EN',
-                  '_blank'
-                )
+              href={
+                lang === 'ru'
+                  ? 'https://t.me/Narfex_RU'
+                  : 'https://t.me/Narfex_EN'
               }
+              target="_blank"
               background
             />
           )}

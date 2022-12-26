@@ -20,11 +20,17 @@ function SuggestiveBox({
   border,
   background,
   onClick,
+  href,
+  ...otherProps
 }) {
+  const Component = href ? 'a' : CustomButton;
+
   return (
-    <CustomButton
+    <Component
       className={cn('MainLanding-SuggestiveBox', size, { border, background })}
       onClick={onClick}
+      href={href}
+      {...otherProps}
     >
       {icon && (
         <div className="MainLanding-SuggestiveBox-icon">
@@ -36,7 +42,7 @@ function SuggestiveBox({
         <div className="MainLanding-SuggestiveBox__title">{title}</div>
         <div className="MainLanding-SuggestiveBox__subtitle">{subtitle}</div>
       </Col>
-    </CustomButton>
+    </Component>
   );
 }
 
@@ -48,6 +54,7 @@ SuggestiveBox.propTypes = {
   border: PropTypes.bool,
   background: PropTypes.bool,
   onClick: PropTypes.func,
+  href: PropTypes.string,
 };
 
 SuggestiveBox.defaultProps = {
@@ -58,6 +65,7 @@ SuggestiveBox.defaultProps = {
   border: false,
   background: false,
   onClick: () => {},
+  href: '',
 };
 
 export default SuggestiveBox;
