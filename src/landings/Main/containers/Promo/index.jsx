@@ -41,17 +41,22 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
         <Container
           className="MainLanding-promo__content"
           maxWidth={1262}
-          padding={adaptive ? 23 : 62}
+          padding={adaptive ? 22 : 62}
         >
-          <ShowIn viewport={titleViewport} animation="slideRight">
+          <ShowIn
+            viewport={titleViewport}
+            animation="slideRight"
+            scrollRemainderPercent={100}
+          >
             <Col>
-              <h1 ref={titleRef}>
+              <div ref={titleRef}>
                 <FormattedText
                   text={getLang('main_landing_title')}
                   className="blue"
                   regularExpression={regexes.betweenCharacters}
+                  tag="h1"
                 />
-              </h1>
+              </div>
               <p>{getLang('main_landing_description')}</p>
             </Col>
           </ShowIn>

@@ -30,6 +30,7 @@ export default function (element, scrollRemainderPercent = 70) {
   });
 
   React.useEffect(() => {
+    checkElement();
     document.addEventListener('scroll', checkElement);
 
     return () => {
