@@ -7,6 +7,8 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { classNames as cn, getLang } from 'utils';
+import getFinePrice from 'utils/get-fine-price';
+import _ from 'lodash';
 
 // Styles
 import './index.less';
@@ -76,7 +78,7 @@ ProductCard.Statistics = ({ title, subtitle, icon }) => {
       <div className="MainLanding-ProductCard-statistics__icon">{icon}</div>
       <div className="MainLanding-ProductCard-statistics__content">
         <div className="MainLanding-ProductCard-statistics__title">
-          {getLang(title)}
+          {_.isString(title) ? getLang(title) : getFinePrice(title)}
         </div>
         <div className="MainLanding-ProductCard-statistics__subtitle">
           {getLang(subtitle)}

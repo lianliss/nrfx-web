@@ -8,6 +8,8 @@ import SVG from 'utils/svg-wrap';
 // Utils
 import productCards from '../../constants/productCards';
 import { classNames as cn } from 'utils';
+import web3Backend from 'src/services/web3-backend';
+import _ from 'lodash';
 
 // Styles
 import './index.less';
@@ -18,6 +20,7 @@ function ProductCards({
   nextSlideRef,
   visible = true,
 }) {
+  const [nrfxPrice, setNrfxPrice] = React.useState(0);
   const playCardAnimation = (index) => {
     if (adaptive) {
       return {};
@@ -32,6 +35,16 @@ function ProductCards({
       `,
     };
   };
+
+  React.useEffect(() => {
+    web3Backend.getTokenRate('nrfx').then((data) => {
+      const price = data.price;
+
+      if (_.isFunction(price.toFixed)) {
+        setNrfxPrice(price.toFixed(2));
+      }
+    });
+  }, []);
 
   if (!visible && !adaptive) {
     return <div className="MainLanding-ProductCards__slider" />;
@@ -57,7 +70,11 @@ function ProductCards({
             statistics={
               product.statistics && (
                 <ProductCard.Statistics
-                  title={product.statistics.title}
+                  title={
+                    product.statistics.title === 'nrfxPrice'
+                      ? nrfxPrice
+                      : product.statistics.title
+                  }
                   subtitle={product.statistics.subtitle}
                   icon={<SVG src={product.statistics.icon} />}
                 />

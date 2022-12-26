@@ -23,7 +23,7 @@ export default [
     description: 'main_landing_product_2_description',
     backgroundImage: getImage('product-token.png'),
     statistics: {
-      title: 'narfexTokenPrice',
+      title: 'nrfxPrice',
       subtitle: 'main_landing_product_2_statistic_sutitle',
       icon: require('src/asset/24px/monetization_on.svg'),
     },
