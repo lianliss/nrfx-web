@@ -13,6 +13,7 @@ import ShowIn from '../../components/ShowIn';
 import useAdaptive from 'src/hooks/adaptive';
 import { DESKTOP } from 'src/index/constants/breakpoints';
 import { getLang } from 'utils';
+import company from 'src/index/constants/company';
 
 // Styles
 import './index.less';
@@ -57,6 +58,8 @@ function JoinUs({ adaptive }) {
               title={getLang('main_landing_white_paper_button_title')}
               subtitle={getLang('main_landing_white_paper_button_subtitle')}
               size={sizes.small}
+              href={company.whitePaper.en}
+              target="_blank"
               border
             />
             <SuggestiveBox
@@ -64,6 +67,8 @@ function JoinUs({ adaptive }) {
               title={getLang('main_landing_github_button_title')}
               subtitle={getLang('main_landing_github_button_subtitle')}
               size={sizes.small}
+              href={company.github}
+              target="_blank"
               border
             />
           </Row>

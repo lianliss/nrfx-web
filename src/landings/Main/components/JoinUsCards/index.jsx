@@ -7,6 +7,8 @@ import { Link } from 'react-router5';
 
 // Utils
 import { getLang } from 'utils';
+import { NARFEX_DAO } from 'src/index/constants/pages';
+import company from 'src/index/constants/company';
 
 import educationHubBg from 'src/asset/backgrounds/main-landing/join-us-hub.svg';
 import governanceBg from 'src/asset/backgrounds/main-landing/join-us-governance.svg';
@@ -20,10 +22,10 @@ function JoinUsCards() {
     <div className="MainLanding-JoinUsCards">
       <JoinUsCard
         link={
-          <Link routeName="">
+          <a href={company.docs} target="_blank">
             {getLang('button_read_more')}
             <SVG src={linkArrow} flex />
-          </Link>
+          </a>
         }
         title={getLang('main_landing_join_us_education_hub')}
         icon={educationHubBg}
@@ -31,7 +33,7 @@ function JoinUsCards() {
       />
       <JoinUsCard
         link={
-          <Link routeName="">
+          <Link routeName={NARFEX_DAO}>
             {getLang('button_read_more')}
             <SVG src={linkArrow} flex />
           </Link>
