@@ -36,7 +36,7 @@ function Sidebar({ langList, lang, setLang, active, launchApp, onClose }) {
         className="MainLandingWrapperHeader-sidebar__content"
         onClick={(e) => e.stopPropagation()}
       >
-        <Navbar />
+        <Navbar sidebarClose={onClose} />
         <Select options={langList} value={lang} onChange={setLang} />
         <Button size="middle" type="lightBlue" onClick={launchApp}>
           <Row alignItems="center">
