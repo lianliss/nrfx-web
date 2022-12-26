@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router5';
 
 // Utils
@@ -6,7 +7,7 @@ import { getLang } from 'utils';
 import navbarItems from 'src/wrappers/MainLanding/constants/navbarItems';
 import _ from 'lodash';
 
-function Navbar({ items = navbarItems, sidebarClose }) {
+function Navbar({ items, sidebarClose }) {
   return (
     <nav className="MainLandingWrapperHeader-nav">
       {items.map(({ title, scrollTo, ...item }, key) => {
@@ -35,5 +36,15 @@ function Navbar({ items = navbarItems, sidebarClose }) {
     </nav>
   );
 }
+
+Navbar.propTypes = {
+  items: PropTypes.array,
+  sidebarClose: PropTypes.func,
+};
+
+Navbar.defaultProps = {
+  items: navbarItems,
+  sidebarClose: () => {},
+};
 
 export default Navbar;
