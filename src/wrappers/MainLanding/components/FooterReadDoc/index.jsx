@@ -6,6 +6,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { getLang } from 'utils';
+import company from 'src/index/constants/company';
 
 // Styles
 import './index.less';
@@ -19,7 +20,11 @@ function FooterReadDoc() {
       <div className="MainLandingWrapperFooter-read-doc__description">
         {getLang('footer_documentation_card_subtitle')}
       </div>
-      <Button type="secondary-lightBlue">
+      <Button
+        type="secondary-lightBlue"
+        href={'https://' + company.social.medium}
+        target="_blank"
+      >
         <Row alignItems="center" wrap>
           {getLang('footer_documentation_card_button')}
           <SVG src={require('src/asset/24px/arrow_right_alt.svg')} flex />

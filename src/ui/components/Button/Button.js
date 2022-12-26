@@ -35,13 +35,17 @@ const Button = memo(props => {
     fillStyle.color = "white";
   }
 
+  const Component = props.href ? 'a' : 'button';
+
   return (
-    <button
+    <Component
       className={className}
       onClick={e => props.onClick && props.onClick(e)}
       style={{ ...fillStyle, ...props.style }}
       type={props.btnType}
       title={props.title}
+      href={props.href}
+      target={props.target}
     >
       {props.state === "loading" && (
         <div className="Button__loader">
@@ -58,7 +62,7 @@ const Button = memo(props => {
         </div>
         {props.afterContent}
       </div>
-    </button>
+    </Component>
   );
 });
 
