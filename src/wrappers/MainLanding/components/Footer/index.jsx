@@ -28,7 +28,7 @@ function Footer({ adaptive }) {
             <Col className="MainLandingWrapperFooter-nav__col">
               <h6>{getLang('site__footerProducts')}</h6>
               <div className="MainLandingWrapperFooter-nav__items">
-                <Link routeName={pages.TOKEN_LANDING}>
+                <Link routeName={pages.TOKEN}>
                   {getLang('main_landing_navbar_token')}
                 </Link>
                 <Link routeName={pages.DAPP_EXCHANGE}>

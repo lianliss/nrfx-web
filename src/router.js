@@ -255,10 +255,6 @@ export const routes =
           path: '/documentation/api/method/:key',
         },
         {
-          name: pages.TOKEN_LANDING,
-          path: '/token_landing',
-        },
-        {
           name: pages.NARFEX_DAO,
           path: '/narfex_dao',
         },

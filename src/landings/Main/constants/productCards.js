@@ -27,7 +27,7 @@ export default [
       subtitle: 'main_landing_product_2_statistic_sutitle',
       icon: require('src/asset/24px/monetization_on.svg'),
     },
-    routeName: pages.TOKEN_LANDING,
+    routeName: pages.TOKEN,
     dark: false,
   },
   {

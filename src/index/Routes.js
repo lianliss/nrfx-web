@@ -158,8 +158,7 @@ function Routes(props) {
     //   break;
     case pages.TOKEN:
       Component = TokenLanding;
-      WrapperComponent = LandingWrapper;
-
+      WrapperComponent = MainLandingWrapper;
       favicon16.href = faviconSmallNRFX_token;
       favicon32.href = faviconLargeNRFX_token;
       break;
@@ -260,12 +259,6 @@ function Routes(props) {
     case pages.DOCUMENTATION_API_METHOD:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationMethodScreen;
-      break;
-    case pages.TOKEN_LANDING:
-      Component = TokenLanding;
-      WrapperComponent = LandingWrapper;
-      favicon16.href = faviconSmallNRFX_token;
-      favicon32.href = faviconLargeNRFX_token;
       break;
     case pages.NARFEX_DAO:
       Component = NarfexDAO;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useRoute } from 'react-router5';
 import { useSelector } from 'react-redux';
 
 // Components
@@ -10,9 +11,9 @@ import BurgerMenu from './components/BurgerMenu';
 import Sidebar from './components/Sidebar';
 
 // Utils
-import { getLang } from 'utils';
+import { getLang, classNames as cn } from 'utils';
 import { setLang } from 'src/services/lang';
-import { DAPP } from 'src/index/constants/pages';
+import { DAPP, MAIN } from 'src/index/constants/pages';
 import { currentLangSelector, displayedLangListSelector } from 'src/selectors';
 import languageIcon from 'src/asset/icons/social/language.svg';
 import router from 'src/router';
@@ -21,6 +22,7 @@ import router from 'src/router';
 import './index.less';
 
 function Header({ adaptive }) {
+  const { route } = useRoute();
   const [isSidebar, setIsSidebar] = React.useState(false);
   const lang = useSelector(currentLangSelector);
 
@@ -44,10 +46,10 @@ function Header({ adaptive }) {
   const launchApp = () => router.navigate(DAPP);
 
   return (
-    <div className="MainLandingWrapperHeader">
-      <div className="MainLandingWrapperHeader__logo">
+    <div className={cn('MainLandingWrapperHeader', route.name)}>
+      <Link routeName={MAIN} className="MainLandingWrapperHeader__logo">
         <SVG src={require('src/asset/logo/narfex-blue.svg')} />
-      </div>
+      </Link>
       {!adaptive && <Navbar />}
       <div className="MainLandingWrapperHeader__action">
         <Select
