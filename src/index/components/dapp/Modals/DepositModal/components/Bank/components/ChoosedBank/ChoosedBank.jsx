@@ -91,21 +91,17 @@ function ChoosedBank(props) {
       <Col>
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper size="large">
-            {card.isCard ? <p className="dark default hight-height extra-small extra-large-height">
-              {ibanFiats.includes(currency) ? (
-                <Lang name="fiatRefillCard_IBANForRefill" />
-              ) : (
-                <Lang name="fiatRefillCard_cardNumberForRefill" />
-              )}
-            </p> : <p className="dark default hight-height extra-small extra-large-height">
-              Account number
-              </p>}
-            <CopyText text={card.number}>
-              <span className="blue default small extra-large-height">
-                {card.number ? card.number.match(/.{1,4}/g).join(' ') : ''}
-              </span>
-              <SVG src={require('src/asset/icons/action/copy.svg')} />
-            </CopyText>
+            {(card.number && card.number.length) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                {card.isCard ? <Lang name="fiatRefillCard_cardNumberForRefill" /> : 'Account number'}
+              </p>
+              <CopyText text={card.number}>
+                <span className="blue default small extra-large-height">
+                  {card.number ? card.number.match(/.{1,4}/g).join(' ') : ''}
+                </span>
+                <SVG src={require('src/asset/icons/action/copy.svg')} />
+              </CopyText>
+            </>}
             <p className="dark default hight-height extra-small extra-large-height">
               <Lang name="fiatRefillCard_cardHolderName" />
             </p>
@@ -130,7 +126,7 @@ function ChoosedBank(props) {
             </>}
             {(!card.isCard && !!card.short_code) && <>
               <p className="dark default hight-height extra-small extra-large-height">
-                Short Code
+                Sort Code
               </p>
               <CopyText text={card.short_code} className="blue default small extra-large-height">
                 {card.short_code}

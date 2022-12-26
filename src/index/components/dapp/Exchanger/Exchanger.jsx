@@ -260,6 +260,11 @@ function Exchanger(props) {
               address: res.address,
               routing_number: res.routing_number,
               account_type: res.account_type,
+              iban: res.iban,
+              bic: res.bic,
+              short_code: res.short_code,
+              institution_number: res.institution_number,
+              transit_number: res.transit_number,
               bank: {
                 code: res.bank,
                 name: bankName,
