@@ -25,7 +25,7 @@ function SocialLinks({
       <SocialLink name={socialNames.telegram} type={type} />
       <SocialLink name={socialNames.discord} type={type} />
       <SocialLink name={socialNames.twitter} type={type} />
-      <SocialLink name={socialNames.facebook} type={type} />
+      <SocialLink name={socialNames.medium} type={type} />
       <SocialLink name={socialNames.instagram} type={type} />
     </Row>
   );

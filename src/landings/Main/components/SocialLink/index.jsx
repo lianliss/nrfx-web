@@ -4,20 +4,19 @@ import React from 'react';
 import SVG from 'utils/svg-wrap';
 
 // Utils
-import COMPANY from 'src/index/constants/company';
+import company from 'src/index/constants/company';
 import socialIcons from '../../constants/socialIcons';
 
 // Styles
 import './index.less';
 
 function SocialLink({ name, type }) {
-  const { social } = COMPANY;
   const icon = socialIcons[name];
 
   return (
     <a
       className={`MainLanding-SocialLink ${type}`}
-      href={`https://${social[name]}`}
+      href={`https://${company.social[name]}`}
       target="_blank"
     >
       {icon && <SVG src={icon} flex />}
