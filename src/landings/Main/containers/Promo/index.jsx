@@ -19,7 +19,9 @@ import './index.less';
 function Promo({ adaptive, isLoaded, setIsLoaded }) {
   const titleRef = React.useRef(null);
   const titleViewport = useIsInViewport(titleRef, 70);
-  const promoBg = require('src/asset/backgrounds/main-landing-promo.svg');
+  const promoBg = adaptive
+    ? require('src/asset/backgrounds/main-landing/promo-adaptive.svg')
+    : require('src/asset/backgrounds/main-landing/promo.svg');
 
   return (
     <div className="MainLanding-promo">
