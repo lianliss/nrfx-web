@@ -32,9 +32,11 @@ export default function (element, scrollRemainderPercent = 70) {
   React.useEffect(() => {
     checkElement();
     document.addEventListener('scroll', checkElement);
+    window.addEventListener('resize', checkElement);
 
     return () => {
       document.removeEventListener('scroll', checkElement);
+      window.removeEventListener('resize', checkElement);
     };
   }, []);
 
