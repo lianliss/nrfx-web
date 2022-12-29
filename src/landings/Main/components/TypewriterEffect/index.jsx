@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { classNames as cn } from 'utils';
 
@@ -8,7 +9,7 @@ import './index.less';
 function TypewriterEffect({
   className,
   text,
-  duration = 0.15,
+  duration,
   play,
   tag: Tag = 'span',
 }) {
@@ -44,5 +45,19 @@ function TypewriterEffect({
     </Tag>
   );
 }
+
+TypewriterEffect.propTypes = {
+  className: PropTypes.string,
+  text: PropTypes.string,
+  duration: PropTypes.number,
+  play: PropTypes.bool,
+};
+
+TypewriterEffect.defaultProps = {
+  className: '',
+  text: '',
+  duration: 0.15,
+  play: false,
+};
 
 export default TypewriterEffect;

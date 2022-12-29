@@ -60,6 +60,7 @@ ProductCard.propTypes = {
   statistics: PropTypes.node,
   comingSoon: PropTypes.bool,
   adaptive: PropTypes.bool,
+  dark: PropTypes.bool,
 };
 
 ProductCard.defaultProps = {
@@ -70,6 +71,7 @@ ProductCard.defaultProps = {
   statistics: null,
   comingSoon: false,
   adaptive: false,
+  dark: false,
 };
 
 ProductCard.Statistics = ({ title, subtitle, icon }) => {

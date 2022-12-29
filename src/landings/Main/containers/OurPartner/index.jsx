@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Container } from 'ui';
@@ -35,5 +36,13 @@ function OurPartner({ adaptive }) {
     </div>
   );
 }
+
+OurPartner.propTypes = {
+  adaptive: PropTypes.bool,
+};
+
+OurPartner.defaultProps = {
+  adaptive: false,
+};
 
 export default OurPartner;

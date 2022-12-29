@@ -1,12 +1,13 @@
 import React from 'react';
 
+
 // Components
 import SocialLink from '../SocialLink';
 import { Row } from 'ui';
 
 // Utils
 import socialNames from '../../constants/socialNames';
-import socialLinksType from '../../constants/socialLinksType';
+import socialLinkTypes from '../../constants/socialLinkTypes';
 
 // Styles
 import './index.less';
@@ -14,7 +15,7 @@ import './index.less';
 function SocialLinks({
   adaptive,
   wrap = true,
-  type = socialLinksType.buttons,
+  type = socialLinkTypes.buttons,
 }) {
   return (
     <Row

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Container } from 'ui';
@@ -24,5 +25,13 @@ function OurBenefits({ adaptive }) {
     </Container>
   );
 }
+
+OurBenefits.propTypes = {
+  adaptive: PropTypes.bool,
+};
+
+OurBenefits.defaultProps = {
+  adaptive: false,
+};
 
 export default OurBenefits;

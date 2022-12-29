@@ -7,7 +7,7 @@ import SocialLinks from 'src/landings/Main/components/SocialLinks';
 import FooterReadDoc from '../FooterReadDoc';
 
 // Utils
-import socialLinksType from 'src/landings/Main/constants/socialLinksType';
+import socialLinkTypes from 'src/landings/Main/constants/socialLinkTypes';
 import { getLang } from 'utils';
 import * as pages from 'src/index/constants/pages';
 import company from 'src/index/constants/company';
@@ -85,7 +85,7 @@ function Footer({ adaptive }) {
           />
           <span className="copyright">2022 All right reserved</span>
           <Col className="MainLandingWrapperFooter-social-links">
-            <SocialLinks type={socialLinksType.icons} wrap={false} />
+            <SocialLinks type={socialLinkTypes.icons} wrap={false} />
           </Col>
         </Row>
       </Container>

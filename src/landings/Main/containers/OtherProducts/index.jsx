@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Row, Container } from 'ui';
@@ -54,5 +55,13 @@ function OtherProducts({ adaptive }) {
     </div>
   );
 }
+
+OtherProducts.propTypes = {
+  adaptive: PropTypes.bool,
+};
+
+OtherProducts.defaultProps = {
+  adaptive: false,
+};
 
 export default OtherProducts;

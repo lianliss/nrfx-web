@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Utils
 import { classNames as cn } from 'utils';
@@ -15,5 +16,19 @@ function JoinUsCard({ title, icon, link, className }) {
     </div>
   );
 }
+
+JoinUsCard.propTypes = {
+  title: PropTypes.string,
+  icon: PropTypes.string,
+  className: PropTypes.string,
+  link: PropTypes.node,
+};
+
+JoinUsCard.defaultProps = {
+  title: '',
+  icon: '',
+  className: '',
+  link: null,
+};
 
 export default JoinUsCard;

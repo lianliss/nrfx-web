@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Container, Row, Col } from 'ui';
@@ -80,5 +81,13 @@ function JoinUs({ adaptive }) {
     </Container>
   );
 }
+
+JoinUs.propTypes = {
+  adaptive: PropTypes.bool,
+};
+
+JoinUs.defaultProps = {
+  adaptive: false,
+};
 
 export default JoinUs;

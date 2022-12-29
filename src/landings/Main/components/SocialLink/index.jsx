@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -6,6 +7,7 @@ import SVG from 'utils/svg-wrap';
 // Utils
 import company from 'src/index/constants/company';
 import socialIcons from '../../constants/socialIcons';
+import socialLinkTypes from '../../constants/socialLinkTypes';
 
 // Styles
 import './index.less';
@@ -23,5 +25,15 @@ function SocialLink({ name, type }) {
     </a>
   );
 }
+
+SocialLink.propTypes = {
+  name: PropTypes.oneOf(Object.keys(socialIcons)),
+  type: PropTypes.oneOf(Object.values(socialLinkTypes)),
+};
+
+SocialLink.defaultProps = {
+  name: null,
+  type: 'buttons',
+};
 
 export default SocialLink;

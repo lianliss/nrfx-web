@@ -24,11 +24,15 @@ function BenefitCard({ size, background, image, title, visible }) {
 BenefitCard.propTypes = {
   size: PropTypes.oneOf(sizes),
   background: PropTypes.oneOf(backgrounds),
+  title: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 BenefitCard.defaultProps = {
   size: sizes.small,
   background: backgrounds.aliceBlue,
+  title: '',
+  visible: false,
 };
 
 BenefitCard.BackgroundImage = ({ children, style, className }) => {

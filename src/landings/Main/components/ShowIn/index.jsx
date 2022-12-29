@@ -12,11 +12,10 @@ import './index.less';
 
 function ShowIn({
   children,
-  type,
   animation,
   className,
   inputVisibleStatus,
-  scrollRemainderPercent = 70,
+  scrollRemainderPercent,
   tag: Tag = 'div',
 }) {
   const showInRef = React.useRef(null);
@@ -36,7 +35,6 @@ function ShowIn({
 }
 
 ShowIn.propTypes = {
-  type: PropTypes.oneOf(['scroll']),
   animation: PropTypes.oneOf([
     'opacity',
     'swipeHorizontal',
@@ -47,13 +45,14 @@ ShowIn.propTypes = {
   ]),
   inputVisibleStatus: PropTypes.bool,
   className: PropTypes.string,
+  scrollRemainderPercent: PropTypes.number,
 };
 
 ShowIn.defaultProps = {
-  type: 'scroll',
   animation: 'opacity',
   inputVisibleStatust: false,
   className: '',
+  scrollRemainderPercent: 70,
 };
 
 function ShowInWrapper({ children, ...props }) {

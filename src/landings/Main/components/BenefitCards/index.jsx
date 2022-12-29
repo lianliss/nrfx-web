@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Col, Row } from 'ui';
@@ -150,5 +151,13 @@ function BenefitCards({ adaptive }) {
     </Col>
   );
 }
+
+BenefitCards.propTypes = {
+  adaptive: PropTypes.bool,
+};
+
+BenefitCards.defaultProps = {
+  adaptive: false,
+};
 
 export default BenefitCards;

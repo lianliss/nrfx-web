@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import Slider from 'dapp/ui/Slider/Slider';
@@ -14,12 +15,7 @@ import _ from 'lodash';
 // Styles
 import './index.less';
 
-function ProductCards({
-  adaptive,
-  prevSlideRef,
-  nextSlideRef,
-  visible = true,
-}) {
+function ProductCards({ adaptive, prevSlideRef, nextSlideRef, visible }) {
   const [nrfxPrice, setNrfxPrice] = React.useState(0);
   const playCardAnimation = (index) => {
     if (adaptive) {
@@ -89,5 +85,22 @@ function ProductCards({
     </Slider>
   );
 }
+
+ProductCards.propTypes = {
+  adaptive: PropTypes.bool,
+  visible: PropTypes.bool,
+};
+
+ProductCards.defaultProps = {
+  adaptive: false,
+  visible: true,
+};
+
+// refProp: PropTypes.oneOfType([
+//   // Either a function
+//   PropTypes.func,
+//   // Or the instance of a DOM native element (see the note about SSR)
+//   PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+// ])
 
 export default ProductCards;

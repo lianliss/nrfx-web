@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router5';
 import { useSelector } from 'react-redux';
 
@@ -102,6 +103,14 @@ const Exchanger = ({ adaptive }) => {
       </Container>
     </ShowIn>
   );
+};
+
+Exchanger.propTypes = {
+  adaptive: PropTypes.bool,
+};
+
+Exchanger.defaultProps = {
+  adaptive: false,
 };
 
 export default Exchanger;

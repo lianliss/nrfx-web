@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Container, Col } from 'ui';
@@ -76,6 +77,18 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
     </div>
   );
 }
+
+Promo.propTypes = {
+  adaptive: PropTypes.bool,
+  isLoaded: PropTypes.bool,
+  setIsLoaded: PropTypes.func,
+};
+
+Promo.defaultProps = {
+  adaptive: false,
+  isLoaded: false,
+  setIsLoaded: () => {},
+};
 
 const PromoBg = React.memo(({ adaptive, setIsLoaded, isLoaded }) => {
   const promoBg = adaptive
