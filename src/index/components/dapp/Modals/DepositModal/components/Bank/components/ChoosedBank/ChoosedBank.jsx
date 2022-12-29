@@ -91,25 +91,87 @@ function ChoosedBank(props) {
       <Col>
         <div className="DepositModal__ChoosedBank__items">
           <InfoWrapper size="large">
-            <p className="dark default hight-height extra-small extra-large-height">
-              {ibanFiats.includes(currency) ? (
-                <Lang name="fiatRefillCard_IBANForRefill" />
-              ) : (
-                <Lang name="fiatRefillCard_cardNumberForRefill" />
-              )}
-            </p>
-            <CopyText text={card.number}>
-              <span className="blue default small extra-large-height">
-                {card.number.match(/.{1,4}/g).join(' ')}
-              </span>
-              <SVG src={require('src/asset/icons/action/copy.svg')} />
-            </CopyText>
+            {(card.number && card.number.length) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                {card.isCard ? <Lang name="fiatRefillCard_cardNumberForRefill" /> : 'Account number'}
+              </p>
+              <CopyText text={card.number}>
+                <span className="blue default small extra-large-height">
+                  {card.number ? card.number.match(/.{1,4}/g).join(' ') : ''}
+                </span>
+                <SVG src={require('src/asset/icons/action/copy.svg')} />
+              </CopyText>
+            </>}
             <p className="dark default hight-height extra-small extra-large-height">
               <Lang name="fiatRefillCard_cardHolderName" />
             </p>
-            <p className="blue default small extra-large-height">
+            <CopyText text={card.holder_name} className="blue default small extra-large-height">
               {bank.holder_name}
-            </p>
+            </CopyText>
+            {(!card.isCard && !!card.iban) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                IBAN
+              </p>
+              <CopyText text={card.iban} className="blue default small extra-large-height">
+                {card.iban}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.bic) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                BIC
+              </p>
+              <CopyText text={card.bic} className="blue default small extra-large-height">
+                {card.bic}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.short_code) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Sort Code
+              </p>
+              <CopyText text={card.short_code} className="blue default small extra-large-height">
+                {card.short_code}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.institution_number) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Institution Number
+              </p>
+              <CopyText text={card.institution_number} className="blue default small extra-large-height">
+                {card.institution_number}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.transit_number) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Transit Number
+              </p>
+              <CopyText text={card.transit_number} className="blue default small extra-large-height">
+                {card.transit_number}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.routing_number) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Routing Number
+              </p>
+              <CopyText text={card.routing_number} className="blue default small extra-large-height">
+                {card.routing_number}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.account_type) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Account type
+              </p>
+              <CopyText text={card.account_type} className="blue default small extra-large-height">
+                {card.account_type}
+              </CopyText>
+            </>}
+            {(!card.isCard && !!card.address) && <>
+              <p className="dark default hight-height extra-small extra-large-height">
+                Address
+              </p>
+              <CopyText text={card.address} className="blue default small extra-large-height">
+                {card.address}
+              </CopyText>
+            </>}
           </InfoWrapper>
         </div>
         <div className="DepositModal__ChoosedBank__items">

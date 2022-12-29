@@ -1,4 +1,4 @@
-@import "../../vars";
+@import '../../vars';
 
 .CheckBox {
   display: flex;
@@ -63,4 +63,27 @@
   margin-left: 12px;
   font-size: 15px;
   line-height: 20px;
+}
+
+.simple.CheckBox {
+  .CheckBox__label {
+    color: #9095a5;
+    margin-left: 5px;
+  }
+
+  .CheckBox__indicator {
+    width: 15.9px;
+    height: 15.9px;
+    border: 1px solid #9095a5;
+    box-shadow: none;
+  }
+
+  .CheckBox__indicator__active {
+    background: var(--blue-light-gradient);
+  }
+
+  .CheckBox__indicator,
+  .CheckBox__indicator__active {
+    border-radius: 5px;
+  }
 }

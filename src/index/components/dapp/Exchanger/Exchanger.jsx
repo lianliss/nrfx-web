@@ -47,7 +47,7 @@ function Exchanger(props) {
     fiats, chainId, accountAddress,
     web3, updateFiats, isConnected,
     tokens, loadAccountBalances, cmcTokens,
-    getTokens,
+    getTokens, getPairAddress,
   } = context;
 
   const [limits, setLimits] = React.useState([]);
@@ -61,13 +61,23 @@ function Exchanger(props) {
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
 
   const userId = `${chainId}${accountAddress}`;
-  const fiatTokens = _.get(fiats, userId, [{
-    name: 'Russian Ruble on Narfex',
-    symbol: 'RUB',
-    address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
-    logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
-    isFiat: true,
-  }]).map(token => {
+  const defaultRuble = chainId === 97
+    ? {
+      name: "Testnet Russian Ruble",
+      symbol: "RUB",
+      address: "0x93e9fefdb37431882D1A27bB794E73a191ebD945",
+      chainId: 97,
+      decimals: 18,
+      logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+    }
+    : {
+      name: 'Russian Ruble on Narfex',
+      symbol: 'RUB',
+      address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
+      logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
+      isFiat: true,
+    };
+  const fiatTokens = _.get(fiats, userId, [defaultRuble]).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
   });
@@ -88,7 +98,7 @@ function Exchanger(props) {
         ...networks[56].tokens,
         ...(cmcTokens || []),
       ]
-    ).filter(token => symbols.indexOf(token.symbol) >= 0),
+    ),
     'address',
   );
 
@@ -244,8 +254,17 @@ function Exchanger(props) {
               fee: res.fee,
             },
             card: {
+              isCard: !!res.is_card,
               number: res.number,
               expire_in: res.book_expiration,
+              address: res.address,
+              routing_number: res.routing_number,
+              account_type: res.account_type,
+              iban: res.iban,
+              bic: res.bic,
+              short_code: res.short_code,
+              institution_number: res.institution_number,
+              transit_number: res.transit_number,
               bank: {
                 code: res.bank,
                 name: bankName,

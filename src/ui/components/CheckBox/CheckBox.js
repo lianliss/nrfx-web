@@ -12,7 +12,7 @@ function CheckBox(props) {
     CheckBox: true,
     checked: props.checked,
     disabled: props.disabled
-  });
+  }, props.type);
 
   return (
     <div className={className} onClick={() => props.onChange(!props.checked)}>
@@ -28,7 +28,12 @@ function CheckBox(props) {
 
 CheckBox.propTypes = {
   checked: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  type: PropTypes.oneOf(['default', 'simple']),
+};
+
+CheckBox.defaultProps = {
+  type: 'default',
 };
 
 export default React.memo(CheckBox);

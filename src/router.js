@@ -7,6 +7,10 @@ import listenersPlugin from 'router5-plugin-listeners';
 import * as pages from './index/constants/pages';
 import * as adminPages from './admin/constants/pages';
 
+// routes
+import validatorRoutes from 'src/index/constants/validator/routes';
+import dappRoutes from 'src/index/constants/dapp/routes';
+
 export const routes =
   process.env.DOMAIN === 'admin'
     ? [
@@ -75,66 +79,6 @@ export const routes =
         {
           name: pages.WALLET_FIAT,
           path: '/wallet/fiat/:currency',
-        },
-        {
-          name: pages.DAPP,
-          path: '/dapp',
-        },
-        {
-          name: pages.DAPP_WALLET,
-          path: '/dapp/wallet',
-        },
-        {
-          name: pages.DAPP_CURRENCY,
-          path: '/dapp/currency',
-        },
-        {
-          name: pages.DAPP_EXCHANGE,
-          path: '/dapp/exchange',
-        },
-        {
-          name: pages.DAPP_TRANSACTION_HISTORY,
-          path: '/dapp/transaction_history',
-        },
-        {
-          name: pages.DAPP_REFERRAL,
-          path: '/dapp/referral',
-        },
-        {
-          name: pages.DAPP_REFERRAL_EXCHANGER,
-          path: '/dapp/referral/exchanger',
-        },
-        {
-          name: pages.DAPP_REFERRAL_FARMING,
-          path: '/dapp/referral/farming',
-        },
-        {
-          name: pages.DAPP_SOCIAL_MEDIA,
-          path: '/dapp/social_media',
-        },
-        {
-          name: pages.DAPP_SWAP,
-          path: '/dapp/swap',
-        },
-        {
-          name: pages.LIQUIDITY,
-          path: '/dapp/liquidity',
-        },
-        {
-          name: pages.TRANSACTIONS,
-          path: '/dapp/transactions',
-        },
-        {
-          name: pages.FARMING,
-          path: '/dapp/farming',
-        },
-        {
-          name: pages.VALIDATOR,
-          path: '/dapp/validator',
-        },
-        {
-          name: pages.DAPP_TEAM,
-          path: '/dapp/team',
         },
         {
           name: pages.TOKENSALE,
@@ -270,6 +214,8 @@ export const routes =
           name: pages.PRIVATE_POOLS,
           path: '/private_pools',
         },
+        ...dappRoutes,
+        ...validatorRoutes,
       ];
 
 const params = {
