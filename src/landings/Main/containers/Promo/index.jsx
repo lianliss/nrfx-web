@@ -19,10 +19,6 @@ import './index.less';
 function Promo({ adaptive, isLoaded, setIsLoaded }) {
   const titleRef = React.useRef(null);
   const titleViewport = useIsInViewport(titleRef, 70);
-  const promoBg = adaptive
-    ? require('src/asset/backgrounds/main-landing/promo-adaptive.svg')
-    : require('src/asset/backgrounds/main-landing/promo.svg');
-
   return (
     <div className="MainLanding-promo">
       <div className="MainLanding-promo__bg">
@@ -32,11 +28,10 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
             flex
           />
         </div>
-        <SVG
-          src={promoBg}
-          handleLoaded={setIsLoaded}
-          className={cn({ loaded: isLoaded })}
-          flex
+        <PromoBg
+          adaptive={adaptive}
+          setIsLoaded={setIsLoaded}
+          isLoaded={isLoaded}
         />
       </div>
       {isLoaded && (
@@ -81,5 +76,20 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
     </div>
   );
 }
+
+const PromoBg = React.memo(({ adaptive, setIsLoaded, isLoaded }) => {
+  const promoBg = adaptive
+    ? require('src/asset/backgrounds/main-landing/promo-adaptive.svg')
+    : require('src/asset/backgrounds/main-landing/promo.svg');
+
+  return (
+    <SVG
+      src={promoBg}
+      handleLoaded={setIsLoaded}
+      className={cn({ loaded: isLoaded })}
+      flex
+    />
+  );
+});
 
 export default Promo;
