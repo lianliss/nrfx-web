@@ -32,7 +32,6 @@ function Main() {
           <OurBenefits adaptive={adaptive} />
           <JoinUs adaptive={adaptive} />
           <Roadmap adaptive={adaptive} />
-          <OurPartner adaptive={adaptive} />
         </>
       )}
     </div>
