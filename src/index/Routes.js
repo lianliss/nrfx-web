@@ -29,6 +29,7 @@ import SiteContactScreen from "../landing/containers/Contacts/Contacts";
 import SiteNotFoundScreen from "./containers/site/SiteNotFoundScreen/SiteNotFoundScreen";
 // import UIKitScreen from "./containers/UIKit/UIKitScreen";
 // import SiteWrapper from "../wrappers/Site/SiteWrapper";
+import MainLandingWrapper from "../wrappers/MainLanding";
 import CabinetWrapper from "../wrappers/Cabinet/CabinetWrapper";
 import DappWrapper from "../wrappers/Dapp/DappWrapper";
 import LandingWrapper from "../wrappers/Landing/LandingWrapper";
@@ -60,6 +61,7 @@ import Validator from "./containers/validator/Main/Main";
 import * as actions from "../actions/index";
 import router from "../router";
 import PrivatePools from "./containers/dapp/PrivatePools/PrivatePools";
+import MainLanding from "../landings/Main";
 
 function Routes(props) {
   const routeState = props.route;
@@ -94,11 +96,10 @@ function Routes(props) {
     setDefaultFavicon([pages.TOKEN]);
   }, [route]);
 
-
   switch (route) {    
     case pages.MAIN:
-      Component = SiteMainScreen;
-      WrapperComponent = LandingWrapper;
+      Component = MainLanding;
+      WrapperComponent = MainLandingWrapper;
       break;
     case pages.BUY_BITCOIN:
       Component = BuyBitcoinScreen;
@@ -159,8 +160,7 @@ function Routes(props) {
     //   break;
     case pages.TOKEN:
       Component = TokenLanding;
-      WrapperComponent = LandingWrapper;
-
+      WrapperComponent = MainLandingWrapper;
       favicon16.href = faviconSmallNRFX_token;
       favicon32.href = faviconLargeNRFX_token;
       break;
@@ -267,12 +267,6 @@ function Routes(props) {
     case pages.DOCUMENTATION_API_METHOD:
       WrapperComponent = DocumentationWrapper;
       Component = DocumentationMethodScreen;
-      break;
-    case pages.TOKEN_LANDING:
-      Component = TokenLanding;
-      WrapperComponent = LandingWrapper;
-      favicon16.href = faviconSmallNRFX_token;
-      favicon32.href = faviconLargeNRFX_token;
       break;
     case pages.NARFEX_DAO:
       Component = NarfexDAO;

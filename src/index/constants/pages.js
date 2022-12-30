@@ -40,7 +40,6 @@ export const DOCUMENTATION_PAGE = "documentation_page";
 export const DOCUMENTATION_API = "documentation_api";
 export const DOCUMENTATION_API_LIST = "documentation_api_list";
 export const DOCUMENTATION_API_METHOD = "documentation_api_method";
-export const TOKEN_LANDING = "token_landing";
 export const NARFEX_DAO = "narfex_dao";
 export const DAPP = "dapp";
 export const DAPP_WALLET = "dapp_wallet";

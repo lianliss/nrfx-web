@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import NRFX_logo from "src/asset/NRFX_logo.svg";
+import NRFX_logo from 'src/asset/NRFX_logo.svg';
 
 import { getLang } from 'utils';
 import web3Backend from 'services/web3-backend';
@@ -26,6 +26,7 @@ import Contacts from '../Contacts/Contacts';
 import Functional from '../Functional/Functional';
 import Tokenomics from '../Tokenomics/Tokenomics';
 import NarfexToken from '../NarfexToken/NarfexToken';
+import { roadmapItems } from '../../constants/roadmap';
 
 function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
   const [price, setPrice] = React.useState(null);
@@ -57,7 +58,10 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
     <div className="TokenLanding">
       <Helmet>
         <title>{getLang('token_landing_title', true)}</title>
-        <meta name="description" content={getLang('token_landing_description')} />
+        <meta
+          name="description"
+          content={getLang('token_landing_description')}
+        />
         <link rel="icon" type="image/svg" href={NRFX_logo} sizes="16x16" />
       </Helmet>
       <NarfexToken />
@@ -66,7 +70,10 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
       <Services />
       <Functional />
       <Tokenomics adaptive={adaptive} />
-      <Roadmap />
+      <Roadmap
+        title={getLang('token_landing_roadmap_title')}
+        items={roadmapItems}
+      />
       <Information
         adaptive={adaptive}
         code="0x3764Be118a1e09257851A3BD636D48DFeab5CAFE"

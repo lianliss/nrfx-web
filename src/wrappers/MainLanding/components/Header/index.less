@@ -1,0 +1,137 @@
+.MainLandingWrapperHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 19px 30px;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  z-index: 2;
+
+  &.main {
+    position: absolute;
+  }
+
+  &__logo {
+    svg {
+      width: 105px;
+      height: 33px;
+    }
+  }
+
+  &-nav {
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+
+    &__link {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: -0.01em;
+      color: #2f323d;
+    }
+
+    &__link:not(:last-child) {
+      margin-right: 42px;
+    }
+  }
+
+  &__action {
+    display: flex;
+
+    & > *:not(:last-child) {
+      margin-right: 9px;
+    }
+  }
+
+  .CabinetSelect {
+    &__control {
+      height: 40px;
+    }
+
+    &__value-container {
+      height: 100%;
+    }
+
+    &__single-value span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: capitalize;
+    }
+
+    .isvg {
+      display: inline-flex;
+      margin-right: 5px;
+    }
+
+    &__option .isvg {
+      display: none;
+    }
+  }
+
+  .Button {
+    .isvg {
+      margin-left: 13px;
+    }
+
+    svg {
+      width: 16px;
+      height: 12px;
+    }
+  }
+}
+
+.adaptive .MainLandingWrapperHeader {
+  padding: 20px 15px;
+
+  &__logo {
+    width: 105px;
+    height: 33px;
+  }
+
+  &__action {
+    display: flex;
+
+    & > *:not(:last-child) {
+      margin-right: 26px;
+    }
+  }
+
+  &__action .CabinetSelect {
+    width: 71px;
+    margin-right: 4px;
+
+    &__control {
+      padding: 10px 14px 10px 9px !important;
+      min-width: 71px !important;
+    }
+
+    .CabinetSelect__single-value {
+      margin: 0;
+      max-width: 100%;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &__option {
+      text-transform: capitalize;
+    }
+  }
+
+  .Button.middle {
+    padding: 0 15px;
+  }
+}
+
+html.noScroll,
+body.noScroll {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}

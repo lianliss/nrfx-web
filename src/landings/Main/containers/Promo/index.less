@@ -1,0 +1,128 @@
+.MainLanding-promo {
+  h1 {
+    max-width: 792px;
+    font-weight: 600;
+    font-size: 71px;
+    line-height: 110%;
+    color: var(--gunmetal) !important;
+
+    span.blue {
+      color: var(--royal-blue);
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    margin-top: -113px;
+    position: relative;
+
+    p {
+      margin-top: 27px;
+      max-width: 398px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 160%;
+      color: var(--landing-color-gray);
+    }
+  }
+
+  .MainLanding-SuggestiveBox__showIn {
+    margin-top: 12px;
+  }
+
+  &__bg {
+    margin: -7% auto 0;
+    max-width: 1352px;
+    width: 78%;
+    box-sizing: border-box;
+    position: relative;
+    height: 807px;
+
+    svg {
+      max-width: 100%;
+      width: 100%;
+      height: 807px;
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: opacity 2s;
+
+      .isvg {
+        justify-content: center;
+        align-items: center;
+
+        svg {
+          height: auto;
+          width: auto;
+        }
+      }
+
+      &.disabled {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.adaptive .MainLanding-promo {
+  &__bg {
+    height: 527px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+
+    .isvg {
+      display: flex;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+      max-width: none;
+      width: 834px;
+      height: 100%;
+    }
+
+    svg {
+      height: 527px;
+    }
+
+    .loading {
+      z-index: 2;
+    }
+  }
+
+  h1 {
+    font-size: 34px;
+    line-height: 120%;
+    text-align: center;
+  }
+
+  &__content {
+    width: 100%;
+    margin-top: -61px;
+    justify-content: center;
+    position: relative;
+
+    p {
+      font-size: 16px;
+      margin: 13px auto 0;
+      text-align: center;
+    }
+  }
+
+  .MainLanding-SuggestiveBox__showIn {
+    margin-top: 23px;
+  }
+}

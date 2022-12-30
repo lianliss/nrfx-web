@@ -13,11 +13,16 @@ function Slider({
   const [eventsExists, setEventsExists] = React.useState(false);
   const sliderRef = React.useRef(null);
   const containerRef = React.useRef(null);
-  const allRefsIsFine =
-    sliderRef.current &&
-    containerRef.current &&
-    nextSlideRef.current &&
-    prevSlideRef.current;
+  const [allRefsIsFine, setAllRefsIsFine] = React.useState(false);
+
+  React.useEffect(() => {
+    setAllRefsIsFine(
+      sliderRef.current &&
+        containerRef.current &&
+        nextSlideRef.current &&
+        prevSlideRef.current
+    );
+  }, [sliderRef, containerRef, nextSlideRef, prevSlideRef]);
 
   React.useEffect(() => {
     if (!allRefsIsFine) return;

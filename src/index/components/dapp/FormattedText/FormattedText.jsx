@@ -6,6 +6,7 @@ function FormattedText({
   text,
   className = '',
   regularExpression = /(-?\d(\.\d+)?%?)/g,
+  tag: Tag = 'span',
 }) {
   const stringForHtml = text
     .replace(regularExpression, (x) => {
@@ -15,7 +16,7 @@ function FormattedText({
     })
     .replace('\n', '<br />');
 
-  return <span dangerouslySetInnerHTML={{ __html: stringForHtml }} />;
+  return <Tag dangerouslySetInnerHTML={{ __html: stringForHtml }} />;
 }
 
 export default FormattedText;

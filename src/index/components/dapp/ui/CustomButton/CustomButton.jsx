@@ -12,22 +12,25 @@ export const buttonTypes = {
   link: 'link',
 };
 
-function CustomButton({ children, className, onClick, style, disabled, type }) {
-  return (
-    <button
-      className={classNames({
-        CustomButton: true,
-        [className]: className,
-        [type]: type,
-        disabled,
-      })}
-      style={style}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
+const CustomButton = React.forwardRef(
+  ({ children, className, onClick, style, disabled, type }, ref) => {
+    return (
+      <button
+        className={classNames({
+          CustomButton: true,
+          [className]: className,
+          [type]: type,
+          disabled,
+        })}
+        style={style}
+        onClick={onClick}
+        ref={ref}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 CustomButton.propTypes = {
   className: PropTypes.string,

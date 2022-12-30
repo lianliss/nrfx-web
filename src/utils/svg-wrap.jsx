@@ -1,15 +1,34 @@
-import React, {useState} from 'react';
-import InlineSVG from "react-inlinesvg";
+import _ from 'lodash';
+import React, { useState } from 'react';
+import InlineSVG from 'react-inlinesvg';
+import { classNames as cn } from '.';
 
-export default props => {
-  const {src} = props;
+export default (props) => {
+  const { src } = props;
+  const { flex, handleLoaded, ...svgProps } = props;
   const [isLoaded, setIsLoaded] = useState(false);
-  return <span className={`isvg ${isLoaded ? 'loaded' : 'loading'}`}>
-    <InlineSVG
-      {...props}
-      onLoad={() => setIsLoaded(true)}
-      onError={error => console.error('[SVG]', src.default || src, props)}
-      uniquifyIDs={true}
-      src={src.default || src} />
-  </span>
+
+  return (
+    <span
+      className={cn('isvg', {
+        loaded: isLoaded,
+        loading: !isLoaded,
+        flex,
+      })}
+    >
+      <InlineSVG
+        {...svgProps}
+        onLoad={() => {
+          setIsLoaded(true);
+
+          if (_.isFunction(handleLoaded)) {
+            handleLoaded(true);
+          }
+        }}
+        onError={(error) => console.error('[SVG]', src.default || src, props)}
+        uniquifyIDs={true}
+        src={src.default || src}
+      />
+    </span>
+  );
 };

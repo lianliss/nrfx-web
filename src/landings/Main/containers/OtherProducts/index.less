@@ -1,0 +1,57 @@
+.MainLanding-other-products {
+  &:not(:last-child) {
+    margin-bottom: 150px;
+  }
+
+  &__title {
+    margin-bottom: 35px;
+  }
+
+  .slider-control {
+    display: flex;
+    gap: 8px;
+
+    &__arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 67px;
+      width: 67px;
+      border: 2px solid #e5e9f4;
+      border-radius: 21px;
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    &__prev .isvg {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.adaptive .MainLanding-other-products {
+  &:not(:last-child) {
+    margin-bottom: 86px;
+  }
+
+  &__title {
+    margin-bottom: 18px;
+    gap: 16px;
+  }
+
+  .slider-control {
+    gap: 6px;
+
+    &__arrow {
+      height: 54px;
+      width: 54px;
+
+      svg {
+        width: 19.44px;
+        height: 19.44px;
+      }
+    }
+  }
+}

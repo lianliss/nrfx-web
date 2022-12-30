@@ -1,0 +1,101 @@
+.MainLanding-BenefitCard {
+  display: flex;
+  flex: 1 1 0;
+  height: 307px;
+  padding: 40px 43px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 30px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+
+  &:not(.visible) {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  &.small {
+    flex: 1 1 306px;
+    text-align: center;
+  }
+  &.medium {
+    flex: 1 1 504px;
+  }
+  &.large {
+    flex: 1 1 702px;
+    text-align: center;
+  }
+
+  &.small &__title,
+  &.large &__title {
+    margin: auto auto 0;
+  }
+
+  &.medium &__title {
+    max-width: 273px;
+  }
+
+  &.blue {
+    background: var(--royal-blue);
+  }
+
+  &.orange {
+    background: linear-gradient(202.23deg, #fa9751 1.99%, #fabe4c 100%);
+  }
+
+  &.alice-blue {
+    background: linear-gradient(198.49deg, #e5e9f4 12.53%, #f2f6ff 95.91%);
+  }
+
+  &__title {
+    margin-top: auto;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 114%;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__background {
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &.alice-blue &__title {
+    color: var(--gunmetal);
+  }
+
+  .users-image {
+    font-weight: 600;
+    font-size: 88px;
+    line-height: 114%;
+    text-align: center;
+    letter-spacing: -0.07em;
+    opacity: 0.23;
+  }
+
+  @keyframes showBenefitCard {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+.adaptive .MainLanding-BenefitCard {
+  padding: 29px;
+  height: 210px;
+
+  &:not(.visible) {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__title {
+    font-size: 18px;
+  }
+}
