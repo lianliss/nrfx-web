@@ -8,7 +8,7 @@ import './DoubleWallets.less';
 
 function DoubleWallets({ first, second, pair, disableSymbols, size }) {
   const context = React.useContext(Web3Context);
-  const { tokens, wrapBNB, bnb } = context;
+  const { tokens, wrapToken, bnb } = context;
   // const [symbol0, setSymbol0] = React.useState(first.symbol);
   // const [symbol1, setSymbol1] = React.useState(second.symbol);
   const [token0, setToken0] = React.useState(_.get(pair, 'token0', first));
@@ -55,8 +55,8 @@ function DoubleWallets({ first, second, pair, disableSymbols, size }) {
   const logo0 = token0.logoURI;
   const logo1 = token1.logoURI;
 
-  const symbol0 = token0.symbol === wrapBNB.symbol ? bnb.symbol : token0.symbol;
-  const symbol1 = token1.symbol === wrapBNB.symbol ? bnb.symbol : token1.symbol;
+  const symbol0 = token0.symbol === wrapToken.symbol ? bnb.symbol : token0.symbol;
+  const symbol1 = token1.symbol === wrapToken.symbol ? bnb.symbol : token1.symbol;
 
   return (
     <div className="DoubleWallets">

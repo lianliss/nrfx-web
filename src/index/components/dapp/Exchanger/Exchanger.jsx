@@ -53,7 +53,8 @@ function Exchanger(props) {
   const [limits, setLimits] = React.useState([]);
   const [fiatSelected, setFiatSelected] = React.useState(null);
   const [coinSelected, setCoinSelected] = React.useState(
-    tokens.find(t => t.symbol === initGetParams.params.coin) || tokens.find(t => t.symbol === 'NRFX')
+    tokens.find(t => t.symbol === initGetParams.params.coin) ||
+    tokens.find(t => t.symbol !== initGetParams.params.fiat)
   );
   const [fiatsLoaded, setFiatsLoaded] = React.useState(false);
   const fiatSymbol = _.get(fiatSelected, 'symbol');
@@ -95,7 +96,7 @@ function Exchanger(props) {
     (isConnected
       ? tokens
       : [
-        ...networks[56].tokens,
+        ...networks[chainId]?.tokens,
         ...(cmcTokens || []),
       ]
     ),

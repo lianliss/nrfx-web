@@ -16,11 +16,12 @@ class TokenContract {
     this.provider = provider;
     this.web3 = provider.web3;
     this.ethereum = provider.ethereum;
+    this.chainId = provider.state.chainId;
 
     this.contract = new (this.web3.eth.Contract)(
       isPairContract
         ? require('src/index/constants/ABI/PancakePair')
-        : require('src/index/constants/ABI/Bep20Token'),
+        : networks[this.chainId].tokenABI,
       this.address,
     );
   }
@@ -140,8 +141,8 @@ class TokenContract {
     const {oracleTokens} = this.provider;
     const network = networks[this.provider.state.chainId];
     
-    const current = this.address ? this : network.wrapBNB;
-    const second = secondToken.address ? secondToken : network.wrapBNB;
+    const current = this.address ? this : network.wrapToken;
+    const second = secondToken.address ? secondToken : network.wrapToken;
     
     if (!oracleTokens[current.address]
       || !oracleTokens[second.address]

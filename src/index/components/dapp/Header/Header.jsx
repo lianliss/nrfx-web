@@ -42,6 +42,11 @@ function Header(props) {
       'bsc',
       require('src/asset/icons/wallets/bsc.svg').default
     ),
+    option(
+      'Ethereum',
+      'eth',
+      require('src/asset/cabinet/crypto/ethereum.svg').default
+    ),
   ];
 
   // Adaptive sidebar is open
@@ -104,7 +109,7 @@ function Header(props) {
           <div className="DappHeader__menu">
             <Select
               isSearchable={false}
-              isDisabled
+              // isDisabled
               options={cryptoOptions}
               value={currentCrypto}
               onChange={handleCryptoChange}

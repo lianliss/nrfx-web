@@ -51,7 +51,7 @@ class Web3Provider extends React.PureComponent {
       fiats: []
     },
     chainId: null,
-    tokens: networks[56].tokens,
+    tokens: [],
     pools: null,
     poolsList: networks[56].poolsList,
     prices: {},
@@ -69,6 +69,7 @@ class Web3Provider extends React.PureComponent {
   saleFactory = networks[56].saleFactory;
   fiatFactory = networks[56].fiatFactory;
   wrapBNB = networks[56].wrapBNB;
+  wrapToken = {};
   exchangerRouter = networks[56].exchangerRouter;
   web3 = null;
   web3Host = null;
@@ -146,7 +147,7 @@ class Web3Provider extends React.PureComponent {
    * @returns {Token}
    */
   getToken(_token) {
-    const token = _token.address ? _token : this.wrapBNB;
+    const token = _token.address ? _token : this.wrapToken;
     return new Token(
       token.chainId,
       token.address,
@@ -178,8 +179,8 @@ class Web3Provider extends React.PureComponent {
    * @returns {string}
    */
   getPairAddress(_token0, _token1) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
+    const token0 = _token0.address ? _token0 : this.wrapToken;
+    const token1 = _token1.address ? _token1 : this.wrapToken;
     
     let first;
     let second;
@@ -208,8 +209,8 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<void>}
    */
   async getPairs(_token0, _token1) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
+    const token0 = _token0.address ? _token0 : this.wrapToken;
+    const token1 = _token1.address ? _token1 : this.wrapToken;
 
     // Get all possible pairs combinations
     const combinations = getAllPairsCombinations(token0, token1);
@@ -362,6 +363,16 @@ class Web3Provider extends React.PureComponent {
           chainId: id,
         })
       }
+
+      this.factoryAddress = networks[id].factoryAddress;
+      this.routerAddress = networks[id].providerAddress;
+      this.tokenSale = networks[id].tokenSale;
+      this.saleFactory = networks[id].saleFactory;
+      this.fiatFactory = networks[id].fiatFactory;
+      this.wrapBNB = networks[id].wrapBNB;
+      this.wrapToken = networks[id].wrapToken;
+      this.exchangerRouter = networks[id].exchangerRouter;
+      
       Object.assign(this, networks[id]);
       this.farm = this.getFarmContract();
       this.pairs = {};
@@ -374,7 +385,7 @@ class Web3Provider extends React.PureComponent {
         chainId: id,
       });
       this.getBlocksPerSecond();
-      if (id === 56) {
+      if (networks[id].mainnet) {
         this.getTokens();
       }
     } catch (error) {
@@ -578,13 +589,15 @@ class Web3Provider extends React.PureComponent {
 
     try {
       let tokens = this.cmcTokens;
+      const network = networks[this.state.chainId];
       if (!tokens) {
-        const request = await axios.get('https://tokens.pancakeswap.finance/cmc.json');
-        tokens = request.data.tokens;
+        const tokenListURI = _.get(network, 'tokenListURI');
+        const request = tokenListURI && await axios.get(tokenListURI);
+        tokens = _.get(request, 'data.tokens');
         this.cmcTokens = tokens;
       }
 
-      if (this.state.chainId !== 56) return [];
+      if (!_.get(network, 'mainnet')) return [];
       if (!this._mounted) return;
       const result = _.uniqBy([
         ...this.state.tokens,
@@ -613,8 +626,8 @@ class Web3Provider extends React.PureComponent {
     let pairAddress;
     if (_token1) {
       // If tokens passed
-      token0 = _token0.address ? _token0 : this.wrapBNB;
-      token1 = _token1.address ? _token1 : this.wrapBNB;
+      token0 = _token0.address ? _token0 : this.wrapToken;
+      token1 = _token1.address ? _token1 : this.wrapToken;
       pairAddress = this.getPairAddress(token0, token1).toLowerCase();
     } else {
       // If only pair passed
@@ -700,8 +713,8 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<number>}
    */
   async getTokensRelativePrice(_token0, _token1, amount = 1, isAmountIn = false) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
+    const token0 = _token0.address ? _token0 : this.wrapToken;
+    const token1 = _token1.address ? _token1 : this.wrapToken;
 
     try {
       const {toBN} = this;
@@ -1836,18 +1849,21 @@ class Web3Provider extends React.PureComponent {
     // const amount = accountBalance < wei.to(value)
     //   ? accountBalance
     //   : wei.to(value);
-    if(token.symbol === 'BNB') {
+    if(token.symbol === this.wrapToken.symbol) {
       const gasPrice = await this.web3.eth.getGasPrice();
       const latestBlock = await this.web3.eth.getBlock('latest');
       const gasLimit = latestBlock.gasLimit;
 
+      // Web3 to hex for reuse
+      const { toHex } = this.web3.utils;
+
       const rawTransaction = {
-        gasPrice: this.web3.utils.toHex(gasPrice),
-        gasLimit: this.web3.utils.toHex(gasLimit),
+        gasPrice: toHex(gasPrice),
+        gasLimit: toHex(gasLimit),
         to: address,
         from: this.state.accountAddress,
-        value: this.web3.utils.toHex(amount),
-        chainId: '0x38',
+        value: toHex(amount),
+        chainId: toHex(this.state.chainId),
       };
 
       try {
@@ -1943,6 +1959,7 @@ class Web3Provider extends React.PureComponent {
       getSomeTimePricesPairMoralis: this.getSomeTimePricesPairMoralis.bind(this),
       bnb: this.bnb,
       wrapBNB: this.wrapBNB,
+      wrapToken: this.wrapToken,
       updateFiats: this.updateFiats.bind(this),
       getFiatsArray: this.getFiatsArray.bind(this),
       cardReserve: this.cardReserve.bind(this),
