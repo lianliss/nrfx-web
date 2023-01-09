@@ -6,7 +6,7 @@ import wei from 'utils/wei';
 import wait from 'utils/wait';
 import _ from 'lodash';
 import axios from 'axios';
-import networks from 'src/index/constants/networks';
+import Network from './multichain/Network';
 import getAllPairsCombinations from 'utils/getPairCombinations';
 import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
 import { getAddress, getCreate2Address } from '@ethersproject/address';
@@ -53,24 +53,25 @@ class Web3Provider extends React.PureComponent {
     chainId: null,
     tokens: [],
     pools: null,
-    poolsList: networks[56].poolsList,
+    poolsList: [],
     prices: {},
     fiats: {},
     connector: CONNECTORS.METAMASK
   };
 
+  network = new Network();
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
   providerAddress = 'asd';
-  factoryAddress = networks[56].factoryAddress;
-  routerAddress = networks[56].providerAddress;
-  tokenSale = networks[56].tokenSale;
-  saleFactory = networks[56].saleFactory;
-  fiatFactory = networks[56].fiatFactory;
-  wrapBNB = networks[56].wrapBNB;
+  factoryAddress = '';
+  routerAddress = '';
+  tokenSale = '';
+  saleFactory = '';
+  fiatFactory = '';
+  exchangerRouter = '';
+  wrapBNB = {};
   wrapToken = {};
-  exchangerRouter = networks[56].exchangerRouter;
   web3 = null;
   web3Host = null;
   farm = null;
@@ -193,13 +194,12 @@ class Web3Provider extends React.PureComponent {
       second = token0;
     }
   
-    const network = networks[token0.chainId];
     return getCreate2Address(
-      network.factoryAddress,
+      this.network.contractAddresses.factoryAddress,
       keccak256(
         ['bytes'],
         [pack(['address', 'address'], [first.address, second.address])]),
-      network.factoryInitCodeHash);
+      this.network.contractAddresses.factoryInitCodeHash);
   }
 
   /**
@@ -357,35 +357,37 @@ class Web3Provider extends React.PureComponent {
    */
   setChain(id) {
     try {
-      if (!networks[id]) {
+      const network = new Network(id);
+      this.network = network;
+      if (!this.network.isFine()) {
         if (!id) toast.error(`Check your network connection`);
         return this.setState({
           chainId: id,
         })
       }
 
-      this.factoryAddress = networks[id].factoryAddress;
-      this.routerAddress = networks[id].providerAddress;
-      this.tokenSale = networks[id].tokenSale;
-      this.saleFactory = networks[id].saleFactory;
-      this.fiatFactory = networks[id].fiatFactory;
-      this.wrapBNB = networks[id].wrapBNB;
-      this.wrapToken = networks[id].wrapToken;
-      this.exchangerRouter = networks[id].exchangerRouter;
-      
-      Object.assign(this, networks[id]);
+      this.factoryAddress = network.contractAddresses.factoryAddress;
+      this.routerAddress = network.contractAddresses.providerAddress;
+      this.tokenSale = network.contractAddresses.tokenSale;
+      this.saleFactory = network.contractAddresses.saleFactory;
+      this.fiatFactory = network.contractAddresses.fiatFactory;
+      this.exchangerRouter = network.contractAddresses.exchangerRouter;
+      this.wrapBNB = network.tokens.wrapBNB;
+      this.wrapToken = network.wrapToken;
+
+      // Object.assign(this, network);
       this.farm = this.getFarmContract();
       this.pairs = {};
       if (this.state.chainId !== id) {
         toast.success(`Selected network is #${id}`);
       }
       this.setState({
-        tokens: networks[id].tokens,
-        poolsList: networks[id].poolsList,
+        tokens: network.displayTokens,
+        poolsList: network.poolsList,
         chainId: id,
       });
       this.getBlocksPerSecond();
-      if (networks[id].mainnet) {
+      if (network.mainnet) {
         this.getTokens();
       }
     } catch (error) {
@@ -589,15 +591,15 @@ class Web3Provider extends React.PureComponent {
 
     try {
       let tokens = this.cmcTokens;
-      const network = networks[this.state.chainId];
+
       if (!tokens) {
-        const tokenListURI = _.get(network, 'tokenListURI');
+        const tokenListURI = this.network.tokenListURI;
         const request = tokenListURI && await axios.get(tokenListURI);
         tokens = _.get(request, 'data.tokens');
         this.cmcTokens = tokens;
       }
 
-      if (!_.get(network, 'mainnet')) return [];
+      if (!this.network.mainnet) return [];
       if (!this._mounted) return;
       const result = _.uniqBy([
         ...this.state.tokens,

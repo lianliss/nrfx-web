@@ -9,6 +9,11 @@ export const TOKEN_LIST_URI = {
   [BSC_MAINNET]: 'https://tokens.pancakeswap.finance/cmc.json',
 };
 
+export const ABI = {
+  [ETHEREUM_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
+  [BSC_MAINNET]: require('src/index/constants/ABI/Bep20Token'),
+};
+
 export const TOKENS = {
   [ETHEREUM_MAINNET]: {
     eth: {
