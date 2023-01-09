@@ -2,7 +2,7 @@ import * as contractAddresses from './contracts';
 import * as initialTokens from './initialTokens';
 import { isMainnet } from './chains';
 
-class Networks {
+class Network {
   constructor(chainId) {
     this.tokenListURI = initialTokens.TOKEN_LIST_URI[chainId];
     this.contractAddresses = contractAddresses.CONTRACT_ADDRESSES[chainId];
@@ -14,4 +14,4 @@ class Networks {
   }
 }
 
-export default Networks;
+export default Network;
