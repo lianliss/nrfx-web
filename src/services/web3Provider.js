@@ -374,6 +374,7 @@ class Web3Provider extends React.PureComponent {
       this.exchangerRouter = network.contractAddresses.exchangerRouter;
       this.wrapBNB = network.tokens.wrapBNB;
       this.wrapToken = network.wrapToken;
+      this.tokens = network.displayTokens;
 
       // Object.assign(this, network);
       this.farm = this.getFarmContract();
