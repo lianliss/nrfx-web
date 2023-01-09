@@ -6,7 +6,6 @@ import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
 import { useRoute } from 'react-router5';
 import router from 'src/router';
-import networks from 'src/index/constants/networks';
 
 // Components
 import CabinetContent from '../CabinetContent/CabinetContent';
@@ -47,7 +46,7 @@ function Exchanger(props) {
     fiats, chainId, accountAddress,
     web3, updateFiats, isConnected,
     tokens, loadAccountBalances, cmcTokens,
-    getTokens, getPairAddress,
+    getTokens, getPairAddress, network
   } = context;
 
   const [limits, setLimits] = React.useState([]);
@@ -96,7 +95,7 @@ function Exchanger(props) {
     (isConnected
       ? tokens
       : [
-        ...networks[chainId]?.tokens,
+        ...(network.displayTokens || []),
         ...(cmcTokens || []),
       ]
     ),

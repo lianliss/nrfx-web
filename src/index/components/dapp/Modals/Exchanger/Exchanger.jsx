@@ -1,6 +1,5 @@
 import React from 'react';
 import { Web3Context } from 'services/web3Provider';
-import networks from 'src/index/constants/networks';
 import routerABI from 'src/index/constants/ABI/NarfexExchangerRouter';
 
 // Components
@@ -40,6 +39,7 @@ function Exchanger({ ...props }) {
     getWeb3,
     transaction,
     getBSCScanLink,
+    network
   } = context;
   
   const [inAmount, setInAmount] = React.useState(fiatAmount);
@@ -80,8 +80,8 @@ function Exchanger({ ...props }) {
       return;
     }
     const token = getTokenContract(fiat);
-    const router = networks[chainId].exchangerRouter;
-    
+    const router = network.contractAddresses.exchangerRouter;
+
     token.getAllowance(router).then(allowance => {
       setAllowance(allowance);
       setIsProcess(false);
@@ -101,7 +101,7 @@ function Exchanger({ ...props }) {
   
   const approve = async () => {
     const token = getTokenContract(fiat);
-    const router = networks[chainId].exchangerRouter;
+    const router = network.contractAddresses.exchangerRouter;
     try {
       const maxApprove = 10**9;
       setIsApproving(true);
@@ -120,11 +120,12 @@ function Exchanger({ ...props }) {
       setIsProcess(true);
       const router = new (getWeb3().eth.Contract)(
         routerABI,
-        networks[chainId].exchangerRouter,
+        network.contractAddresses.exchangerRouter,
       );
       
       const isFromBNB = !path[0].address
-        || path[0].address.toLowerCase() === networks[chainId].wrapBNB.address.toLowerCase();
+        || path[0].address.toLowerCase() ===
+          network.tokens.wrapBNB.address.toLowerCase();
       let value;
       if (isFromBNB) {
         if (isExactOut) {
