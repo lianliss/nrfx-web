@@ -1,13 +1,12 @@
 import wei from 'utils/wei';
 import _ from 'lodash';
 import NarfexOracleABI from 'src/index/constants/ABI/NarfexOracle';
-import networks from 'src/index/constants/networks';
+import Network from 'src/services/multichain/Network';
 import significant from 'utils/significant';
 
 const wait = miliseconds => new Promise(fulfill => setTimeout(fulfill, miliseconds));
 
 class TokenContract {
-
   isAwaiting = false;
   pendingTimeout = 2000;
 
@@ -17,11 +16,12 @@ class TokenContract {
     this.web3 = provider.web3;
     this.ethereum = provider.ethereum;
     this.chainId = provider.state.chainId;
+    this.network = new Network(this.chainId);
 
     this.contract = new (this.web3.eth.Contract)(
       isPairContract
         ? require('src/index/constants/ABI/PancakePair')
-        : networks[this.chainId].tokenABI,
+        : this.network.tokenABI,
       this.address,
     );
   }
@@ -98,10 +98,9 @@ class TokenContract {
   
   _updateTokensData = async (tokens) => {
     try {
-      const network = networks[this.provider.state.chainId];
       const oracleContract = new (this.web3.eth.Contract)(
         NarfexOracleABI,
-        network.narfexOracle,
+        this.network.contractAddresses.narfexOracle,
       );
       const tokensData = (await oracleContract.methods.getTokensData(tokens.map(t => t.address), false).call())
         .map((tokenData, index) => {
@@ -139,21 +138,21 @@ class TokenContract {
   _getExchangeTokens = async secondToken => {
     if (!this.provider.oracleTokens) this.provider.oracleTokens = {};
     const {oracleTokens} = this.provider;
-    const network = networks[this.provider.state.chainId];
     
-    const current = this.address ? this : network.wrapToken;
-    const second = secondToken.address ? secondToken : network.wrapToken;
+    const current = this.address ? this : this.network.wrapToken;
+    const second = secondToken.address ? secondToken : this.network.wrapToken;
+    const networkUSDT = this.network.tokens.usdt;
     
     if (!oracleTokens[current.address]
       || !oracleTokens[second.address]
-      || !oracleTokens[network.usdt.address]) {
-      await this._updateTokensData([current, second, network.usdt]);
+      || !oracleTokens[networkUSDT.address]) {
+      await this._updateTokensData([current, second, networkUSDT]);
     }
     
     return {
       token0: oracleTokens[current.address],
       token1: oracleTokens[second.address],
-      usdt: oracleTokens[network.usdt.address],
+      usdt: oracleTokens[networkUSDT.address],
     }
   };
   
