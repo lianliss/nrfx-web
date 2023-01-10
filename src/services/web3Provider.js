@@ -28,6 +28,7 @@ import * as CONNECTORS from './multiwallets/connectors';
 import { marketCoins } from 'src/services/coingeckoApi';
 import { getTokenFromSymbol } from "./web3Provider/utils";
 import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
+import { CHAIN_TOKENS } from "./multichain/initialTokens";
 
 export const Web3Context = React.createContext();
 
@@ -917,7 +918,7 @@ class Web3Provider extends React.PureComponent {
         ? choosenTokens.filter(tokenIsFine)
         : this.state.tokens.filter(tokenIsFine);
 
-      await this.setBNBBalance();
+      await this.setChainTokenBalance();
 
       const oneChunkNumber = 256;
       const chunks = _.chunk(tokens, oneChunkNumber);
@@ -975,34 +976,32 @@ class Web3Provider extends React.PureComponent {
 
   fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
   
-  // Set BNB balance to balances and tokens.
-  async setBNBBalance() {
+  // Set chain token balance to balances and tokens.
+  async setChainTokenBalance() {
     try {
-      // Get BNB balance
-      const bnbBalance = await new this.web3.eth.getBalance(
+      // Get Chain token balance
+      let chainToken = CHAIN_TOKENS[this.state.chainId];
+      const chainTokenBalance = await new this.web3.eth.getBalance(
         this.state.accountAddress
       );
 
-      if (bnbBalance === '0') return false;
+      if (chainTokenBalance === '0') return false;
+      const chainTokenPrice = await this.getTokenUSDPrice(chainToken);
 
-      const bnbPrice = await this.getTokenUSDPrice(
-        this.state.tokens.find((t) => t.symbol === 'BNB')
-      );
-
-      // Set bnb balance to state.
+      // Set chain token balance to state.
       this.setState((state) => {
         const tokens = state.tokens.map((token) => {
-          if (token.symbol === 'BNB') {
+          if (token.symbol === chainToken.symbol) {
             // Token with balance and price.
             const tokenWithBalance = {
               ...token,
-              balance: bnbBalance,
-              price: bnbPrice,
+              balance: chainTokenBalance,
+              price: chainTokenPrice || 0,
             };
 
             return tokenWithBalance;
           }
-
+          
           return token;
         });
 
@@ -1010,14 +1009,14 @@ class Web3Provider extends React.PureComponent {
       });
 
       this.setBalances((tokens) => {
-        const bnbToken = this.state.tokens.find(t => t.symbol === 'BNB');
+        chainToken = this.state.tokens.find(t => t.symbol === chainToken.symbol);
 
-        return [...tokens, bnbToken];
+        return [...tokens, chainToken];
       }, 'tokens');
 
       return true;
     } catch (error) {
-      console.log('[setBNBBalance]', error);
+      console.log('[setChainTokenBalance]', error);
       return false;
     }
   }
