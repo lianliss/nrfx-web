@@ -12,3 +12,5 @@ export const isMainnet = {
 
 // Chain IDs that are integrated.
 export const FINE_CHAIN_IDS = [ETHEREUM_MAINNET, BSC_MAINNET, BSC_TESTNET];
+
+export const DEFAULT_CHAIN = BSC_MAINNET;

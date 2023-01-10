@@ -3,6 +3,7 @@ import _ from 'lodash';
 import NarfexOracleABI from 'src/index/constants/ABI/NarfexOracle';
 import Network from 'src/services/multichain/Network';
 import significant from 'utils/significant';
+import { DEFAULT_CHAIN } from '../multichain/chains';
 
 const wait = miliseconds => new Promise(fulfill => setTimeout(fulfill, miliseconds));
 
@@ -16,7 +17,7 @@ class TokenContract {
     this.web3 = provider.web3;
     this.ethereum = provider.ethereum;
     this.chainId = provider.state.chainId;
-    this.network = new Network(this.chainId);
+    this.network = new Network(this.chainId || DEFAULT_CHAIN);
 
     this.contract = new (this.web3.eth.Contract)(
       isPairContract

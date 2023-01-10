@@ -160,9 +160,9 @@ export const DISPLAY_TOKENS = {
     TOKENS[ETHEREUM_MAINNET].nrfx,
   ],
   [BSC_MAINNET]: [
+    TOKENS[BSC_MAINNET].bnb,
     TOKENS[BSC_MAINNET].nrfx,
     TOKENS[BSC_MAINNET].usdt,
-    TOKENS[BSC_MAINNET].bnb,
     ...baseTokens,
   ],
   [BSC_TESTNET]: [

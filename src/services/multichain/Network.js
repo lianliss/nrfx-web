@@ -3,7 +3,8 @@ import * as initialTokens from './initialTokens';
 import * as chains from './chains';
 
 class Network {
-  constructor(chainId) {
+  constructor(id) {
+    const chainId = id || chains.DEFAULT_CHAIN;
     this.chainId = chainId;
 
     if (chainId && this.isFine(chainId)) {
@@ -18,8 +19,8 @@ class Network {
     }
   }
 
-  isFine() {
-    if (chains.FINE_CHAIN_IDS.includes(this.chainId)) {
+  isFine(id) {
+    if (chains.FINE_CHAIN_IDS.includes(id || this.chainId)) {
       return true;
     }
 

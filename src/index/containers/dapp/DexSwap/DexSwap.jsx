@@ -249,18 +249,22 @@ class DexSwap extends React.PureComponent {
     if (!tokens || !tokens.length) return;
 
     const { dappSwap } = this.props;
-    const defaultToken0 = tokens.filter(
-      (token) =>
-        token.symbol.toLowerCase() === dappSwap.from.symbol.toLowerCase()
-    )[0];
-    const defaultToken1 = tokens.filter(
-      (token) =>
-        token.symbol.toLowerCase() === dappSwap.to.symbol.toLowerCase()
-    )[0];
+    const defaultToken0 = tokens.find(
+      (token) => token.symbol.toLowerCase() === dappSwap.from.symbol.toLowerCase()
+    );
+    const defaultToken1 = tokens.find(
+      (token) => token.symbol.toLowerCase() === dappSwap.to.symbol.toLowerCase()
+    );
 
     // Get default pair
-    const token0 = defaultToken0.address || window.localStorage.getItem('token0') || tokens[0].address;
-    const token1 = defaultToken1.address || window.localStorage.getItem('token1') || tokens[1].address;
+    const token0 =
+      _.get(defaultToken0, 'address') ||
+      window.localStorage.getItem('token0') ||
+      _.get(tokens[0], 'address');
+    const token1 =
+      _.get(defaultToken1, 'address') ||
+      window.localStorage.getItem('token1') ||
+      _.get(tokens[1], 'address');
 
     // Get user tokens from local storage
     let userTokens = [];

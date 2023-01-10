@@ -29,6 +29,7 @@ import { marketCoins } from 'src/services/coingeckoApi';
 import { getTokenFromSymbol } from "./web3Provider/utils";
 import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
 import { CHAIN_TOKENS } from "./multichain/initialTokens";
+import { DEFAULT_CHAIN } from "./multichain/chains";
 
 export const Web3Context = React.createContext();
 
@@ -60,19 +61,19 @@ class Web3Provider extends React.PureComponent {
     connector: CONNECTORS.METAMASK
   };
 
-  network = new Network();
+  network = new Network(DEFAULT_CHAIN);
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
-  providerAddress = 'asd';
-  factoryAddress = '';
-  routerAddress = '';
-  tokenSale = '';
-  saleFactory = '';
-  fiatFactory = '';
-  exchangerRouter = '';
-  wrapBNB = {};
-  wrapToken = {};
+  providerAddress = this.network.contractAddresses.providerAddress;
+  factoryAddress = this.network.contractAddresses.factoryAddress;
+  routerAddress = this.network.contractAddresses.routerAddress;
+  tokenSale = this.network.contractAddresses.tokenSale;
+  saleFactory = this.network.contractAddresses.saleFactory;
+  fiatFactory = this.network.contractAddresses.fiatFactory;
+  exchangerRouter = this.network.contractAddresses.exchangerRouter;
+  wrapBNB = this.network.tokens.wrapBNB;
+  wrapToken = this.network.wrapToken;
   web3 = null;
   web3Host = null;
   farm = null;
@@ -117,7 +118,7 @@ class Web3Provider extends React.PureComponent {
     this.checkConnection();
 
     // Get tokens list
-    this.getTokens();
+    this.getTokens(DEFAULT_CHAIN);
   }
 
   async checkConnection() {
@@ -586,7 +587,7 @@ class Web3Provider extends React.PureComponent {
     // Returns boolean if token is fine.
     const fineToken = (t) => {
       return !!(
-        t.chainId === this.state.chainId &&
+        t.chainId === this.network.chainId &&
         !incorrectAddresses.find((address) => address === t.address)
       );
     };
@@ -1923,6 +1924,7 @@ class Web3Provider extends React.PureComponent {
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
       logout: this.logout.bind(this),
+      network: this.network,
       getPairAddress: this.getPairAddress.bind(this),
       getReserves: this.getReserves.bind(this),
       pairs: this.pairs,
