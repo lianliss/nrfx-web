@@ -4,6 +4,7 @@ import requests from './requests';
 import _ from 'lodash';
 
 export const noderealRPC = {
+  1: 'https://eth-mainnet.nodereal.io/v1/160620f5efe148ceb99622baf8274e30',
   56: 'https://bsc-mainnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
   97: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
 };
@@ -22,7 +23,7 @@ export const getRequestMetods = (connector) => {
  * @param connector {string} - Wallet connector name from constant.
  * @returns {object}
  */
-export const getEthereum = (connector) => {
+export const getEthereum = (connector, chainID = 56) => {
   switch (connector) {
     case CONNECTORS.BSC: {
       if (!window['BinanceChain']) {
@@ -47,7 +48,7 @@ export const getEthereum = (connector) => {
     }
     case CONNECTORS.WALLET_CONNECT: {
       return new WalletConnectProvider({
-        chainId: 56,
+        chainId: chainID,
         rpc: noderealRPC,
       });
     }
@@ -83,7 +84,7 @@ const getProviderOfConnector = (connector, ethereum, chainID = 56) => {
  * @returns {object}
  */
 export const getConnectorObject = (connector, chainID = 56) => {
-  const ethereum = getEthereum(connector);
+  const ethereum = getEthereum(connector, chainID);
 
   if (!ethereum) {
     return null;
