@@ -61,23 +61,23 @@ function Exchanger(props) {
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
 
   const userId = `${chainId}${accountAddress}`;
-  const defaultRuble = chainId === 97
+  const defaultUSD = chainId === 97
     ? {
-      name: "Testnet Russian Ruble",
-      symbol: "RUB",
-      address: "0x93e9fefdb37431882D1A27bB794E73a191ebD945",
-      chainId: 97,
-      decimals: 18,
-      logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
-    }
+        name: "Testnet United States Dollar",
+        symbol: "USD",
+        address: "0x6dBB65750a6BBE8A0CBD28257008C464bAbe4de6",
+        chainId: 97,
+        decimals: 18,
+        logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
+      }
     : {
-      name: 'Russian Ruble on Narfex',
-      symbol: 'RUB',
-      address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
-      logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
-      isFiat: true,
-    };
-  const fiatTokens = _.get(fiats, userId, [defaultRuble]).map(token => {
+        name: "United States Dollar on Narfex",
+        symbol: "USD",
+        address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
+        logoURI: "https://static.narfex.com/img/currencies/dollar.svg",
+        isFiat: true,
+      };
+  const fiatTokens = _.get(fiats, userId, [defaultUSD]).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
   });
@@ -317,9 +317,13 @@ function Exchanger(props) {
     getBanks();
     getLimits();
     if (!initialCurrencySymbol && !fiatSelected) {
-      setFiat(
-        [...fiatTokens, ...coins].find((t) => t.symbol !== coinSelected?.symbol)
-      );
+      const isUSD = (t) => t.symbol !== coinSelected?.symbol && t.symbol === 'USD';
+      const isFineFiat = (t) => t.symbol !== coinSelected?.symbol;
+
+      const allCoins = [...fiatTokens, ...coins];
+      const USDFromCoins = allCoins.find(isUSD);
+      const availableFiat = allCoins.find(isFineFiat);
+      setFiat(USDFromCoins || availableFiat);
     }
   }, []);
 
