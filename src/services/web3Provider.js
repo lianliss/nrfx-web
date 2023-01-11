@@ -1385,7 +1385,7 @@ class Web3Provider extends React.PureComponent {
         this.setState({
           fiats,
         });
-        return KNOWN_FIATS.filter(f => f.chainId === chainId);
+        return KNOWN_FIATS;
       }
       const fiats = _.cloneDeep(this.state.fiats);
       let list = _.get(fiats, 'list', []);
