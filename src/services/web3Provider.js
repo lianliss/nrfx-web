@@ -1397,11 +1397,11 @@ class Web3Provider extends React.PureComponent {
       const userId = `${chainId}${accountAddress}`;
       if (!isConnected) {
         const fiats = {};
-        fiats[userId] = KNOWN_FIATS.filter(f => f.chainId === chainId);
+        fiats[userId] = KNOWN_FIATS;
         this.setState({
           fiats,
         });
-        return KNOWN_FIATS.filter(f => f.chainId === chainId);
+        return KNOWN_FIATS;
       }
       const fiats = _.cloneDeep(this.state.fiats);
       let list = _.get(fiats, 'list', []);
@@ -1468,10 +1468,10 @@ class Web3Provider extends React.PureComponent {
   getFiatsArray(rates) {
     const userId = `${this.state.chainId}${this.state.accountAddress}`;
     const fiatTokens = _.get(this.state.fiats, userId, [{
-      name: 'Russian Ruble on Narfex',
-      symbol: 'RUB',
-      address: '0xa4FF4DBb11F3186a1e96d3e8DD232E31159Ded9B',
-      logoURI: 'https://static.narfex.com/img/currencies/rubles.svg',
+      name: "United States Dollar on Narfex",
+      symbol: "USD",
+      address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
+      logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
     }]).map(token => {
       const price = _.get(rates, token.symbol.toLowerCase());
       return price ? {...token, price} : token;

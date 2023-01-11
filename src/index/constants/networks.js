@@ -114,6 +114,7 @@ const networks = {
       tokens[ETHEREUM_MAINNET].eth,
       tokens[ETHEREUM_MAINNET].usdt,
       tokens[ETHEREUM_MAINNET].nrfx,
+      ...baseTokens.filter(t => t.chainId === 56),
     ],
   },
   [BSC_MAINNET]: {
