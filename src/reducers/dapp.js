@@ -17,7 +17,7 @@ const initialState = {
   exchange: {
     from: {
       amount: 0,
-      token: { symbol: 'RUB' },
+      token: { symbol: 'USD' },
     },
     to: {
       amount: 0,
