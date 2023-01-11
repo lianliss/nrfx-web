@@ -27,6 +27,14 @@ const TESTNET_FIATS = [
 
 const KNOWN_FIATS = [
   {
+    name: "Russian Ruble on Narfex",
+    symbol: "RUB",
+    address: "0xC7b9dA3D064a918B8e04B23AEEdBD64CBa21D37d",
+    chainId: 56,
+    decimals: 18,
+    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+  },
+  {
     name: "United States Dollar on Narfex",
     symbol: "USD",
     address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
@@ -41,14 +49,6 @@ const KNOWN_FIATS = [
     chainId: 56,
     decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/euro.svg"
-  },
-  {
-    name: "Russian Ruble on Narfex",
-    symbol: "RUB",
-    address: "0xC7b9dA3D064a918B8e04B23AEEdBD64CBa21D37d",
-    chainId: 56,
-    decimals: 18,
-    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
   },
   {
     name: "Ukrainian Hryvnia on Narfex",
