@@ -41,6 +41,7 @@ const AWAITING_DELAY = 2000;
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 class Web3Provider extends React.PureComponent {
+  network = new Network(DEFAULT_CHAIN);
 
   state = {
     isConnected: false,
@@ -53,7 +54,7 @@ class Web3Provider extends React.PureComponent {
       fiats: []
     },
     chainId: null,
-    tokens: [],
+    tokens: this.network.displayTokens,
     pools: null,
     poolsList: [],
     prices: {},
@@ -61,7 +62,6 @@ class Web3Provider extends React.PureComponent {
     connector: CONNECTORS.METAMASK
   };
 
-  network = new Network(DEFAULT_CHAIN);
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
@@ -368,6 +368,7 @@ class Web3Provider extends React.PureComponent {
         })
       }
 
+      this.cmcTokens = undefined;
       this.factoryAddress = network.contractAddresses.factoryAddress;
       this.routerAddress = network.contractAddresses.providerAddress;
       this.tokenSale = network.contractAddresses.tokenSale;
@@ -553,13 +554,14 @@ class Web3Provider extends React.PureComponent {
   async logout() {
     this.setBalances([], 'clear');
     this.setState({
-      tokens: [],
+      tokens: this.network.displayTokens,
       isConnected: false,
       accountAddress: null,
       chainId: null,
     });
 
     // Clear default wallet connection.
+    this.cmcTokens = undefined;
     this.walletConnectorStorage().clear();
     this.getTokens();
 
@@ -596,6 +598,7 @@ class Web3Provider extends React.PureComponent {
       let tokens = this.cmcTokens;
 
       if (!tokens) {
+        this.cmcTokens = []; // set is loading
         const tokenListURI = this.network.tokenListURI;
         const request = tokenListURI && await axios.get(tokenListURI);
         tokens = _.get(request, 'data.tokens');

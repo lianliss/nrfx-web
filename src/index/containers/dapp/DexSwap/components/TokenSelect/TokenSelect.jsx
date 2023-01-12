@@ -200,7 +200,7 @@ class TokenSelect extends React.PureComponent {
                       style={styles}
                     >
                       <WalletIcon
-                        currency={token.symbol.toLowerCase()}
+                        currency={token}
                         size={35}
                       />
                       {token.symbol.toUpperCase()}

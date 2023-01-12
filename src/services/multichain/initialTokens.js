@@ -163,7 +163,7 @@ export const DISPLAY_TOKENS = {
     TOKENS[BSC_MAINNET].bnb,
     TOKENS[BSC_MAINNET].nrfx,
     TOKENS[BSC_MAINNET].usdt,
-    ...baseTokens,
+    ...baseTokens.filter((t) => t.chainId === BSC_MAINNET),
   ],
   [BSC_TESTNET]: [
     TOKENS[BSC_TESTNET].nrfx,

@@ -94,13 +94,7 @@ function Exchanger(props) {
     ...binanceSymbols
   ];
   const coins = _.uniqBy(
-    (isConnected
-      ? tokens
-      : [
-        ...(network.displayTokens || []),
-        ...(cmcTokens || []),
-      ]
-    ),
+    tokens,
     'address',
   );
 
