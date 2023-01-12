@@ -598,7 +598,6 @@ class Web3Provider extends React.PureComponent {
       let tokens = this.cmcTokens;
 
       if (!tokens) {
-        this.cmcTokens = []; // set is loading
         const tokenListURI = this.network.tokenListURI;
         const request = tokenListURI && await axios.get(tokenListURI);
         tokens = _.get(request, 'data.tokens');
