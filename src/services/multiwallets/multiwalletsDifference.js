@@ -2,6 +2,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import * as CONNECTORS from './connectors';
 import requests from './requests';
 import _ from 'lodash';
+import { DEFAULT_CHAIN } from '../multichain/chains';
 
 export const noderealRPC = {
   1: 'https://eth-mainnet.nodereal.io/v1/160620f5efe148ceb99622baf8274e30',
@@ -23,7 +24,7 @@ export const getRequestMetods = (connector) => {
  * @param connector {string} - Wallet connector name from constant.
  * @returns {object}
  */
-export const getEthereum = (connector, chainID = 56) => {
+export const getEthereum = (connector, chainID = DEFAULT_CHAIN) => {
   switch (connector) {
     case CONNECTORS.BSC: {
       if (!window['BinanceChain']) {
@@ -64,7 +65,7 @@ export const getEthereum = (connector, chainID = 56) => {
  * @param chainID {number} - current network chainID - 56 mainnet, 97 testnet.
  * @returns {object}
  */
-const getProviderOfConnector = (connector, ethereum, chainID = 56) => {
+const getProviderOfConnector = (connector, ethereum, chainID = DEFAULT_CHAIN) => {
   let provider = noderealRPC[chainID];
 
   switch (connector) {
@@ -83,7 +84,7 @@ const getProviderOfConnector = (connector, ethereum, chainID = 56) => {
  * @param connector {string} - Wallet connector name from constant.
  * @returns {object}
  */
-export const getConnectorObject = (connector, chainID = 56) => {
+export const getConnectorObject = (connector, chainID = DEFAULT_CHAIN) => {
   const ethereum = getEthereum(connector, chainID);
 
   if (!ethereum) {
