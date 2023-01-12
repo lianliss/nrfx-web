@@ -4,9 +4,13 @@ import * as chains from './chains';
 
 class Network {
   constructor(id, provider) {
+    this.provider = provider;
+    this.initNetwork(id);
+  }
+
+  initNetwork(id) {
     const chainId = this.isFine(id) ? id : chains.DEFAULT_CHAIN;
     this.chainId = chainId;
-    this.provider = provider;
 
     this.tokenListURI = initialTokens.TOKEN_LIST_URI[chainId];
     this.contractAddresses = contractAddresses.CONTRACT_ADDRESSES[chainId];
@@ -32,6 +36,8 @@ class Network {
 
     const providerChain = this.provider.state.chainId;
     this.provider.setChain(id);
+    this.provider.setState({ chainId: providerChain });
+    this.initNetwork(id);
   }
 }
 

@@ -234,8 +234,6 @@ const DropdownIndicator = (props) => {
 
 const ChainSelect = React.memo(
   ({ isConnected, chainId, connector, switchToChain, network }) => {
-    const [value, setValue] = React.useState(network.chainId);
-
     // Set current crypto
     const handleCryptoChange = (id) => {
       if (isConnected) {
@@ -243,17 +241,22 @@ const ChainSelect = React.memo(
         return;
       }
       network.setChain(id);
-      setValue(id);
     };
+
+    const defaultValue = network.isFine(chainId)
+      ? null
+      : options.defaultValue(chainId);
+
+    const allOptions = defaultValue
+      ? [defaultValue, ...options.cryptoOptions]
+      : options.cryptoOptions;
 
     return (
       <Select
         isSearchable={false}
-        options={options.cryptoOptions}
-        value={isConnected ? chainId : value}
-        defaultValue={
-          network.isFine(chainId) ? null : options.defaultValue(chainId)
-        }
+        options={allOptions}
+        value={isConnected ? chainId : network.chainId}
+        defaultValue={defaultValue}
         onChange={handleCryptoChange}
         components={{
           DropdownIndicator,

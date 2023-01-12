@@ -350,17 +350,17 @@ class Web3Provider extends React.PureComponent {
    */
   setChain(id) {
     try {
-      const network = new Network(id, this);
-      this.network = network;
-      if (!this.network.isFine()) {
+      this.network.initNetwork(id)
+
+      if (!this.network.isFine(id)) {
         if (!id) toast.error(`Check your network connection`);
         return this.setState({
           chainId: id,
-        })
+        });
       }
 
       this.cmcTokens = undefined;
-      this.tokens = network.displayTokens;
+      this.tokens = this.network.displayTokens;
 
       // Object.assign(this, network);
       this.farm = this.getFarmContract();
@@ -369,12 +369,12 @@ class Web3Provider extends React.PureComponent {
         toast.success(`Selected network is #${id}`);
       }
       this.setState({
-        tokens: network.displayTokens,
-        poolsList: network.poolsList,
+        tokens: this.network.displayTokens,
+        poolsList: this.network.poolsList,
         chainId: id,
       });
       this.getBlocksPerSecond();
-      if (network.mainnet) {
+      if (this.network.mainnet) {
         this.getTokens();
       }
     } catch (error) {
