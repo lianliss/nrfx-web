@@ -8,7 +8,8 @@ import './DoubleWallets.less';
 
 function DoubleWallets({ first, second, pair, disableSymbols, size }) {
   const context = React.useContext(Web3Context);
-  const { tokens, wrapToken, bnb } = context;
+  const { tokens, network, bnb } = context;
+  const { wrapToken } = network;
   // const [symbol0, setSymbol0] = React.useState(first.symbol);
   // const [symbol1, setSymbol1] = React.useState(second.symbol);
   const [token0, setToken0] = React.useState(_.get(pair, 'token0', first));

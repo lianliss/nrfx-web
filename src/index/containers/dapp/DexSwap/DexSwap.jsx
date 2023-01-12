@@ -90,7 +90,8 @@ class DexSwap extends React.PureComponent {
 
   setInitialAllowance = async () => {
     try {
-      const {getTokenContract, routerAddress} = this.context;
+      const {getTokenContract, network} = this.context;
+      const { routerAddress } = network.contractAddresses;
       const token = _.get(this, 'state.pair[0]');
       if (!token) return;
       if (this.tokenContract) this.tokenContract.stopWaiting();
@@ -420,7 +421,8 @@ class DexSwap extends React.PureComponent {
 
   async approve() {
     const {isApproving, amount0} = this.state;
-    const {tokens, getTokenContract, routerAddress} = this.context;
+    const {tokens, getTokenContract, network} = this.context;
+    const { routerAddress } = network.contractAddresses;
     const {poolAddress} = this.props;
 
     if (isApproving) return;

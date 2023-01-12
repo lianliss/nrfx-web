@@ -41,12 +41,14 @@ function LiquidityRemove({ onClose, currentPool }) {
     getReserves,
     transaction, getTransactionReceipt,
     getTokenContract, chainId,
-    routerAddress, web3,
-    accountAddress, bnb, wrapBNB,
+    network, web3,
+    accountAddress, bnb,
     getBSCScanLink,
     addTokenToWallet,
     approve,
   } = context;
+  const { wrapBNB } = network.tokens;
+  const { routerAddress } = network.contractAddresses;
   const [balance, setBalance] = React.useState(0);
   const [allowance, setAllowance] = React.useState(0);
   const [pair, setPair] = React.useState(null);

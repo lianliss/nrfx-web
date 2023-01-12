@@ -31,7 +31,7 @@ function Exchanger({ ...props }) {
   const {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
-    exchangerRouter, getTokenContract,
+    getTokenContract,
     accountAddress,
     getTokenBalance,
     chainId,
@@ -41,7 +41,6 @@ function Exchanger({ ...props }) {
     getBSCScanLink,
     network
   } = context;
-  
   const [inAmount, setInAmount] = React.useState(fiatAmount);
   const [outAmount, setOutAmount] = React.useState(coinAmount);
   const [priceImpact, setPriceImpact] = React.useState(0);

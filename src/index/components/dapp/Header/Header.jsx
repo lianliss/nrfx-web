@@ -242,6 +242,7 @@ const ChainSelect = React.memo(
         switchToChain(id);
         return;
       }
+      network.setChain(id);
       setValue(id);
     };
 

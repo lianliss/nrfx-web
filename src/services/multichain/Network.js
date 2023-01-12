@@ -3,9 +3,10 @@ import * as initialTokens from './initialTokens';
 import * as chains from './chains';
 
 class Network {
-  constructor(id) {
+  constructor(id, provider) {
     const chainId = this.isFine(id) ? id : chains.DEFAULT_CHAIN;
     this.chainId = chainId;
+    this.provider = provider;
 
     this.tokenListURI = initialTokens.TOKEN_LIST_URI[chainId];
     this.contractAddresses = contractAddresses.CONTRACT_ADDRESSES[chainId];
@@ -23,6 +24,14 @@ class Network {
     }
 
     return false;
+  }
+
+  // Change chain from this class.
+  setChain(id) {
+    if (!this.provider) return;
+
+    const providerChain = this.provider.state.chainId;
+    this.provider.setChain(id);
   }
 }
 
