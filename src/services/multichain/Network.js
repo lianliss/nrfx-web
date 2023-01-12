@@ -4,19 +4,17 @@ import * as chains from './chains';
 
 class Network {
   constructor(id) {
-    const chainId = id || chains.DEFAULT_CHAIN;
+    const chainId = this.isFine(id) ? id : chains.DEFAULT_CHAIN;
     this.chainId = chainId;
 
-    if (chainId && this.isFine(chainId)) {
-      this.tokenListURI = initialTokens.TOKEN_LIST_URI[chainId];
-      this.contractAddresses = contractAddresses.CONTRACT_ADDRESSES[chainId];
-      this.poolsList = contractAddresses.POOLS_LIST[chainId];
-      this.tokens = initialTokens.TOKENS[chainId];
-      this.displayTokens = initialTokens.DISPLAY_TOKENS[chainId];
-      this.wrapToken = initialTokens.WRAP_TOKENS[chainId];
-      this.mainnet = chains.isMainnet[chainId];
-      this.tokenABI = initialTokens.ABI[chainId];
-    }
+    this.tokenListURI = initialTokens.TOKEN_LIST_URI[chainId];
+    this.contractAddresses = contractAddresses.CONTRACT_ADDRESSES[chainId];
+    this.poolsList = contractAddresses.POOLS_LIST[chainId];
+    this.tokens = initialTokens.TOKENS[chainId];
+    this.displayTokens = initialTokens.DISPLAY_TOKENS[chainId];
+    this.wrapToken = initialTokens.WRAP_TOKENS[chainId];
+    this.mainnet = chains.isMainnet[chainId];
+    this.tokenABI = initialTokens.ABI[chainId];
   }
 
   isFine(id) {
