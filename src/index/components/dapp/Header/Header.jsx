@@ -15,7 +15,6 @@ import { WEI_ETHER } from 'src/index/constants/cabinet';
 import { logout } from 'src/actions/auth';
 import { openStateModal } from 'src/actions';
 import * as steps from 'src/components/AuthModal/fixtures';
-import * as chains from 'src/services/multichain/chains';
 import * as connectors from 'src/services/multiwallets/connectors';
 
 import './Header.less';
@@ -23,25 +22,7 @@ import { Button } from 'src/ui';
 import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 import wei from 'utils/wei';
-import { option } from '../Select/Select';
-
-const cryptoOptions = [
-  option(
-    'BSC',
-    chains.BSC_MAINNET,
-    require('src/asset/icons/wallets/bsc.svg').default
-  ),
-  option(
-    'BSC Testnet',
-    chains.BSC_TESTNET,
-    require('src/asset/icons/wallets/bsc.svg').default
-  ),
-  option(
-    'Ethereum',
-    chains.ETHEREUM_MAINNET,
-    require('src/asset/cabinet/crypto/ethereum.svg').default
-  ),
-];
+import * as options from './constants/options';
 
 function Header(props) {
   const context = React.useContext(Web3Context);
@@ -56,6 +37,7 @@ function Header(props) {
     chainId,
     switchToChain,
     connector,
+    network,
   } = context;
 
   // Adaptive sidebar is open
@@ -116,6 +98,7 @@ function Header(props) {
               chainId={chainId}
               connector={connector}
               switchToChain={switchToChain}
+              network={network}
             />
             {isConnected ? (
               <>
@@ -250,8 +233,8 @@ const DropdownIndicator = (props) => {
 };
 
 const ChainSelect = React.memo(
-  ({ isConnected, chainId, connector, switchToChain }) => {
-    const [value, setValue] = React.useState(cryptoOptions[0].value);
+  ({ isConnected, chainId, connector, switchToChain, network }) => {
+    const [value, setValue] = React.useState(network.chainId);
 
     // Set current crypto
     const handleCryptoChange = (id) => {
@@ -265,8 +248,11 @@ const ChainSelect = React.memo(
     return (
       <Select
         isSearchable={false}
-        options={cryptoOptions}
+        options={options.cryptoOptions}
         value={isConnected ? chainId : value}
+        defaultValue={
+          network.isFine(chainId) ? null : options.defaultValue(chainId)
+        }
         onChange={handleCryptoChange}
         components={{
           DropdownIndicator,
