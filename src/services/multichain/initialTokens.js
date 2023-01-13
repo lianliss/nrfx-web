@@ -5,7 +5,7 @@ import baseTokens from 'src/index/constants/baseTokens';
 const DEFAULT_DECIMALS = 18;
 
 export const TOKEN_LIST_URI = {
-  [ETHEREUM_MAINNET]: 'http://tokens.uniswap.org',
+  [ETHEREUM_MAINNET]: 'https://static.narfex.com/img/ether_tokens.json',
   [BSC_MAINNET]: 'https://tokens.pancakeswap.finance/cmc.json',
 };
 

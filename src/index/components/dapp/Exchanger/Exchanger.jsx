@@ -51,12 +51,7 @@ function Exchanger(props) {
 
   const [limits, setLimits] = React.useState([]);
   const [fiatSelected, setFiatSelected] = React.useState(null);
-  const [coinSelected, setCoinSelected] = React.useState(
-    tokens.find(t => t.symbol === initGetParams.params.coin) ||
-    [...network.displayTokens, ...tokens].find(
-      t => t.symbol !== initGetParams.params.fiat
-    )
-  );
+  const [coinSelected, setCoinSelected] = React.useState(null);
   const [fiatsLoaded, setFiatsLoaded] = React.useState(false);
   const fiatSymbol = _.get(fiatSelected, 'symbol');
   const coinSymbol = _.get(coinSelected, 'symbol');
@@ -313,6 +308,16 @@ function Exchanger(props) {
     getLimits();
   }, []);
 
+  // Set initial coin
+  React.useEffect(() => {
+    setCoin(
+      tokens.find((t) => t.symbol === initGetParams.params.coin) ||
+        [...network.displayTokens, ...tokens].find(
+          (t) => t.symbol !== initGetParams.params.fiat
+        )
+    );
+  }, [coins]);
+
   // Set initial fiat
   React.useEffect(() => {
     if (fiatSelected) return;
@@ -335,7 +340,7 @@ function Exchanger(props) {
       const initialFiat = allCoins.find(isInitialFiat);
       setFiat(initialFiat || availableFiat);
     }
-  }, []);
+  }, [fiats]);
 
   return (
     <CabinetContent className="Exchanger__wrap">
