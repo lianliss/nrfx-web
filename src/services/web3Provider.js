@@ -48,6 +48,7 @@ class Web3Provider extends React.PureComponent {
     wallet: null,
     accountAddress: null,
     balancesRequested: null,
+    balancesChain: null,
     blocksPerSecond: 0,
     balances: {
       tokens: [],
@@ -55,6 +56,7 @@ class Web3Provider extends React.PureComponent {
     },
     chainId: null,
     tokens: this.network.displayTokens,
+    tokensChain: null,
     pools: null,
     poolsList: [],
     prices: {},
@@ -379,7 +381,10 @@ class Web3Provider extends React.PureComponent {
         chainId: id,
       });
       this.getBlocksPerSecond();
-      if (this.network.mainnet) {
+      if (
+        this.network.mainnet &&
+        this.state.tokensChain !== this.network.chainId
+      ) {
         this.getTokens();
       }
     } catch (error) {
@@ -522,7 +527,6 @@ class Web3Provider extends React.PureComponent {
 
       // Set provider state
       if (!this._mounted) return;
-      this.getTokens();
       this.setState({
         isConnected: true,
         accountAddress,
@@ -587,6 +591,9 @@ class Web3Provider extends React.PureComponent {
 
     try {
       let tokens = this.cmcTokens;
+      this.setState({
+        tokensChain: this.network.chainId,
+      });
 
       if (!tokens) {
         const tokenListURI = this.network.tokenListURI;
@@ -894,9 +901,13 @@ class Web3Provider extends React.PureComponent {
 
       if (!this.state.isConnected) return;
       // Stop additional loads
-      if (this.state.balancesRequested === accountAddress) return;
+      if (
+        this.state.balancesRequested === accountAddress &&
+        this.state.balancesChain === this.state.chainId
+      ) return;
       this.setState({
         balancesRequested: accountAddress,
+        balancesChain: this.state.chainId,
       });
 
       // Clear tokens balances
@@ -974,7 +985,7 @@ class Web3Provider extends React.PureComponent {
   async setChainTokenBalance() {
     try {
       // Get Chain token balance
-      let chainToken = CHAIN_TOKENS[this.state.chainId];
+      let chainToken = CHAIN_TOKENS[this.network.chainId];
       const chainTokenBalance = await new this.web3.eth.getBalance(
         this.state.accountAddress
       );
