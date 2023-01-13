@@ -350,8 +350,13 @@ class Web3Provider extends React.PureComponent {
    */
   setChain(id) {
     try {
-      this.network.initNetwork(id)
+      // A wallet maybe disconnected when the chain id changes.
+      if (!this.state.accountAddress) {
+        this.connectWallet();
+        return;
+      }
 
+      this.network.initNetwork(id);
       if (!this.network.isFine(id)) {
         if (!id) toast.error(`Check your network connection`);
         return this.setState({
@@ -490,10 +495,6 @@ class Web3Provider extends React.PureComponent {
       }
 
       this.web3 = new Web3(provider);
-      let chainId = await this.web3.eth.getChainId();
-      if (chainId) {
-        this.setChain(chainId);
-      }
 
       // Set account address
       const accountAddress = (
@@ -503,6 +504,13 @@ class Web3Provider extends React.PureComponent {
 
       if (!accountAddress) {
         throw new Error('No accounts connected');
+      }
+
+      // Set the chain id after an account address setted
+      // because the address maybe empty.
+      let chainId = await this.web3.eth.getChainId();
+      if (chainId) {
+        this.setChain(chainId);
       }
 
       this.walletConnectorStorage().set(connector);
