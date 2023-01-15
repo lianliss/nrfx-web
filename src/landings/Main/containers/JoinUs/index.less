@@ -1,0 +1,86 @@
+.MainLanding-join-us {
+  padding: 60px 30px 59px 52px;
+  box-sizing: border-box;
+  gap: 38px 10px;
+  border-radius: 30px;
+  background: linear-gradient(198.49deg, #e5e9f4 12.53%, #f2f6ff 95.91%),
+    #e5e9f4;
+
+  &__wrapper {
+    &:not(:last-child) {
+      margin-bottom: 150px;
+    }
+  }
+
+  &__content {
+    height: auto;
+  }
+
+  h2 {
+    margin-bottom: 6px;
+  }
+
+  &__text {
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 160%;
+    color: var(--gunmetal);
+    opacity: 0.6;
+  }
+
+  &__buttons {
+    margin-top: auto;
+    gap: 10px;
+  }
+
+  .MainLanding-SocialLinks {
+    margin: 20px 0;
+  }
+
+  .MainLanding-SuggestiveBox {
+    &__title {
+      width: 137px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .MainLanding-JoinUsCards__showIn {
+    width: 100%;
+  }
+  .MainLanding-JoinUsCards {
+    flex-wrap: wrap;
+  }
+  .MainLanding-JoinUsCard {
+    flex: 1 1 300px;
+  }
+}
+
+.adaptive .MainLanding-join-us {
+  padding: 50px 34px 60px;
+
+  &__wrapper {
+    &:not(:last-child) {
+      margin-bottom: 80px;
+    }
+  }
+
+  h2 {
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .MainLanding-SocialLinks {
+    margin: 25px 0 30px;
+  }
+
+  &__buttons {
+    margin-top: 54px;
+  }
+}

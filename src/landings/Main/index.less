@@ -1,0 +1,23 @@
+.MainLanding {
+  h2 {
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 114%;
+  }
+
+  &-promo:not(:last-child) {
+    margin-bottom: 150px;
+  }
+}
+
+.adaptive {
+  .MainLanding {
+    &-promo:not(:last-child) {
+      margin-bottom: 51px;
+    }
+
+    h2 {
+      font-size: 34px;
+    }
+  }
+}

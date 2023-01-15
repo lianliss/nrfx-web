@@ -2,19 +2,20 @@ import React from 'react';
 
 import './Roadmap.less';
 
-import { getLang } from 'utils';
+import { getLang, classNames as cn } from 'utils';
 import SVG from 'utils/svg-wrap';
 import playIcon from '../../assets/play.svg';
 
-import { roadmapItems } from '../../constants/roadmap';
 import RoadmapModal from '../../components/Roadmap/Modal/RoadmapModal';
+import { types } from './constants/roadmapTypes';
 
-function Roadmap() {
+function Roadmap({ title = '', items = [], type = types.default }) {
   // Modal State.
   const [showModal, setShowModal] = React.useState(false);
   const [modalTasks, setModalTasks] = React.useState([]);
   const [currentModalNumber, setCurrentModalNumber] = React.useState();
   const [modalPosition, setModalPosition] = React.useState({ x: 0, y: 0 });
+  const [activeStep, setActiveStep] = React.useState(null);
 
   const openModal = (tasks, number, position) => {
     // Set Modal State.
@@ -31,35 +32,51 @@ function Roadmap() {
   };
 
   return (
-    <section className="Roadmap">
+    <section className={`Roadmap ${type}`}>
       <div className="Roadmap__container">
-        <h2 className="Roadmap__title">
-          {getLang('token_landing_roadmap_title')}
-        </h2>
+        <h2 className="Roadmap__title">{title}</h2>
         <div className="Roadmap__items">
-          {roadmapItems.map((item, key) => (
-            <div className="Roadmap__item step" key={key}>
-              <span className="step__number">
-                {getLang('token_landing_step')} {key + 1}
-              </span>
-              <span className="step__title">{getLang(item.title)}</span>
-              <div
-                className="step__modal-open"
-                onClick={(e) => {
-                  const x = e.pageX;
-                  const y = e.pageY;
+          {items.map((item, key) => {
+            const stepId = key + 1;
 
-                  // key + 1, for display "0" index step number to 1.
-                  openModal(item.tasks, key + 1, { x, y });
-                }}
+            return (
+              <div
+                className={cn('Roadmap__item', 'step', {
+                  active: activeStep === stepId && showModal,
+                })}
+                key={stepId}
               >
-                <span className="Roadmap__icon">
-                  <SVG src={playIcon} />
+                <span className="step__number">
+                  {getLang('token_landing_step')} {stepId}
                 </span>
-                <span>{getLang('tokne_landing_see_all')}</span>
+                <span className="step__title">{getLang(item.title)}</span>
+                <div
+                  className="step__modal-open"
+                  onClick={(e) => {
+                    const x = e.pageX;
+                    const y = e.pageY;
+
+                    openModal(item.tasks, stepId, { x, y });
+                    setActiveStep(stepId);
+                  }}
+                >
+                  {type === types.default && (
+                    <span className="Roadmap__icon">
+                      <SVG src={playIcon} />
+                    </span>
+                  )}
+                  <span>{getLang('tokne_landing_see_all')}</span>
+                  {type === types.medium && (
+                    <span className="Roadmap__icon">
+                      <SVG
+                        src={require('src/asset/24px/arrow_right_alt.svg')}
+                      />
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         {showModal && (
           <RoadmapModal

@@ -62,7 +62,7 @@ const networks = {
         decimals: 18,
         logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
       },
-      ...baseTokens,
+      ...baseTokens.filter(t => t.chainId === 56),
     ],
   },
   97: {

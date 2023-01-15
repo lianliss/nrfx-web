@@ -1,0 +1,257 @@
+.MainLanding-exchanger {
+  --container-radius: 45px;
+  background: #5078e6;
+  border-radius: var(--container-radius);
+  padding: 70px 41px;
+  min-height: 624px;
+  position: relative;
+  box-sizing: border-box;
+
+  &__wrapper {
+    &:not(:last-child) {
+      margin-bottom: 150px;
+    }
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    max-width: 400px;
+    color: #fff;
+  }
+
+  p {
+    margin-bottom: 211px;
+    max-width: 360px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 160%;
+    color: #fefefe;
+    opacity: 0.6;
+  }
+
+  &__button {
+    margin-right: 106px;
+    height: 77px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 19px;
+    background: transparent;
+    transition: opacity 0.1s;
+
+    &:hover {
+      opacity: 0.85;
+    }
+
+    &:active {
+      opacity: 0.75;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 31px;
+      width: 100%;
+      height: 100%;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 100%;
+      letter-spacing: -0.01em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .isvg {
+      display: flex;
+      margin-left: 59px;
+
+      path {
+        fill: #fff;
+      }
+    }
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+  }
+
+  .transactions-today {
+    &__title {
+      margin-bottom: 5px;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 114%;
+      color: #fff;
+    }
+
+    &__description {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 160%;
+      color: #fefefe;
+      display: flex;
+      align-items: center;
+
+      span {
+        opacity: 0.6;
+      }
+    }
+
+    &__marker {
+      width: 16px;
+      height: 16px;
+      position: relative;
+      margin-right: 9px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background: #fabe4c;
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(250, 190, 76, 0.2);
+      }
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .exchanger-backgrounds {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+
+    &__monitor {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--container-radius);
+      overflow: hidden;
+
+      .isvg {
+        position: absolute;
+        right: -1px;
+        bottom: -4px;
+        width: 45.95%;
+
+        @media screen and (max-width: 1300px) {
+          width: 50%;
+          right: -20%;
+        }
+      }
+
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    &__select-tokens {
+      position: absolute;
+      right: 390px;
+      bottom: -4px;
+      filter: drop-shadow(0px 34px 74px rgba(13, 40, 80, 0.26));
+
+      @media screen and (max-width: 1300px) {
+        display: none;
+      }
+    }
+
+    &__shadow {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      overflow: hidden;
+      border-radius: var(--container-radius);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 94px;
+        left: 39.15%;
+        background: #6ccaff;
+        filter: blur(242px);
+        width: 872px;
+        height: 872px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .MainLanding-SuggestiveBox {
+    position: absolute;
+    right: 38px;
+    bottom: 96px;
+    z-index: 3;
+  }
+}
+
+.adaptive .MainLanding-exchanger {
+  --container-radius: 35px;
+  padding: 53px 34px 340px;
+
+  p {
+    margin-bottom: 43px;
+    font-size: 16px;
+  }
+
+  &__button {
+    margin: 0 0 50px;
+
+    a {
+      padding: 0 29px;
+      text-align: left;
+    }
+
+    .isvg {
+      margin-left: 11px;
+    }
+  }
+
+  &__action {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .exchanger-backgrounds {
+    &__monitor--adaptive {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      max-width: 95%;
+
+      .isvg {
+        display: flex;
+      }
+
+      svg {
+        height: auto;
+      }
+    }
+
+    &__shadow {
+      &::after {
+        width: 379.58px;
+        height: 379.58px;
+        top: auto;
+        bottom: -56px;
+        left: -71px;
+      }
+    }
+  }
+}

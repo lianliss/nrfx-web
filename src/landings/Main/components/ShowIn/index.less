@@ -1,0 +1,49 @@
+.MainLanding-ShowIn {
+  pointer-events: none;
+
+  &.visible {
+    pointer-events: all;
+  }
+
+  &.opacity {
+    transition: opacity 1s;
+
+    &:not(.visible) {
+      opacity: 0;
+    }
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  &.swipeHorizontal {
+    transition: transform 0.05s;
+  }
+
+  &.slideRight,
+  &.slideLeft,
+  &.slideTop,
+  &.slideBottom {
+    opacity: 0;
+    transition: transform 0.7s, opacity 0.7s;
+
+    &.visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  &.slideRight {
+    transform: translateX(-100%);
+  }
+  &.slideLeft {
+    transform: translateX(100%);
+  }
+  &.slideTop {
+    transform: translateY(100%);
+  }
+  &.slideBottom {
+    transform: translateY(-100%);
+  }
+}

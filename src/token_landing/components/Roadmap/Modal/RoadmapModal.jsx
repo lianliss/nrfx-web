@@ -9,10 +9,22 @@ function RoadmapModal({ svg, number, tasks, position, setShowModal }) {
     return null;
   }
 
+  const [styles, setStyles] = React.useState({});
   const modalRef = React.useRef(null);
+
+  const modalWidth = 207;
+  const { x, y } = position;
+  const left = x + modalWidth > window.screen.width ? x - modalWidth : x;
 
   React.useEffect(() => {
     document.addEventListener('mousedown', handleClickOutSide);
+
+    setStyles({
+      // Set Modal positions
+      width: modalWidth,
+      top: y - (modalRef.current?.offsetHeight || 235),
+      left,
+    });
 
     return function removeListeners() {
       document.removeEventListener('mousedown', handleClickOutSide);
@@ -23,17 +35,6 @@ function RoadmapModal({ svg, number, tasks, position, setShowModal }) {
     if (e.target !== modalRef.current) {
       setShowModal(false);
     }
-  };
-
-  const modalWidth = 207;
-  const { x, y } = position;
-  const left = x + modalWidth > window.screen.width ? x - modalWidth : x;
-
-  const styles = {
-    // Set Modal positions
-    width: modalWidth,
-    top: y - 235,
-    left,
   };
 
   return (

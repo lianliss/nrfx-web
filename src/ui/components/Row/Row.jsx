@@ -12,11 +12,12 @@ function Row({
   alignItems,
   justifyContent,
   wrap,
+  wrapAnyway,
   onClick,
 }) {
   return (
     <div
-      className={cn('Row', { [className]: className })}
+      className={cn('Row', { [className]: className, wrapAnyway })}
       style={{ alignItems, justifyContent, flexWrap: wrap ? 'wrap' : 'nowrap' }}
       onClick={onClick}
     >
@@ -34,7 +35,7 @@ Row.propTypes = {
     'flex-end',
     'space-between',
     'space-around',
-    'stretch'
+    'stretch',
   ]),
   wrap: PropTypes.bool,
   onClick: PropTypes.func,

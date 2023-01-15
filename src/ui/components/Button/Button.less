@@ -19,6 +19,7 @@
   overflow: hidden;
   user-select: none;
   box-sizing: border-box;
+  text-decoration: none !important;
   z-index: 0;
 
   &.buy,
@@ -274,6 +275,26 @@
     }
   }
 
+  &.secondary-lightBlue {
+    background: none;
+    transition: all 0.1s;
+    border: 2px solid rgba(80, 120, 230, 0.25);
+
+    &:hover {
+      background: rgba(229, 235, 252, 0.5);
+      opacity: 0.92;
+      box-shadow: 0 4px 8px rgba(229, 235, 252, 0.5);
+    }
+
+    &:active {
+      opacity: 0.85;
+    }
+
+    .Button__label {
+      color: var(--royal-blue);
+    }
+  }
+
   &.secondary-alice {
     background: var(--alice-blue);
     transition: all 0.1s;
@@ -349,6 +370,7 @@
   &.secondary-alice,
   &.gray,
   &.lightBlue,
+  &.secondary-lightBlue,
   &.green-light {
     .Button__label {
       display: flex;
@@ -421,8 +443,8 @@
 
   .Button.middle & {
     font-weight: 600;
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 14px;
   }
 }
 
