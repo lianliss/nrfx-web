@@ -316,7 +316,7 @@ function Exchanger(props) {
           (t) => t.symbol !== initGetParams.params.fiat
         )
     );
-  }, [coins]);
+  }, [chainId]);
 
   // Set initial fiat
   React.useEffect(() => {
