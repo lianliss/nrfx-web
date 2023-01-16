@@ -14,7 +14,7 @@ import CabinetModal from '../../../CabinetModal/CabinetModal';
 import {setInvoice} from "src/actions/dapp/wallet";
 
 // Utils
-import { getLang, classNames as cn } from 'src/utils';
+import { getLang } from 'src/utils';
 import router from 'src/router';
 import * as actions from 'src/actions';
 import * as toasts from 'src/actions/toasts';
@@ -22,6 +22,7 @@ import { fiatSelector, adaptiveSelector } from 'src/selectors';
 import { closeModal } from 'src/actions';
 import wei from 'src/utils/wei';
 import getFinePrice from 'src/utils/get-fine-price';
+import KNOWN_FIATS from 'src/index/constants/knownFiats';
 
 // Styles
 import './Balance.less';
@@ -109,19 +110,26 @@ function Balance(props) {
   );
   const [amount, setAmount] = useState(null);
   const [touched, setTouched] = useState(null);
-  const [availableMerchants, setAvailableMerchants] = useState([]);
   const fiatState = useSelector(fiatSelector);
 
-  const checkAmount = (value = amount) => {
+  // Get min and max amounts
+  // of the banks.
+  const getAmounts = (currency = currency) => {
+    if (!_.isString(currency)) return;
+
     const anyBank = banks.find((b) =>
       _.includes(b.currencies, currency.toUpperCase())
     );
-    const minAmount = withdrawBanks.length
-      ? withdrawBanks[0].min
-      : _.get(anyBank, 'minAmount', 100);
-    const maxAmount = withdrawBanks.length
-      ? withdrawBanks[0].max
-      : _.get(anyBank, 'maxAmount', 150000);
+
+    const minAmount = _.get(anyBank, 'minAmount', 100);
+    const maxAmount = _.get(anyBank, 'maxAmount', 150000);
+
+    return { minAmount, maxAmount };
+  }
+
+  const checkAmount = (value = amount) => {
+    const { minAmount, maxAmount } = getAmounts(currency);
+
     const currencyLabel = currency.toUpperCase();
     if (value < minAmount) {
       return (
@@ -189,6 +197,18 @@ function Balance(props) {
     if (!value || checkAmount(value)) return false;
   };
 
+  // get amounts of the KNOWN_FIATS.
+  const getAllAmounts = () => {
+    const allAmounts = KNOWN_FIATS.map((fiat) => {
+      const { symbol } = fiat;
+      const { minAmount, maxAmount } = getAmounts(symbol);
+
+      return { minAmount, maxAmount, symbol };
+    });
+
+    return allAmounts;
+  }
+
   const renderForm = () => {
     // const currencyInfo = actions.getCurrencyInfo(currency);
     // const { fee, percent_fee, min_fee } = getFee();
@@ -206,16 +226,7 @@ function Balance(props) {
       }
     }
     
-    const anyBank = banks.find((b) =>
-      _.includes(b.currencies, currency.toUpperCase())
-    );
-  
-    const minAmount = withdrawBanks.length
-      ? withdrawBanks[0].min
-      : _.get(anyBank, 'minAmount', 100);
-    const maxAmount = withdrawBanks.length
-      ? withdrawBanks[0].max
-      : _.get(anyBank, 'maxAmount', 150000);
+    const { minAmount, maxAmount } = getAmounts(currency);
 
     const fiatBalance = wei.from(_.get(fiatSelected, 'balance', '0'));
     const isWithdrawAvailable = amount && amount <= fiatBalance;
