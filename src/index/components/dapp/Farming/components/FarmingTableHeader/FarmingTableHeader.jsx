@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SwitchTabs, Search } from 'src/ui';
-import Select from 'src/index/components/dapp/Select/Select';
+import { Select } from 'dapp';
 import { getLang } from 'utils';
 
 // Styles

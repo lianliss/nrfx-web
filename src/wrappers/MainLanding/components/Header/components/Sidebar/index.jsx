@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // Components
 import Navbar from '../Navbar';
-import Select from 'src/index/components/dapp/Select/Select';
+import Select from 'src/index/components/dapp/Select';
 import { CustomButton } from 'dapp';
 import { Button, Row } from 'ui';
 import SVG from 'utils/svg-wrap';

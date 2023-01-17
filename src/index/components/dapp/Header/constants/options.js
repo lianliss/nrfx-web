@@ -1,5 +1,7 @@
 import * as chains from 'src/services/multichain/chains';
-import { option } from '../../Select/Select';
+import Select from '../../Select';
+
+const { option } = Select;
 
 export const cryptoOptions = [
   option(
@@ -19,8 +21,9 @@ export const cryptoOptions = [
   ),
 ];
 
-export const defaultValue = (value) => option(
-  'Unsupported',
-  value,
-  require('src/asset/icons/cabinet/question-icon.svg').default
-);
+export const defaultValue = (value) =>
+  option(
+    'Unsupported',
+    value,
+    require('src/asset/icons/cabinet/question-icon.svg').default
+  );

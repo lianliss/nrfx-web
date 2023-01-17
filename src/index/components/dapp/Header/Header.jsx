@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import router from 'src/router';
 
-import Select from '../Select/Select';
+import Select from '../Select';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
