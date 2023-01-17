@@ -35,12 +35,12 @@ module.exports = [
     logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
   },
   {
-    name: "Tether",
-    symbol: "USDT",
-    address: "0x55d398326f99059fF775485246999027B3197955",
+    name: "USD Coin",
+    symbol: "USDC",
+    address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
     chainId: 56,
     decimals: 18,
-    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
   },
   {
     name: "PancakeSwap",

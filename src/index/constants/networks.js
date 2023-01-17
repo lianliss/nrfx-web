@@ -10,7 +10,7 @@ const networks = {
     tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
     saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
     fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
-    exchangerRouter: '0xF1211F8b7235EE6d1AC0989a781b44540a0dC5Ef',
+    exchangerRouter: '0x9af372bEAfe51bD4920110834187DFB3679F150E',
     narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
     wrapBNB: {
       name: "Wrapped BNB",
@@ -36,6 +36,14 @@ const networks = {
       decimals: 18,
       logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
     },
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      chainId: 56,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
     poolsList: ["0xe38004a2124abe97f972b2af12e888962fae464b","0x4f191eff08dd7074f3a6584c2024290968ba94db"],
     tokens: [
       {
@@ -53,6 +61,14 @@ const networks = {
         chainId: 56,
         decimals: 18,
         logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+      },
+      {
+        name: "USD Coin",
+        symbol: "USDC",
+        address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+        chainId: 56,
+        decimals: 18,
+        logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
       },
       {
         name: "Binance Coin",
