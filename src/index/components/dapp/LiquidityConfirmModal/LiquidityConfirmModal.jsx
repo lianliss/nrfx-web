@@ -48,11 +48,13 @@ function LiquidityConfirmModal(props) {
   const {
     getReserves,
     transaction, getTransactionReceipt,
-    routerAddress, web3,
-    accountAddress, wrapBNB, bnb,
+    network, web3,
+    accountAddress, bnb,
     getBSCScanLink,
     addTokenToWallet,
   } = context;
+  const { wrapBNB } = network.tokens;
+  const { routerAddress } = network.contractAddresses;
   const dispatch = useDispatch();
   const [pair, setPair] = React.useState(null);
   const adaptive = useSelector((store) => store.default.adaptive);

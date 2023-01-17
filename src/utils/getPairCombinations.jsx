@@ -7,12 +7,12 @@ import _ from 'lodash';
  * @param token1 {object}
  * @returns {Array} - pairs
  */
-const getAllPairsCombinations = (token0, token1) => {
+const getAllPairsCombinations = (token0, token1, chainId = 56) => {
 
   let tokens = _.uniqBy([
     token0,
     token1,
-    ...baseTokens
+    ...baseTokens.filter(t => t.chainId === chainId)
   ], 'address');
 
   const pairs = [];

@@ -6,9 +6,9 @@ import wei from 'utils/wei';
 import wait from 'utils/wait';
 import _ from 'lodash';
 import axios from 'axios';
-import networks from 'src/index/constants/networks';
+import Network from './multichain/Network';
 import getAllPairsCombinations from 'utils/getPairCombinations';
-import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
+import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@narfex/sdk';
 import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { keccak256, pack } from '@ethersproject/solidity';
 import significant from 'utils/significant';
@@ -28,6 +28,8 @@ import * as CONNECTORS from './multiwallets/connectors';
 import { marketCoins } from 'src/services/coingeckoApi';
 import { getTokenFromSymbol } from "./web3Provider/utils";
 import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
+import { CHAIN_TOKENS } from "./multichain/initialTokens";
+import { DEFAULT_CHAIN } from "./multichain/chains";
 
 export const Web3Context = React.createContext();
 
@@ -39,21 +41,24 @@ const AWAITING_DELAY = 2000;
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 class Web3Provider extends React.PureComponent {
+  network = new Network(DEFAULT_CHAIN, this);
 
   state = {
     isConnected: false,
     wallet: null,
     accountAddress: null,
     balancesRequested: null,
+    balancesChain: null,
     blocksPerSecond: 0,
     balances: {
       tokens: [],
       fiats: []
     },
     chainId: null,
-    tokens: networks[56].tokens,
+    tokens: this.network.displayTokens,
+    tokensChain: null,
     pools: null,
-    poolsList: networks[56].poolsList,
+    poolsList: [],
     prices: {},
     fiats: {},
     connector: CONNECTORS.METAMASK
@@ -62,14 +67,6 @@ class Web3Provider extends React.PureComponent {
   ethereum = null;
   //providerAddress = 'https://bsc-dataseed1.defibit.io:443';
   //providerAddress = 'https://bsc-testnet.web3api.com/v1/KBR2FY9IJ2IXESQMQ45X76BNWDAW2TT3Z3';
-  providerAddress = 'asd';
-  factoryAddress = networks[56].factoryAddress;
-  routerAddress = networks[56].providerAddress;
-  tokenSale = networks[56].tokenSale;
-  saleFactory = networks[56].saleFactory;
-  fiatFactory = networks[56].fiatFactory;
-  wrapBNB = networks[56].wrapBNB;
-  exchangerRouter = networks[56].exchangerRouter;
   web3 = null;
   web3Host = null;
   farm = null;
@@ -106,7 +103,7 @@ class Web3Provider extends React.PureComponent {
     this._mounted = true;
 
     const provider = new Web3.providers.HttpProvider(
-      this.providerAddress
+      this.network.contractAddresses.providerAddress
     );
     this.web3Host = new Web3(provider);
 
@@ -114,7 +111,7 @@ class Web3Provider extends React.PureComponent {
     this.checkConnection();
 
     // Get tokens list
-    this.getTokens();
+    this.getTokens(DEFAULT_CHAIN);
   }
 
   async checkConnection() {
@@ -146,7 +143,7 @@ class Web3Provider extends React.PureComponent {
    * @returns {Token}
    */
   getToken(_token) {
-    const token = _token.address ? _token : this.wrapBNB;
+    const token = _token.address ? _token : this.network.wrapToken;
     return new Token(
       token.chainId,
       token.address,
@@ -178,8 +175,8 @@ class Web3Provider extends React.PureComponent {
    * @returns {string}
    */
   getPairAddress(_token0, _token1) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
+    const token0 = _token0.address ? _token0 : this.network.wrapToken;
+    const token1 = _token1.address ? _token1 : this.network.wrapToken;
     
     let first;
     let second;
@@ -192,13 +189,12 @@ class Web3Provider extends React.PureComponent {
       second = token0;
     }
   
-    const network = networks[token0.chainId];
     return getCreate2Address(
-      network.factoryAddress,
+      this.network.contractAddresses.factoryAddress,
       keccak256(
         ['bytes'],
         [pack(['address', 'address'], [first.address, second.address])]),
-      network.factoryInitCodeHash);
+      this.network.contractAddresses.factoryInitCodeHash);
   }
 
   /**
@@ -208,11 +204,11 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<void>}
    */
   async getPairs(_token0, _token1) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
+    const token0 = _token0.address ? _token0 : this.network.wrapToken;
+    const token1 = _token1.address ? _token1 : this.network.wrapToken;
 
     // Get all possible pairs combinations
-    const combinations = getAllPairsCombinations(token0, token1);
+    const combinations = getAllPairsCombinations(token0, token1, this.state.chainId);
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair
@@ -265,6 +261,18 @@ class Web3Provider extends React.PureComponent {
           : this.getTokenAmount(token1, amount),
         {maxNumResults: 1, maxHops: hops}
       ), '[0]');
+      console.log('trade', {
+        trade, pairs, token0, token1, amount, isExactIn, maxHops
+      }, tradeMethod(
+        pairs,
+        isExactIn
+          ? this.getTokenAmount(token0, amount)
+          : this.getToken(token0),
+        isExactIn
+          ? this.getToken(token1)
+          : this.getTokenAmount(token1, amount),
+        {maxNumResults: 1, maxHops: hops}
+      ));
       // Set the best trade
       if (hops === 1 || this.isTradeBetter(bestTrade, trade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
         bestTrade = trade;
@@ -356,25 +364,39 @@ class Web3Provider extends React.PureComponent {
    */
   setChain(id) {
     try {
-      if (!networks[id]) {
+      // A wallet maybe disconnected when the chain id changes.
+      if (!this.state.accountAddress) {
+        this.connectWallet();
+        return;
+      }
+
+      this.network.initNetwork(id);
+      if (!this.network.isFine(id)) {
         if (!id) toast.error(`Check your network connection`);
         return this.setState({
           chainId: id,
-        })
+        });
       }
-      Object.assign(this, networks[id]);
+
+      this.cmcTokens = undefined;
+      this.tokens = this.network.displayTokens;
+
+      // Object.assign(this, network);
       this.farm = this.getFarmContract();
       this.pairs = {};
       if (this.state.chainId !== id) {
         toast.success(`Selected network is #${id}`);
       }
       this.setState({
-        tokens: networks[id].tokens,
-        poolsList: networks[id].poolsList,
+        tokens: this.network.displayTokens,
+        poolsList: this.network.poolsList,
         chainId: id,
       });
       this.getBlocksPerSecond();
-      if (id === 56) {
+      if (
+        this.network.mainnet &&
+        this.state.tokensChain !== this.network.chainId
+      ) {
         this.getTokens();
       }
     } catch (error) {
@@ -490,10 +512,6 @@ class Web3Provider extends React.PureComponent {
       }
 
       this.web3 = new Web3(provider);
-      let chainId = await this.web3.eth.getChainId();
-      if (chainId) {
-        this.setChain(chainId);
-      }
 
       // Set account address
       const accountAddress = (
@@ -505,6 +523,13 @@ class Web3Provider extends React.PureComponent {
         throw new Error('No accounts connected');
       }
 
+      // Set the chain id after an account address setted
+      // because the address maybe empty.
+      let chainId = await this.web3.eth.getChainId();
+      if (chainId) {
+        this.setChain(chainId);
+      }
+
       this.walletConnectorStorage().set(connector);
 
       if (!chainId) {
@@ -514,7 +539,6 @@ class Web3Provider extends React.PureComponent {
 
       // Set provider state
       if (!this._mounted) return;
-      this.getTokens();
       this.setState({
         isConnected: true,
         accountAddress,
@@ -537,13 +561,14 @@ class Web3Provider extends React.PureComponent {
   async logout() {
     this.setBalances([], 'clear');
     this.setState({
-      tokens: [],
+      tokens: this.network.displayTokens,
       isConnected: false,
       accountAddress: null,
       chainId: null,
     });
 
     // Clear default wallet connection.
+    this.cmcTokens = undefined;
     this.walletConnectorStorage().clear();
     this.getTokens();
 
@@ -571,20 +596,25 @@ class Web3Provider extends React.PureComponent {
     // Returns boolean if token is fine.
     const fineToken = (t) => {
       return !!(
-        t.chainId === this.state.chainId &&
+        t.chainId === this.network.chainId &&
         !incorrectAddresses.find((address) => address === t.address)
       );
     };
 
     try {
       let tokens = this.cmcTokens;
+      this.setState({
+        tokensChain: this.network.chainId,
+      });
+
       if (!tokens) {
-        const request = await axios.get('https://tokens.pancakeswap.finance/cmc.json');
-        tokens = request.data.tokens;
+        const tokenListURI = this.network.tokenListURI;
+        const request = tokenListURI && await axios.get(tokenListURI);
+        tokens = _.get(request, 'data.tokens');
         this.cmcTokens = tokens;
       }
 
-      if (this.state.chainId !== 56) return [];
+      if (!this.network.mainnet) return [];
       if (!this._mounted) return;
       const result = _.uniqBy([
         ...this.state.tokens,
@@ -613,8 +643,8 @@ class Web3Provider extends React.PureComponent {
     let pairAddress;
     if (_token1) {
       // If tokens passed
-      token0 = _token0.address ? _token0 : this.wrapBNB;
-      token1 = _token1.address ? _token1 : this.wrapBNB;
+      token0 = _token0.address ? _token0 : this.network.wrapToken;
+      token1 = _token1.address ? _token1 : this.network.wrapToken;
       pairAddress = this.getPairAddress(token0, token1).toLowerCase();
     } else {
       // If only pair passed
@@ -700,8 +730,8 @@ class Web3Provider extends React.PureComponent {
    * @returns {Promise.<number>}
    */
   async getTokensRelativePrice(_token0, _token1, amount = 1, isAmountIn = false) {
-    const token0 = _token0.address ? _token0 : this.wrapBNB;
-    const token1 = _token1.address ? _token1 : this.wrapBNB;
+    const token0 = _token0.address ? _token0 : this.network.wrapToken;
+    const token1 = _token1.address ? _token1 : this.network.wrapToken;
 
     try {
       const {toBN} = this;
@@ -712,7 +742,7 @@ class Web3Provider extends React.PureComponent {
       // Get token0 address and decimals value from the pair
       const routerContract = new (this.getWeb3().eth.Contract)(
         require('src/index/constants/ABI/PancakeRouter'),
-        this.routerAddress,
+        this.network.contractAddresses.routerAddress,
       );
 
       const getMethod = isAmountIn
@@ -883,9 +913,13 @@ class Web3Provider extends React.PureComponent {
 
       if (!this.state.isConnected) return;
       // Stop additional loads
-      if (this.state.balancesRequested === accountAddress) return;
+      if (
+        this.state.balancesRequested === accountAddress &&
+        this.state.balancesChain === this.state.chainId
+      ) return;
       this.setState({
         balancesRequested: accountAddress,
+        balancesChain: this.state.chainId,
       });
 
       // Clear tokens balances
@@ -901,7 +935,7 @@ class Web3Provider extends React.PureComponent {
         ? choosenTokens.filter(tokenIsFine)
         : this.state.tokens.filter(tokenIsFine);
 
-      await this.setBNBBalance();
+      await this.setChainTokenBalance();
 
       const oneChunkNumber = 256;
       const chunks = _.chunk(tokens, oneChunkNumber);
@@ -959,34 +993,32 @@ class Web3Provider extends React.PureComponent {
 
   fractionToHex = (fraction, decimals) => this.getWeb3().utils.toHex(wei.to(significant(fraction), decimals));
   
-  // Set BNB balance to balances and tokens.
-  async setBNBBalance() {
+  // Set chain token balance to balances and tokens.
+  async setChainTokenBalance() {
     try {
-      // Get BNB balance
-      const bnbBalance = await new this.web3.eth.getBalance(
+      // Get Chain token balance
+      let chainToken = CHAIN_TOKENS[this.network.chainId];
+      const chainTokenBalance = await new this.web3.eth.getBalance(
         this.state.accountAddress
       );
 
-      if (bnbBalance === '0') return false;
+      if (chainTokenBalance === '0') return false;
+      const chainTokenPrice = await this.getTokenUSDPrice(chainToken);
 
-      const bnbPrice = await this.getTokenUSDPrice(
-        this.state.tokens.find((t) => t.symbol === 'BNB')
-      );
-
-      // Set bnb balance to state.
+      // Set chain token balance to state.
       this.setState((state) => {
         const tokens = state.tokens.map((token) => {
-          if (token.symbol === 'BNB') {
+          if (token.symbol === chainToken.symbol) {
             // Token with balance and price.
             const tokenWithBalance = {
               ...token,
-              balance: bnbBalance,
-              price: bnbPrice,
+              balance: chainTokenBalance,
+              price: chainTokenPrice || 0,
             };
 
             return tokenWithBalance;
           }
-
+          
           return token;
         });
 
@@ -994,14 +1026,14 @@ class Web3Provider extends React.PureComponent {
       });
 
       this.setBalances((tokens) => {
-        const bnbToken = this.state.tokens.find(t => t.symbol === 'BNB');
+        chainToken = this.state.tokens.find(t => t.symbol === chainToken.symbol);
 
-        return [...tokens, bnbToken];
+        return [...tokens, chainToken];
       }, 'tokens');
 
       return true;
     } catch (error) {
-      console.log('[setBNBBalance]', error);
+      console.log('[setChainTokenBalance]', error);
       return false;
     }
   }
@@ -1041,7 +1073,7 @@ class Web3Provider extends React.PureComponent {
     const {web3} = this;
     const routerContract = new (this.getWeb3().eth.Contract)(
       require('src/index/constants/ABI/PancakeRouter'),
-      this.routerAddress,
+      this.network.contractAddresses.routerAddress,
     );
     const isFromBNB = !_.get(pair, '[0].address');
     const isToBNB = !_.get(pair, '[1].address');
@@ -1393,7 +1425,7 @@ class Web3Provider extends React.PureComponent {
       if (!list.length) {
         const factoryContract = new (this.getWeb3().eth.Contract)(
           require('src/index/constants/ABI/fiatFactory'),
-          this.fiatFactory,
+          this.network.contractAddresses.fiatFactory,
         );
         list = await factoryContract.methods.getFiats().call();
         fiats.list = list;
@@ -1836,18 +1868,21 @@ class Web3Provider extends React.PureComponent {
     // const amount = accountBalance < wei.to(value)
     //   ? accountBalance
     //   : wei.to(value);
-    if(token.symbol === 'BNB') {
+    if(token.symbol === this.network.wrapToken.symbol) {
       const gasPrice = await this.web3.eth.getGasPrice();
       const latestBlock = await this.web3.eth.getBlock('latest');
       const gasLimit = latestBlock.gasLimit;
 
+      // Web3 to hex for reuse
+      const { toHex } = this.web3.utils;
+
       const rawTransaction = {
-        gasPrice: this.web3.utils.toHex(gasPrice),
-        gasLimit: this.web3.utils.toHex(gasLimit),
+        gasPrice: toHex(gasPrice),
+        gasLimit: toHex(gasLimit),
         to: address,
         from: this.state.accountAddress,
-        value: this.web3.utils.toHex(amount),
-        chainId: '0x38',
+        value: toHex(amount),
+        chainId: toHex(this.state.chainId),
       };
 
       try {
@@ -1905,6 +1940,7 @@ class Web3Provider extends React.PureComponent {
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
       logout: this.logout.bind(this),
+      network: this.network,
       getPairAddress: this.getPairAddress.bind(this),
       getReserves: this.getReserves.bind(this),
       pairs: this.pairs,
@@ -1921,10 +1957,6 @@ class Web3Provider extends React.PureComponent {
       addTokenToWallet: this.addTokenToWallet.bind(this),
       swap: this.swap.bind(this),
       loadAccountBalances: this.loadAccountBalances.bind(this),
-      routerAddress: this.routerAddress,
-      tokenSale: this.tokenSale,
-      saleFactory: this.saleFactory,
-      exchangerRouter: this.exchangerRouter,
       estimateTransaction: this.estimateTransaction.bind(this),
       transaction: this.transaction.bind(this),
       farm: this.farm,
@@ -1942,7 +1974,6 @@ class Web3Provider extends React.PureComponent {
       getTokenAmount: this.getTokenAmount.bind(this),
       getSomeTimePricesPairMoralis: this.getSomeTimePricesPairMoralis.bind(this),
       bnb: this.bnb,
-      wrapBNB: this.wrapBNB,
       updateFiats: this.updateFiats.bind(this),
       getFiatsArray: this.getFiatsArray.bind(this),
       cardReserve: this.cardReserve.bind(this),

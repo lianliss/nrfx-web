@@ -72,7 +72,7 @@ function ExchangerSwap(props) {
   const {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
-    exchangerRouter, getTokenContract,
+    network, getTokenContract,
     accountAddress,
     getTokenBalance,
   } = context;
@@ -81,6 +81,7 @@ function ExchangerSwap(props) {
     setFiat, setCoin, reservation,
     setReservation, fiatsLoaded,
   } = props;
+  const { exchangerRouter } = network.contractAddresses;
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const [isSelectCoin, setIsSelectCoin] = React.useState(false);
   // Display rate

@@ -6,7 +6,6 @@ import * as actionTypes from "src/actions/actionTypes";
 import initGetParams from 'src/services/initialGetParams';
 import { useRoute } from 'react-router5';
 import router from 'src/router';
-import networks from 'src/index/constants/networks';
 
 // Components
 import CabinetContent from '../CabinetContent/CabinetContent';
@@ -47,36 +46,54 @@ function Exchanger(props) {
     fiats, chainId, accountAddress,
     web3, updateFiats, isConnected,
     tokens, loadAccountBalances, cmcTokens,
-    getTokens, getPairAddress,
+    getTokens, getPairAddress, network
   } = context;
 
   const [limits, setLimits] = React.useState([]);
   const [fiatSelected, setFiatSelected] = React.useState(null);
-  const [coinSelected, setCoinSelected] = React.useState(
-    tokens.find(t => t.symbol === initGetParams.params.coin) || tokens.find(t => t.symbol === 'NRFX')
-  );
+  const [coinSelected, setCoinSelected] = React.useState(null);
   const [fiatsLoaded, setFiatsLoaded] = React.useState(false);
   const fiatSymbol = _.get(fiatSelected, 'symbol');
   const coinSymbol = _.get(coinSelected, 'symbol');
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
 
   const userId = `${chainId}${accountAddress}`;
-  const defaultUSD = chainId === 97
-    ? {
+  let defaultUSD;
+  switch (chainId) {
+    case 97:
+      defaultUSD = {
         name: "Testnet United States Dollar",
         symbol: "USD",
         address: "0x6dBB65750a6BBE8A0CBD28257008C464bAbe4de6",
         chainId: 97,
         decimals: 18,
-        logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
-      }
-    : {
+        logoURI: "https://static.narfex.com/img/currencies/dollar.svg",
+        isFiat: true,
+      };
+      break;
+    case 1:
+      defaultUSD = {
+        name: "Russian Ruble on Narfex",
+        symbol: "RUB",
+        address: "0x5E11E947e69e8e6267e28C3db9425acd3AA4B489",
+        chainId: 1,
+        decimals: 6,
+        logoURI: "https://static.narfex.com/img/currencies/rubles.svg",
+        isFiat: true,
+      };
+      break;
+    case 56:
+    default:
+      defaultUSD = {
         name: "United States Dollar on Narfex",
         symbol: "USD",
         address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
         logoURI: "https://static.narfex.com/img/currencies/dollar.svg",
+        chainId: 56,
+        decimals: 18,
         isFiat: true,
       };
+  }
   const fiatTokens = _.get(fiats, userId, [defaultUSD]).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
@@ -92,13 +109,7 @@ function Exchanger(props) {
     ...binanceSymbols
   ];
   const coins = _.uniqBy(
-    (isConnected
-      ? tokens
-      : [
-        ...networks[56].tokens,
-        ...(cmcTokens || []),
-      ]
-    ),
+    tokens,
     'address',
   );
 
@@ -178,7 +189,6 @@ function Exchanger(props) {
   fiatsUpdate = () => {
     updateFiats().then(fiats => {
       const currencySymbol = router.getState().params.currency;
-
       if (!fiatSelected) {
         const initialCurrency = fiats[userId]
           .find(fiat => fiat.symbol === currencySymbol);
@@ -316,16 +326,41 @@ function Exchanger(props) {
   React.useEffect(() => {
     getBanks();
     getLimits();
-    if (!initialCurrencySymbol && !fiatSelected) {
-      const isUSD = (t) => t.symbol !== coinSelected?.symbol && t.symbol === 'USD';
-      const isFineFiat = (t) => t.symbol !== coinSelected?.symbol;
-
-      const allCoins = [...fiatTokens, ...coins];
-      const USDFromCoins = allCoins.find(isUSD);
-      const availableFiat = allCoins.find(isFineFiat);
-      setFiat(USDFromCoins || availableFiat);
-    }
   }, []);
+
+  // Set initial coin
+  React.useEffect(() => {
+    setCoin(
+      tokens.find((t) => t.symbol === initGetParams.params.coin) ||
+        [...network.displayTokens, ...tokens].find(
+          (t) => t.symbol !== initGetParams.params.fiat
+        )
+    );
+  }, [chainId]);
+
+  // Set initial fiat
+  React.useEffect(() => {
+    if (fiatSelected) return;
+
+    const isUSD = (t) => t.symbol !== coinSelected?.symbol && t.symbol === 'USD';
+    const isFineFiat = (t) => t.symbol !== coinSelected?.symbol;
+    const isInitialFiat = (t) => t.symbol === initialCurrencySymbol;
+
+    const allCoins = [...fiatTokens, ...coins];
+    const USDFromCoins = allCoins.find(isUSD);
+    const availableFiat = allCoins.find(isFineFiat);
+
+    if (!initialCurrencySymbol) {
+      setFiat(USDFromCoins || availableFiat);
+
+      return;
+    }
+
+    if (!isConnected && initialCurrencySymbol) {
+      const initialFiat = allCoins.find(isInitialFiat);
+      setFiat(initialFiat || availableFiat);
+    }
+  }, [fiats]);
 
   return (
     <CabinetContent className="Exchanger__wrap">

@@ -25,8 +25,9 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
   const context = React.useContext(Web3Context);
   const {
     getPairAddress, getReserves, getTokenBalance, getTokenContract,
-    routerAddress, tokens,
+    network, tokens,
   } = context;
+  const { routerAddress } = network.contractAddresses;
 
   const [isImport, setIsImport] = React.useState(type === 'import');
 

@@ -77,7 +77,7 @@ class PrivatePools extends React.PureComponent {
   };
 
   loadPoolData = async () => {
-    const {getContract, accountAddress, tokenSale} = this.context;
+    const {getContract, accountAddress, network} = this.context;
     console.log('LOAD', `${STORAGE_POOL_KEY}-${this.chainId || 56}`);
     const poolAddress = _.get(window.localStorage, `${STORAGE_POOL_KEY}-${this.chainId || 56}`, this.state.poolAddress);
     if (!poolAddress || !poolAddress.length) return;
@@ -88,7 +88,7 @@ class PrivatePools extends React.PureComponent {
     );
     const saleContract = getContract(
       require('src/index/constants/ABI/TokenSale'),
-      tokenSale,
+      network.contractAddresses.tokenSale,
     );
 
     this.setState({isPoolLoading: true});
