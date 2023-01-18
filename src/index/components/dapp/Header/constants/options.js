@@ -1,7 +1,7 @@
 import * as chains from 'src/services/multichain/chains';
-import Select from '../../Select';
+import { BottomSheetSelect } from '../../Select';
 
-const { option } = Select;
+const { option } = BottomSheetSelect;
 
 export const cryptoOptions = [
   option(

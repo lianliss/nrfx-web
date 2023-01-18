@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import router from 'src/router';
 
-import Select from '../Select';
+import { BottomSheetSelect } from '../Select';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
@@ -252,18 +252,12 @@ const ChainSelect = React.memo(
       : options.cryptoOptions;
 
     return (
-      <Select
+      <BottomSheetSelect
         isSearchable={false}
         options={allOptions}
         value={isConnected ? chainId : network.chainId}
         defaultValue={defaultValue}
         onChange={handleCryptoChange}
-        components={{
-          DropdownIndicator,
-          IndicatorSeparator: null,
-        }}
-        className="CabinetSelect__network"
-        classNamePrefix="CabinetSelect"
         isDisabled={isConnected && connector !== connectors.METAMASK}
       />
     );

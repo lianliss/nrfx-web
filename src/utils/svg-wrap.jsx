@@ -15,6 +15,9 @@ export default (props) => {
         loading: !isLoaded,
         flex,
       })}
+      style={{
+        display: flex && 'flex',
+      }}
     >
       <InlineSVG
         {...svgProps}
