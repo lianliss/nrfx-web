@@ -80,7 +80,7 @@ function Exchanger({ ...props }) {
     }
     const token = getTokenContract(fiat);
     const router = network.contractAddresses.exchangerRouter;
-
+    
     token.getAllowance(router).then(allowance => {
       setAllowance(allowance);
       setIsProcess(false);
@@ -121,7 +121,6 @@ function Exchanger({ ...props }) {
         routerABI,
         network.contractAddresses.exchangerRouter,
       );
-      console.log('NETWORK', network);
       
       const isFromBNB = !path[0].address
         || path[0].address.toLowerCase() ===
