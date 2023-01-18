@@ -19,6 +19,96 @@ export const cryptoOptions = [
     chains.ETHEREUM_MAINNET,
     require('src/asset/cabinet/crypto/ethereum.svg').default
   ),
+  option(
+    'BSC',
+    chains.BSC_MAINNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'BSC Testnet',
+    chains.BSC_TESTNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'Ethereum',
+    chains.ETHEREUM_MAINNET,
+    require('src/asset/cabinet/crypto/ethereum.svg').default
+  ),
+  option(
+    'BSC',
+    chains.BSC_MAINNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'BSC Testnet',
+    chains.BSC_TESTNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'Ethereum',
+    chains.ETHEREUM_MAINNET,
+    require('src/asset/cabinet/crypto/ethereum.svg').default
+  ),
+  option(
+    'BSC',
+    chains.BSC_MAINNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'BSC Testnet',
+    chains.BSC_TESTNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'Ethereum',
+    chains.ETHEREUM_MAINNET,
+    require('src/asset/cabinet/crypto/ethereum.svg').default
+  ),
+  option(
+    'BSC',
+    chains.BSC_MAINNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'BSC Testnet',
+    chains.BSC_TESTNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'Ethereum',
+    chains.ETHEREUM_MAINNET,
+    require('src/asset/cabinet/crypto/ethereum.svg').default
+  ),
+  option(
+    'BSC',
+    chains.BSC_MAINNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'BSC Testnet',
+    chains.BSC_TESTNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'Ethereum',
+    chains.ETHEREUM_MAINNET,
+    require('src/asset/cabinet/crypto/ethereum.svg').default
+  ),
+  option(
+    'BSC',
+    chains.BSC_MAINNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'BSC Testnet',
+    chains.BSC_TESTNET,
+    require('src/asset/icons/wallets/bsc.svg').default
+  ),
+  option(
+    'Ethereum',
+    chains.ETHEREUM_MAINNET,
+    require('src/asset/cabinet/crypto/ethereum.svg').default
+  ),
 ];
 
 export const defaultValue = (value) =>

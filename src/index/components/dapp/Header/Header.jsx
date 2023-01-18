@@ -235,13 +235,13 @@ const DropdownIndicator = (props) => {
 const ChainSelect = React.memo(
   ({ isConnected, chainId, connector, switchToChain, network }) => {
     // Set current crypto
-    const handleCryptoChange = (id) => {
+    const handleCryptoChange = React.useCallback((id) => {
       if (isConnected) {
         switchToChain(id);
         return;
       }
       network.setChain(id);
-    };
+    }, []);
 
     const defaultValue = network.isFine(chainId)
       ? null
