@@ -1488,18 +1488,16 @@ class Web3Provider extends React.PureComponent {
    * @return {array}
    */
   getFiatsArray(rates) {
-    const userId = `${this.state.chainId}${this.state.accountAddress}`;
-    const fiatTokens = _.get(this.state.fiats, userId, [{
-      name: "United States Dollar on Narfex",
-      symbol: "USD",
-      address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
-      logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
-    }]).map(token => {
+    const chainId = this.state.chainId || 56;
+    const userId = `${chainId}${this.state.accountAddress}`;
+    return _.get(
+      this.state.fiats,
+      userId,
+      KNOWN_FIATS.filter(f => f.chainId === chainId)
+    ).map(token => {
       const price = _.get(rates, token.symbol.toLowerCase());
       return price ? {...token, price} : token;
     });
-
-    return fiatTokens;
   }
 
   async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams, additionalOptions = {}) {
@@ -1534,7 +1532,10 @@ class Web3Provider extends React.PureComponent {
           'nrfx-sign': signature,
           ...additionalHeaders,
         },
-        params,
+        params: {
+          ...params,
+          networkID: _.get(this.network, 'networkID', 'BSC'),
+        },
         ...additionalOptions,
       });
     } catch (error) {

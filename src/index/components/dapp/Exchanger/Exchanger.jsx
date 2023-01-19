@@ -232,7 +232,7 @@ function Exchanger(props) {
         });
       }
     } else {
-      web3Backend.getReservation(fiatSymbol, accountAddress)
+      web3Backend.getReservation(fiatSymbol, accountAddress, network.networkID)
         .then(data => {
           const res = data[0];
           if (!res) {
