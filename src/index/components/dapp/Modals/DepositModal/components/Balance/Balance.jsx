@@ -228,7 +228,7 @@ function Balance(props) {
     
     const { minAmount, maxAmount } = getAmounts(currency);
 
-    const fiatBalance = wei.from(_.get(fiatSelected, 'balance', '0'));
+    const fiatBalance = wei.from(_.get(fiatSelected, 'balance', '0'), _.get(fiatSelected, 'decimals', 18));
     const isWithdrawAvailable = amount && amount <= fiatBalance;
 
     const indicator = (
