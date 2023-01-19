@@ -110,6 +110,7 @@ function BottomSheetModal({ children, className, prefix, onClose, skipSwap }) {
       className={cn('BottomSheetModal-container', {
         [prefix + '-Bottom-container']: prefix,
       })}
+      onClick={(e) => e.stopPropagation()}
     >
       <div
         className={cn('BottomSheetModal__bg', {

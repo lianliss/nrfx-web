@@ -1,19 +1,92 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { classNames } from 'utils';
+import { useSelector } from 'react-redux';
 import { default as ReactSelect, components } from 'react-select';
 
 // Components
 import SVG from 'utils/svg-wrap';
 import CabinetScrollBlock from '../../../CabinetScrollBlock/CabinetScrollBlock';
+import { BottomSheetModal } from 'ui';
+
+// Utils
+import { adaptiveSelector } from 'src/selectors';
+import { classNames } from 'utils';
 
 // Styles
 import './index.less';
 
-const { DropdownIndicator, Menu, MenuList, Option } = components;
+const { Control, DropdownIndicator, Menu, MenuList, Option } = components;
 
 const BottomSheetSelect = React.memo(
   ({ options, value, onChange, className, ...props }) => {
+    const adaptive = useSelector(adaptiveSelector);
+    // const [isOpen, setIsOpen] = React.useState(false);
+
+    const styles = {
+      control: (base, state) => ({
+        ...base,
+        width: 150,
+        height: '100%',
+        backgroundColor: 'transparent',
+        borderSize: '1px',
+        borderStyle: 'solid',
+        borderColor: state.isFocused ? '#d7ddee' : '#dfe3f0',
+        borderRadius: 10,
+        boxShadow: 'none',
+
+        '&:hover': {
+          borderColor: '#d7ddee',
+        },
+      }),
+      singleValue: (base) => ({
+        ...base,
+      }),
+      dropdownIndicator: (base) => ({
+        ...base,
+        padding: '0 15px',
+      }),
+      menu: (base) => ({
+        ...base,
+        display: 'flex',
+        background: '#fff',
+        marginTop: 12,
+        boxShadow: '0px 25px 55px rgba(188, 188, 188, 0.25)',
+        borderRadius: '18px',
+        maxHeight: 195,
+      }),
+      menuList: (base) => ({
+        ...base,
+        padding: '0',
+        maxHeight: 156,
+      }),
+      option: (base, state) => ({
+        ...base,
+        padding: state.isSelected ? '8px 12px 8px 9px' : '7px 27.4px 9px 11px',
+        background:
+          state.isFocused || state.isSelected ? '#dce5fd' : 'transparent',
+      }),
+    };
+
+    const adaptiveStyles = {
+      ...styles,
+      control: (base, state) => ({
+        ...styles.control(base, state),
+        width: 63,
+      }),
+      menu: (base, state) => ({
+        ...styles.menu(base, state),
+        maxHeight: 225,
+        margin: 0,
+        position: 'static',
+        width: '100%',
+        borderRadius: '18px 18px 0px 0px',
+      }),
+      option: (base, state) => ({
+        ...styles.option(base, state),
+        padding: '12px 12px 12px 16px',
+      }),
+    };
+
     // Get object value of string from options.
     const getValue = (value, options) => {
       return value ? options.find((c) => c.value === value) : '';
@@ -25,12 +98,17 @@ const BottomSheetSelect = React.memo(
       onChange(newValue.value);
     };
 
+    // const handleMenuOpen = () => {}
+    // const handleMenuClose = () => {}
+
     return (
       <ReactSelect
         isSearchable={false}
         options={options}
         value={getValue(value, options)}
         onChange={handleChange}
+        // menuIsOpen={isOpen}
+        // onMenuOpen={() => }
         components={{
           IndicatorSeparator: null,
           DropdownIndicator: (props) => {
@@ -50,7 +128,7 @@ const BottomSheetSelect = React.memo(
               selectedOption = _.get(props.getValue(), '[0]', {});
             }
 
-            return (
+            const menu = (
               <Menu {...props}>
                 <div className="CabinetSelect-BottomSheet-menu__triangle" />
                 <div className="CabinetSelect-BottomSheet-menu__container">
@@ -61,6 +139,12 @@ const BottomSheetSelect = React.memo(
                 </div>
               </Menu>
             );
+
+            if (adaptive) {
+              return <BottomSheetModal skipSwap>{menu}</BottomSheetModal>;
+            }
+
+            return menu;
           },
           MenuList: ({ children, ...props }) => {
             const scrollContainerRef = React.useRef(null);
@@ -91,53 +175,7 @@ const BottomSheetSelect = React.memo(
         }}
         className={classNames('CabinetSelect-BottomSheet')}
         classNamePrefix="CabinetSelect-BottomSheet"
-        styles={{
-          control: (base, state) => ({
-            ...base,
-            width: 150,
-            height: '100%',
-            backgroundColor: 'transparent',
-            borderSize: '1px',
-            borderStyle: 'solid',
-            borderColor: state.isFocused ? '#d7ddee' : '#dfe3f0',
-            borderRadius: 10,
-            boxShadow: 'none',
-
-            '&:hover': {
-              borderColor: '#d7ddee',
-            },
-          }),
-          singleValue: (base) => ({
-            ...base,
-          }),
-          dropdownIndicator: (base) => ({
-            ...base,
-            padding: '0 15px',
-          }),
-          menu: (base) => ({
-            ...base,
-            display: 'flex',
-            background: '#fff',
-            marginTop: 12,
-            boxShadow: '0px 25px 55px rgba(188, 188, 188, 0.25)',
-            borderRadius: '18px',
-            maxHeight: 195,
-          }),
-          menuList: (base) => ({
-            ...base,
-            padding: '0',
-            maxHeight: 156,
-          }),
-          option: (base, state) => ({
-            ...base,
-            padding: state.isSelected
-              ? '8px 12px 8px 9px'
-              : '7px 27.4px 9px 11px',
-            background:
-              state.isFocused || state.isSelected ? '#dce5fd' : 'transparent',
-          }),
-        }}
-        menuIsOpen
+        styles={adaptive ? adaptiveStyles : styles}
         hideSelectedOptions
         {...props}
       />
