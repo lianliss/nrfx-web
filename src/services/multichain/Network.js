@@ -36,7 +36,7 @@ class Network {
     if (!this.provider) return;
 
     const providerChain = this.provider.state.chainId;
-    this.provider.setChain(id);
+    this.provider.setChain(id, false);
     this.provider.setState({ chainId: providerChain });
     this.initNetwork(id);
   }

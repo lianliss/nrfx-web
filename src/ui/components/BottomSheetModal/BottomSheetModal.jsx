@@ -5,7 +5,10 @@ import { useSwipeable } from 'react-swipeable';
 
 import './BottomSheetModal.less';
 
-function BottomSheetModal({ children, className, prefix, onClose, skipSwap }) {
+function BottomSheetModal(
+  { children, className, prefix, onClose, skipSwap },
+  ref
+) {
   // setup ref for your usage
   const modalRef = React.useRef(null);
   const usingPosition = 20; // 30%
@@ -88,12 +91,16 @@ function BottomSheetModal({ children, className, prefix, onClose, skipSwap }) {
     },
   });
 
+  const close = () => {
+    swipedPosition = usingPosition;
+    window.requestAnimationFrame(step);
+  };
+
   const outsideClickHandler = (e) => {
     e.preventDefault();
-    
+
     if (!modalRef.current.contains(e.target)) {
-      swipedPosition = usingPosition;
-      window.requestAnimationFrame(step);
+      close();
     }
   };
 
@@ -105,11 +112,16 @@ function BottomSheetModal({ children, className, prefix, onClose, skipSwap }) {
     modalRef.current = el;
   };
 
+  React.useImperativeHandle(ref, () => ({
+    close,
+  }));
+
   return (
     <div
       className={cn('BottomSheetModal-container', {
         [prefix + '-Bottom-container']: prefix,
       })}
+      onClick={(e) => e.stopPropagation()}
     >
       <div
         className={cn('BottomSheetModal__bg', {
@@ -147,4 +159,6 @@ BottomSheetModal.defaultProps = {
   skipSwap: false,
 };
 
-export default BottomSheetModal;
+const BottomSheetModalWrapper = React.forwardRef(BottomSheetModal);
+
+export default BottomSheetModalWrapper;
