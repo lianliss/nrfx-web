@@ -349,11 +349,13 @@ class Web3Provider extends React.PureComponent {
   /**
    * Switch to another chain
    * @param id {integer} chainID
+   * @param checkConnection {boolean} Check connection, if
+   *  a user has not connection, call to connectWallet.
    */
-  setChain(id) {
+  setChain(id, checkConnection = true) {
     try {
       // A wallet maybe disconnected when the chain id changes.
-      if (!this.state.accountAddress) {
+      if (!this.state.accountAddress && checkConnection) {
         this.connectWallet();
         return;
       }
