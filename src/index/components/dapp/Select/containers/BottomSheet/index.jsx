@@ -11,16 +11,18 @@ import { BottomSheetModal } from 'ui';
 // Utils
 import { adaptiveSelector } from 'src/selectors';
 import { classNames } from 'utils';
+import _ from 'lodash';
 
 // Styles
 import './index.less';
 
-const { Control, DropdownIndicator, Menu, MenuList, Option } = components;
+const { DropdownIndicator, Menu, MenuList, Option } = components;
 
 const BottomSheetSelect = React.memo(
   ({ options, value, onChange, className, ...props }) => {
     const adaptive = useSelector(adaptiveSelector);
-    // const [isOpen, setIsOpen] = React.useState(false);
+    const bottomSheetModalRef = React.useRef(null);
+    const [isOpen, setIsOpen] = React.useState(false);
 
     const styles = {
       control: (base, state) => ({
@@ -62,8 +64,14 @@ const BottomSheetSelect = React.memo(
       option: (base, state) => ({
         ...base,
         padding: state.isSelected ? '8px 12px 8px 9px' : '7px 27.4px 9px 11px',
-        background:
-          state.isFocused || state.isSelected ? '#dce5fd' : 'transparent',
+
+        '&:not(:hover)': {
+          background: state.isSelected ? '#dce5fd' : 'transparent',
+        },
+
+        '&:hover': {
+          background: '#dce5fd',
+        },
       }),
     };
 
@@ -72,6 +80,14 @@ const BottomSheetSelect = React.memo(
       control: (base, state) => ({
         ...styles.control(base, state),
         width: 63,
+
+        p: {
+          display: 'none',
+        },
+      }),
+      dropdownIndicator: (base, state) => ({
+        ...styles.dropdownIndicator(base, state),
+        padding: '0 10px',
       }),
       menu: (base, state) => ({
         ...styles.menu(base, state),
@@ -96,10 +112,27 @@ const BottomSheetSelect = React.memo(
     // -- Set value of string from object option.
     const handleChange = (newValue) => {
       onChange(newValue.value);
+      closeMenu();
     };
 
-    // const handleMenuOpen = () => {}
-    // const handleMenuClose = () => {}
+    const closeMenu = () => {
+      if (!adaptive) {
+        handleMenuClose();
+        return;
+      }
+
+      const closeBottomSheetModal = _.get(bottomSheetModalRef, 'current.close');
+      if (typeof closeBottomSheetModal === 'function') {
+        closeBottomSheetModal();
+      }
+    };
+
+    const handleMenuOpen = () => {
+      setIsOpen(true);
+    };
+    const handleMenuClose = () => {
+      setIsOpen(false);
+    };
 
     return (
       <ReactSelect
@@ -107,8 +140,9 @@ const BottomSheetSelect = React.memo(
         options={options}
         value={getValue(value, options)}
         onChange={handleChange}
-        // menuIsOpen={isOpen}
-        // onMenuOpen={() => }
+        menuIsOpen={isOpen}
+        onMenuOpen={handleMenuOpen}
+        onMenuClose={!adaptive && handleMenuClose}
         components={{
           IndicatorSeparator: null,
           DropdownIndicator: (props) => {
@@ -141,7 +175,15 @@ const BottomSheetSelect = React.memo(
             );
 
             if (adaptive) {
-              return <BottomSheetModal skipSwap>{menu}</BottomSheetModal>;
+              return (
+                <BottomSheetModal
+                  ref={bottomSheetModalRef}
+                  onClose={handleMenuClose}
+                  skipSwap
+                >
+                  {menu}
+                </BottomSheetModal>
+              );
             }
 
             return menu;
@@ -161,6 +203,7 @@ const BottomSheetSelect = React.memo(
                 <CabinetScrollBlock
                   style={{ height: scrollbarHeight, maxHeight: 156 }}
                   minimalThumbSize={30}
+                  removeTracksWhenNotUsed
                 >
                   <div
                     className="CabinetSelect-BottomSheet-menuList__container"
@@ -183,9 +226,24 @@ const BottomSheetSelect = React.memo(
   }
 );
 
-BottomSheetSelect.propTypes = {};
+BottomSheetSelect.propTypes = {
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.any,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })
+  ),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
+  className: PropTypes.string,
+};
 
-BottomSheetSelect.defaultProps = {};
+BottomSheetSelect.defaultProps = {
+  options: [],
+  value: 0,
+  onChange: () => {},
+  className: '',
+};
 
 // Return object for options constant
 BottomSheetSelect.option = (title, value, icon, showValue = false) => {
