@@ -1,13 +1,13 @@
 import wei from 'utils/wei';
 import _ from 'lodash';
 import NarfexOracleABI from 'src/index/constants/ABI/NarfexOracle';
-import networks from 'src/index/constants/networks';
+import Network from 'src/services/multichain/Network';
 import significant from 'utils/significant';
+import { DEFAULT_CHAIN } from '../multichain/chains';
 
 const wait = miliseconds => new Promise(fulfill => setTimeout(fulfill, miliseconds));
 
 class TokenContract {
-
   isAwaiting = false;
   pendingTimeout = 2000;
 
@@ -16,11 +16,13 @@ class TokenContract {
     this.provider = provider;
     this.web3 = provider.web3;
     this.ethereum = provider.ethereum;
+    this.chainId = provider.state.chainId;
+    this.network = new Network(this.chainId || DEFAULT_CHAIN);
 
     this.contract = new (this.web3.eth.Contract)(
       isPairContract
         ? require('src/index/constants/ABI/PancakePair')
-        : require('src/index/constants/ABI/Bep20Token'),
+        : this.network.tokenABI,
       this.address,
     );
   }
@@ -97,10 +99,9 @@ class TokenContract {
   
   _updateTokensData = async (tokens) => {
     try {
-      const network = networks[this.provider.state.chainId];
       const oracleContract = new (this.web3.eth.Contract)(
         NarfexOracleABI,
-        network.narfexOracle,
+        this.network.contractAddresses.narfexOracle,
       );
       const tokensData = (await oracleContract.methods.getTokensData(tokens.map(t => t.address), false).call())
         .map((tokenData, index) => {
@@ -108,7 +109,7 @@ class TokenContract {
         this.provider.oracleTokens[token.address] = Object.assign(
           this.provider.getTokenContract(token),
           {
-            price: wei.from(tokenData.price),
+            price: wei.from(tokenData.price, token.decimals),
             commission: wei.from(tokenData.commission, 4),
             transferFee: wei.from(tokenData.transferFee, 4),
             isFiat: tokenData.isFiat,
@@ -122,6 +123,9 @@ class TokenContract {
   _getFiatExchange = (token0, token1) => {
     const rate = token0.price / token1.price;
     const commission = (token0.commission + 1) * (token1.commission + 1) - 1;
+    console.log('_getFiatExchange', token0.symbol, token1.symbol, {
+      token0, token1, rate, commission
+    });
     return {rate, commission};
   };
   
@@ -138,21 +142,21 @@ class TokenContract {
   _getExchangeTokens = async secondToken => {
     if (!this.provider.oracleTokens) this.provider.oracleTokens = {};
     const {oracleTokens} = this.provider;
-    const network = networks[this.provider.state.chainId];
     
-    const current = this.address ? this : network.wrapBNB;
-    const second = secondToken.address ? secondToken : network.wrapBNB;
+    const current = this.address ? this : this.network.wrapToken;
+    const second = secondToken.address ? secondToken : this.network.wrapToken;
+    const networkUSDC = this.network.tokens.usdc;
     
     if (!oracleTokens[current.address]
       || !oracleTokens[second.address]
-      || !oracleTokens[network.usdc.address]) {
-      await this._updateTokensData([current, second, network.usdc]);
+      || !oracleTokens[networkUSDC.address]) {
+      await this._updateTokensData([current, second, networkUSDC]);
     }
     
     return {
       token0: oracleTokens[current.address],
       token1: oracleTokens[second.address],
-      usdc: oracleTokens[network.usdc.address],
+      usdc: oracleTokens[networkUSDC.address],
     }
   };
   

@@ -37,7 +37,7 @@ function TokenSale() {
 
   const context = React.useContext(Web3Context);
   const {
-    tokens, getTokenContract, tokenSale, transaction,
+    tokens, getTokenContract, network, transaction,
     isConnected, connectWallet, chainId, getTransactionReceipt,
     getBSCScanLink, addTokenToWallet,
   } = context;
@@ -69,7 +69,7 @@ function TokenSale() {
     const token = tokens.find(t => t.symbol === 'BUSD');
     const contract = getTokenContract(token);
     try {
-      await contract.approve(contract.provider.tokenSale, busdAmount);
+      await contract.approve(network.contractAddresses.tokenSale, busdAmount);
       setAllowance(busdAmount);
       setErrorText('');
     } catch (error) {
@@ -86,7 +86,7 @@ function TokenSale() {
     const web3 = new Web3(window.ethereum);
     const contract = new (web3.eth.Contract)(
       require('src/index/constants/ABI/TokenSale'),
-      tokenSale,
+      network.contractAddresses.tokenSale,
     );
     try {
       const txHash = await transaction(contract, 'buy', [wei.to(wei.bn(amount), 18)]);

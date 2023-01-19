@@ -15,34 +15,30 @@ import { WEI_ETHER } from 'src/index/constants/cabinet';
 import { logout } from 'src/actions/auth';
 import { openStateModal } from 'src/actions';
 import * as steps from 'src/components/AuthModal/fixtures';
+import * as connectors from 'src/services/multiwallets/connectors';
 
 import './Header.less';
 import { Button } from 'src/ui';
 import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 import wei from 'utils/wei';
-import { option } from '../Select/Select';
+import * as options from './constants/options';
 
 function Header(props) {
   const context = React.useContext(Web3Context);
-  const isLogined = !!props.profile.user;
-  // States
-  // Current selected crypto.
-  const [currentCrypto, setCurrentCrypto] = React.useState('bsc');
   const [nrfxBalance, setNrfxBalance] = React.useState(0);
+  // const isLogined = !!props.profile.user;
 
-  const { isConnected, accountAddress, getTokenBalance, tokens, chainId } =
-    context;
-
-  // If domen is testnet then display text 'Testnet' in network.
-  const isTestnetDomen = document.URL.indexOf('://testnet') >= 0;
-  const cryptoOptions = [
-    option(
-      isTestnetDomen ? 'Testnet' : 'BSC',
-      'bsc',
-      require('src/asset/icons/wallets/bsc.svg').default
-    ),
-  ];
+  const {
+    isConnected,
+    accountAddress,
+    getTokenBalance,
+    tokens,
+    chainId,
+    switchToChain,
+    connector,
+    network,
+  } = context;
 
   // Adaptive sidebar is open
   const [isSidebar, setIsSidebar] = React.useState(false);
@@ -54,11 +50,6 @@ function Header(props) {
     } else {
       return null;
     }
-  };
-
-  // Set current crypto
-  const handleCryptoChange = (newValue) => {
-    setCurrentCrypto(newValue);
   };
 
   React.useEffect(() => {
@@ -102,18 +93,12 @@ function Header(props) {
             )}
           </div>
           <div className="DappHeader__menu">
-            <Select
-              isSearchable={false}
-              isDisabled
-              options={cryptoOptions}
-              value={currentCrypto}
-              onChange={handleCryptoChange}
-              components={{
-                DropdownIndicator,
-                IndicatorSeparator: null,
-              }}
-              className="CabinetSelect__network"
-              classNamePrefix="CabinetSelect"
+            <ChainSelect
+              isConnected={isConnected}
+              chainId={chainId}
+              connector={connector}
+              switchToChain={switchToChain}
+              network={network}
             />
             {isConnected ? (
               <>
@@ -210,6 +195,19 @@ function Header(props) {
   );
 }
 
+Header.propTypes = {
+  profile: PropTypes.object,
+  router: PropTypes.object,
+  langList: PropTypes.array,
+  currentLang: PropTypes.string,
+  theme: PropTypes.string,
+  adaptive: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  langList: [],
+};
+
 const addressCut = (address) => {
   if (!address) {
     return '';
@@ -234,18 +232,43 @@ const DropdownIndicator = (props) => {
   );
 };
 
-Header.propTypes = {
-  profile: PropTypes.object,
-  router: PropTypes.object,
-  langList: PropTypes.array,
-  currentLang: PropTypes.string,
-  theme: PropTypes.string,
-  adaptive: PropTypes.bool,
-};
+const ChainSelect = React.memo(
+  ({ isConnected, chainId, connector, switchToChain, network }) => {
+    // Set current crypto
+    const handleCryptoChange = (id) => {
+      if (isConnected) {
+        switchToChain(id);
+        return;
+      }
+      network.setChain(id);
+    };
 
-Header.defaultProps = {
-  langList: [],
-};
+    const defaultValue = network.isFine(chainId)
+      ? null
+      : options.defaultValue(chainId);
+
+    const allOptions = defaultValue
+      ? [defaultValue, ...options.cryptoOptions]
+      : options.cryptoOptions;
+
+    return (
+      <Select
+        isSearchable={false}
+        options={allOptions}
+        value={isConnected ? chainId : network.chainId}
+        defaultValue={defaultValue}
+        onChange={handleCryptoChange}
+        components={{
+          DropdownIndicator,
+          IndicatorSeparator: null,
+        }}
+        className="CabinetSelect__network"
+        classNamePrefix="CabinetSelect"
+        isDisabled={isConnected && connector !== connectors.METAMASK}
+      />
+    );
+  }
+);
 
 export default connect(
   (state) => ({

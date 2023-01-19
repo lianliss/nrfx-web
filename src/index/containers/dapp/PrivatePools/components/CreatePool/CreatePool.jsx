@@ -15,9 +15,10 @@ import './CreatePool.less';
 function CreatePool({ setStep, setPoolAddress, deletePoolAddress, poolAddress }) {
   const context = React.useContext(Web3Context);
   const {
-    web3, transaction, getTransactionReceipt, saleFactory, accountAddress,
+    web3, transaction, getTransactionReceipt, network, accountAddress,
     getContract,
   } = context;
+  const { saleFactory } = network.contractAddresses;
   const [value, setValue] = React.useState('');
   const [isCreated, setIsCreated] = React.useState(false);
   const [isProcess, setIsProcess] = React.useState(false);

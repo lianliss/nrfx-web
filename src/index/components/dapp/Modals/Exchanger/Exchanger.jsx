@@ -1,6 +1,5 @@
 import React from 'react';
 import { Web3Context } from 'services/web3Provider';
-import networks from 'src/index/constants/networks';
 import routerABI from 'src/index/constants/ABI/NarfexExchangerRouter';
 
 // Components
@@ -32,7 +31,7 @@ function Exchanger({ ...props }) {
   const {
     connectWallet, isConnected, addTokenToWallet,
     tokens, loadAccountBalances, exchange,
-    exchangerRouter, getTokenContract,
+    getTokenContract,
     accountAddress,
     getTokenBalance,
     chainId,
@@ -40,8 +39,8 @@ function Exchanger({ ...props }) {
     getWeb3,
     transaction,
     getBSCScanLink,
+    network
   } = context;
-  
   const [inAmount, setInAmount] = React.useState(fiatAmount);
   const [outAmount, setOutAmount] = React.useState(coinAmount);
   const [priceImpact, setPriceImpact] = React.useState(0);
@@ -80,7 +79,7 @@ function Exchanger({ ...props }) {
       return;
     }
     const token = getTokenContract(fiat);
-    const router = networks[chainId].exchangerRouter;
+    const router = network.contractAddresses.exchangerRouter;
     
     token.getAllowance(router).then(allowance => {
       setAllowance(allowance);
@@ -101,7 +100,7 @@ function Exchanger({ ...props }) {
   
   const approve = async () => {
     const token = getTokenContract(fiat);
-    const router = networks[chainId].exchangerRouter;
+    const router = network.contractAddresses.exchangerRouter;
     try {
       const maxApprove = 10**9;
       setIsApproving(true);
@@ -120,11 +119,12 @@ function Exchanger({ ...props }) {
       setIsProcess(true);
       const router = new (getWeb3().eth.Contract)(
         routerABI,
-        networks[chainId].exchangerRouter,
+        network.contractAddresses.exchangerRouter,
       );
       
       const isFromBNB = !path[0].address
-        || path[0].address.toLowerCase() === networks[chainId].wrapBNB.address.toLowerCase();
+        || path[0].address.toLowerCase() ===
+          network.wrapToken.address.toLowerCase();
       let value;
       if (isFromBNB) {
         if (isExactOut) {
@@ -134,11 +134,18 @@ function Exchanger({ ...props }) {
         }
       }
       
+      const amountDecimals = isExactOut
+        ? _.get(path[path.length - 1], 'decimals', 18)
+        : _.get(path[0], 'decimals', 18);
+      const limitDecimals = !isExactOut
+        ? _.get(path[path.length - 1], 'decimals', 18)
+        : _.get(path[0], 'decimals', 18);
+      
       const receipt = await transaction(router, 'swap', [
         path.map(token => token.address),
         isExactOut,
-        wei.to(isExactOut ? outAmount : inAmount),
-        wei.to(isExactOut ? inAmountMax : outAmountMin),
+        wei.to(isExactOut ? outAmount : inAmount, amountDecimals),
+        wei.to(isExactOut ? inAmountMax : outAmountMin, limitDecimals),
         Math.floor(Date.now() / 1000) + deadline * 60,
         '0x0000000000000000000000000000000000000000',
       ], value);

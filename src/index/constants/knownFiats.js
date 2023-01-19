@@ -1,3 +1,22 @@
+const ETHER_FIATS = [
+  {
+    name: "Russian Ruble on Narfex",
+    symbol: "RUB",
+    address: "0x5E11E947e69e8e6267e28C3db9425acd3AA4B489",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+  },
+  {
+    name: "Indonesian Rupiah on Narfex",
+    symbol: "IDR",
+    address: "0x5624e3A00DdfC29765b4e164cD0dC38bFf0FC3a6",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/indonesian-rupiah.svg"
+  },
+];
+
 const TESTNET_FIATS = [
   {
     name: "Testnet United States Dollar",
@@ -123,6 +142,7 @@ const KNOWN_FIATS = [
     logoURI: "https://static.narfex.com/img/currencies/gbp-pound.svg"
   },
   ...TESTNET_FIATS,
+  ...ETHER_FIATS,
 ].map(fiat => ({
   ...fiat,
   isFiat: true,

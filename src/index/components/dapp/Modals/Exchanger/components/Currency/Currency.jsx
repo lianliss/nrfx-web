@@ -13,7 +13,7 @@ function Currency({ currency, amount, name, adaptive }) {
   return (
     <Row className="ExchangerModal__Currency" alignItems="center">
       <WalletIcon size={adaptive ? 35 : 41} currency={currency} />
-      <span class="Number">
+      <span className="Number">
         {getFinePrice(amount)}
       </span>
       <Col>

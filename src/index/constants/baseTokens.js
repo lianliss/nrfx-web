@@ -25,6 +25,41 @@ const TESTNET_BASE_TOKENS = [
   },
 ];
 
+const ETHER_BASE_TOKENS = [
+  {
+    name: "Wrapped Ether",
+    address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    symbol: "WETH",
+    decimals: 18,
+    chainId: 1,
+    logoURI: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+  },
+  {
+    name: "USDCoin",
+    address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    symbol: "USDC",
+    decimals: 6,
+    chainId: 1,
+    logoURI: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png",
+  },
+  {
+    name: "Tether USD",
+    address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    symbol: "USDT",
+    decimals: 6,
+    chainId: 1,
+    logoURI: "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png",
+  },
+  {
+    name: "Uniswap",
+    address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+    symbol: "UNI",
+    decimals: 18,
+    chainId: 1,
+    logoURI: "ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg",
+  },
+];
+
 module.exports = [
   {
     name: "Wrapped BNB",
@@ -91,4 +126,5 @@ module.exports = [
     logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
   },
   ...TESTNET_BASE_TOKENS,
+  ...ETHER_BASE_TOKENS,
 ];

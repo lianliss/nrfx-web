@@ -206,9 +206,9 @@ export class Web3Backend {
     const array = new Uint8Array(response);
     FileDownload(array.buffer, 'report.xlsx');
   });
-  getReservation = (currency, accountAddress) => this.get('cards/reservation', {
+  getReservation = (currency, accountAddress, networkID = 'BSC') => this.get('cards/reservation', {
     params: {
-      currency, accountAddress,
+      currency, accountAddress, networkID,
     }
   });
   getBanks = () => this.get('cards/banks');

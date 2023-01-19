@@ -15,7 +15,7 @@ import {Web3Context} from 'services/web3Provider';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 import significant from 'utils/significant';
-import { Fraction, JSBI } from '@pancakeswap/sdk';
+import { Fraction, JSBI } from '@narfex/sdk';
 import * as toast from 'actions/toasts';
 import { openModal } from "src/actions"
 import { getLang } from "utils";
@@ -90,7 +90,8 @@ class DexSwap extends React.PureComponent {
 
   setInitialAllowance = async () => {
     try {
-      const {getTokenContract, routerAddress} = this.context;
+      const {getTokenContract, network} = this.context;
+      const { routerAddress } = network.contractAddresses;
       const token = _.get(this, 'state.pair[0]');
       if (!token) return;
       if (this.tokenContract) this.tokenContract.stopWaiting();
@@ -249,18 +250,22 @@ class DexSwap extends React.PureComponent {
     if (!tokens || !tokens.length) return;
 
     const { dappSwap } = this.props;
-    const defaultToken0 = tokens.filter(
-      (token) =>
-        token.symbol.toLowerCase() === dappSwap.from.symbol.toLowerCase()
-    )[0];
-    const defaultToken1 = tokens.filter(
-      (token) =>
-        token.symbol.toLowerCase() === dappSwap.to.symbol.toLowerCase()
-    )[0];
+    const defaultToken0 = tokens.find(
+      (token) => token.symbol.toLowerCase() === dappSwap.from.symbol.toLowerCase()
+    );
+    const defaultToken1 = tokens.find(
+      (token) => token.symbol.toLowerCase() === dappSwap.to.symbol.toLowerCase()
+    );
 
     // Get default pair
-    const token0 = defaultToken0.address || window.localStorage.getItem('token0') || tokens[0].address;
-    const token1 = defaultToken1.address || window.localStorage.getItem('token1') || tokens[1].address;
+    const token0 =
+      _.get(defaultToken0, 'address') ||
+      window.localStorage.getItem('token0') ||
+      _.get(tokens[0], 'address');
+    const token1 =
+      _.get(defaultToken1, 'address') ||
+      window.localStorage.getItem('token1') ||
+      _.get(tokens[1], 'address');
 
     // Get user tokens from local storage
     let userTokens = [];
@@ -416,7 +421,8 @@ class DexSwap extends React.PureComponent {
 
   async approve() {
     const {isApproving, amount0} = this.state;
-    const {tokens, getTokenContract, routerAddress} = this.context;
+    const {tokens, getTokenContract, network} = this.context;
+    const { routerAddress } = network.contractAddresses;
     const {poolAddress} = this.props;
 
     if (isApproving) return;
