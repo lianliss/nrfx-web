@@ -122,7 +122,7 @@ const BottomSheetSelect = React.memo(
       }
 
       const closeBottomSheetModal = _.get(bottomSheetModalRef, 'current.close');
-      if (typeof closeBottomSheetModal === 'function') {
+      if (_.isFunction(closeBottomSheetModal)) {
         closeBottomSheetModal();
       }
     };
