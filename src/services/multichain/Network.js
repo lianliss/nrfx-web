@@ -11,6 +11,7 @@ class Network {
   initNetwork(id) {
     const chainId = this.isFine(id) ? id : chains.DEFAULT_CHAIN;
     this.chainId = chainId;
+    Object.assign(this, chains.NETWORKS_DATA[id]);
 
     this.tokenListURI = initialTokens.TOKEN_LIST_URI[chainId];
     this.contractAddresses = contractAddresses.CONTRACT_ADDRESSES[chainId];

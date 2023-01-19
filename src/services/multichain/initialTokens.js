@@ -5,7 +5,7 @@ import baseTokens from 'src/index/constants/baseTokens';
 const DEFAULT_DECIMALS = 18;
 
 export const TOKEN_LIST_URI = {
-  [ETHEREUM_MAINNET]: 'https://static.narfex.com/img/ether_tokens.json',
+  [ETHEREUM_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/ether_tokens.json',
   [BSC_MAINNET]: 'https://tokens.pancakeswap.finance/cmc.json',
 };
 
@@ -16,6 +16,14 @@ export const ABI = {
 
 export const TOKENS = {
   [ETHEREUM_MAINNET]: {
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      chainId: ETHEREUM_MAINNET,
+      decimals: 6,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
     eth: {
       name: 'Ethereum',
       symbol: 'ETH',
@@ -31,17 +39,7 @@ export const TOKENS = {
       decimals: 6,
       chainId: ETHEREUM_MAINNET,
       logoURI:
-        'https://raw.githubusercontent.com/' +
-        'trustwallet/assets/master/blockchains/ethereum/assets/' +
-        '0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png',
-    },
-    nrfx: {
-      name: 'Narfex',
-      symbol: 'NRFX',
-      address: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
-      chainId: ETHEREUM_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png',
     },
     wrapETH: {
       name: 'Wrapped Ether',
@@ -50,12 +48,18 @@ export const TOKENS = {
       decimals: DEFAULT_DECIMALS,
       chainId: ETHEREUM_MAINNET,
       logoURI:
-        'https://raw.githubusercontent.com/' +
-        'trustwallet/assets/master/blockchains/ethereum/assets/' +
-        '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
     },
   },
   [BSC_MAINNET]: {
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      chainId: 56,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
     usdt: {
       name: 'Tether',
       symbol: 'USDT',
@@ -157,7 +161,8 @@ export const DISPLAY_TOKENS = {
   [ETHEREUM_MAINNET]: [
     TOKENS[ETHEREUM_MAINNET].eth,
     TOKENS[ETHEREUM_MAINNET].usdt,
-    TOKENS[ETHEREUM_MAINNET].nrfx,
+    //TOKENS[ETHEREUM_MAINNET].nrfx,
+    ...baseTokens.filter((t) => t.chainId === ETHEREUM_MAINNET),
   ],
   [BSC_MAINNET]: [
     TOKENS[BSC_MAINNET].bnb,

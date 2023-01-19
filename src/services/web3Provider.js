@@ -8,7 +8,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import Network from './multichain/Network';
 import getAllPairsCombinations from 'utils/getPairCombinations';
-import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@pancakeswap/sdk';
+import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@narfex/sdk';
 import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { keccak256, pack } from '@ethersproject/solidity';
 import significant from 'utils/significant';
@@ -208,7 +208,7 @@ class Web3Provider extends React.PureComponent {
     const token1 = _token1.address ? _token1 : this.network.wrapToken;
 
     // Get all possible pairs combinations
-    const combinations = getAllPairsCombinations(token0, token1);
+    const combinations = getAllPairsCombinations(token0, token1, this.state.chainId);
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair
@@ -261,6 +261,18 @@ class Web3Provider extends React.PureComponent {
           : this.getTokenAmount(token1, amount),
         {maxNumResults: 1, maxHops: hops}
       ), '[0]');
+      console.log('trade', {
+        trade, pairs, token0, token1, amount, isExactIn, maxHops
+      }, tradeMethod(
+        pairs,
+        isExactIn
+          ? this.getTokenAmount(token0, amount)
+          : this.getToken(token0),
+        isExactIn
+          ? this.getToken(token1)
+          : this.getTokenAmount(token1, amount),
+        {maxNumResults: 1, maxHops: hops}
+      ));
       // Set the best trade
       if (hops === 1 || this.isTradeBetter(bestTrade, trade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
         bestTrade = trade;
@@ -288,9 +300,15 @@ class Web3Provider extends React.PureComponent {
       .lessThan(tradeB.executionPrice);
   }
 
-  getBSCScanLink = address => this.state.chainId === 56
-    ? `https://bscscan.com/tx/${address}`
-    : `https://testnet.bscscan.com/tx/${address}`;
+  getBSCScanLink = address => {
+    switch (this.state.chainId) {
+      case 97: return `https://testnet.bscscan.com/tx/${address}`;
+      case 1: return `https://etherscan.io/tx/${address}`;
+      case 56:
+      default:
+        return `https://bscscan.com/tx/${address}`;
+    }
+  };
 
 
   /**
@@ -755,7 +773,7 @@ class Web3Provider extends React.PureComponent {
    */
   async getTokenUSDPrice(token) {
     try {
-      const USDT = this.state.tokens.find(t => t.symbol === 'USDT');
+      const USDT = this.state.tokens.find(t => t.symbol === 'USDC');
       const address = token.address ? token.address.toLowerCase() : null;
       return address === USDT.address.toLowerCase()
         ? 1
@@ -806,8 +824,8 @@ class Web3Provider extends React.PureComponent {
   async getTokensBalances(contractAddresses) {
     try {
       const contract = await new this.web3.eth.Contract(
-        require('src/index/constants/ABI/BalancesRequest'),
-        '0xd98B8A68254aEB7d3BdF1DC53936BE2718292A03'
+        require('src/index/constants/ABI/NarfexOracle'),
+        this.network.contractAddresses.narfexOracle,
       );
 
       const results = await contract.methods
@@ -1431,12 +1449,12 @@ class Web3Provider extends React.PureComponent {
         const known = KNOWN_FIATS.filter(f => f.chainId === chainId)
           .find(s => s.symbol === fiat[1]);
         return known ? {
+          decimals: 18,
           ...known,
           address: list[index],
           name: fiat[0],
           symbol: fiat[1],
           chainId,
-          decimals: 18,
           balance: fiat[2],
         } : null;
       }).filter(f => !!f);
@@ -1472,18 +1490,16 @@ class Web3Provider extends React.PureComponent {
    * @return {array}
    */
   getFiatsArray(rates) {
-    const userId = `${this.state.chainId}${this.state.accountAddress}`;
-    const fiatTokens = _.get(this.state.fiats, userId, [{
-      name: "United States Dollar on Narfex",
-      symbol: "USD",
-      address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
-      logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
-    }]).map(token => {
+    const chainId = this.state.chainId || 56;
+    const userId = `${chainId}${this.state.accountAddress}`;
+    return _.get(
+      this.state.fiats,
+      userId,
+      KNOWN_FIATS.filter(f => f.chainId === chainId)
+    ).map(token => {
       const price = _.get(rates, token.symbol.toLowerCase());
       return price ? {...token, price} : token;
     });
-
-    return fiatTokens;
   }
 
   async backendRequest(params, _messageDeprecated, path, method = 'post', modalParams, additionalOptions = {}) {
@@ -1518,7 +1534,10 @@ class Web3Provider extends React.PureComponent {
           'nrfx-sign': signature,
           ...additionalHeaders,
         },
-        params,
+        params: {
+          ...params,
+          networkID: _.get(this.network, 'networkID', 'BSC'),
+        },
         ...additionalOptions,
       });
     } catch (error) {

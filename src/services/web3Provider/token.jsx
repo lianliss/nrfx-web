@@ -109,7 +109,7 @@ class TokenContract {
         this.provider.oracleTokens[token.address] = Object.assign(
           this.provider.getTokenContract(token),
           {
-            price: wei.from(tokenData.price),
+            price: wei.from(tokenData.price, token.decimals),
             commission: wei.from(tokenData.commission, 4),
             transferFee: wei.from(tokenData.transferFee, 4),
             isFiat: tokenData.isFiat,
@@ -123,6 +123,9 @@ class TokenContract {
   _getFiatExchange = (token0, token1) => {
     const rate = token0.price / token1.price;
     const commission = (token0.commission + 1) * (token1.commission + 1) - 1;
+    console.log('_getFiatExchange', token0.symbol, token1.symbol, {
+      token0, token1, rate, commission
+    });
     return {rate, commission};
   };
   
@@ -142,18 +145,18 @@ class TokenContract {
     
     const current = this.address ? this : this.network.wrapToken;
     const second = secondToken.address ? secondToken : this.network.wrapToken;
-    const networkUSDT = this.network.tokens.usdt;
+    const networkUSDC = this.network.tokens.usdc;
     
     if (!oracleTokens[current.address]
       || !oracleTokens[second.address]
-      || !oracleTokens[networkUSDT.address]) {
-      await this._updateTokensData([current, second, networkUSDT]);
+      || !oracleTokens[networkUSDC.address]) {
+      await this._updateTokensData([current, second, networkUSDC]);
     }
     
     return {
       token0: oracleTokens[current.address],
       token1: oracleTokens[second.address],
-      usdt: oracleTokens[networkUSDT.address],
+      usdc: oracleTokens[networkUSDC.address],
     }
   };
   
@@ -172,14 +175,14 @@ class TokenContract {
   
   getOutAmount = async (secondToken, inAmount) => {
     try {
-      const {token0, token1, usdt} = await this._getExchangeTokens(secondToken);
+      const {token0, token1, usdc} = await this._getExchangeTokens(secondToken);
       
       if (
         (token0.isFiat && token1.isFiat)
-        || token0.isFiat && token1.address === usdt.address
-        || token1.isFiat && token0.address === usdt.address
+        || token0.isFiat && token1.address === usdc.address
+        || token1.isFiat && token0.address === usdc.address
         ) {
-        /// Exchange between two fiats or fiat with USDT
+        /// Exchange between two fiats or fiat with USDC
         return {
           inAmount,
           outAmount: this._getFiatExchangeOut(token0, token1, inAmount),
@@ -192,8 +195,8 @@ class TokenContract {
       }
       if (token0.isFiat) {
         // Exchange from fiat to coin
-        const usdtAmount = this._getFiatExchangeOut(token0, usdt, inAmount);
-        const dexResult = await this._getDEXResult(usdt, token1, usdtAmount, true);
+        const usdcAmount = this._getFiatExchangeOut(token0, usdc, inAmount);
+        const dexResult = await this._getDEXResult(usdc, token1, usdcAmount, true);
         return {
           ...dexResult,
           inAmount,
@@ -202,11 +205,11 @@ class TokenContract {
         };
       } else {
         // Exchange from coin to fiat
-        const dexResult = await this._getDEXResult(token0, usdt, inAmount, true);
+        const dexResult = await this._getDEXResult(token0, usdc, inAmount, true);
         return {
           ...dexResult,
           inAmount,
-          outAmount: this._getFiatExchangeOut(usdt, token1, dexResult.outAmount, true),
+          outAmount: this._getFiatExchangeOut(usdc, token1, dexResult.outAmount, true),
           path: [...dexResult.path, token1],
         }
       }
@@ -218,14 +221,14 @@ class TokenContract {
   
   getInAmount = async (secondToken, outAmount) => {
     try {
-      const {token0, token1, usdt} = await this._getExchangeTokens(secondToken);
+      const {token0, token1, usdc} = await this._getExchangeTokens(secondToken);
       
       if (
         (token0.isFiat && token1.isFiat)
-        || token0.isFiat && token1.address === usdt.address
-        || token1.isFiat && token0.address === usdt.address
+        || token0.isFiat && token1.address === usdc.address
+        || token1.isFiat && token0.address === usdc.address
       ) {
-        /// Exchange between two fiats or fiat with USDT
+        /// Exchange between two fiats or fiat with USDC
         return {
           inAmount: this._getFiatExchangeIn(token0, token1, outAmount),
           outAmount,
@@ -238,17 +241,17 @@ class TokenContract {
       }
       if (token0.isFiat) {
         // Exchange from fiat to coin
-        const dexResult = await this._getDEXResult(usdt, token1, outAmount, false);
+        const dexResult = await this._getDEXResult(usdc, token1, outAmount, false);
         return {
           ...dexResult,
-          inAmount: this._getFiatExchangeIn(token0, usdt, dexResult.inAmount),
+          inAmount: this._getFiatExchangeIn(token0, usdc, dexResult.inAmount),
           outAmount,
           path: [token0, ...dexResult.path],
         };
       } else {
         // Exchange from coin to fiat
-        const usdtAmount = this._getFiatExchangeIn(usdt, token1, outAmount);
-        const dexResult = await this._getDEXResult(token0, usdt, usdtAmount, false);
+        const usdcAmount = this._getFiatExchangeIn(usdc, token1, outAmount);
+        const dexResult = await this._getDEXResult(token0, usdc, usdcAmount, false);
         return {
           ...dexResult,
           inAmount: dexResult.inAmount,

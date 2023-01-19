@@ -80,7 +80,7 @@ function Exchanger({ ...props }) {
     }
     const token = getTokenContract(fiat);
     const router = network.contractAddresses.exchangerRouter;
-
+    
     token.getAllowance(router).then(allowance => {
       setAllowance(allowance);
       setIsProcess(false);
@@ -124,7 +124,7 @@ function Exchanger({ ...props }) {
       
       const isFromBNB = !path[0].address
         || path[0].address.toLowerCase() ===
-          network.tokens.wrapBNB.address.toLowerCase();
+          network.wrapToken.address.toLowerCase();
       let value;
       if (isFromBNB) {
         if (isExactOut) {
@@ -134,11 +134,18 @@ function Exchanger({ ...props }) {
         }
       }
       
+      const amountDecimals = isExactOut
+        ? _.get(path[path.length - 1], 'decimals', 18)
+        : _.get(path[0], 'decimals', 18);
+      const limitDecimals = !isExactOut
+        ? _.get(path[path.length - 1], 'decimals', 18)
+        : _.get(path[0], 'decimals', 18);
+      
       const receipt = await transaction(router, 'swap', [
         path.map(token => token.address),
         isExactOut,
-        wei.to(isExactOut ? outAmount : inAmount),
-        wei.to(isExactOut ? inAmountMax : outAmountMin),
+        wei.to(isExactOut ? outAmount : inAmount, amountDecimals),
+        wei.to(isExactOut ? inAmountMax : outAmountMin, limitDecimals),
         Math.floor(Date.now() / 1000) + deadline * 60,
         '0x0000000000000000000000000000000000000000',
       ], value);

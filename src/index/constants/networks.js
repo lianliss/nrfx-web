@@ -10,6 +10,14 @@ const DEFAULT_DECIMALS = 18;
 
 const tokens = {
   [ETHEREUM_MAINNET]: {
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      chainId: ETHEREUM_MAINNET,
+      decimals: 6,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
     eth: {
       name: 'Ethereum',
       symbol: 'ETH',
@@ -27,14 +35,6 @@ const tokens = {
       logoURI:
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png',
     },
-    nrfx: {
-      name: 'Narfex',
-      symbol: 'NRFX',
-      address: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
-      chainId: ETHEREUM_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
-    },
     wrapETH: {
       name: 'Wrapped Ether',
       address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
@@ -46,6 +46,14 @@ const tokens = {
     },
   },
   [BSC_MAINNET]: {
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+      chainId: 56,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
     usdt: {
       name: 'Tether',
       symbol: 'USDT',
@@ -90,34 +98,39 @@ const tokens = {
     },
   },
 };
+tokens.ETH = tokens[ETHEREUM_MAINNET];
+tokens.BSC = tokens[BSC_MAINNET];
 
 const networks = {
   [ETHEREUM_MAINNET]: {
-    tokenListURI: 'http://tokens.uniswap.org',
-    factoryAddress: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
+    networkID: 'ETH',
+    fiatDecimals: 6,
+    tokenListURI: 'https://storage.googleapis.com/custom-product-builder/ether_tokens.json',
+    factoryAddress: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f',
     factoryInitCodeHash:
-      '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5',
-    routerAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
-    masterChefAddress: '0x9032aEc2255680Ed14f832a7ba99603065C7a0ce',
-    narfexToken: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
-    tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
-    saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
-    fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
-    exchangerRouter: '0x94d0376ba6617D96c8c89213de81F4307e4490d0',
-    narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
+      '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f',
+    routerAddress: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+    masterChefAddress: '0x0000000000000000000000000000000000000000',
+    narfexToken: '0x155cd154b4c3Afc2719601b617e52526a520d301',
+    tokenSale: '0x0000000000000000000000000000000000000000',
+    saleFactory: '0x0000000000000000000000000000000000000000',
+    fiatFactory: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
+    exchangerRouter: '0xebDEC768d466157c533f5b93F4ED8f30F42B4e68',
+    narfexOracle: '0xBaBfFCe575929DDd7aD29DEEeb5B7A5F5dee4Ab6',
     tokenABI: require('./ABI/Erc20Token'),
     mainnet: true,
     wrapToken: tokens[ETHEREUM_MAINNET].wrapETH,
     usdt: tokens[ETHEREUM_MAINNET].usdt,
+    usdc: tokens[ETHEREUM_MAINNET].usdc,
     wrapETH: tokens[ETHEREUM_MAINNET].wrapETH,
     tokens: [
-      tokens[ETHEREUM_MAINNET].eth,
-      tokens[ETHEREUM_MAINNET].usdt,
-      tokens[ETHEREUM_MAINNET].nrfx,
-      ...baseTokens.filter(t => t.chainId === 56),
+      ...baseTokens.filter(t => t.chainId === 1),
     ],
+    ...tokens[ETHEREUM_MAINNET],
   },
   [BSC_MAINNET]: {
+    networkID: 'BSC',
+    fiatDecimals: 18,
     tokenListURI: 'https://tokens.pancakeswap.finance/cmc.json',
     factoryAddress: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
     factoryInitCodeHash:
@@ -128,7 +141,7 @@ const networks = {
     tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
     saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
     fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
-    exchangerRouter: '0x94d0376ba6617D96c8c89213de81F4307e4490d0',
+    exchangerRouter: '0x9af372bEAfe51bD4920110834187DFB3679F150E',
     narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
     tokenABI: require('./ABI/Bep20Token'),
     mainnet: true,
@@ -141,11 +154,13 @@ const networks = {
       tokens[BSC_MAINNET].nrfx,
       tokens[BSC_MAINNET].usdt,
       tokens[BSC_MAINNET].bnb,
-      ...baseTokens,
+      ...baseTokens.filter(t => t.chainId === 56),
     ],
     ...tokens[BSC_MAINNET],
   },
   [BSC_TESTNET]: {
+    networkID: 'BSCt',
+    fiatDecimals: 18,
     factoryAddress: '0xb7926c0430afb07aa7defde6da862ae0bde767bc',
     factoryInitCodeHash:
       '0xecba335299a6693cb2ebc4782e74669b84290b6378ea3a3873c7231a8d7d1074',
@@ -177,6 +192,7 @@ const networks = {
       decimals: DEFAULT_DECIMALS,
       logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png',
     },
+    
     poolsList: [],
     tokens: [
       {
@@ -223,5 +239,7 @@ const networks = {
     ],
   },
 };
+networks.ETH = networks[ETHEREUM_MAINNET];
+networks.BSC = networks[BSC_MAINNET];
 
 export default networks;

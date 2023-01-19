@@ -1,3 +1,3 @@
-const commonBases = ['eth', 'usdt', 'nrfx', 'bnb'];
+const commonBases = ['nrfx', 'usdc', 'bnb', 'eth'];
 
 export default commonBases;

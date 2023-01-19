@@ -15,7 +15,7 @@ import {Web3Context} from 'services/web3Provider';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 import significant from 'utils/significant';
-import { Fraction, JSBI } from '@pancakeswap/sdk';
+import { Fraction, JSBI } from '@narfex/sdk';
 import * as toast from 'actions/toasts';
 import { openModal } from "src/actions"
 import { getLang } from "utils";

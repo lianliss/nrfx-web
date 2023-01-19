@@ -90,7 +90,7 @@ function ExchangerTopup(props) {
   }, [fiatSymbol]);
 
   // Fiat price
-  const fiatBalance = wei.from(_.get(fiat, 'balance', "0"));
+  const fiatBalance = wei.from(_.get(fiat, 'balance', "0"), _.get(fiat, 'decimals', 18));
   const fiatPrice = _.get(rates, fiatSymbol.toLowerCase(), 0);
 
   // Calculate coin price

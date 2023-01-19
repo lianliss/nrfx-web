@@ -42,7 +42,7 @@ function getTokenPrice(token) {
   let price;
   switch (symbol) {
     case 'NRFX': price = _.get(rates, 'nrfx', 0); break;
-    case 'USDT':
+    case 'USDC':
     case 'USD': price = 1; break;
     default: price = isFiat
       ? _.get(rates, symbol.toLowerCase(), 0)

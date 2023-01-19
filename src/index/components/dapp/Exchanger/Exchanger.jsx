@@ -58,22 +58,42 @@ function Exchanger(props) {
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
 
   const userId = `${chainId}${accountAddress}`;
-  const defaultUSD = chainId === 97
-    ? {
+  let defaultUSD;
+  switch (chainId) {
+    case 97:
+      defaultUSD = {
         name: "Testnet United States Dollar",
         symbol: "USD",
         address: "0x6dBB65750a6BBE8A0CBD28257008C464bAbe4de6",
         chainId: 97,
         decimals: 18,
-        logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
-      }
-    : {
+        logoURI: "https://static.narfex.com/img/currencies/dollar.svg",
+        isFiat: true,
+      };
+      break;
+    case 1:
+      defaultUSD = {
+        name: "Russian Ruble on Narfex",
+        symbol: "RUB",
+        address: "0x5E11E947e69e8e6267e28C3db9425acd3AA4B489",
+        chainId: 1,
+        decimals: 6,
+        logoURI: "https://static.narfex.com/img/currencies/rubles.svg",
+        isFiat: true,
+      };
+      break;
+    case 56:
+    default:
+      defaultUSD = {
         name: "United States Dollar on Narfex",
         symbol: "USD",
         address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
         logoURI: "https://static.narfex.com/img/currencies/dollar.svg",
+        chainId: 56,
+        decimals: 18,
         isFiat: true,
       };
+  }
   const fiatTokens = _.get(fiats, userId, [defaultUSD]).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
@@ -212,7 +232,7 @@ function Exchanger(props) {
         });
       }
     } else {
-      web3Backend.getReservation(fiatSymbol, accountAddress)
+      web3Backend.getReservation(fiatSymbol, accountAddress, network.networkID)
         .then(data => {
           const res = data[0];
           if (!res) {
