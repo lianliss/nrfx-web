@@ -68,7 +68,7 @@ Select.defaultProps = {
 };
 
 // Return object for options constant
-export const option = (title, value, icon, showValue = false) => {
+Select.option = (title, value, icon, showValue = false) => {
   return {
     label: (
       <>

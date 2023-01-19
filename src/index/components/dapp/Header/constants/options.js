@@ -1,5 +1,7 @@
 import * as chains from 'src/services/multichain/chains';
-import { option } from '../../Select/Select';
+import { BottomSheetSelect } from '../../Select';
+
+const { option } = BottomSheetSelect;
 
 export const cryptoOptions = [
   option(
@@ -15,12 +17,13 @@ export const cryptoOptions = [
   option(
     'Ethereum',
     chains.ETHEREUM_MAINNET,
-    require('src/asset/cabinet/crypto/ethereum.svg').default
+    require('src/asset/icons/wallets/eth.svg').default
   ),
 ];
 
-export const defaultValue = (value) => option(
-  'Unsupported',
-  value,
-  require('src/asset/icons/cabinet/question-icon.svg').default
-);
+export const defaultValue = (value) =>
+  option(
+    'Unsupported',
+    value,
+    require('src/asset/icons/cabinet/question-icon.svg').default
+  );

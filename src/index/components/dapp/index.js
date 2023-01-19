@@ -7,7 +7,7 @@ export { default as CustomButton } from './ui/CustomButton/CustomButton';
 export { default as AnswerPopup } from './ui/AnswerPopup/AnswerPopup';
 export { default as DexRoute } from './DexRoute/DexRoute';
 export { default as DexDescription } from './DexDescription/DexDescription';
-export { default as Select } from './Select/Select';
+export { default as Select } from './Select';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';

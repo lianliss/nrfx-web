@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 // Components
 import { Row, Button } from 'ui';
 import SVG from 'utils/svg-wrap';
-import Select from 'src/index/components/dapp/Select/Select';
+import Select from 'src/index/components/dapp/Select';
 import Navbar from './components/Navbar';
 import BurgerMenu from './components/BurgerMenu';
 import Sidebar from './components/Sidebar';
