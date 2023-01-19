@@ -771,7 +771,7 @@ class Web3Provider extends React.PureComponent {
    */
   async getTokenUSDPrice(token) {
     try {
-      const USDT = this.state.tokens.find(t => t.symbol === 'USDT');
+      const USDT = this.state.tokens.find(t => t.symbol === 'USDC');
       const address = token.address ? token.address.toLowerCase() : null;
       return address === USDT.address.toLowerCase()
         ? 1
@@ -822,8 +822,8 @@ class Web3Provider extends React.PureComponent {
   async getTokensBalances(contractAddresses) {
     try {
       const contract = await new this.web3.eth.Contract(
-        require('src/index/constants/ABI/BalancesRequest'),
-        '0xd98B8A68254aEB7d3BdF1DC53936BE2718292A03'
+        require('src/index/constants/ABI/NarfexOracle'),
+        this.network.contractAddresses.narfexOracle,
       );
 
       const results = await contract.methods
@@ -1447,12 +1447,12 @@ class Web3Provider extends React.PureComponent {
         const known = KNOWN_FIATS.filter(f => f.chainId === chainId)
           .find(s => s.symbol === fiat[1]);
         return known ? {
+          decimals: 18,
           ...known,
           address: list[index],
           name: fiat[0],
           symbol: fiat[1],
           chainId,
-          decimals: 18,
           balance: fiat[2],
         } : null;
       }).filter(f => !!f);
