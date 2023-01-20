@@ -535,14 +535,14 @@ class Web3Provider extends React.PureComponent {
       // because the address maybe empty.
       let chainId = await this.web3.eth.getChainId();
       if (chainId) {
-        this.setChain(chainId);
+        this.setChain(chainId, false);
       }
 
       this.walletConnectorStorage().set(connector);
 
       if (!chainId) {
         chainId = await this.web3.eth.getChainId();
-        this.setChain(chainId);
+        this.setChain(chainId, false);
       }
 
       // Set provider state
