@@ -364,6 +364,31 @@ class Web3Provider extends React.PureComponent {
     }, type);
   }
 
+   /**
+   * Sets a provider of chainId and connector to the web3.
+   * @param {number} chainId 
+   * @returns {void}
+   */
+  async setProvider(chainId) {
+    if (!this.web3) return;
+
+    const { connector } = this.state;
+    const ethereumObject = getConnectorObject(connector, chainId);
+    if (!ethereumObject) {
+      if (showErrorMessage) {
+        toast.error('RPC Provider error.');
+      }
+
+      return;
+    }
+
+    if (connector === CONNECTORS.WALLET_CONNECT) {
+      await provider.enable();
+    }
+
+    this.web3.setProvider(ethereumObject.provider);
+  }
+
   /**
    * Switch to another chain
    * @param id {integer} chainID
@@ -378,6 +403,9 @@ class Web3Provider extends React.PureComponent {
         return;
       }
 
+      // Set new provider for current
+      // chain and connector.
+      this.setProvider(id);
       this.network.initNetwork(id);
       if (!this.network.isFine(id)) {
         if (!id) toast.error(`Check your network connection`);
@@ -531,6 +559,10 @@ class Web3Provider extends React.PureComponent {
         throw new Error('No accounts connected');
       }
 
+      this.setState({
+        connector
+      });
+
       // Set the chain id after an account address setted
       // because the address maybe empty.
       let chainId = await this.web3.eth.getChainId();
@@ -550,7 +582,6 @@ class Web3Provider extends React.PureComponent {
       this.setState({
         isConnected: true,
         accountAddress,
-        connector
       });
 
       // Clear old events
