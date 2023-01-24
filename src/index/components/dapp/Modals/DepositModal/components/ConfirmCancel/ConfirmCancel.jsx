@@ -61,9 +61,7 @@ function ConfirmCancel({ reservation_id, amount, currency, ...props }) {
         <Lang name="fiatRefillCard_cancelReservation_confirmTitle" />
       </h3>
       <p className="secondary default medium">
-        <FormattedText
-          text={getLang('fiatRefillCard_cancelReservation_confirmText')}
-        />
+        <FormattedText lang="fiatRefillCard_cancelReservation_confirmText" />
       </p>
       <Col className="buttons">
         <Button type="lightBlue" onClick={onCancel}>

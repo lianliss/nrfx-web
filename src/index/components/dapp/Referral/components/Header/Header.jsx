@@ -70,7 +70,7 @@ function Header({
       <Col>
         <h1>{title}</h1>
         <p className="subtitle">
-          <FormattedText text={subtitle} className="blue" />
+          <FormattedText lang={subtitle} className="blue" />
         </p>
         <a
           className="link blue-gradient-text"
