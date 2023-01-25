@@ -186,8 +186,9 @@ function Exchanger(props) {
    * Update fiats tokens list and their balances.
    * Sets default fiat
    */
-  fiatsUpdate = () => {
-    updateFiats().then(fiats => {
+  fiatsUpdate = async () => {
+    setFiatsLoaded(false);
+    await updateFiats().then(fiats => {
       const currencySymbol = router.getState().params.currency;
       if (!fiatSelected) {
         const initialCurrency = fiats[userId]
@@ -201,10 +202,8 @@ function Exchanger(props) {
           setFiat(fiatSymbol);
         }
       }
-      setFiatsLoaded(true);
-    }).catch(error => {
-
     });
+    setFiatsLoaded(true);
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);
   };
 
