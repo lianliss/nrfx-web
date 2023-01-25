@@ -6,85 +6,44 @@ import DappContainer from '../../../components/cabinet/DappContainer/DappContain
 import CabinetSidebar from 'src/index/components/dapp/CabinetSidebar/CabinetSidebar';
 import TestnetOverlay from 'dapp/TestnetOverlay/TestnetOverlay';
 
-// Pages
-import {
-  TransactionHistory,
-  Farming,
-  SwitchPage,
-  Exchanger,
-  CabinetValidator,
-  CabinetWallets,
-  Currency,
-  Referral,
-  SocialMedia,
-  Team,
-} from 'src/index/components/dapp';
-
 // Utils
-import * as PAGES from 'src/index/constants/pages';
+import { DAPP, DAPP_EXCHANGE } from 'src/index/constants/pages';
 import router from 'src/router';
+import { Web3Context } from 'src/services/web3Provider';
+import { getFinePage, pageIsFine } from './utils/pageUtils';
+import _ from 'lodash';
 
-export class DappCabinet extends Component {
+const DEFAULT_DAPP_PAGE = DAPP_EXCHANGE;
+
+class DappCabinet extends Component {
   componentDidMount() {
-    if (this.props.route.name === PAGES.DAPP) {
-      router.navigate(PAGES.DAPP_EXCHANGE);
+    if (this.props.route.name === DAPP) {
+      router.navigate(DEFAULT_DAPP_PAGE);
+    }
+
+    this.redirectToFine();
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevRoute = _.get(prevProps, 'route.name');
+    const currentRoute = _.get(this, 'props.route.name');
+    if (prevRoute === currentRoute) return;
+
+    this.redirectToFine();
+  }
+
+  redirectToFine() {
+    const routeName = this.props.route.name;
+    const chainId = this.props.chainId;
+
+    if (!pageIsFine(routeName, chainId) && routeName !== DEFAULT_DAPP_PAGE) {
+      router.navigate(DEFAULT_DAPP_PAGE);
     }
   }
 
   render() {
     const { route, adaptive } = this.props;
-
-    // Set page component
-    let Component = Exchanger;
-    let mainnetOnly = false;
-    let testnetOnly = false;
-
-    switch (route.name) {
-      case PAGES.DAPP_WALLET:
-        Component = CabinetWallets;
-        mainnetOnly = true;
-        break;
-      case PAGES.DAPP_CURRENCY:
-        Component = Currency;
-        mainnetOnly = true;
-        break;
-      case PAGES.DAPP_EXCHANGE:
-        Component = Exchanger;
-        mainnetOnly = false;
-        break;
-      case PAGES.DAPP_TRANSACTION_HISTORY:
-        Component = TransactionHistory;
-        mainnetOnly = true;
-        break;
-      case PAGES.DAPP_SWAP:
-      case PAGES.LIQUIDITY:
-      case PAGES.TRANSACTIONS:
-        Component = SwitchPage;
-        mainnetOnly = true;
-        break;
-      case PAGES.FARMING:
-        Component = Farming;
-        testnetOnly = true;
-        break;
-      case PAGES.DAPP_VALIDATOR:
-        Component = CabinetValidator;
-        break;
-      case PAGES.DAPP_REFERRAL:
-      case PAGES.DAPP_REFERRAL_EXCHANGER:
-      case PAGES.DAPP_REFERRAL_FARMING:
-        Component = Referral;
-        mainnetOnly = true;
-        break;
-      case PAGES.DAPP_SOCIAL_MEDIA:
-        Component = SocialMedia;
-        break;
-      case PAGES.DAPP_TEAM:
-        Component = Team;
-        break;
-      default:
-        Component = Exchanger;
-    }
-    // ------
+    const { Component, mainnetOnly, testnetOnly } = getFinePage(route.name);
 
     return (
       <DappContainer
@@ -99,7 +58,17 @@ export class DappCabinet extends Component {
   }
 }
 
+const DappWrapper = (props) => {
+  const { network, chainId } = React.useContext(Web3Context);
+  const memoizedDappCabinet = React.useMemo(
+    () => <DappCabinet {...props} network={network} chainId={chainId} />,
+    [props, network, chainId]
+  );
+
+  return memoizedDappCabinet;
+};
+
 export default connect((state) => ({
   route: state.router.route,
   adaptive: state.default.adaptive,
-}))(DappCabinet);
+}))(DappWrapper);
