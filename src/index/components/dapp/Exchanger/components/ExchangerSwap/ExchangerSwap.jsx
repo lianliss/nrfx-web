@@ -365,7 +365,7 @@ function ExchangerSwap(props) {
   // Fetch the outAmount and set it to the state.
   const handleFetchOutAmount = async () => {
     const outAmount = await getOutAmount(1);
-    if (!outAmount || !isFinite(outAmount)) return;
+    if (!outAmount) return;
 
     setOutputRate(outAmount);
     return outAmount;
