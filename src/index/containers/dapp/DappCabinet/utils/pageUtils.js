@@ -16,7 +16,7 @@ import * as PAGES from 'src/index/constants/pages';
 import dappPages from '../constants/dappPages';
 import _ from 'lodash';
 
-export const getFinePage = (routeName, chainId) => {
+export const getFinePage = (routeName) => {
   // Set page component
   let Component = Exchanger;
   let mainnetOnly = false;
@@ -79,8 +79,6 @@ export const pageIsFine = (routeName, chainId) => {
 
   const dappPageChains = _.get(dappPage, 'chains', []);
   const isFine = dappPageChains.includes(chainId);
-  console.log(dappPageChains);
-  console.log(isFine);
 
   return isFine;
 };

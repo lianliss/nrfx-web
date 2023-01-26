@@ -26,8 +26,11 @@ class DappCabinet extends Component {
 
   componentDidUpdate(prevProps) {
     const prevRoute = _.get(prevProps, 'route.name');
-    const currentRoute = _.get(this, 'props.route.name');
-    if (prevRoute === currentRoute) return;
+    const nextProps = _.get(this, 'props.route.name');
+    const prevChainId = _.get(prevProps, 'chainId');
+    const nextChainId = _.get(this, 'props.chainId');
+
+    if (prevRoute === nextProps && prevChainId === nextChainId) return;
 
     this.redirectToFine();
   }
@@ -59,7 +62,8 @@ class DappCabinet extends Component {
 }
 
 const DappWrapper = (props) => {
-  const { network, chainId } = React.useContext(Web3Context);
+  const { network } = React.useContext(Web3Context);
+  const { chainId } = network;
   const memoizedDappCabinet = React.useMemo(
     () => <DappCabinet {...props} network={network} chainId={chainId} />,
     [props, network, chainId]

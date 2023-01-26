@@ -5,7 +5,15 @@ import SVG from 'utils/svg-wrap';
 
 import './SidebarItem.less';
 
-function SidebarItem({ title, icon, children, onClick, active, href, disabled }) {
+function SidebarItem({
+  title,
+  icon,
+  children,
+  onClick,
+  active,
+  href,
+  disabled,
+}) {
   const [childIsVisible, setChildIsVisible] = React.useState(active);
   const className = cn({
     SidebarItem: true,
@@ -73,4 +81,4 @@ SidebarItem.defaultProps = {
   disabled: false,
 };
 
-export default SidebarItem;
+export default React.memo(SidebarItem);
