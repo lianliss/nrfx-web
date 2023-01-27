@@ -1,5 +1,21 @@
 const ETHER_FIATS = [
   {
+    name: "United States Dollar on Narfex",
+    symbol: "USD",
+    address: "0x26F80c0107070a8522ecdfae3a201719B1AFd4f8",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
+  },
+  {
+    name: "Euro on Narfex",
+    symbol: "EUR",
+    address: "0x3095c04ca3C9c78CD0F9Ea2a3Fa0511998585Df9",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/euro.svg"
+  },
+  {
     name: "Russian Ruble on Narfex",
     symbol: "RUB",
     address: "0x5E11E947e69e8e6267e28C3db9425acd3AA4B489",
@@ -14,6 +30,70 @@ const ETHER_FIATS = [
     chainId: 1,
     decimals: 6,
     logoURI: "https://static.narfex.com/img/currencies/indonesian-rupiah.svg"
+  },
+  {
+    name: "Ukrainian Hryvnia on Narfex",
+    symbol: "UAH",
+    address: "0x4f272815fb641082b0291025016aebEBBC6Cf0D7",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/uah-gryvnya.svg"
+  },
+  {
+    name: "Chinese Yuan on Narfex",
+    symbol: "CNY",
+    address: "0x0E6e3EbE8a1b34E30CE903fd82105FacdFB7965E",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/yuan-cny.svg"
+  },
+  {
+    name: "Polish Zloty on Narfex",
+    symbol: "PLN",
+    address: "0x52a7bdBE5E7F285f34D2598cc5629Bc3279870Cb",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/pln.svg"
+  },
+  {
+    name: "Thai Baht on Narfex",
+    symbol: "THB",
+    address: "0x109F210b62ee8fF19Fd847936338Bc51d22dc7E7",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/thb.svg"
+  },
+  {
+    name: "Vietnamese Dong on Narfex",
+    symbol: "VND",
+    address: "0xE2f2D206fDB9FC6ddfbaEcA7D916493c5d76987F",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/vnd.svg"
+  },
+  {
+    name: "Turkish Lire on Narfex",
+    symbol: "TRY",
+    address: "0x5542E28DccF582192c36C41C1c9Aad4e9Dd85e20",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/try.svg"
+  },
+  {
+    name: "British Pound on Narfex",
+    symbol: "GBP",
+    address: "0xf90250932472961DC80a0a0654A074D3e37188bB",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/gbp-pound.svg"
+  },
+  {
+    name: "Canadian Dollar on Narfex",
+    symbol: "CAD",
+    address: "0x7099f572f039E44ACc2D8E4e024FB5507bCFE252",
+    chainId: 1,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/cad.svg"
   },
 ];
 
