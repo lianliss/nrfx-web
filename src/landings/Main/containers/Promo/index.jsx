@@ -49,7 +49,7 @@ function Promo({ adaptive, isLoaded, setIsLoaded }) {
             <Col>
               <div ref={titleRef}>
                 <FormattedText
-                  text={getLang('main_landing_title')}
+                  lang="main_landing_title"
                   className="blue"
                   regularExpression={regexes.betweenCharacters}
                   tag="h1"

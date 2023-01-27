@@ -1,20 +1,23 @@
 import React from 'react';
+import { getLang } from 'utils';
 
-// Get regularExpression in string (text)
+// Get regularExpression in string (text||lang)
 // and insert to span with className from props.
 function FormattedText({
   text,
+  lang,
   className = '',
   regularExpression = /(-?\d(\.\d+)?%?)/g,
   tag: Tag = 'span',
 }) {
-  const stringForHtml = text
+  const initialString = text ? text : getLang(lang, true);
+  const stringForHtml = initialString
+    .replace(/(\\n|\n)/g, '<br />')
     .replace(regularExpression, (x) => {
       const result = x.replace('{', '').replace('}', '');
 
       return `<span class="${className}">${result}</span>`;
-    })
-    .replace('\n', '<br />');
+    });
 
   return <Tag dangerouslySetInnerHTML={{ __html: stringForHtml }} />;
 }
