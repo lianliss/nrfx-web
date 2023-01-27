@@ -23,6 +23,8 @@ import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 import wei from 'utils/wei';
 import * as options from './constants/options';
+import isTestnet from 'src/utils/isTestnet';
+import { isMainnet } from 'src/services/multichain/chains';
 
 function Header(props) {
   const context = React.useContext(Web3Context);
@@ -246,13 +248,17 @@ const ChainSelect = React.memo(
       [isConnected]
     );
 
-    const defaultValue = network.isFine(chainId)
+    const cryptoOptions = options.cryptoOptions.filter((option) =>
+      isTestnet ? !isMainnet[option.value] : isMainnet[option.value]
+    );
+
+    const defaultValue = cryptoOptions.find((o) => o.value === chainId)
       ? null
       : options.defaultValue(chainId);
 
     const allOptions = defaultValue
-      ? [defaultValue, ...options.cryptoOptions]
-      : options.cryptoOptions;
+      ? [defaultValue, ...cryptoOptions]
+      : cryptoOptions;
 
     return (
       <BottomSheetSelect
