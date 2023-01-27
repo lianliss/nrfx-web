@@ -425,6 +425,7 @@ class Web3Provider extends React.PureComponent {
       }
       this.setState({
         tokens: this.network.displayTokens,
+        fiats: {},
         poolsList: this.network.poolsList,
         chainId: id,
       });

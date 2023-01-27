@@ -362,6 +362,15 @@ function ExchangerSwap(props) {
     handleFiatChange(paramFiat);
   };
 
+  // Fetch the outAmount and set it to the state.
+  const handleFetchOutAmount = async () => {
+    const outAmount = await getOutAmount(1);
+    if (!outAmount || !isFinite(outAmount)) return;
+
+    setOutputRate(outAmount);
+    return outAmount;
+  }
+
   React.useEffect(() => {
     if (paramsTokenLoaded.fiat && paramsTokenLoaded.token) return;
     if (!isConnected) return;
@@ -382,14 +391,23 @@ function ExchangerSwap(props) {
 
     handleFiatInput(fiatAmount);
   }, [fiat, coin]);
-  
-  // Update rates display (1 RUB = 123 USDT)
+
+  // Get the out amount of coins changes.
   React.useEffect(() => {
     if (!fiat || !coin) return;
-    getOutAmount(1).then(outAmount => {
-      setOutputRate(outAmount);
-    });
+
+    setOutputRate(0);
+    handleFetchOutAmount();
   }, [fiatSymbol, coinSymbol, isConnected]);
+
+  // Get the out amount of fiatsLoaded.
+  React.useEffect(() => {
+    if (!fiatsLoaded) return;
+    if (!fiat || !coin) return;
+    if (!fiat.isFiat && !coin.isFiat) return;
+
+    handleFetchOutAmount();
+  }, [fiatsLoaded]);
 
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
@@ -465,7 +483,8 @@ function ExchangerSwap(props) {
                 </div>
               </div>
               <div className="ExchangerSwap__dropdown-rate">
-                1 {coinSymbol} ≈ {getFinePrice(1 / outputRate)} {fiatSymbol}
+                1 {coinSymbol} ≈ {getFinePrice(outputRate ? 1 / outputRate : 0)}{' '}
+                {fiatSymbol}
               </div>
             </div>
           </div>

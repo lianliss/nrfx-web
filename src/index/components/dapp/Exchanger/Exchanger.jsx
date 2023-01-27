@@ -186,8 +186,9 @@ function Exchanger(props) {
    * Update fiats tokens list and their balances.
    * Sets default fiat
    */
-  fiatsUpdate = () => {
-    updateFiats().then(fiats => {
+  fiatsUpdate = async () => {
+    setFiatsLoaded(false);
+    await updateFiats().then(fiats => {
       const currencySymbol = router.getState().params.currency;
       if (!fiatSelected) {
         const initialCurrency = fiats[userId]
@@ -201,10 +202,8 @@ function Exchanger(props) {
           setFiat(fiatSymbol);
         }
       }
-      setFiatsLoaded(true);
-    }).catch(error => {
-
     });
+    setFiatsLoaded(true);
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);
   };
 
@@ -340,26 +339,26 @@ function Exchanger(props) {
 
   // Set initial fiat
   React.useEffect(() => {
-    if (fiatSelected) return;
-
+    // Filters for select the fiat.
     const isUSD = (t) => t.symbol !== coinSelected?.symbol && t.symbol === 'USD';
     const isFineFiat = (t) => t.symbol !== coinSelected?.symbol;
     const isInitialFiat = (t) => t.symbol === initialCurrencySymbol;
 
     const allCoins = [...fiatTokens, ...coins];
-    const USDFromCoins = allCoins.find(isUSD);
-    const availableFiat = allCoins.find(isFineFiat);
+    const getInitialFiat = () => allCoins.find(isInitialFiat);
+    const getAvailableFiat = () => allCoins.find(isFineFiat);
+    const getUSDFromCoins = () => allCoins.find(isUSD);
 
     if (!initialCurrencySymbol) {
-      setFiat(USDFromCoins || availableFiat);
+      setFiat(getUSDFromCoins() || getAvailableFiat());
 
       return;
     }
 
-    if (!isConnected && initialCurrencySymbol) {
-      const initialFiat = allCoins.find(isInitialFiat);
-      setFiat(initialFiat || availableFiat);
-    }
+    const fineFiat =
+      getInitialFiat() || getAvailableFiat() || getUSDFromCoins();
+
+    setFiat(fineFiat);
   }, [fiats]);
 
   return (
