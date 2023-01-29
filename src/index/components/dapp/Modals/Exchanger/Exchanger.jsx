@@ -39,7 +39,8 @@ function Exchanger({ ...props }) {
     getWeb3,
     transaction,
     getBSCScanLink,
-    network
+    network,
+    referAddress,
   } = context;
   const [inAmount, setInAmount] = React.useState(fiatAmount);
   const [outAmount, setOutAmount] = React.useState(coinAmount);
@@ -147,7 +148,7 @@ function Exchanger({ ...props }) {
         wei.to(isExactOut ? outAmount : inAmount, amountDecimals),
         wei.to(isExactOut ? inAmountMax : outAmountMin, limitDecimals),
         Math.floor(Date.now() / 1000) + deadline * 60,
-        '0x0000000000000000000000000000000000000000',
+        referAddress,
       ], value);
       openStateModal('transaction_submitted', {
         txLink: getBSCScanLink(receipt),

@@ -61,7 +61,8 @@ class Web3Provider extends React.PureComponent {
     poolsList: [],
     prices: {},
     fiats: {},
-    connector: CONNECTORS.METAMASK
+    connector: CONNECTORS.METAMASK,
+    referAddress: ZERO_ADDRESS,
   };
 
   ethereum = null;
@@ -468,6 +469,7 @@ class Web3Provider extends React.PureComponent {
         isConnected: true,
         accountAddress,
       });
+      this.getReferAddress();
     }
   };
 
@@ -584,6 +586,7 @@ class Web3Provider extends React.PureComponent {
         isConnected: true,
         accountAddress,
       });
+      this.getReferAddress();
 
       // Clear old events
       this.ethereumUnsubscribe();
@@ -1794,6 +1797,26 @@ class Web3Provider extends React.PureComponent {
       return result;
     } catch (error) {
       console.error('[getReferHash]', error);
+    }
+  }
+  
+  async getReferAddress() {
+    try {
+      let result = await this.backendRequest({},
+        `Get refer address`,
+        'refer/address',
+        'get',
+      );
+      if (result.toLowerCase() === this.state.accountAddress.toLowerCase()) {
+        // Refer address can't be the account address
+        result = ZERO_ADDRESS;
+      }
+      this.setState({
+        referAddress: result,
+      });
+      return result;
+    } catch (error) {
+      console.error('[getReferAddress]', error);
     }
   }
 
