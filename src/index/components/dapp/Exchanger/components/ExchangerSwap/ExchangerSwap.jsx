@@ -101,7 +101,7 @@ function ExchangerSwap(props) {
   const isSecondFiat = _.get(coin, 'isFiat', false);
 
   // Fiat price
-  const fiatBalance = wei.from(_.get(fiat, 'balance', "0"));
+  const fiatBalance = wei.from(_.get(fiat, 'balance', "0"), _.get(fiat, 'decimals', 18));
   const fiatPrice = getTokenPrice(fiat);
 
   // Calculate coin price
