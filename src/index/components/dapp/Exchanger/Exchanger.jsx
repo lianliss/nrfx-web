@@ -193,7 +193,7 @@ function Exchanger(props) {
       if (!fiatSelected) {
         const initialCurrency = fiats[userId]
           .find(fiat => fiat.symbol === currencySymbol);
-        if (fiatSelected.symbol !== initialCurrency.symbol) {
+        if (fiatSelected.symbol !== _.get(initialCurrency, 'symbol')) {
           setFiat(initialCurrency || fiats[userId][0]);
         }
       } else {

@@ -18,6 +18,7 @@ class Network {
     this.poolsList = contractAddresses.POOLS_LIST[chainId];
     this.tokens = initialTokens.TOKENS[chainId];
     this.displayTokens = initialTokens.DISPLAY_TOKENS[chainId];
+    this.defaultToken = initialTokens.CHAIN_TOKENS[chainId];
     this.wrapToken = initialTokens.WRAP_TOKENS[chainId];
     this.mainnet = chains.isMainnet[chainId];
     this.tokenABI = initialTokens.ABI[chainId];
