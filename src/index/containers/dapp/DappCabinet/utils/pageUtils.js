@@ -37,13 +37,13 @@ export const getFinePage = (routeName) => {
       break;
     case PAGES.DAPP_TRANSACTION_HISTORY:
       Component = TransactionHistory;
-      mainnetOnly = true;
+      mainnetOnly = false;
       break;
     case PAGES.DAPP_SWAP:
     case PAGES.LIQUIDITY:
     case PAGES.TRANSACTIONS:
       Component = SwitchPage;
-      mainnetOnly = true;
+      mainnetOnly = false;
       break;
     case PAGES.FARMING:
       Component = Farming;
@@ -56,7 +56,7 @@ export const getFinePage = (routeName) => {
     case PAGES.DAPP_REFERRAL_EXCHANGER:
     case PAGES.DAPP_REFERRAL_FARMING:
       Component = Referral;
-      mainnetOnly = true;
+      mainnetOnly = false;
       break;
     case PAGES.DAPP_SOCIAL_MEDIA:
       Component = SocialMedia;
