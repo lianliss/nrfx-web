@@ -1,4 +1,4 @@
-import { ETHEREUM_MAINNET, BSC_MAINNET, BSC_TESTNET } from './chains';
+import { ETHEREUM_MAINNET, BSC_MAINNET, BSC_TESTNET, NETWORKS_DATA } from './chains';
 import baseTokens from 'src/index/constants/baseTokens';
 
 // Decimals
@@ -180,8 +180,13 @@ export const DISPLAY_TOKENS = {
   ],
 };
 
+// Common Bases
+const initialCommonBases = ['NRFX', 'DAI', 'USDC', 'USDT', 'WBTC', 'WETH'];
+const getCommonBases = (chainId, arr = []) =>
+  [NETWORKS_DATA[chainId].defaultSymbol].concat(arr, initialCommonBases);
+
 export const COMMON_BASES = {
-  [ETHEREUM_MAINNET]: ['eth', 'nrfx', 'usdc'],
-  [BSC_MAINNET]: ['bnb', 'nrfx', 'usdc'],
-  [BSC_TESTNET]: ['bnb'],
+  [ETHEREUM_MAINNET]: getCommonBases(ETHEREUM_MAINNET),
+  [BSC_MAINNET]: getCommonBases(BSC_MAINNET),
+  [BSC_TESTNET]: getCommonBases(BSC_TESTNET),
 };
