@@ -179,3 +179,9 @@ export const DISPLAY_TOKENS = {
     TOKENS[BSC_TESTNET].dai,
   ],
 };
+
+export const COMMON_BASES = {
+  [ETHEREUM_MAINNET]: ['eth', 'nrfx', 'usdc'],
+  [BSC_MAINNET]: ['bnb', 'nrfx', 'usdc'],
+  [BSC_TESTNET]: ['bnb'],
+};
