@@ -39,7 +39,7 @@ export default [
   },
   {
     name: PAGES.DAPP_REFERRAL,
-    chains: [56, 97],
+    chains: [1, 56, 97],
   },
   {
     name: PAGES.DAPP_REFERRAL_EXCHANGER,
