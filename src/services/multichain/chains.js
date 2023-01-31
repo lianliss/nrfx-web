@@ -18,18 +18,21 @@ export const DEFAULT_CHAIN = BSC_MAINNET;
 export const NETWORKS_DATA = {
   [ETHEREUM_MAINNET]: {
     networkID: 'ETH',
+    title: 'Ethereum',
     fiatDecimals: 6,
     scan: 'https://etherscan.io',
     defaultSymbol: 'ETH',
   },
   [BSC_MAINNET]: {
     networkID: 'BSC',
+    title: 'BSC',
     fiatDecimals: 18,
     scan: 'https://bscscan.com',
     defaultSymbol: 'BNB',
   },
   [BSC_TESTNET]: {
     networkID: 'BSCt',
+    title: 'BSC Testnet',
     fiatDecimals: 18,
     scan: 'https://testnet.bscscan.com',
     defaultSymbol: 'BNB',

@@ -29,7 +29,8 @@ import { marketCoins } from 'src/services/coingeckoApi';
 import { getTokenFromSymbol } from "./web3Provider/utils";
 import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
 import { CHAIN_TOKENS } from "./multichain/initialTokens";
-import { DEFAULT_CHAIN } from "./multichain/chains";
+import { DEFAULT_CHAIN, NETWORKS_DATA } from "./multichain/chains";
+import { getLang } from "utils";
 
 export const Web3Context = React.createContext();
 
@@ -1408,6 +1409,13 @@ class Web3Provider extends React.PureComponent {
       return true;
     } catch (error) {
       console.log('[switchToChain]', error);
+
+      toast.warning(
+        getLang('toast_switch_to_chain_warning').replace(
+          '{chain}',
+          _.get(NETWORKS_DATA[chainId], 'title', '')
+        )
+      );
       if (this.requiredChain === chainId) {
         // return await this.switchToChain(chainId, false);
       }
