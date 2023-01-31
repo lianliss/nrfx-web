@@ -22,6 +22,7 @@ class Network {
     this.wrapToken = initialTokens.WRAP_TOKENS[chainId];
     this.mainnet = chains.isMainnet[chainId];
     this.tokenABI = initialTokens.ABI[chainId];
+    this.commonBases = initialTokens.COMMON_BASES[chainId];
   }
 
   isFine(id) {

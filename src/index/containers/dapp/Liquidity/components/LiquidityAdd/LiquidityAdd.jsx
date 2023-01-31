@@ -343,6 +343,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
 
             setIsToken(false);
           }}
+          commonBases={network.commonBases}
           {...context}
         />
       )}

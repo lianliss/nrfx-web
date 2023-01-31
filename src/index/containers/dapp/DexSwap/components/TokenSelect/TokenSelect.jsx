@@ -15,9 +15,6 @@ import { SwitchTabs } from 'src/ui';
 import SectionBlock from '../SectionBlock/SectionBlock';
 import WalletIcon from 'src/index/components/dapp/WalletIcon/WalletIcon';
 
-// Constants
-import commonBases from './constants/commonBases';
-
 const web3 = new Web3();
 
 class TokenSelect extends React.PureComponent {
@@ -72,6 +69,7 @@ class TokenSelect extends React.PureComponent {
       accountAddress,
       getTokenBalanceKey,
       selected,
+      commonBases,
       disableSwitcher,
       disableCommonBases,
       size,

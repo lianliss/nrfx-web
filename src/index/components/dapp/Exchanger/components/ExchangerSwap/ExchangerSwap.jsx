@@ -530,6 +530,7 @@ function ExchangerSwap(props) {
             onChange={value => handleFiatChange(value)}
             onClose={() => setIsSelectFiat(false)}
             selected={fiat}
+            commonBases={network.commonBases}
             isAdaptive={isAdaptive}
             {...context}
             defaultList="fiats"
@@ -547,6 +548,7 @@ function ExchangerSwap(props) {
           onChange={value => handleCoinChange(value)}
           onClose={() => setIsSelectCoin(false)}
           selected={coin}
+          commonBases={network.commonBases}
           isAdaptive={isAdaptive}
           {...context}
           tokens={[...coins]}
