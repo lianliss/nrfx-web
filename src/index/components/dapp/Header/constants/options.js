@@ -1,21 +1,24 @@
+import _ from 'lodash';
 import * as chains from 'src/services/multichain/chains';
 import { BottomSheetSelect } from '../../Select';
 
 const { option } = BottomSheetSelect;
 
+const getChainTitle = (chainId) => _.get(chains.NETWORKS_DATA[chainId], 'title', '');
+
 export const cryptoOptions = [
   option(
-    'BSC',
+    getChainTitle(chains.BSC_MAINNET),
     chains.BSC_MAINNET,
     require('src/asset/icons/wallets/bsc.svg').default
   ),
   option(
-    'BSC Testnet',
+    getChainTitle(chains.BSC_TESTNET),
     chains.BSC_TESTNET,
     require('src/asset/icons/wallets/bsc.svg').default
   ),
   option(
-    'Ethereum',
+    getChainTitle(chains.ETHEREUM_MAINNET),
     chains.ETHEREUM_MAINNET,
     require('src/asset/icons/wallets/eth.svg').default
   ),
