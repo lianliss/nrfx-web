@@ -105,9 +105,8 @@ const items = [
         },
         {
           title: 'dapp_sidebar_more_audit',
-          link: PAGES.DAPP_SWAP,
-          type: 'route',
-          disabled: true,
+          link: 'https://docs.narfex.com/narfex/main/security-audit',
+          type: 'href',
         },
         {
           title: 'dapp_sidebar_more_governance',
