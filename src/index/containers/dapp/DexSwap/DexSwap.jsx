@@ -705,6 +705,7 @@ class DexSwap extends React.PureComponent {
                 disableSwitcher
                 {...this.context}
                 fiats={this.context.getFiatsArray()}
+                commonBases={this.context.network.commonBases}
               />
             )}
             {isSettings && (

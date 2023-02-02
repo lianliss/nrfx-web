@@ -1,4 +1,4 @@
-import { ETHEREUM_MAINNET, BSC_MAINNET, BSC_TESTNET } from './chains';
+import { ETHEREUM_MAINNET, BSC_MAINNET, BSC_TESTNET, NETWORKS_DATA } from './chains';
 import baseTokens from 'src/index/constants/baseTokens';
 
 // Decimals
@@ -40,6 +40,14 @@ export const TOKENS = {
       chainId: ETHEREUM_MAINNET,
       logoURI:
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png',
+    },
+    nrfx: {
+      name: 'Narfex',
+      symbol: 'NRFX',
+      address: '0x01b443495834D667b42f54d2b77eEd6951eD94a4',
+      chainId: ETHEREUM_MAINNET,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
     },
     wrapETH: {
       name: 'Wrapped Ether',
@@ -161,7 +169,7 @@ export const DISPLAY_TOKENS = {
   [ETHEREUM_MAINNET]: [
     TOKENS[ETHEREUM_MAINNET].eth,
     TOKENS[ETHEREUM_MAINNET].usdt,
-    //TOKENS[ETHEREUM_MAINNET].nrfx,
+    TOKENS[ETHEREUM_MAINNET].nrfx,
     ...baseTokens.filter((t) => t.chainId === ETHEREUM_MAINNET),
   ],
   [BSC_MAINNET]: [
@@ -178,4 +186,15 @@ export const DISPLAY_TOKENS = {
     TOKENS[BSC_TESTNET].usdt,
     TOKENS[BSC_TESTNET].dai,
   ],
+};
+
+// Common Bases
+const initialCommonBases = ['NRFX', 'DAI', 'USDC', 'USDT', 'WBTC', 'WETH'];
+const getCommonBases = (chainId, arr = []) =>
+  [NETWORKS_DATA[chainId].defaultSymbol].concat(arr, initialCommonBases);
+
+export const COMMON_BASES = {
+  [ETHEREUM_MAINNET]: getCommonBases(ETHEREUM_MAINNET),
+  [BSC_MAINNET]: getCommonBases(BSC_MAINNET),
+  [BSC_TESTNET]: getCommonBases(BSC_TESTNET),
 };

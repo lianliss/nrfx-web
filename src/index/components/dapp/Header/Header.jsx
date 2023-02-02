@@ -267,7 +267,6 @@ const ChainSelect = React.memo(
         value={isConnected ? chainId : network.chainId}
         defaultValue={defaultValue}
         onChange={handleCryptoChange}
-        isDisabled={isConnected && connector !== connectors.METAMASK}
       />
     );
   }
