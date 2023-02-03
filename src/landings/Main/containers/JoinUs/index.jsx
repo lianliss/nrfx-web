@@ -9,12 +9,14 @@ import SuggestiveBox from '../../components/SuggestiveBox';
 import { sizes } from '../../components/SuggestiveBox/constants/types';
 import SVG from 'utils/svg-wrap';
 import ShowIn from '../../components/ShowIn';
+import FormattedText from 'dapp/FormattedText/FormattedText';
 
 // Utils
 import useAdaptive from 'src/hooks/adaptive';
 import { DESKTOP } from 'src/index/constants/breakpoints';
 import { getLang } from 'utils';
 import company from 'src/index/constants/company';
+import regexes from 'src/index/constants/regexes.js';
 
 // Styles
 import './index.less';
@@ -45,9 +47,12 @@ function JoinUs({ adaptive }) {
           <ShowIn type="scroll">
             <SocialLinks adaptive={adaptive} />
           </ShowIn>
-          <p className="MainLanding-join-us__text">
-            {getLang('main_landing_join_us_description')}
-          </p>
+          <FormattedText
+            lang={'main_landing_join_us_description_test'}
+            tag="p"
+            tagClassName="MainLanding-join-us__text"
+            regularExpression={regexes.betweenCharacters}
+          />
           <Row
             className="MainLanding-join-us__buttons"
             wrap
