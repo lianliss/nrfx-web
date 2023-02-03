@@ -7,6 +7,7 @@ function FormattedText({
   text,
   lang,
   className = '',
+  tagClassName = '',
   regularExpression = /(-?\d(\.\d+)?%?)/g,
   tag: Tag = 'span',
 }) {
@@ -19,7 +20,12 @@ function FormattedText({
       return `<span class="${className}">${result}</span>`;
     });
 
-  return <Tag dangerouslySetInnerHTML={{ __html: stringForHtml }} />;
+  return (
+    <Tag
+      className={tagClassName}
+      dangerouslySetInnerHTML={{ __html: stringForHtml }}
+    />
+  );
 }
 
 export default FormattedText;
