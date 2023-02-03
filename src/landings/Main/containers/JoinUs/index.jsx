@@ -48,7 +48,7 @@ function JoinUs({ adaptive }) {
             <SocialLinks adaptive={adaptive} />
           </ShowIn>
           <FormattedText
-            lang={'main_landing_join_us_description_test'}
+            lang={'main_landing_join_us_description'}
             tag="p"
             tagClassName="MainLanding-join-us__text"
             regularExpression={regexes.betweenCharacters}
