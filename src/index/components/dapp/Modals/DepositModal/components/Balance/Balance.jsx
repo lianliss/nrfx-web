@@ -23,6 +23,7 @@ import { closeModal } from 'src/actions';
 import wei from 'src/utils/wei';
 import getFinePrice from 'src/utils/get-fine-price';
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
+import useUpdateReservation from 'src/hooks/dapp/useUpdateReservation';
 
 // Styles
 import './Balance.less';
@@ -51,6 +52,8 @@ function Balance(props) {
   const invoice = useSelector(state => _.get(state, `dapp.invoices.${fiatSymbol}`));
   
   const withdrawBanks = useSelector(state => _.get(state, `dapp.withdraw.banks.${fiatSymbol}`, []));
+
+  const { updateReservation } = useUpdateReservation();
 
   /**
    * Update "fiatSelected" — fiat token state.
@@ -146,15 +149,17 @@ function Balance(props) {
     }
     return null;
   };
-  
-  const handleFiatRefill = () => {
+
+  const handleFiatRefill = async () => {
     setTouched(true);
     const message = checkAmount();
     if (message) {
       toasts.error(message);
       return false;
     }
-    
+
+    await updateReservation(fiatSymbol);
+
     actions.openModal(
       'deposit_choose_bank',
       {

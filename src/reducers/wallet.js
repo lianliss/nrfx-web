@@ -73,6 +73,13 @@ export default function reduce(state = initialState, action = {}) {
       };
     }
 
+    case actionTypes.WALLET_DELETE_CARD_RESERVATION: {
+      return {
+        ...state,
+        cardReservation: null,
+      };
+    }
+
     case actionTypes.WALLET_HISTORY_SET: {
       return {
         ...state,

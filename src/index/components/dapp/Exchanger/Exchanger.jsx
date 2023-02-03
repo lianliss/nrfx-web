@@ -21,6 +21,7 @@ import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 import { openModal } from 'src/actions';
 import { LOGIN } from 'src/components/AuthModal/fixtures';
 import { getLang } from 'src/utils';
+import useUpdateReservation from 'src/hooks/dapp/useUpdateReservation';
 
 // Styles
 import './Exchanger.less';
@@ -38,9 +39,11 @@ function Exchanger(props) {
   const { route } = useRoute();
   const initialCurrencySymbol = route.params.currency;
   // const initialCoinSymbol = route.params.coin;
-  const methods = useSelector(state => state.fiat.banks);
   const rates = useSelector(web3RatesSelector);
   const context = React.useContext(Web3Context);
+
+  // Reservation
+  const { updateReservation, updateBanks } = useUpdateReservation();
 
   const {
     fiats, chainId, accountAddress,
@@ -208,18 +211,6 @@ function Exchanger(props) {
   };
 
   /**
-   * Updates bank list
-   */
-  const getBanks = () => {
-    web3Backend.getBanks().then(banks => {
-      dispatch({
-        type: actionTypes.FIAT_BANKS_UPDATE,
-        payload: banks,
-      });
-    });
-  };
-
-  /**
    * Updates the current reservation with current selected fiat
    */
   cardsUpdate = () => {
@@ -231,70 +222,7 @@ function Exchanger(props) {
         });
       }
     } else {
-      web3Backend.getReservation(fiatSymbol, accountAddress, network.networkID)
-        .then(data => {
-          const res = data[0];
-          if (!res) {
-            if (reservation) {
-              // If there was reservation before get available banks again
-              getBanks();
-              dispatch({
-                type: actionTypes.FIAT_TOPUP_DELETE,
-                payload: fiatSymbol,
-              });
-            }
-            return;
-          }
-          let payload = {};
-          payload[fiatSymbol] = res;
-          dispatch({
-            type: actionTypes.FIAT_TOPUP_UPDATE,
-            payload,
-          });
-
-          // Data for invoice
-          const method = methods.find(b => b.code === res.bank);
-          const bankName = method ? method.title : res.bank;
-          payload = {
-            reservation: {
-              id: res.operation_id,
-              amount: res.amount,
-              status: res.status,
-              fee: res.fee,
-            },
-            card: {
-              isCard: !!res.is_card,
-              number: res.number,
-              expire_in: res.book_expiration,
-              address: res.address,
-              routing_number: res.routing_number,
-              account_type: res.account_type,
-              iban: res.iban,
-              bic: res.bic,
-              short_code: res.short_code,
-              institution_number: res.institution_number,
-              transit_number: res.transit_number,
-              bank: {
-                code: res.bank,
-                name: bankName,
-                holder_name: res.holder_name,
-                currency: fiatSelected.symbol,
-              }
-            }
-          };
-          dispatch({
-            type: actionTypes.WALLET_SET_CARD_RESERVATION,
-            payload,
-          });
-        }).catch(error => {
-          console.error('[Exchanger][getReservation]', error);
-          if (reservation && reservation[fiatSymbol]) {
-            dispatch({
-              type: actionTypes.FIAT_TOPUP_DELETE,
-              payload: fiatSymbol,
-            });
-          }
-      });
+      updateReservation(fiatSymbol);
     }
     cardsUpdateTimeout = setTimeout(() => cardsUpdate(), UPDATE_DELAY);
   };
@@ -323,7 +251,7 @@ function Exchanger(props) {
   }, [accountAddress, chainId, isConnected, fiatSelected]);
 
   React.useEffect(() => {
-    getBanks();
+    updateBanks();
     getLimits();
   }, []);
 
