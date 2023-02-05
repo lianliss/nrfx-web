@@ -60,12 +60,14 @@ function Exchanger({ ...props }) {
     if (isExactOut) {
       getTokenContract(fiat).getInAmount(coin, outAmount).then(data => {
         setInAmount(data.inAmount);
+        setOutAmount(Number(outAmount.toFixed(9)));
         setRate(outAmount / data.inAmount);
         setPath(data.path);
         setPriceImpact(_.get(data, 'priceImpact', 0));
       });
     } else {
       getTokenContract(fiat).getOutAmount(coin, inAmount).then(data => {
+        setInAmount(Number(inAmount.toFixed(9)))
         setOutAmount(data.outAmount);
         setRate(data.outAmount / inAmount);
         setPath(data.path);
