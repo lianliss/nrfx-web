@@ -22,7 +22,7 @@ class TokenContract {
     this.contract = new (this.web3.eth.Contract)(
       isPairContract
         ? require('src/index/constants/ABI/PancakePair')
-        : this.network.tokenABI,
+        : require('src/index/constants/ABI/Bep20Token'),
       this.address,
     );
   }

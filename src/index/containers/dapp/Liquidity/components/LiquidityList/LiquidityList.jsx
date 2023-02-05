@@ -59,7 +59,7 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
   }, [poolsList, accountAddress, chainId]);
 
   const ItemContent = ({ item }) => {
-
+    
     const symbol0 = _.get(item, 'token0.symbol', '');
     const symbol1 = _.get(item, 'token1.symbol', '');
     const decimals0 = _.get(item, 'token0.decimals', 18);

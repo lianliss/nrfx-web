@@ -98,7 +98,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
       || selectedTokens[0].symbol === selectedTokens[1].symbol) {
       return;
     }
-
+    
     token0 = getTokenContract(selectedTokens[0]);
     token1 = getTokenContract(selectedTokens[1]);
 

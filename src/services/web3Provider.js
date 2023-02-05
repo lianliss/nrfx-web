@@ -718,7 +718,7 @@ class Web3Provider extends React.PureComponent {
         require('src/index/constants/ABI/PancakePair'),
         pairAddress,
       );
-
+      
       const data = await Promise.all([
         contract.methods.getReserves().call(),
         contract.methods.token0().call(),
@@ -759,7 +759,7 @@ class Web3Provider extends React.PureComponent {
       result.push(this.pairs[pairAddress]);
       return result;
     } catch (error) {
-      console.error('[getReserves]', this.getBSCScanLink(pairAddress), error);
+      console.error('[getReserves]', pairAddress, error);
     }
   }
 
