@@ -373,14 +373,12 @@ class Web3Provider extends React.PureComponent {
    * @returns {void}
    */
   async setProvider(chainId) {
-    if (!this.web3) {
-      const provider = new Web3.providers.HttpProvider(
-        CONTRACT_ADDRESSES[chainId].providerAddress
-      );
-      this.web3Host.setProvider(provider);
+    const hostProvider = new Web3.providers.HttpProvider(
+      CONTRACT_ADDRESSES[chainId].providerAddress
+    );
+    this.web3Host.setProvider(hostProvider);
 
-      return;
-    };
+    if (!this.web3) return;
 
     const { connector } = this.state;
     const ethereumObject = getConnectorObject(connector, chainId);
