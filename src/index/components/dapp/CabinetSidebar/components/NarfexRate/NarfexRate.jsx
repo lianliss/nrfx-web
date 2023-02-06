@@ -8,17 +8,18 @@ import WalletsList from '../../../WalletsList/WalletsList';
 import RateIndicator from 'src/ui/components/RateIndicator/RateIndicator';
 
 // Utils
-import { useSelector } from 'react-redux';
 import { simpleTokenPrice } from 'src/services/coingeckoApi';
-import Network from 'src/services/multichain/Network';
+import { Web3Context } from 'src/services/web3Provider';
+import { TOKENS } from 'src/services/multichain/initialTokens';
 
 function NarfexRate() {
-  const currentPrice = useSelector((state) => state.web3.rates.nrfx);
+  const { network, getTokenContract } = React.useContext(Web3Context);
+  const [currentPrice, setCurrentPrice] = React.useState(0);
   const [priceDifference, setPriceDifference] = React.useState(null);
-  const network = new Network(56);
 
   const getNarfexRate = () => {
     setPriceDifference(null);
+    setCurrentPrice(0);
     const narfexAddress = network.contractAddresses.narfexToken;
 
     simpleTokenPrice(narfexAddress, true).then((r) => {
@@ -26,11 +27,21 @@ function NarfexRate() {
 
       setPriceDifference(Number(resultChange));
     });
+
+    fetchRate().then((rate) => setCurrentPrice(rate));
+  };
+
+  const fetchRate = async () => {
+    const data = await getTokenContract(
+      TOKENS[network.chainId].nrfx
+    ).getOutAmount(TOKENS[network.chainId].usdc, 1);
+
+    return _.get(data, 'outAmount', 0);
   };
 
   React.useEffect(() => {
     getNarfexRate();
-  }, []);
+  }, [network.chainId]);
 
   return (
     <WalletsList>
@@ -40,7 +51,7 @@ function NarfexRate() {
         endTexts={[
           <span className="NarfexRate__large">
             $
-            <NumberFormat number={currentPrice ? currentPrice.toFixed(2) : 0} />
+            <NumberFormat number={currentPrice || 0} />
           </span>,
           <RateIndicator
             number={priceDifference}

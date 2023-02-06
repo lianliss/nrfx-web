@@ -31,6 +31,7 @@ import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
 import { CHAIN_TOKENS } from "./multichain/initialTokens";
 import { DEFAULT_CHAIN, NETWORKS_DATA } from "./multichain/chains";
 import { getLang } from "utils";
+import { CONTRACT_ADDRESSES } from "./multichain/contracts";
 
 export const Web3Context = React.createContext();
 
@@ -210,7 +211,7 @@ class Web3Provider extends React.PureComponent {
     const token1 = _token1.address ? _token1 : this.network.wrapToken;
 
     // Get all possible pairs combinations
-    const combinations = getAllPairsCombinations(token0, token1, this.state.chainId);
+    const combinations = getAllPairsCombinations(token0, token1, this.network.chainId);
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair
@@ -372,7 +373,14 @@ class Web3Provider extends React.PureComponent {
    * @returns {void}
    */
   async setProvider(chainId) {
-    if (!this.web3) return;
+    if (!this.web3) {
+      const provider = new Web3.providers.HttpProvider(
+        CONTRACT_ADDRESSES[chainId].providerAddress
+      );
+      this.web3Host.setProvider(provider);
+
+      return;
+    };
 
     const { connector } = this.state;
     const ethereumObject = getConnectorObject(connector, chainId);
