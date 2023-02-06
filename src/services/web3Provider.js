@@ -499,6 +499,8 @@ class Web3Provider extends React.PureComponent {
       isConnected: false,
       accountAddress: null,
     });
+
+    this.web3 = null;
   };
 
   onMessage = message => {
@@ -631,6 +633,8 @@ class Web3Provider extends React.PureComponent {
       default:
         break;
     }
+
+    this.web3 = null;
   }
 
   /**
