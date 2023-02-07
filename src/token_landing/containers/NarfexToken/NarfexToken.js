@@ -22,7 +22,13 @@ const NarfexToken = (props) => {
               {getLang('token_landing_buy_on_narfex')}
             </TokenButton>
             <a
-              href="https://pancakeswap.finance/swap?outputCurrency=0x3764Be118a1e09257851A3BD636D48DFeab5CAFE"
+              href={
+                'https://app.uniswap.org/#/swap' +
+                '?inputCurrency=' +
+                '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48' +
+                '&outputCurrency=0x01b443495834D667b42f54d2b77eEd6951eD94a4' +
+                '&slippage=3000'
+              }
               target="_blank"
             >
               <SVG src={require('asset/token/wallet.svg')} />

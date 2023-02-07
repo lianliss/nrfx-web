@@ -8,7 +8,8 @@ import { Web3Context } from '../services/web3Provider';
  * @returns {number} rate - Token rate
  */
 const useGetTokenRate = (tokenSymbol = '', switchToChain) => {
-  const { network, getTokenContract, web3 } = React.useContext(Web3Context);
+  const { network, getTokenContract, web3, isConnected } =
+    React.useContext(Web3Context);
   const [rate, setRate] = React.useState(0);
 
   const fetchRate = async () => {
@@ -34,7 +35,7 @@ const useGetTokenRate = (tokenSymbol = '', switchToChain) => {
     if (!tokenSymbol) return;
 
     fetchRate().then((rate) => setRate(rate));
-  }, [network.chainId]);
+  }, [network.chainId, isConnected]);
 
   return rate;
 };

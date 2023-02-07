@@ -497,8 +497,6 @@ class Web3Provider extends React.PureComponent {
       isConnected: false,
       accountAddress: null,
     });
-
-    this.web3 = null;
   };
 
   onMessage = message => {
