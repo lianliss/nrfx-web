@@ -1,4 +1,5 @@
 import * as PAGES from 'src/index/constants/pages';
+import company from 'src/index/constants/company';
 
 const items = [
   [
@@ -101,7 +102,8 @@ const items = [
         },
         {
           title: 'dapp_sidebar_more_team',
-          disabled: true,
+          link: company.docsTeam,
+          type: 'href',
         },
         {
           title: 'dapp_sidebar_more_audit',
