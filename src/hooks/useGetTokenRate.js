@@ -16,7 +16,7 @@ const useGetTokenRate = (tokenSymbol = '', switchToChain) => {
     try {
       const data = await getTokenContract(
         TOKENS[network.chainId][tokenSymbol.toLocaleLowerCase()]
-      ).getOutAmount(TOKENS[network.chainId].usdc, 1);
+      ).getOutAmount(TOKENS[network.chainId].usdc, 1, 0);
 
       return _.get(data, 'outAmount', 0);
     } catch (error) {

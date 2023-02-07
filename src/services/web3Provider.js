@@ -206,12 +206,14 @@ class Web3Provider extends React.PureComponent {
    * @param _token1 {object} - raw token data
    * @returns {Promise.<void>}
    */
-  async getPairs(_token0, _token1) {
+  async getPairs(_token0, _token1, maxHops = 3) {
     const token0 = _token0.address ? _token0 : this.network.wrapToken;
     const token1 = _token1.address ? _token1 : this.network.wrapToken;
 
     // Get all possible pairs combinations
-    const combinations = getAllPairsCombinations(token0, token1, this.network.chainId);
+    const combinations = maxHops
+      ? getAllPairsCombinations(token0, token1, this.network.chainId)
+      : [[token0, token1]];
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair

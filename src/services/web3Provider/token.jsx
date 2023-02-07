@@ -160,8 +160,8 @@ class TokenContract {
     }
   };
   
-  _getDEXResult = async (token0, token1, amount, isExactIn = true) => {
-    const pairs = await this.provider.getPairs(token0, token1);
+  _getDEXResult = async (token0, token1, amount, isExactIn = true, maxHops = 3) => {
+    const pairs = await this.provider.getPairs(token0, token1, maxHops);
     const trade = this.provider.getTrade(pairs, token0, token1, amount, isExactIn);
     const transferFee = (token0.transferFee + 1) * (token1.transferFee + 1) - 1;
     const priceImpact = significant(trade.priceImpact.asFraction);
@@ -173,7 +173,7 @@ class TokenContract {
     };
   };
   
-  getOutAmount = async (secondToken, inAmount) => {
+  getOutAmount = async (secondToken, inAmount, maxHops = 3) => {
     try {
       const {token0, token1, usdc} = await this._getExchangeTokens(secondToken);
       
@@ -191,12 +191,12 @@ class TokenContract {
       }
       if (!token0.isFiat && !token1.isFiat) {
         // Only DEX exchange
-        return await this._getDEXResult(token0, token1, inAmount, true);
+        return await this._getDEXResult(token0, token1, inAmount, true, maxHops);
       }
       if (token0.isFiat) {
         // Exchange from fiat to coin
         const usdcAmount = this._getFiatExchangeOut(token0, usdc, inAmount);
-        const dexResult = await this._getDEXResult(usdc, token1, usdcAmount, true);
+        const dexResult = await this._getDEXResult(usdc, token1, usdcAmount, true, maxHops);
         return {
           ...dexResult,
           inAmount,
@@ -205,7 +205,7 @@ class TokenContract {
         };
       } else {
         // Exchange from coin to fiat
-        const dexResult = await this._getDEXResult(token0, usdc, inAmount, true);
+        const dexResult = await this._getDEXResult(token0, usdc, inAmount, true, maxHops);
         return {
           ...dexResult,
           inAmount,
@@ -219,7 +219,7 @@ class TokenContract {
     }
   };
   
-  getInAmount = async (secondToken, outAmount) => {
+  getInAmount = async (secondToken, outAmount, maxHops = 3) => {
     try {
       const {token0, token1, usdc} = await this._getExchangeTokens(secondToken);
       
@@ -237,11 +237,11 @@ class TokenContract {
       }
       if (!token0.isFiat && !token1.isFiat) {
         // Only DEX exchange
-        return await this._getDEXResult(token0, token1, outAmount, false);
+        return await this._getDEXResult(token0, token1, outAmount, false, maxHops);
       }
       if (token0.isFiat) {
         // Exchange from fiat to coin
-        const dexResult = await this._getDEXResult(usdc, token1, outAmount, false);
+        const dexResult = await this._getDEXResult(usdc, token1, outAmount, false, maxHops);
         return {
           ...dexResult,
           inAmount: this._getFiatExchangeIn(token0, usdc, dexResult.inAmount),
@@ -251,7 +251,7 @@ class TokenContract {
       } else {
         // Exchange from coin to fiat
         const usdcAmount = this._getFiatExchangeIn(usdc, token1, outAmount);
-        const dexResult = await this._getDEXResult(token0, usdc, usdcAmount, false);
+        const dexResult = await this._getDEXResult(token0, usdc, usdcAmount, false, maxHops);
         return {
           ...dexResult,
           inAmount: dexResult.inAmount,
