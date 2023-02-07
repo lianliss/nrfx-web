@@ -10,13 +10,16 @@ import SVG from 'utils/svg-wrap';
 import productCards from '../../constants/productCards';
 import { classNames as cn } from 'utils';
 import web3Backend from 'src/services/web3-backend';
+import useGetTokenRate from 'src/hooks/useGetTokenRate';
+import { ETHEREUM_MAINNET } from 'src/services/multichain/chains';
 import _ from 'lodash';
 
 // Styles
 import './index.less';
 
 function ProductCards({ adaptive, prevSlideRef, nextSlideRef, visible }) {
-  const [nrfxPrice, setNrfxPrice] = React.useState(0);
+  const nrfxPrice = useGetTokenRate('NRFX', ETHEREUM_MAINNET);
+
   const playCardAnimation = (index) => {
     if (adaptive) {
       return {};
@@ -31,16 +34,6 @@ function ProductCards({ adaptive, prevSlideRef, nextSlideRef, visible }) {
       `,
     };
   };
-
-  React.useEffect(() => {
-    web3Backend.getTokenRate('nrfx').then((data) => {
-      const price = data.price;
-
-      if (_.isFunction(price.toFixed)) {
-        setNrfxPrice(price.toFixed(2));
-      }
-    });
-  }, []);
 
   if (!visible && !adaptive) {
     return <div className="MainLanding-ProductCards__slider" />;
