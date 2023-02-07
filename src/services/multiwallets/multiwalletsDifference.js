@@ -5,8 +5,8 @@ import _ from 'lodash';
 import { DEFAULT_CHAIN } from '../multichain/chains';
 
 export const noderealRPC = {
-  1: 'https://eth-mainnet.nodereal.io/v1/160620f5efe148ceb99622baf8274e30',
-  56: 'https://bsc-mainnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
+  1: 'https://rpc.ankr.com/eth/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  56: 'https://rpc.ankr.com/bsc/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
   97: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
 };
 

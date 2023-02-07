@@ -14,10 +14,10 @@ class TokenContract {
   constructor(token, provider, isPairContract = false) {
     Object.assign(this, token);
     this.provider = provider;
-    this.web3 = provider.web3;
+    this.web3 = provider.getWeb3();
     this.ethereum = provider.ethereum;
-    this.chainId = provider.state.chainId;
-    this.network = new Network(this.chainId || DEFAULT_CHAIN);
+    this.network = provider.network;
+    this.chainId = provider.network.chainId;
 
     this.contract = new (this.web3.eth.Contract)(
       isPairContract

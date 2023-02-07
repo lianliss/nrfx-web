@@ -1,3 +1,4 @@
+import { noderealRPC } from '../multiwallets/multiwalletsDifference';
 import { BSC_MAINNET, BSC_TESTNET, ETHEREUM_MAINNET } from './chains';
 
 export const CONTRACT_ADDRESSES = {
@@ -13,6 +14,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
     exchangerRouter: '0xe847015B4B7C2A7844703E654415B96534fE772D',
     narfexOracle: '0xBaBfFCe575929DDd7aD29DEEeb5B7A5F5dee4Ab6',
+    providerAddress: noderealRPC[ETHEREUM_MAINNET],
   },
   [BSC_MAINNET]: {
     factoryAddress: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
@@ -26,6 +28,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
     exchangerRouter: '0x4F7446aE07c1A4AF09Bc6c3dCAf28FAF351C02D5',
     narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
+    providerAddress: noderealRPC[BSC_MAINNET],
   },
   [BSC_TESTNET]: {
     factoryAddress: '0xb7926c0430afb07aa7defde6da862ae0bde767bc',
@@ -39,6 +42,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0xF1f8206c94F38525E94919E7381889B3d6D57Ac5',
     exchangerRouter: '0x40b12e44Ec75307D18831f8B0AA636Af1De081fc',
     narfexOracle: '0x0CdCad1e2c9C59920E916aDC75B7b21B5c2f78D5',
+    providerAddress: noderealRPC[BSC_TESTNET],
   },
 };
 

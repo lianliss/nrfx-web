@@ -1,16 +1,26 @@
 import React from 'react';
-import PropTypes, { object, objectOf } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { getLang } from 'utils';
-import { NumberFormat, } from "src/ui";
+import { NumberFormat } from 'src/ui';
+import { ETHEREUM_MAINNET } from 'src/services/multichain/chains';
+import useGetTokenRate from 'src/hooks/useGetTokenRate';
+
 import './Statistics.less';
 
-function Statistics({ price }) {
+function Statistics() {
+  const price = useGetTokenRate('NRFX', ETHEREUM_MAINNET);
 
   const data = [
     {
       name: getLang('token_landing_statistics_1_name'),
-      value: price ? <>$<NumberFormat number={price} currency="" /></> : "-"
+      value: price ? (
+        <>
+          $<NumberFormat number={price} currency="" />
+        </>
+      ) : (
+        '-'
+      ),
     },
     {
       name: getLang('token_landing_statistics_2_name'),
@@ -23,7 +33,7 @@ function Statistics({ price }) {
     {
       name: getLang('token_landing_statistics_4_name'),
       value: getLang('token_landing_statistics_4_value'),
-    }
+    },
   ];
 
   return (
