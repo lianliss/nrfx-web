@@ -24,7 +24,7 @@ function SwapSettings({
   const transactionSpeeds = [
     { id: 0, title: getLang('dapp_swap_settings_speed_standart'), amount: 7 },
     { id: 2, title: getLang('dapp_swap_settings_speed_fast'), amount: 3 },
-    { id: 3, title: getLang('dapp_swap_settings_speed_istant'), amount: 8 },
+    { id: 3, title: getLang('dapp_swap_settings_speed_instant'), amount: 8 },
   ];
 
   const [transactionSpeed, setTransactionSpeed] = React.useState(0);
