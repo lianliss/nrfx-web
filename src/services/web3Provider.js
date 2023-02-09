@@ -1355,9 +1355,11 @@ class Web3Provider extends React.PureComponent {
     try {
       const {pools} = this.state;
       const farm = this.getFarmContract();
+      const settings = await farm.contract.methods.getSettings().call();
       const data = await Promise.all(Object.keys(pools).map(address => farm.getPoolData(pools[address])));
       const poolsWithData = {};
       data.map((pool, index) => {
+        data[index].rewardPerBlock = wei.to(wei.from(settings.uintRewardPerBlock) * data[index].share);
         poolsWithData[pool.address] = data[index];
       });
       this.setState({pools: poolsWithData});
