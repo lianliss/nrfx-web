@@ -1,5 +1,7 @@
 import wei from 'utils/wei';
 import _ from 'lodash';
+import { DEFAULT_CHAIN } from '../multichain/chains';
+import Network from 'src/services/multichain/Network';
 
 class MasterChefContract {
 
@@ -11,10 +13,12 @@ class MasterChefContract {
     this.provider = provider;
     this.web3 = provider.web3;
     this.ethereum = provider.ethereum;
+    this.chainId = provider.state.chainId || DEFAULT_CHAIN;
+    this.network = new Network(this.chainId || DEFAULT_CHAIN);
 
     this.contract = new (this.web3.eth.Contract)(
       require('src/index/constants/ABI/MasterChef'),
-      this.provider.masterChefAddress,
+      this.network.contractAddresses.masterChefAddress,
     );
   }
 

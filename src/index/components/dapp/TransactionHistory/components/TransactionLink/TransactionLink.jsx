@@ -1,4 +1,5 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import { Row } from 'ui';
@@ -12,11 +13,13 @@ import { getLang } from 'utils';
 import './TransactionLink.less';
 
 function TransactionLink({ tx_hash }) {
+  const context = React.useContext(Web3Context);
+  
   return (
     <div className="TransactionHistory__TransactionLink">
       <a
         className={cn({ disabled: !tx_hash })}
-        href={`https://bscscan.com/tx/${tx_hash}`}
+        href={`${_.get(context, 'network.scan', 'https://bscscan.com')}/tx/${tx_hash}`}
         target="_blank"
       >
         {getLang('dapp_global_link')}

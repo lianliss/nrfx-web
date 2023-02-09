@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import router from 'src/router';
 
-import Select from '../Select/Select';
+import { BottomSheetSelect } from '../Select';
 import SVG from 'utils/svg-wrap';
 import { classNames } from 'src/ui/utils';
 import { getLang } from 'utils';
@@ -23,6 +23,8 @@ import { ActionSheet, NumberFormat } from 'src/ui';
 import AdaptiveSidebar from '../AdaptiveSidebar/AdaptiveSidebar';
 import wei from 'utils/wei';
 import * as options from './constants/options';
+import isTestnet from 'src/utils/isTestnet';
+import { isMainnet } from 'src/services/multichain/chains';
 
 function Header(props) {
   const context = React.useContext(Web3Context);
@@ -235,36 +237,36 @@ const DropdownIndicator = (props) => {
 const ChainSelect = React.memo(
   ({ isConnected, chainId, connector, switchToChain, network }) => {
     // Set current crypto
-    const handleCryptoChange = (id) => {
-      if (isConnected) {
-        switchToChain(id);
-        return;
-      }
-      network.setChain(id);
-    };
+    const handleCryptoChange = React.useCallback(
+      (id) => {
+        if (isConnected) {
+          switchToChain(id);
+          return;
+        }
+        network.setChain(id);
+      },
+      [isConnected]
+    );
 
-    const defaultValue = network.isFine(chainId)
+    const cryptoOptions = options.cryptoOptions.filter((option) =>
+      isTestnet ? !isMainnet[option.value] : isMainnet[option.value]
+    );
+
+    const defaultValue = cryptoOptions.find((o) => o.value === chainId)
       ? null
       : options.defaultValue(chainId);
 
     const allOptions = defaultValue
-      ? [defaultValue, ...options.cryptoOptions]
-      : options.cryptoOptions;
+      ? [defaultValue, ...cryptoOptions]
+      : cryptoOptions;
 
     return (
-      <Select
+      <BottomSheetSelect
         isSearchable={false}
         options={allOptions}
         value={isConnected ? chainId : network.chainId}
         defaultValue={defaultValue}
         onChange={handleCryptoChange}
-        components={{
-          DropdownIndicator,
-          IndicatorSeparator: null,
-        }}
-        className="CabinetSelect__network"
-        classNamePrefix="CabinetSelect"
-        isDisabled={isConnected && connector !== connectors.METAMASK}
       />
     );
   }

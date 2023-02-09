@@ -29,7 +29,9 @@ import { marketCoins } from 'src/services/coingeckoApi';
 import { getTokenFromSymbol } from "./web3Provider/utils";
 import WalletConnectorStorage from "./multiwallets/WalletConnectorStorage";
 import { CHAIN_TOKENS } from "./multichain/initialTokens";
-import { DEFAULT_CHAIN } from "./multichain/chains";
+import { DEFAULT_CHAIN, NETWORKS_DATA } from "./multichain/chains";
+import { getLang } from "utils";
+import { CONTRACT_ADDRESSES } from "./multichain/contracts";
 
 export const Web3Context = React.createContext();
 
@@ -61,7 +63,8 @@ class Web3Provider extends React.PureComponent {
     poolsList: [],
     prices: {},
     fiats: {},
-    connector: CONNECTORS.METAMASK
+    connector: CONNECTORS.METAMASK,
+    referAddress: ZERO_ADDRESS,
   };
 
   ethereum = null;
@@ -203,12 +206,14 @@ class Web3Provider extends React.PureComponent {
    * @param _token1 {object} - raw token data
    * @returns {Promise.<void>}
    */
-  async getPairs(_token0, _token1) {
+  async getPairs(_token0, _token1, maxHops = 3) {
     const token0 = _token0.address ? _token0 : this.network.wrapToken;
     const token1 = _token1.address ? _token1 : this.network.wrapToken;
 
     // Get all possible pairs combinations
-    const combinations = getAllPairsCombinations(token0, token1, this.state.chainId);
+    const combinations = maxHops
+      ? getAllPairsCombinations(token0, token1, this.network.chainId)
+      : [[token0, token1]];
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair
@@ -364,18 +369,53 @@ class Web3Provider extends React.PureComponent {
     }, type);
   }
 
+   /**
+   * Sets a provider of chainId and connector to the web3.
+   * @param {number} chainId 
+   * @returns {void}
+   */
+  async setProvider(chainId) {
+    const hostProvider = new Web3.providers.HttpProvider(
+      CONTRACT_ADDRESSES[chainId].providerAddress
+    );
+    this.web3Host.setProvider(hostProvider);
+
+    if (!this.web3) return;
+
+    const { connector } = this.state;
+    const ethereumObject = getConnectorObject(connector, chainId);
+    if (!ethereumObject) {
+      if (showErrorMessage) {
+        toast.error('RPC Provider error.');
+      }
+
+      return;
+    }
+
+    if (connector === CONNECTORS.WALLET_CONNECT) {
+      await provider.enable();
+    }
+
+    this.web3.setProvider(ethereumObject.provider);
+  }
+
   /**
    * Switch to another chain
    * @param id {integer} chainID
+   * @param checkConnection {boolean} Check connection, if
+   *  a user has not connection, call to connectWallet.
    */
-  setChain(id) {
+  setChain(id, checkConnection = true) {
     try {
       // A wallet maybe disconnected when the chain id changes.
-      if (!this.state.accountAddress) {
+      if (!this.state.accountAddress && checkConnection) {
         this.connectWallet();
         return;
       }
 
+      // Set new provider for current
+      // chain and connector.
+      this.setProvider(id);
       this.network.initNetwork(id);
       if (!this.network.isFine(id)) {
         if (!id) toast.error(`Check your network connection`);
@@ -395,6 +435,7 @@ class Web3Provider extends React.PureComponent {
       }
       this.setState({
         tokens: this.network.displayTokens,
+        fiats: {},
         poolsList: this.network.poolsList,
         chainId: id,
       });
@@ -437,6 +478,7 @@ class Web3Provider extends React.PureComponent {
         isConnected: true,
         accountAddress,
       });
+      this.getReferAddress();
     }
   };
 
@@ -529,18 +571,22 @@ class Web3Provider extends React.PureComponent {
         throw new Error('No accounts connected');
       }
 
+      this.setState({
+        connector
+      });
+
       // Set the chain id after an account address setted
       // because the address maybe empty.
       let chainId = await this.web3.eth.getChainId();
       if (chainId) {
-        this.setChain(chainId);
+        this.setChain(chainId, false);
       }
 
       this.walletConnectorStorage().set(connector);
 
       if (!chainId) {
         chainId = await this.web3.eth.getChainId();
-        this.setChain(chainId);
+        this.setChain(chainId, false);
       }
 
       // Set provider state
@@ -548,8 +594,8 @@ class Web3Provider extends React.PureComponent {
       this.setState({
         isConnected: true,
         accountAddress,
-        connector
       });
+      this.getReferAddress();
 
       // Clear old events
       this.ethereumUnsubscribe();
@@ -585,6 +631,8 @@ class Web3Provider extends React.PureComponent {
       default:
         break;
     }
+
+    this.web3 = null;
   }
 
   /**
@@ -680,7 +728,7 @@ class Web3Provider extends React.PureComponent {
         require('src/index/constants/ABI/PancakePair'),
         pairAddress,
       );
-
+      
       const data = await Promise.all([
         contract.methods.getReserves().call(),
         contract.methods.token0().call(),
@@ -721,7 +769,7 @@ class Web3Provider extends React.PureComponent {
       result.push(this.pairs[pairAddress]);
       return result;
     } catch (error) {
-      console.error('[getReserves]', this.getBSCScanLink(pairAddress), error);
+      console.error('[getReserves]', pairAddress, error);
     }
   }
 
@@ -1371,6 +1419,13 @@ class Web3Provider extends React.PureComponent {
       return true;
     } catch (error) {
       console.log('[switchToChain]', error);
+
+      toast.warning(
+        getLang('toast_switch_to_chain_warning').replace(
+          '{chain}',
+          _.get(NETWORKS_DATA[chainId], 'title', '')
+        )
+      );
       if (this.requiredChain === chainId) {
         // return await this.switchToChain(chainId, false);
       }
@@ -1760,6 +1815,26 @@ class Web3Provider extends React.PureComponent {
       return result;
     } catch (error) {
       console.error('[getReferHash]', error);
+    }
+  }
+  
+  async getReferAddress() {
+    try {
+      let result = await this.backendRequest({},
+        `Get refer address`,
+        'refer/address',
+        'get',
+      );
+      if (result.toLowerCase() === this.state.accountAddress.toLowerCase()) {
+        // Refer address can't be the account address
+        result = ZERO_ADDRESS;
+      }
+      this.setState({
+        referAddress: result,
+      });
+      return result;
+    } catch (error) {
+      console.error('[getReferAddress]', error);
     }
   }
 

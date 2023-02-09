@@ -1,0 +1,93 @@
+.CabinetSelect-BottomSheet {
+  &-menu {
+    display: flex;
+    position: relative;
+
+    &__triangle {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      width: 13.62px;
+      height: 13.62px;
+      background: #dce5fd;
+      z-index: 1;
+    }
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: inherit;
+      z-index: 2;
+    }
+  }
+
+  &-option {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  &-option__icon {
+    display: flex;
+    height: 100%;
+
+    img {
+      width: 23px;
+      height: 23px;
+      object-fit: 'contain';
+    }
+
+    &:not(:last-child) {
+      margin-right: 6px;
+    }
+  }
+
+  &-option__title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #0a1539;
+  }
+
+  .ScrollbarBox {
+    .ScrollbarTrackY {
+      background: #f7f9fc !important;
+      border: 1px solid #fff;
+      width: 2px !important;
+      right: 8px !important;
+      transition: width 0.1s, right 0.1s;
+
+      &:hover,
+      &:focus,
+      &:active {
+        width: 4px !important;
+        right: 7px !important;
+      }
+    }
+  }
+}
+
+.adaptive .CabinetSelect-BottomSheet {
+  &-menu {
+    &__triangle {
+      display: none;
+    }
+  }
+
+  &-option__icon {
+    img {
+      width: 21px;
+      height: 21px;
+    }
+  }
+
+  .BottomSheetModal {
+    padding: 0;
+    background: transparent;
+  }
+}

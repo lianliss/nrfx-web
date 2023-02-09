@@ -8,8 +8,8 @@ import './DoubleWallets.less';
 
 function DoubleWallets({ first, second, pair, disableSymbols, size }) {
   const context = React.useContext(Web3Context);
-  const { tokens, network, bnb } = context;
-  const { wrapToken } = network;
+  const { tokens, network } = context;
+  const { wrapToken, defaultSymbol } = network;
   // const [symbol0, setSymbol0] = React.useState(first.symbol);
   // const [symbol1, setSymbol1] = React.useState(second.symbol);
   const [token0, setToken0] = React.useState(_.get(pair, 'token0', first));
@@ -22,42 +22,14 @@ function DoubleWallets({ first, second, pair, disableSymbols, size }) {
 
   React.useEffect(() => {}, [first, second, pair]);
 
-  // React.useEffect(() => {
-  //   const getSymbol = async (token, index) => {
-  //     if (token.symbol) {
-  //       if (index) {
-  //         if (symbol1 !== token.symbol) {
-  //           setSymbol1(token.symbol);
-  //         }
-  //       } else {
-  //         if (symbol0 !== token.symbol) {
-  //           setSymbol0(token.symbol);
-  //         }
-  //       }
-  //       return;
-  //     }
-  //     if (!token.address) return;
-  //     const contract = context.getTokenContract(token);
-  //     const symbol = await contract.getSymbol();
-  //     if (index) {setSymbol1(symbol)}
-  //     else {setSymbol0(symbol)}
-  //   };
-  //   getSymbol(first, 0).catch(error => {
-  //     console.error('[DoubleWallets][getSymbol]', error);
-  //   });
-  //   getSymbol(second, 1).catch(error => {
-  //     console.error('[DoubleWallets][getSymbol]', error);
-  //   });
-  // }, [first.symbol, second.symbol, first.address, second.address]);
-  //
-  // const logo0 = first.logoURI || (!!symbol0 && _.get(tokens.find(t => t.symbol === symbol0), 'logoURI'));
-  // const logo1 = second.logoURI || (!!symbol1 && _.get(tokens.find(t => t.symbol === symbol1), 'logoURI'));
-
   const logo0 = token0.logoURI;
   const logo1 = token1.logoURI;
-
-  const symbol0 = token0.symbol === wrapToken.symbol ? bnb.symbol : token0.symbol;
-  const symbol1 = token1.symbol === wrapToken.symbol ? bnb.symbol : token1.symbol;
+  
+  let symbol0, symbol1;
+  if (!disableSymbols) {
+    symbol0 = token0.symbol === wrapToken.symbol ? defaultSymbol : token0.symbol;
+    symbol1 = token1.symbol === wrapToken.symbol ? defaultSymbol : token1.symbol;
+  }
 
   return (
     <div className="DoubleWallets">

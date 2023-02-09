@@ -39,7 +39,8 @@ function Exchanger({ ...props }) {
     getWeb3,
     transaction,
     getBSCScanLink,
-    network
+    network,
+    referAddress,
   } = context;
   const [inAmount, setInAmount] = React.useState(fiatAmount);
   const [outAmount, setOutAmount] = React.useState(coinAmount);
@@ -59,12 +60,14 @@ function Exchanger({ ...props }) {
     if (isExactOut) {
       getTokenContract(fiat).getInAmount(coin, outAmount).then(data => {
         setInAmount(data.inAmount);
+        setOutAmount(Number(outAmount.toFixed(9)));
         setRate(outAmount / data.inAmount);
         setPath(data.path);
         setPriceImpact(_.get(data, 'priceImpact', 0));
       });
     } else {
       getTokenContract(fiat).getOutAmount(coin, inAmount).then(data => {
+        setInAmount(Number(inAmount.toFixed(9)))
         setOutAmount(data.outAmount);
         setRate(data.outAmount / inAmount);
         setPath(data.path);
@@ -147,7 +150,7 @@ function Exchanger({ ...props }) {
         wei.to(isExactOut ? outAmount : inAmount, amountDecimals),
         wei.to(isExactOut ? inAmountMax : outAmountMin, limitDecimals),
         Math.floor(Date.now() / 1000) + deadline * 60,
-        '0x0000000000000000000000000000000000000000',
+        referAddress,
       ], value);
       openStateModal('transaction_submitted', {
         txLink: getBSCScanLink(receipt),

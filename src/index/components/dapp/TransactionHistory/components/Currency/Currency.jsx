@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import WalletIcon from '../../../WalletIcon/WalletIcon';
@@ -14,21 +15,34 @@ function Currency({
   source_amount,
   target_amount,
 }) {
+  const context = React.useContext(Web3Context);
+  const { network } = context;
+  const { wrapToken, defaultToken } = network;
+  
   if (type === 'exchange') {
+    let token0 = source_token;
+    let token1 = target_token;
+    if (token0.symbol === wrapToken.symbol) {
+      token0 = defaultToken;
+    }
+    if (token1.symbol === wrapToken.symbol) {
+      token1 = defaultToken;
+    }
+    
     return (
       <Row alignItems="center">
         <DoubleWallets
-          first={source_token}
-          second={target_token}
+          first={token0}
+          second={token1}
           size={24}
           disableSymbols
         />
         <Row alignItems="center" wrap>
-          <NumberFormat number={source_amount} currency={source_token.symbol} />
+          <NumberFormat number={source_amount} currency={token0.symbol} />
           <span className="TransactionHistory__icon-arrow">
             <SVG src={require('src/asset/icons/arrows/to-arrow.svg')} />
           </span>
-          <NumberFormat number={target_amount} currency={target_token.symbol} />
+          <NumberFormat number={target_amount} currency={token1.symbol} />
         </Row>
       </Row>
     );

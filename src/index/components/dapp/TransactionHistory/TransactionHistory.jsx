@@ -5,6 +5,7 @@ import CabinetBlock from '../CabinetBlock/CabinetBlock';
 import TransactionTable from './components/TransactionTable/TransactionTable';
 import TransactionTableAdaptive from './components/TransactionTableAdaptive/TransactionTableAdaptive';
 import TransactionHistoryOverlay from './components/TransactionHistoryOverlay/TransactionHistoryOverlay';
+import { Web3Context } from 'services/web3Provider';
 
 // Utils
 import { getLang, classNames as cn } from 'src/utils';
@@ -23,6 +24,11 @@ function TransactionHistory() {
     transactions,
     accountHistoryExists,
   } = useTransactionHistory();
+  const context = React.useContext(Web3Context);
+  const networkID = _.get(context, 'network.networkID', 'BSC');
+  const history = accountHistoryExists
+    ? accountHistory.filter(row => row.networkID === networkID)
+    : [];
 
   const Transactions = ({ accountHistory }) => {
     const component = adaptive ? (
@@ -54,7 +60,7 @@ function TransactionHistory() {
             })}
           >
             {accountHistoryExists ? (
-              <Transactions accountHistory={accountHistory} />
+              <Transactions accountHistory={history} />
             ) : (
               <Transactions
                 accountHistory={

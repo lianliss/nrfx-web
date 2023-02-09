@@ -53,3 +53,25 @@ export const setInvoice = (payload) => {
     dispatch({ type: actionTypes.DAPP_SET_INVOICE, payload });
   };
 };
+
+/**
+ * Set the card reservation.
+ * @param {web3Backend.getReservation} payload
+ */
+export const setCardReservation = (payload) => {
+  return (dispatch) =>
+    dispatch({
+      type: actionTypes.WALLET_SET_CARD_RESERVATION,
+      payload,
+    });
+};
+
+/**
+ * Delete the card reservation.
+ */
+export const deleteCardReservation = () => {
+  return (dispatch) =>
+    dispatch({
+      type: actionTypes.WALLET_DELETE_CARD_RESERVATION,
+    });
+};

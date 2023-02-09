@@ -11,7 +11,7 @@ import { Web3Context } from 'src/services/web3Provider';
 import { web3RatesSelector } from 'src/selectors';
 
 function TokenSelectAction({ type, onClose, onSelected }) {
-  const { tokens, fiats, getTokenBalanceKey, getFiatsArray } =
+  const { tokens, fiats, getTokenBalanceKey, getFiatsArray, network } =
     React.useContext(Web3Context);
   const [selected, setSelected] = React.useState(tokens[0]);
   const rates = useSelector(web3RatesSelector);
@@ -37,6 +37,7 @@ function TokenSelectAction({ type, onClose, onSelected }) {
         tokens={tokens}
         fiats={fiatTokens}
         selected={selected}
+        commonBases={network.commonBases}
         onChange={handleSelectedChange}
         defaultList={type}
         getTokenBalanceKey={getTokenBalanceKey}

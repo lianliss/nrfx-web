@@ -29,12 +29,6 @@ import NarfexToken from '../NarfexToken/NarfexToken';
 import { roadmapItems } from '../../constants/roadmap';
 
 function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
-  const [price, setPrice] = React.useState(null);
-  React.useEffect(() => {
-    web3Backend.getTokenRate('nrfx').then((data) => {
-      setPrice(data.price);
-    });
-  }, []);
   React.useEffect(() => {
     // Landing adaptive Setter.
     window.addEventListener('resize', screenResize);
@@ -65,7 +59,7 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
         <link rel="icon" type="image/svg" href={NRFX_logo} sizes="16x16" />
       </Helmet>
       <NarfexToken />
-      <Statistics price={price} />
+      <Statistics />
       <AboutUs />
       <Services />
       <Functional />
@@ -76,7 +70,7 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
       />
       <Information
         adaptive={adaptive}
-        code="0x3764Be118a1e09257851A3BD636D48DFeab5CAFE"
+        code="0x01b443495834D667b42f54d2b77eEd6951eD94a4"
         currentLang={currentLang}
         routePath={routePath}
       />

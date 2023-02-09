@@ -18,9 +18,11 @@ class Network {
     this.poolsList = contractAddresses.POOLS_LIST[chainId];
     this.tokens = initialTokens.TOKENS[chainId];
     this.displayTokens = initialTokens.DISPLAY_TOKENS[chainId];
+    this.defaultToken = initialTokens.CHAIN_TOKENS[chainId];
     this.wrapToken = initialTokens.WRAP_TOKENS[chainId];
     this.mainnet = chains.isMainnet[chainId];
     this.tokenABI = initialTokens.ABI[chainId];
+    this.commonBases = initialTokens.COMMON_BASES[chainId];
   }
 
   isFine(id) {
@@ -36,7 +38,7 @@ class Network {
     if (!this.provider) return;
 
     const providerChain = this.provider.state.chainId;
-    this.provider.setChain(id);
+    this.provider.setChain(id, false);
     this.provider.setState({ chainId: providerChain });
     this.initNetwork(id);
   }

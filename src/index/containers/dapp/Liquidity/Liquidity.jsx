@@ -12,8 +12,6 @@ import router from 'src/router';
 // Styles
 import './Liquidity.less';
 
-const POOLS_LIST_KEY = 'narfex-pools-list';
-
 // Main
 function Liquidity() {
   const routerParams = router.getState().params;
@@ -27,6 +25,7 @@ function Liquidity() {
   const [currentPool, setCurrentPool] = React.useState(null);
   const [currentDisplay, setCurrentDisplay] = React.useState('main');
   const context = React.useContext(Web3Context);
+  const POOLS_LIST_KEY = `narfex-pools-list-${context.chainId}`;
   let storagePools;
   try {
     storagePools =
