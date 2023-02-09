@@ -15,7 +15,6 @@ class MasterChefContract {
     this.ethereum = provider.ethereum;
     this.chainId = provider.state.chainId || DEFAULT_CHAIN;
     this.network = new Network(this.chainId || DEFAULT_CHAIN);
-    console.error('MasterChefContract', this.network, this.provider.network.contractAddresses.masterChefAddress);
 
     this.contract = new (this.web3.eth.Contract)(
       require('src/index/constants/ABI/MasterChef'),
