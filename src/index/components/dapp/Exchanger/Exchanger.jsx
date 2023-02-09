@@ -29,6 +29,7 @@ import './Exchanger.less';
 const UPDATE_DELAY = 5000;
 let fiatsUpdateTimeout;
 let cardsUpdateTimeout;
+let updateTokenBalanceTimeout;
 // Let's predefine functions so that timeouts take their actual versions
 let fiatsUpdate;
 let cardsUpdate;
@@ -46,10 +47,20 @@ function Exchanger(props) {
   const { updateReservation, updateBanks } = useUpdateReservation();
 
   const {
-    fiats, chainId, accountAddress,
-    web3, updateFiats, isConnected,
-    tokens, loadAccountBalances, cmcTokens,
-    getTokens, getPairAddress, network
+    fiats,
+    chainId,
+    accountAddress,
+    web3,
+    updateFiats,
+    isConnected,
+    tokens,
+    loadAccountBalances,
+    cmcTokens,
+    getTokens,
+    getPairAddress,
+    network,
+    getTokenBalance,
+    updateTokenBalance: updateTokenBalanceContext,
   } = context;
 
   const [limits, setLimits] = React.useState([]);
@@ -236,6 +247,22 @@ function Exchanger(props) {
     })
   };
 
+  const updateTokenBalance = async () => {
+    try {
+      if (!isConnected) return;
+      if (_.get(fiatSelected, 'isFiat', false)) return;
+
+      const balance = await getTokenBalance(fiatSelected.address, true);
+
+      updateTokenBalanceContext(fiatSelected.address, balance);
+      setFiatSelected({ ...fiatSelected, balance });
+    } catch (error) {
+      console.error('[updateTokenBalance]', error);
+    }
+
+    updateTokenBalanceTimeout = setTimeout(updateTokenBalance, UPDATE_DELAY);
+  };
+
   React.useEffect(() => {
     fiatsUpdate();
     return () => {
@@ -277,6 +304,7 @@ function Exchanger(props) {
     const getAvailableFiat = () => allCoins.find(isFineFiat);
     const getUSDFromCoins = () => allCoins.find(isUSD);
 
+    if (!_.get(getInitialFiat(), 'isFiat')) return;
     if (!initialCurrencySymbol) {
       setFiat(getUSDFromCoins() || getAvailableFiat());
 
@@ -288,6 +316,14 @@ function Exchanger(props) {
 
     setFiat(fineFiat);
   }, [fiats]);
+
+  React.useEffect(() => {
+    updateTokenBalance();
+
+    return () => {
+      clearTimeout(updateTokenBalanceTimeout);
+    }
+  }, [fiatSymbol, chainId, isConnected]);
 
   return (
     <CabinetContent className="Exchanger__wrap">
