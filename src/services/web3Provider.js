@@ -557,6 +557,12 @@ class Web3Provider extends React.PureComponent {
       this.successConnectionCheck = true;
       if (connector === CONNECTORS.WALLET_CONNECT) {
         await provider.enable();
+
+        provider.on('visibilitychange', () => {
+          if (document.visibilityState === 'hidden') {
+            window.localStorage.removeItem('WALLETCONNECT_DEEPLINK_CHOICE');
+          }
+        });
       }
 
       this.web3 = new Web3(provider);
@@ -606,6 +612,8 @@ class Web3Provider extends React.PureComponent {
       // On account address change
     } catch (error) {
       console.log('error', error);
+      this.walletConnectorStorage().clear();
+
       throw error;
     }
   }
