@@ -2,12 +2,20 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import * as CONNECTORS from './connectors';
 import requests from './requests';
 import _ from 'lodash';
-import { DEFAULT_CHAIN } from '../multichain/chains';
+import {
+  DEFAULT_CHAIN,
+  ETHEREUM_MAINNET,
+  BSC_MAINNET, BSC_TESTNET,
+  POLYGON_MAINNET,
+  ARBITRUM_MAINNET,
+} from '../multichain/chains';
 
 export const noderealRPC = {
-  1: 'https://rpc.ankr.com/eth/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
-  56: 'https://rpc.ankr.com/bsc/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
-  97: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
+  [ETHEREUM_MAINNET]: 'https://rpc.ankr.com/eth/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  [BSC_MAINNET]: 'https://rpc.ankr.com/bsc/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  [BSC_TESTNET]: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
+  [POLYGON_MAINNET]: 'https://rpc.ankr.com/polygon/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  [ARBITRUM_MAINNET]: 'https://rpc.ankr.com/arbitrum/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
 };
 
 /**
