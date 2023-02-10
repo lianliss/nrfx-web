@@ -50,10 +50,7 @@ export const getEthereum = (connector, chainID = DEFAULT_CHAIN) => {
     case CONNECTORS.WALLET_CONNECT: {
       const walletConnect = new WalletConnectProvider({
         chainId: chainID,
-        rpc: noderealRPC,
-        // qrcodeModalOptions: {
-        //   mobileLinks: ['metamask', 'trust'],
-        // },
+        rpc: noderealRPC
       });
 
       return walletConnect;
