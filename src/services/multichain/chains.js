@@ -50,14 +50,14 @@ export const NETWORKS_DATA = {
     networkID: 'PLG',
     title: 'Polygon',
     fiatDecimals: 6,
-    scan: 'https://polygonscan.com/',
+    scan: 'https://polygonscan.com',
     defaultSymbol: 'MATIC',
   },
   [ARBITRUM_MAINNET]: {
     networkID: 'ARB',
     title: 'Arbitrum',
     fiatDecimals: 6,
-    scan: 'https://arbiscan.io/',
+    scan: 'https://arbiscan.io',
     defaultSymbol: 'ETH',
   },
 };
