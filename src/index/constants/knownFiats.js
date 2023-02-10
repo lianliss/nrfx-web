@@ -97,6 +97,28 @@ const ETHER_FIATS = [
   },
 ];
 
+const POLYGON_FIATS = [
+  {
+    name: "Russian Ruble on Narfex",
+    symbol: "RUB",
+    address: "0xA4b698FF2DA1fFc2eE02c2A2433E2AFF396c9e6d",
+    chainId: 137,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+  },
+];
+
+const ARBITRUM_FIATS = [
+  {
+    name: "Russian Ruble on Narfex",
+    symbol: "RUB",
+    address: "0xf9A45bbcf419A0660dac64517fe9625203415CFE",
+    chainId: 42161,
+    decimals: 6,
+    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+  },
+];
+
 const TESTNET_FIATS = [
   {
     name: "Testnet United States Dollar",
@@ -223,6 +245,8 @@ const KNOWN_FIATS = [
   },
   ...TESTNET_FIATS,
   ...ETHER_FIATS,
+  ...POLYGON_FIATS,
+  ...ARBITRUM_FIATS,
 ].map(fiat => ({
   ...fiat,
   isFiat: true,
