@@ -62,7 +62,9 @@ class Web3Provider extends React.PureComponent {
     pools: null,
     poolsList: [],
     prices: {},
-    fiats: {},
+    fiats: {
+      known: KNOWN_FIATS,
+    },
     connector: CONNECTORS.METAMASK,
     referAddress: ZERO_ADDRESS,
   };
@@ -435,7 +437,9 @@ class Web3Provider extends React.PureComponent {
       }
       this.setState({
         tokens: this.network.displayTokens,
-        fiats: {},
+        fiats: {
+          known: KNOWN_FIATS,
+        },
         poolsList: this.network.poolsList,
         chainId: id,
       });
@@ -605,7 +609,7 @@ class Web3Provider extends React.PureComponent {
 
       // On account address change
     } catch (error) {
-      console.log('error', error);
+      console.error('[connectWallet]', error);
       throw error;
     }
   }
@@ -644,6 +648,7 @@ class Web3Provider extends React.PureComponent {
     const incorrectAddresses = [
       '0x179960442Ece8dE9f390011b7f7c9b56C74e4D0a',
       '0x03a3cDa7F684Db91536e5b36DC8e9077dC451081',
+      '0x0E622E0e97B88824C655A0443e69416c3233a522', // Polygon Rubaled
     ];
 
     // @param token.
@@ -1477,6 +1482,7 @@ class Web3Provider extends React.PureComponent {
       if (!isConnected) {
         const fiats = {};
         fiats[userId] = KNOWN_FIATS;
+        fiats.known = KNOWN_FIATS;
         this.setState({
           fiats,
         });
@@ -1514,6 +1520,7 @@ class Web3Provider extends React.PureComponent {
         } : null;
       }).filter(f => !!f);
       fiats[userId] = userFiats;
+      fiats.known = KNOWN_FIATS;
       this.setState({
         fiats,
       });

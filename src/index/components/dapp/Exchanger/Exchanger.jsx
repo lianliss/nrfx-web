@@ -97,7 +97,9 @@ function Exchanger(props) {
         isFiat: true,
       };
   }
-  const fiatTokens = _.get(fiats, userId, [defaultUSD]).map(token => {
+  const chainFiats = _.get(fiats, 'known', []).filter(f => f.chainId === chainId);
+  const defaultFiats = chainFiats.length ? chainFiats : [defaultUSD];
+  const fiatTokens = _.get(fiats, userId, defaultFiats).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
   });
@@ -130,7 +132,7 @@ function Exchanger(props) {
         [...fiatTokens, ...coins].find((t) => t.symbol !== fiatSelected?.symbol)
       );
     }
-
+    
     if (fiatSelected) {
       setCoinSelected(fiatSelected);
     } else {
@@ -258,7 +260,7 @@ function Exchanger(props) {
   // Set initial coin
   React.useEffect(() => {
     setCoin(
-      tokens.find((t) => t.symbol === initGetParams.params.coin) ||
+      [...fiatTokens, ...tokens].find((t) => t.symbol === initGetParams.params.coin) ||
         [...network.displayTokens, ...tokens].find(
           (t) => t.symbol !== initGetParams.params.fiat
         )
