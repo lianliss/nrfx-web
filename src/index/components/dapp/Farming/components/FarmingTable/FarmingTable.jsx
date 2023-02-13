@@ -1,6 +1,7 @@
 import React from 'react';
 import { Web3Context } from 'services/web3Provider';
 import { getLang } from 'src/utils';
+import useGetTokenRate from 'src/hooks/useGetTokenRate';
 
 // Components
 import {
@@ -9,6 +10,7 @@ import {
 } from 'src/ui';
 import FarmingTableItem from '../FarmingTableItem/FarmingTableItem';
 import FarmingTableHeader from '../FarmingTableHeader/FarmingTableHeader';
+
 
 // Styles
 import './FarmingTable.less';
@@ -19,6 +21,8 @@ function FarmingTable({
   const { farmsValue, setFarmsValue, sortBy, setSortBy, farms, sortOptions } =
     filters;
   const context = React.useContext(Web3Context);
+  const {chainId} = context;
+  const nrfxPrice = useGetTokenRate('NRFX', chainId || 1);
   const {pools} = context;
 
   return (
@@ -53,6 +57,7 @@ function FarmingTable({
                 id={index}
                 pool={pool}
                 dark={index % 2 ? true : false}
+                nrfxPrice={nrfxPrice}
               />
             );
           })}

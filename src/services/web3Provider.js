@@ -712,6 +712,10 @@ class Web3Provider extends React.PureComponent {
 
     try {
       const reserves = this.pairs[pairAddress];
+      const tokens = [
+        ...this.getFiatsArray(),
+        ...this.state.tokens,
+      ];
       if (reserves) {
         if (_token1) {
           // If tokens passed
@@ -744,8 +748,8 @@ class Web3Provider extends React.PureComponent {
         const dataToken0 = data[1].toLowerCase();
         const dataToken1 = data[2].toLowerCase();
         // If no tokens passed
-        token0 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === dataToken0);
-        token1 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === dataToken1);
+        token0 = tokens.find(t => t.address && t.address.toLowerCase() === dataToken0);
+        token1 = tokens.find(t => t.address && t.address.toLowerCase() === dataToken1);
       }
       // Switch pair
       const result = data[1] === token0.address
@@ -1551,7 +1555,7 @@ class Web3Provider extends React.PureComponent {
    * @param rates {array}
    * @return {array}
    */
-  getFiatsArray(rates) {
+  getFiatsArray(rates = {}) {
     const chainId = this.state.chainId || 56;
     const userId = `${chainId}${this.state.accountAddress}`;
     return _.get(

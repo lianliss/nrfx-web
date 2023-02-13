@@ -40,7 +40,7 @@ export const NETWORKS_DATA = {
     defaultSymbol: 'BNB',
   },
   [BSC_TESTNET]: {
-    networkID: 'BSCt',
+    networkID: 'TEST',
     title: 'Testnet',
     fiatDecimals: 18,
     scan: 'https://testnet.bscscan.com',
