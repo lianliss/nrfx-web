@@ -26,7 +26,9 @@ class MasterChefContract {
     try {
       const accountAddress = _.get(this, 'provider.state.accountAddress');
       const pools = {};
+      console.log('getPoolsList', this);
       const count = await this.contract.methods.getPoolsCount().call();
+      console.log('count', count);
       const getMethods = [];
       for (let i = 0; i < Number(count); i++) {
         getMethods.push(this.contract.methods.poolInfo(i).call())

@@ -49,11 +49,11 @@ function LiquidityConfirmModal(props) {
     getReserves,
     transaction, getTransactionReceipt,
     network, web3,
-    accountAddress, bnb,
+    accountAddress,
     getBSCScanLink,
     addTokenToWallet,
   } = context;
-  const { wrapBNB } = network.tokens;
+  const { wrapBNB, bnb } = network.tokens;
   const { routerAddress } = network.contractAddresses;
   const dispatch = useDispatch();
   const [pair, setPair] = React.useState(null);

@@ -8,6 +8,14 @@ const TESTNET_BASE_TOKENS = [
     logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png"
   },
   {
+    name: "USD Coin",
+    symbol: "USDC",
+    address: "0xd92271C20A5a3A03d8Eb6244D1c002EBed525605",
+    chainId: 97,
+    decimals: 18,
+    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+  },
+  {
     name: "Tether",
     symbol: "USDT",
     address: "0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684",

@@ -74,6 +74,7 @@ function FarmingTableItemOptions({
   };
 
   const lpBalance = wei.from(available);
+  console.log('REWARD', reward, nrfxPrice);
 
   return (
     <>
@@ -165,8 +166,8 @@ function FarmingTableItemOptions({
         </TableColumn>
         <TableColumn colspan={3}>
           <DoubleText
-            first={getFinePrice(reward)}
-            second={getFinePrice(reward * nrfxPrice)}
+            first={reward}
+            second={reward * nrfxPrice}
             currency={'NRFX'}
             title={getLang('dapp_global_earned')}
           />

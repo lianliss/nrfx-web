@@ -35,6 +35,20 @@ export const CONTRACT_ADDRESSES = {
     narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
     providerAddress: noderealRPC[BSC_MAINNET],
   },
+  [BSC_TESTNET]: {
+    factoryAddress: '0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc',
+    factoryInitCodeHash:
+      '0xecba335299a6693cb2ebc4782e74669b84290b6378ea3a3873c7231a8d7d1074',
+    routerAddress: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3',
+    masterChefAddress: '0x105D485139DA922cA679a184E5835a7A078966ba',
+    narfexToken: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
+    tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
+    saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
+    fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
+    exchangerRouter: '0x96E163D8E6f3C1D128Ce9EBA81fF7AD5E3054f4d',
+    narfexOracle: '0x5bA23078FaB7Dd3A6d7b5049a2C711Ef8ba7E8d0',
+    providerAddress: noderealRPC[BSC_MAINNET],
+  },
   [POLYGON_MAINNET]: {
     factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
     factoryInitCodeHash:

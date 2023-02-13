@@ -122,6 +122,14 @@ export const TOKENS = {
       decimals: DEFAULT_DECIMALS,
       logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png',
     },
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0xd92271C20A5a3A03d8Eb6244D1c002EBed525605",
+      chainId: BSC_TESTNET,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
     bnb: {
       name: 'Binance Coin',
       symbol: 'BNB',
@@ -252,9 +260,9 @@ export const DISPLAY_TOKENS = {
     TOKENS[BSC_TESTNET].nrfx,
     TOKENS[BSC_TESTNET].busd,
     TOKENS[BSC_TESTNET].bnb,
-    TOKENS[BSC_TESTNET].wrapBNB,
     TOKENS[BSC_TESTNET].usdt,
     TOKENS[BSC_TESTNET].dai,
+    ...baseTokens.filter((t) => t.chainId === BSC_TESTNET),
   ],
   [POLYGON_MAINNET]: [
     TOKENS[POLYGON_MAINNET].usdc,

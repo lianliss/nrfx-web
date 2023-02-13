@@ -51,11 +51,11 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
 
   React.useEffect(() => {
     updateBalance();
-    clearInterval(updateBalanceInterval);
-    setInterval(updateBalance, UPDATE_BALANCE_TIMEOUT);
-    return () => {
-      clearInterval(updateBalanceInterval);
-    }
+    // clearInterval(updateBalanceInterval);
+    // setInterval(updateBalance, UPDATE_BALANCE_TIMEOUT);
+    // return () => {
+    //   clearInterval(updateBalanceInterval);
+    // }
   }, [poolsList, accountAddress, chainId]);
 
   const ItemContent = ({ item }) => {
