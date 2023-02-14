@@ -369,6 +369,27 @@ class Web3Provider extends React.PureComponent {
     }, type);
   }
 
+  /**
+   * Add to state new token object with balance.
+   * @param {string} address 
+   * @param {string} balance 
+   */
+  async updateTokenBalance(address, balance) {
+    this.setState((state) => {
+      const tokens = [...state.tokens];
+      const tokenIndex = tokens.findIndex(
+        (t) => t.address === address
+      );
+
+      tokens[tokenIndex] = {
+        ...tokens[tokenIndex],
+        balance,
+      };
+
+      return { tokens };
+    });
+  }
+
    /**
    * Sets a provider of chainId and connector to the web3.
    * @param {number} chainId 
@@ -2080,6 +2101,7 @@ class Web3Provider extends React.PureComponent {
       sendTokens: this.sendTokens.bind(this),
       setBalances: this.setBalances.bind(this),
       updateTokenInBalances: this.updateTokenInBalances.bind(this),
+      updateTokenBalance: this.updateTokenBalance.bind(this),
       setRefer: this.setRefer.bind(this),
       getReferHash: this.getReferHash.bind(this),
       getReferFriends: this.getReferFriends.bind(this),

@@ -29,6 +29,7 @@ import './Exchanger.less';
 const UPDATE_DELAY = 5000;
 let fiatsUpdateTimeout;
 let cardsUpdateTimeout;
+let updateTokenBalanceTimeout;
 // Let's predefine functions so that timeouts take their actual versions
 let fiatsUpdate;
 let cardsUpdate;
@@ -46,10 +47,20 @@ function Exchanger(props) {
   const { updateReservation, updateBanks } = useUpdateReservation();
 
   const {
-    fiats, chainId, accountAddress,
-    web3, updateFiats, isConnected,
-    tokens, loadAccountBalances, cmcTokens,
-    getTokens, getPairAddress, network
+    fiats,
+    chainId,
+    accountAddress,
+    web3,
+    updateFiats,
+    isConnected,
+    tokens,
+    loadAccountBalances,
+    cmcTokens,
+    getTokens,
+    getPairAddress,
+    network,
+    getTokenBalance,
+    updateTokenBalance: updateTokenBalanceContext,
   } = context;
 
   const [limits, setLimits] = React.useState([]);
@@ -186,26 +197,35 @@ function Exchanger(props) {
   };
 
   /**
-   * Update fiats tokens list and their balances.
-   * Sets default fiat
+   * Update the fiats tokens list and their balances.
+   * Sets the default fiat
    */
   fiatsUpdate = async () => {
     setFiatsLoaded(false);
-    await updateFiats().then(fiats => {
-      const currencySymbol = router.getState().params.currency;
-      if (!fiatSelected) {
-        const initialCurrency = fiats[userId]
-          .find(fiat => fiat.symbol === currencySymbol);
-        if (fiatSelected.symbol !== _.get(initialCurrency, 'symbol')) {
-          setFiat(initialCurrency || fiats[userId][0]);
+
+    try {
+      await updateFiats().then((fiats) => {
+        const currencySymbol = router.getState().params.currency;
+        if (!fiatSelected) {
+          const initialCurrency = fiats[userId].find(
+            (fiat) => fiat.symbol === currencySymbol
+          );
+          if (fiatSelected.symbol !== _.get(initialCurrency, 'symbol')) {
+            setFiat(initialCurrency || fiats[userId][0]);
+          }
+        } else {
+          const updatedFiat = fiats[userId].find(
+            (c) => currencySymbol === c.symbol
+          );
+          if (updatedFiat) {
+            setFiat(updatedFiat);
+          }
         }
-      } else {
-        const fiatSymbol = fiats[userId].find(c => currencySymbol === c.symbol);
-        if (fiatSymbol) {
-          setFiat(fiatSymbol);
-        }
-      }
-    });
+      });
+    } catch (error) {
+      console.log('[fiatsUpdate]', error);
+    }
+
     setFiatsLoaded(true);
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);
   };
@@ -236,6 +256,36 @@ function Exchanger(props) {
     })
   };
 
+  const updateTokenBalance = async () => {
+    try {
+      if (!isConnected) return;
+      if (_.get(fiatSelected, 'isFiat', false)) return;
+
+      // Get the currency coin to update it.
+      // The using fiatSelected here is unwanted solution.
+      const currencySymbol = router.getState().params.currency;
+      const currency = coins.find(t => t.symbol === currencySymbol);
+      if (!currency) return;
+
+      // Fetch the token balance.
+      const balance = await getTokenBalance(currency.address, true);
+
+      // While the balance is loading currency can be changed.
+      const symbolAfterLoading = router.getState().params.currency;
+      if (currencySymbol !== symbolAfterLoading) return;
+
+      // Set the token balance to context.
+      // And set the new fiatSelected with the current balance.
+      updateTokenBalanceContext(currency.address, balance);
+      setFiatSelected({ ...currency, balance });
+    } catch (error) {
+      console.error('[updateTokenBalance]', error);
+    }
+
+    // Update the balance with UPDATE_DELAY.
+    updateTokenBalanceTimeout = setTimeout(() => updateTokenBalance(), UPDATE_DELAY);
+  };
+
   React.useEffect(() => {
     fiatsUpdate();
     return () => {
@@ -257,12 +307,16 @@ function Exchanger(props) {
 
   // Set initial coin
   React.useEffect(() => {
-    setCoin(
-      tokens.find((t) => t.symbol === initGetParams.params.coin) ||
-        [...network.displayTokens, ...tokens].find(
-          (t) => t.symbol !== initGetParams.params.fiat
-        )
-    );
+    const params = initGetParams.params;
+    const isParamsCoin = (t) => t.symbol === params.coin;
+    const isParamCurrency = (t) => t.symbol === fiatSelected?.symbol;
+
+    const allCoins = [...coins, ...fiatTokens];
+    const getFineCoin = () => allCoins.find((t) => isParamsCoin(t) && !isParamCurrency(t));
+    const getAvailableCoin = () => allCoins.find((t) => !isParamCurrency(t));
+    const coin = getFineCoin() || getAvailableCoin();
+
+    setCoin(coin);
   }, [chainId]);
 
   // Set initial fiat
@@ -277,6 +331,7 @@ function Exchanger(props) {
     const getAvailableFiat = () => allCoins.find(isFineFiat);
     const getUSDFromCoins = () => allCoins.find(isUSD);
 
+    if (!_.get(getInitialFiat(), 'isFiat')) return;
     if (!initialCurrencySymbol) {
       setFiat(getUSDFromCoins() || getAvailableFiat());
 
@@ -288,6 +343,14 @@ function Exchanger(props) {
 
     setFiat(fineFiat);
   }, [fiats]);
+
+  React.useEffect(() => {
+    updateTokenBalance();
+
+    return () => {
+      clearTimeout(updateTokenBalanceTimeout);
+    }
+  }, [fiatSymbol, chainId, isConnected]);
 
   return (
     <CabinetContent className="Exchanger__wrap">
