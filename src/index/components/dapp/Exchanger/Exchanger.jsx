@@ -197,26 +197,35 @@ function Exchanger(props) {
   };
 
   /**
-   * Update fiats tokens list and their balances.
-   * Sets default fiat
+   * Update the fiats tokens list and their balances.
+   * Sets the default fiat
    */
   fiatsUpdate = async () => {
     setFiatsLoaded(false);
-    await updateFiats().then(fiats => {
-      const currencySymbol = router.getState().params.currency;
-      if (!fiatSelected) {
-        const initialCurrency = fiats[userId]
-          .find(fiat => fiat.symbol === currencySymbol);
-        if (fiatSelected.symbol !== _.get(initialCurrency, 'symbol')) {
-          setFiat(initialCurrency || fiats[userId][0]);
+
+    try {
+      await updateFiats().then((fiats) => {
+        const currencySymbol = router.getState().params.currency;
+        if (!fiatSelected) {
+          const initialCurrency = fiats[userId].find(
+            (fiat) => fiat.symbol === currencySymbol
+          );
+          if (fiatSelected.symbol !== _.get(initialCurrency, 'symbol')) {
+            setFiat(initialCurrency || fiats[userId][0]);
+          }
+        } else {
+          const updatedFiat = fiats[userId].find(
+            (c) => currencySymbol === c.symbol
+          );
+          if (updatedFiat) {
+            setFiat(updatedFiat);
+          }
         }
-      } else {
-        const fiatSymbol = fiats[userId].find(c => currencySymbol === c.symbol);
-        if (fiatSymbol) {
-          setFiat(fiatSymbol);
-        }
-      }
-    });
+      });
+    } catch (error) {
+      console.log('[fiatsUpdate]', error);
+    }
+
     setFiatsLoaded(true);
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);
   };
