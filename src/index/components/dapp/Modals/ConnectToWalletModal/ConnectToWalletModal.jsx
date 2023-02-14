@@ -24,10 +24,10 @@ function ConnectToWalletModal(props) {
       props.onClose();
     }
 
-    if (!isConnected && adaptive) {
-      connectWallet(getCurrentConnector());
-      props.onClose();
-    }
+    // if (!isConnected && adaptive) {
+    //   connectWallet(getCurrentConnector(adaptive));
+    //   props.onClose();
+    // }
   }, [isConnected, adaptive]);
 
   return (

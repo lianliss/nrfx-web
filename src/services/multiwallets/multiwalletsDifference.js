@@ -41,16 +41,24 @@ export const getEthereum = (connector, chainID = DEFAULT_CHAIN) => {
       return window['ethereum'];
     }
     case CONNECTORS.TRUST_WALLET: {
-      if (!window['trustwallet']) {
-        return null;
+      const isTrustWallet =
+        _.get(window, 'trustwallet.isTrust') ||
+        _.get(window, 'trustwallet.isTrustWallet');
+
+      if (isTrustWallet) {
+        return window['trustwallet'];
       }
 
-      return window['trustwallet'];
+      if (window['ethereum']) {
+        return window['ethereum'];
+      }
+
+      return null;
     }
     case CONNECTORS.WALLET_CONNECT: {
       const walletConnect = new WalletConnectProvider({
         chainId: chainID,
-        rpc: noderealRPC
+        rpc: noderealRPC,
       });
 
       return walletConnect;
@@ -67,7 +75,11 @@ export const getEthereum = (connector, chainID = DEFAULT_CHAIN) => {
  * @param chainID {number} - current network chainID - 56 mainnet, 97 testnet.
  * @returns {object}
  */
-const getProviderOfConnector = (connector, ethereum, chainID = DEFAULT_CHAIN) => {
+const getProviderOfConnector = (
+  connector,
+  ethereum,
+  chainID = DEFAULT_CHAIN
+) => {
   let provider = noderealRPC[chainID];
 
   switch (connector) {
@@ -97,7 +109,10 @@ export const getConnectorObject = (connector, chainID = DEFAULT_CHAIN) => {
     return null;
   }
 
-  if (connector === CONNECTORS.TRUST_WALLET && !ethereum.isTrustWallet) {
+  if (
+    connector === CONNECTORS.TRUST_WALLET &&
+    !(ethereum.isTrustWallet || ethereum.isTrust)
+  ) {
     return null;
   }
 
@@ -144,7 +159,12 @@ export const getCurrentConnector = () => {
     return CONNECTORS.METAMASK;
   }
 
-  if (_.get(window, 'trustwallet.isTrustWallet')) {
+  if (
+    _.get(window, 'trustwallet.isTrustWallet') ||
+    _.get(window, 'ethereum.isTrustWallet') ||
+    _.get(window, 'trustwallet.isTrust') ||
+    _.get(window, 'ethereum.isTrust')
+  ) {
     return CONNECTORS.TRUST_WALLET;
   }
 
