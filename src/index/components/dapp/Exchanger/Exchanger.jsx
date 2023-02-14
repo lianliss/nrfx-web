@@ -252,15 +252,29 @@ function Exchanger(props) {
       if (!isConnected) return;
       if (_.get(fiatSelected, 'isFiat', false)) return;
 
-      const balance = await getTokenBalance(fiatSelected.address, true);
+      // Get the currency coin to update it.
+      // The using fiatSelected here is unwanted solution.
+      const currencySymbol = router.getState().params.currency;
+      const currency = coins.find(t => t.symbol === currencySymbol);
+      if (!currency) return;
 
-      updateTokenBalanceContext(fiatSelected.address, balance);
-      setFiatSelected({ ...fiatSelected, balance });
+      // Fetch the token balance.
+      const balance = await getTokenBalance(currency.address, true);
+
+      // While the balance is loading currency can be changed.
+      const symbolAfterLoading = router.getState().params.currency;
+      if (currencySymbol !== symbolAfterLoading) return;
+
+      // Set the token balance to context.
+      // And set the new fiatSelected with the current balance.
+      updateTokenBalanceContext(currency.address, balance);
+      setFiatSelected({ ...currency, balance });
     } catch (error) {
       console.error('[updateTokenBalance]', error);
     }
 
-    updateTokenBalanceTimeout = setTimeout(updateTokenBalance, UPDATE_DELAY);
+    // Update the balance with UPDATE_DELAY.
+    updateTokenBalanceTimeout = setTimeout(() => updateTokenBalance(), UPDATE_DELAY);
   };
 
   React.useEffect(() => {
@@ -284,12 +298,16 @@ function Exchanger(props) {
 
   // Set initial coin
   React.useEffect(() => {
-    setCoin(
-      tokens.find((t) => t.symbol === initGetParams.params.coin) ||
-        [...network.displayTokens, ...tokens].find(
-          (t) => t.symbol !== initGetParams.params.fiat
-        )
-    );
+    const params = initGetParams.params;
+    const isParamsCoin = (t) => t.symbol === params.coin;
+    const isParamCurrency = (t) => t.symbol === fiatSelected?.symbol;
+
+    const allCoins = [...coins, ...fiatTokens];
+    const getFineCoin = () => allCoins.find((t) => isParamsCoin(t) && !isParamCurrency(t));
+    const getAvailableCoin = () => allCoins.find((t) => !isParamCurrency(t));
+    const coin = getFineCoin() || getAvailableCoin();
+
+    setCoin(coin);
   }, [chainId]);
 
   // Set initial fiat
