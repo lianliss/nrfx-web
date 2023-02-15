@@ -371,6 +371,27 @@ class Web3Provider extends React.PureComponent {
     }, type);
   }
 
+  /**
+   * Add to state new token object with balance.
+   * @param {string} address
+   * @param {string} balance
+   */
+  async updateTokenBalance(address, balance) {
+    this.setState((state) => {
+      const tokens = [...state.tokens];
+      const tokenIndex = tokens.findIndex(
+        (t) => t.address === address
+      );
+
+      tokens[tokenIndex] = {
+        ...tokens[tokenIndex],
+        balance,
+      };
+
+      return { tokens };
+    });
+  }
+
    /**
    * Sets a provider of chainId and connector to the web3.
    * @param {number} chainId 
@@ -561,6 +582,12 @@ class Web3Provider extends React.PureComponent {
       this.successConnectionCheck = true;
       if (connector === CONNECTORS.WALLET_CONNECT) {
         await provider.enable();
+
+        provider.on('visibilitychange', () => {
+          if (document.visibilityState === 'hidden') {
+            window.localStorage.removeItem('WALLETCONNECT_DEEPLINK_CHOICE');
+          }
+        });
       }
 
       this.web3 = new Web3(provider);
@@ -610,6 +637,8 @@ class Web3Provider extends React.PureComponent {
       // On account address change
     } catch (error) {
       console.error('[connectWallet]', error);
+      this.walletConnectorStorage().clear();
+
       throw error;
     }
   }
@@ -2085,6 +2114,7 @@ class Web3Provider extends React.PureComponent {
       sendTokens: this.sendTokens.bind(this),
       setBalances: this.setBalances.bind(this),
       updateTokenInBalances: this.updateTokenInBalances.bind(this),
+      updateTokenBalance: this.updateTokenBalance.bind(this),
       setRefer: this.setRefer.bind(this),
       getReferHash: this.getReferHash.bind(this),
       getReferFriends: this.getReferFriends.bind(this),
