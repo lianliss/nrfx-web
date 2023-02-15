@@ -8,6 +8,7 @@ import DynamicShadow from 'src/ui/components/DynamicShadow/DynamicShadow';
 // Utils
 import { getLang } from 'src/utils';
 import { openStateModal } from 'src/actions';
+import company from 'src/index/constants/company';
 
 import './WalletsIsEmpty.less';
 
@@ -59,7 +60,7 @@ function WalletsIsEmpty() {
             </DynamicShadow>
           </div>
           <div className="WalletsIsEmpty__links">
-            <a href="http://docs.narfex.com" target="_blank">
+            <a href={company.docs} target="_blank">
               <OpenPopupLink
                 title={getLang('dapp_global_learn_about_narfex')}
               />
@@ -71,20 +72,23 @@ function WalletsIsEmpty() {
               <div className="WalletsIsEmpty-social__items">
                 <LinkIcon to="https://t.me/narfexfeed" icon="telegram-solid" />
                 <LinkIcon
-                  to="https://discord.gg/56Xrq2rXYv"
+                  to={'https://' + company.social.discord}
                   icon="discord-solid"
                 />
                 <LinkIcon
-                  to="https://instagram.com/narfex.global"
+                  to={'https://' + company.social.instagram}
                   icon="instagram-solid"
                 />
-                <LinkIcon to="https://medium.com/@narfex" icon="M-solid" />
                 <LinkIcon
-                  to="https://www.youtube.com/channel/UCDwJ0XUJDJpQAhB9DxYYUlw"
+                  to={'https://' + company.social.medium}
+                  icon="M-solid"
+                />
+                <LinkIcon
+                  to={'https://' + company.social.youtube}
                   icon="youtube-solid"
                 />
                 <LinkIcon
-                  to="https://twitter.com/narfexglobal?s=21"
+                  to={'https://' + company.social.twitter}
                   icon="twitter-solid"
                 />
               </div>

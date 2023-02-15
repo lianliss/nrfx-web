@@ -16,12 +16,12 @@ export default {
     medium: 'medium.com/@narfex',
     linkedin: 'linkedin.com/company/bitcoinbot-indonesia/',
     instagram: 'instagram.com/narfex.global',
-    discord: 'discord.gg/T4hFnUaPFS',
-    youtube: 'youtube.com/channel/UCDwJ0XUJDJpQAhB9DxYYUlw',
+    discord: 'discord.gg/narfex',
+    youtube: 'youtube.com/@narfex_com',
   },
   github: 'https://github.com/narfex',
   whitePaper: {
-    en: 'https://docs.narfex.com/narfex/products/p2p-exchanger',
+    en: 'https://docs.narfex.com/narfex/main/how-it-works',
   },
   BuyInstruction: {
     en: 'https://drive.google.com/file/d/1PcmO04n1Yp0eUKQMQLvjvoP4Nlj4mJl3/view?usp=drivesdk',
