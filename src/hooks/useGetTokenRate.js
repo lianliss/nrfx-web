@@ -1,5 +1,6 @@
 import React from 'react';
 import { TOKENS } from '../services/multichain/initialTokens';
+import { BSC_MAINNET } from '../services/multichain/chains';
 import { Web3Context } from '../services/web3Provider';
 
 /**
@@ -14,10 +15,14 @@ const useGetTokenRate = (tokenSymbol = '', switchToChain) => {
 
   const fetchRate = async () => {
     try {
+      let hops;
+      switch (switchToChain) {
+        case BSC_MAINNET: hops = 1; break;
+        default: hops = 0;
+      }
       const data = await getTokenContract(
         TOKENS[network.chainId][tokenSymbol.toLocaleLowerCase()]
-      ).getOutAmount(TOKENS[network.chainId].usdc, 1, 1);
-      /// TODO Надо придумать, как считать цену, если нет прямой пары с USDC, но чтобы было мало запросов
+      ).getOutAmount(TOKENS[network.chainId].usdc, 1, hops);
 
       return _.get(data, 'outAmount', 0);
     } catch (error) {

@@ -145,6 +145,7 @@ class TokenContract {
     
     const current = this.address ? this : this.network.wrapToken;
     const second = secondToken.address ? secondToken : this.network.wrapToken;
+    console.log('_getExchangeTokens', secondToken, this.network.wrapToken);
     const networkUSDC = this.network.tokens.usdc;
     
     if (!oracleTokens[current.address]

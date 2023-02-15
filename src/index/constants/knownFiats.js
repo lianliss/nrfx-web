@@ -97,32 +97,200 @@ const ETHER_FIATS = [
   },
 ];
 
+const POLYGON_FIATS = [
+  {
+    name: "United States Dollar on Narfex",
+    symbol: "USD",
+    address: "0x95f8a92D0c8C4Dff8e567ADb6c68758b7fc99287",
+    logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
+  },
+  {
+    name: "Euro on Narfex",
+    symbol: "EUR",
+    address: "0x8f53BFc73b2FB7c6b0C26e8617b1d43a5af21b29",
+    logoURI: "https://static.narfex.com/img/currencies/euro.svg"
+  },
+  {
+    name: "Russian Ruble on Narfex",
+    symbol: "RUB",
+    address: "0xA4b698FF2DA1fFc2eE02c2A2433E2AFF396c9e6d",
+    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+  },
+  {
+    name: "Ukrainian Hryvnia on Narfex",
+    symbol: "UAH",
+    address: "0x533Ec6d91786Ed2600700dF67cd7B5BdBE1768A7",
+    logoURI: "https://static.narfex.com/img/currencies/uah-gryvnya.svg"
+  },
+  {
+    name: "Chinese Yuan on Narfex",
+    symbol: "CNY",
+    address: "0x88dF6195fA1B5d86403946004Aec9962476b5BA3",
+    logoURI: "https://static.narfex.com/img/currencies/yuan-cny.svg"
+  },
+  {
+    name: "Indonesian Rupiah on Narfex",
+    symbol: "IDR",
+    address: "0x7684A91B68B63CC0E077bcBb78919ab05485c2E1",
+    logoURI: "https://static.narfex.com/img/currencies/indonesian-rupiah.svg"
+  },
+  {
+    name: "Polish Zloty on Narfex",
+    symbol: "PLN",
+    address: "0xFa2d9846cb12a8e03e0F24498c5BAD6FA41EA1c7",
+    logoURI: "https://static.narfex.com/img/currencies/pln.svg"
+  },
+  {
+    name: "Thai Baht on Narfex",
+    symbol: "THB",
+    address: "0x59550031b68e67a141404caf241C61D0c8580565",
+    logoURI: "https://static.narfex.com/img/currencies/thb.svg"
+  },
+  {
+    name: "Vietnamese Dong on Narfex",
+    symbol: "VND",
+    address: "0x6a31E64B08CF35FfeAfbC707840a8E989307d9A0",
+    logoURI: "https://static.narfex.com/img/currencies/vnd.svg"
+  },
+  {
+    name: "Canadian Dollar on Narfex",
+    symbol: "CAD",
+    address: "0x98cA4f60F1AFdec251f059264d039632751368ef",
+    logoURI: "https://static.narfex.com/img/currencies/cad.svg"
+  },
+  {
+    name: "Turkish Lire on Narfex",
+    symbol: "TRY",
+    address: "0x8Eb2638444037394b5440192422337F4Cc211810",
+    logoURI: "https://static.narfex.com/img/currencies/try.svg"
+  },
+  {
+    name: "British Pound on Narfex",
+    symbol: "GBP",
+    address: "0xEDd5854E28b52DBbB312CbfA191b545E32C4F0cF",
+    logoURI: "https://static.narfex.com/img/currencies/gbp-pound.svg"
+  },
+].map(fiat => ({
+  ...fiat,
+  chainId: 137,
+  decimals: 6,
+}));
+
+const ARBITRUM_FIATS = [
+  {
+    name: "United States Dollar on Narfex",
+    symbol: "USD",
+    address: "0x7dd8dDFcc4E10efcfF9553c109FDd35071a1e87a",
+    logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
+  },
+  {
+    name: "Euro on Narfex",
+    symbol: "EUR",
+    address: "0xFf3492ee2c335bEdbc3A77aE4FcDB75272A1a03f",
+    logoURI: "https://static.narfex.com/img/currencies/euro.svg"
+  },
+  {
+    name: "Russian Ruble on Narfex",
+    symbol: "RUB",
+    address: "0xf9A45bbcf419A0660dac64517fe9625203415CFE",
+    logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
+  },
+  {
+    name: "Ukrainian Hryvnia on Narfex",
+    symbol: "UAH",
+    address: "0x7C6b157DE0f62f980CbBA8c8Cf862Acf5d9882a3",
+    logoURI: "https://static.narfex.com/img/currencies/uah-gryvnya.svg"
+  },
+  {
+    name: "Chinese Yuan on Narfex",
+    symbol: "CNY",
+    address: "0xAfe7bb0A7F5386b4736B5A07C7c282A8F6feA8e9",
+    logoURI: "https://static.narfex.com/img/currencies/yuan-cny.svg"
+  },
+  {
+    name: "Indonesian Rupiah on Narfex",
+    symbol: "IDR",
+    address: "0xA9b81E1d69C2B8FE50b04e7363c51C5Ef0e1495a",
+    logoURI: "https://static.narfex.com/img/currencies/indonesian-rupiah.svg"
+  },
+  {
+    name: "Polish Zloty on Narfex",
+    symbol: "PLN",
+    address: "0x819067F88A63E7F52b868Ad5054ce744AD3f90BF",
+    logoURI: "https://static.narfex.com/img/currencies/pln.svg"
+  },
+  {
+    name: "Thai Baht on Narfex",
+    symbol: "THB",
+    address: "0xa1b26D1E4D118dcc9907A0e03dEc8599A904cD1B",
+    logoURI: "https://static.narfex.com/img/currencies/thb.svg"
+  },
+  {
+    name: "Vietnamese Dong on Narfex",
+    symbol: "VND",
+    address: "0xb688a277F6E094d808F2a97f14a3497F65bD901B",
+    logoURI: "https://static.narfex.com/img/currencies/vnd.svg"
+  },
+  {
+    name: "Canadian Dollar on Narfex",
+    symbol: "CAD",
+    address: "0xeD9e2129E59824604C0051920901cAE46d5653B3",
+    logoURI: "https://static.narfex.com/img/currencies/cad.svg"
+  },
+  {
+    name: "Turkish Lire on Narfex",
+    symbol: "TRY",
+    address: "0x01e30335a994303e6855748a132CFA825ed6F4f7",
+    logoURI: "https://static.narfex.com/img/currencies/try.svg"
+  },
+  {
+    name: "British Pound on Narfex",
+    symbol: "GBP",
+    address: "0xD028348D68F31Cc6d0311F620B0198C69D5bef5A",
+    logoURI: "https://static.narfex.com/img/currencies/gbp-pound.svg"
+  },
+].map(fiat => ({
+  ...fiat,
+  chainId: 42161,
+  decimals: 6,
+}));
+
 const TESTNET_FIATS = [
   {
     name: "Testnet United States Dollar",
     symbol: "USD",
     address: "0x6dBB65750a6BBE8A0CBD28257008C464bAbe4de6",
-    chainId: 97,
-    decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/dollar.svg"
   },
   {
     name: "Testnet Russian Ruble",
     symbol: "RUB",
     address: "0x93e9fefdb37431882D1A27bB794E73a191ebD945",
-    chainId: 97,
-    decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/rubles.svg"
   },
   {
     name: "Testnet Ukrainian Hryvnia",
     symbol: "UAH",
     address: "0xbD6a27FF04405F0111D8d811951b53B7cbb1bf95",
-    chainId: 97,
-    decimals: 18,
     logoURI: "https://static.narfex.com/img/currencies/uah-gryvnya.svg"
   },
-];
+  {
+    name: "Testnet Chinese Yuan on Narfex",
+    symbol: "CNY",
+    address: "0x6CbcfF2b0bCd4a23b016C3dc419E73620058c802",
+    logoURI: "https://static.narfex.com/img/currencies/yuan-cny.svg"
+  },
+  {
+    name: "Testnet Indonesian Rupiah on Narfex",
+    symbol: "IDR",
+    address: "0x91049b125A7c57971B52d96c6eB931AC500EC98D",
+    logoURI: "https://static.narfex.com/img/currencies/indonesian-rupiah.svg"
+  },
+].map(fiat => ({
+  ...fiat,
+  chainId: 97,
+  decimals: 18,
+}));
 
 const KNOWN_FIATS = [
   {
@@ -223,6 +391,8 @@ const KNOWN_FIATS = [
   },
   ...TESTNET_FIATS,
   ...ETHER_FIATS,
+  ...POLYGON_FIATS,
+  ...ARBITRUM_FIATS,
 ].map(fiat => ({
   ...fiat,
   isFiat: true,

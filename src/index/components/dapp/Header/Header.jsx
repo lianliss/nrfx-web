@@ -247,7 +247,7 @@ const ChainSelect = React.memo(
       },
       [isConnected]
     );
-
+    
     const cryptoOptions = options.cryptoOptions.filter((option) =>
       isTestnet ? !isMainnet[option.value] : isMainnet[option.value]
     );

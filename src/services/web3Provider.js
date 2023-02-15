@@ -62,7 +62,9 @@ class Web3Provider extends React.PureComponent {
     pools: null,
     poolsList: [],
     prices: {},
-    fiats: {},
+    fiats: {
+      known: KNOWN_FIATS,
+    },
     connector: CONNECTORS.METAMASK,
     referAddress: ZERO_ADDRESS,
   };
@@ -371,8 +373,8 @@ class Web3Provider extends React.PureComponent {
 
   /**
    * Add to state new token object with balance.
-   * @param {string} address 
-   * @param {string} balance 
+   * @param {string} address
+   * @param {string} balance
    */
   async updateTokenBalance(address, balance) {
     this.setState((state) => {
@@ -456,7 +458,9 @@ class Web3Provider extends React.PureComponent {
       }
       this.setState({
         tokens: this.network.displayTokens,
-        fiats: {},
+        fiats: {
+          known: KNOWN_FIATS,
+        },
         poolsList: this.network.poolsList,
         chainId: id,
       });
@@ -632,7 +636,7 @@ class Web3Provider extends React.PureComponent {
 
       // On account address change
     } catch (error) {
-      console.log('error', error);
+      console.error('[connectWallet]', error);
       this.walletConnectorStorage().clear();
 
       throw error;
@@ -673,6 +677,7 @@ class Web3Provider extends React.PureComponent {
     const incorrectAddresses = [
       '0x179960442Ece8dE9f390011b7f7c9b56C74e4D0a',
       '0x03a3cDa7F684Db91536e5b36DC8e9077dC451081',
+      '0x0E622E0e97B88824C655A0443e69416c3233a522', // Polygon Rubaled
     ];
 
     // @param token.
@@ -736,6 +741,10 @@ class Web3Provider extends React.PureComponent {
 
     try {
       const reserves = this.pairs[pairAddress];
+      const tokens = [
+        ...this.getFiatsArray(),
+        ...this.state.tokens,
+      ];
       if (reserves) {
         if (_token1) {
           // If tokens passed
@@ -768,8 +777,8 @@ class Web3Provider extends React.PureComponent {
         const dataToken0 = data[1].toLowerCase();
         const dataToken1 = data[2].toLowerCase();
         // If no tokens passed
-        token0 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === dataToken0);
-        token1 = this.state.tokens.find(t => t.address && t.address.toLowerCase() === dataToken1);
+        token0 = tokens.find(t => t.address && t.address.toLowerCase() === dataToken0);
+        token1 = tokens.find(t => t.address && t.address.toLowerCase() === dataToken1);
       }
       // Switch pair
       const result = data[1] === token0.address
@@ -1384,9 +1393,11 @@ class Web3Provider extends React.PureComponent {
     try {
       const {pools} = this.state;
       const farm = this.getFarmContract();
+      const settings = await farm.contract.methods.getSettings().call();
       const data = await Promise.all(Object.keys(pools).map(address => farm.getPoolData(pools[address])));
       const poolsWithData = {};
       data.map((pool, index) => {
+        data[index].rewardPerBlock = wei.to(wei.from(settings.uintRewardPerBlock) * data[index].share);
         poolsWithData[pool.address] = data[index];
       });
       this.setState({pools: poolsWithData});
@@ -1504,6 +1515,7 @@ class Web3Provider extends React.PureComponent {
       if (!isConnected) {
         const fiats = {};
         fiats[userId] = KNOWN_FIATS;
+        fiats.known = KNOWN_FIATS;
         this.setState({
           fiats,
         });
@@ -1541,6 +1553,7 @@ class Web3Provider extends React.PureComponent {
         } : null;
       }).filter(f => !!f);
       fiats[userId] = userFiats;
+      fiats.known = KNOWN_FIATS;
       this.setState({
         fiats,
       });
@@ -1571,7 +1584,7 @@ class Web3Provider extends React.PureComponent {
    * @param rates {array}
    * @return {array}
    */
-  getFiatsArray(rates) {
+  getFiatsArray(rates = {}) {
     const chainId = this.state.chainId || 56;
     const userId = `${chainId}${this.state.accountAddress}`;
     return _.get(

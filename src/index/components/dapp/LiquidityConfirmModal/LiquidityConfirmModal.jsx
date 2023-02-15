@@ -49,11 +49,11 @@ function LiquidityConfirmModal(props) {
     getReserves,
     transaction, getTransactionReceipt,
     network, web3,
-    accountAddress, bnb,
+    accountAddress,
     getBSCScanLink,
     addTokenToWallet,
   } = context;
-  const { wrapBNB } = network.tokens;
+  const { wrapBNB, bnb } = network.tokens;
   const { routerAddress } = network.contractAddresses;
   const dispatch = useDispatch();
   const [pair, setPair] = React.useState(null);
@@ -104,14 +104,18 @@ function LiquidityConfirmModal(props) {
         require('src/index/constants/ABI/PancakeRouter'),
         routerAddress,
       );
+      let minA = amount0 - amount0 * slippageTolerance;
+      let minB = amount1 - amount0 * slippageTolerance;
+      if (minA < 0) minA = 0;
+      if (minB < 0) minB = 0;
       let method = 'addLiquidity';
       const params = [
         selectedTokens[0].address,
         selectedTokens[1].address,
         wei.to(amount0, selectedTokens[0].decimals || 18),
         wei.to(amount1, selectedTokens[1].decimals || 18),
-        wei.to(amount0 - amount0 * slippageTolerance, selectedTokens[0].decimals || 18),
-        wei.to(amount1 - amount0 * slippageTolerance, selectedTokens[1].decimals || 18),
+        wei.to(minA, selectedTokens[0].decimals || 18),
+        wei.to(minB, selectedTokens[1].decimals || 18),
         accountAddress,
         Number(Date.now() / 1000 + 60 * 15).toFixed(0),
       ];

@@ -28,6 +28,7 @@ import SVG from 'utils/svg-wrap';
 // Utils
 import popupTimer from 'src/index/components/dapp/Popup/hooks/popupTimer';
 import { toastPush } from 'src/actions/toasts';
+import useGetTokenRate from 'src/hooks/useGetTokenRate';
 
 // Styles
 import './FarmingPopup.less';
@@ -82,8 +83,8 @@ export function FarmingPopupROI(props) {
     props.onClose();
     return <></>;
   };
-  const rewardPrice = useSelector(state => _.get(state, 'web3.rates.nrfx', 0));
-  const {blocksPerSecond, prices} = React.useContext(Web3Context);
+  const {blocksPerSecond, prices, chainId} = React.useContext(Web3Context);
+  const rewardPrice = useGetTokenRate('NRFX', chainId || 1);
   const pairPrice = prices[pool.address] || 1;
   const poolSize = wei.from(_.get(pool, 'size', '0')) || (1000 / pairPrice);
   const poolPrice = pairPrice * poolSize;

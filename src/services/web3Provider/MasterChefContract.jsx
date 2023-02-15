@@ -18,7 +18,7 @@ class MasterChefContract {
 
     this.contract = new (this.web3.eth.Contract)(
       require('src/index/constants/ABI/MasterChef'),
-      this.network.contractAddresses.masterChefAddress,
+      this.provider.network.contractAddresses.masterChefAddress,
     );
   }
 
@@ -26,15 +26,17 @@ class MasterChefContract {
     try {
       const accountAddress = _.get(this, 'provider.state.accountAddress');
       const pools = {};
-      const count = await this.contract.methods.poolsCount().call();
+      console.log('getPoolsList', this);
+      const count = await this.contract.methods.getPoolsCount().call();
+      console.log('count', count);
       const getMethods = [];
       for (let i = 0; i < Number(count); i++) {
-        getMethods.push(this.contract.methods.poolsList(i).call())
+        getMethods.push(this.contract.methods.poolInfo(i).call())
       }
-      const addresses = await Promise.all(getMethods);
-      addresses.map((address, index) => {
-        pools[address] = {
-          address,
+      const data = await Promise.all(getMethods);
+      data.map((data, index) => {
+        pools[data.pairToken] = {
+          address: data.pairToken,
           token0: null,
           token1: null,
           size: '0',
@@ -53,10 +55,6 @@ class MasterChefContract {
     try {
       const {address} = pool;
       const accountAddress = _.get(this, 'provider.state.accountAddress');
-      const pairContract = new (this.web3.eth.Contract)(
-        require('src/index/constants/ABI/PancakePair'),
-        address,
-      );
       const promises = [
         this.contract.methods.getPoolData(address).call()
       ];
@@ -70,7 +68,8 @@ class MasterChefContract {
         token1: _.get(data[0], 'token1'),
         token0Symbol: _.get(data[0], 'token0Symbol'),
         token1Symbol: _.get(data[0], 'token1Symbol'),
-        size: _.get(data[0], 'size', '0'),
+        size: _.get(data[0], 'amount', '0'),
+        share: wei.from(_.get(data[0], 'poolShare', '0'), 4),
         rewardPerBlock: _.get(data[0], 'rewardPerBlock', '0'),
         balance: _.get(data[1], 'balance', '0'),
         userPool: _.get(data[1], 'userPool', '0'),

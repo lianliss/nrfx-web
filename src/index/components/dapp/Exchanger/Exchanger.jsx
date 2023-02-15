@@ -108,7 +108,9 @@ function Exchanger(props) {
         isFiat: true,
       };
   }
-  const fiatTokens = _.get(fiats, userId, [defaultUSD]).map(token => {
+  const chainFiats = _.get(fiats, 'known', []).filter(f => f.chainId === chainId);
+  const defaultFiats = chainFiats.length ? chainFiats : [defaultUSD];
+  const fiatTokens = _.get(fiats, userId, defaultFiats).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
     return price ? {...token, price} : token;
   });
@@ -311,7 +313,7 @@ function Exchanger(props) {
     const isParamsCoin = (t) => t.symbol === params.coin;
     const isParamCurrency = (t) => t.symbol === fiatSelected?.symbol;
 
-    const allCoins = [...coins, ...fiatTokens];
+    const allCoins = [...fiatTokens, ...coins];
     const getFineCoin = () => allCoins.find((t) => isParamsCoin(t) && !isParamCurrency(t));
     const getAvailableCoin = () => allCoins.find((t) => !isParamCurrency(t));
     const coin = getFineCoin() || getAvailableCoin();

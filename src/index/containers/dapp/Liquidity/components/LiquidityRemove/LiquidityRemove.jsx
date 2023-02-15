@@ -112,11 +112,11 @@ function LiquidityRemove({ onClose, currentPool }) {
       onClose: onClose,
       token0: {
         symbol: symbol0,
-        number: getFinePrice(userAmount0 * multiplier),
+        number: userAmount0 * multiplier,
       },
       token1: {
         symbol: symbol1,
-        number: getFinePrice(userAmount1 * multiplier),
+        number: userAmount1 * multiplier,
       }
     });
     

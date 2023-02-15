@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
 import { getLang } from 'src/utils';
+import { web3RatesSelector, adaptiveSelector } from 'src/selectors';
 
 // Components
 import DexSwapInput from '../../../DexSwap/components/DexSwapInput/DexSwapInput';
@@ -25,9 +27,18 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
   const context = React.useContext(Web3Context);
   const {
     getPairAddress, getReserves, getTokenBalance, getTokenContract,
-    network, tokens,
+    network, tokens, fiats, chainId, accountAddress,
   } = context;
   const { routerAddress } = network.contractAddresses;
+  const rates = useSelector(web3RatesSelector);
+  
+  const userId = `${chainId}${accountAddress}`;
+  const chainFiats = _.get(fiats, 'known', []).filter(f => f.chainId === chainId);
+  const defaultFiats = chainFiats.length ? chainFiats : [defaultUSD];
+  const fiatTokens = _.get(fiats, userId, defaultFiats).map(token => {
+    const price = _.get(rates, token.symbol.toLowerCase());
+    return price ? {...token, price} : token;
+  });
 
   const [isImport, setIsImport] = React.useState(type === 'import');
 
@@ -37,7 +48,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
   // --Tokens
   const [selectedTokens, setSelectedTokens] = React.useState([
     tokens.find(t => t.symbol === 'NRFX'),
-    tokens.find(t => t.symbol === 'BNB'),
+    tokens.find(t => t.symbol === 'USDC'),
   ]);
   const [selectToken, setSelectToken] = React.useState(0);
   const [reserves, setReserves] = React.useState([0,0]);
@@ -122,8 +133,8 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
     });
 
     updateBalances();
-    clearInterval(balanceInterval);
-    balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+    // clearInterval(balanceInterval);
+    // balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
   }, [selectedTokens]);
 
   // Set default selected tokens
@@ -132,8 +143,8 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
     if (currentPool) {
       getReserves(currentPool).then(reserve => {
         setSelectedTokens([reserve[2].token0, reserve[2].token1]);
-        clearInterval(balanceInterval);
-        balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+        // clearInterval(balanceInterval);
+        // balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
       }).catch(error => {
         console.error("[LiquidityAdd] Can't set the current pool", currentPool, error);
       });
@@ -142,13 +153,13 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
       const secondToken = tokens.find(t => t.symbol === 'BNB');
 
       setSelectedTokens([firstToken, secondToken]);
-      clearInterval(balanceInterval);
-      balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
+      // clearInterval(balanceInterval);
+      // balanceInterval = setInterval(updateBalances, TIMEOUT_BALANCE);
     }
 
-    return () => {
-      clearInterval(balanceInterval);
-    }
+    // return () => {
+    //   clearInterval(balanceInterval);
+    // }
   }, []);
 
   React.useEffect(() => {
@@ -345,6 +356,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
           }}
           commonBases={network.commonBases}
           {...context}
+          fiats={fiatTokens}
         />
       )}
     </>

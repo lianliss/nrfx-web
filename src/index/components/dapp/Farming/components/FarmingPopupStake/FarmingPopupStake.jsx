@@ -117,7 +117,9 @@ class FarmingPopupStake extends React.PureComponent {
   }
 
   async getAllowance(address) {
-    const allowance = await this.contract.getAllowance(this.contract.provider.masterChefAddress);
+    const allowance = await this.contract.getAllowance(
+      this.contract.provider.network.contractAddresses.masterChefAddress
+    );
     this.setState({allowance});
   }
 
@@ -144,7 +146,10 @@ class FarmingPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
-      await this.contract.approve(this.contract.provider.masterChefAddress, amount);
+      await this.contract.approve(
+        this.contract.provider.network.contractAddresses.masterChefAddress,
+        amount
+      );
       if (!this._mount) return;
       this.setState({allowance: amount, errorText: ''});
     } catch (error) {
@@ -160,19 +165,20 @@ class FarmingPopupStake extends React.PureComponent {
     const {toastPush, pool, onClose} = this.props;
     const { balance } = pool;
     const {isTransaction, value, token1Symbol, token0Symbol} = this.state;
-    const {getFarmContract, getBSCScanLink, getTransactionReceipt, updatePoolData} = this.context;
+    const {getFarmContract, getBSCScanLink, getTransactionReceipt, updatePoolData, referAddress} = this.context;
     if (isTransaction) return;
     this.setState({isTransaction: true});
 
     try {
       const amount = Number(value) || 0;
-      const amountWei = wei.to(amount.toFixed(18));
-      const transactionAmount = amountWei > balance ? balance : amountWei;
+      const transactionAmount = amount > wei.from(balance)
+        ? balance
+        : wei.to(amount.toFixed(9));
       const farm = getFarmContract();
       const tx = await farm.transaction('deposit', [
         pool.address,
         transactionAmount,
-        '0x0000000000000000000000000000000000000000',
+        referAddress || '0x0000000000000000000000000000000000000000',
       ]);
       console.log('transaction hash', tx, getBSCScanLink(tx));
       const receipt = await getTransactionReceipt(tx);

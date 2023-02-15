@@ -159,7 +159,7 @@ const networks = {
     ...tokens[BSC_MAINNET],
   },
   [BSC_TESTNET]: {
-    networkID: 'BSCt',
+    networkID: 'TEST',
     fiatDecimals: 18,
     factoryAddress: '0xb7926c0430afb07aa7defde6da862ae0bde767bc',
     factoryInitCodeHash:

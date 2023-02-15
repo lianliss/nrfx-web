@@ -3,6 +3,7 @@ import './TokenSelect.less';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
 import useAdaptive from 'src/hooks/adaptive';
 import SVG from 'utils/svg-wrap';
@@ -170,7 +171,10 @@ class TokenSelect extends React.PureComponent {
               size="medium"
             />}
             {(!disableCommonBases && isTokens) && <SectionBlock className="TokenSelect__fiat" title="Common bases">
-              {tokens
+              {_.uniqWith(
+                tokens,
+                (t0, t1) => (t0.address || '').toLowerCase() === (t1.address || '').toLowerCase()
+              )
                 .filter((token) => {
                   const symbol = token.symbol.toUpperCase();
 

@@ -1,5 +1,12 @@
-import { ETHEREUM_MAINNET, BSC_MAINNET, BSC_TESTNET, NETWORKS_DATA } from './chains';
+import {
+  ETHEREUM_MAINNET,
+  BSC_MAINNET, BSC_TESTNET,
+  POLYGON_MAINNET,
+  ARBITRUM_MAINNET,
+  NETWORKS_DATA,
+} from './chains';
 import baseTokens from 'src/index/constants/baseTokens';
+import _ from 'lodash';
 
 // Decimals
 const DEFAULT_DECIMALS = 18;
@@ -7,11 +14,16 @@ const DEFAULT_DECIMALS = 18;
 export const TOKEN_LIST_URI = {
   [ETHEREUM_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/ether_tokens.json',
   [BSC_MAINNET]: 'https://tokens.pancakeswap.finance/cmc.json',
+  [POLYGON_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/polygon_tokens.json',
+  [ARBITRUM_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/arbitrum_tokens.json',
 };
 
 export const ABI = {
   [ETHEREUM_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
   [BSC_MAINNET]: require('src/index/constants/ABI/Bep20Token'),
+  [BSC_TESTNET]: require('src/index/constants/ABI/Bep20Token'),
+  [POLYGON_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
+  [ARBITRUM_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
 };
 
 export const TOKENS = {
@@ -110,6 +122,14 @@ export const TOKENS = {
       decimals: DEFAULT_DECIMALS,
       logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png',
     },
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0xd92271C20A5a3A03d8Eb6244D1c002EBed525605",
+      chainId: BSC_TESTNET,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
     bnb: {
       name: 'Binance Coin',
       symbol: 'BNB',
@@ -151,18 +171,76 @@ export const TOKENS = {
       logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png',
     },
   },
+  [POLYGON_MAINNET]: {
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      chainId: POLYGON_MAINNET,
+      decimals: 6,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
+    matic: {
+      name: 'Matic',
+      symbol: 'MATIC',
+      address: null,
+      chainId: POLYGON_MAINNET,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: 'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
+    },
+    wrapMATIC: {
+      name: 'Wrapped Matic',
+      address: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+      symbol: 'WMATIC',
+      decimals: DEFAULT_DECIMALS,
+      chainId: POLYGON_MAINNET,
+      logoURI:
+        'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
+    },
+  },
+  [ARBITRUM_MAINNET]: {
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      chainId: ARBITRUM_MAINNET,
+      decimals: 6,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
+    eth: {
+      name: 'Ethereum',
+      symbol: 'ETH',
+      address: null,
+      chainId: ARBITRUM_MAINNET,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+    },
+    wrapETH: {
+      name: 'Wrapped Ether',
+      address: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
+      symbol: 'WETH',
+      decimals: DEFAULT_DECIMALS,
+      chainId: ARBITRUM_MAINNET,
+      logoURI:
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
+    },
+  },
 };
 
 export const CHAIN_TOKENS = {
   [ETHEREUM_MAINNET]: TOKENS[ETHEREUM_MAINNET].eth,
   [BSC_MAINNET]: TOKENS[BSC_MAINNET].bnb,
   [BSC_TESTNET]: TOKENS[BSC_TESTNET].bnb,
+  [POLYGON_MAINNET]: TOKENS[POLYGON_MAINNET].matic,
+  [ARBITRUM_MAINNET]: TOKENS[ARBITRUM_MAINNET].eth,
 };
 
 export const WRAP_TOKENS = {
   [ETHEREUM_MAINNET]: TOKENS[ETHEREUM_MAINNET].wrapETH,
   [BSC_MAINNET]: TOKENS[BSC_MAINNET].wrapBNB,
   [BSC_TESTNET]: TOKENS[BSC_TESTNET].wrapBNB,
+  [POLYGON_MAINNET]: TOKENS[POLYGON_MAINNET].wrapMATIC,
+  [ARBITRUM_MAINNET]: TOKENS[ARBITRUM_MAINNET].wrapETH,
 };
 
 export const DISPLAY_TOKENS = {
@@ -182,19 +260,34 @@ export const DISPLAY_TOKENS = {
     TOKENS[BSC_TESTNET].nrfx,
     TOKENS[BSC_TESTNET].busd,
     TOKENS[BSC_TESTNET].bnb,
-    TOKENS[BSC_TESTNET].wrapBNB,
     TOKENS[BSC_TESTNET].usdt,
     TOKENS[BSC_TESTNET].dai,
+    ...baseTokens.filter((t) => t.chainId === BSC_TESTNET),
   ],
+  [POLYGON_MAINNET]: [
+    TOKENS[POLYGON_MAINNET].usdc,
+    TOKENS[POLYGON_MAINNET].matic,
+    TOKENS[POLYGON_MAINNET].wrapMATIC,
+    ...baseTokens.filter(t => t.chainId === POLYGON_MAINNET),
+  ],
+  [ARBITRUM_MAINNET]: [
+    TOKENS[ARBITRUM_MAINNET].usdc,
+    TOKENS[ARBITRUM_MAINNET].eth,
+    TOKENS[ARBITRUM_MAINNET].wrapETH,
+    ...baseTokens.filter(t => t.chainId === ARBITRUM_MAINNET),
+  ]
 };
 
 // Common Bases
 const initialCommonBases = ['NRFX', 'DAI', 'USDC', 'USDT', 'WBTC', 'WETH'];
-const getCommonBases = (chainId, arr = []) =>
-  [NETWORKS_DATA[chainId].defaultSymbol].concat(arr, initialCommonBases);
+const getCommonBases = (chainId, arr = []) => [NETWORKS_DATA[chainId].defaultSymbol].concat(arr, initialCommonBases)
 
 export const COMMON_BASES = {
   [ETHEREUM_MAINNET]: getCommonBases(ETHEREUM_MAINNET),
   [BSC_MAINNET]: getCommonBases(BSC_MAINNET),
   [BSC_TESTNET]: getCommonBases(BSC_TESTNET),
+  [POLYGON_MAINNET]: getCommonBases(POLYGON_MAINNET),
+  [ARBITRUM_MAINNET]: getCommonBases(ARBITRUM_MAINNET),
 };
+
+console.log('COMMON_BASES', COMMON_BASES);

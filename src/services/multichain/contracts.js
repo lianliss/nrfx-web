@@ -1,5 +1,10 @@
 import { noderealRPC } from '../multiwallets/multiwalletsDifference';
-import { BSC_MAINNET, BSC_TESTNET, ETHEREUM_MAINNET } from './chains';
+import {
+  ETHEREUM_MAINNET,
+  BSC_MAINNET, BSC_TESTNET,
+  POLYGON_MAINNET,
+  ARBITRUM_MAINNET,
+} from './chains';
 
 export const CONTRACT_ADDRESSES = {
   [ETHEREUM_MAINNET]: {
@@ -31,18 +36,46 @@ export const CONTRACT_ADDRESSES = {
     providerAddress: noderealRPC[BSC_MAINNET],
   },
   [BSC_TESTNET]: {
-    factoryAddress: '0xb7926c0430afb07aa7defde6da862ae0bde767bc',
+    factoryAddress: '0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc',
     factoryInitCodeHash:
       '0xecba335299a6693cb2ebc4782e74669b84290b6378ea3a3873c7231a8d7d1074',
     routerAddress: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3',
-    masterChefAddress: '0x75e8563615f71C8078B6eD3CC86B24B976F2Ad1F',
+    masterChefAddress: '0x105D485139DA922cA679a184E5835a7A078966ba',
     narfexToken: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
-    tokenSale: '0x19E27fea1fC3ee50ab6A5354B812E1D8E8940FDB',
-    saleFactory: '0x7195274908d9c6A2991Ae17bD32e5245fD0b5d7b',
-    fiatFactory: '0xF1f8206c94F38525E94919E7381889B3d6D57Ac5',
-    exchangerRouter: '0x40b12e44Ec75307D18831f8B0AA636Af1De081fc',
-    narfexOracle: '0x0CdCad1e2c9C59920E916aDC75B7b21B5c2f78D5',
-    providerAddress: noderealRPC[BSC_TESTNET],
+    tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
+    saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
+    fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
+    exchangerRouter: '0x96E163D8E6f3C1D128Ce9EBA81fF7AD5E3054f4d',
+    narfexOracle: '0x5bA23078FaB7Dd3A6d7b5049a2C711Ef8ba7E8d0',
+    providerAddress: noderealRPC[BSC_MAINNET],
+  },
+  [POLYGON_MAINNET]: {
+    factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
+    factoryInitCodeHash:
+      '0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303',
+    routerAddress: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
+    masterChefAddress: '',
+    narfexToken: '',
+    tokenSale: '',
+    saleFactory: '',
+    fiatFactory: '0xAD1Fc0E22C13159884Cf9FD1d46e3C2Ad60C8F36',
+    exchangerRouter: '0xEcF8DeF47948321Ab0594462D154E9B78625AA20',
+    narfexOracle: '0xC8f30866816fdab9Bb6BDbbb03d4a54103145c99',
+    providerAddress: noderealRPC[POLYGON_MAINNET],
+  },
+  [ARBITRUM_MAINNET]: {
+    factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
+    factoryInitCodeHash:
+      '0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303',
+    routerAddress: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
+    masterChefAddress: '',
+    narfexToken: '',
+    tokenSale: '',
+    saleFactory: '',
+    fiatFactory: '0x79f3b7770093444573D64972E67312d03E9A6f3c',
+    exchangerRouter: '0x7A052032AeecBa4e723Fee660Df7Ff5CA59B08C6',
+    narfexOracle: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
+    providerAddress: noderealRPC[ARBITRUM_MAINNET],
   },
 };
 
@@ -53,10 +86,14 @@ export const POOLS_LIST = {
     '0x4f191eff08dd7074f3a6584c2024290968ba94db',
   ],
   [BSC_TESTNET]: [],
+  [POLYGON_MAINNET]: [],
+  [ARBITRUM_MAINNET]: [],
 };
 
 export const TOKEN_ABI = {
   [ETHEREUM_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
   [BSC_MAINNET]: require('src/index/constants/ABI/Bep20Token'),
   [BSC_TESTNET]: require('src/index/constants/ABI/Bep20Token'),
+  [POLYGON_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
+  [ARBITRUM_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
 };

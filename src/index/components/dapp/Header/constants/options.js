@@ -22,6 +22,16 @@ export const cryptoOptions = [
     chains.ETHEREUM_MAINNET,
     require('src/asset/icons/wallets/eth.svg').default
   ),
+  option(
+    getChainTitle(chains.POLYGON_MAINNET),
+    chains.POLYGON_MAINNET,
+    require('src/asset/icons/wallets/polygon.svg').default
+  ),
+  option(
+    getChainTitle(chains.ARBITRUM_MAINNET),
+    chains.ARBITRUM_MAINNET,
+    require('src/asset/icons/wallets/arbitrum.svg').default
+  ),
 ];
 
 export const defaultValue = (value) =>
