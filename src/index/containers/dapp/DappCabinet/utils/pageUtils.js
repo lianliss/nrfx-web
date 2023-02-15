@@ -25,11 +25,11 @@ export const getFinePage = (routeName) => {
   switch (routeName) {
     case PAGES.DAPP_WALLET:
       Component = CabinetWallets;
-      mainnetOnly = true;
+      mainnetOnly = false;
       break;
     case PAGES.DAPP_CURRENCY:
       Component = Currency;
-      mainnetOnly = true;
+      mainnetOnly = false;
       break;
     case PAGES.DAPP_EXCHANGE:
       Component = Exchanger;
@@ -47,7 +47,7 @@ export const getFinePage = (routeName) => {
       break;
     case PAGES.FARMING:
       Component = Farming;
-      testnetOnly = true;
+      testnetOnly = false;
       break;
     case PAGES.DAPP_VALIDATOR:
       Component = CabinetValidator;
