@@ -9,9 +9,9 @@ export const ARBITRUM_MAINNET = 42161;
 export const isMainnet = {
   [ETHEREUM_MAINNET]: true,
   [BSC_MAINNET]: true,
-  [BSC_TESTNET]: false,
-  [POLYGON_MAINNET]: true,
-  [ARBITRUM_MAINNET]: true,
+  [BSC_TESTNET]: true,
+  [POLYGON_MAINNET]: false,
+  [ARBITRUM_MAINNET]: false,
 };
 
 // Chain IDs that are integrated.
