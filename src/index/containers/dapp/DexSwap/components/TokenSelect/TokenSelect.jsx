@@ -171,7 +171,7 @@ class TokenSelect extends React.PureComponent {
               size="medium"
             />}
             {(!disableCommonBases && isTokens) && <SectionBlock className="TokenSelect__fiat" title="Common bases">
-              tokens.filter((token) => {
+              {tokens.filter((token) => {
                   const symbol = token.symbol.toUpperCase();
 
                   for (let i = 0; i < commonBases.length; i++) {
