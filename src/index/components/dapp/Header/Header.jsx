@@ -247,14 +247,15 @@ const ChainSelect = React.memo(
       },
       [isConnected]
     );
-    
+
     const cryptoOptions = options.cryptoOptions.filter((option) =>
       isTestnet ? !isMainnet[option.value] : isMainnet[option.value]
     );
 
-    const defaultValue = cryptoOptions.find((o) => o.value === chainId)
-      ? null
-      : options.defaultValue(chainId);
+    const defaultValue =
+      !isConnected || cryptoOptions.find((o) => o.value === chainId)
+        ? null
+        : options.defaultValue(chainId);
 
     const allOptions = defaultValue
       ? [defaultValue, ...cryptoOptions]
