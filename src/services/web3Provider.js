@@ -58,6 +58,7 @@ class Web3Provider extends React.PureComponent {
     },
     chainId: null,
     tokens: this.network.displayTokens,
+    tokensLoaded: false,
     tokensChain: null,
     pools: null,
     poolsList: [],
@@ -65,6 +66,7 @@ class Web3Provider extends React.PureComponent {
     fiats: {
       known: KNOWN_FIATS,
     },
+    fiatsLoaded: false,
     connector: CONNECTORS.METAMASK,
     referAddress: ZERO_ADDRESS,
   };
@@ -449,6 +451,10 @@ class Web3Provider extends React.PureComponent {
 
       this.cmcTokens = undefined;
       this.tokens = this.network.displayTokens;
+      this.setState({
+        fiatsLoaded: false,
+        tokensLoaded: false,
+      });
 
       // Object.assign(this, network);
       this.farm = this.getFarmContract();
@@ -523,6 +529,8 @@ class Web3Provider extends React.PureComponent {
     this.setState({
       isConnected: false,
       accountAddress: null,
+      fiatsLoaded: false,
+      tokensLoaded: false,
     });
   };
 
@@ -650,6 +658,8 @@ class Web3Provider extends React.PureComponent {
       isConnected: false,
       accountAddress: null,
       chainId: null,
+      tokensLoaded: false,
+      fiatsLoaded: false,
     });
 
     // Clear default wallet connection.
@@ -712,6 +722,7 @@ class Web3Provider extends React.PureComponent {
         .map(token => ({ ...token, balance: '0' }));
       this.setState({
         tokens: result,
+        tokensLoaded: true,
       });
       return result;
     } catch (error) {
@@ -1556,6 +1567,7 @@ class Web3Provider extends React.PureComponent {
       fiats.known = KNOWN_FIATS;
       this.setState({
         fiats,
+        fiatsLoaded: true,
       });
 
       this.setBalances(userFiats.map((userFiat) => {

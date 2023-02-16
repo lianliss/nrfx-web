@@ -57,6 +57,8 @@ function Exchanger(props) {
     loadAccountBalances,
     cmcTokens,
     getTokens,
+    fiatsLoaded,
+    tokensLoaded,
     getPairAddress,
     network,
     getTokenBalance,
@@ -66,7 +68,7 @@ function Exchanger(props) {
   const [limits, setLimits] = React.useState([]);
   const [fiatSelected, setFiatSelected] = React.useState(null);
   const [coinSelected, setCoinSelected] = React.useState(null);
-  const [fiatsLoaded, setFiatsLoaded] = React.useState(false);
+  const [initTokensMounted, setInitTokensMounted] = React.useState(false);
   const fiatSymbol = _.get(fiatSelected, 'symbol');
   const coinSymbol = _.get(coinSelected, 'symbol');
   const reservation = useSelector(state => _.get(state, `fiat.topup.${fiatSymbol}`));
@@ -130,7 +132,7 @@ function Exchanger(props) {
   );
 
   // Filters for select the fiat.
-  const params = router.getState().params;
+  const { params } = router.getState();
   const allCoins = [...fiatTokens, ...coins];
 
   const isParamsCoin = (t) => t.symbol === params.coin;
@@ -140,11 +142,22 @@ function Exchanger(props) {
   const isUSD = (t) => !isSelectedCoin(t) && t.symbol === 'USD';
   const isAvailableToken = (t, secondToken) => secondToken?.isFiat ? !t?.isFiat : t?.isFiat;
 
-  const getInitialFiat = () => allCoins.find((t) => isParamsFiat(t) && !isSelectedCoin(t));
+  const getParamsFiat = () => allCoins.find((t) => isParamsFiat(t) && !isSelectedCoin(t));
   const getAvailableFiat = () => allCoins.find((t) => !isSelectedCoin(t) && isAvailableToken(t, coinSelected));
   const getUSDFromCoins = () => allCoins.find(isUSD);
-  const getFineCoin = () => allCoins.find((t) => isParamsCoin(t) && !isSelectedFiat(t));
+  const getParamsCoin = () => allCoins.find((t) => isParamsCoin(t) && !isSelectedFiat(t));
   const getAvailableCoin = () => allCoins.find((t) => !isSelectedFiat(t) && !t.isFiat);
+
+  // Exchanger storage.
+  const exchangerStorage = JSON.parse(window.localStorage.getItem('dappExchanger'));
+  const initialFiat = _.get(exchangerStorage, 'fiat');
+  const initialCoin = _.get(exchangerStorage, 'coin');
+
+  // Get token by storage.
+  const getInitialFiat = () =>
+    allCoins.find((t) => t.symbol === initialFiat);
+  const getInitialCoin = () =>
+    allCoins.find((t) => t.symbol === initialCoin);
 
   const swapSelected = () => {
     if (coinSelected) {
@@ -214,8 +227,6 @@ function Exchanger(props) {
    * Sets the default fiat
    */
   fiatsUpdate = async () => {
-    setFiatsLoaded(false);
-
     try {
       await updateFiats().then((fiats) => {
         const currencySymbol = router.getState().params.currency;
@@ -239,7 +250,6 @@ function Exchanger(props) {
       console.log('[fiatsUpdate]', error);
     }
 
-    setFiatsLoaded(true);
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);
   };
 
@@ -326,14 +336,14 @@ function Exchanger(props) {
 
   // Set initial coin
   React.useEffect(() => {
-    const coin = getFineCoin() || getAvailableCoin();
+    const coin = getParamsCoin() || getAvailableCoin();
 
     setCoin(coin);
   }, [chainId]);
 
   // Set initial fiat
   React.useEffect(() => {
-    if (!_.get(getInitialFiat(), 'isFiat')) return;
+    if (!_.get(getParamsFiat(), 'isFiat')) return;
     if (!initialCurrencySymbol) {
       setFiat(getUSDFromCoins() || getAvailableFiat());
 
@@ -341,7 +351,7 @@ function Exchanger(props) {
     }
 
     const fineFiat =
-      getInitialFiat() || getAvailableFiat() || getUSDFromCoins();
+      getParamsFiat() || getAvailableFiat() || getUSDFromCoins();
 
     setFiat(fineFiat);
   }, [fiats]);
@@ -355,10 +365,36 @@ function Exchanger(props) {
   }, [fiatSymbol, chainId, isConnected]);
 
   React.useEffect(() => {
-    if (fiatSymbol !== coinSymbol) return;
+    if (isConnected) {
+      const nextExchangerStorage = {
+        ...exchangerStorage,
+        fiat: fiatSymbol,
+        coin: coinSymbol,
+      };
 
-    setFiat(getInitialFiat() || getAvailableFiat());
+      window.localStorage.setItem(
+        'dappExchanger',
+        JSON.stringify(nextExchangerStorage)
+      );
+    }
+
+    if (fiatSymbol === coinSymbol) {
+      setFiat(getParamsFiat() || getAvailableFiat());
+    }
   }, [fiatSymbol, coinSymbol]);
+
+  React.useEffect(() => {
+    if (initTokensMounted) return;
+    if (!isConnected || !fiatsLoaded || !tokensLoaded) return;
+
+    const coin = getInitialCoin() || getParamsCoin() || getAvailableCoin();
+    const fiat = getInitialFiat() || getParamsFiat() || getAvailableFiat();
+
+    setCoin(coin);
+    setFiat(fiat);
+
+    setInitTokensMounted(true);
+  }, [isConnected, fiatsLoaded, tokensLoaded]);
 
   return (
     <CabinetContent className="Exchanger__wrap">
