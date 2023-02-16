@@ -358,7 +358,7 @@ function Exchanger(props) {
     if (fiatSymbol !== coinSymbol) return;
 
     setFiat(getInitialFiat() || getAvailableFiat());
-  }, [fiatSymbol, coinSymbol])
+  }, [fiatSymbol, coinSymbol]);
 
   return (
     <CabinetContent className="Exchanger__wrap">
