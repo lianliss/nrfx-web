@@ -351,11 +351,13 @@ function Exchanger(props) {
       return;
     }
 
-    const fineFiat =
-      getParamsFiat() || getAvailableFiat() || getUSDFromCoins();
+    if (!isConnected || initTokensMounted) {
+      const fineFiat =
+        getParamsFiat() || getAvailableFiat() || getUSDFromCoins();
 
-    setFiat(fineFiat);
-  }, [fiats]);
+      setFiat(fineFiat);
+    }
+  }, [fiatsLoaded, isConnected]);
 
   React.useEffect(() => {
     updateTokenBalance();
@@ -366,7 +368,10 @@ function Exchanger(props) {
   }, [fiatSymbol, chainId, isConnected]);
 
   React.useEffect(() => {
-    if (isConnected && fiatSymbol && coinSymbol) {
+    const isSymbols = fiatSymbol && coinSymbol;
+    const coinsIsLoaded = fiatsLoaded && tokensLoaded;
+
+    if (isConnected && isSymbols && coinsIsLoaded) {
       exchangerStorage.set({
         fiat: fiatSymbol,
         coin: coinSymbol,
