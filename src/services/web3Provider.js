@@ -1525,8 +1525,11 @@ class Web3Provider extends React.PureComponent {
       const userId = `${chainId}${accountAddress}`;
       if (!isConnected) {
         const fiats = {};
-        fiats[userId] = KNOWN_FIATS;
-        fiats.known = KNOWN_FIATS;
+        const fineFiats = KNOWN_FIATS.filter(
+          (t) => t.chainId === this.network.chainId
+        );
+        fiats[userId] = fineFiats;
+        fiats.known = fineFiats;
         this.setState({
           fiats,
         });
