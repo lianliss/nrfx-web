@@ -451,10 +451,6 @@ class Web3Provider extends React.PureComponent {
 
       this.cmcTokens = undefined;
       this.tokens = this.network.displayTokens;
-      this.setState({
-        fiatsLoaded: false,
-        tokensLoaded: false,
-      });
 
       // Object.assign(this, network);
       this.farm = this.getFarmContract();
@@ -463,7 +459,6 @@ class Web3Provider extends React.PureComponent {
         toast.success(`Selected network is #${id}`);
       }
       this.setState({
-        tokens: this.network.displayTokens,
         fiats: {
           known: KNOWN_FIATS,
         },
@@ -475,6 +470,10 @@ class Web3Provider extends React.PureComponent {
         this.network.mainnet &&
         this.state.tokensChain !== this.network.chainId
       ) {
+        this.setState({
+          tokens: this.network.displayTokens,
+          tokensLoaded: false,
+        });
         this.getTokens();
       }
     } catch (error) {
@@ -710,6 +709,9 @@ class Web3Provider extends React.PureComponent {
         const request = tokenListURI && await axios.get(tokenListURI);
         tokens = _.get(request, 'data.tokens');
         this.cmcTokens = tokens;
+        this.setState({
+          tokensLoaded: true,
+        });
       }
 
       if (!this.network.mainnet) return [];

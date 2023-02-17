@@ -22,6 +22,7 @@ import { openModal } from 'src/actions';
 import { LOGIN } from 'src/components/AuthModal/fixtures';
 import { getLang } from 'src/utils';
 import useUpdateReservation from 'src/hooks/dapp/useUpdateReservation';
+import ExchangerStorage from 'src/utils/dapp/ExchangerStorage';
 
 // Styles
 import './Exchanger.less';
@@ -149,9 +150,9 @@ function Exchanger(props) {
   const getAvailableCoin = () => allCoins.find((t) => !isSelectedFiat(t) && !t.isFiat);
 
   // Exchanger storage.
-  const exchangerStorage = JSON.parse(window.localStorage.getItem('dappExchanger'));
-  const initialFiat = _.get(exchangerStorage, 'fiat');
-  const initialCoin = _.get(exchangerStorage, 'coin');
+  const exchangerStorage = new ExchangerStorage();
+  const initialFiat = _.get(exchangerStorage.storage, 'fiat');
+  const initialCoin = _.get(exchangerStorage.storage, 'coin');
 
   // Get token by storage.
   const getInitialFiat = () =>
@@ -365,17 +366,11 @@ function Exchanger(props) {
   }, [fiatSymbol, chainId, isConnected]);
 
   React.useEffect(() => {
-    if (isConnected) {
-      const nextExchangerStorage = {
-        ...exchangerStorage,
+    if (isConnected && fiatSymbol && coinSymbol) {
+      exchangerStorage.set({
         fiat: fiatSymbol,
         coin: coinSymbol,
-      };
-
-      window.localStorage.setItem(
-        'dappExchanger',
-        JSON.stringify(nextExchangerStorage)
-      );
+      });
     }
 
     if (fiatSymbol === coinSymbol) {
