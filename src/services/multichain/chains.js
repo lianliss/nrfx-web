@@ -11,7 +11,7 @@ export const isMainnet = {
   [BSC_MAINNET]: true,
   [BSC_TESTNET]: true,
   [POLYGON_MAINNET]: false,
-  [ARBITRUM_MAINNET]: false,
+  [ARBITRUM_MAINNET]: true,
 };
 
 // Chain IDs that are integrated.
