@@ -39,7 +39,10 @@ class Network {
 
     const providerChain = this.provider.state.chainId;
     this.provider.setChain(id, false);
-    this.provider.setState({ chainId: providerChain });
+    this.provider.setState({
+      chainId: providerChain,
+      fiatsLoaded: false,
+    });
     this.initNetwork(id);
   }
 }

@@ -58,6 +58,7 @@ class Web3Provider extends React.PureComponent {
     },
     chainId: null,
     tokens: this.network.displayTokens,
+    tokensLoaded: false,
     tokensChain: null,
     pools: null,
     poolsList: [],
@@ -65,6 +66,7 @@ class Web3Provider extends React.PureComponent {
     fiats: {
       known: KNOWN_FIATS,
     },
+    fiatsLoaded: false,
     connector: CONNECTORS.METAMASK,
     referAddress: ZERO_ADDRESS,
   };
@@ -457,7 +459,6 @@ class Web3Provider extends React.PureComponent {
         toast.success(`Selected network is #${id}`);
       }
       this.setState({
-        tokens: this.network.displayTokens,
         fiats: {
           known: KNOWN_FIATS,
         },
@@ -469,6 +470,10 @@ class Web3Provider extends React.PureComponent {
         this.network.mainnet &&
         this.state.tokensChain !== this.network.chainId
       ) {
+        this.setState({
+          tokens: this.network.displayTokens,
+          tokensLoaded: false,
+        });
         this.getTokens();
       }
     } catch (error) {
@@ -523,6 +528,8 @@ class Web3Provider extends React.PureComponent {
     this.setState({
       isConnected: false,
       accountAddress: null,
+      fiatsLoaded: false,
+      tokensLoaded: false,
     });
   };
 
@@ -650,6 +657,8 @@ class Web3Provider extends React.PureComponent {
       isConnected: false,
       accountAddress: null,
       chainId: null,
+      tokensLoaded: false,
+      fiatsLoaded: false,
     });
 
     // Clear default wallet connection.
@@ -700,6 +709,9 @@ class Web3Provider extends React.PureComponent {
         const request = tokenListURI && await axios.get(tokenListURI);
         tokens = _.get(request, 'data.tokens');
         this.cmcTokens = tokens;
+        this.setState({
+          tokensLoaded: true,
+        });
       }
 
       if (!this.network.mainnet) return [];
@@ -712,6 +724,7 @@ class Web3Provider extends React.PureComponent {
         .map(token => ({ ...token, balance: '0' }));
       this.setState({
         tokens: result,
+        tokensLoaded: true,
       });
       return result;
     } catch (error) {
@@ -1514,8 +1527,11 @@ class Web3Provider extends React.PureComponent {
       const userId = `${chainId}${accountAddress}`;
       if (!isConnected) {
         const fiats = {};
-        fiats[userId] = KNOWN_FIATS;
-        fiats.known = KNOWN_FIATS;
+        const fineFiats = KNOWN_FIATS.filter(
+          (t) => t.chainId === this.network.chainId
+        );
+        fiats[userId] = fineFiats;
+        fiats.known = fineFiats;
         this.setState({
           fiats,
         });
@@ -1556,6 +1572,7 @@ class Web3Provider extends React.PureComponent {
       fiats.known = KNOWN_FIATS;
       this.setState({
         fiats,
+        fiatsLoaded: true,
       });
 
       this.setBalances(userFiats.map((userFiat) => {
