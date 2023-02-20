@@ -8,8 +8,8 @@ import TransactionModal from '../../TransactionModal/TransactionModal';
 // Utils
 import { Web3Context } from 'services/web3Provider';
 import { classNames as cn, getLang } from 'src/utils';
-import { getCurrentConnector } from 'services/multiwallets/multiwalletsDifference';
 import * as CONNECTORS from 'services/multiwallets/connectors';
+import { getConnectorObject } from 'services/multiwallets/multiwalletsDifference';
 
 // Styles
 import './ConnectToWalletModal.less';
@@ -18,6 +18,24 @@ function ConnectToWalletModal(props) {
   const context = React.useContext(Web3Context);
   const { isConnected, connectWallet } = context;
   const adaptive = useSelector((state) => state.default.adaptive);
+
+  const handleTrustWallet = () => {
+    if (!adaptive) {
+      connectWallet(CONNECTORS.TRUST_WALLET);
+      return;
+    }
+
+    const isTrust = getConnectorObject(CONNECTORS.TRUST_WALLET);
+    if (isTrust) {
+      connectWallet(CONNECTORS.TRUST_WALLET);
+      return;
+    }
+
+    window.open(
+      `trust://open_url?coin_id=60&url=${window.location.href}`,
+      '_blank'
+    );
+  };
 
   React.useEffect(() => {
     if (isConnected) {
@@ -48,7 +66,7 @@ function ConnectToWalletModal(props) {
             title="Trust Wallet"
             icon={require('src/asset/icons/social/trustWallet.svg')}
             style={{ background: '#3375bb' }}
-            onClick={() => connectWallet(CONNECTORS.TRUST_WALLET)}
+            onClick={handleTrustWallet}
           />
         </div>
         <div className="row">
