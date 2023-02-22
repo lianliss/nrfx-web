@@ -9,13 +9,14 @@ import { Button, CopyText } from 'src/ui';
 
 // Utils
 import { Web3Context } from 'services/web3Provider';
+import { getLang } from 'utils';
 
 // Styles
 import './YourWalletModal.less';
 
 function YourWalletModal(props) {
   const context = React.useContext(Web3Context);
-  const { isConnected, chainId, accountAddress, logout } = context;
+  const { isConnected, chainId, accountAddress, logout, network } = context;
 
   const transactions = window.localStorage.getItem('DexSwapTransactions')
     ? JSON.parse(window.localStorage.getItem('DexSwapTransactions'))
@@ -65,13 +66,12 @@ function YourWalletModal(props) {
         </div>
         <div className="col">
           <a
-            href={`https://${
-              chainId !== 56 ? 'testnet.' : ''
-            }bscscan.com/address/${accountAddress}`}
+            href={`${network.scan}/address/${accountAddress}`}
             className="action-text"
             target="_blank"
           >
-            View on BscScan <SVG src={require('src/asset/icons/export.svg')} />
+            {getLang('dapp_view_on_scan').replace('{scan}', network.scanTitle)}
+            <SVG src={require('src/asset/icons/export.svg')} />
           </a>
         </div>
       </div>
