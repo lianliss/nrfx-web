@@ -16,7 +16,7 @@ const useGetTokenRate = (tokenSymbol = '', switchToChain) => {
   const fetchRate = async () => {
     try {
       let hops;
-      switch (switchToChain) {
+      switch (network.chainId) {
         case BSC_MAINNET: hops = 1; break;
         default: hops = 0;
       }

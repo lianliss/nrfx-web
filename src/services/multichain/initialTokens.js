@@ -76,7 +76,7 @@ export const TOKENS = {
       name: "USD Coin",
       symbol: "USDC",
       address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-      chainId: 56,
+      chainId: BSC_MAINNET,
       decimals: 18,
       logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
     },
