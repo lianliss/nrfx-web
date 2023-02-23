@@ -32,6 +32,8 @@ import { CHAIN_TOKENS } from "./multichain/initialTokens";
 import { DEFAULT_CHAIN, NETWORKS_DATA } from "./multichain/chains";
 import { getLang } from "utils";
 import { CONTRACT_ADDRESSES } from "./multichain/contracts";
+import router from "../router";
+import dappPages from "../index/containers/dapp/DappCabinet/constants/dappPages";
 
 export const Web3Context = React.createContext();
 
@@ -453,7 +455,11 @@ class Web3Provider extends React.PureComponent {
       // Object.assign(this, network);
       this.farm = this.getFarmContract();
       this.pairs = {};
-      if (this.state.chainId !== id) {
+      const isDapp = dappPages.some(
+        (dappPage) => dappPage.name === router.getState().name
+      );
+
+      if (this.state.chainId !== id && isDapp) {
         toast.success(`Selected network is #${id}`);
       }
       this.setState({
