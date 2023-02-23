@@ -22,6 +22,10 @@ class DappCabinet extends Component {
     }
 
     this.redirectToFine();
+
+    if (!this.props.dappMounted) {
+      this.props.mountDapp();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -62,11 +66,19 @@ class DappCabinet extends Component {
 }
 
 const DappWrapper = (props) => {
-  const { network } = React.useContext(Web3Context);
+  const { network, mountDapp, dappMounted } = React.useContext(Web3Context);
   const { chainId } = network;
   const memoizedDappCabinet = React.useMemo(
-    () => <DappCabinet {...props} network={network} chainId={chainId} />,
-    [props, network, chainId]
+    () => (
+      <DappCabinet
+        {...props}
+        network={network}
+        chainId={chainId}
+        dappMounted={dappMounted}
+        mountDapp={mountDapp}
+      />
+    ),
+    [props, network, chainId, dappMounted]
   );
 
   return memoizedDappCabinet;

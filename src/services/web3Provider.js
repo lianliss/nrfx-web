@@ -69,6 +69,7 @@ class Web3Provider extends React.PureComponent {
     fiatsLoaded: false,
     connector: CONNECTORS.METAMASK,
     referAddress: ZERO_ADDRESS,
+    dappMounted: false,
   };
 
   ethereum = null;
@@ -113,12 +114,6 @@ class Web3Provider extends React.PureComponent {
       this.network.contractAddresses.providerAddress
     );
     this.web3Host = new Web3(provider);
-
-    // Check web3 wallet plugin
-    this.checkConnection();
-
-    // Get tokens list
-    this.getTokens(DEFAULT_CHAIN);
   }
 
   async checkConnection() {
@@ -142,6 +137,15 @@ class Web3Provider extends React.PureComponent {
 
   componentWillUnmount() {
     this._mounted = false;
+  }
+
+  mountDapp() {
+    // Check web3 wallet plugin
+    this.checkConnection();
+
+    // Get tokens list
+    this.getTokens(DEFAULT_CHAIN);
+    this.setState({ dappMounted: true });
   }
 
   /**
@@ -2074,6 +2078,7 @@ class Web3Provider extends React.PureComponent {
       getWeb3: this.getWeb3.bind(this),
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
+      mountDapp: this.mountDapp.bind(this),
       logout: this.logout.bind(this),
       network: this.network,
       getPairAddress: this.getPairAddress.bind(this),
