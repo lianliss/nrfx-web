@@ -310,13 +310,7 @@ class Web3Provider extends React.PureComponent {
   }
 
   getBSCScanLink = address => {
-    switch (this.state.chainId) {
-      case 97: return `https://testnet.bscscan.com/tx/${address}`;
-      case 1: return `https://etherscan.io/tx/${address}`;
-      case 56:
-      default:
-        return `https://bscscan.com/tx/${address}`;
-    }
+    return `${this.network.scan}/tx/${address}`;
   };
 
 

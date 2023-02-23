@@ -6,10 +6,15 @@ import _ from 'lodash';
 import SVG from 'utils/svg-wrap';
 import getFinePrice from 'src/utils/get-fine-price';
 
+// Utils
+import { Web3Context } from 'src/services/web3Provider';
+
 //Styles
 import './RecentTransactions.less';
 
 function RecentTransactions({ items, onClear }) {
+  const { getBSCScanLink } = React.useContext(Web3Context);
+
   // Return null if items is empty.
   if (!items.length) {
     return null;
@@ -25,7 +30,7 @@ function RecentTransactions({ items, onClear }) {
         {_.chunk(items, 5)[0].map((item, index) => {
           const {amount0, amount1, token0, token1, txHash} = item;
           return <a target="_blank"
-                    href={`https://bscscan.com/tx/${txHash}`}
+                    href={getBSCScanLink(txHash)}
                     className="RecentTransactions__item" key={index}>
             <p className="action-text">
               Swap {getFinePrice(amount0)} {token0} for {getFinePrice(amount1)} {token1}

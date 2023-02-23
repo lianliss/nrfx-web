@@ -15,7 +15,7 @@ import './TransactionSubmittedModal.less';
 
 function TransactionSubmittedModal(props) {
   const context = React.useContext(Web3Context);
-  const { addTokenToWallet, ethereum } = context;
+  const { addTokenToWallet, ethereum, network } = context;
   const isMetaMask = ethereum.isMetaMask;
   const { symbol, txLink, addToken, isInProgress, text, coinForAddToWallet } =
     props;
@@ -66,7 +66,12 @@ function TransactionSubmittedModal(props) {
             target="_blank"
             className="text-with-icon view_on_bac_scan"
           >
-            <span className="default-text">View on BscScan</span>
+            <span className="default-text">
+              {getLang('dapp_view_on_scan').replace(
+                '{scan}',
+                network.scanTitle
+              )}
+            </span>
             <SVG
               src={require('src/asset/icons/export.svg')}
               style={{ width: 14, height: 14 }}

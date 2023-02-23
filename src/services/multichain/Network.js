@@ -23,6 +23,15 @@ class Network {
     this.mainnet = chains.isMainnet[chainId];
     this.tokenABI = initialTokens.ABI[chainId];
     this.commonBases = initialTokens.COMMON_BASES[chainId];
+    this.scan = chains.NETWORKS_DATA[chainId].scan;
+    this.scanTitle = this.getScanTitle(this.scan);
+  }
+
+  getScanTitle(scan) {
+    if (typeof scan !== 'string') return;
+    const title = scan.replace(/(https:\/\/)|(.com)$|(.org)$|(.io)$/g, '');
+
+    return title[0].toUpperCase() + title.slice(1);
   }
 
   isFine(id) {
