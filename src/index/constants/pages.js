@@ -60,6 +60,8 @@ export const TOKENSALE = "tokensale";
 export const FARMING_INSTRUCTION = "farming_instruction";
 export const TERMS_OF_SERVICE = "terms_of_service";
 export const PRIVATE_POOLS = "private_pools";
+export const P2P = "p2p";
+export const P2P_ORDERS = "p2p_orders";
 
 // Validator
 export const VALIDATOR = 'validator';
