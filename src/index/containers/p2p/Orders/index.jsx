@@ -4,6 +4,7 @@ import React from 'react';
 import P2P from '../P2P';
 import Information from './components/Information';
 import Advantages from './components/Advantages';
+import Blog from './components/Blog';
 
 // Styles
 import './index.less';
@@ -14,6 +15,7 @@ function Orders(props) {
       <div className="p2p-orders">
         <Information />
         <Advantages />
+        <Blog />
       </div>
     </P2P>
   );
