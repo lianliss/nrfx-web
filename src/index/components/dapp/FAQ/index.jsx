@@ -30,6 +30,7 @@ function FAQ({ items, adaptive }) {
           </p>
           <SVG
             src={require('src/asset/icons/arrows/dropdown-small-bordered.svg')}
+            flex
           />
         </Row>
       </DropdownElement>

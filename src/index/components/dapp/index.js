@@ -39,3 +39,6 @@ export { default as Team } from './Team/Team';
 
 // Action Components
 export { default as SocialLinks } from './SocialLinks/SocialLinks';
+
+// Components
+export { default as FAQ } from './FAQ';

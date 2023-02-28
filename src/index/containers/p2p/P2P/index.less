@@ -25,4 +25,26 @@
     line-height: 18px;
     color: var(--cool-gray);
   }
+
+  .SwitchTabs {
+    height: 46px;
+    min-width: 240px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 10px;
+    background: var(--alice-blue);
+
+    &__item:not(.active) span {
+      background: var(--blue-light-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: var(--blue-light-gradient-color-end);
+    }
+
+    &__indicator span {
+      border-radius: 10px;
+    }
+  }
 }

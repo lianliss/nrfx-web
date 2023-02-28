@@ -4,18 +4,20 @@ import React from 'react';
 import P2P from '../P2P';
 import Information from './components/Information';
 import Advantages from './components/Advantages';
+import FAQ from './components/FAQ';
 import Blog from './components/Blog';
 
 // Styles
 import './index.less';
 
-function Orders(props) {
+function Orders({ adaptive }) {
   return (
     <P2P>
       <div className="p2p-orders">
-        <Information />
-        <Advantages />
-        <Blog />
+        <Information adaptive={adaptive} />
+        <Advantages adaptive={adaptive} />
+        <FAQ adaptive={adaptive} />
+        <Blog adaptive={adaptive} />
       </div>
     </P2P>
   );
