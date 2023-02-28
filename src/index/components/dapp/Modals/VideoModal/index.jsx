@@ -10,12 +10,17 @@ import { adaptiveSelector } from 'src/selectors';
 // Styles
 import './index.less';
 
-function VideoModal({ link, ...props }) {
+function VideoModal({ title, link, ...props }) {
   const adaptive = useSelector(adaptiveSelector);
 
   return (
-    <CabinetModal {...props} className="DappVideoModal" closeButton={!adaptive}>
-      <h3>How to buy Narfex?</h3>      
+    <CabinetModal
+      {...props}
+      className="DappVideoModal"
+      closeButton={!adaptive}
+      closeOfRef={adaptive}
+    >
+      <h3>{title}</h3>
       {link ? (
         <iframe
           src={link}

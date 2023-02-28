@@ -412,7 +412,7 @@ function Exchanger(props) {
             limits={limits}
             {...{reservation}}
           />
-          {!isAdaptive && <WatchVideo />}
+          {!isAdaptive && <WatchVideo adaptive={isAdaptive} />}
           <ExchangerSwap
             fiats={fiatTokens}
             fiatsLoaded={fiatsLoaded}
@@ -424,7 +424,7 @@ function Exchanger(props) {
             limits={limits}
             {...{reservation}}
           />
-          {isAdaptive && <WatchVideo />}
+          {isAdaptive && <WatchVideo adaptive={isAdaptive} />}
           <Instruction />
         </div>
       </div>
