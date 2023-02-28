@@ -1458,7 +1458,7 @@ class Web3Provider extends React.PureComponent {
           method: this.requestMethods.wallet_addEthereumChain,
           params: [{
             chainId: this.web3.utils.toHex(97),
-            chainName: 'BSC web3 test',
+            chainName: 'BSC testnet',
             nativeCurrency: {
               name: 'BNB',
               symbol: 'BNB',

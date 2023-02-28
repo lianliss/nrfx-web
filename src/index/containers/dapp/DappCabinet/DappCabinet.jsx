@@ -50,7 +50,7 @@ class DappCabinet extends Component {
 
   render() {
     const { route, adaptive } = this.props;
-    const { Component, mainnetOnly, testnetOnly } = getFinePage(route.name);
+    const { Component, mainnetOnly, testnetOnly, chainsWhitelist, chainsBlacklist } = getFinePage(route.name);
 
     return (
       <DappContainer
@@ -60,6 +60,7 @@ class DappCabinet extends Component {
         <Component route={route.name} adaptive={adaptive} />
         {testnetOnly && <TestnetOverlay testnetOnly networks={[97]} />}
         {mainnetOnly && <TestnetOverlay mainnetOnly networks={[56]} />}
+        {(chainsWhitelist || chainsBlacklist) && <TestnetOverlay {...{chainsWhitelist, chainsBlacklist}} />}
       </DappContainer>
     );
   }

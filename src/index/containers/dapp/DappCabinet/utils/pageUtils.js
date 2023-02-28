@@ -21,6 +21,8 @@ export const getFinePage = (routeName) => {
   let Component = Exchanger;
   let mainnetOnly = false;
   let testnetOnly = false;
+  let chainsWhitelist = false;
+  let chainsBlacklist = false;
 
   switch (routeName) {
     case PAGES.DAPP_WALLET:
@@ -48,6 +50,7 @@ export const getFinePage = (routeName) => {
     case PAGES.FARMING:
       Component = Farming;
       testnetOnly = false;
+      chainsWhitelist = [97];
       break;
     case PAGES.DAPP_VALIDATOR:
       Component = CabinetValidator;
@@ -68,7 +71,7 @@ export const getFinePage = (routeName) => {
       Component = Exchanger;
   }
 
-  return { Component, mainnetOnly, testnetOnly };
+  return { Component, mainnetOnly, testnetOnly, chainsWhitelist, chainsBlacklist };
 };
 
 export const pageIsFine = (routeName, chainId) => {
