@@ -1,7 +1,13 @@
 .p2p-orders .orders-list {
   color: var(--dark-black);
 
-  &-item {
+  thead {
+    td span {
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 13px;
+      margin-left: 10px;
+    }
   }
 
   &-user {
@@ -106,6 +112,18 @@
       height: 15px;
       border-radius: 20px;
       margin-right: 5px;
+    }
+  }
+
+  .Button.small {
+    padding: 0 18px;
+    height: 36px;
+    border-radius: 7px;
+
+    .Button__label {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
     }
   }
 }

@@ -3,7 +3,7 @@ import React from 'react';
 // Components
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { CabinetBlock } from 'dapp';
-import { Row, NumberFormat } from 'ui';
+import { Row, NumberFormat, Button } from 'ui';
 import { WalletIcon } from 'dapp';
 import SVG from 'utils/svg-wrap';
 
@@ -104,7 +104,11 @@ function List() {
               <Payment title="Pay me" color={paymentColors.red} />
             </div>
           </TD>
-          <TD>Buy N-fiat</TD>
+          <TD>
+            <Button type="lightBlue" size="small">
+              Buy N-fiat
+            </Button>
+          </TD>
         </TR>
       </CabinetTable>
     </CabinetBlock>
