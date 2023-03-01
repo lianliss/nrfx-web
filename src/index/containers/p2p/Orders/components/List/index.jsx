@@ -9,6 +9,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import avatar from 'src/asset/illustrations/people/p2p_working_instruction_avatar.svg';
+import getFinePrice from 'utils/get-fine-price';
 
 // Styles
 import './index.less';
@@ -62,7 +63,24 @@ function List() {
             </Row>
           </TD>
           <TD>
-            Available: <NumberFormat number={1000.0} currency="USDT" />
+            <div className="orders-list-limits">
+              <div className="orders-list-limits__available">
+                <span className="orders-list-limits__title">Available</span>
+                <NumberFormat number={1000.0} currency="USDT" />
+              </div>
+              <div className="orders-list-limits__limit">
+                <span className="orders-list-limits__title">Limit</span>
+                <div>
+                  <span className="Number" title={1000000.0}>
+                    {`Rp${getFinePrice(1000000.0)}`}
+                  </span>
+                  <span className="Number">&nbsp;-&nbsp;</span>
+                  <span className="Number" title={1030260.0}>
+                    {`Rp${getFinePrice(1030260.0)}`}
+                  </span>
+                </div>
+              </div>
+            </div>
           </TD>
           <TD>Bank Transfer Bank Transfer</TD>
           <TD>Buy N-fiat</TD>
