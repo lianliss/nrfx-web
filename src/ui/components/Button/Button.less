@@ -363,6 +363,21 @@
     }
   }
 
+  &.white {
+    background: #fff;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.35);
+    }
+
+    .Button__label {
+      color: var(--secondary-blue);
+    }
+  }
+
+  &.white,
   &.dark,
   &.light,
   &.secondary-light,
