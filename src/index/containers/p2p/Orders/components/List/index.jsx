@@ -10,11 +10,24 @@ import SVG from 'utils/svg-wrap';
 // Utils
 import avatar from 'src/asset/illustrations/people/p2p_working_instruction_avatar.svg';
 import getFinePrice from 'utils/get-fine-price';
+import paymentColors from '../../../constants/paymentColors';
 
 // Styles
 import './index.less';
 
 function List() {
+  const Payment = ({ title, color }) => {
+    return (
+      <div className="orders-list-payment__item">
+        <div
+          className="orders-list-payment__color"
+          style={{ background: color }}
+        ></div>
+        <span>{title}</span>
+      </div>
+    );
+  };
+
   return (
     <CabinetBlock className="orders-list">
       <CabinetTable
@@ -82,7 +95,15 @@ function List() {
               </div>
             </div>
           </TD>
-          <TD>Bank Transfer Bank Transfer</TD>
+          <TD>
+            <div className="orders-list-payment">
+              <Payment title="Bank Transfer" color={paymentColors.orange} />
+              <Payment title="Pay me" color={paymentColors.red} />
+              <Payment title="Mono Bank" color={paymentColors.black} />
+              <Payment title="Bank Transfer" color={paymentColors.orange} />
+              <Payment title="Pay me" color={paymentColors.red} />
+            </div>
+          </TD>
           <TD>Buy N-fiat</TD>
         </TR>
       </CabinetTable>
