@@ -4,6 +4,7 @@ import React from 'react';
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { CabinetBlock } from 'dapp';
 import { Row, NumberFormat } from 'ui';
+import { WalletIcon } from 'dapp';
 import SVG from 'utils/svg-wrap';
 
 // Utils
@@ -55,7 +56,10 @@ function List() {
             </div>
           </TD>
           <TD>
-            <NumberFormat number={15333.33} currency="IDR" />
+            <Row alignItems="center" className="orders-list-price">
+              <WalletIcon currency="IDR" size={24} />
+              <NumberFormat number={15333.33} currency="IDR" />
+            </Row>
           </TD>
           <TD>
             Available: <NumberFormat number={1000.0} currency="USDT" />
