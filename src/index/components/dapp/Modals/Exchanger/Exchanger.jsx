@@ -20,6 +20,7 @@ import { openStateModal } from 'src/actions';
 import * as toast from 'actions/toasts';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
+import * as exchangerAnalytics from 'src/utils/analytics/exchanger';
 
 // Styles
 import './Exchanger.less';
@@ -156,6 +157,16 @@ function Exchanger({ ...props }) {
         txLink: getBSCScanLink(receipt),
         symbol: coin.symbol,
         addToken: () => addTokenToWallet(coin),
+      });
+
+      const coinRate = await getTokenContract(coin).getOutAmount(network.defaultRateToken, 1);
+      exchangerAnalytics.addExchange({
+        tx: receipt,
+        price: coinRate?.outAmount,
+        fromToken: fiat,
+        toToken: coin,
+        chainId: network.chainId,
+        toTokensAmount: outAmount,
       });
     } catch (error) {
       console.error('[swap]', error);
