@@ -11,7 +11,8 @@ export const addExchange = ({
   const chainTitle = NETWORKS_DATA[chainId].title;
   const priceOfCoinAmount = toTokensAmount * price;
 
-  dataLayer.push({
+  window.dataLayer.push({ ecommerce: null });
+  window.dataLayer.push({
     ecommerce: {
       purchase: {
         actionField: {
