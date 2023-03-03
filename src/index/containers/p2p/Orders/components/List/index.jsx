@@ -2,7 +2,6 @@ import React from 'react';
 
 // Components
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
-import { CabinetBlock } from 'dapp';
 import { Row, NumberFormat, Button } from 'ui';
 import ListPayment from '../ListPayment';
 import { WalletIcon } from 'dapp';
@@ -85,7 +84,7 @@ function List() {
   );
 
   return (
-    <CabinetBlock className="orders-list">
+    <div className="orders-list">
       <CabinetTable
         header={
           <TR>
@@ -104,7 +103,7 @@ function List() {
         <Item />
         <Item />
       </CabinetTable>
-    </CabinetBlock>
+    </div>
   );
 }
 
