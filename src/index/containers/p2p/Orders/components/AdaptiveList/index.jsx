@@ -16,7 +16,7 @@ import paymentColors from '../../../constants/paymentColors';
 // Styles
 import './index.less';
 
-function List() {
+function AdaptiveList() {
   return (
     <CabinetBlock className="orders-list">
       <CabinetTable
@@ -85,18 +85,32 @@ function List() {
             </div>
           </TD>
           <TD>
-            <div className="orders-list-payment">
-              <ListPayment title="Bank Transfer" color={paymentColors.orange} />
-              <ListPayment title="Pay me" color={paymentColors.red} />
-              <ListPayment title="Mono Bank" color={paymentColors.black} />
-              <ListPayment title="Bank Transfer" color={paymentColors.orange} />
-              <ListPayment title="Pay me" color={paymentColors.red} />
+            <div className="orders-list-buy">
+              <Button type="lightBlue" size="small">
+                Buy
+              </Button>
             </div>
           </TD>
           <TD>
-            <Button type="lightBlue" size="small">
-              Buy N-fiat
-            </Button>
+            <div className="orders-list-payment">
+              <ListPayment
+                title="Bank Transfer"
+                color={paymentColors.orange}
+                adaptive
+              />
+              <ListPayment title="Pay me" color={paymentColors.red} adaptive />
+              <ListPayment
+                title="Mono Bank"
+                color={paymentColors.black}
+                adaptive
+              />
+              <ListPayment
+                title="Bank Transfer"
+                color={paymentColors.orange}
+                adaptive
+              />
+              <ListPayment title="Pay me" color={paymentColors.red} adaptive />
+            </div>
           </TD>
         </TR>
       </CabinetTable>
@@ -104,4 +118,4 @@ function List() {
   );
 }
 
-export default List;
+export default AdaptiveList;

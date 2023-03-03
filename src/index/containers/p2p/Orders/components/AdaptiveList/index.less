@@ -1,0 +1,68 @@
+.adaptive .p2p-orders .orders-list {
+  &-item {
+    grid-template-columns: auto auto;
+    padding: 0;
+    background: transparent;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  .CabinetTable td:not(:first-child) {
+    margin-top: 0;
+  }
+
+  .CabinetTable td:nth-child(2),
+  .CabinetTable td:nth-child(5) {
+    grid-column: 1/3;
+  }
+
+  .CabinetTable td:nth-child(2) {
+    margin: 15px 0 10px;
+  }
+
+  .CabinetTable td:nth-child(5) {
+    margin: 15px 0 0;
+  }
+
+  &-user {
+    &__info {
+      margin-left: 0;
+    }
+  }
+
+  &-price {
+    font-size: 22px;
+    line-height: 27px;
+  }
+
+  &-buy {
+    padding: 3px 0 0 10px;
+
+    .Button.small {
+      min-width: 90px;
+    }
+  }
+
+  &-limits {
+    &__title {
+      min-width: auto;
+      box-sizing: border-box;
+    }
+  }
+
+  &-payment {
+    max-width: 100%;
+    color: #fff;
+    gap: 5px;
+
+    &__item {
+      line-height: 13.41px;
+      padding: 5px 8px;
+      border-radius: 10px;
+    }
+
+    &__color {
+      display: none;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import P2P from '../P2P';
-import List from './components/List';
+import ListWrapper from './components/ListWrapper';
 import Information from './components/Information';
 import Advantages from './components/Advantages';
 import FAQ from './components/FAQ';
@@ -15,7 +15,7 @@ function Orders({ adaptive }) {
   return (
     <P2P>
       <div className="p2p-orders">
-        <List />
+        <ListWrapper adaptive={adaptive} />
         <Information adaptive={adaptive} />
         <Advantages adaptive={adaptive} />
         <FAQ adaptive={adaptive} />
