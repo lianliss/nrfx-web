@@ -57,4 +57,12 @@ export default [
     name: PAGES.DAPP_TEAM,
     chains: [1, 56, 97],
   },
+  {
+    name: PAGES.P2P,
+    chains: [1, 56, 97],
+  },
+  {
+    name: PAGES.P2P_ORDERS,
+    chains: [1, 56, 97],
+  },
 ];

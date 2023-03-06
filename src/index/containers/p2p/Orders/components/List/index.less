@@ -1,0 +1,134 @@
+.p2p-orders .orders-list {
+  thead {
+    td {
+      padding-top: 0;
+    }
+
+    td span {
+      display: inline-flex;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 13px;
+      margin-left: 10px;
+    }
+  }
+
+  &-user {
+    display: flex;
+    flex-direction: column;
+
+    &__profile {
+      display: flex;
+      align-items: center;
+    }
+    &__info {
+      margin: 7px 0 0 35px;
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 105%;
+
+      span:first-child:not(:last-child) {
+        position: relative;
+        padding-right: 4px;
+        margin-right: 7px;
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 1px;
+          height: 7px;
+          background: var(--cool-gray);
+          top: 50%;
+          right: -1px;
+          transform: translateY(-50%);
+        }
+      }
+    }
+
+    &__avatar {
+      width: 25px;
+      height: 25px;
+    }
+
+    &__name {
+      margin: 0 5px 0 10px;
+    }
+  }
+
+  &-user__name,
+  &-price,
+  &-limits .Number {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--dark-black);
+  }
+
+  &-price .Number {
+    margin-left: 8px;
+  }
+
+  &-limits {
+    max-width: 230px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--cool-gray);
+
+    & > * {
+      display: flex;
+    }
+
+    &__limit {
+      margin-top: 7px;
+
+      & > div {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    &__title {
+      min-width: 63px;
+      margin-right: 7px;
+    }
+
+    .Number {
+      line-height: 22px;
+    }
+  }
+
+  &-payment {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 182px;
+    gap: 7px 14px;
+
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+
+    &__item {
+      display: flex;
+    }
+
+    &__color {
+      width: 2px;
+      height: 15px;
+      border-radius: 20px;
+      margin-right: 5px;
+    }
+  }
+
+  .Button.small {
+    padding: 0 18px;
+    height: 36px;
+    border-radius: 7px;
+
+    .Button__label {
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+}

@@ -61,6 +61,14 @@ const routes = [
     name: pages.DAPP_TEAM,
     path: '/dapp/team',
   },
+  {
+    name: pages.P2P,
+    path: '/dapp/p2p',
+  },
+  {
+    name: pages.P2P_ORDERS,
+    path: '/dapp/p2p/orders',
+  },
 ];
 
 export default routes;
