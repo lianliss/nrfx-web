@@ -106,6 +106,7 @@ Button.propTypes = {
     "secondary-light",
     "light",
     "dark",
+    "orange",
   ]),
   shadow: PropTypes.bool,  
   currency: PropTypes.object,

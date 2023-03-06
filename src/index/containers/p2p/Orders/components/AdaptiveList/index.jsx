@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
@@ -11,11 +12,12 @@ import SVG from 'utils/svg-wrap';
 import avatar from 'src/asset/illustrations/people/p2p_working_instruction_avatar.svg';
 import getFinePrice from 'utils/get-fine-price';
 import paymentColors from '../../../constants/paymentColors';
+import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Styles
 import './index.less';
 
-function AdaptiveList() {
+function AdaptiveList({ mode }) {
   const Item = () => (
     <TR className="orders-list-item">
       <TD>
@@ -68,8 +70,11 @@ function AdaptiveList() {
       </TD>
       <TD>
         <div className="orders-list-buy">
-          <Button type="lightBlue" size="small">
-            Buy
+          <Button
+            type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
+            size="small"
+          >
+            {mode === p2pMode.sell ? 'Sell' : 'Buy'}
           </Button>
         </div>
       </TD>
@@ -112,9 +117,22 @@ function AdaptiveList() {
         <Item />
         <Item />
         <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+        <Item />
       </CabinetTable>
     </div>
   );
 }
+
+AdaptiveList.propTypes = {
+  mode: PropTypes.oneOf(p2pMode),
+};
 
 export default AdaptiveList;
