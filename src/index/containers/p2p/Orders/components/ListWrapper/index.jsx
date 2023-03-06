@@ -6,11 +6,16 @@ import List from '../List';
 import SVG from 'utils/svg-wrap';
 import { CabinetBlock, CustomButton } from 'dapp';
 
+// Utils
+import useAdaptive from 'src/hooks/adaptive';
+
 // Styles
 import './index.less';
 
 function ListWrapper({ adaptive, ...props }) {
-  const listComponent = adaptive ? (
+  const isSmallDesktop = useAdaptive(1299, false);
+
+  const listComponent = isSmallDesktop ? (
     <AdaptiveList {...props} />
   ) : (
     <List {...props} />
@@ -23,7 +28,9 @@ function ListWrapper({ adaptive, ...props }) {
   );
 
   return (
-    <CabinetBlock className="orders-list__wrapper">
+    <CabinetBlock
+      className={`orders-list__wrapper ${isSmallDesktop ? 'adaptive' : ''}`}
+    >
       {listComponent}
       <div className="orders-list-pagination">
         <CustomButton className="orders-list-pagination__prev">
