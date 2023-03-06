@@ -25,6 +25,9 @@ const initialState = {
     },
     focus: 'to',
   },
+  p2p: {
+    mode: 'buy',
+  },
 };
 
 function reduce(state = initialState, action = {}) {
@@ -150,6 +153,15 @@ function reduce(state = initialState, action = {}) {
         exchange: {
           ...state.exchange,
           focus: payload,
+        },
+      };
+    }
+    case actionTypes.DAPP_SET_P2P_MODE: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          mode: payload,
         },
       };
     }
