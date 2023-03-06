@@ -33,4 +33,5 @@ export default {
   reCaptchaSiteKey: '6LdRL9QUAAAAAE45WnoX0AM_MSiYgS2aJsbiNI0a',
   docs: 'https://docs.narfex.com',
   docsTeam: 'https://docs.narfex.com/narfex/main/narfex-team',
+  audit: 'https://docs.narfex.com/narfex/main/security-audit',
 };
