@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { dataStatus, sortTypes } from '../index/constants/dapp/types';
+import { dataStatus, p2pMode, sortTypes } from '../index/constants/dapp/types';
 
 const initialState = {
   wallet: {
@@ -26,7 +26,7 @@ const initialState = {
     focus: 'to',
   },
   p2p: {
-    mode: 'buy',
+    mode: p2pMode.buy,
   },
 };
 

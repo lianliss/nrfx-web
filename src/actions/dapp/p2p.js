@@ -1,4 +1,4 @@
-import { actionTypes } from '../actionTypes';
+import * as actionTypes from '../actionTypes';
 
 /**
  *  Sets p2p mode.
