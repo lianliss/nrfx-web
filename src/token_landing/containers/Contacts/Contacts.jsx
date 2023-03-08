@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router5';
 
 import './Contacts.less';
-import phonesImage from './assets/phones.png';
+import phonesImage from './assets/phones.svg';
 
 import { getLang } from 'utils';
 import TokenButton from '../../components/TokenButton/TokenButton';
