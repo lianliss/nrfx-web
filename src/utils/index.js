@@ -1,40 +1,40 @@
 //styles
 // external
-import React, { useEffect, useRef } from "react";
-import bn from "big.js";
+import React, { useEffect, useRef } from 'react';
+import bn from 'big.js';
 // internal
-import store from "../store";
-import router from "../router";
-import moment from "moment";
-import * as api from "src/services/api";
-import TranslatorMode from "src/index/components/cabinet/TranslatorMode/TranslatorModal";
-import { userRole } from "../actions/cabinet/profile";
-import REGEXES from "src/index/constants/regexes";
+import store from '../store';
+import router from '../router';
+import moment from 'moment';
+import * as api from 'src/services/api';
+import TranslatorMode from 'src/index/components/cabinet/TranslatorMode/TranslatorModal';
+import { userRole } from '../actions/cabinet/profile';
+import REGEXES from 'src/index/constants/regexes';
 
 export function classNames() {
   let result = [];
 
-  [].concat(Array.prototype.slice.call(arguments)).forEach(function(item) {
+  [].concat(Array.prototype.slice.call(arguments)).forEach(function (item) {
     if (!item) {
       return;
     }
-    switch (typeof item === "undefined" ? "undefined" : typeof item) {
-      case "string":
+    switch (typeof item === 'undefined' ? 'undefined' : typeof item) {
+      case 'string':
         result.push(item);
         break;
-      case "object":
-        Object.keys(item).forEach(function(key) {
+      case 'object':
+        Object.keys(item).forEach(function (key) {
           if (item[key]) {
             result.push(key);
           }
         });
         break;
       default:
-        result.push("" + item);
+        result.push('' + item);
     }
   });
 
-  return result.join(" ");
+  return result.join(' ');
 }
 
 export function removeProperty(object, ...properties) {
@@ -45,7 +45,7 @@ export function removeProperty(object, ...properties) {
   return newObject;
 }
 
-export function joinComponents(separator = ", ") {
+export function joinComponents(separator = ', ') {
   return (accu, elem) => {
     return accu === null ? [elem] : [...accu, separator, elem];
   };
@@ -56,10 +56,10 @@ export function getLang(key, string = false, code = false) {
   const { currentLang, translations } = state.default;
   let langString = translations[code || currentLang][key] || key;
 
-  if (["object", "string"].includes(typeof string) || !string) {
+  if (['object', 'string'].includes(typeof string) || !string) {
     if (
       state.default.profile.user &&
-      userRole("translator") &&
+      userRole('translator') &&
       state.settings &&
       state.settings.translator
     ) {
@@ -70,7 +70,7 @@ export function getLang(key, string = false, code = false) {
         />
       );
     }
-    return ["object", "string"].includes(typeof string)
+    return ['object', 'string'].includes(typeof string)
       ? string
       : nl2br(langString);
   }
@@ -78,20 +78,17 @@ export function getLang(key, string = false, code = false) {
   return langString;
 }
 
-export const getCssVar = (v, fallback = "#AAA") => {
+export const getCssVar = (v, fallback = '#AAA') => {
   return (
     (window.getComputedStyle &&
-      window
-        .getComputedStyle(document.body)
-        .getPropertyValue(v)
-        .trim()) ||
+      window.getComputedStyle(document.body).getPropertyValue(v).trim()) ||
     fallback
   );
 };
 
-export const nl2br = text => {
-  if (text && text.includes("\\n")) {
-    return text.split("\\n").map((item, i) => (
+export const nl2br = (text) => {
+  if (text && text.includes('\\n')) {
+    return text.split('\\n').map((item, i) => (
       <>
         {item}
         <br />
@@ -108,14 +105,14 @@ export function isJson(string) {
     return false;
   }
 }
-export const isEmail = email => REGEXES.email.test(email.toLowerCase());
+export const isEmail = (email) => REGEXES.email.test(email.toLowerCase());
 
-export const isName = name => REGEXES.name.test((name || "").toLowerCase());
+export const isName = (name) => REGEXES.name.test((name || '').toLowerCase());
 
-export const isLogin = name => REGEXES.login.test((name || "").toLowerCase());
+export const isLogin = (name) => REGEXES.login.test((name || '').toLowerCase());
 
-export const isPassword = password =>
-  Object.values(REGEXES.createPassword).every(r => {
+export const isPassword = (password) =>
+  Object.values(REGEXES.createPassword).every((r) => {
     return r.test(password);
   });
 
@@ -141,8 +138,8 @@ export function useInterval(callback, delay) {
 
 export function diff(a1, a2) {
   return a1
-    .filter(i => !a2.includes(i))
-    .concat(a2.filter(i => !a1.includes(i)));
+    .filter((i) => !a2.includes(i))
+    .concat(a2.filter((i) => !a1.includes(i)));
 }
 
 export const formatNumber = (
@@ -153,7 +150,7 @@ export const formatNumber = (
   if (num) {
     return num.toLocaleString(undefined, {
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     });
   }
 
@@ -162,9 +159,9 @@ export const formatNumber = (
 
 export function isProduction() {
   return (
-    !api.API_ENTRY.includes("stage") &&
-    !api.API_ENTRY.includes("api-") &&
-    !api.API_ENTRY.includes("127.0.0.1")
+    !api.API_ENTRY.includes('stage') &&
+    !api.API_ENTRY.includes('api-') &&
+    !api.API_ENTRY.includes('127.0.0.1')
   );
 }
 
@@ -196,7 +193,7 @@ export function throttle2(func, ms) {
 
     isThrottled = true;
 
-    setTimeout(function() {
+    setTimeout(function () {
       isThrottled = false; // (3)
       if (savedArgs) {
         wrapper.apply(savedThis, savedArgs);
@@ -210,7 +207,7 @@ export function throttle2(func, ms) {
 
 export function debounce(func, ms) {
   let isCooldown = false;
-  return function() {
+  return function () {
     if (isCooldown) return;
     func.apply(this, arguments);
     isCooldown = true;
@@ -218,21 +215,15 @@ export function debounce(func, ms) {
   };
 }
 
-export function ucfirst(input = "") {
-  if (typeof input !== "string") return "";
+export function ucfirst(input = '') {
+  if (typeof input !== 'string') return '';
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
 export function formatDouble(input, fractionDigits = 8) {
   if (isNaN(parseFloat(input)) || Math.abs(input) === Infinity) return null;
-  const coefficient = parseInt(1 + "0".repeat(fractionDigits));
-  return (
-    Math.floor(
-      bn(input)
-        .mul(coefficient)
-        .toExponential()
-    ) / coefficient
-  );
+  const coefficient = parseInt(1 + '0'.repeat(fractionDigits));
+  return Math.floor(bn(input).mul(coefficient).toExponential()) / coefficient;
   // return parseFloat(parseFloat(input).toFixed(fractionDigits));
 }
 
@@ -247,7 +238,7 @@ export function formatTableId(index) {
 
   let arr = new Array(need).fill(0);
   arr.push(index);
-  return arr.join("");
+  return arr.join('');
 }
 
 export function makeModalParams(modal, params) {
@@ -255,7 +246,7 @@ export function makeModalParams(modal, params) {
   return {
     ...result,
     modal,
-    ...params
+    ...params,
   };
 }
 
@@ -265,14 +256,14 @@ export function InputNumberOnKeyPressHandler(e) {
   }
 }
 
-export function __doubleInputOnKeyPressHandler(e, value = "") {
+export function __doubleInputOnKeyPressHandler(e, value = '') {
   switch (e.key) {
     default:
-      if (isNaN(parseInt(e.key)) || (value.length === 1 && value[0] === "0")) {
+      if (isNaN(parseInt(e.key)) || (value.length === 1 && value[0] === '0')) {
         e.preventDefault();
       }
       break;
-    case ".": {
+    case '.': {
       return value.length === 0
         ? e.preventDefault()
         : value.indexOf(e.key) > -1 && e.preventDefault();
@@ -280,32 +271,32 @@ export function __doubleInputOnKeyPressHandler(e, value = "") {
   }
 }
 
-export function clipTextMiddle(text = "", length = 10) {
-  if (typeof text !== "string") return "";
+export function clipTextMiddle(text = '', length = 10) {
+  if (typeof text !== 'string') return '';
 
   if (text.length <= length + length / 2) {
     return text;
   }
 
-  let parts = [text.substr(0, length), "...", text.substr(-length / 2)];
-  return parts.join("");
+  let parts = [text.substr(0, length), '...', text.substr(-length / 2)];
+  return parts.join('');
 }
 
 export function switchMatch(key, node) {
-  const __DEFAULT__ = "default";
+  const __DEFAULT__ = 'default';
   switch (typeof node) {
-    case "object": {
+    case 'object': {
       switch (typeof key) {
-        case "boolean":
+        case 'boolean':
           return node[key];
         default:
-        case "string": {
+        case 'string': {
           if (node.hasOwnProperty(key)) {
             return node[key];
           } else {
             if (node.hasOwnProperty(__DEFAULT__)) {
               switch (typeof node[__DEFAULT__]) {
-                case "function": {
+                case 'function': {
                   return node[__DEFAULT__]();
                 }
                 default:
@@ -324,21 +315,21 @@ export function switchMatch(key, node) {
 }
 
 export function getScrollbarWidth() {
-  const outer = document.createElement("div");
-  outer.style.visibility = "hidden";
-  outer.style.width = "100px";
+  const outer = document.createElement('div');
+  outer.style.visibility = 'hidden';
+  outer.style.width = '100px';
   document.body.appendChild(outer);
   const widthNoScroll = outer.offsetWidth;
-  outer.style.overflow = "scroll";
-  const inner = document.createElement("div");
-  inner.style.width = "100%";
+  outer.style.overflow = 'scroll';
+  const inner = document.createElement('div');
+  inner.style.width = '100%';
   outer.appendChild(inner);
   const widthWithScroll = inner.offsetWidth;
   outer.parentNode.removeChild(outer);
   return widthNoScroll - widthWithScroll;
 }
 
-export function isFiat(currency = "") {
+export function isFiat(currency = '') {
   return [
     'gbp',
     'usd',
@@ -355,26 +346,35 @@ export function isFiat(currency = "") {
   // TODO: Брать из state.default.currency
 }
 
-export function dateFormat(date, format = "DD MMMM YYYY, HH:mm") {
+export function dateFormat(date, format = 'DD MMMM YYYY, HH:mm') {
   let dateObject;
 
-  if (typeof date === "number" && date.toString().length === 10) {
+  if (typeof date === 'number' && date.toString().length === 10) {
     dateObject = moment.unix(date);
   } else {
     const offsetMoscow = 60 * 3;
     const offset = new Date().getTimezoneOffset() + offsetMoscow;
-    dateObject = moment(date).subtract(offset, "minutes");
+    dateObject = moment(date).subtract(offset, 'minutes');
   }
 
   return !!format ? dateObject.format(format) : dateObject;
 }
 
-export const timeout = miliseconds => {
-  return new Promise(resolve => setTimeout(resolve, miliseconds));
+export const timeout = (miliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, miliseconds));
 };
 
 export const getFixedNumber = (number, fixedNumber) => {
+  if (!fixedNumber) return number;
+
+  if (typeof number === 'string') {
+    const indexOfFraction = number.indexOf('.') || number.indexOf(',');
+    return indexOfFraction
+      ? number.slice(0, indexOfFraction + (fixedNumber + 1))
+      : number;
+  }
+
   return Number(Number(number).toFixed(fixedNumber));
-}
+};
 
 export { default as wei } from './wei';
