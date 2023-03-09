@@ -365,6 +365,8 @@ export const timeout = (miliseconds) => {
 };
 
 export const getFixedNumber = (number, fixedNumber) => {
+  if (!fixedNumber) return number;
+
   if (typeof number === 'string') {
     const indexOfFraction = number.indexOf('.') || number.indexOf(',');
     return indexOfFraction

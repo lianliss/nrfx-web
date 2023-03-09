@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { adaptiveSelector } from 'src/selectors';
 import { classNames } from 'src/ui/utils';
+import { getFixedNumber } from 'utils';
 import _ from 'lodash';
 
 // Styles
@@ -21,8 +22,9 @@ function DappInput({
   error,
   disabled,
   footer,
+  decimals,
 }) {
-  const [inputState, setInputState] = React.useState(value ? value : '');
+  const [inputState, setInputState] = React.useState(value || '');
   const adaptive = useSelector(adaptiveSelector);
   const indicatorRef = React.useRef(null);
 
@@ -63,8 +65,8 @@ function DappInput({
 
     if (type === 'number') {
       if (adaptive) {
-        onChange(Number(newValue));
-        setInputState(newValue);
+        onChange(getFixedNumber(Number(newValue), decimals));
+        setInputState(getFixedNumber(newValue, decimals));
         return;
       }
 
@@ -83,8 +85,8 @@ function DappInput({
       }
 
       if (!_.isNaN(Number(value))) {
-        onChange(Number(value));
-        setInputState(value);
+        onChange(getFixedNumber(Number(value), decimals));
+        setInputState(getFixedNumber(value, decimals));
         return;
       }
 
@@ -147,6 +149,7 @@ DappInput.defaultProps = {
   onFocus: () => {},
   selectLastSymbol: false,
   error: false,
+  decimals: null,
 };
 
 DappInput.propTypes = {
@@ -155,6 +158,7 @@ DappInput.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   selectLastSymbol: PropTypes.bool,
+  decimals: PropTypes.number,
 };
 
 export default DappInput;
