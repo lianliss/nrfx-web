@@ -21,12 +21,10 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { toastPush } from 'src/actions/toasts';
-import { getLang } from 'src/utils';
+import { getLang, getFixedNumber } from 'src/utils';
 
 // Styles
 import './FarmingPopupStake.less';
-import TransactionWaitingModal from '../../../TransactionWaitingModal/TransactionWaitingModal';
-import TransactionSubmittedModal from '../../../TransactionSubmittedModal/TransactionSubmittedModal';
 
 const processError = (error) => {
   const { message } = error;
@@ -60,9 +58,13 @@ class FarmingPopupStake extends React.PureComponent {
   onChange = (event) => {
     let value = event.target.value;
     if (this.props.adaptive) {
+      value = getFixedNumber(value, 18);
+
       this.setState({ value });
     } else {
       value = value.replace(',', '.');
+      value = getFixedNumber(value, 18);
+
       if (!_.isNaN(Number(value)) || value === '.') {
         this.setState({ value });
       }
@@ -183,8 +185,11 @@ class FarmingPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
+      const balanceInEth = wei.from(balance);
       const transactionAmount =
-        amount > wei.from(balance) ? balance : wei.to(amount.toFixed(9));
+        getFixedNumber(amount, 18) >= getFixedNumber(balanceInEth, 18)
+          ? balance
+          : wei.to(getFixedNumber(amount, 18));
       const farm = getFarmContract();
       const tx = await farm.transaction('deposit', [
         pool.address,
@@ -228,8 +233,12 @@ class FarmingPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
-      const amountWei = wei.to(amount.toFixed(18));
-      const transactionAmount = amountWei > userPool ? userPool : amountWei;
+      const poolInEth = wei.from(userPool);
+      const transactionAmount =
+        getFixedNumber(amount, 18) >= getFixedNumber(poolInEth, 18)
+          ? userPool
+          : wei.to(getFixedNumber(amount, 18));
+
       const farm = getFarmContract();
       const tx = await farm.transaction('withdraw', [
         pool.address,
@@ -271,9 +280,11 @@ class FarmingPopupStake extends React.PureComponent {
     } = this.state;
     const isStake = modal === 'stake';
     const Wrapper = adaptive ? BottomSheetModal : Modal;
-    const balance = wei.from(_.get(pool, 'balance', '0'));
+    const weiBalance = _.get(pool, 'balance', '0');
+    const balance = getFixedNumber(wei.from(weiBalance), 18);
     const amount = Number(value) || 0;
-    const userPool = wei.from(_.get(pool, 'userPool', '0'));
+    const weiUserPool = _.get(pool, 'userPool', '0');
+    const userPool = getFixedNumber(wei.from(weiUserPool), 18);
 
     const isAvailable = isStake
       ? allowance >= amount && amount && amount <= balance
@@ -330,7 +341,9 @@ class FarmingPopupStake extends React.PureComponent {
                     className="input-controls__button"
                     onClick={() => {
                       if (!isTransaction && !isApproving)
-                        this.setState({ value: isStake ? balance : userPool });
+                        this.setState({
+                          value: isStake ? balance : userPool,
+                        });
                     }}
                   >
                     <span>{getLang('global_max')}</span>
