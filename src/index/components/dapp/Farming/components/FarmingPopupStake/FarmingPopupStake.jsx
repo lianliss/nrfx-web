@@ -12,12 +12,12 @@ import {
   NumberFormat,
   Form,
   Button,
-  Input,
   Modal,
   BottomSheetModal,
   Row,
 } from 'src/ui';
 import SVG from 'utils/svg-wrap';
+import { DappInput } from 'dapp';
 
 // Utils
 import { toastPush } from 'src/actions/toasts';
@@ -55,20 +55,8 @@ class FarmingPopupStake extends React.PureComponent {
     errorText: '',
   };
 
-  onChange = (event) => {
-    let value = event.target.value;
-    if (this.props.adaptive) {
-      value = getFixedNumber(value, 18);
-
-      this.setState({ value });
-    } else {
-      value = value.replace(',', '.');
-      value = getFixedNumber(value, 18);
-
-      if (!_.isNaN(Number(value)) || value === '.') {
-        this.setState({ value });
-      }
-    }
+  onChange = (value) => {
+    this.setState({ value });
   };
 
   handleChange = (newValue) => {
@@ -326,11 +314,13 @@ class FarmingPopupStake extends React.PureComponent {
                 </span>
               </div>
               <div className="input-container">
-                <Input
-                  type={adaptive ? 'number' : 'text'}
+                <DappInput
+                  type="number"
                   disabled={isTransaction || isApproving}
+                  inputMode="decimal"
                   value={value}
                   onChange={this.onChange.bind(this)}
+                  decimals={18}
                 />
                 <div className="input-controls">
                   <p className="default-text">

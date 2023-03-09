@@ -8,6 +8,7 @@ export { default as AnswerPopup } from './ui/AnswerPopup/AnswerPopup';
 export { default as DexRoute } from './DexRoute/DexRoute';
 export { default as DexDescription } from './DexDescription/DexDescription';
 export { default as Select } from './Select';
+export { default as DappInput } from './DappInput/DappInput';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';

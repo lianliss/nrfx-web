@@ -438,6 +438,7 @@ function ExchangerSwap(props) {
                      onChange={handleFiatInput}
                      value={fiatValue}
                      type="number"
+                     inputMode="decimal"
                      onFocus={() => {
                       dispatch(setExchangeFocus('from'));
                      }}
@@ -494,6 +495,7 @@ function ExchangerSwap(props) {
                      value={coinAmount}
                      onChange={handleCoinInput}
                      type="number"
+                     inputMode="decimal"
                      onFocus={() => {
                       dispatch(setExchangeFocus('to'));
                      }}

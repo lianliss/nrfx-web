@@ -285,6 +285,7 @@ function Balance(props) {
           onChange={handleChangeAmount}
           indicator={indicator}
           type="number"
+          inputMode="decimal"
           footer={
             props.type === 'withdrawal' && (
               <InputFooter onClick={handleChangeAmount} />
