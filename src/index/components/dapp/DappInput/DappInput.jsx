@@ -23,6 +23,8 @@ function DappInput({
   disabled,
   footer,
   decimals,
+  inputMode,
+  pattern,
 }) {
   const [inputState, setInputState] = React.useState(value || '');
   const adaptive = useSelector(adaptiveSelector);
@@ -64,12 +66,6 @@ function DappInput({
     const newValue = e.currentTarget.value;
 
     if (type === 'number') {
-      if (adaptive) {
-        onChange(getFixedNumber(Number(newValue), decimals));
-        setInputState(getFixedNumber(newValue, decimals));
-        return;
-      }
-
       let value = `${newValue}`;
       value = value.replace(',', '.');
 
@@ -121,11 +117,13 @@ function DappInput({
   return (
     <div className="DappInput__wrapper">
       <input
-        type={adaptive ? type : 'text'}
+        type="text"
         value={inputState}
         onChange={handleInput}
         className={className}
         placeholder={placeholder}
+        inputMode={inputMode}
+        pattern={pattern}
         style={{ ...style, ...padding }}
         onFocus={handleFocus}
         disabled={disabled}
@@ -150,6 +148,8 @@ DappInput.defaultProps = {
   selectLastSymbol: false,
   error: false,
   decimals: null,
+  inputMode: 'text',
+  pattern: null,
 };
 
 DappInput.propTypes = {
@@ -159,6 +159,8 @@ DappInput.propTypes = {
   onFocus: PropTypes.func,
   selectLastSymbol: PropTypes.bool,
   decimals: PropTypes.number,
+  inputMode: PropTypes.string,
+  pattern: PropTypes.string,
 };
 
 export default DappInput;

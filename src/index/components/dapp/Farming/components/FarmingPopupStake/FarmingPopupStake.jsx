@@ -317,6 +317,7 @@ class FarmingPopupStake extends React.PureComponent {
                 <DappInput
                   type="number"
                   disabled={isTransaction || isApproving}
+                  inputMode="decimal"
                   value={value}
                   onChange={this.onChange.bind(this)}
                   decimals={18}
