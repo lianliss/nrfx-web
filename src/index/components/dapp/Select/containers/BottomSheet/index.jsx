@@ -5,7 +5,6 @@ import { default as ReactSelect, components } from 'react-select';
 
 // Components
 import SVG from 'utils/svg-wrap';
-import CabinetScrollBlock from '../../../CabinetScrollBlock/CabinetScrollBlock';
 import { BottomSheetModal } from 'ui';
 
 // Utils
@@ -20,7 +19,7 @@ import './index.less';
 const { DropdownIndicator, Menu, MenuList, Option } = components;
 
 const BottomSheetSelect = React.memo(
-  ({ options, value, onChange, className, ...props }) => {
+  ({ options, value, onChange, className, listHeight, ...props }) => {
     const adaptive = useSelector(adaptiveSelector);
     const bottomSheetModalRef = React.useRef(null);
     const [isOpen, setIsOpen] = React.useState(false);
@@ -30,6 +29,7 @@ const BottomSheetSelect = React.memo(
       return value ? options.find((c) => c.value === value) : '';
     };
 
+    const fineStyles = adaptive ? adaptiveStyles : styles;
     // Handlers
     // -- Set value of string from object option.
     const handleChange = (newValue) => {
@@ -110,37 +110,16 @@ const BottomSheetSelect = React.memo(
 
             return menu;
           },
-          MenuList: ({ children, ...props }) => {
-            const scrollContainerRef = React.useRef(null);
-            const [scrollbarHeight, setScrollbarHeight] = React.useState(0);
-
-            React.useEffect(() => {
-              setScrollbarHeight(
-                _.get(scrollContainerRef, 'current.offsetHeight', 0)
-              );
-            }, [scrollContainerRef]);
-
-            return (
-              <MenuList {...props}>
-                <CabinetScrollBlock
-                  style={{ height: scrollbarHeight, maxHeight: 156 }}
-                  minimalThumbSize={30}
-                  removeTracksWhenNotUsed
-                >
-                  <div
-                    className="CabinetSelect-BottomSheet-menuList__container"
-                    ref={scrollContainerRef}
-                  >
-                    {children}
-                  </div>
-                </CabinetScrollBlock>
-              </MenuList>
-            );
-          },
         }}
         className={classNames('CabinetSelect-BottomSheet')}
         classNamePrefix="CabinetSelect-BottomSheet"
-        styles={adaptive ? adaptiveStyles : styles}
+        styles={{
+          ...fineStyles,
+          menuList: (base) => ({
+            ...styles.menuList(base),
+            maxHeight: listHeight,
+          }),
+        }}
         hideSelectedOptions
         {...props}
       />
@@ -165,10 +144,11 @@ BottomSheetSelect.defaultProps = {
   value: 0,
   onChange: () => {},
   className: '',
+  listHeight: 156,
 };
 
 // Return object for options constant
-BottomSheetSelect.option = (title, value, icon, showValue = false) => {
+const BottomSheetSelectOption = (title, value, icon, showValue = false) => {
   return {
     label: (
       <div className="CabinetSelect-BottomSheet-option">
@@ -184,5 +164,7 @@ BottomSheetSelect.option = (title, value, icon, showValue = false) => {
     value,
   };
 };
+
+BottomSheetSelect.option = BottomSheetSelectOption;
 
 export default BottomSheetSelect;

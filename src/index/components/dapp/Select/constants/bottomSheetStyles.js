@@ -32,8 +32,23 @@ export const styles = {
   }),
   menuList: (base) => ({
     ...base,
-    padding: '0',
-    maxHeight: 156,
+    padding: '0 3px 0 0',
+    marginRight: 3,
+    overflowY: 'scroll',
+
+    '&::-webkit-scrollbar': {
+      width: '4px',
+    },
+
+    '&::-webkit-scrollbar-track': {
+      borderRadius: '2px',
+      backgroundColor: '#f7f9fc',
+    },
+
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: '2px',
+      backgroundColor: '#e5ebfc',
+    },
   }),
   option: (base, state) => ({
     ...base,
