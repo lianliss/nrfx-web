@@ -6,6 +6,7 @@ import { default as ReactSelect, components } from 'react-select';
 // Components
 import SVG from 'utils/svg-wrap';
 import { BottomSheetModal } from 'ui';
+import DappInput from 'dapp/DappInput/DappInput';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
@@ -16,11 +17,20 @@ import _ from 'lodash';
 // Styles
 import './index.less';
 
-const { DropdownIndicator, Menu, MenuList, Option } = components;
+const { DropdownIndicator, Menu, Option } = components;
 
 const BottomSheetSelect = React.memo(
-  ({ options, value, onChange, className, listHeight, ...props }) => {
+  ({
+    options,
+    value,
+    onChange,
+    className,
+    listHeight,
+    isSearchable,
+    ...props
+  }) => {
     const adaptive = useSelector(adaptiveSelector);
+    const [search, setSearch] = React.useState('');
     const bottomSheetModalRef = React.useRef(null);
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -65,6 +75,7 @@ const BottomSheetSelect = React.memo(
         menuIsOpen={isOpen}
         onMenuOpen={handleMenuOpen}
         onMenuClose={!adaptive && handleMenuClose}
+        backspaceRemovesValue={false}
         components={{
           IndicatorSeparator: null,
           DropdownIndicator: (props) => {
@@ -91,6 +102,22 @@ const BottomSheetSelect = React.memo(
                   <Option {...props} isSelected>
                     {selectedOption.label}
                   </Option>
+                  {isSearchable && (
+                    <div className="CabinetSelect-BottomSheet-menu__search">
+                      <DappInput
+                        size="small"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                        }}
+                        indicator={
+                          <SVG
+                            src={require('src/asset/icons/action/search-small.svg')}
+                            flex
+                          />
+                        }
+                      />
+                    </div>
+                  )}
                   {children}
                 </div>
               </Menu>

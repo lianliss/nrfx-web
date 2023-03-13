@@ -21,6 +21,8 @@ function DappInput({
   error,
   disabled,
   footer,
+  size,
+  ...otherProps
 }) {
   const [inputState, setInputState] = React.useState(value ? value : '');
   const adaptive = useSelector(adaptiveSelector);
@@ -117,7 +119,7 @@ function DappInput({
   });
 
   return (
-    <div className="DappInput__wrapper">
+    <div className={classNames('DappInput__wrapper', size)}>
       <input
         type={adaptive ? type : 'text'}
         value={inputState}
@@ -127,6 +129,7 @@ function DappInput({
         style={{ ...style, ...padding }}
         onFocus={handleFocus}
         disabled={disabled}
+        {...otherProps}
       />
       {indicator && (
         <div className="DappInput__indicator" ref={indicatorRef}>
@@ -147,6 +150,7 @@ DappInput.defaultProps = {
   onFocus: () => {},
   selectLastSymbol: false,
   error: false,
+  small: 'medium',
 };
 
 DappInput.propTypes = {
@@ -155,6 +159,7 @@ DappInput.propTypes = {
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   selectLastSymbol: PropTypes.bool,
+  small: PropTypes.oneOf(['small', 'medium', 'large']),
 };
 
 export default DappInput;
