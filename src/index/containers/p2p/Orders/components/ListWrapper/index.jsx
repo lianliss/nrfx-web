@@ -5,6 +5,7 @@ import AdaptiveList from '../AdaptiveList';
 import List from '../List';
 import SVG from 'utils/svg-wrap';
 import { CabinetBlock, CustomButton } from 'dapp';
+import Filters from '../Filters';
 
 // Utils
 import useAdaptive from 'src/hooks/adaptive';
@@ -31,6 +32,7 @@ function ListWrapper({ adaptive, ...props }) {
     <CabinetBlock
       className={`orders-list__wrapper ${isSmallDesktop ? 'adaptive' : ''}`}
     >
+      <Filters mode={props.mode} />
       {listComponent}
       <div className="orders-list-pagination">
         <CustomButton className="orders-list-pagination__prev">
