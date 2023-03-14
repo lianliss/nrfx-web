@@ -4,6 +4,7 @@ import React from 'react';
 import { Row } from 'ui';
 import { BottomSheetSelect } from 'dapp/Select';
 import SwitchTheMode from '../SwitchTheMode';
+import ListPayment from '../ListPayment';
 
 // Utils
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
@@ -17,7 +18,10 @@ function Filters({ mode }) {
     BottomSheetSelect.option(fiat.symbol, fiat.address, fiat.logoURI)
   );
   const paymentsOptions = testPayments.map((payment, i) =>
-    BottomSheetSelect.option(payment.title, i + 1, payment.color)
+    BottomSheetSelect.option(
+      <ListPayment title={payment.title} color={payment.color} />,
+      i + 1
+    )
   );
   const regionsOptions = testRegions.map((region, i) =>
     BottomSheetSelect.option(region.title, i + 1, region.flag)

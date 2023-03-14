@@ -199,14 +199,24 @@ BottomSheetSelect.defaultProps = {
 };
 
 // Return object for options constant
-const BottomSheetSelectOption = (title, value, icon, showValue = false) => {
+const BottomSheetSelectOption = (
+  title,
+  value,
+  icon,
+  showValue = false,
+  titleTag
+) => {
+  const Title = titleTag || 'p';
+
   return {
     label: (
       <div className="CabinetSelect-BottomSheet-option">
         <div className="CabinetSelect-BottomSheet-option__icon">
           {icon && <img src={icon} />}
         </div>
-        <p className="CabinetSelect-BottomSheet-option__title">{title}</p>
+        <Title className="CabinetSelect-BottomSheet-option__title">
+          {title}
+        </Title>
         {showValue && (
           <p className="CabinetSelect-BottomSheet-option__value">{value}</p>
         )}

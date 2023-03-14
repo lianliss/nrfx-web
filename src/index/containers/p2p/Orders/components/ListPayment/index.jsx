@@ -6,10 +6,12 @@ function ListPayment({ title, color, adaptive }) {
       className="orders-list-payment__item"
       style={{ background: adaptive && color }}
     >
-      <div
-        className="orders-list-payment__color"
-        style={{ background: color }}
-      ></div>
+      {!adaptive && (
+        <div
+          className="orders-list-payment__color"
+          style={{ background: color }}
+        />
+      )}
       <span>{title}</span>
     </div>
   );
