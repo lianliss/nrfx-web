@@ -12,7 +12,8 @@ import DappInput from 'dapp/DappInput/DappInput';
 import { adaptiveSelector } from 'src/selectors';
 import { classNames } from 'utils';
 import bottomSheetStyles from '../../constants/bottomSheetStyles';
-import * as desktopStyles from '../../constants/desktopStyles';
+import desktopStyles from '../../constants/desktopStyles';
+import indicatorIcons from '../../constants/indicatorIcons';
 import _ from 'lodash';
 
 // Styles
@@ -29,6 +30,9 @@ const BottomSheetSelect = React.memo(
     listHeight,
     isSearchable,
     type,
+    components,
+    width,
+    showSelectedInMenu,
     ...props
   }) => {
     const adaptive = useSelector(adaptiveSelector);
@@ -90,10 +94,7 @@ const BottomSheetSelect = React.memo(
           DropdownIndicator: (props) => {
             return (
               <DropdownIndicator {...props}>
-                <SVG
-                  src={require('src/asset/icons/cabinet/select-arrow.svg')}
-                  flex
-                />
+                <SVG src={indicatorIcons[type]} flex />
               </DropdownIndicator>
             );
           },
@@ -106,11 +107,15 @@ const BottomSheetSelect = React.memo(
 
             const menu = (
               <Menu {...props}>
-                <div className="CabinetSelect-BottomSheet-menu__triangle" />
+                {type === 'bold' && (
+                  <div className="CabinetSelect-BottomSheet-menu__triangle" />
+                )}
                 <div className="CabinetSelect-BottomSheet-menu__container">
-                  <Option {...props} isSelected>
-                    {selectedOption.label}
-                  </Option>
+                  {showSelectedInMenu && (
+                    <Option {...props} isSelected>
+                      {selectedOption.label}
+                    </Option>
+                  )}
                   {isSearchable && (
                     <div className="CabinetSelect-BottomSheet-menu__search">
                       <DappInput
@@ -146,14 +151,19 @@ const BottomSheetSelect = React.memo(
 
             return menu;
           },
+          ...components,
         }}
-        className={classNames('CabinetSelect-BottomSheet')}
+        className={classNames('CabinetSelect-BottomSheet', type)}
         classNamePrefix="CabinetSelect-BottomSheet"
         styles={{
           ...styles,
-          menuList: (base) => ({
-            ...styles.menuList(base),
+          menuList: (base, state) => ({
+            ...styles?.menuList(base, state),
             maxHeight: listHeight,
+          }),
+          control: (base, state) => ({
+            ...styles?.control(base, state),
+            width,
           }),
         }}
         hideSelectedOptions
@@ -173,6 +183,8 @@ BottomSheetSelect.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   className: PropTypes.string,
+  listHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.oneOf(['average', 'bold']),
 };
 
@@ -182,6 +194,7 @@ BottomSheetSelect.defaultProps = {
   onChange: () => {},
   className: '',
   listHeight: 156,
+  width: 150,
   type: 'average',
 };
 

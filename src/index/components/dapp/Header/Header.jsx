@@ -269,6 +269,7 @@ const ChainSelect = React.memo(
         defaultValue={defaultValue}
         onChange={handleCryptoChange}
         type="bold"
+        showSelectedInMenu
       />
     );
   }

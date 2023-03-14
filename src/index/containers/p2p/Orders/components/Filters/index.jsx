@@ -17,10 +17,10 @@ function Filters({ mode }) {
     BottomSheetSelect.option(fiat.symbol, fiat.address, fiat.logoURI)
   );
   const paymentsOptions = testPayments.map((payment, i) =>
-    BottomSheetSelect.option(payment.title, i, payment.color)
+    BottomSheetSelect.option(payment.title, i + 1, payment.color)
   );
   const regionsOptions = testRegions.map((region, i) =>
-    BottomSheetSelect.option(region.title, i, region.flag)
+    BottomSheetSelect.option(region.title, i + 1, region.flag)
   );
 
   const Column = ({ title, content }) => (
@@ -32,7 +32,7 @@ function Filters({ mode }) {
 
   return (
     <div className="orders-list-filters">
-      <Row>
+      <Row alignItems="stretch">
         <Column
           title="Function selection"
           content={<SwitchTheMode mode={mode} size="small" />}
@@ -44,6 +44,7 @@ function Filters({ mode }) {
               options={fiatsOptions}
               value={fiatsOptions[0].value}
               listHeight={215}
+              width={131}
               isSearchable
               menuIsOpen
             />
@@ -56,6 +57,7 @@ function Filters({ mode }) {
               options={paymentsOptions}
               value={paymentsOptions[0].value}
               listHeight={215}
+              width={164}
               isSearchable
               menuIsOpen
             />
@@ -67,6 +69,7 @@ function Filters({ mode }) {
             <BottomSheetSelect
               options={regionsOptions}
               value={regionsOptions[0].value}
+              width={164}
               isSearchable
               menuIsOpen
             />

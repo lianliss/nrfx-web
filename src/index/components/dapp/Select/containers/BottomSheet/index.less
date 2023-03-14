@@ -79,7 +79,6 @@
     &,
     &:focus {
       border: none !important;
-      border-top: 1px solid var(--azureish-white) !important;
       border-bottom: 1px solid var(--azureish-white) !important;
     }
 
@@ -103,6 +102,12 @@
   .DappInput__wrapper.small .DappInput {
     border-radius: 0;
     height: 38px;
+  }
+
+  &.average &__indicator {
+    .isvg path {
+      fill: #dfe3f0;
+    }
   }
 }
 
