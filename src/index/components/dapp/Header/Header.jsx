@@ -268,6 +268,7 @@ const ChainSelect = React.memo(
         value={isConnected ? chainId : network.chainId}
         defaultValue={defaultValue}
         onChange={handleCryptoChange}
+        type="bold"
       />
     );
   }

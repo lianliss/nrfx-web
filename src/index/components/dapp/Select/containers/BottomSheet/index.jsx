@@ -11,7 +11,8 @@ import DappInput from 'dapp/DappInput/DappInput';
 // Utils
 import { adaptiveSelector } from 'src/selectors';
 import { classNames } from 'utils';
-import { styles, adaptiveStyles } from '../../constants/bottomSheetStyles';
+import bottomSheetStyles from '../../constants/bottomSheetStyles';
+import * as desktopStyles from '../../constants/desktopStyles';
 import _ from 'lodash';
 
 // Styles
@@ -27,6 +28,7 @@ const BottomSheetSelect = React.memo(
     className,
     listHeight,
     isSearchable,
+    type,
     ...props
   }) => {
     const adaptive = useSelector(adaptiveSelector);
@@ -39,7 +41,14 @@ const BottomSheetSelect = React.memo(
       return value ? options.find((c) => c.value === value) : '';
     };
 
-    const fineStyles = adaptive ? adaptiveStyles : styles;
+    const responsiveStyles = {
+      desktop: desktopStyles[type],
+      adaptive: bottomSheetStyles(desktopStyles[type]),
+    };
+    const styles = adaptive
+      ? responsiveStyles.adaptive
+      : responsiveStyles.desktop;
+
     // Handlers
     // -- Set value of string from object option.
     const handleChange = (newValue) => {
@@ -141,7 +150,7 @@ const BottomSheetSelect = React.memo(
         className={classNames('CabinetSelect-BottomSheet')}
         classNamePrefix="CabinetSelect-BottomSheet"
         styles={{
-          ...fineStyles,
+          ...styles,
           menuList: (base) => ({
             ...styles.menuList(base),
             maxHeight: listHeight,
@@ -164,6 +173,7 @@ BottomSheetSelect.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   className: PropTypes.string,
+  type: PropTypes.oneOf(['average', 'bold']),
 };
 
 BottomSheetSelect.defaultProps = {
@@ -172,6 +182,7 @@ BottomSheetSelect.defaultProps = {
   onChange: () => {},
   className: '',
   listHeight: 156,
+  type: 'average',
 };
 
 // Return object for options constant
