@@ -23,6 +23,7 @@ import { LOGIN } from 'src/components/AuthModal/fixtures';
 import { getLang } from 'src/utils';
 import useUpdateReservation from 'src/hooks/dapp/useUpdateReservation';
 import ExchangerStorage from 'src/utils/dapp/ExchangerStorage';
+import WatchVideo from './components/WatchVideo';
 
 // Styles
 import './Exchanger.less';
@@ -411,6 +412,7 @@ function Exchanger(props) {
             limits={limits}
             {...{reservation}}
           />
+          {!isAdaptive && <WatchVideo adaptive={isAdaptive} />}
           <ExchangerSwap
             fiats={fiatTokens}
             fiatsLoaded={fiatsLoaded}
@@ -422,6 +424,7 @@ function Exchanger(props) {
             limits={limits}
             {...{reservation}}
           />
+          {isAdaptive && <WatchVideo adaptive={isAdaptive} />}
           <Instruction />
         </div>
       </div>

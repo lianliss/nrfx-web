@@ -12,7 +12,6 @@ import * as PAGES from 'src/index/constants/pages';
 
 // Styles
 import './SwitchPage.less';
-import Transactions from '../Transactions/Transactions';
 
 // Main
 function SwitchPage({ adaptive }) {
@@ -24,12 +23,10 @@ function SwitchPage({ adaptive }) {
   const switchTabs = [
     { value: PAGES.DAPP_SWAP, label: getLang('dapp_sidebar_swap') },
     { value: PAGES.LIQUIDITY, label: getLang('dapp_sidebar_liquidity') },
-    { value: PAGES.TRANSACTIONS, label: getLang('dapp_sidebar_transactions') },
   ];
   // Current page is ...
   const isSwap = route.name === PAGES.DAPP_SWAP;
   const isLiquidity = route.name === PAGES.LIQUIDITY;
-  const isTransactions = route.name === PAGES.TRANSACTIONS;
 
   // Page Title.
   const titleLang = getSwitchedTitle(route.name, adaptive);
@@ -82,7 +79,6 @@ function SwitchPage({ adaptive }) {
       <div className="SwitchPage__row">
         {isSwap && <DexSwap />}
         {isLiquidity && <Liquidity />}
-        {isTransactions && <Transactions />}
       </div>
     </CabinetContent>
   );
@@ -98,10 +94,6 @@ function getSwitchedTitle(route, adaptive = false) {
   const isLiquidity = route.name === PAGES.LIQUIDITY;
   if (route === PAGES.DAPP_SWAP) {
     return 'dapp_swap_page_title';
-  }
-
-  if (route === PAGES.TRANSACTIONS) {
-    return 'dapp_sidebar_transactions';
   }
 
   if (route === PAGES.LIQUIDITY) {

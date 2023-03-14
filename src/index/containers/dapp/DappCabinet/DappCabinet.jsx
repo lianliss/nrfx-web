@@ -22,6 +22,10 @@ class DappCabinet extends Component {
     }
 
     this.redirectToFine();
+
+    if (!this.props.dappMounted) {
+      this.props.mountDapp();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -46,7 +50,7 @@ class DappCabinet extends Component {
 
   render() {
     const { route, adaptive } = this.props;
-    const { Component, mainnetOnly, testnetOnly } = getFinePage(route.name);
+    const { Component, mainnetOnly, testnetOnly, chainsWhitelist, chainsBlacklist } = getFinePage(route.name);
 
     return (
       <DappContainer
@@ -56,17 +60,26 @@ class DappCabinet extends Component {
         <Component route={route.name} adaptive={adaptive} />
         {testnetOnly && <TestnetOverlay testnetOnly networks={[97]} />}
         {mainnetOnly && <TestnetOverlay mainnetOnly networks={[56]} />}
+        {(chainsWhitelist || chainsBlacklist) && <TestnetOverlay {...{chainsWhitelist, chainsBlacklist}} />}
       </DappContainer>
     );
   }
 }
 
 const DappWrapper = (props) => {
-  const { network } = React.useContext(Web3Context);
+  const { network, mountDapp, dappMounted } = React.useContext(Web3Context);
   const { chainId } = network;
   const memoizedDappCabinet = React.useMemo(
-    () => <DappCabinet {...props} network={network} chainId={chainId} />,
-    [props, network, chainId]
+    () => (
+      <DappCabinet
+        {...props}
+        network={network}
+        chainId={chainId}
+        dappMounted={dappMounted}
+        mountDapp={mountDapp}
+      />
+    ),
+    [props, network, chainId, dappMounted]
   );
 
   return memoizedDappCabinet;

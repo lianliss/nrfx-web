@@ -18,6 +18,57 @@
     }
   }
 
+  &-footer {
+    & &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 13px 38px 13px 14px;
+      background: rgba(48, 113, 238, 0.12);
+      border: 0.5px solid var(--secondary-blue);
+      border-radius: var(--radius-panel);
+      text-align: left;
+
+      &__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      & h6,
+      & p {
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      & h6 {
+        margin-bottom: 5px;
+        font-size: 12px;
+        line-height: 18px;
+        color: var(--dark-black);
+      }
+
+      & p {
+        margin-bottom: 10px;
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--cool-gray);
+      }
+
+      & a {
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 16px;
+        color: var(--royal-blue);
+
+        &:not(:hover) {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
   &__footer {
     margin: 0 auto;
     text-align: center;
@@ -130,7 +181,7 @@
 
   .basic,
   .popup-link,
-  .Input {
+  .DappInput {
     font-weight: 600;
     font-size: 14px;
     line-height: 100%;
@@ -149,7 +200,7 @@
   }
 
   // <Input />
-  .Input {
+  .DappInput {
     width: 100%;
     padding: 16px 150px 13px 16px !important;
     border: none;

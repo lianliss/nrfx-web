@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { adaptiveSelector } from 'src/selectors';
 import { classNames } from 'src/ui/utils';
+import { getFixedNumber } from 'utils';
 import _ from 'lodash';
 
 // Styles
@@ -22,9 +23,12 @@ function DappInput({
   disabled,
   footer,
   size,
+  decimals,
+  inputMode,
+  pattern,
   ...otherProps
 }) {
-  const [inputState, setInputState] = React.useState(value ? value : '');
+  const [inputState, setInputState] = React.useState(value || '');
   const adaptive = useSelector(adaptiveSelector);
   const indicatorRef = React.useRef(null);
 
@@ -64,12 +68,6 @@ function DappInput({
     const newValue = e.currentTarget.value;
 
     if (type === 'number') {
-      if (adaptive) {
-        onChange(Number(newValue));
-        setInputState(newValue);
-        return;
-      }
-
       let value = `${newValue}`;
       value = value.replace(',', '.');
 
@@ -85,8 +83,8 @@ function DappInput({
       }
 
       if (!_.isNaN(Number(value))) {
-        onChange(Number(value));
-        setInputState(value);
+        onChange(getFixedNumber(Number(value), decimals));
+        setInputState(getFixedNumber(value, decimals));
         return;
       }
 
@@ -121,11 +119,13 @@ function DappInput({
   return (
     <div className={classNames('DappInput__wrapper', size)}>
       <input
-        type={adaptive ? type : 'text'}
+        type="text"
         value={inputState}
         onChange={handleInput}
         className={className}
         placeholder={placeholder}
+        inputMode={inputMode}
+        pattern={pattern}
         style={{ ...style, ...padding }}
         onFocus={handleFocus}
         disabled={disabled}
@@ -151,6 +151,9 @@ DappInput.defaultProps = {
   selectLastSymbol: false,
   error: false,
   small: 'medium',
+  decimals: null,
+  inputMode: 'text',
+  pattern: null,
 };
 
 DappInput.propTypes = {
@@ -160,6 +163,9 @@ DappInput.propTypes = {
   onFocus: PropTypes.func,
   selectLastSymbol: PropTypes.bool,
   small: PropTypes.oneOf(['small', 'medium', 'large']),
+  decimals: PropTypes.number,
+  inputMode: PropTypes.string,
+  pattern: PropTypes.string,
 };
 
 export default DappInput;

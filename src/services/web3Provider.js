@@ -32,6 +32,8 @@ import { CHAIN_TOKENS } from "./multichain/initialTokens";
 import { DEFAULT_CHAIN, NETWORKS_DATA } from "./multichain/chains";
 import { getLang } from "utils";
 import { CONTRACT_ADDRESSES } from "./multichain/contracts";
+import router from "../router";
+import dappPages from "../index/containers/dapp/DappCabinet/constants/dappPages";
 
 export const Web3Context = React.createContext();
 
@@ -69,6 +71,7 @@ class Web3Provider extends React.PureComponent {
     fiatsLoaded: false,
     connector: CONNECTORS.METAMASK,
     referAddress: ZERO_ADDRESS,
+    dappMounted: false,
   };
 
   ethereum = null;
@@ -113,12 +116,6 @@ class Web3Provider extends React.PureComponent {
       this.network.contractAddresses.providerAddress
     );
     this.web3Host = new Web3(provider);
-
-    // Check web3 wallet plugin
-    this.checkConnection();
-
-    // Get tokens list
-    this.getTokens(DEFAULT_CHAIN);
   }
 
   async checkConnection() {
@@ -142,6 +139,15 @@ class Web3Provider extends React.PureComponent {
 
   componentWillUnmount() {
     this._mounted = false;
+  }
+
+  mountDapp() {
+    // Check web3 wallet plugin
+    this.checkConnection();
+
+    // Get tokens list
+    this.getTokens(DEFAULT_CHAIN);
+    this.setState({ dappMounted: true });
   }
 
   /**
@@ -449,7 +455,11 @@ class Web3Provider extends React.PureComponent {
       // Object.assign(this, network);
       this.farm = this.getFarmContract();
       this.pairs = {};
-      if (this.state.chainId !== id) {
+      const isDapp = dappPages.some(
+        (dappPage) => dappPage.name === router.getState().name
+      );
+
+      if (this.state.chainId !== id && isDapp) {
         toast.success(`Selected network is #${id}`);
       }
       this.setState({
@@ -1448,7 +1458,7 @@ class Web3Provider extends React.PureComponent {
           method: this.requestMethods.wallet_addEthereumChain,
           params: [{
             chainId: this.web3.utils.toHex(97),
-            chainName: 'BSC web3 test',
+            chainName: 'BSC testnet',
             nativeCurrency: {
               name: 'BNB',
               symbol: 'BNB',
@@ -2074,6 +2084,7 @@ class Web3Provider extends React.PureComponent {
       getWeb3: this.getWeb3.bind(this),
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
+      mountDapp: this.mountDapp.bind(this),
       logout: this.logout.bind(this),
       network: this.network,
       getPairAddress: this.getPairAddress.bind(this),

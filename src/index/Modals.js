@@ -74,6 +74,7 @@ import {
   SendTokensModal,
   TransactionResponseModal,
   ExchangerModal,
+  VideoModal,
 } from "./components/dapp";
 import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
 import DexSettingsModal from "./containers/dapp/DexSwap/components/DexSettingsModal/DexSettingsModal";
@@ -281,6 +282,9 @@ function Modals(props) {
       break;
     case "exchanger":
       Component = ExchangerModal;
+      break;
+    case "watch_video":
+      Component = VideoModal;
       break;
     default:
       return null;

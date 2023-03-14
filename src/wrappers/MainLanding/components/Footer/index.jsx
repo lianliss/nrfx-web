@@ -49,25 +49,25 @@ function Footer({ adaptive }) {
               </div>
             </Col>
             <Col className="MainLandingWrapperFooter-nav__col">
-              <h6>{getLang('site__footerCompany')}</h6>
-              <Col className="MainLandingWrapperFooter-nav__items">
-                <Link routeName={pages.NARFEX_DAO}>
-                  {getLang('landing_footer_company')}
-                </Link>
-                <a
-                  href={company.docs + '/narfex/faq/narfex-platform'}
-                  target="_blank"
-                >
-                  {getLang('landing_footer_faq')}
+              <h6>{getLang('landing_footer_about')}</h6>
+              <div className="MainLandingWrapperFooter-nav__items">
+                <a href={company.docs} target="_blank">
+                  {getLang('landing_footer_docs')}
                 </a>
-              </Col>
-            </Col>
-            <Col className="MainLandingWrapperFooter-nav__col">
-              <h6>{getLang('site__footerLegacy')}</h6>
-              <Col className="MainLandingWrapperFooter-nav__items">
+                <a href={company.docsTeam} target="_blank">
+                  {getLang('dapp_sidebar_more_team')}
+                </a>
+                <a href={company.github} target="_blank">
+                  Github
+                </a>
+                <a href={company.audit} target="_blank">
+                  {getLang('dapp_sidebar_more_audit')}
+                </a>
+                <Link routeName="">
+                  {getLang('landing_footer_terms_of_use')}
+                </Link>
                 <Link routeName="">{getLang('landing_footer_privacy')}</Link>
-                <Link routeName="">{getLang('landing_footer_terms')}</Link>
-              </Col>
+              </div>
             </Col>
           </nav>
           <FooterReadDoc />
@@ -83,7 +83,7 @@ function Footer({ adaptive }) {
             alt="Narfex"
             className="MainLandingWrapperFooter__logo"
           />
-          <span className="copyright">2022 All right reserved</span>
+          <span className="copyright">2023 All rights reserved</span>
           <Col className="MainLandingWrapperFooter-social-links">
             <SocialLinks type={socialLinkTypes.icons} wrap={false} />
           </Col>

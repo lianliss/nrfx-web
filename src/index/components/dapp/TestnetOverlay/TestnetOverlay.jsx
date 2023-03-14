@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import isTestnet from 'src/utils/isTestnet';
 import { Web3Context } from 'services/web3Provider';
@@ -14,7 +15,7 @@ const TestnetOverlay = (props) => {
   const context = React.useContext(Web3Context);
   const { chainId, switchToChain, isConnected, connector, connectWallet } =
     context;
-  const { testnetOnly, mainnetOnly, networks } = props;
+  const { testnetOnly, mainnetOnly, networks, chainsWhitelist, chainsBlacklist } = props;
 
   const changeLocation = () => {
     const { pathname, search } = window.location;
@@ -25,7 +26,7 @@ const TestnetOverlay = (props) => {
     }
   };
 
-  const Body = ({ isChainChanger, isLocationChanger }) => {
+  const Body = ({ isChainChanger, isLocationChanger, forceChainId }) => {
     let text = getLang('dapp_connection_or_settings_error');
 
     if (isLocationChanger) {
@@ -58,7 +59,10 @@ const TestnetOverlay = (props) => {
             <div className="TestnetOverlay__buttons">
               {chainId && connector === METAMASK && (
                 <Button
-                  onClick={() => switchToChain(testnetOnly ? 97 : 56)}
+                  onClick={() => {
+                    const newChain = forceChainId || (testnetOnly ? 97 : 56);
+                    switchToChain(newChain)
+                  }}
                   type="lightBlue"
                   shadow
                 >
@@ -81,7 +85,10 @@ const TestnetOverlay = (props) => {
       </div>
     );
   };
-
+  
+  if (isConnected && chainsWhitelist && !_.includes(chainsWhitelist, chainId)) {
+    return <Body isChainChanger forceChainId={chainsWhitelist[0]} />;
+  }
   if ((!mainnetOnly && !testnetOnly) || !isConnected) return <></>;
   if (window.location.hostname === 'localhost')
     return (

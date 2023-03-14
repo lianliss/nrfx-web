@@ -20,6 +20,7 @@ import { openStateModal } from 'src/actions';
 import * as toast from 'actions/toasts';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
+import * as exchangerAnalytics from 'src/utils/analytics/exchanger';
 
 // Styles
 import './Exchanger.less';
@@ -48,7 +49,7 @@ function Exchanger({ ...props }) {
   const [rate, setRate] = React.useState(coinAmount / fiatAmount);
   const [isRateReverse, setIsRateReverse] = React.useState(false);
   const [path, setPath] = React.useState([]);
-  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 4);
+  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 0.1);
   const [deadline, setDeadline] = React.useState(20);
   const [allowance, setAllowance] = React.useState(999999999);
   const [isProcess, setIsProcess] = React.useState(true);
@@ -67,7 +68,7 @@ function Exchanger({ ...props }) {
       });
     } else {
       getTokenContract(fiat).getOutAmount(coin, inAmount).then(data => {
-        setInAmount(Number(inAmount.toFixed(9)))
+        setInAmount(Number(inAmount.toFixed(9)));
         setOutAmount(data.outAmount);
         setRate(data.outAmount / inAmount);
         setPath(data.path);
@@ -156,6 +157,16 @@ function Exchanger({ ...props }) {
         txLink: getBSCScanLink(receipt),
         symbol: coin.symbol,
         addToken: () => addTokenToWallet(coin),
+      });
+
+      const coinRate = await getTokenContract(coin).getOutAmount(network.defaultRateToken, 1);
+      exchangerAnalytics.addExchange({
+        tx: receipt,
+        price: coinRate?.outAmount,
+        fromToken: fiat,
+        toToken: coin,
+        chainId: network.chainId,
+        toTokensAmount: outAmount,
       });
     } catch (error) {
       console.error('[swap]', error);

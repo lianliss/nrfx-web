@@ -8,6 +8,7 @@ export { default as AnswerPopup } from './ui/AnswerPopup/AnswerPopup';
 export { default as DexRoute } from './DexRoute/DexRoute';
 export { default as DexDescription } from './DexDescription/DexDescription';
 export { default as Select } from './Select';
+export { default as DappInput } from './DappInput/DappInput';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';
@@ -19,6 +20,7 @@ export { default as ConnectToWalletModal } from './Modals/ConnectToWalletModal/C
 export { default as CreateReferralLink } from './Modals/CreateReferralLink/CreateReferralLink';
 export { default as TransactionResponseModal } from './Modals/TransactionResponse/TransactionResponse';
 export { default as ExchangerModal } from './Modals/Exchanger/Exchanger';
+export { default as VideoModal } from './Modals/VideoModal';
 
 export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGenerated';
 export { default as AttentionBuyTokenModal } from './Modals/AttentionBuyToken/AttentionBuyToken';
