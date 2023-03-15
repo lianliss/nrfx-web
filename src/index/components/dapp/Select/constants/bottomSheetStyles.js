@@ -30,6 +30,7 @@ const bottomSheetStyles = (desktopStyles = {}) => {
       position: 'static',
       width: '100%',
       borderRadius: '18px 18px 0px 0px',
+      border: 'none',
     }),
     option: (base, state) => ({
       ...getSelectStyles('option', base, state),
