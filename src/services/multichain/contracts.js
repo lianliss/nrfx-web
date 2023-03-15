@@ -19,7 +19,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
     exchangerRouter: '0xe847015B4B7C2A7844703E654415B96534fE772D',
     narfexOracle: '0xBaBfFCe575929DDd7aD29DEEeb5B7A5F5dee4Ab6',
-    providerAddress: noderealRPC[ETHEREUM_MAINNET],
+    providerAddress: 'awd'//noderealRPC[ETHEREUM_MAINNET],
   },
   [BSC_MAINNET]: {
     factoryAddress: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
@@ -33,7 +33,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
     exchangerRouter: '0x4F7446aE07c1A4AF09Bc6c3dCAf28FAF351C02D5',
     narfexOracle: '0xE948F3AE41105118A48B0a656f59C5B4113d404e',
-    providerAddress: noderealRPC[BSC_MAINNET],
+    providerAddress: 'qwe'//noderealRPC[BSC_MAINNET],
   },
   [BSC_TESTNET]: {
     factoryAddress: '0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc',
@@ -47,7 +47,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0xF9ceb479201054d2B301f9052A5fFBe47D652358',
     exchangerRouter: '0x96E163D8E6f3C1D128Ce9EBA81fF7AD5E3054f4d',
     narfexOracle: '0x5bA23078FaB7Dd3A6d7b5049a2C711Ef8ba7E8d0',
-    providerAddress: noderealRPC[BSC_MAINNET],
+    providerAddress: 'qwe'//noderealRPC[BSC_MAINNET],
   },
   [POLYGON_MAINNET]: {
     factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
@@ -61,7 +61,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0xAD1Fc0E22C13159884Cf9FD1d46e3C2Ad60C8F36',
     exchangerRouter: '0xEcF8DeF47948321Ab0594462D154E9B78625AA20',
     narfexOracle: '0xC8f30866816fdab9Bb6BDbbb03d4a54103145c99',
-    providerAddress: noderealRPC[POLYGON_MAINNET],
+    providerAddress: 'qwe'//noderealRPC[POLYGON_MAINNET],
   },
   [ARBITRUM_MAINNET]: {
     factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
@@ -75,7 +75,7 @@ export const CONTRACT_ADDRESSES = {
     fiatFactory: '0x79f3b7770093444573D64972E67312d03E9A6f3c',
     exchangerRouter: '0x7A052032AeecBa4e723Fee660Df7Ff5CA59B08C6',
     narfexOracle: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
-    providerAddress: noderealRPC[ARBITRUM_MAINNET],
+    providerAddress: 'qwe'//noderealRPC[ARBITRUM_MAINNET],
   },
 };
 
