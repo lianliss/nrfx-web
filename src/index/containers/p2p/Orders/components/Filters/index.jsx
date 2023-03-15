@@ -1,10 +1,13 @@
 import React from 'react';
 
 // Components
-import { Row } from 'ui';
+import { Row, Button } from 'ui';
 import { BottomSheetSelect } from 'dapp/Select';
+import { CustomButton } from 'dapp';
 import SwitchTheMode from '../SwitchTheMode';
 import ListPayment from '../ListPayment';
+import DappInput from 'dapp/DappInput/DappInput';
+import SVG from 'utils/svg-wrap';
 
 // Utils
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
@@ -37,9 +40,26 @@ function Filters({ mode }) {
     </div>
   );
 
+  const AmountSearch = () => {
+    const [value, setValue] = React.useState('5543334');
+
+    return (
+      <div className="orders-list-filters-amount">
+        <DappInput
+          value={value}
+          onChange={setValue}
+          indicator={fiatsOptions[0].title}
+          type="number"
+          inputMode="decimals"
+        />
+        <Button type="lightBlue">Search</Button>
+      </div>
+    );
+  };
+
   return (
     <div className="orders-list-filters">
-      <Row alignItems="stretch">
+      <Row className="orders-list-filters__columns" alignItems="stretch" wrap>
         <Column
           title="Function selection"
           content={<SwitchTheMode mode={mode} size="small" />}
@@ -79,10 +99,14 @@ function Filters({ mode }) {
             />
           }
         />
-        {/* <Column
-          title="Amount"
-          content={<SwitchTheMode mode={mode} size="small" />}
-        /> */}
+        <Column title="Amount" content={<AmountSearch />} />
+        <Column
+          content={
+            <CustomButton className="orders-list-filters-refresh">
+              <SVG src={require('src/asset/icons/action/reload.svg')} />
+            </CustomButton>
+          }
+        />
       </Row>
     </div>
   );

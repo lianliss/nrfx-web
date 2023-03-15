@@ -129,7 +129,7 @@ const BottomSheetSelect = React.memo(
                             flex
                           />
                         }
-                        placeholder='Search'
+                        placeholder="Search"
                       />
                     </div>
                   )}
@@ -226,6 +226,7 @@ const BottomSheetSelectOption = (
       </div>
     ),
     value,
+    title,
   };
 };
 
