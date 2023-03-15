@@ -20,7 +20,10 @@ function Filters({ mode }) {
   const paymentsOptions = testPayments.map((payment, i) =>
     BottomSheetSelect.option(
       <ListPayment title={payment.title} color={payment.color} />,
-      i + 1
+      i + 1,
+      null,
+      false,
+      'div'
     )
   );
   const regionsOptions = testRegions.map((region, i) =>
@@ -50,7 +53,6 @@ function Filters({ mode }) {
               listHeight={215}
               width={131}
               isSearchable
-              menuIsOpen
             />
           }
         />
@@ -63,7 +65,6 @@ function Filters({ mode }) {
               listHeight={215}
               width={164}
               isSearchable
-              menuIsOpen
             />
           }
         />
@@ -75,14 +76,13 @@ function Filters({ mode }) {
               value={regionsOptions[0].value}
               width={164}
               isSearchable
-              menuIsOpen
             />
           }
         />
-        <Column
+        {/* <Column
           title="Amount"
           content={<SwitchTheMode mode={mode} size="small" />}
-        />
+        /> */}
       </Row>
     </div>
   );

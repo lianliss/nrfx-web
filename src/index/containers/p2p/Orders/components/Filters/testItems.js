@@ -25,7 +25,7 @@ export const testPayments = [
 ];
 export const testRegions = [
   {
-    flag: require('src/asset/icons/social/language.svg').default,
+    flag: require('src/asset/icons/social/language-dark.svg').default,
     title: 'All regions',
   },
   {

@@ -129,6 +129,7 @@ const BottomSheetSelect = React.memo(
                             flex
                           />
                         }
+                        placeholder='Search'
                       />
                     </div>
                   )}
@@ -211,9 +212,11 @@ const BottomSheetSelectOption = (
   return {
     label: (
       <div className="CabinetSelect-BottomSheet-option">
-        <div className="CabinetSelect-BottomSheet-option__icon">
-          {icon && <img src={icon} />}
-        </div>
+        {icon && (
+          <div className="CabinetSelect-BottomSheet-option__icon">
+            <img src={icon} />
+          </div>
+        )}
         <Title className="CabinetSelect-BottomSheet-option__title">
           {title}
         </Title>

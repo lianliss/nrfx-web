@@ -7,11 +7,12 @@ const commonStyles = {
     boxShadow: 'none',
     borderColor: state.isFocused ? '#d7ddee' : '#dfe3f0',
     '&:hover': {
-      borderColor: '#d7ddee',
+      borderColor: !state.selectProps.menuIsOpen && '#d7ddee',
     },
   }),
-  dropdownIndicator: () => ({
+  dropdownIndicator: (base, state) => ({
     padding: '0 15px',
+    transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : 'rotate(0)',
   }),
   menu: (base) => ({
     display: 'flex',
@@ -48,9 +49,9 @@ const desktopStyles = {
     singleValue: (base) => ({
       ...base,
     }),
-    dropdownIndicator: (base) => ({
+    dropdownIndicator: (base, state) => ({
       ...base,
-      ...commonStyles.dropdownIndicator(base),
+      ...commonStyles.dropdownIndicator(base, state),
     }),
     menu: (base) => ({
       ...base,
@@ -65,7 +66,7 @@ const desktopStyles = {
     }),
     option: (base, state) => ({
       ...base,
-      padding: state.isSelected ? '8px 12px 8px 9px' : '7px 27.4px 9px 11px',
+      padding: state.isSelected ? '8px 12px 8px 9px' : '8px 27.4px 8px 11px',
 
       '&:not(:hover)': {
         background: state.isSelected ? '#dce5fd' : 'transparent',
@@ -80,15 +81,17 @@ const desktopStyles = {
     control: (base, state) => ({
       ...base,
       ...commonStyles.control(base, state),
-      borderBottom: state.selectProps.menuIsOpen && 'none',
+      borderBottom:
+        state.selectProps.menuIsOpen && '1px solid rgba(255, 255, 255, 0)',
       borderRadius: state.selectProps.menuIsOpen ? '10px 10px 0 0' : 10,
     }),
     singleValue: (base) => ({
       ...base,
       overflow: 'visible',
     }),
-    dropdownIndicator: (base) => ({
+    dropdownIndicator: (base, state) => ({
       ...base,
+      ...commonStyles.dropdownIndicator(base, state),
     }),
     menu: (base, state) => ({
       ...base,
@@ -107,7 +110,7 @@ const desktopStyles = {
       ...base,
       display: 'flex',
       alignItems: 'center',
-      padding: state.isSelected ? '8px 12px 8px 9px' : '7px 27.4px 9px 11px',
+      padding: state.isSelected ? '8px 12px 8px 9px' : '8px 27.4px 8px 11px',
       minHeight: 35,
 
       '&:not(:hover)': {
