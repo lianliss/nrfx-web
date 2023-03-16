@@ -155,7 +155,7 @@ function ExchangerSwap(props) {
     try {
       if (isConnected) {
         const data = await getTokenContract(fiat).getOutAmount(coin, inAmount);
-        console.log('data', data);
+        console.log('getOutAmount', {fiat, coin, data});
         return _.get(data, 'outAmount', 0);
       } else {
         return inAmount * rate * (1 - coinCommission);
