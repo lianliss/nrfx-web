@@ -409,6 +409,8 @@ function ExchangerSwap(props) {
 
     handleFetchOutAmount();
   }, [fiatsLoaded]);
+  
+  const isNoLiquidity = !!coinAmount !== !!fiatAmount;
 
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
@@ -517,7 +519,9 @@ function ExchangerSwap(props) {
                   fiatAmount,
                   coinAmount,
                 })}>
-          {getLang('dapp_exchanger_exchange_button')}
+          {isNoLiquidity
+            ? 'No liquidity found'
+            : getLang('dapp_exchanger_exchange_button')}
         </Button>
       </div> : <div className="ExchangerSwap__actions-buy">
         <Button

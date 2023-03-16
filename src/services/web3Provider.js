@@ -277,18 +277,6 @@ class Web3Provider extends React.PureComponent {
           : this.getTokenAmount(token1, amount),
         {maxNumResults: 1, maxHops: hops}
       ), '[0]');
-      console.log('trade', {
-        trade, pairs, token0, token1, amount, isExactIn, maxHops
-      }, tradeMethod(
-        pairs,
-        isExactIn
-          ? this.getTokenAmount(token0, amount)
-          : this.getToken(token0),
-        isExactIn
-          ? this.getToken(token1)
-          : this.getTokenAmount(token1, amount),
-        {maxNumResults: 1, maxHops: hops}
-      ));
       // Set the best trade
       if (hops === 1 || this.isTradeBetter(bestTrade, trade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
         bestTrade = trade;
