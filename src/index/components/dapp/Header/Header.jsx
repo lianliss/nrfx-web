@@ -101,6 +101,7 @@ function Header(props) {
               connector={connector}
               switchToChain={switchToChain}
               network={network}
+              adaptive={props.adaptive}
             />
             {isConnected ? (
               <>
@@ -235,7 +236,7 @@ const DropdownIndicator = (props) => {
 };
 
 const ChainSelect = React.memo(
-  ({ isConnected, chainId, connector, switchToChain, network }) => {
+  ({ isConnected, chainId, connector, switchToChain, network, adaptive }) => {
     // Set current crypto
     const handleCryptoChange = React.useCallback(
       (id) => {
@@ -270,6 +271,8 @@ const ChainSelect = React.memo(
         onChange={handleCryptoChange}
         type="bold"
         showSelectedInMenu
+        isModalForAdaptive
+        width={adaptive ? 63 : 150}
       />
     );
   }

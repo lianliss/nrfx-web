@@ -33,6 +33,7 @@ const BottomSheetSelect = React.memo(
     components,
     width,
     showSelectedInMenu,
+    isModalForAdaptive,
     ...props
   }) => {
     const adaptive = useSelector(adaptiveSelector);
@@ -49,9 +50,10 @@ const BottomSheetSelect = React.memo(
       desktop: desktopStyles[type],
       adaptive: bottomSheetStyles(desktopStyles[type]),
     };
-    const styles = adaptive
-      ? responsiveStyles.adaptive
-      : responsiveStyles.desktop;
+    const styles =
+      adaptive && isModalForAdaptive
+        ? responsiveStyles.adaptive
+        : responsiveStyles.desktop;
 
     // Handlers
     // -- Set value of string from object option.
@@ -61,7 +63,7 @@ const BottomSheetSelect = React.memo(
     };
 
     const closeMenu = () => {
-      if (!adaptive) {
+      if (!adaptive || !isModalForAdaptive) {
         handleMenuClose();
         return;
       }
@@ -87,7 +89,7 @@ const BottomSheetSelect = React.memo(
         onChange={handleChange}
         menuIsOpen={isOpen}
         onMenuOpen={handleMenuOpen}
-        onMenuClose={!adaptive && handleMenuClose}
+        onMenuClose={handleMenuClose}
         backspaceRemovesValue={false}
         components={{
           IndicatorSeparator: null,
@@ -138,7 +140,7 @@ const BottomSheetSelect = React.memo(
               </Menu>
             );
 
-            if (adaptive) {
+            if (adaptive && isModalForAdaptive) {
               return (
                 <BottomSheetModal
                   ref={bottomSheetModalRef}
@@ -187,6 +189,7 @@ BottomSheetSelect.propTypes = {
   listHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.oneOf(['average', 'bold']),
+  isModalForAdaptive: PropTypes.bool,
 };
 
 BottomSheetSelect.defaultProps = {
@@ -197,6 +200,7 @@ BottomSheetSelect.defaultProps = {
   listHeight: 156,
   width: 150,
   type: 'average',
+  isModalForAdaptive: false,
 };
 
 // Return object for options constant

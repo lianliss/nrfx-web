@@ -13,7 +13,6 @@ const bottomSheetStyles = (desktopStyles = {}) => {
     ...desktopStyles,
     control: (base, state) => ({
       ...getSelectStyles('control', base, state),
-      width: 63,
 
       p: {
         display: 'none',
