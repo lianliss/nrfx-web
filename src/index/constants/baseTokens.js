@@ -124,7 +124,7 @@ const ARBITRUM_BASE_TOKENS = [
   },
 ];
 
-module.exports = [
+const BASE_TOKENS = [
   {
     name: "Wrapped BNB",
     symbol: "WBNB",
@@ -197,3 +197,5 @@ module.exports = [
   ...t,
   address: t.address.toLowerCase(),
 }));
+
+export default BASE_TOKENS;
