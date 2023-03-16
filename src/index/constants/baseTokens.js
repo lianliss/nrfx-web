@@ -193,4 +193,7 @@ module.exports = [
   ...ETHER_BASE_TOKENS,
   ...POLYGON_BASE_TOKENS,
   ...ARBITRUM_BASE_TOKENS,
-];
+].map(t => ({
+  ...t,
+  address: t.address.toLowerCase(),
+}));

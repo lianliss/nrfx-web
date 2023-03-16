@@ -227,6 +227,18 @@ export const TOKENS = {
   },
 };
 
+Object.keys(TOKENS).map(network => {
+  const tokens = TOKENS[network];
+  Object.keys(tokens).map(symbol => {
+    tokens[symbol] = {
+      ...tokens[symbol],
+      address: tokens[symbol].address
+        ? tokens[symbol].address.toLowerCase()
+        : tokens[symbol].address,
+    }
+  });
+});
+
 export const CHAIN_TOKENS = {
   [ETHEREUM_MAINNET]: TOKENS[ETHEREUM_MAINNET].eth,
   [BSC_MAINNET]: TOKENS[BSC_MAINNET].bnb,
