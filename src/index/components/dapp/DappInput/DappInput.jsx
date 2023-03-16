@@ -26,6 +26,7 @@ function DappInput({
   decimals,
   inputMode,
   pattern,
+  id,
   ...otherProps
 }) {
   const [inputState, setInputState] = React.useState(value || '');
@@ -129,6 +130,7 @@ function DappInput({
         style={{ ...style, ...padding }}
         onFocus={handleFocus}
         disabled={disabled}
+        id={id && `input-` + id}
         {...otherProps}
       />
       {indicator && (

@@ -21,6 +21,7 @@ export { default as CreateReferralLink } from './Modals/CreateReferralLink/Creat
 export { default as TransactionResponseModal } from './Modals/TransactionResponse/TransactionResponse';
 export { default as ExchangerModal } from './Modals/Exchanger/Exchanger';
 export { default as VideoModal } from './Modals/VideoModal';
+export { default as AdaptiveTop } from './Modals/AdaptiveTop';
 
 export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGenerated';
 export { default as AttentionBuyTokenModal } from './Modals/AttentionBuyToken/AttentionBuyToken';

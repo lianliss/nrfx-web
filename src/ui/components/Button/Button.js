@@ -81,6 +81,7 @@ Button.propTypes = {
     "medium",
     "large",
     "extra_large",
+    "extra_small",
     "ultra_small",
     "big"
   ]),
