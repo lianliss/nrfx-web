@@ -34,7 +34,7 @@ function TokenMigration() {
               tag="h1"
             />
             <h2>Migrate your Narfex tokens to Narfex V2 tokens</h2>
-            <p>
+            <p className="TokenMigrationLanding__description">
               We have upgraded our Narfex Token contract to V2, and it will be
               necessary to convert your balance to NRFX (v2) in order to fully
               benefit from our protocol and smart contract going forward.
