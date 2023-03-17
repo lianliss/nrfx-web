@@ -6,6 +6,9 @@ import { CustomButton } from 'dapp';
 import { Row, Button } from 'ui';
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import { classNames as cn } from 'utils';
+
 // Styles
 import './index.less';
 
@@ -17,6 +20,7 @@ function Buttons({
   onShowAll,
   optionsLength,
   initDisplayNumber,
+  highlightedOptions,
 }) {
   const [showAll, setShowAll] = React.useState(false);
   const displayOptions = showAll
@@ -32,17 +36,16 @@ function Buttons({
     setShowAll((prev) => !prev);
   };
 
-  const SelectButton = ({ label, icon, value, isSelected }) => {
+  const SelectButton = ({ label, icon, value, isSelected, highlighted }) => {
     const type = isSelected ? 'lightBlue' : 'secondary-alice';
     const handleOnChange = () => !isSelected && onChange(value);
-    const className = isSelected ? 'isSelected' : '';
 
     return (
       <Button
         size="extra_small"
         type={type}
         onClick={handleOnChange}
-        className={className}
+        className={cn({ isSelected, highlighted })}
       >
         {icon && <img src={icon} alt={label} />}
         {label}
@@ -78,11 +81,11 @@ function Buttons({
         )}
       </Row>
       <div className="CabinetSelect-Buttons__buttons">
-        <SelectButton label="All" value="all" isSelected={'all' === value} />
         {displayOptions.map((option, key) => (
           <SelectButton
             {...option}
             isSelected={option.value === value}
+            highlighted={highlightedOptions.includes(key)}
             key={key}
           />
         ))}
@@ -99,6 +102,7 @@ Buttons.propTypes = {
   onShowAll: PropTypes.func,
   initDisplayNumber: PropTypes.number,
   optionsLength: PropTypes.number,
+  highlightedOptions: PropTypes.arrayOf(PropTypes.number),
 };
 
 Buttons.defaultProps = {
@@ -107,8 +111,9 @@ Buttons.defaultProps = {
   onChange: () => {},
   value: '',
   onShowAll: () => {},
-  initDisplayNumber: 17,
+  initDisplayNumber: 18,
   optionsLength: 0,
+  highlightedOptions: [],
 };
 
 export default Buttons;

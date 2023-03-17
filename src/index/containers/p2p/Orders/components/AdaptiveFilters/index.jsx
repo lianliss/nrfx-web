@@ -31,6 +31,11 @@ function AdaptiveFilters({
     label: payment.title,
     value: payment.code,
   }));
+  const fiatsOptions = fiats.map((fiat) => ({
+    label: fiat.symbol,
+    value: fiat.symbol,
+    icon: fiat.logoURI,
+  }));
 
   return (
     <div className="orders-list-filters--adaptive">
@@ -77,6 +82,14 @@ function AdaptiveFilters({
             value={selectedPayment}
             onChange={setPayment}
             title="Payment"
+            highlightedOptions={[0]}
+          />
+          <ButtonsSelect
+            options={fiatsOptions}
+            value={selectedFiat}
+            onChange={setFiat}
+            title="Fiat"
+            initDisplayNumber={6}
           />
         </AdaptiveTop>
       )}
