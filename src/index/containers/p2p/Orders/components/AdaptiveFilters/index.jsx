@@ -7,6 +7,7 @@ import { Row } from 'ui';
 import { CustomButton, WalletIcon, AdaptiveTop, DappInput } from 'dapp';
 import SVG from 'utils/svg-wrap';
 import { ButtonsSelect } from 'dapp/Select';
+import BottomSheetSelect from 'dapp/Select/containers/BottomSheet';
 
 // Utils
 import { p2pMode } from 'src/index/constants/dapp/types';
@@ -36,7 +37,9 @@ function AdaptiveFilters({
     value: fiat.symbol,
     icon: fiat.logoURI,
   }));
-
+  const regionsOptions = regions.map((region) =>
+    BottomSheetSelect.option(region.title, region.title, region.flag)
+  );
   return (
     <div className="orders-list-filters--adaptive">
       <SwitchTheMode mode={mode} size="small" />
@@ -91,6 +94,17 @@ function AdaptiveFilters({
             title="Fiat"
             initDisplayNumber={6}
           />
+          <div>
+            <AdaptiveTop.title title="Available regions" />
+            <BottomSheetSelect
+              options={regionsOptions}
+              onChange={setRegion}
+              value={selectedRegion}
+              width="100%"
+              listHeight={190}
+              isSearchable
+            />
+          </div>
         </AdaptiveTop>
       )}
     </div>

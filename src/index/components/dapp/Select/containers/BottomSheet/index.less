@@ -40,7 +40,7 @@
       width: 23px;
       height: 23px;
       border-radius: 50%;
-      object-fit:cover;
+      object-fit: cover;
     }
 
     &:not(:last-child) {
@@ -48,11 +48,21 @@
     }
   }
 
-  &-option__title {
+  & &-option__title {
+    color: var(--dark-black);
+  }
+
+  &.bold &-option__title {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #0a1539;
+  }
+
+  &.average &-option__title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
   }
 
   .ScrollbarBox {

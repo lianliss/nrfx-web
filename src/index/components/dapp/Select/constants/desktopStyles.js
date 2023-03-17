@@ -112,13 +112,19 @@ const desktopStyles = {
       alignItems: 'center',
       padding: state.isSelected ? '8px 12px 8px 9px' : '8px 27.4px 8px 11px',
       minHeight: 35,
-
-      '&:not(:hover)': {
-        background: 'transparent',
-      },
+      background: 'transparent',
 
       '&:hover': {
-        background: !state.isSelected ? '#dce5fd' : 'transparent',
+        background: 'transparent',
+
+        '.CabinetSelect-BottomSheet-option__title': {
+          background:
+            'linear-gradient(135deg, #78a0ff 0%, #5078e6 100%), #dfe3f0',
+          '-webkit-background-clip': 'text',
+          '-webkit-text-fill-color': 'transparent',
+          backgroundClip: 'text',
+          textFillColor: 'transparent',
+        },
       },
     }),
   },
