@@ -13,7 +13,6 @@ import { ButtonsSelect } from 'dapp/Select';
 import './index.less';
 
 const paymentsExample = [
-  { label: 'All', value: 0 },
   { label: 'Monobank', value: 1 },
   { label: 'Privat Bank (Universal Card)', value: 2 },
   { label: 'PUMB', value: 3 },
@@ -25,6 +24,12 @@ const paymentsExample = [
   { label: 'PUMB', value: 9 },
   { label: 'A-Bank', value: 10 },
   { label: 'Izibank', value: 11 },
+  { label: 'All', value: 12 },
+  { label: 'Monobank', value: 13 },
+  { label: 'Privat Bank (Universal Card)', value: 14 },
+  { label: 'PUMB', value: 15 },
+  { label: 'A-Bank', value: 16 },
+  { label: 'Izibank', value: 17 },
 ];
 
 function AdaptiveFilters({ mode }) {

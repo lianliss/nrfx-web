@@ -27,7 +27,7 @@
 
     & .Button {
       width: calc(33% - 4px);
-      padding: 0 9px;
+      padding: 0px;
 
       &__label {
         font-weight: 500;
@@ -36,8 +36,14 @@
       }
     }
 
-    & .Button:not(.isSelected) .Button__label {
-      color: var(--cool-gray);
+    & .Button:not(.isSelected) {
+      .Button__label {
+        color: var(--cool-gray);
+      }
+
+      &:first-child .Button__label {
+        color: var(--dark-black);
+      }
     }
   }
 }

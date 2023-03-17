@@ -9,14 +9,18 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './index.less';
 
-function Buttons({ title, options, onChange, value }) {
+function Buttons({ title, options, onChange, value, initOptionsLimit }) {
   const SelectButton = ({ label, value, isSelected }) => {
+    const type = isSelected ? 'lightBlue' : 'secondary-alice';
+    const handleOnChange = () => !isSelected && onChange(value);
+    const className = isSelected && 'isSelected';
+
     return (
       <Button
         size="extra_small"
-        type={isSelected ? 'lightBlue' : 'secondary-alice'}
-        onClick={() => onChange(value)}
-        className={isSelected && 'isSelected'}
+        type={type}
+        onClick={handleOnChange}
+        className={className}
       >
         {label}
       </Button>
@@ -43,6 +47,7 @@ function Buttons({ title, options, onChange, value }) {
         </CustomButton>
       </Row>
       <div className="CabinetSelect-Buttons__buttons">
+        <SelectButton label="All" value="all" isSelected={'all' === value} />
         {options.map((option, key) => (
           <SelectButton
             {...option}
