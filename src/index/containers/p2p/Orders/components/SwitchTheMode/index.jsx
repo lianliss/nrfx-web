@@ -21,7 +21,7 @@ function SwitchTheMode({ mode, size }) {
       selected={mode}
       tabs={switchTabs}
       onChange={(mode) => dispatch(setP2PMode(mode))}
-      type="light-blue"
+      type={mode === p2pMode.sell ? 'orange' : 'light-blue'}
       size={size}
     />
   );

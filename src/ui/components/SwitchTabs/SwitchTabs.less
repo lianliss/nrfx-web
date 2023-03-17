@@ -6,7 +6,7 @@
 .SwitchTabs {
   --indicator-width: 0;
   --padding: 4px;
-  
+
   position: relative;
   color: var(--primary-blue);
   background: var(--primary-blue-opacity);
@@ -58,6 +58,23 @@
   }
 
   &.light-blue {
+    .SwitchTabs__indicator {
+      span {
+        background: var(--blue-light-gradient);
+      }
+    }
+  }
+
+  &.orange {
+    .SwitchTabs__indicator {
+      span {
+        background: var(--light-orange-gradient);
+      }
+    }
+  }
+
+  &.orange,
+  &.light-blue {
     .SwitchTabs__item {
       font-weight: inherit;
       font-size: inherit;
@@ -70,12 +87,6 @@
       &.active {
         font-weight: 600;
         color: #fff;
-      }
-    }
-
-    .SwitchTabs__indicator {
-      span {
-        background: var(--blue-light-gradient);
       }
     }
   }

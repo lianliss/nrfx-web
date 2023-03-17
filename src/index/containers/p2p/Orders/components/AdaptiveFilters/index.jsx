@@ -27,7 +27,8 @@ function AdaptiveFilters({
   selectedRegion,
   setRegion,
 }) {
-  const [modal, setModal] = React.useState(true);
+  const [filtersModal, setFiltersModal] = React.useState(false);
+  const [fiatsModal, setFiatsModal] = React.useState(false);
   const paymentsOptions = payments.map((payment) => ({
     label: payment.title,
     value: payment.code,
@@ -40,6 +41,23 @@ function AdaptiveFilters({
   const regionsOptions = regions.map((region) =>
     BottomSheetSelect.option(region.title, region.title, region.flag)
   );
+
+  const handleOpenFiltersModal = () => {
+    setFiltersModal(true);
+  };
+
+  const handleCloseFiltersModal = () => {
+    setFiltersModal(false);
+  };
+
+  const handleOpenFiatsModal = () => {
+    setFiatsModal(true);
+  };
+
+  const handleCloseFiatsModal = () => {
+    setFiatsModal(false);
+  };
+
   return (
     <div className="orders-list-filters--adaptive">
       <SwitchTheMode mode={mode} size="small" />
@@ -47,7 +65,7 @@ function AdaptiveFilters({
         className="orders-list-filters--adaptive-content"
         alignItems="center"
       >
-        <CustomButton>
+        <CustomButton onClick={handleOpenFiatsModal}>
           <WalletIcon currency={selectedFiat} size={16.9} />
           {selectedFiat}
           <SVG
@@ -57,7 +75,7 @@ function AdaptiveFilters({
             flex
           />
         </CustomButton>
-        <CustomButton onClick={() => setModal(true)}>
+        <CustomButton onClick={handleOpenFiltersModal}>
           Filter
           <SVG
             src={require('src/asset/icons/action/filter.svg')}
@@ -74,11 +92,27 @@ function AdaptiveFilters({
           />
         </CustomButton>
       </Row>
-      {modal && (
-        <AdaptiveTop title="Filter" onClose={() => setModal(false)}>
+      {fiatsModal && (
+        <AdaptiveTop title="Select fiat" onClose={handleCloseFiatsModal}>
+          <ButtonsSelect
+            options={fiatsOptions}
+            value={selectedFiat}
+            onChange={setFiat}
+            title="Fiat"
+            initDisplayNumber={12}
+          />
+        </AdaptiveTop>
+      )}
+      {filtersModal && (
+        <AdaptiveTop title="Filter" onClose={handleCloseFiltersModal}>
           <div>
             <AdaptiveTop.title title="Amount" />
-            <DappInput placeholder="Enter amount" indicator={selectedFiat} />
+            <DappInput
+              placeholder="Enter amount"
+              indicator={selectedFiat}
+              inputMode="decimals"
+              type="number"
+            />
           </div>
           <ButtonsSelect
             options={paymentsOptions}
@@ -101,7 +135,7 @@ function AdaptiveFilters({
               onChange={setRegion}
               value={selectedRegion}
               width="100%"
-              listHeight={190}
+              listHeight={226}
               isSearchable
             />
           </div>
