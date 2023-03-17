@@ -10,12 +10,33 @@ import AdaptiveFilters from '../AdaptiveFilters';
 
 // Utils
 import useAdaptive from 'src/hooks/adaptive';
+import { testRegions, testPayments } from '../Filters/testItems';
+import KNOWN_FIATS from 'src/index/constants/knownFiats';
 
 // Styles
 import './index.less';
 
 function ListWrapper({ adaptive, ...props }) {
   const isSmallDesktop = useAdaptive(1299, false);
+  const [selectedPayment, setSelectedPayment] = React.useState(
+    testPayments[0].code
+  );
+  const [selectedRegion, setSelectedRegion] = React.useState(
+    testRegions[0].title
+  );
+  const [selectedFiat, setSelectedFiat] = React.useState(KNOWN_FIATS[0].symbol);
+
+  const handlePaymentChange = (value) => {
+    setSelectedPayment(value);
+  };
+
+  const handleRegionChange = (value) => {
+    setSelectedRegion(value);
+  };
+
+  const handleFiatChange = (value) => {
+    setSelectedFiat(value);
+  };
 
   const listComponent = isSmallDesktop ? (
     <AdaptiveList {...props} />
@@ -23,9 +44,31 @@ function ListWrapper({ adaptive, ...props }) {
     <List {...props} />
   );
   const filtersComponent = adaptive ? (
-    <AdaptiveFilters mode={props.mode} />
+    <AdaptiveFilters
+      mode={props.mode}
+      payments={testPayments}
+      selectedPayment={selectedPayment}
+      setPayment={handlePaymentChange}
+      selectedFiat={selectedFiat}
+      fiats={KNOWN_FIATS}
+      setFiat={handleFiatChange}
+      regions={testRegions}
+      selectedRegion={selectedRegion}
+      setRegion={handleRegionChange}
+    />
   ) : (
-    <Filters mode={props.mode} />
+    <Filters
+      mode={props.mode}
+      payments={testPayments}
+      selectedPayment={selectedPayment}
+      setPayment={handlePaymentChange}
+      selectedFiat={selectedFiat}
+      fiats={KNOWN_FIATS}
+      setFiat={handleFiatChange}
+      regions={testRegions}
+      selectedRegion={selectedRegion}
+      setRegion={handleRegionChange}
+    />
   );
 
   const PaginationNumber = ({ number }) => (

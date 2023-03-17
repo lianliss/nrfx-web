@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import SwitchTheMode from '../SwitchTheMode';
@@ -8,35 +9,28 @@ import SVG from 'utils/svg-wrap';
 import { ButtonsSelect } from 'dapp/Select';
 
 // Utils
+import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Styles
 import './index.less';
 
-const paymentsExample = [
-  { label: 'Monobank', value: 1 },
-  { label: 'Privat Bank (Universal Card)', value: 2 },
-  { label: 'PUMB', value: 3 },
-  { label: 'A-Bank', value: 4 },
-  { label: 'Izibank', value: 5 },
-  { label: 'All', value: 6 },
-  { label: 'Monobank', value: 7 },
-  { label: 'Privat Bank (Universal Card)', value: 8 },
-  { label: 'PUMB', value: 9 },
-  { label: 'A-Bank', value: 10 },
-  { label: 'Izibank', value: 11 },
-  { label: 'All', value: 12 },
-  { label: 'Monobank', value: 13 },
-  { label: 'Privat Bank (Universal Card)', value: 14 },
-  { label: 'PUMB', value: 15 },
-  { label: 'A-Bank', value: 16 },
-  { label: 'Izibank', value: 17 },
-];
-
-function AdaptiveFilters({ mode }) {
+function AdaptiveFilters({
+  mode,
+  payments,
+  selectedPayment,
+  setPayment,
+  fiats,
+  selectedFiat,
+  setFiat,
+  regions,
+  selectedRegion,
+  setRegion,
+}) {
   const [modal, setModal] = React.useState(true);
-  const [selectedPayment, setSelectedPayment] = React.useState(
-    paymentsExample[0].value
-  );
+  const paymentsOptions = payments.map((payment) => ({
+    label: payment.title,
+    value: payment.code,
+  }));
 
   return (
     <div className="orders-list-filters--adaptive">
@@ -46,8 +40,8 @@ function AdaptiveFilters({ mode }) {
         alignItems="center"
       >
         <CustomButton>
-          <WalletIcon currency="IDR" size={16.9} />
-          IDR
+          <WalletIcon currency={selectedFiat} size={16.9} />
+          {selectedFiat}
           <SVG
             src={require('src/asset/icons/arrows/form-dropdown.svg')}
             className="dark-dropdown-icon"
@@ -76,18 +70,44 @@ function AdaptiveFilters({ mode }) {
         <AdaptiveTop title="Filter" onClose={() => setModal(false)}>
           <div>
             <AdaptiveTop.title title="Amount" />
-            <DappInput placeholder="Enter amount" indicator="IDR" />
+            <DappInput placeholder="Enter amount" indicator={selectedFiat} />
           </div>
           <ButtonsSelect
+            options={paymentsOptions}
             value={selectedPayment}
-            onChange={(value) => setSelectedPayment(value)}
+            onChange={setPayment}
             title="Payment"
-            options={paymentsExample}
           />
         </AdaptiveTop>
       )}
     </div>
   );
 }
+
+AdaptiveFilters.propTypes = {
+  mode: PropTypes.oneOf(p2pMode),
+  payments: PropTypes.array,
+  selectedPayment: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setPayment: PropTypes.func,
+  fiats: PropTypes.array,
+  selectedFiat: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setFiat: PropTypes.func,
+  regions: PropTypes.array,
+  selectedRegion: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setRegion: PropTypes.func,
+};
+
+AdaptiveFilters.defaultProps = {
+  mode: p2pMode.buy,
+  payments: [],
+  selectedPayment: '',
+  setPayment: () => {},
+  fiats: [],
+  selectedFiat: '',
+  setFiat: () => {},
+  regions: [],
+  selectedRegion: '',
+  setRegion: () => {},
+};
 
 export default AdaptiveFilters;

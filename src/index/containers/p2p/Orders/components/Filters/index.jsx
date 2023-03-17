@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Row, Button } from 'ui';
@@ -10,27 +11,37 @@ import DappInput from 'dapp/DappInput/DappInput';
 import SVG from 'utils/svg-wrap';
 
 // Utils
-import KNOWN_FIATS from 'src/index/constants/knownFiats';
-import { testRegions, testPayments } from './testItems';
+import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Styles
 import './index.less';
 
-function Filters({ mode }) {
-  const fiatsOptions = KNOWN_FIATS.map((fiat) =>
-    BottomSheetSelect.option(fiat.symbol, fiat.address, fiat.logoURI)
+function Filters({
+  mode,
+  payments,
+  selectedPayment,
+  setPayment,
+  fiats,
+  selectedFiat,
+  setFiat,
+  regions,
+  selectedRegion,
+  setRegion,
+}) {
+  const fiatsOptions = fiats.map((fiat) =>
+    BottomSheetSelect.option(fiat.symbol, fiat.symbol, fiat.logoURI)
   );
-  const paymentsOptions = testPayments.map((payment, i) =>
+  const paymentsOptions = payments.map((payment) =>
     BottomSheetSelect.option(
       <ListPayment title={payment.title} color={payment.color} />,
-      i + 1,
+      payment.code,
       null,
       false,
       'div'
     )
   );
-  const regionsOptions = testRegions.map((region, i) =>
-    BottomSheetSelect.option(region.title, i + 1, region.flag)
+  const regionsOptions = regions.map((region) =>
+    BottomSheetSelect.option(region.title, region.title, region.flag)
   );
 
   const Column = ({ title, content }) => (
@@ -48,7 +59,7 @@ function Filters({ mode }) {
         <DappInput
           value={value}
           onChange={setValue}
-          indicator={fiatsOptions[0].title}
+          indicator={selectedFiat}
           type="number"
           inputMode="decimals"
         />
@@ -69,7 +80,8 @@ function Filters({ mode }) {
           content={
             <BottomSheetSelect
               options={fiatsOptions}
-              value={fiatsOptions[0].value}
+              value={selectedFiat}
+              onChange={setFiat}
               listHeight={215}
               width={131}
               isSearchable
@@ -81,7 +93,8 @@ function Filters({ mode }) {
           content={
             <BottomSheetSelect
               options={paymentsOptions}
-              value={paymentsOptions[0].value}
+              value={selectedPayment}
+              onChange={setPayment}
               listHeight={215}
               width={164}
               isSearchable
@@ -93,7 +106,8 @@ function Filters({ mode }) {
           content={
             <BottomSheetSelect
               options={regionsOptions}
-              value={regionsOptions[0].value}
+              value={selectedRegion}
+              onChange={setRegion}
               width={164}
               isSearchable
             />
@@ -111,5 +125,31 @@ function Filters({ mode }) {
     </div>
   );
 }
+
+Filters.propTypes = {
+  mode: PropTypes.oneOf(p2pMode),
+  payments: PropTypes.array,
+  selectedPayment: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setPayment: PropTypes.func,
+  fiats: PropTypes.array,
+  selectedFiat: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setFiat: PropTypes.func,
+  regions: PropTypes.array,
+  selectedRegion: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setRegion: PropTypes.func,
+};
+
+Filters.defaultProps = {
+  mode: p2pMode.buy,
+  payments: [],
+  selectedPayment: '',
+  setPayment: () => {},
+  fiats: [],
+  selectedFiat: '',
+  setFiat: () => {},
+  regions: [],
+  selectedRegion: '',
+  setRegion: () => {},
+};
 
 export default Filters;

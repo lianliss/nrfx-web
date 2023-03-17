@@ -9,11 +9,33 @@ import SVG from 'utils/svg-wrap';
 // Styles
 import './index.less';
 
-function Buttons({ title, options, onChange, value, initOptionsLimit }) {
-  const SelectButton = ({ label, value, isSelected }) => {
+function Buttons({
+  title,
+  options,
+  onChange,
+  value,
+  onShowAll,
+  optionsLength,
+  initDisplayNumber,
+}) {
+  const [showAll, setShowAll] = React.useState(false);
+  const displayOptions = showAll
+    ? options
+    : options.slice(0, initDisplayNumber);
+  const fineOptionsLength = optionsLength || options.length;
+
+  const handleShowAll = async () => {
+    if (onShowAll && !showAll) {
+      await onShowAll();
+    }
+
+    setShowAll((prev) => !prev);
+  };
+
+  const SelectButton = ({ label, icon, value, isSelected }) => {
     const type = isSelected ? 'lightBlue' : 'secondary-alice';
     const handleOnChange = () => !isSelected && onChange(value);
-    const className = isSelected && 'isSelected';
+    const className = isSelected ? 'isSelected' : '';
 
     return (
       <Button
@@ -22,6 +44,7 @@ function Buttons({ title, options, onChange, value, initOptionsLimit }) {
         onClick={handleOnChange}
         className={className}
       >
+        {icon && <img src={icon} alt={label} />}
         {label}
       </Button>
     );
@@ -35,20 +58,28 @@ function Buttons({ title, options, onChange, value, initOptionsLimit }) {
         alignItems="center"
       >
         <h4>{title}</h4>
-        <CustomButton>
-          <Row alignItems="center">
-            All(55)
-            <SVG
-              src={require('src/asset/icons/arrows/form-dropdown.svg')}
-              className="dark-dropdown-icon"
-              flex
-            />
-          </Row>
-        </CustomButton>
+        {fineOptionsLength > initDisplayNumber && (
+          <CustomButton onClick={handleShowAll}>
+            <Row alignItems="center">
+              All({fineOptionsLength})
+              <SVG
+                src={require('src/asset/icons/arrows/form-dropdown.svg')}
+                className="dark-dropdown-icon"
+                style={{
+                  transform:
+                    fineOptionsLength === displayOptions.length
+                      ? 'rotate(180deg)'
+                      : '',
+                }}
+                flex
+              />
+            </Row>
+          </CustomButton>
+        )}
       </Row>
       <div className="CabinetSelect-Buttons__buttons">
         <SelectButton label="All" value="all" isSelected={'all' === value} />
-        {options.map((option, key) => (
+        {displayOptions.map((option, key) => (
           <SelectButton
             {...option}
             isSelected={option.value === value}
@@ -65,6 +96,19 @@ Buttons.propTypes = {
   options: PropTypes.array,
   onChange: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onShowAll: PropTypes.func,
+  initDisplayNumber: PropTypes.number,
+  optionsLength: PropTypes.number,
+};
+
+Buttons.defaultProps = {
+  title: '',
+  options: [],
+  onChange: () => {},
+  value: '',
+  onShowAll: () => {},
+  initDisplayNumber: 17,
+  optionsLength: 0,
 };
 
 export default Buttons;
