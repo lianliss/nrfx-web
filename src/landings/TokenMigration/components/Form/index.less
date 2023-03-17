@@ -1,3 +1,4 @@
+.adaptive .TokenMigrationLanding-form,
 .TokenMigrationLanding-form {
   max-width: 535px;
   padding: 40px 31px;
@@ -6,30 +7,30 @@
   border-radius: var(--radius-panel-large);
   box-sizing: border-box;
 
-  h3,
-  &__balance {
+  & h3,
+  & &__balance {
     line-height: 110%;
     letter-spacing: -0.01em;
     color: var(--dark-black);
   }
 
-  h3 {
+  & h3 {
     font-weight: 600;
     font-size: 16px;
     margin-bottom: 16px;
   }
 
-  &__balance,
-  &__description {
+  & &__balance,
+  & &__description {
     font-weight: 500;
   }
 
-  &__balance {
+  & &__balance {
     font-size: 32px;
     margin-bottom: 20px;
   }
 
-  &__description {
+  & &__description {
     margin-bottom: 30px;
     font-size: 14px;
     line-height: 160%;
@@ -63,6 +64,16 @@
   }
 
   &:not(.isConnected) &__content {
+    pointer-events: none;
+    user-select: none;
     opacity: 0.25;
+  }
+}
+
+.adaptive .TokenMigrationLanding-form {
+  padding: 40px 15px;
+
+  &__buttons {
+    gap: 15px;
   }
 }

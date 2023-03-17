@@ -11,7 +11,7 @@ import successIcon from 'src/asset/icons/status/check_circle_success.svg';
 // Styles
 import './index.less';
 
-function Form({ isConnected = false, approved = true }) {
+function Form({ isConnected = true, approved = true }) {
   return (
     <div className={cn('TokenMigrationLanding-form', { isConnected })}>
       <div className="TokenMigrationLanding-form__content">
