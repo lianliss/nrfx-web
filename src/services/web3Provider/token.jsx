@@ -103,6 +103,7 @@ class TokenContract {
         NarfexOracleABI,
         this.network.contractAddresses.narfexOracle,
       );
+      console.log('this.web3', this.web3);
       const tokensData = (await oracleContract.methods.getTokensData(tokens.map(t => t.address), false).call())
         .map((tokenData, index) => {
         const token = tokens[index];
@@ -145,7 +146,7 @@ class TokenContract {
     
     const current = this.address ? this : this.network.wrapToken;
     const second = secondToken.address ? secondToken : this.network.wrapToken;
-    console.log('_getExchangeTokens', secondToken, this.network.wrapToken);
+    console.log('_getExchangeTokens', current, second, oracleTokens);
     const networkUSDC = this.network.tokens.usdc;
     
     if (!oracleTokens[current.address]
@@ -177,6 +178,7 @@ class TokenContract {
   getOutAmount = async (secondToken, inAmount, maxHops = 3) => {
     try {
       const {token0, token1, usdc} = await this._getExchangeTokens(secondToken);
+      console.log('getOutAmount', token0, token1, usdc);
       
       if (
         (token0.isFiat && token1.isFiat)

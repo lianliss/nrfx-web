@@ -86,6 +86,14 @@ const POLYGON_BASE_TOKENS = [
     logoURI:
       'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
   },
+  {
+    chainId: 137,
+    name: "Tether USD",
+    symbol: "USDT",
+    decimals: 6,
+    address: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    logoURI: "https://wallet-asset.matic.network/img/tokens/usdt.svg",
+  },
 ];
 
 const ARBITRUM_BASE_TOKENS = [
@@ -106,9 +114,17 @@ const ARBITRUM_BASE_TOKENS = [
     logoURI:
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
   },
+  {
+    chainId: 42161,
+    address: "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    name: "Tether",
+    symbol: "USDT",
+    decimals: 6,
+    logoURI: "https://assets.coingecko.com/coins/images/325/thumb/Tether.png?1668148663"
+  },
 ];
 
-module.exports = [
+const BASE_TOKENS = [
   {
     name: "Wrapped BNB",
     symbol: "WBNB",
@@ -177,4 +193,9 @@ module.exports = [
   ...ETHER_BASE_TOKENS,
   ...POLYGON_BASE_TOKENS,
   ...ARBITRUM_BASE_TOKENS,
-];
+].map(t => ({
+  ...t,
+  address: t.address.toLowerCase(),
+}));
+
+export default BASE_TOKENS;

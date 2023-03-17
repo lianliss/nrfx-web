@@ -240,7 +240,7 @@ function Exchanger(props) {
             setFiat(initialCurrency || fiats[userId][0]);
           }
         } else {
-          const updatedFiat = fiats[userId].find(
+          const updatedFiat = _.get(fiats, userId, []).find(
             (c) => currencySymbol === c.symbol
           );
           if (updatedFiat) {
@@ -249,7 +249,7 @@ function Exchanger(props) {
         }
       });
     } catch (error) {
-      console.log('[fiatsUpdate]', error);
+      console.error('[fiatsUpdate]', error);
     }
 
     fiatsUpdateTimeout = setTimeout(() => fiatsUpdate(), UPDATE_DELAY);

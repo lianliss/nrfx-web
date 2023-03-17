@@ -10,7 +10,7 @@ export const isMainnet = {
   [ETHEREUM_MAINNET]: true,
   [BSC_MAINNET]: true,
   [BSC_TESTNET]: true,
-  [POLYGON_MAINNET]: false,
+  [POLYGON_MAINNET]: true,
   [ARBITRUM_MAINNET]: true,
 };
 

@@ -155,6 +155,7 @@ function ExchangerSwap(props) {
     try {
       if (isConnected) {
         const data = await getTokenContract(fiat).getOutAmount(coin, inAmount);
+        console.log('getOutAmount', {fiat, coin, data});
         return _.get(data, 'outAmount', 0);
       } else {
         return inAmount * rate * (1 - coinCommission);
@@ -408,6 +409,8 @@ function ExchangerSwap(props) {
 
     handleFetchOutAmount();
   }, [fiatsLoaded]);
+  
+  const isNoLiquidity = !!coinAmount !== !!fiatAmount;
 
   return (
     <ContentBox className={`ExchangerSwap ${isAdaptive && 'adaptive'}`}>
@@ -516,7 +519,9 @@ function ExchangerSwap(props) {
                   fiatAmount,
                   coinAmount,
                 })}>
-          {getLang('dapp_exchanger_exchange_button')}
+          {isNoLiquidity
+            ? 'No liquidity found'
+            : getLang('dapp_exchanger_exchange_button')}
         </Button>
       </div> : <div className="ExchangerSwap__actions-buy">
         <Button

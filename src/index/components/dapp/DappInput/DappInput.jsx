@@ -25,6 +25,7 @@ function DappInput({
   decimals,
   inputMode,
   pattern,
+  size,
 }) {
   const [inputState, setInputState] = React.useState(value || '');
   const adaptive = useSelector(adaptiveSelector);
@@ -109,10 +110,13 @@ function DappInput({
     });
   };
 
-  const className = classNames({
-    DappInput: true,
-    error: error,
-  });
+  const className = classNames(
+    {
+      DappInput: true,
+      error: error,
+    },
+    size
+  );
 
   return (
     <div className="DappInput__wrapper">

@@ -224,6 +224,7 @@ class Web3Provider extends React.PureComponent {
     const combinations = maxHops
       ? getAllPairsCombinations(token0, token1, this.network.chainId)
       : [[token0, token1]];
+    console.log('getPairs', {token0, token1, combinations});
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair
@@ -276,18 +277,6 @@ class Web3Provider extends React.PureComponent {
           : this.getTokenAmount(token1, amount),
         {maxNumResults: 1, maxHops: hops}
       ), '[0]');
-      console.log('trade', {
-        trade, pairs, token0, token1, amount, isExactIn, maxHops
-      }, tradeMethod(
-        pairs,
-        isExactIn
-          ? this.getTokenAmount(token0, amount)
-          : this.getToken(token0),
-        isExactIn
-          ? this.getToken(token1)
-          : this.getTokenAmount(token1, amount),
-        {maxNumResults: 1, maxHops: hops}
-      ));
       // Set the best trade
       if (hops === 1 || this.isTradeBetter(bestTrade, trade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
         bestTrade = trade;
@@ -711,7 +700,10 @@ class Web3Provider extends React.PureComponent {
       if (!tokens) {
         const tokenListURI = this.network.tokenListURI;
         const request = tokenListURI && await axios.get(tokenListURI);
-        tokens = _.get(request, 'data.tokens');
+        tokens = _.get(request, 'data.tokens').map(t => ({
+          ...t,
+          address: t.address.toLowerCase(),
+        }));
         this.cmcTokens = tokens;
         this.setState({
           tokensLoaded: true,
