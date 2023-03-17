@@ -38,9 +38,55 @@
 
   &__more {
     margin-top: 18px;
+
+    .Button__label {
+      font-size: 16px !important;
+    }
   }
 
   .blue {
     color: var(--royal-blue);
+  }
+}
+
+.adaptive .TokenMigrationLanding {
+  padding-top: 18px;
+
+  h1 {
+    margin-bottom: 16px;
+    font-size: 34px;
+    line-height: 120%;
+  }
+
+  h2 {
+    margin-bottom: 13px;
+    font-size: 22px;
+  }
+
+  p,
+  ol {
+    font-size: 16px;
+  }
+
+  &__blocks {
+    max-width: 100%;
+    gap: 0;
+  }
+
+  &__block {
+    padding: 0 15px;
+
+    &:not(:first-child) {
+      margin-top: 50px;
+    }
+
+    &:first-child {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__more {
+    width: 100%;
+    padding: 0 10px;
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // Components
 import Form from './components/Form';
@@ -9,13 +10,20 @@ import SVG from 'utils/svg-wrap';
 // Utils
 import regexes from 'src/index/constants/regexes';
 import rightArrowIcon from 'src/asset/24px/arrow_right_alt.svg';
+import { adaptiveSelector } from 'src/selectors';
 
 // Styles
 import './index.less';
 
 function TokenMigration() {
+  const adaptive = useSelector(adaptiveSelector);
+
   return (
-    <Container className="TokenMigrationLanding" maxWidth={1260} padding={70}>
+    <Container
+      className="TokenMigrationLanding"
+      maxWidth={1260}
+      padding={adaptive ? 0 : 70}
+    >
       <Row justifyContent="space-between">
         <div className="TokenMigrationLanding__blocks">
           <div className="TokenMigrationLanding__block">
@@ -32,7 +40,7 @@ function TokenMigration() {
               benefit from our protocol and smart contract going forward.
             </p>
           </div>
-
+          {adaptive && <Form />}
           <div className="TokenMigrationLanding__block">
             <h2>What Is V2 Narfex Token?</h2>
             <p>
@@ -51,7 +59,11 @@ function TokenMigration() {
             >
               <Row alignItems="center">
                 More info about V2 Narfex Token
-                <SVG flex src={rightArrowIcon} style={{ marginLeft: 44 }} />
+                <SVG
+                  src={rightArrowIcon}
+                  style={{ marginLeft: adaptive ? 10 : 13 }}
+                  flex
+                />
               </Row>
             </Button>
           </div>
@@ -77,7 +89,7 @@ function TokenMigration() {
             </p>
           </div>
         </div>
-        <Form />
+        {!adaptive && <Form />}
       </Row>
     </Container>
   );
