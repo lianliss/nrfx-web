@@ -32,19 +32,19 @@ function Form({ isConnected = false, approved = true }) {
             <Button
               type="secondary-light"
               style={{ pointerEvents: approved && 'none' }}
-              size="extra_large"
+              size="ultra_large"
             >
               <Row alignItems="center">
                 <span className="blue">Approve</span>
                 <SVG src={successIcon} flex style={{ marginLeft: 5.56 }} />
               </Row>
             </Button>
-            <Button type="lightBlue" disabled={!approved} size="extra_large">
+            <Button type="lightBlue" disabled={!approved} size="ultra_large">
               Swap
             </Button>
           </>
         ) : (
-          <Button type="lightBlue" size="extra_large">
+          <Button type="lightBlue" size="ultra_large">
             Connect Wallet
           </Button>
         )}
