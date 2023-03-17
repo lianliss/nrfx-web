@@ -120,8 +120,8 @@ const desktopStyles = {
         '.CabinetSelect-BottomSheet-option__title': {
           background:
             'linear-gradient(135deg, #78a0ff 0%, #5078e6 100%), #dfe3f0',
-          '-webkit-background-clip': 'text',
-          '-webkit-text-fill-color': 'transparent',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textFillColor: 'transparent',
         },
