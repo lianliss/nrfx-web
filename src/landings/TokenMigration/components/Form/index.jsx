@@ -5,7 +5,7 @@ import { Button, NumberFormat, Row } from 'ui';
 import SVG from 'utils/svg-wrap';
 
 // Utils
-import { classNames as cn } from 'utils';
+import { classNames as cn, getLang } from 'utils';
 import successIcon from 'src/asset/icons/status/check_circle_success.svg';
 
 // Styles
@@ -15,15 +15,12 @@ function Form({ isConnected = true, approved = true }) {
   return (
     <div className={cn('TokenMigrationLanding-form', { isConnected })}>
       <div className="TokenMigrationLanding-form__content">
-        <h3>You exchange NRFX to NRFX V2</h3>
+        <h3>{getLang('token_migration_form_title')}</h3>
         <p className="TokenMigrationLanding-form__balance">
           <NumberFormat number={0.0} currency="NRFX" />
         </p>
         <p className="TokenMigrationLanding-form__description">
-          If you experienced an error or believe your estimate is incorrect,
-          please email us at support@narfex.com. Provide your wallet address, a
-          clear explanation of your issue, and any relevant blockchain
-          transactions. We will respond within 5 business days.
+          {getLang('token_migration_form_description')}
         </p>
       </div>
       <div className="TokenMigrationLanding-form__buttons">
@@ -35,17 +32,21 @@ function Form({ isConnected = true, approved = true }) {
               size="ultra_large"
             >
               <Row alignItems="center">
-                <span className="blue">Approve</span>
+                <span className="blue">
+                  {approved
+                    ? getLang('dapp_global_approved')
+                    : getLang('dapp_global_approve')}
+                </span>
                 <SVG src={successIcon} flex style={{ marginLeft: 5.56 }} />
               </Row>
             </Button>
             <Button type="lightBlue" disabled={!approved} size="ultra_large">
-              Swap
+              {getLang('dapp_swap_exchange')}
             </Button>
           </>
         ) : (
           <Button type="lightBlue" size="ultra_large">
-            Connect Wallet
+            {getLang('dapp_global_connect_wallet')}
           </Button>
         )}
       </div>

@@ -11,6 +11,7 @@ import SVG from 'utils/svg-wrap';
 import regexes from 'src/index/constants/regexes';
 import rightArrowIcon from 'src/asset/24px/arrow_right_alt.svg';
 import { adaptiveSelector } from 'src/selectors';
+import { getLang } from 'utils';
 
 // Styles
 import './index.less';
@@ -28,37 +29,29 @@ function TokenMigration() {
         <div className="TokenMigrationLanding__blocks">
           <div className="TokenMigrationLanding__block">
             <FormattedText
-              lang="main_landing_title"
+              lang="token_migration_landing_title"
               className="blue"
               regularExpression={regexes.betweenCharacters}
               tag="h1"
             />
-            <h2>Migrate your Narfex tokens to Narfex V2 tokens</h2>
+            <h2>{getLang('token_migration_landing_subtitle_1')}</h2>
             <p className="TokenMigrationLanding__description">
-              We have upgraded our Narfex Token contract to V2, and it will be
-              necessary to convert your balance to NRFX (v2) in order to fully
-              benefit from our protocol and smart contract going forward.
+              {getLang('token_migration_landing_description_1')}
             </p>
           </div>
           {adaptive && <Form />}
           <div className="TokenMigrationLanding__block">
-            <h2>What Is V2 Narfex Token?</h2>
-            <p>
-              We aspire to improve the utility, safety, and accessibility of the
-              existing Narfex token by implementing novel features that expand
-              the usage of NRFX within our protocol. Through this upgrade, the
-              Narfex Token will become the heart of the Narfex Protocol.\n\n
-              Important to note, there will be NO charge for converting to NRFX
-              V2. After conversion, the total amount of NRFX V2 that you hold
-              will be equal in value to your original V1 NRFX balance
-            </p>
+            <h2>{getLang('token_migration_landing_subtitle_2')}</h2>
+            <p>{getLang('token_migration_landing_description_2')}</p>
             <Button
               type="secondary-lightBlue"
               size="ultra_large"
               className="TokenMigrationLanding__more"
+              href="https://docs.narfex.com/narfex/main/narfex-token-nrfx/new-narfex-token-erc-20"
+              target="_blank"
             >
               <Row alignItems="center">
-                More info about V2 Narfex Token
+                {getLang('token_migration_button_more')}
                 <SVG
                   src={rightArrowIcon}
                   style={{ marginLeft: adaptive ? 10 : 13 }}
@@ -68,25 +61,13 @@ function TokenMigration() {
             </Button>
           </div>
           <div className="TokenMigrationLanding__block">
-            <h2>What are the required steps?</h2>
+            <h2>{getLang('token_migration_landing_subtitle_3')}</h2>
             <ol>
-              <li>
-                Please make sure to have enough ETH in your wallet to cover the
-                "gas fee". Unfortunately, as token developers, this is a
-                blockchain cost that we cannot control.
-              </li>
-              <li>
-                To begin, you will need to approve the new contract for trading.
-              </li>
-              <li>
-                After that, you can proceed to "Swap" your V1 NRFX for V2 NRFX.
-              </li>
+              <li>{getLang('token_migration_steps_1')}</li>
+              <li>{getLang('token_migration_steps_2')}</li>
+              <li>{getLang('token_migration_steps_3')}</li>
             </ol>
-            <p>
-              Once redeemed, you will be able to review the transaction of your
-              NRFX tokens being migrated from the V1, and the NRFX V2 tokens
-              being sent to your wallet.
-            </p>
+            <p>{getLang('token_migration_landing_description_3')}</p>
           </div>
         </div>
         {!adaptive && <Form />}
