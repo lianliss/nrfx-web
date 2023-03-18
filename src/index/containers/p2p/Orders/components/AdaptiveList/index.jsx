@@ -52,7 +52,7 @@ function AdaptiveList({ mode }) {
         <div className="orders-list-limits">
           <div className="orders-list-limits__available">
             <span className="orders-list-limits__title">Available</span>
-            <NumberFormat number={1000.0} currency="USDT" />
+            <NumberFormat number={1000.0} currency="N-Fiat" />
           </div>
           <div className="orders-list-limits__limit">
             <span className="orders-list-limits__title">Limit</span>

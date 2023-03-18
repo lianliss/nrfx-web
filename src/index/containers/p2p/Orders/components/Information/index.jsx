@@ -15,7 +15,7 @@ function Information({ mode }) {
       <img src={avatar} />
       <h5>Place an Order</h5>
       <p>
-        Once you place a P2P order, the crypto asset will be escrowed by Binance
+        Once you place a P2P order, the crypto asset will be escrowed by Narfex
         P2P.
       </p>
     </div>

@@ -19,7 +19,7 @@ function Advantages() {
               As P2P exchange is a simple platform, the overhead costs are
               negligible for buyers and sellers. <br />
               <br />
-              On Binance P2P, takers are charged zero trading fees, while makers
+              On Narfex P2P, takers are charged zero trading fees, while makers
               are charged a small amount of transaction fees upon every
               completed order. We pledge to apply the lowest P2P transaction
               fees in all markets.
@@ -33,7 +33,7 @@ function Advantages() {
               As P2P exchange is a simple platform, the overhead costs are
               negligible for buyers and sellers. <br />
               <br />
-              On Binance P2P, takers are charged zero trading fees, while makers
+              On Narfex P2P, takers are charged zero trading fees, while makers
               are charged.
             </>
           }
@@ -45,7 +45,7 @@ function Advantages() {
               As P2P exchange is a simple platform, the overhead costs are
               negligible for buyers and sellers. <br />
               <br />
-              On Binance P2P, takers are charged zero trading fees, while makers
+              On Narfex P2P, takers are charged zero trading fees, while makers
               are charged a small amount of transaction fees upon every
               completed order. We pledge to apply the lowest P2P transaction
               fees in all markets.
