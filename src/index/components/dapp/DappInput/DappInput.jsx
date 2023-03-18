@@ -26,7 +26,6 @@ function DappInput({
   decimals,
   inputMode,
   pattern,
-  size,
   id,
   ...otherProps
 }) {
