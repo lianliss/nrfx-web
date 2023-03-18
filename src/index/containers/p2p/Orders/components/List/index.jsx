@@ -51,7 +51,7 @@ function List({ mode }) {
         <div className="orders-list-limits">
           <div className="orders-list-limits__available">
             <span className="orders-list-limits__title">Available</span>
-            <NumberFormat number={1000.0} currency="USDT" />
+            <NumberFormat number={1000.0} currency="N-Fiat" />
           </div>
           <div className="orders-list-limits__limit">
             <span className="orders-list-limits__title">Limit</span>
@@ -81,7 +81,7 @@ function List({ mode }) {
           type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
           size="small"
         >
-          {mode === p2pMode.sell ? 'Sell USDT' : 'Buy N-Fiat'}
+          {mode === p2pMode.sell ? 'Sell N-Fiat' : 'Buy N-Fiat'}
         </Button>
       </TD>
     </TR>
