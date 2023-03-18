@@ -81,6 +81,7 @@ Button.propTypes = {
     "medium",
     "large",
     "extra_large",
+    "extra_small",
     "ultra_small",
     "big"
   ]),
@@ -106,8 +107,8 @@ Button.propTypes = {
     "secondary-light",
     "light",
     "dark",
-    "white",
     "orange",
+    "white",
   ]),
   shadow: PropTypes.bool,
   currency: PropTypes.object,

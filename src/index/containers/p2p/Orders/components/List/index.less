@@ -69,7 +69,7 @@
   }
 
   &-limits {
-    max-width: 230px;
+    // max-width: 230px;
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
@@ -130,5 +130,16 @@
       font-size: 12px;
       line-height: 16px;
     }
+  }
+
+  tr td:nth-child(3) {
+    width: 27%;
+  }
+}
+
+.p2p-orders *.adaptive .orders-list,
+.adaptive .p2p-orders .orders-list {
+  tr td:nth-child(3) {
+    width: auto;
   }
 }

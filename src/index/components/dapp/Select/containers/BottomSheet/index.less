@@ -39,7 +39,8 @@
     img {
       width: 23px;
       height: 23px;
-      object-fit: 'contain';
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     &:not(:last-child) {
@@ -47,11 +48,21 @@
     }
   }
 
-  &-option__title {
+  & &-option__title {
+    color: var(--dark-black);
+  }
+
+  &.bold &-option__title {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #0a1539;
+  }
+
+  &.average &-option__title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
   }
 
   .ScrollbarBox {
@@ -68,6 +79,45 @@
         width: 4px !important;
         right: 7px !important;
       }
+    }
+  }
+
+  .DappInput {
+    border-radius: 0;
+    background: none;
+    padding-right: 26px !important;
+
+    &,
+    &:focus {
+      border: none !important;
+      border-bottom: 1px solid var(--azureish-white) !important;
+    }
+
+    &__wrapper {
+      border: none;
+    }
+
+    &__indicator {
+    }
+
+    &__wrapper,
+    & {
+      font-weight: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+    }
+  }
+
+  .DappInput__wrapper.small .DappInput {
+    border-radius: 0;
+    height: 38px;
+  }
+
+  &.average &__indicator {
+    .isvg path {
+      fill: #dfe3f0;
     }
   }
 }
