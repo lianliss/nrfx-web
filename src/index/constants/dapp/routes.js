@@ -61,6 +61,10 @@ const routes = [
     name: pages.DAPP_TEAM,
     path: '/dapp/team',
   },
+  {
+    name: pages.TOKEN_MIGRATION,
+    path: '/token_migration',
+  },
 ];
 
 export default routes;

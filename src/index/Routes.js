@@ -62,6 +62,7 @@ import * as actions from "../actions/index";
 import router from "../router";
 import PrivatePools from "./containers/dapp/PrivatePools/PrivatePools";
 import MainLanding from "../landings/Main";
+import TokenMigrationLanding from "../landings/TokenMigration";
 
 function Routes(props) {
   const routeState = props.route;
@@ -195,6 +196,10 @@ function Routes(props) {
       needAuthorization = false;
       WrapperComponent = DappWrapper;
       Component = DappCabinet;
+      break;
+    case pages.TOKEN_MIGRATION:
+      WrapperComponent = MainLandingWrapper;
+      Component = TokenMigrationLanding;
       break;
     case pages.VALIDATOR:
     case pages.VALIDATOR_CREATE_TRADE:

@@ -126,6 +126,15 @@
     }
   }
 
+  &.ultra_large {
+    --button-height: 76px;
+    border-radius: 19px;
+
+    .Button__label {
+      font-size: 18px;
+    }
+  }
+
   &.secondary {
     background: transparent;
     color: var(--dark-blue);
@@ -408,10 +417,10 @@
 
   &.disabled {
     pointer-events: none;
-    opacity: 0.65;
+    background: #f7f8fb;
 
-    &:hover {
-      opacity: 0.65;
+    .Button__label {
+      color: var(--azureish-white) !important;
     }
   }
 }
