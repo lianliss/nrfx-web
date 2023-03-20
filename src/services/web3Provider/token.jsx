@@ -27,12 +27,13 @@ class TokenContract {
     );
   }
 
-  getAllowance = spender => new Promise((fulfill, reject) => {
+  getAllowance = (spender, account = this.provider.state.accountAddress) => new Promise((fulfill, reject) => {
     // Allow BNB
     if (!this.address) return fulfill(5 * 10**9);
     // Get contract allowance
+    console.log('getAllowance', account, spender);
     this.contract.methods.allowance(
-      this.provider.state.accountAddress,
+      account,
       spender,
     ).call().then(response => {
       const allowance = wei.from(wei.bn(response), this.decimals);

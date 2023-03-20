@@ -19,7 +19,7 @@ function NarfexRate() {
 
   const getNarfexRateDifference = () => {
     setPriceDifference(null);
-    const narfexAddress = network.contractAddresses.narfexToken;
+    const narfexAddress = network.contractAddresses.narfexToken2;
 
     simpleTokenPrice(narfexAddress, true).then((r) => {
       const resultChange = r.usd_24h_change.toFixed(2);
