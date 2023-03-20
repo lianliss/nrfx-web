@@ -1300,10 +1300,12 @@ class Web3Provider extends React.PureComponent {
         gasEstimationParams.value = value;
       }
       const gasLimit = await data.estimateGas(gasEstimationParams);
+      const gas = gasPrice * gasLimit;
       const rawTransaction = {
         from: accountAddress,
         gasPrice: this.web3.utils.toHex(gasPrice),
         gasLimit: this.web3.utils.toHex(gasLimit),
+        gas: this.web3.utils.toHex(gas),
         to: contract._address,
         data: data.encodeABI(),
         nonce: this.web3.utils.toHex(count),

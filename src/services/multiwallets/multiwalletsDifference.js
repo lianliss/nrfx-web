@@ -5,17 +5,23 @@ import _ from 'lodash';
 import {
   DEFAULT_CHAIN,
   ETHEREUM_MAINNET,
-  BSC_MAINNET, BSC_TESTNET,
+  BSC_MAINNET,
+  BSC_TESTNET,
   POLYGON_MAINNET,
   ARBITRUM_MAINNET,
 } from '../multichain/chains';
 
 export const noderealRPC = {
-  [ETHEREUM_MAINNET]: 'https://rpc.ankr.com/eth/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
-  [BSC_MAINNET]: 'https://rpc.ankr.com/bsc/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
-  [BSC_TESTNET]: 'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
-  [POLYGON_MAINNET]: 'https://rpc.ankr.com/polygon/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
-  [ARBITRUM_MAINNET]: 'https://rpc.ankr.com/arbitrum/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  [ETHEREUM_MAINNET]:
+    'https://rpc.ankr.com/eth/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  [BSC_MAINNET]:
+    'https://rpc.ankr.com/bsc/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  [BSC_TESTNET]:
+    'https://bsc-testnet.nodereal.io/v1/38d2b41600d44427ac26d968efff647a',
+  [POLYGON_MAINNET]:
+    'https://rpc.ankr.com/polygon/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
+  [ARBITRUM_MAINNET]:
+    'https://rpc.ankr.com/arbitrum/6c2f34a42715fa4c50762b0069a7a658618c752709b7db32f7bfe442741117eb',
 };
 
 /**
@@ -26,6 +32,17 @@ export const noderealRPC = {
 export const getRequestMetods = (connector) => {
   return requests[connector];
 };
+
+/**
+ * @param {string} wallet - Wallet in the window.
+ * @param {string[]} validationArray - Validation string
+ *   in wallet. Example "isMetamask"
+ * @returns {boolean} the wallet is valid.
+ */
+export const walletIsValid = (wallet, validationArray) =>
+  validationArray.every((validation) =>
+    _.get(window, `${wallet}.${validation}`)
+  );
 
 /**
  * Returns ethereum object of connector.
@@ -49,9 +66,10 @@ export const getEthereum = (connector, chainID = DEFAULT_CHAIN) => {
       return window['ethereum'];
     }
     case CONNECTORS.TRUST_WALLET: {
-      const isTrustWallet =
-        _.get(window, 'trustwallet.isTrust') ||
-        _.get(window, 'trustwallet.isTrustWallet');
+      const isTrustWallet = walletIsValid('trustwallet', [
+        'isTrust',
+        'isTrustWallet',
+      ]);
 
       if (isTrustWallet) {
         return window['trustwallet'];
@@ -70,6 +88,26 @@ export const getEthereum = (connector, chainID = DEFAULT_CHAIN) => {
       });
 
       return walletConnect;
+    }
+    case CONNECTORS.OKX_WALLET: {
+      const isOKXWallet = walletIsValid('okxwallet', [
+        'isOkxWallet',
+        'isOKExWallet',
+      ]);
+      const isEthereumOKX = walletIsValid('ethereum', [
+        'isOkxWallet',
+        'isOKExWallet',
+      ]);
+
+      if (isOKXWallet) {
+        return window['okxwallet'];
+      }
+
+      if (isEthereumOKX) {
+        return window['ethereum'];
+      }
+
+      return null;
     }
     default:
       return null;
