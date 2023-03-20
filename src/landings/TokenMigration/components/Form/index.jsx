@@ -147,9 +147,10 @@ function Form() {
         {isConnected ? (
           <>
             <Button
-              type="secondary-light"
+              type={isApproved ? "secondary-light" : "lightBlue"}
               style={{ pointerEvents: isApproved && 'none' }}
               size="ultra_large"
+              state={isApproving ? 'loading' : ''}
               onClick={() => approve()}
             >
               <Row alignItems="center">
@@ -161,7 +162,9 @@ function Form() {
                 <SVG src={successIcon} flex style={{ marginLeft: 5.56 }} />
               </Row>
             </Button>
-            <Button type="lightBlue" disabled={!isApproved} size="ultra_large" onClick={() => migrate()}>
+            <Button type={!isApproved ? "secondary-light" : "lightBlue"}
+                    state={isProcess ? 'loading' : ''}
+                    disabled={!isApproved} size="ultra_large" onClick={() => migrate()}>
               {getLang('dapp_swap_exchange')}
             </Button>
           </>
