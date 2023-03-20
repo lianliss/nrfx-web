@@ -40,7 +40,7 @@ export const getRequestMetods = (connector) => {
  * @returns {boolean} the wallet is valid.
  */
 export const walletIsValid = (wallet, validationArray) =>
-  validationArray.every((validation) =>
+  validationArray.some((validation) =>
     _.get(window, `${wallet}.${validation}`)
   );
 
