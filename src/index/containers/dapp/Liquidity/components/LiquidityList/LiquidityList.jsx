@@ -59,7 +59,6 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
   }, [poolsList, accountAddress, chainId]);
 
   const ItemContent = ({ item }) => {
-    
     const symbol0 = _.get(item, 'token0.symbol', '');
     const symbol1 = _.get(item, 'token1.symbol', '');
     const decimals0 = _.get(item, 'token0.decimals', 18);
@@ -76,22 +75,19 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
       <div className="ItemContent">
         <div className="ItemContent__body">
           <div>
-            <span>{getLang('dapp_liquidity_common_pool_balance')}</span>
             <span>
-              <span>{getFinePrice(reserve0)}</span>
-              <WalletIcon currency={item.token0} size={16} />
-              &nbsp;+&nbsp;
-              <span>{getFinePrice(reserve1)}</span>
-              <WalletIcon currency={item.token1} size={16} />
+              {getLang('dapp_liquidity_pooled')} {item.token0.symbol}
             </span>
-          </div>
-          {!!balance && <>
-          <div>
-            <span>{getLang('dapp_liquidity_you_pooled')}</span>
             <span>
               <span>{getFinePrice(userAmount0)}</span>
               <WalletIcon currency={item.token0} size={16} />
-              &nbsp;+&nbsp;
+            </span>
+          </div>
+          <div>
+            <span>
+              {getLang('dapp_liquidity_pooled')} {item.token1.symbol}
+            </span>
+            <span>
               <span>{getFinePrice(userAmount1)}</span>
               <WalletIcon currency={item.token1} size={16} />
             </span>
@@ -104,14 +100,21 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
             <span>{getLang('dapp_liquidity_your_share')}:</span>
             <span>{getFinePrice(share * 100)}%</span>
           </div>
-          </>}
         </div>
         <div className="ItemContent__footer">
-          <Button type="lightBlue" size="extra_large" onClick={() => onAddClick(item.address)}>
+          <Button
+            type="lightBlue"
+            size="extra_large"
+            onClick={() => onAddClick(item.address)}
+          >
             {getLang('dapp_global_add')}
           </Button>
-          <Button type="dark" disabled={!balance}
-                  size="extra_large" onClick={() => onRemoveClick(item.address)}>
+          <Button
+            type="dark"
+            disabled={!balance}
+            size="extra_large"
+            onClick={() => onRemoveClick(item.address)}
+          >
             {getLang('dapp_global_remove')}
           </Button>
         </div>
