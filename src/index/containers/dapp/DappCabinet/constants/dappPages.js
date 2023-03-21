@@ -130,4 +130,12 @@ export default [
       ARBITRUM_MAINNET,
     ],
   },
+  {
+    name: PAGES.P2P,
+    chains: [1, 56, 97],
+  },
+  {
+    name: PAGES.P2P_ORDERS,
+    chains: [1, 56, 97],
+  },
 ];

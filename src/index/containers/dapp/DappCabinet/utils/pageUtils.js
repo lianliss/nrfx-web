@@ -11,6 +11,7 @@ import {
   SocialMedia,
   Team,
 } from 'src/index/components/dapp';
+import * as p2p from 'src/index/containers/p2p';
 
 import * as PAGES from 'src/index/constants/pages';
 import dappPages from '../constants/dappPages';
@@ -66,6 +67,12 @@ export const getFinePage = (routeName) => {
       break;
     case PAGES.DAPP_TEAM:
       Component = Team;
+      break;
+    case PAGES.P2P:
+      Component = p2p.Orders;
+      break;
+    case PAGES.P2P_ORDERS:
+      Component = p2p.Orders;
       break;
     default:
       Component = Exchanger;

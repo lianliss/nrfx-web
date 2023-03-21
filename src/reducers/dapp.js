@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { dataStatus, sortTypes } from '../index/constants/dapp/types';
+import { dataStatus, p2pMode, sortTypes } from '../index/constants/dapp/types';
 
 const initialState = {
   wallet: {
@@ -24,6 +24,9 @@ const initialState = {
       token: { symbol: 'NRFX' },
     },
     focus: 'to',
+  },
+  p2p: {
+    mode: p2pMode.buy,
   },
 };
 
@@ -150,6 +153,15 @@ function reduce(state = initialState, action = {}) {
         exchange: {
           ...state.exchange,
           focus: payload,
+        },
+      };
+    }
+    case actionTypes.DAPP_SET_P2P_MODE: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          mode: payload,
         },
       };
     }

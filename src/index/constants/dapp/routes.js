@@ -65,6 +65,14 @@ const routes = [
     name: pages.TOKEN_MIGRATION,
     path: '/token_migration',
   },
+  {
+    name: pages.P2P,
+    path: '/dapp/p2p',
+  },
+  {
+    name: pages.P2P_ORDERS,
+    path: '/dapp/p2p/orders',
+  },
 ];
 
 export default routes;

@@ -79,6 +79,12 @@
     }
   }
 
+  &.extra_small {
+    --button-height: 29px;
+    padding: 0 9px;
+    border-radius: 6px;
+  }
+
   &.small {
     --button-height: 32px;
     padding: 0 16px;
@@ -372,6 +378,16 @@
     }
   }
 
+  &.orange {
+    background: var(--light-orange-gradient);
+    transition: all 0.2s;
+
+    &:hover {
+      opacity: 0.92;
+      box-shadow: 0 4px 8px rgba(250, 200, 106, 0.42);
+    }
+  }
+
   &.white {
     background: #fff;
     transition: all 0.2s;
@@ -386,6 +402,7 @@
     }
   }
 
+  &.orange,
   &.white,
   &.dark,
   &.light,
