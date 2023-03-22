@@ -62,6 +62,7 @@ export const TERMS_OF_SERVICE = "terms_of_service";
 export const PRIVATE_POOLS = "private_pools";
 export const P2P = "p2p";
 export const P2P_ORDERS = "p2p_orders";
+export const P2P_ORDER = "p2p_order";
 
 // Landing
 export const TOKEN_MIGRATION = 'token_migration';

@@ -73,6 +73,10 @@ const routes = [
     name: pages.P2P_ORDERS,
     path: '/dapp/p2p/orders',
   },
+  {
+    name: pages.P2P_ORDER,
+    path: '/dapp/p2p/order',
+  },
 ];
 
 export default routes;

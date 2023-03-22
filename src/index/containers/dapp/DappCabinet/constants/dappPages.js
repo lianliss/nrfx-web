@@ -138,4 +138,8 @@ export default [
     name: PAGES.P2P_ORDERS,
     chains: [1, 56, 97],
   },
+  {
+    name: PAGES.P2P_ORDER,
+    chains: [1, 56, 97],
+  },
 ];
