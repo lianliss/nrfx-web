@@ -1,0 +1,42 @@
+.p2p-order {
+  h1 {
+    margin-bottom: 13px;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 50px;
+    box-sizing: border-box;
+
+    &__info {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 22px;
+      gap: 0 5px;
+
+      &:not(:last-child) {
+        margin-bottom: 9px;
+      }
+
+      & > * {
+        color: var(--black-gunmetal) !important;
+
+        &:first-child {
+          font-weight: 400;
+          color: var(--cool-gray) !important;
+        }
+      }
+
+      .Row {
+        width: auto;
+      }
+
+      .CopyTextComponent__content {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
