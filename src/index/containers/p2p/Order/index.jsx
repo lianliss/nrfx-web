@@ -3,6 +3,10 @@ import React from 'react';
 // Components
 import P2P from '../P2P';
 import Header from './components/Header';
+import { FAQ, CabinetBlock } from 'dapp';
+
+// Utils
+import faq from '../constants/faq';
 
 // Styles
 import './index.less';
@@ -14,9 +18,12 @@ function Order({ adaptive }) {
         <Header adaptive={adaptive} />
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
-            <div className="p2p-order-body__faq"></div>
+            <CabinetBlock className="p2p-order-body__faq">
+              <h3>FAQ</h3>
+              <FAQ items={faq.order} doubleColumn={false} />
+            </CabinetBlock>
           </div>
-          <div className="p2p-order-body__right"></div>
+          {!adaptive && <div className="p2p-order-body__right"></div>}
         </div>
       </div>
     </P2P>

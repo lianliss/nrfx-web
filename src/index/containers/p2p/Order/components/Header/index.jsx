@@ -30,7 +30,7 @@ function Header({ adaptive }) {
         <Row alignItems="center" gap="12px 15px" wrap>
           <p>The order is created, please wait for system confirmation.</p>
           <Timer
-            type="blue-light"
+            type="light-blue"
             time={new Date(new Date().getTime() + 1 * 60 * 60 * 1000)}
             hideHours
           />

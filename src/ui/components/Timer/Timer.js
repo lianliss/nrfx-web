@@ -59,15 +59,15 @@ const Timer = ({
     <time title={dateFormat(time)} className={cn('Timer', type, size)}>
       {filteredTimes.map((value, key, arr) => {
         return (
-          <>
-            <div className="Timer__part" key={key}>
+          <React.Fragment key={key}>
+            <div className="Timer__part">
               <div className="Timer__value">{value[0]}</div>
               <div className="Timer__value">{value[1]}</div>
             </div>
             {!(key === arr.length - 1) && (
               <div className="Timer__separator">:</div>
             )}
-          </>
+          </React.Fragment>
         );
       })}
     </time>
