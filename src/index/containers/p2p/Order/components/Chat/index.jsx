@@ -1,53 +1,26 @@
 import React from 'react';
 
 // Components
+import { OrderCreatedTime, OrderCreatedDate } from 'src/index/components/p2p';
 import { Row, Col } from 'ui';
 import { CabinetBlock } from 'dapp';
 import SVG from 'utils/svg-wrap';
-
-// Utils
-import avatar from 'src/asset/illustrations/people/p2p_working_instruction_avatar.svg';
-import success from 'src/asset/icons/status/check_circle_success.svg';
+import ChatUser from '../ChatUser';
 
 // Styles
 import './index.less';
 
 function Chat() {
-  const Progress = ({ title, number }) => (
-    <Col className="p2p-order-chat-user-progress__item" gap={5}>
-      <span>{title}</span>
-      <span>
-        <strong>{number}</strong>
-      </span>
-    </Col>
-  );
-
   return (
     <CabinetBlock className="p2p-order-chat">
-      <div className="p2p-order-chat-user">
-        <Row className="p2p-order-chat-user__header" alignItems="center">
-          <img src={avatar} alt="avatar" width="53" height="53" />
-          <div>
-            <p className="p2p-order-chat-user__name">mail****@gmail.com</p>
-            <Row alignItems="center">
-              <span>KYC</span>
-              <SVG
-                src={success}
-                style={{ width: 11, height: 11, margin: '0 15px 0 4px' }}
-                flex
-              />
-              <a href="">Report</a>
-            </Row>
+      <ChatUser />
+      <div className="p2p-order-chat-content">
+        <Row>
+          <div className="p2p-order__created">
+            <OrderCreatedTime time={new Date()} />
+            <OrderCreatedDate date={new Date()} />
           </div>
         </Row>
-        <div className="p2p-order-chat-user__body">
-          <Row className="p2p-order-chat-user-progress" gap="10px 9%" wrap>
-            <Progress title="First Trade" number={34} />
-            <Progress title="First Trade" number={667} />
-            <Progress title="First Trade" number={45567} />
-            <Progress title="First Trade" number={3} />
-          </Row>
-        </div>
       </div>
     </CabinetBlock>
   );
