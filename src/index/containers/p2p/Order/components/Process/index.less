@@ -1,3 +1,69 @@
 .p2p-order-process {
   margin-bottom: 30px;
+
+  &-steps {
+    display: flex;
+    padding-bottom: 35px;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  &-step {
+    flex: 1 1 auto;
+    position: relative;
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      width: 33%;
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 22px;
+      color: var(--cool-gray);
+    }
+
+    &__number {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 22px;
+      color: #fff;
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 26px;
+        height: 26px;
+        background: #f1f1f1;
+        border-radius: 50%;
+        z-index: 2;
+      }
+    }
+
+    &:not(:last-child) &__number::after {
+      content: '';
+      z-index: 1;
+      height: 1px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      background: #f1f1f1;
+    }
+
+    &.active &__number {
+      div {
+        background: var(--blue-light-gradient-color-start);
+      }
+    }
+
+    &.active p {
+      font-weight: 500;
+      color: var(--dark-black);
+    }
+  }
 }
