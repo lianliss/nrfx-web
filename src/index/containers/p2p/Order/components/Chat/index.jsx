@@ -2,14 +2,39 @@ import React from 'react';
 
 // Components
 import { OrderCreatedTime, OrderCreatedDate } from 'src/index/components/p2p';
-import { Row } from 'ui';
-import { CabinetBlock, Message } from 'dapp';
+import { Row, Form } from 'ui';
+import { CabinetBlock, Message, DappInput, CustomButton } from 'dapp';
 import ChatUser from '../ChatUser';
+import SVG from 'utils/svg-wrap';
+
+// Utils
+import sendIcon from 'src/asset/icons/action/send-message.svg';
 
 // Styles
 import './index.less';
 
 function Chat() {
+  const [nextMessage, setNextMessage] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    setTimeout(() => setIsLoading(false), 2000);
+  };
+
+  const sendMessageButton = (
+    <CustomButton
+      className="p2p-order-chat__send"
+      disabled={isLoading}
+      onClick={handleSendMessage}
+    >
+      <SVG src={sendIcon} />
+    </CustomButton>
+  );
+
   return (
     <CabinetBlock className="p2p-order-chat">
       <ChatUser />
@@ -50,6 +75,14 @@ function Chat() {
             Bank Transfer Method For Other Payment Method
           </p>
         </Message>
+        <Form onSubmit={handleSendMessage}>
+          <DappInput
+            value={nextMessage}
+            onChange={setNextMessage}
+            indicator={sendMessageButton}
+            placeholder="write a message..."
+          />
+        </Form>
       </div>
     </CabinetBlock>
   );
