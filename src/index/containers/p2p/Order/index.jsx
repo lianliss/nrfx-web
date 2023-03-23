@@ -19,6 +19,9 @@ function Order({ adaptive }) {
         <Header adaptive={adaptive} />
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
+            <CabinetBlock
+              style={{ height: 724, marginBottom: 30 }}
+            ></CabinetBlock>
             <CabinetBlock className="p2p-order-body__faq">
               <h3>FAQ</h3>
               <FAQ items={faq.order} doubleColumn={false} />

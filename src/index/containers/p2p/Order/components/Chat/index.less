@@ -1,3 +1,48 @@
 .p2p-order-chat {
   padding: 0 !important;
+
+  &-content {
+    padding: 28px 30px 20px;
+
+    .gray:not(.background),
+    .warning.background,
+    .gray.background {
+      padding: 12px;
+
+      p {
+        font-size: 10px;
+        line-height: 18px;
+        color: var(--cool-gray);
+      }
+    }
+
+    .gray:not(.background) {
+      margin: 20px 0;
+      padding: 3px 2px;
+      text-align: center;
+
+      p {
+        line-height: 22px;
+      }
+    }
+
+    .warning.background {
+      padding-right: 17px;
+      margin-bottom: 15px;
+
+      p {
+        font-weight: 500;
+      }
+    }
+
+    .gray.background {
+      padding-right: 34px;
+
+      p {
+        text-transform: uppercase;
+        font-weight: 400;
+        color: #555;
+      }
+    }
+  }
 }

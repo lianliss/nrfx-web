@@ -19,6 +19,7 @@ function CreateTrade() {
           {isWarning && (
             <Message
               type="warning"
+              border
               maxWidth={620}
               onClose={() => setIsWarning(false)}
             >
