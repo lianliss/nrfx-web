@@ -4,6 +4,7 @@ import React from 'react';
 import P2P from '../P2P';
 import Header from './components/Header';
 import { FAQ, CabinetBlock } from 'dapp';
+import Chat from './components/Chat';
 
 // Utils
 import faq from '../constants/faq';
@@ -23,7 +24,11 @@ function Order({ adaptive }) {
               <FAQ items={faq.order} doubleColumn={false} />
             </CabinetBlock>
           </div>
-          {!adaptive && <div className="p2p-order-body__right"></div>}
+          {!adaptive && (
+            <div className="p2p-order-body__right">
+              <Chat />
+            </div>
+          )}
         </div>
       </div>
     </P2P>
