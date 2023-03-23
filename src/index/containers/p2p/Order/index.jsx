@@ -5,6 +5,7 @@ import P2P from '../P2P';
 import Header from './components/Header';
 import { FAQ, CabinetBlock } from 'dapp';
 import Chat from './components/Chat';
+import Process from './components/Process';
 
 // Utils
 import faq from '../constants/faq';
@@ -19,9 +20,7 @@ function Order({ adaptive }) {
         <Header adaptive={adaptive} />
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
-            <CabinetBlock
-              style={{ height: 724, marginBottom: 30 }}
-            ></CabinetBlock>
+            <Process />
             <CabinetBlock className="p2p-order-body__faq">
               <h3>FAQ</h3>
               <FAQ items={faq.order} doubleColumn={false} />
