@@ -29,7 +29,7 @@ Col.propTypes = {
     'stretch',
   ]),
   style: PropTypes.object,
-  gap: PropTypes.string,
+  gap: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 Col.defaultProps = {
