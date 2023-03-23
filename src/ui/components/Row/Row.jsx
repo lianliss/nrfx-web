@@ -45,7 +45,7 @@ Row.propTypes = {
   ]),
   wrap: PropTypes.bool,
   onClick: PropTypes.func,
-  gap: PropTypes.string,
+  gap: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 Row.defaultProps = {
