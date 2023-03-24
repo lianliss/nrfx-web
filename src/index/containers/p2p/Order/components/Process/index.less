@@ -68,7 +68,8 @@
   }
 
   &-content {
-    padding: 0 0 40px 20px;
+    padding: 0;
+    padding-left: 20px;
     margin-top: 35px;
     border-left: 1px solid #f1f1f1;
   }
@@ -102,6 +103,31 @@
     &:first-child .Number {
       font-weight: 600;
       color: var(--green);
+    }
+  }
+
+  .HoverPopup {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 160%;
+    margin-left: 9px;
+
+    &__content {
+      padding: 12px 14px;
+    }
+  }
+
+  &-method {
+    &__warn {
+      margin: 10px 0 30px;
+
+      p {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 22px;
+        color: var(--main-orange);
+        margin-left: 5px;
+      }
     }
   }
 }
