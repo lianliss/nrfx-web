@@ -742,10 +742,10 @@ class Web3Provider extends React.PureComponent {
       // If tokens passed
       token0 = _token0.address ? _token0 : this.network.wrapToken;
       token1 = _token1.address ? _token1 : this.network.wrapToken;
-      pairAddress = this.getPairAddress(token0, token1).toLowerCase();
+      pairAddress = this.getPairAddress(token0, token1);
     } else {
       // If only pair passed
-      pairAddress = _token0.toLowerCase();
+      pairAddress = _token0;
     }
 
     try {

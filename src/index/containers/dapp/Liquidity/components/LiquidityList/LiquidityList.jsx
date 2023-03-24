@@ -22,34 +22,41 @@ const UPDATE_BALANCE_TIMEOUT = 5000;
 
 // Main
 function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
-
   const context = React.useContext(Web3Context);
-  const {
-    getReserves, getTokenContract, accountAddress, chainId,
-  } = context;
+  const { getReserves, getTokenContract, accountAddress, chainId } = context;
   const [pools, setPools] = React.useState([]);
   const [balances, setBalances] = React.useState({});
 
   const updateBalance = () => {
-    Promise.allSettled(poolsList.map(address => getReserves(address))).then(data => {
-      setPools(data.map(d => _.get(d, 'value[2]')).filter(d => d));
-    });
     if (accountAddress) {
-      Promise.allSettled(poolsList.map(address => getTokenContract({
-        address,
-        decimals: 18,
-      }, true).getBalance()))
-        .then(data => {
-          const balances = {};
-          data.map((b, i) => {
-            balances[poolsList[i]] = b.value;
-          });
-          setBalances(balances);
+      Promise.allSettled(poolsList.map((address) => getReserves(address))).then(
+        (data) => {
+          setPools(data.map((d) => _.get(d, 'value[2]')).filter((d) => d));
+        }
+      );
+      Promise.allSettled(
+        poolsList.map((address) =>
+          getTokenContract(
+            {
+              address,
+              decimals: 18,
+            },
+            true
+          ).getBalance()
+        )
+      ).then((data) => {
+        const balances = {};
+        data.map((b, i) => {
+          const address = poolsList[i];
+          balances[address] = b.value;
         });
+        setBalances(balances);
+      });
     }
   };
 
   React.useEffect(() => {
+    if (!accountAddress) return;
     updateBalance();
     // clearInterval(updateBalanceInterval);
     // setInterval(updateBalance, UPDATE_BALANCE_TIMEOUT);
