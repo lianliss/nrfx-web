@@ -11,7 +11,7 @@ import ReactScrollableList from 'react-scrollable-list';
 import Web3 from 'web3/dist/web3.min.js';
 import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
-import { getLang } from 'utils';
+import { getLang, classNames as cn } from 'utils';
 import { SwitchTabs } from 'src/ui';
 import SectionBlock from '../SectionBlock/SectionBlock';
 import WalletIcon from 'src/index/components/dapp/WalletIcon/WalletIcon';
@@ -142,13 +142,7 @@ class TokenSelect extends React.PureComponent {
             <h2>
               <span>{getLang('dex_select_token')}</span>
               <span className="TokenSelect__close" onClick={onClose}>
-                <SVG
-                  src={
-                    isAdaptive
-                      ? require('src/asset/24px/angle-left.svg')
-                      : require('src/asset/24px/close-large.svg')
-                  }
-                />
+                <SVG src={require('src/asset/24px/close-large.svg')} />
               </span>
             </h2>
             <div className="TokenSelect__search">
@@ -181,26 +175,15 @@ class TokenSelect extends React.PureComponent {
                   }
                 })
                 .map((token, key) => {
-                  const isActive = token.symbol === selected.symbol;
-                  const styles = isActive
-                    ? {
-                        borderRadius: '11px',
-                        padding: '5px 16px 5px 7px',
-                        background: 'rgba(229, 235, 252, 1)',
-                      }
-                    : {};
+                  const active = token.symbol === selected.symbol;
 
                   return (
                     <div
                       key={key}
                       onClick={() => onChange(token)}
-                      className={`TokenSelect__fiat__item`}
-                      style={styles}
+                      className={cn(`TokenSelect__fiat__item`, { active })}
                     >
-                      <WalletIcon
-                        currency={token}
-                        size={35}
-                      />
+                      <WalletIcon currency={token} size={16} />
                       {token.symbol.toUpperCase()}
                     </div>
                   );

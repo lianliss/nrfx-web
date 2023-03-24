@@ -64,13 +64,13 @@
   }
 
   &__search {
-    border: 1px solid var(--light-gray);
+    border: 1px solid #dfe3f0;
     border-radius: var(--radius-panel);
     height: 46px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 16px 0 12px;
+    margin: 20px 0 20px;
     padding: 0 14px;
 
     input {
@@ -115,30 +115,44 @@
   }
 
   &__fiat {
-    margin: 11px 0 19px;
+    @gap: 6px;
+    @number-of-elements: 4;
+
+    margin: 20px 0 20px;
+    padding: 0;
+    background: none;
 
     &__content {
       display: flex;
       flex-wrap: wrap;
+      gap: 10px @gap;
     }
 
     &__item {
+      @width: calc(100% / @number-of-elements);
+      @gaps: calc(@gap * 3 / 4);
+
+      flex: 0 0 calc(@width - @gaps);
+      background: #f7f8fb;
       display: flex;
       align-items: center;
+      justify-content: center;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 10px;
       line-height: 110%;
       letter-spacing: -0.01em;
-      height: 45px;
+      height: 30px;
       box-sizing: border-box;
+      border-radius: 6px;
       cursor: pointer;
 
-      &:not(:last-child) {
-        margin-right: 20px;
+      .WalletIcon {
+        margin-right: 4px;
       }
 
-      .WalletIcon {
-        margin-right: 7px;
+      &.active {
+        color: #fff;
+        background: var(--blue-light-gradient);
       }
     }
   }
@@ -172,18 +186,18 @@
       &::-webkit-scrollbar-thumb:hover {
         background: var(--secondary-background);
       }
-      &::-webkit-scrollbar-thumb:active {
-        //background: #000000;
-      }
+      // &::-webkit-scrollbar-thumb:active {
+      //   background: #000000;
+      // }
       &::-webkit-scrollbar-track {
         background: var(--secondary-background);
         border: 0 none #ffffff;
         border-radius: 50px;
       }
-      &::-webkit-scrollbar-track:hover {
-      }
-      &::-webkit-scrollbar-track:active {
-      }
+      // &::-webkit-scrollbar-track:hover {
+      // }
+      // &::-webkit-scrollbar-track:active {
+      // }
       &::-webkit-scrollbar-corner {
         background: transparent;
       }
@@ -193,7 +207,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 11px 12px 11px 12px;
+    padding: 7.5px 12px;
     cursor: pointer;
 
     &:hover {
@@ -310,15 +324,24 @@
 
   h2 {
     margin-top: 0;
-    
+    margin-bottom: 20px;
+
     span {
       &:first-child {
-        font-size: 18px !important;
+        font-size: 16px !important;
       }
     }
   }
   &__close {
     right: 15px;
     top: 18px;
+  }
+
+  &__search {
+    height: 43px;
+  }
+
+  .react-scrollable-list {
+    height: 233px;
   }
 }
