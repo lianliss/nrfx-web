@@ -66,4 +66,42 @@
       color: var(--dark-black);
     }
   }
+
+  &-content {
+    padding: 0 0 40px 20px;
+    margin-top: 35px;
+    border-left: 1px solid #f1f1f1;
+  }
+
+  h5,
+  &-info__item .Number {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--dark-black);
+  }
+
+  h5 {
+    color: var(--black-gunmetal);
+  }
+
+  &-info__items {
+    margin: 15px 0 30px;
+  }
+
+  &-info__item {
+    flex: 1 1 auto;
+
+    p {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 22px;
+      color: var(--cool-gray);
+    }
+
+    &:first-child .Number {
+      font-weight: 600;
+      color: var(--green);
+    }
+  }
 }
