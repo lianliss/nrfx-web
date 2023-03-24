@@ -6,9 +6,9 @@ import { Row, Button } from 'ui';
 import { BottomSheetSelect } from 'dapp/Select';
 import { CustomButton } from 'dapp';
 import SwitchTheMode from '../SwitchTheMode';
-import ListPayment from '../ListPayment';
 import DappInput from 'dapp/DappInput/DappInput';
 import SVG from 'utils/svg-wrap';
+import PaymentItem from 'src/index/components/p2p/components/PaymentItem';
 
 // Utils
 import { p2pMode } from 'src/index/constants/dapp/types';
@@ -33,7 +33,7 @@ function Filters({
   );
   const paymentsOptions = payments.map((payment) =>
     BottomSheetSelect.option(
-      <ListPayment title={payment.title} color={payment.color} />,
+      <PaymentItem title={payment.title} color={payment.color} />,
       payment.code,
       null,
       false,

@@ -4,15 +4,15 @@ import React from 'react';
 import { CopyText } from 'ui';
 import CreatedText from '../CreatedText';
 
-function CreatedNumber({ number }) {
+function CreatedTextCopy({ text }) {
   return (
-    <CopyText text={number}>
+    <CopyText text={text}>
       <CreatedText
-        title={number}
+        title={text}
         icon={require('src/asset/icons/action/copy-document.svg')}
       />
     </CopyText>
   );
 }
 
-export default CreatedNumber;
+export default CreatedTextCopy;

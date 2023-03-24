@@ -4,6 +4,7 @@ import React from 'react';
 import { Row, Col, NumberFormat, HoverPopup } from 'ui';
 import { CabinetBlock } from 'dapp';
 import SVG from 'utils/svg-wrap';
+import ChooseMethod from '../ChooseMethod';
 
 // Utils
 import { classNames as cn } from 'utils';
@@ -73,6 +74,7 @@ function Process() {
             <SVG src={require('src/asset/icons/status/warn-orange.svg')} />
             <p>Binance only supports real-name verified payment methods.</p>
           </Row>
+          <ChooseMethod />
         </div>
       </div>
     </CabinetBlock>

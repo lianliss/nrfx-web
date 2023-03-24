@@ -87,6 +87,32 @@
   }
 }
 
+.Radio.extra_small {
+  margin-top: 8px;
+
+  .Radio__label {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    margin-left: 7px;
+  }
+
+  .Radio__indicator {
+    width: 11px;
+    height: 11px;
+    border-width: 1px;
+
+    &::after {
+      width: 5px;
+      height: 5px;
+    }
+  }
+
+  &.selected .Radio__label {
+    font-weight: 600;
+  }
+}
+
 .Radio.light-blue {
   .Radio__label {
     color: var(--cool-gray);
@@ -101,6 +127,22 @@
 
     &::after {
       background: var(--royal-blue);
+    }
+  }
+}
+
+.Radio.malibu {
+  .Radio__label {
+    color: var(--black-gunmetal);
+  }
+
+  .Radio__indicator {
+    border-color: var(--malibu);
+  }
+
+  &.selected .Radio__indicator {
+    &::after {
+      background: var(--malibu);
     }
   }
 }

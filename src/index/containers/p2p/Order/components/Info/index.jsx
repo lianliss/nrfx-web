@@ -4,7 +4,7 @@ import React from 'react';
 import { Row, Col } from 'ui';
 import {
   OrderCreatedDate,
-  OrderCreatedNumber,
+  OrderCreatedTextCopy,
   OrderCreatedTime,
 } from 'src/index/components/p2p';
 
@@ -21,7 +21,7 @@ function Info() {
           justifyContent="flex-end"
         >
           <span>Order number:</span>
-          <OrderCreatedNumber number="444566673777788877655556677" />
+          <OrderCreatedTextCopy text="444566673777788877655556677" />
         </Row>
         <Row
           className="p2p-order-info__item"
