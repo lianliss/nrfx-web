@@ -59,7 +59,7 @@ function LiquidityConfirmModal(props) {
   const [pair, setPair] = React.useState(null);
   const adaptive = useSelector((store) => store.default.adaptive);
   const Component = adaptive ? BottomSheetModal : Modal;
-  const [slippageTolerance, setSlippageTolerance] = React.useState(0.04);
+  const [slippageTolerance, setSlippageTolerance] = React.useState(0.9);
   const [isTransaction, setIsTransaction] = React.useState(false);
   const [errorText, setErrorText] = React.useState('');
 
@@ -114,12 +114,12 @@ function LiquidityConfirmModal(props) {
         selectedTokens[1].address,
         wei.to(amount0, selectedTokens[0].decimals || 18),
         wei.to(amount1, selectedTokens[1].decimals || 18),
-        wei.to(minA, selectedTokens[0].decimals || 18),
-        wei.to(minB, selectedTokens[1].decimals || 18),
+        '0', //wei.to(minA, selectedTokens[0].decimals || 18),
+        '0', //wei.to(minB, selectedTokens[1].decimals || 18),
         accountAddress,
         Number(Date.now() / 1000 + 60 * 15).toFixed(0),
       ];
-      console.log('[supply]', method, params);
+      console.log('[supply]', method, params, selectedTokens);
       const txHash = await transaction(routerContract, method, params);
       const receipt = await getTransactionReceipt(txHash);
       console.log('[supply] Success', txHash, receipt);
