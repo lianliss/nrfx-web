@@ -28,6 +28,11 @@ export const cryptoOptions = [
     require('src/asset/icons/wallets/polygon.svg').default
   ),
   option(
+    getChainTitle(chains.POLYGON_MUMBAI),
+    chains.POLYGON_MUMBAI,
+    require('src/asset/icons/wallets/polygon.svg').default
+  ),
+  option(
     getChainTitle(chains.ARBITRUM_MAINNET),
     chains.ARBITRUM_MAINNET,
     require('src/asset/icons/wallets/arbitrum.svg').default

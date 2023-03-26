@@ -2,11 +2,11 @@ import {
   ETHEREUM_MAINNET,
   BSC_MAINNET, BSC_TESTNET,
   POLYGON_MAINNET,
+  POLYGON_MUMBAI,
   ARBITRUM_MAINNET,
   NETWORKS_DATA,
 } from './chains';
 import baseTokens from 'src/index/constants/baseTokens';
-import _ from 'lodash';
 
 // Decimals
 const DEFAULT_DECIMALS = 18;
@@ -16,6 +16,7 @@ export const TOKEN_LIST_URI = {
   [BSC_MAINNET]: 'https://tokens.pancakeswap.finance/cmc.json',
   [POLYGON_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/polygon_tokens.json',
   [ARBITRUM_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/arbitrum_tokens.json',
+  [POLYGON_MUMBAI]: 'https://storage.googleapis.com/custom-product-builder/mumbai_tokens.json',
 };
 
 export const ABI = {
@@ -23,6 +24,7 @@ export const ABI = {
   [BSC_MAINNET]: require('src/index/constants/ABI/Bep20Token'),
   [BSC_TESTNET]: require('src/index/constants/ABI/Bep20Token'),
   [POLYGON_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
+  [POLYGON_MUMBAI]: require('src/index/constants/ABI/Erc20Token'),
   [ARBITRUM_MAINNET]: require('src/index/constants/ABI/Erc20Token'),
 };
 
@@ -198,6 +200,41 @@ export const TOKENS = {
         'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
     },
   },
+  [POLYGON_MUMBAI]: {
+    usdc: {
+      name: "USD Coin",
+      symbol: "USDC",
+      address: "0x4CC22BA6A0fFaA248B6a704330d26Be84DcC1405",
+      chainId: POLYGON_MUMBAI,
+      decimals: 18,
+      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
+    matic: {
+      name: 'Matic',
+      symbol: 'MATIC',
+      address: null,
+      chainId: POLYGON_MUMBAI,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: 'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
+    },
+    wrapMATIC: {
+      name: 'Wrapped Matic',
+      address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+      symbol: 'WMATIC',
+      decimals: DEFAULT_DECIMALS,
+      chainId: POLYGON_MUMBAI,
+      logoURI:
+        'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
+    },
+    nrfx: {
+      name: 'Narfex',
+      symbol: 'NRFX',
+      address: '0xe48d1C63199aca7B4b4B39068098A0ED27840a8d',
+      chainId: POLYGON_MUMBAI,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
+    },
+  },
   [ARBITRUM_MAINNET]: {
     usdc: {
       name: "USD Coin",
@@ -244,6 +281,7 @@ export const CHAIN_TOKENS = {
   [BSC_MAINNET]: TOKENS[BSC_MAINNET].bnb,
   [BSC_TESTNET]: TOKENS[BSC_TESTNET].bnb,
   [POLYGON_MAINNET]: TOKENS[POLYGON_MAINNET].matic,
+  [POLYGON_MUMBAI]: TOKENS[POLYGON_MUMBAI].matic,
   [ARBITRUM_MAINNET]: TOKENS[ARBITRUM_MAINNET].eth,
 };
 
@@ -252,6 +290,7 @@ export const WRAP_TOKENS = {
   [BSC_MAINNET]: TOKENS[BSC_MAINNET].wrapBNB,
   [BSC_TESTNET]: TOKENS[BSC_TESTNET].wrapBNB,
   [POLYGON_MAINNET]: TOKENS[POLYGON_MAINNET].wrapMATIC,
+  [POLYGON_MUMBAI]: TOKENS[POLYGON_MUMBAI].wrapMATIC,
   [ARBITRUM_MAINNET]: TOKENS[ARBITRUM_MAINNET].wrapETH,
 };
 
@@ -282,6 +321,13 @@ export const DISPLAY_TOKENS = {
     TOKENS[POLYGON_MAINNET].wrapMATIC,
     ...baseTokens.filter(t => t.chainId === POLYGON_MAINNET),
   ],
+  [POLYGON_MUMBAI]: [
+    TOKENS[POLYGON_MUMBAI].usdc,
+    TOKENS[POLYGON_MUMBAI].nrfx,
+    TOKENS[POLYGON_MUMBAI].matic,
+    TOKENS[POLYGON_MUMBAI].wrapMATIC,
+    ...baseTokens.filter(t => t.chainId === POLYGON_MUMBAI),
+  ],
   [ARBITRUM_MAINNET]: [
     TOKENS[ARBITRUM_MAINNET].usdc,
     TOKENS[ARBITRUM_MAINNET].eth,
@@ -299,7 +345,6 @@ export const COMMON_BASES = {
   [BSC_MAINNET]: getCommonBases(BSC_MAINNET),
   [BSC_TESTNET]: getCommonBases(BSC_TESTNET),
   [POLYGON_MAINNET]: getCommonBases(POLYGON_MAINNET),
+  [POLYGON_MUMBAI]: getCommonBases(POLYGON_MUMBAI),
   [ARBITRUM_MAINNET]: getCommonBases(ARBITRUM_MAINNET),
 };
-
-console.log('COMMON_BASES', COMMON_BASES);

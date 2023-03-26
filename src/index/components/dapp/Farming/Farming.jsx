@@ -163,7 +163,7 @@ function Farming() {
 
   React.useEffect(() => {
     if (!isConnected) return;
-    if (chainId === 97) {
+    if (chainId === 97 || chainId === 80001) {
       updatePoolsList().catch((error) => {
         console.error('[Farming][getPoolsList]', error);
       });

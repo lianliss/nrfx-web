@@ -724,7 +724,7 @@ class Web3Provider extends React.PureComponent {
       });
       return result;
     } catch (error) {
-      console.log(`Can't get tokens list`, error);
+      console.error(`Can't get tokens list`, error);
     }
   }
 
