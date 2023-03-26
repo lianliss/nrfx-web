@@ -75,7 +75,7 @@ export const CONTRACT_ADDRESSES = {
     tokenSale: '',
     saleFactory: '',
     fiatFactory: '0xC8f30866816fdab9Bb6BDbbb03d4a54103145c99',
-    exchangerRouter: '0xEcF8DeF47948321Ab0594462D154E9B78625AA20',
+    exchangerRouter: '0x90A5bf543E4B3C62eAEefdFB16AaeA43eaFde5b6',
     narfexOracle: '0xe56f902B21d540FC031531C1Da4b50f4377aFE81',
     providerAddress: noderealRPC[POLYGON_MAINNET],
   },
