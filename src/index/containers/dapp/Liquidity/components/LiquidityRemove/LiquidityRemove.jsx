@@ -47,7 +47,7 @@ function LiquidityRemove({ onClose, currentPool }) {
     addTokenToWallet,
     approve,
   } = context;
-  const { wrapBNB } = network.tokens;
+  const { wrapToken, defaultSymbol } = network;
   const { routerAddress } = network.contractAddresses;
   const [balance, setBalance] = React.useState(0);
   const [allowance, setAllowance] = React.useState(0);
@@ -67,7 +67,7 @@ function LiquidityRemove({ onClose, currentPool }) {
     Promise.all([
       getReserves(currentPool),
       tokenContract.getBalance(),
-      tokenContract.getAllowance(routerAddress, 5 * 10**9),
+      tokenContract.getAllowance(routerAddress, accountAddress, 5 * 10**9),
     ]).then(data => {
       setPair(data[0][2]);
       setBalance(data[1]);
@@ -101,9 +101,9 @@ function LiquidityRemove({ onClose, currentPool }) {
     setIsApproving(false);
   };
 
-  const isApproved = allowance > balance;
-  const isToken0Wrap = pair.token0.address === wrapBNB.address || !pair.token0.address;
-  const isToken1Wrap = pair.token1.address === wrapBNB.address || !pair.token1.address;
+  const isApproved = allowance >= balance;
+  const isToken0Wrap = pair.token0.address === wrapToken.address || !pair.token0.address;
+  const isToken1Wrap = pair.token1.address === wrapToken.address || !pair.token1.address;
   const isBNB = isToken0Wrap || isToken1Wrap;
 
   const onRemove = async () => {

@@ -34,12 +34,12 @@ function Liquidity() {
     storagePools = [];
   }
   const [userPools, setUserPools] = React.useState(storagePools);
-  const poolsList = _.uniq([...context.poolsList, ...userPools]);
+  const poolsList = _.uniq([..._.get(context, 'poolsList', []), ...userPools]);
 
   const addPool = (_poolAddress) => {
     const poolAddress = _poolAddress.toLowerCase();
     if (
-      context.poolsList.indexOf(poolAddress) >= 0 ||
+      _.get(context, 'poolsList', []).indexOf(poolAddress) >= 0 ||
       userPools.indexOf(poolAddress) >= 0
     )
       return;
@@ -51,7 +51,7 @@ function Liquidity() {
   const removePool = (_poolAddress) => {
     const poolAddress = _poolAddress.toLowerCase();
     if (
-      context.poolsList.indexOf(poolAddress) >= 0 ||
+      _.get(context, 'poolsList', []).indexOf(poolAddress) >= 0 ||
       userPools.indexOf(poolAddress) < 0
     )
       return;

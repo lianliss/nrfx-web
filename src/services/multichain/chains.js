@@ -4,6 +4,7 @@ export const BSC_MAINNET = 56;
 export const BSC_TESTNET = 97;
 export const POLYGON_MAINNET = 137;
 export const ARBITRUM_MAINNET = 42161;
+export const POLYGON_MUMBAI = 80001;
 
 // Chain is mainnet.
 export const isMainnet = {
@@ -12,6 +13,7 @@ export const isMainnet = {
   [BSC_TESTNET]: true,
   [POLYGON_MAINNET]: true,
   [ARBITRUM_MAINNET]: true,
+  [POLYGON_MUMBAI]: true,
 };
 
 // Chain IDs that are integrated.
@@ -20,6 +22,7 @@ export const FINE_CHAIN_IDS = [
   BSC_MAINNET, BSC_TESTNET,
   POLYGON_MAINNET,
   ARBITRUM_MAINNET,
+  POLYGON_MUMBAI,
 ];
 
 export const DEFAULT_CHAIN = BSC_MAINNET;
@@ -51,6 +54,13 @@ export const NETWORKS_DATA = {
     title: 'Polygon',
     fiatDecimals: 6,
     scan: 'https://polygonscan.com',
+    defaultSymbol: 'MATIC',
+  },
+  [POLYGON_MUMBAI]: {
+    networkID: 'MUM',
+    title: 'Mumbai',
+    fiatDecimals: 6,
+    scan: 'https://mumbai.polygonscan.com',
     defaultSymbol: 'MATIC',
   },
   [ARBITRUM_MAINNET]: {

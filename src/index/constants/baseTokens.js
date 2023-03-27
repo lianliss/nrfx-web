@@ -96,6 +96,26 @@ const POLYGON_BASE_TOKENS = [
   },
 ];
 
+const MUMBAI_BASE_TOKENS = [
+  {
+    name: "USD Coin",
+    symbol: "USDC",
+    address: "0x4CC22BA6A0fFaA248B6a704330d26Be84DcC1405",
+    chainId: 80001,
+    decimals: 6,
+    logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+  },
+  {
+    name: 'Wrapped Ether',
+    address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+    symbol: 'WMATIC',
+    decimals: 18,
+    chainId: 80001,
+    logoURI:
+      'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
+  },
+];
+
 const ARBITRUM_BASE_TOKENS = [
   {
     name: "USD Coin",
@@ -193,6 +213,7 @@ const BASE_TOKENS = [
   ...ETHER_BASE_TOKENS,
   ...POLYGON_BASE_TOKENS,
   ...ARBITRUM_BASE_TOKENS,
+  ...MUMBAI_BASE_TOKENS,
 ].map(t => ({
   ...t,
   address: t.address.toLowerCase(),

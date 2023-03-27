@@ -4,4 +4,5 @@ export default {
   97: 'BNB Smart Chain - Testnet',
   137: 'Polygon',
   42161: 'Arbitrum',
+  80001: 'Polygon Mumbai',
 };
