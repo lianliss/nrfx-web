@@ -144,10 +144,10 @@ export default [
   },
   {
     name: PAGES.P2P,
-    chains: [1, 56, 97],
+    chains: window.location.host === company.host ? [] : [1, 56, 97],
   },
   {
     name: PAGES.P2P_ORDERS,
-    chains: [1, 56, 97],
+    chains: window.location.host === company.host ? [] : [1, 56, 97],
   },
 ];

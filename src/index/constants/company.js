@@ -1,6 +1,8 @@
 export default {
   name: 'Narfex',
   host: 'narfex.com',
+  testnetHost: 'testnet.narfex.com',
+  stageHost: 'nrfxlab.world',
   url: 'https://narfex.com/',
   wikiUrl: 'https://narfex.info/',
   faqUrl: 'https://narfex.gitbook.io/wiki/',

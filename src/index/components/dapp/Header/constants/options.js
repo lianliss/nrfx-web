@@ -37,22 +37,6 @@ export const cryptoOptions = [
     chains.ARBITRUM_MAINNET,
     require('src/asset/icons/wallets/arbitrum.svg').default
   ),
-  // Test items
-   option(
-    getChainTitle(chains.ARBITRUM_MAINNET),
-    chains.ARBITRUM_MAINNET,
-    require('src/asset/icons/wallets/arbitrum.svg').default
-  ),
-   option(
-    getChainTitle(chains.ARBITRUM_MAINNET),
-    chains.ARBITRUM_MAINNET,
-    require('src/asset/icons/wallets/arbitrum.svg').default
-  ),
-   option(
-    getChainTitle(chains.ARBITRUM_MAINNET),
-    chains.ARBITRUM_MAINNET,
-    require('src/asset/icons/wallets/arbitrum.svg').default
-  ),
 ];
 
 export const defaultValue = (value) =>
