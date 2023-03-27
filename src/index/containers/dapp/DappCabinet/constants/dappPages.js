@@ -7,6 +7,7 @@ import {
   POLYGON_MUMBAI,
   ARBITRUM_MAINNET,
 } from 'src/services/multichain/chains';
+import company from 'src/index/constants/company';
 
 export default [
   {
