@@ -58,7 +58,7 @@ export const NETWORKS_DATA = {
   },
   [POLYGON_MUMBAI]: {
     networkID: 'MUM',
-    title: 'Mumbai',
+    title: 'Testnet',
     fiatDecimals: 6,
     scan: 'https://mumbai.polygonscan.com',
     defaultSymbol: 'MATIC',
