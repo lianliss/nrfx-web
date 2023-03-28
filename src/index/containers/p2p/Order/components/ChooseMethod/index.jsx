@@ -31,6 +31,7 @@ function ChooseMethod() {
           selected={selectedMethod === payment.code}
           type="malibu"
           size="extra_small"
+          key={payment.code}
         >
           <PaymentItem title={payment.title} color={paymentColors.orange} />
         </Radio>

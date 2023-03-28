@@ -71,7 +71,7 @@
     padding: 0;
     padding-left: 20px;
     margin-top: 35px;
-    border-left: 1px solid #f1f1f1;
+    // border-left: 1px solid #f1f1f1;
   }
 
   h5,
@@ -106,18 +106,21 @@
     }
   }
 
-  .HoverPopup {
+  .AnswerPopup {
     font-weight: 400;
     font-size: 10px;
     line-height: 160%;
+    margin-top: 3px;
     margin-left: 9px;
 
-    &__content {
+    &__container {
       padding: 12px 14px;
     }
   }
 
   &-method {
+    margin-bottom: 30px;
+
     &__warn {
       margin: 10px 0 30px;
 
@@ -127,6 +130,22 @@
         line-height: 22px;
         color: var(--main-orange);
         margin-left: 5px;
+      }
+    }
+  }
+
+  &__buttons {
+    margin-top: 20px;
+
+    .Button {
+      height: 42px;
+      padding: 0 39px;
+      border-radius: 7px;
+
+      &__label {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 16px;
       }
     }
   }
