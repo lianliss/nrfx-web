@@ -100,6 +100,17 @@ function Exchanger(props) {
         isFiat: true,
       };
       break;
+    case 80001:
+      defaultUSD = {
+        name: "Russian Ruble on Narfex",
+        symbol: "RUB",
+        address: "0x4107a32e44c69a2244c260413ee9ed67F5c57969",
+        chainId: 80001,
+        decimals: 6,
+        logoURI: "https://static.narfex.com/img/currencies/rubles.svg",
+        isFiat: true,
+      };
+      break;
     case 56:
     default:
       defaultUSD = {

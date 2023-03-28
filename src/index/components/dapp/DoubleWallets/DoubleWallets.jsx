@@ -12,6 +12,7 @@ function DoubleWallets({ first, second, pair, disableSymbols, size }) {
   const { wrapToken, defaultSymbol } = network;
   // const [symbol0, setSymbol0] = React.useState(first.symbol);
   // const [symbol1, setSymbol1] = React.useState(second.symbol);
+  console.log('DOUBLE', pair);
   const [token0, setToken0] = React.useState(_.get(pair, 'token0', first));
   const [token1, setToken1] = React.useState(_.get(pair, 'token1', second));
   const containerSize = size && size * 2 - size * 2 * 0.1956;

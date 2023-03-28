@@ -4,8 +4,10 @@ import {
   BSC_MAINNET,
   BSC_TESTNET,
   POLYGON_MAINNET,
+  POLYGON_MUMBAI,
   ARBITRUM_MAINNET,
 } from 'src/services/multichain/chains';
+import company from 'src/index/constants/company';
 
 export default [
   {
@@ -19,6 +21,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -29,6 +32,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -39,16 +43,17 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
   {
     name: PAGES.DAPP_SWAP,
-    chains: [BSC_MAINNET, BSC_TESTNET],
+    chains: [BSC_MAINNET, BSC_TESTNET, POLYGON_MUMBAI],
   },
   {
     name: PAGES.LIQUIDITY,
-    chains: [BSC_MAINNET, BSC_TESTNET],
+    chains: [BSC_MAINNET, BSC_TESTNET, POLYGON_MUMBAI],
   },
   {
     name: PAGES.TRANSACTIONS,
@@ -57,6 +62,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -67,6 +73,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -77,6 +84,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -87,6 +95,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -97,6 +106,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -107,6 +117,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -117,6 +128,7 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
@@ -127,16 +139,25 @@ export default [
       BSC_MAINNET,
       BSC_TESTNET,
       POLYGON_MAINNET,
+      POLYGON_MUMBAI,
       ARBITRUM_MAINNET,
     ],
   },
   {
     name: PAGES.P2P,
-    chains: [1, 56, 97],
+    chains:
+      window.location.host === company.host ||
+      window.location.host === company.testnetHost
+        ? []
+        : [1, 56, 97],
   },
   {
     name: PAGES.P2P_ORDERS,
-    chains: [1, 56, 97],
+    chains:
+      window.location.host === company.host ||
+      window.location.host === company.testnetHost
+        ? []
+        : [1, 56, 97],
   },
   {
     name: PAGES.P2P_ORDER,

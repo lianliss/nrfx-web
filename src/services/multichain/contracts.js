@@ -3,6 +3,7 @@ import {
   ETHEREUM_MAINNET,
   BSC_MAINNET, BSC_TESTNET,
   POLYGON_MAINNET,
+  POLYGON_MUMBAI,
   ARBITRUM_MAINNET,
 } from './chains';
 
@@ -64,6 +65,20 @@ export const CONTRACT_ADDRESSES = {
     narfexOracle: '0xC8f30866816fdab9Bb6BDbbb03d4a54103145c99',
     providerAddress: noderealRPC[POLYGON_MAINNET],
   },
+  [POLYGON_MUMBAI]: {
+    factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
+    factoryInitCodeHash:
+      '0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303',
+    routerAddress: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
+    masterChefAddress: '0x00A4A639EC536C3Bb9436e710b38120856Fa95ec',
+    narfexToken: '0xe48d1C63199aca7B4b4B39068098A0ED27840a8d',
+    tokenSale: '',
+    saleFactory: '',
+    fiatFactory: '0xC8f30866816fdab9Bb6BDbbb03d4a54103145c99',
+    exchangerRouter: '0x90A5bf543E4B3C62eAEefdFB16AaeA43eaFde5b6',
+    narfexOracle: '0xe56f902B21d540FC031531C1Da4b50f4377aFE81',
+    providerAddress: noderealRPC[POLYGON_MAINNET],
+  },
   [ARBITRUM_MAINNET]: {
     factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
     factoryInitCodeHash:
@@ -96,6 +111,9 @@ export const POOLS_LIST = {
   ],
   [POLYGON_MAINNET]: [],
   [ARBITRUM_MAINNET]: [],
+  [POLYGON_MUMBAI]: [
+    '0xe19E7E35c52169d27a515781e83FF90422e5b7b7',
+  ],
 };
 
 export const TOKEN_ABI = {
