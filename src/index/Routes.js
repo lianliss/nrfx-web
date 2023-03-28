@@ -193,6 +193,8 @@ function Routes(props) {
     case pages.DAPP_REFERRAL_FARMING:
     case pages.DAPP_SOCIAL_MEDIA:
     case pages.DAPP_TEAM:
+    case pages.P2P:
+    case pages.P2P_ORDERS:
       needAuthorization = false;
       WrapperComponent = DappWrapper;
       Component = DappCabinet;

@@ -1,0 +1,49 @@
+.p2p-orders .orders-information {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40px 50px;
+
+  &__title {
+    gap: 25px 20px;
+  }
+
+  &__cards {
+    gap: 30px 65px;
+  }
+
+  &-card {
+    flex: 1 1 calc(100% / 3 - 65px);
+    min-width: 190px;
+
+    img {
+      margin-bottom: 18px;
+    }
+
+    h5 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 18px;
+    }
+  }
+}
+
+.adaptive .p2p-orders .orders-information {
+  padding: 30px 18px;
+
+  &__title {
+    flex-wrap: wrap-reverse !important;
+  }
+
+  .SwitchTabs {
+    width: 100%;
+  }
+
+  &-card {
+    flex: 1 1 100%;
+  }
+}

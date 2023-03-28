@@ -1,0 +1,66 @@
+.p2p-orders .orders-list-filters--adaptive {
+  margin-bottom: 30px;
+
+  &-content {
+    margin-top: 9px;
+    padding: 15px 8px;
+    background: var(--alice-blue);
+    border-radius: 10px;
+    gap: 20px;
+    box-sizing: border-box;
+
+    .CustomButton {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: var(--dark-black);
+
+      &:nth-child(2) {
+        margin-left: auto;
+      }
+
+      &:active {
+        color: var(--royal-blue);
+
+        g {
+          opacity: 1;
+        }
+        path {
+          fill: var(--royal-blue);
+        }
+      }
+    }
+
+    .WalletIcon {
+      margin-right: 6px;
+    }
+
+    .dark-dropdown-icon {
+      width: 7px;
+      height: 4px;
+
+      path {
+        fill: var(--dark-black);
+      }
+    }
+  }
+
+  .Modal-AdaptiveTop {
+    .DappInput {
+      height: 44px;
+      border: 1px solid var(--azureish-white);
+      background: none;
+
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 140%;
+
+      &__indicator {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 22px;
+        color: var(--cool-gray);
+      }
+    }
+  }
+}

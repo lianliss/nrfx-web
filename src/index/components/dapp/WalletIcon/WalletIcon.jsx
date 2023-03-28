@@ -5,6 +5,7 @@ import _ from 'lodash';
 // Components
 import SVG from 'utils/svg-wrap';
 import { Web3Context } from 'services/web3Provider';
+import KNOWN_FIATS from '../../../constants/knownFiats';
 
 // Styles
 import './WalletIcon.less';
@@ -21,7 +22,9 @@ function WalletIcon({ currency, size, marginLeft, marginRight, className }) {
   React.useEffect(() => {
     try {
       let logo = _.isObject(currency) && currency.logoURI;
-      const token = !logo && tokens.find((t) => t.symbol === symbol);
+      const findToken = (t) => t.symbol === symbol;
+      const token =
+        (!logo && tokens.find(findToken)) || KNOWN_FIATS.find(findToken);
       setIcon(logo ? logo : token.logoURI);
     } catch (error) {
       console.log(`${symbol} icon is not finded`);

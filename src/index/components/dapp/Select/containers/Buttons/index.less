@@ -1,0 +1,63 @@
+.CabinetSelect-Buttons {
+  & &__header {
+    margin-bottom: 8px;
+
+    h4 {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--cool-gray);
+    }
+
+    .CustomButton {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: var(--dark-black);
+    }
+  }
+
+  .dark-dropdown-icon {
+    width: 7px;
+    height: 4px;
+    margin-left: 3px;
+
+    path {
+      fill: var(--dark-black);
+    }
+  }
+
+  & &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 4px;
+
+    & .Button {
+      width: calc(33% - 2px);
+      padding: 0px;
+
+      &__label {
+        font-weight: 500;
+        font-size: 10px;
+        line-height: 10px;
+      }
+
+      img {
+        margin-right: 4px;
+        width: 16px;
+        height: 16px;
+        object-fit: cover;
+      }
+    }
+
+    & .Button:not(.isSelected) {
+      .Button__label {
+        color: var(--cool-gray);
+      }
+
+      &.highlighted .Button__label {
+        color: var(--dark-black);
+      }
+    }
+  }
+}

@@ -13,11 +13,6 @@ export const cryptoOptions = [
     require('src/asset/icons/wallets/bsc.svg').default
   ),
   option(
-    getChainTitle(chains.BSC_TESTNET),
-    chains.BSC_TESTNET,
-    require('src/asset/icons/wallets/bsc.svg').default
-  ),
-  option(
     getChainTitle(chains.ETHEREUM_MAINNET),
     chains.ETHEREUM_MAINNET,
     require('src/asset/icons/wallets/eth.svg').default

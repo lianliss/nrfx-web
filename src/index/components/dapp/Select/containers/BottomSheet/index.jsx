@@ -5,23 +5,39 @@ import { default as ReactSelect, components } from 'react-select';
 
 // Components
 import SVG from 'utils/svg-wrap';
-import CabinetScrollBlock from '../../../CabinetScrollBlock/CabinetScrollBlock';
 import { BottomSheetModal } from 'ui';
+import DappInput from 'dapp/DappInput/DappInput';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
 import { classNames } from 'utils';
-import { styles, adaptiveStyles } from '../../constants/bottomSheetStyles';
+import bottomSheetStyles from '../../constants/bottomSheetStyles';
+import desktopStyles from '../../constants/desktopStyles';
+import indicatorIcons from '../../constants/indicatorIcons';
 import _ from 'lodash';
 
 // Styles
 import './index.less';
 
-const { DropdownIndicator, Menu, MenuList, Option } = components;
+const { DropdownIndicator, Menu, Option } = components;
 
 const BottomSheetSelect = React.memo(
-  ({ options, value, onChange, className, ...props }) => {
+  ({
+    options,
+    value,
+    onChange,
+    className,
+    listHeight,
+    isSearchable,
+    type,
+    components,
+    width,
+    showSelectedInMenu,
+    isModalForAdaptive,
+    ...props
+  }) => {
     const adaptive = useSelector(adaptiveSelector);
+    const [search, setSearch] = React.useState('');
     const bottomSheetModalRef = React.useRef(null);
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -29,6 +45,15 @@ const BottomSheetSelect = React.memo(
     const getValue = (value, options) => {
       return value ? options.find((c) => c.value === value) : '';
     };
+
+    const responsiveStyles = {
+      desktop: desktopStyles[type],
+      adaptive: bottomSheetStyles(desktopStyles[type]),
+    };
+    const styles =
+      adaptive && isModalForAdaptive
+        ? responsiveStyles.adaptive
+        : responsiveStyles.desktop;
 
     // Handlers
     // -- Set value of string from object option.
@@ -38,7 +63,7 @@ const BottomSheetSelect = React.memo(
     };
 
     const closeMenu = () => {
-      if (!adaptive) {
+      if (!adaptive || !isModalForAdaptive) {
         handleMenuClose();
         return;
       }
@@ -64,16 +89,14 @@ const BottomSheetSelect = React.memo(
         onChange={handleChange}
         menuIsOpen={isOpen}
         onMenuOpen={handleMenuOpen}
-        onMenuClose={!adaptive && handleMenuClose}
+        onMenuClose={handleMenuClose}
+        backspaceRemovesValue={false}
         components={{
           IndicatorSeparator: null,
           DropdownIndicator: (props) => {
             return (
               <DropdownIndicator {...props}>
-                <SVG
-                  src={require('src/asset/icons/cabinet/select-arrow.svg')}
-                  flex
-                />
+                <SVG src={indicatorIcons[type]} flex />
               </DropdownIndicator>
             );
           },
@@ -86,17 +109,38 @@ const BottomSheetSelect = React.memo(
 
             const menu = (
               <Menu {...props}>
-                <div className="CabinetSelect-BottomSheet-menu__triangle" />
+                {type === 'bold' && (
+                  <div className="CabinetSelect-BottomSheet-menu__triangle" />
+                )}
                 <div className="CabinetSelect-BottomSheet-menu__container">
-                  <Option {...props} isSelected>
-                    {selectedOption.label}
-                  </Option>
+                  {showSelectedInMenu && (
+                    <Option {...props} isSelected>
+                      {selectedOption.label}
+                    </Option>
+                  )}
+                  {isSearchable && (
+                    <div className="CabinetSelect-BottomSheet-menu__search">
+                      <DappInput
+                        size="small"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                        }}
+                        indicator={
+                          <SVG
+                            src={require('src/asset/icons/action/search-small.svg')}
+                            flex
+                          />
+                        }
+                        placeholder="Search"
+                      />
+                    </div>
+                  )}
                   {children}
                 </div>
               </Menu>
             );
 
-            if (adaptive) {
+            if (adaptive && isModalForAdaptive) {
               return (
                 <BottomSheetModal
                   ref={bottomSheetModalRef}
@@ -110,37 +154,21 @@ const BottomSheetSelect = React.memo(
 
             return menu;
           },
-          MenuList: ({ children, ...props }) => {
-            const scrollContainerRef = React.useRef(null);
-            const [scrollbarHeight, setScrollbarHeight] = React.useState(0);
-
-            React.useEffect(() => {
-              setScrollbarHeight(
-                _.get(scrollContainerRef, 'current.offsetHeight', 0)
-              );
-            }, [scrollContainerRef]);
-
-            return (
-              <MenuList {...props}>
-                <CabinetScrollBlock
-                  style={{ height: scrollbarHeight, maxHeight: 156 }}
-                  minimalThumbSize={30}
-                  removeTracksWhenNotUsed
-                >
-                  <div
-                    className="CabinetSelect-BottomSheet-menuList__container"
-                    ref={scrollContainerRef}
-                  >
-                    {children}
-                  </div>
-                </CabinetScrollBlock>
-              </MenuList>
-            );
-          },
+          ...components,
         }}
-        className={classNames('CabinetSelect-BottomSheet')}
+        className={classNames('CabinetSelect-BottomSheet', type)}
         classNamePrefix="CabinetSelect-BottomSheet"
-        styles={adaptive ? adaptiveStyles : styles}
+        styles={{
+          ...styles,
+          menuList: (base, state) => ({
+            ...styles?.menuList(base, state),
+            maxHeight: listHeight,
+          }),
+          control: (base, state) => ({
+            ...styles?.control(base, state),
+            width,
+          }),
+        }}
         hideSelectedOptions
         {...props}
       />
@@ -158,6 +186,10 @@ BottomSheetSelect.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   className: PropTypes.string,
+  listHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  type: PropTypes.oneOf(['average', 'bold']),
+  isModalForAdaptive: PropTypes.bool,
 };
 
 BottomSheetSelect.defaultProps = {
@@ -165,24 +197,43 @@ BottomSheetSelect.defaultProps = {
   value: 0,
   onChange: () => {},
   className: '',
+  listHeight: 156,
+  width: 150,
+  type: 'average',
+  isModalForAdaptive: false,
 };
 
 // Return object for options constant
-BottomSheetSelect.option = (title, value, icon, showValue = false) => {
+const BottomSheetSelectOption = (
+  title,
+  value,
+  icon,
+  showValue = false,
+  titleTag
+) => {
+  const Title = titleTag || 'p';
+
   return {
     label: (
       <div className="CabinetSelect-BottomSheet-option">
-        <div className="CabinetSelect-BottomSheet-option__icon">
-          {icon && <img src={icon} />}
-        </div>
-        <p className="CabinetSelect-BottomSheet-option__title">{title}</p>
+        {icon && (
+          <div className="CabinetSelect-BottomSheet-option__icon">
+            <img src={icon} />
+          </div>
+        )}
+        <Title className="CabinetSelect-BottomSheet-option__title">
+          {title}
+        </Title>
         {showValue && (
           <p className="CabinetSelect-BottomSheet-option__value">{value}</p>
         )}
       </div>
     ),
     value,
+    title,
   };
 };
+
+BottomSheetSelect.option = BottomSheetSelectOption;
 
 export default BottomSheetSelect;
