@@ -3,12 +3,15 @@ import React from 'react';
 // Components
 import SVG from 'utils/svg-wrap';
 
+// Utils
+import { classNames as cn } from 'utils';
+
 // Styles
 import './AnswerPopup.less';
 
-function AnswerPopup({ question, children }) {
+function AnswerPopup({ question, children, className }) {
   return (
-    <div className="AnswerPopup">
+    <div className={cn('AnswerPopup', className)}>
       {question ? (
         <div className="AnswerPopup__question">{question}</div>
       ) : (

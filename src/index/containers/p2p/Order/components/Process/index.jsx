@@ -8,21 +8,28 @@ import ChooseMethod from '../ChooseMethod';
 import Step from './components/Step';
 import Info from './components/Info';
 
+// Utils
+import processes from './constants/processes';
+
 // Styles
 import './index.less';
 
 const steps = [
-  { id: 1, title: 'Transfer payment to Seller' },
-  { id: 2, title: 'Pending Seller to Realease Cryptos' },
-  { id: 3, title: 'Completed' },
+  { id: 1, type: processes.payment, title: 'Transfer payment to Seller' },
+  {
+    id: 2,
+    type: processes.pending,
+    title: 'Pending Seller to Realease Cryptos',
+  },
+  { id: 3, type: processes.completed, title: 'Completed' },
 ];
 
 function Process() {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(steps[1].type);
 
   const renderInfo = () => (
     <div className="p2p-order-process-info">
-      <h5>Confirm order info</h5>
+      <h5 className="p2p-order-process__title">Confirm order info</h5>
       <Row className="p2p-order-process-info__items">
         <Info title="Amount" prefix="Rp" number={600812255} />
         <Info title="Price" prefix="Rp" number={15555000} />
@@ -33,7 +40,7 @@ function Process() {
 
   const renderMethod = () => (
     <div className="p2p-order-process-method">
-      <Row>
+      <Row className="p2p-order-process__title">
         <h5>Transfer the funds to the sellers account provided below</h5>
         <AnswerPopup>Answer</AnswerPopup>
       </Row>
@@ -47,7 +54,7 @@ function Process() {
 
   const renderSubmit = () => (
     <div className="p2p-order-process-submit">
-      <Row>
+      <Row className="p2p-order-process__title">
         <h5>
           After transferring the funds, click on the “Transferred, <br />
           notify seller” button.
@@ -76,8 +83,8 @@ function Process() {
   return (
     <CabinetBlock className="p2p-order-process">
       <div className="p2p-order-process-steps">
-        {steps.map(({ title, id }) => (
-          <Step number={id} key={id} title={title} active={step === id} />
+        {steps.map(({ title, id, type }) => (
+          <Step number={id} key={id} title={title} active={step === type} />
         ))}
       </div>
       {renderContent()}
