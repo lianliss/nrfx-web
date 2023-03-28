@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Components
-import { Row, Col, NumberFormat, Button } from 'ui';
+import { Row, Button } from 'ui';
 import { CabinetBlock, AnswerPopup } from 'dapp';
 import SVG from 'utils/svg-wrap';
 import ChooseMethod from '../ChooseMethod';
-
-// Utils
-import { classNames as cn } from 'utils';
+import Step from './components/Step';
+import Info from './components/Info';
 
 // Styles
 import './index.less';
@@ -18,28 +17,8 @@ const steps = [
   { id: 3, title: 'Completed' },
 ];
 
-const Step = ({ number, title, active }) => (
-  <div className={cn('p2p-order-process-step', { active })}>
-    <div className="p2p-order-process-step__number">
-      <div>{number}</div>
-    </div>
-    <p>{title}</p>
-  </div>
-);
-
-const Info = ({ title, prefix, currency, number }) => (
-  <Col className="p2p-order-process-info__item">
-    <p>{title}</p>
-    <NumberFormat
-      prefix={prefix ? prefix + ' ' : ''}
-      number={number}
-      currency={currency}
-    />
-  </Col>
-);
-
 function Process() {
-  const [step, setStep] = React.useState(2);
+  const [step, setStep] = useState(2);
 
   const renderInfo = () => (
     <div className="p2p-order-process-info">
@@ -55,7 +34,7 @@ function Process() {
   const renderMethod = () => (
     <div className="p2p-order-process-method">
       <Row>
-        <h5>Transfer the funds to the sellers account provided below </h5>
+        <h5>Transfer the funds to the sellers account provided below</h5>
         <AnswerPopup>Answer</AnswerPopup>
       </Row>
       <Row className="p2p-order-process-method__warn" alignItems="center">
@@ -80,7 +59,7 @@ function Process() {
           <span>Transferred notify seller</span>
         </Button>
         <Button type="secondary-light">
-          <span className="light-blue-gradient-text">Cancel Order</span>
+          <span className="light-blue-gradient-color">Cancel Order</span>
         </Button>
       </Row>
     </div>
