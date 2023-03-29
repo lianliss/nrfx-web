@@ -80,23 +80,25 @@ function Process({ adaptive }) {
   );
 
   const renderSubmit = () => (
-    <div className="p2p-order-process-submit">
-      <Row className="p2p-order-process__title">
-        <h5>
-          After transferring the funds, click on the “Transferred, notify
-          seller” button.
-        </h5>
-        <AnswerPopup>Answer</AnswerPopup>
-      </Row>
+    <>
+      <div className="p2p-order-process-submit__header">
+        <Row className="p2p-order-process__title">
+          <h5>
+            After transferring the funds, click on the “Transferred, notify
+            seller” button.
+          </h5>
+          <AnswerPopup>Answer</AnswerPopup>
+        </Row>
+      </div>
       <Row className="p2p-order-process__buttons" gap={15}>
-        <Button type="lightBlue">
+        <Button type="lightBlue" size="">
           <span>Transferred notify seller</span>
         </Button>
         <Button type="secondary-light">
           <span className="light-blue-gradient-color">Cancel Order</span>
         </Button>
       </Row>
-    </div>
+    </>
   );
 
   const renderContent = () => (
