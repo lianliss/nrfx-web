@@ -11,6 +11,7 @@ import OrderCreatedInfo from '../Info';
 
 // Utils
 import processes from './constants/processes';
+import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Styles
 import './index.less';
@@ -25,7 +26,7 @@ const steps = [
   { id: 3, type: processes.completed, title: 'Completed' },
 ];
 
-function Process({ adaptive }) {
+function Process({ adaptive, mode }) {
   const [step, setStep] = useState(steps[1].type);
 
   const renderInfo = () => {
@@ -40,6 +41,9 @@ function Process({ adaptive }) {
             title="Amount"
             prefix="Rp"
             number={600812255}
+            className={
+              mode === p2pMode.buy ? 'green-color' : 'orange-red-color'
+            }
           />
           <Info
             adaptive={adaptive}

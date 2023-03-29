@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 // Components
 import P2P from '../P2P';
@@ -9,18 +10,21 @@ import Process from './components/Process';
 
 // Utils
 import faq from '../constants/faq';
+import { dappP2PModeSelector } from 'src/selectors';
 
 // Styles
 import './index.less';
 
 function Order({ adaptive }) {
+  const mode = useSelector(dappP2PModeSelector);
+
   return (
     <P2P>
       <div className="p2p-order">
         <Header adaptive={adaptive} />
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
-            <Process adaptive={adaptive} />
+            <Process adaptive={adaptive} mode={mode} />
             <CabinetBlock className="p2p-order-body__faq">
               <h3>FAQ</h3>
               <FAQ items={faq.order} doubleColumn={false} />
