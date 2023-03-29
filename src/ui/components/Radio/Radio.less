@@ -88,7 +88,9 @@
 }
 
 .Radio.extra_small {
-  margin-top: 8px;
+  &:not(:first-child) {
+    margin-top: 8px;
+  }
 
   .Radio__label {
     font-weight: 500;

@@ -12,7 +12,7 @@ import { testPayments } from '../../../Orders/components/Filters/testItems';
 // Styles
 import './index.less';
 
-function ChooseMethod() {
+function ChooseMethod({ adaptive }) {
   const [selectedMethod, setSelectedMethod] = React.useState(
     testPayments[0].code
   );
@@ -59,7 +59,11 @@ function ChooseMethod() {
   ));
 
   return (
-    <Row className="p2p-order-choose-method" alignItems="stretch">
+    <Row
+      className="p2p-order-choose-method"
+      alignItems="stretch"
+      wrap={adaptive}
+    >
       <PaymentMethods />
       <OrderData />
     </Row>

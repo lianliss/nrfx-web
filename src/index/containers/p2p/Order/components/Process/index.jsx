@@ -75,7 +75,7 @@ function Process({ adaptive }) {
         <SVG src={require('src/asset/icons/status/warn-orange.svg')} />
         <p>Binance only supports real-name verified payment methods.</p>
       </Row>
-      <ChooseMethod />
+      <ChooseMethod adaptive={adaptive} />
     </div>
   );
 
@@ -83,8 +83,8 @@ function Process({ adaptive }) {
     <div className="p2p-order-process-submit">
       <Row className="p2p-order-process__title">
         <h5>
-          After transferring the funds, click on the “Transferred, <br />
-          notify seller” button.
+          After transferring the funds, click on the “Transferred, notify
+          seller” button.
         </h5>
         <AnswerPopup>Answer</AnswerPopup>
       </Row>
