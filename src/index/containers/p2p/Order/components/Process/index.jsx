@@ -93,7 +93,7 @@ function Process({ adaptive }) {
         </Row>
       </div>
       <Row className="p2p-order-process__buttons" gap={15}>
-        <Button type="lightBlue" size="">
+        <Button type="lightBlue">
           <span>Transferred notify seller</span>
         </Button>
         <Button type="secondary-light">
