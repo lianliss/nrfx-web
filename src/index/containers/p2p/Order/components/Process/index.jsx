@@ -68,8 +68,10 @@ function Process({ adaptive }) {
   const renderMethod = () => (
     <div className="p2p-order-process-method">
       <Row className="p2p-order-process__title">
-        <h5>Transfer the funds to the sellers account provided below</h5>
-        <AnswerPopup>Answer</AnswerPopup>
+        <h5>
+          Transfer the funds to the sellers account provided below
+          <AnswerPopup>Answer</AnswerPopup>
+        </h5>
       </Row>
       <Row className="p2p-order-process-method__warn" alignItems="center">
         <SVG src={require('src/asset/icons/status/warn-orange.svg')} />
@@ -86,8 +88,8 @@ function Process({ adaptive }) {
           <h5>
             After transferring the funds, click on the “Transferred, notify
             seller” button.
+            <AnswerPopup>Answer</AnswerPopup>
           </h5>
-          <AnswerPopup>Answer</AnswerPopup>
         </Row>
       </div>
       <Row className="p2p-order-process__buttons" gap={15}>

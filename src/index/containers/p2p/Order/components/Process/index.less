@@ -153,16 +153,19 @@
   }
 
   &__title {
-    max-width: 480px;
-
     .AnswerPopup {
       margin-left: 9px;
-      margin-top: 3px;
+      margin-top: 2px;
+      position: absolute; 
     }
   }
 
   &-method {
     padding-bottom: 30px;
+
+    h5 {
+      max-width: 457px;
+    }
 
     &__warn {
       margin: 10px 0 30px;
@@ -174,6 +177,12 @@
         color: var(--main-orange);
         margin-left: 5px;
       }
+    }
+  }
+
+  &-submit__header {
+    h5 {
+      max-width: 435px;
     }
   }
 

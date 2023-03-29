@@ -11,13 +11,13 @@ import './AnswerPopup.less';
 
 function AnswerPopup({ question, children, className }) {
   return (
-    <div className={cn('AnswerPopup', className)}>
+    <span className={cn('AnswerPopup', className)}>
       {question ? (
-        <div className="AnswerPopup__question">{question}</div>
+        <span className="AnswerPopup__question">{question}</span>
       ) : (
-        <div className="AnswerPopup__icon">
+        <span className="AnswerPopup__icon">
           <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
-        </div>
+        </span>
       )}
       <div className="AnswerPopup__container">
         <div className="AnswerPopup__triangle">
@@ -25,7 +25,7 @@ function AnswerPopup({ question, children, className }) {
         </div>
         <div className="AnswerPopup__content">{children}</div>
       </div>
-    </div>
+    </span>
   );
 }
 
