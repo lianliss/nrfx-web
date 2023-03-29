@@ -1,4 +1,6 @@
 .p2p-order .p2p-order-info {
+  width: auto;
+
   &__item {
     font-weight: 500;
     font-size: 14px;
@@ -21,6 +23,33 @@
     .CopyTextComponent__content {
       display: flex;
       align-items: center;
+      word-wrap: break-word;
+    }
+  }
+
+  &__data {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0 5px;
+  }
+}
+
+.adaptive .p2p-order .p2p-order-info {
+  width: 100%;
+
+  &__data {
+    gap: 0 8px;
+    width: 60%;
+  }
+
+  &__item {
+    & > * {
+      flex: 1 1 auto;
+    }
+
+    & > *:first-child {
+      font-size: 12px;
+      width: 40%;
     }
   }
 }

@@ -11,26 +11,30 @@ import {
 // Styles
 import './index.less';
 
-function Info() {
+function Info({ adaptive }) {
   return (
     <div className="p2p-order-info">
-      <Col alignItems="flex-end">
+      <Col alignItems={adaptive ? 'flex-start' : 'flex-end'}>
         <Row
           className="p2p-order-info__item"
           alignItems="center"
-          justifyContent="flex-end"
+          justifyContent={adaptive ? 'space-between' : 'flex-end'}
         >
-          <span>Order number:</span>
-          <OrderCreatedTextCopy text="444566673777788877655556677" />
+          <div>Order number:</div>
+          <div className="p2p-order-info__data">
+            <OrderCreatedTextCopy text="444566677777888776556" />
+          </div>
         </Row>
         <Row
           className="p2p-order-info__item"
           alignItems="center"
-          justifyContent="flex-end"
+          justifyContent={adaptive ? 'space-between' : 'flex-end'}
         >
-          <span>Time created:</span>
-          <OrderCreatedTime time={new Date()} />
-          <OrderCreatedDate date={new Date()} />
+          <div>Time created:</div>
+          <div className="p2p-order-info__data">
+            <OrderCreatedTime time={new Date()} />
+            <OrderCreatedDate date={new Date()} />
+          </div>
         </Row>
       </Col>
     </div>

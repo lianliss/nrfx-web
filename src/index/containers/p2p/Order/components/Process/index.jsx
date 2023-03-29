@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 
 // Components
-import { Row, Button } from 'ui';
+import { Row, Col, Button } from 'ui';
 import { CabinetBlock, AnswerPopup } from 'dapp';
 import SVG from 'utils/svg-wrap';
 import ChooseMethod from '../ChooseMethod';
 import Step from './components/Step';
 import Info from './components/Info';
+import OrderCreatedInfo from '../Info';
 
 // Utils
 import processes from './constants/processes';
@@ -24,19 +25,45 @@ const steps = [
   { id: 3, type: processes.completed, title: 'Completed' },
 ];
 
-function Process() {
+function Process({ adaptive }) {
   const [step, setStep] = useState(steps[1].type);
 
-  const renderInfo = () => (
-    <div className="p2p-order-process-info">
-      <h5 className="p2p-order-process__title">Confirm order info</h5>
-      <Row className="p2p-order-process-info__items">
-        <Info title="Amount" prefix="Rp" number={600812255} />
-        <Info title="Price" prefix="Rp" number={15555000} />
-        <Info title="Quantity" currency="USDT" number={389.88} />
-      </Row>
-    </div>
-  );
+  const renderInfo = () => {
+    const ItemsComponent = adaptive ? Col : Row;
+
+    return (
+      <div className="p2p-order-process-info">
+        <h5 className="p2p-order-process__title">Confirm order info</h5>
+        <ItemsComponent className="p2p-order-process-info__items">
+          <Info
+            adaptive={adaptive}
+            title="Amount"
+            prefix="Rp"
+            number={600812255}
+          />
+          <Info
+            adaptive={adaptive}
+            title="Price"
+            prefix="Rp"
+            number={15555000}
+          />
+          <Info
+            adaptive={adaptive}
+            title="Quantity"
+            currency="USDT"
+            number={389.88}
+          />
+          {adaptive && (
+            <>
+              <div className="p2p-order-process-info__line" />
+              <OrderCreatedInfo adaptive={adaptive} />
+              <div className="p2p-order-process-info__line" />
+            </>
+          )}
+        </ItemsComponent>
+      </div>
+    );
+  };
 
   const renderMethod = () => (
     <div className="p2p-order-process-method">
@@ -82,11 +109,13 @@ function Process() {
 
   return (
     <CabinetBlock className="p2p-order-process">
-      <div className="p2p-order-process-steps">
-        {steps.map(({ title, id, type }) => (
-          <Step number={id} key={id} title={title} active={step === type} />
-        ))}
-      </div>
+      {!adaptive && (
+        <div className="p2p-order-process-steps">
+          {steps.map(({ title, id, type }) => (
+            <Step number={id} key={id} title={title} active={step === type} />
+          ))}
+        </div>
+      )}
       {renderContent()}
     </CabinetBlock>
   );
