@@ -180,8 +180,8 @@ function FarmingAdaptiveItemOptions({
       <div className="row">
         <div className="col">
           <DoubleText
-            first={getFinePrice(reward)}
-            second={getFinePrice(reward * nrfxPrice)}
+            first={reward}
+            second={reward * nrfxPrice}
             currency={'NRFX'}
             title={getLang('dapp_global_earned')}
           />

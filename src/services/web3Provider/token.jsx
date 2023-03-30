@@ -18,6 +18,7 @@ class TokenContract {
     this.ethereum = provider.ethereum;
     this.network = provider.network;
     this.chainId = provider.network.chainId;
+    this.allowance = null;
 
     this.contract = new (this.web3.eth.Contract)(
       isPairContract
@@ -36,8 +37,8 @@ class TokenContract {
       account,
       spender,
     ).call().then(response => {
-      const allowance = wei.from(wei.bn(response), this.decimals);
-      fulfill(allowance);
+      this.allowance = wei.from(wei.bn(response), this.decimals);
+      fulfill(this.allowance);
     }).catch(error => {
       console.error('[TokenContract][getAllowance]', error);
       fulfill(0);
@@ -64,8 +65,9 @@ class TokenContract {
 
   _pendingAllowance = async (spender, amount) => {
     if (!this.isAwaiting) return false;
+    const prevAllowance = this.allowance;
     const allowance = await this.getAllowance(spender);
-    if (allowance < amount) {
+    if (allowance === prevAllowance) {
       await wait(this.pendingTimeout);
       return await this._pendingAllowance(spender, amount);
     } else {

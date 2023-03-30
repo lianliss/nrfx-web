@@ -94,9 +94,9 @@ function LiquidityRemove({ onClose, currentPool }) {
     setIsApproving(true);
     try {
       const amount = await tokenContract.approve(routerAddress, 5 * 10**9);
-      setAllowance(amount);
+      setAllowance(tokenContract.allowance);
     } catch (error) {
-      console.error('[LiquidityRemove][approve]', token);
+      console.error('[LiquidityRemove][approve]', error);
     }
     setIsApproving(false);
   };
