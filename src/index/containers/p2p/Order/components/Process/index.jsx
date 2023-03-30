@@ -77,29 +77,26 @@ function Process({ adaptive, mode, process }) {
   };
 
   const renderMethod = () => {
-    let title =
-      process === processes.payment ? (
-        <>
-          <Row className="p2p-order-process__title">
-            <h5>
-              Transfer the funds to the sellers account provided below
-              <AnswerPopup>Answer</AnswerPopup>
-            </h5>
-          </Row>
-          <Row className="p2p-order-process-method__warn" alignItems="center">
-            <SVG src={warnIcon} />
-            <p>Binance only supports real-name verified payment methods.</p>
-          </Row>
-        </>
-      ) : (
-        <Row className="p2p-order-process__title">
-          <h5>Payment method</h5>
-        </Row>
-      );
-
     return (
       <div className="p2p-order-process-method">
-        {title}
+        {process === processes.payment ? (
+          <>
+            <Row className="p2p-order-process__title">
+              <h5>
+                Transfer the funds to the sellers account provided below
+                <AnswerPopup>Answer</AnswerPopup>
+              </h5>
+            </Row>
+            <Row className="p2p-order-process-method__warn" alignItems="center">
+              <SVG src={warnIcon} />
+              <p>Binance only supports real-name verified payment methods.</p>
+            </Row>
+          </>
+        ) : (
+          <Row className="p2p-order-process__title">
+            <h5>Payment method</h5>
+          </Row>
+        )}
         <ChooseMethod
           methods={
             // If precess is not -payment-
