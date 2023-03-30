@@ -82,42 +82,13 @@
   &-content {
     padding: 0;
 
-    &:not(:first-child) {
-      margin-top: 35px;
-    }
-
-    & > * {
-      position: relative;
-      padding-left: 20px;
-    }
-
-    & > *:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 0.5px;
-      top: 5px;
-      transform: translateX(-50%);
-      width: 11px;
-      height: 11px;
-      background: #fff;
-      border: 1px solid var(--malibu);
-      border-radius: 50%;
-      box-sizing: border-box;
-    }
-
     & > *:nth-child(1),
     & > *:nth-child(2) {
       padding-bottom: 30px;
+    }
 
-      &::before {
-        content: '';
-        position: absolute;
-        top: 5px;
-        left: 0;
-        height: 100%;
-        width: 1px;
-        background: #f1f1f1;
-      }
+    &:not(:first-child) {
+      margin-top: 35px;
     }
   }
 
@@ -199,8 +170,6 @@
   }
 
   &__buttons {
-    margin-top: 20px;
-
     .Button {
       height: 42px;
       padding: 0 39px;
@@ -212,6 +181,77 @@
         line-height: 16px;
       }
     }
+
+    .malibu-text {
+      position: relative;
+      width: auto;
+
+      &,
+      .Timer {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 22px;
+      }
+
+      &:not(:first-child) {
+        padding-left: 10px;
+      }
+      &:not(:last-child) {
+        padding-right: 11px;
+
+        &::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 1px;
+          height: 14px;
+          background: #dbdbdb;
+        }
+      }
+    }
+  }
+
+  // Payment process styles
+  &.payment &-content {
+    & > * {
+      position: relative;
+      padding-left: 20px;
+    }
+
+    & > *:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 0.5px;
+      top: 5px;
+      transform: translateX(-50%);
+      width: 11px;
+      height: 11px;
+      background: #fff;
+      border: 1px solid var(--malibu);
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+
+    & > *:nth-child(1),
+    & > *:nth-child(2) {
+      padding-bottom: 30px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 0;
+        height: 100%;
+        width: 1px;
+        background: #f1f1f1;
+      }
+    }
+  }
+
+  &.payment &__buttons {
+    margin-top: 20px;
   }
 }
 
@@ -225,20 +265,16 @@
     padding: 0;
 
     & > *:not(:last-child) {
-      padding-bottom: 20px;
+      padding-bottom: 30px;
     }
 
     &:not(:first-child) {
       margin-top: 35px;
     }
-
-    & > * {
-      padding-left: 12px;
-    }
   }
 
   &-info {
-    padding-bottom: 10px !important;
+    padding-bottom: 20px !important;
 
     &__line {
       margin: 10px 0;
@@ -271,7 +307,6 @@
   }
 
   &__buttons {
-    margin-top: 0;
     flex-direction: column;
 
     .Button {
@@ -287,11 +322,42 @@
         letter-spacing: -0.01em;
       }
     }
-  }
 
-  &-content {
+    .malibu-text {
+      margin-right: auto;
+
+      &:not(:last-child) {
+        padding-right: 0px;
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+// Payment process styles
+.adaptive .p2p-order-process.payment {
+  .p2p-order-process-content {
+    & > *:not(:last-child) {
+      padding-bottom: 20px;
+    }
+
+    & > * {
+      padding-left: 12px;
+    }
+
     & > *:last-child {
       padding-left: 0px;
     }
+  }
+
+  .p2p-order-process-info {
+    padding-bottom: 10px !important;
+  }
+
+  .p2p-order-process__buttons {
+    margin-top: 0;
   }
 }

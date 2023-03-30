@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Components
-import { Row, Col, Button } from 'ui';
-import { CabinetBlock, AnswerPopup } from 'dapp';
+import { Row, Col, Button, Timer } from 'ui';
+import { CabinetBlock, AnswerPopup, CustomButton } from 'dapp';
 import SVG from 'utils/svg-wrap';
 import ChooseMethod from '../ChooseMethod';
 import Step from './components/Step';
@@ -10,6 +10,7 @@ import Info from './components/Info';
 import OrderCreatedInfo from '../Info';
 
 // Utils
+import { classNames as cn } from 'utils';
 import processes from '../../constants/processes';
 import { p2pMode } from 'src/index/constants/dapp/types';
 import { testPayments } from '../../../Orders/components/Filters/testItems';
@@ -35,6 +36,45 @@ const steps = [
 
 function Process({ adaptive, mode, process }) {
   const processStep = steps.find((step) => step.type === process);
+
+  const CancelOrderButton = ({ type = 'default' }) => {
+    if (type === 'custom-malibu') {
+      return (
+        <CustomButton className="malibu-color malibu-text">
+          <span>Cancel Order</span>
+        </CustomButton>
+      );
+    }
+
+    return (
+      <Button type="secondary-light">
+        <span className="light-blue-gradient-color">Cancel Order</span>
+      </Button>
+    );
+  };
+
+  const renderSteps = () => {
+    const { pending, payment } = processes;
+    const processIsFine = process === payment || process === pending;
+
+    if (!adaptive && processIsFine) {
+      return (
+        <div className="p2p-order-process-steps">
+          {steps.map(({ title, id, answerMessage }) => (
+            <Step
+              number={id}
+              key={id}
+              title={title}
+              active={id <= processStep.id}
+              answerMessage={answerMessage}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    return <></>;
+  };
 
   const renderInfo = () => {
     const ItemsComponent = adaptive ? Col : Row;
@@ -112,27 +152,49 @@ function Process({ adaptive, mode, process }) {
     );
   };
 
-  const renderSubmit = () => (
-    <>
-      <div className="p2p-order-process-submit__header">
-        <Row className="p2p-order-process__title">
-          <h5>
-            After transferring the funds, click on the “Transferred, notify
-            seller” button.
-            <AnswerPopup>Answer</AnswerPopup>
-          </h5>
+  const renderSubmit = () => {
+    if (process === processes.payment) {
+      return (
+        <>
+          <div className="p2p-order-process-submit__header">
+            <Row className="p2p-order-process__title">
+              <h5>
+                After transferring the funds, click on the “Transferred, notify
+                seller” button.
+                <AnswerPopup>Answer</AnswerPopup>
+              </h5>
+            </Row>
+          </div>
+          <Row className="p2p-order-process__buttons" gap={15}>
+            <Button type="lightBlue">
+              <span>Transferred notify seller</span>
+            </Button>
+            <CancelOrderButton />
+          </Row>
+        </>
+      );
+    }
+
+    if (process === processes.pending) {
+      return (
+        <Row
+          className="p2p-order-process__buttons"
+          alignItems="center"
+          gap={'15px 0'}
+        >
+          <Row className="malibu-color malibu-text">
+            Transaction issue; appeal after (
+            <Timer
+              time={new Date(new Date().getTime() + 1 * 60 * 60 * 1000)}
+              hideHours
+            />
+            )
+          </Row>
+          <CancelOrderButton type={adaptive ? 'default' : 'custom-malibu'} />
         </Row>
-      </div>
-      <Row className="p2p-order-process__buttons" gap={15}>
-        <Button type="lightBlue">
-          <span>Transferred notify seller</span>
-        </Button>
-        <Button type="secondary-light">
-          <span className="light-blue-gradient-color">Cancel Order</span>
-        </Button>
-      </Row>
-    </>
-  );
+      );
+    }
+  };
 
   const renderContent = () => (
     <div className="p2p-order-process-content">
@@ -143,20 +205,8 @@ function Process({ adaptive, mode, process }) {
   );
 
   return (
-    <CabinetBlock className="p2p-order-process">
-      {!adaptive && (
-        <div className="p2p-order-process-steps">
-          {steps.map(({ title, id, answerMessage }) => (
-            <Step
-              number={id}
-              key={id}
-              title={title}
-              active={id <= processStep.id}
-              answerMessage={answerMessage}
-            />
-          ))}
-        </div>
-      )}
+    <CabinetBlock className={cn('p2p-order-process', process)}>
+      {renderSteps()}
       {renderContent()}
     </CabinetBlock>
   );
