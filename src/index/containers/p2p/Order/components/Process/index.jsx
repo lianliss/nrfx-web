@@ -13,6 +13,7 @@ import OrderCreatedInfo from '../Info';
 import processes from '../../constants/processes';
 import { p2pMode } from 'src/index/constants/dapp/types';
 import { testPayments } from '../../../Orders/components/Filters/testItems';
+import warnIcon from 'src/asset/icons/status/warn-orange.svg';
 
 // Styles
 import './index.less';
@@ -75,29 +76,44 @@ function Process({ adaptive, mode, process }) {
     );
   };
 
-  const renderMethod = () => (
-    <div className="p2p-order-process-method">
-      <Row className="p2p-order-process__title">
-        <h5>
-          Transfer the funds to the sellers account provided below
-          <AnswerPopup>Answer</AnswerPopup>
-        </h5>
-      </Row>
-      <Row className="p2p-order-process-method__warn" alignItems="center">
-        <SVG src={require('src/asset/icons/status/warn-orange.svg')} />
-        <p>Binance only supports real-name verified payment methods.</p>
-      </Row>
-      <ChooseMethod
-        methods={
-          process === processes.payment
-            ? testPayments
-            : testPayments.filter((_paymentItem, index) => index === 0)
-        }
-        selectedMethod={testPayments[0].code}
-        adaptive={adaptive}
-      />
-    </div>
-  );
+  const renderMethod = () => {
+    let title =
+      process === processes.payment ? (
+        <>
+          <Row className="p2p-order-process__title">
+            <h5>
+              Transfer the funds to the sellers account provided below
+              <AnswerPopup>Answer</AnswerPopup>
+            </h5>
+          </Row>
+          <Row className="p2p-order-process-method__warn" alignItems="center">
+            <SVG src={warnIcon} />
+            <p>Binance only supports real-name verified payment methods.</p>
+          </Row>
+        </>
+      ) : (
+        <Row className="p2p-order-process__title">
+          <h5>Payment method</h5>
+        </Row>
+      );
+
+    return (
+      <div className="p2p-order-process-method">
+        {title}
+        <ChooseMethod
+          methods={
+            // If precess is not -payment-
+            // Keep selected payment, and remove others.
+            process === processes.payment
+              ? testPayments
+              : testPayments.filter((_paymentItem, index) => index === 0)
+          }
+          selectedMethod={testPayments[0].code}
+          adaptive={adaptive}
+        />
+      </div>
+    );
+  };
 
   const renderSubmit = () => (
     <>
