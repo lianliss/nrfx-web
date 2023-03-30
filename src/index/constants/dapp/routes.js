@@ -62,6 +62,10 @@ const routes = [
     path: '/dapp/team',
   },
   {
+    name: pages.TOKEN_MIGRATION,
+    path: '/token_migration',
+  },
+  {
     name: pages.P2P,
     path: '/dapp/p2p',
   },
@@ -70,8 +74,8 @@ const routes = [
     path: '/dapp/p2p/orders',
   },
   {
-    name: pages.TOKEN_MIGRATION,
-    path: '/token_migration',
+    name: pages.P2P_ORDER,
+    path: '/dapp/p2p/order',
   },
 ];
 

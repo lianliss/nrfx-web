@@ -53,13 +53,13 @@ function LiquidityConfirmModal(props) {
     getBSCScanLink,
     addTokenToWallet,
   } = context;
-  const { wrapBNB, bnb } = network.tokens;
+  const { wrapToken, defaultSymbol } = network;
   const { routerAddress } = network.contractAddresses;
   const dispatch = useDispatch();
   const [pair, setPair] = React.useState(null);
   const adaptive = useSelector((store) => store.default.adaptive);
   const Component = adaptive ? BottomSheetModal : Modal;
-  const [slippageTolerance, setSlippageTolerance] = React.useState(0.04);
+  const [slippageTolerance, setSlippageTolerance] = React.useState(0.9);
   const [isTransaction, setIsTransaction] = React.useState(false);
   const [errorText, setErrorText] = React.useState('');
 
@@ -80,10 +80,10 @@ function LiquidityConfirmModal(props) {
 
   const totalSupply = wei.from(pair.totalSupply);
   const reserve0 = wei.from(pair[
-    selectedTokens[0].symbol === bnb.symbol ? wrapBNB.symbol : selectedTokens[0].symbol
+    selectedTokens[0].symbol === defaultSymbol ? defaultSymbol : selectedTokens[0].symbol
     ]);
   const reserve1 = wei.from(pair[
-    selectedTokens[1].symbol === bnb.symbol ? wrapBNB.symbol : selectedTokens[1].symbol
+    selectedTokens[1].symbol === defaultSymbol ? defaultSymbol : selectedTokens[1].symbol
     ]);
   const lpTokens = Math.min(amount0 * totalSupply / reserve0, amount1 * totalSupply / reserve1);
   const isBNB = !selectedTokens[0].address || !selectedTokens[1].address;
@@ -114,12 +114,12 @@ function LiquidityConfirmModal(props) {
         selectedTokens[1].address,
         wei.to(amount0, selectedTokens[0].decimals || 18),
         wei.to(amount1, selectedTokens[1].decimals || 18),
-        wei.to(minA, selectedTokens[0].decimals || 18),
-        wei.to(minB, selectedTokens[1].decimals || 18),
+        '0', //wei.to(minA, selectedTokens[0].decimals || 18),
+        '0', //wei.to(minB, selectedTokens[1].decimals || 18),
         accountAddress,
         Number(Date.now() / 1000 + 60 * 15).toFixed(0),
       ];
-      console.log('[supply]', method, params);
+      console.log('[supply]', method, params, selectedTokens);
       const txHash = await transaction(routerContract, method, params);
       const receipt = await getTransactionReceipt(txHash);
       console.log('[supply] Success', txHash, receipt);
@@ -154,13 +154,13 @@ function LiquidityConfirmModal(props) {
         token.address,
         wei.to(amount, token.decimals || 18),
         wei.to(amount - amount * slippageTolerance, token.decimals || 18),
-        wei.to(bnbAmount - bnbAmount * slippageTolerance, bnb.decimals || 18),
+        wei.to(bnbAmount - bnbAmount * slippageTolerance, wrapToken.decimals || 18),
         accountAddress,
         Number(Date.now() / 1000 + 60 * 15).toFixed(0),
       ];
-      console.log('[supplyBNB]', method, params, wei.to(bnbAmount, bnb.decimals || 18));
+      console.log('[supplyBNB]', method, params, wei.to(bnbAmount, wrapToken.decimals || 18));
       const txHash = await transaction(
-        routerContract, method, params, wei.to(bnbAmount, bnb.decimals || 18)
+        routerContract, method, params, wei.to(bnbAmount, wrapToken.decimals || 18)
       );
       const receipt = await getTransactionReceipt(txHash);
       console.log('[supplyBNB] Success', txHash, receipt);

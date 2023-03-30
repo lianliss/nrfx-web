@@ -14,11 +14,17 @@ function Row({
   wrap,
   wrapAnyway,
   onClick,
+  gap,
 }) {
   return (
     <div
       className={cn('Row', { [className]: className, wrapAnyway })}
-      style={{ alignItems, justifyContent, flexWrap: wrap ? 'wrap' : 'nowrap' }}
+      style={{
+        alignItems,
+        justifyContent,
+        flexWrap: wrap ? 'wrap' : 'nowrap',
+        gap,
+      }}
       onClick={onClick}
     >
       {children}
@@ -39,6 +45,7 @@ Row.propTypes = {
   ]),
   wrap: PropTypes.bool,
   onClick: PropTypes.func,
+  gap: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 Row.defaultProps = {
@@ -47,6 +54,7 @@ Row.defaultProps = {
   justifyContent: 'flex-start',
   wrap: false,
   onClick: () => {},
+  gap: '',
 };
 
 export default Row;

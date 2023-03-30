@@ -11,9 +11,14 @@ import { getLang } from 'utils';
 // Styles
 import './index.less';
 
-function FAQ({ items, adaptive }) {
-  const leftColumnItems = items.filter((__, i) => i % 2 === 0);
-  const rightColumnItems = items.filter((__, i) => i % 2 !== 0);
+function FAQ({ items, adaptive, doubleColumn = true }) {
+  let leftColumnItems = [];
+  let rightColumnItems = [];
+
+  if (doubleColumn) {
+    leftColumnItems = items.filter((__, i) => i % 2 === 0);
+    rightColumnItems = items.filter((__, i) => i % 2 !== 0);
+  }
 
   const FAQItem = ({ question, answer }) => {
     return (
@@ -39,24 +44,38 @@ function FAQ({ items, adaptive }) {
 
   return (
     <Row wrap={adaptive} className="DappFAQ">
-      <Col className="DappFAQ__items">
-        {leftColumnItems.map((item, key) => (
-          <FAQItem
-            question={getLang(item.question)}
-            answer={getLang(item.answer)}
-            key={key}
-          />
-        ))}
-      </Col>
-      <Col className="DappFAQ__items">
-        {rightColumnItems.map((item, key) => (
-          <FAQItem
-            question={getLang(item.question)}
-            answer={getLang(item.answer)}
-            key={key}
-          />
-        ))}
-      </Col>
+      {doubleColumn ? (
+        <>
+          <Col className="DappFAQ__items">
+            {leftColumnItems.map((item, key) => (
+              <FAQItem
+                question={getLang(item.question)}
+                answer={getLang(item.answer)}
+                key={key}
+              />
+            ))}
+          </Col>
+          <Col className="DappFAQ__items">
+            {rightColumnItems.map((item, key) => (
+              <FAQItem
+                question={getLang(item.question)}
+                answer={getLang(item.answer)}
+                key={key}
+              />
+            ))}
+          </Col>
+        </>
+      ) : (
+        <Col className="DappFAQ__items">
+          {items.map((item, key) => (
+            <FAQItem
+              question={getLang(item.question)}
+              answer={getLang(item.answer)}
+              key={key}
+            />
+          ))}
+        </Col>
+      )}
     </Row>
   );
 }

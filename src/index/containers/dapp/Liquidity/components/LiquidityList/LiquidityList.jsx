@@ -22,34 +22,41 @@ const UPDATE_BALANCE_TIMEOUT = 5000;
 
 // Main
 function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
-
   const context = React.useContext(Web3Context);
-  const {
-    getReserves, getTokenContract, accountAddress, chainId,
-  } = context;
+  const { getReserves, getTokenContract, accountAddress, chainId } = context;
   const [pools, setPools] = React.useState([]);
   const [balances, setBalances] = React.useState({});
 
   const updateBalance = () => {
-    Promise.allSettled(poolsList.map(address => getReserves(address))).then(data => {
-      setPools(data.map(d => _.get(d, 'value[2]')).filter(d => d));
-    });
     if (accountAddress) {
-      Promise.allSettled(poolsList.map(address => getTokenContract({
-        address,
-        decimals: 18,
-      }, true).getBalance()))
-        .then(data => {
-          const balances = {};
-          data.map((b, i) => {
-            balances[poolsList[i]] = b.value;
-          });
-          setBalances(balances);
+      Promise.allSettled(poolsList.map((address) => getReserves(address))).then(
+        (data) => {
+          setPools(data.map((d) => _.get(d, 'value[2]')).filter((d) => d));
+        }
+      );
+      Promise.allSettled(
+        poolsList.map((address) =>
+          getTokenContract(
+            {
+              address,
+              decimals: 18,
+            },
+            true
+          ).getBalance()
+        )
+      ).then((data) => {
+        const balances = {};
+        data.map((b, i) => {
+          const address = poolsList[i];
+          balances[address] = b.value;
         });
+        setBalances(balances);
+      });
     }
   };
 
   React.useEffect(() => {
+    if (!accountAddress) return;
     updateBalance();
     // clearInterval(updateBalanceInterval);
     // setInterval(updateBalance, UPDATE_BALANCE_TIMEOUT);
@@ -59,7 +66,6 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
   }, [poolsList, accountAddress, chainId]);
 
   const ItemContent = ({ item }) => {
-    
     const symbol0 = _.get(item, 'token0.symbol', '');
     const symbol1 = _.get(item, 'token1.symbol', '');
     const decimals0 = _.get(item, 'token0.decimals', 18);
@@ -76,22 +82,19 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
       <div className="ItemContent">
         <div className="ItemContent__body">
           <div>
-            <span>{getLang('dapp_liquidity_common_pool_balance')}</span>
             <span>
-              <span>{getFinePrice(reserve0)}</span>
-              <WalletIcon currency={item.token0} size={16} />
-              &nbsp;+&nbsp;
-              <span>{getFinePrice(reserve1)}</span>
-              <WalletIcon currency={item.token1} size={16} />
+              {getLang('dapp_liquidity_pooled')} {item.token0.symbol}
             </span>
-          </div>
-          {!!balance && <>
-          <div>
-            <span>{getLang('dapp_liquidity_you_pooled')}</span>
             <span>
               <span>{getFinePrice(userAmount0)}</span>
               <WalletIcon currency={item.token0} size={16} />
-              &nbsp;+&nbsp;
+            </span>
+          </div>
+          <div>
+            <span>
+              {getLang('dapp_liquidity_pooled')} {item.token1.symbol}
+            </span>
+            <span>
               <span>{getFinePrice(userAmount1)}</span>
               <WalletIcon currency={item.token1} size={16} />
             </span>
@@ -104,14 +107,21 @@ function LiquidityList({ onAddClick, onRemoveClick, poolsList, emptyText }) {
             <span>{getLang('dapp_liquidity_your_share')}:</span>
             <span>{getFinePrice(share * 100)}%</span>
           </div>
-          </>}
         </div>
         <div className="ItemContent__footer">
-          <Button type="lightBlue" size="extra_large" onClick={() => onAddClick(item.address)}>
+          <Button
+            type="lightBlue"
+            size="extra_large"
+            onClick={() => onAddClick(item.address)}
+          >
             {getLang('dapp_global_add')}
           </Button>
-          <Button type="dark" disabled={!balance}
-                  size="extra_large" onClick={() => onRemoveClick(item.address)}>
+          <Button
+            type="dark"
+            disabled={!balance}
+            size="extra_large"
+            onClick={() => onRemoveClick(item.address)}
+          >
             {getLang('dapp_global_remove')}
           </Button>
         </div>

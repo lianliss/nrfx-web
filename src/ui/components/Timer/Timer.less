@@ -1,3 +1,45 @@
 .Timer {
   font-family: Roboto;
+
+  &,
+  &__part,
+  &__values {
+    display: flex;
+    align-items: center;
+  }
+
+  &__separator {
+    font-weight: 400;
+    margin: 0 1px;
+  }
+
+  // Sizes
+  &.small {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  // Types
+  &.light-blue &__part {
+    gap: 0 2px;
+  }
+
+  &.light-blue &__separator {
+    margin: 0 3px;
+    color: var(--dark-black);
+  }
+
+  &.light-blue &__value {
+    background: var(--blue-light-gradient);
+    text-align: center;
+    color: #fff;
+  }
+
+  &.light-blue.small &__value {
+    height: 24px;
+    width: 19px;
+    border-radius: 3px;
+  }
 }

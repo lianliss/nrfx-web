@@ -195,6 +195,7 @@ function Routes(props) {
     case pages.DAPP_TEAM:
     case pages.P2P:
     case pages.P2P_ORDERS:
+    case pages.P2P_ORDER:
       needAuthorization = false;
       WrapperComponent = DappWrapper;
       Component = DappCabinet;

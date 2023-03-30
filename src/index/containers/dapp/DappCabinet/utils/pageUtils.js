@@ -51,7 +51,7 @@ export const getFinePage = (routeName) => {
     case PAGES.FARMING:
       Component = Farming;
       testnetOnly = false;
-      chainsWhitelist = [97];
+      chainsWhitelist = [97, 80001];
       break;
     case PAGES.DAPP_VALIDATOR:
       Component = CabinetValidator;
@@ -74,11 +74,20 @@ export const getFinePage = (routeName) => {
     case PAGES.P2P_ORDERS:
       Component = p2p.Orders;
       break;
+    case PAGES.P2P_ORDER:
+      Component = p2p.Order;
+      break;
     default:
       Component = Exchanger;
   }
 
-  return { Component, mainnetOnly, testnetOnly, chainsWhitelist, chainsBlacklist };
+  return {
+    Component,
+    mainnetOnly,
+    testnetOnly,
+    chainsWhitelist,
+    chainsBlacklist,
+  };
 };
 
 export const pageIsFine = (routeName, chainId) => {

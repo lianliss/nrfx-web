@@ -2,8 +2,8 @@ import React from 'react';
 
 // Components
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
+import PaymentItem from 'src/index/components/p2p/components/PaymentItem';
 import { Row, NumberFormat, Button } from 'ui';
-import ListPayment from '../ListPayment';
 import { WalletIcon } from 'dapp';
 import SVG from 'utils/svg-wrap';
 
@@ -69,11 +69,11 @@ function List({ mode }) {
       </TD>
       <TD>
         <div className="orders-list-payment">
-          <ListPayment title="Bank Transfer" color={paymentColors.orange} />
-          <ListPayment title="Pay me" color={paymentColors.red} />
-          <ListPayment title="Mono Bank" color={paymentColors.black} />
-          <ListPayment title="Bank Transfer" color={paymentColors.orange} />
-          <ListPayment title="Pay me" color={paymentColors.red} />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
+          <PaymentItem title="Mono Bank" color={paymentColors.black} />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
         </div>
       </TD>
       <TD>

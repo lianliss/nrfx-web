@@ -150,7 +150,7 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
       });
     } else {
       const firstToken = tokens.find(t => t.symbol === 'NRFX');
-      const secondToken = tokens.find(t => t.symbol === 'BNB');
+      const secondToken = tokens.find(t => t.symbol === 'USDC');
 
       setSelectedTokens([firstToken, secondToken]);
       // clearInterval(balanceInterval);
