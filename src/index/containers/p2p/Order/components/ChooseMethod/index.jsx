@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { OrderCreatedTextCopy } from 'src/index/components/p2p';
@@ -7,23 +8,23 @@ import PaymentItem from 'src/index/components/p2p/components/PaymentItem';
 
 // Utils
 import paymentColors from '../../../constants/paymentColors';
-import { testPayments } from '../../../Orders/components/Filters/testItems';
 
 // Styles
 import './index.less';
 
-function ChooseMethod({ adaptive }) {
-  const [selectedMethod, setSelectedMethod] = React.useState(
-    testPayments[0].code
-  );
-
+function ChooseMethod({
+  adaptive,
+  methods,
+  selectedMethod,
+  setSelectedMethod,
+}) {
   const handleMethodChange = (code) => {
     setSelectedMethod(code);
   };
 
   const PaymentMethods = React.memo(() => (
     <div className="p2p-order-choose-method__items">
-      {testPayments.slice(0, 3).map((payment) => (
+      {methods.slice(0, 3).map((payment) => (
         <Radio
           className="p2p-order-choose-method__item"
           value={payment.code}
@@ -69,5 +70,9 @@ function ChooseMethod({ adaptive }) {
     </Row>
   );
 }
+
+ChooseMethod.defaultProps = {
+  setSelectedMethod: () => {},
+};
 
 export default ChooseMethod;

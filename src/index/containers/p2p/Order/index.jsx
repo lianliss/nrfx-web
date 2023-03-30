@@ -11,12 +11,14 @@ import Process from './components/Process';
 // Utils
 import faq from '../constants/faq';
 import { dappP2PModeSelector } from 'src/selectors';
+import processes from './constants/processes';
 
 // Styles
 import './index.less';
 
 function Order({ adaptive }) {
   const mode = useSelector(dappP2PModeSelector);
+  const [process, setProcess] = React.useState(processes.pending);
 
   return (
     <P2P>
@@ -24,7 +26,7 @@ function Order({ adaptive }) {
         <Header adaptive={adaptive} />
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
-            <Process adaptive={adaptive} mode={mode} />
+            <Process process={process} adaptive={adaptive} mode={mode} />
             <CabinetBlock className="p2p-order-body__faq">
               <h3>FAQ</h3>
               <FAQ items={faq.order} doubleColumn={false} />

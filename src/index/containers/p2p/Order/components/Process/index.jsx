@@ -10,8 +10,9 @@ import Info from './components/Info';
 import OrderCreatedInfo from '../Info';
 
 // Utils
-import processes from './constants/processes';
+import processes from '../../constants/processes';
 import { p2pMode } from 'src/index/constants/dapp/types';
+import { testPayments } from '../../../Orders/components/Filters/testItems';
 
 // Styles
 import './index.less';
@@ -22,12 +23,17 @@ const steps = [
     id: 2,
     type: processes.pending,
     title: 'Pending Seller to Realease Cryptos',
+    answerMessage:
+      'Waiting for payment confirmation. ' +
+      'Please do not cancel the order if payment has' +
+      ' been made. Once the counterparty confirms the payment,' +
+      ' the crypto will be realeased to your wallet.',
   },
   { id: 3, type: processes.completed, title: 'Completed' },
 ];
 
-function Process({ adaptive, mode }) {
-  const [step, setStep] = useState(steps[1].type);
+function Process({ adaptive, mode, process }) {
+  const processStep = steps.find((step) => step.type === process);
 
   const renderInfo = () => {
     const ItemsComponent = adaptive ? Col : Row;
@@ -81,7 +87,15 @@ function Process({ adaptive, mode }) {
         <SVG src={require('src/asset/icons/status/warn-orange.svg')} />
         <p>Binance only supports real-name verified payment methods.</p>
       </Row>
-      <ChooseMethod adaptive={adaptive} />
+      <ChooseMethod
+        methods={
+          process === processes.payment
+            ? testPayments
+            : testPayments.filter((_paymentItem, index) => index === 0)
+        }
+        selectedMethod={testPayments[0].code}
+        adaptive={adaptive}
+      />
     </div>
   );
 
@@ -119,8 +133,14 @@ function Process({ adaptive, mode }) {
     <CabinetBlock className="p2p-order-process">
       {!adaptive && (
         <div className="p2p-order-process-steps">
-          {steps.map(({ title, id, type }) => (
-            <Step number={id} key={id} title={title} active={step === type} />
+          {steps.map(({ title, id, answerMessage }) => (
+            <Step
+              number={id}
+              key={id}
+              title={title}
+              active={id <= processStep.id}
+              answerMessage={answerMessage}
+            />
           ))}
         </div>
       )}
