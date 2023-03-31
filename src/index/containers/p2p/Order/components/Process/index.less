@@ -345,10 +345,9 @@
 
     .malibu-text {
       margin-right: auto;
+      padding: 0;
 
       &:not(:last-child) {
-        padding-right: 0px;
-
         &::after {
           display: none;
         }
@@ -359,18 +358,8 @@
   .p2p-order-process-content.sideline .p2p-order-process__buttons {
     margin-top: 0;
   }
-}
 
-// Payment process styles
-.adaptive .p2p-order-process.payment {
-  .p2p-order-process-content {
-  }
-
-  .p2p-order-process-info {
+  .p2p-order-process-content.sideline &-info {
     padding-bottom: 10px !important;
-  }
-
-  .p2p-order-process__buttons {
-    margin-top: 0;
   }
 }
