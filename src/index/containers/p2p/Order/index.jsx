@@ -11,14 +11,14 @@ import Process from './components/Process';
 // Utils
 import faq from '../constants/faq';
 import { dappP2PModeSelector } from 'src/selectors';
-import processes from './constants/processes';
+import { orderProcesses as processes } from 'src/index/constants/dapp/types';
 
 // Styles
 import './index.less';
 
 function Order({ adaptive }) {
-  const mode = useSelector(dappP2PModeSelector);
-  const [process, setProcess] = React.useState(processes.pending);
+  const mode = 'sell' || useSelector(dappP2PModeSelector);
+  const process = processes.sell.releasing;
 
   return (
     <P2P>

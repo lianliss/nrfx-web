@@ -213,8 +213,11 @@
     }
   }
 
-  // Payment process styles
-  &.payment &-content {
+  &-content.sideline &__buttons {
+    margin-top: 20px;
+  }
+
+  &-content.sideline {
     & > * {
       position: relative;
       padding-left: 20px;
@@ -250,8 +253,11 @@
     }
   }
 
-  &.payment &__buttons {
-    margin-top: 20px;
+  &-content,
+  &-content.sideline {
+    & > *:last-child {
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -270,6 +276,20 @@
 
     &:not(:first-child) {
       margin-top: 35px;
+    }
+  }
+
+  &-content.sideline {
+    & > *:not(:last-child) {
+      padding-bottom: 20px;
+    }
+
+    & > * {
+      padding-left: 12px;
+    }
+
+    & > *:last-child {
+      padding-left: 0px;
     }
   }
 
@@ -335,22 +355,15 @@
       }
     }
   }
+
+  .p2p-order-process-content.sideline .p2p-order-process__buttons {
+    margin-top: 0;
+  }
 }
 
 // Payment process styles
 .adaptive .p2p-order-process.payment {
   .p2p-order-process-content {
-    & > *:not(:last-child) {
-      padding-bottom: 20px;
-    }
-
-    & > * {
-      padding-left: 12px;
-    }
-
-    & > *:last-child {
-      padding-left: 0px;
-    }
   }
 
   .p2p-order-process-info {
