@@ -18,7 +18,7 @@ import './index.less';
 
 function Order({ adaptive }) {
   const mode = 'sell' || useSelector(dappP2PModeSelector);
-  const process = processes.sell.releasing;
+  const process = processes.sell.completed;
 
   return (
     <P2P>
