@@ -5,3 +5,5 @@ export { default as ChoosedMethod } from './ChoosedMethod';
 export { default as ChooseMethod } from './ChooseMethod';
 export { default as Chat } from './Chat';
 export { default as ChatUser } from './ChatUser';
+export { default as Feedback } from './Feedback';
+export { default as Process } from './Process';

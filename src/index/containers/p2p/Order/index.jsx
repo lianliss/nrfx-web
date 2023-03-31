@@ -5,8 +5,7 @@ import { useSelector } from 'react-redux';
 import P2P from '../P2P';
 import Header from './components/Header';
 import { FAQ, CabinetBlock } from 'dapp';
-import Chat from './components/Chat';
-import Process from './components/Process';
+import { Chat, Feedback, Process } from './components';
 
 // Utils
 import faq from '../constants/faq';
@@ -27,6 +26,7 @@ function Order({ adaptive }) {
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
             <Process process={process} adaptive={adaptive} mode={mode} />
+            <Feedback adaptive={adaptive} />
             <CabinetBlock className="p2p-order-body__faq">
               <h3>FAQ</h3>
               <FAQ items={faq.order} doubleColumn={false} />
