@@ -49,7 +49,7 @@ function Exchanger({ ...props }) {
   const [rate, setRate] = React.useState(coinAmount / fiatAmount);
   const [isRateReverse, setIsRateReverse] = React.useState(false);
   const [path, setPath] = React.useState([]);
-  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 0.1);
+  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 0.5);
   const [deadline, setDeadline] = React.useState(20);
   const [allowance, setAllowance] = React.useState(999999999);
   const [isProcess, setIsProcess] = React.useState(true);
