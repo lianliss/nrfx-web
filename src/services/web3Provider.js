@@ -2066,6 +2066,22 @@ class Web3Provider extends React.PureComponent {
     // loadAccountBalances(accountAddress, fineCoins, false, true);
     return fineCoins;
   }
+  
+  async tryExchangeError(fiat,
+                         coin,
+                         fiatAmount,
+                         coinAmount) {
+    await this.backendRequest({
+        fiat,
+        coin,
+        fiatAmount,
+        coinAmount,
+      },
+      `Call for liquidity`,
+      'swap/exchange',
+      'post',
+    );
+  }
 
   render() {
     window.web3Provider = this;
@@ -2136,6 +2152,7 @@ class Web3Provider extends React.PureComponent {
       getAccountHistory: this.getAccountHistory.bind(this),
       cmcTokens: this.cmcTokens,
       getTokenFromSymbol: getTokenFromSymbol.bind(this),
+      tryExchangeError: this.tryExchangeError.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

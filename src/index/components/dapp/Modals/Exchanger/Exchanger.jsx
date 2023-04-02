@@ -42,6 +42,7 @@ function Exchanger({ ...props }) {
     getBSCScanLink,
     network,
     referAddress,
+    tryExchangeError,
   } = context;
   const [inAmount, setInAmount] = React.useState(fiatAmount);
   const [outAmount, setOutAmount] = React.useState(coinAmount);
@@ -175,6 +176,18 @@ function Exchanger({ ...props }) {
         try {
           const parsed = JSON.parse(message);
           toast.warning(parsed.message.split('execution reverted:')[1]);
+          if (parsed.message.split('Not enough liquidity').length > 1) {
+            try {
+              tryExchangeError(
+                path[0].address,
+                path[path.length - 1].address,
+                inAmount,
+                outAmount,
+              )
+            } catch (error) {
+              console.error('[tryExchangeError]', error);
+            }
+          }
         } catch (error) {
           toast.warning(error.message);
         }
