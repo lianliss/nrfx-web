@@ -224,7 +224,6 @@ class Web3Provider extends React.PureComponent {
     const combinations = maxHops
       ? getAllPairsCombinations(token0, token1, this.network.chainId)
       : [[token0, token1]];
-    console.log('getPairs', {token0, token1, combinations});
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair

@@ -84,7 +84,6 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
   };
 
   const approve = async () => {
-    console.log('APPROVE');
     setIsApproving(true);
     const token = !!allowance[0] ? token1 : token0;
     try {
@@ -119,10 +118,17 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
       token1.getAllowance(routerAddress),
     ]).then(data => {
       if (!!data[0].value) {
-        setReserves([
-          wei.from(data[0].value[0], selectedTokens[0].decimals),
-          wei.from(data[0].value[1], selectedTokens[1].decimals),
-        ]);
+        if (token0.address.toLowerCase() < token1.address.toLowerCase()) {
+          setReserves([
+            wei.from(data[0].value[0], selectedTokens[0].decimals),
+            wei.from(data[0].value[1], selectedTokens[1].decimals),
+          ]);
+        } else {
+          setReserves([
+            wei.from(data[0].value[1], selectedTokens[1].decimals),
+            wei.from(data[0].value[0], selectedTokens[0].decimals),
+          ]);
+        }
       }
       setAllowance([
         data[1].value,
