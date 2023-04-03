@@ -7,7 +7,6 @@ import { NumberFormat } from 'src/ui';
 import './DoubleText.less';
 
 function DoubleText({ title, currency, first, second }) {
-  console.log('DOUBLETEXT', first, second);
   return (
     <div className="DoubleText">
       <span>
