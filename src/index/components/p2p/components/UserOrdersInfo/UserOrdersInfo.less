@@ -1,0 +1,48 @@
+.p2p-user-orders-info {
+  &__name {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  &__numbers {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 105%;
+  }
+
+  // Blocks
+  &__numbers {
+    & > span {
+      &:first-child {
+        padding-right: 4px;
+      }
+      &:last-child {
+        padding-left: 7px;
+      }
+    }
+
+    span + span {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 7px;
+        width: 1px;
+        background: var(--cool-gray);
+      }
+    }
+  }
+}
+
+.adaptive .p2p-user-orders-info {
+  &__numbers {
+    font-weight: 500;
+    font-size: 10px;
+    color: var(--cool-gray);
+  }
+}

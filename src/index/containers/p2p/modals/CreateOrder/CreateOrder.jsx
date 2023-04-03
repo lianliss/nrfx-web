@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 // Components
 import { CabinetModal, DappInput, CustomButton } from 'dapp';
 import { Row, Button, NumberFormat } from 'ui';
+import { UserOrdersInfo } from 'src/index/components/p2p';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
@@ -25,7 +26,13 @@ function CreateOrder(props) {
   return (
     <CabinetModal className="p2p-modal-create-order__wrapper">
       <Row className="p2p-modal-create-order" wrap={adaptive}>
-        <div></div>
+        <div>
+          <UserOrdersInfo
+            name="mail****@gmail.com"
+            ordersNumber={287}
+            completion={85.7}
+          />
+        </div>
         <div className="p2p-modal-create-order-form">
           <div>
             <Label text="I want to pay" />
