@@ -22,7 +22,14 @@ function Order({ adaptive }) {
   return (
     <P2P>
       <div className="p2p-order">
-        <Header adaptive={adaptive} />
+        <Header
+          adaptive={adaptive}
+          process={process}
+          from="USDT"
+          to="IDR"
+          fromAmount={200}
+          toAmount={15000}
+        />
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
             <Process process={process} adaptive={adaptive} mode={mode} />
