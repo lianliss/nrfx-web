@@ -27,6 +27,7 @@ function DappInput({
   inputMode,
   pattern,
   id,
+  className,
   ...otherProps
 }) {
   const [inputState, setInputState] = React.useState(value || '');
@@ -112,21 +113,15 @@ function DappInput({
     });
   };
 
-  const className = classNames(
-    {
-      DappInput: true,
-      error: error,
-    },
-    size
-  );
-
   return (
     <div className={classNames('DappInput__wrapper', size)}>
       <input
         type="text"
         value={inputState}
         onChange={handleInput}
-        className={className}
+        className={classNames('DappInput', size, className, {
+          error: error,
+        })}
         placeholder={placeholder}
         inputMode={inputMode}
         pattern={pattern}

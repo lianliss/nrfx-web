@@ -77,6 +77,7 @@ import {
   VideoModal,
   AdaptiveTop,
 } from "./components/dapp";
+import * as p2pModals from './containers/p2p/modals';
 import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
 import DexSettingsModal from "./containers/dapp/DexSwap/components/DexSettingsModal/DexSettingsModal";
 import { closeModal } from "src/actions/index";
@@ -289,6 +290,9 @@ function Modals(props) {
       break;
     case "adaptive_top":
       Component = AdaptiveTop;
+      break;
+    case "p2p_create_order":
+      Component = p2pModals.CreateOrder;
       break;
     default:
       return null;
