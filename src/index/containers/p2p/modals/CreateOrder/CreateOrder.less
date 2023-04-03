@@ -1,0 +1,114 @@
+.p2p-modal-create-order {
+  background: #fff;
+  border-radius: var(--radius-panel);
+
+  &__wrapper > .Modal__box {
+    max-width: 1110px;
+    width: 100%;
+  }
+
+  & > div {
+    padding: 40px;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+
+    &:last-child {
+      max-width: 42.235%;
+      padding: 40px 40px 40px 28px;
+      border-left: 1px solid #dbdbdb;
+    }
+  }
+
+  &-form {
+    & > div {
+      &:nth-child(1) {
+        margin-bottom: 20px;
+      }
+      &:nth-child(2) {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .DappInput {
+    border: 1px solid var(--azureish-white);
+    border-radius: 10px;
+    background: none;
+
+    &__wrapper {
+      margin-top: 8px;
+
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .CustomButton {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+
+    &:hover {
+      &:not(:active) {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .modal-balance {
+    text-align: right;
+  }
+
+  .modal-buttons {
+    .Button {
+      flex: 1 1 auto;
+    }
+  }
+
+  .modal__label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .moderate-fz {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .normal-fw {
+    font-weight: 400;
+  }
+  .medium-fw {
+    font-weight: 500;
+  }
+  .semi-bold-fw {
+    font-weight: 600;
+  }
+  .bold-fw {
+    font-weight: 700;
+  }
+}
+
+.adaptive .p2p-modal-create-order {
+  & > div {
+    padding: 18px;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+  }
+
+  .moderate-fz {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .Button.big {
+    .Button__label {
+      font-size: 18px;
+      line-height: 100%;
+    }
+  }
+}
