@@ -415,7 +415,10 @@ class FarmingPopupStake extends React.PureComponent {
                 <div>
                   <h6>{getLang('dapp_farming_stake_info_2_title')}</h6>
                   <p>{getLang('dapp_farming_stake_info_2_description')}</p>
-                  <a href="">
+                  <a
+                    href="https://docs.narfex.com/narfex/farming/farming"
+                    target="_blank"
+                  >
                     {getLang('dapp_farming_stake_info_read_more')} ›
                   </a>
                 </div>
