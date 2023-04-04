@@ -90,12 +90,6 @@ function FarmingInstruction() {
         days of the last harvest or staking. Each withdrawal resets the timer
         for 14 hours. These 10% withdrawal fees are automatically burned.
       </p>
-      {/* <h3>Changeable parameters (DAO)</h3>
-      <DocumentContainer.CustomList separator="–">
-        <li> Early harvest fee.</li>
-        <li> Amount of distributions of NRFX per block.</li>
-        <li> Update rewards.</li>
-      </DocumentContainer.CustomList> */}
       <br />
       <DocumentContainer.Title>
         Narfex Competition Campaign
