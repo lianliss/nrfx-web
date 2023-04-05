@@ -2,144 +2,60 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 // Components
-import { CabinetModal, DappInput, CustomButton } from 'dapp';
-import { Row, Button, NumberFormat } from 'ui';
-import { UserOrdersInfo, PaymentItem } from 'src/index/components/p2p';
+import { CabinetModal } from 'dapp';
+import { Row } from 'ui';
+import { UserOrdersInfo } from 'src/index/components/p2p';
+import {
+  Form,
+  TermsAndConditions,
+  OrderAmountItems,
+  PaymentItems,
+} from './components';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
+import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Styles
 import './CreateOrder.less';
 
-const CurrencyIndicator = ({ currency }) => (
-  <span className="moderate-fz medium-fw dark-black-color">{currency}</span>
-);
-
-const Label = ({ text }) => (
-  <p className="cool-gray-color modal__label">{text}</p>
-);
-
-const OrderInfoWrapper = ({ title, children }) => (
-  <div className="p2p-modal-create-order-info-item normal-fw moderate-fz">
-    <span className="cool-gray-color">{title}</span>
-    <div>{children}</div>
-  </div>
-);
-
-const OrderAmountItems = () => (
-  <Row
-    className="p2p-modal-create-order-amount-items"
-    justifyContent="space-between"
-    gap="7px 0"
-    wrap
+const Wrapper = ({ children, adaptive, ...props }) => (
+  <CabinetModal
+    className="p2p-modal-create-order__wrapper"
+    closeOfRef={adaptive}
+    closeButton={adaptive}
+    {...props}
   >
-    <OrderInfoWrapper title="Price">
-      <span className="green-color medium-fw">
-        <NumberFormat number={39.93} currency="USDT" />
-      </span>
-    </OrderInfoWrapper>
-    <OrderInfoWrapper title="Avaible">
-      <span className="black-gunmetal-color medium-fw">
-        <NumberFormat number={220.0} currency="USDT" />
-      </span>
-    </OrderInfoWrapper>
-  </Row>
+    <Row
+      className="p2p-modal-create-order"
+      alignItems="stretch"
+      wrap={adaptive}
+    >
+      {children}
+    </Row>
+  </CabinetModal>
 );
 
-const PaymentItems = ({ adaptive }) => (
-  <Row
-    className="p2p-modal-create-order-payment-items"
-    justifyContent="space-between"
-    gap="10px 0"
-    wrap
-  >
-    <OrderInfoWrapper title={adaptive ? 'Payment term' : 'Payment Time Limit'}>
-      <span className="black-gunmetal-color medium-fw">
-        <NumberFormat number={15} /> Minutes
-      </span>
-    </OrderInfoWrapper>
-    <OrderInfoWrapper title={adaptive ? 'Payment' : 'Seller`s payment method'}>
-      <Row gap="10px 12px" wrap>
-        <PaymentItem title="Bank Transfer" />
-        <PaymentItem title="Bank Transfer" />
-        <PaymentItem title="Monobank" />
-      </Row>
-    </OrderInfoWrapper>
-  </Row>
-);
-
-function CreateOrder({ mode }) {
+function CreateOrder({ mode = 'sell', ...props }) {
   const adaptive = useSelector(adaptiveSelector);
-
-  const renderForm = () => {
-    return (
-      <div className="p2p-modal-create-order-form">
-        <div>
-          <Label text="I want to pay" />
-          <DappInput
-            placeholder="0.00"
-            inputMode="decimal"
-            indicator={
-              <Row alignItems="center" gap={8}>
-                <CustomButton>
-                  <span className="light-blue-gradient-color">ALL</span>
-                </CustomButton>
-                <CurrencyIndicator currency="IDR" />
-              </Row>
-            }
-            className="moderate-fz medium-fw"
-          />
-          {!adaptive && (
-            <p className="cool-gray-color moderate-fz normal-fw modal-balance">
-              Balance: <NumberFormat number={0.0} currency="USDT" />
-            </p>
-          )}
-        </div>
-        <div>
-          <Label text="I will receive" />
-          <DappInput
-            placeholder="1,000.00 - 8,999.60"
-            indicator={<CurrencyIndicator currency="IDR" />}
-            className="moderate-fz medium-fw"
-            inputMode="decimal"
-            type="number"
-          />
-        </div>
-        <Row className="modal-buttons" gap="15px 6px">
-          {!adaptive && (
-            <Button type="secondary-light" size="moderate">
-              <span className="light-blue-gradient-color">Cancel</span>
-            </Button>
-          )}
-          <Button Button type="lightBlue" size={adaptive ? 'big' : 'moderate'}>
-            Buy USDT
-          </Button>
-        </Row>
-        {adaptive && <PaymentItems adaptive={adaptive} />}
-      </div>
-    );
-  };
+  const paymentMethod = null;
 
   return (
-    <CabinetModal
-      className="p2p-modal-create-order__wrapper"
-      closeOfRef={adaptive}
-      closeButton={adaptive}
-    >
-      <Row className="p2p-modal-create-order" wrap={adaptive}>
-        <div>
-          <UserOrdersInfo
-            name="mail****@gmail.com"
-            ordersNumber={287}
-            completion={85.7}
-          />
-          <OrderAmountItems />
-          {!adaptive && <PaymentItems adaptive={adaptive} />}
-        </div>
-        {renderForm()}
-      </Row>
-    </CabinetModal>
+    <Wrapper adaptive={adaptive} {...props}>
+      <div>
+        <UserOrdersInfo
+          name="mail****@gmail.com"
+          ordersNumber={287}
+          completion={85.7}
+        />
+        <OrderAmountItems mode={mode} />
+        {!adaptive && <PaymentItems mode={mode} adaptive={adaptive} />}
+        {mode === p2pMode.sell && !adaptive && (
+          <TermsAndConditions mode={mode} />
+        )}
+      </div>
+      <Form mode={mode} adaptive={adaptive} />
+    </Wrapper>
   );
 }
 
