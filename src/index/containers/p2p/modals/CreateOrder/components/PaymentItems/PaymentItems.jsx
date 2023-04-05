@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Row, NumberFormat } from 'ui';
 import { OrderInfoWrapper } from '..';
@@ -32,7 +33,7 @@ const getTitles = (text, mode, adaptive) => {
   return titles[mode][text][adaptive ? 'adaptive' : 'desktop'];
 };
 
-const PaymentItems = ({ adaptive, mode }) => (
+const PaymentItems = ({ adaptive, mode, selected }) => (
   <Row
     className="p2p-modal-create-order-payment-items"
     justifyContent="space-between"
@@ -46,11 +47,24 @@ const PaymentItems = ({ adaptive, mode }) => (
     </OrderInfoWrapper>
     <OrderInfoWrapper title={getTitles('payment', mode, adaptive)}>
       <Row gap="10px 12px" wrap>
-        <PaymentItem title="Bank Transfer" />
-        <PaymentItem title="Bank Transfer" />
-        <PaymentItem title="Monobank" />
+        {selected ? (
+          <PaymentItem title={selected.title} />
+        ) : (
+          <>
+            <PaymentItem title="Bank Transfer" />
+            <PaymentItem title="Bank Transfer" />
+            <PaymentItem title="Mono Bank" />
+          </>
+        )}
       </Row>
     </OrderInfoWrapper>
   </Row>
 );
+
+PaymentItems.propTypes = {
+  adaptive: PropTypes.bool,
+  selected: PropTypes.object,
+  mode: PropTypes.oneOf(Object.keys(p2pMode)),
+};
+
 export default PaymentItems;

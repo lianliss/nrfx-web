@@ -14,7 +14,18 @@ const Label = ({ text }) => (
   <p className="cool-gray-color modal__label">{text}</p>
 );
 
-function Form({ mode, adaptive }) {
+const SetPaymentButton = ({ adaptive, buttonSize, onClick }) => {
+  return (
+    <div className="modal-buttons-set-payment">
+      {!adaptive && <Label text="Payment Method" />}
+      <Button type="secondary-light" size={buttonSize} onClick={onClick}>
+        <span className="light-blue-gradient-color">Set my payment method</span>
+      </Button>
+    </div>
+  );
+};
+
+function Form({ mode, adaptive, selectedPayment }) {
   const buttonSize = adaptive ? 'big' : 'moderate';
 
   return (
@@ -52,7 +63,12 @@ function Form({ mode, adaptive }) {
           type="number"
         />
       </div>
-      <Row className="modal-buttons" gap="15px 6px">
+      <Row
+        className="modal-buttons"
+        gap={adaptive ? '15px 6px' : '30px 6px'}
+        wrap
+      >
+        {mode === p2pMode.sell && !selectedPayment && <SetPaymentButton />}
         {!adaptive && (
           <Button type="secondary-light" size="moderate">
             <span className="light-blue-gradient-color">Cancel</span>
@@ -68,7 +84,13 @@ function Form({ mode, adaptive }) {
           </Button>
         )}
       </Row>
-      {adaptive && <PaymentItems mode={mode} adaptive={adaptive} />}
+      {adaptive && (
+        <PaymentItems
+          mode={mode}
+          selected={selectedPayment}
+          adaptive={adaptive}
+        />
+      )}
       {mode === p2pMode.sell && adaptive && <TermsAndConditions />}
     </div>
   );

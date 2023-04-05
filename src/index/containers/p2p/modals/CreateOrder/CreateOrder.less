@@ -67,6 +67,15 @@
   }
 
   .modal-buttons {
+    &-set-payment {
+      width: 100%;
+
+      .Button {
+        margin-top: 8px;
+        width: 100%;
+      }
+    }
+
     .Button {
       flex: 1 1 auto;
     }
@@ -93,6 +102,16 @@
     padding-left: 35px;
   }
 
+  &-payment-items {
+    .p2p-modal-create-order-info-item {
+      &:last-child {
+        & > div {
+          width: 100%;
+        }
+      }
+    }
+  }
+
   .modal__label {
     font-weight: 500;
     font-size: 14px;
@@ -117,12 +136,12 @@
       font-weight: 500;
       font-size: 14px;
       line-height: 22px;
-      color: var(--cool-gray);
+      color: var(--dark-black);
     }
 
     p {
       text-transform: uppercase;
-      color: var(--dark-black);
+      color: var(--cool-gray);
 
       &:not(:last-child) {
         margin-bottom: 12px;
@@ -204,7 +223,7 @@
       justify-content: space-between;
       align-items: flex-start;
 
-      & > div > {
+      & > div {
         max-width: 50%;
       }
 

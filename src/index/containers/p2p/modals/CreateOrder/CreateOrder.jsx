@@ -38,7 +38,7 @@ const Wrapper = ({ children, adaptive, ...props }) => (
 
 function CreateOrder({ mode = 'sell', ...props }) {
   const adaptive = useSelector(adaptiveSelector);
-  const paymentMethod = null;
+  const selectedPayment =  { title: 'Mono Bank' };
 
   return (
     <Wrapper adaptive={adaptive} {...props}>
@@ -49,12 +49,18 @@ function CreateOrder({ mode = 'sell', ...props }) {
           completion={85.7}
         />
         <OrderAmountItems mode={mode} />
-        {!adaptive && <PaymentItems mode={mode} adaptive={adaptive} />}
+        {!adaptive && (
+          <PaymentItems
+            selected={selectedPayment}
+            mode={mode}
+            adaptive={adaptive}
+          />
+        )}
         {mode === p2pMode.sell && !adaptive && (
           <TermsAndConditions mode={mode} />
         )}
       </div>
-      <Form mode={mode} adaptive={adaptive} />
+      <Form mode={mode} adaptive={adaptive} selectedPayment={selectedPayment} />
     </Wrapper>
   );
 }
