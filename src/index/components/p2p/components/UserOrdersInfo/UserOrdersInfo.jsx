@@ -17,7 +17,7 @@ function UserOrdersInfo({ name, ordersNumber, completion }) {
         alignItems="center"
         gap="0 10px"
       >
-        <SVG src={avatarIcon} style={{ width: 25, height: 25 }} flex />
+        <SVG className="p2p-user-orders-info__icon" src={avatarIcon} flex />
         <Row alignItems="center" gap="4px 12px" wrap>
           <span className="p2p-user-orders-info__name">{name}</span>
           <div className="p2p-user-orders-info__numbers">

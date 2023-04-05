@@ -73,6 +73,11 @@
   }
 
   &-info-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+
     &:first-child {
       flex: 1 1 47.5%;
     }
@@ -81,7 +86,8 @@
     }
   }
 
-  &-info-items {
+  &-payment-items,
+  &-amount-items {
     box-sizing: border-box;
     padding-left: 35px;
   }
@@ -128,10 +134,26 @@
 
 .adaptive .p2p-modal-create-order {
   & > div {
-    padding: 18px;
     width: 100%;
     max-width: 100%;
     border: none;
+
+    &:first-child {
+      padding: 50px 18px 20px 18px;
+    }
+    &:last-child {
+      padding: 0 18px 18px 18px;
+    }
+  }
+
+  &-form {
+    & > div {
+      margin-bottom: 20px;
+    }
+  }
+
+  .modal-buttons {
+    margin-bottom: 20px;
   }
 
   .moderate-fz {
@@ -143,6 +165,38 @@
     .Button__label {
       font-size: 18px;
       line-height: 100%;
+    }
+  }
+
+  &-info-item {
+    flex: 1 1 100%;
+  }
+
+  &-payment-items,
+  &-amount-items {
+    padding: 0;
+  }
+
+  &-payment-items {
+    .p2p-modal-create-order-info-item {
+      justify-content: space-between;
+      align-items: flex-start;
+
+      & > div > {
+        max-width: 50%;
+      }
+
+      .orders-list-payment-item {
+        width: 100%;
+        justify-content: flex-end;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+
+        &__color {
+          display: none;
+        }
+      }
     }
   }
 }
