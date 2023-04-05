@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 // Components
 import { CabinetModal, DappInput, CustomButton } from 'dapp';
 import { Row, Button, NumberFormat } from 'ui';
-import { UserOrdersInfo } from 'src/index/components/p2p';
+import { UserOrdersInfo, PaymentItem } from 'src/index/components/p2p';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
@@ -20,6 +20,20 @@ const Label = ({ text }) => (
   <p className="cool-gray-color modal__label">{text}</p>
 );
 
+const OrderInfoWrapper = ({ title, children }) => (
+  <div className="p2p-modal-create-order-info-item">
+    <Row
+      className="normal-fw moderate-fz"
+      alignItems="center"
+      gap="4px 10px"
+      wrap
+    >
+      <span className="cool-gray-color">{title}</span>
+      <div>{children}</div>
+    </Row>
+  </div>
+);
+
 function CreateOrder(props) {
   const adaptive = useSelector(adaptiveSelector);
 
@@ -32,6 +46,40 @@ function CreateOrder(props) {
             ordersNumber={287}
             completion={85.7}
           />
+          <Row
+            className="p2p-modal-create-order-info-items"
+            justifyContent="space-between"
+            wrap
+          >
+            <OrderInfoWrapper title="Price">
+              <span className="green-color medium-fw">
+                <NumberFormat number={39.93} currency="USDT" />
+              </span>
+            </OrderInfoWrapper>
+            <OrderInfoWrapper title="Avaible">
+              <span className="black-gunmetal-color medium-fw">
+                <NumberFormat number={220.0} currency="USDT" />
+              </span>
+            </OrderInfoWrapper>
+          </Row>
+          <Row
+            className="p2p-modal-create-order-info-items"
+            justifyContent="space-between"
+            wrap
+          >
+            <OrderInfoWrapper title="Payment Time Limit">
+              <span className="black-gunmetal-color medium-fw">
+                <NumberFormat number={15} /> Minutes
+              </span>
+            </OrderInfoWrapper>
+            <OrderInfoWrapper title="Seller`s payment method">
+              <Row gap="10px 12px" wrap>
+                <PaymentItem title="Bank Transfer" />
+                <PaymentItem title="Bank Transfer" />
+                <PaymentItem title="Monobank" />
+              </Row>
+            </OrderInfoWrapper>
+          </Row>
         </div>
         <div className="p2p-modal-create-order-form">
           <div>
@@ -71,7 +119,11 @@ function CreateOrder(props) {
                 <span className="light-blue-gradient-color">Cancel</span>
               </Button>
             )}
-            <Button type="lightBlue" size={adaptive ? 'big' : 'moderate'}>
+            <Button
+              Button
+              type="lightBlue"
+              size={adaptive ? 'big' : 'moderate'}
+            >
               Buy USDT
             </Button>
           </Row>

@@ -1,9 +1,10 @@
 import React from 'react';
+import paymentColors from 'src/index/containers/p2p/constants/paymentColors';
 
 // Styles
 import './index.less';
 
-function PaymentItem({ title, color, adaptive }) {
+function PaymentItem({ title, color = paymentColors.orange, adaptive }) {
   return (
     <div
       className="orders-list-payment-item"

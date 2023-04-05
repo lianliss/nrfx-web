@@ -2,6 +2,10 @@
   background: #fff;
   border-radius: var(--radius-panel);
 
+  &__wrapper {
+    padding: 20px;
+  }
+
   &__wrapper > .Modal__box {
     max-width: 1110px;
     width: 100%;
@@ -11,9 +15,10 @@
     padding: 40px;
     flex: 1 1 auto;
     box-sizing: border-box;
+    width: 58%;
 
     &:last-child {
-      max-width: 42.235%;
+      width: 42.1%;
       padding: 40px 40px 40px 28px;
       border-left: 1px solid #dbdbdb;
     }
@@ -67,10 +72,34 @@
     }
   }
 
+  &-info-item {
+    &:first-child {
+      flex: 1 1 47.5%;
+    }
+    &:last-child {
+      flex: 1 1 52.5%;
+    }
+  }
+
+  &-info-items {
+    box-sizing: border-box;
+    padding-left: 35px;
+  }
+
   .modal__label {
     font-weight: 500;
     font-size: 14px;
     line-height: 22px;
+  }
+
+  .p2p-user-orders-info__wrapper {
+    margin-bottom: 20px;
+  }
+
+  .orders-list-payment-item {
+    color: var(--dark-black);
+    font-size: 11px;
+    line-height: 13px;
   }
 
   .small-fz {
