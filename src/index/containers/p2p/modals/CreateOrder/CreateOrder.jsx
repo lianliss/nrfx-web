@@ -38,7 +38,7 @@ const Wrapper = ({ children, adaptive, ...props }) => (
 
 function CreateOrder({ mode = 'sell', ...props }) {
   const adaptive = useSelector(adaptiveSelector);
-  const selectedPayment =  { title: 'Mono Bank' };
+  const selectedPayment = null;
 
   return (
     <Wrapper adaptive={adaptive} {...props}>
