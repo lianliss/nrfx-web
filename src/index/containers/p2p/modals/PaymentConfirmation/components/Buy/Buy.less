@@ -1,0 +1,25 @@
+@import url(../../PaymentConfirmation.less);
+
+.@{modal-class}.@{buy-class} {
+  .CheckBox {
+    margin-left: 1px;
+    margin-right: 5px;
+    
+    &__indicator {
+      width: 14px;
+      height: 14px;
+    }
+
+    & + p {
+      line-height: 18px;
+      user-select: none;
+      cursor: pointer;
+    }
+  }
+  
+  .@{buy-class}{
+    &-checkbox-wrapper {
+      margin-top: 20px;
+    }
+  }
+}

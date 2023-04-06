@@ -294,6 +294,9 @@ function Modals(props) {
     case "p2p_create_order":
       Component = p2pModals.CreateOrder;
       break;
+    case "p2p_payment_confirmation":
+      Component = p2pModals.PaymentConfirmation;
+      break;
     default:
       return null;
   }
