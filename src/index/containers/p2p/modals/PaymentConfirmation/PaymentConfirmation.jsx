@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 // Components
 import { CabinetModal } from 'dapp';
-import { Buy } from './components';
+import { Buy, Sell } from './components';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
@@ -16,23 +17,35 @@ function PaymentConfirmation({ mode = 'buy', ...props }) {
   const adaptive = useSelector(adaptiveSelector);
 
   const renderBody = () => {
+    let Component = <></>;
+
     if (mode === p2pMode.buy) {
-      return (
-        <Buy prefix="p2p-modal-payment-confirmation" adaptive={adaptive} />
-      );
+      Component = Buy;
     }
+
+    if (mode === p2pMode.sell) {
+      Component = Sell;
+    }
+
+    return (
+      <Component prefix="p2p-modal-payment-confirmation" adaptive={adaptive} />
+    );
   };
 
   return (
     <CabinetModal
       className="p2p-modal-payment-confirmation__wrapper"
       closeOfRef={adaptive}
-      closeButton={adaptive}
+      closeButton
       {...props}
     >
       {renderBody()}
     </CabinetModal>
   );
 }
+
+PaymentConfirmation.propTypes = {
+  mode: PropTypes.oneOf(Object.keys(p2pMode)),
+};
 
 export default PaymentConfirmation;
