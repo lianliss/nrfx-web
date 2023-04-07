@@ -297,6 +297,9 @@ function Modals(props) {
     case "p2p_payment_confirmation":
       Component = p2pModals.PaymentConfirmation;
       break;
+    case "p2p_set_payment_method":
+      Component = p2pModals.SetPaymentMethod;
+      break;
     default:
       return null;
   }

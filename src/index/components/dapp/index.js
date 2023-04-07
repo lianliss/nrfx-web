@@ -9,6 +9,7 @@ export { default as DexRoute } from './DexRoute/DexRoute';
 export { default as DexDescription } from './DexDescription/DexDescription';
 export { default as Select } from './Select';
 export { default as DappInput } from './DappInput/DappInput';
+export { default as ScrollBox } from './ui/ScrollBox/ScrollBox';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';
@@ -42,6 +43,7 @@ export { default as Team } from './Team/Team';
 
 // Action Components
 export { default as SocialLinks } from './SocialLinks/SocialLinks';
+export { default as AlphabetSelect } from './AlphabetSelect/AlphabetSelect';
 
 // Components
 export { default as FAQ } from './FAQ';
