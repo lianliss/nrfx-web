@@ -1,6 +1,9 @@
 .selectMethod {
-  h3,
   h2 {
+    margin-bottom: 10px;
+  }
+
+  h3 {
     margin-bottom: 15px;
   }
 }
@@ -54,10 +57,17 @@
 }
 
 .item {
+  padding: 3px 0;
   flex: 1 1 (25% - 31px);
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 :global(.adaptive) {
