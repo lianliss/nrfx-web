@@ -12,6 +12,7 @@ import './DappInput.less';
 
 function DappInput({
   textPosition,
+  indicatorPosition,
   type,
   placeholder,
   value,
@@ -27,6 +28,7 @@ function DappInput({
   inputMode,
   pattern,
   id,
+  className,
   ...otherProps
 }) {
   const [inputState, setInputState] = React.useState(value || '');
@@ -61,8 +63,13 @@ function DappInput({
     if (!indicatorRef.current) return;
 
     const indicatorWidth = indicatorRef.current.clientWidth;
-    const paddingKey = textPosition === 'left' ? 'paddingRight' : 'paddingLeft';
-    setPadding({ [paddingKey]: indicatorWidth });
+    const indicatorIsRight = indicatorPosition === 'right';
+    const textPositionIsLeft = textPosition === 'left';
+    const paddingKey =
+      (textPositionIsLeft && indicatorIsRight) || indicatorIsRight
+        ? 'paddingRight'
+        : 'paddingLeft';
+    setPadding({ [paddingKey]: indicatorWidth + 6 });
   }, []);
 
   const handleInput = (e) => {
@@ -112,21 +119,15 @@ function DappInput({
     });
   };
 
-  const className = classNames(
-    {
-      DappInput: true,
-      error: error,
-    },
-    size
-  );
-
   return (
     <div className={classNames('DappInput__wrapper', size)}>
       <input
         type="text"
         value={inputState}
         onChange={handleInput}
-        className={className}
+        className={classNames('DappInput', size, className, {
+          error: error,
+        })}
         placeholder={placeholder}
         inputMode={inputMode}
         pattern={pattern}
@@ -137,7 +138,16 @@ function DappInput({
         {...otherProps}
       />
       {indicator && (
-        <div className="DappInput__indicator" ref={indicatorRef}>
+        <div
+          className="DappInput__indicator"
+          ref={indicatorRef}
+          style={{
+            [indicatorPosition]: '0',
+            ['padding' +
+            indicatorPosition[0].toUpperCase() +
+            indicatorPosition.slice(1)]: '16px',
+          }}
+        >
           {indicator}
         </div>
       )}
@@ -148,6 +158,7 @@ function DappInput({
 
 DappInput.defaultProps = {
   textPosition: 'left',
+  indicatorPosition: 'right',
   type: 'text',
   placeholder: '',
   value: '',
@@ -163,6 +174,7 @@ DappInput.defaultProps = {
 
 DappInput.propTypes = {
   textPosition: PropTypes.string,
+  indicatorPosition: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,

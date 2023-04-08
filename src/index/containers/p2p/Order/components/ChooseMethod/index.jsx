@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { OrderCreatedTextCopy } from 'src/index/components/p2p';
@@ -7,35 +8,55 @@ import PaymentItem from 'src/index/components/p2p/components/PaymentItem';
 
 // Utils
 import paymentColors from '../../../constants/paymentColors';
-import { testPayments } from '../../../Orders/components/Filters/testItems';
 
 // Styles
 import './index.less';
 
-function ChooseMethod({ adaptive }) {
-  const [selectedMethod, setSelectedMethod] = React.useState(
-    testPayments[0].code
-  );
+const PaymentRadio = ({ title, code, selected, onChange }) => (
+  <Radio
+    className="p2p-order-choose-method__item"
+    value={code}
+    onChange={onChange}
+    selected={selected}
+    type="malibu"
+    size="extra_small"
+    key={code}
+  >
+    <PaymentItem title={title} color={paymentColors.orange} />
+  </Radio>
+);
 
+function ChooseMethod({
+  adaptive,
+  methods,
+  selectedMethod,
+  setSelectedMethod,
+}) {
   const handleMethodChange = (code) => {
     setSelectedMethod(code);
   };
 
   const PaymentMethods = React.memo(() => (
     <div className="p2p-order-choose-method__items">
-      {testPayments.slice(0, 3).map((payment) => (
-        <Radio
-          className="p2p-order-choose-method__item"
-          value={payment.code}
-          onChange={handleMethodChange}
-          selected={selectedMethod === payment.code}
-          type="malibu"
-          size="extra_small"
-          key={payment.code}
-        >
-          <PaymentItem title={payment.title} color={paymentColors.orange} />
-        </Radio>
-      ))}
+      {!!methods.length ? (
+        methods
+          .slice(0, 3)
+          .map((payment) => (
+            <PaymentRadio
+              title={payment.title}
+              code={payment.code}
+              key={payment.code}
+              selected={selectedMethod.code === payment.code}
+              onChange={handleMethodChange}
+            />
+          ))
+      ) : (
+        <PaymentRadio
+          title={selectedMethod.title}
+          code={selectedMethod.code}
+          selected={true}
+        />
+      )}
     </div>
   ));
 
@@ -69,5 +90,15 @@ function ChooseMethod({ adaptive }) {
     </Row>
   );
 }
+
+ChooseMethod.propTypes = {
+  setSelectedMethod: PropTypes.func,
+  methods: PropTypes.array,
+};
+
+ChooseMethod.defaultProps = {
+  setSelectedMethod: () => {},
+  methods: [],
+};
 
 export default ChooseMethod;
