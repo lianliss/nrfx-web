@@ -15,8 +15,14 @@ const testItems = Array(50)
   .fill({ title: 'Bank Transfer' })
   .map((item, index) => (index < 16 ? { ...item, recommended: true } : item));
 
-function SelectMethod({ adaptive }) {
+function SelectMethod({ adaptive, onSelect }) {
   const [selectedLetter, setSelectedLetter] = React.useState('All');
+
+  const MethodItem = ({ item }) => (
+    <div className={styles.item} onClick={() => onSelect(item)}>
+      <PaymentItem title={item.title} />
+    </div>
+  );
 
   return (
     <div className={styles.selectMethod}>
@@ -33,9 +39,7 @@ function SelectMethod({ adaptive }) {
               {testItems
                 .filter((item) => item.recommended)
                 .map((item, index) => (
-                  <div className={styles.item} key={index}>
-                    <PaymentItem title={item.title} />
-                  </div>
+                  <MethodItem item={item} key={index} />
                 ))}
             </div>
           </div>
@@ -54,9 +58,7 @@ function SelectMethod({ adaptive }) {
             />
             <div className={styles.items}>
               {testItems.map((item, index) => (
-                <div className={styles.item} key={index}>
-                  <PaymentItem title={item.title} />
-                </div>
+                <MethodItem item={item} key={index} />
               ))}
             </div>
           </div>
