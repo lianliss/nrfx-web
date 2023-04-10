@@ -16,7 +16,7 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './index.less';
 
-function List({ mode }) {
+function List({ mode, onOrderCreate }) {
   const Item = () => (
     <TR className="orders-list-item">
       <TD>
@@ -80,6 +80,7 @@ function List({ mode }) {
         <Button
           type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
           size="small"
+          onClick={onOrderCreate}
         >
           {mode === p2pMode.sell ? 'Sell N-Fiat' : 'Buy N-Fiat'}
         </Button>

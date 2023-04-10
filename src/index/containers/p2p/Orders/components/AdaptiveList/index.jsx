@@ -17,7 +17,7 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './index.less';
 
-function AdaptiveList({ mode }) {
+function AdaptiveList({ mode, onOrderCreate }) {
   const Item = () => (
     <TR className="orders-list-item">
       <TD>
@@ -73,6 +73,7 @@ function AdaptiveList({ mode }) {
           <Button
             type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
             size="small"
+            onClick={onOrderCreate}
           >
             {mode === p2pMode.sell ? 'Sell' : 'Buy'}
           </Button>
@@ -80,19 +81,11 @@ function AdaptiveList({ mode }) {
       </TD>
       <TD>
         <div className="orders-list-payment">
-          <PaymentItem
-            title="Bank Transfer"
-            color={paymentColors.orange}
-            adaptive
-          />
-          <PaymentItem title="Pay me" color={paymentColors.red} adaptive />
-          <PaymentItem title="Mono Bank" color={paymentColors.black} adaptive />
-          <PaymentItem
-            title="Bank Transfer"
-            color={paymentColors.orange}
-            adaptive
-          />
-          <PaymentItem title="Pay me" color={paymentColors.red} adaptive />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
+          <PaymentItem title="Mono Bank" color={paymentColors.black} />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
         </div>
       </TD>
     </TR>
