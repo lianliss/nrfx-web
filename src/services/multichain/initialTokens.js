@@ -151,7 +151,7 @@ export const TOKENS = {
     nrfx: {
       name: 'Narfex',
       symbol: 'NRFX',
-      address: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
+      address: '0xfa76d0dc8E020098B3f22f67d8AADda6FDc7164e',
       chainId: BSC_TESTNET,
       decimals: DEFAULT_DECIMALS,
       logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
