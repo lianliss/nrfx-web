@@ -17,7 +17,7 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './index.less';
 
-function AdaptiveList({ mode }) {
+function AdaptiveList({ mode, onOrderCreate }) {
   const Item = () => (
     <TR className="orders-list-item">
       <TD>
@@ -73,6 +73,7 @@ function AdaptiveList({ mode }) {
           <Button
             type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
             size="small"
+            onClick={onOrderCreate}
           >
             {mode === p2pMode.sell ? 'Sell' : 'Buy'}
           </Button>

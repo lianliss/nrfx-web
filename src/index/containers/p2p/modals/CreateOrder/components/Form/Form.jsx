@@ -6,6 +6,11 @@ import { Row, Button, NumberFormat } from 'ui';
 import { DappInput, CustomButton } from 'dapp';
 import { TermsAndConditions, PaymentItems } from '..';
 
+// Utils
+import { openStateModal } from 'src/actions';
+import router from 'src/router';
+import { P2P_ORDER } from 'src/index/constants/pages';
+
 const CurrencyIndicator = ({ currency }) => (
   <span className="moderate-fz medium-fw dark-black-color">{currency}</span>
 );
@@ -25,8 +30,14 @@ const SetPaymentButton = ({ adaptive, buttonSize, onClick }) => {
   );
 };
 
-function Form({ mode, adaptive, selectedPayment }) {
+function Form({ mode, adaptive, selectedPayment, onCancel }) {
   const buttonSize = adaptive ? 'big' : 'moderate';
+
+  const handleConfirm = () => {
+    router.navigate(P2P_ORDER);
+
+    onCancel();
+  };
 
   return (
     <div className="p2p-modal-create-order-form">
@@ -37,6 +48,7 @@ function Form({ mode, adaptive, selectedPayment }) {
         <DappInput
           placeholder="0.00"
           inputMode="decimal"
+          type="number"
           indicator={
             <Row alignItems="center" gap={8}>
               <CustomButton>
@@ -68,18 +80,22 @@ function Form({ mode, adaptive, selectedPayment }) {
         gap={adaptive ? '15px 6px' : '30px 6px'}
         wrap
       >
-        {mode === p2pMode.sell && !selectedPayment && <SetPaymentButton />}
+        {mode === p2pMode.sell && !selectedPayment && (
+          <SetPaymentButton
+            onClick={() => openStateModal('p2p_set_payment_method', { mode })}
+          />
+        )}
         {!adaptive && (
-          <Button type="secondary-light" size="moderate">
+          <Button type="secondary-light" size="moderate" onClick={onCancel}>
             <span className="light-blue-gradient-color">Cancel</span>
           </Button>
         )}
         {mode === p2pMode.buy ? (
-          <Button type="lightBlue" size={buttonSize}>
+          <Button type="lightBlue" size={buttonSize} onClick={handleConfirm}>
             Buy USDT
           </Button>
         ) : (
-          <Button type="orange" size={buttonSize}>
+          <Button type="orange" size={buttonSize} onClick={handleConfirm}>
             Sell USDT
           </Button>
         )}

@@ -7,3 +7,16 @@ import * as actionTypes from '../actionTypes';
  */
 export const setP2PMode = (mode) => (dispatch) =>
   dispatch({ type: actionTypes.DAPP_SET_P2P_MODE, payload: mode });
+
+/**
+ *  Sets p2p payment.
+ * @param {'buy' | 'sell'} mode
+ * @param {object} payment
+ * @returns dispatch
+ */
+export const setP2PPayment = (mode, payment) => (dispatch) => {
+  return dispatch({
+    type: actionTypes.DAPP_SET_P2P_PAYMENT,
+    payload: { payment, mode },
+  });
+};

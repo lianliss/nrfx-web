@@ -27,6 +27,12 @@ const initialState = {
   },
   p2p: {
     mode: p2pMode.buy,
+    buy: {
+      payment: null,
+    },
+    sell: {
+      payment: null,
+    },
   },
 };
 
@@ -164,6 +170,19 @@ function reduce(state = initialState, action = {}) {
           mode: payload,
         },
       };
+    }
+    case actionTypes.DAPP_SET_P2P_PAYMENT: {
+      const newState = { ...state };
+
+      if (payload.mode === p2pMode.buy) {
+        newState.p2p.buy.payment = payload.payment;
+      }
+
+      if (payload.mode === p2pMode.sell) {
+        newState.p2p.sell.payment = payload.payment;
+      }
+
+      return newState;
     }
     default:
       return state;

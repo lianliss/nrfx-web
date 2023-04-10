@@ -13,7 +13,7 @@ import { classNames as cn } from 'utils';
 // Styles
 import styles from './Form.module.less';
 
-function Form({ payment, adaptive, onCancel }) {
+function Form({ payment, adaptive, onCancel, onConfirm }) {
   const buttonSize = adaptive ? 'big' : 'moderate';
 
   return (
@@ -63,7 +63,7 @@ function Form({ payment, adaptive, onCancel }) {
         <Button type="secondary-light" size={buttonSize} onClick={onCancel}>
           <span className="light-blue-gradient-color">Cancel</span>
         </Button>
-        <Button type="lightBlue" size={buttonSize}>
+        <Button type="lightBlue" size={buttonSize} onClick={onConfirm}>
           Confirm
         </Button>
       </div>
