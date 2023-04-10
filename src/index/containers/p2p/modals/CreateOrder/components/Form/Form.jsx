@@ -57,7 +57,7 @@ function Form({ mode, adaptive, selectedPayment }) {
         <Label text="I will receive" />
         <DappInput
           placeholder="1,000.00 - 8,999.60"
-          indicator={<CurrencyIndicator currency="IDR" />}
+          indicator={<CurrencyIndicator currency="USDT" />}
           className="moderate-fz medium-fw"
           inputMode="decimal"
           type="number"

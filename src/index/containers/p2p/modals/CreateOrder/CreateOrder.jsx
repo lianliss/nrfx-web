@@ -36,6 +36,16 @@ const Wrapper = ({ children, adaptive, ...props }) => (
   </CabinetModal>
 );
 
+const getTitle = (mode) => {
+  if (mode === p2pMode.buy) {
+    return 'Buy';
+  }
+
+  if (mode === p2pMode.sell) {
+    return 'Sell';
+  }
+};
+
 function CreateOrder({ mode = 'sell', ...props }) {
   const adaptive = useSelector(adaptiveSelector);
   const selectedPayment = null;
@@ -43,6 +53,7 @@ function CreateOrder({ mode = 'sell', ...props }) {
   return (
     <Wrapper adaptive={adaptive} {...props}>
       <div>
+        {adaptive && <h2>{getTitle(mode)} IDR</h2>}
         <UserOrdersInfo
           name="mail****@gmail.com"
           ordersNumber={287}
