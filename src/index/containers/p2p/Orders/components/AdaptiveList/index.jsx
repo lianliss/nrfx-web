@@ -81,19 +81,11 @@ function AdaptiveList({ mode, onOrderCreate }) {
       </TD>
       <TD>
         <div className="orders-list-payment">
-          <PaymentItem
-            title="Bank Transfer"
-            color={paymentColors.orange}
-            adaptive
-          />
-          <PaymentItem title="Pay me" color={paymentColors.red} adaptive />
-          <PaymentItem title="Mono Bank" color={paymentColors.black} adaptive />
-          <PaymentItem
-            title="Bank Transfer"
-            color={paymentColors.orange}
-            adaptive
-          />
-          <PaymentItem title="Pay me" color={paymentColors.red} adaptive />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
+          <PaymentItem title="Mono Bank" color={paymentColors.black} />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
         </div>
       </TD>
     </TR>
