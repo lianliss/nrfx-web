@@ -1,12 +1,11 @@
 import React from 'react';
 
 // Components
-import { Radio, Row, Col } from 'ui';
+import { Radio, Col } from 'ui';
 import { ConfirmButtons } from '..';
 
 // Utils
 import { classNames as cn } from 'utils';
-import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Styles
 import './Sell.less';
@@ -20,7 +19,7 @@ const confirmations = [
   },
 ];
 
-function Sell({ prefix, adaptive, ...props }) {
+function Sell({ prefix, adaptive, onConfirm, onCancel, onClose, mode }) {
   const [confirmation, setConfirmation] = React.useState(null);
 
   const handleConfirmationChange = (value) => {
@@ -42,7 +41,7 @@ function Sell({ prefix, adaptive, ...props }) {
                 size="small"
                 className
               >
-                <p>{item.title}</p>
+                <p>{option.title}</p>
               </Radio>
             ))}
           </div>
@@ -65,7 +64,14 @@ function Sell({ prefix, adaptive, ...props }) {
           </div>
         </Col>
       </div>
-      <ConfirmButtons adaptive={adaptive} prefix={prefix} mode={p2pMode.sell} />
+      <ConfirmButtons
+        adaptive={adaptive}
+        prefix={prefix}
+        mode={mode}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        onClose={onClose}
+      />
     </div>
   );
 }

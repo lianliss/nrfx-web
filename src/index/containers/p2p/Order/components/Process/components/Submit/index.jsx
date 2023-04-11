@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Button, Row, Timer } from 'ui';
 import { CustomButton, AnswerPopup } from 'dapp';
 import { orderProcesses as processes } from 'src/index/constants/dapp/types';
@@ -6,11 +8,7 @@ import { orderProcesses as processes } from 'src/index/constants/dapp/types';
 const TransactionTime = () => (
   <Row className="malibu-color malibu-text">
     Transaction issue; appeal after (
-    <Timer
-      time={new Date(new Date().getTime() + 1 * 60 * 60 * 1000)}
-      hideHours
-    />
-    )
+    <Timer time={new Date(new Date().getTime() + 1 * 60 * 1000)} hideHours />)
   </Row>
 );
 
@@ -20,18 +18,24 @@ const ButtonsWrapper = ({ children, gap }) => (
   </Row>
 );
 
-function Submit({ process, adaptive }) {
+function Submit({
+  process,
+  adaptive,
+  onNotifySeller,
+  onPaymentReceived,
+  onCancel,
+}) {
   const CancelOrderButton = ({ type = 'default' }) => {
     if (type === 'custom-malibu') {
       return (
-        <CustomButton className="malibu-color malibu-text">
+        <CustomButton className="malibu-color malibu-text" onClick={onCancel}>
           <span>Cancel Order</span>
         </CustomButton>
       );
     }
 
     return (
-      <Button type="secondary-light">
+      <Button type="secondary-light" onClick={onCancel}>
         <span className="light-blue-gradient-color">Cancel Order</span>
       </Button>
     );
@@ -50,7 +54,7 @@ function Submit({ process, adaptive }) {
           </Row>
         </div>
         <ButtonsWrapper gap={15}>
-          <Button type="lightBlue">
+          <Button type="lightBlue" onClick={onNotifySeller}>
             <span>Transferred notify seller</span>
           </Button>
           <CancelOrderButton />
@@ -81,7 +85,7 @@ function Submit({ process, adaptive }) {
           </Row>
         </div>
         <ButtonsWrapper gap="0 15px">
-          <Button type="lightBlue">
+          <Button type="lightBlue" onClick={onPaymentReceived}>
             <span>Payment received</span>
           </Button>
           {!adaptive && <TransactionTime />}
@@ -108,5 +112,16 @@ function Submit({ process, adaptive }) {
 
   return <></>;
 }
+
+Submit.propTypes = {
+  adaptive: PropTypes.bool,
+  process: PropTypes.oneOf([
+    ...Object.values(processes.buy),
+    ...Object.values(processes.sell),
+  ]),
+  onNotifySeller: PropTypes.func,
+  onPaymentReceived: PropTypes.func,
+  onCancel: PropTypes.func,
+};
 
 export default Submit;

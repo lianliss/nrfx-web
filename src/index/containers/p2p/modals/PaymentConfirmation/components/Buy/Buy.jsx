@@ -8,12 +8,11 @@ import { ConfirmButtons } from '..';
 import { classNames as cn } from 'utils';
 import successIcon from 'src/asset/icons/status/success-tick.svg';
 import crossIcon from 'src/asset/icons/status/cross-18.svg';
-import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Styles
 import './Buy.less';
 
-function Buy({ prefix, adaptive, ...props }) {
+function Buy({ prefix, adaptive, onConfirm, onCancel, onClose, mode }) {
   const [checked, setChecked] = React.useState(false);
 
   const handleCheckChange = () => {
@@ -58,7 +57,14 @@ function Buy({ prefix, adaptive, ...props }) {
           </p>
         </Row>
       </div>
-      <ConfirmButtons adaptive={adaptive} prefix={prefix} mode={p2pMode.buy} />
+      <ConfirmButtons
+        adaptive={adaptive}
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        onClose={onClose}
+        prefix={prefix}
+        mode={mode}
+      />
     </div>
   );
 }

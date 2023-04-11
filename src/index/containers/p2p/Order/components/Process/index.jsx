@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Row, Col } from 'ui';
@@ -17,7 +18,14 @@ import { testPayments } from '../../../Orders/components/Filters/testItems';
 // Styles
 import './index.less';
 
-function Process({ adaptive, mode, process }) {
+function Process({
+  adaptive,
+  mode,
+  process,
+  onNotifySeller,
+  onPaymentReceived,
+  onCancel,
+}) {
   const renderInfo = () => {
     const ItemsComponent = adaptive ? Col : Row;
 
@@ -72,7 +80,13 @@ function Process({ adaptive, mode, process }) {
         process={process}
         adaptive={adaptive}
       />
-      <Submit process={process} adaptive={adaptive} />
+      <Submit
+        process={process}
+        adaptive={adaptive}
+        onNotifySeller={onNotifySeller}
+        onPaymentReceived={onPaymentReceived}
+        onCancel={onCancel}
+      />
     </div>
   );
 
@@ -83,5 +97,17 @@ function Process({ adaptive, mode, process }) {
     </CabinetBlock>
   );
 }
+
+Process.propTypes = {
+  adaptive: PropTypes.bool,
+  mode: PropTypes.oneOf(Object.values(p2pMode)),
+  process: PropTypes.oneOf([
+    ...Object.values(processes.buy),
+    ...Object.values(processes.sell),
+  ]),
+  onNotifySeller: PropTypes.func,
+  onPaymentReceived: PropTypes.func,
+  onCancel: PropTypes.func,
+};
 
 export default Process;

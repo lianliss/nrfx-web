@@ -31,9 +31,13 @@ const Timer = ({
   useEffect(() => {
     if (time <= dateNow) return;
 
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setDateNow(Date.now());
     }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [dateNow]);
 
   if (time <= dateNow) {

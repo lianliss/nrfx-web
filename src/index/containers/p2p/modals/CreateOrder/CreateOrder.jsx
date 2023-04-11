@@ -49,6 +49,11 @@ const getTitle = (mode) => {
 };
 
 function CreateOrder({ mode, onClose, ...props }) {
+  if (!mode) {
+    onClose();
+    return <></>;
+  }
+
   const adaptive = useSelector(adaptiveSelector);
   const selectedPayment = useSelector(dappP2PPaymentSelector(mode));
 

@@ -10,14 +10,70 @@ import { Chat, Feedback, Process } from './components';
 // Utils
 import faq from '../constants/faq';
 import { dappP2PModeSelector } from 'src/selectors';
-import { orderProcesses as processes } from 'src/index/constants/dapp/types';
+import { p2pMode } from 'src/index/constants/dapp/types';
+import { getOrderProcess } from '../utils/order';
+import { orderProcesses } from 'src/index/constants/dapp/types';
+import { openStateModal } from 'src/actions';
 
 // Styles
 import './index.less';
 
+const testOrder = {
+  buy: {
+    mode: p2pMode.buy,
+    status: 'payment',
+  },
+  sell: { mode: p2pMode.sell, status: 'pending' },
+};
+
 function Order({ adaptive }) {
-  const mode = 'sell' || useSelector(dappP2PModeSelector);
-  const process = processes.sell.completed;
+  // Order will be order from data by backend.
+  const globalP2PMode = useSelector(dappP2PModeSelector);
+  const [order, setOrder] = React.useState(testOrder[globalP2PMode]);
+  const { mode } = order;
+  const process = getOrderProcess(mode, order.status);
+
+  const handleNotifySeller = () => {
+    openStateModal('p2p_payment_confirmation', {
+      mode,
+      onConfirm: () => {
+        // ...
+        setOrder((prev) => ({ ...prev, status: 'pending' }));
+      },
+    });
+  };
+
+  const handlePaymentReceived = () => {
+    openStateModal('p2p_payment_confirmation', {
+      mode,
+      onConfirm: () => {
+        // ...
+        setOrder((prev) => ({ ...prev, status: 'completed' }));
+      },
+    });
+  };
+
+  const handleCancel = () => {
+    // ...
+    if (mode === p2pMode.buy) {
+      setOrder((prev) => ({ ...prev, status: 'cancelled' }));
+    }
+  };
+
+  // The test order pending.
+  React.useEffect(() => {
+    if (process === orderProcesses.buy.pending) {
+      setTimeout(() => {
+        setOrder((prev) => ({ ...prev, status: 'completed' }));
+      }, 3000);
+    }
+
+    if (process === orderProcesses.sell.pending) {
+      setTimeout(() => {
+        setOrder((prev) => ({ ...prev, status: 'releasing' }));
+      }, 3000);
+    }
+  }, [process]);
 
   return (
     <P2P>
@@ -32,7 +88,14 @@ function Order({ adaptive }) {
         />
         <div className="p2p-order-body">
           <div className="p2p-order-body__left">
-            <Process process={process} adaptive={adaptive} mode={mode} />
+            <Process
+              process={process}
+              adaptive={adaptive}
+              mode={mode}
+              onNotifySeller={handleNotifySeller}
+              onPaymentReceived={handlePaymentReceived}
+              onCancel={handleCancel}
+            />
             <Feedback adaptive={adaptive} />
             <CabinetBlock className="p2p-order-body__faq">
               <h3>FAQ</h3>

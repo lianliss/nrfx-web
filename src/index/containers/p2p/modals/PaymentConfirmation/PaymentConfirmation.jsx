@@ -13,7 +13,12 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './PaymentConfirmation.less';
 
-function PaymentConfirmation({ mode = 'buy', ...props }) {
+function PaymentConfirmation({ mode, onConfirm, onCancel, onClose, ...props }) {
+  if (!mode) {
+    onClose();
+    return <></>;
+  }
+
   const adaptive = useSelector(adaptiveSelector);
 
   const renderBody = () => {
@@ -28,7 +33,14 @@ function PaymentConfirmation({ mode = 'buy', ...props }) {
     }
 
     return (
-      <Component prefix="p2p-modal-payment-confirmation" adaptive={adaptive} />
+      <Component
+        prefix="p2p-modal-payment-confirmation"
+        onConfirm={onConfirm}
+        onCancel={onCancel}
+        onClose={onClose}
+        adaptive={adaptive}
+        mode={mode}
+      />
     );
   };
 
@@ -37,6 +49,7 @@ function PaymentConfirmation({ mode = 'buy', ...props }) {
       className="p2p-modal-payment-confirmation__wrapper"
       closeOfRef={adaptive}
       closeButton
+      onClose={onClose}
       {...props}
     >
       {renderBody()}
@@ -45,7 +58,14 @@ function PaymentConfirmation({ mode = 'buy', ...props }) {
 }
 
 PaymentConfirmation.propTypes = {
-  mode: PropTypes.oneOf(Object.keys(p2pMode)),
+  mode: PropTypes.oneOf(Object.values(p2pMode)),
+  onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
+};
+
+PaymentConfirmation.defaultProps = {
+  onConfirm: () => {},
+  onCancel: () => {},
 };
 
 export default PaymentConfirmation;

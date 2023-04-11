@@ -17,6 +17,11 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 import styles from './SetPaymentMethod.module.less';
 
 function SetPaymentMethod({ onClose, mode, ...props }) {
+  if (!mode) {
+    onClose();
+    return <></>;
+  }
+
   const dispatch = useDispatch();
   const adaptive = useSelector(adaptiveSelector);
   const selected = useSelector(dappP2PPaymentSelector(mode));
