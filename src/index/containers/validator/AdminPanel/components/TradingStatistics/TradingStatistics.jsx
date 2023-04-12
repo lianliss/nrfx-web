@@ -24,17 +24,19 @@ function TradingStatistics({
         <span>{title}</span>
         <AnswerPopup>{description}</AnswerPopup>
       </div>
-      <div className={styles.TradingStatistics__number}>{content}</div>
-      {(buyNumber || sellNumber) && (
-        <BetweenSeparator className={styles.TradingStatistics__tradeVolume}>
-          <span className="green-color">
-            Buy <NumberFormat number={buyNumber} />
-          </span>
-          <span className="orange-red-color">
-            Sell <NumberFormat number={sellNumber} />
-          </span>
-        </BetweenSeparator>
-      )}
+      <div className={styles.TradingStatistics__body}>
+        <div className={styles.TradingStatistics__number}>{content}</div>
+        {(buyNumber || sellNumber) && (
+          <BetweenSeparator className={styles.TradingStatistics__tradeVolume}>
+            <span className="green-color">
+              Buy <NumberFormat number={buyNumber} />
+            </span>
+            <span className="orange-red-color">
+              Sell <NumberFormat number={sellNumber} />
+            </span>
+          </BetweenSeparator>
+        )}
+      </div>
     </div>
   );
 }

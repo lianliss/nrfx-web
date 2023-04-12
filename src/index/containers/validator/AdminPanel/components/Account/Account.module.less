@@ -6,19 +6,23 @@
   &__header {
     padding-bottom: 30px;
     border-bottom: 1px solid #f1f1f1;
+    gap: 15px;
   }
 
   &__body {
     display: flex;
     justify-content: space-between;
     padding-top: 30px;
-
-    &__item {
-    }
   }
 }
 
 :global(.adaptive) {
   .Account {
+    padding: 31px 18px;
+
+    &__body {
+      flex-direction: column;
+      gap: 12px;
+    }
   }
 }
