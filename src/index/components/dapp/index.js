@@ -10,6 +10,7 @@ export { default as DexDescription } from './DexDescription/DexDescription';
 export { default as Select } from './Select';
 export { default as DappInput } from './DappInput/DappInput';
 export { default as ScrollBox } from './ui/ScrollBox/ScrollBox';
+export { default as FormattedText } from './FormattedText/FormattedText';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';
