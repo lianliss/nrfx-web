@@ -163,4 +163,12 @@ export default [
     name: PAGES.P2P_ORDER,
     chains: [1, 56, 97],
   },
+  {
+    name: PAGES.VALIDATOR_CREATE_TRADE,
+    chains: [1, 56, 97],
+  },
+  {
+    name: PAGES.VALIDATOR_ADMIN_PANEL,
+    chains: [1, 56, 97],
+  },
 ];

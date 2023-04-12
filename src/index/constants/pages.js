@@ -70,3 +70,4 @@ export const TOKEN_MIGRATION = 'token_migration';
 // Validator
 export const VALIDATOR = 'validator';
 export const VALIDATOR_CREATE_TRADE = 'VALIDATOR_CREATE_TRADE';
+export const VALIDATOR_ADMIN_PANEL = 'VALIDATOR_ADMIN_PANEL';

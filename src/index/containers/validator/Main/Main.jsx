@@ -18,8 +18,7 @@ function Main(props) {
   switch (route.name) {
     case pages.VALIDATOR:
       Component = Preview;
-    case pages.VALIDATOR_CREATE_TRADE:
-      Component = CreateTrade
+      break;
     default:
       break;
   }

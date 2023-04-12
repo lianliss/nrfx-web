@@ -7,7 +7,11 @@ const routes = [
   },
   {
     name: pages.VALIDATOR_CREATE_TRADE,
-    path: '/validator/create_trade',
+    path: '/dapp/validator/create_trade',
+  },
+  {
+    name: pages.VALIDATOR_ADMIN_PANEL,
+    path: '/dapp/validator/admin_panel',
   },
 ];
 
