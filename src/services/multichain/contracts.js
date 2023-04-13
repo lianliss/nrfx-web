@@ -42,7 +42,7 @@ export const CONTRACT_ADDRESSES = {
     factoryInitCodeHash:
       '0xecba335299a6693cb2ebc4782e74669b84290b6378ea3a3873c7231a8d7d1074',
     routerAddress: '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3',
-    masterChefAddress: '0xDf8951a64a0eaF51216B72C4f4Fdd2BE8d98589E',
+    masterChefAddress: '0xb29A6e8451D85E0a57D56F3E2DaFD2b3E54c584a',
     narfexToken: '0xfa76d0dc8E020098B3f22f67d8AADda6FDc7164e',
     tokenSale: '0x0af7288b81176212aA52B2eEa1Ee63551E39cE80',
     saleFactory: '0x0E956a98907Af40cffC365a5609316442854e77B',
