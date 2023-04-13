@@ -3,7 +3,7 @@ import React from 'react';
 // Components
 import { Row, NumberFormat } from 'ui';
 import { UserProfile } from 'src/index/components/p2p';
-import { TradingStatistics, Verify } from '..';
+import { TradingStatistics, Verify } from '../../components';
 
 // Styles
 import styles from './Account.module.less';
