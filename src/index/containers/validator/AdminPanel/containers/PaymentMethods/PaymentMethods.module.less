@@ -37,6 +37,25 @@
   }
 }
 
+.switchContainer {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f1f1;
+
+  :global {
+    .SwitchTabs {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: -0.01em;
+      min-width: min(445px, 100%);
+      text-align: center;
+    }
+  }
+}
+
 :global(.adaptive) {
   .PaymentMethods {
     padding: 31px 18px;
@@ -69,6 +88,19 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .switchContainer {
+    margin: 30px 0 12px;
+
+    :global {
+      .SwitchTabs {
+        width: 100%;
+        height: 70px;
+        letter-spacing: normal;
+        background: rgba(64, 112, 255, 0.1);
       }
     }
   }
