@@ -12,6 +12,16 @@ import testPayments from '../../../../p2p/constants/testPayments';
 // Styles
 import styles from './PaymentMethodsTable.module.less';
 
+/**
+ * PaymentMethodType {
+ *  id: string | number,
+ *  name: string,
+ *  payment: object,
+ *  bankAccountNumber?: string,
+ *  email?: string,
+ *  paymentDetails?: string,
+ * }
+ */
 const testItems = [
   {
     id: 0,
@@ -38,8 +48,14 @@ const testItems = [
     id: 3,
     name: 'Name Surname',
     payment: testPayments[3],
-    bankAccountNumber: null,
     email: 'mail****@gmail.com',
+    paymentDetails: 'Name Surname',
+  },
+  {
+    id: 4,
+    name: 'Name Surname',
+    payment: testPayments[4],
+    bankAccountNumber: '122144219',
     paymentDetails: 'Name Surname',
   },
 ];
@@ -146,7 +162,7 @@ const AdaptiveTR = (props) => (
 );
 
 // Main component
-function PaymentMethodsTable({ adaptive }) {
+function PaymentMethodsTable({ adaptive, items = testItems }) {
   const handleDelete = () => {};
   const handleEdit = () => {};
   const handleBlock = () => {};
@@ -154,7 +170,7 @@ function PaymentMethodsTable({ adaptive }) {
   return (
     <div className={styles.PaymentMethodsTable}>
       <CabinetTable type="columnWithHeader">
-        {testItems.map((item) => {
+        {items.map((item) => {
           const Component = adaptive ? AdaptiveTR : DesktopTR;
 
           return (

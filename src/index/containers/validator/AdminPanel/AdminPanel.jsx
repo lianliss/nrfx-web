@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 // Components
 import { Account, PaymentMethods } from './containers';
+import { SocialLinks } from 'dapp';
 
 // Utils
 import { adaptiveSelector } from 'src/selectors';
@@ -17,6 +18,7 @@ function AdminPanel() {
     <div className={styles.AdminPanel}>
       <Account />
       <PaymentMethods adaptive={adaptive} />
+      <SocialLinks type="v2" />
     </div>
   );
 }
