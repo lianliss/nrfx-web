@@ -6,9 +6,9 @@ import { classNames as cn } from 'utils';
 // Styles
 import './CabinetTable.less';
 
-function CabinetTable({ header, children }) {
+function CabinetTable({ header, children, type }) {
   return (
-    <table className="CabinetTable">
+    <table className={cn('CabinetTable', type)}>
       <thead>{header}</thead>
       <tbody>{children}</tbody>
     </table>

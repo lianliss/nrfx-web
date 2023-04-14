@@ -45,7 +45,7 @@ function PaymentMethods({ adaptive }) {
             </span>
           </Button>
         </div>
-        <PaymentMethodsTable />
+        <PaymentMethodsTable adaptive={adaptive} />
       </div>
     </>
   );
