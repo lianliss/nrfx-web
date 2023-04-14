@@ -176,14 +176,14 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
   }, []);
 
   const rate0 = !!reserves[1]
-    ? reserves[1] / reserves[0]
-    : !!amount0
-      ? amount1 / amount0
-      : 0;
-  const rate1 = !!reserves[0]
     ? reserves[0] / reserves[1]
     : !!amount1
       ? amount0 / amount1
+      : 0;
+  const rate1 = !!reserves[0]
+    ? reserves[1] / reserves[0]
+    : !!amount0
+      ? amount1 / amount0
       : 0;
   const share = !!reserves[0]
     ? amount0 / (amount0 + reserves[0]) * 100
@@ -213,8 +213,8 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
       <div className="Liquidity__body LiquidityAdd">
         <DexSwapInput
           onChange={(value) => {
-            const secondValue = !!reserves[1]
-              ? reserves[0] / reserves[1] * (Number(value) || 0)
+            const secondValue = !!reserves[0]
+              ? reserves[1] / reserves[0] * (Number(value) || 0)
               : values[1];
             setValues((state) => [value, secondValue]);
           }}
@@ -232,8 +232,8 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
         </div>
         <DexSwapInput
           onChange={(value) => {
-            const secondValue = !!reserves[0]
-              ? reserves[1] / reserves[0] * (Number(value) || 0)
+            const secondValue = !!reserves[1]
+              ? reserves[0] / reserves[1] * (Number(value) || 0)
               : values[0];
             setValues((state) => [secondValue, value]);
           }}
