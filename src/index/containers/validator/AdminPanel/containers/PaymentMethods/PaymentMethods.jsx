@@ -2,6 +2,7 @@ import React from 'react';
 
 // Components
 import { Button, SwitchTabs } from 'ui';
+import { PaymentMethodsTable } from '../../components';
 
 // Styles
 import styles from './PaymentMethods.module.less';
@@ -44,6 +45,7 @@ function PaymentMethods({ adaptive }) {
             </span>
           </Button>
         </div>
+        <PaymentMethodsTable />
       </div>
     </>
   );
