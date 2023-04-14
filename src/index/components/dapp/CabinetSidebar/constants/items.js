@@ -42,26 +42,26 @@ const items = [
     },
   ],
   [
-    {
-      title: 'dapp_sidebar_trade',
-      icon: 'trade',
-      type: 'parent',
-      active: true,
-      items: [
-        {
-          title: 'dapp_sidebar_swap',
-          active: [PAGES.DAPP_SWAP],
-          link: PAGES.DAPP_SWAP,
-          type: 'route',
-        },
-        {
-          title: 'dapp_sidebar_pro_dex',
-          type: 'comingSoon',
-          active: [],
-          disabled: true,
-        },
-      ],
-    },
+    // {
+    //   title: 'dapp_sidebar_trade',
+    //   icon: 'trade',
+    //   type: 'parent',
+    //   active: true,
+    //   items: [
+    //     {
+    //       title: 'dapp_sidebar_swap',
+    //       active: [PAGES.DAPP_SWAP],
+    //       link: PAGES.DAPP_SWAP,
+    //       type: 'route',
+    //     },
+    //     {
+    //       title: 'dapp_sidebar_pro_dex',
+    //       type: 'comingSoon',
+    //       active: [],
+    //       disabled: true,
+    //     },
+    //   ],
+    // },
     {
       title: 'dapp_sidebar_liquidity',
       icon: 'liquidity',

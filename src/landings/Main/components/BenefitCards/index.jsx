@@ -25,7 +25,11 @@ function BenefitCards({ adaptive }) {
   React.useEffect(() => {
     if (!visible) return;
 
-    cardShow();
+    const cardShowTimeout = cardShow();
+
+    return () => {
+      clearTimeout(cardShowTimeout);
+    };
   }, [visible]);
 
   const cardShow = () => {

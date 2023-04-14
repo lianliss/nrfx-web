@@ -214,15 +214,6 @@
     border: none;
     transition: all 0.2s;
 
-    &.disabled {
-      opacity: 1;
-      background: #e3e9f0;
-
-      .Button__label {
-        color: var(--cool-gray);
-      }
-    }
-
     &:hover {
       box-shadow: 0 4px 8px rgba(94, 196, 122, 0.32);
       opacity: 0.9;
@@ -442,6 +433,14 @@
 
     &::after {
       background: none;
+    }
+
+    &.green-light {
+      background: #e3e9f0;
+
+      .Button__label {
+        color: var(--cool-gray) !important;
+      }
     }
   }
 }

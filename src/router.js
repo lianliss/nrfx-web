@@ -236,7 +236,7 @@ router.usePlugin(
     useHash: false,
     hashPrefix: '',
     mergeState: true,
-    preserveHash: false,
+    preserveHash: true,
     // forceDeactivate: true,
   })
 );
