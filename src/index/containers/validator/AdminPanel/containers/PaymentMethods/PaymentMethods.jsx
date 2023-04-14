@@ -7,29 +7,30 @@ import { PaymentMethodsTable } from '../../components';
 // Styles
 import styles from './PaymentMethods.module.less';
 
+const Switch = ({ selected, onChange }) => (
+  <div className={styles.switchContainer}>
+    <SwitchTabs
+      selected={selected}
+      onChange={onChange}
+      isAnimated
+      type="secondary-alice"
+      tabs={[
+        { value: 'methods', label: 'P2P Payment Methods' },
+        { value: 'feedback', label: 'Feedback (0)' },
+        { value: 'blacklist', label: 'Blacklist' },
+      ]}
+    />
+  </div>
+);
+
 function PaymentMethods({ adaptive }) {
   const [selected, setSelected] = React.useState('methods');
 
-  const Switch = () => (
-    <div className={styles.switchContainer}>
-      <SwitchTabs
-        selected={selected}
-        onChange={setSelected}
-        type="secondary-alice"
-        tabs={[
-          { value: 'methods', label: 'P2P Payment Methods' },
-          { value: 'feedback', label: 'Feedback (0)' },
-          { value: 'blacklist', label: 'Blacklist' },
-        ]}
-      />
-    </div>
-  );
-
   return (
     <>
-      {adaptive && <Switch />}
+      {adaptive && <Switch selected={selected} onChange={setSelected} />}
       <div className={styles.PaymentMethods}>
-        {!adaptive && <Switch />}
+        {!adaptive && <Switch selected={selected} onChange={setSelected} />}
         <h2 className={styles.PaymentMethods__title}>P2P Payment Methods</h2>
         <div className={styles.PaymentMethods__subtitle__wrapper}>
           <p className={styles.PaymentMethods__subtitle}>
