@@ -1,12 +1,32 @@
 import React from 'react';
-import CopyText from '../../ui/components/CopyText/CopyText';
 import DocumentContainer from '../components/DocumentContainer/DocumentContainer';
 import company from '../../index/constants/company';
+import { default as useAdaptive } from '../../hooks/adaptive';
 
 function FarmingInstruction() {
+  const adaptive = useAdaptive();
+  const instructionTitleRef = React.useRef(null);
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
   const getSocialUrl = (social) => {
     return 'https://' + social;
   };
+
+  React.useEffect(() => {
+    if (isScrolled) return;
+    if (typeof adaptive === undefined) return;
+    if (window.location.hash !== '#instruction') return;
+
+    const rect = instructionTitleRef.current.getBoundingClientRect();
+    const topPosition = rect.top;
+
+    setTimeout(() => {
+      window.scrollTo({
+        top: adaptive ? topPosition - 80 : topPosition - 20,
+      });
+      setIsScrolled(true);
+    });
+  }, [adaptive]);
 
   return (
     <DocumentContainer>
@@ -169,7 +189,9 @@ function FarmingInstruction() {
         Or talk to us directly in the telegram group:&nbsp;
         <a href="https://t.me/Narfex_EN">https://t.me/Narfex_EN</a>
       </p>
-      <DocumentContainer.Title>Instructions</DocumentContainer.Title>
+      <DocumentContainer.Title ref={instructionTitleRef}>
+        Instructions
+      </DocumentContainer.Title>
       <h3>What is a Mumbai Testnet?</h3>
       <p>
         The testnet is a test environment for Polygon network, run by the
