@@ -8,6 +8,6 @@ export default [
   { title: 'main_landing_navbar_docs', href: company.docs },
   {
     title: 'main_landing_navbar_community',
-    scrollTo: '.MainLanding-join-us',
+    scrollTo: ['.MainLanding-join-us', '.MainLandingWrapperFooter'],
   },
 ];
