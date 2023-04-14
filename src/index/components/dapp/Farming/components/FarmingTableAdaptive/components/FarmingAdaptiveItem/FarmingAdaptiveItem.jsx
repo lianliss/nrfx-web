@@ -102,7 +102,6 @@ class FarmingAdaptiveItem extends React.PureComponent {
       const reward = data[0];
       const isCanHarvest = data[1];
       const rewardAmount = wei.from(reward);
-      console.log('[updateRewardAmount]', data);
       pool.reward = reward;
       pool.isCanHarvest = isCanHarvest;
       if (this._mount) {
