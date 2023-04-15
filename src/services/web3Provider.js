@@ -789,7 +789,8 @@ class Web3Provider extends React.PureComponent {
         token1 = tokens.find(t => t.address && t.address.toLowerCase() === dataToken1);
       }
       // Switch pair
-      const result = data[1] === token0.address
+      const isZeroTokenFirst = token0.address.toLowerCase() < token1.address.toLowerCase();
+      const result = isZeroTokenFirst
         ? [
           data[0][0],
           data[0][1],
@@ -804,8 +805,8 @@ class Web3Provider extends React.PureComponent {
       this.pairs[pairAddress] = {
         blockTimestamp: data[0]._blockTimestampLast * 1000,
         updateTimestamp: Date.now(),
-        token0: !!_token1 ? _token0 : token0,
-        token1: !!_token1 ? _token1 : token1,
+        token0: isZeroTokenFirst ? token0 : token1,
+        token1: isZeroTokenFirst ? token1 : token0,
         totalSupply: data[3],
         address: pairAddress,
         decimals: 18,

@@ -118,17 +118,10 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
       token1.getAllowance(routerAddress),
     ]).then(data => {
       if (!!data[0].value) {
-        if (token0.address.toLowerCase() < token1.address.toLowerCase()) {
-          setReserves([
-            wei.from(data[0].value[0], selectedTokens[0].decimals),
-            wei.from(data[0].value[1], selectedTokens[1].decimals),
-          ]);
-        } else {
-          setReserves([
-            wei.from(data[0].value[1], selectedTokens[1].decimals),
-            wei.from(data[0].value[0], selectedTokens[0].decimals),
-          ]);
-        }
+        setReserves([
+          wei.from(data[0].value[0], selectedTokens[0].decimals),
+          wei.from(data[0].value[1], selectedTokens[1].decimals),
+        ]);
       }
       setAllowance([
         data[1].value,

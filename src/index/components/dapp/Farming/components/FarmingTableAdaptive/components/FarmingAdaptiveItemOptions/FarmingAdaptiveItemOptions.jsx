@@ -17,6 +17,7 @@ import { toastPush } from 'src/actions/toasts';
 import { LIQUIDITY } from 'src/index/constants/pages';
 import getFinePrice from 'utils/get-fine-price';
 import { getLang } from 'src/utils';
+import useGetTokenRate from 'src/hooks/useGetTokenRate';
 
 // Styles
 import './FarmingAdaptiveItemOptions.less';
@@ -32,7 +33,7 @@ function FarmingAdaptiveItemOptions({
   } = React.useContext(Web3Context);
   const [isHarvest, setIsHarvest] = React.useState(false);
   const [reward, setReward] = React.useState(earned);
-  const nrfxPrice = useSelector(state => _.get(state, 'web3.rates.nrfx', 0));
+  const nrfxPrice = useGetTokenRate('NRFX') || 0;
 
   // States
   const [isVisible, setIsVisible] = React.useState(false);
