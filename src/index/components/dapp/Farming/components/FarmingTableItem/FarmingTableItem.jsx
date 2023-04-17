@@ -173,10 +173,11 @@ class FarmingTableItem extends React.PureComponent {
     const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
     const poolSize = wei.from(pool.size || '0');
     const userPoolSize = wei.from(pool.userPool || '0');
+    const lpPrice = prices[pool.address] || 0;
 
     const pairPrice = prices[pool.address] || 0;
 
-    const apr = this.getAPR(1000);
+    const apr = this.getAPR(1000 / lpPrice);
     const apy = this.getAPY(apr);
 
     return (

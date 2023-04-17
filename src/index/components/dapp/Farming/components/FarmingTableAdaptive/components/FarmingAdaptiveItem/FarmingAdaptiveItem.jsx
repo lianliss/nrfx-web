@@ -112,7 +112,7 @@ class FarmingAdaptiveItem extends React.PureComponent {
     }
     this.rewardTimeout = setTimeout(this.updateRewardAmount.bind(this), REWARD_UPDATE_INTERVAL);
   };
-
+  
   getAPR(poolSize = 1000) {
     const {blocksPerSecond, prices} = this.context;
     const {pool, nrfxPrice} = this.props;
@@ -124,13 +124,13 @@ class FarmingAdaptiveItem extends React.PureComponent {
     );
     const rewardPrice = nrfxPrice || 0;
     const lpPrice = prices[pool.address] || 0;
-
+    
     const rewardUsdt = rpy * rewardPrice;
     const poolUsdt = poolSize * lpPrice;
-
+    
     return rewardUsdt / poolUsdt;
   }
-
+  
   getAPY(apr) {
     const {blocksPerSecond, prices} = this.context;
     const {pool, nrfxPrice} = this.props;
@@ -163,10 +163,11 @@ class FarmingAdaptiveItem extends React.PureComponent {
     const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
     const poolSize = wei.from(pool.size);
     const userPoolSize = wei.from(pool.userPool || '0');
+    const lpPrice = prices[pool.address] || 0;
 
     const pairPrice = prices[pool.address] || 0;
   
-    const apr = this.getAPR(1000);
+    const apr = this.getAPR(1000 / lpPrice);
     const apy = this.getAPY(apr);
 
     return (

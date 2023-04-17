@@ -11,6 +11,7 @@ import useHeightSize from './hooks/useHeightSize';
 // Styles
 import './FarmingTableAdaptive.less';
 import FarmingAdaptiveItem from './components/FarmingAdaptiveItem/FarmingAdaptiveItem';
+import useGetTokenRate from 'src/hooks/useGetTokenRate';
 
 function FarmingTableAdaptive({ items, ...filters }) {
   // Sort filters from props
@@ -18,6 +19,8 @@ function FarmingTableAdaptive({ items, ...filters }) {
     filters;
 
   const context = React.useContext(Web3Context);
+  const {chainId} = context;
+  const nrfxPrice = useGetTokenRate('NRFX', chainId || 1);
   const {pools} = context;
 
   return (
@@ -33,7 +36,7 @@ function FarmingTableAdaptive({ items, ...filters }) {
       <div className="FarmingTableAdaptive__list">
         {!!pools && Object.keys(pools).map((address, index) => {
           const pool = pools[address];
-          return <FarmingAdaptiveItem key={index} pool={pool} />;
+          return <FarmingAdaptiveItem key={index} pool={pool} nrfxPrice={nrfxPrice} />;
         })}
       </div>
     </div>
