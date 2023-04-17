@@ -3,9 +3,10 @@ import React from 'react';
 import { Row, Button } from 'ui';
 import { AnswerPopup } from 'dapp';
 import { BottomSheetSelect } from 'dapp/Select';
+import { components } from 'react-select';
+import KNOWN_FIATS from '../../../../../constants/knownFiats';
 
 import styles from './Staking.module.less';
-import KNOWN_FIATS from '../../../../../constants/knownFiats';
 
 const Staking = ({ adaptive }) => {
   const fiatsOptions = KNOWN_FIATS.map((fiat) =>
@@ -46,6 +47,8 @@ const Staking = ({ adaptive }) => {
         alignItems="center"
         justifyContent="flex-end"
         className={styles.Staking__row}
+        gap="5px 0"
+        wrap
       >
         <div className={styles.Staking__title}>
           <span>Staked</span>
@@ -57,35 +60,21 @@ const Staking = ({ adaptive }) => {
             options={fiatsOptions}
             type="bold"
             showSelectedInMenu
-            // components={{
-            //   Control: ({ children, ...props }) => (
-            //     <div props={props} className={styles.select__control}>{children}</div>
-            //   ),
-            // }}
-            customStyles={(componentStyles) => ({
-              control: (base, state) => ({
-                ...base,
-                ...componentStyles.control,
-                display: 'flex',
-                flexWrap: 'nowrap',
-                alignItems: 'center',
-              }),
-              singleValue: (base, state) => {
-                return {
-                  ...base,
-                  ...componentStyles.singleValue,
-                  position: 'static',
-                  transform: 'none',
-                  maxWidth: 'auto',
-                  overflow: 'visible',
-                };
-              },
-              valueContainer: (base, state) => ({
-                ...base,
-                ...componentStyles.valueContainer,
-                overflow: 'visible',
-              }),
-            })}
+            components={{
+              Control: ({ children, ...props }) => (
+                <components.Control {...props}>
+                  200 {children}
+                </components.Control>
+              ),
+            }}
+            classNames={{
+              control: () => styles.Select__control,
+              singleValue: () => styles.Select__singleValue,
+              valueContainer: () => styles.Select__valueContainer,
+              menu: () => styles.Select__menu,
+              dropdownIndicator: () => styles.Select__dropdownIndicator,
+            }}
+            indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
           />
         </div>
         {stakeButton}
@@ -94,6 +83,8 @@ const Staking = ({ adaptive }) => {
         alignItems="center"
         justifyContent="flex-end"
         className={styles.Staking__row}
+        gap="5px 0"
+        wrap
       >
         <div className={styles.Staking__title}>
           <Row alignItems="center">

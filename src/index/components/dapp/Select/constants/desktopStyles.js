@@ -61,6 +61,8 @@ const desktopStyles = {
       ...base,
       ...commonStyles.menu(base),
       marginTop: 12,
+      left: '50%',
+      transform: 'translateX(-50%)',
       boxShadow: '0px 25px 55px rgba(188, 188, 188, 0.25)',
       borderRadius: '18px',
     }),

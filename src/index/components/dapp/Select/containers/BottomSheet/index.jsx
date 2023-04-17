@@ -21,18 +21,6 @@ import './index.less';
 
 const { DropdownIndicator, Menu, Option } = components;
 
-const getStylesObject = (stylesCallbacks) => {
-  const stylesObject = {};
-
-  Object.entries(stylesCallbacks).map(([key, getStyles]) => {
-    if (!(getStyles instanceof Function)) return {};
-
-    stylesObject[key] = getStyles({}, {});
-  });
-
-  return stylesObject;
-};
-
 const BottomSheetSelect = React.memo(
   ({
     options,
@@ -46,7 +34,7 @@ const BottomSheetSelect = React.memo(
     width,
     showSelectedInMenu,
     isModalForAdaptive,
-    customStyles,
+    indicatorIcon,
     ...props
   }) => {
     const adaptive = useSelector(adaptiveSelector);
@@ -67,7 +55,6 @@ const BottomSheetSelect = React.memo(
       adaptive && isModalForAdaptive
         ? responsiveStyles.adaptive
         : responsiveStyles.desktop;
-    const initStylesObject = getStylesObject(styles);
 
     // Handlers
     // -- Set value of string from object option.
@@ -110,7 +97,7 @@ const BottomSheetSelect = React.memo(
           DropdownIndicator: (props) => {
             return (
               <DropdownIndicator {...props}>
-                <SVG src={indicatorIcons[type]} flex />
+                <SVG src={indicatorIcon || indicatorIcons[type]} flex />
               </DropdownIndicator>
             );
           },
@@ -182,7 +169,6 @@ const BottomSheetSelect = React.memo(
             ...styles?.control(base, state),
             width,
           }),
-          ...customStyles(initStylesObject),
         }}
         hideSelectedOptions
         {...props}
