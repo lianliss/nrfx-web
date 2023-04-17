@@ -5,7 +5,7 @@ const DEFAULT_DECIMALS = 18;
 
 const wei = {
   from: (bigNumber, decimals = DEFAULT_DECIMALS) => {
-    const value = Math.floor(Number(web3.utils.fromWei(bigNumber)) * 1e6) / 1e6;
+    const value = Number(web3.utils.fromWei(bigNumber));
     return value * 10 ** (DEFAULT_DECIMALS - decimals);
   },
   to: (value, decimals = DEFAULT_DECIMALS) => {

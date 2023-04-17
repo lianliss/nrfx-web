@@ -42,6 +42,7 @@ function Exchanger({ ...props }) {
     getBSCScanLink,
     network,
     referAddress,
+    tryExchangeError,
   } = context;
   const [inAmount, setInAmount] = React.useState(fiatAmount);
   const [outAmount, setOutAmount] = React.useState(coinAmount);
@@ -49,7 +50,7 @@ function Exchanger({ ...props }) {
   const [rate, setRate] = React.useState(coinAmount / fiatAmount);
   const [isRateReverse, setIsRateReverse] = React.useState(false);
   const [path, setPath] = React.useState([]);
-  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 0.1);
+  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 0.5);
   const [deadline, setDeadline] = React.useState(20);
   const [allowance, setAllowance] = React.useState(999999999);
   const [isProcess, setIsProcess] = React.useState(true);
@@ -175,6 +176,18 @@ function Exchanger({ ...props }) {
         try {
           const parsed = JSON.parse(message);
           toast.warning(parsed.message.split('execution reverted:')[1]);
+          if (parsed.message.split('Not enough liquidity').length > 1) {
+            try {
+              tryExchangeError(
+                path[0].address,
+                path[path.length - 1].address,
+                inAmount,
+                outAmount,
+              )
+            } catch (error) {
+              console.error('[tryExchangeError]', error);
+            }
+          }
         } catch (error) {
           toast.warning(error.message);
         }

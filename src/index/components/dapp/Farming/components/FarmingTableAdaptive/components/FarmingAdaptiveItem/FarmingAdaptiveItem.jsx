@@ -102,7 +102,6 @@ class FarmingAdaptiveItem extends React.PureComponent {
       const reward = data[0];
       const isCanHarvest = data[1];
       const rewardAmount = wei.from(reward);
-      console.log('[updateRewardAmount]', data);
       pool.reward = reward;
       pool.isCanHarvest = isCanHarvest;
       if (this._mount) {
@@ -163,10 +162,11 @@ class FarmingAdaptiveItem extends React.PureComponent {
     const token0 = tokens.find(t => t.address && t.address === pool.token0) || {...UNKNOWN_TOKEN, address: pool.token0};
     const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
     const poolSize = wei.from(pool.size);
+    const userPoolSize = wei.from(pool.userPool || '0');
 
     const pairPrice = prices[pool.address] || 0;
-
-    const apr = this.getAPR();
+  
+    const apr = this.getAPR(1000);
     const apy = this.getAPY(apr);
 
     return (

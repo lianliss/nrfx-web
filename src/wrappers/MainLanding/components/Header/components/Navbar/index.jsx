@@ -13,8 +13,11 @@ function Navbar({ items, sidebarClose }) {
       {items.map(({ title, scrollTo, ...item }, key) => {
         const Component = item.routeName ? Link : 'a';
         const handleScroll = () => {
-          const element = document.querySelector(scrollTo);
+          const element = scrollTo
+            .map((selector) => document.querySelector(selector))
+            .find((element) => element);
 
+          if (!element) return;
           if (_.isFunction(element.scrollIntoView)) {
             element.scrollIntoView({ behavior: 'smooth' });
             sidebarClose();

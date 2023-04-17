@@ -176,7 +176,7 @@ class FarmingTableItem extends React.PureComponent {
 
     const pairPrice = prices[pool.address] || 0;
 
-    const apr = this.getAPR(userPoolSize || poolSize);
+    const apr = this.getAPR(1000);
     const apy = this.getAPY(apr);
 
     return (
@@ -218,7 +218,7 @@ class FarmingTableItem extends React.PureComponent {
           </span>
         </TableColumn>
         <TableColumn>
-          {!!poolSize ? `$${getFinePrice(poolSize * pairPrice)}` : '—'}
+          {!!userPoolSize ? `$${getFinePrice(userPoolSize * pairPrice)}` : '—'}
           <SVG src={require('src/asset/icons/cabinet/question-icon.svg')} />
         </TableColumn>
         <TableColumn>

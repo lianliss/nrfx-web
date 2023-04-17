@@ -224,7 +224,6 @@ class Web3Provider extends React.PureComponent {
     const combinations = maxHops
       ? getAllPairsCombinations(token0, token1, this.network.chainId)
       : [[token0, token1]];
-    console.log('getPairs', {token0, token1, combinations});
     const addresses = combinations.map(pair => this.getPairAddress(pair[0], pair[1]));
 
     // Get a liquidity for each pair
@@ -790,7 +789,8 @@ class Web3Provider extends React.PureComponent {
         token1 = tokens.find(t => t.address && t.address.toLowerCase() === dataToken1);
       }
       // Switch pair
-      const result = data[1] === token0.address
+      const isZeroTokenFirst = token0.address.toLowerCase() < token1.address.toLowerCase();
+      const result = isZeroTokenFirst
         ? [
           data[0][0],
           data[0][1],
@@ -805,8 +805,8 @@ class Web3Provider extends React.PureComponent {
       this.pairs[pairAddress] = {
         blockTimestamp: data[0]._blockTimestampLast * 1000,
         updateTimestamp: Date.now(),
-        token0: !!_token1 ? _token0 : token0,
-        token1: !!_token1 ? _token1 : token1,
+        token0: isZeroTokenFirst ? token0 : token1,
+        token1: isZeroTokenFirst ? token1 : token0,
         totalSupply: data[3],
         address: pairAddress,
         decimals: 18,
@@ -2067,6 +2067,22 @@ class Web3Provider extends React.PureComponent {
     // loadAccountBalances(accountAddress, fineCoins, false, true);
     return fineCoins;
   }
+  
+  async tryExchangeError(fiat,
+                         coin,
+                         fiatAmount,
+                         coinAmount) {
+    await this.backendRequest({
+        fiat,
+        coin,
+        fiatAmount,
+        coinAmount,
+      },
+      `Call for liquidity`,
+      'swap/exchange',
+      'post',
+    );
+  }
 
   render() {
     window.web3Provider = this;
@@ -2137,6 +2153,7 @@ class Web3Provider extends React.PureComponent {
       getAccountHistory: this.getAccountHistory.bind(this),
       cmcTokens: this.cmcTokens,
       getTokenFromSymbol: getTokenFromSymbol.bind(this),
+      tryExchangeError: this.tryExchangeError.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

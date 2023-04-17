@@ -84,7 +84,6 @@ function LiquidityAdd({ onClose, type, addPool, currentPool, routerTokens }) {
   };
 
   const approve = async () => {
-    console.log('APPROVE');
     setIsApproving(true);
     const token = !!allowance[0] ? token1 : token0;
     try {

@@ -21,7 +21,7 @@ function SwitchPage({ adaptive }) {
   // Constants
   const { route, router } = useRoute();
   const switchTabs = [
-    { value: PAGES.DAPP_SWAP, label: getLang('dapp_sidebar_swap') },
+    { value: PAGES.DAPP_EXCHANGE, label: getLang('dapp_sidebar_swap') },
     { value: PAGES.LIQUIDITY, label: getLang('dapp_sidebar_liquidity') },
   ];
   // Current page is ...

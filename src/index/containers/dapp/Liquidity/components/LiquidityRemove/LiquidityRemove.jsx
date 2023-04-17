@@ -151,12 +151,8 @@ function LiquidityRemove({ onClose, currentPool }) {
           pair.token0.address,
           pair.token1.address,
           wei.to(balance * multiplier),
-          wei.to(
-            (userAmount0 * multiplier - userAmount0 * multiplier * slippageTolerance),
-            pair.token0.decimals || 18),
-          wei.to(
-            (userAmount1 * multiplier - userAmount1 * multiplier * slippageTolerance),
-            pair.token1.decimals || 18),
+          '0',
+          '0',
           accountAddress,
           deadline,
         ]

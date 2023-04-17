@@ -18,6 +18,7 @@ import { toastPush } from 'src/actions/toasts';
 import { Web3Context } from 'services/web3Provider';
 import getFinePrice from 'utils/get-fine-price';
 import { getLang } from 'src/utils';
+import useGetTokenRate from 'src/hooks/useGetTokenRate';
 
 // Styles
 import './FarmingTableItemOptions.less';
@@ -34,7 +35,7 @@ function FarmingTableItemOptions({
   } = React.useContext(Web3Context);
   const [isHarvest, setIsHarvest] = React.useState(false);
   const [reward, setReward] = React.useState(earned);
-  const nrfxPrice = useSelector(state => _.get(state, 'web3.rates.nrfx', 0));
+  const nrfxPrice = useGetTokenRate('NRFX') || 0;
 
   // States
   const [isVisible, setIsVisible] = React.useState(false);
@@ -74,7 +75,6 @@ function FarmingTableItemOptions({
   };
 
   const lpBalance = wei.from(available);
-  console.log('REWARD', reward, nrfxPrice);
 
   return (
     <>

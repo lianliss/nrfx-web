@@ -153,6 +153,19 @@ export class Web3Backend {
       fiatAmount,
     }
   });
+  tryExchangeError = (fiat,
+                      coin,
+                      fiatAmount,
+                      coinAmount,
+                      networkID,) => this.post('swap/exchange', {
+    params: {
+      fiat,
+      coin,
+      fiatAmount,
+      coinAmount,
+      networkID,
+    },
+  });
   estimateTransferToUserGas = (token, amount) => this.get('swap/fiatToToken', {
     params: {
       token,

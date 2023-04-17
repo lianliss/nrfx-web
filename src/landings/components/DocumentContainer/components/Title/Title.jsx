@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-function Title({ children }) {
-  return <h2 className="title">{children}</h2>;
-}
+const Title = forwardRef(({ children }, ref) => {
+  return (
+    <h2 className="title" ref={ref}>
+      {children}
+    </h2>
+  );
+});
 
 export default Title;
