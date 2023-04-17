@@ -16,6 +16,7 @@ const Switch = ({ selected, onChange }) => (
       type="secondary-alice"
       tabs={[
         { value: 'methods', label: 'P2P Payment Methods' },
+        { value: 'ads', label: 'My ads' },
         { value: 'feedback', label: 'Feedback (0)' },
         { value: 'blacklist', label: 'Blacklist' },
       ]}

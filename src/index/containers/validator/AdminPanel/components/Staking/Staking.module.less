@@ -1,0 +1,44 @@
+.Staking {
+  width: 55%;
+
+  &__row {
+    &:first-child {
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    &:last-child {
+      padding-top: 15px;
+    }
+  }
+
+  &__title,
+  &__amount {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  &__title {
+    font-weight: 500;
+    color: var(--cool-gray);
+    margin-right: 44px;
+
+    :global {
+      .AnswerPopup {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  &__amount {
+    margin-left: auto;
+
+    font-weight: 600;
+    color: var(--dark-black);
+  }
+
+  &__button {
+    margin-left: 20px;
+    min-width: 225px;
+  }
+}
