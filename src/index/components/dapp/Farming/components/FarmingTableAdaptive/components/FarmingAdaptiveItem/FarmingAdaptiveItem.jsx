@@ -167,7 +167,7 @@ class FarmingAdaptiveItem extends React.PureComponent {
 
     const pairPrice = prices[pool.address] || 0;
   
-    const apr = this.getAPR(poolSize);
+    const apr = this.getAPR(poolSize || (100000 / lpPrice));
     const apy = this.getAPY(apr);
 
     return (
