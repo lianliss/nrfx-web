@@ -177,7 +177,7 @@ class FarmingTableItem extends React.PureComponent {
 
     const pairPrice = prices[pool.address] || 0;
 
-    const apr = this.getAPR(1000 / lpPrice);
+    const apr = this.getAPR(100000 / lpPrice);
     const apy = this.getAPY(apr);
 
     return (
