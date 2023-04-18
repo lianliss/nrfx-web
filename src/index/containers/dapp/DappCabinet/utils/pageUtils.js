@@ -51,7 +51,7 @@ export const getFinePage = (routeName) => {
     case PAGES.FARMING:
       Component = Farming;
       testnetOnly = false;
-      chainsWhitelist = [97, 80001];
+      chainsWhitelist = [1];
       break;
     case PAGES.DAPP_VALIDATOR:
       Component = CabinetValidator;
