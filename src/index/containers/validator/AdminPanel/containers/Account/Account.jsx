@@ -8,7 +8,7 @@ import { TradingStatistics, Verify, Staking } from '../../components';
 // Styles
 import styles from './Account.module.less';
 
-function Account() {
+function Account({ adaptive }) {
   const BodyItem = ({ children }) => (
     <div className={styles.Account__body__item}>{children}</div>
   );
@@ -22,7 +22,7 @@ function Account() {
       >
         <UserProfile name="mail****@gmail.com" isVerified />
         {/* <Verify /> */}
-        <Staking />
+        <Staking adaptive={adaptive} />
       </Row>
       <div className={styles.Account__body}>
         <BodyItem>

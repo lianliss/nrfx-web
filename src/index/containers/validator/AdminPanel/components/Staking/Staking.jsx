@@ -8,6 +8,18 @@ import KNOWN_FIATS from '../../../../../constants/knownFiats';
 
 import styles from './Staking.module.less';
 
+const StakingRow = ({ children, adaptive }) => (
+  <Row
+    alignItems="center"
+    justifyContent={adaptive ? 'flex-start' : 'flex-end'}
+    className={styles.Staking__row}
+    gap={adaptive ? 12 : '5px 0'}
+    wrap={adaptive}
+  >
+    {children}
+  </Row>
+);
+
 const Staking = ({ adaptive }) => {
   const fiatsOptions = KNOWN_FIATS.map((fiat) =>
     BottomSheetSelect.option(fiat.symbol, fiat.address, fiat.logoURI)
@@ -43,13 +55,7 @@ const Staking = ({ adaptive }) => {
 
   return (
     <div className={styles.Staking}>
-      <Row
-        alignItems="center"
-        justifyContent="flex-end"
-        className={styles.Staking__row}
-        gap="5px 0"
-        wrap
-      >
+      <StakingRow adaptive={adaptive}>
         <div className={styles.Staking__title}>
           <span>Staked</span>
         </div>
@@ -77,15 +83,9 @@ const Staking = ({ adaptive }) => {
             indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
           />
         </div>
-        {stakeButton}
-      </Row>
-      <Row
-        alignItems="center"
-        justifyContent="flex-end"
-        className={styles.Staking__row}
-        gap="5px 0"
-        wrap
-      >
+        {!adaptive && stakeButton}
+      </StakingRow>
+      <StakingRow adaptive={adaptive}>
         <div className={styles.Staking__title}>
           <Row alignItems="center">
             <span>Available for trade</span>
@@ -97,8 +97,14 @@ const Staking = ({ adaptive }) => {
           </Row>
         </div>
         <div className={styles.Staking__amount}>100.00 NUSD</div>
-        {unstakeButton}
-      </Row>
+        {!adaptive && unstakeButton}
+      </StakingRow>
+      {adaptive && (
+        <div className={styles.Staking__buttons}>
+          {stakeButton}
+          {unstakeButton}
+        </div>
+      )}
     </div>
   );
 };

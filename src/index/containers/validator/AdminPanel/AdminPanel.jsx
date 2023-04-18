@@ -16,7 +16,7 @@ function AdminPanel() {
 
   return (
     <div className={styles.AdminPanel}>
-      <Account />
+      <Account adaptive={adaptive} />
       <PaymentMethods adaptive={adaptive} />
       <SocialLinks type="v2" />
     </div>
