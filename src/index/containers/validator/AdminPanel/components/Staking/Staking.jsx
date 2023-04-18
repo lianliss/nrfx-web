@@ -4,7 +4,9 @@ import { Row, Button } from 'ui';
 import { AnswerPopup } from 'dapp';
 import { BottomSheetSelect } from 'dapp/Select';
 import { components } from 'react-select';
+
 import KNOWN_FIATS from '../../../../../constants/knownFiats';
+import { classNames as cn } from 'utils';
 
 import styles from './Staking.module.less';
 
@@ -59,17 +61,21 @@ const Staking = ({ adaptive }) => {
         <div className={styles.Staking__title}>
           <span>Staked</span>
         </div>
-        <div className={styles.Staking__amount}>
+        <div className={cn(styles.Staking__amount, styles.Select__wrapper)}>
           <BottomSheetSelect
             value={selectedFiat}
             onChange={setSelectedFiat}
             options={fiatsOptions}
             type="bold"
             showSelectedInMenu
+            isModalForAdaptive
             components={{
               Control: ({ children, ...props }) => (
                 <components.Control {...props}>
-                  200 {children}
+                  {!adaptive && (
+                    <span className={styles.Staking__amountNumber}>200</span>
+                  )}
+                  {children}
                 </components.Control>
               ),
             }}
@@ -80,8 +86,15 @@ const Staking = ({ adaptive }) => {
               menu: () => styles.Select__menu,
               dropdownIndicator: () => styles.Select__dropdownIndicator,
             }}
-            indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
+            indicatorIcon={
+              adaptive
+                ? require('src/asset/icons/cabinet/swap/select-arrow.svg')
+                : require('src/asset/icons/arrows/form-dropdown.svg')
+            }
           />
+          {adaptive && (
+            <span className={styles.Staking__amountNumber}>200</span>
+          )}
         </div>
         {!adaptive && stakeButton}
       </StakingRow>
