@@ -7,9 +7,16 @@
 
   &__color {
     width: 2px;
+    min-width: 2px;
     height: 15px;
     border-radius: 20px;
     margin-right: 5px;
+  }
+
+  span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &.large {
@@ -21,6 +28,7 @@
 
   &.large &__color {
     width: 4px;
+    min-width: 4px;
     height: 23px;
     margin-right: 9px;
   }

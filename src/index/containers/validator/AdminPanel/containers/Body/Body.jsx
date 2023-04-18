@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import { Button, SwitchTabs } from 'ui';
-import { PaymentMethodsTable } from '../../components';
+import { AdsTable, PaymentMethodsTable } from '../../components';
 
 // Styles
 import styles from './Body.module.less';
@@ -16,7 +16,7 @@ const Switch = ({ selected, onChange }) => (
       type="secondary-alice"
       tabs={[
         { value: 'methods', label: 'P2P Payment Methods' },
-        { value: 'ads', label: 'My ads' },
+        { value: 'my-ads', label: 'My ads' },
         { value: 'feedback', label: 'Feedback (0)' },
         { value: 'blacklist', label: 'Blacklist' },
       ]}
@@ -25,7 +25,7 @@ const Switch = ({ selected, onChange }) => (
 );
 
 function Body({ adaptive }) {
-  const [selected, setSelected] = React.useState('methods');
+  const [selected, setSelected] = React.useState('my-ads');
 
   return (
     <>
@@ -47,7 +47,8 @@ function Body({ adaptive }) {
             </span>
           </Button>
         </div>
-        <PaymentMethodsTable adaptive={adaptive} />
+        {selected === 'methods' && <PaymentMethodsTable adaptive={adaptive} />}
+        {selected === 'my-ads' && <AdsTable adaptive={adaptive} />}
       </div>
     </>
   );

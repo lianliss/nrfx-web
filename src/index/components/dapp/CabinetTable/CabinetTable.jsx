@@ -23,7 +23,7 @@ export const TR = ({ children, className, background, custom }) => (
 
 export const TD = ({ type, color, className, children, dataLabel }) => (
   <td
-    className={cn({ [type]: type, [color]: color, className })}
+    className={cn({ [type]: type, [color]: color }, className)}
     data-label={dataLabel}
   >
     {children}
