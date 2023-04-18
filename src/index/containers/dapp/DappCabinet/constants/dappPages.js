@@ -77,7 +77,7 @@ export default [
     name: PAGES.FARMING,
     chains: [
       ETHEREUM_MAINNET,
-      BSC_MAINNET,
+      // BSC_MAINNET,
       BSC_TESTNET,
       // POLYGON_MAINNET,
       POLYGON_MUMBAI,
