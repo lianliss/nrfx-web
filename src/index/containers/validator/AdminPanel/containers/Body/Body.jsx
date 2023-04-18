@@ -5,7 +5,7 @@ import { Button, SwitchTabs } from 'ui';
 import { PaymentMethodsTable } from '../../components';
 
 // Styles
-import styles from './PaymentMethods.module.less';
+import styles from './Body.module.less';
 
 const Switch = ({ selected, onChange }) => (
   <div className={styles.switchContainer}>
@@ -24,17 +24,17 @@ const Switch = ({ selected, onChange }) => (
   </div>
 );
 
-function PaymentMethods({ adaptive }) {
+function Body({ adaptive }) {
   const [selected, setSelected] = React.useState('methods');
 
   return (
     <>
       {adaptive && <Switch selected={selected} onChange={setSelected} />}
-      <div className={styles.PaymentMethods}>
+      <div className={styles.Body}>
         {!adaptive && <Switch selected={selected} onChange={setSelected} />}
-        <h2 className={styles.PaymentMethods__title}>P2P Payment Methods</h2>
-        <div className={styles.PaymentMethods__subtitle__wrapper}>
-          <p className={styles.PaymentMethods__subtitle}>
+        <h2 className={styles.Body__title}>P2P Payment Methods</h2>
+        <div className={styles.Body__subtitle__wrapper}>
+          <p className={styles.Body__subtitle}>
             P2P payment methods: When you sell cryptocurrencies, the payment
             method added will be displayed to buyer as options to accept
             payment, please ensure that the account owner’s name is consistent
@@ -53,4 +53,4 @@ function PaymentMethods({ adaptive }) {
   );
 }
 
-export default PaymentMethods;
+export default Body;
