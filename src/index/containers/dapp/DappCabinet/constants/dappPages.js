@@ -78,9 +78,9 @@ export default [
     chains: [
       ETHEREUM_MAINNET,
       // BSC_MAINNET,
-      // BSC_TESTNET,
+      BSC_TESTNET,
       // POLYGON_MAINNET,
-      // POLYGON_MUMBAI,
+      POLYGON_MUMBAI,
       // ARBITRUM_MAINNET,
     ],
   },
