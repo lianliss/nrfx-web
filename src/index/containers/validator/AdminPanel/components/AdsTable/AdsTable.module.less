@@ -1,4 +1,6 @@
 .AdsTable {
+  margin-top: 20px;
+
   td span {
     font-weight: 500;
     font-size: 14px;
@@ -34,6 +36,10 @@
       }
     }
   }
+
+  &__action__buttons {
+    width: auto;
+  }
 }
 
 .cutText {
@@ -46,4 +52,31 @@
 .TD__published {
   display: flex;
   align-items: flex-start;
+}
+
+.adaptiveTR {
+  td:first-child {
+    span {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+}
+
+.adaptiveTD {
+  & &__title {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--cool-gray);
+  }
+
+  .paymentItem span,
+  & &__value {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: right;
+  }
 }

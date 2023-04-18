@@ -138,6 +138,31 @@
   }
 
   &.column {
-    
+    tr {
+      grid-template-columns: 100%;
+      padding: 30px 18px;
+      border-radius: 0;
+      background: none;
+      border-bottom: 1px solid var(--alice-blue);
+
+      &:first-child {
+        border-top: 1px solid var(--alice-blue);
+      }
+    }
+
+    td {
+      &::before {
+        content: none;
+      }
+    }
+
+    td:first-child {
+      padding: 0 0 8px !important;
+      grid-column: 1;
+    }
+
+    td:not(:first-child) {
+      margin-top: 12px;
+    }
   }
 }
