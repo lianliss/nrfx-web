@@ -31,7 +31,7 @@ function TableLayout({ adaptive }) {
     <>
       {adaptive && <Switch selected={selected} onChange={setSelected} />}
       <div className={styles.TableLayout}>
-        <div>
+        <div className={styles.TableLayout__header}>
           {!adaptive && <Switch selected={selected} onChange={setSelected} />}
           <h2 className={styles.TableLayout__title}>P2P Payment Methods</h2>
           <div className={styles.TableLayout__subtitle__wrapper}>
