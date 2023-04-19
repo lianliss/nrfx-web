@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import { Button, SwitchTabs } from 'ui';
-import { AdsTable, PaymentMethodsTable } from '../../components';
+import { AdsFilters, AdsTable, PaymentMethodsTable } from '../../components';
 
 // Styles
 import styles from './TableLayout.module.less';
@@ -48,6 +48,7 @@ function TableLayout({ adaptive }) {
               </span>
             </Button>
           </div>
+          <AdsFilters />
         </div>
         {selected === 'methods' && <PaymentMethodsTable adaptive={adaptive} />}
         {selected === 'my-ads' && <AdsTable adaptive={adaptive} />}

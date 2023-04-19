@@ -30,3 +30,5 @@ export const orderProcesses = {
     completed: 'sell-completed',
   },
 };
+
+export const orderAdStatuses = { published: 'published', private: 'private' };

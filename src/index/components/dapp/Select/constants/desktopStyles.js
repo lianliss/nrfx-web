@@ -9,8 +9,9 @@ const commonStyles = {
     boxShadow: 'none',
     borderColor: _.get(state, 'isFocused') ? '#d7ddee' : '#dfe3f0',
     '&:hover': {
-      borderColor: !_.get(state, 'selectProps.menuIsOpen') && '#d7ddee',
+      borderColor: !_.get(state, 'selectProps.menuIsOpen') && '#c7cdde',
     },
+    cursor: 'pointer',
   }),
   dropdownIndicator: (base, state) => ({
     padding: '0 15px',
