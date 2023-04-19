@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 // Components
-import { Account, Body } from './containers';
+import { Account, TableLayout } from './containers';
 import { SocialLinks } from 'dapp';
 
 // Utils
@@ -17,7 +17,7 @@ function AdminPanel() {
   return (
     <div className={styles.AdminPanel}>
       <Account adaptive={adaptive} />
-      <Body adaptive={adaptive} />
+      <TableLayout adaptive={adaptive} />
       <SocialLinks type="v2" />
     </div>
   );
