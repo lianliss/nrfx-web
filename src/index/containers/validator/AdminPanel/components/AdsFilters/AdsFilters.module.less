@@ -1,6 +1,30 @@
-.Column {
-  flex: 1 1 auto;
+.AdsFilters {
+  :global {
+    .Button {
+      min-width: 104px;
 
+      &__label {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 16px;
+      }
+    }
+
+    .CustomButton {
+      height: 46px;
+
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+
+      &:not(:active):hover {
+        opacity: 0.85;
+      }
+    }
+  }
+}
+
+.Column {
   &__title {
     margin-bottom: 8px;
 
@@ -12,7 +36,7 @@
 
   &__content {
     width: 100%;
-    
+
     font-weight: 500;
     font-size: 12px;
     line-height: 100%;
@@ -20,9 +44,34 @@
   }
 
   &__isSelect {
+    flex: 1 1 auto;
     max-width: 151px;
+  }
+
+  .Select {
+    &__control {
+      min-height: 46px;
+    }
   }
 }
 
-.Select {
+.DatePicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--azureish-white);
+  border-radius: 10px;
+  box-sizing: border-box;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
 }

@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { BottomSheetSelect } from 'dapp/Select';
-import { Row, Col } from 'ui';
+import { CustomButton } from 'dapp';
+import { Row, Col, Button } from 'ui';
+import SVG from 'utils/svg-wrap';
 
 import { classNames as cn } from 'utils';
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
@@ -23,7 +25,9 @@ const SelectComponent = ({ value, onChange, options }) => (
     onChange={onChange}
     listHeight={215}
     width="100%"
-    className={styles.Select}
+    classNames={{
+      control: () => styles.Select__control,
+    }}
   />
 );
 
@@ -39,7 +43,7 @@ const AdsFilters = () => {
   );
 
   return (
-    <Row className={styles.AdsFilters} gap={11}>
+    <Row className={styles.AdsFilters} alignItems="flex-end" gap={11} wrap>
       <Column
         title="Asset/Fiat"
         content={<SelectComponent options={fiatsOptions} />}
@@ -59,10 +63,22 @@ const AdsFilters = () => {
         title="Created time"
         content={
           <div className={styles.DatePicker}>
-            <div></div>
+            <span>2022-12-08</span>
+            <span>—</span>
+            <span>2022-12-08</span>
+            <SVG src={require('src/asset/icons/cabinet/calendar.svg')} />
           </div>
         }
       />
+      <Button type="lightBlue">
+        <span>Filter</span>
+      </Button>
+      <Button type="secondary-light--light-blue">
+        <span>Reset</span>
+      </Button>
+      <CustomButton>
+        <span className="light-blue-gradient-color">Ad History</span>
+      </CustomButton>
     </Row>
   );
 };
