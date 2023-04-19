@@ -68,7 +68,7 @@ class MasterChefContract {
         token1: _.get(data[0], 'token1'),
         token0Symbol: _.get(data[0], 'token0Symbol'),
         token1Symbol: _.get(data[0], 'token1Symbol'),
-        size: _.get(data[0], 'amount', '0'),
+        size: _.get(data[0], 'totalDeposited', '0'),
         share: wei.from(_.get(data[0], 'poolShare', '0'), 4),
         rewardPerBlock: _.get(data[0], 'rewardPerBlock', '0'),
         balance: _.get(data[1], 'balance', '0'),
