@@ -3,12 +3,12 @@ import React from 'react';
 // Components
 import { Row, NumberFormat } from 'ui';
 import { UserProfile } from 'src/index/components/p2p';
-import { TradingStatistics, Verify } from '../../components';
+import { TradingStatistics, Verify, Staking } from '../../components';
 
 // Styles
 import styles from './Account.module.less';
 
-function Account() {
+function Account({ adaptive }) {
   const BodyItem = ({ children }) => (
     <div className={styles.Account__body__item}>{children}</div>
   );
@@ -21,7 +21,8 @@ function Account() {
         wrap
       >
         <UserProfile name="mail****@gmail.com" isVerified />
-        <Verify />
+        {/* <Verify /> */}
+        <Staking adaptive={adaptive} />
       </Row>
       <div className={styles.Account__body}>
         <BodyItem>

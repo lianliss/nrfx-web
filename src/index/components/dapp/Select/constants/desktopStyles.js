@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const commonStyles = {
   control: (base, state) => ({
     height: '100%',
@@ -5,14 +7,17 @@ const commonStyles = {
     borderSize: '1px',
     borderStyle: 'solid',
     boxShadow: 'none',
-    borderColor: state.isFocused ? '#d7ddee' : '#dfe3f0',
+    borderColor: _.get(state, 'isFocused') ? '#d7ddee' : '#dfe3f0',
     '&:hover': {
-      borderColor: !state.selectProps.menuIsOpen && '#d7ddee',
+      borderColor: !_.get(state, 'selectProps.menuIsOpen') && '#c7cdde',
     },
+    cursor: 'pointer',
   }),
   dropdownIndicator: (base, state) => ({
     padding: '0 15px',
-    transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : 'rotate(0)',
+    transform: _.get(state, 'selectProps.menuIsOpen')
+      ? 'rotate(180deg)'
+      : 'rotate(0)',
   }),
   menu: (base) => ({
     display: 'flex',
@@ -57,6 +62,8 @@ const desktopStyles = {
       ...base,
       ...commonStyles.menu(base),
       marginTop: 12,
+      left: '50%',
+      transform: 'translateX(-50%)',
       boxShadow: '0px 25px 55px rgba(188, 188, 188, 0.25)',
       borderRadius: '18px',
     }),
@@ -66,10 +73,12 @@ const desktopStyles = {
     }),
     option: (base, state) => ({
       ...base,
-      padding: state.isSelected ? '8px 12px 8px 9px' : '8px 27.4px 8px 11px',
+      padding: _.get(state, 'isSelected')
+        ? '8px 12px 8px 9px'
+        : '8px 27.4px 8px 11px',
 
       '&:not(:hover)': {
-        background: state.isSelected ? '#dce5fd' : 'transparent',
+        background: _.get(state, 'isSelected') ? '#dce5fd' : 'transparent',
       },
 
       '&:hover': {
@@ -82,8 +91,11 @@ const desktopStyles = {
       ...base,
       ...commonStyles.control(base, state),
       borderBottom:
-        state.selectProps.menuIsOpen && '1px solid rgba(255, 255, 255, 0)',
-      borderRadius: state.selectProps.menuIsOpen ? '10px 10px 0 0' : 10,
+        _.get(state, 'selectProps.menuIsOpen') &&
+        '1px solid rgba(255, 255, 255, 0)',
+      borderRadius: _.get(state, 'selectProps.menuIsOpen')
+        ? '10px 10px 0 0'
+        : 10,
     }),
     singleValue: (base) => ({
       ...base,
@@ -110,7 +122,9 @@ const desktopStyles = {
       ...base,
       display: 'flex',
       alignItems: 'center',
-      padding: state.isSelected ? '8px 12px 8px 9px' : '8px 27.4px 8px 11px',
+      padding: _.get(state, 'isSelected')
+        ? '8px 12px 8px 9px'
+        : '8px 27.4px 8px 11px',
       minHeight: 35,
       background: 'transparent',
 

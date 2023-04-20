@@ -21,7 +21,7 @@ function PaymentItem({
       className={cn('orders-list-payment-item', className, size)}
       style={{ background: adaptive && color }}
     >
-      {!adaptive && (
+      {color && !adaptive && (
         <div
           className="orders-list-payment-item__color"
           style={{ background: color }}

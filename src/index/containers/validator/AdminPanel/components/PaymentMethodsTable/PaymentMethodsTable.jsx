@@ -5,6 +5,7 @@ import { Col, Row } from 'ui';
 import { CustomButton } from 'dapp';
 import CabinetTable, { TD, TR } from 'dapp/CabinetTable/CabinetTable';
 import { PaymentItem } from 'src/index/components/p2p';
+import { Pagination } from 'src/index/components/p2p/components/UI';
 
 // Utils
 import testPayments from '../../../../p2p/constants/testPayments';
@@ -184,6 +185,7 @@ function PaymentMethodsTable({ adaptive, items = testItems }) {
           );
         })}
       </CabinetTable>
+      <Pagination style={{ marginTop: 30 }} />
     </div>
   );
 }

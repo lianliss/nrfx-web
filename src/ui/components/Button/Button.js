@@ -106,6 +106,7 @@ Button.propTypes = {
     "secondary-blue",
     "secondary-alice",
     "secondary-light",
+    "secondary-light--light-blue",
     "light",
     "dark",
     "orange",
