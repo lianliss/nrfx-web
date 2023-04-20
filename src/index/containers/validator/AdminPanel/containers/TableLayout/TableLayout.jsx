@@ -48,7 +48,7 @@ function TableLayout({ adaptive }) {
               </span>
             </Button>
           </div>
-          <AdsFilters />
+          <AdsFilters adaptive={adaptive} />
         </div>
         {selected === 'methods' && <PaymentMethodsTable adaptive={adaptive} />}
         {selected === 'my-ads' && <AdsTable adaptive={adaptive} />}

@@ -1,24 +1,29 @@
 .AdsFilters {
-  :global {
-    .Button {
-      min-width: 104px;
+  &__buttons {
+    flex: 1 1 auto;
+    width: auto;
 
-      &__label {
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 16px;
+    :global {
+      .Button {
+        min-width: 104px;
+
+        &__label {
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 16px;
+        }
       }
-    }
 
-    .CustomButton {
-      height: 46px;
+      .CustomButton {
+        height: 46px;
 
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 100%;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 100%;
 
-      &:not(:active):hover {
-        opacity: 0.85;
+        &:not(:active):hover {
+          opacity: 0.85;
+        }
       }
     }
   }
@@ -70,8 +75,32 @@
   line-height: 100%;
   letter-spacing: -0.01em;
 
+  :global(.isvg) {
+    margin-left: auto;
+  }
+
   svg {
     width: 14px;
     height: 14px;
+  }
+}
+
+:global(.adaptive) {
+  .Column {
+    width: 100%;
+    max-width: 100%;
+
+    .Select {
+      &__control {
+        min-height: 44px;
+      }
+    }
+  }
+
+  .AdsFilters {
+    &__buttons {
+      margin-top: 10px;
+      width: 100%;
+    }
   }
 }

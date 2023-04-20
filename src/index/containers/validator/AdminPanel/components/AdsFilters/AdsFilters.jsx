@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { BottomSheetSelect } from 'dapp/Select';
-import { CustomButton } from 'dapp';
+import { BottomSheetSelect, ButtonsSelect } from 'dapp/Select';
+import { CustomButton, AdaptiveTop } from 'dapp';
 import { Row, Col, Button } from 'ui';
 import SVG from 'utils/svg-wrap';
 
-import { classNames as cn } from 'utils';
+import { classNames as cn, ucfirst } from 'utils';
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
 import { p2pMode, orderAdStatuses } from 'src/index/constants/dapp/types';
 
@@ -31,24 +31,39 @@ const SelectComponent = ({ value, onChange, options }) => (
   />
 );
 
-const AdsFilters = () => {
+const AdsFilters = ({ adaptive }) => {
   const fiatsOptions = KNOWN_FIATS.map((fiat) =>
-    BottomSheetSelect.option(fiat.symbol, fiat.symbol, fiat.logoURI)
+    BottomSheetSelect.option(ucfirst(fiat.symbol), fiat.symbol, fiat.logoURI)
   );
   const typesOptions = Object.values(p2pMode).map((mode) =>
-    BottomSheetSelect.option(mode, mode)
+    BottomSheetSelect.option(ucfirst(mode), mode)
   );
   const statusesOptions = Object.values(orderAdStatuses).map((status) =>
-    BottomSheetSelect.option(status, status)
+    BottomSheetSelect.option(ucfirst(status), status)
   );
 
-  return (
-    <Row className={styles.AdsFilters} alignItems="flex-end" gap={11} wrap>
-      <Column
-        title="Asset/Fiat"
-        content={<SelectComponent options={fiatsOptions} />}
-        isSelect
-      />
+  const buttonSize = adaptive ? 'big' : 'moderate';
+
+  const renderBody = () => (
+    <Row
+      className={styles.AdsFilters}
+      alignItems="flex-end"
+      gap={adaptive ? 20 : 11}
+      wrap
+    >
+      {adaptive ? (
+        <ButtonsSelect
+          title="Asset/Fiat"
+          options={fiatsOptions}
+          className={styles.ButtonsSelect}
+        />
+      ) : (
+        <Column
+          title="Asset/Fiat"
+          content={<SelectComponent options={fiatsOptions} />}
+          isSelect
+        />
+      )}
       <Column
         title="Type"
         content={<SelectComponent options={typesOptions} />}
@@ -70,17 +85,37 @@ const AdsFilters = () => {
           </div>
         }
       />
-      <Button type="lightBlue">
-        <span>Filter</span>
-      </Button>
-      <Button type="secondary-light--light-blue">
-        <span>Reset</span>
-      </Button>
-      <CustomButton>
-        <span className="light-blue-gradient-color">Ad History</span>
-      </CustomButton>
+      <Row gap={adaptive ? 15 : 11} wrap className={styles.AdsFilters__buttons}>
+        {adaptive ? (
+          <Button type="lightBlue" size={buttonSize}>
+            <span>Search</span>
+          </Button>
+        ) : (
+          <Button type="lightBlue" size={buttonSize}>
+            <span>Filter</span>
+          </Button>
+        )}
+        <Button type="secondary-light--light-blue" size={buttonSize}>
+          <span>Reset</span>
+        </Button>
+        {!adaptive && (
+          <CustomButton>
+            <span className="light-blue-gradient-color">Ad History</span>
+          </CustomButton>
+        )}
+      </Row>
     </Row>
   );
+
+  if (adaptive) {
+    return (
+      <div className={styles.AdsFilters__wrapper}>
+        <AdaptiveTop title="Filter">{renderBody()}</AdaptiveTop>
+      </div>
+    );
+  }
+
+  return renderBody();
 };
 
 export default AdsFilters;

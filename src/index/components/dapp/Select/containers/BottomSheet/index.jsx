@@ -207,7 +207,7 @@ BottomSheetSelect.defaultProps = {
 };
 
 // Return object for options constant
-const BottomSheetSelectOption = (
+const bottomSheetSelectOption = (
   title,
   value,
   icon,
@@ -237,6 +237,6 @@ const BottomSheetSelectOption = (
   };
 };
 
-BottomSheetSelect.option = BottomSheetSelectOption;
+BottomSheetSelect.option = bottomSheetSelectOption;
 
 export default BottomSheetSelect;
