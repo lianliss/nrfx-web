@@ -5,9 +5,10 @@ import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { CustomButton } from 'dapp';
 import { Col, Row } from 'ui';
 import SVG from 'utils/svg-wrap';
+import Pagination from 'src/index/components/p2p/components/UI/components/Pagination/Pagination';
+import { PaymentItem } from 'src/index/components/p2p';
 
 import styles from './AdsTable.module.less';
-import PaymentItem from 'src/index/components/p2p/components/PaymentItem';
 import testItems from './testItems';
 import { classNames as cn } from 'utils';
 
@@ -197,6 +198,7 @@ const AdsTable = ({ adaptive }) => {
           <TableRow {...item} key={item.adNumber} adaptive={adaptive} />
         ))}
       </CabinetTable>
+      <Pagination style={{ marginTop: 30 }} />
     </div>
   );
 };
