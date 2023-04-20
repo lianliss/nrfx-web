@@ -6,7 +6,7 @@ import { NumberFormat } from 'src/ui';
 // Styles
 import './DoubleText.less';
 
-function DoubleText({ title, currency, first, second }) {
+function DoubleText({ title, currency, first, second, firstDecimals = 2, secondDecimals = 0 }) {
   return (
     <div className="DoubleText">
       <span>
@@ -14,11 +14,11 @@ function DoubleText({ title, currency, first, second }) {
       </span>
       <p>
         <span>
-          <NumberFormat number={first} currency={currency} />
+          <NumberFormat number={first} fractionDigits={firstDecimals} currency={currency} />
         </span>
         &nbsp;/&nbsp;
         <span>
-          $<NumberFormat number={second} />
+          $<NumberFormat number={second} fractionDigits={secondDecimals} />
         </span>
       </p>
     </div>

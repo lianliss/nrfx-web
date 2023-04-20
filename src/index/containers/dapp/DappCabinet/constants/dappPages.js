@@ -53,7 +53,14 @@ export default [
   },
   {
     name: PAGES.LIQUIDITY,
-    chains: [BSC_MAINNET, BSC_TESTNET, POLYGON_MUMBAI],
+    chains: [
+      ETHEREUM_MAINNET,
+      BSC_MAINNET,
+      BSC_TESTNET,
+      POLYGON_MAINNET,
+      POLYGON_MUMBAI,
+      ARBITRUM_MAINNET,
+    ],
   },
   {
     name: PAGES.TRANSACTIONS,

@@ -112,25 +112,29 @@ class FarmingAdaptiveItem extends React.PureComponent {
     }
     this.rewardTimeout = setTimeout(this.updateRewardAmount.bind(this), REWARD_UPDATE_INTERVAL);
   };
-
-  getAPR(poolSize = 1000) {
+  
+  getAPR() {
     const {blocksPerSecond, prices} = this.context;
     const {pool, nrfxPrice} = this.props;
+    const lpPrice = prices[pool.address] || 0;
+    const poolSize = wei.from(pool.size || '0') || (100000 / lpPrice);
+    const userPoolSize = wei.from(pool.userPool || '0');
+    const userShare = userPoolSize
+      ? userPoolSize / poolSize
+      : 1;
     // Reward per year
     const rpy = roi.getPeriodReward(
       60 * 60 * 24 * 365,
       blocksPerSecond,
-      wei.from(_.get(pool, 'rewardPerBlock', '0'))
+      wei.from(_.get(pool, 'rewardPerBlock', '0')) * userShare
     );
     const rewardPrice = nrfxPrice || 0;
-    const lpPrice = prices[pool.address] || 0;
-
     const rewardUsdt = rpy * rewardPrice;
     const poolUsdt = poolSize * lpPrice;
-
+    
     return rewardUsdt / poolUsdt;
   }
-
+  
   getAPY(apr) {
     const {blocksPerSecond, prices} = this.context;
     const {pool, nrfxPrice} = this.props;
@@ -163,10 +167,11 @@ class FarmingAdaptiveItem extends React.PureComponent {
     const token1 = tokens.find(t => t.address && t.address === pool.token1) || {...UNKNOWN_TOKEN, address: pool.token1};
     const poolSize = wei.from(pool.size);
     const userPoolSize = wei.from(pool.userPool || '0');
+    const lpPrice = prices[pool.address] || 0;
 
     const pairPrice = prices[pool.address] || 0;
   
-    const apr = this.getAPR(1000);
+    const apr = this.getAPR();
     const apy = this.getAPY(apr);
 
     return (

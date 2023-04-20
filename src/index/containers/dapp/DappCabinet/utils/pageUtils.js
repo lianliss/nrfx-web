@@ -17,6 +17,7 @@ import * as p2p from 'src/index/containers/p2p';
 import * as PAGES from 'src/index/constants/pages';
 import dappPages from '../constants/dappPages';
 import _ from 'lodash';
+import { BSC_TESTNET, ETHEREUM_MAINNET, POLYGON_MUMBAI } from 'src/services/multichain/chains';
 
 export const getFinePage = (routeName) => {
   // Set page component
@@ -52,7 +53,7 @@ export const getFinePage = (routeName) => {
     case PAGES.FARMING:
       Component = Farming;
       testnetOnly = false;
-      chainsWhitelist = [97, 80001];
+      chainsWhitelist = [ETHEREUM_MAINNET, BSC_TESTNET];
       break;
     case PAGES.DAPP_VALIDATOR:
       Component = CabinetValidator;

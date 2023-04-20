@@ -193,7 +193,7 @@ function LiquidityConfirmModal(props) {
       </div>
       <div className="LiquidityConfirmModal__row">
         <span className="large-text">
-          <NumberFormat number={lpTokens} />
+          <NumberFormat number={lpTokens} fractionDigits={5} />
         </span>
         <WalletIcon currency={selectedTokens[0].symbol} size={41} />
         <WalletIcon currency={selectedTokens[1].symbol} size={41} />
