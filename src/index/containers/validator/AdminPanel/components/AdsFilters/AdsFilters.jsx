@@ -32,6 +32,10 @@ const SelectComponent = ({ value, onChange, options }) => (
 );
 
 const AdsFilters = ({ adaptive }) => {
+  // States
+  const [isModal, setIsModal] = React.useState(false);
+
+  // Constants
   const fiatsOptions = KNOWN_FIATS.map((fiat) =>
     BottomSheetSelect.option(ucfirst(fiat.symbol), fiat.symbol, fiat.logoURI)
   );
@@ -42,6 +46,7 @@ const AdsFilters = ({ adaptive }) => {
     BottomSheetSelect.option(ucfirst(status), status)
   );
 
+  // Design
   const buttonSize = adaptive ? 'big' : 'moderate';
 
   const renderBody = () => (
@@ -110,7 +115,30 @@ const AdsFilters = ({ adaptive }) => {
   if (adaptive) {
     return (
       <div className={styles.AdsFilters__wrapper}>
-        <AdaptiveTop title="Filter">{renderBody()}</AdaptiveTop>
+        <Row className={styles.AdsFilters__closedFilters} alignItems="center">
+          <CustomButton>Ad history</CustomButton>
+          <CustomButton onClick={() => setIsModal(true)}>
+            Filter
+            <SVG
+              src={require('src/asset/icons/action/filter.svg')}
+              style={{ marginLeft: 3 }}
+              flex
+            />
+          </CustomButton>
+          <CustomButton>
+            Refresh
+            <SVG
+              src={require('src/asset/icons/action/reload-gray.svg')}
+              style={{ marginLeft: 3 }}
+              flex
+            />
+          </CustomButton>
+        </Row>
+        {isModal && (
+          <AdaptiveTop title="Filter" onClose={() => setIsModal(false)}>
+            {renderBody()}
+          </AdaptiveTop>
+        )}
       </div>
     );
   }
