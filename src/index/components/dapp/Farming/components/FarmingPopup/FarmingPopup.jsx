@@ -133,7 +133,7 @@ export function FarmingPopupROI(props) {
             return <TableCell key={index}>
               <TableColumn>{period.title}</TableColumn>
               <TableColumn>
-                <NumberFormat number={apr * 100} percent /> ${userShare.toFixed(2)}
+                <NumberFormat number={apr * 100} percent />
               </TableColumn>
               <TableColumn
                 sub={
