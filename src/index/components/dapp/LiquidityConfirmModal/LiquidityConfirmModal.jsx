@@ -114,8 +114,8 @@ function LiquidityConfirmModal(props) {
         selectedTokens[1].address,
         wei.to(amount0, selectedTokens[0].decimals || 18),
         wei.to(amount1, selectedTokens[1].decimals || 18),
-        '0', //wei.to(minA, selectedTokens[0].decimals || 18),
-        '0', //wei.to(minB, selectedTokens[1].decimals || 18),
+        wei.to(minA, selectedTokens[0].decimals || 18),
+        wei.to(minB, selectedTokens[1].decimals || 18),
         accountAddress,
         Number(Date.now() / 1000 + 60 * 15).toFixed(0),
       ];
