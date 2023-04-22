@@ -18,7 +18,11 @@ function Account({ adaptive, user }) {
   );
 
   const renderValidatorAction = (verified) =>
-    verified ? <Staking adaptive={adaptive} /> : <Verify userRole={role} />;
+    verified ? (
+      <Staking adaptive={adaptive} />
+    ) : (
+      <Verify adaptive={adaptive} userRole={role} />
+    );
 
   return (
     <div className={styles.Account}>
@@ -29,7 +33,9 @@ function Account({ adaptive, user }) {
       >
         <UserProfile name={name} isVerified={verified} />
         {isValidator && renderValidatorAction(verified)}
-        {isUser && <Verify userRole={role} verified={verified} />}
+        {isUser && (
+          <Verify adaptive={adaptive} userRole={role} verified={verified} />
+        )}
       </Row>
       <div className={styles.Account__body}>
         <BodyItem>
