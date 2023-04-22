@@ -11,13 +11,18 @@ import {
   SocialMedia,
   Team,
 } from 'src/index/components/dapp';
+import { UserCenter } from '../..';
 import * as validator from 'src/index/containers/validator';
 import * as p2p from 'src/index/containers/p2p';
 
 import * as PAGES from 'src/index/constants/pages';
 import dappPages from '../constants/dappPages';
 import _ from 'lodash';
-import { BSC_TESTNET, ETHEREUM_MAINNET, POLYGON_MUMBAI } from 'src/services/multichain/chains';
+import {
+  BSC_TESTNET,
+  ETHEREUM_MAINNET,
+  POLYGON_MUMBAI,
+} from 'src/services/multichain/chains';
 
 export const getFinePage = (routeName) => {
   // Set page component
@@ -79,11 +84,14 @@ export const getFinePage = (routeName) => {
     case PAGES.P2P_ORDER:
       Component = p2p.Order;
       break;
+    case PAGES.P2P_USER_CENTER:
+      Component = UserCenter;
+      break;
     case PAGES.VALIDATOR_CREATE_TRADE:
       Component = validator.CreateTrade;
       break;
     case PAGES.VALIDATOR_ADMIN_PANEL:
-      Component = validator.AdminPanel;
+      Component = validator.ValidatorAdminPanel;
       break;
     default:
       Component = Exchanger;

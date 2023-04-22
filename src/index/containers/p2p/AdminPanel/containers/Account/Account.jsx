@@ -8,10 +8,17 @@ import { TradingStatistics, Verify, Staking } from '../../components';
 // Styles
 import styles from './Account.module.less';
 
-function Account({ adaptive }) {
+function Account({ adaptive, user }) {
+  const { name, role, verified } = user;
+  const isValidator = role === 'validator';
+  const isUser = role === 'user';
+
   const BodyItem = ({ children }) => (
     <div className={styles.Account__body__item}>{children}</div>
   );
+
+  const renderValidatorAction = (verified) =>
+    verified ? <Staking adaptive={adaptive} /> : <Verify userRole={role} />;
 
   return (
     <div className={styles.Account}>
@@ -20,9 +27,9 @@ function Account({ adaptive }) {
         className={styles.Account__header}
         wrap
       >
-        <UserProfile name="mail****@gmail.com" isVerified />
-        {/* <Verify /> */}
-        <Staking adaptive={adaptive} />
+        <UserProfile name={name} isVerified={verified} />
+        {isValidator && renderValidatorAction(verified)}
+        {isUser && <Verify userRole={role} verified={verified} />}
       </Row>
       <div className={styles.Account__body}>
         <BodyItem>

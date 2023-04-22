@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import { Button, SwitchTabs } from 'ui';
@@ -7,25 +8,39 @@ import { AdsFilters, AdsTable, PaymentMethodsTable } from '../../components';
 // Styles
 import styles from './TableLayout.module.less';
 
-const Switch = ({ selected, onChange }) => (
+const pages = [
+  {
+    value: 'methods',
+    label: 'P2P Payment Methods',
+    supportRoles: ['validator', 'user'],
+  },
+  { value: 'my-ads', label: 'My ads', supportRoles: ['validator'] },
+  {
+    value: 'feedback',
+    label: 'Feedback (0)',
+    supportRoles: ['validator', 'user'],
+  },
+  {
+    value: 'blacklist',
+    label: 'Blacklist',
+    supportRoles: ['validator', 'user'],
+  },
+];
+
+const Switch = ({ selected, onChange, userRole }) => (
   <div className={styles.switchContainer}>
     <SwitchTabs
       selected={selected}
       onChange={onChange}
       isAnimated
       type="secondary-alice"
-      tabs={[
-        { value: 'methods', label: 'P2P Payment Methods' },
-        { value: 'my-ads', label: 'My ads' },
-        { value: 'feedback', label: 'Feedback (0)' },
-        { value: 'blacklist', label: 'Blacklist' },
-      ]}
+      tabs={pages.filter((page) => page.supportRoles.includes(userRole))}
     />
   </div>
 );
 
-function TableLayout({ adaptive }) {
-  const [selected, setSelected] = React.useState('my-ads');
+function TableLayout({ adaptive, userRole }) {
+  const [selected, setSelected] = React.useState(pages[0].value);
 
   const TitleBlock = ({ title, subtitle, onAction, actionText }) => (
     <>
@@ -46,10 +61,22 @@ function TableLayout({ adaptive }) {
 
   return (
     <>
-      {adaptive && <Switch selected={selected} onChange={setSelected} />}
+      {adaptive && (
+        <Switch
+          selected={selected}
+          onChange={setSelected}
+          userRole={userRole}
+        />
+      )}
       <div className={styles.TableLayout}>
         <div className={styles.TableLayout__header}>
-          {!adaptive && <Switch selected={selected} onChange={setSelected} />}
+          {!adaptive && (
+            <Switch
+              selected={selected}
+              onChange={setSelected}
+              userRole={userRole}
+            />
+          )}
           {selected === 'methods' && (
             <TitleBlock
               title="P2P Payment Methods"
@@ -86,5 +113,10 @@ function TableLayout({ adaptive }) {
     </>
   );
 }
+
+TableLayout.propTypes = {
+  adaptive: PropTypes.bool,
+  userRole: PropTypes.oneOf(['validator', 'user']),
+};
 
 export default TableLayout;

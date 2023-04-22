@@ -8,16 +8,13 @@ import { SocialLinks } from 'dapp';
 // Utils
 import { adaptiveSelector } from 'src/selectors';
 
-// Styles
-import styles from './AdminPanel.module.less';
-
-function AdminPanel() {
+function AdminPanel({ user }) {
   const adaptive = useSelector(adaptiveSelector);
 
   return (
-    <div className={styles.AdminPanel}>
-      <Account adaptive={adaptive} />
-      <TableLayout adaptive={adaptive} />
+    <div>
+      <Account adaptive={adaptive} user={user} />
+      <TableLayout adaptive={adaptive} userRole={user.role} />
       <SocialLinks type="v2" />
     </div>
   );

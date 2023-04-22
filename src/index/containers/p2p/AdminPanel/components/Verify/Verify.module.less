@@ -1,7 +1,7 @@
 .Verify {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 
   p {
     font-weight: 500;
@@ -9,7 +9,7 @@
     line-height: 12px;
     text-align: center;
 
-    color: #9095a5;
+    color: var(--cool-gray);
   }
 
   :global {
@@ -22,8 +22,10 @@
 
 :global(.adaptive) .Verify {
   width: 100%;
+  justify-content: center;
 
   :global {
+    .Col,
     .Button {
       width: 100%;
       max-width: 350px;
