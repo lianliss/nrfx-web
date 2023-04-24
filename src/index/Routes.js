@@ -197,6 +197,7 @@ function Routes(props) {
     case pages.P2P_ORDERS:
     case pages.P2P_ORDER:
     case pages.P2P_USER_CENTER:
+    case pages.P2P_ADVERTISER_DETAIL:
     case pages.VALIDATOR_ADMIN_PANEL:
     case pages.VALIDATOR_CREATE_TRADE:
       needAuthorization = false;

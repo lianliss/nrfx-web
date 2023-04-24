@@ -81,6 +81,10 @@ const routes = [
     name: pages.P2P_USER_CENTER,
     path: '/dapp/p2p/user_center',
   },
+  {
+    name: pages.P2P_ADVERTISER_DETAIL,
+    path: '/dapp/p2p/advertiser_detail',
+  },
 ];
 
 export default routes;

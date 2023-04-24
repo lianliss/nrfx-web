@@ -69,6 +69,7 @@ export const P2P = "p2p";
 export const P2P_ORDERS = "p2p_orders";
 export const P2P_ORDER = "p2p_order";
 export const P2P_USER_CENTER = "p2p_user_center";
+export const P2P_ADVERTISER_DETAIL = "p2p_advertiser_detail";
 
 // Validator
 export const VALIDATOR = 'validator';
