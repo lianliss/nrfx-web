@@ -9,6 +9,7 @@ import tokenABI from 'src/index/constants/ABI/NarfexToken2';
 
 // Utils
 import { classNames as cn, getLang } from 'utils';
+import { openStateModal } from 'src/actions';
 import successIcon from 'src/asset/icons/status/check_circle_success.svg';
 
 // Styles
@@ -25,7 +26,6 @@ function Form() {
     transaction,
     getBSCScanLink,
     addTokenToWallet,
-    connectWallet,
     setChain,
     getWeb3,
   } = context;
@@ -169,7 +169,11 @@ function Form() {
             </Button>
           </>
         ) : (
-          <Button type="lightBlue" size="ultra_large" onClick={() => connectWallet()}>
+          <Button
+            type="lightBlue"
+            size="ultra_large"
+            onClick={() => openStateModal('connect_to_wallet')}
+          >
             {getLang('dapp_global_connect_wallet')}
           </Button>
         )}
