@@ -64,6 +64,35 @@
   td.small {
     font-weight: 500;
   }
+
+  & &__tip {
+    margin-left: 10px;
+    border-radius: 4px;
+    padding: 4px 6px 5px;
+    white-space: nowrap;
+
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #fff;
+  }
+
+  &.fullColumn {
+    td {
+      vertical-align: top;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    thead td {
+      padding-top: 17px;
+      padding-bottom: 17px;
+    }
+
+    td:last-child {
+      padding-right: 16px;
+    }
+  }
 }
 
 .adaptive .CabinetTable,
