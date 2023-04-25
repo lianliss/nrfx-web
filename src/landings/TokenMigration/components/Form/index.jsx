@@ -31,11 +31,11 @@ function Form() {
   } = context;
   
   const nrfxOld = {
-    address: _.get(network, 'contractAddresses.narfexToken'),
+    address: _.get(network, 'contractAddresses.narfexToken1'),
     symbol: 'NRFX v1',
   };
   const nrfx = {
-    address: _.get(network, 'contractAddresses.narfexToken2'),
+    address: _.get(network, 'contractAddresses.narfexToken'),
     symbol: 'NRFX',
   };
   const isEth = chainId === 1;
