@@ -18,7 +18,7 @@ function AdminPanel({ user, type = 'default' }) {
       {type === 'default' && (
         <TableLayout adaptive={adaptive} userRole={user.role} />
       )}
-      {type === 'advertiser_detail' && <AdvertiserDetail />}
+      {type === 'advertiser_detail' && <AdvertiserDetail adaptive={adaptive} />}
       <SocialLinks type="v2" />
     </div>
   );

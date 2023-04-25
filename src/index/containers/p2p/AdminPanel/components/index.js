@@ -4,3 +4,4 @@ export { default as TradingStatistics } from './TradingStatistics/TradingStatist
 export { default as PaymentMethodsTable } from './PaymentMethodsTable/PaymentMethodsTable';
 export { default as AdsTable } from './AdsTable/AdsTable';
 export { default as AdsFilters } from './AdsFilters/AdsFilters';
+export { default as AdvertiserDetailTable } from './AdvertiserDetailTable/AdvertiserDetailTable';
