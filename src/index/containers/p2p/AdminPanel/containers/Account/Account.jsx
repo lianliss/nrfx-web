@@ -13,7 +13,7 @@ import {
 // Styles
 import styles from './Account.module.less';
 
-function Account({ adaptive, user, type }) {
+function Account({ adaptive, user, type, isForeignProfile }) {
   const { name, role, verified } = user;
   const isValidator = role === 'validator';
 
@@ -40,7 +40,12 @@ function Account({ adaptive, user, type }) {
         className={styles.Account__header}
         wrap
       >
-        <UserProfile name={name} isVerified={verified} />
+        <UserProfile
+          name={name}
+          isVerified={verified}
+          isForeignProfile={isForeignProfile}
+          adaptive={adaptive}
+        />
         {renderRightSide()}
       </Row>
       <div className={styles.Account__body}>

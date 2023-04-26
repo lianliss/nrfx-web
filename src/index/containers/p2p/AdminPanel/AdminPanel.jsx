@@ -9,12 +9,17 @@ import { SocialLinks } from 'dapp';
 // Utils
 import { adaptiveSelector } from 'src/selectors';
 
-function AdminPanel({ user, type = 'default' }) {
+function AdminPanel({ user, type = 'default', isForeignProfile }) {
   const adaptive = useSelector(adaptiveSelector);
 
   return (
     <div>
-      <Account adaptive={adaptive} user={user} type={type} />
+      <Account
+        adaptive={adaptive}
+        user={user}
+        isForeignProfile={isForeignProfile}
+        type={type}
+      />
       {type === 'default' && (
         <TableLayout adaptive={adaptive} userRole={user.role} />
       )}
