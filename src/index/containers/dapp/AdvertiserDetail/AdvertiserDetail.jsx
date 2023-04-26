@@ -9,7 +9,7 @@ const AdvertiserDetail = () => {
     verified: false,
   };
 
-  return <AdminPanel user={user} type="advertiser_detail" />;
+  return <AdminPanel user={user} type="advertiser_detail" isForeignProfile />;
 };
 
 export default AdvertiserDetail;

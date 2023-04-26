@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Row, NumberFormat } from 'ui';
-import { LimitAndAvailable, BuyButton, Payment } from '..';
+import { LimitAndAvailable, BuyButton, SellButton, Payment } from '..';
 import { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { WalletIcon } from 'dapp';
+import { p2pMode } from 'src/index/constants/dapp/types';
 
 const MobileTR = (props) => (
   <TR>
@@ -21,7 +22,8 @@ const MobileTR = (props) => (
           limits={props.limits}
           selectedCoin={props.selectedCoin}
         />
-        <BuyButton onClick={props.onTrade} />
+        {props.mode === p2pMode.buy && <BuyButton onClick={props.onTrade} />}
+        {props.mode === p2pMode.sell && <SellButton onClick={props.onTrade} />}
       </Row>
     </TD>
     <TD>{props.payment && <Payment payment={props.payment} />}</TD>

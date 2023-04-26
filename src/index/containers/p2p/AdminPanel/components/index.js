@@ -5,3 +5,4 @@ export { default as PaymentMethodsTable } from './PaymentMethodsTable/PaymentMet
 export { default as AdsTable } from './AdsTable/AdsTable';
 export { default as AdsFilters } from './AdsFilters/AdsFilters';
 export { default as AdvertiserDetailTable } from './AdvertiserDetailTable/AdvertiserDetailTable';
+export { default as AdvertiserFeedback } from './AdvertiserFeedback/AdvertiserFeedback';

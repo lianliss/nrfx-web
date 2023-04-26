@@ -5,6 +5,8 @@ import { Row } from 'ui';
 import { DesktopTR, MobileTR } from './components';
 import CabinetTable, { TR, TD, Tip } from 'dapp/CabinetTable/CabinetTable';
 
+import { p2pMode } from 'src/index/constants/dapp/types';
+
 import styles from './AdvertiserDetailTable.module.less';
 
 const Header = () => (
@@ -28,7 +30,7 @@ const Header = () => (
   </TR>
 );
 
-const AdvertiserDetailTable = ({ items, adaptive }) => {
+const AdvertiserDetailTable = ({ items, adaptive, mode }) => {
   const AdaptiveTR = adaptive ? MobileTR : DesktopTR;
 
   return (
@@ -37,6 +39,7 @@ const AdvertiserDetailTable = ({ items, adaptive }) => {
         {items.map((item, key) => (
           <AdaptiveTR
             {...item}
+            mode={mode}
             selectedCoin="USDT"
             key={`${item.coin.symbol}-${key}`}
           />
@@ -61,6 +64,7 @@ AdvertiserDetailTable.propTypes = {
       onTrade: PropTypes.func,
     })
   ),
+  mode: PropTypes.oneOf(Object.values(p2pMode)),
 };
 
 export default AdvertiserDetailTable;

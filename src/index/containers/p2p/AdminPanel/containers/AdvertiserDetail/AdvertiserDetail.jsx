@@ -2,7 +2,9 @@ import React from 'react';
 
 import { SwitchTabs } from 'ui';
 import { AdvertiserDetailTable } from '../../components';
+import { Pagination } from 'src/index/components/p2p/components/UI/';
 
+import { p2pMode } from 'src/index/constants/dapp/types';
 import KNOWN_FIATS from 'src/index/constants/knownFiats';
 import { testPayments } from '../../../Orders/components/Filters/testItems';
 
@@ -47,7 +49,7 @@ const testItems = [
 ];
 
 const Switch = ({ selected, onChange, tabs }) => (
-  <div className={styles.Switch}>
+  <div className={styles.switchContainer}>
     <SwitchTabs
       selected={selected}
       type="secondary-alice"
@@ -83,9 +85,18 @@ const AdvertiserDetail = ({ adaptive }) => {
           />
         )}
         <h2>Buy from the user</h2>
-        <AdvertiserDetailTable adaptive={adaptive} items={testItems} />
+        <AdvertiserDetailTable
+          mode={p2pMode.buy}
+          adaptive={adaptive}
+          items={testItems}
+        />
         <h2>Sell to the user</h2>
-        <AdvertiserDetailTable adaptive={adaptive} items={testItems} />
+        <AdvertiserDetailTable
+          mode={p2pMode.sell}
+          adaptive={adaptive}
+          items={testItems}
+        />
+        {adaptive && <Pagination />}
       </div>
     </div>
   );
