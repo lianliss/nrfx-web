@@ -11,9 +11,10 @@
     line-height: 22px;
   }
 
-  .limit_available {
+  .limitAndAvailable {
     &__row {
       display: flex;
+      flex-wrap: wrap;
       gap: 7px;
 
       & > * {
@@ -28,6 +29,7 @@
     &__value,
     &__title {
       font-size: 14px;
+      max-width: 100%;
     }
 
     &__title {
@@ -77,6 +79,11 @@
 
 :global(.adaptive) {
   .AdvertiserDetailTable {
+    &:not(:last-child) {
+      margin-bottom: 30px;
+      padding-bottom: 0px;
+    }
+
     td:nth-child(2) > * {
       &:first-child span {
         font-weight: inherit;
@@ -85,7 +92,7 @@
       }
     }
 
-    .limit_available {
+    .limitAndAvailable {
       &__row > * {
         flex: none;
       }

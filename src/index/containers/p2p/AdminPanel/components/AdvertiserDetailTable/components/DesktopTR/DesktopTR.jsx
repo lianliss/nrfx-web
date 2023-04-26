@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { Row, NumberFormat } from 'ui';
-import { LimitAndAvailable, Payment, BuyButton } from '..';
+import { LimitAndAvailable, Payment, BuyButton, SellButton } from '..';
 import { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { WalletIcon } from 'dapp';
+
+import { p2pMode } from 'src/index/constants/dapp/types';
 
 const DesktopTR = (props) => (
   <TR>
@@ -27,7 +29,8 @@ const DesktopTR = (props) => (
     </TD>
     <TD>{props.payment && <Payment payment={props.payment} />}</TD>
     <TD>
-      <BuyButton onClick={props.onTrade} />
+      {props.mode === p2pMode.buy && <BuyButton onClick={props.onTrade} />}
+      {props.mode === p2pMode.sell && <SellButton onClick={props.onTrade} />}
     </TD>
   </TR>
 );
