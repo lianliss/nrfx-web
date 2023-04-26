@@ -17,8 +17,8 @@
       flex-wrap: wrap;
       gap: 7px;
 
-      & > * {
-        flex: 1 1 auto;
+      & > *:first-child {
+        min-width: 63px;
       }
 
       &:not(:last-child) {
@@ -93,8 +93,8 @@
     }
 
     .limitAndAvailable {
-      &__row > * {
-        flex: none;
+      &__row > *:first-child {
+        min-width: 0;
       }
 
       &__title,

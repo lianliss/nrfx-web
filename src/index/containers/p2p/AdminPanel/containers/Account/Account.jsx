@@ -3,26 +3,35 @@ import React from 'react';
 // Components
 import { Row, NumberFormat } from 'ui';
 import { UserProfile } from 'src/index/components/p2p';
-import { TradingStatistics, Verify, Staking } from '../../components';
+import {
+  TradingStatistics,
+  Verify,
+  Staking,
+  AdvertiserFeedback,
+} from '../../components';
 
 // Styles
 import styles from './Account.module.less';
 
-function Account({ adaptive, user }) {
+function Account({ adaptive, user, type }) {
   const { name, role, verified } = user;
   const isValidator = role === 'validator';
-  const isUser = role === 'user';
 
   const BodyItem = ({ children }) => (
     <div className={styles.Account__body__item}>{children}</div>
   );
 
-  const renderValidatorAction = (verified) =>
-    verified ? (
-      <Staking adaptive={adaptive} />
-    ) : (
-      <Verify adaptive={adaptive} userRole={role} />
-    );
+  const renderRightSide = () => {
+    if (type === 'advertiser_detail') {
+      return <AdvertiserFeedback adaptive={adaptive} />;
+    }
+
+    if (verified && isValidator) {
+      return <Staking adaptive={adaptive} />;
+    }
+
+    return <Verify adaptive={adaptive} userRole={role} verified={verified} />;
+  };
 
   return (
     <div className={styles.Account}>
@@ -32,10 +41,7 @@ function Account({ adaptive, user }) {
         wrap
       >
         <UserProfile name={name} isVerified={verified} />
-        {isValidator && renderValidatorAction(verified)}
-        {isUser && (
-          <Verify adaptive={adaptive} userRole={role} verified={verified} />
-        )}
+        {renderRightSide()}
       </Row>
       <div className={styles.Account__body}>
         <BodyItem>
