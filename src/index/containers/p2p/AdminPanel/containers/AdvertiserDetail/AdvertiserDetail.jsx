@@ -96,7 +96,7 @@ const AdvertiserDetail = ({ adaptive }) => {
           adaptive={adaptive}
           items={testItems}
         />
-        <Pagination />
+        {adaptive && <Pagination />}
       </div>
     </div>
   );
