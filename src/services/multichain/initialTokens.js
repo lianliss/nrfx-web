@@ -55,10 +55,18 @@ export const TOKENS = {
       logoURI:
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png',
     },
+    nrfx1: {
+      name: 'Narfex v1 (legacy)',
+      symbol: 'NRFXv1',
+      address: '0x01b443495834D667b42f54d2b77eEd6951eD94a4',
+      chainId: ETHEREUM_MAINNET,
+      decimals: DEFAULT_DECIMALS,
+      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
+    },
     nrfx: {
       name: 'Narfex',
       symbol: 'NRFX',
-      address: '0x01b443495834D667b42f54d2b77eEd6951eD94a4',
+      address: '0xCc17e34794B6c160a0F61B58CF30AA6a2a268625',
       chainId: ETHEREUM_MAINNET,
       decimals: DEFAULT_DECIMALS,
       logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
@@ -299,6 +307,7 @@ export const DISPLAY_TOKENS = {
     TOKENS[ETHEREUM_MAINNET].eth,
     TOKENS[ETHEREUM_MAINNET].usdt,
     TOKENS[ETHEREUM_MAINNET].nrfx,
+    TOKENS[ETHEREUM_MAINNET].nrfx1,
     ...baseTokens.filter((t) => t.chainId === ETHEREUM_MAINNET),
   ],
   [BSC_MAINNET]: [
