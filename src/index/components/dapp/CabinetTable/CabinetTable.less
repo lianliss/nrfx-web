@@ -64,6 +64,35 @@
   td.small {
     font-weight: 500;
   }
+
+  & &__tip {
+    margin-left: 10px;
+    border-radius: 4px;
+    padding: 4px 6px 5px;
+    white-space: nowrap;
+
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #fff;
+  }
+
+  &.fullColumn {
+    td {
+      vertical-align: top;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    thead td {
+      padding-top: 17px;
+      padding-bottom: 17px;
+    }
+
+    td:last-child {
+      padding-right: 16px;
+    }
+  }
 }
 
 .adaptive .CabinetTable,
@@ -163,6 +192,63 @@
 
     td:not(:first-child) {
       margin-top: 12px;
+    }
+  }
+
+  &.fullColumn {
+    tr {
+      grid-template-columns: 100%;
+      padding: 0 18px 30px;
+      background: none;
+      border-radius: 0;
+
+      &:not(:first-child) {
+        padding-top: 30px;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #f1f1f1;
+      }
+    }
+
+    td::before {
+      content: none;
+    }
+
+    td:first-child {
+      padding: 0 0 15px !important;
+      grid-column: 1;
+    }
+
+    td:nth-child(2) {
+      margin: 0;
+      background: var(--alice-blue);
+      border-radius: 10px;
+
+      & > * {
+        box-sizing: border-box;
+
+        &:first-child {
+          padding: 18px 10px 17px;
+
+          font-weight: 500;
+          font-size: 22px;
+          line-height: 100%;
+        }
+
+        &:not(:first-child) {
+          padding: 9px 10px 16px;
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid #eee;
+        }
+      }
+    }
+
+    td:last-child {
+      margin-top: 0;
+      padding-top: 15px !important;
     }
   }
 }

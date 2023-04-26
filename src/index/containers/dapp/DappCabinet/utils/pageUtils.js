@@ -11,7 +11,7 @@ import {
   SocialMedia,
   Team,
 } from 'src/index/components/dapp';
-import { UserCenter } from '../..';
+import { UserCenter, AdvertiserDetail } from '../..';
 import * as validator from 'src/index/containers/validator';
 import * as p2p from 'src/index/containers/p2p';
 
@@ -86,6 +86,9 @@ export const getFinePage = (routeName) => {
       break;
     case PAGES.P2P_USER_CENTER:
       Component = UserCenter;
+      break;
+    case PAGES.P2P_ADVERTISER_DETAIL:
+      Component = AdvertiserDetail;
       break;
     case PAGES.VALIDATOR_CREATE_TRADE:
       Component = validator.CreateTrade;

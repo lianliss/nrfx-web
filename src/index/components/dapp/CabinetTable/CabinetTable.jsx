@@ -15,6 +15,12 @@ function CabinetTable({ header, children, type }) {
   );
 }
 
+export const Tip = ({ style, children }) => (
+  <span style={style} className="CabinetTable__tip">
+    {children}
+  </span>
+);
+
 export const TR = ({ children, className, background, custom }) => (
   <tr className={cn({ [className]: className, custom })} style={{ background }}>
     {children}

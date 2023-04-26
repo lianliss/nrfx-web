@@ -32,7 +32,6 @@ const Switch = ({ selected, onChange, userRole }) => (
     <SwitchTabs
       selected={selected}
       onChange={onChange}
-      isAnimated
       type="secondary-alice"
       tabs={pages.filter((page) => page.supportRoles.includes(userRole))}
     />
