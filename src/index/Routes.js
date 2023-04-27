@@ -93,10 +93,6 @@ function Routes(props) {
     }
   }
 
-  React.useEffect(() => {
-    setDefaultFavicon([pages.TOKEN]);
-  }, [route]);
-
   switch (route) {    
     case pages.MAIN:
       Component = MainLanding;
