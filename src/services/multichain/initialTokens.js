@@ -66,7 +66,7 @@ export const TOKENS = {
     nrfx: {
       name: 'Narfex',
       symbol: 'NRFX',
-      address: '0xCc17e34794B6c160a0F61B58CF30AA6a2a268625',
+      address: '0x41BbD051E366D8437cb02374FBb0521C847F494E',
       chainId: ETHEREUM_MAINNET,
       decimals: DEFAULT_DECIMALS,
       logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',

@@ -26,7 +26,7 @@ const NarfexToken = (props) => {
                 'https://app.uniswap.org/#/swap' +
                 '?inputCurrency=' +
                 '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48' +
-                '&outputCurrency=0xCc17e34794B6c160a0F61B58CF30AA6a2a268625' +
+                '&outputCurrency=0x41BbD051E366D8437cb02374FBb0521C847F494E' +
                 '&slippage=3000'
               }
               target="_blank"

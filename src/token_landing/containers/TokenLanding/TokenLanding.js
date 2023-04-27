@@ -70,7 +70,7 @@ function TokenLanding({ adaptive, setAdaptive, currentLang, routePath }) {
       />
       <Information
         adaptive={adaptive}
-        code="0xCc17e34794B6c160a0F61B58CF30AA6a2a268625"
+        code="0x41BbD051E366D8437cb02374FBb0521C847F494E"
         currentLang={currentLang}
         routePath={routePath}
       />

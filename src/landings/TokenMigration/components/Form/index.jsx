@@ -5,7 +5,7 @@ import { Web3Context } from 'services/web3Provider';
 import { Button, NumberFormat, Row } from 'ui';
 import SVG from 'utils/svg-wrap';
 import * as toast from 'actions/toasts';
-import tokenABI from 'src/index/constants/ABI/NarfexToken2';
+import tokenABI from 'src/index/constants/ABI/NarfexToken3';
 
 // Utils
 import { classNames as cn, getLang } from 'utils';
@@ -30,10 +30,15 @@ function Form() {
     getWeb3,
   } = context;
   
-  const nrfxOld = {
+  const v1 = {
     address: _.get(network, 'contractAddresses.narfexToken1'),
     symbol: 'NRFX v1',
   };
+  const v2 = {
+    address: _.get(network, 'contractAddresses.narfexToken2'),
+    symbol: 'NRFX v2',
+  };
+  let nrfxOld = v1;
   const nrfx = {
     address: _.get(network, 'contractAddresses.narfexToken'),
     symbol: 'NRFX',
@@ -44,6 +49,7 @@ function Form() {
   const [isProcess, setIsProcess] = React.useState(true);
   const [isApproving, setIsApproving] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
+  const [old, setOld] = React.useState(v1);
   
   const isApproved = allowance >= balance;
   
@@ -53,18 +59,36 @@ function Form() {
       setIsProcess(false);
       return;
     }
-    const oldToken = getTokenContract(nrfxOld);
-  
-    oldToken.getAllowance(nrfx.address, accountAddress).then(amount => {
-      setAllowance(amount);
-      setIsProcess(false);
-      console.log('ALLOWANCE', amount);
-    }).catch(error => {
-      console.error('[getAllowance]', error);
-    });
+    if (!old.address) setOld(v1);
+    let oldToken = getTokenContract(v1);
     oldToken.getBalance(accountAddress).then(amount => {
+      if (!amount) return;
       setBalance(amount);
       console.log('BALANCE', amount);
+      oldToken.getAllowance(nrfx.address, accountAddress).then(amount => {
+        setAllowance(amount);
+        setIsProcess(false);
+        console.log('ALLOWANCE', amount);
+      }).catch(error => {
+        console.error('[getAllowance]', error);
+      });
+    }).catch(error => {
+      console.error('[getBalance]', accountAddress, error);
+    });
+    
+    oldToken = getTokenContract(v2);
+    oldToken.getBalance(accountAddress).then(amount => {
+      if (!amount) return;
+      setBalance(amount);
+      setOld(v2);
+      console.log('BALANCE', amount);
+      oldToken.getAllowance(nrfx.address, accountAddress).then(amount => {
+        setAllowance(amount);
+        setIsProcess(false);
+        console.log('ALLOWANCE', amount);
+      }).catch(error => {
+        console.error('[getAllowance]', error);
+      });
     }).catch(error => {
       console.error('[getBalance]', accountAddress, error);
     });
@@ -84,8 +108,8 @@ function Form() {
       setIsApproving(false);
       return;
     }
-    
-    const oldToken = getTokenContract(nrfxOld);
+    console.log('old', old, v1, v2);
+    const oldToken = getTokenContract(old);
     try {
       const maxApprove = 10**9;
       setIsApproving(true);
@@ -113,6 +137,10 @@ function Form() {
         nrfx.address,
       );
   
+      const params = [];
+      if (old.symbol === v2.symbol) {
+        params.push(true);
+      }
       const receipt = await transaction(token, 'migrate', []);
       openStateModal('transaction_submitted', {
         txLink: getBSCScanLink(receipt),
@@ -135,9 +163,9 @@ function Form() {
   return (
     <div className={cn('TokenMigrationLanding-form', { isConnected })}>
       <div className="TokenMigrationLanding-form__content">
-        <h3>{getLang('token_migration_form_title')}</h3>
+        <h3>{getLang('token_migration_form_title')} {old.symbol} to NRFX v3</h3>
         <p className="TokenMigrationLanding-form__balance">
-          <NumberFormat number={0.0} currency="NRFX" />
+          <NumberFormat number={Number(balance.toFixed(4))} currency={old.symbol} />
         </p>
         <p className="TokenMigrationLanding-form__description">
           {getLang('token_migration_form_description')}

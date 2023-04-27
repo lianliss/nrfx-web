@@ -21,7 +21,8 @@ export const CONTRACT_ADDRESSES = {
     narfexOracle: '0xBaBfFCe575929DDd7aD29DEEeb5B7A5F5dee4Ab6',
     providerAddress: noderealRPC[ETHEREUM_MAINNET],
     narfexToken1: '0x01b443495834D667b42f54d2b77eEd6951eD94a4',
-    narfexToken: '0xCc17e34794B6c160a0F61B58CF30AA6a2a268625',
+    narfexToken2: '0xCc17e34794B6c160a0F61B58CF30AA6a2a268625',
+    narfexToken: '0x41BbD051E366D8437cb02374FBb0521C847F494E',
   },
   [BSC_MAINNET]: {
     factoryAddress: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
