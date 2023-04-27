@@ -52,6 +52,17 @@ export default [
     chains: [BSC_MAINNET, BSC_TESTNET, POLYGON_MUMBAI],
   },
   {
+    name: PAGES.DAPP_PRO_DEX,
+    chains: [
+      ETHEREUM_MAINNET,
+      BSC_MAINNET,
+      BSC_TESTNET,
+      POLYGON_MAINNET,
+      POLYGON_MUMBAI,
+      ARBITRUM_MAINNET,
+    ],
+  },
+  {
     name: PAGES.LIQUIDITY,
     chains: [
       ETHEREUM_MAINNET,

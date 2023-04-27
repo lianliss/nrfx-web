@@ -16,7 +16,12 @@ import * as p2p from 'src/index/containers/p2p';
 import * as PAGES from 'src/index/constants/pages';
 import dappPages from '../constants/dappPages';
 import _ from 'lodash';
-import { BSC_TESTNET, ETHEREUM_MAINNET, POLYGON_MUMBAI } from 'src/services/multichain/chains';
+import {
+  BSC_TESTNET,
+  ETHEREUM_MAINNET,
+  POLYGON_MUMBAI,
+} from 'src/services/multichain/chains';
+import { ProDex } from '../..';
 
 export const getFinePage = (routeName) => {
   // Set page component
@@ -49,6 +54,9 @@ export const getFinePage = (routeName) => {
       Component = SwitchPage;
       mainnetOnly = false;
       break;
+    case PAGES.DAPP_PRO_DEX:
+      Component = ProDex;
+      break;
     case PAGES.FARMING:
       Component = Farming;
       testnetOnly = false;
@@ -79,7 +87,13 @@ export const getFinePage = (routeName) => {
       Component = Exchanger;
   }
 
-  return { Component, mainnetOnly, testnetOnly, chainsWhitelist, chainsBlacklist };
+  return {
+    Component,
+    mainnetOnly,
+    testnetOnly,
+    chainsWhitelist,
+    chainsBlacklist,
+  };
 };
 
 export const pageIsFine = (routeName, chainId) => {

@@ -42,6 +42,10 @@ const routes = [
     path: '/dapp/swap',
   },
   {
+    name: pages.DAPP_PRO_DEX,
+    path: '/dapp/pro_dex',
+  },
+  {
     name: pages.LIQUIDITY,
     path: '/dapp/liquidity',
   },
