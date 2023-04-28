@@ -8,6 +8,8 @@ import { NumberFormat, Row } from 'ui';
 import DoubleWallets from '../../../DoubleWallets/DoubleWallets';
 import SVG from 'utils/svg-wrap';
 
+import styles from './Currency.module.less';
+
 function Currency({
   type,
   source_token,
@@ -18,7 +20,7 @@ function Currency({
   const context = React.useContext(Web3Context);
   const { network } = context;
   const { wrapToken, defaultToken } = network;
-  
+
   if (type === 'exchange') {
     let token0 = source_token;
     let token1 = target_token;
@@ -28,9 +30,9 @@ function Currency({
     if (token1.symbol === wrapToken.symbol) {
       token1 = defaultToken;
     }
-    
+
     return (
-      <Row alignItems="center">
+      <Row alignItems="center" className={styles.Currency}>
         <DoubleWallets
           first={token0}
           second={token1}
@@ -39,7 +41,7 @@ function Currency({
         />
         <Row alignItems="center" wrap>
           <NumberFormat number={source_amount} currency={token0.symbol} />
-          <span className="TransactionHistory__icon-arrow">
+          <span className={styles.Currency__arrow}>
             <SVG src={require('src/asset/icons/arrows/to-arrow.svg')} />
           </span>
           <NumberFormat number={target_amount} currency={token1.symbol} />

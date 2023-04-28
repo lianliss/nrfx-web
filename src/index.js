@@ -1,5 +1,7 @@
 // styles
 import "./index.less";
+import "ui/index.less";
+
 // external
 import React from "react";
 import ReactDOM from "react-dom";

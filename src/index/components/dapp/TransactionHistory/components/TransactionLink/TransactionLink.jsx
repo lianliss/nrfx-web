@@ -10,20 +10,24 @@ import { classNames as cn } from 'utils';
 import { getLang } from 'utils';
 
 // Styles
-import './TransactionLink.less';
+import styles from './TransactionLink.module.less';
 
 function TransactionLink({ tx_hash }) {
   const context = React.useContext(Web3Context);
-  
+
   return (
-    <div className="TransactionHistory__TransactionLink">
+    <div className={styles.TransactionLink}>
       <a
         className={cn({ disabled: !tx_hash })}
-        href={`${_.get(context, 'network.scan', 'https://bscscan.com')}/tx/${tx_hash}`}
+        href={`${_.get(
+          context,
+          'network.scan',
+          'https://bscscan.com'
+        )}/tx/${tx_hash}`}
         target="_blank"
       >
         {getLang('dapp_global_link')}
-        <div className="TransactionHistory__icon-export">
+        <div className={styles.TransactionLink__icon}>
           <SVG src={require('src/asset/icons/action/export-light-bg.svg')} />
         </div>
       </a>
