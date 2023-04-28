@@ -1,12 +1,19 @@
 .ProDex {
+  box-sizing: border-box;
+
   &__row {
     width: auto;
   }
 }
 
+.dexSwap {
+  height: auto;
+  display: flex;
+}
+
 .tradingViewWidget {
   width: 61.15%;
-  height: auto;
+  height: 554px;
 }
 
 .tradeHistory {
@@ -26,5 +33,36 @@
       font-size: 24px;
       line-height: 29px;
     }
+  }
+}
+
+:global(.adaptive) {
+  .ProDex {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 29px 18px 17px;
+    border-radius: var(--radius-panel-large);
+
+    :global {
+      .SwitchTabs {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 100%;
+      }
+    }
+  }
+
+  .tradingViewWidget {
+    margin-top: 18px;
+    width: 100%;
+    height: 460px;
+    padding-bottom: 5px;
+  }
+
+  .dexSwap {
+    margin-top: 13px;
+    width: 100%;
   }
 }

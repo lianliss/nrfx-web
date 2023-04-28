@@ -65,6 +65,32 @@
     }
   }
 
+  &.secondary-alice {
+    background: var(--alice-blue);
+
+    .SwitchTabs__item {
+      &:not(.active) span {
+        background: var(--blue-light-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+      }
+
+      &.active {
+        & > span {
+          color: #fff;
+        }
+      }
+    }
+
+    .SwitchTabs__indicator {
+      span {
+        background: var(--blue-light-gradient);
+      }
+    }
+  }
+
   &.orange {
     .SwitchTabs__indicator {
       span {
@@ -74,7 +100,8 @@
   }
 
   &.orange,
-  &.light-blue {
+  &.light-blue,
+  &.secondary-alice {
     .SwitchTabs__item {
       font-weight: inherit;
       font-size: inherit;

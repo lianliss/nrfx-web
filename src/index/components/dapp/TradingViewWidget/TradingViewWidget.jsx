@@ -35,8 +35,7 @@ function TradingViewWidget() {
     function createWidget() {
       if (document.getElementById(elementId) && 'TradingView' in window) {
         new window.TradingView.widget({
-          width: 'auto',
-          height: 554,
+          autosize: true,
           symbol: 'NASDAQ:AAPL',
           interval: 'D',
           timezone: 'Etc/UTC',
