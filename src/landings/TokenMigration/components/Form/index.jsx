@@ -52,6 +52,7 @@ function Form() {
   const [old, setOld] = React.useState(v1);
   
   const isApproved = allowance >= balance;
+  const isFromV2 = old.symbol === v2.symbol;
   
   React.useEffect(() => {
     console.log('USEEFFECT', chainId, isConnected, isEth, nrfxOld, nrfx, accountAddress);
@@ -138,10 +139,10 @@ function Form() {
       );
   
       const params = [];
-      if (old.symbol === v2.symbol) {
+      if (isFromV2) {
         params.push(true);
       }
-      const receipt = await transaction(token, 'migrate', []);
+      const receipt = await transaction(token, 'migrate', params);
       openStateModal('transaction_submitted', {
         txLink: getBSCScanLink(receipt),
         symbol: 'NRFX',
