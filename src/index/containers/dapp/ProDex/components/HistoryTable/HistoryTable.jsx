@@ -3,7 +3,7 @@ import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { Row } from 'ui';
 import SVG from 'utils/svg-wrap';
 import Currency from 'dapp/TransactionHistory/components/Currency/Currency';
-import TransactionLink from '../../../../../components/dapp/TransactionHistory/components/TransactionLink/TransactionLink';
+import TransactionLink from 'dapp/TransactionHistory/components/TransactionLink/TransactionLink';
 
 const HistoryTable = ({ items, coin }) => {
   return (
