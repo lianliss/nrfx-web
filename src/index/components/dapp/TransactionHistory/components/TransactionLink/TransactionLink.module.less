@@ -1,0 +1,29 @@
+.TransactionLink {
+  display: flex;
+  justify-content: start;
+
+  a {
+    display: flex;
+    align-items: center;
+    color: inherit;
+
+    &:global(.disabled) {
+      pointer-events: none;
+      color: var(--cool-gray);
+
+      :global(.isvg) {
+        filter: grayscale(60%);
+      }
+    }
+  }
+
+  &__icon {
+    margin-left: 4px;
+
+    :global(.isvg) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
