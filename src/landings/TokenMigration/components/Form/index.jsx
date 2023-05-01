@@ -164,7 +164,7 @@ function Form() {
   return (
     <div className={cn('TokenMigrationLanding-form', { isConnected })}>
       <div className="TokenMigrationLanding-form__content">
-        <h3>{getLang('token_migration_form_title')} {old.symbol} to NRFX v3</h3>
+        <h3>{getLang('token_migration_form_title')} {old.symbol} to NRFX v2.1</h3>
         <p className="TokenMigrationLanding-form__balance">
           <NumberFormat number={Number(balance.toFixed(4))} currency={old.symbol} />
         </p>
