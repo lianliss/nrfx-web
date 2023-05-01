@@ -72,6 +72,7 @@ import {
   SwiftGeneratedModal,
   AttentionBuyTokenModal,
   SendTokensModal,
+  KYCVerificationModal,
   TransactionResponseModal,
   ExchangerModal,
   VideoModal,
@@ -281,6 +282,9 @@ function Modals(props) {
       break;
     case "send_tokens":
       Component = SendTokensModal;
+      break;
+    case "kyc_verification":
+      Component = KYCVerificationModal;
       break;
     case "exchanger":
       Component = ExchangerModal;
