@@ -6,13 +6,14 @@ import TradingViewWidget from 'dapp/TradingViewWidget/TradingViewWidget';
 import { Row, SwitchTabs } from 'ui';
 import HistoryTable from './components/HistoryTable/HistoryTable';
 
-import { adaptiveSelector } from 'src/selectors';
+import { adaptiveSelector, dappSwapSelector } from 'src/selectors';
 import KNOWN_FIATS from '../../../constants/knownFiats';
 
 import styles from './ProDex.module.less';
 
 const ProDex = () => {
   const adaptive = useSelector(adaptiveSelector);
+  const dappSwap = useSelector(dappSwapSelector);
   const [page, setPage] = React.useState('swap');
 
   const showMarketPage = !adaptive || page === 'market';
@@ -35,7 +36,10 @@ const ProDex = () => {
       <Row alignItems="stretch" gap={17}>
         {showMarketPage && (
           <div className={styles.tradingViewWidget}>
-            <TradingViewWidget height={adaptive ? 460 : 554} />
+            <TradingViewWidget
+              height={adaptive ? 460 : 554}
+              chartSymbol={`${dappSwap.from.symbol}-${dappSwap.to.symbol}`}
+            />
           </div>
         )}
         {showSwapPage && (

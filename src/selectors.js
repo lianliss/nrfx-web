@@ -54,5 +54,7 @@ export const dappTransactionsSelector = state => state.dapp.wallet.transactions;
 export const dappExchangeAmountSelector = focus => state => state.dapp.exchange[focus].amount;
 export const dappExchangeTokenSelector = focus => state => state.dapp.exchange[focus].token;
 export const dappExchangeFocusSelector = state => state.dapp.exchange.focus;
+export const dappSwapSelector = (state) => state.dapp.swap;
+
 // dapp_p2p
 export const dappP2PModeSelector = state => state.dapp.p2p.mode;

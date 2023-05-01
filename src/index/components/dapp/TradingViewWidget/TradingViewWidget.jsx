@@ -1,13 +1,15 @@
-// TradingViewWidget.jsx
-
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+
 import { getUniqId } from 'utils';
+import { currentLangSelector } from 'src/selectors';
 
 import styles from './TradingViewWidget.module.less';
 
 let tvScriptLoadingPromise;
 
-function TradingViewWidget() {
+function TradingViewWidget({ chartSymbol }) {
+  const lang = useSelector(currentLangSelector);
   const onLoadScriptRef = useRef();
   const [elementId] = useState(getUniqId().toString());
 
@@ -36,19 +38,19 @@ function TradingViewWidget() {
       if (document.getElementById(elementId) && 'TradingView' in window) {
         new window.TradingView.widget({
           autosize: true,
-          symbol: 'NASDAQ:AAPL',
+          symbol: chartSymbol,
           interval: 'D',
           timezone: 'Etc/UTC',
           theme: 'light',
           style: '1',
-          locale: 'en',
+          locale: lang,
           toolbar_bg: '#f1f3f6',
           enable_publishing: false,
           container_id: elementId,
         });
       }
     }
-  }, []);
+  }, [chartSymbol, lang]);
 
   return (
     <div className={styles.TradingViewWidgetContainer}>
@@ -57,4 +59,4 @@ function TradingViewWidget() {
   );
 }
 
-export default TradingViewWidget;
+export default React.memo(TradingViewWidget);

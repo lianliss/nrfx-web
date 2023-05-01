@@ -303,6 +303,9 @@ class DexSwap extends React.PureComponent {
     if (!this.state.pair.length) return;
 
     console.log('swapPair');
+    const { setSwap, dappSwap } = this.props;
+
+    setSwap(dappSwap.to, dappSwap.from);
     const trade = this.updateTrade(
       false,
       this.state.pair[1],
