@@ -8,7 +8,7 @@ import styles from './TradingViewWidget.module.less';
 
 let tvScriptLoadingPromise;
 
-function TradingViewWidget({ chartSymbol }) {
+function TradingViewWidget({ coins }) {
   const lang = useSelector(currentLangSelector);
   const onLoadScriptRef = useRef();
   const [elementId] = useState(getUniqId().toString());
@@ -36,9 +36,9 @@ function TradingViewWidget({ chartSymbol }) {
 
     function createWidget() {
       if (document.getElementById(elementId) && 'TradingView' in window) {
-        new window.TradingView.widget({
+        const widget = new window.TradingView.widget({
           autosize: true,
-          symbol: chartSymbol,
+          symbol: coins[0].symbol + '-' + coins[1].symbol,
           interval: 'D',
           timezone: 'Etc/UTC',
           theme: 'light',
@@ -46,11 +46,12 @@ function TradingViewWidget({ chartSymbol }) {
           locale: lang,
           toolbar_bg: '#f1f3f6',
           enable_publishing: false,
+          hide_side_toolbar: false,
           container_id: elementId,
         });
       }
     }
-  }, [chartSymbol, lang]);
+  }, [coins, lang]);
 
   return (
     <div className={styles.TradingViewWidgetContainer}>
@@ -59,4 +60,4 @@ function TradingViewWidget({ chartSymbol }) {
   );
 }
 
-export default React.memo(TradingViewWidget);
+export default TradingViewWidget;

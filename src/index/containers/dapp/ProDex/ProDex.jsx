@@ -49,7 +49,7 @@ const ProDex = () => {
           <div className={styles.tradingViewWidget}>
             <TradingViewWidget
               height={adaptive ? 460 : 554}
-              chartSymbol={`${dappSwap.from.symbol}-${dappSwap.to.symbol}`}
+              coins={[dappSwap.from, dappSwap.to]}
             />
           </div>
         )}
