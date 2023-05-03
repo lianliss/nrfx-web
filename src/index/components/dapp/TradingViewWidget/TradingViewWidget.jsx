@@ -12,6 +12,7 @@ function TradingViewWidget({ coins }) {
   const lang = useSelector(currentLangSelector);
   const onLoadScriptRef = useRef();
   const [elementId] = useState(getUniqId().toString());
+  const [separator] = useState('');
 
   useEffect(() => {
     onLoadScriptRef.current = createWidget;
@@ -35,10 +36,14 @@ function TradingViewWidget({ coins }) {
     return () => (onLoadScriptRef.current = null);
 
     function createWidget() {
+      const coin0 = coins[0].symbol;
+      const coin1 = coins[1].symbol;
+      const symbol = coin0 + separator + coin1;
+
       if (document.getElementById(elementId) && 'TradingView' in window) {
-        const widget = new window.TradingView.widget({
+        new window.TradingView.widget({
           autosize: true,
-          symbol: coins[0].symbol + '-' + coins[1].symbol,
+          symbol,
           interval: 'D',
           timezone: 'Etc/UTC',
           theme: 'light',
