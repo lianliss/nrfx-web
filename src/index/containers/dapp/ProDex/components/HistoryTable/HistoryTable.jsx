@@ -1,13 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { Row, NumberFormat } from 'ui';
 import SVG from 'utils/svg-wrap';
 import Currency from 'dapp/TransactionHistory/components/Currency/Currency';
 import TransactionLink from 'dapp/TransactionHistory/components/TransactionLink/TransactionLink';
 import useTransactionHistory from 'src/hooks/useTransactionHistory';
-import { web3RatesSelector } from 'src/selectors';
 import { dataStatus } from 'src/index/constants/dapp/types';
+import { getRoundedTime, getTimeDiff } from 'utils/time';
 
 // const objectExample = {
 //   currency: {
@@ -35,10 +34,11 @@ const HistoryTable = ({ coin }) => {
 
     for (let historyItem of accountHistory) {
       const usdPrice = 1 || (await getTokenUSDPrice(historyItem.source_token));
-      console.log(usdPrice);
+      const time = getRoundedTime(getTimeDiff(historyItem.jsTimestamp));
       const newHistoryItem = {
         ...historyItem,
         source_amount_usd: historyItem.source_amount * usdPrice,
+        time,
       };
 
       setTradingAccountHistory((prev) => [...prev, newHistoryItem]);
