@@ -44,7 +44,7 @@ const ProDex = () => {
           ]}
         />
       )}
-      <Row alignItems="stretch" gap={17}>
+      {/* <Row alignItems="stretch" gap={17}>
         {showMarketPage && (
           <div className={styles.tradingViewWidget}>
             <TradingViewWidget
@@ -58,47 +58,12 @@ const ProDex = () => {
             <DexSwap />
           </div>
         )}
-      </Row>
+      </Row> */}
       {!adaptive && (
         <div className={styles.tradeHistory__wrapper}>
           <h2>Trade history</h2>
           <HistoryTable
             coin="USD"
-            items={[
-              {
-                currency: {
-                  source_token: KNOWN_FIATS[0],
-                  target_token: KNOWN_FIATS[1],
-                  source_amount: 0.56666,
-                  target_amount: 1600000,
-                },
-                coinRate: 143.7,
-                time: '15 sec',
-                tx_hash: 'test',
-              },
-              {
-                currency: {
-                  source_token: KNOWN_FIATS[0],
-                  target_token: KNOWN_FIATS[1],
-                  source_amount: 0.56666,
-                  target_amount: 1600000,
-                },
-                coinRate: 143.7,
-                time: '15 sec',
-                tx_hash: 'tes2t',
-              },
-              {
-                currency: {
-                  source_token: KNOWN_FIATS[0],
-                  target_token: KNOWN_FIATS[1],
-                  source_amount: 0.56666,
-                  target_amount: 1600000,
-                },
-                coinRate: 143.7,
-                time: '15 sec',
-                tx_hash: 'te3st',
-              },
-            ]}
           />
         </div>
       )}

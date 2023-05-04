@@ -15,10 +15,11 @@ import { useClearTransactions } from '../index/components/dapp/TransactionHistor
  * which we need to display it.
  * @returns {object}
  */
-const useTransactionHistory = () => {
+const useTransactionHistory = (options = {}) => {
   // Context.
   const {
     getAccountHistory,
+    getTokenUSDPrice,
     accountAddress,
     isConnected,
     updateFiats,
@@ -30,14 +31,16 @@ const useTransactionHistory = () => {
   const dispatch = useDispatch();
   const adaptive = useSelector(adaptiveSelector);
   const transactions = useSelector(dappTransactionsSelector);
+  const { status } = transactions;
 
   // Constants
-  const accountHistory = transactions.items;
+  const accountHistory =
+    options.maxAccountHistory > 0
+      ? transactions.items.slice(0, options.maxAccountHistory)
+      : transactions.items;
   const historyLength = accountHistory.length > 0;
   const accountHistoryExists =
-    isConnected &&
-    statusEqual(transactions.status, dataStatus.LOADED) &&
-    historyLength;
+    isConnected && statusEqual(status, dataStatus.LOADED) && historyLength;
 
   const mappedTestHistory = useClearTransactions(
     dispatch,
@@ -66,6 +69,8 @@ const useTransactionHistory = () => {
     transactions,
     accountHistoryExists,
     accountAddress,
+    getTokenUSDPrice,
+    status,
   };
 };
 
