@@ -1,12 +1,16 @@
 import React from 'react';
+
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { Row, NumberFormat } from 'ui';
 import SVG from 'utils/svg-wrap';
 import Currency from 'dapp/TransactionHistory/components/Currency/Currency';
 import TransactionLink from 'dapp/TransactionHistory/components/TransactionLink/TransactionLink';
+
 import useTransactionHistory from 'src/hooks/useTransactionHistory';
 import { dataStatus } from 'src/index/constants/dapp/types';
 import { getRoundedTime, getTimeDiff } from 'utils/time';
+import { getLang } from 'utils';
+import { Web3Context } from 'src/services/web3Provider';
 
 // const objectExample = {
 //   currency: {
@@ -21,10 +25,11 @@ import { getRoundedTime, getTimeDiff } from 'utils/time';
 // };
 
 const HistoryTable = ({ coin }) => {
-  const { accountHistory, transactions, status, getTokenUSDPrice } =
-    useTransactionHistory({
-      maxAccountHistory: 20,
-    });
+  const { network } = React.useContext(Web3Context);
+  const { accountHistory, status, getTokenUSDPrice } = useTransactionHistory({
+    maxAccountHistory: 20,
+    forNetworkID: network.networkID,
+  });
   const [loadingStatus, setLoadingStatus] = React.useState(dataStatus.IDLE);
   const [tradingAccountHistory, setTradingAccountHistory] = React.useState([]);
 
@@ -48,13 +53,15 @@ const HistoryTable = ({ coin }) => {
   };
 
   React.useEffect(() => {
-    if (transactions.status !== dataStatus.LOADED) return;
+    if (status !== dataStatus.LOADED) return;
 
     updateTradingAccountHistory();
-  }, [status]);
+  }, [status, network.networkID, accountHistory]);
 
   const renderTradingAccountHistory = () => {
-    if (loadingStatus === dataStatus.LOADED) {
+    const isLoaded = loadingStatus === dataStatus.LOADED;
+
+    if (isLoaded && tradingAccountHistory.length) {
       return tradingAccountHistory.map((historyItem, i) => (
         <TR key={`${historyItem.tx_hash}_${i}`}>
           <TD>
@@ -83,6 +90,17 @@ const HistoryTable = ({ coin }) => {
           </TD>
         </TR>
       ));
+    }
+
+    if (isLoaded) {
+      return (
+        <TR>
+          <TD>{getLang('dapp_transactions_empty_yet')}</TD>
+          <TD />
+          <TD />
+          <TD />
+        </TR>
+      );
     }
   };
 

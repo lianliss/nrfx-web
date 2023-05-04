@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Web3Context } from 'src/services/web3Provider';
 import { dataStatus } from 'src/index/constants/dapp/types';
@@ -31,13 +31,9 @@ const useTransactionHistory = (options = {}) => {
   const dispatch = useDispatch();
   const adaptive = useSelector(adaptiveSelector);
   const transactions = useSelector(dappTransactionsSelector);
-  const { status } = transactions;
+  const [accountHistory, setAccountHistory] = useState([]);
+  const { status, items } = transactions;
 
-  // Constants
-  const accountHistory =
-    options.maxAccountHistory > 0
-      ? transactions.items.slice(0, options.maxAccountHistory)
-      : transactions.items;
   const historyLength = accountHistory.length > 0;
   const accountHistoryExists =
     isConnected && statusEqual(status, dataStatus.LOADED) && historyLength;
@@ -59,7 +55,28 @@ const useTransactionHistory = (options = {}) => {
       getTokenFromSymbol,
       updateFiats
     );
-  }, [accountAddress]);
+  }, [accountAddress, options.forNetworkID]);
+
+  useEffect(() => {
+    setAccountHistory(items);
+  }, [items]);
+
+  useEffect(() => {
+    if (status !== dataStatus.LOADED) return;
+    let newHistory = [...accountHistory];
+
+    if (options.maxAccountHistory > 0) {
+      newHistory = newHistory.slice(0, options.maxAccountHistory);
+    }
+
+    if (options.forNetworkID) {
+      newHistory = newHistory.filter(
+        ({ networkID }) => networkID === options.forNetworkID
+      );
+    }
+
+    setAccountHistory(newHistory);
+  }, [items, options.forNetworkID, options.maxAccountHistory, status]);
 
   return {
     adaptive,
