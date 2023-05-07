@@ -45,13 +45,14 @@ function Form() {
   };
   const isEth = chainId === 1;
   
-  const [allowance, setAllowance] = React.useState(999999999);
+  const [allowance, setAllowance] = React.useState(0);
+  const [isChecking, setIsChecking] = React.useState(true);
   const [isProcess, setIsProcess] = React.useState(true);
   const [isApproving, setIsApproving] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
   const [old, setOld] = React.useState(v1);
   
-  const isApproved = allowance >= balance;
+  const isApproved = allowance >= balance && allowance;
   const isFromV2 = old.symbol === v2.symbol;
   
   React.useEffect(() => {
@@ -61,32 +62,34 @@ function Form() {
       return;
     }
     if (!old.address) setOld(v1);
-    let oldToken = getTokenContract(v1);
-    oldToken.getBalance(accountAddress).then(amount => {
+    const token1 = getTokenContract(v1);
+    token1.getBalance(accountAddress).then(amount => {
       if (!amount) return;
       setBalance(amount);
       console.log('BALANCE', amount);
-      oldToken.getAllowance(nrfx.address, accountAddress).then(amount => {
-        setAllowance(amount);
+      token1.getAllowance(nrfx.address, accountAddress).then(allowed => {
+        setAllowance(allowed);
         setIsProcess(false);
-        console.log('ALLOWANCE', amount);
+        console.log('ALLOWANCE', allowed);
+        setIsChecking(false);
       }).catch(error => {
         console.error('[getAllowance]', error);
       });
     }).catch(error => {
       console.error('[getBalance]', accountAddress, error);
     });
-    
-    oldToken = getTokenContract(v2);
-    oldToken.getBalance(accountAddress).then(amount => {
+  
+    const token2 = getTokenContract(v2);
+    token2.getBalance(accountAddress).then(amount => {
       if (!amount) return;
       setBalance(amount);
       setOld(v2);
       console.log('BALANCE', amount);
-      oldToken.getAllowance(nrfx.address, accountAddress).then(amount => {
-        setAllowance(amount);
+      token2.getAllowance(nrfx.address, accountAddress).then(allowed => {
+        setAllowance(allowed);
         setIsProcess(false);
-        console.log('ALLOWANCE', amount);
+        console.log('ALLOWANCE', allowed);
+        setIsChecking(false);
       }).catch(error => {
         console.error('[getAllowance]', error);
       });
@@ -179,7 +182,7 @@ function Form() {
               type={isApproved ? "secondary-light" : "lightBlue"}
               style={{ pointerEvents: isApproved && 'none' }}
               size="ultra_large"
-              state={isApproving ? 'loading' : ''}
+              state={isApproving || isChecking ? 'loading' : ''}
               onClick={() => approve()}
             >
               <Row alignItems="center">
@@ -192,7 +195,7 @@ function Form() {
               </Row>
             </Button>
             <Button type={!isApproved ? "secondary-light" : "lightBlue"}
-                    state={isProcess ? 'loading' : ''}
+                    state={isProcess || isChecking ? 'loading' : ''}
                     disabled={!isApproved} size="ultra_large" onClick={() => migrate()}>
               {getLang('dapp_swap_exchange')}
             </Button>
