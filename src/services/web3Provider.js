@@ -860,17 +860,23 @@ class Web3Provider extends React.PureComponent {
   }
 
   /**
-   * Returns token price in USDT
+   * Returns token price in USDC
    * @param token {object}
    * @returns {Promise.<number>}
    */
   async getTokenUSDPrice(token) {
     try {
-      const USDT = this.state.tokens.find(t => t.symbol === 'USDC');
+      const USDC = this.state.tokens.find(t => t.symbol === 'USDC');
       const address = token.address ? token.address.toLowerCase() : null;
-      return address === USDT.address.toLowerCase()
-        ? 1
-        : await this.getTokensRelativePrice(token, USDT);
+
+      if (address === USDC.address.toLowerCase()) return 1;
+      const data = await this.getTokenContract(token).getOutAmount(
+        USDC,
+        1,
+        this.network.hops
+      );
+
+      return _.get(data, 'outAmount', 0);
     } catch (error) {
       console.warn('[getTokenUSDPrice]', error);
       return 0;

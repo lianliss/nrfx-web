@@ -36,19 +36,25 @@ const HistoryTable = ({ coin }) => {
   const updateTradingAccountHistory = async () => {
     setLoadingStatus(dataStatus.LOADING);
     setTradingAccountHistory([]);
+    let newAccountHistory = [];
 
-    for (let historyItem of accountHistory) {
-      const usdPrice = 1 || (await getTokenUSDPrice(historyItem.source_token));
-      const time = getRoundedTime(getTimeDiff(historyItem.jsTimestamp));
-      const newHistoryItem = {
-        ...historyItem,
-        source_amount_usd: historyItem.source_amount * usdPrice,
-        time,
-      };
+    try {
+      for (let historyItem of accountHistory) {
+        const usdPrice = await getTokenUSDPrice(historyItem.target_token);
+        const time = getRoundedTime(getTimeDiff(historyItem.jsTimestamp));
+        const newHistoryItem = {
+          ...historyItem,
+          source_amount_usd: historyItem.target_amount * usdPrice,
+          time,
+        };
 
-      setTradingAccountHistory((prev) => [...prev, newHistoryItem]);
+        newAccountHistory.push(newHistoryItem);
+      }
+    } catch (err) {
+      console.log('[updateTradingAccountHistory]', err);
     }
 
+    setTradingAccountHistory(newAccountHistory);
     setLoadingStatus(dataStatus.LOADED);
   };
 
