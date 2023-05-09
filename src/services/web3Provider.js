@@ -34,6 +34,7 @@ import { getLang } from "utils";
 import { CONTRACT_ADDRESSES } from "./multichain/contracts";
 import router from "../router";
 import dappPages from "../index/containers/dapp/DappCabinet/constants/dappPages";
+import AccountHistory from "./AccountHistory";
 
 export const Web3Context = React.createContext();
 
@@ -46,6 +47,7 @@ const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 class Web3Provider extends React.PureComponent {
   network = new Network(DEFAULT_CHAIN, this);
+  accountHistory = new AccountHistory(this);
 
   state = {
     isConnected: false,
@@ -2159,6 +2161,7 @@ class Web3Provider extends React.PureComponent {
       cmcTokens: this.cmcTokens,
       getTokenFromSymbol: getTokenFromSymbol.bind(this),
       tryExchangeError: this.tryExchangeError.bind(this),
+      accountHistory: this.accountHistory,
     }}>
       {this.props.children}
     </Web3Context.Provider>
