@@ -23,9 +23,17 @@
   .ScrollbarTrackY {
     display: flex !important;
     background: none !important;
-    width: 4px !important;
+    width: 2px !important;
     right: 4px !important;
+    transition: width 0.1s, transform 0.1s;
     z-index: 3;
+
+    &:hover,
+    &:active {
+      width: 4px !important;
+
+      transform: translate(1px);
+    }
   }
 
   .ScrollbarThumbY {

@@ -16,13 +16,6 @@ const items = [
       type: 'route',
     },
     {
-      title: 'dapp_sidebar_exchanger',
-      icon: 'exchange',
-      active: [PAGES.DAPP_EXCHANGE],
-      link: PAGES.DAPP_EXCHANGE,
-      type: 'route',
-    },
-    {
       title: 'dapp_sidebar_history',
       icon: 'history',
       active: [PAGES.DAPP_TRANSACTION_HISTORY],
@@ -30,15 +23,62 @@ const items = [
       type: 'route',
     },
     {
-      title: 'dapp_sidebar_referral_program',
-      icon: 'team-icon',
-      active: [
-        PAGES.DAPP_REFERRAL,
-        PAGES.DAPP_REFERRAL_EXCHANGER,
-        PAGES.DAPP_REFERRAL_FARMING,
+      title: 'dapp_sidebar_fiat_exchange',
+      type: 'block',
+      items: [
+        {
+          title: 'dapp_sidebar_swap',
+          icon: 'swap',
+          active: [PAGES.DAPP_EXCHANGE],
+          link: PAGES.DAPP_EXCHANGE,
+          type: 'route',
+        },
+        // {
+        //   title: 'P2P',
+        //   icon: 'p2p',
+        //   active: [PAGES.DAPP_EXCHANGE],
+        //   link: PAGES.DAPP_EXCHANGE,
+        //   type: 'route',
+        // },
       ],
-      link: PAGES.DAPP_REFERRAL,
-      type: 'route',
+    },
+    {
+      title: 'dapp_sidebar_earn',
+      type: 'block',
+      items: [
+        {
+          title: 'dapp_sidebar_liquidity',
+          icon: 'liquidity',
+          active: [PAGES.LIQUIDITY],
+          link: PAGES.LIQUIDITY,
+          type: 'route',
+        },
+        {
+          title: 'dapp_sidebar_farm',
+          icon: 'farm',
+          active: [PAGES.FARMING],
+          link: PAGES.FARMING,
+          type: 'route',
+        },
+        {
+          title: 'dapp_sidebar_referral_program',
+          icon: 'team-icon',
+          active: [
+            PAGES.DAPP_REFERRAL,
+            PAGES.DAPP_REFERRAL_EXCHANGER,
+            PAGES.DAPP_REFERRAL_FARMING,
+          ],
+          link: PAGES.DAPP_REFERRAL,
+          type: 'route',
+        },
+        {
+          title: 'dapp_sidebar_validator',
+          icon: 'validator',
+          active: [PAGES.DAPP_VALIDATOR],
+          link: PAGES.DAPP_VALIDATOR,
+          type: 'route',
+        },
+      ],
     },
   ],
   [
@@ -63,27 +103,6 @@ const items = [
     //   ],
     // },
     {
-      title: 'dapp_sidebar_liquidity',
-      icon: 'liquidity',
-      active: [PAGES.LIQUIDITY],
-      link: PAGES.LIQUIDITY,
-      type: 'route',
-    },
-    {
-      title: 'dapp_sidebar_farm',
-      icon: 'farm',
-      active: [PAGES.FARMING],
-      link: PAGES.FARMING,
-      type: 'route',
-    },
-    {
-      title: 'dapp_sidebar_validator',
-      icon: 'validator',
-      active: [PAGES.DAPP_VALIDATOR],
-      link: PAGES.DAPP_VALIDATOR,
-      type: 'route',
-    },
-    {
       title: 'dapp_sidebar_about_nrfx',
       icon: 'nrfx-blue-bg-icon',
       type: 'href',
@@ -94,6 +113,7 @@ const items = [
       title: 'dapp_sidebar_more',
       icon: 'more-vertical-icon',
       type: 'parent',
+      active: true,
       items: [
         {
           title: 'dapp_sidebar_more_docs',
