@@ -33,6 +33,9 @@ const initialState = {
     sell: {
       payment: null,
     },
+    kyc: null,
+    currency: null,
+    available: {},
   },
 };
 
@@ -183,6 +186,36 @@ function reduce(state = initialState, action = {}) {
       }
 
       return newState;
+    }
+    case actionTypes.DAPP_UPDATE_P2P_KYC: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          kyc: payload,
+        },
+      };
+    }
+    case actionTypes.DAPP_SET_P2P_CURRENCY: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          currency: payload,
+        },
+      };
+    }
+    case actionTypes.DAPP_UPDATE_P2P_AVAILABLE_TRADE: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          available: {
+            ...state.p2p.available,
+            [payload.fiatAddress]: payload.available,
+          },
+        },
+      };
     }
     default:
       return state;

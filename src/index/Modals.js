@@ -49,6 +49,7 @@ import DappReceiveQRModal from "./components/dapp/DappReceiveQRModal/DappReceive
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
 import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
 import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
+import P2pPopupStake  from "./components/p2p/components/P2pPopupStake/P2pPopupStake";
 
 // New Deposit Modals
 import {
@@ -222,6 +223,10 @@ function Modals(props) {
     case "stake":
     case "unstake":
       Component = FarmingPopupStake;
+      break;
+    case "p2p_stake":
+    case "p2p_unstake":
+      Component = P2pPopupStake;
       break;
     case "farming_roi":
       Component = FarmingPopupROI;

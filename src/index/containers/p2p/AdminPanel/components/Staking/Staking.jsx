@@ -1,11 +1,16 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { Row, Button } from 'ui';
 import { AnswerPopup } from 'dapp';
 import { BottomSheetSelect } from 'dapp/Select';
 import { components } from 'react-select';
+import { openModal } from 'src/actions';
+import { Web3Context } from 'services/web3Provider';
+import { useDispatch, useSelector } from 'react-redux';
+import { setP2PCurrency, updateP2PAvailableForTrade } from 'src/actions/dapp/p2p';
 
-import KNOWN_FIATS from '../../../../../constants/knownFiats';
+import { dappP2PCurrencySelector, dappP2PAvailableForTradeSelector } from 'src/selectors';
 import { classNames as cn } from 'utils';
 
 import styles from './Staking.module.less';
@@ -23,14 +28,41 @@ const StakingRow = ({ children, adaptive }) => (
 );
 
 const Staking = ({ adaptive }) => {
-  const fiatsOptions = KNOWN_FIATS.map((fiat) =>
-    BottomSheetSelect.option(fiat.symbol, fiat.address, fiat.logoURI)
+  const context = React.useContext(Web3Context);
+  const {
+    chainId,
+    getFiatsArray,
+  } = context;
+  const fiatsOptions = getFiatsArray()
+    .map((fiat) =>
+      BottomSheetSelect.option(fiat.symbol, fiat, fiat.logoURI)
   );
-  const [selectedFiat, setSelectedFiat] = React.useState(fiatsOptions[0].value);
+  const dispatch = useDispatch();
+  const selectedFiat = useSelector(dappP2PCurrencySelector);
+  const fiatAddress = _.get(selectedFiat, 'address', null);
+  const availableForTrade = useSelector(dappP2PAvailableForTradeSelector(fiatAddress)) || 0;
   const buttonSize = adaptive ? 'big' : 'extra_small';
+  
+  const selectCurrency = currency => dispatch(setP2PCurrency(currency));
+  
+  React.useEffect(() => {
+    if (!selectedFiat || selectedFiat.chainId !== chainId) {
+      selectCurrency(fiatsOptions[0].value);
+    }
+  }, [chainId]);
+  
+  React.useEffect(() => {
+    if (fiatAddress) {
+      dispatch(updateP2PAvailableForTrade(fiatAddress, context));
+    }
+  }, [fiatAddress]);
 
-  const handleStake = () => {};
-  const handleUnstake = () => {};
+  const handleStake = () => {
+    openModal('p2p_stake', {}, {fiat: selectedFiat});
+  };
+  const handleUnstake = () => {
+    openModal('p2p_unstake', {}, {fiat: selectedFiat});
+  };
 
   const stakeButton = (
     <Button
@@ -59,12 +91,12 @@ const Staking = ({ adaptive }) => {
     <div className={styles.Staking}>
       <StakingRow adaptive={adaptive}>
         <div className={styles.Staking__title}>
-          <span>Staked</span>
+          <span>Currency</span>
         </div>
         <div className={cn(styles.Staking__amount, styles.Select__wrapper)}>
           <BottomSheetSelect
-            value={selectedFiat}
-            onChange={setSelectedFiat}
+            value={selectedFiat || fiatsOptions[0].value}
+            onChange={selectCurrency}
             options={fiatsOptions}
             type="bold"
             showSelectedInMenu
@@ -72,9 +104,6 @@ const Staking = ({ adaptive }) => {
             components={{
               Control: ({ children, ...props }) => (
                 <components.Control {...props}>
-                  {!adaptive && (
-                    <span className={styles.Staking__amountNumber}>200</span>
-                  )}
                   {children}
                 </components.Control>
               ),
@@ -92,9 +121,6 @@ const Staking = ({ adaptive }) => {
                 : require('src/asset/icons/arrows/form-dropdown.svg')
             }
           />
-          {adaptive && (
-            <span className={styles.Staking__amountNumber}>200</span>
-          )}
         </div>
         {!adaptive && stakeButton}
       </StakingRow>
@@ -109,7 +135,7 @@ const Staking = ({ adaptive }) => {
             </AnswerPopup>
           </Row>
         </div>
-        <div className={styles.Staking__amount}>100.00 NUSD</div>
+        <div className={styles.Staking__amount}>{availableForTrade.toFixed(2)} {_.get(selectedFiat, 'symbol', '')}</div>
         {!adaptive && unstakeButton}
       </StakingRow>
       {adaptive && (

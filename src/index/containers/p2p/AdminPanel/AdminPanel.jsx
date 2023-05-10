@@ -1,16 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { updateP2PKYC } from 'src/actions/dapp/p2p';
+import { useDispatch, useSelector } from 'react-redux';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import { Account, TableLayout, AdvertiserDetail } from './containers';
 import { SocialLinks } from 'dapp';
 
 // Utils
-import { adaptiveSelector } from 'src/selectors';
+import { adaptiveSelector, dappP2PKYCSelector } from 'src/selectors';
 
 function AdminPanel({ user, type = 'default', isForeignProfile }) {
+  const context = React.useContext(Web3Context);
   const adaptive = useSelector(adaptiveSelector);
+  const kyc = useSelector(dappP2PKYCSelector);
+  const dispatch = useDispatch();
+  
+  const {
+    accountAddress,
+    chainId,
+    isConnected,
+  } = context;
+  
+  React.useEffect(() => {
+    if (!isConnected) return;
+    dispatch(updateP2PKYC(context));
+  }, [accountAddress, chainId, isConnected]);
 
   return (
     <div>
@@ -19,6 +35,7 @@ function AdminPanel({ user, type = 'default', isForeignProfile }) {
         user={user}
         isForeignProfile={isForeignProfile}
         type={type}
+        kyc={kyc}
       />
       {type === 'default' && (
         <TableLayout adaptive={adaptive} userRole={user.role} />
