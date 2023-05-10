@@ -58,7 +58,7 @@ const Staking = ({ adaptive }) => {
   }, [fiatAddress]);
 
   const handleStake = () => {
-    openModal('p2p_stake', {}, {fiat: selectedFiat});
+    openModal('p2p_stake', {}, {fiat: selectedFiat, modal: 'stake'});
   };
   const handleUnstake = () => {
     openModal('p2p_unstake', {}, {fiat: selectedFiat});
@@ -81,7 +81,7 @@ const Staking = ({ adaptive }) => {
       type="secondary-light--light-blue"
       className={styles.Staking__button}
       onClick={handleUnstake}
-      disabled
+      disabled={availableForTrade <= 0}
     >
       <span>Unstake</span>
     </Button>

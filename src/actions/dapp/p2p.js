@@ -72,7 +72,7 @@ export const updateP2PKYC = (context) => async (dispatch) => {
       payload,
     });
   } catch (error) {
-  
+    console.error('[updateP2PKYC]', error);
   }
 };
 
@@ -101,7 +101,7 @@ export const updateP2PAvailableForTrade = (fiatAddress, context) => async (dispa
       require('src/index/constants/ABI/p2p/exchangerPool'),
       p2p.pool,
     );
-    const data = poolContract.methods.validatorLimit(accountAddress, fiatAddress).call();
+    const data = await poolContract.methods.validatorLimit(accountAddress, fiatAddress).call();
     const payload = {
       fiatAddress,
       available: wei.from(data),
@@ -111,6 +111,6 @@ export const updateP2PAvailableForTrade = (fiatAddress, context) => async (dispa
       payload,
     });
   } catch (error) {
-  
+    console.error('[updateP2PAvailableForTrade]', error);
   }
 };

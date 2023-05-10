@@ -4,6 +4,7 @@ import router from 'src/router';
 import { bindActionCreators } from 'redux';
 import { Web3Context } from 'services/web3Provider';
 import wei from 'utils/wei';
+import { updateP2PAvailableForTrade } from 'src/actions/dapp/p2p';
 import _ from 'lodash';
 
 import { LIQUIDITY } from 'src/index/constants/pages';
@@ -48,8 +49,7 @@ class P2pPopupStake extends React.PureComponent {
   state = {
     value: '0',
     allowance: 0,
-    token0Symbol: '???',
-    token1Symbol: '???',
+    balance: 0,
     isApproving: false,
     isTransaction: false,
     errorText: '',
@@ -82,36 +82,49 @@ class P2pPopupStake extends React.PureComponent {
 
   componentDidMount() {
     this._mount = true;
-    const { getTokenContract, tokens, chainId } = this.context;
-    const { fiat } = this.props;
+    const { getTokenContract, tokens, chainId, getTokenBalance } = this.context;
+    const { fiat, modal, allowances } = this.props;
     if (!fiat) {
       this.props.onClose();
       return;
     }
-
-    this.contract = getTokenContract(
-      {
-        address: fiat.address,
-        symbol: fiat.symbol,
-        chainId: chainId,
-        decimals: 18,
-      },
+    const usdc = tokens.find(t => t.symbol === 'USDC');
+    
+    this.contract = getTokenContract(fiat,
+      true
+    );
+    this.usdcContract = getTokenContract(usdc,
       true
     );
     
     this.getAllowance();
+    const isStake = modal === 'stake';
+    if (isStake) {
+      getTokenBalance(usdc.address).then(balance => this.setState({
+        balance: wei.from(balance, usdc.decimals),
+      }));
+    } else {
+      this.setState({
+        balance: _.get(allowances, fiat.address, 0),
+      })
+    }
   }
 
-  async getAllowance(address) {
-    const allowance = await this.contract.getAllowance(
-      this.contract.provider.network.contractAddresses.p2p.router
-    );
-    this.setState({ allowance });
+  async getAllowance() {
+    const { fiat, modal } = this.props;
+    const isStake = modal === 'stake';
+    if (isStake) {
+      const allowance = await this.usdcContract.getAllowance(
+        this.contract.provider.network.contractAddresses.p2p.router
+      );
+      this.setState({ allowance });
+    }
   }
 
   componentWillUnmount() {
     this._mount = false;
     this.contract && this.contract.stopWaiting();
+    this.usdcContract && this.usdcContract.stopWaiting();
   }
 
   onApprove = async () => {
@@ -121,8 +134,8 @@ class P2pPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
-      await this.contract.approve(
-        this.contract.provider.network.contractAddresses.p2p.router,
+      await this.usdcContract.approve(
+        this.usdcContract.provider.network.contractAddresses.p2p.router,
         amount
       );
       if (!this._mount) return;
@@ -130,19 +143,20 @@ class P2pPopupStake extends React.PureComponent {
     } catch (error) {
       console.error('[onApprove]', error);
       if (!this._mount) return;
-      this.contract.stopWaiting();
+      this.usdcContract.stopWaiting();
       this.setState({ errorText: processError(error) });
     }
     this.setState({ isApproving: false });
   };
 
   onDeposit = async () => {
-    const { toastPush, fiat, onClose } = this.props;
+    const { toastPush, fiat, onClose, updateP2PAvailableForTrade } = this.props;
     const {
       getWeb3,
       network,
       getBSCScanLink,
       getTransactionReceipt,
+      transaction,
     } = this.context;
     const {p2p} = network.contractAddresses;
     if (!p2p) return;
@@ -154,16 +168,15 @@ class P2pPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
-      const balanceInEth = wei.from(balance);
       const transactionAmount =
-        getFixedNumber(amount, 18) >= getFixedNumber(balanceInEth, 18)
+        getFixedNumber(amount, 18) >= getFixedNumber(balance, 18)
           ? balance
           : wei.to(getFixedNumber(amount, 18));
       const routerContract = new (getWeb3().eth.Contract)(
         require('src/index/constants/ABI/p2p/router'),
         p2p.router,
       );
-      const tx = await routerContract.transaction('deposit', [
+      const tx = await transaction(routerContract, 'deposit', [
         transactionAmount,
         fiat.address,
       ]);
@@ -176,6 +189,7 @@ class P2pPopupStake extends React.PureComponent {
         )} ${fiat.symbol}`,
         'farming'
       );
+      updateP2PAvailableForTrade(fiat.address, this.context);
       if (!this._mount) return;
       onClose();
     } catch (error) {
@@ -189,14 +203,14 @@ class P2pPopupStake extends React.PureComponent {
   };
 
   onWithdraw = async () => {
-    const { toastPush, fiat, onClose } = this.props;
+    const { toastPush, fiat, onClose, updateP2PAvailableForTrade } = this.props;
     const { isTransaction, value, token1Symbol, token0Symbol } = this.state;
     const {
       getWeb3,
-      getFarmContract,
+      network,
       getBSCScanLink,
       getTransactionReceipt,
-      updatePoolData,
+      transaction,
     } = this.context;
     const {p2p} = network.contractAddresses;
     if (!p2p) return;
@@ -205,24 +219,26 @@ class P2pPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
-      const poolInEth = wei.from(userPool);
       const transactionAmount = wei.to(getFixedNumber(amount, 18));
-
-      const farm = getFarmContract();
-      const tx = await farm.transaction('withdraw', [
-        pool.address,
+  
+      const routerContract = new (getWeb3().eth.Contract)(
+        require('src/index/constants/ABI/p2p/router'),
+        p2p.router,
+      );
+      const tx = await transaction(routerContract, 'withdraw', [
         transactionAmount,
+        fiat.address,
       ]);
       console.log('transaction hash', tx, getBSCScanLink(tx));
       const receipt = await getTransactionReceipt(tx);
       console.log('transaction receipt', receipt);
-      updatePoolData(pool);
       toastPush(
         `${getLang('dapp_farming_unstaked')} ${amount.toFixed(
           2
-        )} ${token1Symbol}-${token0Symbol}`,
+        )} ${fiat.symbol}`,
         'farming'
       );
+      updateP2PAvailableForTrade(fiat.address, this.context);
       if (!this._mount) return;
       onClose();
     } catch (error) {
@@ -236,12 +252,16 @@ class P2pPopupStake extends React.PureComponent {
   };
 
   render() {
-    const { toastPush, adaptive, modal, fiat } = this.props;
-    const { getTokenContract, addTokenToWallet } = this.context;
+    const { toastPush, adaptive, modal, fiat, onClose } = this.props;
+    const { getTokenContract, addTokenToWallet, tokens } = this.context;
+    if (!fiat) {
+      onClose();
+      return <></>;
+    }
+    const usdc = tokens.find(t => t.symbol === 'USDC');
     const {
       value,
-      token0Symbol,
-      token1Symbol,
+      balance,
       allowance,
       isApproving,
       isTransaction,
@@ -249,15 +269,11 @@ class P2pPopupStake extends React.PureComponent {
     } = this.state;
     const isStake = modal === 'stake';
     const Wrapper = adaptive ? BottomSheetModal : Modal;
-    const weiBalance = _.get(pool, 'balance', '0');
-    const balance = getFixedNumber(wei.from(weiBalance), 18);
     const amount = Number(value) || 0;
-    const weiUserPool = _.get(pool, 'userPool', '0');
-    const userPool = getFixedNumber(wei.from(weiUserPool), 18);
 
     const isAvailable = isStake
       ? allowance >= amount && amount && amount <= balance
-      : amount && amount <= userPool;
+      : amount && amount <= balance;
 
     const title =
       modal === 'stake'
@@ -291,7 +307,7 @@ class P2pPopupStake extends React.PureComponent {
                 <span className="default-text">{title}</span>
                 <span className="default-text">
                   {getLang('dapp_global_balance')}:&nbsp;
-                  <NumberFormat number={isStake ? balance : userPool} />
+                  <NumberFormat number={balance} />
                 </span>
               </div>
               <div className="input-container">
@@ -305,7 +321,7 @@ class P2pPopupStake extends React.PureComponent {
                 />
                 <div className="input-controls">
                   <p className="default-text">
-                    {token0Symbol}-{token1Symbol}
+                    {isStake ? usdc.symbol : fiat.symbol}
                   </p>
                   <button
                     type="button"
@@ -313,7 +329,7 @@ class P2pPopupStake extends React.PureComponent {
                     onClick={() => {
                       if (!isTransaction && !isApproving)
                         this.setState({
-                          value: isStake ? balance : userPool,
+                          value: balance,
                         });
                     }}
                   >
@@ -365,24 +381,6 @@ class P2pPopupStake extends React.PureComponent {
             )}
           </Form>
           <div className="FarmingPopup__footer FarmingPopup-footer">
-            {isStake && (
-              <Row
-                alignItems="center"
-                justifyContent="center"
-                className="popup-link"
-                onClick={() => {
-                  router.navigate(LIQUIDITY, {
-                    token0: token0Symbol,
-                    token1: token1Symbol,
-                  });
-                }}
-              >
-                <span>
-                  {getLang('dapp_global_get')} {token0Symbol}-{token1Symbol}
-                </span>
-                <SVG src={require('src/asset/icons/export.svg')} />
-              </Row>
-            )}
             <div className="FarmingPopup-footer__info FarmingPopup-footer-info">
               <div className="FarmingPopup-footer-info__item">
                 <SVG src={require('src/asset/icons/info.svg')} />
@@ -405,20 +403,6 @@ class P2pPopupStake extends React.PureComponent {
                 </div>
               </div>
             </div>
-            {/* <span
-              className="popup-link"
-              onClick={() =>
-                addTokenToWallet({
-                  address: _.get(pool, 'address'),
-                  symbol: `${token0Symbol}-${token1Symbol}`,
-                  image:
-                    'https://pancake.kiemtienonline360.com/images/coins/0xf9f93cf501bfadb6494589cb4b4c15de49e85d0e.png',
-                })
-              }
-            >
-              Add token to Metamask&nbsp;
-              <SVG src={require('src/asset/icons/export.svg')} />
-            </span> */}
           </div>
           {!!errorText.length && (
             <div className="FarmingPopup__error">{errorText}</div>
@@ -432,11 +416,13 @@ class P2pPopupStake extends React.PureComponent {
 export default connect(
   (state) => ({
     adaptive: state.default.adaptive,
+    allowances: state.dapp.p2p.available,
   }),
   (dispatch) =>
     bindActionCreators(
       {
         toastPush,
+        updateP2PAvailableForTrade,
       },
       dispatch
     ),
