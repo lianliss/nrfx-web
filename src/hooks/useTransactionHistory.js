@@ -46,6 +46,7 @@ const useTransactionHistory = (options = {}) => {
   // Get transactions.
   useEffect(() => {
     if (!isConnected) return;
+    let transactionsUpdateInterval;
 
     getTransactionsData(
       dispatch,
@@ -54,6 +55,22 @@ const useTransactionHistory = (options = {}) => {
       getTokenFromSymbol,
       updateFiats
     );
+
+    if (options.updateInterval) {
+      transactionsUpdateInterval = setInterval(() => {
+        getTransactionsData(
+          dispatch,
+          getFiatsArray,
+          getAccountHistory,
+          getTokenFromSymbol,
+          updateFiats
+        );
+      }, options.updateInterval);
+    }
+
+    return () => {
+      clearInterval(transactionsUpdateInterval);
+    };
   }, [accountAddress, options.forNetworkID]);
 
   useEffect(() => {

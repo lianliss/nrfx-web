@@ -32,6 +32,7 @@ const HistoryTable = ({ coin }) => {
   const { accountHistory, status } = useTransactionHistory({
     maxAccountHistory: 20,
     forNetworkID: network.networkID,
+    updateInterval: 60_000,
   });
   const [loadingStatus, setLoadingStatus] = React.useState(dataStatus.IDLE);
   const [tradingAccountHistory, setTradingAccountHistory] = React.useState([]);
