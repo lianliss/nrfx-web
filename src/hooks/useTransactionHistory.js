@@ -19,7 +19,6 @@ const useTransactionHistory = (options = {}) => {
   // Context.
   const {
     getAccountHistory,
-    getTokenUSDPrice,
     accountAddress,
     isConnected,
     updateFiats,
@@ -86,7 +85,6 @@ const useTransactionHistory = (options = {}) => {
     transactions,
     accountHistoryExists,
     accountAddress,
-    getTokenUSDPrice,
     status,
   };
 };
