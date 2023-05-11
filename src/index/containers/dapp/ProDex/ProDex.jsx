@@ -44,7 +44,7 @@ const ProDex = () => {
           ]}
         />
       )}
-      {/* <Row alignItems="stretch" gap={17}>
+      <Row alignItems="stretch" gap={17}>
         {showMarketPage && (
           <div className={styles.tradingViewWidget}>
             <TradingViewWidget
@@ -58,7 +58,7 @@ const ProDex = () => {
             <DexSwap />
           </div>
         )}
-      </Row> */}
+      </Row>
       {!adaptive && (
         <div className={styles.tradeHistory__wrapper}>
           <h2>Trade history</h2>

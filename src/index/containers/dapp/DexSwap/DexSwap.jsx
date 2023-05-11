@@ -19,7 +19,7 @@ import { Fraction, JSBI } from '@narfex/sdk';
 import * as toast from 'actions/toasts';
 import { openModal } from "src/actions"
 import { getLang } from "utils";
-import { DexRoute, DexDescription } from 'dapp';
+import { DexRoute, DexDescription, CabinetModal } from 'dapp';
 
 // Styles
 import './DexSwap.less';
@@ -457,6 +457,10 @@ class DexSwap extends React.PureComponent {
     }
   };
 
+  closeTokenSelect = () => {
+    this.setState({ selectToken: null });
+  }
+
   render() {
     const {
       isPro,
@@ -684,32 +688,36 @@ class DexSwap extends React.PureComponent {
             )}
 
             {!_.isNull(selectToken) && (
-              <TokenSelect
-                onChange={(value) => {
-                  const secondToken = selectToken === 1 ? 0 : 1;
-                  this.setState((state) => {
-                    if (state.pair[secondToken].address === value.address) {
-                      state.pair[secondToken] = state.pair[selectToken];
-                    }
-                    state.pair[selectToken] = value;
-                    this.props.setSwap(secondToken === 1 && value, secondToken === 0 && value);
-                    return {
-                      ...state,
-                      selectToken: null,
-                      isSwappedPrice: false,
-                    };
-                  }, () => {
-                    this.updateLiquidity();
-                    this.setInitialAllowance();
-                  });
-                }}
-                onClose={() => this.setState({ selectToken: null })}
-                selected={this.state.pair[selectToken]}
-                disableSwitcher
-                {...this.context}
-                fiats={this.context.getFiatsArray()}
-                commonBases={this.context.network.commonBases}
-              />
+              <CabinetModal
+                onClose={this.closeTokenSelect}
+              >
+                <TokenSelect
+                  onChange={(value) => {
+                    const secondToken = selectToken === 1 ? 0 : 1;
+                    this.setState((state) => {
+                      if (state.pair[secondToken].address === value.address) {
+                        state.pair[secondToken] = state.pair[selectToken];
+                      }
+                      state.pair[selectToken] = value;
+                      this.props.setSwap(secondToken === 1 && value, secondToken === 0 && value);
+                      return {
+                        ...state,
+                        selectToken: null,
+                        isSwappedPrice: false,
+                      };
+                    }, () => {
+                      this.updateLiquidity();
+                      this.setInitialAllowance();
+                    });
+                  }}
+                  onClose={this.closeTokenSelect}
+                  selected={this.state.pair[selectToken]}
+                  disableSwitcher
+                  {...this.context}
+                  fiats={this.context.getFiatsArray()}
+                  commonBases={this.context.network.commonBases}
+                />
+              </CabinetModal>
             )}
             {isSettings && (
               <DexSettingsModal
