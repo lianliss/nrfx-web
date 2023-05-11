@@ -44,7 +44,8 @@ const HistoryTable = ({ coin }) => {
 
     try {
       for (let historyItem of accountHistory) {
-        const time = getRoundedTime(getTimeDiff(historyItem.jsTimestamp));
+        const timeDiff = getTimeDiff(historyItem.jsTimestamp);
+        const time = getRoundedTime(timeDiff);
         const newHistoryItem = {
           ...historyItem,
           source_amount_usd: null,
