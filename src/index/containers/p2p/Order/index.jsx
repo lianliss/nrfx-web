@@ -21,13 +21,14 @@ import './index.less';
 const testOrder = {
   buy: {
     mode: p2pMode.buy,
-    status: 'payment',
+    status: 'pending',
   },
   sell: { mode: p2pMode.sell, status: 'pending' },
 };
 
-function Order({ adaptive }) {
+function Order({ adaptive, visitorMode = 'user' }) {
   // Order will be order from data by backend.
+  const visitorIsModerator = visitorMode === 'moderator';
   const globalP2PMode = useSelector(dappP2PModeSelector);
   const [order, setOrder] = React.useState(testOrder[globalP2PMode]);
   const { mode } = order;
@@ -65,13 +66,13 @@ function Order({ adaptive }) {
     if (process === orderProcesses.buy.pending) {
       setTimeout(() => {
         setOrder((prev) => ({ ...prev, status: 'completed' }));
-      }, 3000);
+      }, 60_000);
     }
 
     if (process === orderProcesses.sell.pending) {
       setTimeout(() => {
         setOrder((prev) => ({ ...prev, status: 'releasing' }));
-      }, 3000);
+      }, 60_000);
     }
   }, [process]);
 
@@ -95,12 +96,17 @@ function Order({ adaptive }) {
               onNotifySeller={handleNotifySeller}
               onPaymentReceived={handlePaymentReceived}
               onCancel={handleCancel}
+              visitorMode={visitorMode}
             />
-            <Feedback adaptive={adaptive} />
-            <CabinetBlock className="p2p-order-body__faq">
-              <h3>FAQ</h3>
-              <FAQ items={faq.order} doubleColumn={false} />
-            </CabinetBlock>
+            {!visitorIsModerator && (
+              <>
+                <Feedback adaptive={adaptive} />
+                <CabinetBlock className="p2p-order-body__faq">
+                  <h3>FAQ</h3>
+                  <FAQ items={faq.order} doubleColumn={false} />
+                </CabinetBlock>
+              </>
+            )}
           </div>
           {!adaptive && (
             <div className="p2p-order-body__right">

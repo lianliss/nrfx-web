@@ -25,7 +25,10 @@ function Process({
   onNotifySeller,
   onPaymentReceived,
   onCancel,
+  visitorMode = 'user',
 }) {
+  const visitorIsModerator = visitorMode === 'moderator';
+
   const renderInfo = () => {
     const ItemsComponent = adaptive ? Col : Row;
 
@@ -66,33 +69,39 @@ function Process({
     );
   };
 
-  const renderContent = () => (
-    <div
-      className={cn('p2p-order-process-content', {
-        sideline:
-          process === processes.buy.payment ||
-          process === processes.sell.releasing,
-      })}
-    >
-      {renderInfo()}
-      <Method
-        selectedMethod={testPayments[0]}
-        process={process}
-        adaptive={adaptive}
-      />
-      <Submit
-        process={process}
-        adaptive={adaptive}
-        onNotifySeller={onNotifySeller}
-        onPaymentReceived={onPaymentReceived}
-        onCancel={onCancel}
-      />
-    </div>
-  );
+  const renderContent = () => {
+    const isBuyPayment = process === processes.buy.payment;
+    const isSellReleasing = process === processes.sell.releasing;
+    const isSideline = !visitorIsModerator && (isBuyPayment || isSellReleasing);
+
+    return (
+      <div
+        className={cn('p2p-order-process-content', {
+          sideline: isSideline,
+        })}
+      >
+        {renderInfo()}
+        <Method
+          selectedMethod={testPayments[0]}
+          process={process}
+          adaptive={adaptive}
+        />
+        <Submit
+          process={process}
+          adaptive={adaptive}
+          onNotifySeller={onNotifySeller}
+          onPaymentReceived={onPaymentReceived}
+          onCancel={onCancel}
+        />
+      </div>
+    );
+  };
 
   return (
     <CabinetBlock className={cn('p2p-order-process', process)}>
-      <Steps mode={mode} process={process} adaptive={adaptive} />
+      {!visitorIsModerator && (
+        <Steps mode={mode} process={process} adaptive={adaptive} />
+      )}
       {renderContent()}
     </CabinetBlock>
   );
@@ -108,6 +117,7 @@ Process.propTypes = {
   onNotifySeller: PropTypes.func,
   onPaymentReceived: PropTypes.func,
   onCancel: PropTypes.func,
+  visitorMode: PropTypes.string,
 };
 
 export default Process;

@@ -7,11 +7,12 @@ import CabinetSidebar from 'src/index/components/dapp/CabinetSidebar/CabinetSide
 import TestnetOverlay from 'dapp/TestnetOverlay/TestnetOverlay';
 
 // Utils
-import { DAPP, DAPP_EXCHANGE } from 'src/index/constants/pages';
+import { DAPP, DAPP_EXCHANGE, P2P_MODERATOR } from 'src/index/constants/pages';
 import router from 'src/router';
 import { Web3Context } from 'src/services/web3Provider';
 import { getFinePage, pageIsFine } from './utils/pageUtils';
 import _ from 'lodash';
+import { Sidebar as P2PModeratorSidebar } from '../../p2p/ModeratorPanel/components';
 
 const DEFAULT_DAPP_PAGE = DAPP_EXCHANGE;
 
@@ -50,17 +51,31 @@ class DappCabinet extends Component {
 
   render() {
     const { route, adaptive } = this.props;
-    const { Component, mainnetOnly, testnetOnly, chainsWhitelist, chainsBlacklist } = getFinePage(route.name);
+    const {
+      Component,
+      mainnetOnly,
+      testnetOnly,
+      chainsWhitelist,
+      chainsBlacklist,
+    } = getFinePage(route.name);
+    let sidebar;
+
+    switch (route.name) {
+      case P2P_MODERATOR:
+        sidebar = <P2PModeratorSidebar />;
+        break;
+      default:
+        sidebar = <CabinetSidebar />;
+    }
 
     return (
-      <DappContainer
-        className="CabinetWalletScreen"
-        sideBar={<CabinetSidebar />}
-      >
+      <DappContainer className="CabinetWalletScreen" sideBar={sidebar}>
         <Component route={route.name} adaptive={adaptive} />
         {testnetOnly && <TestnetOverlay testnetOnly networks={[97]} />}
         {mainnetOnly && <TestnetOverlay mainnetOnly networks={[56]} />}
-        {(chainsWhitelist || chainsBlacklist) && <TestnetOverlay {...{chainsWhitelist, chainsBlacklist}} />}
+        {(chainsWhitelist || chainsBlacklist) && (
+          <TestnetOverlay {...{ chainsWhitelist, chainsBlacklist }} />
+        )}
       </DappContainer>
     );
   }
