@@ -105,7 +105,7 @@ class P2pPopupStake extends React.PureComponent {
       }));
     } else {
       this.setState({
-        balance: _.get(allowances, fiat.address, 0),
+        balance: wei.from(_.get(allowances, fiat.address, '0')),
       })
     }
   }
@@ -203,8 +203,8 @@ class P2pPopupStake extends React.PureComponent {
   };
 
   onWithdraw = async () => {
-    const { toastPush, fiat, onClose, updateP2PAvailableForTrade } = this.props;
-    const { isTransaction, value, token1Symbol, token0Symbol } = this.state;
+    const { toastPush, fiat, onClose, updateP2PAvailableForTrade, allowances } = this.props;
+    const { isTransaction, value, balance } = this.state;
     const {
       getWeb3,
       network,
@@ -219,12 +219,16 @@ class P2pPopupStake extends React.PureComponent {
 
     try {
       const amount = Number(value) || 0;
-      const transactionAmount = wei.to(getFixedNumber(amount, 18));
+      const transactionAmount = amount === wei.from(_.get(allowances, fiat.address, '0'))
+        ? _.get(allowances, fiat.address, '0')
+        : wei.to(getFixedNumber(amount, 18));
   
       const routerContract = new (getWeb3().eth.Contract)(
         require('src/index/constants/ABI/p2p/router'),
         p2p.router,
       );
+      console.log('withdraw', [transactionAmount,
+        fiat.address,]);
       const tx = await transaction(routerContract, 'withdraw', [
         transactionAmount,
         fiat.address,

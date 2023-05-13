@@ -9,6 +9,7 @@ import { openModal } from 'src/actions';
 import { Web3Context } from 'services/web3Provider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setP2PCurrency, updateP2PAvailableForTrade } from 'src/actions/dapp/p2p';
+import wei from 'utils/wei';
 
 import { dappP2PCurrencySelector, dappP2PAvailableForTradeSelector } from 'src/selectors';
 import { classNames as cn } from 'utils';
@@ -40,7 +41,7 @@ const Staking = ({ adaptive }) => {
   const dispatch = useDispatch();
   const selectedFiat = useSelector(dappP2PCurrencySelector);
   const fiatAddress = _.get(selectedFiat, 'address', null);
-  const availableForTrade = useSelector(dappP2PAvailableForTradeSelector(fiatAddress)) || 0;
+  const availableForTrade = wei.from(useSelector(dappP2PAvailableForTradeSelector(fiatAddress)) || '0');
   const buttonSize = adaptive ? 'big' : 'extra_small';
   
   const selectCurrency = currency => dispatch(setP2PCurrency(currency));

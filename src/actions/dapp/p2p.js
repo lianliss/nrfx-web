@@ -1,5 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import wei from 'utils/wei';
+import { getFixedNumber } from 'src/utils';
 
 /**
  *  Sets p2p mode.
@@ -104,7 +105,7 @@ export const updateP2PAvailableForTrade = (fiatAddress, context) => async (dispa
     const data = await poolContract.methods.validatorLimit(accountAddress, fiatAddress).call();
     const payload = {
       fiatAddress,
-      available: wei.from(data),
+      available: data,
     };
     return dispatch({
       type: actionTypes.DAPP_UPDATE_P2P_AVAILABLE_TRADE,
