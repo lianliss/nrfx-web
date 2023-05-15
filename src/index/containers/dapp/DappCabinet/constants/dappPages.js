@@ -9,6 +9,16 @@ import {
 } from 'src/services/multichain/chains';
 import company from 'src/index/constants/company';
 
+const isLocalhost = Boolean(
+  window.location.hostname === "localhost" ||
+  // [::1] is the IPv6 localhost address.
+  window.location.hostname === "[::1]" ||
+  // 127.0.0.1/8 is considered localhost for IPv4.
+  window.location.hostname.match(
+    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+  )
+);
+
 export default [
   {
     name: PAGES.DAPP_WALLET,
@@ -153,17 +163,19 @@ export default [
   {
     name: PAGES.P2P,
     chains:
-      window.location.host === company.host ||
-      window.location.host === company.testnetHost
-        ? []
+      window.location.host === company.host
+      || window.location.host === company.testnetHost
+      || isLocalhost
+        ? [97]
         : [1, 56, 97],
   },
   {
     name: PAGES.P2P_ORDERS,
     chains:
-      window.location.host === company.host ||
-      window.location.host === company.testnetHost
-        ? []
+      window.location.host === company.host
+      || window.location.host === company.testnetHost
+      || isLocalhost
+        ? [97]
         : [1, 56, 97],
   },
   {
@@ -180,6 +192,10 @@ export default [
   },
   {
     name: PAGES.VALIDATOR_CREATE_TRADE,
+    chains: [1, 56, 97],
+  },
+  {
+    name: PAGES.VALIDATOR_EDIT_TRADE,
     chains: [1, 56, 97],
   },
   {

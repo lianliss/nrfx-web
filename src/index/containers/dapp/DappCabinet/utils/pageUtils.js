@@ -94,6 +94,7 @@ export const getFinePage = (routeName) => {
       Component = p2p.ModeratorPanel;
       break;
     case PAGES.VALIDATOR_CREATE_TRADE:
+    case PAGES.VALIDATOR_EDIT_TRADE:
       Component = validator.CreateTrade;
       break;
     case PAGES.VALIDATOR_ADMIN_PANEL:

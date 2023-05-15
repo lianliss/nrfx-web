@@ -1,4 +1,6 @@
 import React from 'react';
+import _ from 'lodash';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import { Row, NumberFormat } from 'ui';
@@ -13,9 +15,16 @@ import {
 // Styles
 import styles from './Account.module.less';
 
-function Account({ adaptive, user, type, isForeignProfile }) {
-  const { name, role, verified } = user;
-  const isValidator = role === 'validator';
+function Account({ adaptive, user, type, isForeignProfile, kyc }) {
+  const context = React.useContext(Web3Context);
+  const {
+    accountAddress,
+    chainId,
+    isConnected,
+  } = context;
+  const isVerified = !!kyc;
+  const name = _.get(kyc, 'name', accountAddress);
+  const isValidator = _.get(kyc, 'isValidator', false) && user.role !== 'user';
 
   const BodyItem = ({ children }) => (
     <div className={styles.Account__body__item}>{children}</div>
@@ -26,11 +35,11 @@ function Account({ adaptive, user, type, isForeignProfile }) {
       return <AdvertiserFeedback adaptive={adaptive} />;
     }
 
-    if (verified && isValidator) {
+    if (isVerified && isValidator) {
       return <Staking adaptive={adaptive} />;
     }
 
-    return <Verify adaptive={adaptive} userRole={role} verified={verified} />;
+    return <Verify adaptive={adaptive} userRole={'any'} verified={isVerified} />;
   };
 
   return (
@@ -42,7 +51,7 @@ function Account({ adaptive, user, type, isForeignProfile }) {
       >
         <UserProfile
           name={name}
-          isVerified={verified}
+          isVerified={isVerified}
           isForeignProfile={isForeignProfile}
           adaptive={adaptive}
         />

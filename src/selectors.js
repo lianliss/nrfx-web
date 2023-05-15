@@ -57,3 +57,7 @@ export const dappExchangeFocusSelector = state => state.dapp.exchange.focus;
 // dapp_p2p
 export const dappP2PModeSelector = state => state.dapp.p2p.mode;
 export const dappP2PPaymentSelector = mode => state => state.dapp.p2p[mode].payment;
+export const dappP2PKYCSelector = state => state.dapp.p2p.kyc;
+export const dappP2PCurrencySelector = state => state.dapp.p2p.currency;
+export const dappP2PAvailableForTradeSelector = fiatAddress => state => state.dapp.p2p.available[fiatAddress];
+export const routeParams = state => state.router.route.params;

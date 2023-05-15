@@ -2154,6 +2154,7 @@ class Web3Provider extends React.PureComponent {
       cmcTokens: this.cmcTokens,
       getTokenFromSymbol: getTokenFromSymbol.bind(this),
       tryExchangeError: this.tryExchangeError.bind(this),
+      backendRequest: this.backendRequest.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>

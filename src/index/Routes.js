@@ -201,6 +201,7 @@ function Routes(props) {
     case pages.P2P_MODERATOR:
     case pages.VALIDATOR_ADMIN_PANEL:
     case pages.VALIDATOR_CREATE_TRADE:
+    case pages.VALIDATOR_EDIT_TRADE:
       needAuthorization = false;
       WrapperComponent = DappWrapper;
       Component = DappCabinet;

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
+import { openModal } from 'actions';
 
 // Components
 import { Button, Col } from 'ui';
@@ -7,7 +9,18 @@ import { Button, Col } from 'ui';
 import styles from './Verify.module.less';
 
 function Verify({ userRole, verified, adaptive }) {
+  const context = React.useContext(Web3Context);
+  const {
+    isConnected,
+    chainId,
+    accountAddress,
+    backendRequest,
+  } = context;
   const buttonsSize = adaptive ? 'big' : 'extra_large';
+  
+  const openVerification = () => {
+    openModal('kyc_verification', {}, {});
+  };
 
   return (
     <div className={styles.Verify}>
@@ -18,7 +31,7 @@ function Verify({ userRole, verified, adaptive }) {
       )}
       {!verified && (
         <Col alignItems="center">
-          <Button size={buttonsSize} type="lightBlue">
+          <Button size={buttonsSize} onClick={openVerification} type="lightBlue">
             Pass KYC
           </Button>
           <p>powered by sumsub.com</p>

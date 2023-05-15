@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 // Components
 import { Button, SwitchTabs } from 'ui';
 import { AdsFilters, AdsTable, PaymentMethodsTable } from '../../components';
+import router from 'src/router';
+import { VALIDATOR_CREATE_TRADE, VALIDATOR_EDIT_TRADE } from 'src/index/constants/pages';
 
 // Styles
 import styles from './TableLayout.module.less';
@@ -12,7 +14,7 @@ const pages = [
   {
     value: 'methods',
     label: 'P2P Payment Methods',
-    supportRoles: ['validator', 'user'],
+    supportRoles: ['user'],
   },
   { value: 'my-ads', label: 'My ads', supportRoles: ['validator'] },
   {
@@ -23,7 +25,7 @@ const pages = [
   {
     value: 'blacklist',
     label: 'Blacklist',
-    supportRoles: ['validator', 'user'],
+    supportRoles: ['validator'],
   },
 ];
 
@@ -39,7 +41,8 @@ const Switch = ({ selected, onChange, userRole }) => (
 );
 
 function TableLayout({ adaptive, userRole }) {
-  const [selected, setSelected] = React.useState(pages[0].value);
+  const userPages = pages.filter((page) => page.supportRoles.includes(userRole));
+  const [selected, setSelected] = React.useState(userPages[0].value);
 
   const TitleBlock = ({ title, subtitle, onAction, actionText }) => (
     <>
@@ -101,7 +104,9 @@ function TableLayout({ adaptive, userRole }) {
                 'payment methods.'
               }
               actionText="Post new Ad"
-              onAction={() => {}}
+              onAction={() => {
+                router.navigate(VALIDATOR_CREATE_TRADE);
+              }}
             />
           )}
           {selected === 'my-ads' && <AdsFilters adaptive={adaptive} />}
