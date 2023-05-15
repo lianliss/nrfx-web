@@ -4,6 +4,11 @@
   grid-template-columns: auto calc(100% - 38px);
   padding: 8px 25px 8px 11px;
   box-sizing: border-box;
+  user-select: none;
+
+  img {
+    pointer-events: none;
+  }
 
   &:hover,
   &:global(.active) {
