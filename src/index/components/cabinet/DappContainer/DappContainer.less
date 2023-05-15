@@ -1,13 +1,16 @@
 @import '../../../../vars';
 
 .DappContainer {
-  --site-bar-width: 208px;
+  // --site-bar-width: 208px;
+  --sidebar-width: 190px;
   --content-width: 1300px;
   --container-padding: 18px;
   --header-height: 58px;
 
   display: grid;
-  grid-template-columns: 190px calc(100% - 190px - 25px);
+  grid-template-columns: var(--sidebar-width) calc(
+      100% - var(--sidebar-width) - 25px
+    );
   grid-column-gap: 25px;
   width: 100%;
   margin: 0 auto;
@@ -19,7 +22,7 @@
 .DappContainer__content {
   display: flex;
   flex-direction: column;
-  max-width: calc(100vw - var(--site-bar-width) - var(--container-padding));
+  max-width: calc(100vw - var(--sidebar-width) - var(--container-padding));
   // width: 100%;
   position: relative;
   z-index: 1;
@@ -27,7 +30,7 @@
 
 .DappContainer__sideBar {
   // margin-right: 25px;
-  max-width: var(--site-bar-width);
+  max-width: var(--sidebar-width);
   // width: 100%;
   position: relative;
   z-index: 2;
@@ -40,7 +43,7 @@
 @media (max-width: @mobile-width) {
   .DappContainer {
     grid-template-columns: 100%;
-    --site-bar-width: 100%;
+    --sidebar-width: 100%;
     --content-width: 100%;
 
     width: 100%;

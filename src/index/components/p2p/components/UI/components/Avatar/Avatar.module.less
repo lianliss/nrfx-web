@@ -1,15 +1,16 @@
-.Avatar {
-
-  &:global(.small) {
-  }
-  &:global(.medium) {
-    height: 53px;
-    width: 53px;
+.getType(@type, @size, @marginRight) {
+  &:global(.@{type}) {
+    height: @size;
+    width: @size;
 
     &:global(.left) {
-      margin-right: 14px;
+      margin-right: @marginRight;
     }
   }
-  &:global(.large) {
-  }
+}
+
+.Avatar {
+  .getType(small, 30px, 8px);
+  .getType(medium, 50px, 14px);
+  .getType(large, 50px, 14px);
 }

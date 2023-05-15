@@ -6,8 +6,12 @@ import CabinetSidebar from '../CabinetSidebar/CabinetSidebar';
 
 // Style
 import './AdaptiveSidebar.less';
+import getSidebar from '../../../containers/dapp/DappCabinet/utils/getSidebar';
 
 function AdaptiveSidebar({ route, active, onClose }) {
+  const sidebar = getSidebar(route);
+  const { Component } = sidebar;
+
   React.useEffect(() => {
     const html = document.querySelector('html');
     const body = document.querySelector('body');
@@ -38,7 +42,7 @@ function AdaptiveSidebar({ route, active, onClose }) {
   return (
     <div className={cn('AdaptiveSidebar', { active })}>
       <div className="AdaptiveSidebar__bg" onClick={onClose} />
-      <CabinetSidebar className={cn({ active })} adaptive={true} />
+      <Component className={cn({ active })} adaptive={true} />
     </div>
   );
 }

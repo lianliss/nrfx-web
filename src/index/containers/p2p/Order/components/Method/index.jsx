@@ -55,7 +55,6 @@ function Method({ adaptive, process, selectedMethod }) {
       component = (
         <ChooseMethod selectedMethod={selectedMethod} adaptive={adaptive} />
       );
-      console.log(12);
       break;
     case processes.sell.releasing:
       title = (

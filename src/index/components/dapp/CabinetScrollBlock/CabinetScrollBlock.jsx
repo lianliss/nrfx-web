@@ -4,9 +4,27 @@ import { Scrollbar } from 'react-scrollbars-custom';
 
 import './CabinetScrollBlock.less';
 
-function CabinetScrollBlock({ children, className, ...props }) {
+function CabinetScrollBlock({ children, className, maxHeight, ...props }) {
+  const contentRef = React.useRef();
+  const [height, setHeight] = React.useState(null);
+
+  React.useEffect(() => {
+    if (!maxHeight) return;
+    if (!contentRef?.current) return;
+
+    const contentHeight = contentRef.current.offsetHeight;
+
+    setHeight(contentHeight);
+  }, [children, maxHeight]);
+
   return (
-    <div className={`ScrollbarBox-container ${className}`}>
+    <div
+      className={`ScrollbarBox-container ${className}`}
+      style={{
+        height,
+        maxHeight,
+      }}
+    >
       <Scrollbar
         maximalThumbSize={73}
         minimalThumbSize={73}
@@ -37,7 +55,7 @@ function CabinetScrollBlock({ children, className, ...props }) {
         }}
         {...props}
       >
-        {children}
+        <div ref={contentRef}>{children}</div>
       </Scrollbar>
     </div>
   );

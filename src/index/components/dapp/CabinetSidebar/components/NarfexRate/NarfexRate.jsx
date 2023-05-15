@@ -12,6 +12,8 @@ import { simpleTokenPrice } from 'src/services/coingeckoApi';
 import { Web3Context } from 'src/services/web3Provider';
 import useGetTokenRate from 'src/hooks/useGetTokenRate';
 
+import styles from './NarfexRate.module.less';
+
 function NarfexRate() {
   const { network } = React.useContext(Web3Context);
   const price = useGetTokenRate('NRFX');
@@ -33,12 +35,12 @@ function NarfexRate() {
   }, [network.chainId]);
 
   return (
-    <WalletsList>
+    <WalletsList className={styles.NarfexRate}>
       <WalletsListItem
         icon={<SVG src={require('src/asset/icons/wallets/nrfx.svg')} />}
         startTexts={['Narfex', 'NRFX']}
         endTexts={[
-          <span className="NarfexRate__large">
+          <span className={styles.NarfexRate__large}>
             $
             <NumberFormat number={price || 0} />
           </span>,

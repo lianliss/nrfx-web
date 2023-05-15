@@ -9,8 +9,13 @@ function DappContainer({ children, sideBar, sidebarOptions }) {
   const adaptive = useAdaptive();
 
   return (
-    <div className="DappContainer">
-      <div className="DappContainer__sideBar">{sideBar}</div>
+    <div
+      className="DappContainer"
+      style={{
+        '--sidebar-width': sideBar.width,
+      }}
+    >
+      <div className="DappContainer__sideBar">{<sideBar.Component />}</div>
       <div className="DappContainer__content">{children}</div>
       {adaptive && sidebarOptions && sidebarOptions.length && (
         <UI.FloatingButton

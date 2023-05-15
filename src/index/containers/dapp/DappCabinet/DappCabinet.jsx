@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 
 // Components
 import DappContainer from '../../../components/cabinet/DappContainer/DappContainer';
-import CabinetSidebar from 'src/index/components/dapp/CabinetSidebar/CabinetSidebar';
 import TestnetOverlay from 'dapp/TestnetOverlay/TestnetOverlay';
 
 // Utils
-import { DAPP, DAPP_EXCHANGE, P2P_MODERATOR } from 'src/index/constants/pages';
+import { DAPP, DAPP_EXCHANGE } from 'src/index/constants/pages';
 import router from 'src/router';
 import { Web3Context } from 'src/services/web3Provider';
 import { getFinePage, pageIsFine } from './utils/pageUtils';
 import _ from 'lodash';
-import { Sidebar as P2PModeratorSidebar } from '../../p2p/ModeratorPanel/components';
+import getSidebar from './utils/getSidebar';
 
 const DEFAULT_DAPP_PAGE = DAPP_EXCHANGE;
 
@@ -58,15 +57,7 @@ class DappCabinet extends Component {
       chainsWhitelist,
       chainsBlacklist,
     } = getFinePage(route.name);
-    let sidebar;
-
-    switch (route.name) {
-      case P2P_MODERATOR:
-        sidebar = <P2PModeratorSidebar />;
-        break;
-      default:
-        sidebar = <CabinetSidebar />;
-    }
+    let sidebar = getSidebar(route.name);
 
     return (
       <DappContainer className="CabinetWalletScreen" sideBar={sidebar}>

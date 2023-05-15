@@ -1,20 +1,27 @@
+.getTypeStyles(@thumb-color, @track-color) {
+  overflow-y: auto;
+  scrollbar-color: @thumb-color @track-color;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: @track-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: @thumb-color;
+  }
+}
+
+.getSizeStyles(@width) {
+  &::-webkit-scrollbar {
+    width: @width;
+  }
+}
+
 .scrollBox {
   &:global(.customizedScroll) {
-    overflow-y: scroll;
-    scrollbar-color: #e5ebfc var(--alice-blue);
-
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    &::-webkit-scrollbar-track {
-      border-radius: 2px;
-      background-color: var(--alice-blue);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 2px;
-      background-color: #e5ebfc;
-    }
+    .getTypeStyles(#e5ebfc, var(--alice-blue));
+    .getSizeStyles(4px);
   }
 }

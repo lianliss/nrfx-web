@@ -1,0 +1,52 @@
+.NarfexRate {
+  position: sticky;
+  width: 100%;
+  top: calc(100vh - 75px);
+
+  &__large {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 110%;
+    text-align: right;
+    letter-spacing: -0.01em;
+    color: var(--dark-black);
+  }
+
+  :global(.WalletsListItem) {
+    transition: box-shadow 0.3s;
+    background: var(--alice-blue);
+    cursor: default;
+
+    &__icon {
+      .isvg {
+        box-shadow: 0 0 0 1px #fff;
+      }
+    }
+
+    &__column:nth-child(3) {
+      :global(.WalletsListItem__text-medium) {
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
+
+:global(.adaptive) {
+  .NarfexRate {
+    position: static;
+    margin-top: auto;
+    padding-top: 33px;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 192px;
+    justify-content: end;
+
+    :global(.WalletsListItem) {
+      &__icon {
+        .isvg {
+          box-shadow: 0 0 0 1px #fff;
+        }
+      }
+    }
+  }
+}

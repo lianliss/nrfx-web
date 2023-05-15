@@ -13,6 +13,7 @@ function ScrollBox({
   height,
   style,
   customizedScroll = true,
+  size = 'medium',
   ...props
 }) {
   return (
