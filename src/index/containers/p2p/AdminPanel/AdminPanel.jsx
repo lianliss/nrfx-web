@@ -23,6 +23,11 @@ function AdminPanel({ user, type = 'default', isForeignProfile }) {
     isConnected,
   } = context;
   
+  const isVerified = !!kyc;
+  const name = _.get(kyc, 'name', accountAddress);
+  const isValidator = _.get(kyc, 'isValidator', false) && user.role !== 'user';
+  user.verified = isVerified;
+  
   React.useEffect(() => {
     if (!isConnected) return;
     dispatch(updateP2PKYC(context));

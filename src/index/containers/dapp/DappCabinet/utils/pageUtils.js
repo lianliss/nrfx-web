@@ -91,6 +91,7 @@ export const getFinePage = (routeName) => {
       Component = AdvertiserDetail;
       break;
     case PAGES.VALIDATOR_CREATE_TRADE:
+    case PAGES.VALIDATOR_EDIT_TRADE:
       Component = validator.CreateTrade;
       break;
     case PAGES.VALIDATOR_ADMIN_PANEL:

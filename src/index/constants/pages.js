@@ -74,4 +74,5 @@ export const P2P_ADVERTISER_DETAIL = "p2p_advertiser_detail";
 // Validator
 export const VALIDATOR = 'validator';
 export const VALIDATOR_CREATE_TRADE = 'VALIDATOR_CREATE_TRADE';
+export const VALIDATOR_EDIT_TRADE = 'VALIDATOR_EDIT_TRADE';
 export const VALIDATOR_ADMIN_PANEL = 'VALIDATOR_ADMIN_PANEL';

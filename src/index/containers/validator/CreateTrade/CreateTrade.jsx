@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { routeParams } from 'src/selectors';
 
 // Components
 import { Message, CabinetBlock, SocialLinks } from 'dapp';
@@ -9,13 +11,19 @@ import TradeForm from '../../../components/validator/TradeForm/TradeForm';
 import './CreateTrade.less';
 
 function CreateTrade() {
+  const {offerAddress} = useSelector(routeParams);
   const [isWarning, setIsWarning] = React.useState(true);
 
   return (
     <div className="ValidatorCreateTrade">
       <Container>
-        <CabinetBlock>
-          <h1>Create a bitcoin trade advertisement</h1>
+        {!!offerAddress
+          ? <CabinetBlock>
+            <h1>Edit a trade advertisement</h1>
+            <TradeForm offerAddress={offerAddress} />
+          </CabinetBlock>
+          : <><CabinetBlock>
+          <h1>Create a trade advertisement</h1>
           {isWarning && (
             <Message
               type="warning"
@@ -65,7 +73,7 @@ function CreateTrade() {
         </CabinetBlock>
         <CabinetBlock>
           <TradeForm />
-        </CabinetBlock>
+        </CabinetBlock></>}
       </Container>
       <SocialLinks />
     </div>

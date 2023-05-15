@@ -24,7 +24,7 @@ function Account({ adaptive, user, type, isForeignProfile, kyc }) {
   } = context;
   const isVerified = !!kyc;
   const name = _.get(kyc, 'name', accountAddress);
-  const isValidator = _.get(kyc, 'isValidator', false);
+  const isValidator = _.get(kyc, 'isValidator', false) && user.role !== 'user';
 
   const BodyItem = ({ children }) => (
     <div className={styles.Account__body__item}>{children}</div>

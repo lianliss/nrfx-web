@@ -9,12 +9,14 @@ import TradeType from './components/TradeType/TradeType';
 // Styles
 import './TradeForm.less';
 
-function TradeForm() {
+function TradeForm({offerAddress}) {
   return (
     <Form className="ValidatorTradeForm">
-      <TradeType />
+      {!offerAddress ? <TradeType />
+        : <>
       <MoreInformation />
       <SecurityOptions />
+        </>}
     </Form>
   );
 }
