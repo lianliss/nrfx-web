@@ -30,7 +30,10 @@ function DappContainer({ children, sideBar, sidebarOptions }) {
 }
 
 DappContainer.propTypes = {
-  sideBar: PropTypes.node,
+  sideBar: PropTypes.shape({
+    Component: PropTypes.elementType,
+    width: PropTypes.oneOfType([PropTypes.string]),
+  }),
   sidebarOptions: PropTypes.array,
 };
 

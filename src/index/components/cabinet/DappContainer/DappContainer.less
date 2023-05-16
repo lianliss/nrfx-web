@@ -6,12 +6,13 @@
   --content-width: 1300px;
   --container-padding: 18px;
   --header-height: 58px;
+  --column-gap: 20px;
 
   display: grid;
   grid-template-columns: var(--sidebar-width) calc(
-      100% - var(--sidebar-width) - 25px
+      100% - var(--sidebar-width) - var(--column-gap)
     );
-  grid-column-gap: 25px;
+  grid-column-gap: var(--column-gap);
   width: 100%;
   margin: 0 auto;
   padding: 20px var(--container-padding) var(--container-padding);

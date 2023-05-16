@@ -51,7 +51,12 @@ function Message({
 }
 
 Message.propTypes = {
-  type: PropTypes.oneOf(['warning', 'gray']),
+  type: PropTypes.oneOf([
+    'warning',
+    'gray',
+    'transparent--gray',
+    'transparent--orange',
+  ]),
   maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClose: PropTypes.func,
   style: PropTypes.object,
