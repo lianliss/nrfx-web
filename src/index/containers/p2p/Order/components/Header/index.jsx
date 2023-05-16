@@ -40,6 +40,10 @@ const headerTitles = {
     title: 'Order Cancelled',
     subtitle: 'You have cancelled the order.',
   },
+  [processes.buy.appeal]: {
+    title: 'Buy {to} from {from} Shop',
+    subtitle: 'The order is created, please wait for system confirmation.',
+  },
   [processes.sell.pending]: {
     title: 'Sell {from} to {to} Shop',
     subtitle: 'Pending buyer`s payment. Time remaining',
@@ -51,6 +55,10 @@ const headerTitles = {
   [processes.sell.completed]: {
     title: 'Order completed',
     subtitle: 'Successfully sold {fromAmount} {from}',
+  },
+  [processes.sell.appeal]: {
+    title: 'Sell {from} to {to} Shop',
+    subtitle: 'The order is created, please wait for system confirmation.',
   },
 };
 

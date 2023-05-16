@@ -21,9 +21,9 @@ import './index.less';
 const testOrder = {
   buy: {
     mode: p2pMode.buy,
-    status: 'pending',
+    status: 'appeal',
   },
-  sell: { mode: p2pMode.sell, status: 'pending' },
+  sell: { mode: p2pMode.sell, status: 'appeal' },
 };
 
 function Order({ adaptive, visitorMode = 'user' }) {

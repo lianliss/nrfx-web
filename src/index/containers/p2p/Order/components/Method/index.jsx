@@ -70,6 +70,13 @@ function Method({ adaptive, process, selectedMethod }) {
         <ChooseMethod selectedMethod={selectedMethod} adaptive={adaptive} />
       );
       break;
+    case processes.sell.appeal:
+    case processes.buy.appeal:
+      title = <Title title="Payment method" />;
+      component = (
+        <ChooseMethod selectedMethod={selectedMethod} adaptive={adaptive} />
+      );
+      break;
     default:
       title = <Title title="Payment method" />;
       component = <ChoosedMethod payment={selectedMethod} />;
