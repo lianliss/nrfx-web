@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbar } from 'react-scrollbars-custom';
+import { classNames as cn } from 'utils';
 
 import './CabinetScrollBlock.less';
 
-function CabinetScrollBlock({ children, className, maxHeight, ...props }) {
+function CabinetScrollBlock({
+  children,
+  className,
+  maxHeight,
+  maximalThumbSize,
+  minimalThumbSize,
+  type,
+  top,
+  right,
+  ...props
+}) {
   const contentRef = React.useRef();
   const [height, setHeight] = React.useState(null);
 
@@ -19,16 +30,20 @@ function CabinetScrollBlock({ children, className, maxHeight, ...props }) {
 
   return (
     <div
-      className={`ScrollbarBox-container ${className}`}
+      className={cn('ScrollbarBox-container', className)}
       style={{
         height,
         maxHeight,
       }}
     >
       <Scrollbar
-        maximalThumbSize={73}
-        minimalThumbSize={73}
-        className="ScrollbarBox"
+        maximalThumbSize={maximalThumbSize}
+        minimalThumbSize={minimalThumbSize}
+        style={{
+          '--scrollbar-track-y-top': top,
+          '--scrollbar-track-y-right': right,
+        }}
+        className={cn('ScrollbarBox', type)}
         trackYProps={{
           renderer: (props) => {
             const { elementRef, ...restProps } = props;
@@ -55,7 +70,9 @@ function CabinetScrollBlock({ children, className, maxHeight, ...props }) {
         }}
         {...props}
       >
-        <div ref={contentRef}>{children}</div>
+        <div className="ScrollbarBox-content" ref={contentRef}>
+          {children}
+        </div>
       </Scrollbar>
     </div>
   );
@@ -63,10 +80,20 @@ function CabinetScrollBlock({ children, className, maxHeight, ...props }) {
 
 CabinetScrollBlock.propTypes = {
   className: PropTypes.string,
+  type: PropTypes.oneOf(['transparent-track', 'alice-blue']),
+  maximalThumbSize: PropTypes.number,
+  minimalThumbSize: PropTypes.number,
+  top: PropTypes.string,
+  right: PropTypes.string,
 };
 
 CabinetScrollBlock.defaultProps = {
   className: '',
+  type: 'transparent-track',
+  maximalThumbSize: 73,
+  minimalThumbSize: 73,
+  top: '10px',
+  right: '4px',
 };
 
 export default CabinetScrollBlock;

@@ -21,10 +21,14 @@
   }
 
   .ScrollbarTrackY {
+    @top: var(--scrollbar-track-y-top, 10px);
+
     display: flex !important;
     background: none !important;
     width: 2px !important;
-    right: 4px !important;
+    height: calc(100% - @top * 2) !important;
+    top: @top !important;
+    right: var(--scrollbar-track-y-right, 4px) !important;
     transition: width 0.1s, transform 0.1s;
     z-index: 3;
 
@@ -41,5 +45,11 @@
     border-radius: 20px !important;
     width: 2px;
     z-index: 4;
+  }
+
+  &.alice-blue {
+    .ScrollbarTrackY {
+      background: var(--alice-blue) !important;
+    }
   }
 }
