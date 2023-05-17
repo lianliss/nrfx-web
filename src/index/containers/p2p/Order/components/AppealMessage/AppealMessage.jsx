@@ -26,6 +26,7 @@ const AppealMessage = ({
   userName,
   paragraphs = [],
   files = [],
+  isNew,
 }) => {
   return (
     <div className={styles.AppealMessage}>
@@ -37,6 +38,11 @@ const AppealMessage = ({
         <span className={styles.AppealMessage__user__name}>{userName}</span>
       </Row>
       <div className={styles.AppealMessage__message}>
+        {isNew && (
+          <div className={styles.AppealMessage__marker}>
+            <span>NEW</span>
+          </div>
+        )}
         {title && <div className={styles.AppealMessage__title}>{title}</div>}
         {!!paragraphs.length &&
           paragraphs.map(({ title, text }, key) => (
@@ -77,6 +83,7 @@ AppealMessage.propTypes = {
       src: PropTypes.string,
     })
   ),
+  isNew: PropTypes.bool,
 };
 
 export default AppealMessage;

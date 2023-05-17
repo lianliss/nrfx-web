@@ -24,6 +24,7 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    position: relative;
     width: 100%;
     padding: 20px 15px;
     background: #fcfcfc;
@@ -36,6 +37,21 @@
       line-height: 18px;
       color: #555;
     }
+  }
+
+  &__marker {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 2.5px 12px;
+    background: var(--orange-red);
+    border-radius: 5px;
+
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 18px;
+    text-align: center;
+    color: #fff;
   }
 
   &__title {
