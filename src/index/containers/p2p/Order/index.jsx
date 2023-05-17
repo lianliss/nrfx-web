@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import P2P from '../P2P';
 import Header from './components/Header';
 import { FAQ, CabinetBlock } from 'dapp';
-import { Chat, Feedback, Process } from './components';
+import { Chat, Feedback, Process, AppealHistory } from './components';
 
 // Utils
 import faq from '../constants/faq';
@@ -33,6 +33,10 @@ function Order({ adaptive, visitorMode = 'user' }) {
   const [order, setOrder] = React.useState(testOrder[globalP2PMode]);
   const { mode } = order;
   const process = getOrderProcess(mode, order.status);
+
+  const processIsAppeal =
+    process === orderProcesses.sell.appeal ||
+    process === orderProcesses.buy.appeal;
 
   const handleNotifySeller = () => {
     openStateModal('p2p_payment_confirmation', {
@@ -98,6 +102,7 @@ function Order({ adaptive, visitorMode = 'user' }) {
               onCancel={handleCancel}
               visitorMode={visitorMode}
             />
+            {processIsAppeal && <AppealHistory />}
             {!visitorIsModerator && (
               <>
                 <Feedback adaptive={adaptive} />

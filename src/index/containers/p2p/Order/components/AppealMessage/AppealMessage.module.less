@@ -1,0 +1,96 @@
+.AppealMessage {
+  &__user,
+  &__date {
+    font-weight: 500;
+  }
+
+  &__user {
+    margin-bottom: 15px;
+
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--dark-black);
+  }
+
+  &__date {
+    margin-bottom: 8px;
+
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--cool-gray);
+  }
+
+  &__message {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    padding: 20px 15px;
+    background: #fcfcfc;
+    border-radius: 7px;
+    box-sizing: border-box;
+
+    p {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 18px;
+      color: #555;
+    }
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--dark-black);
+  }
+
+  &__subtitle {
+    margin-bottom: 6px;
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--cool-gray);
+  }
+
+  &__image {
+    width: 74px;
+    height: 74px;
+    object-fit: cover;
+    pointer-events: none;
+
+    &,
+    svg {
+      user-select: none;
+    }
+
+    &__container {
+      position: relative;
+      cursor: pointer;
+    }
+
+    &__add {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      :global(.isvg) {
+        transition: transform 0.3s;
+      }
+    }
+
+    &__container:active &__add {
+      :global(.isvg) {
+        transition: transform 0.1s;
+      }
+    }
+
+    &__container:not(:active):hover &__add {
+      :global(.isvg) {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
