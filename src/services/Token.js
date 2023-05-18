@@ -76,6 +76,7 @@ class Token {
 
   getContract(provider) {
     if (this.contractMounted) return this.contract;
+    if (!provider) return;
 
     this.contract = new TokenContract(this.details, provider, false);
     this.contractMounted = true;
