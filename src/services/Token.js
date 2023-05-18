@@ -3,50 +3,43 @@ import TokenContract from './web3Provider/tokenContract';
 
 class Token {
   /**
-   * Token name
-   * @type {string}
+   * @type {string} - Token name
    */
   name;
 
   /**
-   * Token symbol
-   * @type {string}
+   * @type {string} - Token address
    */
   address;
 
   /**
-   * Token symbol
-   * @type {string}
+   * @type {string} - Token symbol
    */
   symbol;
 
   /**
-   * Token chain id
-   * @type {number}
+   * @type {number} - Token chain id
    */
   chainId;
 
   /**
-   * Token decimals
-   * @type {number}
+   * @type {number} - Token decimals
    */
   decimals;
 
   /**
-   * Token logo uri
-   * @type {string}
+   * @type {string} - Token logo uri
    */
   logoURI;
 
   /**
-   * Token type is fiat
-   * @type {boolean}
+   * @type {boolean} - Token type is fiat
    */
   isFiat;
 
   /**
-   * @type {boolean} contractMounted
-   * @type {TokenContract} contract
+   * @type {boolean} contractMounted - Conract is mounted
+   * @type {TokenContract} contract - TokenContract object
    */
   contractMounted;
   contract;
@@ -82,7 +75,12 @@ class Token {
   }
 
   getContract(provider) {
+    if (this.contractMounted) return this.contract;
+
     this.contract = new TokenContract(this.details, provider, false);
+    this.contractMounted = true;
+
+    return this.contract;
   }
 }
 
