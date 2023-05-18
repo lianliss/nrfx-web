@@ -39,9 +39,12 @@ class Token {
 
   /**
    * @type {boolean} contractMounted - Conract is mounted
-   * @type {TokenContract} contract - TokenContract object
    */
   contractMounted;
+
+  /**
+   * @type {TokenContract} contract - TokenContract object
+   */
   contract;
 
   constructor(
