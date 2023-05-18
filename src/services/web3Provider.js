@@ -8,7 +8,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import Network from './multichain/Network';
 import getAllPairsCombinations from 'utils/getPairCombinations';
-import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@narfex/sdk';
+import { Pair, TokenAmount, CurrencyAmount, Trade, Token as TokenSDK, JSBI, Percent, Fraction, } from '@narfex/sdk';
 import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { keccak256, pack } from '@ethersproject/solidity';
 import significant from 'utils/significant';
@@ -34,6 +34,7 @@ import { getLang } from "utils";
 import { CONTRACT_ADDRESSES } from "./multichain/contracts";
 import router from "../router";
 import dappPages from "../index/containers/dapp/DappCabinet/constants/dappPages";
+import { Token } from "./Token";
 
 export const Web3Context = React.createContext();
 
@@ -153,11 +154,11 @@ class Web3Provider extends React.PureComponent {
   /**
    * Returns Token type object
    * @param _token {object} - raw token data
-   * @returns {Token}
+   * @returns {TokenSDK}
    */
   getToken(_token) {
     const token = _token.address ? _token : this.network.wrapToken;
-    return new Token(
+    return new TokenSDK(
       token.chainId,
       token.address,
       token.decimals,
@@ -699,10 +700,16 @@ class Web3Provider extends React.PureComponent {
       if (!tokens) {
         const tokenListURI = this.network.tokenListURI;
         const request = tokenListURI && await axios.get(tokenListURI);
-        tokens = _.get(request, 'data.tokens').map(t => ({
-          ...t,
-          address: t.address.toLowerCase(),
-        }));
+        tokens = _.get(request, 'data.tokens').map((t) => {
+          return new Token(
+            t.name,
+            t.symbol,
+            t.address.toLowerCase(),
+            t.chainId,
+            t.decimals,
+            t.logoURI
+          );
+        });
         this.cmcTokens = tokens;
         this.setState({
           tokensLoaded: true,
@@ -711,12 +718,10 @@ class Web3Provider extends React.PureComponent {
 
       if (!this.network.mainnet) return [];
       if (!this._mounted) return;
-      const result = _.uniqBy([
-        ...this.state.tokens,
-        ...tokens,
-      ], 'address')
-        .filter(fineToken)
-        .map(token => ({ ...token, balance: '0' }));
+      const result = _.uniqBy(
+        [...this.state.tokens, ...tokens],
+        'address'
+      ).filter(fineToken);
       this.setState({
         tokens: result,
         tokensLoaded: true,

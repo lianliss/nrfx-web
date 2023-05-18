@@ -2,6 +2,7 @@ import { DEFAULT_DECIMALS } from './multichain/initialTokens';
 
 class Token {
   isFiat = false;
+  balance = '0';
 
   constructor(name, symbol, address, chainId, decimals, logoURI) {
     this.name = name;
