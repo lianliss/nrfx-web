@@ -25,7 +25,7 @@ class Token {
   /**
    * @type {number} - Token decimals
    */
-  decimals;
+  decimals = DEFAULT_DECIMALS;
 
   /**
    * @type {string} - Token logo uri
@@ -35,12 +35,12 @@ class Token {
   /**
    * @type {boolean} - Token type is fiat
    */
-  isFiat;
+  isFiat = false;
 
   /**
    * @type {boolean} contractMounted - Conract is mounted
    */
-  contractMounted;
+  contractMounted = false;
 
   /**
    * @type {TokenContract} contract - TokenContract object
@@ -60,7 +60,7 @@ class Token {
     this.symbol = symbol;
     this.address = address;
     this.chainId = chainId;
-    this.decimals = decimals || DEFAULT_DECIMALS;
+    this.decimals = decimals;
     this.logoURI = logoURI;
     this.isFiat = isFiat;
   }
