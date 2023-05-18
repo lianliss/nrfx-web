@@ -98,6 +98,7 @@ const ETHER_FIATS = [
     'https://static.narfex.com/img/currencies/cad.svg'
   ),
 ];
+
 const POLYGON_FIATS = [
   new FiatToken(
     'United States Dollar on Narfex',
@@ -196,6 +197,7 @@ const POLYGON_FIATS = [
     'https://static.narfex.com/img/currencies/gbp-pound.svg'
   ),
 ];
+
 const ARBITRUM_FIATS = [
   new FiatToken(
     'United States Dollar on Narfex',
@@ -294,6 +296,7 @@ const ARBITRUM_FIATS = [
     'https://static.narfex.com/img/currencies/gbp-pound.svg'
   ),
 ];
+
 const TESTNET_FIATS = [
   new FiatToken(
     'Testnet United States Dollar',
@@ -336,6 +339,7 @@ const TESTNET_FIATS = [
     'https://static.narfex.com/img/currencies/indonesian-rupiah.svg'
   ),
 ];
+
 const MUMBAI_FIATS = [
   new FiatToken(
     'Testnet Russian Ruble',
