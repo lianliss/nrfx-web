@@ -12,7 +12,7 @@ import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fractio
 import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { keccak256, pack } from '@ethersproject/solidity';
 import significant from 'utils/significant';
-import TokenContract from './web3Provider/token';
+import TokenContract from './web3Provider/tokenContract';
 import MasterChefContract from './web3Provider/MasterChefContract';
 import web3Backend from './web3-backend';
 import * as actions from "src/actions";

@@ -6,7 +6,7 @@ const BSC_MAINNET = 56;
 const BSC_TESTNET = 97;
 
 // Decimals
-const DEFAULT_DECIMALS = 18;
+export const DEFAULT_DECIMALS = 18;
 
 const tokens = {
   [ETHEREUM_MAINNET]: {
