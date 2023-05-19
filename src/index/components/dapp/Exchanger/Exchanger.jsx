@@ -124,7 +124,12 @@ function Exchanger(props) {
   const defaultFiats = chainFiats.length ? chainFiats : [defaultUSD];
   const fiatTokens = _.get(fiats, userId, defaultFiats).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
-    return price ? {...token, price} : token;
+
+    if (price) {
+      token.price = price;
+    }
+
+    return token;
   });
 
   // Get raw coins list

@@ -1116,15 +1116,10 @@ class Web3Provider extends React.PureComponent {
         const tokens = state.tokens.map((token) => {
           if (token.symbol === chainToken.symbol) {
             // Token with balance and price.
-            const tokenWithBalance = {
-              ...token,
-              balance: chainTokenBalance,
-              price: chainTokenPrice || 0,
-            };
-
-            return tokenWithBalance;
+            token.balance = chainTokenBalance;
+            token.price = chainTokenPrice || token.price || 0;
           }
-          
+
           return token;
         });
 
@@ -1619,7 +1614,12 @@ class Web3Provider extends React.PureComponent {
       KNOWN_FIATS.filter(f => f.chainId === chainId)
     ).map(token => {
       const price = _.get(rates, token.symbol.toLowerCase());
-      return price ? {...token, price} : token;
+
+      if (price) {
+        token.price = price;
+      }
+
+      return token;
     });
   }
 
