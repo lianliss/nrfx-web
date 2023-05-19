@@ -34,7 +34,7 @@ import { getLang } from "utils";
 import { CONTRACT_ADDRESSES } from "./multichain/contracts";
 import router from "../router";
 import dappPages from "../index/containers/dapp/DappCabinet/constants/dappPages";
-import { Token } from "./Token";
+import { FiatToken, Token } from "./Token";
 
 export const Web3Context = React.createContext();
 
@@ -1560,15 +1560,22 @@ class Web3Provider extends React.PureComponent {
       }))).map((fiat, index) => {
         const known = KNOWN_FIATS.filter(f => f.chainId === chainId)
           .find(s => s.symbol === fiat[1]);
-        return known ? {
-          decimals: 18,
-          ...known,
-          address: list[index],
-          name: fiat[0],
-          symbol: fiat[1],
-          chainId,
-          balance: fiat[2],
-        } : null;
+
+        if (known) {
+          const token = new FiatToken(
+            fiat[0],
+            fiat[1],
+            list[index],
+            chainId,
+            18,
+            known.logoURI
+          );
+          token.balance = fiat[2];
+
+          return token;
+        }
+
+        return null;
       }).filter(f => !!f);
       fiats[userId] = userFiats;
       fiats.known = KNOWN_FIATS;
