@@ -17,9 +17,6 @@ import DexSwapInput from 'src/index/containers/dapp/DexSwap/components/DexSwapIn
 import limits from 'src/index/constants/fiats';
 import * as toast from "src/actions/toasts";
 import CabinetModal from '../../../Modals/CabinetModal/CabinetModal';
-import router from 'src/router';
-import { setSwap } from 'src/actions/dapp/swap';
-import * as PAGES from 'src/index/constants/pages';
 
 // Utils
 import {
@@ -65,23 +62,19 @@ let inputAmount, outputAmount;
 function ExchangerSwap(props) {
   const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
-  const rates = useSelector(web3RatesSelector);
   const commissions = useSelector(state => _.get(state, 'web3.commissions', {}));
   const route = useSelector(state => state.router.route);
   const context = React.useContext(Web3Context);
   const {
-    connectWallet, isConnected, addTokenToWallet,
-    tokens, loadAccountBalances, exchange,
+    isConnected, loadAccountBalances,
     network, getTokenContract,
-    accountAddress,
     getTokenBalance,
   } = context;
   const {
     fiats, fiat, coins, coin,
-    setFiat, setCoin, reservation,
-    setReservation, fiatsLoaded,
+    setFiat, setCoin,
+    fiatsLoaded,
   } = props;
-  const { exchangerRouter } = network.contractAddresses;
   const [isSelectFiat, setIsSelectFiat] = React.useState(false);
   const [isSelectCoin, setIsSelectCoin] = React.useState(false);
   // Display rate
@@ -91,14 +84,10 @@ function ExchangerSwap(props) {
     token: false,
     fiat: false
   });
-  const bnbToken = coins.find(c => c.symbol === 'BNB');
 
   // Symbols
   const fiatSymbol = _.get(fiat, 'symbol', '');
   const coinSymbol = _.get(coin, 'symbol', '');
-
-  const isFirstFiat = _.get(fiat, 'isFiat', false);
-  const isSecondFiat = _.get(coin, 'isFiat', false);
 
   // Fiat price
   const fiatBalance = wei.from(_.get(fiat, 'balance', "0"), _.get(fiat, 'decimals', 18));
@@ -106,15 +95,6 @@ function ExchangerSwap(props) {
 
   // Calculate coin price
   const coinPrice = getTokenPrice(coin);
-
-  const limits = props.limits.find(l => l.coin === coinSymbol);
-  const minCoinAmount = Math.max(
-    _.get(limits, 'min', 0),
-    isFirstFiat && isSecondFiat
-      ? 50 / coinPrice
-      : 20 / coinPrice
-  );
-  const maxCoinAmount = _.get(limits, 'max', Infinity);
 
   // input values
   const inputFocus = useSelector(dappExchangeFocusSelector);
@@ -132,23 +112,12 @@ function ExchangerSwap(props) {
     `${coinSymbol.toLowerCase()}`,
     getDefaultCommission(coin, commissions)
     )) || 0) / 100;
-  const bnbCommission = (Number(_.get(
-    commissions,
-    `bnb`,
-    getDefaultCommission(bnbToken, commissions)
-  )) || 0) / 100;
   const rate = (fiatPrice * (1 - fiatCommission)) / coinPrice;
   const fiatAmount = Number(fiatValue) || 0;
   const coinAmount = Number(coinValue);
-  const rateDisplay = 1 / rate / (1 - coinCommission);
 
   // Button availability
-  const [isProcessing, setIsProcessing] = React.useState(false);
-  const [processingTime, setProcessingTime] = React.useState(false);
-  const isAvailableOfFiat = fiatBalance >= fiatAmount;
-  const isAvailableOfMax = coinAmount <= maxCoinAmount;
-  const isAvailableOfMin = coinAmount >= minCoinAmount;
-  const isAvailable = isAvailableOfMin && isAvailableOfMax && isAvailableOfFiat;
+  const [isProcessing] = React.useState(false);
   
   // Get output amount for connected and not connected states
   const getOutAmount = async inAmount => {
@@ -223,97 +192,6 @@ function ExchangerSwap(props) {
     setIsSelectCoin(true);
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }
-
-  function setTransactionToLocalStorage(transaction) {
-    const record = window.localStorage.getItem('ExchangerSwapTransactions');
-    let transactions = record ? JSON.parse(record) : [];
-
-    transactions = [
-      {
-        accountAddress: accountAddress,
-        date: new Date(),
-        tx: transaction.tx,
-        token0: transaction.token0,
-        token1: transaction.token1,
-        amount0: transaction.amount0,
-        amount1: transaction.amount1,
-      },
-      ...transactions
-    ];
-
-    window.localStorage.setItem(
-      'ExchangerSwapTransactions',
-      JSON.stringify(transactions)
-    );
-  }
-  
-  const bnbPrice = getTokenPrice(bnbToken);
-  const swapTokens = async () => {
-    setIsProcessing(true);
-    setProcessingTime(Date.now() + 60000 * 5);
-    
-    try {
-      let fiatToBNBAmount = 0;
-      const bnbBalance = wei.from(await getTokenBalance());
-      const bnbAmount = 0.01;
-      const minBNBAmount = 0.005;
-  
-      const sourcePrice = fiat.isFiat ? fiatPrice : coinPrice;
-      const sourceCommission = fiat.isFiat ? fiatCommission : coinCommission;
-      const gasPrice = bnbAmount
-        * (bnbPrice / sourcePrice)
-        * (1 + sourceCommission)
-        * (1 + bnbCommission);
-      
-      // Check BNB balance and ask to exchange some fiat to bnbAmount
-      if ((bnbBalance < minBNBAmount) && (fiat.isFiat || coin.isFiat)) {
-        try {
-          await actions.openModal('attention_buy_token', {}, {
-            toToken: {
-              amount: bnbAmount,
-              label: 'BNB',
-            },
-            fromToken: {
-              amount: Number(gasPrice.toFixed(0)),
-              label: fiat.isFiat ? fiatSymbol : coinSymbol,
-            }
-          });
-          fiatToBNBAmount = gasPrice;
-        } catch (error) {
-          console.warn('Gas buy cancelled', error);
-        }
-      }
-      
-      if (!fiat.isFiat) {
-        const token = getTokenContract(fiat);
-        const allowance = await token.getAllowance(exchangerRouter);
-        if (allowance < fiatAmount) {
-          await token.approve(exchangerRouter, fiatAmount);
-        }
-      }
-      const result = await exchange(fiat.address, coin.address, fiatAmount, fiatToBNBAmount, {
-        symbol: coinSymbol,
-        isInProgress: true,
-        text: getLang('dapp_exchanger_swap_submitted_text'),
-        token: coin,
-        coinForAddToWallet: coin,
-    });
-      console.log('[swapTokens]', result);
-       setTransactionToLocalStorage({
-        tx: result,
-        token0: fiat.symbol,
-        token1: coin.symbol,
-        amount0: fiatAmount,
-        amount1: coinAmount,
-      });
-      toast.success('Exchange confirmed');
-    } catch (error) {
-      console.error('[swapTokens]', error);
-      toast.error(_.get(error, 'data.message', error ? error.message : ''));
-    }
-    setIsProcessing(false);
-    setProcessingTime(null);
-  };
 
   const handleFiatChange = (value) => {
     setFiat(value);
