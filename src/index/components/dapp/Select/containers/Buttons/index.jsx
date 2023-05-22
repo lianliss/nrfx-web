@@ -21,6 +21,7 @@ function Buttons({
   optionsLength,
   initDisplayNumber,
   highlightedOptions,
+  className,
 }) {
   const [showAll, setShowAll] = React.useState(false);
   const displayOptions = showAll
@@ -54,7 +55,7 @@ function Buttons({
   };
 
   return (
-    <div className="CabinetSelect-Buttons">
+    <div className={cn('CabinetSelect-Buttons', className)}>
       <Row
         className="CabinetSelect-Buttons__header"
         justifyContent="space-between"

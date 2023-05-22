@@ -115,7 +115,7 @@ function HoverPopup({
     if (type === 'bottom') {
       setPosition((prev) => ({
         ...prev,
-        top: top + childrenHeight + 20,
+        top: top + childrenHeight + 10,
       }));
     }
 

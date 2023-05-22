@@ -27,6 +27,7 @@ const bottomSheetStyles = (desktopStyles = {}) => {
       maxHeight: 225,
       margin: 0,
       position: 'static',
+      transform: 'none',
       width: '100%',
       borderRadius: '18px 18px 0px 0px',
       border: 'none',

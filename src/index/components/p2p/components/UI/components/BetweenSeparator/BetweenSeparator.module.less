@@ -1,0 +1,13 @@
+.BetweenSeparator {
+  display: flex;
+  align-items: center;
+
+  & > * {
+    padding-right: 5px;
+
+    &:not(:first-child) {
+      padding: 0 5px;
+      border-left: 1px solid #dbdbdb;
+    }
+  }
+}

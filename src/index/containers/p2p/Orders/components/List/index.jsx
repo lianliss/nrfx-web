@@ -2,8 +2,8 @@ import React from 'react';
 
 // Components
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
+import PaymentItem from 'src/index/components/p2p/components/PaymentItem';
 import { Row, NumberFormat, Button } from 'ui';
-import ListPayment from '../ListPayment';
 import { WalletIcon } from 'dapp';
 import SVG from 'utils/svg-wrap';
 
@@ -16,7 +16,7 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './index.less';
 
-function List({ mode }) {
+function List({ mode, onOrderCreate }) {
   const Item = () => (
     <TR className="orders-list-item">
       <TD>
@@ -69,17 +69,18 @@ function List({ mode }) {
       </TD>
       <TD>
         <div className="orders-list-payment">
-          <ListPayment title="Bank Transfer" color={paymentColors.orange} />
-          <ListPayment title="Pay me" color={paymentColors.red} />
-          <ListPayment title="Mono Bank" color={paymentColors.black} />
-          <ListPayment title="Bank Transfer" color={paymentColors.orange} />
-          <ListPayment title="Pay me" color={paymentColors.red} />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
+          <PaymentItem title="Mono Bank" color={paymentColors.black} />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
         </div>
       </TD>
       <TD>
         <Button
           type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
           size="small"
+          onClick={onOrderCreate}
         >
           {mode === p2pMode.sell ? 'Sell N-Fiat' : 'Buy N-Fiat'}
         </Button>

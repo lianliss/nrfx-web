@@ -9,6 +9,8 @@ export { default as DexRoute } from './DexRoute/DexRoute';
 export { default as DexDescription } from './DexDescription/DexDescription';
 export { default as Select } from './Select';
 export { default as DappInput } from './DappInput/DappInput';
+export { default as ScrollBox } from './ui/ScrollBox/ScrollBox';
+export { default as FormattedText } from './FormattedText/FormattedText';
 
 // Modals
 export { default as CabinetModal } from './Modals/CabinetModal/CabinetModal';
@@ -22,6 +24,7 @@ export { default as TransactionResponseModal } from './Modals/TransactionRespons
 export { default as ExchangerModal } from './Modals/Exchanger/Exchanger';
 export { default as VideoModal } from './Modals/VideoModal';
 export { default as AdaptiveTop } from './Modals/AdaptiveTop';
+export { default as KYCVerificationModal} from './Modals/KYCVerification/KYCVerification';
 
 export { default as SwiftGeneratedModal } from './Modals/SwiftGenerated/SwiftGenerated';
 export { default as AttentionBuyTokenModal } from './Modals/AttentionBuyToken/AttentionBuyToken';
@@ -42,6 +45,7 @@ export { default as Team } from './Team/Team';
 
 // Action Components
 export { default as SocialLinks } from './SocialLinks/SocialLinks';
+export { default as AlphabetSelect } from './AlphabetSelect/AlphabetSelect';
 
 // Components
 export { default as FAQ } from './FAQ';

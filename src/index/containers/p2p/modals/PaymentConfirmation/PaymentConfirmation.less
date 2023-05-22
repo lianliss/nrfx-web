@@ -1,0 +1,79 @@
+@modal-class: p2p-modal-payment-confirmation;
+@buy-class: buy;
+@sell-class: sell;
+
+.@{modal-class} {
+  background: #fff;
+  box-sizing: border-box;
+  padding: 40px;
+  border-radius: var(--radius-panel);
+
+  &__wrapper {
+    .Modal__box {
+      max-width: 550px;
+      width: 100%;
+    }
+  }
+
+  h2 {
+    margin-bottom: 12px;
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  h3 {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  h4 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 110%;
+  }
+
+  p {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--cool-gray);
+  }
+
+  h3,
+  h4 {
+    margin-bottom: 15px;
+  }
+}
+
+.adaptive .@{modal-class} {
+  padding: 52px 18px 30px;
+
+  h2 {
+    margin-bottom: 20px;
+
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  h3 {
+    font-size: 14px;
+  }
+
+  h4 {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  p {
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  h3,
+  h4 {
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,50 @@
+.PaymentMethodsTable {
+  margin-top: 40px;
+  padding: 0 50px;
+  box-sizing: border-box;
+
+  td {
+    &:last-child {
+      padding-right: 16px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 4px;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--cool-gray);
+  }
+
+  &__value {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--dark-black);
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 25px;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+
+    :global {
+      .CustomButton {
+        &:hover:not(:active) {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+
+:global(.adaptive) .PaymentMethodsTable {
+  margin-top: 30px;
+  padding: 0 18px;
+}

@@ -24,6 +24,7 @@ import { getLang } from 'src/utils';
 import useUpdateReservation from 'src/hooks/dapp/useUpdateReservation';
 import ExchangerStorage from 'src/utils/dapp/ExchangerStorage';
 import WatchVideo from './components/WatchVideo';
+import { FiatToken } from 'src/services/Token';
 
 // Styles
 import './Exchanger.less';
@@ -79,55 +80,56 @@ function Exchanger(props) {
   let defaultUSD;
   switch (chainId) {
     case 97:
-      defaultUSD = {
-        name: "Testnet United States Dollar",
-        symbol: "USD",
-        address: "0x6dBB65750a6BBE8A0CBD28257008C464bAbe4de6",
-        chainId: 97,
-        decimals: 18,
-        logoURI: "https://static.narfex.com/img/currencies/dollar.svg",
-        isFiat: true,
-      };
+      defaultUSD = new FiatToken(
+        "Testnet United States Dollar",
+        "USD",
+        "0x6dBB65750a6BBE8A0CBD28257008C464bAbe4de6",
+        97,
+        18,
+        "https://static.narfex.com/img/currencies/dollar.svg"
+      );
       break;
     case 1:
-      defaultUSD = {
-        name: "Russian Ruble on Narfex",
-        symbol: "RUB",
-        address: "0x5E11E947e69e8e6267e28C3db9425acd3AA4B489",
-        chainId: 1,
-        decimals: 6,
-        logoURI: "https://static.narfex.com/img/currencies/rubles.svg",
-        isFiat: true,
-      };
+      defaultUSD = new FiatToken(
+        "Russian Ruble on Narfex",
+        "RUB",
+        "0x5E11E947e69e8e6267e28C3db9425acd3AA4B489",
+        1,
+        6,
+        "https://static.narfex.com/img/currencies/rubles.svg"
+      );
       break;
     case 80001:
-      defaultUSD = {
-        name: "Russian Ruble on Narfex",
-        symbol: "RUB",
-        address: "0x4107a32e44c69a2244c260413ee9ed67F5c57969",
-        chainId: 80001,
-        decimals: 6,
-        logoURI: "https://static.narfex.com/img/currencies/rubles.svg",
-        isFiat: true,
-      };
+      defaultUSD = new FiatToken(
+        "Russian Ruble on Narfex",
+        "RUB",
+        "0x4107a32e44c69a2244c260413ee9ed67F5c57969",
+        80001,
+        6,
+        "https://static.narfex.com/img/currencies/rubles.svg"
+      );
       break;
     case 56:
     default:
-      defaultUSD = {
-        name: "United States Dollar on Narfex",
-        symbol: "USD",
-        address: "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
-        logoURI: "https://static.narfex.com/img/currencies/dollar.svg",
-        chainId: 56,
-        decimals: 18,
-        isFiat: true,
-      };
+      defaultUSD = new FiatToken(
+        "United States Dollar on Narfex",
+        "USD",
+        "0xc0Bd103de432a939F93E1E2f8Bf1e5C795774F90",
+        56,
+        18,
+        "https://static.narfex.com/img/currencies/dollar.svg"
+      );
   }
   const chainFiats = _.get(fiats, 'known', []).filter(f => f.chainId === chainId);
   const defaultFiats = chainFiats.length ? chainFiats : [defaultUSD];
   const fiatTokens = _.get(fiats, userId, defaultFiats).map(token => {
     const price = _.get(rates, token.symbol.toLowerCase());
-    return price ? {...token, price} : token;
+
+    if (price) {
+      token.price = price;
+    }
+
+    return token;
   });
 
   // Get raw coins list

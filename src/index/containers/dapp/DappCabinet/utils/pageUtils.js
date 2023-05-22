@@ -11,6 +11,8 @@ import {
   SocialMedia,
   Team,
 } from 'src/index/components/dapp';
+import { UserCenter, AdvertiserDetail } from '../..';
+import * as validator from 'src/index/containers/validator';
 import * as p2p from 'src/index/containers/p2p';
 
 import * as PAGES from 'src/index/constants/pages';
@@ -82,6 +84,22 @@ export const getFinePage = (routeName) => {
       break;
     case PAGES.P2P_ORDERS:
       Component = p2p.Orders;
+      break;
+    case PAGES.P2P_ORDER:
+      Component = p2p.Order;
+      break;
+    case PAGES.P2P_USER_CENTER:
+      Component = UserCenter;
+      break;
+    case PAGES.P2P_ADVERTISER_DETAIL:
+      Component = AdvertiserDetail;
+      break;
+    case PAGES.VALIDATOR_CREATE_TRADE:
+    case PAGES.VALIDATOR_EDIT_TRADE:
+      Component = validator.CreateTrade;
+      break;
+    case PAGES.VALIDATOR_ADMIN_PANEL:
+      Component = validator.ValidatorAdminPanel;
       break;
     default:
       Component = Exchanger;

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 // Components
 import CabinetTable, { TR, TD } from 'dapp/CabinetTable/CabinetTable';
 import { Row, NumberFormat, Button } from 'ui';
-import ListPayment from '../ListPayment';
 import { WalletIcon } from 'dapp';
 import SVG from 'utils/svg-wrap';
+import PaymentItem from 'src/index/components/p2p/components/PaymentItem';
 
 // Utils
 import avatar from 'src/asset/illustrations/people/p2p_working_instruction_avatar.svg';
@@ -17,7 +17,7 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './index.less';
 
-function AdaptiveList({ mode }) {
+function AdaptiveList({ mode, onOrderCreate }) {
   const Item = () => (
     <TR className="orders-list-item">
       <TD>
@@ -73,6 +73,7 @@ function AdaptiveList({ mode }) {
           <Button
             type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
             size="small"
+            onClick={onOrderCreate}
           >
             {mode === p2pMode.sell ? 'Sell' : 'Buy'}
           </Button>
@@ -80,19 +81,11 @@ function AdaptiveList({ mode }) {
       </TD>
       <TD>
         <div className="orders-list-payment">
-          <ListPayment
-            title="Bank Transfer"
-            color={paymentColors.orange}
-            adaptive
-          />
-          <ListPayment title="Pay me" color={paymentColors.red} adaptive />
-          <ListPayment title="Mono Bank" color={paymentColors.black} adaptive />
-          <ListPayment
-            title="Bank Transfer"
-            color={paymentColors.orange}
-            adaptive
-          />
-          <ListPayment title="Pay me" color={paymentColors.red} adaptive />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
+          <PaymentItem title="Mono Bank" color={paymentColors.black} />
+          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
+          <PaymentItem title="Pay me" color={paymentColors.red} />
         </div>
       </TD>
     </TR>

@@ -1,0 +1,138 @@
+.AdsFilters {
+  &__buttons {
+    flex: 1 1 auto;
+    width: auto;
+
+    :global {
+      .Button {
+        min-width: 104px;
+
+        &__label {
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+
+      .CustomButton {
+        height: 46px;
+
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 100%;
+
+        &:not(:active):hover {
+          opacity: 0.85;
+        }
+      }
+    }
+  }
+
+  &__closedFilters {
+    padding: 15px 11px;
+    background: var(--alice-blue);
+    border-radius: 10px;
+    gap: 20px;
+    box-sizing: border-box;
+
+    :global {
+      .CustomButton {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 20px;
+        color: var(--dark-black);
+
+        &:nth-child(2) {
+          margin-left: auto;
+        }
+
+        &:active {
+          color: var(--royal-blue);
+
+          g {
+            opacity: 1;
+          }
+          path {
+            fill: var(--royal-blue);
+          }
+        }
+      }
+    }
+  }
+}
+
+.Column {
+  &__title {
+    margin-bottom: 8px;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--cool-gray);
+  }
+
+  &__content {
+    width: 100%;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+  }
+
+  &__isSelect {
+    flex: 1 1 auto;
+    max-width: 151px;
+  }
+
+  .Select {
+    &__control {
+      min-height: 46px;
+    }
+  }
+}
+
+.DatePicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--azureish-white);
+  border-radius: 10px;
+  box-sizing: border-box;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: -0.01em;
+
+  :global(.isvg) {
+    margin-left: auto;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+:global(.adaptive) {
+  .Column {
+    width: 100%;
+    max-width: 100%;
+
+    .Select {
+      &__control {
+        min-height: 44px;
+      }
+    }
+  }
+
+  .AdsFilters {
+    &__buttons {
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+}

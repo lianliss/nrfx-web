@@ -57,7 +57,7 @@ import DocumentationPageScreen from "./containers/documentation/Page/Page";
 import DocumentationMethodScreen from "./containers/documentation/Method/Method";
 import DocumentationMethodListScreen from "./containers/documentation/MethodList/MethodList";
 import DappCabinet from "./containers/dapp/DappCabinet/DappCabinet";
-import Validator from "./containers/validator/Main/Main";
+import { Main as Validator } from "./containers/validator";
 import * as actions from "../actions/index";
 import router from "../router";
 import PrivatePools from "./containers/dapp/PrivatePools/PrivatePools";
@@ -196,6 +196,12 @@ function Routes(props) {
     case pages.DAPP_TEAM:
     case pages.P2P:
     case pages.P2P_ORDERS:
+    case pages.P2P_ORDER:
+    case pages.P2P_USER_CENTER:
+    case pages.P2P_ADVERTISER_DETAIL:
+    case pages.VALIDATOR_ADMIN_PANEL:
+    case pages.VALIDATOR_CREATE_TRADE:
+    case pages.VALIDATOR_EDIT_TRADE:
       needAuthorization = false;
       WrapperComponent = DappWrapper;
       Component = DappCabinet;
@@ -205,7 +211,6 @@ function Routes(props) {
       Component = TokenMigrationLanding;
       break;
     case pages.VALIDATOR:
-    case pages.VALIDATOR_CREATE_TRADE:
       needAuthorization = false;
       WrapperComponent = ValidatorWrapper;
       Component = Validator;

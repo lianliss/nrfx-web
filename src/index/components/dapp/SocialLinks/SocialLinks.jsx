@@ -6,12 +6,12 @@ import OpenPopupLink from '../OpenPopupLink/OpenPopupLink';
 
 // Utils
 import COMPANY from '../../../constants/company';
-import { getLang } from 'src/utils';
+import { getLang, classNames as cn } from 'src/utils';
 
 // Styles
 import './SocialLinks.less';
 
-function SocialLinks() {
+function SocialLinks({ type }) {
   const { social } = COMPANY;
 
   const LinkIcon = ({ icon, to, className }) => (
@@ -24,7 +24,7 @@ function SocialLinks() {
   );
 
   return (
-    <div className="SocialLinks">
+    <div className={cn('SocialLinks', type)}>
       <a href="http://docs.narfex.com" target="_blank">
         <OpenPopupLink title={getLang('dapp_global_learn_about_narfex')} />
       </a>

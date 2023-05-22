@@ -76,9 +76,10 @@ Button.defaultProps = {
 
 Button.propTypes = {
   size: PropTypes.oneOf([
-    "middle",
     "small",
+    "middle",
     "medium",
+    "moderate",
     "large",
     "extra_large",
     "extra_small",
@@ -105,12 +106,13 @@ Button.propTypes = {
     "secondary-blue",
     "secondary-alice",
     "secondary-light",
+    "secondary-light--light-blue",
     "light",
     "dark",
     "orange",
     "white",
   ]),
-  shadow: PropTypes.bool,  
+  shadow: PropTypes.bool,
   currency: PropTypes.object,
   className: PropTypes.string,
   btnType: PropTypes.string,
