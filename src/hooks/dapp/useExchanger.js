@@ -174,6 +174,7 @@ const useExchanger = () => {
    * @param currencyObject {object} - fiat token
    */
   const setFiat = (currencyObject) => {
+    if (!currencyObject) return;
     if (currencyObject.symbol === coinSymbol) {
       return swapSelected();
     }
@@ -197,6 +198,7 @@ const useExchanger = () => {
    * @param currencyObject {object} - coin token
    */
   const setCoin = (currencyObject) => {
+    if (!currencyObject) return;
     if (currencyObject.symbol === fiatSymbol) {
       return swapSelected();
     }
@@ -222,15 +224,17 @@ const useExchanger = () => {
     try {
       await updateFiats().then((fiats) => {
         const currencySymbol = router.getState().params.currency;
+        const userIdFiats = _.get(fiats, userId, []);
         if (!fiatSelected) {
-          const initialCurrency = fiats[userId].find(
-            (fiat) => fiat.symbol === currencySymbol
-          );
-          if (fiatSelected.symbol !== _.get(initialCurrency, 'symbol')) {
-            setFiat(initialCurrency || fiats[userId][0]);
+          const initialCurrency =
+            userIdFiats.find((fiat) => fiat.symbol === currencySymbol) ||
+            userIdFiats[0];
+
+          if (initialCurrency) {
+            setFiat(initialCurrency);
           }
         } else {
-          const updatedFiat = _.get(fiats, userId, []).find(
+          const updatedFiat = userIdFiats.find(
             (c) => currencySymbol === c.symbol
           );
           if (updatedFiat) {

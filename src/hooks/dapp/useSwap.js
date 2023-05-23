@@ -294,6 +294,8 @@ const useSwap = ({
 
   return {
     isAdaptive,
+    fiat,
+    coin,
     fiatSelector,
     coinSelector,
     outputRate,
