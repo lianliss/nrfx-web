@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Web3Context } from 'services/web3Provider';
 import { useRoute } from 'react-router5';
 import router from 'src/router';
@@ -14,7 +14,6 @@ let updateTokenBalanceTimeout;
 let fiatsUpdate;
 
 const useExchanger = () => {
-  const dispatch = useDispatch();
   const isAdaptive = useSelector(adaptiveSelector);
   const { route } = useRoute();
   const initialCurrencySymbol = route.params.currency;
