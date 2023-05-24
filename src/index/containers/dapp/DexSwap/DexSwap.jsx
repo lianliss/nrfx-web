@@ -49,6 +49,8 @@ const DexSwap = ({
     isExactOut: swap.isExactOut,
   });
 
+  const [isSettings, setIsSettings] = React.useState(false);
+
   let button = (
     <Button
       type="lightBlue"
@@ -83,15 +85,7 @@ const DexSwap = ({
               disabled={!swap.fiatAmount || !swap.coinAmount}
               state={swap.isProcessing ? 'loading' : ''}
               className="DexSwap__button-swap"
-              onClick={() =>
-                openStateModal('exchanger', {
-                  isExactOut: swap.isExactOut,
-                  fiat: swap.fiat,
-                  coin: swap.coin,
-                  fiatAmount: swap.fiatAmount,
-                  coinAmount: swap.coinAmount,
-                })
-              }
+              onClick={swapAction.swap}
             >
               <SVG src={require('src/asset/icons/convert-card.svg')} />
               {/* {priceImpactNumber >= 5
@@ -131,7 +125,7 @@ const DexSwap = ({
             manage={
               <div
                 className="DexSwap__manage"
-                onClick={() => this.setState({ isSettings: true })}
+                onClick={() => setIsSettings(true)}
               >
                 <SVG src={require('src/asset/icons/cabinet/settings.svg')} />
               </div>
@@ -269,18 +263,16 @@ const DexSwap = ({
               />
             </CabinetModal>
           )}
-          {/* {isSettings && (
+          {isSettings && (
             <DexSettingsModal
-              slippageTolerance={this.state.slippageTolerance}
-              deadline={this.state.deadline}
-              setSlippage={(value) =>
-                this.setState({ slippageTolerance: value })
-              }
-              setDeadline={(value) => this.setState({ deadline: value })}
-              onClose={() => this.setState({ isSettings: false })}
+              slippageTolerance={swapAction.slippage}
+              deadline={swapAction.deadline}
+              setSlippage={swapAction.setSlippage}
+              setDeadline={swapAction.setDeadline}
+              onClose={() => setIsSettings(false)}
               showTitle={true}
             />
-          )} */}
+          )}
         </div>
       </CabinetBlock>
       {!!swapAction.path && !!swapAction.path.length && (
