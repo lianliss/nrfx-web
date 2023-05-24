@@ -362,6 +362,8 @@ export const useSwapAction = ({
   const networkName = chainId === 56 ? 'BSC' : 'Testnet BSC';
 
   React.useEffect(() => {
+    if (!fiat || !coin) return;
+
     if (isExactOut) {
       getTokenContract(fiat)
         .getInAmount(coin, outAmount)
@@ -383,9 +385,11 @@ export const useSwapAction = ({
           setPriceImpact(_.get(data, 'priceImpact', 0));
         });
     }
-  }, [fiatAmount, coinAmount, isExactOut]);
+  }, [fiat, coin, fiatAmount, coinAmount, isExactOut]);
 
   React.useEffect(() => {
+    if (!fiat) return;
+
     if (fiat.isFiat) {
       setIsProcess(false);
       return;
@@ -397,7 +401,7 @@ export const useSwapAction = ({
       setAllowance(allowance);
       setIsProcess(false);
     });
-  }, []);
+  }, [fiat]);
 
   const inAmountMax = inAmount * (1 + slippage / 100);
   const outAmountMin = outAmount * (1 - slippage / 100);

@@ -16,7 +16,7 @@ import { openStateModal } from 'src/actions';
 import { getLang } from 'utils';
 import { DexRoute, DexDescription, CabinetModal } from 'dapp';
 import useExchanger from 'src/hooks/dapp/useExchanger';
-import useSwap from 'src/hooks/dapp/useSwap';
+import useSwap, { useSwapAction } from 'src/hooks/dapp/useSwap';
 
 // Styles
 import './DexSwap.less';
@@ -40,6 +40,13 @@ const DexSwap = ({
     setFiat,
     setCoin,
     fiatsLoaded,
+  });
+  const swapAction = useSwapAction({
+    fiat: swap.fiat,
+    coin: swap.coin,
+    fiatAmount: swap.fiatAmount,
+    coinAmount: swap.coinAmount,
+    isExactOut: swap.isExactOut,
   });
 
   let button = (
@@ -119,9 +126,7 @@ const DexSwap = ({
             showBalance
             label
             title={getLang(
-              'dex_pay_exact' || !exactIndex
-                ? 'dex_pay_exact'
-                : 'dex_pay_around'
+              !swap.isExactOut ? 'dex_pay_exact' : 'dex_pay_around'
             )}
             manage={
               <div
@@ -147,9 +152,7 @@ const DexSwap = ({
             token={swap.coin}
             label
             title={getLang(
-              'dex_receive_around' || exactIndex
-                ? 'dex_receive_exact'
-                : 'dex_receive_around'
+              swap.isExactOut ? 'dex_receive_exact' : 'dex_receive_around'
             )}
           />
           {/* {!!Number(executionPrice) && (
@@ -280,7 +283,12 @@ const DexSwap = ({
           )} */}
         </div>
       </CabinetBlock>
-      {/* {!!route && !!route.length && <DexRoute tokens={tokens} route={route} />} */}
+      {!!swapAction.path && !!swapAction.path.length && (
+        <DexRoute
+          tokens={[...fiatTokens, ...coins]}
+          route={swapAction.path.map((token) => token.symbol)}
+        />
+      )}
     </div>
   );
 };
