@@ -9,6 +9,11 @@ import {
   dappExchangeFocusSelector,
 } from 'src/selectors';
 import { getFixedNumber } from 'src/utils';
+import routerABI from 'src/index/constants/ABI/NarfexExchangerRouter';
+import { openStateModal } from 'src/actions';
+import * as toast from 'actions/toasts';
+import * as exchangerAnalytics from 'src/utils/analytics/exchanger';
+import _ from 'lodash';
 
 function getTokenPrice(token) {
   const rates = useSelector(web3RatesSelector);
@@ -317,6 +322,225 @@ const useSwap = ({
     handleFiatChange,
     handleCoinChange,
     context,
+  };
+};
+
+export const useSwapAction = ({
+  fiat,
+  coin,
+  fiatAmount,
+  coinAmount,
+  isExactOut,
+  context,
+}) => {
+  const {
+    addTokenToWallet,
+    getTokenContract,
+    chainId,
+    getWeb3,
+    transaction,
+    getBSCScanLink,
+    network,
+    referAddress,
+    tryExchangeError,
+  } = context || React.useContext(Web3Context);
+
+  const [inAmount, setInAmount] = React.useState(fiatAmount);
+  const [outAmount, setOutAmount] = React.useState(coinAmount);
+  const [priceImpact, setPriceImpact] = React.useState(0);
+  const [rate, setRate] = React.useState(coinAmount / fiatAmount);
+  const [isRateReverse, setIsRateReverse] = React.useState(false);
+  const [path, setPath] = React.useState([]);
+  const [slippage, setSlippage] = React.useState(
+    Number(window.localStorage.getItem('nrfx-slippage')) || 0.5
+  );
+  const [deadline, setDeadline] = React.useState(20);
+  const [allowance, setAllowance] = React.useState(999999999);
+  const [isProcess, setIsProcess] = React.useState(true);
+  const [isApproving, setIsApproving] = React.useState(false);
+
+  const networkName = chainId === 56 ? 'BSC' : 'Testnet BSC';
+
+  React.useEffect(() => {
+    if (isExactOut) {
+      getTokenContract(fiat)
+        .getInAmount(coin, outAmount)
+        .then((data) => {
+          setInAmount(data.inAmount);
+          setOutAmount(Number(outAmount.toFixed(9)));
+          setRate(outAmount / data.inAmount);
+          setPath(data.path);
+          setPriceImpact(_.get(data, 'priceImpact', 0));
+        });
+    } else {
+      getTokenContract(fiat)
+        .getOutAmount(coin, inAmount)
+        .then((data) => {
+          setInAmount(Number(inAmount.toFixed(9)));
+          setOutAmount(data.outAmount);
+          setRate(data.outAmount / inAmount);
+          setPath(data.path);
+          setPriceImpact(_.get(data, 'priceImpact', 0));
+        });
+    }
+  }, [fiatAmount, coinAmount, isExactOut]);
+
+  React.useEffect(() => {
+    if (fiat.isFiat) {
+      setIsProcess(false);
+      return;
+    }
+    const token = getTokenContract(fiat);
+    const router = network.contractAddresses.exchangerRouter;
+
+    token.getAllowance(router).then((allowance) => {
+      setAllowance(allowance);
+      setIsProcess(false);
+    });
+  }, []);
+
+  const inAmountMax = inAmount * (1 + slippage / 100);
+  const outAmountMin = outAmount * (1 - slippage / 100);
+
+  const priceImpactPercents = priceImpact * 100;
+  let priceImpactColor = '';
+  if (priceImpactPercents < 1) priceImpactColor = 'green';
+  if (priceImpactPercents >= 3) priceImpactColor = 'yellow';
+  if (priceImpactPercents >= 5) priceImpactColor = 'red';
+
+  const isAvailable = allowance > inAmount;
+
+  const approve = async () => {
+    const token = getTokenContract(fiat);
+    const router = network.contractAddresses.exchangerRouter;
+    try {
+      const maxApprove = 10 ** 9;
+      setIsApproving(true);
+      await token.approve(
+        router,
+        inAmountMax > maxApprove ? inAmountMax : maxApprove
+      );
+      setAllowance(inAmountMax > maxApprove ? inAmountMax : maxApprove);
+    } catch (error) {
+      console.error('[approve]', error);
+      token.stopWaiting();
+      toast.warning('Approve error');
+    }
+    setIsApproving(false);
+  };
+
+  const swap = async () => {
+    try {
+      setIsProcess(true);
+      const router = new (getWeb3().eth.Contract)(
+        routerABI,
+        network.contractAddresses.exchangerRouter
+      );
+
+      const isFromBNB =
+        !path[0].address ||
+        path[0].address.toLowerCase() ===
+          network.wrapToken.address.toLowerCase();
+      let value;
+      if (isFromBNB) {
+        if (isExactOut) {
+          value = wei.to(inAmountMax);
+        } else {
+          value = wei.to(inAmount);
+        }
+      }
+
+      const amountDecimals = isExactOut
+        ? _.get(path[path.length - 1], 'decimals', 18)
+        : _.get(path[0], 'decimals', 18);
+      const limitDecimals = !isExactOut
+        ? _.get(path[path.length - 1], 'decimals', 18)
+        : _.get(path[0], 'decimals', 18);
+
+      const receipt = await transaction(
+        router,
+        'swap',
+        [
+          path.map((token) => token.address),
+          isExactOut,
+          wei.to(isExactOut ? outAmount : inAmount, amountDecimals),
+          wei.to(isExactOut ? inAmountMax : outAmountMin, limitDecimals),
+          Math.floor(Date.now() / 1000) + deadline * 60,
+          referAddress,
+        ],
+        value
+      );
+      openStateModal('transaction_submitted', {
+        txLink: getBSCScanLink(receipt),
+        symbol: coin.symbol,
+        addToken: () => addTokenToWallet(coin),
+      });
+
+      const coinRate = await getTokenContract(coin).getOutAmount(
+        network.defaultRateToken,
+        1
+      );
+      exchangerAnalytics.addExchange({
+        tx: receipt,
+        price: coinRate?.outAmount,
+        fromToken: fiat,
+        toToken: coin,
+        chainId: network.chainId,
+        toTokensAmount: outAmount,
+      });
+    } catch (error) {
+      console.error('[swap]', error);
+      if (error.message.indexOf('Internal JSON-RPC error.') >= 0) {
+        const message = error.message.split('Internal JSON-RPC error.')[1];
+        try {
+          const parsed = JSON.parse(message);
+          toast.warning(parsed.message.split('execution reverted:')[1]);
+          if (parsed.message.split('Not enough liquidity').length > 1) {
+            try {
+              tryExchangeError(
+                path[0].address,
+                path[path.length - 1].address,
+                inAmount,
+                outAmount
+              );
+            } catch (error) {
+              console.error('[tryExchangeError]', error);
+            }
+          }
+        } catch (error) {
+          toast.warning(error.message);
+        }
+      } else {
+        toast.warning(error.message);
+      }
+    }
+    setIsProcess(false);
+  };
+
+  return {
+    networkName,
+    priceImpactColor,
+    priceImpactPercents,
+    rate,
+    isRateReverse,
+    setIsRateReverse,
+    fiat,
+    coin,
+    inAmount,
+    outAmount,
+    inAmountMax,
+    outAmountMin,
+    isApproving,
+    isAvailable,
+    isProcess,
+    isExactOut,
+    slippage,
+    setSlippage,
+    deadline,
+    setDeadline,
+    path,
+    approve,
+    swap,
   };
 };
 
