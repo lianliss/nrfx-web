@@ -27,14 +27,17 @@ function Filters({
   regions,
   selectedRegion,
   setRegion,
+  amount,
+  setAmount,
+  updateList,
 }) {
   const fiatsOptions = fiats.map((fiat) =>
-    BottomSheetSelect.option(fiat.symbol, fiat.symbol, fiat.logoURI)
+    BottomSheetSelect.option(fiat.symbol, fiat, fiat.logoURI)
   );
   const paymentsOptions = payments.map((payment) =>
     BottomSheetSelect.option(
       <PaymentItem title={payment.title} color={payment.color} />,
-      payment.code,
+      payment,
       null,
       false,
       'div'
@@ -52,18 +55,23 @@ function Filters({
   );
 
   const AmountSearch = () => {
-    const [value, setValue] = React.useState('5543334');
+    const [value, setValue] = React.useState(amount);
+    const updateAmount = () => {
+      setAmount(value);
+      updateList();
+    };
 
     return (
       <div className="orders-list-filters-amount">
         <DappInput
           value={value}
           onChange={setValue}
-          indicator={selectedFiat}
+          indicator={selectedFiat.symbol}
           type="number"
           inputMode="decimals"
+          onEnter={updateAmount}
         />
-        <Button type="lightBlue">Search</Button>
+        <Button type="lightBlue" onClick={updateAmount}>Search</Button>
       </div>
     );
   };
@@ -96,18 +104,6 @@ function Filters({
               value={selectedPayment}
               onChange={setPayment}
               listHeight={215}
-              width={164}
-              isSearchable
-            />
-          }
-        />
-        <Column
-          title="Available Region(s)"
-          content={
-            <BottomSheetSelect
-              options={regionsOptions}
-              value={selectedRegion}
-              onChange={setRegion}
               width={164}
               isSearchable
             />

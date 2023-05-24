@@ -19,8 +19,8 @@ import './index.less';
 function Orders({ adaptive }) {
   const mode = useSelector(dappP2PModeSelector);
 
-  const handleOrderCreate = () => {
-    openStateModal('p2p_create_order', { mode });
+  const handleOrderCreate = (offer, banksList) => {
+    openStateModal('p2p_create_order', { mode, offer, banksList });
   };
 
   return (

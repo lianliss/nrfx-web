@@ -12,6 +12,7 @@ function InputColumn({
   indicator,
   value,
   onChange,
+  type,
 }) {
   return (
     <Column>
@@ -21,6 +22,7 @@ function InputColumn({
         value={value}
         onTextChange={onChange}
         indicator={indicator}
+        type={type}
       />
     </Column>
   );

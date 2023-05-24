@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { classNames } from 'utils';
 import { default as ReactSelect } from 'react-select';
 import defaultIcon from 'src/asset/icons/cabinet/select-arrow.svg';
+import _ from 'lodash';
 
 // Components
 import SVG from 'utils/svg-wrap';
@@ -21,7 +22,9 @@ function Select({
 }) {
   // Get object value of string from options.
   const getValue = () => {
-    return value ? options.find((c) => c.value === value) : '';
+    return typeof value !== 'undefined' && !_.isNull(value)
+      ? options.find((c) => c.value === value)
+      : '';
   };
 
   // Handlers

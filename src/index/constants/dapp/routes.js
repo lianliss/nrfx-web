@@ -75,7 +75,7 @@ const routes = [
   },
   {
     name: pages.P2P_ORDER,
-    path: '/dapp/p2p/order',
+    path: '/dapp/p2p/order/:orderHash',
   },
   {
     name: pages.P2P_USER_CENTER,

@@ -40,8 +40,10 @@ function TradeType() {
   const currency = useSelector(dappP2PCurrencySelector);
   const symbol = _.get(currency, 'symbol', '');
   const logo = _.get(currency, 'logoURI', '');
-  const [tradeType, setTradeType] = React.useState('sell');
+  const [tradeType, setTradeType] = React.useState('buy');
   const [margin, setMargin] = React.useState(0);
+  const [minTradeAmount, setMinTradeAmount] = React.useState(0);
+  const [maxTradeAmount, setMaxTradeAmount] = React.useState(0);
   const [isProcess, setIsProcess] = React.useState(false);
   const [errorText, setErrorText] = React.useState();
   
@@ -87,6 +89,8 @@ function TradeType() {
       const params = [
         currency.address,
         wei.to(margin / 100, 4),
+        wei.to(minTradeAmount, currency.decimals),
+        wei.to(maxTradeAmount, currency.decimals),
       ];
       if (!isBuy) {
       
@@ -120,17 +124,6 @@ function TradeType() {
       <h2>Trade type</h2>
       <Row className="ValidatorTradeForm-row trade-type">
         <Column>
-          <ColumnTitle title="I want to..." description={defaultAnswer} />
-          <RadioGroup selected={tradeType} onChange={setTradeType}>
-            <Radio size="small" type="light-blue" value="sell">
-              Customers can sell {symbol}
-            </Radio>
-            <Radio size="small" type="light-blue" value="buy">
-              Customers can buy {symbol}
-            </Radio>
-          </RadioGroup>
-        </Column>
-        <Column>
           <ColumnTitle title="Currency" />
           <Select
             value={currency}
@@ -140,19 +133,45 @@ function TradeType() {
             indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
           />
         </Column>
+        <Column>
+          <ColumnTitle title="Customers can" description={defaultAnswer} />
+          <RadioGroup selected={tradeType} onChange={setTradeType}>
+            <Radio size="small" type="light-blue" value="buy">
+              Buy stable {symbol} for fiat
+            </Radio>
+            <Radio size="small" type="light-blue" disabled value="sell">
+              Sell stable {symbol} for fiat
+            </Radio>
+          </RadioGroup>
+        </Column>
+        <Column />
+      </Row>
+      <Row className="ValidatorTradeForm-row trade-type">
         <InputColumn
-          title="Initial Margin"
+          title="Commission"
           description={defaultAnswer}
           placeholder="0"
           indicator="%"
           value={margin}
           onChange={setMargin}
         />
-      </Row>
-      <Row className="ValidatorTradeForm-row trade-type">
-        <Column />
-        {!!errorText ? <Column>{errorText}</Column> : <Column />}
-        <Column className="right">
+        <InputColumn
+          title="Min. transaction limit"
+          description={defaultAnswer}
+          placeholder="0"
+          indicator={symbol}
+          value={minTradeAmount}
+          onChange={setMinTradeAmount}
+        />
+        <InputColumn
+          title="Max. transaction limit"
+          description={defaultAnswer}
+          placeholder="0"
+          indicator={symbol}
+          value={maxTradeAmount}
+          onChange={setMaxTradeAmount}
+        />
+        <Column className="right bottom">
           <Button
             state={isProcess ? "loading" : ''}
             disabled={isProcess}
@@ -162,6 +181,9 @@ function TradeType() {
           </Button>
         </Column>
       </Row>
+      {!!errorText && <Row className="ValidatorTradeForm-row trade-type">
+        <Column>{errorText}</Column>
+      </Row>}
     </>
   );
 }

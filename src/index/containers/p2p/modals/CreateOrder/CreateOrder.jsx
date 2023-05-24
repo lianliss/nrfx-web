@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { Web3Context } from 'services/web3Provider';
+import wei from 'utils/wei';
+import wait from 'utils/wait';
+import _ from 'lodash';
 
 // Components
 import { CabinetModal } from 'dapp';
@@ -48,11 +52,53 @@ const getTitle = (mode) => {
   }
 };
 
-function CreateOrder({ mode, onClose, ...props }) {
-  if (!mode) {
+function CreateOrder({ mode, onClose, offer, banksList, ...props }) {
+  if (!mode || !offer) {
     onClose();
     return <></>;
   }
+  
+  const context = React.useContext(Web3Context);
+  const {
+    isConnected,
+    accountAddress,
+    chainId,
+    getFiatsArray,
+    getWeb3,
+    network,
+    getBSCScanLink,
+    getTransactionReceipt,
+    transaction,
+    backendRequest,
+  } = context;
+  
+  const {
+    fiat,
+    address,
+    commission,
+    currency,
+    isKYCRequired,
+    maxTrade,
+    minTrade,
+    name,
+    owner,
+    schedule,
+    settings,
+    side,
+  } = offer;
+  const banks = _.get(settings, 'banks', [])
+    .map((b, index) => {
+      if (!b.code) {
+        return null;
+      }
+      const title = b.bankName || _.get(banksList.find(l => l.code === b.code), 'title', b.code);
+      return {
+        ...b,
+        title,
+        index,
+      }
+    });
+  const terms = _.get(settings, 'terms', '');
 
   const adaptive = useSelector(adaptiveSelector);
   const selectedPayment = useSelector(dappP2PPaymentSelector(mode));
@@ -60,22 +106,23 @@ function CreateOrder({ mode, onClose, ...props }) {
   return (
     <Wrapper adaptive={adaptive} onClose={closeStateModal} {...props}>
       <div>
-        {adaptive && <h2>{getTitle(mode)} IDR</h2>}
+        {adaptive && <h2>{getTitle(mode)} {fiat.symbol}</h2>}
         <UserOrdersInfo
-          name="mail****@gmail.com"
+          name={name}
           ordersNumber={287}
           completion={85.7}
         />
-        <OrderAmountItems mode={mode} />
+        <OrderAmountItems maxTrade={maxTrade} fiat={fiat} commission={commission} mode={mode} />
         {!adaptive && (
           <PaymentItems
+            banks={banks}
             selected={selectedPayment}
             mode={mode}
             adaptive={adaptive}
           />
         )}
-        {mode === p2pMode.sell && !adaptive && (
-          <TermsAndConditions mode={mode} />
+        {!adaptive && (
+          <TermsAndConditions terms={terms} mode={mode} />
         )}
       </div>
       <Form
@@ -83,6 +130,9 @@ function CreateOrder({ mode, onClose, ...props }) {
         adaptive={adaptive}
         selectedPayment={selectedPayment}
         onCancel={closeStateModal}
+        banks={banks}
+        offer={offer}
+        {...props}
       />
     </Wrapper>
   );

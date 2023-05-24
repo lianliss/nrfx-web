@@ -29,6 +29,7 @@ function DappInput({
   pattern,
   id,
   className,
+  onEnter = () => {},
   ...otherProps
 }) {
   const [inputState, setInputState] = React.useState(value || '');
@@ -118,6 +119,12 @@ function DappInput({
       input.setSelectionRange(input.value.length, input.value.length);
     });
   };
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      onEnter();
+    }
+  };
 
   return (
     <div className={classNames('DappInput__wrapper', size)}>
@@ -128,6 +135,7 @@ function DappInput({
         className={classNames('DappInput', size, className, {
           error: error,
         })}
+        onKeyDown={handleKeyDown}
         placeholder={placeholder}
         inputMode={inputMode}
         pattern={pattern}

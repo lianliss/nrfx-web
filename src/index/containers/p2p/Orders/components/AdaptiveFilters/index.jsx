@@ -26,6 +26,8 @@ function AdaptiveFilters({
   regions,
   selectedRegion,
   setRegion,
+  amount,
+  setAmount,
 }) {
   const [filtersModal, setFiltersModal] = React.useState(false);
   const [fiatsModal, setFiatsModal] = React.useState(false);
@@ -56,6 +58,11 @@ function AdaptiveFilters({
 
   const handleCloseFiatsModal = () => {
     setFiatsModal(false);
+  };
+  
+  const [value, setValue] = React.useState(amount);
+  const updateAmount = () => {
+    setAmount(value);
   };
 
   return (
@@ -112,6 +119,7 @@ function AdaptiveFilters({
               indicator={selectedFiat}
               inputMode="decimals"
               type="number"
+              onEnter={updateAmount}
             />
           </div>
           <ButtonsSelect
@@ -128,17 +136,6 @@ function AdaptiveFilters({
             title="Fiat"
             initDisplayNumber={6}
           />
-          <div>
-            <AdaptiveTop.title title="Available regions" />
-            <BottomSheetSelect
-              options={regionsOptions}
-              onChange={setRegion}
-              value={selectedRegion}
-              width="100%"
-              listHeight={226}
-              isSearchable
-            />
-          </div>
         </AdaptiveTop>
       )}
     </div>

@@ -8,14 +8,14 @@ import { OrderInfoWrapper } from '..';
 import { classNames as cn } from 'utils';
 import { p2pMode } from 'src/index/constants/dapp/types';
 
-const OrderAmountItems = ({ mode }) => (
+const OrderAmountItems = ({ mode, maxTrade, commission, fiat }) => (
   <Row
     className="p2p-modal-create-order-amount-items"
     justifyContent="space-between"
     gap="7px 0"
     wrap
   >
-    <OrderInfoWrapper title="Price">
+    <OrderInfoWrapper title="Commission">
       <span
         className={cn(
           {
@@ -25,12 +25,12 @@ const OrderAmountItems = ({ mode }) => (
           ' medium-fw'
         )}
       >
-        <NumberFormat number={39.93} currency="USDT" />
+        <NumberFormat number={commission * 100} currency="%" />
       </span>
     </OrderInfoWrapper>
     <OrderInfoWrapper title="Avaible">
       <span className="black-gunmetal-color medium-fw">
-        <NumberFormat number={220.0} currency="USDT" />
+        <NumberFormat number={maxTrade} currency={fiat.symbol} />
       </span>
     </OrderInfoWrapper>
   </Row>

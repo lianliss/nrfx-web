@@ -163,20 +163,12 @@ export default [
   {
     name: PAGES.P2P,
     chains:
-      window.location.host === company.host
-      || window.location.host === company.testnetHost
-      || isLocalhost
-        ? [97]
-        : [1, 56, 97],
+      [1, 56, 97],
   },
   {
     name: PAGES.P2P_ORDERS,
     chains:
-      window.location.host === company.host
-      || window.location.host === company.testnetHost
-      || isLocalhost
-        ? [97]
-        : [1, 56, 97],
+      [1, 56, 97],
   },
   {
     name: PAGES.P2P_ORDER,

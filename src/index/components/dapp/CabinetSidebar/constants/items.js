@@ -33,13 +33,20 @@ const items = [
           link: PAGES.DAPP_EXCHANGE,
           type: 'route',
         },
-        // {
-        //   title: 'P2P',
-        //   icon: 'p2p',
-        //   active: [PAGES.DAPP_EXCHANGE],
-        //   link: PAGES.DAPP_EXCHANGE,
-        //   type: 'route',
-        // },
+        {
+          title: 'P2P',
+          icon: 'p2p',
+          active: [PAGES.P2P_ORDERS, PAGES.P2P_ORDER],
+          link: PAGES.P2P_ORDERS,
+          type: 'route',
+        },
+        {
+          title: 'User center',
+          icon: 'team-icon',
+          active: [PAGES.P2P_USER_CENTER],
+          link: PAGES.P2P_USER_CENTER,
+          type: 'route',
+        },
       ],
     },
     {

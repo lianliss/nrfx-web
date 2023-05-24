@@ -33,7 +33,7 @@ const getTitles = (text, mode, adaptive) => {
   return titles[mode][text][adaptive ? 'adaptive' : 'desktop'];
 };
 
-const PaymentItems = ({ adaptive, mode, selected }) => (
+const PaymentItems = ({ adaptive, mode, selected, banks }) => (
   <Row
     className="p2p-modal-create-order-payment-items"
     justifyContent="space-between"
@@ -51,9 +51,7 @@ const PaymentItems = ({ adaptive, mode, selected }) => (
           <PaymentItem title={selected.title} />
         ) : (
           <>
-            <PaymentItem title="Bank Transfer" />
-            <PaymentItem title="Bank Transfer" />
-            <PaymentItem title="Mono Bank" />
+            {banks.filter(b=>!!b).map((b, index) => <PaymentItem title={b.title} key={index} />)}
           </>
         )}
       </Row>

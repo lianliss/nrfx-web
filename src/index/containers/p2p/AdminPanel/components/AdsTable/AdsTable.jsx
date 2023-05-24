@@ -169,7 +169,7 @@ const TableRow = ({
       </TD>
       <TD>
         <Col>
-          <span>{availableAmount}</span>
+          <span>{availableAmount} {fiat}</span>
           <span>{qty}</span>
         </Col>
       </TD>
@@ -181,9 +181,18 @@ const TableRow = ({
       </TD>
       <TD>
         <Col>
-          {paymentMethods.map((paymentMethod, key) => (
-            <PaymentItem title={paymentMethod.title} key={key} />
-          ))}
+          {paymentMethods.map((data, key) => {
+            let parsed;
+            try {
+              parsed = JSON.parse(data);
+            } catch (error) {
+              parsed = data;
+            }
+            const {type, holder, account, bankName, code} = parsed;
+            if (!type) return <></>;
+            
+            return <PaymentItem title={code} key={key} />
+          })}
         </Col>
       </TD>
       <TD>
@@ -285,7 +294,7 @@ const AdsTable = ({ adaptive }) => {
         header={
           <TR>
             <TD>Ad Number Type Asset/Fiat</TD>
-            <TD>Current trades</TD>
+            <TD>Current limit</TD>
             <TD>Commission</TD>
             <TD>Payment Method</TD>
             <TD>Last Updated Create Time</TD>
