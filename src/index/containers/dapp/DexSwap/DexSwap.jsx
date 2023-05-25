@@ -69,31 +69,38 @@ const DexSwap = ({
           </Button>
         );
       } else {
+        let buttonText;
+
+        if (swap.isNoLiquidity) {
+          buttonText = 'No liquidity found';
+        } else if (swapAction.priceImpactPercents >= 5) {
+          buttonText = getLang('dex_button_swap_anyway');
+        } else {
+          buttonText = getLang('dapp_exchanger_exchange_button');
+        }
+
         button = (
           <>
-            {/* {!swap.isAvailable && (
+            {!swapAction.isAvailable && (
               <Button
-                type={swap.isAvailable ? 'secondary' : 'lightBlue'}
-                state={swap.isApproving ? 'loading' : ''}
-                onClick={this.approve.bind(this)}
+                type={swapAction.isAvailable ? 'secondary' : 'lightBlue'}
+                state={swapAction.isApproving ? 'loading' : ''}
+                onClick={swapAction.approve}
               >
                 Approve
               </Button>
-            )} */}
+            )}
             <Button
               type="lightBlue"
-              disabled={!swap.fiatAmount || !swap.coinAmount}
+              disabled={
+                !swapAction.isAvailable || !swap.fiatAmount || !swap.coinAmount
+              }
               state={swap.isProcessing ? 'loading' : ''}
               className="DexSwap__button-swap"
               onClick={swapAction.swap}
             >
               <SVG src={require('src/asset/icons/convert-card.svg')} />
-              {/* {priceImpactNumber >= 5
-                ? getLang('dex_button_swap_anyway')
-                : getLang('dex_button_buy')} */}
-              {swap.isNoLiquidity
-                ? 'No liquidity found'
-                : getLang('dapp_exchanger_exchange_button')}
+              {buttonText}
             </Button>
           </>
         );
