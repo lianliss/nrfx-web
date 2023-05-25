@@ -362,6 +362,14 @@ export const useSwapAction = ({
   const networkName = chainId === 56 ? 'BSC' : 'Testnet BSC';
 
   React.useEffect(() => {
+    setInAmount(fiatAmount);
+  }, [fiatAmount]);
+
+  React.useEffect(() => {
+    setOutAmount(coinAmount);
+  }, [coinAmount]);
+
+  React.useEffect(() => {
     if (!fiat || !coin) return;
 
     if (isExactOut) {
@@ -531,8 +539,6 @@ export const useSwapAction = ({
     setIsRateReverse,
     fiat,
     coin,
-    inAmount,
-    outAmount,
     inAmountMax,
     outAmountMin,
     isApproving,

@@ -47,6 +47,7 @@ const DexSwap = ({
     fiatAmount: swap.fiatAmount,
     coinAmount: swap.coinAmount,
     isExactOut: swap.isExactOut,
+    context,
   });
 
   const [isSettings, setIsSettings] = React.useState(false);
@@ -156,27 +157,32 @@ const DexSwap = ({
               swap.isExactOut ? 'dex_receive_exact' : 'dex_receive_around'
             )}
           />
-          {/* {!!Number(executionPrice) && (
+          {swap.fiat && swap.coin && (
             <div className="DexSwap__Price">
               <span>{getLang('dex_price')}</span>
               <span>
                 {getFinePrice(
-                  Number(isSwappedPrice ? 1 / executionPrice : executionPrice)
+                  swapAction.isRateReverse
+                    ? 1 / swapAction.rate
+                    : swapAction.rate
                 )}
                 &nbsp;
-                {pair[Number(!isSwappedPrice)].symbol} {getLang('dex_per')}{' '}
-                {pair[Number(isSwappedPrice)].symbol}
+                {(swapAction.isRateReverse ? swap.fiat : swap.coin).symbol}
+                &nbsp;
+                {getLang('dex_per')}
+                &nbsp;
+                {(swapAction.isRateReverse ? swap.coin : swap.fiat).symbol}
               </span>
               <div
                 className="DexSwap__Price-swap"
                 onClick={() =>
-                  this.setState({ isSwappedPrice: !isSwappedPrice })
+                  swapAction.setIsRateReverse(!swapAction.isRateReverse)
                 }
               >
                 <SVG src={require('src/asset/icons/swap.svg')} />
               </div>
             </div>
-          )} */}
+          )}
           {button}
 
           {/* {!!this.trade && !!Number(swap.fiatAmount) && (
