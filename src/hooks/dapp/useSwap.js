@@ -392,6 +392,7 @@ export const useSwapAction = ({
 
     if (fiat.isFiat) {
       setIsProcess(false);
+      setAllowance(999999999);
       return;
     }
     const token = getTokenContract(fiat);
