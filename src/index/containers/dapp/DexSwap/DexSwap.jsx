@@ -222,7 +222,7 @@ const DexSwap = ({
                     : swap.coin?.symbol}
                 </span>
               </DexDescription.Item>
-              {/* <DexDescription.Item>
+              <DexDescription.Item>
                 <span>
                   {getLang('dex_price_impact')}
                   <HoverPopup
@@ -239,11 +239,11 @@ const DexSwap = ({
                     />
                   </HoverPopup>
                 </span>
-                <span className={priceImpactColor}>
-                  {priceImpactNumber.toFixed(2)}%
+                <span className={swapAction.priceImpactColor}>
+                  {swapAction.priceImpactPercents?.toFixed(2)}%
                 </span>
               </DexDescription.Item>
-              <DexDescription.Item>
+              {/* <DexDescription.Item>
                 <span>{getLang('dex_liquidity_fee')}</span>
                 <span>
                   {getFinePrice(fee)} {_.get(this.state, 'pair[0].symbol', '')}

@@ -361,30 +361,45 @@ export const useSwapAction = ({
 
   const networkName = chainId === 56 ? 'BSC' : 'Testnet BSC';
 
-  React.useEffect(() => {
+  const getAmounts = async () => {
     if (!fiat || !coin) return;
+    const amounts = {
+      fiat: fiatAmount,
+      coin: coinAmount,
+    };
+    setInAmount(amounts.fiat);
+    setOutAmount(amounts.coin);
 
-    if (isExactOut) {
-      getTokenContract(fiat)
-        .getInAmount(coin, coinAmount)
-        .then((data) => {
-          setInAmount(data.inAmount);
-          setOutAmount(Number(coinAmount.toFixed(9)));
-          setRate(coinAmount / data.inAmount);
-          setPath(data.path);
-          setPriceImpact(_.get(data, 'priceImpact', 0));
-        });
-    } else {
-      getTokenContract(fiat)
-        .getOutAmount(coin, fiatAmount)
-        .then((data) => {
-          setInAmount(Number(fiatAmount.toFixed(9)));
-          setOutAmount(data.outAmount);
-          setRate(data.outAmount / fiatAmount);
-          setPath(data.path);
-          setPriceImpact(_.get(data, 'priceImpact', 0));
-        });
+    try {
+      if (isExactOut) {
+        const data = await getTokenContract(fiat).getInAmount(
+          coin,
+          amounts.coin
+        );
+        setInAmount(data.inAmount);
+        setOutAmount(Number(amounts.coin.toFixed(9)));
+        setRate(amounts.coin / data.inAmount);
+        setPath(data.path);
+        setPriceImpact(_.get(data, 'priceImpact', 0));
+      } else {
+        const data = await getTokenContract(fiat).getOutAmount(
+          coin,
+          amounts.fiat
+        );
+
+        setInAmount(Number(amounts.fiat.toFixed(9)));
+        setOutAmount(data.outAmount);
+        setRate(data.outAmount / amounts.fiat);
+        setPath(data.path);
+        setPriceImpact(_.get(data, 'priceImpact', 0));
+      }
+    } catch (err) {
+      console.log('getAmounts', err);
     }
+  };
+
+  React.useEffect(() => {
+    getAmounts();
   }, [fiat, coin, fiatAmount, coinAmount, isExactOut]);
 
   React.useEffect(() => {
@@ -533,6 +548,8 @@ export const useSwapAction = ({
     coin,
     inAmountMax,
     outAmountMin,
+    inAmount,
+    outAmount,
     isApproving,
     isAvailable,
     isProcess,
