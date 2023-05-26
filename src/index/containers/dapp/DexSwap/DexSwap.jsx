@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { setSwap } from 'src/actions/dapp/swap';
 
 // Components
-import { Button, HoverPopup } from 'src/ui';
+import { Button, HoverPopup, NumberFormat } from 'src/ui';
 import DexSettingsModal from './components/DexSettingsModal/DexSettingsModal';
 import SVG from 'utils/svg-wrap';
 import CabinetBlock from 'src/index/components/cabinet/CabinetBlock/CabinetBlock';
@@ -185,13 +185,14 @@ const DexSwap = ({
           )}
           {button}
 
-          {/* {!!this.trade && !!Number(swap.fiatAmount) && (
+          {(!!Number(swapAction.inAmountMax) ||
+            !!Number(swapAction.outAmountMin)) && (
             <DexDescription>
               <DexDescription.Item>
                 <span>
-                  {isExactIn
-                    ? getLang('dex_minimum_receive')
-                    : getLang('dex_maximum_spend')}
+                  {swap.isExactOut
+                    ? getLang('dex_maximum_spend')
+                    : getLang('dex_minimum_receive')}
                   <HoverPopup
                     content={
                       <div className="DexSwap__hint">
@@ -206,16 +207,20 @@ const DexSwap = ({
                   </HoverPopup>
                 </span>
                 <span>
-                  {getFinePrice(
-                    Number(
-                      significant(isExactIn ? minimumReceive : maximumSpend)
-                    )
-                  )}
+                  <NumberFormat
+                    number={
+                      swapAction.isExactOut
+                        ? swapAction.inAmountMax
+                        : swapAction.outAmountMin
+                    }
+                  />
                   &nbsp;
-                  {pair[Number(!exactIndex)].symbol}
+                  {swapAction.isExactOut
+                    ? swap.fiat?.symbol
+                    : swap.coin?.symbol}
                 </span>
               </DexDescription.Item>
-              <DexDescription.Item>
+              {/* <DexDescription.Item>
                 <span>
                   {getLang('dex_price_impact')}
                   <HoverPopup
@@ -241,9 +246,9 @@ const DexSwap = ({
                 <span>
                   {getFinePrice(fee)} {_.get(this.state, 'pair[0].symbol', '')}
                 </span>
-              </DexDescription.Item>
+              </DexDescription.Item> */}
             </DexDescription>
-          )} */}
+          )}
 
           {swap.isSelectFiat && (
             <CabinetModal onClose={() => swap.setIsSelectFiat(false)}>
