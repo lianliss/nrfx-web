@@ -93,12 +93,12 @@ function ConnectToWalletModal(props) {
             onClick={() => connectWallet(CONNECTORS.BSC)}
             style={{ background: '#1e2026' }}
           />
-          <Wallet
+          {/* <Wallet
             title="OKX Wallet"
             icon={require('src/asset/icons/social/okx-wallet.svg')}
             onClick={() => connectWallet(CONNECTORS.OKX_WALLET)}
             style={{ background: '#000' }}
-          />
+          /> */}
         </div>
       </div>
       <span className="action-text">
