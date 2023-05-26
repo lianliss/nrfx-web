@@ -51,6 +51,9 @@ const DexSwap = ({
   });
 
   const [isSettings, setIsSettings] = React.useState(false);
+  const isMaxMinAmount = swapAction.isExactOut
+    ? !!swapAction.inAmountMax
+    : !!swapAction.outAmountMin;
 
   let button = (
     <Button
@@ -185,8 +188,7 @@ const DexSwap = ({
           )}
           {button}
 
-          {(!!Number(swapAction.inAmountMax) ||
-            !!Number(swapAction.outAmountMin)) && (
+          {isMaxMinAmount && (
             <DexDescription>
               <DexDescription.Item>
                 <span>
