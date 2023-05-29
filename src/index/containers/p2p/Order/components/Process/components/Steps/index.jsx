@@ -5,10 +5,9 @@ import { orderProcesses as processes } from 'src/index/constants/dapp/types';
 
 const steps = {
   buy: [
-    { id: 1, type: 1, title: 'Transfer payment to Seller' },
+    { id: 1, title: 'Transfer payment to Seller' },
     {
       id: 2,
-      type: processes.buy.pending,
       title: 'Pending Seller to Realease Cryptos',
       answerMessage:
         'Waiting for payment confirmation. ' +
@@ -16,17 +15,15 @@ const steps = {
         ' been made. Once the counterparty confirms the payment,' +
         ' the crypto will be realeased to your wallet.',
     },
-    { id: 3, type: processes.buy.completed, title: 'Completed' },
+    { id: 3, title: 'Completed' },
   ],
   sell: [
     {
       id: 1,
-      type: processes.sell.pending,
       title: 'Pending Payment',
     },
     {
       id: 2,
-      type: processes.sell.releasing,
       title: 'Release crypto to the buyer',
       answerMessage:
         'Waiting for payment confirmation. ' +
@@ -34,20 +31,20 @@ const steps = {
         ' been made. Once the counterparty confirms the payment,' +
         ' the crypto will be realeased to your wallet.',
     },
-    { id: 3, type: processes.sell.completed, title: 'Completed' },
+    { id: 3, title: 'Completed' },
   ],
 };
-
-const stepsEnabledProcesses = [
-  processes.buy.payment,
-  processes.buy.pending,
-  processes.sell.pending,
-  processes.sell.releasing,
-];
 
 function Steps({ mode, order, adaptive }) {
   const stepsOfMode = steps[order.cache.side];
   const allowedProcess = true;
+  let step = 1;
+  if (order.cache.isPayed) {
+    step = 2;
+  }
+  if (!order.cache.isCanceled && !order.status) {
+    step = 3;
+  }
 
   if (!adaptive && allowedProcess) {
     return (
@@ -57,7 +54,7 @@ function Steps({ mode, order, adaptive }) {
             number={id}
             key={id}
             title={title}
-            active={id <= 1}
+            active={id <= step}
             answerMessage={answerMessage}
           />
         ))}

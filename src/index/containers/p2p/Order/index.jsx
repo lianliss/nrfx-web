@@ -11,6 +11,7 @@ import P2P from '../P2P';
 import Header from './components/Header';
 import { FAQ, CabinetBlock } from 'dapp';
 import { Chat, Feedback, Process } from './components';
+import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingStatus";
 
 // Utils
 import faq from '../constants/faq';
@@ -79,6 +80,13 @@ function Order({ adaptive }) {
         client: clientAddress,
       }, ``, 'offers/trades', 'get');
       if (!cache.length) return;
+      if (!!order) {
+        setOrder({
+          ...order,
+          cache,
+        });
+        return;
+      }
       const isBuy = cache[0].side !== 'sell';
       const contract = isBuy
         ? new (getWeb3().eth.Contract)(
@@ -126,7 +134,7 @@ function Order({ adaptive }) {
         status: Number(data[1]['status']),
       });
     } catch (error) {
-      console.log('[getOrder]', error);
+      console.error('[getOrder]', error);
     }
   };
   console.log('ORDER', order);
@@ -135,14 +143,17 @@ function Order({ adaptive }) {
     clearInterval(updateInterval);
     setTimeout(() => {
       clearInterval(updateInterval);
-      updateInterval = setInterval(getOrder, 4000);
+      if (!_.get(order, 'status', 1)) {
+        updateInterval = setInterval(getOrder, 4000);
+      }
     }, 4000);
   }, [chainId, accountAddress, offerAddress, clientAddress]);
-  if (!order) return <>Loading...</>;
+  if (!order) return <LoadingStatus inline status="loading" />;
   
-  const isClient = accountAddress === order.clientAddress;
-  const isOwner = accountAddress === order.ownerAddress;
-  const isLawyer = accountAddress === order.lawyerAddress;
+  const addressFormatted = getWeb3().utils.toChecksumAddress(accountAddress);
+  const isClient = addressFormatted === order.clientAddress;
+  const isOwner = addressFormatted === order.ownerAddress;
+  const isLawyer = addressFormatted === order.lawyerAddress;
   
   const {
     fiat,
@@ -164,17 +175,55 @@ function Order({ adaptive }) {
   const handlePaymentReceived = () => {
     openStateModal('p2p_payment_confirmation', {
       mode,
-      onConfirm: () => {
-        // ...
-        setOrder((prev) => ({ ...prev, status: 'completed' }));
+      onConfirm: async () => {
+        try {
+          const contract = order.isBuy
+            ? new (getWeb3().eth.Contract)(
+              require('src/index/constants/ABI/p2p/buy'),
+              offerAddress,
+            )
+            : new (getWeb3().eth.Contract)(
+              require('src/index/constants/ABI/p2p/sell'),
+              offerAddress,
+            );
+          const params = [
+            order.clientAddress,
+          ];
+          const tx = await transaction(contract, 'confirmTrade', params);
+          console.log('transaction hash', tx, getBSCScanLink(tx));
+          const receipt = await getTransactionReceipt(tx);
+          console.log('transaction receipt', receipt);
+          dispatch(toastPush(
+            `Trade confirmed`));
+        } catch (error) {
+          console.error('[handleCancel]', error);
+        }
       },
     });
   };
 
-  const handleCancel = () => {
-    // ...
-    if (mode === p2pMode.buy) {
-      setOrder((prev) => ({ ...prev, status: 'cancelled' }));
+  const handleCancel = async () => {
+    try {
+      const contract = order.isBuy
+        ? new (getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/p2p/buy'),
+          offerAddress,
+        )
+        : new (getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/p2p/sell'),
+          offerAddress,
+        );
+      const params = [
+        order.clientAddress,
+      ];
+      const tx = await transaction(contract, 'cancelTrade', params);
+      console.log('transaction hash', tx, getBSCScanLink(tx));
+      const receipt = await getTransactionReceipt(tx);
+      console.log('transaction receipt', receipt);
+      dispatch(toastPush(
+        `Trade cancelled`));
+    } catch (error) {
+      console.error('[handleCancel]', error);
     }
   };
 

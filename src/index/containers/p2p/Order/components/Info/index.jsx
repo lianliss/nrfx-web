@@ -20,9 +20,9 @@ function Info({ adaptive, order }) {
           alignItems="center"
           justifyContent={adaptive ? 'space-between' : 'flex-end'}
         >
-          <div>Offer address:</div>
+          <div>Order number:</div>
           <div className="p2p-order-info__data">
-            <OrderCreatedTextCopy text={order.offerAddress} />
+            <OrderCreatedTextCopy text={order.cache.id} />
           </div>
         </Row>
         <Row

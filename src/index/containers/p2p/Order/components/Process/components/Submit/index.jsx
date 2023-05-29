@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { useDispatch, useSelector } from 'react-redux';
+import wait from 'utils/wait';
 
 import { Button, Row, Timer } from 'ui';
 import { CustomButton, AnswerPopup } from 'dapp';
 import { orderProcesses as processes } from 'src/index/constants/dapp/types';
 import { Web3Context } from 'services/web3Provider';
+import { toastPush } from 'src/actions/toasts';
 
 const TransactionTime = () => (
   <Row className="malibu-color malibu-text">
@@ -26,6 +30,7 @@ function Submit({
   onPaymentReceived,
   onCancel,
 }) {
+  const dispatch = useDispatch();
   const context = React.useContext(Web3Context);
   const {
     accountAddress,
@@ -38,9 +43,13 @@ function Submit({
     transaction,
     backendRequest,
   } = context;
-  const isClient = accountAddress === order.clientAddress;
-  const isOwner = accountAddress === order.ownerAddress;
-  const isLawyer = accountAddress === order.lawyerAddress;
+  const addressFormatted = getWeb3().utils.toChecksumAddress(accountAddress);
+  const isClient = addressFormatted === order.clientAddress;
+  const isOwner = addressFormatted === order.ownerAddress;
+  const isLawyer = addressFormatted === order.lawyerAddress;
+  const isPayed = _.get(order, 'cache.isPayed', false);
+  const isCancel = _.get(order, 'cache.isCancel', false);
+  const [isProcess, setIsProcess] = React.useState(false);
   
   const {
     fiat,
@@ -58,13 +67,34 @@ function Submit({
     }
 
     return (
-      <Button type="secondary-light" onClick={onCancel}>
+      <Button type="secondary-light" onClick={async () => {
+        setIsProcess(true);
+        await onCancel();
+        setIsProcess(false);
+      }}>
         <span className="light-blue-gradient-color">Cancel Order</span>
       </Button>
     );
   };
+  
+  const setAsPayed = async () => {
+    setIsProcess(true);
+    try {
+      await backendRequest({
+        chat: order.chatRoom,
+      }, ``, 'offers/payed', 'post');
+      await wait(4000);
+      dispatch(toastPush(
+        'Marked as payed',
+        "success"
+      ));
+    } catch (error) {
+      console.error('[setAsPayed]', error);
+    }
+    setIsProcess(false);
+  };
 
-  if (order.isBuy && isClient) {
+  if (!isPayed && ((order.isBuy && isClient) || (!order.isBuy && isOwner))) {
     return (
       <>
         <div className="p2p-order-process-submit__header">
@@ -77,25 +107,41 @@ function Submit({
           </Row>
         </div>
         <ButtonsWrapper gap={15}>
-          <Button type="lightBlue" onClick={onNotifySeller}>
+          <Button type="lightBlue"
+                  state={isProcess ? "loading" : ''}
+                  disabled={isProcess}
+                  onClick={setAsPayed}>
             <span>Transferred notify seller</span>
           </Button>
-          <CancelOrderButton />
+          <CancelOrderButton state={isProcess ? "loading" : ''}
+                             onClick={async () => {
+                               setIsProcess(true);
+                               await onCancel();
+                               setIsProcess(false);
+                             }}
+                             disabled={isProcess} />
         </ButtonsWrapper>
       </>
     );
   }
 
-  if (isClient) {
+  if (isPayed && ((order.isBuy && isClient) || (!order.isBuy && isOwner))) {
     return (
       <ButtonsWrapper gap="15px 0">
         <TransactionTime />
-        <CancelOrderButton type={adaptive ? 'default' : 'custom-malibu'} />
+        <CancelOrderButton state={isProcess ? "loading" : ''}
+                           onClick={async () => {
+                             setIsProcess(true);
+                             await onCancel();
+                             setIsProcess(false);
+                           }}
+                           disabled={isProcess}
+                           type={adaptive ? 'default' : 'custom-malibu'} />
       </ButtonsWrapper>
     );
   }
 
-  if (order.isBuy && isOwner) {
+  if ((order.isBuy && isOwner) || (!order.isSell && isClient)) {
     return (
       <>
         <div className="p2p-order-process-submit__header">
@@ -108,7 +154,8 @@ function Submit({
           </Row>
         </div>
         <ButtonsWrapper gap="0 15px">
-          <Button type="lightBlue" onClick={onPaymentReceived}>
+          <Button type="lightBlue" state={isProcess ? "loading" : ''}
+                  disabled={isProcess} onClick={onPaymentReceived}>
             <span>Payment received</span>
           </Button>
           {!adaptive && <TransactionTime />}
@@ -118,7 +165,7 @@ function Submit({
   }
 
   if (
-    order.status === 1
+    order.status === 0
   ) {
     return (
       <ButtonsWrapper gap="10px 0">

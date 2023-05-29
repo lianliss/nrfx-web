@@ -9,15 +9,7 @@ import './index.less';
 function ChoosedMethod({ payment }) {
   return (
     <div className="p2p-order-choosed-method">
-      <div className="orders-list-payment-item">
-        Method: {payment.bankName || payment.title}
-      </div>
-      <div className="orders-list-payment-item">
-        Account: {payment.account}
-      </div>
-      <div className="orders-list-payment-item">
-        Holder: {payment.holder}
-      </div>
+      <PaymentItem title={payment.title} color={paymentColors.orange} />
     </div>
   );
 }

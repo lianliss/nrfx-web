@@ -77,7 +77,7 @@ function Process({
       {renderInfo()}
       <Method
         selectedMethod={order.bank}
-        process={order}
+        order={order}
         adaptive={adaptive}
       />
       <Submit

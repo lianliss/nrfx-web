@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 // Components
 import { AnswerPopup } from 'dapp';
@@ -32,7 +33,8 @@ function Method({ adaptive, order, selectedMethod }) {
   let title;
   let component;
 
-  component = <ChoosedMethod payment={selectedMethod} />;
+  const bank = _.get(order, 'bank', {});
+  component = <ChooseMethod methods={[bank]} selectedMethod={bank} payment={selectedMethod} />;
 
   return (
     <div className="p2p-order-process-method">

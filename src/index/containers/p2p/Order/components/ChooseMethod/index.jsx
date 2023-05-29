@@ -12,8 +12,8 @@ import paymentColors from '../../../constants/paymentColors';
 // Styles
 import './index.less';
 
-const PaymentRadio = ({ title, code, selected, onChange }) => (
-  <Radio
+const PaymentRadio = ({ title, code, selected, onChange }) => {
+  return <Radio
     className="p2p-order-choose-method__item"
     value={code}
     onChange={onChange}
@@ -24,7 +24,7 @@ const PaymentRadio = ({ title, code, selected, onChange }) => (
   >
     <PaymentItem title={title} color={paymentColors.orange} />
   </Radio>
-);
+};
 
 function ChooseMethod({
   adaptive,
@@ -40,19 +40,18 @@ function ChooseMethod({
     <div className="p2p-order-choose-method__items">
       {!!methods.length ? (
         methods
-          .slice(0, 3)
           .map((payment) => (
             <PaymentRadio
-              title={payment.title}
+              title={payment.bankName ? `${payment.title}: ${payment.bankName}` : payment.title}
               code={payment.code}
               key={payment.code}
-              selected={selectedMethod.code === payment.code}
-              onChange={handleMethodChange}
+              selected={selectedMethod.id === payment.id}
+              onChange={() => {}}
             />
           ))
       ) : (
         <PaymentRadio
-          title={selectedMethod.title}
+          title={selectedMethod.bankName ? `${selectedMethod.title}: ${selectedMethod.bankName}` : selectedMethod.title}
           code={selectedMethod.code}
           selected={true}
         />
@@ -64,17 +63,17 @@ function ChooseMethod({
     <div className="p2p-order-choose-method-data">
       <div className="p2p-order-choose-method-data__item">
         <div className="p2p-order-choose-method-data__title">Name</div>
-        <OrderCreatedTextCopy text="Alexandr Widodo Halim" />
+        <OrderCreatedTextCopy text={selectedMethod.holder} />
       </div>
       <div className="p2p-order-choose-method-data__item">
         <div className="p2p-order-choose-method-data__title">
-          Bank account number
+          {selectedMethod.type === 'card' ? 'Card number' : 'Account number'}
         </div>
-        <OrderCreatedTextCopy text="999555844" />
+        <OrderCreatedTextCopy text={selectedMethod.account} />
       </div>
       <div className="p2p-order-choose-method-data__item">
         <div className="p2p-order-choose-method-data__title">Bank name</div>
-        <OrderCreatedTextCopy text="BCA" />
+        <OrderCreatedTextCopy text={selectedMethod.bankName || selectedMethod.title} />
       </div>
     </div>
   ));
@@ -90,15 +89,5 @@ function ChooseMethod({
     </Row>
   );
 }
-
-ChooseMethod.propTypes = {
-  setSelectedMethod: PropTypes.func,
-  methods: PropTypes.array,
-};
-
-ChooseMethod.defaultProps = {
-  setSelectedMethod: () => {},
-  methods: [],
-};
 
 export default ChooseMethod;
