@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, Row, Timer } from 'ui';
 import { CustomButton, AnswerPopup } from 'dapp';
 import { orderProcesses as processes } from 'src/index/constants/dapp/types';
+import { Web3Context } from 'services/web3Provider';
 
 const TransactionTime = () => (
   <Row className="malibu-color malibu-text">
@@ -19,12 +20,34 @@ const ButtonsWrapper = ({ children, gap }) => (
 );
 
 function Submit({
-  process,
+  order,
   adaptive,
   onNotifySeller,
   onPaymentReceived,
   onCancel,
 }) {
+  const context = React.useContext(Web3Context);
+  const {
+    accountAddress,
+    chainId,
+    getFiatsArray,
+    getWeb3,
+    network,
+    getBSCScanLink,
+    getTransactionReceipt,
+    transaction,
+    backendRequest,
+  } = context;
+  const isClient = accountAddress === order.clientAddress;
+  const isOwner = accountAddress === order.ownerAddress;
+  const isLawyer = accountAddress === order.lawyerAddress;
+  
+  const {
+    fiat,
+    fiatAmount,
+    moneyAmount,
+  } = order;
+  
   const CancelOrderButton = ({ type = 'default' }) => {
     if (type === 'custom-malibu') {
       return (
@@ -41,7 +64,7 @@ function Submit({
     );
   };
 
-  if (process === processes.buy.payment) {
+  if (order.isBuy && isClient) {
     return (
       <>
         <div className="p2p-order-process-submit__header">
@@ -63,7 +86,7 @@ function Submit({
     );
   }
 
-  if (process === processes.buy.pending) {
+  if (isClient) {
     return (
       <ButtonsWrapper gap="15px 0">
         <TransactionTime />
@@ -72,7 +95,7 @@ function Submit({
     );
   }
 
-  if (process === processes.sell.releasing) {
+  if (order.isBuy && isOwner) {
     return (
       <>
         <div className="p2p-order-process-submit__header">
@@ -95,8 +118,7 @@ function Submit({
   }
 
   if (
-    process === processes.buy.completed ||
-    process === processes.sell.completed
+    order.status === 1
   ) {
     return (
       <ButtonsWrapper gap="10px 0">
@@ -112,16 +134,5 @@ function Submit({
 
   return <></>;
 }
-
-Submit.propTypes = {
-  adaptive: PropTypes.bool,
-  process: PropTypes.oneOf([
-    ...Object.values(processes.buy),
-    ...Object.values(processes.sell),
-  ]),
-  onNotifySeller: PropTypes.func,
-  onPaymentReceived: PropTypes.func,
-  onCancel: PropTypes.func,
-};
 
 export default Submit;

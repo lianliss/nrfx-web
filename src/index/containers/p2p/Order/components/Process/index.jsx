@@ -21,11 +21,18 @@ import './index.less';
 function Process({
   adaptive,
   mode,
-  process,
+  order,
   onNotifySeller,
   onPaymentReceived,
   onCancel,
 }) {
+  const {
+    fiat,
+    fiatAmount,
+    moneyAmount,
+  } = order;
+  const symbol = _.get(fiat, 'symbol', '');
+  
   const renderInfo = () => {
     const ItemsComponent = adaptive ? Col : Row;
 
@@ -36,8 +43,8 @@ function Process({
           <Info
             adaptive={adaptive}
             title="Amount"
-            prefix="Rp"
-            number={600812255}
+            number={moneyAmount}
+            currency={symbol}
             className={
               mode === p2pMode.buy ? 'green-color' : 'orange-red-color'
             }
@@ -45,14 +52,8 @@ function Process({
           <Info
             adaptive={adaptive}
             title="Price"
-            prefix="Rp"
-            number={15555000}
-          />
-          <Info
-            adaptive={adaptive}
-            title="Quantity"
-            currency="USDT"
-            number={389.88}
+            currency={symbol}
+            number={fiatAmount}
           />
           {adaptive && (
             <>
@@ -70,18 +71,17 @@ function Process({
     <div
       className={cn('p2p-order-process-content', {
         sideline:
-          process === processes.buy.payment ||
-          process === processes.sell.releasing,
+          order.status,
       })}
     >
       {renderInfo()}
       <Method
-        selectedMethod={testPayments[0]}
-        process={process}
+        selectedMethod={order.bank}
+        process={order}
         adaptive={adaptive}
       />
       <Submit
-        process={process}
+        order={order}
         adaptive={adaptive}
         onNotifySeller={onNotifySeller}
         onPaymentReceived={onPaymentReceived}
@@ -91,23 +91,11 @@ function Process({
   );
 
   return (
-    <CabinetBlock className={cn('p2p-order-process', process)}>
-      <Steps mode={mode} process={process} adaptive={adaptive} />
+    <CabinetBlock className={cn('p2p-order-process', order)}>
+      <Steps mode={mode} order={order} adaptive={adaptive} />
       {renderContent()}
     </CabinetBlock>
   );
 }
-
-Process.propTypes = {
-  adaptive: PropTypes.bool,
-  mode: PropTypes.oneOf(Object.values(p2pMode)),
-  process: PropTypes.oneOf([
-    ...Object.values(processes.buy),
-    ...Object.values(processes.sell),
-  ]),
-  onNotifySeller: PropTypes.func,
-  onPaymentReceived: PropTypes.func,
-  onCancel: PropTypes.func,
-};
 
 export default Process;

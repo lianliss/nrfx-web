@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { p2pMode } from 'src/index/constants/dapp/types';
 
 // Components
@@ -11,6 +12,10 @@ import { openStateModal } from 'src/actions';
 import router from 'src/router';
 import { P2P_ORDER } from 'src/index/constants/pages';
 import getFinePrice from 'utils/get-fine-price';
+import { Web3Context } from 'services/web3Provider';
+import wei from 'utils/wei';
+import wait from 'utils/wait';
+import { toastPush } from 'src/actions/toasts';
 
 const CurrencyIndicator = ({ currency }) => (
   <span className="moderate-fz medium-fw dark-black-color">{currency}</span>
@@ -31,7 +36,23 @@ const SetPaymentButton = ({ adaptive, buttonSize, onClick }) => {
   );
 };
 
-function Form({ mode, adaptive, selectedPayment, onCancel, banks, offer }) {
+const processError = (error) => {
+  const { message } = error;
+  try {
+    if (message.indexOf('Internal JSON-RPC error.') >= 0) {
+      const internal = JSON.parse(message.split('Internal JSON-RPC error.')[1]);
+      return internal.message;
+    } else {
+      return message;
+    }
+  } catch (err) {
+    console.log('ERRR', err);
+    return message;
+  }
+};
+
+function Form({ mode, adaptive, selectedPayment, onCancel, banks, banksList, offer, initialAmount = 0, initialFiatAmount = 0 }) {
+  const dispatch = useDispatch();
   const {
     address,
     commission,
@@ -47,10 +68,26 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, offer }) {
     fiat,
     terms,
   } = offer;
+  const context = React.useContext(Web3Context);
+  const {
+    isConnected,
+    accountAddress,
+    chainId,
+    getFiatsArray,
+    getWeb3,
+    network,
+    getBSCScanLink,
+    getTransactionReceipt,
+    transaction,
+    backendRequest,
+    getTokenContract,
+  } = context;
   const buttonSize = adaptive ? 'big' : 'moderate';
   
-  const [amount, setAmount] = React.useState(0);
-  const [fiatAmount, setFiatAmount] = React.useState(0);
+  const [amount, setAmount] = React.useState(initialAmount);
+  const [fiatAmount, setFiatAmount] = React.useState(initialFiatAmount);
+  const [isProcess, setIsProcess] = React.useState(false);
+  const [errorText, setErrorText] = React.useState();
   
   const onSetFiatAmount = value => {
     setFiatAmount(value);
@@ -62,10 +99,44 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, offer }) {
     setFiatAmount(value * (1 + commission));
   };
 
-  const handleConfirm = () => {
-    router.navigate(P2P_ORDER);
-
-    onCancel();
+  const handleConfirm = async () => {
+    const {p2p} = network.contractAddresses;
+    if (!p2p) return;
+  
+    setErrorText(null);
+    setIsProcess(true);
+    try {
+      const isBuy = mode !== 'sell';
+      const contract = isBuy
+        ? new (getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/p2p/buy'),
+          offer.address,
+        )
+        : new (getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/p2p/sell'),
+          offer.address,
+        );
+      const params = [
+        wei.to(fiatAmount),
+        selectedPayment.index
+      ];
+      const tx = await transaction(contract, 'createTrade', params);
+      console.log('transaction hash', tx, getBSCScanLink(tx));
+      const receipt = await getTransactionReceipt(tx);
+      console.log('transaction receipt', receipt);
+      dispatch(toastPush(
+        `Trade created`));
+      await wait(2000);
+      router.navigate(P2P_ORDER, {
+        offerAddress: offer.address,
+        clientAddress: accountAddress,
+      });
+      onCancel();
+    } catch (error) {
+      console.error('[handleConfirm]', error);
+      setErrorText(processError(error));
+    }
+    setIsProcess(false);
   };
 
   return (
@@ -115,7 +186,7 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, offer }) {
       >
         {!selectedPayment && (
           <SetPaymentButton
-            onClick={() => openStateModal('p2p_set_payment_method', { mode, offer, banksList })}
+            onClick={() => openStateModal('p2p_set_payment_method', { mode, offer, banks, banksList, amount, fiatAmount })}
           />
         )}
         {!adaptive && (
@@ -124,14 +195,17 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, offer }) {
           </Button>
         )}
         {mode === p2pMode.buy ? (
-          <Button type="lightBlue" size={buttonSize} onClick={handleConfirm}>
+          <Button type="lightBlue" state={isProcess ? "loading" : ''}
+                  disabled={isProcess} size={buttonSize} onClick={handleConfirm}>
             Buy {fiat.symbol}
           </Button>
         ) : (
-          <Button type="orange" size={buttonSize} onClick={handleConfirm}>
+          <Button type="orange" state={isProcess ? "loading" : ''}
+                  disabled={isProcess} size={buttonSize} onClick={handleConfirm}>
             Sell {fiat.symbol}
           </Button>
         )}
+        {!!errorText && <span>{errorText}</span>}
       </Row>
       {adaptive && (
         <PaymentItems

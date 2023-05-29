@@ -56,6 +56,7 @@ function TradeType() {
     getBSCScanLink,
     getTransactionReceipt,
     transaction,
+    backendRequest,
   } = context;
   
   const fiatsOptions = getFiatsArray()

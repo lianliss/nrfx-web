@@ -58,20 +58,6 @@ function CreateOrder({ mode, onClose, offer, banksList, ...props }) {
     return <></>;
   }
   
-  const context = React.useContext(Web3Context);
-  const {
-    isConnected,
-    accountAddress,
-    chainId,
-    getFiatsArray,
-    getWeb3,
-    network,
-    getBSCScanLink,
-    getTransactionReceipt,
-    transaction,
-    backendRequest,
-  } = context;
-  
   const {
     fiat,
     address,
@@ -131,6 +117,7 @@ function CreateOrder({ mode, onClose, offer, banksList, ...props }) {
         selectedPayment={selectedPayment}
         onCancel={closeStateModal}
         banks={banks}
+        banksList={banksList}
         offer={offer}
         {...props}
       />

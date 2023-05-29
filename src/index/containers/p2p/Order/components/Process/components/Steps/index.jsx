@@ -5,7 +5,7 @@ import { orderProcesses as processes } from 'src/index/constants/dapp/types';
 
 const steps = {
   buy: [
-    { id: 1, type: processes.buy.payment, title: 'Transfer payment to Seller' },
+    { id: 1, type: 1, title: 'Transfer payment to Seller' },
     {
       id: 2,
       type: processes.buy.pending,
@@ -45,10 +45,9 @@ const stepsEnabledProcesses = [
   processes.sell.releasing,
 ];
 
-function Steps({ mode, process, adaptive }) {
-  const stepsOfMode = steps[mode];
-  const processStep = stepsOfMode.find((step) => step.type === process);
-  const allowedProcess = stepsEnabledProcesses.includes(process);
+function Steps({ mode, order, adaptive }) {
+  const stepsOfMode = steps[order.cache.side];
+  const allowedProcess = true;
 
   if (!adaptive && allowedProcess) {
     return (
@@ -58,7 +57,7 @@ function Steps({ mode, process, adaptive }) {
             number={id}
             key={id}
             title={title}
-            active={id <= processStep.id}
+            active={id <= 1}
             answerMessage={answerMessage}
           />
         ))}

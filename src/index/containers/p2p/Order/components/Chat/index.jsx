@@ -13,7 +13,7 @@ import sendIcon from 'src/asset/icons/action/send-message.svg';
 // Styles
 import './index.less';
 
-function Chat() {
+function Chat({order}) {
   const [nextMessage, setNextMessage] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -37,11 +37,11 @@ function Chat() {
 
   return (
     <CabinetBlock className="p2p-order-chat">
-      <ChatUser />
+      <ChatUser order={order} />
       <div className="p2p-order-chat-content">
         <Row alignItems="center" justifyContent="center" gap={15} wrap>
-          <OrderCreatedTime time={new Date()} />
-          <OrderCreatedDate date={new Date()} />
+          <OrderCreatedTime time={new Date(order.date)} />
+          <OrderCreatedDate date={new Date(order.date)} />
         </Row>
         <Message
           type="gray"

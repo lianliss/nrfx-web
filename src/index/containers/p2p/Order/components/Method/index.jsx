@@ -22,64 +22,21 @@ const Title = ({ title, answerMessage, showWarn }) => (
     {showWarn && (
       <Row className="p2p-order-process-method__warn" alignItems="center">
         <SVG src={warnIcon} />
-        <p>Binance only supports real-name verified payment methods.</p>
+        <p>Narfex only supports real-name verified payment methods.</p>
       </Row>
     )}
   </>
 );
 
-function Method({ adaptive, process, selectedMethod }) {
+function Method({ adaptive, order, selectedMethod }) {
   let title;
   let component;
 
-  switch (process) {
-    case processes.buy.payment:
-      title = (
-        <Title
-          title="Transfer the funds to the sellers account provided below"
-          answerMessage="Answer"
-          showWarn
-        />
-      );
-      component = (
-        <ChooseMethod
-          methods={testPayments}
-          selectedMethod={selectedMethod}
-          adaptive={adaptive}
-        />
-      );
-      break;
-    case processes.buy.pending:
-    case processes.sell.pending:
-      title = <Title title="Payment method" />;
-      component = (
-        <ChooseMethod selectedMethod={selectedMethod} adaptive={adaptive} />
-      );
-      console.log(12);
-      break;
-    case processes.sell.releasing:
-      title = (
-        <Title
-          title="Confirm that the payment is
-            made using the buyer`s real name
-            (Alexandr Widodo Halim)."
-          answerMessage="Answer"
-          showWarn
-        />
-      );
-      component = (
-        <ChooseMethod selectedMethod={selectedMethod} adaptive={adaptive} />
-      );
-      break;
-    default:
-      title = <Title title="Payment method" />;
-      component = <ChoosedMethod payment={selectedMethod} />;
-      break;
-  }
+  component = <ChoosedMethod payment={selectedMethod} />;
 
   return (
     <div className="p2p-order-process-method">
-      {title}
+      <Title title="Payment method" />
       {component}
     </div>
   );

@@ -30,6 +30,25 @@
   border-radius: var(--radius-panel);
 }
 
+.row {
+  margin: 20px -8px;
+  padding: 8px 12px;
+  border-radius: var(--radius-panel);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--azureish-white);
+  }
+}
+.field {
+  b {
+    font-weight: 500;
+  }
+  span {
+    margin-left: 10px;
+  }
+}
+
 :global(.adaptive) .setPaymentMethod {
   h2 {
     font-size: 16px;

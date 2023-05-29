@@ -11,7 +11,7 @@ import success from 'src/asset/icons/status/check_circle_success.svg';
 // Styles
 import './index.less';
 
-function ChatUser() {
+function ChatUser({order}) {
   const Progress = ({ title, number }) => (
     <Col className="p2p-order-chat-user-progress__item" gap={5}>
       <span>{title}</span>
@@ -26,7 +26,7 @@ function ChatUser() {
       <Row className="p2p-order-chat-user__header" alignItems="center">
         <img src={avatar} alt="avatar" width="53" height="53" />
         <div>
-          <p className="p2p-order-chat-user__name">mail****@gmail.com</p>
+          <p className="p2p-order-chat-user__name">{order.ownerName}</p>
           <Row alignItems="center">
             <span>KYC</span>
             <SVG

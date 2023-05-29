@@ -8,6 +8,7 @@ import SVG from 'utils/svg-wrap';
 
 // Utils
 import { orderProcesses as processes } from 'src/index/constants/dapp/types';
+import getFinePrice from 'utils/get-fine-price';
 
 import successIcon from 'src/asset/icons/status/check_circle_success.svg';
 
@@ -65,18 +66,32 @@ const formatTitle = (title, values) => {
   return formattedTitle;
 };
 
-function Header({ adaptive, process, from, to, fromAmount, toAmount }) {
-  const isCompleted = completedProcesses.includes(process);
-  const title = formatTitle(headerTitles[process].title, {
-    from,
-    to,
-  });
-  const subtitle = formatTitle(headerTitles[process].subtitle, {
-    from,
-    to,
-    fromAmount,
-    toAmount,
-  });
+function Header({ adaptive, order, from, to, fromAmount, toAmount }) {
+  const isCompleted = !order.status;
+  const isCancel = _.get(order, 'cache.isCancel', false);
+  
+  const ownerName = order.ownerName.length ? order.ownerName : order.ownerAddress;
+  const clientName = order.clientName.length ? order.clientName : order.clientAddress;
+  
+  const {fiat, fiatAmount, moneyAmount} = order;
+  const {symbol} = fiat;
+  
+  let title;
+  let subtitle;
+  if (order.status) {
+    if (order.isBuy) {
+      title = `Buy ${getFinePrice(moneyAmount)} ${symbol} from ${ownerName}`;
+    } else {
+      title = `Sell ${getFinePrice(fiatAmount)} ${symbol} to ${ownerName}`;
+    }
+    subtitle = 'The order is created, please wait for system confirmation.';
+  } else {
+    if (isCancel) {
+      title = 'Order cancelled';
+    } else {
+      title = 'Order completed';
+    }
+  }
 
   const chatButton = (
     <CustomButton className="p2p-order-header__chat-icon">
@@ -109,16 +124,16 @@ function Header({ adaptive, process, from, to, fromAmount, toAmount }) {
         </h3>
         <Row alignItems="center" gap="12px 15px" wrap>
           <p>{subtitle}</p>
-          {timerEnabledProcesses.includes(process) && (
+          {(
             <Timer
               type="light-blue"
-              time={new Date(new Date().getTime() + 1 * 60 * 60 * 1000)}
+              time={new Date(new Date(order.date).getTime() + 1 * 60 * 60 * 1000)}
               hideHours
             />
           )}
         </Row>
       </div>
-      {adaptive ? chatButton : <Info />}
+      {adaptive ? chatButton : <Info order={order} />}
     </CabinetBlock>
   );
 }
