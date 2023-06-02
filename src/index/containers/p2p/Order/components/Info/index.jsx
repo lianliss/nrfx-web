@@ -12,6 +12,7 @@ import {
 import './index.less';
 
 function Info({ adaptive, order }) {
+  if (!order) return <></>;
   return (
     <div className="p2p-order-info">
       <Col alignItems={adaptive ? 'flex-start' : 'flex-end'}>

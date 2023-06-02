@@ -17,18 +17,43 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './index.less';
 
-function AdaptiveList({ mode, onOrderCreate }) {
-  const Item = () => (
-    <TR className="orders-list-item">
+function AdaptiveList({
+                        mode,
+                        selectedPayment,
+                        selectedFiat,
+                        amount,
+                        offersList,
+                        onOrderCreate,
+                        banksList,
+                      }) {
+  const Item = ({offer}) => {
+    const {
+      address,
+      commission,
+      currency,
+      isKYCRequired,
+      maxTrade,
+      minTrade,
+      name,
+      network,
+      owner,
+      schedule,
+      settings,
+      side,
+    } = offer;
+    const banks = _.get(settings, 'banks', [])
+      .filter(b => !!b.code)
+      .map(b => _.get(banksList.find(l => l.code === b.code), 'title'));
+    return <TR className="orders-list-item">
       <TD>
         <div className="orders-list-user">
           <div className="orders-list-user__profile">
             <img src={avatar} alt="" className="orders-list-user__avatar" />
             <span
               className="orders-list-user__name "
-              title="mail****@gmail.com"
+              title={address}
             >
-              mail****@gmail.com
+              {name.length ? name : address}
             </span>
             <SVG src={require('src/asset/icons/status/sucess-13px.svg')} flex />
           </div>
@@ -44,27 +69,19 @@ function AdaptiveList({ mode, onOrderCreate }) {
       </TD>
       <TD>
         <Row alignItems="center" className="orders-list-price">
-          <WalletIcon currency="IDR" size={24} />
-          <NumberFormat number={15333.33} currency="IDR" />
+          <WalletIcon currency={selectedFiat.symbol} size={24} />
+          <NumberFormat number={commission * 100} currency="%" />
         </Row>
       </TD>
       <TD>
         <div className="orders-list-limits">
           <div className="orders-list-limits__available">
-            <span className="orders-list-limits__title">Available</span>
-            <NumberFormat number={1000.0} currency="N-Fiat" />
+            <span className="orders-list-limits__title">Min. trade</span>
+            <NumberFormat number={minTrade} currency={selectedFiat.symbol} />
           </div>
-          <div className="orders-list-limits__limit">
-            <span className="orders-list-limits__title">Limit</span>
-            <div>
-              <span className="Number" title={1000000.0}>
-                {`Rp${getFinePrice(1000000.0)}`}
-              </span>
-              <span className="Number">&nbsp;-&nbsp;</span>
-              <span className="Number" title={1030260.0}>
-                {`Rp${getFinePrice(1030260.0)}`}
-              </span>
-            </div>
+          <div className="orders-list-limits__available">
+            <span className="orders-list-limits__title">Max. trade</span>
+            <NumberFormat number={maxTrade} currency={selectedFiat.symbol} />
           </div>
         </div>
       </TD>
@@ -73,7 +90,9 @@ function AdaptiveList({ mode, onOrderCreate }) {
           <Button
             type={mode === p2pMode.sell ? 'orange' : 'lightBlue'}
             size="small"
-            onClick={onOrderCreate}
+            onClick={() => {
+              onOrderCreate(offer, banksList)
+            }}
           >
             {mode === p2pMode.sell ? 'Sell' : 'Buy'}
           </Button>
@@ -81,15 +100,11 @@ function AdaptiveList({ mode, onOrderCreate }) {
       </TD>
       <TD>
         <div className="orders-list-payment">
-          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
-          <PaymentItem title="Pay me" color={paymentColors.red} />
-          <PaymentItem title="Mono Bank" color={paymentColors.black} />
-          <PaymentItem title="Bank Transfer" color={paymentColors.orange} />
-          <PaymentItem title="Pay me" color={paymentColors.red} />
+          {banks.map((bank, index) => <PaymentItem title={bank} key={index} color={paymentColors.orange} />)}
         </div>
       </TD>
     </TR>
-  );
+  };
 
   return (
     <div className="orders-list">
@@ -106,19 +121,7 @@ function AdaptiveList({ mode, onOrderCreate }) {
           </TR>
         }
       >
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        {offersList.map((offer, index) => <Item offer={offer} key={index} />)}
       </CabinetTable>
     </div>
   );

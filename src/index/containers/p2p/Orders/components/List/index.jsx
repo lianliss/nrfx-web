@@ -51,7 +51,7 @@ function List({
             <img src={avatar} alt="" className="orders-list-user__avatar" />
             <span
               className="orders-list-user__name "
-              title="mail****@gmail.com"
+              title={address}
             >
               {name.length ? name : address}
             </span>
@@ -100,7 +100,6 @@ function List({
       </TD>
     </TR>
   };
-
   return (
     <div className="orders-list">
       <CabinetTable

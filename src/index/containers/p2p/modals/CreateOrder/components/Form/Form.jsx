@@ -196,12 +196,12 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, banksList, off
         )}
         {mode === p2pMode.buy ? (
           <Button type="lightBlue" state={isProcess ? "loading" : ''}
-                  disabled={isProcess} size={buttonSize} onClick={handleConfirm}>
+                  disabled={isProcess || !selectedPayment} size={buttonSize} onClick={handleConfirm}>
             Buy {fiat.symbol}
           </Button>
         ) : (
           <Button type="orange" state={isProcess ? "loading" : ''}
-                  disabled={isProcess} size={buttonSize} onClick={handleConfirm}>
+                  disabled={isProcess || !selectedPayment} size={buttonSize} onClick={handleConfirm}>
             Sell {fiat.symbol}
           </Button>
         )}
@@ -212,6 +212,7 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, banksList, off
           mode={mode}
           selected={selectedPayment}
           adaptive={adaptive}
+          banks={banks}
         />
       )}
       {adaptive && <TermsAndConditions terms={terms} />}

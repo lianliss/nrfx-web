@@ -28,6 +28,7 @@ function AdaptiveFilters({
   setRegion,
   amount,
   setAmount,
+  updateList,
 }) {
   const [filtersModal, setFiltersModal] = React.useState(false);
   const [fiatsModal, setFiatsModal] = React.useState(false);
@@ -37,9 +38,10 @@ function AdaptiveFilters({
   }));
   const fiatsOptions = fiats.map((fiat) => ({
     label: fiat.symbol,
-    value: fiat.symbol,
+    value: fiat,
     icon: fiat.logoURI,
   }));
+  const [value, setValue] = React.useState(amount);
   const regionsOptions = regions.map((region) =>
     BottomSheetSelect.option(region.title, region.title, region.flag)
   );
@@ -50,7 +52,10 @@ function AdaptiveFilters({
 
   const handleCloseFiltersModal = () => {
     setFiltersModal(false);
+    setAmount(value);
+    updateList();
   };
+  console.log('amount', amount);
 
   const handleOpenFiatsModal = () => {
     setFiatsModal(true);
@@ -60,9 +65,9 @@ function AdaptiveFilters({
     setFiatsModal(false);
   };
   
-  const [value, setValue] = React.useState(amount);
   const updateAmount = () => {
     setAmount(value);
+    updateList();
   };
 
   return (
@@ -74,7 +79,7 @@ function AdaptiveFilters({
       >
         <CustomButton onClick={handleOpenFiatsModal}>
           <WalletIcon currency={selectedFiat} size={16.9} />
-          {selectedFiat}
+          {selectedFiat.symbol}
           <SVG
             src={require('src/asset/icons/arrows/form-dropdown.svg')}
             className="dark-dropdown-icon"
@@ -90,7 +95,7 @@ function AdaptiveFilters({
             flex
           />
         </CustomButton>
-        <CustomButton>
+        <CustomButton onClick={updateList}>
           Refresh
           <SVG
             src={require('src/asset/icons/action/reload-gray.svg')}
@@ -104,7 +109,9 @@ function AdaptiveFilters({
           <ButtonsSelect
             options={fiatsOptions}
             value={selectedFiat}
-            onChange={setFiat}
+            onChange={fiat => {
+              setFiat(fiat);
+            }}
             title="Fiat"
             initDisplayNumber={12}
           />
@@ -116,9 +123,11 @@ function AdaptiveFilters({
             <AdaptiveTop.title title="Amount" />
             <DappInput
               placeholder="Enter amount"
-              indicator={selectedFiat}
+              indicator={selectedFiat.symbol}
               inputMode="decimals"
               type="number"
+              value={value}
+              onChange={setValue}
               onEnter={updateAmount}
             />
           </div>

@@ -88,7 +88,7 @@ function ListWrapper({ adaptive, onOrderCreate, ...props }) {
       params.amount = amount;
     }
     const list = await backendRequest(params, ``, 'offers', 'get');
-    console.log('OFFERS LIST', list);
+    console.log('OFFERS LIST', list, selectedFiat);
     setOffersList(list.map(offer => {
       let settings;
       try {

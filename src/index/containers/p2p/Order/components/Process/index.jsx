@@ -41,6 +41,7 @@ function Process({
         <h5 className="p2p-order-process__title">Confirm order info</h5>
         <ItemsComponent className="p2p-order-process-info__items">
           <Info
+            order={order}
             adaptive={adaptive}
             title="Amount"
             number={moneyAmount}
@@ -50,6 +51,7 @@ function Process({
             }
           />
           <Info
+            order={order}
             adaptive={adaptive}
             title="Price"
             currency={symbol}
