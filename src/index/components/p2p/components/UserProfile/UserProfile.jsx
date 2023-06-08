@@ -29,11 +29,10 @@ function UserProfile({ avatar, name, isVerified, isValidator, isForeignProfile, 
   } = context;
   const onTelegramAuth = async user => {
     try {
-      await web3Backend.setP2pUserTelegram(user.id);
-      await backendRequest({
+      const response = await backendRequest({
         telegramID: user.id,
       }, ``, 'user/p2p/telegram', 'post');
-      console.log('[onTelegramAuth]', user);
+      console.log('[onTelegramAuth]', user, response);
     } catch (error) {
       console.error('[onTelegramAuth]', error);
     }
