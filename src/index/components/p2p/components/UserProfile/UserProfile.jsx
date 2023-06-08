@@ -5,6 +5,7 @@ import { Avatar, BetweenSeparator } from '../UI';
 import { CustomButton } from 'dapp';
 import TelegramLoginButton from 'react-telegram-login';
 import web3Backend from 'src/services/web3-backend';
+import { Web3Context } from 'services/web3Provider';
 
 // Utils
 import successRedIcon from 'src/asset/icons/status/success-red.svg';
@@ -22,9 +23,16 @@ const BlockButton = ({ onClick }) => (
 );
 
 function UserProfile({ avatar, name, isVerified, isValidator, isForeignProfile, adaptive }) {
+  const context = React.useContext(Web3Context);
+  const {
+    backendRequest,
+  } = context;
   const onTelegramAuth = async user => {
     try {
       await web3Backend.setP2pUserTelegram(user.id);
+      await backendRequest({
+        telegramID: user.id,
+      }, ``, 'user/p2p/telegram', 'post');
       console.log('[onTelegramAuth]', user);
     } catch (error) {
       console.error('[onTelegramAuth]', error);
