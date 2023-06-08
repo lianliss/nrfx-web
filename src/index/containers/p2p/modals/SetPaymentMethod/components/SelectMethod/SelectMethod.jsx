@@ -15,8 +15,17 @@ const testItems = Array(50)
   .fill({ title: 'Bank Transfer' })
   .map((item, index) => (index < 16 ? { ...item, recommended: true } : item));
 
-function SelectMethod({ adaptive, onSelect }) {
+function SelectMethod({ adaptive, onSelect, banksList, getFiatsArray }) {
   const [selectedLetter, setSelectedLetter] = React.useState('All');
+  const [search, setSearch] = React.useState('');
+  const recommended = banksList.filter(b => b.isRecommended);
+  let items = selectedLetter === 'All'
+    ? banksList
+    : banksList.filter(b => b.currencies.indexOf(selectedLetter) >= 0);
+  if (search.length) {
+    const _search = search.toLowerCase();
+    items = items.filter(i => i.title.toLowerCase().indexOf(_search) >= 0);
+  }
 
   const MethodItem = ({ item }) => (
     <div className={styles.item} onClick={() => onSelect(item)}>
@@ -33,16 +42,15 @@ function SelectMethod({ adaptive, onSelect }) {
         customizedScroll={!adaptive}
       >
         <div>
-          <div className={styles.recommendedMethods}>
+          {!!recommended.length && <div className={styles.recommendedMethods}>
             <h3>Recommended</h3>
             <div className={styles.items}>
-              {testItems
-                .filter((item) => item.recommended)
+              {recommended
                 .map((item, index) => (
                   <MethodItem item={item} key={index} />
                 ))}
             </div>
-          </div>
+          </div>}
           <div className={styles.allMethods}>
             <h3>All Payment Methods</h3>
             <DappInput
@@ -50,14 +58,17 @@ function SelectMethod({ adaptive, onSelect }) {
               placeholder="Search"
               textPosition="left"
               indicatorPosition="left"
+              value={search}
+              onChange={setSearch}
             />
             <AlphabetSelect
               className={styles.alphabet}
               value={selectedLetter}
               onChange={setSelectedLetter}
+              options={getFiatsArray().map(f => f.symbol)}
             />
             <div className={styles.items}>
-              {testItems.map((item, index) => (
+              {items.map((item, index) => (
                 <MethodItem item={item} key={index} />
               ))}
             </div>

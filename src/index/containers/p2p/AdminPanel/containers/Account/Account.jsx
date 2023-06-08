@@ -52,6 +52,7 @@ function Account({ adaptive, user, type, isForeignProfile, kyc }) {
         <UserProfile
           name={name}
           isVerified={isVerified}
+          isValidator={isValidator}
           isForeignProfile={isForeignProfile}
           adaptive={adaptive}
         />

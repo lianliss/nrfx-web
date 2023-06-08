@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const landingSelector = state => state.landing;
 export const langListSelector = state => state.default.langList;
 export const displayedLangListSelector = state =>
@@ -56,7 +58,7 @@ export const dappExchangeTokenSelector = focus => state => state.dapp.exchange[f
 export const dappExchangeFocusSelector = state => state.dapp.exchange.focus;
 // dapp_p2p
 export const dappP2PModeSelector = state => state.dapp.p2p.mode;
-export const dappP2PPaymentSelector = mode => state => state.dapp.p2p[mode].payment;
+export const dappP2PPaymentSelector = mode => state => _.get(state, `dapp.p2p${mode}.payment`);
 export const dappP2PKYCSelector = state => state.dapp.p2p.kyc;
 export const dappP2PCurrencySelector = state => state.dapp.p2p.currency;
 export const dappP2PAvailableForTradeSelector = fiatAddress => state => state.dapp.p2p.available[fiatAddress];

@@ -52,7 +52,7 @@ const getTitle = (mode) => {
   }
 };
 
-function CreateOrder({ mode, onClose, offer, banksList, ...props }) {
+function CreateOrder({ mode, onClose, offer, banksList, payment, ...props }) {
   if (!mode || !offer) {
     onClose();
     return <></>;
@@ -87,7 +87,8 @@ function CreateOrder({ mode, onClose, offer, banksList, ...props }) {
   const terms = _.get(settings, 'terms', '');
 
   const adaptive = useSelector(adaptiveSelector);
-  const selectedPayment = useSelector(dappP2PPaymentSelector(mode));
+  const selectedPayment = payment;
+  console.log('selectedPayment', selectedPayment);
 
   return (
     <Wrapper adaptive={adaptive} onClose={closeStateModal} {...props}>

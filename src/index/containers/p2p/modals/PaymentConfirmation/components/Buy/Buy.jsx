@@ -12,7 +12,7 @@ import crossIcon from 'src/asset/icons/status/cross-18.svg';
 // Styles
 import './Buy.less';
 
-function Buy({ prefix, adaptive, onConfirm, onCancel, onClose, mode }) {
+function Buy({ prefix, adaptive, onConfirm, onCancel, onClose, order }) {
   const [checked, setChecked] = React.useState(false);
 
   const handleCheckChange = () => {
@@ -63,7 +63,7 @@ function Buy({ prefix, adaptive, onConfirm, onCancel, onClose, mode }) {
         onCancel={onCancel}
         onClose={onClose}
         prefix={prefix}
-        mode={mode}
+        order={order}
       />
     </div>
   );

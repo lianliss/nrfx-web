@@ -3,6 +3,8 @@ import React from 'react';
 // Components
 import { Avatar, BetweenSeparator } from '../UI';
 import { CustomButton } from 'dapp';
+import TelegramLoginButton from 'react-telegram-login';
+import web3Backend from 'src/services/web3-backend';
 
 // Utils
 import successRedIcon from 'src/asset/icons/status/success-red.svg';
@@ -19,7 +21,15 @@ const BlockButton = ({ onClick }) => (
   </div>
 );
 
-function UserProfile({ avatar, name, isVerified, isForeignProfile, adaptive }) {
+function UserProfile({ avatar, name, isVerified, isValidator, isForeignProfile, adaptive }) {
+  const onTelegramAuth = async user => {
+    try {
+      await web3Backend.setP2pUserTelegram(user.id);
+      console.log('[onTelegramAuth]', user);
+    } catch (error) {
+      console.error('[onTelegramAuth]', error);
+    }
+  };
   return (
     <div className={styles.UserProfile}>
       <Avatar position="left" size="medium" />
@@ -37,6 +47,10 @@ function UserProfile({ avatar, name, isVerified, isForeignProfile, adaptive }) {
             <img src={isVerified ? successGreenIcon : successRedIcon} />
           </div>
         </div>
+        {isValidator && <TelegramLoginButton dataOnauth={onTelegramAuth}
+                                             cornerRadius={12}
+                                             buttonSize="medium"
+                                             botName="GreedIsGoodAIBot" />}
         {isForeignProfile && adaptive && <BlockButton />}
       </div>
       {isForeignProfile && !adaptive && <BlockButton />}

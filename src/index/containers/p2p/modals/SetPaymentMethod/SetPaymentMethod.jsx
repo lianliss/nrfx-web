@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import { CabinetModal } from 'dapp';
@@ -17,35 +18,26 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import styles from './SetPaymentMethod.module.less';
 
-function SetPaymentMethod({ onClose, mode, banks, banksList, offer, amount, fiatAmount, ...props }) {
-  if (!mode) {
-    onClose();
-    return <></>;
-  }
-
+function SetPaymentMethod({ onClose, initialSelect, mode, banks, banksList, offer, amount, fiatAmount, ...props }) {
+  
+  const context = React.useContext(Web3Context);
+  const {getFiatsArray} = context;
   const dispatch = useDispatch();
   const adaptive = useSelector(adaptiveSelector);
-  const selected = useSelector(dappP2PPaymentSelector(mode));
-
-  const clearSelected = () => {
-    dispatch(setP2PPayment(mode, null));
-  };
-
-  const handleSelect = (newPayment) => {
-    dispatch(setP2PPayment(mode, newPayment));
-  };
+  const [selected, setSelected] = React.useState(initialSelect);
+  
+  const clearSelected = () => setSelected(null);
 
   const handleModalClose = () => {
-    if (selected) {
-      clearSelected();
-      return;
+    if (offer) {
+      openStateModal('p2p_create_order', { mode, banks, banksList, offer, initialAmount: amount, initialFiatAmount: fiatAmount, payment: initialSelect });
     }
-
-    openStateModal('p2p_create_order', { mode, banks, banksList, offer, initialAmount: amount, initialFiatAmount: fiatAmount });
   };
 
-  const handleFormConfirm = () => {
-    openStateModal('p2p_create_order', { mode, banks, banksList, offer, initialAmount: amount, initialFiatAmount: fiatAmount });
+  const handleFormConfirm = _banks => {
+    if (offer) {
+      openStateModal('p2p_create_order', { mode, banks: _banks || banks, banksList, offer, initialAmount: amount, initialFiatAmount: fiatAmount, payment: _banks[0] });
+    }
   };
   
   if (mode === 'buy' && banks) {
@@ -62,8 +54,8 @@ function SetPaymentMethod({ onClose, mode, banks, banksList, offer, amount, fiat
         </h2>
         {banks.filter(b => !!b).map((bank, index) => {
           return <div className={styles.row} key={index} onClick={() => {
-            handleSelect(bank);
-            handleFormConfirm();
+            setSelected(bank);
+            handleFormConfirm([bank]);
           }}>
             <div className={styles.field}>
               <b>Method:</b>
@@ -98,10 +90,14 @@ function SetPaymentMethod({ onClose, mode, banks, banksList, offer, amount, fiat
             adaptive={adaptive}
             onCancel={clearSelected}
             onConfirm={handleFormConfirm}
+            getFiatsArray={getFiatsArray}
             mode={mode}
           />
         ) : (
-          <SelectMethod adaptive={adaptive} onSelect={handleSelect} />
+          <SelectMethod getFiatsArray={getFiatsArray}
+                        adaptive={adaptive}
+                        banksList={banksList}
+                        onSelect={setSelected} />
         )}
       </div>
     </CabinetModal>

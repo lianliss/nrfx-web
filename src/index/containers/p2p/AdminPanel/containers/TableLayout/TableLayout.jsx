@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Web3Backend from 'services/web3-backend';
+import { openStateModal } from 'src/actions';
 
 // Components
 import { Button, SwitchTabs } from 'ui';
@@ -43,6 +45,21 @@ const Switch = ({ selected, onChange, userRole }) => (
 function TableLayout({ adaptive, userRole }) {
   const userPages = pages.filter((page) => page.supportRoles.includes(userRole));
   const [selected, setSelected] = React.useState(userPages[0].value);
+  const [banksList, setBanksList] = React.useState();
+  
+  const onAddPaymentMethod = async () => {
+    try {
+      let _banksList = banksList;
+      if (!banksList) {
+        _banksList = await Web3Backend.getP2pBanks();
+        setBanksList(_banksList);
+      }
+      console.log('onAddPaymentMethod', _banksList);
+      openStateModal('p2p_set_payment_method', { banksList: _banksList });
+    } catch (error) {
+      console.error('[onAddPaymentMethod]', error);
+    }
+  };
 
   const TitleBlock = ({ title, subtitle, onAction, actionText }) => (
     <>
@@ -90,7 +107,7 @@ function TableLayout({ adaptive, userRole }) {
                 'payment methods.'
               }
               actionText="Add a payment method"
-              onAction={() => {}}
+              onAction={onAddPaymentMethod}
             />
           )}
           {selected === 'my-ads' && (

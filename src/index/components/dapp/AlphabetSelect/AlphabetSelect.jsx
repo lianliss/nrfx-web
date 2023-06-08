@@ -10,9 +10,9 @@ import { classNames as cn } from 'utils';
 // Styles
 import styles from './AlphabetSelect.module.less';
 
-function AlphabetSelect({ value, onChange, className }) {
+function AlphabetSelect({ value, onChange, className, options }) {
   const [selected, setSelected] = React.useState(value || 'All');
-  const buttons = ['All', ...letters['en']];
+  const buttons = ['All', ...(options || letters['en'])];
 
   const handleButtonClick = (value) => {
     setSelected(value);

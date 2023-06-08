@@ -225,11 +225,32 @@ export class Web3Backend {
     }
   });
   getBanks = () => this.get('cards/banks');
+  getP2pBanks = (currency) => {
+    if (currency) {
+      return this.get('offers/banks', {
+        params: {
+          currency,
+        }
+      })
+    } else {
+      return this.get('offers/banks')
+    }
+  };
   getLimits = () => this.get('rates/limits');
   getExchangerBalance = () => this.get('rates/balance');
   setUserTelegram = telegramID => this.post('user/telegram', {
     params: {
       telegramID,
+    }
+  });
+  setP2pUserTelegram = telegramID => this.post('user/p2p/telegram', {
+    params: {
+      telegramID,
+    }
+  });
+  setP2pUserSettings = settings => this.post('user/p2p/settings', {
+    params: {
+      settings,
     }
   });
   getWithdrawBanks = () => this.get('withdraw/banks');

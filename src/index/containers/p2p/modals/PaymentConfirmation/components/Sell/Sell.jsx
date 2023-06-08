@@ -19,7 +19,7 @@ const confirmations = [
   },
 ];
 
-function Sell({ prefix, adaptive, onConfirm, onCancel, onClose, mode }) {
+function Sell({ prefix, adaptive, onConfirm, onCancel, onClose, order }) {
   const [confirmation, setConfirmation] = React.useState(null);
 
   const handleConfirmationChange = (value) => {
@@ -67,7 +67,7 @@ function Sell({ prefix, adaptive, onConfirm, onCancel, onClose, mode }) {
       <ConfirmButtons
         adaptive={adaptive}
         prefix={prefix}
-        mode={mode}
+        order={order}
         onConfirm={onConfirm}
         onCancel={onCancel}
         onClose={onClose}

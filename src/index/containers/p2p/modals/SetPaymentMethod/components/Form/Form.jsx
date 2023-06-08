@@ -4,6 +4,7 @@ import React from 'react';
 import { Row, Col, Button } from 'ui';
 import { Message } from 'dapp';
 import SVG from 'utils/svg-wrap';
+import { Select } from 'dapp';
 import { PaymentItem, FormInput } from 'src/index/components/p2p';
 
 // Utils
@@ -13,8 +14,12 @@ import { classNames as cn } from 'utils';
 // Styles
 import styles from './Form.module.less';
 
-function Form({ payment, adaptive, onCancel, onConfirm }) {
+function Form({ payment, adaptive, onCancel, onConfirm, getFiatsArray }) {
   const buttonSize = adaptive ? 'big' : 'moderate';
+  const [currency, setCurrency] = React.useState(payment.currencies.split(',')[0]);
+  const currencies = payment.currencies.split(',').map(c => ({value: c, label: c}));
+  const [holder, setHolder] = React.useState('');
+  const [accountNumber, setAccountNumber] = React.useState('');
 
   return (
     <div className={styles.form}>
@@ -40,17 +45,24 @@ function Form({ payment, adaptive, onCancel, onConfirm }) {
         size="large"
       />
       <Col gap={adaptive ? 15 : 20}>
+        <Select
+          value={currency}
+          onChange={setCurrency}
+          options={currencies}
+          type="simple"
+          indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
+        />
         <FormInput
+          value={holder}
+          onChange={setHolder}
           label="Full name"
           placeholder="Please enter your full name"
         />
         <FormInput
+          value={accountNumber}
+          onChange={setAccountNumber}
           label="Account Number"
           placeholder="Please enter your bank account number"
-        />
-        <FormInput
-          label="Payment Details(Optional)"
-          placeholder="Please enter payment details"
         />
       </Col>
       <p className={cn(styles.warning, 'cool-gray-color')}>

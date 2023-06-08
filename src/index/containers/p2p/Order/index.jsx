@@ -79,6 +79,7 @@ function Order({ adaptive }) {
         offer: offerAddress,
         client: clientAddress,
       }, ``, 'offers/trades', 'get');
+      console.log('cache', cache);
       if (!cache.length) return;
       if (!!order) {
         setOrder({
@@ -173,8 +174,9 @@ function Order({ adaptive }) {
   };
 
   const handlePaymentReceived = () => {
+    console.log('handlePaymentReceived');
     openStateModal('p2p_payment_confirmation', {
-      mode,
+      order,
       onConfirm: async () => {
         try {
           const contract = order.isBuy

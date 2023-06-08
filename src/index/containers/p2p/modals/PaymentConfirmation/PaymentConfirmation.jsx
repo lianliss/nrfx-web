@@ -13,24 +13,19 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import './PaymentConfirmation.less';
 
-function PaymentConfirmation({ mode, onConfirm, onCancel, onClose, ...props }) {
-  if (!mode) {
-    onClose();
-    return <></>;
-  }
+function PaymentConfirmation({ order, onConfirm, onCancel, onClose, ...props }) {
 
   const adaptive = useSelector(adaptiveSelector);
 
   const renderBody = () => {
     let Component = <></>;
 
-    if (mode === p2pMode.buy) {
+    if (order.isBuy) {
       Component = Buy;
-    }
-
-    if (mode === p2pMode.sell) {
+    } else {
       Component = Sell;
     }
+
 
     return (
       <Component
@@ -39,7 +34,7 @@ function PaymentConfirmation({ mode, onConfirm, onCancel, onClose, ...props }) {
         onCancel={onCancel}
         onClose={onClose}
         adaptive={adaptive}
-        mode={mode}
+        order={order}
       />
     );
   };

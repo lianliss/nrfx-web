@@ -15,7 +15,7 @@ function ConfirmButtons({
   onCancel,
   onClose,
   adaptive,
-  mode,
+  order,
 }) {
   const buttonSize = adaptive ? 'big' : 'moderate';
 
@@ -35,8 +35,8 @@ function ConfirmButtons({
         <span className="light-blue-gradient-color">Cancel</span>
       </Button>
       <Button type="lightBlue" size={buttonSize} onClick={handleConfirm}>
-        {mode === p2pMode.buy && 'Confirm payment'}
-        {mode === p2pMode.sell && 'Confirm'}
+        {order.isBuy && 'Confirm payment'}
+        {!order.isBuy && 'Confirm'}
       </Button>
     </div>
   );
