@@ -83,9 +83,7 @@ function ChoosedBank(props) {
   };
   
   const validateEmail = (email) => {
-    return email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
+    return email.indexOf('@') > 0;
   };
   const isEmail = !!validateEmail(card.number);
 
@@ -113,12 +111,14 @@ function ChoosedBank(props) {
                 <SVG src={require('src/asset/icons/action/copy.svg')} />
               </CopyText>
             </>}
+            {!isEmail && <>
             <p className="dark default hight-height extra-small extra-large-height">
               <Lang name="fiatRefillCard_cardHolderName" />
             </p>
             <CopyText text={card.holder_name} className="blue default small extra-large-height">
               {bank.holder_name}
             </CopyText>
+            </>}
             {(!card.isCard && !!card.iban) && <>
               <p className="dark default hight-height extra-small extra-large-height">
                 IBAN
