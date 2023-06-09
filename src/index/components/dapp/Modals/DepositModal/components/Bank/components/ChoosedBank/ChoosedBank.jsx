@@ -81,6 +81,13 @@ function ChoosedBank(props) {
         toast.error(err.message);
       });
   };
+  
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+  const isEmail = !!validateEmail(card.number);
 
   return (
     <Col className="DepositModal__ChoosedBank" alignItems="stretch">
@@ -93,11 +100,15 @@ function ChoosedBank(props) {
           <InfoWrapper size="large">
             {(card.number && card.number.length) && <>
               <p className="dark default hight-height extra-small extra-large-height">
-                {card.isCard ? <Lang name="fiatRefillCard_cardNumberForRefill" /> : 'Account number'}
+                {isEmail
+                  ? 'Payment email'
+                  :card.isCard ? <Lang name="fiatRefillCard_cardNumberForRefill" /> : 'Account number'}
               </p>
               <CopyText text={card.number}>
                 <span className="blue default small extra-large-height">
-                  {card.number ? card.number.match(/.{1,4}/g).join(' ') : ''}
+                  {isEmail
+                    ? card.number
+                    : card.number ? card.number.match(/.{1,4}/g).join(' ') : ''}
                 </span>
                 <SVG src={require('src/asset/icons/action/copy.svg')} />
               </CopyText>
