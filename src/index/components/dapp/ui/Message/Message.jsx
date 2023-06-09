@@ -10,7 +10,17 @@ import { classNames as cn } from 'utils';
 // Styles
 import './Message.less';
 
-function Message({ children, type, maxWidth, onClose }) {
+function Message({
+  children,
+  type,
+  border,
+  background,
+  onClose,
+  disableClosing,
+  maxWidth,
+  borderRadius,
+  style,
+}) {
   const [opacity, setOpacity] = React.useState(1);
   const animationDuration = 0.3;
 
@@ -21,31 +31,41 @@ function Message({ children, type, maxWidth, onClose }) {
 
   return (
     <div
-      className={cn({ DappMessage: true, [type]: type })}
+      className={cn('DappMessage', type, { border, background })}
       style={{
         transition: `opacity ${animationDuration}s`,
         maxWidth,
         opacity,
+        borderRadius,
+        ...style,
       }}
     >
       {children}
-      <div className="close" onClick={handleClose}>
-        <SVG src={require('src/asset/icons/close/default.svg')} />
-      </div>
+      {!disableClosing && (
+        <div className="close" onClick={handleClose}>
+          <SVG src={require('src/asset/icons/close/default.svg')} />
+        </div>
+      )}
     </div>
   );
 }
 
 Message.propTypes = {
-  type: PropTypes.oneOf(['warning']),
+  type: PropTypes.oneOf(['warning', 'gray']),
   maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClose: PropTypes.func,
+  style: PropTypes.object,
+  border: PropTypes.bool,
+  background: PropTypes.bool,
 };
 
 Message.defaultProps = {
   type: 'warning',
   maxWidth: null,
   onClose: () => {},
+  style: {},
+  border: false,
+  background: true,
 };
 
 export default Message;

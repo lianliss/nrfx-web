@@ -16,3 +16,19 @@ export const p2pMode = {
   buy: 'buy',
   sell: 'sell',
 };
+
+export const orderProcesses = {
+  buy: {
+    payment: 'buy-payment',
+    pending: 'buy-pending',
+    completed: 'buy-completed',
+    cancelled: 'buy-cancelled',
+  },
+  sell: {
+    pending: 'sell-pending',
+    releasing: 'sell-releasing',
+    completed: 'sell-completed',
+  },
+};
+
+export const orderAdStatuses = { published: 'published', private: 'private' };

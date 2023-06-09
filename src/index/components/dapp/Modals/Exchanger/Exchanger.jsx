@@ -1,6 +1,4 @@
 import React from 'react';
-import { Web3Context } from 'services/web3Provider';
-import routerABI from 'src/index/constants/ABI/NarfexExchangerRouter';
 
 // Components
 import { CabinetModal, CustomButton, AnswerPopup } from 'dapp';
@@ -15,188 +13,22 @@ import SVG from 'utils/svg-wrap';
 import _ from 'lodash';
 import { getLang } from 'utils';
 import { useSelector } from 'react-redux';
-import * as actions from "src/actions";
-import { openStateModal } from 'src/actions';
-import * as toast from 'actions/toasts';
-import wei from 'utils/wei';
 import getFinePrice from 'utils/get-fine-price';
-import * as exchangerAnalytics from 'src/utils/analytics/exchanger';
+import { useSwapAction } from 'src/hooks/dapp/useSwap';
 
 // Styles
 import './Exchanger.less';
 
 function Exchanger({ ...props }) {
   const adaptive = useSelector((state) => state.default.adaptive);
-  const context = React.useContext(Web3Context);
-  const {fiat, coin, fiatAmount, coinAmount, isExactOut} = props;
-  const {
-    connectWallet, isConnected, addTokenToWallet,
-    tokens, loadAccountBalances, exchange,
-    getTokenContract,
-    accountAddress,
-    getTokenBalance,
-    chainId,
-    routerAddress,
-    getWeb3,
-    transaction,
-    getBSCScanLink,
-    network,
-    referAddress,
-    tryExchangeError,
-  } = context;
-  const [inAmount, setInAmount] = React.useState(fiatAmount);
-  const [outAmount, setOutAmount] = React.useState(coinAmount);
-  const [priceImpact, setPriceImpact] = React.useState(0);
-  const [rate, setRate] = React.useState(coinAmount / fiatAmount);
-  const [isRateReverse, setIsRateReverse] = React.useState(false);
-  const [path, setPath] = React.useState([]);
-  const [slippage, setSlippage] = React.useState(Number(window.localStorage.getItem('nrfx-slippage')) || 0.5);
-  const [deadline, setDeadline] = React.useState(20);
-  const [allowance, setAllowance] = React.useState(999999999);
-  const [isProcess, setIsProcess] = React.useState(true);
-  const [isApproving, setIsApproving] = React.useState(false);
-  
-  const networkName = chainId === 56 ? 'BSC' : 'Testnet BSC';
-  
-  React.useEffect(() => {
-    if (isExactOut) {
-      getTokenContract(fiat).getInAmount(coin, outAmount).then(data => {
-        setInAmount(data.inAmount);
-        setOutAmount(Number(outAmount.toFixed(9)));
-        setRate(outAmount / data.inAmount);
-        setPath(data.path);
-        setPriceImpact(_.get(data, 'priceImpact', 0));
-      });
-    } else {
-      getTokenContract(fiat).getOutAmount(coin, inAmount).then(data => {
-        setInAmount(Number(inAmount.toFixed(9)));
-        setOutAmount(data.outAmount);
-        setRate(data.outAmount / inAmount);
-        setPath(data.path);
-        setPriceImpact(_.get(data, 'priceImpact', 0));
-      });
-    }
-  }, [fiatAmount, coinAmount, isExactOut]);
-  
-  React.useEffect(() => {
-    if (fiat.isFiat) {
-      setIsProcess(false);
-      return;
-    }
-    const token = getTokenContract(fiat);
-    const router = network.contractAddresses.exchangerRouter;
-    
-    token.getAllowance(router).then(allowance => {
-      setAllowance(allowance);
-      setIsProcess(false);
-    });
-  }, []);
-  
-  const inAmountMax = inAmount * (1 + slippage / 100);
-  const outAmountMin = outAmount * (1 - slippage / 100);
-  
-  const priceImpactPercents = priceImpact * 100;
-  let priceImpactColor = '';
-  if (priceImpactPercents < 1) priceImpactColor = 'green';
-  if (priceImpactPercents >= 3) priceImpactColor = 'yellow';
-  if (priceImpactPercents >= 5) priceImpactColor = 'red';
-  
-  const isAvailable = allowance > inAmount;
-  
-  const approve = async () => {
-    const token = getTokenContract(fiat);
-    const router = network.contractAddresses.exchangerRouter;
-    try {
-      const maxApprove = 10**9;
-      setIsApproving(true);
-      await token.approve(router, inAmountMax > maxApprove ? inAmountMax : maxApprove);
-      setAllowance(inAmountMax > maxApprove ? inAmountMax : maxApprove);
-    } catch (error) {
-      console.error('[approve]', error);
-      token.stopWaiting();
-      toast.warning('Approve error');
-    }
-    setIsApproving(false);
-  };
-  
-  const swap = async () => {
-    try {
-      setIsProcess(true);
-      const router = new (getWeb3().eth.Contract)(
-        routerABI,
-        network.contractAddresses.exchangerRouter,
-      );
-      
-      const isFromBNB = !path[0].address
-        || path[0].address.toLowerCase() ===
-          network.wrapToken.address.toLowerCase();
-      let value;
-      if (isFromBNB) {
-        if (isExactOut) {
-          value = wei.to(inAmountMax);
-        } else {
-          value = wei.to(inAmount);
-        }
-      }
-      
-      const amountDecimals = isExactOut
-        ? _.get(path[path.length - 1], 'decimals', 18)
-        : _.get(path[0], 'decimals', 18);
-      const limitDecimals = !isExactOut
-        ? _.get(path[path.length - 1], 'decimals', 18)
-        : _.get(path[0], 'decimals', 18);
-      
-      const receipt = await transaction(router, 'swap', [
-        path.map(token => token.address),
-        isExactOut,
-        wei.to(isExactOut ? outAmount : inAmount, amountDecimals),
-        wei.to(isExactOut ? inAmountMax : outAmountMin, limitDecimals),
-        Math.floor(Date.now() / 1000) + deadline * 60,
-        referAddress,
-      ], value);
-      openStateModal('transaction_submitted', {
-        txLink: getBSCScanLink(receipt),
-        symbol: coin.symbol,
-        addToken: () => addTokenToWallet(coin),
-      });
-
-      const coinRate = await getTokenContract(coin).getOutAmount(network.defaultRateToken, 1);
-      exchangerAnalytics.addExchange({
-        tx: receipt,
-        price: coinRate?.outAmount,
-        fromToken: fiat,
-        toToken: coin,
-        chainId: network.chainId,
-        toTokensAmount: outAmount,
-      });
-    } catch (error) {
-      console.error('[swap]', error);
-      if (error.message.indexOf('Internal JSON-RPC error.') >= 0) {
-        const message = error.message.split('Internal JSON-RPC error.')[1];
-        try {
-          const parsed = JSON.parse(message);
-          toast.warning(parsed.message.split('execution reverted:')[1]);
-          if (parsed.message.split('Not enough liquidity').length > 1) {
-            try {
-              tryExchangeError(
-                path[0].address,
-                path[path.length - 1].address,
-                inAmount,
-                outAmount,
-              )
-            } catch (error) {
-              console.error('[tryExchangeError]', error);
-            }
-          }
-        } catch (error) {
-          toast.warning(error.message);
-        }
-      } else {
-        toast.warning(error.message);
-      }
-    }
-    setIsProcess(false);
-  };
+  const { fiat, coin, fiatAmount, coinAmount, isExactOut } = props;
+  const swapAction = useSwapAction({
+    fiat,
+    coin,
+    fiatAmount,
+    coinAmount,
+    isExactOut,
+  });
 
   const ListItem = ({ title, value }) => (
     <Row
@@ -210,7 +42,10 @@ function Exchanger({ ...props }) {
   );
 
   const SwapButton = () => (
-    <CustomButton onClick={() => setIsRateReverse(!isRateReverse)} className="swap">
+    <CustomButton
+      onClick={() => swapAction.setIsRateReverse(!swapAction.isRateReverse)}
+      className="swap"
+    >
       <SVG src={require('src/asset/icons/swap.svg')} />
     </CustomButton>
   );
@@ -223,18 +58,18 @@ function Exchanger({ ...props }) {
           <span>{getLang('dapp_exchanger_you_give')}</span>
           <Currency
             adaptive={adaptive}
-            name={networkName}
-            currency={fiat}
-            amount={inAmount}
+            name={swapAction.networkName}
+            currency={swapAction.fiat}
+            amount={swapAction.inAmount}
           />
         </Col>
         <Col className="ExchangerModal__Currency__container">
           <span>{getLang('dapp_exchanger_you_receive')}</span>
           <Currency
             adaptive={adaptive}
-            name={networkName}
-            currency={coin}
-            amount={outAmount}
+            name={swapAction.networkName}
+            currency={swapAction.coin}
+            amount={swapAction.outAmount}
           />
         </Col>
         <div className="ExchangerModal__rate">
@@ -243,10 +78,26 @@ function Exchanger({ ...props }) {
             value={
               <>
                 <span>
-                  {getFinePrice(isRateReverse ? 1 / rate : rate)}
-                  &nbsp;{(isRateReverse ? fiat : coin).symbol}
+                  {getFinePrice(
+                    swapAction.isRateReverse
+                      ? 1 / swapAction.rate
+                      : swapAction.rate
+                  )}
+                  &nbsp;
+                  {
+                    (swapAction.isRateReverse
+                      ? swapAction.fiat
+                      : swapAction.coin
+                    ).symbol
+                  }
                   &nbsp;{getLang('dapp_global_per').toLowerCase()}
-                  &nbsp;{(isRateReverse ? coin : fiat).symbol}
+                  &nbsp;
+                  {
+                    (swapAction.isRateReverse
+                      ? swapAction.coin
+                      : swapAction.fiat
+                    ).symbol
+                  }
                 </span>
                 <SwapButton />
               </>
@@ -254,31 +105,50 @@ function Exchanger({ ...props }) {
           />
         </div>
         <div>
-          {!isAvailable && <Button type="lightBlue"
-                                   size="extra_large"
-                                   onClick={() => approve()}
-                                   state={isApproving ? 'loading' : ''}
-                                   className="exchange">
-            Approve
-          </Button>}
-          <Button type="lightBlue"
-                  size="extra_large"
-                  onClick={() => swap()}
-                  disabled={!isAvailable}
-                  state={isProcess ? 'loading' : ''}
-                  className="exchange">
+          {!swapAction.isAvailable && (
+            <Button
+              type="lightBlue"
+              size="extra_large"
+              onClick={() => swapAction.approve()}
+              state={swapAction.isApproving ? 'loading' : ''}
+              className="exchange"
+            >
+              Approve
+            </Button>
+          )}
+          <Button
+            type="lightBlue"
+            size="extra_large"
+            onClick={() => swapAction.swap()}
+            disabled={!swapAction.isAvailable}
+            state={swapAction.isProcess ? 'loading' : ''}
+            className="exchange"
+          >
             {getLang('dapp_exchanger_exchange_button')}
           </Button>
         </div>
         <DexDescription>
           <DexDescription.Item>
             <div>
-              {getLang(isExactOut ? 'dex_maximum_spend' : 'dex_minimum_receive')}
+              {getLang(
+                swapAction.isExactOut
+                  ? 'dex_maximum_spend'
+                  : 'dex_minimum_receive'
+              )}
               <AnswerPopup>{getLang('dex_notice_price_movement')}</AnswerPopup>
             </div>
             <span>
-              <NumberFormat number={isExactOut ? inAmountMax : outAmountMin} />
-              &nbsp;{isExactOut ? fiat.symbol : coin.symbol}
+              <NumberFormat
+                number={
+                  swapAction.isExactOut
+                    ? swapAction.inAmountMax
+                    : swapAction.outAmountMin
+                }
+              />
+              &nbsp;
+              {swapAction.isExactOut
+                ? swapAction.fiat.symbol
+                : swapAction.coin.symbol}
             </span>
           </DexDescription.Item>
           <DexDescription.Item>
@@ -286,30 +156,31 @@ function Exchanger({ ...props }) {
               {getLang('dex_price_impact')}
               <AnswerPopup>{getLang('dex_price_impact_hint')}</AnswerPopup>
             </div>
-            <span className={priceImpactColor}>
-              <NumberFormat number={priceImpactPercents.toFixed(2)} percent />
+            <span className={swapAction.priceImpactColor}>
+              <NumberFormat
+                number={swapAction.priceImpactPercents.toFixed(2)}
+                percent
+              />
             </span>
           </DexDescription.Item>
           {/*<DexDescription.Item>*/}
-            {/*<div>*/}
-              {/*{getLang('dex_trade_fee')}*/}
-              {/*/!* <AnswerPopup>*/}
-                {/*Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem*/}
-                {/*ipsum dolor sit amet, consectetur adipiscing elit*/}
-              {/*</AnswerPopup> *!/*/}
-            {/*</div>*/}
-            {/*<span>$00.55 - BNB557483875475</span>*/}
+          {/*<div>*/}
+          {/*{getLang('dex_trade_fee')}*/}
+          {/*/!* <AnswerPopup>*/}
+          {/*Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem*/}
+          {/*ipsum dolor sit amet, consectetur adipiscing elit*/}
+          {/*</AnswerPopup> *!/*/}
+          {/*</div>*/}
+          {/*<span>$00.55 - BNB557483875475</span>*/}
           {/*</DexDescription.Item>*/}
         </DexDescription>
-        <ExchangeRoute
-          route={path.map(token => token.symbol)}
-        />
+        <ExchangeRoute route={swapAction.path.map((token) => token.symbol)} />
         <ExchangerSettings
           {...{
-            slippage,
-            setSlippage,
-            deadline,
-            setDeadline,
+            slippage: swapAction.slippage,
+            setSlippage: swapAction.setSlippage,
+            deadline: swapAction.deadline,
+            setDeadline: swapAction.setDeadline,
           }}
         />
       </div>

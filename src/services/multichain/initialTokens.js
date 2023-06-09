@@ -1,6 +1,8 @@
+import { Token, BaseChainToken } from '../Token';
 import {
   ETHEREUM_MAINNET,
-  BSC_MAINNET, BSC_TESTNET,
+  BSC_MAINNET,
+  BSC_TESTNET,
   POLYGON_MAINNET,
   POLYGON_MUMBAI,
   ARBITRUM_MAINNET,
@@ -9,14 +11,18 @@ import {
 import baseTokens from 'src/index/constants/baseTokens';
 
 // Decimals
-const DEFAULT_DECIMALS = 18;
+export const DEFAULT_DECIMALS = 18;
 
 export const TOKEN_LIST_URI = {
-  [ETHEREUM_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/ether_tokens.json',
+  [ETHEREUM_MAINNET]:
+    'https://storage.googleapis.com/custom-product-builder/ether_tokens.json',
   [BSC_MAINNET]: 'https://tokens.pancakeswap.finance/cmc.json',
-  [POLYGON_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/polygon_tokens.json',
-  [ARBITRUM_MAINNET]: 'https://storage.googleapis.com/custom-product-builder/arbitrum_tokens.json',
-  [POLYGON_MUMBAI]: 'https://storage.googleapis.com/custom-product-builder/mumbai_tokens.json',
+  [POLYGON_MAINNET]:
+    'https://storage.googleapis.com/custom-product-builder/polygon_tokens.json',
+  [ARBITRUM_MAINNET]:
+    'https://storage.googleapis.com/custom-product-builder/arbitrum_tokens.json',
+  [POLYGON_MUMBAI]:
+    'https://storage.googleapis.com/custom-product-builder/mumbai_tokens.json',
 };
 
 export const ABI = {
@@ -30,257 +36,247 @@ export const ABI = {
 
 export const TOKENS = {
   [ETHEREUM_MAINNET]: {
-    usdc: {
-      name: "USD Coin",
-      symbol: "USDC",
-      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      chainId: ETHEREUM_MAINNET,
-      decimals: 6,
-      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
-    },
-    eth: {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      address: null,
-      chainId: ETHEREUM_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
-    },
-    usdt: {
-      name: 'Tether USD',
-      address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-      symbol: 'USDT',
-      decimals: 6,
-      chainId: ETHEREUM_MAINNET,
-      logoURI:
-        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png',
-    },
-    nrfx1: {
-      name: 'Narfex v1 (legacy)',
-      symbol: 'NRFXv1',
-      address: '0x01b443495834D667b42f54d2b77eEd6951eD94a4',
-      chainId: ETHEREUM_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
-    },
-    nrfx: {
-      name: 'Narfex',
-      symbol: 'NRFX',
-      address: '0xCc17e34794B6c160a0F61B58CF30AA6a2a268625',
-      chainId: ETHEREUM_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
-    },
-    wrapETH: {
-      name: 'Wrapped Ether',
-      address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-      symbol: 'WETH',
-      decimals: DEFAULT_DECIMALS,
-      chainId: ETHEREUM_MAINNET,
-      logoURI:
-        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
-    },
+    usdc: new Token(
+      'USD Coin',
+      'USDC',
+      '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      ETHEREUM_MAINNET,
+      6,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png'
+    ),
+    eth: new BaseChainToken(
+      'Ethereum',
+      'ETH',
+      ETHEREUM_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png'
+    ),
+    usdt: new Token(
+      'Tether USD',
+      'USDT',
+      '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+      ETHEREUM_MAINNET,
+      6,
+      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png'
+    ),
+    nrfx1: new Token(
+      'Narfex v1 (legacy)',
+      'NRFXv1',
+      '0x01b443495834D667b42f54d2b77eEd6951eD94a4',
+      ETHEREUM_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://static.narfex.com/img/currencies/nrfx_pancake.svg'
+    ),
+    nrfx: new Token(
+      'Narfex',
+      'NRFX',
+      '0xCc17e34794B6c160a0F61B58CF30AA6a2a268625',
+      ETHEREUM_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://static.narfex.com/img/currencies/nrfx_pancake.svg'
+    ),
+    wrapETH: new Token(
+      'Wrapped Ether',
+      '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+      'WETH',
+      ETHEREUM_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png'
+    ),
   },
   [BSC_MAINNET]: {
-    usdc: {
-      name: "USD Coin",
-      symbol: "USDC",
-      address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-      chainId: BSC_MAINNET,
-      decimals: 18,
-      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
-    },
-    usdt: {
-      name: 'Tether',
-      symbol: 'USDT',
-      address: '0x55d398326f99059fF775485246999027B3197955',
-      chainId: BSC_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png',
-    },
-    nrfx: {
-      name: 'Narfex',
-      symbol: 'NRFX',
-      address: '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
-      chainId: BSC_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
-    },
-    bnb: {
-      name: 'Binance Coin',
-      symbol: 'BNB',
-      address: null,
-      chainId: BSC_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png',
-    },
-    wrapBNB: {
-      name: 'Wrapped BNB',
-      symbol: 'WBNB',
-      address: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-      chainId: BSC_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png',
-    },
+    usdc: new Token(
+      'USD Coin',
+      'USDC',
+      '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
+      BSC_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png'
+    ),
+    usdt: new Token(
+      'Tether',
+      'USDT',
+      '0x55d398326f99059fF775485246999027B3197955',
+      BSC_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png'
+    ),
+    nrfx: new Token(
+      'Narfex',
+      'NRFX',
+      '0x3764Be118a1e09257851A3BD636D48DFeab5CAFE',
+      BSC_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://static.narfex.com/img/currencies/nrfx_pancake.svg'
+    ),
+    bnb: new BaseChainToken(
+      'Binance Coin',
+      'BNB',
+      BSC_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png'
+    ),
+    wrapBNB: new Token(
+      'Wrapped BNB',
+      'WBNB',
+      '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+      BSC_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png'
+    ),
   },
   [BSC_TESTNET]: {
-    wrapBNB: {
-      name: 'Wrapped BNB',
-      symbol: 'WBNB',
-      address: '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
-      chainId: BSC_TESTNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png',
-    },
-    usdc: {
-      name: "USD Coin",
-      symbol: "USDC",
-      address: "0xd92271C20A5a3A03d8Eb6244D1c002EBed525605",
-      chainId: BSC_TESTNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
-    },
-    bnb: {
-      name: 'Binance Coin',
-      symbol: 'BNB',
-      address: null,
-      chainId: BSC_TESTNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png',
-    },
-    usdt: {
-      name: 'Tether',
-      symbol: 'USDT',
-      address: '0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684',
-      chainId: BSC_TESTNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png',
-    },
-    nrfx: {
-      name: 'Narfex',
-      symbol: 'NRFX',
-      address: '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
-      chainId: BSC_TESTNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
-    },
-    busd: {
-      name: 'Binance USD',
-      symbol: 'BUSD',
-      address: '0x78867bbeef44f2326bf8ddd1941a4439382ef2a7',
-      chainId: BSC_TESTNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/4687.png',
-    },
-    dai: {
-      name: 'Dai Token',
-      symbol: 'DAI',
-      address: '0x8a9424745056Eb399FD19a0EC26A14316684e274',
-      chainId: BSC_TESTNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png',
-    },
+    wrapBNB: new Token(
+      'Wrapped BNB',
+      'WBNB',
+      '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+      BSC_TESTNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png'
+    ),
+    usdc: new Token(
+      'USD Coin',
+      'USDC',
+      '0xd92271C20A5a3A03d8Eb6244D1c002EBed525605',
+      BSC_TESTNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png'
+    ),
+    bnb: new BaseChainToken(
+      'Binance Coin',
+      'BNB',
+      BSC_TESTNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/7192.png'
+    ),
+    usdt: new Token(
+      'Tether',
+      'USDT',
+      '0x7ef95a0fee0dd31b22626fa2e10ee6a223f8a684',
+      BSC_TESTNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png'
+    ),
+    nrfx: new Token(
+      'Narfex',
+      'NRFX',
+      '0xcDA8eD22bB27Fe84615f368D09B5A8Afe4a99320',
+      BSC_TESTNET,
+      DEFAULT_DECIMALS,
+      'https://static.narfex.com/img/currencies/nrfx_pancake.svg'
+    ),
+    busd: new Token(
+      'Binance USD',
+      'BUSD',
+      '0x78867bbeef44f2326bf8ddd1941a4439382ef2a7',
+      BSC_TESTNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/4687.png'
+    ),
+    dai: new Token(
+      'Dai Token',
+      'DAI',
+      '0x8a9424745056Eb399FD19a0EC26A14316684e274',
+      BSC_TESTNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png'
+    ),
   },
   [POLYGON_MAINNET]: {
-    usdc: {
-      name: "USD Coin",
-      symbol: "USDC",
-      address: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-      chainId: POLYGON_MAINNET,
-      decimals: 6,
-      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
-    },
-    matic: {
-      name: 'Matic',
-      symbol: 'MATIC',
-      address: null,
-      chainId: POLYGON_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
-    },
-    wrapMATIC: {
-      name: 'Wrapped Matic',
-      address: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
-      symbol: 'WMATIC',
-      decimals: DEFAULT_DECIMALS,
-      chainId: POLYGON_MAINNET,
-      logoURI:
-        'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
-    },
+    usdc: new Token(
+      'USD Coin',
+      'USDC',
+      '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+      POLYGON_MAINNET,
+      6,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png'
+    ),
+    matic: new BaseChainToken(
+      'Matic',
+      'MATIC',
+      POLYGON_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png'
+    ),
+    wrapMATIC: new Token(
+      'Wrapped Matic',
+      '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+      'WMATIC',
+      POLYGON_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png'
+    ),
   },
   [POLYGON_MUMBAI]: {
-    usdc: {
-      name: "USD Coin",
-      symbol: "USDC",
-      address: "0x4CC22BA6A0fFaA248B6a704330d26Be84DcC1405",
-      chainId: POLYGON_MUMBAI,
-      decimals: 18,
-      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
-    },
-    matic: {
-      name: 'Matic',
-      symbol: 'MATIC',
-      address: null,
-      chainId: POLYGON_MUMBAI,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
-    },
-    wrapMATIC: {
-      name: 'Wrapped Matic',
-      address: '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
-      symbol: 'WMATIC',
-      decimals: DEFAULT_DECIMALS,
-      chainId: POLYGON_MUMBAI,
-      logoURI:
-        'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png',
-    },
-    nrfx: {
-      name: 'Narfex',
-      symbol: 'NRFX',
-      address: '0xe48d1C63199aca7B4b4B39068098A0ED27840a8d',
-      chainId: POLYGON_MUMBAI,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://static.narfex.com/img/currencies/nrfx_pancake.svg',
-    },
+    usdc: new Token(
+      'USD Coin',
+      'USDC',
+      '0x4CC22BA6A0fFaA248B6a704330d26Be84DcC1405',
+      POLYGON_MUMBAI,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png'
+    ),
+    matic: new BaseChainToken(
+      'Matic',
+      'MATIC',
+      POLYGON_MUMBAI,
+      DEFAULT_DECIMALS,
+      'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png'
+    ),
+    wrapMATIC: new Token(
+      'Wrapped Matic',
+      '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+      'WMATIC',
+      POLYGON_MUMBAI,
+      DEFAULT_DECIMALS,
+      'https://static.metaswap.codefi.network/api/v1/tokenIcons/137/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png'
+    ),
+    nrfx: new Token(
+      'Narfex',
+      'NRFX',
+      '0xe48d1C63199aca7B4b4B39068098A0ED27840a8d',
+      POLYGON_MUMBAI,
+      DEFAULT_DECIMALS,
+      'https://static.narfex.com/img/currencies/nrfx_pancake.svg'
+    ),
   },
   [ARBITRUM_MAINNET]: {
-    usdc: {
-      name: "USD Coin",
-      symbol: "USDC",
-      address: "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-      chainId: ARBITRUM_MAINNET,
-      decimals: 6,
-      logoURI: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
-    },
-    eth: {
-      name: 'Ethereum',
-      symbol: 'ETH',
-      address: null,
-      chainId: ARBITRUM_MAINNET,
-      decimals: DEFAULT_DECIMALS,
-      logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
-    },
-    wrapETH: {
-      name: 'Wrapped Ether',
-      address: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
-      symbol: 'WETH',
-      decimals: DEFAULT_DECIMALS,
-      chainId: ARBITRUM_MAINNET,
-      logoURI:
-        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
-    },
+    usdc: new Token(
+      'USD Coin',
+      'USDC',
+      '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
+      ARBITRUM_MAINNET,
+      6,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png'
+    ),
+    eth: new Token(
+      'Ethereum',
+      'ETH',
+      null,
+      ARBITRUM_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png'
+    ),
+    wrapETH: new Token(
+      'Wrapped Ether',
+      '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
+      'WETH',
+      ARBITRUM_MAINNET,
+      DEFAULT_DECIMALS,
+      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png'
+    ),
   },
 };
 
-Object.keys(TOKENS).map(network => {
+Object.keys(TOKENS).map((network) => {
   const tokens = TOKENS[network];
-  Object.keys(tokens).map(symbol => {
+  Object.keys(tokens).map((symbol) => {
     tokens[symbol] = {
       ...tokens[symbol],
       address: tokens[symbol].address
         ? tokens[symbol].address.toLowerCase()
         : tokens[symbol].address,
-    }
+    };
   });
 });
 
@@ -328,26 +324,27 @@ export const DISPLAY_TOKENS = {
     TOKENS[POLYGON_MAINNET].usdc,
     TOKENS[POLYGON_MAINNET].matic,
     TOKENS[POLYGON_MAINNET].wrapMATIC,
-    ...baseTokens.filter(t => t.chainId === POLYGON_MAINNET),
+    ...baseTokens.filter((t) => t.chainId === POLYGON_MAINNET),
   ],
   [POLYGON_MUMBAI]: [
     TOKENS[POLYGON_MUMBAI].usdc,
     TOKENS[POLYGON_MUMBAI].nrfx,
     TOKENS[POLYGON_MUMBAI].matic,
     TOKENS[POLYGON_MUMBAI].wrapMATIC,
-    ...baseTokens.filter(t => t.chainId === POLYGON_MUMBAI),
+    ...baseTokens.filter((t) => t.chainId === POLYGON_MUMBAI),
   ],
   [ARBITRUM_MAINNET]: [
     TOKENS[ARBITRUM_MAINNET].usdc,
     TOKENS[ARBITRUM_MAINNET].eth,
     TOKENS[ARBITRUM_MAINNET].wrapETH,
-    ...baseTokens.filter(t => t.chainId === ARBITRUM_MAINNET),
-  ]
+    ...baseTokens.filter((t) => t.chainId === ARBITRUM_MAINNET),
+  ],
 };
 
 // Common Bases
 const initialCommonBases = ['NRFX', 'DAI', 'USDC', 'USDT', 'WBTC', 'WETH'];
-const getCommonBases = (chainId, arr = []) => [NETWORKS_DATA[chainId].defaultSymbol].concat(arr, initialCommonBases)
+const getCommonBases = (chainId, arr = []) =>
+  [NETWORKS_DATA[chainId].defaultSymbol].concat(arr, initialCommonBases);
 
 export const COMMON_BASES = {
   [ETHEREUM_MAINNET]: getCommonBases(ETHEREUM_MAINNET),

@@ -1,0 +1,88 @@
+.AdsTable {
+  margin-top: 30px;
+  padding: 0 50px;
+
+  td span {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+
+    &:not([class]) {
+      color: var(--dark-black);
+    }
+  }
+
+  td {
+    vertical-align: top;
+  }
+
+  :global {
+    .orders-list-payment-item {
+      max-width: 109px;
+    }
+
+    td > .Col > * {
+      &:not(:last-child) {
+        margin-bottom: 7px;
+      }
+    }
+
+    .Col {
+      height: auto;
+    }
+
+    .CustomButton {
+      &:not(:active):hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &__action__buttons {
+    width: auto;
+  }
+}
+
+.cutText {
+  max-width: 115px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.TD__published {
+  display: flex;
+  align-items: flex-start;
+}
+
+.adaptiveTR {
+  td:first-child {
+    span {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+}
+
+.adaptiveTD {
+  & &__title {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--cool-gray);
+  }
+
+  .paymentItem span,
+  & &__value {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: right;
+  }
+}
+
+:global(.adaptive) .AdsTable {
+  margin-top: 20px;
+  padding: 0;
+}

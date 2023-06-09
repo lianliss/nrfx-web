@@ -1,0 +1,33 @@
+.alphabetSelect {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.lettersButton {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 16px;
+  max-width: 18px;
+  height: 18px;
+  padding: 0;
+  background: var(--blue-light-gradient);
+  border-radius: 4px;
+  cursor: pointer;
+
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 16px;
+  color: #fff;
+
+  &:not(:global(.active)) {
+    background: none;
+    color: var(--cool-gray);
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

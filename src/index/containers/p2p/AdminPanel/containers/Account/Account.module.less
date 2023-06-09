@@ -1,0 +1,33 @@
+.Account {
+  padding: 50px;
+  background: #fff;
+  border-radius: var(--radius-panel);
+
+  &__header {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #f1f1f1;
+    gap: 15px;
+  }
+
+  &__body {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+  }
+}
+
+:global(.adaptive) {
+  .Account {
+    padding: 31px 18px;
+
+    &__header {
+      padding-bottom: 0;
+      border: none;
+    }
+
+    &__body {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+}

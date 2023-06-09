@@ -34,6 +34,7 @@ const BottomSheetSelect = React.memo(
     width,
     showSelectedInMenu,
     isModalForAdaptive,
+    indicatorIcon,
     ...props
   }) => {
     const adaptive = useSelector(adaptiveSelector);
@@ -96,7 +97,7 @@ const BottomSheetSelect = React.memo(
           DropdownIndicator: (props) => {
             return (
               <DropdownIndicator {...props}>
-                <SVG src={indicatorIcons[type]} flex />
+                <SVG src={indicatorIcon || indicatorIcons[type]} flex />
               </DropdownIndicator>
             );
           },
@@ -190,6 +191,7 @@ BottomSheetSelect.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   type: PropTypes.oneOf(['average', 'bold']),
   isModalForAdaptive: PropTypes.bool,
+  customStyles: PropTypes.func,
 };
 
 BottomSheetSelect.defaultProps = {
@@ -201,10 +203,11 @@ BottomSheetSelect.defaultProps = {
   width: 150,
   type: 'average',
   isModalForAdaptive: false,
+  customStyles: () => {},
 };
 
 // Return object for options constant
-const BottomSheetSelectOption = (
+const bottomSheetSelectOption = (
   title,
   value,
   icon,
@@ -234,6 +237,6 @@ const BottomSheetSelectOption = (
   };
 };
 
-BottomSheetSelect.option = BottomSheetSelectOption;
+BottomSheetSelect.option = bottomSheetSelectOption;
 
 export default BottomSheetSelect;

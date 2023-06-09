@@ -11,6 +11,8 @@ import { getLang, classNames as cn } from 'utils';
 import items from '../../constants/items';
 import { Web3Context } from 'src/services/web3Provider';
 import { pageIsFine } from 'src/index/containers/dapp/DappCabinet/utils/pageUtils';
+import { useSelector } from 'react-redux';
+import { currentLangSelector } from 'src/selectors';
 
 function Items({ routeName, chainId }) {
   // Check - current page is exists or empty in pages.
@@ -91,12 +93,27 @@ function Items({ routeName, chainId }) {
     </SidebarItem>
   );
 
+  const Block = ({ title, items = [] }) => (
+    <li className="CabinetSidebar__Block">
+      <span className="CabinetSidebar__Block__title">{getLang(title)}</span>
+      <ul>
+        {items.map((childItem, key) => (
+          <Item {...childItem} key={key} />
+        ))}
+      </ul>
+    </li>
+  );
+
   const Column = ({ items }) => (
     <CabinetBlock>
       <ul>
         {items.map((item, key) => {
           if (item.type === 'parent') {
             return <ParentItem {...item} key={key} />;
+          }
+
+          if (item.type === 'block') {
+            return <Block {...item} key={key} />;
           }
 
           return <Item {...item} key={key} />;
@@ -116,13 +133,14 @@ function Items({ routeName, chainId }) {
 
 const ItemsWrapper = (props) => {
   const { network } = React.useContext(Web3Context);
+  const lang = useSelector(currentLangSelector);
   const { route } = useRoute();
   const { chainId } = network;
   const routeName = route.name;
 
   const memoizedItems = React.useMemo(
     () => <Items {...props} chainId={chainId} routeName={routeName} />,
-    [routeName, chainId]
+    [routeName, chainId, lang]
   );
 
   return memoizedItems;

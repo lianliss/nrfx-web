@@ -1,0 +1,342 @@
+@import '../../../../../vars.less';
+
+.FarmingPopup {
+  // Containers
+  &__header {
+    margin-bottom: 12px;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+
+    p {
+      margin-bottom: 8px;
+    }
+  }
+
+  &-footer {
+    & &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 13px 38px 13px 14px;
+      background: rgba(48, 113, 238, 0.12);
+      border: 0.5px solid var(--secondary-blue);
+      border-radius: var(--radius-panel);
+      text-align: left;
+
+      &__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      & h6,
+      & p {
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      & h6 {
+        margin-bottom: 5px;
+        font-size: 12px;
+        line-height: 18px;
+        color: var(--dark-black);
+      }
+
+      & p {
+        margin-bottom: 10px;
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--cool-gray);
+      }
+
+      & a {
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 16px;
+        color: var(--royal-blue);
+
+        &:not(:hover) {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    margin: 0 auto;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--cool-gray);
+
+    a {
+      text-decoration: underline;
+      color: var(--dark-black);
+    }
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &:not(&__fullscreen) {
+    max-width: 353px;
+    width: 100%;
+  }
+
+  &__fullscreen {
+    .Modal {
+      &__box {
+        padding: 32px 32.5px;
+        max-width: 445px;
+      }
+    }
+
+    .FarmingPopup__header {
+      margin-bottom: 24px;
+    }
+
+    .close {
+      position: absolute;
+      top: 37.7px;
+      right: 32.5px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    p {
+      max-width: 100%;
+    }
+  }
+
+  &.FarmingPopupStake {
+    .Modal__box {
+      max-width: 388px;
+      width: 100%;
+      border-radius: var(--radius-panel);
+    }
+
+    .Button {
+      margin: 0 0 16px;
+    }
+  }
+
+  // Components
+  .title {
+    margin-bottom: 8px;
+    padding-right: 30px;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: #222330;
+  }
+
+  .success-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-right: 30px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #5ec47a;
+  }
+
+  p,
+  .default-text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: var(--cool-gray);
+  }
+
+  .popup-link {
+    display: inline-flex;
+    align-items: center;
+    text-align: center;
+    color: #000;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .basic {
+    color: var(--dark-black);
+  }
+
+  .basic,
+  .popup-link,
+  .DappInput {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+  }
+
+  label {
+    margin: 0 0 24px;
+    width: 100%;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  // <Input />
+  .DappInput {
+    width: 100%;
+    padding: 16px 150px 13px 16px !important;
+    border: none;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+
+    &__wrapper {
+      margin: 0;
+    }
+  }
+
+  .input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 8px;
+  }
+
+  .input-controls {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 8px;
+
+    &__button {
+      padding: 8px;
+      background: #cadfff;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 100%;
+    }
+
+    span {
+      background: linear-gradient(135deg, #78a0ff 0%, #5078e6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .default-text {
+      font-weight: 600;
+      color: var(--dark-gunmetal);
+      margin: 0 10px 0 0;
+    }
+  }
+
+  // <Button />
+  .Button {
+    height: 46px;
+    width: 100%;
+    margin: 12px 0 20px;
+  }
+
+  // <SVG />
+  .isvg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: start;
+  }
+
+  .FarmingPopup__header .isvg {
+    margin-right: 4px;
+  }
+
+  .popup-link .isvg {
+    margin-left: 4px;
+  }
+
+  // <Table />
+  &__table {
+    margin-top: 12px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    td:last-child .Table__td__cont {
+      padding-right: 10px;
+    }
+
+    .Table__td__cont {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 100%;
+      color: var(--dark-black);
+    }
+
+    .Table__sub {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 100%;
+      color: var(--cool-gray);
+    }
+
+    thead {
+      .Table__td__cont {
+        min-height: 14px;
+        padding-bottom: 12px;
+      }
+
+      td:first-child .Table__td__cont {
+        padding-left: 0;
+      }
+    }
+
+    tbody {
+      // Borders radius
+      tr:last-child td:first-child {
+        border-radius: 0 0 0 var(--radius-panel);
+      }
+
+      tr:last-child td:last-child {
+        border-radius: 0 0 var(--radius-panel) 0;
+      }
+
+      tr:first-child td:first-child {
+        border-radius: var(--radius-panel) 0 0 0;
+      }
+
+      tr:first-child td:last-child {
+        border-radius: 0 var(--radius-panel) 0 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @mobile-width) {
+  .FarmingPopup {
+    &:not(&__fullscreen) {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+}

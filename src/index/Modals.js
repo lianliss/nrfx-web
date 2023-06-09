@@ -49,6 +49,7 @@ import DappReceiveQRModal from "./components/dapp/DappReceiveQRModal/DappReceive
 import LoadingStatus from "./components/cabinet/LoadingStatus/LoadingStatus";
 import {FarmingPopupROI} from "./components/dapp/Farming/components/FarmingPopup/FarmingPopup";
 import FarmingPopupStake  from "./components/dapp/Farming/components/FarmingPopupStake/FarmingPopupStake";
+import P2pPopupStake  from "./components/p2p/components/P2pPopupStake/P2pPopupStake";
 
 // New Deposit Modals
 import {
@@ -72,11 +73,13 @@ import {
   SwiftGeneratedModal,
   AttentionBuyTokenModal,
   SendTokensModal,
+  KYCVerificationModal,
   TransactionResponseModal,
   ExchangerModal,
   VideoModal,
   AdaptiveTop,
 } from "./components/dapp";
+import * as p2pModals from './containers/p2p/modals';
 import TransferModal from "./containers/dapp/CabinetWalletScreen/components/TransferModal/TransferModal";
 import DexSettingsModal from "./containers/dapp/DexSwap/components/DexSettingsModal/DexSettingsModal";
 import { closeModal } from "src/actions/index";
@@ -221,6 +224,10 @@ function Modals(props) {
     case "unstake":
       Component = FarmingPopupStake;
       break;
+    case "p2p_stake":
+    case "p2p_unstake":
+      Component = P2pPopupStake;
+      break;
     case "farming_roi":
       Component = FarmingPopupROI;
       break;
@@ -281,6 +288,9 @@ function Modals(props) {
     case "send_tokens":
       Component = SendTokensModal;
       break;
+    case "kyc_verification":
+      Component = KYCVerificationModal;
+      break;
     case "exchanger":
       Component = ExchangerModal;
       break;
@@ -289,6 +299,15 @@ function Modals(props) {
       break;
     case "adaptive_top":
       Component = AdaptiveTop;
+      break;
+    case "p2p_create_order":
+      Component = p2pModals.CreateOrder;
+      break;
+    case "p2p_payment_confirmation":
+      Component = p2pModals.PaymentConfirmation;
+      break;
+    case "p2p_set_payment_method":
+      Component = p2pModals.SetPaymentMethod;
       break;
     default:
       return null;

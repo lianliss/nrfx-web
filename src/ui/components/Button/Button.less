@@ -1,7 +1,7 @@
 @import '../../vars';
 
 .Button {
-  --button-height: 48px;
+  --button-height: 46px;
   outline: none;
   border: none;
   font-family: @font-family;
@@ -80,9 +80,9 @@
   }
 
   &.extra_small {
-    --button-height: 29px;
+    --button-height: 30px;
     padding: 0 9px;
-    border-radius: 6px;
+    border-radius: 7px;
   }
 
   &.small {
@@ -96,15 +96,27 @@
     border-radius: 6px;
   }
 
+  &.middle {
+    --button-height: 40px;
+    padding: 0 24px;
+  }
+
   &.medium {
     --button-height: 44px;
     padding: 0 14px;
     border-radius: 11px;
   }
 
-  &.middle {
-    --button-height: 40px;
-    padding: 0 24px;
+  &.moderate {
+    --button-height: 46px;
+    padding: 0 18px;
+    border-radius: 7px;
+
+    .Button__label {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 22px;
+    }
   }
 
   &.large {
@@ -151,7 +163,6 @@
 
     &:after {
       background: var(--primary-blue);
-      opacity: 0.12;
     }
 
     &:hover:after {
@@ -320,6 +331,7 @@
     }
   }
 
+  &.secondary-light--light-blue,
   &.secondary-light {
     background: #f7f8fb;
     transition: all 0.2s;
@@ -331,6 +343,22 @@
 
     .Button__label {
       color: var(--dark-black);
+    }
+  }
+
+  &.secondary-light--light-blue {
+    .Button__label span {
+      background: var(--blue-light-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    &.disabled {
+      .Button__label {
+        opacity: 0.5;
+      }
     }
   }
 
@@ -369,16 +397,6 @@
     }
   }
 
-  &.orange {
-    background: var(--light-orange-gradient);
-    transition: all 0.2s;
-
-    &:hover {
-      opacity: 0.92;
-      box-shadow: 0 4px 8px rgba(250, 200, 106, 0.42);
-    }
-  }
-
   &.white {
     background: #fff;
     transition: all 0.2s;
@@ -393,11 +411,22 @@
     }
   }
 
+  &.orange {
+    background: var(--light-orange-gradient);
+    transition: all 0.2s;
+
+    &:hover {
+      opacity: 0.92;
+      box-shadow: 0 4px 8px rgba(250, 200, 106, 0.42);
+    }
+  }
+
   &.orange,
   &.white,
   &.dark,
   &.light,
   &.secondary-light,
+  &.secondary-light--light-blue,
   &.secondary-blue,
   &.secondary-alice,
   &.gray,

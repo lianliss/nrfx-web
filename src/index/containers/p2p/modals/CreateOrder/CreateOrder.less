@@ -1,0 +1,266 @@
+.p2p-modal-create-order {
+  background: #fff;
+  border-radius: var(--radius-panel);
+
+  &__wrapper {
+    padding: 20px;
+  }
+
+  &__wrapper > .Modal__box {
+    max-width: 1110px;
+    width: 100%;
+  }
+
+  & > div {
+    padding: 40px;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    width: 58%;
+
+    &:last-child {
+      width: 42.1%;
+      padding: 40px 40px 40px 28px;
+      border-left: 1px solid #dbdbdb;
+    }
+  }
+
+  &-form {
+    & > div {
+      &:nth-child(1) {
+        margin-bottom: 20px;
+      }
+      &:nth-child(2) {
+        margin-bottom: 30px;
+      }
+    }
+  }
+
+  .DappInput {
+    border: 1px solid var(--azureish-white);
+    border-radius: 10px;
+    background: none;
+
+    &__wrapper {
+      margin-top: 8px;
+
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
+  .CustomButton {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.01em;
+
+    &:hover {
+      &:not(:active) {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .modal-balance {
+    text-align: right;
+  }
+
+  .modal-buttons {
+    &-set-payment {
+      width: 100%;
+
+      .Button {
+        margin-top: 8px;
+        width: 100%;
+      }
+    }
+
+    .Button {
+      flex: 1 1 auto;
+    }
+  }
+
+  &-info-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+
+    &:first-child {
+      flex: 1 1 47.5%;
+    }
+    &:last-child {
+      flex: 1 1 52.5%;
+    }
+  }
+
+  &-payment-items,
+  &-amount-items,
+  &-terms {
+    box-sizing: border-box;
+    padding-left: 35px;
+  }
+
+  &-payment-items {
+    .p2p-modal-create-order-info-item {
+      &:last-child {
+        & > div {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .modal__label {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .p2p-user-orders-info__wrapper {
+    margin-bottom: 20px;
+  }
+
+  .orders-list-payment-item {
+    color: var(--dark-black);
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  &-terms {
+    margin-top: 50px;
+
+    h3 {
+      margin-bottom: 15px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--dark-black);
+    }
+
+    p {
+      text-transform: uppercase;
+      color: var(--cool-gray);
+
+      &:not(:last-child) {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .small-fz {
+    font-size: 11px;
+    line-height: 105%;
+  }
+
+  .moderate-fz {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .normal-fw {
+    font-weight: 400;
+  }
+  .medium-fw {
+    font-weight: 500;
+  }
+  .semi-bold-fw {
+    font-weight: 600;
+  }
+  .bold-fw {
+    font-weight: 700;
+  }
+}
+
+.adaptive .p2p-modal-create-order {
+  h2 {
+    margin-bottom: 20px;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  & > div {
+    width: 100%;
+    max-width: 100%;
+    border: none;
+
+    &:first-child {
+      padding: 50px 18px 20px 18px;
+    }
+    &:last-child {
+      padding: 0 18px 18px 18px;
+    }
+  }
+
+  &-form {
+    & > div {
+      margin-bottom: 20px;
+    }
+  }
+
+  .modal-buttons {
+    margin-bottom: 20px;
+  }
+
+  .moderate-fz {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .Button.big {
+    .Button__label {
+      font-size: 18px;
+      line-height: 100%;
+    }
+  }
+
+  &-info-item {
+    flex: 1 1 100%;
+  }
+
+  &-payment-items,
+  &-amount-items {
+    padding: 0;
+  }
+
+  &-payment-items {
+    .p2p-modal-create-order-info-item {
+      justify-content: space-between;
+      align-items: flex-start;
+
+      & > div {
+        max-width: 50%;
+      }
+
+      .orders-list-payment-item {
+        width: 100%;
+        justify-content: flex-end;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+
+        &__color {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &-terms {
+    margin-top: 26px;
+    padding-left: 0;
+
+    h3 {
+      margin-bottom: 8px;
+    }
+
+    p {
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

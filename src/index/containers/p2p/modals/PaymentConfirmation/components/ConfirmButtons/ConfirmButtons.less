@@ -1,0 +1,26 @@
+@import url(../../PaymentConfirmation.less);
+
+.@{modal-class}__buttons {
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+  gap: 16px 15px;
+
+  .Button {
+    width: 50%;
+
+    &.big .Button__label {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 100%;
+    }
+  }
+}
+
+.adaptive .@{modal-class}__buttons {
+  flex-direction: column-reverse;
+
+  .Button {
+    width: 100%;
+  }
+}

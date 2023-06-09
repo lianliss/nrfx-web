@@ -18,20 +18,6 @@ function MoreInformation() {
       <Col className="more-information">
         <div className="more-information__item">
           <Row className="ValidatorTradeForm-row">
-            <Column>
-              <ColumnTitle title="Currency" />
-              <Select
-                value={'light'}
-                onChange={() => {}}
-                options={[
-                  { value: 'light', label: 'Light' },
-                  { value: 'medium', label: 'Medium' },
-                  { value: 'dark', label: 'Dark' },
-                ]}
-                type="simple"
-                indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
-              />
-            </Column>
             <InputColumn
               title="Bank name"
               description={defaultAnswer}

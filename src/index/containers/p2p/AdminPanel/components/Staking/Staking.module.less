@@ -1,0 +1,202 @@
+.Staking {
+  min-width: 55%;
+
+  &__row {
+    &:first-child {
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    &:nth-child(2) {
+      padding-top: 15px;
+    }
+  }
+
+  &__title,
+  &__amount {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  &__title {
+    font-weight: 500;
+    color: var(--cool-gray);
+    margin-right: 20px;
+
+    :global {
+      .AnswerPopup {
+        margin-left: 5px;
+
+        &__container {
+          padding: 12px 14px;
+          width: 348px;
+          max-width: 40vw;
+          box-sizing: border-box;
+        }
+
+        &__content {
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 160%;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  &__amount {
+    margin-left: auto;
+
+    font-weight: 600;
+    color: var(--dark-black);
+  }
+
+  &__button {
+    margin-left: 20px;
+    min-width: 225px;
+  }
+
+  .Select {
+    &__control {
+      width: auto;
+      display: flex;
+      min-height: 0;
+      border: none;
+      cursor: pointer;
+
+      .Select__valueContainer {
+        padding: 0 9px 0 1px;
+      }
+    }
+
+    &__singleValue {
+      position: static;
+      transform: none;
+      max-width: none;
+      overflow: visible;
+
+      :global {
+        .CabinetSelect-BottomSheet-option {
+          &__icon {
+            display: none;
+          }
+
+          p {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 110%;
+            letter-spacing: -0.01em;
+            color: var(--gunmetal);
+          }
+        }
+      }
+    }
+
+    &__valueContainer {
+      flex: none;
+      overflow: visible;
+    }
+
+    &__menu {
+      width: 150px;
+    }
+
+    &__dropdownIndicator {
+      padding: 0;
+
+      svg {
+        fill: #dce5fd;
+      }
+    }
+  }
+}
+
+:global(.adaptive) .Staking {
+  margin: 5px 0;
+  width: 100%;
+
+  &__row {
+    &:first-child {
+      padding: 0px;
+      margin-bottom: 12px;
+      border: none;
+    }
+
+    &:nth-child(2) {
+      padding: 0px;
+    }
+  }
+
+  &__title {
+    margin: 0 auto 0 0;
+  }
+
+  &__amount {
+    margin: 0;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+
+    :global {
+      .Button {
+        margin: 0;
+        flex: 1 1 auto;
+      }
+    }
+  }
+
+  &__amountNumber {
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 110%;
+    letter-spacing: -0.01em;
+  }
+}
+
+:global(.adaptive) .Staking .Select {
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__control {
+    .Select__valueContainer {
+      padding: 0 4px 0 1px;
+    }
+  }
+
+  &__singleValue {
+    :global {
+      .CabinetSelect-BottomSheet-option {
+        &__icon {
+          display: flex;
+          margin-right: 8px;
+
+          img {
+            width: 31px;
+            height: 31px;
+          }
+        }
+
+        p {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  &__menu {
+    width: 100%;
+  }
+}

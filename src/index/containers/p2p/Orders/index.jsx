@@ -11,6 +11,7 @@ import Blog from './components/Blog';
 
 // Utils
 import { dappP2PModeSelector } from 'src/selectors';
+import { openStateModal } from 'src/actions';
 
 // Styles
 import './index.less';
@@ -18,10 +19,18 @@ import './index.less';
 function Orders({ adaptive }) {
   const mode = useSelector(dappP2PModeSelector);
 
+  const handleOrderCreate = () => {
+    openStateModal('p2p_create_order', { mode });
+  };
+
   return (
     <P2P mode={mode}>
       <div className="p2p-orders">
-        <ListWrapper adaptive={adaptive} mode={mode} />
+        <ListWrapper
+          adaptive={adaptive}
+          mode={mode}
+          onOrderCreate={handleOrderCreate}
+        />
         <Information adaptive={adaptive} mode={mode} />
         <Advantages adaptive={adaptive} mode={mode} />
         <FAQ adaptive={adaptive} mode={mode} />

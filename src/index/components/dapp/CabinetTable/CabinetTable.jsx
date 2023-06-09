@@ -7,14 +7,20 @@ import _ from 'lodash';
 // Styles
 import './CabinetTable.less';
 
-function CabinetTable({ header, children }) {
+function CabinetTable({ header, children, type }) {
   return (
-    <table className="CabinetTable">
+    <table className={cn('CabinetTable', type)}>
       <thead>{header}</thead>
       <tbody>{children}</tbody>
     </table>
   );
 }
+
+export const Tip = ({ style, children }) => (
+  <span style={style} className="CabinetTable__tip">
+    {children}
+  </span>
+);
 
 export const TR = ({ children, className, background, custom }) => (
   <tr className={cn({ [className]: className, custom })} style={{ background }}>

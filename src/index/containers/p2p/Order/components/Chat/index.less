@@ -1,0 +1,84 @@
+.p2p-order-chat {
+  padding: 0 !important;
+
+  &-content {
+    padding: 28px 30px 20px;
+
+    .gray:not(.background),
+    .warning.background,
+    .gray.background {
+      padding: 12px;
+
+      p {
+        font-size: 10px;
+        line-height: 18px;
+        color: var(--cool-gray);
+      }
+    }
+
+    .gray:not(.background) {
+      margin: 20px 0;
+      padding: 3px 2px;
+      text-align: center;
+
+      p {
+        line-height: 22px;
+      }
+    }
+
+    .warning.background {
+      padding-right: 17px;
+      margin-bottom: 15px;
+
+      p {
+        font-weight: 500;
+      }
+    }
+
+    .gray.background {
+      padding-right: 34px;
+
+      p {
+        text-transform: uppercase;
+        font-weight: 400;
+        color: #555;
+      }
+    }
+  }
+
+  .DappInput {
+    border: 1px solid var(--azureish-white);
+    background: none;
+
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+
+    &__indicator {
+      padding: 0 12px 0 5px;
+      width: 16px;
+    }
+  }
+
+  .Form {
+    margin-top: 24px;
+  }
+
+  .CustomButton {
+    &.disabled {
+      opacity: 0.8;
+    }
+  }
+
+  &__send {
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:active {
+      svg {
+        fill: #70727b;
+      }
+    }
+  }
+}

@@ -7,13 +7,16 @@ import PropTypes from 'prop-types';
 import { classNames } from '../../utils';
 
 function Radio(props) {
-  const className = classNames({
-    Radio: true,
-    selected: props.selected,
-    disabled: props.disabled,
-    [props.type]: props.type,
-    [props.size]: props.size,
-  });
+  const className = classNames(
+    {
+      Radio: true,
+      selected: props.selected,
+      disabled: props.disabled,
+    },
+    props.type,
+    props.size,
+    props.className
+  );
 
   return (
     <div
@@ -30,8 +33,8 @@ Radio.propTypes = {
   selected: PropTypes.bool,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
-  type: PropTypes.oneOf(['light-blue', 'blue']),
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  type: PropTypes.oneOf(['light-blue', 'blue', 'malibu']),
+  size: PropTypes.oneOf(['extra_small', 'small', 'medium', 'large']),
 };
 
 Radio.defaultProps = {

@@ -27,6 +27,15 @@ const initialState = {
   },
   p2p: {
     mode: p2pMode.buy,
+    buy: {
+      payment: null,
+    },
+    sell: {
+      payment: null,
+    },
+    kyc: null,
+    currency: null,
+    available: {},
   },
 };
 
@@ -162,6 +171,49 @@ function reduce(state = initialState, action = {}) {
         p2p: {
           ...state.p2p,
           mode: payload,
+        },
+      };
+    }
+    case actionTypes.DAPP_SET_P2P_PAYMENT: {
+      const newState = { ...state };
+
+      if (payload.mode === p2pMode.buy) {
+        newState.p2p.buy.payment = payload.payment;
+      }
+
+      if (payload.mode === p2pMode.sell) {
+        newState.p2p.sell.payment = payload.payment;
+      }
+
+      return newState;
+    }
+    case actionTypes.DAPP_UPDATE_P2P_KYC: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          kyc: payload,
+        },
+      };
+    }
+    case actionTypes.DAPP_SET_P2P_CURRENCY: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          currency: payload,
+        },
+      };
+    }
+    case actionTypes.DAPP_UPDATE_P2P_AVAILABLE_TRADE: {
+      return {
+        ...state,
+        p2p: {
+          ...state.p2p,
+          available: {
+            ...state.p2p.available,
+            [payload.fiatAddress]: payload.available,
+          },
         },
       };
     }
