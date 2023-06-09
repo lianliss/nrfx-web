@@ -13,7 +13,7 @@ import SuggestiveBox from '../../components/SuggestiveBox';
 // Utils
 import { getLang } from 'utils';
 import { sizes } from '../../components/SuggestiveBox/constants/types';
-import { DAPP_EXCHANGE } from 'src/index/constants/pages';
+import { DAPP_PRO_DEX } from 'src/index/constants/pages';
 import { currentLangSelector } from 'src/selectors';
 
 // Styles
@@ -35,7 +35,7 @@ const Exchanger = ({ adaptive }) => {
             <p>{getLang('main_landing_exchanger_description')}</p>
             <div className="MainLanding-exchanger__action">
               <CustomButton className="MainLanding-exchanger__button">
-                <Link routeName={DAPP_EXCHANGE}>
+                <Link routeName={DAPP_PRO_DEX}>
                   <Row alignItems="center">
                     {getLang('main_landing_try_exchanger')}
                     <SVG src={require('src/asset/24px/arrow_right_alt.svg')} />

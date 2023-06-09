@@ -50,7 +50,7 @@ function Login({
                 pages.DOCUMENTATION_API_LIST,
                 pages.DOCUMENTATION_API_METHOD,
                 // Dapp Login
-                pages.DAPP_EXCHANGE
+                pages.DAPP_PRO_DEX
               ].includes(currentRoute.name)
             ) {
               router.navigate(pages.WALLET);

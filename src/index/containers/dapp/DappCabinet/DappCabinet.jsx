@@ -6,14 +6,14 @@ import DappContainer from '../../../components/cabinet/DappContainer/DappContain
 import TestnetOverlay from 'dapp/TestnetOverlay/TestnetOverlay';
 
 // Utils
-import { DAPP, DAPP_EXCHANGE } from 'src/index/constants/pages';
+import { DAPP, DAPP_PRO_DEX } from 'src/index/constants/pages';
 import router from 'src/router';
 import { Web3Context } from 'src/services/web3Provider';
 import { getFinePage, pageIsFine } from './utils/pageUtils';
 import _ from 'lodash';
 import getSidebar from './utils/getSidebar';
 
-const DEFAULT_DAPP_PAGE = DAPP_EXCHANGE;
+const DEFAULT_DAPP_PAGE = DAPP_PRO_DEX;
 
 class DappCabinet extends Component {
   componentDidMount() {

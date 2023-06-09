@@ -9,7 +9,7 @@ import Card from './components/Card/Card';
 import * as actions from 'src/actions/index';
 
 import router from 'src/router';
-import { DAPP_EXCHANGE } from 'src/index/constants/pages';
+import { DAPP_PRO_DEX } from 'src/index/constants/pages';
 
 // Card Images
 import laptopImage from './assets/101.svg';
@@ -58,7 +58,7 @@ function Information({ code, adaptive, currentLang, routePath }) {
           {!adaptive && (
             <div className="Information__action">
               <CopyText text={code} />
-              <TokenButton className="light-btn" onClick={() => router.navigate(DAPP_EXCHANGE)}>
+              <TokenButton className="light-btn" onClick={() => router.navigate(DAPP_PRO_DEX)}>
                 {getLang('token_landing_narfex_exchange')}
               </TokenButton>
             </div>

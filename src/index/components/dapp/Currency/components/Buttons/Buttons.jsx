@@ -36,7 +36,7 @@ function Buttons({ disabled, paramsCurrency, currency }) {
         <Button
           type="secondary-alice"
           onClick={() => {
-            router.navigate(PAGES.DAPP_EXCHANGE, {
+            router.navigate(PAGES.DAPP_PRO_DEX, {
               coin: currency.symbol,
             });
           }}
