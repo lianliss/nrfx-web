@@ -43,47 +43,10 @@
     list-style-type: none;
   }
 
-  .WalletsList {
-    position: sticky;
-    width: 100%;
-    top: calc(100vh - 75px);
-
-    .WalletsListItem {
-      transition: box-shadow 0.3s;
-      background: var(--alice-blue);
-      cursor: default;
-
-      &:hover {
-        box-shadow: 0 0 20px #dfe3f0;
-      }
-
-      &__icon {
-        .isvg {
-          box-shadow: 0 0 0 1px #fff;
-        }
-      }
-
-      &__column:nth-child(3) {
-        .WalletsListItem__text-medium {
-          margin-bottom: 3px;
-        }
-      }
-    }
-  }
-
   .disabled {
     opacity: 0.7;
     user-select: none;
     pointer-events: none;
-  }
-
-  .NarfexRate__large {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 110%;
-    text-align: right;
-    letter-spacing: -0.01em;
-    color: var(--dark-black);
   }
 
   .RateIndicator {
@@ -173,24 +136,6 @@
 
       &:not(:last-child) {
         margin-bottom: 0;
-      }
-    }
-
-    .WalletsList {
-      position: static;
-      margin-top: auto;
-      padding-top: 33px;
-      margin-bottom: 15px;
-      width: 100%;
-      max-width: 192px;
-      justify-content: end;
-
-      .WalletsListItem {
-        &__icon {
-          .isvg {
-            box-shadow: 0 0 0 1px #fff;
-          }
-        }
       }
     }
 

@@ -23,11 +23,13 @@ export const orderProcesses = {
     pending: 'buy-pending',
     completed: 'buy-completed',
     cancelled: 'buy-cancelled',
+    appeal: 'buy-appeal',
   },
   sell: {
     pending: 'sell-pending',
     releasing: 'sell-releasing',
     completed: 'sell-completed',
+    appeal: 'sell-appeal',
   },
 };
 

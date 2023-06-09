@@ -1,0 +1,53 @@
+.Chat {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: auto calc(100% - 38px);
+  padding: 8px 25px 8px 11px;
+  box-sizing: border-box;
+  user-select: none;
+
+  img {
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:global(.active) {
+    background: #f1f5ff;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .name {
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--dark-black);
+  }
+
+  .text {
+    max-width: 80.86%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .date,
+  .text {
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 10px;
+    color: var(--cool-gray);
+  }
+
+  .date,
+  .isRead {
+    margin-left: auto;
+  }
+}

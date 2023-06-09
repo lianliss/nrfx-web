@@ -141,6 +141,11 @@
       margin-top: 2px;
       position: absolute;
     }
+
+    .Timer,
+    .Timer * {
+      display: inline-flex;
+    }
   }
 
   &-method {
@@ -165,11 +170,13 @@
 
   &-submit__header {
     h5 {
-      max-width: 435px;
+      max-width: 515px;
     }
   }
 
   &__buttons {
+    margin-top: 20px;
+
     .Button {
       height: 42px;
       padding: 0 39px;
@@ -217,10 +224,6 @@
         }
       }
     }
-  }
-
-  &-content.sideline &__buttons {
-    margin-top: 20px;
   }
 
   &-content.sideline {

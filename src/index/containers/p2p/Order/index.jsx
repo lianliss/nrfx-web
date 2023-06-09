@@ -5,13 +5,12 @@ import _ from 'lodash';
 import { toastPush } from 'src/actions/toasts';
 import wei from 'utils/wei';
 import { routeParams } from 'src/selectors';
-import { DH, PrimeUtils } from "will-dh";
 
 // Components
 import P2P from '../P2P';
 import Header from './components/Header';
 import { FAQ, CabinetBlock } from 'dapp';
-import { Chat, Feedback, Process } from './components';
+import { Chat, Feedback, Process, AppealHistory } from './components';
 import LoadingStatus from "src/index/components/cabinet/LoadingStatus/LoadingStatus";
 
 // Utils
@@ -252,6 +251,7 @@ function Order({ adaptive }) {
               onPaymentReceived={handlePaymentReceived}
               onCancel={handleCancel}
             />
+            <AppealHistory />
             <Feedback adaptive={adaptive} />
             <CabinetBlock className="p2p-order-body__faq">
               <h3>FAQ</h3>

@@ -90,6 +90,9 @@ export const getFinePage = (routeName) => {
     case PAGES.P2P_ADVERTISER_DETAIL:
       Component = AdvertiserDetail;
       break;
+    case PAGES.P2P_MODERATOR:
+      Component = p2p.ModeratorPanel;
+      break;
     case PAGES.VALIDATOR_CREATE_TRADE:
     case PAGES.VALIDATOR_EDIT_TRADE:
       Component = validator.CreateTrade;

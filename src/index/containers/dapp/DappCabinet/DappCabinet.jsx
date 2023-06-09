@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 // Components
 import DappContainer from '../../../components/cabinet/DappContainer/DappContainer';
-import CabinetSidebar from 'src/index/components/dapp/CabinetSidebar/CabinetSidebar';
 import TestnetOverlay from 'dapp/TestnetOverlay/TestnetOverlay';
 
 // Utils
@@ -12,6 +11,7 @@ import router from 'src/router';
 import { Web3Context } from 'src/services/web3Provider';
 import { getFinePage, pageIsFine } from './utils/pageUtils';
 import _ from 'lodash';
+import getSidebar from './utils/getSidebar';
 
 const DEFAULT_DAPP_PAGE = DAPP_EXCHANGE;
 
@@ -50,17 +50,23 @@ class DappCabinet extends Component {
 
   render() {
     const { route, adaptive } = this.props;
-    const { Component, mainnetOnly, testnetOnly, chainsWhitelist, chainsBlacklist } = getFinePage(route.name);
+    const {
+      Component,
+      mainnetOnly,
+      testnetOnly,
+      chainsWhitelist,
+      chainsBlacklist,
+    } = getFinePage(route.name);
+    let sidebar = getSidebar(route.name);
 
     return (
-      <DappContainer
-        className="CabinetWalletScreen"
-        sideBar={<CabinetSidebar />}
-      >
+      <DappContainer className="CabinetWalletScreen" sideBar={sidebar}>
         <Component route={route.name} adaptive={adaptive} />
         {testnetOnly && <TestnetOverlay testnetOnly networks={[97]} />}
         {mainnetOnly && <TestnetOverlay mainnetOnly networks={[56]} />}
-        {(chainsWhitelist || chainsBlacklist) && <TestnetOverlay {...{chainsWhitelist, chainsBlacklist}} />}
+        {(chainsWhitelist || chainsBlacklist) && (
+          <TestnetOverlay {...{ chainsWhitelist, chainsBlacklist }} />
+        )}
       </DappContainer>
     );
   }

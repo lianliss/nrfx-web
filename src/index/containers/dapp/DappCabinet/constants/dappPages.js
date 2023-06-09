@@ -179,6 +179,10 @@ export default [
     chains: [1, 56, 97],
   },
   {
+    name: PAGES.P2P_MODERATOR,
+    chains: [1, 56, 97],
+  },
+  {
     name: PAGES.VALIDATOR_CREATE_TRADE,
     chains: [1, 56, 97],
   },

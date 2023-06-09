@@ -1,0 +1,35 @@
+.Sidebar {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  height: 100%;
+
+  :global {
+    .ScrollbarTrackY {
+      right: 8px !important;
+      background: var(--alice-blue) !important;
+    }
+  }
+}
+
+:global(.adaptive) {
+  .Sidebar {
+    height: 100%;
+    padding-top: 12px;
+    padding-left: 29px;
+    margin-left: -15px;
+    max-width: 100%;
+    width: 256px;
+    box-sizing: border-box;
+    border-radius: var(--radius-panel) var(--radius-panel) 0 0;
+    background: #fff;
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+    z-index: 100;
+    overflow-y: scroll;
+
+    &:global(.active) {
+      transform: translateX(0%);
+    }
+  }
+}
