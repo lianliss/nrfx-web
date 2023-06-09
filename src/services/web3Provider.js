@@ -34,6 +34,7 @@ import { getLang } from "utils";
 import { CONTRACT_ADDRESSES } from "./multichain/contracts";
 import router from "../router";
 import dappPages from "../index/containers/dapp/DappCabinet/constants/dappPages";
+import { DH, PrimeUtils } from "will-dh";
 
 export const Web3Context = React.createContext();
 
@@ -43,6 +44,8 @@ const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), JSBI.BigIn
 const ONE_HUNDRED_PERCENT = new Percent('1');
 const AWAITING_DELAY = 2000;
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+const DH_PRIME_KEY = '2611891123';
+const DH_GENERATOR = '1723';
 
 class Web3Provider extends React.PureComponent {
   network = new Network(DEFAULT_CHAIN, this);
@@ -2083,6 +2086,51 @@ class Web3Provider extends React.PureComponent {
       'post',
     );
   }
+  
+  async getDH() {
+    const {accountAddress} = this.state;
+    if (!accountAddress) return;
+    const key = `dh-key-${accountAddress}`;
+    try {
+      // Get saved settings
+      let settings;
+      try {
+        settings = JSON.parse(window.localStorage.getItem(key));
+      } catch (error) {}
+      if (!settings) {
+        try {
+          settings = JSON.parse(await this.backendRequest({}, ``, 'user/p2p/settings', 'get'))
+        } catch {
+          settings = {};
+        }
+      }
+      
+      // Create DH object
+      let {privateKey, publicKey} = settings;
+      const dh = new DH();
+      dh.prime = DH_PRIME_KEY;
+      dh.generator = DH_GENERATOR;
+      if (!privateKey || !publicKey) {
+        // Generate new keys
+        privateKey = await PrimeUtils.findPrime(30);
+        dh.privateKey = privateKey;
+        dh.computePublicKey();
+        settings.privateKey = privateKey;
+        settings.publicKey = dh.publicKey;
+        // Save new key
+        window.localStorage.setItem(key, JSON.stringify(settings));
+        this.backendRequest({settings}, ``, 'user/p2p/settings', 'post')
+      } else {
+        // Use old keys
+        dh.privateKey = privateKey;
+        dh.publicKey = publicKey;
+        window.localStorage.setItem(key, JSON.stringify(settings));
+      }
+      return dh;
+    } catch (error) {
+      console.error('[getDHKey]', error);
+    }
+  }
 
   render() {
     window.web3Provider = this;
@@ -2091,6 +2139,7 @@ class Web3Provider extends React.PureComponent {
       ...this.state,
       web3: this.web3,
       getWeb3: this.getWeb3.bind(this),
+      getDH: this.getDH.bind(this),
       ethereum: this.ethereum,
       connectWallet: this.connectWallet.bind(this),
       mountDapp: this.mountDapp.bind(this),

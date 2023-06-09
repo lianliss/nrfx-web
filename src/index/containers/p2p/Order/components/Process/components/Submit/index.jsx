@@ -93,6 +93,19 @@ function Submit({
     }
     setIsProcess(false);
   };
+  
+  if (order.status === 0) {
+    return (
+      <ButtonsWrapper gap="10px 0">
+        <CustomButton className="malibu-color malibu-text">
+          <span>Have A Question</span>
+        </CustomButton>
+        <CustomButton className="malibu-color malibu-text">
+          <span>View my balance</span>
+        </CustomButton>
+      </ButtonsWrapper>
+    );
+  }
 
   if (!isPayed && ((order.isBuy && isClient) || (!order.isBuy && isOwner))) {
     return (
@@ -124,6 +137,29 @@ function Submit({
       </>
     );
   }
+  
+  if (isPayed && ((order.isBuy && isOwner) || (!order.isBuy && isClient))) {
+    return (
+      <>
+      <div className="p2p-order-process-submit__header">
+        <Row className="p2p-order-process__title">
+          <h5>
+            After confirming the payment, be sure to click the “Payment
+            received” button.
+            <AnswerPopup>Answer</AnswerPopup>
+          </h5>
+        </Row>
+      </div>
+      <ButtonsWrapper gap="0 15px">
+        <Button type="lightBlue" state={isProcess ? "loading" : ''}
+                disabled={isProcess} onClick={onPaymentReceived}>
+          <span>Payment received</span>
+        </Button>
+        {!adaptive && <TransactionTime />}
+      </ButtonsWrapper>
+      </>
+    );
+  }
 
   if (isPayed && ((order.isBuy && isClient) || (!order.isBuy && isOwner))) {
     return (
@@ -137,44 +173,6 @@ function Submit({
                            }}
                            disabled={isProcess}
                            type={adaptive ? 'default' : 'custom-malibu'} />
-      </ButtonsWrapper>
-    );
-  }
-
-  if ((order.isBuy && isOwner) || (!order.isSell && isClient)) {
-    return (
-      <>
-        <div className="p2p-order-process-submit__header">
-          <Row className="p2p-order-process__title">
-            <h5>
-              After confirming the payment, be sure to click the “Payment
-              received” button.
-              <AnswerPopup>Answer</AnswerPopup>
-            </h5>
-          </Row>
-        </div>
-        <ButtonsWrapper gap="0 15px">
-          <Button type="lightBlue" state={isProcess ? "loading" : ''}
-                  disabled={isProcess} onClick={onPaymentReceived}>
-            <span>Payment received</span>
-          </Button>
-          {!adaptive && <TransactionTime />}
-        </ButtonsWrapper>
-      </>
-    );
-  }
-
-  if (
-    order.status === 0
-  ) {
-    return (
-      <ButtonsWrapper gap="10px 0">
-        <CustomButton className="malibu-color malibu-text">
-          <span>Have A Question</span>
-        </CustomButton>
-        <CustomButton className="malibu-color malibu-text">
-          <span>View my balance</span>
-        </CustomButton>
       </ButtonsWrapper>
     );
   }

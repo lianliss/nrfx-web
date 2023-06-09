@@ -49,7 +49,7 @@ function Steps({ mode, order, adaptive }) {
   if (!adaptive && allowedProcess) {
     return (
       <div className="p2p-order-process-steps">
-        {stepsOfMode.map(({ title, id, answerMessage }) => (
+        {!!stepsOfMode && stepsOfMode.map(({ title, id, answerMessage }) => (
           <Step
             number={id}
             key={id}

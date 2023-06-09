@@ -47,7 +47,7 @@ function TradeForm({offerAddress}) {
   
   React.useEffect(() => {(async () => {
     const {p2p} = network.contractAddresses;
-    if (!p2p) return;
+    if (!p2p || !accountAddress) return;
     if (!offerAddress) return;
     
     try {
@@ -86,6 +86,7 @@ function TradeForm({offerAddress}) {
   })()}, [chainId, offerAddress, accountAddress, lastUpdate]);
   
   console.log('OFFER', offer);
+  if (!accountAddress) return <></>;
   
   return (
     <Form className="ValidatorTradeForm">

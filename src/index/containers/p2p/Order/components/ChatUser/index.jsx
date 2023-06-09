@@ -1,4 +1,5 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
 
 // Components
 import { Row, Col } from 'ui';
@@ -12,6 +13,16 @@ import success from 'src/asset/icons/status/check_circle_success.svg';
 import './index.less';
 
 function ChatUser({order}) {
+  const context = React.useContext(Web3Context);
+  const {
+    accountAddress,
+    getWeb3,
+  } = context;
+  const addressFormatted = !!accountAddress && getWeb3().utils.toChecksumAddress(accountAddress);
+  const name = order.ownerAddress === addressFormatted
+    ? order.clientName || order.clientAddress
+    : order.ownerName || order.ownerAddress;
+  
   const Progress = ({ title, number }) => (
     <Col className="p2p-order-chat-user-progress__item" gap={5}>
       <span>{title}</span>
@@ -26,7 +37,7 @@ function ChatUser({order}) {
       <Row className="p2p-order-chat-user__header" alignItems="center">
         <img src={avatar} alt="avatar" width="53" height="53" />
         <div>
-          <p className="p2p-order-chat-user__name">{order.ownerName}</p>
+          <p className="p2p-order-chat-user__name">{name}</p>
           <Row alignItems="center">
             <span>KYC</span>
             <SVG

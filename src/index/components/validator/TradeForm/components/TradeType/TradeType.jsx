@@ -57,6 +57,7 @@ function TradeType() {
     getTransactionReceipt,
     transaction,
     backendRequest,
+    getDH,
   } = context;
   
   const fiatsOptions = getFiatsArray()
@@ -94,8 +95,10 @@ function TradeType() {
         wei.to(maxTradeAmount, currency.decimals),
       ];
       if (!isBuy) {
-      
+        const dh = await getDH();
+        params.push(getWeb3().utils.numberToHex(dh.publicKey));
       }
+      console.log('params', params);
       const tx = await transaction(factory, 'create', params);
       console.log('transaction hash', tx, getBSCScanLink(tx));
       const receipt = await getTransactionReceipt(tx);
@@ -140,7 +143,7 @@ function TradeType() {
             <Radio size="small" type="light-blue" value="buy">
               Buy stable {symbol} for fiat
             </Radio>
-            <Radio size="small" type="light-blue" disabled value="sell">
+            <Radio size="small" type="light-blue" value="sell">
               Sell stable {symbol} for fiat
             </Radio>
           </RadioGroup>

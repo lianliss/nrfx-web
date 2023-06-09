@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { toastPush } from 'src/actions/toasts';
 import wei from 'utils/wei';
 import { routeParams } from 'src/selectors';
+import { DH, PrimeUtils } from "will-dh";
 
 // Components
 import P2P from '../P2P';
@@ -64,6 +65,7 @@ function Order({ adaptive }) {
     getTransactionReceipt,
     transaction,
     backendRequest,
+    getDH,
   } = context;
   
   const globalP2PMode = useSelector(dappP2PModeSelector);
@@ -84,7 +86,7 @@ function Order({ adaptive }) {
       if (!!order) {
         setOrder({
           ...order,
-          cache,
+          cache: cache[0],
         });
         return;
       }
@@ -144,14 +146,14 @@ function Order({ adaptive }) {
     clearInterval(updateInterval);
     setTimeout(() => {
       clearInterval(updateInterval);
-      if (!_.get(order, 'status', 1)) {
+      if (!_.get(order, 'status', 0)) {
         updateInterval = setInterval(getOrder, 4000);
       }
     }, 4000);
   }, [chainId, accountAddress, offerAddress, clientAddress]);
-  if (!order) return <LoadingStatus inline status="loading" />;
+  if (!order || !accountAddress) return <LoadingStatus inline status="loading" />;
   
-  const addressFormatted = getWeb3().utils.toChecksumAddress(accountAddress);
+  const addressFormatted = !!accountAddress && getWeb3().utils.toChecksumAddress(accountAddress);
   const isClient = addressFormatted === order.clientAddress;
   const isOwner = addressFormatted === order.ownerAddress;
   const isLawyer = addressFormatted === order.lawyerAddress;
