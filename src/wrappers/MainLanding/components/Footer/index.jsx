@@ -31,7 +31,7 @@ function Footer({ adaptive }) {
                 <Link routeName={pages.TOKEN}>
                   {getLang('main_landing_navbar_token')}
                 </Link>
-                <Link routeName={pages.DAPP_EXCHANGE}>
+                <Link routeName={pages.DAPP_PRO_DEX}>
                   {getLang('dapp_sidebar_exchanger')}
                 </Link>
                 <Link routeName={pages.DAPP_SWAP}>

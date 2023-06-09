@@ -37,9 +37,10 @@ export const transactionsMap = (array, getTokenFromSymbol) => {
         : getTokenFromSymbol(transaction.target_currency);
 
     // Get date from timestamp
-    const date = moment(transaction.timestamp * 1000).format('DD.MM.YYYY');
+    const jsTimestamp = transaction.timestamp * 1000;
+    const date = moment(jsTimestamp).format('DD.MM.YYYY');
 
-    return { ...transaction, source_token, target_token, date };
+    return { ...transaction, source_token, target_token, date, jsTimestamp };
   });
 
   return transactionItems;

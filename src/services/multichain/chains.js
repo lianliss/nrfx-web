@@ -19,7 +19,8 @@ export const isMainnet = {
 // Chain IDs that are integrated.
 export const FINE_CHAIN_IDS = [
   ETHEREUM_MAINNET,
-  BSC_MAINNET, BSC_TESTNET,
+  BSC_MAINNET,
+  BSC_TESTNET,
   POLYGON_MAINNET,
   ARBITRUM_MAINNET,
   POLYGON_MUMBAI,
@@ -34,6 +35,7 @@ export const NETWORKS_DATA = {
     fiatDecimals: 6,
     scan: 'https://etherscan.io',
     defaultSymbol: 'ETH',
+    hops: 0,
   },
   [BSC_MAINNET]: {
     networkID: 'BSC',
@@ -41,6 +43,7 @@ export const NETWORKS_DATA = {
     fiatDecimals: 18,
     scan: 'https://bscscan.com',
     defaultSymbol: 'BNB',
+    hops: 1,
   },
   [BSC_TESTNET]: {
     networkID: 'BSCTest',
@@ -48,6 +51,7 @@ export const NETWORKS_DATA = {
     fiatDecimals: 18,
     scan: 'https://testnet.bscscan.com',
     defaultSymbol: 'BNB',
+    hops: 0,
   },
   [POLYGON_MAINNET]: {
     networkID: 'PLG',
@@ -55,6 +59,7 @@ export const NETWORKS_DATA = {
     fiatDecimals: 6,
     scan: 'https://polygonscan.com',
     defaultSymbol: 'MATIC',
+    hops: 0,
   },
   [POLYGON_MUMBAI]: {
     networkID: 'MUM',
@@ -62,6 +67,7 @@ export const NETWORKS_DATA = {
     fiatDecimals: 6,
     scan: 'https://mumbai.polygonscan.com',
     defaultSymbol: 'MATIC',
+    hops: 0,
   },
   [ARBITRUM_MAINNET]: {
     networkID: 'ARB',
@@ -69,5 +75,6 @@ export const NETWORKS_DATA = {
     fiatDecimals: 6,
     scan: 'https://arbiscan.io',
     defaultSymbol: 'ETH',
+    hops: 0,
   },
 };

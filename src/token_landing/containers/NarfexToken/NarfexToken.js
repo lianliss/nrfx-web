@@ -4,7 +4,7 @@ import './NarfexToken.less';
 import TokenButton from '../../components/TokenButton/TokenButton';
 import SVG from 'utils/svg-wrap';
 import router from 'src/router';
-import { DAPP_EXCHANGE } from 'src/index/constants/pages';
+import { DAPP_PRO_DEX } from 'src/index/constants/pages';
 import { getLang } from 'utils';
 
 const NarfexToken = (props) => {
@@ -16,7 +16,7 @@ const NarfexToken = (props) => {
           <p>{getLang('token_landing_narfex_token_text')}</p>
           <div className="NarfexToken__buttons">
             <TokenButton
-              onClick={() => router.navigate(DAPP_EXCHANGE)}
+              onClick={() => router.navigate(DAPP_PRO_DEX)}
               className="light-btn"
             >
               {getLang('token_landing_buy_on_narfex')}

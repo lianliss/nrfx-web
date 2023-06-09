@@ -134,7 +134,7 @@ class CabinetWalletScreen extends React.PureComponent {
     const prevName = _.get(prevProps, 'route.name');
     const prevParams = _.get(prevProps, 'route.params');
     if (name !== prevName || !_.isEqual(params, prevParams)) {
-      const isSwap = name === PAGES.DAPP_EXCHANGE;
+      const isSwap = name === PAGES.DAPP_PRO_DEX;
       const isCrypto = name === PAGES.WALLET_CRYPTO;
       const balanceId = this.getBalanceId().id;
 
@@ -159,7 +159,7 @@ class CabinetWalletScreen extends React.PureComponent {
     const { name, params } = route;
     const { currency } = params;
 
-    const isSwap = name === PAGES.DAPP_EXCHANGE;
+    const isSwap = name === PAGES.DAPP_PRO_DEX;
 
     const fiat = oldWallets.balances.find((fiat) => fiat.currency === currency);
     const cryptoBalances = _.get(balance, '[0].items', {});

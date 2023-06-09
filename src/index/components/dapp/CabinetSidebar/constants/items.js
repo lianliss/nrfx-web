@@ -29,8 +29,8 @@ const items = [
         {
           title: 'dapp_sidebar_swap',
           icon: 'swap',
-          active: [PAGES.DAPP_EXCHANGE],
-          link: PAGES.DAPP_EXCHANGE,
+          active: [PAGES.DAPP_PRO_DEX],
+          link: PAGES.DAPP_PRO_DEX,
           type: 'route',
         },
         {
@@ -81,7 +81,7 @@ const items = [
         {
           title: 'dapp_sidebar_validator',
           icon: 'validator',
-          active: [PAGES.DAPP_VALIDATOR],
+          active: [PAGES.DAPP_VALIDATOR, PAGES.VALIDATOR_ADMIN_PANEL, PAGES.VALIDATOR_EDIT_TRADE],
           link: PAGES.DAPP_VALIDATOR,
           type: 'route',
         },

@@ -25,6 +25,7 @@ function DexSwapInput({
                         onChange,
                         onSelectToken,
                         setExact,
+                        onFocus,
                       }) {
   // States
   const [textValue, setTextValue] = React.useState(value);
@@ -65,6 +66,7 @@ function DexSwapInput({
     if (!selectRef.current.contains(e.target)) {
       inputRef.current.focus();
       setExact();
+      onFocus();
     }
   };
 
@@ -135,6 +137,7 @@ DexSwapInput.propTypes = {
   setExact: PropTypes.func,
   value: PropTypes.any,
   token: PropTypes.object,
+  onFocus: PropTypes.func,
 };
 
 DexSwapInput.defaultProps = {
@@ -144,6 +147,7 @@ DexSwapInput.defaultProps = {
   showBalance: false,
   onSelectToken: () => {},
   setExact: () => {},
+  onFocus: () => {},
 };
 
 export default DexSwapInput;

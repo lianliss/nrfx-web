@@ -26,7 +26,7 @@ function WalletsHeader({ isFiat }) {
   const coinsType = isFiat ? 'fiats' : 'tokens';
 
   const handlers = {
-    buy: (coin) => router.navigate(PAGES.DAPP_EXCHANGE, { coin: coin.symbol }),
+    buy: (coin) => router.navigate(PAGES.DAPP_PRO_DEX, { coin: coin.symbol }),
     send: () => setIsSendTokens(true),
     deposit: (fiat) => handleFiatSelect('refill', fiat),
     withdrawal: (fiat) => handleFiatSelect('withdrawal', fiat),

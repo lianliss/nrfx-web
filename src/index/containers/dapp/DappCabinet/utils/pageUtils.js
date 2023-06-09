@@ -23,6 +23,7 @@ import {
   ETHEREUM_MAINNET,
   POLYGON_MUMBAI,
 } from 'src/services/multichain/chains';
+import { ProDex } from '../..';
 
 export const getFinePage = (routeName) => {
   // Set page component
@@ -54,6 +55,9 @@ export const getFinePage = (routeName) => {
     case PAGES.TRANSACTIONS:
       Component = SwitchPage;
       mainnetOnly = false;
+      break;
+    case PAGES.DAPP_PRO_DEX:
+      Component = ProDex;
       break;
     case PAGES.FARMING:
       Component = Farming;

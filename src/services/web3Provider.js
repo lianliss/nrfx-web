@@ -8,11 +8,11 @@ import _ from 'lodash';
 import axios from 'axios';
 import Network from './multichain/Network';
 import getAllPairsCombinations from 'utils/getPairCombinations';
-import { Pair, TokenAmount, CurrencyAmount, Trade, Token, JSBI, Percent, Fraction, } from '@narfex/sdk';
+import { Pair, TokenAmount, CurrencyAmount, Trade, Token as TokenSDK, JSBI, Percent, Fraction, } from '@narfex/sdk';
 import { getAddress, getCreate2Address } from '@ethersproject/address';
 import { keccak256, pack } from '@ethersproject/solidity';
 import significant from 'utils/significant';
-import TokenContract from './web3Provider/token';
+import TokenContract from './web3Provider/tokenContract';
 import MasterChefContract from './web3Provider/MasterChefContract';
 import web3Backend from './web3-backend';
 import * as actions from "src/actions";
@@ -35,6 +35,8 @@ import { CONTRACT_ADDRESSES } from "./multichain/contracts";
 import router from "../router";
 import dappPages from "../index/containers/dapp/DappCabinet/constants/dappPages";
 import { DH, PrimeUtils } from "will-dh";
+import AccountHistory from "./AccountHistory";
+import { FiatToken, Token } from "./Token";
 
 export const Web3Context = React.createContext();
 
@@ -49,6 +51,7 @@ const DH_GENERATOR = '1723';
 
 class Web3Provider extends React.PureComponent {
   network = new Network(DEFAULT_CHAIN, this);
+  accountHistory = new AccountHistory(this);
 
   state = {
     isConnected: false,
@@ -156,11 +159,11 @@ class Web3Provider extends React.PureComponent {
   /**
    * Returns Token type object
    * @param _token {object} - raw token data
-   * @returns {Token}
+   * @returns {TokenSDK}
    */
   getToken(_token) {
     const token = _token.address ? _token : this.network.wrapToken;
-    return new Token(
+    return new TokenSDK(
       token.chainId,
       token.address,
       token.decimals,
@@ -702,10 +705,16 @@ class Web3Provider extends React.PureComponent {
       if (!tokens) {
         const tokenListURI = this.network.tokenListURI;
         const request = tokenListURI && await axios.get(tokenListURI);
-        tokens = _.get(request, 'data.tokens').map(t => ({
-          ...t,
-          address: t.address.toLowerCase(),
-        }));
+        tokens = _.get(request, 'data.tokens').map((t) => {
+          return new Token(
+            t.name,
+            t.symbol,
+            t.address.toLowerCase(),
+            t.chainId,
+            t.decimals,
+            t.logoURI
+          );
+        });
         this.cmcTokens = tokens;
         this.setState({
           tokensLoaded: true,
@@ -714,12 +723,10 @@ class Web3Provider extends React.PureComponent {
 
       if (!this.network.mainnet) return [];
       if (!this._mounted) return;
-      const result = _.uniqBy([
-        ...this.state.tokens,
-        ...tokens,
-      ], 'address')
-        .filter(fineToken)
-        .map(token => ({ ...token, balance: '0' }));
+      const result = _.uniqBy(
+        [...this.state.tokens, ...tokens],
+        'address'
+      ).filter(fineToken);
       this.setState({
         tokens: result,
         tokensLoaded: true,
@@ -863,17 +870,23 @@ class Web3Provider extends React.PureComponent {
   }
 
   /**
-   * Returns token price in USDT
+   * Returns token price in USDC
    * @param token {object}
    * @returns {Promise.<number>}
    */
   async getTokenUSDPrice(token) {
     try {
-      const USDT = this.state.tokens.find(t => t.symbol === 'USDC');
+      const USDC = this.state.tokens.find(t => t.symbol === 'USDC');
       const address = token.address ? token.address.toLowerCase() : null;
-      return address === USDT.address.toLowerCase()
-        ? 1
-        : await this.getTokensRelativePrice(token, USDT);
+
+      if (address === USDC.address.toLowerCase()) return 1;
+      const data = await this.getTokenContract(token).getOutAmount(
+        USDC,
+        1,
+        this.network.hops
+      );
+
+      return _.get(data, 'outAmount', 0);
     } catch (error) {
       console.warn('[getTokenUSDPrice]', error);
       return 0;
@@ -1114,15 +1127,10 @@ class Web3Provider extends React.PureComponent {
         const tokens = state.tokens.map((token) => {
           if (token.symbol === chainToken.symbol) {
             // Token with balance and price.
-            const tokenWithBalance = {
-              ...token,
-              balance: chainTokenBalance,
-              price: chainTokenPrice || 0,
-            };
-
-            return tokenWithBalance;
+            token.balance = chainTokenBalance;
+            token.price = chainTokenPrice || token.price || 0;
           }
-          
+
           return token;
         });
 
@@ -1558,15 +1566,22 @@ class Web3Provider extends React.PureComponent {
       }))).map((fiat, index) => {
         const known = KNOWN_FIATS.filter(f => f.chainId === chainId)
           .find(s => s.symbol === fiat[1]);
-        return known ? {
-          decimals: 18,
-          ...known,
-          address: list[index],
-          name: fiat[0],
-          symbol: fiat[1],
-          chainId,
-          balance: fiat[2],
-        } : null;
+
+        if (known) {
+          const token = new FiatToken(
+            fiat[0],
+            fiat[1],
+            list[index],
+            chainId,
+            18,
+            known.logoURI
+          );
+          token.balance = fiat[2];
+
+          return token;
+        }
+
+        return null;
       }).filter(f => !!f);
       fiats[userId] = userFiats;
       fiats.known = KNOWN_FIATS;
@@ -1610,7 +1625,12 @@ class Web3Provider extends React.PureComponent {
       KNOWN_FIATS.filter(f => f.chainId === chainId)
     ).map(token => {
       const price = _.get(rates, token.symbol.toLowerCase());
-      return price ? {...token, price} : token;
+
+      if (price) {
+        token.price = price;
+      }
+
+      return token;
     });
   }
 
@@ -2203,6 +2223,7 @@ class Web3Provider extends React.PureComponent {
       cmcTokens: this.cmcTokens,
       getTokenFromSymbol: getTokenFromSymbol.bind(this),
       tryExchangeError: this.tryExchangeError.bind(this),
+      accountHistory: this.accountHistory,
       backendRequest: this.backendRequest.bind(this),
     }}>
       {this.props.children}

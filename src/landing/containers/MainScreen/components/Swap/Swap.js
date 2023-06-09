@@ -220,7 +220,7 @@ export default () => {
             </div>
           </div>
           <Button
-            onClick={() => router.navigate(pages.DAPP_EXCHANGE)}
+            onClick={() => router.navigate(pages.DAPP_PRO_DEX)}
             disabled={pendingRate}
             size="extra_large"
           >

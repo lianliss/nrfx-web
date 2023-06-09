@@ -38,7 +38,7 @@ export default () => {
         description={<Lang name="lendingBitcoin_promo_description" />}
         actionButtonText={<Lang name="landingBitcoin_promo_actionButton" />}
         image={require("../MainScreen/components/Promo/assets/bitcoin.svg").default}
-        actionPage={pages.DAPP_EXCHANGE}
+        actionPage={pages.DAPP_PRO_DEX}
       />
       <Steps />
       {/*<Swap />*/}
@@ -87,7 +87,7 @@ export default () => {
       <Welcome
         titleLang="landingBitcoin_callToAction_title"
         actionButtonLang="landingBitcoin_callToAction_button"
-        action={() => router.navigate(pages.DAPP_EXCHANGE)}
+        action={() => router.navigate(pages.DAPP_PRO_DEX)}
       />
     </div>
   );

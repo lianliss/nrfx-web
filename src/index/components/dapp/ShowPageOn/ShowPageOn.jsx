@@ -9,7 +9,7 @@ function ShowPageOn({ hostNames = ['localhost', 'nrfxlab.world'] }) {
 
   React.useEffect(() => {
     if (!show) {
-      router.navigate(pages.DAPP_EXCHANGE);
+      router.navigate(pages.DAPP_PRO_DEX);
     }
   }, []);
 

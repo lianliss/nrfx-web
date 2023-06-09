@@ -76,7 +76,7 @@ function FiatButtons({ currency, disabled }) {
         <Button
           type="secondary-alice"
           onClick={() => {
-            router.navigate(PAGES.DAPP_EXCHANGE, {
+            router.navigate(PAGES.DAPP_PRO_DEX, {
               coin: currency.symbol,
               currency: 'USDT',
             });
@@ -89,7 +89,7 @@ function FiatButtons({ currency, disabled }) {
         <Button
           type="secondary-alice"
           onClick={() => {
-            router.navigate(PAGES.DAPP_EXCHANGE, {
+            router.navigate(PAGES.DAPP_PRO_DEX, {
               currency: currency.symbol,
               coin: 'NRFX',
             });

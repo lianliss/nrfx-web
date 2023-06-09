@@ -2,6 +2,7 @@ import React from 'react';
 
 // Utils
 import { classNames as cn } from 'utils';
+import _ from 'lodash';
 
 // Styles
 import './CabinetTable.less';
@@ -27,13 +28,36 @@ export const TR = ({ children, className, background, custom }) => (
   </tr>
 );
 
-export const TD = ({ type, color, className, children, dataLabel }) => (
-  <td
-    className={cn({ [type]: type, [color]: color }, className)}
-    data-label={dataLabel}
-  >
-    {children}
-  </td>
-);
+export const TD = ({
+  type,
+  color,
+  className,
+  children,
+  dataLabel,
+  contentWidth,
+}) => {
+  const tdRef = React.useRef();
+  const [width, setWidth] = React.useState();
+
+  React.useEffect(() => {
+    if (!contentWidth) return;
+    if (!tdRef) return;
+
+    setWidth(_.get(tdRef, 'current.children[0].offsetWidth'));
+  }, [tdRef]);
+
+  return (
+    <td
+      className={cn({ [type]: type, [color]: color }, className)}
+      data-label={dataLabel}
+      style={{
+        width,
+      }}
+      ref={tdRef}
+    >
+      {children}
+    </td>
+  );
+};
 
 export default CabinetTable;
