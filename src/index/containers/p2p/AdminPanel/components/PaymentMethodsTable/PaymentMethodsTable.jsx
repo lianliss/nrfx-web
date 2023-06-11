@@ -1,4 +1,6 @@
 import React from 'react';
+import { Web3Context } from 'services/web3Provider';
+import _ from 'lodash';
 
 // Components
 import { Col, Row } from 'ui';
@@ -80,13 +82,14 @@ const TableFullName = ({ name }) => (
   <TableItem title="Full name" value={name} />
 );
 
-const TableBankName = ({ payment, disabledTitle }) => (
-  <TableItem
+const TableBankName = ({ title, code, bankName, disabledTitle }) => {
+  console.log('TableBankName', title, code, bankName);
+  return <TableItem
     title="Bank name"
-    value={<PaymentItem title={payment.title} />}
+    value={!!bankName ? <PaymentItem title={`${title}: ${bankName}`} /> : <PaymentItem title={title} />}
     disabledTitle={disabledTitle}
   />
-);
+};
 
 const TableBankAccountNumber = ({ number }) => (
   <TableItem title="Bank Account Number" value={number} />
@@ -120,50 +123,81 @@ const TableButtons = ({ onEdit, onDelete, onBlock }) => (
   </div>
 );
 
-const DesktopTR = (props) => (
-  <TR>
+const DesktopTR = (props) => {
+  const {banksList} = props;
+  const bank = banksList.find(b => b.code === props.code);
+  return <TR>
     <TD>
-      <TableFullName name={props.name} />
+      <TableFullName name={props.holder} />
     </TD>
     <TD>
-      <TableBankName payment={props.payment} />
+      <TableBankName {...{...props, ...bank}} />
     </TD>
     <TD>
-      <TableEmail email={props.email} />
-      <TableBankAccountNumber number={props.bankAccountNumber} />
+      <TableBankAccountNumber number={props.account} />
     </TD>
-    <TD>
-      <TablePaymentDetails detailsText={props.paymentDetails} />
-    </TD>
+    {/*<TD>*/}
+      {/*<TablePaymentDetails detailsText={'asd'} />*/}
+    {/*</TD>*/}
     <TD>
       <TableButtons onEdit={props.onEdit} onDelete={props.onDelete} />
     </TD>
   </TR>
-);
+};
 
-const AdaptiveTR = (props) => (
-  <TR>
+const AdaptiveTR = (props) => {
+  const {banksList} = props;
+  const bank = banksList.find(b => b.code === props.code);
+  return <TR>
     <TD>
       <Row alignItems="center" justifyContent="space-between">
-        <TableBankName payment={props.payment} disabledTitle />
+        <TableBankName {...{...props, ...bank}} />
         <TableButtons onDelete={props.onDelete} onBlock={props.onBlock} />
       </Row>
     </TD>
-    <TD>{props.name && <TableFullName name={props.name} />}</TD>
+    <TD>{props.name && <TableFullName name={props.holder} />}</TD>
     <TD>
-      <TableBankAccountNumber number={props.bankAccountNumber} />
-      <TableEmail email={props.email} />
+      <TableBankAccountNumber number={props.account} />
     </TD>
-    <TD>
-      {props.paymentDetails && (
-        <TablePaymentDetails detailsText={props.paymentDetails} />
-      )}
-    </TD>
+    {/*<TD>*/}
+      {/*{props.paymentDetails && (*/}
+        {/*<TablePaymentDetails detailsText={props.paymentDetails} />*/}
+      {/*)}*/}
+    {/*</TD>*/}
   </TR>
-);
+};
 
 // Main component
-function PaymentMethodsTable({ adaptive, items = testItems }) {
+function PaymentMethodsTable({ adaptive, timestamp, items = testItems }) {
+  const context = React.useContext(Web3Context);
+  const {getFiatsArray, accountAddress, backendRequest} = context;
+  const [banksList, setBanksList] = React.useState([]);
+  console.log('banksList', banksList);
+  
+  const key = `dh-key-${accountAddress}`;
+  const [settings, setSettings] = React.useState({});
+  React.useEffect(() => {
+    (async () => {
+      if (!accountAddress) return;
+      const banksList = await backendRequest({}, ``, 'offers/banks', 'get');
+      setBanksList(banksList);
+      let settings;
+      try {
+        settings = JSON.parse(window.localStorage.getItem(key));
+      } catch (error) {}
+      if (!settings) {
+        try {
+          settings = JSON.parse(await this.backendRequest({}, ``, 'user/p2p/settings', 'get'));
+        } catch (error) {
+          settings = {};
+        }
+      }
+      setSettings(settings);
+    })()
+  }, [accountAddress, timestamp]);
+  const userBankAccounts = _.get(settings, 'bankAccounts', []);
+  console.log('userBankAccounts', userBankAccounts);
+  
   const handleDelete = () => {};
   const handleEdit = () => {};
   const handleBlock = () => {};
@@ -171,16 +205,17 @@ function PaymentMethodsTable({ adaptive, items = testItems }) {
   return (
     <div className={styles.PaymentMethodsTable}>
       <CabinetTable type="columnWithHeader">
-        {items.map((item) => {
+        {userBankAccounts.map((item, index) => {
           const Component = adaptive ? AdaptiveTR : DesktopTR;
 
           return (
             <Component
               {...item}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onBlock={handleBlock}
+              onEdit={() => handleEdit(index)}
+              onDelete={() => handleDelete(index)}
+              onBlock={() => handleBlock(index)}
               key={item.id}
+              banksList={banksList}
             />
           );
         })}

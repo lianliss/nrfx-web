@@ -18,29 +18,72 @@ import { p2pMode } from 'src/index/constants/dapp/types';
 // Styles
 import styles from './SetPaymentMethod.module.less';
 
-function SetPaymentMethod({ onClose, initialSelect, mode, banks, banksList, offer, amount, fiatAmount, ...props }) {
+function SetPaymentMethod({ onClose, initialSelect, mode, banks, banksList, offer, amount, fiatAmount, setTimestamp, ...props }) {
   
   const context = React.useContext(Web3Context);
-  const {getFiatsArray} = context;
+  const {getFiatsArray, accountAddress, backendRequest} = context;
   const dispatch = useDispatch();
   const adaptive = useSelector(adaptiveSelector);
   const [selected, setSelected] = React.useState(initialSelect);
   
   const clearSelected = () => setSelected(null);
-
+  
+  const key = `dh-key-${accountAddress}`;
+  const [settings, setSettings] = React.useState({});
+  React.useEffect(() => {
+    (async () => {
+      let settings;
+      try {
+        settings = JSON.parse(window.localStorage.getItem(key));
+      } catch (error) {}
+      if (!settings) {
+        try {
+          settings = JSON.parse(await this.backendRequest({}, ``, 'user/p2p/settings', 'get'));
+        } catch (error) {
+          settings = {};
+        }
+      }
+      setSettings(settings);
+    })()
+  }, [accountAddress]);
+  const userBankAccounts = _.get(settings, 'bankAccounts', []);
+  
+  const saveBankAccount = async account => {
+    try {
+      if (!settings.bankAccounts) settings.bankAccounts = userBankAccounts;
+      settings.bankAccounts.push(account);
+      window.localStorage.setItem(key, JSON.stringify(settings));
+      backendRequest({settings}, ``, 'user/p2p/settings', 'post');
+      setSettings(settings);
+      setTimestamp(Date.now());
+    } catch (error) {
+      console.error('[saveBankAccount]', error, account);
+    }
+  };
+  
   const handleModalClose = () => {
     if (offer) {
       openStateModal('p2p_create_order', { mode, banks, banksList, offer, initialAmount: amount, initialFiatAmount: fiatAmount, payment: initialSelect });
     }
   };
-
+  
   const handleFormConfirm = _banks => {
+    console.log('handleFormConfirm', _banks);
     if (offer) {
       openStateModal('p2p_create_order', { mode, banks: _banks || banks, banksList, offer, initialAmount: amount, initialFiatAmount: fiatAmount, payment: _banks[0] });
+    } else {
+      saveBankAccount(_banks[0]);
+      setSelected(_banks[0]);
+      onClose();
     }
   };
   
-  if (mode === 'buy' && banks) {
+  if (!!offer) {
+    console.log('SET PAYMENT', offer, banks, userBankAccounts);
+    const offerBanks = _.get(offer, 'settings.banks', []);
+    const currentBanks = mode === 'buy'
+      ? banks.filter(b => !!b)
+      : userBankAccounts.filter(ub => _.indexOf(offerBanks, ub.code) >= 0);
     return <CabinetModal
       className={styles.setPaymentMethod}
       closeOfRef={adaptive}
@@ -52,17 +95,22 @@ function SetPaymentMethod({ onClose, initialSelect, mode, banks, banksList, offe
         <h2>
           Select payment method
         </h2>
-        {banks.filter(b => !!b).map((bank, index) => {
+        {currentBanks.map((bank, index) => {
+          console.log('currentBank', bank);
+          const isBankTransfer = _.get(bank, 'code') === 'BankTransfer';
           return <div className={styles.row} key={index} onClick={() => {
             setSelected(bank);
             handleFormConfirm([bank]);
           }}>
             <div className={styles.field}>
               <b>Method:</b>
-              <span>{_.get(bank, 'title')}</span>
+              <span>
+                {_.get(bank, 'title', bank.code)}
+                {isBankTransfer && ` to ${_.get(bank, 'bankName')}`}
+              </span>
             </div>
             <div className={styles.field}>
-              <b>{bank.title === 'card' ? 'Card number' : 'Account number'}:</b>
+              <b>{bank.type === 'card' ? 'Card number' : 'Account number'}:</b>
               <span>{_.get(bank, 'account')}</span>
             </div>
             <div className={styles.field}>
@@ -92,6 +140,7 @@ function SetPaymentMethod({ onClose, initialSelect, mode, banks, banksList, offe
             onConfirm={handleFormConfirm}
             getFiatsArray={getFiatsArray}
             mode={mode}
+            offer={offer}
           />
         ) : (
           <SelectMethod getFiatsArray={getFiatsArray}

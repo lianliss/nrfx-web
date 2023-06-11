@@ -52,6 +52,7 @@ function AddBankAccount({banksList, addBankAccount}) {
   const isCustomBank = bankCode === 'BankTransfer';
   
   return <>
+  <h2>Add new bank account</h2>
   <Row className="security-options">
     <Column>
       <ColumnTitle title="Type" description={defaultAnswer} />
@@ -129,6 +130,43 @@ function AddBankAccount({banksList, addBankAccount}) {
   </>;
 }
 
+function AddBank({banksList, addBank}) {
+  const banksOptions = banksList.map(b => ({
+    value: b.code, label: b.title,
+  }));
+  const [isProcess, setIsProcess] = React.useState(false);
+  const [bankCode, setBankCode] = React.useState(null);
+  return <>
+  <h2>Add new bank</h2>
+  <Row className="security-options">
+    <Column>
+      <Select
+        value={bankCode}
+        onChange={setBankCode}
+        options={banksOptions}
+        type="simple"
+        indicatorIcon={require('src/asset/icons/arrows/form-dropdown.svg')}
+      />
+    </Column>
+    <Column className="right bottom">
+      <Button
+        state={isProcess ? "loading" : ''}
+        disabled={isProcess || !bankCode}
+        onClick={async () => {
+          if (!bankCode) return;
+          setIsProcess(true);
+          await addBank(bankCode);
+          setIsProcess(false);
+          setBankCode(false);
+        }}
+      >
+        Add account
+      </Button>
+    </Column>
+  </Row>
+  </>;
+}
+
 function SecurityOptions({offer, setLastUpdate}) {
   const context = React.useContext(Web3Context);
   const dispatch = useDispatch();
@@ -159,6 +197,7 @@ function SecurityOptions({offer, setLastUpdate}) {
     cache,
   } = offer;
   
+  const [cachedAccounts, setCachedAccounts] = React.useState(bankAccounts);
   const [banksList, setBanksList] = React.useState([]);
   const [_isKYCRequired, setIsKYCRequired] = React.useState(isKYCRequired);
   const [isProcess, setIsProcess] = React.useState(false);
@@ -198,6 +237,19 @@ function SecurityOptions({offer, setLastUpdate}) {
       setLastUpdate(Date.now());
     } catch (error) {
       console.error('[addBankAccount]', error);
+    }
+  };
+  
+  const addBank = async code => {
+    try {
+      cachedAccounts.push(code);
+      await backendRequest({
+        offerAddress,
+        banks: cachedAccounts,
+      }, null, 'offers/single/banks', 'post');
+      setCachedAccounts(cachedAccounts);
+    } catch (error) {
+      console.error('[addBank]', error);
     }
   };
   
@@ -272,6 +324,11 @@ function SecurityOptions({offer, setLastUpdate}) {
       </Row>
       {!!bankAccounts.length && <>
         {bankAccounts.map((data, index) => {
+          if (!isBuy) {
+            return <Row className="security-options" key={index}>
+              {data}
+            </Row>
+          }
           let parsed;
           try {
             parsed = JSON.parse(data);
@@ -330,8 +387,9 @@ function SecurityOptions({offer, setLastUpdate}) {
           </Row>
         })}
       </>}
-      <h2>Add new bank account</h2>
-      <AddBankAccount addBankAccount={addBankAccount} banksList={banksList} />
+        {isBuy
+          ? <AddBankAccount addBankAccount={addBankAccount} banksList={banksList} />
+          : <AddBank addBank={addBank} banksList={banksList} />}
       </div>
     </Col>
   );

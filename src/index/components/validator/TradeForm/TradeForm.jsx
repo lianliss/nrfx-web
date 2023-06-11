@@ -40,6 +40,7 @@ function TradeForm({offerAddress}) {
     getBSCScanLink,
     getTransactionReceipt,
     transaction,
+    getTokenContract,
     backendRequest,
   } = context;
   const [offer, setOffer] = React.useState();
@@ -51,34 +52,55 @@ function TradeForm({offerAddress}) {
     if (!offerAddress) return;
     
     try {
-      const contract = new (getWeb3().eth.Contract)(
+      let contract = new (getWeb3().eth.Contract)(
         require('src/index/constants/ABI/p2p/buy'),
         offerAddress,
       );
+      const offer = await contract.methods.getOffer().call();
+      const isBuy = offer[3];
+      const isActive = offer[4];
+      const owner = offer[2];
+      const commission = wei.from(offer[5], 4);
+      const totalCommission = wei.from(offer[6], 4);
+      const fiat = getFiatsArray().find(f => f.address === offer[1]);
+      if (!fiat) return;
+      
+      if (!isBuy) {
+        contract = new (getWeb3().eth.Contract)(
+          require('src/index/constants/ABI/p2p/sell'),
+          offerAddress,
+        );
+      }
+      const fiatContract = getTokenContract(fiat);
       const data = await Promise.all([
-        contract.methods.getOffer().call(),
+        isBuy
+          ? fiatContract.getBalance(offerAddress)
+          : contract.methods.offerLimit().call(),
         contract.methods.getSchedule().call(),
         contract.methods.isKYCRequired().call(),
         contract.methods.maxTradeAmount().call(),
-        contract.methods.getBankAccounts().call(),
-        backendRequest({}, null, 'offers/validator', 'get'),
+        isBuy
+          ? contract.methods.getBankAccounts().call()
+          : backendRequest({offerAddress}, null, 'offers/single/banks', 'get'),
+        backendRequest({offerAddress}, null, 'offers/single', 'get'),
       ]);
-      const fiat = getFiatsArray().find(f => f.address === data[0][1]);
-      if (!fiat) return;
+      const minTrade = wei.from(offer[7], fiat.decimals);
       setOffer({
         fiat,
         offerAddress,
-        owner: data[0][2],
-        isBuy: data[0][3],
-        isActive: data[0][4],
-        commission: wei.from(data[0][5], 4),
-        totalCommission: wei.from(data[0][6], 4),
-        minTrade: wei.from(data[0][7], 18),
-        maxTrade: wei.from(data[3], 18),
+        owner,
+        isBuy,
+        isActive,
+        commission,
+        totalCommission,
+        minTrade,
+        balance: isBuy ? data[0] : 0,
+        limit: isBuy ? 0 : wei.from(data[0], fiat.decimals),
+        maxTrade: wei.from(data[3], fiat.decimals),
         schedule: data[1],
         isKYCRequired: data[2],
-        bankAccounts: data[4],
-        cache: data[5].find(o => o.address === offerAddress),
+        bankAccounts: data[4].length ? data[4] : [],
+        cache: data[5],
       });
     } catch (error) {
       console.error('[TradeForm]', error);

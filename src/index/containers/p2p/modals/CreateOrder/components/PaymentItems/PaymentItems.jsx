@@ -34,7 +34,6 @@ const getTitles = (text, mode, adaptive) => {
 };
 
 const PaymentItems = ({ adaptive, mode, selected, banks }) => {
-  console.log('PAY', { adaptive, mode, selected, banks });
   return <Row
     className="p2p-modal-create-order-payment-items"
     justifyContent="space-between"
@@ -48,11 +47,13 @@ const PaymentItems = ({ adaptive, mode, selected, banks }) => {
     </OrderInfoWrapper>
     <OrderInfoWrapper title={getTitles('payment', mode, adaptive)}>
       <Row gap="10px 12px" wrap>
-        {selected ? (
-          <PaymentItem title={selected.title} />
-        ) : (
+        {selected ? (mode === 'buy' ? <PaymentItem title={selected.title || selected.code} /> : <>
+          <PaymentItem title={`${selected.title || selected.code}${selected.bankName ? `: ${selected.bankName}` : ''}`} />
+          <PaymentItem title={selected.holder} />
+          <PaymentItem title={selected.account} />
+        </>) : (
           <>
-          {banks.filter(b=>!!b).map((b, index) => <PaymentItem title={b.title} key={index} />)}
+          {banks.filter(b=>!!b).map((b, index) => <PaymentItem title={typeof b === 'string' ? b : b.title} key={index} />)}
           </>
         )}
       </Row>

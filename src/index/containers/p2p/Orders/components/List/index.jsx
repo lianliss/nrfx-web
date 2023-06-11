@@ -41,9 +41,10 @@ function List({
       settings,
       side,
     } = offer;
-    const banks = _.get(settings, 'banks', [])
+    const banks = side === 'buy' ? _.get(settings, 'banks', [])
       .filter(b => !!b.code)
-      .map(b => _.get(banksList.find(l => l.code === b.code), 'title'));
+      .map(b => _.get(banksList.find(l => l.code === b.code), 'title'))
+      : _.get(settings, 'banks', []).map(b => _.get(banksList.find(l => l.code === b), 'title'));
     return <TR className="orders-list-item">
       <TD>
         <div className="orders-list-user">

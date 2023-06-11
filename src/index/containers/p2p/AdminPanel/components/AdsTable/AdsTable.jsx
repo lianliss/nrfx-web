@@ -53,7 +53,7 @@ const TableRow = ({
   status,
   updateOffers,
 }) => {
-  
+  console.log('paymentMethods', paymentMethods);
   const context = React.useContext(Web3Context);
   const {
     accountAddress,
@@ -134,7 +134,7 @@ const TableRow = ({
           <Col gap={8} alignItems="flex-end">
             {paymentMethods.map((item, key) => (
               <PaymentItem
-                title={item.title}
+                title={typeof item === 'string' ? item : item.title}
                 color={null}
                 className={styles.paymentItem}
                 key={key}
@@ -182,6 +182,9 @@ const TableRow = ({
       <TD>
         <Col>
           {paymentMethods.map((data, key) => {
+            if (typeof data === 'string') {
+              return <PaymentItem title={data} key={key} />
+            }
             let parsed;
             try {
               parsed = JSON.parse(data);

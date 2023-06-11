@@ -81,12 +81,15 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, banksList, off
     transaction,
     backendRequest,
     getTokenContract,
+    getDH,
   } = context;
   const buttonSize = adaptive ? 'big' : 'moderate';
   
   const [amount, setAmount] = React.useState(initialAmount);
   const [fiatAmount, setFiatAmount] = React.useState(initialFiatAmount);
+  const [isApproving, setIsApproving] = React.useState(false);
   const [isProcess, setIsProcess] = React.useState(false);
+  const [allowance, setAllowance] = React.useState(0);
   const [errorText, setErrorText] = React.useState();
   
   const onSetFiatAmount = value => {
@@ -94,10 +97,36 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, banksList, off
     setAmount(value * (1 - commission));
   };
   
+  const getAllowance = async () => {
+    try {
+      const contract = getTokenContract(fiat);
+      setAllowance(await contract.getAllowance(offer.address));
+    } catch (error) {
+      console.error('[getAllowance]', error);
+    }
+  };
+  
   const onSetAmount = value => {
     setAmount(value);
     setFiatAmount(value * (1 + commission));
   };
+  
+  const onApprove = async () => {
+    if (isApproving) return;
+    setIsApproving(true);
+    const contract = getTokenContract(fiat);
+    try {
+      await contract.approve(offer.address, fiatAmount);
+      await getAllowance();
+      setErrorText('');
+    } catch (error) {
+      contract.stopWaiting();
+      console.error('[onApprove]', error);
+      setErrorText(processError(error));
+    }
+    setIsApproving(false);
+  };
+  const isApproved = allowance >= fiatAmount;
 
   const handleConfirm = async () => {
     const {p2p} = network.contractAddresses;
@@ -116,10 +145,24 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, banksList, off
           require('src/index/constants/ABI/p2p/sell'),
           offer.address,
         );
-      const params = [
-        wei.to(fiatAmount),
-        selectedPayment.index
-      ];
+      let params;
+      if (isBuy) {
+        params = [
+          wei.to(fiatAmount, fiat.decimals),
+          selectedPayment.index
+        ];
+      } else {
+        const dh = await getDH();
+        const otherKey = (await contract.methods.ownerPublicKey().call()).slice(0,10);
+        dh.otherPublicKey  = getWeb3().utils.hexToNumber(otherKey).toFixed(0);
+        dh.computeSharedKey();
+        const encrypted = dh.encrypt(JSON.stringify(selectedPayment));
+        params = [
+          wei.to(fiatAmount, fiat.decimals),
+          encrypted,
+          getWeb3().utils.numberToHex(Number(dh.publicKey)),
+        ];
+      }
       const tx = await transaction(contract, 'createTrade', params);
       console.log('transaction hash', tx, getBSCScanLink(tx));
       const receipt = await getTransactionReceipt(tx);
@@ -199,12 +242,13 @@ function Form({ mode, adaptive, selectedPayment, onCancel, banks, banksList, off
                   disabled={isProcess || !selectedPayment} size={buttonSize} onClick={handleConfirm}>
             Buy {fiat.symbol}
           </Button>
-        ) : (
-          <Button type="orange" state={isProcess ? "loading" : ''}
-                  disabled={isProcess || !selectedPayment} size={buttonSize} onClick={handleConfirm}>
-            Sell {fiat.symbol}
-          </Button>
-        )}
+        ) : (isApproved ? <Button type="orange" state={isProcess ? "loading" : ''}
+                                  disabled={isProcess || !selectedPayment} size={buttonSize} onClick={handleConfirm}>
+          Sell {fiat.symbol}
+        </Button> : <Button type="orange" state={isProcess ? "loading" : ''}
+                            disabled={isApproving || !selectedPayment} size={buttonSize} onClick={onApprove}>
+          Approve {fiat.symbol}
+        </Button>)}
         {!!errorText && <span>{errorText}</span>}
       </Row>
       {adaptive && (

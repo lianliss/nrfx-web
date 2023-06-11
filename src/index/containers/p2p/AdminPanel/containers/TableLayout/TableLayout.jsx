@@ -46,6 +46,7 @@ function TableLayout({ adaptive, userRole }) {
   const userPages = pages.filter((page) => page.supportRoles.includes(userRole));
   const [selected, setSelected] = React.useState(userPages[0].value);
   const [banksList, setBanksList] = React.useState();
+  const [timestamp, setTimestamp] = React.useState(Date.now());
   
   const onAddPaymentMethod = async () => {
     try {
@@ -55,7 +56,7 @@ function TableLayout({ adaptive, userRole }) {
         setBanksList(_banksList);
       }
       console.log('onAddPaymentMethod', _banksList);
-      openStateModal('p2p_set_payment_method', { banksList: _banksList });
+      openStateModal('p2p_set_payment_method', { banksList: _banksList, setTimestamp });
     } catch (error) {
       console.error('[onAddPaymentMethod]', error);
     }
@@ -128,7 +129,7 @@ function TableLayout({ adaptive, userRole }) {
           )}
           {selected === 'my-ads' && <AdsFilters adaptive={adaptive} />}
         </div>
-        {selected === 'methods' && <PaymentMethodsTable adaptive={adaptive} />}
+        {selected === 'methods' && <PaymentMethodsTable timestamp={timestamp} adaptive={adaptive} />}
         {selected === 'my-ads' && <AdsTable adaptive={adaptive} />}
       </div>
     </>

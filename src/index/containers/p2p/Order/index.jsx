@@ -71,6 +71,13 @@ function Order({ adaptive }) {
   const [order, setOrder] = React.useState();
   const { mode } = 'buy';
   
+  console.log('ORDER', order);
+  
+  const addressFormatted = !!accountAddress && getWeb3().utils.toChecksumAddress(accountAddress);
+  const isClient = addressFormatted === _.get(order, 'clientAddress');
+  const isOwner = addressFormatted === _.get(order, 'ownerAddress');
+  const isLawyer = addressFormatted === _.get(order, 'lawyerAddress');
+  
   const getOrder = async () => {
     const {p2p} = network.contractAddresses;
     if (!p2p) return;
@@ -103,21 +110,42 @@ function Order({ adaptive }) {
         require('src/index/constants/ABI/p2p/kyc'),
         p2p.kyc,
       );
-      const data = await Promise.all([
+      const promises = [
         contract.methods.getOffer().call(),
         contract.methods.getTrade(clientAddress).call(),
-        contract.methods.getBankAccounts().call(),
-      ]);
+      ];
+      if (isBuy) {
+        promises.push(contract.methods.getBankAccounts().call());
+      } else {
+        promises.push(contract.methods.ownerPublicKey().call());
+      }
+      const data = await Promise.all(promises);
       const fiat = getFiatsArray().find(f => f.address === data[0][1]);
       
       const more = await Promise.all([
         backendRequest({
           currency: fiat.symbol,
         }, ``, 'offers/banks', 'get'),
-        kycContract.methods.getData([data[0][2], clientAddress, '0xBdA52bfc01ACcfEf9a77e549F48F5F3EC9599F56']).call()
+        kycContract.methods.getData([data[0][2], clientAddress]).call()
       ]);
-      const bank = JSON.parse(data[2][data[1]['bankAccountId']]);
-      bank.title = _.get(more[0].find(b => b.code === bank.code), 'title');
+      let bank;
+      if (isBuy) {
+        bank = JSON.parse(data[2][data[1]['bankAccountId']]);
+        bank.title = _.get(more[0].find(b => b.code === bank.code), 'title');
+      } else {
+        const ownerPublicKey = getWeb3().utils.hexToNumber(data[2].slice(0,10)).toFixed(0);
+        const clientPublicKey = getWeb3().utils.hexToNumber(data[1].clientPublicKey.slice(0,10)).toFixed(0);
+        const dh = await getDH();
+        dh.otherPublicKey = dh.publicKey === ownerPublicKey ? clientPublicKey : ownerPublicKey;
+        dh.computeSharedKey();
+        const decrypted = dh.decrypt(data[1].bankAccount);
+        try {
+          bank = JSON.parse(decrypted);
+          bank.title = _.get(more[0].find(b => b.code === bank.code), 'title');
+        } catch (error) {
+          console.error('[getOrder]', "Can't decrypt bank account", error, decrypted);
+        }
+      }
       setOrder({
         isBuy,
         cache: cache[0],
@@ -139,23 +167,16 @@ function Order({ adaptive }) {
       console.error('[getOrder]', error);
     }
   };
-  console.log('ORDER', order);
+  
   React.useEffect(() => {
     getOrder();
     clearInterval(updateInterval);
     setTimeout(() => {
       clearInterval(updateInterval);
-      if (!_.get(order, 'status', 0)) {
-        updateInterval = setInterval(getOrder, 4000);
-      }
+      updateInterval = setInterval(getOrder, 4000);
     }, 4000);
   }, [chainId, accountAddress, offerAddress, clientAddress]);
   if (!order || !accountAddress) return <LoadingStatus inline status="loading" />;
-  
-  const addressFormatted = !!accountAddress && getWeb3().utils.toChecksumAddress(accountAddress);
-  const isClient = addressFormatted === order.clientAddress;
-  const isOwner = addressFormatted === order.ownerAddress;
-  const isLawyer = addressFormatted === order.lawyerAddress;
   
   const {
     fiat,

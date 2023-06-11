@@ -106,6 +106,8 @@ function Submit({
       </ButtonsWrapper>
     );
   }
+  
+  console.log('SUBM', order.isBuy, isClient, isOwner);
 
   if (!isPayed && ((order.isBuy && isClient) || (!order.isBuy && isOwner))) {
     return (

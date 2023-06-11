@@ -74,6 +74,14 @@ function CreateOrder({ mode, onClose, offer, banksList, payment, ...props }) {
   } = offer;
   const banks = _.get(settings, 'banks', [])
     .map((b, index) => {
+      if (typeof b === 'string' && b.length) {
+        const title = _.get(banksList.find(l => l.code === b), 'title', b);
+        return {
+          code: b,
+          title,
+          index,
+        }
+      }
       if (!b.code) {
         return null;
       }

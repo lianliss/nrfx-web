@@ -161,21 +161,21 @@ class P2pPopupStake extends React.PureComponent {
     const {p2p} = network.contractAddresses;
     if (!p2p) return;
     
-    const { balance } = fiat;
-    const { isTransaction, value } = this.state;
+    const { isTransaction, value, balance } = this.state;
     if (isTransaction) return;
     this.setState({ isTransaction: true });
 
     try {
       const amount = Number(value) || 0;
       const transactionAmount =
-        getFixedNumber(amount, 18) >= getFixedNumber(balance, 18)
-          ? balance
+        getFixedNumber(amount, 18) >= wei.to(getFixedNumber(balance, 18))
+          ? wei.to(getFixedNumber(balance, 18))
           : wei.to(getFixedNumber(amount, 18));
       const routerContract = new (getWeb3().eth.Contract)(
         require('src/index/constants/ABI/p2p/router'),
         p2p.router,
       );
+      console.log('transactionAmount', transactionAmount, amount, balance);
       const tx = await transaction(routerContract, 'deposit', [
         transactionAmount,
         fiat.address,

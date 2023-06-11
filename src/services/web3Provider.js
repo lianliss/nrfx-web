@@ -2119,11 +2119,12 @@ class Web3Provider extends React.PureComponent {
       } catch (error) {}
       if (!settings) {
         try {
-          settings = JSON.parse(await this.backendRequest({}, ``, 'user/p2p/settings', 'get'))
-        } catch {
+          settings = JSON.parse(await this.backendRequest({}, ``, 'user/p2p/settings', 'get'));
+        } catch (error) {
           settings = {};
         }
       }
+      if (!settings) settings = {};
       
       // Create DH object
       let {privateKey, publicKey} = settings;
