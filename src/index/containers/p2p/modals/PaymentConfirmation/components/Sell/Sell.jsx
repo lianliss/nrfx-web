@@ -15,7 +15,7 @@ const confirmations = [
   {
     value: 1,
     title:
-      "I have received the correct amount. Payment sender matches the buyer's verified name on Binance, and I agree to release my crypto to the buyer.",
+      "I have received the correct amount. Payment sender matches the buyer's verified name on Narfex, and I agree to release my crypto to the buyer.",
   },
 ];
 

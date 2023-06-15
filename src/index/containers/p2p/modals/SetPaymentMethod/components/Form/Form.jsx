@@ -43,7 +43,7 @@ function Form({ payment, adaptive, onCancel, onConfirm, offer, getFiatsArray }) 
             <span className="black-gunmetal-color">Tips:</span> The added
             payment method will be shown to the buyer during the transaction to
             accept fiat transfers. Please ensure that the information is
-            correct, real, and matches your KYC information on Binance.
+            correct, real, and matches your KYC information on Narfex.
           </p>
         </Row>
       </Message>
@@ -90,7 +90,7 @@ function Form({ payment, adaptive, onCancel, onConfirm, offer, getFiatsArray }) 
         <span className="black-gunmetal-color">Tips:</span> The added payment
         method will be shown to the buyer during the transaction to accept fiat
         transfers. Please ensure that the information is correct, real, and
-        matches your KYC information on Binance.
+        matches your KYC information on Narfex.
       </p>
       <div className={styles.buttons}>
         <Button type="secondary-light" size={buttonSize} onClick={onCancel}>

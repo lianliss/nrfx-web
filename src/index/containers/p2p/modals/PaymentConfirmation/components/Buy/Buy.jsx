@@ -30,8 +30,8 @@ function Buy({ prefix, adaptive, onConfirm, onCancel, onClose, order }) {
           <Row gap={adaptive ? '5px' : '7px'}>
             <img src={successIcon} alt="success" />
             <p>
-              You must leave Binance’s platform to complete the transfer
-              yourself. Binance will not automatically transfer the payment on
+              You must leave Narfex’s platform to complete the transfer
+              yourself. Narfex will not automatically transfer the payment on
               your behalf.
             </p>
           </Row>

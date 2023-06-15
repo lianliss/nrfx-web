@@ -104,7 +104,7 @@ function TableLayout({ adaptive, userRole }) {
                 'P2P payment methods: When you sell cryptocurrencies,' +
                 'the payment method added will be displayed to buyer as options to' +
                 'accept payment, please ensure that the account owner’s name is consistent' +
-                ' with your verified name on Binance. You can add up to 20 ' +
+                ' with your verified name on Narfex. You can add up to 20 ' +
                 'payment methods.'
               }
               actionText="Add a payment method"
@@ -118,7 +118,7 @@ function TableLayout({ adaptive, userRole }) {
                 'P2P payment methods: When you sell cryptocurrencies,' +
                 'the payment method added will be displayed to buyer as options to' +
                 'accept payment, please ensure that the account owner’s name is consistent' +
-                ' with your verified name on Binance. You can add up to 20 ' +
+                ' with your verified name on Narfex. You can add up to 20 ' +
                 'payment methods.'
               }
               actionText="Post new Ad"
