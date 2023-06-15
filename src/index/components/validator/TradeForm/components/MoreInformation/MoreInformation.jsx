@@ -11,6 +11,7 @@ import InputColumn from '../InputColumn/InputColumn';
 import OpeningHours from '../OpeningHours/OpeningHours';
 import ColumnTitle from '../ColumnTitle/ColumnTitle';
 import Column from '../Column/Column';
+import Deposit from '../Deposit/Deposit';
 
 // Utils
 import defaultAnswer from '../../constants/defaultAnswer';
@@ -98,13 +99,6 @@ function MoreInformation({offer, setLastUpdate}) {
     try {
       setErrorText(null);
       setIsProcess(true);
-      if (isLimitChanged) {
-        const contract = new (getWeb3().eth.Contract)(
-          require('src/index/constants/ABI/p2p/sell'),
-          offerAddress,
-        );
-        const tx = await transaction(contract, 'setLimit', [wei.to(_offerLimit, fiat.decimals)]);
-      }
       if (isChanged) {
         const contract = isBuy
           ? new (getWeb3().eth.Contract)(
@@ -150,6 +144,10 @@ function MoreInformation({offer, setLastUpdate}) {
   
   return (
     <>
+      <div className="more-information-header">
+        <h1>Edit a trade advertisement</h1>
+        <Deposit adaptive={false} offer={offer} setLastUpdate={setLastUpdate} />
+      </div>
       <h2>Main information</h2>
       <Col className="more-information">
         <div className="more-information__item">
@@ -178,14 +176,6 @@ function MoreInformation({offer, setLastUpdate}) {
               value={_commission}
               onChange={setCommission}
             />
-            {!isBuy && <InputColumn
-              title="Offer limit"
-              description={defaultAnswer}
-              placeholder={limit}
-              indicator={symbol}
-              value={_offerLimit}
-              onChange={setOfferLimit}
-            />}
             <Column>
               <ColumnTitle title="Total Commission" description={defaultAnswer} />
               {_totalCommission.toFixed(2)} %

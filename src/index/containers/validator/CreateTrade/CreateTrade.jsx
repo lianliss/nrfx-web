@@ -19,7 +19,6 @@ function CreateTrade() {
       <Container>
         {!!offerAddress
           ? <CabinetBlock>
-            <h1>Edit a trade advertisement</h1>
             <TradeForm offerAddress={offerAddress} />
           </CabinetBlock>
           : <><CabinetBlock>
