@@ -384,30 +384,6 @@ class P2pPopupStake extends React.PureComponent {
               </Button>
             )}
           </Form>
-          <div className="FarmingPopup__footer FarmingPopup-footer">
-            <div className="FarmingPopup-footer__info FarmingPopup-footer-info">
-              <div className="FarmingPopup-footer-info__item">
-                <SVG src={require('src/asset/icons/info.svg')} />
-                <div>
-                  <h6>{getLang('dapp_farming_stake_info_1_title')}</h6>
-                  <p>{getLang('dapp_farming_stake_info_1_description')}</p>
-                </div>
-              </div>
-              <div className="FarmingPopup-footer-info__item">
-                <SVG src={require('src/asset/icons/info.svg')} />
-                <div>
-                  <h6>{getLang('dapp_farming_stake_info_2_title')}</h6>
-                  <p>{getLang('dapp_farming_stake_info_2_description')}</p>
-                  <a
-                    href="https://docs.narfex.com/narfex/farming/farming"
-                    target="_blank"
-                  >
-                    {getLang('dapp_farming_stake_info_read_more')} ›
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
           {!!errorText.length && (
             <div className="FarmingPopup__error">{errorText}</div>
           )}
