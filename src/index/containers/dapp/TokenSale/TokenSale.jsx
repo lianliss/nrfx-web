@@ -11,12 +11,12 @@ import { getLang } from "utils";
 import { Form, Input, Button } from 'src/ui';
 import * as toast from 'actions/toasts';
 import { openStateModal } from 'src/actions';
+import { DappInput } from 'dapp';
 
 // Styles
 import './TokenSale.less';
 
-const TOKEN_PRICE = 0.4;
-const CHAIN_HEX = '0x61';
+const TOKEN_PRICE = 0.1;
 
 const processError = error => {
   const {message} = error;
@@ -40,6 +40,7 @@ function TokenSale() {
     tokens, getTokenContract, network, transaction,
     isConnected, connectWallet, chainId, getTransactionReceipt,
     getBSCScanLink, addTokenToWallet,
+    getFiatsArray,
   } = context;
   const [value, setValue] = React.useState('0');
   const [allowance, setAllowance] = React.useState(0);
@@ -66,10 +67,10 @@ function TokenSale() {
   const onApprove = async () => {
     if (isApproving) return;
     setIsApproving(true);
-    const token = tokens.find(t => t.symbol === 'BUSD');
+    const token = getFiatsArray().find(t => t.symbol === 'CAD');
     const contract = getTokenContract(token);
     try {
-      await contract.approve(network.contractAddresses.tokenSale, busdAmount);
+      await contract.approve(network.contractAddresses.cadSwap, busdAmount);
       setAllowance(busdAmount);
       setErrorText('');
     } catch (error) {
@@ -85,11 +86,11 @@ function TokenSale() {
     setErrorText('');
     const web3 = new Web3(window.ethereum);
     const contract = new (web3.eth.Contract)(
-      require('src/index/constants/ABI/TokenSale'),
-      network.contractAddresses.tokenSale,
+      '[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newPrice","type":"uint256"}],"name":"SetPrice","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"caller","type":"address"},{"indexed":false,"internalType":"uint256","name":"CADamount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"NRFXamount","type":"uint256"}],"name":"Swap","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"NRFXamount","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"CAD","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"NRFX","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"price","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newPrice","type":"uint256"}],"name":"setPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"inputAmount","type":"uint256"}],"name":"swap","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawNRFX","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawNRFX","outputs":[],"stateMutability":"nonpayable","type":"function"}]',
+      network.contractAddresses.cadSwap,
     );
     try {
-      const txHash = await transaction(contract, 'buy', [wei.to(wei.bn(amount), 18)]);
+      const txHash = await transaction(contract, 'swap', [wei.to(wei.bn(amount), 6)]);
       const receipt = await getTransactionReceipt(txHash);
       console.log('[onBuyTokens]', txHash, receipt);
       setValue('0');
@@ -105,17 +106,6 @@ function TokenSale() {
     setIsDeposit(false);
   };
 
-  // // Change the chain
-  // React.useEffect(() => {
-  //   if (!isConnected) return;
-  //   if (window.ethereum.chainId === CHAIN_HEX) return;
-  //
-  //   window.ethereum.request({
-  //     method: 'wallet_switchEthereumChain',
-  //     params: [{ chainId: '0x61' }],
-  //   });
-  // }, [isConnected, chainId]);
-
   return (
     <div className="TokenSale__wrap">
       <CabinetBlock className="TokenSale">
@@ -124,17 +114,25 @@ function TokenSale() {
           <h3>{chainId === 97 ? 'Testnet' : ''} Token Sale</h3>
           <label>
             <p>
-              <span>BUSD Amount</span>
-              <small>1 BUSD = {1 / TOKEN_PRICE} NRFX</small>
+              <span>CAD Amount</span>
+              <small>1 CAD = {1 / TOKEN_PRICE} NRFX</small>
             </p>
-            <Input value={value} onChange={onChange} disabled={isDeposit} />
+            <DappInput
+              type="number"
+              disabled={isDeposit}
+              inputMode="decimal"
+              value={value}
+              onChange={setValue}
+              indicator="CAD"
+              decimals={6}
+            />
           </label>
           {isConnected ? <>
           <Button type={isAvailable ? 'secondary' : 'lightBlue'}
                   onClick={onApprove}
                   disabled={!amount || isAvailable}
                   state={isApproving ? 'loading' : ''}>
-            Approve {amount.toFixed(2)} BUSD
+            Approve {amount.toFixed(2)} CAD
           </Button>
           <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
                   onClick={onBuyTokens}
