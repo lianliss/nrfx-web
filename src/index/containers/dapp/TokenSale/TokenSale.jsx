@@ -39,7 +39,7 @@ function TokenSale() {
   const {
     tokens, getTokenContract, network, transaction,
     isConnected, connectWallet, chainId, getTransactionReceipt,
-    getBSCScanLink, addTokenToWallet,
+    getBSCScanLink, addTokenToWallet, accountAddress,
     getFiatsArray,
   } = context;
   const [value, setValue] = React.useState('0');
@@ -86,7 +86,7 @@ function TokenSale() {
     setErrorText('');
     const web3 = new Web3(window.ethereum);
     const contract = new (web3.eth.Contract)(
-      '[{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newPrice","type":"uint256"}],"name":"SetPrice","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"caller","type":"address"},{"indexed":false,"internalType":"uint256","name":"CADamount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"NRFXamount","type":"uint256"}],"name":"Swap","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"NRFXamount","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"CAD","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"NRFX","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"price","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newPrice","type":"uint256"}],"name":"setPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"inputAmount","type":"uint256"}],"name":"swap","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawNRFX","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawNRFX","outputs":[],"stateMutability":"nonpayable","type":"function"}]',
+      [{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newPrice","type":"uint256"}],"name":"SetPrice","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"caller","type":"address"},{"indexed":false,"internalType":"uint256","name":"CADamount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"NRFXamount","type":"uint256"}],"name":"Swap","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"NRFXamount","type":"uint256"}],"name":"Withdraw","type":"event"},{"inputs":[],"name":"CAD","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"NRFX","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"price","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"newPrice","type":"uint256"}],"name":"setPrice","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"inputAmount","type":"uint256"}],"name":"swap","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawNRFX","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"withdrawNRFX","outputs":[],"stateMutability":"nonpayable","type":"function"}],
       network.contractAddresses.cadSwap,
     );
     try {
@@ -105,6 +105,20 @@ function TokenSale() {
     }
     setIsDeposit(false);
   };
+  
+  React.useEffect(() => {
+    (async() => {
+      try {
+        const token = getFiatsArray().find(t => t.symbol === 'CAD');
+        const contract = getTokenContract(token);
+        const allowance = await contract.getAllowance(network.contractAddresses.cadSwap);
+        console.log('Allowance', allowance);
+        setAllowance(allowance);
+      } catch (error) {
+        console.error('setAllowance', error);
+      }
+    })()
+  }, [isConnected, accountAddress, chainId]);
 
   return (
     <div className="TokenSale__wrap">

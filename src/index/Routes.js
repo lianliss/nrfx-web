@@ -289,6 +289,7 @@ function Routes(props) {
       break;
     case pages.TOKENSALE:
       Component = TokenSale;
+      WrapperComponent = DappWrapper;
       break;
     default:
       Component = SiteNotFoundScreen;
