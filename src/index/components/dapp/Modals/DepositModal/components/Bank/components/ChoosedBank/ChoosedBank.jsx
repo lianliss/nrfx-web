@@ -110,6 +110,26 @@ function ChoosedBank(props) {
                 </span>
                 <SVG src={require('src/asset/icons/action/copy.svg')} />
               </CopyText>
+              {isEmail && <>
+                <p className="dark default hight-height extra-small extra-large-height">
+                  Security question
+                </p>
+                <CopyText text={'Smart contract name'}>
+                  <span className="blue default small extra-large-height">
+                    Smart contract name
+                  </span>
+                  <SVG src={require('src/asset/icons/action/copy.svg')} />
+                </CopyText>
+                <p className="dark default hight-height extra-small extra-large-height">
+                  Security answer
+                </p>
+                <CopyText text={'CAD'}>
+                    <span className="blue default small extra-large-height">
+                      CAD
+                    </span>
+                  <SVG src={require('src/asset/icons/action/copy.svg')} />
+                </CopyText>
+              </>}
             </>}
             {!isEmail && <>
             <p className="dark default hight-height extra-small extra-large-height">
