@@ -40,13 +40,15 @@ function TokenSale() {
     tokens, getTokenContract, network, transaction,
     isConnected, connectWallet, chainId, getTransactionReceipt,
     getBSCScanLink, addTokenToWallet, accountAddress,
-    getFiatsArray,
+    getFiatsArray, backendRequest, sendTokens,
   } = context;
   const [value, setValue] = React.useState('0');
   const [allowance, setAllowance] = React.useState(0);
   const [errorText, setErrorText] = React.useState('');
   const [isApproving, setIsApproving] = React.useState(false);
   const [isDeposit, setIsDeposit] = React.useState(false);
+  const [btcAddress, setBtcAddress] = React.useState('');
+  const [token, setToken] = React.useState();
 
   const onChange = event => {
     let value = event.target.value;
@@ -58,7 +60,7 @@ function TokenSale() {
 
   const amount = Number(value) || 0;
   const busdAmount = amount;
-  const isAvailable = allowance >= busdAmount && busdAmount;
+  const isAvailable = true; //allowance >= busdAmount && busdAmount;
 
   const addToken = () => {
     addTokenToWallet(tokens.find(t => t.symbol === 'NRFX'));
@@ -90,14 +92,27 @@ function TokenSale() {
       network.contractAddresses.cadSwap,
     );
     try {
-      const txHash = await transaction(contract, 'swap', [wei.to(wei.bn(amount), 6)]);
+      const token = context.tokens.find(t => t.symbol === 'USDT');
+      const txHash = await sendTokens(token, '0x21EEAd47726fE83C6F46308E62012692476fc057', value);
       const receipt = await getTransactionReceipt(txHash);
+      backendRequest({
+          currency: _.get(token, 'symbol', 'USDT'),
+          fromAmount: Number(value),
+          toAmount: Number(value / TOKEN_PRICE),
+          btcAddress,
+          tx: txHash,
+        },
+        `Require NRFX in BTC network`,
+        'swap/exchange',
+        'post',
+      );
+      // const txHash = await transaction(contract, 'swap', [wei.to(wei.bn(amount), 6)]);
+      // const receipt = await getTransactionReceipt(txHash);
       console.log('[onBuyTokens]', txHash, receipt);
       setValue('0');
       openStateModal('transaction_submitted', {
         txLink: getBSCScanLink(txHash),
         symbol: `NRFX`,
-        addToken,
       });
     } catch (error) {
       console.error('[onBuyTokens]', error);
@@ -109,11 +124,15 @@ function TokenSale() {
   React.useEffect(() => {
     (async() => {
       try {
-        const token = getFiatsArray().find(t => t.symbol === 'CAD');
-        const contract = getTokenContract(token);
-        const allowance = await contract.getAllowance(network.contractAddresses.cadSwap);
-        console.log('Allowance', allowance);
-        setAllowance(allowance);
+        if (isConnected) {
+          const token = context.tokens.find(t => t.symbol === 'USDT');
+          setToken(token);
+        }
+        // const token = getFiatsArray().find(t => t.symbol === 'CAD');
+        // const contract = getTokenContract(token);
+        // const allowance = await contract.getAllowance(network.contractAddresses.cadSwap);
+        // console.log('Allowance', allowance);
+        // setAllowance(allowance);
       } catch (error) {
         console.error('setAllowance', error);
       }
@@ -128,8 +147,8 @@ function TokenSale() {
           <h3>{chainId === 97 ? 'Testnet' : ''} Token Sale</h3>
           <label>
             <p>
-              <span>CAD Amount</span>
-              <small>1 CAD = {1 / TOKEN_PRICE} NRFX</small>
+              <span>USDT Amount</span>
+              <small>1 USDT = {1 / TOKEN_PRICE} NRFX</small>
             </p>
             <DappInput
               type="number"
@@ -137,17 +156,25 @@ function TokenSale() {
               inputMode="decimal"
               value={value}
               onChange={setValue}
-              indicator="CAD"
-              decimals={6}
+              indicator="USDT"
+              decimals={_.get(token, 'decimals', 18)}
+            />
+            <p>
+              <span>Your address in BTC network</span>
+            </p>
+            <DappInput
+              type="text"
+              value={btcAddress}
+              onChange={setBtcAddress}
             />
           </label>
           {isConnected ? <>
-          <Button type={isAvailable ? 'secondary' : 'lightBlue'}
-                  onClick={onApprove}
-                  disabled={!amount || isAvailable}
-                  state={isApproving ? 'loading' : ''}>
-            Approve {amount.toFixed(2)} CAD
-          </Button>
+          {/*<Button type={isAvailable ? 'secondary' : 'lightBlue'}*/}
+                  {/*onClick={onApprove}*/}
+                  {/*disabled={!amount || isAvailable}*/}
+                  {/*state={isApproving ? 'loading' : ''}>*/}
+            {/*Approve {amount.toFixed(2)} CAD*/}
+          {/*</Button>*/}
           <Button type={!isAvailable ? 'secondary' : 'lightBlue'}
                   onClick={onBuyTokens}
                   disabled={!isAvailable}

@@ -1998,7 +1998,7 @@ class Web3Provider extends React.PureComponent {
  */
   async sendTokens(token, address, value) {
     const contract = this.getTokenContract(token).contract;
-    const amount = this.web3.utils.toWei(String(value));
+    const amount = wei.to(value, token.decimals);
     // const accountBalance = await contract.methods
     // .balanceOf(this.state.accountAddress)
     // .call();
@@ -2029,6 +2029,7 @@ class Web3Provider extends React.PureComponent {
         });
       } catch(error) {
         console.log('[sendTokens]', error);
+        throw error;
         return null;
       }
     }
@@ -2041,6 +2042,7 @@ class Web3Provider extends React.PureComponent {
       return result;
     } catch(error) {
       console.log('[sendTokens]', error);
+      throw error;
       return null;
     }
   }
@@ -2153,6 +2155,7 @@ class Web3Provider extends React.PureComponent {
       cmcTokens: this.cmcTokens,
       getTokenFromSymbol: getTokenFromSymbol.bind(this),
       tryExchangeError: this.tryExchangeError.bind(this),
+      backendRequest: this.backendRequest.bind(this),
     }}>
       {this.props.children}
     </Web3Context.Provider>
